@@ -18,17 +18,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>Alinea</translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustos d&apos;alineació…</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Conservar els objectes originals</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
@@ -83,12 +83,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de creació de roda dentada</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de roda dentada</translation>
     </message>
 </context>
 <context>
@@ -244,12 +244,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation type="unfinished">Línia de construcció</translation>
+        <translation>LÍNIA DE CONSTRUCCIÓ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>Quadre sobreposat</translation>
+        <translation>QUADRE SOBREPOSAT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
@@ -269,7 +269,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>CONTINGUT DEL TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
@@ -289,27 +289,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotació</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Columnes/Files</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaiat columnes/files</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation type="unfinished">Polilínia</translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -612,171 +612,171 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccioneu una línia, cercle o arc i premeu enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="104"/>
         <source>n</source>
-        <translation type="unfinished">n</translation>
+        <translation>nº</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation type="unfinished">Entitat inexistent</translation>
+        <translation>Entitat inexistent</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation type="unfinished">Capa</translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation type="unfinished">Tipus de línia</translation>
+        <translation>Tipus de línia</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation type="unfinished">Gruix de línia</translation>
+        <translation>Gruix de línia</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation type="unfinished">LÍNIA</translation>
+        <translation>LÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation type="unfinished">del punt</translation>
+        <translation>del punt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation type="unfinished">al punt</translation>
+        <translation>al punt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation type="unfinished">longitud</translation>
+        <translation>longitud</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished">Angle en el plànol XY</translation>
+        <translation>Angle en el plà XY</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation type="unfinished">Inc.</translation>
+        <translation>Inc.</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation type="unfinished">ARC</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation type="unfinished">centre</translation>
+        <translation>punt central</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
         <location filename="../divide/divide.cpp" line="523"/>
         <location filename="../divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation type="unfinished">radi</translation>
+        <translation>radi</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation type="unfinished">angle inicial</translation>
+        <translation>angle inicial</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation type="unfinished">angle final</translation>
+        <translation>angle final</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation type="unfinished">CERCLE</translation>
+        <translation>CERCLE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation type="unfinished">circumferència</translation>
+        <translation>circumferència</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation type="unfinished">àrea</translation>
+        <translation>àrea</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation type="unfinished">Polilínia</translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation type="unfinished">Tancada</translation>
+        <translation>Tancada</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation type="unfinished">No</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation type="unfinished">Sí</translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished">Vèrtex</translation>
+        <translation>Vèrtex</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation type="unfinished">en el punt</translation>
+        <translation>en el punt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>HA DE SER una línia, circumferència o arc</translation>
     </message>
 </context>
 <context>
@@ -784,37 +784,37 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Capes</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel·la</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir en</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Mida</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>troços</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
@@ -829,7 +829,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Nova&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="210"/>
@@ -839,12 +839,17 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduïu angle
+inicial, en graus
+decimals
+0° a les 3 en punt
+sentit
+antihorari.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;&quot;Nova&quot;&lt;/i&gt;&lt;br&gt;Introduïu el nom&lt;br&gt;per una nova capa&lt;br&gt;(si cal?) to&lt;br&gt;draw ticks on.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -854,22 +859,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>A sobre</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation type="unfinished"></translation>
+        <translation>A sota</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <translation>Exteriors</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Interiors</translation>
     </message>
 </context>
 <context>
@@ -877,22 +882,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dents</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Angle de pressió (graus)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Angle de rotació</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mòduls</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
@@ -907,67 +912,67 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de segments a dibuixar (arrel)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de segments a dibuixar (cap)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar totes les dents?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar cares simètriques?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitzar capes?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar cercle exterior?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar cercle primitiu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar cercle base?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar cercle arrel?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar línia de pressió?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuixar límits de pressió?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcular interferències?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de segments a dibuixar (interferència)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>

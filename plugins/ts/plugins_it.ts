@@ -21,28 +21,29 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni allineamento...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantieni oggetti originali</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifica prima i punti base</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni allineamento</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca su opzioni per impostare,
+Ok per accettare e iniziare allineamento.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,7 +53,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se è selezionato &apos;Mantieni oggetti originali&apos;,
+Allinea copierà gli oggetti selezionati invece di spostarli.
+
+Se è selezionato &apos;Specifica prima i punti base&apos;,
+Allinea chiederà i punti di allineamento nell&apos;ordine
+primo iniziale, secondo iniziale, primo finale, secondo finale.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -62,7 +68,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation>primo punto obiettivo:</translation>
+        <translation>primo punto finale:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
@@ -73,7 +79,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation>secondo punto obiettivo:</translation>
+        <translation>secondo punto finale:</translation>
     </message>
 </context>
 <context>
@@ -183,7 +189,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inc.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
@@ -252,12 +258,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>SOLIDO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>MTEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
@@ -282,7 +288,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>punto inserimento</translation>
+        <translation>Punto di inserimento</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -322,7 +328,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Si</translation>
+        <translation>Sì</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
@@ -391,7 +397,7 @@ first base, second base, first target, second target.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Copia proprietà</translation>
+        <translation>Copia le proprietà</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
@@ -610,22 +616,22 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividi</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona una linea, cerchio od arco e premi Invio</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="104"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
@@ -635,12 +641,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
@@ -665,7 +671,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
@@ -754,7 +760,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
@@ -774,7 +780,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>DEVE essere una linea, cerchio od arco</translation>
     </message>
 </context>
 <context>
@@ -787,7 +793,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Livelli</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -802,17 +808,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividi a</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>posti</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
@@ -827,7 +833,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Nuovo&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="210"/>
@@ -852,22 +858,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Sopra</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Sotto</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <translation>All&apos;esterno</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Interno</translation>
     </message>
 </context>
 <context>
@@ -885,12 +891,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Angolo di rotazione</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
@@ -915,7 +921,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Disegnare tutti i denti?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
@@ -925,7 +931,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Usare i livelli?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -960,12 +966,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcolare l&apos;interferenza?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero di segmenti da disegnare (interferenza)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>

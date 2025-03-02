@@ -66,15 +66,15 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Bogen auswählen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position für Bogenmass angeben</translation>
     </message>
 </context>
 <context>
@@ -114,23 +114,23 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentrum angeben</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente angeben</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl angeben:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Keine gültige Anzahl. Versuchen Sie 1..9999</translation>
+        <translation>Keine gültige Anzahl. Geben sie einen Wert zwischen 1..9999 ein</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ungültiger Ausdruck</translation>
+        <translation>Kein gültiger Ausdruck</translation>
     </message>
 </context>
 <context>
@@ -820,59 +820,59 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol&amp;ygon (Zentrum,Tangente)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished">Kreis&amp;bogen</translation>
+        <translation>Kreis&amp;bogen</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Layer ein&amp;schalten</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alle Ebenen ausblenden</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle entspe&amp;rren</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;lle sperren</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ausgewählte Ebene(n) exportieren</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle &amp;sichtbaren Ebene(n) exportieren</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Blöcke an&amp;zeigen</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Blöcke ver&amp;bergen</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als CA&amp;M/Bereinigtes SVG...</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle schließen</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Widgets neu andocken</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;lle speichern...</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene &quot;%1&quot; als &quot;%2&quot; speichern </translation>
     </message>
 </context>
 <context>
@@ -919,55 +919,55 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliothek Browser</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Kommandozeile</translation>
+        <translation>Befehlszeile</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Dockbereich</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Fliegend</translation>
     </message>
     <message>
         <source>Lines</source>
-        <translation type="unfinished">Linien</translation>
+        <translation>Linien</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation type="unfinished">Kreise</translation>
+        <translation>Kreise</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Freihand</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished">Ellipsen</translation>
+        <translation>Ellipsen</translation>
     </message>
     <message>
         <source>PolyLines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polylinie</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Auswählen</translation>
+        <translation>Auswählen</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Maße</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Ändern</translation>
+        <translation>Ändern</translation>
     </message>
     <message>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Messen</translation>
     </message>
 </context>
 <context>
@@ -1152,7 +1152,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation>&amp;horizontal anordnen</translation>
+        <translation>&amp;Horizontal anordnen</translation>
     </message>
     <message>
         <source>Creating new file...</source>
@@ -1318,7 +1318,7 @@ Automatisches speichern wurde deaktiviert.</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation>&amp;Vertikal</translation>
+        <translation>&amp;Vertikal anordnen</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
@@ -1518,141 +1518,142 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Entwurf speichern: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern abbrechen</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Zeichnung schließen</translation>
+        <translation>Entwurf schließen</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderungen bei den folgenden Elemente speichern?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Speichern</translation>
+        <translation>&amp;Speichern</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Speichern &amp;unter...</translation>
+        <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Speichern %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern %1 &amp;als...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fenster-Modus</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anordung</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>abgerundet</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation>Dreieckig</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation>Norden</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation>Süden</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation>Osten</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation>Westen</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anordnung</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Maximiert</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles speichern abbrechen</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Code</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwebend</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Angedockt</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>An&amp;wenderhandbuch</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Befehle</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stilvorlage</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip &amp;Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Release Information</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>On&amp;line</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spenden</translation>
     </message>
 </context>
 <context>
@@ -1787,15 +1788,15 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Block entfernen</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach gleichen Blocknamen</translation>
     </message>
 </context>
 <context>
@@ -1882,11 +1883,11 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/Farbbox</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerwahl</translation>
     </message>
 </context>
 <context>
@@ -1908,7 +1909,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Löschen</translation>
+        <translation>Entfernen</translation>
     </message>
 </context>
 <context>
@@ -1932,7 +1933,7 @@ Fenster editieren</translation>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <source>...</source>
@@ -1940,19 +1941,19 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Ablage</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwebend</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Kommandozeile</translation>
+        <translation>Befehlszeile</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -2057,11 +2058,12 @@ Fenster editieren</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribute des gewählten Elements, werden auch auf Unterelemente angewendet INSERT.
+Dies verändert alle Elemente des Block rekursiv.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribute auf Blöcke anwenden</translation>
     </message>
 </context>
 <context>
@@ -2251,7 +2253,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilddatei auswählen</translation>
     </message>
 </context>
 <context>
@@ -2368,7 +2370,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID: </translation>
     </message>
 </context>
 <context>
@@ -2975,23 +2977,23 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrifteinstellung</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished">Schriftart:</translation>
+        <translation>Schriftart:</translation>
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Textausrichtung</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Von links nach rechts</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts nach Links</translation>
     </message>
 </context>
 <context>
@@ -3447,91 +3449,91 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Höhe:</translation>
+        <translation>&amp;Höhe:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Breite:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichtung</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ränder</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished">Unten</translation>
+        <translation>Unten</translation>
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Seitenanzahl</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontal:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation>fixe Länge der Linie</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Splines</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Punkte</translation>
+        <translation>&amp;Punkte</translation>
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktart</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktgröße</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwg Einheiten</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe relativ zum Bildschirm</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe in Zeichnungseinheiten</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0 =&gt; 5% relativ zur Bildschirmgröße)</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation>Architektonisch (metrisch)</translation>
     </message>
     <message>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für das Längenformat &quot;Architektonisch (metrisch)&quot; muss die Einheit auf Meter eingestellt werden.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirm %</translation>
     </message>
 </context>
 <context>
@@ -3778,79 +3780,79 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Panning</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausblenden der Relativ-&amp;-Null-Markierung</translation>
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualisiere das Objekt unter dem Cursor</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus-Over-Effekte</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Relativ-Null Markierungsfarbe:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisches Speichern (Minuten):</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehrt die Bildlaufrichtung um, wenn das Mausrad mit der Umschalttaste verwendet wird.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Umkehrung der horizontalen Bildlaufrichtung</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehrt die Bildlaufrichtung um, wenn das Mausrad mit der Strg/Ctrl-Taste verwendet wird.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Umkehrung der vertikalen Bildlaufrichtung</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertiert die Zoomrichtung bei Verwendung des Mausrads.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomrichtung umkehren</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur-Einstellungen</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommandos auswerten, wenn die Leertaste gedrückt wird</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalten des freien Fangmodus, wenn die LEERTASTE gedrückt wird und das Befehlsfenster leer ist</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalten des freien Fangmodus, wenn die Leertaste gedrückt wird</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD-Voreinstellungen</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisches Zoomen der Zeichnung beim Öffnen</translation>
     </message>
 </context>
 <context>
@@ -3885,67 +3887,75 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als CAM/einfaches SVG</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Voreingestellte Breite der Elemente, mm</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished">Bilder</translation>
+        <translation>Bilder</translation>
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasterbild-Export</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich/Punkt-Linien</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge des Musters, mm</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-/Punktlinien in SVG-Pfad einbinden</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM (Stand November 2014) blendet SVG-Inhalte nicht aus 
+die unsichtbar gesetzt wurden (&quot;display: none&quot; oder &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM (Stand November 2014) kann nicht korrekt mit Blöcken umgehen,
+weil es den Referenzpunkt im &lt;use&gt; nicht berücksichtigt.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM kann ab März 2015 Ellipsen und Ellipsenbögen nicht korrekt darstellen, 
+wenn sie unter Verwendung des &lt;ellipse&gt;-Tags mit einer Rotation im 
+Attribut oder als &lt;Pfad&gt; mit elliptischen Bogensegmenten erstellt werden.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportierte Bilder können in SVG-Editoren (Inkscape, etc.) nützlich sein, 
+aber in einigen CAM&apos;s vermieden werden.</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
+        <translation>Viele CAMs (MakerCAM, EleskCAM, LaserWeb) ignorieren gestrichelte/gepunktete Linien, 
+was beim Lasercut von Sperrholz oder beim Papierbasteln nützlich sein kann. </translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Standardbreite von Elementen kann einige CAMs/SVG-Editoren beeinflussen, 
+aber von anderen ignoriert</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge des Linienmusters bezogen auf den Zoom, 
+daher Standardschrittwert für das Backen erforderlich</translation>
     </message>
 </context>
 <context>
@@ -4793,11 +4803,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles schließen</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -4873,7 +4883,7 @@ so default step value required for baking</source>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaften bearbeiten</translation>
     </message>
 </context>
 <context>
@@ -5035,39 +5045,39 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Ebenen entsperren</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Ebenen sperren</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene entfernen</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alle Ebenen entsperren</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alle Ebenen sperren</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">&amp;Sperre umschalten </translation>
+        <translation>Ebenen&amp;sperre umschalten</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ausgewählte Ebene(n) exportieren</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sichtbare Ebene(n) exportieren</translation>
     </message>
 </context>
 <context>
@@ -5082,11 +5092,11 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederherstellen</translation>
     </message>
 </context>
 <context>
@@ -5239,15 +5249,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="unfinished">Linienfarbe</translation>
+        <translation>Linienfarbe</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="unfinished">Linienstärke</translation>
+        <translation>Linienbreite</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="unfinished">Linientyp</translation>
+        <translation>Linientyp</translation>
     </message>
 </context>
 <context>
@@ -5411,15 +5421,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative Nullposition ist %1</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>gesperrt</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>entsperrt</translation>
     </message>
 </context>
 <context>
@@ -5598,45 +5608,45 @@ Diese Aktion kann NICHT rückgängig gemacht werden.</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Ebene &quot;0&quot; kann niemals entfernt werden.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Ebene entfernen</numerusform>
+            <numerusform>%n Ebenen entfernen</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufgelistete Ebenen und alle darauf befindlichen Objekte werden entfernt.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
     </message>
     <message>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtung: Die Ebene &quot;0&quot; kann niemals entfernt werden.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebenen zum Entfernen:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Entfern %n Block</numerusform>
+            <numerusform>Entfern %n Blöcke</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufgelistete Blöcke und alle ihre Entitäten werden entfernt.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blöcke zum Entfernen:</translation>
     </message>
 </context>
 <context>
@@ -7048,7 +7058,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine %1 Ebenen gefunden</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -7158,7 +7168,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>oder</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -7931,119 +7941,119 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
-        <translation type="unfinished"></translation>
+        <translation>DWG-Unterstützung ist noch nicht vollständig!</translation>
     </message>
     <message>
         <source>If this file fails to open try an older DWG format</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn sich diese Datei nicht öffnen lässt, versuchen Sie es mit einem älteren DWG-Format</translation>
     </message>
     <message>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>oder versuchen Sie, einen Konverter zu finden, der die Datei in eine DXF-Datei umwandelt.</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Importieren:</translation>
     </message>
     <message>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jedenfalls wurden einige Einheiten identifiziert.</translation>
     </message>
     <message>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie die Datei jetzt öffnen, ist die Zeichnung möglicherweise nicht vollständig oder unbrauchbar.</translation>
     </message>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Den Fehler ignorieren und die Datei öffnen?</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>kein DXF/DWG-Fehler</translation>
     </message>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Öffnen einer DXF/DWG-Datei</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>nicht unterstützte DXF/DWG-Dateiversion</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen der DXF/DWG-Metadaten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen des DXF/DWG-Dateikopfes</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen der DXF/DWG-Kopfdaten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Einlesen der DXF/DWG-Objektkarte</translation>
     </message>
     <message>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen der DXF/DWG-Klassen</translation>
     </message>
     <message>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Tabellen</translation>
     </message>
     <message>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Blöcken</translation>
     </message>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Elementen</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Objekten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF-/DWG-Abschnitten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen des DXF/DWG-Codes</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation type="unfinished"></translation>
+        <translation>undefinierbarer Fehler</translation>
     </message>
     <message>
         <source>usage: </source>
@@ -8059,7 +8069,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="unfinished"></translation>
+        <translation>-- alle dxf-Dateien in pdf-Dateien mit denselben Namen drucken.</translation>
     </message>
     <message>
         <source> -o some.pdf *.dxf</source>
@@ -8071,50 +8081,50 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Anpassung und Zentrierung der Zeichnung auf der Seite.</translation>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Zentrierung der Zeichnung auf der Seite.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucken in Graustufen.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation type="unfinished"></translation>
+        <translation>Monochromer Druck (schwarz/weiß).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation type="unfinished"></translation>
+        <translation>Papierformat (Breite x Höhe) in mm.</translation>
     </message>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabeauflösung (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangsmaßstab. Z.B.: 0,01 (für Maßstab 1:100).</translation>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation type="unfinished"></translation>
+        <translation>Papierränder in mm (Integer oder Float).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation type="unfinished"></translation>
+        <translation>Druck auf mehreren Seiten (horizontal und vertikal).</translation>
     </message>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation type="unfinished"></translation>
+        <translation>PDF-Datei ausgeben.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zielverzeichnis für die Ausgabe.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
@@ -8122,7 +8132,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF-Datei(en) einlesen</translation>
     </message>
     <message>
         <source>Keycode mode</source>
@@ -8130,19 +8140,19 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommando-Datei laden</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehrere Kommandos einfügen</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinieren Sie alle Ebenen</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; existiert bereits. Möchten Sie sie ersetzen?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -8150,7 +8160,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Individuell ausgesucht</translation>
     </message>
     <message>
         <source>noname</source>
@@ -8213,17 +8223,19 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Block kann keine Einfügung von sich selbst enthalten.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation> hat verschachtelte Einfügung des aktuellen Blocks in:
+</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Dieser Block kann nicht eingefügt werden.</translation>
     </message>
 </context>
 <context>
@@ -8515,7 +8527,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify point on circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt auf dem Kreis angeben</translation>
     </message>
 </context>
 <context>
@@ -8592,15 +8604,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 ist ungültig (Ausdruck)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 ist ungültig (negativ)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 ist ungültig (Null)</translation>
     </message>
 </context>
 <context>
@@ -8677,23 +8689,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Ausdruck &apos;%1&apos; für Radius</translation>
     </message>
     <message>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger negativer Radius &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Nullradius &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein tangentialer Kreis für Radius &apos;%1&apos; möglich</translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein gemeinsamer Tangentialkreis für Radius &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -9003,11 +9015,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht rückgängig gemacht werden: Beginn der Chronik erreicht</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht rückgängig gemacht werden: Ende der Chronik erreicht</translation>
     </message>
 </context>
 <context>
@@ -9379,19 +9391,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe des Endpunktes x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Polylinien eingeben</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie eine Gleichung ein, f(x)</translation>
     </message>
     <message>
         <source>x</source>
@@ -9399,19 +9411,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe des Startpunktes x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das eingegebene x ist ungültig.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die eingegebene Schrittweite ist ungültig.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der eingegebene Wert x ist ungültig.</translation>
     </message>
 </context>
 <context>
@@ -9805,7 +9817,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf das zu ändernde Objekt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9954,7 +9966,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erste Entität angeben oder Radius &lt;%1&gt; eingeben</translation>
     </message>
 </context>
 <context>
@@ -10341,7 +10353,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): Das Limit der Seiten wurde überschritten.</translation>
     </message>
 </context>
 <context>
@@ -11098,11 +11110,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckskalierung auf die Linienbreite anwenden</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnen Sie die Anzahl der Seiten, die für die Zeichnung benötigt werden</translation>
     </message>
 </context>
 <context>

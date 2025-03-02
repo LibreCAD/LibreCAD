@@ -57,23 +57,23 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Primer punto base:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Primer punto destino:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
         <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Segundo punto base:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Segundo punto destino:</translation>
     </message>
 </context>
 <context>

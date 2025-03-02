@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer puntos ascii</translation>
     </message>
 </context>
 <context>
@@ -16,12 +16,12 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinear ajustes...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>

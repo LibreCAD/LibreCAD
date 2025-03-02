@@ -31,61 +31,61 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar a favoritos</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadro de grupo</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Colección</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de la curva</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
+        <translation>Capa:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometría</translation>
+        <translation>Geometría</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrado</translation>
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Puntas de Tiras</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de Control</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntas en Tira</translation>
     </message>
 </context>
 <context>
@@ -93,15 +93,16 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>radio=%1 es demasiada pequeña para las puntas elegida
+la distancia entre los puntos=%2 es más grande del diámetro=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Elige de dos posible centros del círculo</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Especificar primer punto</translation>
+        <translation>Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -113,11 +114,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>De Vuelta</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Elige centro del círculo</translation>
     </message>
 </context>
 <context>
@@ -136,7 +137,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>De Vuelta</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -144,18 +145,18 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No se puede deshacer: No hay bastantes entidades todavía.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede deshacer: Nada se puede rehacer.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ventana Zoom</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
@@ -163,19 +164,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Elige Entidad</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Marca Ventana</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Desmarca Ventana</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>(De-)Eligir &amp;Contornar</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
@@ -8776,8 +8777,8 @@ This action can NOT be undone.</source>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 ya existe;
-¿quiere reemplazarlo? </translation>
+        <translation>Ya existe %1.
+¿quiere reemplazarlo?</translation>
     </message>
     <message>
         <source>Yes</source>

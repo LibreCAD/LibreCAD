@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη στα αγαπημένα</translation>
     </message>
     <message>
         <source>...</source>

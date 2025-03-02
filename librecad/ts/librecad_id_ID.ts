@@ -11,13 +11,13 @@
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="35"/>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambah ke favorit</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="38"/>
         <location filename="../src/ui/generic/colorwizard.ui" line="62"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -58,7 +58,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tertutup</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
@@ -74,7 +74,7 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Titik pada Spline</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,8 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">radius=%1 terlalu kecil untuk titik yang dipilih
+jarak antara titik=%2 lebih besar daripada diameter=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
@@ -133,7 +134,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pilih tengah lingkaran</translation>
     </message>
 </context>
 <context>
@@ -151,17 +152,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan angka:</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="199"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bukan angka yang valid. Coba 1..9999</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="202"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bukan ekspresi yang valid</translation>
     </message>
 </context>
 <context>
@@ -285,17 +286,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
         <source>&amp;Parallel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Paralel</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="171"/>
         <source>Parallel through point</source>
-        <translation type="unfinished">Sejajar melalui titik</translation>
+        <translation>Sejajar melalui titik</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="178"/>
         <source>Rectangle</source>
-        <translation type="unfinished">Persegi panjang</translation>
+        <translation>Persegi panjang</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="185"/>
@@ -345,7 +346,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="250"/>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pusat, &amp;Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="256"/>
@@ -360,7 +361,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 Titik, Radius</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="277"/>
@@ -507,12 +508,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="499"/>
         <source>&amp;Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Arsir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="506"/>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan &amp;Gambar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
@@ -582,7 +583,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="612"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="618"/>
@@ -592,7 +593,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="626"/>
         <source>&amp;Scale</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Skala</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -653,7 +654,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1134"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1209"/>
