@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 void LC_QuickInfoOptions::load(){
     RS_Pen highlightPen;
 
-    LC_GROUP_GUARD("QuickInfoWidget");
+    LC_GROUP_GUARD("Widget.QuickInfo");
     {
         displayDistanceAndAngle = LC_GET_BOOL("ShowDistanceAndAngle", true);
         displayEntityBoundaries = LC_GET_BOOL("ShowEntityBoundaries", true);
@@ -44,7 +44,7 @@ void LC_QuickInfoOptions::load(){
 }
 
 void LC_QuickInfoOptions::save() const{
-    LC_GROUP_GUARD("QuickInfoWidget");
+    LC_GROUP_GUARD("Widget.QuickInfo");
     {
         LC_SET("ShowDistanceAndAngle", displayDistanceAndAngle);
         LC_SET("ShowEntityBoundaries", displayEntityBoundaries);
