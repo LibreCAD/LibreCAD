@@ -33,6 +33,7 @@
 #include <QColorDialog>
 #include <QMessageBox>
 #include <QPixmapCache>
+#include <QInputDialog>
 
 #include "lc_dlgiconssetup.h"
 /**
@@ -131,7 +132,72 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
 
     connect(tbOverridesDir, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::setIconsOverrideFoler);
 
-//    lClassicStatusBarOnly->setVisible(!useClassicalStatusBar);
+    QFile iconsDir(iconsOverrideDir);
+    bool directoryExists = iconsDir.exists();
+
+    bool readingStyleEnabled = directoryExists;
+    bool writingStyleEnabled = directoryExists;
+
+    // fixme - sand - check why here we have false?
+    /*bool readingStyleEnabled = false;
+    bool writingStyleEnabled = false;
+    if (directoryExists){
+        readingStyleEnabled = iconsDir.isReadable();
+        writingStyleEnabled = iconsDir.isWritable();
+    }*/
+
+    lblStyle->setEnabled(readingStyleEnabled);
+    cbIconsStyle->setEnabled(readingStyleEnabled);
+    pbStyleSave->setEnabled(writingStyleEnabled);
+
+    if (readingStyleEnabled){
+        if (!setupStylesCombobox()){
+            cbIconsStyle->setEnabled(false);
+        }
+        else{
+            cbIconsStyle->insertItem(0,"");
+        }
+        connect(cbIconsStyle, &QComboBox::currentTextChanged, this, &LC_WidgetOptionsDialog::onStyleChanged);
+    }
+
+    if (writingStyleEnabled){
+        connect(pbStyleSave, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::onSaveStylePressed);
+    }
+
+    connect(pbPreviewColors, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::applyIconColors);
+}
+
+void LC_WidgetOptionsDialog::onStyleChanged(const QString &val){
+    QString style = cbIconsStyle->currentText();
+    if (!style.isEmpty()) {
+        if (iconColorsOptions.loadFromFile(style)) {
+            currentIconsStyleName = style;
+            updateUIByOptions();
+            applyIconColors();
+        }
+    }
+}
+
+bool LC_WidgetOptionsDialog::setupStylesCombobox() {
+    QStringList existingStyles;
+    iconColorsOptions.getAvailableStyles(existingStyles);
+    if (!existingStyles.isEmpty()) {
+        for (const auto& style:existingStyles){
+          cbIconsStyle->addItem(style);
+        }
+        return true;
+    }
+    return false;
+}
+
+void LC_WidgetOptionsDialog::onSaveStylePressed(){
+    bool ok;
+    QString styleName = QInputDialog::getText(this, tr("Save Icons Style"),
+                                         tr("Enter name of icons style:"), QLineEdit::Normal,
+                                         currentIconsStyleName, &ok);
+    if (ok){
+        iconColorsOptions.saveToFile(styleName);
+    }
 }
 
 void LC_WidgetOptionsDialog::setIconsOverrideFoler() {
@@ -168,15 +234,24 @@ void LC_WidgetOptionsDialog::updateUIByOptions(){
 }
 
 void LC_WidgetOptionsDialog::onpbMainClicked() {
-    set_color(cbIconColorMain);
+    QString colorName = set_color(cbIconColorMain);
+    if (!colorName.isEmpty()) {
+        onMainIconColorChanged(colorName);
+    }
 }
 
 void LC_WidgetOptionsDialog::onpbAccentClicked() {
-    set_color(cbIconColorAccent);
+    QString colorName = set_color(cbIconColorAccent);
+    if (!colorName.isEmpty()) {
+        onAccentIconColorChanged(colorName);
+    }
 }
 
 void LC_WidgetOptionsDialog::onpbBackClicked() {
-    set_color(cbIconColorBack);
+    QString colorName = set_color(cbIconColorBack);
+    if (!colorName.isEmpty()) {
+        onBackIconColorChanged(colorName);
+    }
 }
 
 void LC_WidgetOptionsDialog::onMainIconColorChanged(const QString &value){
@@ -194,7 +269,7 @@ void LC_WidgetOptionsDialog::onBackIconColorChanged(const QString &value){
     applyIconColors();
 }
 
-void LC_WidgetOptionsDialog::set_color(QComboBox *combo) {
+QString LC_WidgetOptionsDialog::set_color(QComboBox *combo) {
     QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
@@ -202,8 +277,11 @@ void LC_WidgetOptionsDialog::set_color(QComboBox *combo) {
 
     QColor color = dlg.getColor(current, this, tr("Select Color"), QColorDialog::DontUseNativeDialog);
     if (color.isValid()) {
-        combo->lineEdit()->setText(color.name());
+        auto colorName = color.name();
+        combo->lineEdit()->setText(colorName);
+        return colorName;
     }
+    return "";
 }
 
 void LC_WidgetOptionsDialog::accept() {
@@ -268,22 +346,6 @@ void LC_WidgetOptionsDialog::accept() {
 
     QString iconsOverrideDir = leIconsOverrideDir->text();
     iconColorsOptions.setIconsOverridesDir(iconsOverrideDir);
-
-    /*LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_MAIN,-1,-1, "#000");
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_ACCENT,-1,-1, "#c7c7c7");
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,-1,-1, "#e2e2e2");
-
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Active,QIcon::State::On, "#fff");
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Active,QIcon::State::Off, "#000");
-
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Normal,QIcon::State::On, "#f00");
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Normal,QIcon::State::Off, "#ff0");
-
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Selected,QIcon::State::On, "#0f0");
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Selected,QIcon::State::Off, "#0ff");
-
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Disabled,QIcon::State::On, "#00f");
-    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Disabled,QIcon::State::Off, "#f0f");*/
 
     applyIconColors();
     iconColorsOptions.save();
