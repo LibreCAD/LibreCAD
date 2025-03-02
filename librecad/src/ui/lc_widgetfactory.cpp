@@ -406,8 +406,6 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
         pen_palette = new LC_PenPaletteWidget("PenPalette", dock_pen_palette);
         pen_palette->setFocusPolicy(Qt::NoFocus);
         connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-//        connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
-
         connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, pen_palette, &LC_PenPaletteWidget::updateWidgetSettings);
         dock_pen_palette ->setWidget(pen_palette);
     }
@@ -418,7 +416,6 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     layer_widget = new QG_LayerWidget(action_handler, dock_layer, "Layer");
     layer_widget->setFocusPolicy(Qt::NoFocus);
     connect(layer_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-//    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
     dock_layer->setWidget(layer_widget);
 
     connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, layer_widget, &QG_LayerWidget::updateWidgetSettings);
@@ -699,6 +696,8 @@ QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
 }
 
 void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
+
+
     file_menu = menu(tr("&File"),"file", menu_bar, {
         "FileNew",
         "FileNewTemplate",
@@ -709,6 +708,9 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "FileSaveAll",
         ""
     });
+
+    QList<QMenu*> topMenuMenus;
+    topMenuMenus << file_menu;
 
     subMenu(file_menu, tr("Import"),"import", ":/icons/import.lci", {
         "DrawImage",
@@ -742,6 +744,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "OptionsDrawing",
     });
 
+    topMenuMenus << settings;
+
     auto edit = menu(tr("&Edit"),"edit", menu_bar, {
         "EditKillAllActions",
         "",
@@ -759,7 +763,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ModifyDeleteQuick"
     });
 
-    auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
+    topMenuMenus << edit;
+
 
     auto view_menu = menu(tr("&View"), "view", menu_bar, {
         "Fullscreen",
@@ -790,6 +795,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ZoomViewSave",
     });
 
+    topMenuMenus << view_menu;
+
+    auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
+
+    topMenuMenus << plugins;
+
 
     /*auto views_restore_menu = */subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.lci",
                                       {"ZoomViewRestore1",
@@ -798,58 +809,98 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
                                        "ZoomViewRestore4",
                                        "ZoomViewRestore5"});
 
+    LC_GROUP("Startup");
+    bool expandToolsMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
 
-    auto tools = menu(tr("&Tools"), "tools", menu_bar);
-    subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.lci", line_actions);
-    subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.lci", point_actions);
-    subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.lci", circle_actions);
-    subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", curve_actions);
-    subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", shape_actions);
-    subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.lci", spline_actions);
-    subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ellipse_actions);
-    subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", polyline_actions);
-    subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.lci", select_actions);
-    subMenuWithActions(tools, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", dimension_actions);
-    subMenuWithActions(tools, tr("Ot&her"), "other", ":/icons/text.lci", other_drawing_actions);
-    subMenuWithActions(tools, tr("&Modify"), "modify", ":/icons/move_rotate.lci", modify_actions);
-    subMenuWithActions(tools, tr("&Info"), "info", ":/icons/measure.lci", info_actions);
-    subMenuWithActions(tools, tr("&Order"), "order", ":/icons/order.lci", order_actions);
+    if (expandToolsMenu) {
+        bool expandToolsTillEntity = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
+        if (expandToolsTillEntity) {
+            auto line = menu(tr("&Line"), "line", menu_bar);
+            line->addActions(line_actions);
+            topMenuMenus << line;
 
-    windows_menu = menu(tr("&Drawings"),"drawings", menu_bar, {
-        "Fullscreen" // temp way to show this menu on OS X
-    });
+            auto point = menu(tr("Poin&t"), "point", menu_bar);
+            point->addActions(point_actions);
+            topMenuMenus << point;
 
-    connect(windows_menu, SIGNAL(aboutToShow()),
-            main_window, SLOT(slotWindowsMenuAboutToShow()));
+            auto circle = menu(tr("&Circle"), "circle", menu_bar);
+            circle->addActions(circle_actions);
+            topMenuMenus << circle;
 
-    auto help = menu(tr("&Help"), "help", menu_bar);
+            auto arc = menu(tr("&Arc"), "arc", menu_bar);
+            arc->addActions(curve_actions);
+            topMenuMenus << arc;
 
-    subMenuWithActions(help, tr("On&line Docs"),"OnlineInfo", nullptr, {
-        urlActionTR(tr("&Wiki"), "https://dokuwiki.librecad.org/"),
-        urlActionTR(tr("User's &Manual"), "https://librecad.readthedocs.io/"),
-        urlActionTR(tr("&Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
-        urlActionTR(tr("&Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"),
-        urlActionTR(tr("Wid&gets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets")
-    });
+            auto shape = menu(tr("Poly&gon"), "shape", menu_bar);
+            shape->addActions(shape_actions);
+            topMenuMenus << shape;
 
+            auto spline = menu(tr("Splin&e"), "spline", menu_bar);
+            spline->addActions(spline_actions);
+            topMenuMenus << spline;
 
-    auto help_about = new QAction(QIcon(":/images/librecad.png"), tr("About"), main_window);
-    connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
+            auto ellipse = menu(tr("Ellipse&e"), "ellipse", menu_bar);
+            ellipse->addActions(ellipse_actions);
+            topMenuMenus << ellipse;
 
-    auto license = new QAction(QObject::tr("License"), main_window);
-    connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
+            auto polyline = menu(tr("&Polyline"), "polyline", menu_bar);
+            polyline->addActions(polyline_actions);
+            topMenuMenus << polyline;
 
-    help->addSeparator();
-    help->addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
-    help->addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
-    help->addSeparator();
-    help->addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
-    help->addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    help->addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    help->addSeparator();
-    help->addAction(help_about);
-    help->addAction(license);
-    help->addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
+            auto other = menu(tr("&Other"), "other", menu_bar);
+            other->addActions(other_drawing_actions);
+            topMenuMenus << other;
+        }
+        else {
+            auto draw = menu(tr("&Draw"), "draw", menu_bar);
+            subMenuWithActions(draw, tr("&Line"), "line", ":/icons/line.lci", line_actions);
+            subMenuWithActions(draw, tr("Poin&t"), "point", ":/icons/points.lci", point_actions);
+            subMenuWithActions(draw, tr("&Circle"), "circle", ":/icons/circle.lci", circle_actions);
+            subMenuWithActions(draw, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", curve_actions);
+            subMenuWithActions(draw, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", shape_actions);
+            subMenuWithActions(draw, tr("Splin&e"), "spline", ":/icons/spline_points.lci", spline_actions);
+            subMenuWithActions(draw, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ellipse_actions);
+            subMenuWithActions(draw, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", polyline_actions);
+            subMenuWithActions(draw, tr("Ot&her"), "other", ":/icons/text.lci", other_drawing_actions);
+
+            topMenuMenus << draw;
+        }
+
+        auto modify = menu(tr("&Modify"), "info", menu_bar);
+        modify->addActions(modify_actions);
+        subMenuWithActions(modify, tr("&Order"), "order", ":/icons/order.lci", order_actions);
+
+        topMenuMenus << modify;
+
+        auto dims = menu(tr("&Dimensions"), "dims", menu_bar);
+        dims->addActions(dimension_actions);
+        topMenuMenus << dims;
+
+        auto info = menu(tr("&Info"), "info", menu_bar);
+        info->addActions(info_actions);
+        topMenuMenus << info;
+    }
+    else {
+        auto tools = menu(tr("&Tools"), "tools", menu_bar);
+        subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.lci", line_actions);
+        subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.lci", point_actions);
+        subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.lci", circle_actions);
+        subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", curve_actions);
+        subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", shape_actions);
+        subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.lci", spline_actions);
+        subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ellipse_actions);
+        subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", polyline_actions);
+        subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.lci", select_actions);
+        subMenuWithActions(tools, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", dimension_actions);
+        subMenuWithActions(tools, tr("Ot&her"), "other", ":/icons/text.lci", other_drawing_actions);
+        subMenuWithActions(tools, tr("&Modify"), "modify", ":/icons/move_rotate.lci", modify_actions);
+        subMenuWithActions(tools, tr("&Info"), "info", ":/icons/measure.lci", info_actions);
+        subMenuWithActions(tools, tr("&Order"), "order", ":/icons/order.lci", order_actions);
+
+        auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
+        topMenuMenus << tools;
+    }
+    LC_GROUP_END();
 
     auto widgets = menu(tr("Widgets"),"widgets", menu_bar);
 
@@ -905,12 +956,6 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     QList<QToolBar*> toolbarsList = main_window->findChildren<QToolBar*>();
 
-    /*for (QToolBar* tb: toolbarsList){
-        LC_ERR << tb->windowTitle() << " " << tb->property("_group").toInt();
-    }
-
-    LC_ERR <<  "____";*/
-
     main_window->sortWidgetsByGroupAndTitle(toolbarsList);
 
     int previousGroup = -100;
@@ -934,15 +979,52 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     addAction(widgets, "InvokeMenuCreator");
     addAction(widgets, "InvokeToolbarCreator");
 
-    menu_bar->addMenu(file_menu);
-    menu_bar->addMenu(settings);
-    menu_bar->addMenu(edit);
-    menu_bar->addMenu(view_menu);
-    menu_bar->addMenu(plugins);
-    menu_bar->addMenu(tools);
-    menu_bar->addMenu(widgets);
-    menu_bar->addMenu(windows_menu);
-    menu_bar->addMenu(help);
+    topMenuMenus << widgets;
+
+    windows_menu = menu(tr("&Drawings"),"drawings", menu_bar, {
+        "Fullscreen" // temp way to show this menu on OS X
+        });
+
+    connect(windows_menu, SIGNAL(aboutToShow()),
+            main_window, SLOT(slotWindowsMenuAboutToShow()));
+
+    topMenuMenus << widgets;
+
+
+    auto help = menu(tr("&Help"), "help", menu_bar);
+
+    subMenuWithActions(help, tr("On&line Docs"),"OnlineInfo", nullptr, {
+        urlActionTR(tr("&Wiki"), "https://dokuwiki.librecad.org/"),
+        urlActionTR(tr("User's &Manual"), "https://librecad.readthedocs.io/"),
+        urlActionTR(tr("&Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
+        urlActionTR(tr("&Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"),
+        urlActionTR(tr("Wid&gets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets")
+    });
+
+
+    auto help_about = new QAction(QIcon(":/images/librecad.png"), tr("About"), main_window);
+    connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
+
+    auto license = new QAction(QObject::tr("License"), main_window);
+    connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
+
+    help->addSeparator();
+    help->addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
+    help->addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
+    help->addSeparator();
+    help->addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
+    help->addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
+    help->addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
+    help->addSeparator();
+    help->addAction(help_about);
+    help->addAction(license);
+    help->addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
+
+    topMenuMenus << help;
+
+    for (auto m : topMenuMenus) {
+        menu_bar->addMenu(m);
+    }
 }
 
 void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames){
