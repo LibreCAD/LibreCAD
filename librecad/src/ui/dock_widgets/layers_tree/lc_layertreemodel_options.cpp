@@ -51,7 +51,7 @@ RS_Pen LC_LayerTreeModelOptions::getDefaultPen(int layerType) const{
 }
 
 void LC_LayerTreeModelOptions::save() const{
-    LC_GROUP_GUARD("LayerTree");
+    LC_GROUP_GUARD("Widget.LayerTree");
     {
         LC_SET("activeLayerBgColor", activeLayerBgColor.name());
         LC_SET("selectedItemBgColor", selectedItemBgColor.name());
@@ -83,7 +83,7 @@ void LC_LayerTreeModelOptions::load(){
 
     LC_LayerTreeModelOptions defaults;
 
-    LC_GROUP_GUARD("LayerTree");
+    LC_GROUP_GUARD("Widget.LayerTree");
     {
         activeLayerBgColor = QColor(LC_GET_STR("activeLayerBgColor", defaults.activeLayerBgColor.name()));
         selectedItemBgColor = QColor(LC_GET_STR("selectedItemBgColor", defaults.selectedItemBgColor.name()));
