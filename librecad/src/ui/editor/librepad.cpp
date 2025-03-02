@@ -379,7 +379,10 @@ void Librepad::newDocument()
 
 void Librepad::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open the file", "All Files (*.*)");
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    "Open the file",
+                                                    QApplication::applicationDirPath(),
+                                                    "All Files (*.*)");
     if (fileName.isEmpty())
         return;
 
