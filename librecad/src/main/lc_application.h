@@ -29,8 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QApplication>
 
-class QStringList;
-
 class LC_Application : public QApplication
 {
     Q_OBJECT

@@ -9,6 +9,13 @@
     </message>
 </context>
 <context>
+    <name>ExpTo_Csv</name>
+    <message>
+        <source>Export points to csv</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_Align</name>
     <message>
         <source>Align</source>
@@ -689,6 +696,21 @@ anti-clockwise.</source>
     </message>
     <message>
         <source>Inside</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>lc_Exptocsvdlg</name>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV (*.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

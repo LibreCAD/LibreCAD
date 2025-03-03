@@ -56,10 +56,6 @@ public:
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     void fillRect ( const QRectF & rectangle, const RS_Color & color ) override;
     void fillRect ( const QRectF & rectangle, const QBrush & brush ) override;
-    void drawArc(const RS_Vector& cp, double radius,
-                         double a1, double a2,
-                         const RS_Vector& p1, const RS_Vector& p2,
-                         bool reversed) override;
 
     void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
@@ -73,6 +69,7 @@ public:
                              double angle,
                              double a1, double a2,
                              bool reversed) override;
+    void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) override;
     void drawSplinePoints(const LC_SplinePointsData& splineData) override;
     void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) override;
     void drawImg(QImage& img, const RS_Vector& pos,
@@ -81,6 +78,7 @@ public:
                            const QString& text) override;
     void drawTextV(int x1, int y1, int x2, int y2,
                            const QString& text) override;
+    void drawText(const QRect& rect, const QString& text, QRect* boundingBox) override;
 
     void fillRect(int x1, int y1, int w, int h,
                           const RS_Color& col) override;

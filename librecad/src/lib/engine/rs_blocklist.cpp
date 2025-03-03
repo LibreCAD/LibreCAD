@@ -27,7 +27,7 @@
 #include <set>
 #include <iostream>
 #include <QString>
-#include <QRegExp>
+#include <QRegularExpression>
 #include "rs_debug.h"
 #include "rs_blocklist.h"
 #include "rs_block.h"
@@ -241,8 +241,8 @@ QString RS_BlockList::newName(const QString& suggestion) {
 		return suggestion;
 
 	QString name=suggestion;
-	QRegExp const rx(R"(-\d+$)");
-	int index=name.lastIndexOf(rx);
+    QRegularExpression const rx(R"(-\d+$)");
+    int index=rx.match(name).lastCapturedIndex();
 	int i=-1;
 	if(index>0){
 		i=name.mid(index+1).toInt();

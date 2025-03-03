@@ -31,6 +31,8 @@
 #include <vector>
 #include <iosfwd>
 
+class QPointF;
+
 /**
  * Represents a 3d vector (x/y/z)
  *
@@ -43,7 +45,8 @@ public:
     explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
-	~RS_Vector()=default;
+    explicit RS_Vector(const QPointF& point);
+    ~RS_Vector()=default;
 
 	//!
 	//! \brief operator bool explicit and implicit conversion to bool
@@ -72,16 +75,30 @@ public:
 
     RS_Vector toInteger();
 
-    RS_Vector move(const RS_Vector& offset);
-	RS_Vector rotate(double ang);
-    RS_Vector rotate(const RS_Vector& angleVector);
-	RS_Vector rotate(const RS_Vector& center, double ang);
-    RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
-	RS_Vector scale(double factor);
-    RS_Vector scale(const RS_Vector& factor);
-	RS_Vector scale(const RS_Vector& factor) const;
-	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
-    RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    RS_Vector& move(const RS_Vector& offset);
+    RS_Vector& rotate(double ang);
+    RS_Vector& rotate(const RS_Vector& angleVector);
+    RS_Vector& rotate(const RS_Vector& center, double ang);
+    RS_Vector& rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    RS_Vector& scale(double factor);
+    RS_Vector& scale(const RS_Vector& factor);
+    RS_Vector scale(const RS_Vector& factor) const;
+    RS_Vector& scale(const RS_Vector& center, const RS_Vector& factor);
+    RS_Vector& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    /**
+     * Returns vector that defines point located in specified distance and angle from current
+     * @param distance distance to target point
+     * @param angle angle from target point from this one
+     * @return resulting point
+     */
+    RS_Vector relative(double distance, double angle) const;
+    /**
+     * @brief shear     Shear/Skew transform
+     * @author          Dongxu Li
+     * @param k         the shear parameter: x = x + k y; y=y
+     * @return          the transformed vector
+     */
+    RS_Vector& shear(double k);
 	double dotP(const RS_Vector& v1) const;
     RS_Vector normalized() const;
     RS_Vector& normalize();
@@ -148,48 +165,48 @@ public:
  */
 class RS_VectorSolutions {
 public:
-	typedef RS_Vector value_type;
-	RS_VectorSolutions();
+    typedef RS_Vector value_type;
+    RS_VectorSolutions();
     RS_VectorSolutions(std::vector<RS_Vector> vectors);
     RS_VectorSolutions(std::initializer_list<RS_Vector> list);
     RS_VectorSolutions(int num);
 
-	void alloc(size_t num);
+    void alloc(size_t num);
     void clear();
-	/**
-	 * @brief get range safe method of member access
-	 * @param i member index
-	 * @return indexed member, or invalid vector, if out of range
-	 */
-	RS_Vector get(size_t i) const;
-	const RS_Vector& at(size_t i) const;
-	const RS_Vector&  operator [] (const size_t i) const;
-	RS_Vector&  operator [] (const size_t i);
-	size_t getNumber() const;
-	size_t size() const;
+/**
+ * @brief get range safe method of member access
+ * @param i member index
+ * @return indexed member, or invalid vector, if out of range
+ */
+    RS_Vector get(size_t i) const;
+    const RS_Vector& at(size_t i) const;
+    const RS_Vector&  operator [] (const size_t i) const;
+    RS_Vector&  operator [] (const size_t i);
+    size_t getNumber() const;
+    size_t size() const;
     bool empty() const;
     void resize(size_t n);
     bool hasValid() const;
     void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
-	void removeAt(const size_t i);
-	RS_VectorSolutions& push_back(const RS_VectorSolutions& v);
+    void removeAt(const size_t i);
+    RS_VectorSolutions& push_back(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
-						 double* dist=nullptr, size_t* index=nullptr) const;
+                         double* dist=nullptr, size_t* index=nullptr) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
-	const std::vector<RS_Vector>& getVector() const;
+    const std::vector<RS_Vector>& getVector() const;
     std::vector<RS_Vector>::const_iterator cbegin() const;
     std::vector<RS_Vector>::const_iterator cend() const;
     std::vector<RS_Vector>::const_iterator begin() const;
     std::vector<RS_Vector>::const_iterator end() const;
     std::vector<RS_Vector>::iterator begin();
-	std::vector<RS_Vector>::iterator end();
-	void rotate(double ang);
+    std::vector<RS_Vector>::iterator end();
+    void rotate(double ang);
     void rotate(const RS_Vector& angleVector);
-	void rotate(const RS_Vector& center, double ang);
+    void rotate(const RS_Vector& center, double ang);
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);
@@ -202,10 +219,8 @@ public:
                                       const RS_VectorSolutions& s);
 
 private:
-	std::vector<RS_Vector> vector;
+    std::vector<RS_Vector> vector;
     bool tangent = false;
 };
 
 #endif
-
-// EOF

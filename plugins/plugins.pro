@@ -7,7 +7,7 @@
 TEMPLATE = subdirs
 TARGET = plugins
 
-QT += gui
+QT += widgets
 
 SUBDIRS     = \
         asciifile \
@@ -18,6 +18,7 @@ SUBDIRS     = \
         sample \
         picfile \
         plotequation \
+        pointstocsv \
         gear
 
 TRANSLATIONS = ./ts/plugins_ar.ts \

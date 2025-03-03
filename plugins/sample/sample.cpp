@@ -34,11 +34,9 @@ PluginCapabilities LC_Sample::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_Sample::execComm(Document_Interface *doc,
-                             QWidget *parent, QString cmd)
+void LC_Sample::execComm([[maybe_unused]] Document_Interface *doc,
+                             QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(doc);
-    Q_UNUSED(cmd);
     lc_Sampledlg pdt(parent);
     int result =  pdt.exec();
     if (result == QDialog::Accepted)
@@ -112,9 +110,8 @@ bool lc_Sampledlg::failGUI(QString *msg)
 }
 
 
-void lc_Sampledlg::processAction(Document_Interface *doc)
+void lc_Sampledlg::processAction([[maybe_unused]] Document_Interface *doc)
 {
-    Q_UNUSED(doc);
     QPointF start, end;
     start.setX(startxedit->text().toDouble());
     start.setY(startyedit->text().toDouble());

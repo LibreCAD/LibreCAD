@@ -177,7 +177,8 @@ void RS_Spline::update() {
         return;
     }
 
-    if (data.controlPoints.size() < size_t(data.degree)+1) {
+    // Issue #1689: allow closed splines by 3 control points
+    if ( (!data.closed && data.controlPoints.size() < size_t(data.degree)+1) || data.controlPoints.size() < 3) {
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
     }
@@ -340,7 +341,15 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
     update();
 }
 
+RS_Entity& RS_Spline::shear(double k)
+{
+    for (RS_Vector& vp: data.controlPoints) {
+        vp.shear(k);
+    }
 
+    update();
+    return *this;
+}
 
 void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 	for (RS_Vector& vp: data.controlPoints) {

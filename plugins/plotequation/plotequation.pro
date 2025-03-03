@@ -1,4 +1,4 @@
-QT       += gui
+QT       += widgets
 TEMPLATE = lib
 CONFIG += plugin
 VERSION = 1.0.1

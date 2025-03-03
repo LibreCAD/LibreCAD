@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_ModifyRotateOptions</class>
+ <widget class="QWidget" name="LC_ModifyRotateOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1058</width>
+    <height>24</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>128</width>
+    <height>22</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Move Rotate Options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item row="0" column="8">
+    <widget class="QCheckBox" name="cbFreeRefAngle">
+     <property name="toolTip">
+      <string>Free selection of factor should be performed by mouse if checked.</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="16">
+    <widget class="QCheckBox" name="cbCurrentLayer">
+     <property name="toolTip">
+      <string>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</string>
+     </property>
+     <property name="text">
+      <string>Use Current Layer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QCheckBox" name="cbAbsoluteRefAngle">
+     <property name="toolTip">
+      <string>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</string>
+     </property>
+     <property name="text">
+      <string>Absolute</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle to rotate entity around rotation center point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="Line" name="line_2">
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be applied to created entities, othewise original ones will be used. </string>
+     </property>
+     <property name="text">
+      <string>Use Current Attributes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QCheckBox" name="cbTwoRotations">
+     <property name="toolTip">
+      <string>If checked, second rotation is around reference point</string>
+     </property>
+     <property name="text">
+      <string>Rotate twice</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QLineEdit" name="leAngle2">
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle for additional rotation around refrence point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="Line" name="line">
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If checked, original entities will be survive, otherwise they will be removed.</string>
+     </property>
+     <property name="text">
+      <string>Keep Originals</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="17">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="12">
+    <widget class="QCheckBox" name="cbMultipleCopies">
+     <property name="toolTip">
+      <string>Multiple copies will be created if checked.</string>
+     </property>
+     <property name="text">
+      <string>Multiple Copies</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Rotation Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="cbFreeAngle">
+     <property name="toolTip">
+      <string>Specifies whether angle is defined by entered value or by mouse position</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <widget class="QSpinBox" name="sbNumberOfCopies">
+     <property name="toolTip">
+      <string>Number of copies</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="14">
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>leAngle</tabstop>
+  <tabstop>cbFreeAngle</tabstop>
+  <tabstop>cbTwoRotations</tabstop>
+  <tabstop>leAngle2</tabstop>
+  <tabstop>cbFreeRefAngle</tabstop>
+  <tabstop>cbKeepOriginals</tabstop>
+  <tabstop>cbMultipleCopies</tabstop>
+  <tabstop>sbNumberOfCopies</tabstop>
+  <tabstop>cbCurrentAttr</tabstop>
+  <tabstop>cbCurrentLayer</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

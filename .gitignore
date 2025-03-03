@@ -5,6 +5,7 @@
 /\.*
 
 # Apple generated directories
+build/
 LibreCAD.app/
 LibreCAD.pbproj/
 LibreCAD.dmg
@@ -104,3 +105,4 @@ core.*
 *.vcxproj
 *.vcxproj.filters
 *.sln
+/cmake-build-debug/

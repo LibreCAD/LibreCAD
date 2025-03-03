@@ -392,5 +392,3 @@ private:
 };
 
 #endif
-
-// EOF

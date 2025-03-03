@@ -41,12 +41,9 @@ PluginCapabilities LC_Gear::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_Gear::execComm(Document_Interface *doc,
-                        QWidget *parent, QString cmd)
+void LC_Gear::execComm([[maybe_unused]] Document_Interface *doc,
+                        QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(doc);
-    Q_UNUSED(cmd);
-
     QPointF center;
     if (!doc->getPoint(&center, QString("select center"))) {
         return;
@@ -302,12 +299,8 @@ double evolute::find_common_phi_evo1(const double eps)
     return x;
 } /* find_common_phi_evo1 */
 
-void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPointF& center)
+void lc_Geardlg::processAction([[maybe_unused]] Document_Interface *doc, [[maybe_unused]] const QString& cmd, [[maybe_unused]] QPointF& center)
 {
-    Q_UNUSED(doc);
-    Q_UNUSED(cmd);
-    Q_UNUSED(center);
-
     std::vector<Plug_VertexData> polyline;
     std::vector<QPointF> first_tooth;
     QTransform rotate_and_disp;

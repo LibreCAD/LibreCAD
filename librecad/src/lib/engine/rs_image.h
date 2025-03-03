@@ -201,6 +201,10 @@ public:
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear([[maybe_unused]] double k) override {
+        // TODO
+        return *this;
+    }
 	/*void stretch(RS_Vector firstCorner,
                          RS_Vector secondCorner,
                          RS_Vector offset);*/

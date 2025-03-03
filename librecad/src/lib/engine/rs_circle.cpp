@@ -674,6 +674,17 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
         }
 }
 
+RS_Vector RS_Circle::dualLineTangentPoint(const RS_Vector& line) const
+{
+    RS_Vector dr = line.normalized() * data.radius;
+    RS_Vector vp0 = data.center + dr;
+    RS_Vector vp1 = data.center - dr;
+    auto lineEqu = [&line](const RS_Vector& vp) {
+        return std::abs(line.dotP(vp) + 1.);
+    };
+    return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
+}
+
 void RS_Circle::move(const RS_Vector& offset) {
 	data.center.move(offset);
     moveBorders(offset);
@@ -689,17 +700,32 @@ void RS_Circle::move(const RS_Vector& offset) {
   *Author: Dongxu Li
   */
 bool RS_Circle::offset(const RS_Vector& coord, const double& distance) {
-    double r0(coord.distanceTo(getCenter()));
-    if(r0 > getRadius()){
+   /* bool increase = coord.x > 0;
+    double newRadius;
+    if (increase){
+        newRadius = getRadius() + std::abs(distance);
+    }
+    else{
+        newRadius = getRadius() - std::abs(distance);
+        if(newRadius < RS_TOLERANCE) {
+            return false;
+        }
+    }*/
+
+    double dist(coord.distanceTo(getCenter()));
+    double newRadius;
+    if(dist > getRadius()){
         //external
-        r0 = getRadius()+ std::abs(distance);
+        newRadius = getRadius()+ fabs(distance);
     }else{
-        r0 = getRadius()- std::abs(distance);
-        if(r0<RS_TOLERANCE) {
+        newRadius = getRadius()- fabs(distance);
+        if(newRadius<RS_TOLERANCE) {
             return false;
         }
     }
-    setRadius(r0);
+    setRadius(newRadius);
+    calculateBorders();
+    setRadius(newRadius);
     calculateBorders();
     return true;
 }
@@ -733,6 +759,13 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 	data.center.mirror(axisPoint1, axisPoint2);
     calculateBorders();
 }
+RS_Entity& RS_Circle::shear(double k)
+{
+    if (!std::isnormal(k))
+        assert(!"shear() should not not be called for circle");
+    return *this;
+}
+
 
 
 /** whether the entity's bounding box intersects with visible portion of graphic view

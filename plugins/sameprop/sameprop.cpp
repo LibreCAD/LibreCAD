@@ -30,10 +30,8 @@ PluginCapabilities LC_SameProp::getCapabilities() const
 }
 
 void LC_SameProp::execComm(Document_Interface *doc,
-                             QWidget *parent, QString cmd)
+                             [[maybe_unused]] QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(cmd);
     QHash<int, QVariant> data, moddata;
     QList<Plug_Entity *> obj;
     QVariant lay, col, ltype, lwidth;

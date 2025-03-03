@@ -7,7 +7,7 @@
 QT       -= core gui
 TEMPLATE = lib
 
-CONFIG += c++14 static warn_on
+CONFIG += c++20 static warn_on
 
 DESTDIR = ../../generated/lib
 
@@ -24,10 +24,10 @@ QT -= svg
 HEADERS += \
     include/muParserTokenReader.h \
     include/muParserToken.h \
-    include/muParserStack.h \
     include/muParserFixes.h \
     include/muParserError.h \
     include/muParserDef.h \
+    include/muParserInt.h \
     include/muParserCallback.h \
     include/muParserBytecode.h \
     include/muParserBase.h \
@@ -43,4 +43,6 @@ SOURCES += \
     src/muParserCallback.cpp \
     src/muParserBytecode.cpp \
     src/muParserBase.cpp \
+    src/muParserInt.cpp \
     src/muParser.cpp
+

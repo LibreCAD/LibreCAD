@@ -55,7 +55,9 @@ struct LC_SplinePointsData
 
     bool closed = false;
     bool cut = false;
-	/** points on the spline. */
+    // directly use control points from data, instead of generating control points from splinePoints
+    bool useControlPoints = false;
+    /** points on the spline. */
 	std::vector<RS_Vector> splinePoints;
 	std::vector<RS_Vector> controlPoints;
 };
@@ -210,6 +212,7 @@ public:
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear(double k) override;
 
 	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 	void revertDirection() override;

@@ -24,11 +24,13 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include <QRegularExpression>
 #include <QStringList>
-#include <QTextCodec>
+#include <QStringConverter>
 
 #include "rs_filterdxfrw.h"
 
+#include "lc_parabola.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_dimaligned.h"
@@ -143,13 +145,10 @@ QString RS_FilterDXFRW::lastError() const
  * will be created or the graphics from which the entities are
  * taken to be stored in a file.
  */
-bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type) {
+bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unused]] RS2::FormatType type) {
     RS_DEBUG->print("RS_FilterDXFRW::fileImport");
 
     RS_DEBUG->print("DXFRW Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
-#ifndef DWGSUPPORT
-    Q_UNUSED(type)
-#endif
 
     graphic = &g;
     currentContainer = graphic;
@@ -306,7 +305,7 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         graphic->setIsometricGrid(data.snapStyle);
         graphic->setCrosshairType( (RS2::CrosshairType)data.snapIsopair);
         RS_GraphicView *gv = graphic->getGraphicView();
-		if (gv ) {
+        if (gv ) {
             double width = data.height * data.ratio;
             double factorX= gv->getWidth() / width;
             double factorY= gv->getHeight() / data.height;
@@ -626,6 +625,19 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 
 	if(data->degree == 2)
 	{
+        if (data->controllist.size() == 3) {
+            auto toRs = [](const std::shared_ptr<DRW_Coord>& coord) -> RS_Vector {
+                return coord ? RS_Vector{coord->x, coord->y} : RS_Vector{};
+            };
+            LC_ParabolaData d{{toRs(data->controllist.at(0)),
+                            toRs(data->controllist.at(1)),
+                             toRs(data->controllist.at(2))}};
+            auto* parabola = new LC_Parabola(currentContainer, d);
+            setEntityAttributes(parabola, data);
+            parabola->update();
+            currentContainer->addEntity(parabola);
+            return;
+        }
 		LC_SplinePoints* splinePoints;
 		LC_SplinePointsData d(((data->flags&0x1)==0x1), true);
 		splinePoints = new LC_SplinePoints(currentContainer, d);
@@ -666,6 +678,9 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         for (auto const& vert: data->fitlist)
             spline->addControlPoint({vert->x, vert->y});
     }
+    // ensure that the spline is really closed
+    if (spline->data.closed and !spline->hasWrappedControlPoints())
+        spline->data.closed = 0;
 
     spline->update();
 }
@@ -790,6 +805,19 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
                   interlin,
                   mtext, sty, angle,
                   RS2::NoUpdate);
+    switch(data.alignH) {
+    //case DRW_Text::DrawingDirection::LeftToRight:
+    default:
+        d.drawingDirection=RS_MTextData::MTextDrawingDirection::LeftToRight;
+        break;
+    case 3:
+        d.drawingDirection=RS_MTextData::MTextDrawingDirection::TopToBottom;
+        break;
+    case 5:
+        // FIXME: add style support
+        d.drawingDirection=RS_MTextData::MTextDrawingDirection::RightToLeft;
+        break;
+    }
     RS_MText* entity = new RS_MText(currentContainer, d);
 
     setEntityAttributes(entity, &data);
@@ -1351,7 +1379,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 		graphic->addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_VarName);
 
     QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
-    acadver.replace(QRegExp("[a-zA-Z]"), "");
+    acadver.replace(QRegularExpression("[a-zA-Z]"), "");
     bool ok;
     version=acadver.toInt(&ok);
     if (!ok) { version = 1021;}
@@ -2109,6 +2137,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeSpline((RS_Spline*)e);
         break;
     case RS2::EntitySplinePoints:
+    case RS2::EntityParabola:
         writeSplinePoints((LC_SplinePoints*)e);
         break;
 //    case RS2::EntityVertex:
@@ -3716,11 +3745,11 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
                    ) {
                     //found tag, append parsed part
                     res.append(data.mid(j,i-j));
-                    int pos = data.indexOf(0x7D, i+3);//find '}'
+                    qsizetype pos = data.indexOf(QChar(0x7D), i+3);//find '}'
                     if (pos <0) break; //'}' not found
                     QString tmp = data.mid(i+1, pos-i-1);
                     do {
-                        tmp = tmp.remove(0,tmp.indexOf(0x3B, 0)+1 );//remove to ';'
+                        tmp = tmp.remove(0,tmp.indexOf(QChar{0x3B}, 0)+1 );//remove to ';'
                     } while(tmp.startsWith("\\f") || tmp.startsWith("\\H") || tmp.startsWith("\\C"));
                     res.append(tmp);
                     i = j = pos;
@@ -3732,17 +3761,17 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     res.append(data.mid(j));
 
     // Line feed:
-    res = res.replace(QRegExp("\\\\P"), "\n");
+    res = res.replace(QRegularExpression("\\\\P"), "\n");
     // Space:
-    res = res.replace(QRegExp("\\\\~"), " ");
+    res = res.replace(QRegularExpression("\\\\~"), " ");
     // Tab:
-    res = res.replace(QRegExp("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
+    res = res.replace(QRegularExpression("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
     // diameter:
-    res = res.replace(QRegExp("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
+    res = res.replace(QRegularExpression("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
     // degree:
-    res = res.replace(QRegExp("%%[dD]"), QChar(0x00B0));
+    res = res.replace(QRegularExpression("%%[dD]"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(QRegExp("%%[pP]"), QChar(0x00B1));
+    res = res.replace(QRegularExpression("%%[pP]"), QChar(0x00B1));
 
     return res;
 }
@@ -4066,6 +4095,3 @@ void RS_FilterDXFRW::printDwgError(int le){
     }
 }
 #endif
-
-// EOF
-

@@ -27,7 +27,7 @@ win32 {
 
 # use c++ only
 QMAKE_CC = g++
-QMAKE_CFLAGS = -std=c++1y
+QMAKE_CFLAGS = -std=c++17
 
 # Windows compiler settings
 win32 {
@@ -74,15 +74,16 @@ QMAKE_CFLAGS_ISYSTEM = ""
 QT += svg
 
 greaterThan( QT_MAJOR_VERSION, 5) {
-    CONFIG += c++1y
+    CONFIG += c++17
 }else{
     unix|macx|win32-g++ {
         # no such option for MSVC
-    QMAKE_CXXFLAGS += -std=c++1y
-    QMAKE_CXXFLAGS_DEBUG += -std=c++1y
+    QMAKE_CXXFLAGS += -std=c++17
+    QMAKE_CXXFLAGS_DEBUG += -std=c++17
     }
 }
 
+DEFINES += MUPARSER_STATIC
 # RVT July 12 2015, I believe we need these here
 #macx{
 #    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8

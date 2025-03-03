@@ -32,34 +32,34 @@
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 #include "rs_units.h"
 
 
 RS_DimLinearData::RS_DimLinearData():
-	extensionPoint1(false),
-	extensionPoint2(false),
-	angle(0.0),
-	oblique(0.0)
+    extensionPoint1(false),
+    extensionPoint2(false),
+    angle(0.0),
+    oblique(0.0)
 {}
 
 RS_DimLinearData::RS_DimLinearData(const RS_Vector& _extensionPoint1,
-				 const RS_Vector& _extensionPoint2,
-				 double _angle, double _oblique):
-	extensionPoint1(_extensionPoint1)
-	,extensionPoint2(_extensionPoint2)
-	,angle(_angle)
-	,oblique(_oblique)
-{
+                                   const RS_Vector& _extensionPoint2,
+                                   double _angle, double _oblique):
+    extensionPoint1(_extensionPoint1)
+    ,extensionPoint2(_extensionPoint2)
+    ,angle(_angle)
+    ,oblique(_oblique){
 }
 
 std::ostream& operator << (std::ostream& os,
-								  const RS_DimLinearData& dd) {
-	os << "(" << dd.extensionPoint1 << ","
-	   << dd.extensionPoint1 <<','
-	   << dd.angle <<','
-	   << dd.oblique <<','
-		  <<")";
-	return os;
+                           const RS_DimLinearData& dd) {
+    os << "(" << dd.extensionPoint1 << ","
+       << dd.extensionPoint1 <<','
+       << dd.angle <<','
+       << dd.oblique <<','
+       <<")";
+    return os;
 }
 
 /**
@@ -73,23 +73,22 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
                            const RS_DimensionData& d,
                            const RS_DimLinearData& ed)
         : RS_Dimension(parent, d), edata(ed) {
-
     calculateBorders();
 }
 
 RS_Entity* RS_DimLinear::clone() const {
-	RS_DimLinear* d = new RS_DimLinear(*this);
-	d->setOwner(isOwner());
-	d->initId();
-	d->detach();
-	return d;
+    auto* d = new RS_DimLinear(*this);
+    d->setOwner(isOwner());
+    d->initId();
+    d->detach();
+    return d;
 }
 
-RS_VectorSolutions RS_DimLinear::getRefPoints() const
-{
+RS_VectorSolutions RS_DimLinear::getRefPoints() const{
 		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
 												data.definitionPoint, data.middleOfText});
 }
+
 void RS_DimLinear::setAngle(double a) {
 	edata.angle = RS_Math::correctAngle(a);
 }
@@ -101,12 +100,12 @@ void RS_DimLinear::setAngle(double a) {
  */
 QString RS_DimLinear::getMeasuredLabel() {
     // direction of dimension line
-	RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
+    RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
     // construction line for dimension line
-	RS_ConstructionLine dimLine(nullptr,
-								RS_ConstructionLineData(data.definitionPoint,
-														data.definitionPoint + dirDim));
+    RS_ConstructionLine dimLine(nullptr,
+                                RS_ConstructionLineData(data.definitionPoint,
+                                                        data.definitionPoint + dirDim));
 
     RS_Vector dimP1 = dimLine.getNearestPointOnEntity(edata.extensionPoint1);
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
@@ -114,38 +113,39 @@ QString RS_DimLinear::getMeasuredLabel() {
     // Definitive dimension line:
     double dist = dimP1.distanceTo(dimP2) * getGeneralFactor();
 
-        RS_Graphic* graphic = getGraphic();
+//    fixme - try to read settings once during action lifecycle
+    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
+        dist = RS_Units::convert(dist);
+    }
+
+    RS_Graphic* graphic = getGraphic();
 
     QString ret;
-        if (graphic) {
-            int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
-            int dimdec = getGraphicVariableInt("$DIMDEC", 4);
-            int dimzin = getGraphicVariableInt("$DIMZIN", 1);
-            RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
-            ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
-            if (format == RS2::Decimal)
-                ret = stripZerosLinear(ret, dimzin);
-            //verify if units are decimal and comma separator
-            if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
-                if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
-                    ret.replace(QChar('.'), QChar(','));
-            }
+    if (graphic) {
+        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
+        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
+        int dimzin = getGraphicVariableInt("$DIMZIN", 1);
+        RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
+        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
+        if (format == RS2::Decimal)
+            ret = stripZerosLinear(ret, dimzin);
+        //verify if units are decimal and comma separator
+        if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
+            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
+                ret.replace(QChar('.'), QChar(','));
         }
-        else {
+    }
+    else {
         ret = QString("%1").arg(dist);
-        }
+    }
 
     return ret;
 }
-
-
 
 bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
         return (edata.extensionPoint1.isInWindow(v1, v2) ||
                 edata.extensionPoint2.isInWindow(v1, v2));
 }
-
-
 
 /**
  * Updates the sub entities of this dimension. Called when the
@@ -171,13 +171,13 @@ void RS_DimLinear::updateDim(bool autoText) {
     double dimexe = getExtensionLineExtension()*dimscale;
 
     // direction of dimension line
-	RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
+    RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
     // construction line for dimension line
     RS_ConstructionLine dimLine(
-		nullptr,
-		RS_ConstructionLineData(data.definitionPoint,
-								data.definitionPoint + dirDim));
+        nullptr,
+        RS_ConstructionLineData(data.definitionPoint,
+                                data.definitionPoint + dirDim));
 
     RS_Vector dimP1 = dimLine.getNearestPointOnEntity(edata.extensionPoint1);
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
@@ -195,12 +195,12 @@ void RS_DimLinear::updateDim(bool autoText) {
     if ((edata.extensionPoint1-dimP1).magnitude()<1e-6) {
         if ((edata.extensionPoint2-dimP2).magnitude()<1e-6) {
             //boot extension points are in dimension line only rotate 90
-			extAngle2 = edata.angle + (M_PI_2);
+            extAngle2 = edata.angle + (M_PI_2);
         } else {
             //first extension point are in dimension line use second
             extAngle2 = edata.extensionPoint2.angleTo(dimP2);
         }
-            extAngle1 = extAngle2;
+        extAngle1 = extAngle2;
     } else {
         //first extension point not are in dimension line use it
         extAngle1 = edata.extensionPoint1.angleTo(dimP1);
@@ -228,22 +228,20 @@ void RS_DimLinear::updateDim(bool autoText) {
     }
 
     RS_Pen pen(getExtensionLineColor(),
-           getExtensionLineWidth(),
-           RS2::LineByBlock);
+               getExtensionLineWidth(),
+               RS2::LineByBlock);
 
     // extension lines:
-	RS_Line* line = new RS_Line{this,
-			edata.extensionPoint1+vDimexo1, dimP1+vDimexe1};
+    auto* line = new RS_Line{this,edata.extensionPoint1+vDimexo1, dimP1+vDimexe1};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
-	line->setLayer(nullptr);
+    line->setLayer(nullptr);
     addEntity(line);
     //data.definitionPoint+vDimexe2);
-	line = new RS_Line{this,
-			edata.extensionPoint2+vDimexo2, dimP2+vDimexe2};
+    line = new RS_Line{this,edata.extensionPoint2+vDimexo2, dimP2+vDimexe2};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
-	line->setLayer(nullptr);
+    line->setLayer(nullptr);
     addEntity(line);
 
     calculateBorders();
@@ -256,9 +254,6 @@ void RS_DimLinear::move(const RS_Vector& offset) {
     edata.extensionPoint2.move(offset);
     update();
 }
-
-
-
 void RS_DimLinear::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
     RS_Dimension::rotate(center, angleVector);
@@ -269,7 +264,6 @@ void RS_DimLinear::rotate(const RS_Vector& center, const double& angle) {
     update();
 }
 
-
 void RS_DimLinear::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_Dimension::rotate(center, angleVector);
 
@@ -279,8 +273,6 @@ void RS_DimLinear::rotate(const RS_Vector& center, const RS_Vector& angleVector)
     update();
 }
 
-
-
 void RS_DimLinear::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, factor);
 
@@ -289,7 +281,15 @@ void RS_DimLinear::scale(const RS_Vector& center, const RS_Vector& factor) {
     update();
 }
 
+void RS_DimLinear::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
+    RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
+    // construction line for dimension line
+    RS_ConstructionLine dimLine(nullptr,RS_ConstructionLineData(data.definitionPoint,data.definitionPoint + dirDim));
+
+    dimP1 = dimLine.getNearestPointOnEntity(edata.extensionPoint1);
+    dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
+}
 
 void RS_DimLinear::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Dimension::mirror(axisPoint1, axisPoint2);
@@ -304,8 +304,6 @@ void RS_DimLinear::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 
     update();
 }
-
-
 
 void RS_DimLinear::stretch(const RS_Vector& firstCorner,
                            const RS_Vector& secondCorner,
@@ -352,25 +350,22 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
     updateDim(true);
 }
 
-
-
 void RS_DimLinear::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-
-	if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
-		data.definitionPoint += offset;
-                updateDim(true);
+    if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
+        data.definitionPoint += offset;
+        updateDim(true);
     }
-        else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
+    else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText += offset;
-                updateDim(false);
+        updateDim(false);
     }
-        else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
+    else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
         edata.extensionPoint1 += offset;
-                updateDim(true);
+        updateDim(true);
     }
-        else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
+    else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
         edata.extensionPoint2 += offset;
-                updateDim(true);
+        updateDim(true);
     }
 }
 

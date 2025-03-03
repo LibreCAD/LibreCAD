@@ -136,6 +136,3 @@ private:
 };
 
 #endif
-
-// EOF
-

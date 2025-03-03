@@ -24,20 +24,55 @@
 **
 **********************************************************************/
 
-
-
 #include <iostream>
-#include <QTextStream>
-#include <QTextCodec>
 
-#include "rs_font.h"
+#include <QRegularExpression>
+#include <QStringConverter>
+#include <QTextStream>
+
 #include "rs_arc.h"
-#include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_fontchar.h"
-#include "rs_system.h"
-#include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_font.h"
+#include "rs_fontchar.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_polyline.h"
+#include "rs_system.h"
+
+namespace {
+
+// Encode a unicode character from its hexdecimal string
+// "0x20" is encoded to the character '0'
+QString charFromHex(const QString& hexCode)
+{
+    bool okay=false;
+    char32_t ucsCode = hexCode.toUInt(&okay, 16);
+    //  REPLACEMENT CHARACTER for unicode
+    constexpr char32_t invalidCode = 0xFFFD;
+    return (okay) ? QString::fromUcs4(&ucsCode, 1) : QString::fromUcs4(&invalidCode, 1);
+}
+
+// Extract the unicode char from LFF font line
+std::pair<QString, bool> extractFontChar(const QString& line)
+{
+    // read unicode:
+    static QRegularExpression regexp("[0-9A-Fa-f]{1,5}");
+    QRegularExpressionMatch match=regexp.match(line);
+    if (!match.hasMatch())
+        return {};
+
+    QString cap = match.captured(0);
+    bool okay=false;
+    std::uint32_t code = cap.toUInt(&okay, 16);
+
+    if (!okay) {
+        LC_ERR<<__func__<<"() line "<<__LINE__<<": invalid font code in "<<line;
+        return {};
+    }
+    char32_t ucsCode{code};
+    return {QString::fromUcs4(&ucsCode, 1), true};
+}
+}
 
 /**
  * Constructor.
@@ -72,18 +107,14 @@ bool RS_Font::loadFont() {
     QString path;
 
     // Search for the appropriate font if we have only the name of the font:
-    if (!fileName.toLower().contains(".cxf") &&
-            !fileName.toLower().contains(".lff")) {
+    if (!fileName.contains(".cxf", Qt::CaseInsensitive) &&
+        !fileName.contains(".lff", Qt::CaseInsensitive)) {
         QStringList fonts = RS_SYSTEM->getNewFontList();
         fonts.append(RS_SYSTEM->getFontList());
 
-        QFileInfo file;
-        for (QStringList::Iterator it = fonts.begin();
-             it!=fonts.end();
-             it++) {
-
-            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
-                path = *it;
+        for (const QString& font: fonts) {
+            if (QFileInfo(font).baseName().toLower()==fileName.toLower()) {
+                path = font;
                 break;
             }
         }
@@ -121,12 +152,12 @@ bool RS_Font::loadFont() {
         readLFF(path);
 
     RS_Block* bk = letterList.find(QChar(0xfffd));
-	if (!bk) {
+    if (!bk) {
         // create new letter:
-		RS_FontChar* letter = new RS_FontChar(nullptr, QChar(0xfffd), RS_Vector(0.0, 0.0));
+        RS_FontChar* letter = new RS_FontChar(nullptr, QChar(0xfffd), RS_Vector(0.0, 0.0));
         RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
         pline->setPen(RS_Pen(RS2::FlagInvalid));
-		pline->setLayer(nullptr);
+        pline->setLayer(nullptr);
         pline->addVertex(RS_Vector(1, 0), 0);
         pline->addVertex(RS_Vector(0, 2), 0);
         pline->addVertex(RS_Vector(1, 4), 0);
@@ -186,7 +217,7 @@ void RS_Font::readCXF(QString path) {
             } else if (identifier.toLower()=="name") {
                 names.append(value);
             } else if (identifier.toLower()=="encoding") {
-                ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
+                ts.setEncoding(QStringConverter::encodingForName(value.toLatin1()).value());
                 encoding = value;
             }
         }
@@ -195,32 +226,30 @@ void RS_Font::readCXF(QString path) {
         else if (line.at(0)=='[') {
 
             // uniode character:
-            QChar ch;
+            QString ch;
 
             // read unicode:
-            QRegExp regexp("[0-9A-Fa-f]{4,4}");
-            regexp.indexIn(line);
-            QString cap = regexp.cap();
-            if (!cap.isNull()) {
-				int uCode = cap.toInt(nullptr, 16);
-                ch = QChar(uCode);
+            QRegularExpression regexp("[0-9A-Fa-f]{4,4}");
+            QRegularExpressionMatch match=regexp.match(line);
+            if (match.hasMatch()) {
+                ch = charFromHex(match.captured(0));
             }
 
             // read UTF8 (LibreCAD 1 compatibility)
             else if (line.indexOf(']')>=3) {
                 int i = line.indexOf(']');
                 QString mid = line.mid(1, i-1);
-                ch = QString::fromUtf8(mid.toLatin1()).at(0);
+                ch = QString::fromUtf8(mid.toLatin1()).first(1);
             }
 
             // read normal ascii character:
             else {
-                ch = line.at(1);
+                ch = line.first(1);
             }
 
             // create new letter:
             RS_FontChar* letter =
-					new RS_FontChar(nullptr, ch, RS_Vector(0.0, 0.0));
+                new RS_FontChar(nullptr, ch, RS_Vector(0.0, 0.0));
 
             // Read entities of this letter:
             QString coordsStr;
@@ -249,9 +278,9 @@ void RS_Font::readCXF(QString path) {
                     double x2 = (*it2++).toDouble();
                     double y2 = (*it2).toDouble();
 
-					RS_Line* line = new RS_Line{letter, {{x1, y1}, {x2, y2}}};
+                    RS_Line* line = new RS_Line{letter, {{x1, y1}, {x2, y2}}};
                     line->setPen(RS_Pen(RS2::FlagInvalid));
-					line->setLayer(nullptr);
+                    line->setLayer(nullptr);
                     letter->addEntity(line);
                 }
 
@@ -260,15 +289,15 @@ void RS_Font::readCXF(QString path) {
                     double cx = (*it2++).toDouble();
                     double cy = (*it2++).toDouble();
                     double r = (*it2++).toDouble();
-					double a1 = RS_Math::deg2rad((*it2++).toDouble());
-					double a2 = RS_Math::deg2rad((*it2).toDouble());
+                    double a1 = RS_Math::deg2rad((*it2++).toDouble());
+                    double a2 = RS_Math::deg2rad((*it2).toDouble());
                     bool reversed = (line.at(1)=='R');
 
                     RS_ArcData ad(RS_Vector(cx,cy),
                                   r, a1, a2, reversed);
                     RS_Arc* arc = new RS_Arc(letter, ad);
                     arc->setPen(RS_Pen(RS2::FlagInvalid));
-					arc->setLayer(nullptr);
+                    arc->setLayer(nullptr);
                     letter->addEntity(arc);
                 }
             } while (!line.isEmpty());
@@ -304,8 +333,8 @@ void RS_Font::readLFF(QString path) {
             QStringList lst =line.remove(0,1).split(':', Qt::SkipEmptyParts);
 #else
             QStringList lst =line.remove(0,1).split(':', QString::SkipEmptyParts);
-#endif
-            //if size is < 2 is a comentary not parameter
+#endif \
+    //if size is < 2 is a comentary not parameter
             if (lst.size()<2)
                 continue;
 
@@ -325,7 +354,7 @@ void RS_Font::readLFF(QString path) {
             } else if (identifier.toLower()=="license") {
                 fileLicense = value;
             } else if (identifier.toLower()=="encoding") {
-                ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
+                ts.setEncoding(QStringConverter::encodingForName(value.toLatin1()).value());
                 encoding = value;
             } else if (identifier.toLower()=="created") {
                 fileCreate = value;
@@ -336,18 +365,8 @@ void RS_Font::readLFF(QString path) {
         else if (line.at(0)=='[') {
 
             // uniode character:
-            QChar ch;
-
-            // read unicode:
-            QRegExp regexp("[0-9A-Fa-f]{1,5}");
-            regexp.indexIn(line);
-            QString cap = regexp.cap();
-            if (!cap.isNull()) {
-				int uCode = cap.toInt(nullptr, 16);
-                ch = QChar(uCode);
-            }
-            // only unicode allowed
-            else {
+            const auto [ch, okay] = extractFontChar(line);
+            if (!okay) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,"Ignoring code from LFF font file: %s",qPrintable(line));
                 continue;
             }
@@ -358,21 +377,19 @@ void RS_Font::readLFF(QString path) {
                 if(line.isEmpty()) break;
                 fontData.push_back(line);
             } while(true);
-            if (0 < fontData.size()                             // valid data
-                && !rawLffFontList.contains( QString(ch))) {    // ignore duplicates
-                rawLffFontList[QString(ch)] = fontData;
+            if (!fontData.isEmpty()                             // valid data
+                && !rawLffFontList.contains( ch)) {    // ignore duplicates
+                rawLffFontList[ch] = fontData;
             }
         }
     }
     f.close();
 }
 
-void RS_Font::generateAllFonts(){
-    QMap<QString, QStringList>::const_iterator i = rawLffFontList.constBegin();
-    while (i != rawLffFontList.constEnd()) {
-        generateLffFont(i.key());
-        ++i;
-    }
+void RS_Font::generateAllFonts()
+{
+    for(const QString& key : rawLffFontList.keys())
+        generateLffFont(key);
 }
 
 RS_Block* RS_Font::generateLffFont(const QString& key){
@@ -391,7 +408,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
     QStringList fontData = rawLffFontList[key];
     QString line;
 
-    while(fontData.isEmpty() == false) {
+    while(!fontData.isEmpty()) {
         line = fontData.takeFirst();
 
         if (line.isEmpty()) {
@@ -401,9 +418,9 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
         // Defined char:
         if (line.at(0)=='C') {
             line.remove(0,1);
-			int uCode = line.toInt(nullptr, 16);
-            QChar ch = QChar(uCode);
-            if (QString(ch) == key) {   // recursion, a character can't include itself
+            auto uCode = line.toUInt(nullptr, 16);
+            auto ch = charFromHex(line);
+            if (ch == key) {   // recursion, a character can't include itself
                 RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : recursion, ignore this character from %s", uCode, qPrintable(fileName));
                 delete letter;
                 return nullptr;
@@ -432,13 +449,13 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
             vertex = line.split(';', Qt::SkipEmptyParts);
 #else
             vertex = line.split(';', QString::SkipEmptyParts);
-#endif
-            //at least is required two vertex
+#endif \
+    //at least is required two vertex
             if (vertex.size()<2)
                 continue;
             RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
             pline->setPen(RS_Pen(RS2::FlagInvalid));
-			pline->setLayer(nullptr);
+            pline->setLayer(nullptr);
             foreach(const QString& point, vertex) {
                 double x1, y1;
                 double bulge = 0;
@@ -447,8 +464,8 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
                 coords = point.split(',', Qt::SkipEmptyParts);
 #else
                 coords = point.split(',', QString::SkipEmptyParts);
-#endif
-                //at least X,Y is required
+#endif \
+    //at least X,Y is required
                 if (coords.size()<2)
                     continue;
                 x1 = coords.at(0).toDouble();
@@ -478,7 +495,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
 
 RS_Block* RS_Font::findLetter(const QString& name) {
     RS_Block* ret= letterList.find(name);
-	if (ret) return ret;
+    if (ret) return ret;
     return generateLffFont(name);
 
 }

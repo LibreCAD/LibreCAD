@@ -27,6 +27,7 @@
 
 #include <iostream>
 #include <QString>
+#include <rs_debug.h>
 #include "rs_layer.h"
 
 RS_LayerData::RS_LayerData(const QString& name,
@@ -44,8 +45,9 @@ RS_LayerData::RS_LayerData(const QString& name,
  * Constructor.
  */
 RS_Layer::RS_Layer(const QString& name):
-	data(name, RS_Pen(Qt::black, RS2::Width00,RS2::SolidLine), false, false)
+    data(name, RS_Pen(Qt::black, name == "0" ? RS2::Width07 : RS2::Width00,RS2::SolidLine), false, false)
 {
+//    LC_ERR<<name;
 }
 
 RS_Layer* RS_Layer::clone() const{
@@ -230,4 +232,3 @@ std::ostream& operator << (std::ostream& os, const RS_Layer& l) {
     << std::endl;
     return os;
 }
-

@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,16 +41,16 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1000"
+     inkscape:window-height="1176"
      id="namedview4321"
      showgrid="true"
      units="px"
      inkscape:snap-grids="true"
-     inkscape:zoom="4.0249896"
-     inkscape:cx="87.254553"
-     inkscape:cy="131.50336"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:zoom="3.7226562"
+     inkscape:cx="128"
+     inkscape:cy="128"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4295"
      inkscape:object-nodes="true"
@@ -67,7 +67,7 @@
        inkscape:connector-curvature="0"
        id="path6592"
        d="m 14.675557,62.088893 0,-33.866669 42.89778,0 0,33.866669 z"
-       style="fill:#c8c8c8;fill-rule:evenodd;stroke:#c8c8c8;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1" />
+       style="fill:#cccccc;fill-rule:evenodd;stroke:#cccccc;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1" />
     <path
        sodipodi:open="true"
        d="M 20.319998,24.83541 A 15.804445,15.804445 0 0 1 36.124443,9.0309658 15.804445,15.804445 0 0 1 51.928888,24.835411"
@@ -79,6 +79,6 @@
        sodipodi:cx="36.124443"
        sodipodi:type="arc"
        id="path6594"
-       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#c8c8c8;stroke-width:4.51555634;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#cccccc;stroke-width:4.51555634;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>

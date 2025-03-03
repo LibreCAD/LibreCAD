@@ -7,6 +7,14 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
+        <translation>Leer puntos ASCII</translation>
+    </message>
+</context>
+<context>
+    <name>ExpTo_Csv</name>
+    <message>
+        <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
+        <source>Export points to csv</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16,64 +24,70 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de Alineación...</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="49"/>
+        <location filename="../align/align.cpp" line="47"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener objetos originales</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="50"/>
+        <location filename="../align/align.cpp" line="48"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique los puntos de base primero</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="54"/>
+        <location filename="../align/align.cpp" line="52"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de alineación</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="57"/>
+        <location filename="../align/align.cpp" line="55"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clic en opciones para  agrupar/desagrupar
+Ok para aceptar e iniciar  la alineación</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="60"/>
+        <location filename="../align/align.cpp" line="58"/>
         <source>If &apos;Keep original objects&apos; is checked,
 Align will copy rather than move the selected objects.
 
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí &quot;Mantener objetos originales&quot; esta marcado
+alinear copiara en lugar de mover los objetos seleccionados.
+
+Sí &quot;Especifique los puntos base primero&quot; esta marcado
+alinear le pedirá los puntos de alineación en orden de
+primer punto base, segundo punto base, primer punto objetivo, segundo punto objetivo.</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="81"/>
+        <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../align/align.cpp" line="86"/>
-        <source>first target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Primer punto base:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
-        <location filename="../align/align.cpp" line="89"/>
-        <source>second base point:</source>
-        <translation type="unfinished"></translation>
+        <source>first target point:</source>
+        <translation>Primer punto objetivo:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="91"/>
+        <location filename="../align/align.cpp" line="82"/>
+        <location filename="../align/align.cpp" line="87"/>
+        <source>second base point:</source>
+        <translation>Segundo punto base:</translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="89"/>
         <source>second target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Segundo punto objetivo:</translation>
     </message>
 </context>
 <context>
@@ -81,308 +95,308 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de creación de engranes</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de engranes</translation>
     </message>
 </context>
 <context>
     <name>LC_List</name>
     <message>
-        <location filename="../list/list.cpp" line="23"/>
-        <location filename="../list/list.cpp" line="30"/>
+        <location filename="../list/list.cpp" line="22"/>
+        <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de entidades</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="46"/>
+        <location filename="../list/list.cpp" line="43"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="60"/>
+        <location filename="../list/list.cpp" line="57"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Entidad vacía</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="67"/>
+        <location filename="../list/list.cpp" line="64"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="67"/>
+        <location filename="../list/list.cpp" line="64"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="74"/>
+        <source>Layer</source>
+        <translation>Capa</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="76"/>
+        <source>Color</source>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
-        <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <source>Line type</source>
+        <translation>Tipo de línea</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="78"/>
+        <source>Line thickness</source>
+        <translation>Espesor de línea</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
-        <source>Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="80"/>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="81"/>
-        <source>Line thickness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="82"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="88"/>
+        <location filename="../list/list.cpp" line="85"/>
         <source>POINT</source>
-        <translation type="unfinished"></translation>
+        <translation>PUNTO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="89"/>
-        <location filename="../list/list.cpp" line="180"/>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="86"/>
+        <location filename="../list/list.cpp" line="177"/>
+        <location filename="../list/list.cpp" line="219"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>en punto</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="94"/>
+        <location filename="../list/list.cpp" line="91"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>LÍNEA</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="96"/>
+        <source>from point</source>
+        <translation>desde el punto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
-        <source>from point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>al punto</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="107"/>
-        <location filename="../list/list.cpp" line="131"/>
+        <location filename="../list/list.cpp" line="104"/>
+        <location filename="../list/list.cpp" line="128"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>longitud</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="112"/>
+        <location filename="../list/list.cpp" line="109"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo en el plano XY</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="113"/>
+        <location filename="../list/list.cpp" line="110"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inc.</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="118"/>
+        <location filename="../list/list.cpp" line="115"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>ARCO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="119"/>
-        <location filename="../list/list.cpp" line="135"/>
-        <location filename="../list/list.cpp" line="145"/>
+        <location filename="../list/list.cpp" line="116"/>
+        <location filename="../list/list.cpp" line="132"/>
+        <location filename="../list/list.cpp" line="142"/>
         <source>center point</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto central</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="125"/>
-        <location filename="../list/list.cpp" line="139"/>
-        <location filename="../list/list.cpp" line="226"/>
+        <location filename="../list/list.cpp" line="122"/>
+        <location filename="../list/list.cpp" line="136"/>
+        <location filename="../list/list.cpp" line="223"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>radio</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="126"/>
+        <location filename="../list/list.cpp" line="123"/>
         <source>initial angle</source>
-        <translation type="unfinished"></translation>
+        <translation>ángulo inicial</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="127"/>
+        <location filename="../list/list.cpp" line="124"/>
         <source>final angle</source>
-        <translation type="unfinished"></translation>
+        <translation>ángulo final</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="134"/>
+        <location filename="../list/list.cpp" line="131"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>CÍRCULO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="140"/>
+        <location filename="../list/list.cpp" line="137"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>circunferencia</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="138"/>
+        <source>area</source>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="141"/>
-        <source>area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation type="unfinished"></translation>
+        <translation>ELIPSE</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="148"/>
+        <location filename="../list/list.cpp" line="145"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>eje mayor</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="163"/>
+        <source>CONSTRUCTIONLINE</source>
+        <translation>LÍNEADECONSTRUCCIÓN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
-        <source>CONSTRUCTIONLINE</source>
-        <translation type="unfinished"></translation>
+        <source>OVERLAYBOX</source>
+        <translation>CAJASUPERPUESTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
-        <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <source>SOLID</source>
+        <translation>SÓLIDO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="172"/>
-        <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <location filename="../list/list.cpp" line="173"/>
+        <source>MTEXT</source>
+        <translation>MTEXTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
-        <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <source>TEXT</source>
+        <translation>TEXTO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="179"/>
-        <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <location filename="../list/list.cpp" line="180"/>
+        <source>TEXTCONTENT</source>
+        <translation>CONTENIDODELTEXTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
-        <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <source>INSERT</source>
+        <translation>INSERTAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
-        <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <source>Name</source>
+        <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="189"/>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
+        <location filename="../list/list.cpp" line="188"/>
+        <source>Insertion point</source>
+        <translation>Punto de inserción</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
-        <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <source>Scale</source>
+        <translation>Escala</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
-        <source>Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotación</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="203"/>
+        <location filename="../list/list.cpp" line="200"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Columnas/Filas</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="207"/>
+        <location filename="../list/list.cpp" line="204"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaciado de Columna/Fila</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="211"/>
+        <source>POLYLINE</source>
+        <translation>POLILÍNEA</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="212"/>
+        <source>Closed</source>
+        <translation>Cerrar</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="213"/>
+        <source>No</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="213"/>
+        <source>Yes</source>
+        <translation>Si</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
-        <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="215"/>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="216"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="216"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Vértices</translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="228"/>
+        <source>IMAGE</source>
+        <translation>IMAGEN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
-        <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <source>SPLINE</source>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="234"/>
-        <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <source>SPLINEPOINTS</source>
+        <translation>PUNTOSDESPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
-        <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <source>HATCH</source>
+        <translation>SOMBREADO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
-        <source>HATCH</source>
-        <translation type="unfinished"></translation>
+        <source>DIMLEADER</source>
+        <translation>DIMLEADER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
-        <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <source>DIMALIGNED</source>
+        <translation>ALINEADA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
-        <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <source>DIMLINEAR</source>
+        <translation>DIMLINEAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
-        <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <source>DIMRADIAL</source>
+        <translation>DIMRADIAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
-        <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <source>DIMDIAMETRIC</source>
+        <translation>DIMDIAMETRICO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
-        <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <source>DIMANGULAR</source>
+        <translation>DIMANGULAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
-        <source>DIMANGULAR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>DESCONOCIDO</translation>
     </message>
 </context>
 <context>
@@ -391,17 +405,17 @@ first base, second base, first target, second target.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Mismas propiedades</translation>
+    </message>
+    <message>
+        <location filename="../sameprop/sameprop.cpp" line="39"/>
+        <source>select original entity:</source>
+        <translation>seleccionar entidad original:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
-        <source>select original entity:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation type="unfinished"></translation>
+        <translation>seleccionar entidades a cambiar</translation>
     </message>
 </context>
 <context>
@@ -410,7 +424,7 @@ first base, second base, first target, second target.</source>
         <location filename="../sample/sample.cpp" line="26"/>
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de prueba</translation>
     </message>
 </context>
 <context>
@@ -418,12 +432,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer archivo PIC</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>importar archivo PIC</translation>
     </message>
 </context>
 <context>
@@ -431,686 +445,709 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer puntos ASCII</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separador de espacios</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separador de pestañas</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Comma Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separador de coma</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacio en columnas</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation type="unfinished"></translation>
+        <translation>*.odb para Psion 2</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectar puntos</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto 2D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar punto 2D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto 3D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar punto 3D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar número de punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Elevación del punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar elevación del punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Código del punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar el código del punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="268"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Calecar</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar archivo</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa del punto 2D está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa del punto 3D está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa de elevación del punto esta vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura de elevación del punto esta vacío</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Separación de elevación del punto esta vacío</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa del número de punto esta vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura del numero de punto esta vacío</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Separación del número de punto esta vacío</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa del código del punto está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura del código del punto esta vacío</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Separación del código del punto está vacío</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo %1 no existe</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="364"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede abrir el archivo %1</translation>
     </message>
 </context>
 <context>
     <name>divide</name>
     <message>
-        <location filename="../divide/divide.cpp" line="35"/>
-        <location filename="../divide/divide.cpp" line="42"/>
+        <location filename="../divide/divide.cpp" line="34"/>
+        <location filename="../divide/divide.cpp" line="41"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="56"/>
+        <location filename="../divide/divide.cpp" line="52"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione una línea, circulo o arco y presione enter/return</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="67"/>
+        <location filename="../divide/divide.cpp" line="63"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="104"/>
+        <location filename="../divide/divide.cpp" line="100"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="444"/>
+        <location filename="../divide/divide.cpp" line="440"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Entidad vacía</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="452"/>
+        <location filename="../divide/divide.cpp" line="448"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="452"/>
+        <location filename="../divide/divide.cpp" line="448"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="460"/>
+        <location filename="../divide/divide.cpp" line="456"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="462"/>
+        <location filename="../divide/divide.cpp" line="458"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Color</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="459"/>
+        <source>Line type</source>
+        <translation>Tipo de línea</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="461"/>
+        <source>Line thickness</source>
+        <translation>Espesor de línea</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="465"/>
-        <source>Line thickness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="474"/>
+        <location filename="../divide/divide.cpp" line="470"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>LÍNEA</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="479"/>
+        <location filename="../divide/divide.cpp" line="475"/>
         <source>from point</source>
-        <translation type="unfinished"></translation>
+        <translation>Desde el punto</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="482"/>
+        <location filename="../divide/divide.cpp" line="478"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>al punto</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="487"/>
-        <location filename="../divide/divide.cpp" line="514"/>
+        <location filename="../divide/divide.cpp" line="483"/>
+        <location filename="../divide/divide.cpp" line="510"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>longitud</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="492"/>
+        <location filename="../divide/divide.cpp" line="488"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo en el plano XY</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="494"/>
+        <location filename="../divide/divide.cpp" line="490"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inc.</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="499"/>
+        <location filename="../divide/divide.cpp" line="495"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>ARCO</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="500"/>
-        <location filename="../divide/divide.cpp" line="519"/>
+        <location filename="../divide/divide.cpp" line="496"/>
+        <location filename="../divide/divide.cpp" line="515"/>
         <source>center point</source>
-        <translation type="unfinished"></translation>
+        <translation>punto central</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="506"/>
-        <location filename="../divide/divide.cpp" line="523"/>
-        <location filename="../divide/divide.cpp" line="545"/>
+        <location filename="../divide/divide.cpp" line="502"/>
+        <location filename="../divide/divide.cpp" line="519"/>
+        <location filename="../divide/divide.cpp" line="541"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>radio</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="507"/>
+        <location filename="../divide/divide.cpp" line="503"/>
         <source>initial angle</source>
-        <translation type="unfinished"></translation>
+        <translation>ángulo inicial</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="509"/>
+        <location filename="../divide/divide.cpp" line="505"/>
         <source>final angle</source>
-        <translation type="unfinished"></translation>
+        <translation>ángulo final</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="518"/>
+        <location filename="../divide/divide.cpp" line="514"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>CÍRCULO</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="524"/>
+        <location filename="../divide/divide.cpp" line="520"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>circunferencia</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="522"/>
+        <source>area</source>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
-        <source>area</source>
-        <translation type="unfinished"></translation>
+        <source>POLYLINE</source>
+        <translation>POLILÍNEA</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="527"/>
+        <source>Closed</source>
+        <translation>Cerrar</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="529"/>
+        <source>No</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="529"/>
+        <source>Yes</source>
+        <translation>Si</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
-        <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="531"/>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="533"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="533"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Vértices</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="539"/>
+        <location filename="../divide/divide.cpp" line="535"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>en el punto</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="555"/>
+        <location filename="../divide/divide.cpp" line="551"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>DEBE ser una línea, círculo o arco</translation>
     </message>
 </context>
 <context>
     <name>dividedlg</name>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="48"/>
+        <location filename="../divide/dividedlg.cpp" line="47"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir - </translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="69"/>
+        <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Capas</translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="74"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="85"/>
+        <location filename="../divide/dividedlg.cpp" line="84"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir en</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="92"/>
+        <location filename="../divide/dividedlg.cpp" line="91"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="115"/>
+        <location filename="../divide/dividedlg.cpp" line="114"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>lugares</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="126"/>
+        <location filename="../divide/dividedlg.cpp" line="125"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Ticks - Apagado</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="134"/>
+        <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Breaks - Apagado</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="179"/>
+        <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Nuevo&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="210"/>
+        <location filename="../divide/dividedlg.cpp" line="209"/>
         <source>Enter start
 angle, in
 decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese el inicio
+del ángulo, en
+grados decimales
+de 0° a las 3 en punto
+yendo
+en sentido contrario a las agujas del reloj.</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="246"/>
+        <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;&quot;Nuevo&quot;&lt;/i&gt;Ingrese nombre&lt;br&gt;para nueva capa&lt;br&gt;(¿Es necesario?)a&lt;br&gt;dibujar ticks en.</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="252"/>
+        <location filename="../divide/dividedlg.cpp" line="251"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Ticks</translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="257"/>
+        <source>Above</source>
+        <translation>Encima</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
-        <source>Above</source>
-        <translation type="unfinished"></translation>
+        <source>Below</source>
+        <translation>Debajo</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="259"/>
-        <source>Below</source>
-        <translation type="unfinished"></translation>
+        <location filename="../divide/dividedlg.cpp" line="262"/>
+        <source>Outside</source>
+        <translation>Afuera</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
-        <source>Outside</source>
+        <source>Inside</source>
+        <translation>Dentro</translation>
+    </message>
+</context>
+<context>
+    <name>lc_Exptocsvdlg</name>
+    <message>
+        <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
+        <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="264"/>
-        <source>Inside</source>
+        <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
+        <source>CSV (*.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pointstocsv/pointstocsv.cpp" line="128"/>
+        <source>Unable to open file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>lc_Geardlg</name>
     <message>
-        <location filename="../gear/gear.cpp" line="114"/>
+        <location filename="../gear/gear.cpp" line="111"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="116"/>
-        <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de dientes</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
+        <source>Pressure angle (deg)</source>
+        <translation>Ángulo de presión (grados)</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="110"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo de rotación</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="112"/>
+        <source>Modulus</source>
+        <translation>Módulos</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="114"/>
+        <source>Addendum (rel. to modulus)</source>
+        <translation>Cabeza del diente (relativa al módulo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
-        <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <source>Dedendum (rel. to modulus)</source>
+        <translation>Pie del diente (relativo al módulo)</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="116"/>
+        <source>Number of segments to draw (dedendum)</source>
+        <translation>Número de segmentos a dibujar (pie del diente)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
-        <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <source>Number of segments to draw (addendum)</source>
+        <translation>Número de segmentos a dibujar (cabeza del diente)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
-        <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <source>Draw all teeth?</source>
+        <translation>¿Dibujar todos los dientes?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
-        <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="120"/>
-        <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <source>Draw symmetric face?</source>
+        <translation>¿Dibujar una cara simétrica?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
-        <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <source>Use layers?</source>
+        <translation>¿Usar capas?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
-        <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
+        <source>Draw addendum circle?</source>
+        <translation>¿Dibujar círculo de la cabeza del diente?</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="123"/>
+        <source>Draw pitch circle?</source>
+        <translation>¿Dibujar círculo de paso del engrane?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
-        <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <source>Draw base circle?</source>
+        <translation>¿Dibujar círculo base del engrane?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
-        <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
+        <source>Draw root circle?</source>
+        <translation>¿Dibujar círculo raíz del engrane?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
-        <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
+        <source>Draw pressure line?</source>
+        <translation>¿Dibujar línea de presión?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
-        <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="128"/>
-        <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
+        <source>Draw pressure limits?</source>
+        <translation>¿Dibujar límites de presión?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
-        <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
+        <source>Calculate interference?</source>
+        <translation>¿Calcular interferencia?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
-        <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
+        <source>Number of segments to draw (interference)</source>
+        <translation>Número de segmentos a dibujar (interferencia)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
-        <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <source>Accept</source>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
-        <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="135"/>
-        <source>Accept</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="278"/>
+        <location filename="../list/list.cpp" line="275"/>
         <source>List entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de entidades</translation>
     </message>
 </context>
 <context>
     <name>lc_Sampledlg</name>
     <message>
-        <location filename="../sample/sample.cpp" line="54"/>
+        <location filename="../sample/sample.cpp" line="52"/>
         <source>Draw line</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar línea</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="60"/>
+        <location filename="../sample/sample.cpp" line="58"/>
         <source>Start X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar X:</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="66"/>
+        <location filename="../sample/sample.cpp" line="64"/>
         <source>Start Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar Y:</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="72"/>
+        <location filename="../sample/sample.cpp" line="70"/>
         <source>End X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin X:</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="78"/>
+        <location filename="../sample/sample.cpp" line="76"/>
         <source>End Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin Y:</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="86"/>
+        <location filename="../sample/sample.cpp" line="84"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="91"/>
+        <location filename="../sample/sample.cpp" line="89"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="105"/>
+        <source>Start X is empty</source>
+        <translation>Iniciar X está vacío</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="106"/>
+        <source>Start Y is empty</source>
+        <translation>Iniciar Y está vacío</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
-        <source>Start X is empty</source>
-        <translation type="unfinished"></translation>
+        <source>End X is empty</source>
+        <translation>Fin X está vació</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
-        <source>Start Y is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="109"/>
-        <source>End X is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin Y está vacío</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="132"/>
+        <location filename="../sample/sample.cpp" line="129"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de prueba</translation>
     </message>
 </context>
 <context>
     <name>picPunto</name>
     <message>
-        <location filename="../picfile/picfile.cpp" line="65"/>
+        <location filename="../picfile/picfile.cpp" line="64"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo...</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="75"/>
+        <location filename="../picfile/picfile.cpp" line="74"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala:</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="79"/>
+        <location filename="../picfile/picfile.cpp" line="78"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="83"/>
+        <location filename="../picfile/picfile.cpp" line="82"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="111"/>
+        <location filename="../picfile/picfile.cpp" line="110"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar archivo</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="119"/>
+        <location filename="../picfile/picfile.cpp" line="118"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>El factor de escala esta vacío o no es válido</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="132"/>
+        <location filename="../picfile/picfile.cpp" line="131"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo %1 no existe</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="137"/>
+        <location filename="../picfile/picfile.cpp" line="136"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede abrir el archivo %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="144"/>
+        <location filename="../picfile/picfile.cpp" line="143"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 objetos importados</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="166"/>
+        <location filename="../picfile/picfile.cpp" line="165"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto dibujarLínea: primer punto está vacío %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="179"/>
+        <location filename="../picfile/picfile.cpp" line="178"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto dibujarLínea: siguiente punto esta vacío %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="262"/>
-        <location filename="../picfile/picfile.cpp" line="271"/>
+        <location filename="../picfile/picfile.cpp" line="261"/>
+        <location filename="../picfile/picfile.cpp" line="270"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error de formato en %1</translation>
     </message>
 </context>
 <context>
@@ -1119,7 +1156,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de trazado</translation>
     </message>
 </context>
 <context>
@@ -1127,7 +1164,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecuación de trazado</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1136,60 +1173,64 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Este plugin permite que traces ecuaciones matemáticas.
+Si usted no quiere usar la forma paramétrica, solo omita &quot;Ecuación2&quot;.
+Usted puede usar pi cuando necesite el valor de pi (ej. (3*pi)).
+Use t o x en sus ecuaciones como variable/parámetro.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecuación 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecuación 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>valor inicial:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>valor final:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>tamaño del paso:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Segmentos de línea</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Polilínea</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puntos Spline</translation>
     </message>
 </context>
 <context>
@@ -1197,7 +1238,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa:</translation>
     </message>
 </context>
 <context>
@@ -1205,17 +1246,17 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation type="unfinished"></translation>
+        <translation>Separación</translation>
     </message>
 </context>
 </TS>

@@ -174,7 +174,7 @@ public:
     /**
      * Sets the parent documents modified status to 'm'.
      */
-	virtual void setModified(bool m);
+	   void setModified(bool m) override;
 
     /**
      * Sets only this block modified status to 'm'

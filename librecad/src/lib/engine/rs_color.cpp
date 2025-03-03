@@ -26,8 +26,9 @@
 **********************************************************************/
 
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
+
 #include "rs_color.h"
 
 //This method is used for plugins
