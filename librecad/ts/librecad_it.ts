@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation>Selezionare l&apos;entità dell&apos;arco</translation>
+        <translation type="unfinished">Seleziona un arco</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3792,7 +3792,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation>Alt + Z</translation>
+        <translation type="unfinished">Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>

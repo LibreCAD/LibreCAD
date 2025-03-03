@@ -373,6 +373,7 @@ void RS_Insert::scale(const RS_Vector& center, const RS_Vector& factor) {
         RS_DEBUG->print("RS_Insert::scale2: insertionPoint: %f/%f",
                 data.insertionPoint.x, data.insertionPoint.y);
     update();
+
 }
 
 
@@ -394,17 +395,3 @@ std::ostream& operator << (std::ostream& os, const RS_Insert& i) {
     os << " Insert: " << i.getData() << std::endl;
     return os;
 }
-
-void RS_Insert::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/)
-{
-    if ( ! (painter && view)) return;
-
-    double patternOffset = 0.0;
-
-    for (auto e : getEntityList())
-    {
-        e->setPen(getPen());
-        e->draw(painter, view, patternOffset);
-    }
-}
-

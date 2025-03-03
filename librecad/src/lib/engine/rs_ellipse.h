@@ -44,16 +44,18 @@ struct RS_EllipseData {
     //! Endpoint of major axis relative to center.
     RS_Vector majorP;
     //! Ratio of minor axis to major axis.
-	double ratio;
+    double ratio = 0.;
     //! Start angle
-	double angle1;
+    double angle1 = 0.;
     //! End angle
-	double angle2;
+    double angle2 = 0.;
     //! Reversed (cw) flag
-	bool reversed;
+    bool reversed = false;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
+
+// fixme - add support of offset operation for ellipse entity!
 
 /**
  * Class for an ellipse entity. All angles are in Rad.
@@ -174,7 +176,7 @@ public:
 	/** : generic quadratic: A x^2 + C xy + B y^2 + D x + E y + F =0 */
 	bool createFromQuadratic(const LC_Quadratic& q);
 	//! \}
-	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines);
+	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,std::vector<RS_Vector> &tangent);
 	RS_Vector getMiddlePoint(void)const override;
 	RS_Vector getNearestEndpoint(const RS_Vector& coord,
 										 double* dist = nullptr) const override;
@@ -192,6 +194,9 @@ public:
 	RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                     const RS_Line& normal,
 									 bool onEntity = false) const override;
+
+    RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
+
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
 	void correctAngles();//make sure angleLength() is not more than 2*M_PI
 	bool isPointOnEntity(const RS_Vector& coord,
@@ -203,6 +208,7 @@ public:
 	void rotate(const RS_Vector& center, const double& angle) override;
 	void rotate(const RS_Vector& center, const RS_Vector& angle) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    RS_Entity& shear(double k) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 

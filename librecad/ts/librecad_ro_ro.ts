@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation>Adaugă la favorite</translation>
+        <translation>Adăugare la favorite</translation>
     </message>
     <message>
         <source>...</source>

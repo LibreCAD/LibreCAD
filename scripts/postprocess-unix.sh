@@ -19,7 +19,7 @@ mkdir -p "${RESOURCEDIR}"/patterns
 cp "${SPTDIR}"/patterns/*.dxf "${RESOURCEDIR}"/patterns
 cp "${SPTDIR}"/fonts/*.lff* "${RESOURCEDIR}"/fonts
 find "${SPTDIR}"/library -type d | sed 's:^.*support/::' | xargs -IFILES  mkdir -p "${RESOURCEDIR}"/FILES
-find "${SPTDIR}"/library -type f -iname *.dxf | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
+find "${SPTDIR}"/library -type f -iname "*.dxf" | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
 
 # Generate translations
 ${LRELEASE} "${LCDIR}"/src/src.pro

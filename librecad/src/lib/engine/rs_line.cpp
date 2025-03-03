@@ -29,6 +29,7 @@
 #include "rs_line.h"
 
 #include "lc_rect.h"
+#include "qc_applicationwindow.h"
 
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -87,7 +88,6 @@ void RS_Line::calculateBorders() {
     minV = RS_Vector::minimum(data.startpoint, data.endpoint);
     maxV = RS_Vector::maximum(data.startpoint, data.endpoint);
 }
-
 
 
 RS_VectorSolutions RS_Line::getRefPoints() const
@@ -440,7 +440,12 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     if(RS_Vector::dotP(direction,vp)<0.) {
         direction *= -1.;
     }
-    direction*=distance;
+    double dist = distance;
+/*    if (coord.x < 0){
+//        direction *= -1.;
+        dist = -dist;
+    }*/
+    direction*=dist;
     move(direction);
     return true;
 }
@@ -565,6 +570,13 @@ void RS_Line::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     calculateBorders();
 }
 
+RS_Entity& RS_Line::shear(double k)
+{
+    data.startpoint.shear(k);
+    data.endpoint.shear(k);
+    calculateBorders();
+    return *this;
+}
 
 /**
  * Stretches the given range of the entity by the given offset.
@@ -670,5 +682,3 @@ std::ostream& operator << (std::ostream& os, const RS_Line& l) {
     os << " Line: " << l.getData() << "\n";
     return os;
 }
-
-

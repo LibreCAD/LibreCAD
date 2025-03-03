@@ -523,7 +523,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1059"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>导出为CAM/plain SVG(&amp;M)...</translation>
+        <translation>导出为CA&amp;M/plain SVG...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1088"/>
@@ -1166,7 +1166,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
         <source>Lines</source>
-        <translation>线条</translation>
+        <translation>线</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="538"/>
@@ -1176,7 +1176,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="545"/>
         <source>Freehand</source>
-        <translation>徒手绘制</translation>
+        <translation>徒手画</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="552"/>

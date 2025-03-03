@@ -832,7 +832,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Alle Ebenen ausblenden</translation>
+        <translation>Alle Layer aussc&amp;halten</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
@@ -844,11 +844,11 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Ausgewählte Ebene(n) exportieren</translation>
+        <translation>Ausgewählte Layer &amp;exportieren</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Alle &amp;sichtbaren Ebene(n) exportieren</translation>
+        <translation>Sichtbare Layer exp&amp;ortieren</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
@@ -864,7 +864,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Close All</source>
-        <translation>Alle schließen</translation>
+        <translation>Alle schliessen</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
@@ -886,7 +886,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Ebene &quot;%1&quot; als &quot;%2&quot; speichern </translation>
+        <translation>Speichere Layer &quot;%1&quot; als &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -951,7 +951,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>PolyLines</source>
-        <translation>Polylinie</translation>
+        <translation>Polylinien</translation>
     </message>
     <message>
         <source>Select</source>
@@ -959,7 +959,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Dimensions</source>
-        <translation>Maße</translation>
+        <translation>Bemassungen</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -1518,7 +1518,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation>Entwurf speichern: %1</translation>
+        <translation>Zeichnung speichern: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
@@ -1526,12 +1526,12 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Entwurf schließen</translation>
+        <translation>Zeichnung schließen</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Änderungen bei den folgenden Elemente speichern?
+        <translation>Änderungen speichern für folgenden Eintrag?
 %1</translation>
     </message>
     <message>
@@ -1560,7 +1560,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation>abgerundet</translation>
+        <translation>Abgerundet</translation>
     </message>
     <message>
         <source>Triangular</source>
@@ -1596,7 +1596,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation>Alle</translation>
+        <translation>Alle schliessen abgebrochen</translation>
     </message>
     <message>
         <source>The Code</source>
@@ -1608,7 +1608,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation>Schwebend</translation>
+        <translation>Fiegend</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -2985,11 +2985,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Text Direction</source>
-        <translation>Textausrichtung</translation>
+        <translation>Textrichtung</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation>Von links nach rechts</translation>
+        <translation>Links nach rechts</translation>
     </message>
     <message>
         <source>Right to left</source>

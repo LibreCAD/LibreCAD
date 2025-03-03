@@ -35,7 +35,6 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
-#include "rs_linetypepattern.h"
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_painterqt.h"
@@ -153,9 +152,7 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 class ClosestEllipticPoint {
 public:
     ClosestEllipticPoint(double a, double b, const RS_Vector& point):
-        m_a{a}
-      , m_b{b}
-      , m_point{point}
+        m_point{point}
       , c2{a*a-b*b}
       , ax2{2.*a*point.x}
       , by2{2.*b*point.y}
@@ -195,8 +192,6 @@ private:
         return 2.*c2*cos(2.*t) + ax2*cos(t) + by2*sin(t);
     }
 
-    double m_a=0.;
-    double m_b=0.;
     RS_Vector m_point{};
     double c2=0.;
     double ax2=0.;
@@ -888,7 +883,7 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 *
 *@author Dongxu Li
 */
-bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
+bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines, std::vector<RS_Vector> &tangent)
 {
 	if(lines.size() != 4) return false; //only do 4 lines
 	std::vector<std::unique_ptr<RS_Line> > quad(4);
@@ -920,7 +915,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	}
 	//        std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
-	std::vector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
+//	std::vector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
 	int parallel=0;
 	int parallel_index=0;
 	for(int i=0;i<=1;++i) {
@@ -1151,58 +1146,79 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
   *@author: Dongxu Li
   */
 
-RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
-                                        const RS_Line& normal,
-										bool onEntity ) const
-{
-    if ( !coord.valid ) {
+RS_Vector RS_Ellipse::getNearestOrthTan(
+    const RS_Vector &coord,
+    const RS_Line &normal,
+    bool onEntity) const{
+    if (!coord.valid){
         return RS_Vector(false);
     }
-    RS_Vector direction=normal.getEndpoint() - normal.getStartpoint();
-	if (direction.squared()< RS_TOLERANCE15) {
+    RS_Vector direction = normal.getEndpoint() - normal.getStartpoint();
+    if (direction.squared() < RS_TOLERANCE15){
         //undefined direction
         return RS_Vector(false);
     }
     //scale to ellipse angle
     RS_Vector aV(-getAngle());
     direction.rotate(aV);
-    double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
+    double angle = direction.scale(RS_Vector(1., getRatio())).angle();
     double ra(getMajorRadius());
-    direction.set(ra*cos(angle),getRatio()*ra*sin(angle));//relative to center
-	std::vector<RS_Vector> sol;
-    for(int i=0;i<2;i++){
-        if(!onEntity ||
-                RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
-            if(i){
-				sol.push_back(- direction);
-            }else{
-				sol.push_back(direction);
+    direction.set(ra * cos(angle), getRatio() * ra * sin(angle));//relative to center
+    std::vector<RS_Vector> sol;
+    for (int i = 0; i < 2; i++) {
+        if (!onEntity ||
+            RS_Math::isAngleBetween(angle, getAngle1(), getAngle2(), isReversed())){
+            if (i){
+                sol.push_back(-direction);
+            } else {
+                sol.push_back(direction);
             }
         }
-        angle=RS_Math::correctAngle(angle+M_PI);
+        angle = RS_Math::correctAngle(angle + M_PI);
     }
-    if(sol.size()<1) return RS_Vector(false);
-    aV.y*=-1.;
-	for(auto& v: sol){
-		v.rotate(aV);
-	}
+    if (sol.size() < 1) return RS_Vector(false);
+    aV.y *= -1.;
+    for (auto &v: sol) {
+        v.rotate(aV);
+    }
     RS_Vector vp;
-	switch(sol.size()) {
-    case 0:
-        return RS_Vector(false);
-    case 2:
-        if( RS_Vector::dotP(sol[1],coord-getCenter())>0.) {
-            vp=sol[1];
+    switch (sol.size()) {
+        case 0:
+            return RS_Vector(false);
+        case 2:
+            if (RS_Vector::dotP(sol[1], coord - getCenter()) > 0.){
+                vp = sol[1];
+                break;
+            }
+            // fall-through
+        default:
+            vp = sol[0];
             break;
-        }
-        // fall-through
-    default:
-        vp=sol[0];
-        break;
     }
     return getCenter() + vp;
 }
 
+
+RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const
+{
+    // u x + v y = 1
+    // coordinates : dual
+    // rotate (-a) : rotate(a)
+    RS_Vector uv = RS_Vector{line}.rotate(-data.majorP.angle());
+    // slope = -b c/ a s ( a s, - b c)
+    // x a s - b c y =0 -> s/c = b y / a x
+    // elliptical angle
+    double t = std::atan2(data.ratio * uv.y, uv.x);
+    RS_Vector vp{data.majorP.magnitude()*std::cos(t), data.majorP.magnitude()*data.ratio*std::sin(t)};
+    vp.rotate(data.majorP.angle());
+
+    RS_Vector vp0 = data.center + vp;
+    RS_Vector vp1 = data.center - vp;
+    auto lineEqu = [&line](const RS_Vector& vp) {
+        return std::abs(line.dotP(vp) + 1.);
+    };
+    return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
+}
 
 void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
@@ -1452,6 +1468,21 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     scaleBorders(center,factor);
 // calculateBorders();
 
+}
+
+/**
+ * @author{Dongxu Li}
+ */
+RS_Entity& RS_Ellipse::shear(double k)
+{
+    RS_Ellipse e1 = *this;
+    e1.createFromQuadratic(e1.getQuadratic().shear(k));
+    if (isArc()) {
+        e1.moveStartpoint(getStartpoint().shear(k));
+        e1.moveEndpoint(getEndpoint().shear(k));
+    }
+    *this = e1;
+    return *this;
 }
 
 

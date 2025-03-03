@@ -3,35 +3,55 @@ on:
   push:
     branches:
       - master
-      - ci_dev
+      - 2.2.1
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-22.04
-    env:
-      platform_version: 22.04
+    runs-on: ubuntu-20.04
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.*'
+
+      - name: Qt6 path
+        run: |
+          find ${{github.workspace}}/../Qt -type f -iname "*.so"
+          ls -l ${{github.workspace}}/../Qt
 
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtbase5-dev libqt5svg5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo apt-get -qq install qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
+          find /home/runner/work/LibreCAD/Qt/6.6.3 -iname "libqt*svg*"
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-15 clang-tools-15
+          sudo apt-get -qq install clang-10 clang-tools-10
+
+      - name: Set Dark splash
+        # Test setting dark splash screen for `2.2.2_alpha`,
+        # then switch "Loading..." label text color to white.
+        # Comment this if `master` is used for releases.
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cp ${{github.workspace}}/desktop/media/splash/librecad01_dark.png ${{github.workspace}}/librecad/res/main/splash_librecad.png
+          sed -i 's/Qt::black/Qt::white/g' ${{github.workspace}}/librecad/src/main/main.cpp
 
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          export ANALYZE="scan-build-10 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
+          ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
       - name: Create report repository
@@ -57,28 +77,63 @@ jobs:
 
       - name: Create AppImage
         run: |
-          find unix/
-          ./CI/build-appimg.sh
+          #find unix/
+          QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
+          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
+
+      - name: List files
+        run: |
+          echo ${{ github.workspace }} && ls ${{ github.workspace }}
+        shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
         with:
-          name: assets
+          name: linuxAssets
           path: LibreCAD*.AppImage
           retention-days: 2
-
+#
+#      - name: Create snapcraft
+#        run: |
+#          ./scripts/createSnap.sh
+#
+#      - name: Uploading snap
+#        uses: actions/upload-artifact@v3.1.0
+#        with:
+#          path: ${{ github.workspace }}/librecad**snap
+#          name: LibreCAD.snap
+#
   BuildMacOS:
-    runs-on: macos-11
+    runs-on: macos-14
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
-      - name: Install Qt5 and dependencies
+      - name: uninstall p7zip
         run: |
-          brew install boost qt5
-          brew link qt5 --force
+          brew uninstall p7zip
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.*'
+
+      - name: Install boost dependencies
+        run: |
+          brew install boost
+
+      # XProtect can cause random failures if it decides that the DMG we create
+      # during the packaging phase is malware.
+      # TODO: Do it in a cleaner way
+      # Inspiration: https://github.com/servo/servo/pull/30779
+      - name: Kill XProtectBehaviorService
+        run: |
+          echo Killing XProtect.; sudo pkill -9 XProtect >/dev/null || true;
 
       - name: Build and packaging
         run: |
@@ -86,110 +141,20 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
         with:
-          name: assets
+          name: macOSAssets
           path: LibreCAD*.dmg
           retention-days: 2
 
-  BuildWindows:
-    runs-on: windows-2019
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Uninstall incorrect mingw
-        run: |
-          choco uninstall mingw --force
-          choco uninstall strawberryperl --force
-
-      - name: Install MinGW8.1 32-bit
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW32
-
-      - name: Install Qt-5.15
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '5.15.2'
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win32_mingw81'
-          dir: '..'
-          install-deps: 'true'
-          cache: 'false'
-          cache-key-prefix: 'install-qt-action'
-          setup-python: 'true'
-          set-env: 'true'
-          tools-only: 'false'
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
-          extra: '--external 7z'
-
-      - name: Install boost
-        shell: bash
-        run: |
-          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
-          7z x -o. -y boost.7z
-          mv boost_1_75_0 ../boost
-          rm boost.7z
-
-      - name: Debugging
-        if: ${{ always() }}
-        shell: cmd
-        run: |
-          set
-          echo.
-          dir c:\
-          echo.
-          dir d:\
-          echo.
-          dir d:\a
-          echo.
-          dir
-          echo.
-          dir ..
-          echo.
-          dir ..\boost
-          echo.
-          dir ..\Qt
-          echo.
-          dir ..\Qt\5.15.2\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_32\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_32\bin
-
-      - name: Build
-        run: |
-          set PATH=c:\msys64\mingw32\bin;%PATH%
-          copy CI\custom-win.pri custom.pri
-          copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
-          echo SET:
-          set
-          pushd "${{ github.workspace }}\scripts"
-          build-windows.bat
-        shell: cmd
-
-      - name: Rename installer
-        run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --always`.exe
-        shell: bash
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: assets
-          path: LibreCAD-Installer*.exe
-          retention-days: 2
-
   BuildWindows64:
-    runs-on: windows-2019
+    runs-on: windows-2022
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -198,18 +163,13 @@ jobs:
           choco uninstall mingw --force
           choco uninstall strawberryperl --force
 
-      - name: Install MinGW8.1 64-bit
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-
-      - name: Install Qt-5.15
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '6.6.*'
           host: 'windows'
+          arch: 'win64_mingw'
           target: 'desktop'
-          arch: 'win64_mingw81'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
@@ -217,16 +177,24 @@ jobs:
           setup-python: 'true'
           set-env: 'true'
           tools-only: 'false'
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
           extra: '--external 7z'
+
+      - name: install mingw-1120
+        run: |
+          aqt install-tool windows desktop tools_mingw90
+
+      - name: list folders
+        run: |
+          where qmake6.exe
+          where g++.exe
+          where mingw32-make.exe
 
       - name: Install boost
         shell: bash
         run: |
-          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.7z
           7z x -o. -y boost.7z
-          mv boost_1_75_0 ../boost
+          mv boost_1_83_0 ../boost
           rm boost.7z
 
       - name: Debugging
@@ -246,18 +214,17 @@ jobs:
           dir ..
           echo.
           dir ..\boost
+          dir ..\Qt\6.6.3\mingw_64\bin
           echo.
-          dir ..\Qt
-          echo.
-          dir ..\Qt\5.15.2\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_64\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_64\bin
+          dir /b /s ..\Qt
+          where qmake6.exe
+          where mingw32-make.exe
+          where make.exe
+          where g++
 
       - name: Build
         run: |
-          set PATH=C:\msys64\mingw64\bin;%PATH%
+          set PATH=${{ github.workspace }}\Tools\mingw1120_64\bin;${{ github.workspace }}\Qt\6.6.3\mingw_64\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
@@ -268,37 +235,50 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
         shell: bash
 
+      - name: List files
+        run: |
+            echo "${{ github.workspace }}"
+            dir "${{ github.workspace }}"
+        shell: cmd
+
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
         with:
-          name: assets
-          path: LibreCAD-Installer*.exe
+          name: win64Assets
+          path: LibreCAD*.exe
           retention-days: 2
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
-    runs-on: ubuntu-22.04
+    needs: [BuildLinux, BuildMacOS, BuildWindows64]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
+      - name: Delete existing
+        run: gh release delete "2.2.2_alpha-latest" -y
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Fetch artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@main
 
       - name: Upload latest pre-release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          title: "Continuous Build"
+          name: "Continuous Build: latest development"
+          tag_name: "2.2.2_alpha-latest"
+          prerelease: true
+          draft: false
           files: |
-            assets/LibreCAD*.*
+            linuxAssets/LibreCAD*.AppImage
+            macOSAssets/LibreCAD*.dmg
+            win64Assets/LibreCAD*.exe
             LICENSE
-
-

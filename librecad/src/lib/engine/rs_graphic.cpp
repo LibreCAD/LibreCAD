@@ -42,7 +42,6 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 
-
 /**
  * Default constructor.
  */
@@ -56,20 +55,20 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         marginRight(0.0),
         marginBottom(0.0),
         pagesNumH(1),
-        pagesNumV(1)
-{
+        pagesNumV(1) {
 
-    RS_SETTINGS->beginGroup("/Defaults");
-    setUnit(RS_Units::stringToUnit(RS_SETTINGS->readEntry("/Unit", "None")));
-    RS_SETTINGS->endGroup();
-    RS_SETTINGS->beginGroup("/Appearance");
-    //$ISOMETRICGRID == $SNAPSTYLE
-    addVariable("$SNAPSTYLE",static_cast<int>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)),70);
-   crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
-    RS_SETTINGS->endGroup();
+
+    setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
+
+    {
+        LC_GROUP_GUARD("Appearance");
+        //$ISOMETRICGRID == $SNAPSTYLE
+        addVariable("$SNAPSTYLE", static_cast<int>(LC_GET_INT("IsometricGrid", 0)), 70);
+        crosshairType = static_cast<RS2::CrosshairType>(LC_GET_INT("CrosshairType", 0));
+    }
     RS2::Unit unit = getUnit();
 
-    if (unit==RS2::Inch) {
+    if (unit == RS2::Inch) {
         addVariable("$DIMASZ", 0.1, 40);
         addVariable("$DIMEXE", 0.05, 40);
         addVariable("$DIMEXO", 0.025, 40);
@@ -92,14 +91,12 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     setPaperScale(getPaperScale());
     setPaperInsertionBase(getPaperInsertionBase());
 
-	//set default values for point style
-	addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
-	addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
+//set default values for point style
+    addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
+    addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
 
     setModified(false);
 }
-
-
 
 /**
  * Destructor.
@@ -107,77 +104,69 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 RS_Graphic::~RS_Graphic() = default;
 
 
-
 /**
  * Counts the entities on the given layer.
  */
-unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
-
-    int c=0;
-
-	if (layer) {
-        for(RS_Entity* t: entities){
-
-			if (t->getLayer() &&
-                    t->getLayer()->getName()==layer->getName()) {
-                c+=t->countDeep();
+unsigned long int RS_Graphic::countLayerEntities(RS_Layer *layer) {
+    int c = 0;
+    if (layer) {
+        for (RS_Entity *t: entities) {
+            if (t->getLayer() &&
+                t->getLayer()->getName() == layer->getName()) {
+                c += t->countDeep();
             }
         }
     }
-
     return c;
 }
-
-
 
 /**
  * Removes the given layer and undoes all entities on it.
  */
 void RS_Graphic::removeLayer(RS_Layer* layer) {
-
-    if (layer && layer->getName()!="0") {
-
-		std::vector<RS_Entity*> toRemove;
-		//find entities on layer
-        for(RS_Entity* e: entities){
-			if (e->getLayer() &&
-                    e->getLayer()->getName()==layer->getName()) {
-				toRemove.push_back(e);
+    if (layer != nullptr) {
+        const QString &layerName = layer->getName();
+        if (layerName != "0") {
+            std::vector<RS_Entity *> toRemove;
+//find entities on layer
+            for (RS_Entity *e: entities) {
+                if (e->getLayer() &&
+                    e->getLayer()->getName() == layerName) {
+                    toRemove.push_back(e);
+                }
             }
+// remove all entities on that layer:
+            if (!toRemove.empty()) {
+                startUndoCycle();
+                for (RS_Entity *e: toRemove) {
+                    e->setUndoState(true);
+                    e->setLayer("0");
+                    addUndoable(e);
+                }
+                endUndoCycle();
+            }
+
+            toRemove.clear();
+            // remove all entities in blocks that are on that layer:
+            for (RS_Block *blk: blockList) {
+                if (!blk) continue;
+                for (auto e: *blk) {
+                    if (e->getLayer() &&
+                        e->getLayer()->getName() == layerName) {
+                        toRemove.push_back(e);
+                    }
+                }
+            }
+
+            for (RS_Entity *e: toRemove) {
+                e->setUndoState(true);
+                e->setLayer("0");
+            }
+
+            layerList.remove(layer);
         }
-		// remove all entities on that layer:
-		if(toRemove.size()){
-			startUndoCycle();
-            for(RS_Entity* e: toRemove){
-				e->setUndoState(true);
-				e->setLayer("0");
-				addUndoable(e);
-			}
-			endUndoCycle();
-		}
-
-		toRemove.clear();
-        // remove all entities in blocks that are on that layer:
-		for(RS_Block* blk: blockList){
-			if(!blk) continue;
-			for(auto e: *blk){
-
-				if (e->getLayer() &&
-						e->getLayer()->getName()==layer->getName()) {
-					toRemove.push_back(e);
-				}
-			}
-		}
-
-        for(RS_Entity* e: toRemove){
-			e->setUndoState(true);
-			e->setLayer("0");
-		}
-
-        layerList.remove(layer);
     }
 }
-
 
 /**
  * Clears all layers, blocks and entities of this graphic.
@@ -188,17 +177,12 @@ void RS_Graphic::newDoc() {
     RS_DEBUG->print("RS_Graphic::newDoc");
 
     clear();
-
     clearLayers();
     clearBlocks();
-
     addLayer(new RS_Layer("0"));
     //addLayer(new RS_Layer("ByBlock"));
-
-        setModified(false);
+    setModified(false);
 }
-
-
 
 /*
  * Description:	Create/update the drawing backup file, if necessary.
@@ -213,77 +197,68 @@ void RS_Graphic::newDoc() {
  * 						false	: Operation failed.
  * 						true	: Operation successful.
  */
-bool RS_Graphic::BackupDrawingFile(const QString &filename)
-{
-        static const char	*msg_err	=
-                "RS_Graphic::BackupDrawingFile: Can't create object!";
+bool RS_Graphic::BackupDrawingFile(const QString &filename) {
+    static const char *msg_err =
+        "RS_Graphic::BackupDrawingFile: Can't create object!";
 
-        bool	ret	= false;		/*	Operation failed, by default. */
+    bool ret = false;  /*	Operation failed, by default. */
 
 
-        /*	- Create backup only if drawing file name exist.
-         *	- Remark: Not really necessary to check if the drawing file
-         *	  name have been defined.
-         *	----------------------------------------------------------- */
-        if (filename.length() > 0)
-        {
-                /*	Built Backup File Name.
+    /*	- Create backup only if drawing file name exist.
+     *	- Remark: Not really necessary to check if the drawing file
+     *	  name have been defined.
+     *	----------------------------------------------------------- */
+    if (filename.length() > 0) {
+        /*	Built Backup File Name.
+         *	*/
+        QString *qs_backup_fn = new QString(filename + '~');
+
+        /*	Create "Drawing File" object.
+         *	*/
+        QFile *qf_df = new QFile(filename);
+
+        /*	If able to create the objects, process...
+         *	----------------------------------------- */
+        if ((qs_backup_fn != nullptr) && (qf_df != nullptr)) {
+            /*	Create backup file only if drawing file already exist.
+             *	------------------------------------------------------ */
+            if (qf_df->exists() == true) {
+                /*	Create "Drawing File Backup" object.
                  *	*/
-                QString	*qs_backup_fn	= new QString(filename + '~');
+                QFile *qf_dfb = new QFile(*qs_backup_fn);
 
-                /*	Create "Drawing File" object.
-                 *	*/
-                QFile	*qf_df = new QFile(filename);
+                /*	If able to create the object, process...
+                 *	---------------------------------------- */
+                if (qf_dfb != nullptr) {
+                    /*	If a backup file already exist, remove it!
+                     *	------------------------------------------ */
+                    if (qf_dfb->exists() == true)
+                        qf_dfb->remove();
 
-                /*	If able to create the objects, process...
-                 *	----------------------------------------- */
-                if ((qs_backup_fn != nullptr) && (qf_df != nullptr))
-                {
-                        /*	Create backup file only if drawing file already exist.
-                         *	------------------------------------------------------ */
-                        if (qf_df->exists() == true)
-                        {
-                                /*	Create "Drawing File Backup" object.
-                                 *	*/
-                                QFile	*qf_dfb	= new QFile(*qs_backup_fn);
-
-                                /*	If able to create the object, process...
-                                 *	---------------------------------------- */
-                                if (qf_dfb != nullptr)
-                                {
-                                        /*	If a backup file already exist, remove it!
-                                         *	------------------------------------------ */
-                                        if (qf_dfb->exists() == true)
-                                                qf_dfb->remove();
-
-                                        qf_df->copy(*qs_backup_fn);	/*	Create backup file. */
-                                        ret	= true;						/*	Operation successful. */
-                                        delete qf_dfb;
-                                }
-                                /*	Can't create object.
-                                 *	-------------------- */
-                                else
-                                {
+                    qf_df->copy(*qs_backup_fn); /*	Create backup file. */
+                    ret = true;      /*	Operation successful. */
+                    delete qf_dfb;
+                }
+                    /*	Can't create object.
+                     *	-------------------- */
+                else {
                     RS_DEBUG->print("%s", msg_err);
-                                }
-                        }
-
                 }
-                /*	Can't create object(s).
-                 *	----------------------- */
-                else
-                {
+            }
+
+        }
+            /*	Can't create object(s).
+             *	----------------------- */
+        else {
             RS_DEBUG->print("%s", msg_err);
-                }
-
-                delete qs_backup_fn;
-                delete qf_df;
         }
 
-        return ret;
+        delete qs_backup_fn;
+        delete qf_df;
+    }
+
+    return ret;
 }
-
-
 
 /*
  *	Description:	Saves this graphic with the current filename and settings.
@@ -302,9 +277,8 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
  * 					  is saved more than one time without being modified.
  */
 
-bool RS_Graphic::save(bool isAutoSave)
-{
-    bool ret	= false;
+bool RS_Graphic::save(bool isAutoSave) {
+    bool ret = false;
 
     RS_DEBUG->print("RS_Graphic::save: Entering...");
 
@@ -313,27 +287,25 @@ bool RS_Graphic::save(bool isAutoSave)
          *	  coding error that make LibreCAD not aware of modification
          *	  when some kind of drawing modification is done.
          *	----------------------------------------------------------- */
-	if (isModified())
-    {
-		QString actualName;
-        RS2::FormatType	actualType;
+    if (isModified()) {
+        QString actualName;
+        RS2::FormatType actualType;
 
-        actualType	= formatType;
+        actualType = formatType;
 
-		if (isAutoSave)
-        {
-			actualName = autosaveFilename;
+        if (isAutoSave) {
+            actualName = autosaveFilename;
 
             if (formatType == RS2::FormatUnknown)
                 actualType = RS2::FormatDXFRW;
-		} else {
-			//	- This is not an AutoSave operation.  This is a manual
-			//	  save operation.  So, ...
-			//		- Set working file name to the drawing file name.
-			//		- Backup drawing file (if necessary).
-			//	------------------------------------------------------
-			QFileInfo	finfo(filename);
-			QDateTime m=finfo.lastModified();
+        } else {
+//	- This is not an AutoSave operation.  This is a manual
+//	  save operation.  So, ...
+//		- Set working file name to the drawing file name.
+//		- Backup drawing file (if necessary).
+//	------------------------------------------------------
+            QFileInfo finfo(filename);
+            QDateTime m = finfo.lastModified();
             //bug#3414993
             //modifiedTime should only be used for the same filename
 //            DEBUG_HEADER
@@ -343,65 +315,64 @@ bool RS_Graphic::save(bool isAutoSave)
 //            qDebug()<<"modifiedTime.isValid()="<<modifiedTime.isValid();
 //            qDebug()<<"Previous timestamp: "<<modifiedTime;
 //            qDebug()<<"Current timestamp: "<<m;
-            if ( currentFileName == QString(filename)
-                 && modifiedTime.isValid() && m != modifiedTime ) {
+            if (currentFileName == QString(filename)
+                && modifiedTime.isValid() && m != modifiedTime) {
                 //file modified by others
 //            qDebug()<<"detected on disk change";
-                RS_DIALOGFACTORY->commandMessage(QObject::tr("File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(filename));
+                RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                    "File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(
+                    filename));
                 return false;
             }
 
-			actualName = filename;
-            auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
-            if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
+            actualName = filename;
+            if (LC_GET_ONE_BOOL("Defaults","AutoBackupDocument", true)) {
                 BackupDrawingFile(filename);
+            }
         }
 
         /*	Save drawing file if able to created associated object.
                  *	------------------------------------------------------- */
-		if (!actualName.isEmpty())
-        {
-			RS_DEBUG->print("RS_Graphic::save: File: %s", actualName.toLatin1().data());
+        if (!actualName.isEmpty()) {
+            RS_DEBUG->print("RS_Graphic::save: File: %s", actualName.toLatin1().data());
             RS_DEBUG->print("RS_Graphic::save: Format: %d", (int) actualType);
             RS_DEBUG->print("RS_Graphic::save: Export...");
 
-			ret = RS_FileIO::instance()->fileExport(*this, actualName, actualType);
-			QFileInfo	finfo(actualName);
-			modifiedTime=finfo.lastModified();
-			currentFileName=actualName;
-		} else {
+            ret = RS_FileIO::instance()->fileExport(*this, actualName, actualType);
+            QFileInfo finfo(actualName);
+            modifiedTime = finfo.lastModified();
+            currentFileName = actualName;
+        } else {
             RS_DEBUG->print("RS_Graphic::save: Can't create object!");
             RS_DEBUG->print("RS_Graphic::save: File not saved!");
         }
 
         /*	Remove AutoSave file after user has successfully saved file.
                  *	------------------------------------------------------------ */
-        if (ret && !isAutoSave)
-        {
+        if (ret && !isAutoSave) {
             /*	Autosave file object.
                          *	*/
-			QFile	qf_file(autosaveFilename);
+            QFile qf_file(autosaveFilename);
 
-			/*	Tell that drawing file is no more modified.
-						 *	------------------------------------------- */
-			setModified(false);
-			layerList.setModified(false);
-			blockList.setModified(false);
+/*	Tell that drawing file is no more modified.
+    *	------------------------------------------- */
+            setModified(false);
+            layerList.setModified(false);
+            blockList.setModified(false);
 
-			/*	- Remove autosave file, if able to create associated object,
-						 *	  and if autosave file exist.
-						 *	------------------------------------------------------------ */
-			if (qf_file.exists())
-			{
-				RS_DEBUG->print(	"RS_Graphic::save: Removing old autosave file %s",
-									autosaveFilename.toLatin1().data());
-				qf_file.remove();
-			}
+/*	- Remove autosave file, if able to create associated object,
+    *	  and if autosave file exist.
+    *	------------------------------------------------------------ */
+            if (qf_file.exists()) {
+                RS_DEBUG->print("RS_Graphic::save: Removing old autosave file %s",
+                                autosaveFilename.toLatin1().data());
+                qf_file.remove();
+            }
 
         }
 
         RS_DEBUG->print("RS_Graphic::save: Done!");
-	} else {
+    } else {
         RS_DEBUG->print("RS_Graphic::save: File not modified, not saved");
         ret = true;
     }
@@ -410,8 +381,6 @@ bool RS_Graphic::save(bool isAutoSave)
 
     return ret;
 }
-
-
 
 /*
  *	Description:	- Saves this graphic with the given filename and current
@@ -433,56 +402,55 @@ bool RS_Graphic::save(bool isAutoSave)
  * Notes:			Backup the drawing file (if necessary).
  */
 
-bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type, bool force)
-{
-	RS_DEBUG->print("RS_Graphic::saveAs: Entering...");
+bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type, bool force) {
+    RS_DEBUG->print("RS_Graphic::saveAs: Entering...");
 
-	// Set to "failed" by default.
-	bool ret	= false;
+// Set to "failed" by default.
+    bool ret = false;
 
-	// Check/memorize if file name we want to use as new file
-	// name is the same as the actual file name.
-	bool fn_is_same	= filename == this->filename;
-	auto const filenameSaved=this->filename;
-	auto const autosaveFilenameSaved=this->autosaveFilename;
-	auto const formatTypeSaved=this->formatType;
+// Check/memorize if file name we want to use as new file
+// name is the same as the actual file name.
+    bool fn_is_same = filename == this->filename;
+    auto const filenameSaved = this->filename;
+    auto const autosaveFilenameSaved = this->autosaveFilename;
+    auto const formatTypeSaved = this->formatType;
 
-	this->filename = filename;
-	this->formatType	= type;
+    this->filename = filename;
+    this->formatType = type;
 
-	// QString	const oldAutosaveName = this->autosaveFilename;
-	QFileInfo	finfo(filename);
+// QString	const oldAutosaveName = this->autosaveFilename;
+    QFileInfo finfo(filename);
 
-	// Construct new autosave filename by prepending # to the filename
-	// part, using the same directory as the destination file.
-	this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
+// Construct new autosave filename by prepending # to the filename
+// part, using the same directory as the destination file.
+    this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
 
-	// When drawing is saved using a different name than the actual
-	// drawing file name, make LibreCAD think that drawing file
-	// has been modified, to make sure the drawing file saved.
-	if (!fn_is_same || force)
-		setModified(true);
+// When drawing is saved using a different name than the actual
+// drawing file name, make LibreCAD think that drawing file
+// has been modified, to make sure the drawing file saved.
+    if (!fn_is_same || force)
+        setModified(true);
 
-	ret	= save();		//	Save file.
+    ret = save();  //	Save file.
 
-	if (ret) {
-		// Save was successful, remove old autosave file.
-		QFile	qf_file(autosaveFilenameSaved);
+    if (ret) {
+// Save was successful, remove old autosave file.
+        QFile qf_file(autosaveFilenameSaved);
 
-		if (qf_file.exists()) {
-			RS_DEBUG->print("RS_Graphic::saveAs: Removing old autosave file %s",
-							autosaveFilenameSaved.toLatin1().data());
-			qf_file.remove();
-		}
+        if (qf_file.exists()) {
+            RS_DEBUG->print("RS_Graphic::saveAs: Removing old autosave file %s",
+                            autosaveFilenameSaved.toLatin1().data());
+            qf_file.remove();
+        }
 
-	}else{
-		//do not modify filenames:
-		this->filename=filenameSaved;
-		this->autosaveFilename=autosaveFilenameSaved;
-		this->formatType=formatTypeSaved;
-	}
+    } else {
+//do not modify filenames:
+        this->filename = filenameSaved;
+        this->autosaveFilename = autosaveFilenameSaved;
+        this->formatType = formatTypeSaved;
+    }
 
-	return ret;
+    return ret;
 }
 
 
@@ -492,7 +460,7 @@ bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type, bool forc
 bool RS_Graphic::loadTemplate(const QString &filename, RS2::FormatType type) {
     RS_DEBUG->print("RS_Graphic::loadTemplate(%s)", filename.toLatin1().data());
 
-    bool ret = false;
+    bool ret;
 
     // Construct new autosave filename by prepending # to the filename part,
     // using system temporary dir.
@@ -521,13 +489,13 @@ bool RS_Graphic::loadTemplate(const QString &filename, RS2::FormatType type) {
 bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     RS_DEBUG->print("RS_Graphic::open(%s)", filename.toLatin1().data());
 
-        bool ret = false;
+    bool ret;
 
     this->filename = filename;
-        QFileInfo finfo(filename);
-        // Construct new autosave filename by prepending # to the filename
-        // part, using the same directory as the destination file.
-        this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
+    QFileInfo finfo(filename);
+    // Construct new autosave filename by prepending # to the filename
+    // part, using the same directory as the destination file.
+    this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
 
     // clean all:
     newDoc();
@@ -535,26 +503,25 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     // import file:
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
-    if( ret) {
+    if (ret) {
         setModified(false);
         layerList.setModified(false);
         blockList.setModified(false);
         modifiedTime = finfo.lastModified();
-        currentFileName=QString(filename);
+        currentFileName = QString(filename);
 
         //cout << *((RS_Graphic*)graphic);
         //calculateBorders();
 
         RS_DEBUG->print("RS_Graphic::open(%s): OK", filename.toLatin1().data());
     }
-
     return ret;
 }
-
 
 void RS_Graphic::clearVariables() {
     variableDict.clear();
 }
+
 int RS_Graphic::countVariables() {
     return variableDict.count();
 }
@@ -562,15 +529,19 @@ int RS_Graphic::countVariables() {
 void RS_Graphic::addVariable(const QString& key, const RS_Vector& value, int code) {
     variableDict.add(key, value, code);
 }
+
 void RS_Graphic::addVariable(const QString& key, const QString& value, int code) {
     variableDict.add(key, value, code);
 }
+
 void RS_Graphic::addVariable(const QString& key, int value, int code) {
     variableDict.add(key, value, code);
 }
+
 void RS_Graphic::addVariable(const QString& key, double value, int code) {
     variableDict.add(key, value, code);
 }
+
 void RS_Graphic::removeVariable(const QString& key) {
     variableDict.remove(key);
 }
@@ -599,16 +570,15 @@ QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
  * @return true if the grid is switched on (visible).
  */
 bool RS_Graphic::isGridOn() const {
-        int on = getVariableInt("$GRIDMODE", 1);
-        return on != 0;
+    int on = getVariableInt("$GRIDMODE", 1);
+    return on != 0;
 }
-
 
 /**
  * Enables / disables the grid.
  */
 void RS_Graphic::setGridOn(bool on) {
-        addVariable("$GRIDMODE", (int)on, 70);
+    addVariable("$GRIDMODE", (int)on, 70);
 }
 
 /**
@@ -616,18 +586,16 @@ void RS_Graphic::setGridOn(bool on) {
  */
 bool RS_Graphic::isIsometricGrid() const{
     //$ISOMETRICGRID == $SNAPSTYLE
-        int on = getVariableInt("$SNAPSTYLE", 0);
-        return on!=0;
+    int on = getVariableInt("$SNAPSTYLE", 0);
+    return on!=0;
 }
-
-
 
 /**
  * Enables / disables isometric grid.
  */
 void RS_Graphic::setIsometricGrid(bool on) {
     //$ISOMETRICGRID == $SNAPSTYLE
-        addVariable("$SNAPSTYLE", (int)on, 70);
+    addVariable("$SNAPSTYLE", (int)on, 70);
 }
 
 void RS_Graphic::setCrosshairType(RS2::CrosshairType chType){
@@ -642,15 +610,9 @@ RS2::CrosshairType RS_Graphic::getCrosshairType() const {
  * Sets the unit of this graphic to 'u'
  */
 void RS_Graphic::setUnit(RS2::Unit u) {
-
     setPaperSize(RS_Units::convert(getPaperSize(), getUnit(), u));
-
     addVariable("$INSUNITS", (int)u, 70);
-
-    //unit = u;
 }
-
-
 
 /**
  * Gets the unit of this graphic
@@ -658,8 +620,6 @@ void RS_Graphic::setUnit(RS2::Unit u) {
 RS2::Unit RS_Graphic::getUnit() const {
     return static_cast<RS2::Unit>(getVariableInt("$INSUNITS", 0));
 }
-
-
 
 /**
  * @return The linear format type for this document.
@@ -700,35 +660,22 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() {
  */
 RS2::LinearFormat RS_Graphic::getLinearFormat(int f){
     switch (f) {
-    default:
-    case 2:
-        return RS2::Decimal;
-        break;
-
-    case 1:
-        return RS2::Scientific;
-        break;
-
-    case 3:
-        return RS2::Engineering;
-        break;
-
-    case 4:
-        return RS2::Architectural;
-        break;
-
-    case 5:
-        return RS2::Fractional;
-        break;
-
-    case 6:
-        return RS2::ArchitecturalMetric;
-        break;
+        case 1:
+            return RS2::Scientific;
+        case 2:
+            return RS2::Decimal;
+        case 3:
+            return RS2::Engineering;
+        case 4:
+            return RS2::Architectural;
+        case 5:
+            return RS2::Fractional;
+        case 6:
+            return RS2::ArchitecturalMetric;
+        default:
+            return RS2::Decimal;
     }
-
-    return RS2::Decimal;
 }
-
 
 /**
  * @return The linear precision for this document.
@@ -738,8 +685,6 @@ int RS_Graphic::getLinearPrecision() {
     return getVariableInt("$LUPREC", 4);
 }
 
-
-
 /**
  * @return The angle format type for this document.
  * This is determined by the variable "$AUNITS".
@@ -748,32 +693,20 @@ RS2::AngleFormat RS_Graphic::getAngleFormat() {
     int aunits = getVariableInt("$AUNITS", 0);
 
     switch (aunits) {
-    default:
-    case 0:
-        return RS2::DegreesDecimal;
-        break;
-
-    case 1:
-        return RS2::DegreesMinutesSeconds;
-        break;
-
-    case 2:
-        return RS2::Gradians;
-        break;
-
-    case 3:
-        return RS2::Radians;
-        break;
-
-    case 4:
-        return RS2::Surveyors;
-        break;
+        case 0:
+            return RS2::DegreesDecimal;
+        case 1:
+            return RS2::DegreesMinutesSeconds;
+        case 2:
+            return RS2::Gradians;
+        case 3:
+            return RS2::Radians;
+        case 4:
+            return RS2::Surveyors;        
+        default:
+            return RS2::DegreesDecimal;
     }
-
-    return RS2::DegreesDecimal;
 }
-
-
 
 /**
  * @return The linear precision for this document.
@@ -782,8 +715,6 @@ RS2::AngleFormat RS_Graphic::getAngleFormat() {
 int RS_Graphic::getAnglePrecision() {
     return getVariableInt("$AUPREC", 4);
 }
-
-
 
 /**
  * @return The insertion point of the drawing into the paper space.
@@ -794,7 +725,6 @@ RS_Vector RS_Graphic::getPaperInsertionBase() {
     return getVariableVector("$PINSBASE", RS_Vector(0.0,0.0));
 }
 
-
 /**
  * Sets the PINSBASE variable.
  */
@@ -802,16 +732,17 @@ void RS_Graphic::setPaperInsertionBase(const RS_Vector& p) {
     addVariable("$PINSBASE", p, 10);
 }
 
-
 /**
  * @return Paper size in graphic units.
  */
 RS_Vector RS_Graphic::getPaperSize() {
-    RS_SETTINGS->beginGroup("/Print");
     bool okX,okY;
-    double sX = RS_SETTINGS->readEntry("/PaperSizeX", "0.0").toDouble(&okX);
-    double sY = RS_SETTINGS->readEntry("/PaperSizeY", "0.0").toDouble(&okY);
-	RS_SETTINGS->endGroup();
+    double sX, sY;
+    LC_GROUP_GUARD("Print");
+    {
+        sX = LC_GET_STR("PaperSizeX", "0.0").toDouble(&okX);
+        sY = LC_GET_STR("PaperSizeY", "0.0").toDouble(&okY);
+    }
     RS_Vector def ;
     if(okX&&okY && sX>RS_TOLERANCE && sY>RS_TOLERANCE) {
         def=RS_Units::convert(RS_Vector(sX,sY),
@@ -827,7 +758,6 @@ RS_Vector RS_Graphic::getPaperSize() {
     return v2-v1;
 }
 
-
 /**
  * Sets a new paper size.
  */
@@ -837,29 +767,27 @@ void RS_Graphic::setPaperSize(const RS_Vector& s) {
     //set default paper size
     RS_Vector def = RS_Units::convert(s,
                                      getUnit(), RS2::Millimeter);
-    RS_SETTINGS->beginGroup("/Print");
-    RS_SETTINGS->writeEntry("/PaperSizeX", def.x);
-    RS_SETTINGS->writeEntry("/PaperSizeY", def.y);
-    RS_SETTINGS->endGroup();
-
+    LC_GROUP_GUARD("Print");
+    {
+        LC_SET("PaperSizeX", def.x);
+        LC_SET("PaperSizeY", def.y);
+    }
 }
-
 
 /**
  * @return Print Area size in graphic units.
  */
 RS_Vector RS_Graphic::getPrintAreaSize(bool total) {
     RS_Vector printArea = getPaperSize();
-    printArea.x -= RS_Units::convert(marginLeft+marginRight, RS2::Millimeter, getUnit());
-    printArea.y -= RS_Units::convert(marginTop+marginBottom, RS2::Millimeter, getUnit());
+    RS2::Unit dest = getUnit();
+    printArea.x -= RS_Units::convert(marginLeft + marginRight, RS2::Millimeter, dest);
+    printArea.y -= RS_Units::convert(marginTop+marginBottom, RS2::Millimeter, dest);
     if (total) {
         printArea.x *= pagesNumH;
         printArea.y *= pagesNumV;
     }
     return printArea;
 }
-
-
 
 /**
  * @return Paper format.
@@ -870,15 +798,11 @@ RS_Vector RS_Graphic::getPrintAreaSize(bool total) {
 RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
     RS_Vector size = RS_Units::convert(getPaperSize(),
                                        getUnit(), RS2::Millimeter);
-
-	if (landscape) {
+    if (landscape) {
         *landscape = (size.x>size.y);
     }
-
     return RS_Units::paperSizeToFormat(size);
 }
-
-
 
 /**
  * Sets the paper format to the given format.
@@ -887,13 +811,11 @@ void RS_Graphic::setPaperFormat(RS2::PaperFormat f, bool landscape) {
     RS_Vector size = RS_Units::paperFormatToSize(f);
 
     if (landscape != (size.x > size.y)) {
-		std::swap(size.x, size.y);
+        std::swap(size.x, size.y);
     }
 
-	setPaperSize(RS_Units::convert(size, RS2::Millimeter, getUnit()));
+    setPaperSize(RS_Units::convert(size, RS2::Millimeter, getUnit()));
 }
-
-
 
 /**
  * @return Paper space scaling (DXF: $PSVPSCALE).
@@ -903,20 +825,17 @@ double RS_Graphic::getPaperScale() const {
     if (paperScale < 1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Graphic:: %s(), invalid paper scale %lg\n", __func__, paperScale);
     }
-
     return paperScale;
 }
-
-
 
 /**
  * Sets a new scale factor for the paper space.
  */
 void RS_Graphic::setPaperScale(double s) {
-    if(paperScaleFixed==false) addVariable("$PSVPSCALE", s, 40);
+    if(paperScaleFixed==false) {
+        addVariable("$PSVPSCALE", s, 40);
+    }
 }
-
-
 
 /**
  * Centers drawing on page. Affects DXF variable $PINSBASE.
@@ -924,8 +843,8 @@ void RS_Graphic::setPaperScale(double s) {
 void RS_Graphic::centerToPage() {
     RS_Vector size = getPrintAreaSize();
     double scale = getPaperScale();
-	auto s=getSize();
-	auto sMin=getMin();
+    auto s=getSize();
+    auto sMin=getMin();
     /** avoid zero size, bug#3573158 */
     if(std::abs(s.x)<RS_TOLERANCE) {
         s.x=10.;
@@ -937,20 +856,20 @@ void RS_Graphic::centerToPage() {
     }
 
     RS_Vector pinsbase = (size-s*scale)/2.0 - sMin*scale;
-    pinsbase.x += RS_Units::convert(marginLeft, RS2::Millimeter, getUnit());
-    pinsbase.y += RS_Units::convert(marginBottom, RS2::Millimeter, getUnit());
+    RS2::Unit unit = getUnit();
+    pinsbase.x += RS_Units::convert(marginLeft, RS2::Millimeter, unit);
+    pinsbase.y += RS_Units::convert(marginBottom, RS2::Millimeter, unit);
 
     setPaperInsertionBase(pinsbase);
 }
 
-
-
 /**
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
+  // fixme - check margins support in single and tiled modes - looks like they are shown differently
 bool RS_Graphic::fitToPage() {
     bool ret = true;
-    RS_Vector ps = getPrintAreaSize();
+    RS_Vector ps = getPrintAreaSize(false);
     RS_Vector s = getSize();
     /** avoid zero size, bug#3573158 */
     if(std::abs(s.x)<RS_TOLERANCE) s.x=10.;
@@ -971,12 +890,7 @@ bool RS_Graphic::fitToPage() {
 
     double fxy = std::min(fx, fy);
     if (fxy >= RS_MAXDOUBLE || fxy <= 1.0e-10) {
-        setPaperSize(
-                    RS_Units::convert(RS_Vector(210.,297.)
-                                      , RS2::Millimeter
-                                      , getUnit()
-                                      )
-                    );
+        setPaperSize(RS_Units::convert(RS_Vector(210.,297.), RS2::Millimeter, getUnit()));
         ret=false;
     }
     setPaperScale(fxy);
@@ -984,26 +898,22 @@ bool RS_Graphic::fitToPage() {
     return ret;
 }
 
-
 bool RS_Graphic::isBiggerThanPaper() {
     RS_Vector ps = getPrintAreaSize();
     RS_Vector s = getSize() * getPaperScale();
     return !s.isInWindow(RS_Vector(0.0, 0.0), ps);
 }
 
-
-void RS_Graphic::addEntity(RS_Entity* entity)
-{
+void RS_Graphic::addEntity(RS_Entity *entity) {
     RS_EntityContainer::addEntity(entity);
-    if( entity->rtti() == RS2::EntityBlock ||
-            entity->rtti() == RS2::EntityContainer){
-        RS_EntityContainer* e=static_cast<RS_EntityContainer*>(entity);
-		for(auto e1: *e){
+    if (entity->rtti() == RS2::EntityBlock ||
+        entity->rtti() == RS2::EntityContainer) {
+        auto *e = dynamic_cast<RS_EntityContainer *>(entity);
+        for (auto e1: *e) {
             addEntity(e1);
         }
     }
 }
-
 
 /**
  * Dumps the entities to stdout.
@@ -1014,7 +924,6 @@ std::ostream& operator << (std::ostream& os, RS_Graphic& g) {
     os << "---" << *g.getBlockList() << "\n";
     os << "---" << (RS_Undo&)g << "\n";
     os << "---" << (RS_EntityContainer&)g << "\n";
-
     return os;
 }
 
@@ -1022,29 +931,28 @@ std::ostream& operator << (std::ostream& os, RS_Graphic& g) {
  * Removes invalid objects.
  * @return how many objects were removed
  */
-int RS_Graphic::clean()
-{
+int RS_Graphic::clean() {
     // author: ravas
 
     int how_many = 0;
 
-    foreach (RS_Entity* e, entities)
-    {
-        if    (e->getMin().x > e->getMax().x
-            || e->getMin().y > e->getMax().y
-            || e->getMin().x > RS_MAXDOUBLE
-            || e->getMax().x > RS_MAXDOUBLE
-            || e->getMin().x < RS_MINDOUBLE
-            || e->getMax().x < RS_MINDOUBLE
-            || e->getMin().y > RS_MAXDOUBLE
-            || e->getMax().y > RS_MAXDOUBLE
-            || e->getMin().y < RS_MINDOUBLE
-            || e->getMax().y < RS_MINDOUBLE)
-        {
-            removeEntity(e);
-            how_many += 1;
+        foreach (RS_Entity *e, entities) {
+            const RS_Vector &min = e->getMin();
+            const RS_Vector &max = e->getMax();
+            if (min.x > max.x
+                || min.y > max.y
+                || min.x > RS_MAXDOUBLE
+                || max.x > RS_MAXDOUBLE
+                || min.x < RS_MINDOUBLE
+                || max.x < RS_MINDOUBLE
+                || min.y > RS_MAXDOUBLE
+                || max.y > RS_MAXDOUBLE
+                || min.y < RS_MINDOUBLE
+                || max.y < RS_MINDOUBLE) {
+                removeEntity(e);
+                how_many += 1;
+            }
         }
-    }
     return how_many;
 }
 
@@ -1052,21 +960,25 @@ int RS_Graphic::clean()
  * Paper margins in graphic units
  */
 void RS_Graphic::setMarginsInUnits(double left, double top, double right, double bottom) {
-    setMargins(
-        RS_Units::convert(left, getUnit(), RS2::Millimeter),
-        RS_Units::convert(top, getUnit(), RS2::Millimeter),
-        RS_Units::convert(right, getUnit(), RS2::Millimeter),
-        RS_Units::convert(bottom, getUnit(), RS2::Millimeter));
+    RS2::Unit src = getUnit();
+    setMargins(RS_Units::convert(left, src, RS2::Millimeter),
+               RS_Units::convert(top, src, RS2::Millimeter),
+               RS_Units::convert(right, src, RS2::Millimeter),
+               RS_Units::convert(bottom, src, RS2::Millimeter));
 }
+
 double RS_Graphic::getMarginLeftInUnits() {
     return RS_Units::convert(marginLeft, RS2::Millimeter, getUnit());
 }
+
 double RS_Graphic::getMarginTopInUnits() {
     return RS_Units::convert(marginTop, RS2::Millimeter, getUnit());
 }
+
 double RS_Graphic::getMarginRightInUnits() {
     return RS_Units::convert(marginRight, RS2::Millimeter, getUnit());
 }
+
 double RS_Graphic::getMarginBottomInUnits() {
     return RS_Units::convert(marginBottom, RS2::Millimeter, getUnit());
 }
@@ -1077,6 +989,7 @@ void RS_Graphic::setPagesNum(int horiz, int vert) {
     if (vert > 0)
         pagesNumV = vert;
 }
+
 void RS_Graphic::setPagesNum(const QString &horizXvert) {
     if (horizXvert.contains('x')) {
         bool ok1 = false;

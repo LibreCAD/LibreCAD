@@ -51,6 +51,7 @@
         <file>snap_grid.svg</file>
         <file>snap_intersection.svg</file>
         <file>snap_middle.svg</file>
+        <file>snap_middle_manual.svg</file>
         <file>lock_rel_zero.svg</file>
         <file>set_rel_zero.svg</file>
         <file>arc_3_points.svg</file>
@@ -225,5 +226,42 @@
         <file>close_all.svg</file>
         <file>save_all.svg</file>
         <file>scaleLineWidth.svg</file>
+        <file>parabola_4_points.svg</file>
+        <file>parabola_focus_directrix.svg</file>
+        <file>pen_apply.svg</file>
+        <file>pen_copy.svg</file>
+        <file>cross_circle.svg</file>
+        <file>cross_circle1.svg</file>
+        <file>line_rel.svg</file>
+        <file>line_rel_x.svg</file>
+        <file>line_rel_y.svg</file>
+        <file>line_angle_rel.svg</file>
+        <file>line_ortho_rel.svg</file>
+        <file>slice_divide.svg</file>
+        <file>circle_by_arc.svg</file>
+        <file>line_join.svg</file>
+        <file>line_points.svg</file>
+        <file>duplicate.svg</file>
+        <file>line_to_ortho.svg</file>
+        <file>rectangle_1_point.svg</file>
+        <file>rectangle_2_points.svg</file>
+        <file>rectangle_3_points.svg</file>
+        <file>line_polygon_star.svg</file>
+        <file>slice_divide_circle.svg</file>
+        <file>break_out_trim.svg</file>
+        <file>line_gap.svg</file>
+        <file>distance_entity_to_point.svg</file>
+        <file>state-shift_no.svg</file>
+        <file>state-shift_yes.svg</file>
+        <file>state_ctrl_yes.svg</file>
+        <file>paste_transform.svg</file>
+        <file>angle_3_points.svg</file>
+        <file>page_landscape.svg</file>
+        <file>page_portait.svg</file>
+        <file>shortcuts_settings.svg</file>
+        <file>ellipse_1_point.svg</file>
+        <file>ellipse_arc_1_point.svg</file>
+        <file>dim_baseline.svg</file>
+        <file>dim_continue.svg</file>
     </qresource>
 </RCC>

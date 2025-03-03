@@ -145,7 +145,7 @@ bool RS_FilterDXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 QString RS_FilterDXF::getDXFEncoding() {
 
     QString acadver=variables.getString("$ACADVER", "");
-    acadver.replace(QRegExp("[a-zA-Z]"), "");
+    acadver.replace(QRegularExpression("[a-zA-Z]"), "");
     bool ok;
     int version=acadver.toInt(&ok);
 
@@ -3068,28 +3068,28 @@ QString RS_FilterDXF::toNativeString(const char* data, const QString& encoding) 
     }
 
     // Line feed:
-    res = res.replace(QRegExp("\\\\P"), "\n");
+    res = res.replace(QRegularExpression("\\\\P"), "\n");
     // Space:
-    res = res.replace(QRegExp("\\\\~"), " ");
+    res = res.replace(QRegularExpression("\\\\~"), " ");
     // diameter:
-    res = res.replace(QRegExp("%%c"), QChar(0x2205));
+    res = res.replace(QRegularExpression("%%c"), QChar(0x2205));
     // degree:
-    res = res.replace(QRegExp("%%d"), QChar(0x00B0));
+    res = res.replace(QRegularExpression("%%d"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(QRegExp("%%p"), QChar(0x00B1));
+    res = res.replace(QRegularExpression("%%p"), QChar(0x00B1));
 
     // Unicode characters:
     QString cap = "";
     int uCode = 0;
     bool ok = false;
     do {
-        QRegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
+        QRegularExpression regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
         regexp.indexIn(res);
         cap = regexp.cap();
         if (!cap.isNull()) {
             uCode = cap.right(4).toInt(&ok, 16);
             // workaround for Qt 3.0.x:
-            res.replace(QRegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
+            res.replace(QRegularExpression("\\\\U\\+" + cap.right(4)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -3101,13 +3101,13 @@ QString RS_FilterDXF::toNativeString(const char* data, const QString& encoding) 
     uCode = 0;
     ok = false;
     do {
-        QRegExp regexp("%%[0-9]{3,3}");
+        QRegularExpression regexp("%%[0-9]{3,3}");
         regexp.indexIn(res);
         cap = regexp.cap();
         if (!cap.isNull()) {
             uCode = cap.right(3).toInt(&ok, 10);
             // workaround for Qt 3.0.x:
-            res.replace(QRegExp("%%" + cap.right(3)), QChar(uCode));
+            res.replace(QRegularExpression("%%" + cap.right(3)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -3115,7 +3115,7 @@ QString RS_FilterDXF::toNativeString(const char* data, const QString& encoding) 
     while (!cap.isNull());
 
     // Ignore font tags:
-    res = res.replace(QRegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
+    res = res.replace(QRegularExpression("\\\\f[0-9A-Za-z| ]{0,};"), "");
 
     // Ignore {}
     res = res.replace("\\{", "#curly#");
@@ -3273,8 +3273,6 @@ RS2::Unit RS_FilterDXF::numberToUnit(int num) {
     return RS2::None;
 }
 
-
-
 /**
  * Converts a unit enum into a DXF unit number e.g. for INSUNITS.
  */
@@ -3349,8 +3347,6 @@ int RS_FilterDXF::unitToNumber(RS2::Unit unit) {
     return 0;
 }
 
-
-
 /**
  * Checks if the given variable is two-dimensional (e.g. $LIMMIN).
  */
@@ -3367,6 +3363,3 @@ bool RS_FilterDXF::isVariableTwoDimensional(const QString& var) {
         return false;
     }
 }
-
-// EOF
-

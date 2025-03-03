@@ -336,35 +336,27 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
     return ret;
 }
 
-RS_Vector RS_Solid::getNearestCenter(const RS_Vector& coord,
+RS_Vector RS_Solid::getNearestCenter([[maybe_unused]] const RS_Vector& coord,
                                      double* dist /*= nullptr*/) const
 {
-    Q_UNUSED( coord)
-
     setDistPtr( dist, RS_MAXDOUBLE);
 
     return RS_Vector(false);
 }
 
-RS_Vector RS_Solid::getNearestMiddle(const RS_Vector& coord,
+RS_Vector RS_Solid::getNearestMiddle([[maybe_unused]] const RS_Vector& coord,
                                      double* dist /*= nullptr*/,
-                                     const int middlePoints /*= 1*/) const
+                                     [[maybe_unused]] const int middlePoints /*= 1*/) const
 {
-    Q_UNUSED( coord)
-    Q_UNUSED( middlePoints)
-
     setDistPtr( dist, RS_MAXDOUBLE);
 
     return RS_Vector(false);
 }
 
-RS_Vector RS_Solid::getNearestDist(double distance,
-                                   const RS_Vector& coord,
+RS_Vector RS_Solid::getNearestDist([[maybe_unused]] double distance,
+                                   [[maybe_unused]] const RS_Vector& coord,
                                    double* dist /*= nullptr*/) const
 {
-    Q_UNUSED( distance)
-    Q_UNUSED( coord)
-
     setDistPtr( dist, RS_MAXDOUBLE);
 
     return RS_Vector(false);
@@ -376,12 +368,9 @@ RS_Vector RS_Solid::getNearestDist(double distance,
  */
 double RS_Solid::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity /*= nullptr*/,
-                                    RS2::ResolveLevel level /*= RS2::ResolveNone*/,
-                                    double solidDist /*= RS_MAXDOUBLE*/) const
+                                    [[maybe_unused]] RS2::ResolveLevel level /*= RS2::ResolveNone*/,
+                                    [[maybe_unused]] double solidDist /*= RS_MAXDOUBLE*/) const
 {
-    Q_UNUSED( level)
-    Q_UNUSED( solidDist)
-
     if (nullptr != entity) {
         *entity = const_cast<RS_Solid*>(this);
     }
@@ -445,10 +434,8 @@ void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 
 void RS_Solid::draw(RS_Painter* painter,
                     RS_GraphicView* view,
-                    double& patternOffset)
+                    [[maybe_unused]] double& patternOffset)
 {
-    Q_UNUSED( patternOffset)
-
     if (nullptr == painter
         || nullptr == view) {
         return;

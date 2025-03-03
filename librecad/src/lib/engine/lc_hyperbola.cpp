@@ -25,13 +25,10 @@
 **********************************************************************/
 
 #include "lc_hyperbola.h"
-
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
-#include "rs_information.h"
-#include "rs_linetypepattern.h"
 #include "lc_quadratic.h"
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
 
 LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& _center,
 			   const RS_Vector& _majorP,
@@ -98,7 +95,89 @@ LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& focus0,
     ratio= dc/dd;
     majorP /= ratio;
     ratio=sqrt(ratio*ratio - 1.);
+}
 
+/**
+ * @author {Dongxu Li}
+ */
+bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
+{
+    if (!q.isQuadratic()) return false;
+    auto  const& mQ=q.getQuad();
+    double const& a=mQ(0,0);
+    double const& c=2.*mQ(0,1);
+    double const& b=mQ(1,1);
+    auto  const& mL=q.getLinear();
+    double const& d=mL(0);
+    double const& e=mL(1);
+    double determinant=c*c-4.*a*b;
+    if(determinant <= RS_TOLERANCE2) return false;
+    // find center of quadratic
+    // 2 A x + C y = D
+    // C x   + 2 B y = E
+    // x = (2BD - EC)/( 4AB - C^2)
+    // y = (2AE - DC)/(4AB - C^2)
+    const RS_Vector eCenter=RS_Vector{2.*b*d - e*c, 2.*a*e - d*c}/determinant;
+    //generate centered quadratic
+    LC_Quadratic qCentered=q;
+    qCentered.move(-eCenter);
+    if(qCentered.constTerm() <= RS_TOLERANCE2) return false;
+    const auto& mq2=qCentered.getQuad();
+    const double factor=-1./qCentered.constTerm();
+    //quadratic terms
+    if(!createFromQuadratic({mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor})) return false;
+
+    //move back to center
+    move(eCenter);
+    return true;
+}
+
+/** \brief create from quadratic form:
+  * dn[0] x^2 + dn[1] xy + dn[2] y^2 =1
+  * keep the ellipse center before calling this function
+  *
+  *@author: Dongxu Li
+  */
+bool LC_Hyperbola::createFromQuadratic(const std::vector<double>& dn)
+{
+    using namespace std;
+    LC_LOG<<__func__<<"(): begin";
+    if(dn.size()!=3) return false;
+
+    //eigenvalues and eigenvectors of quadratic form
+    // (dn[0] 0.5*dn[1])
+    // (0.5*dn[1] dn[2])
+    double a=dn[0];
+    const double c=dn[1];
+    double b=dn[2];
+
+    //Eigen system
+    const double d = a - b;
+    const double s=hypot(d,c);
+    // { a>b, d>0
+    // eigenvalue: ( a+b - s)/2, eigenvector: ( -c, d + s)
+    // eigenvalue: ( a+b + s)/2, eigenvector: ( d + s, c)
+    // }
+    // { a<b, d<0
+    // eigenvalue: ( a+b - s)/2, eigenvector: ( s-d,-c)
+    // eigenvalue: ( a+b + s)/2, eigenvector: ( c, s-d)
+    // }
+
+    // eigenvalues are required to be positive for ellipses
+    if(s <= a+b ) return false;
+    if(a>=b) {
+        setMajorP(RS_Vector(atan2(c, d+s))/sqrt(0.5*(a+b+s)));
+    }else{
+        setMajorP(RS_Vector(atan2(s-d, c))/sqrt(0.5*(a+b+s)));
+    }
+    setRatio(sqrt((s-a-b)/(s+a+b)));
+
+    // start/end angle at 0. means a whole ellipse, instead of an elliptic arc
+    setAngle1(0.);
+    setAngle2(0.);
+    LC_LOG<<__func__<<"(): end";
+
+    return true;
 }
 
 ///** create data based on foci and a point on hyperbola */
@@ -166,6 +245,14 @@ bool LC_Hyperbola::isPointOnEntity(const RS_Vector& coord,
     RS_Vector vp(coord - data.center);
     vp=vp.rotate(-data.majorP.angle());
     return fabs( vp.x*vp.x/(a*a)- vp.y*vp.y/(b*b) -1.)<tolerance;
+}
+
+RS_Entity& LC_Hyperbola::shear(double k)
+{
+    LC_Quadratic q = getQuadratic().shear(k);
+    bool success = createFromQuadratic(q);
+    assert(success);
+    return *this;
 }
 
 

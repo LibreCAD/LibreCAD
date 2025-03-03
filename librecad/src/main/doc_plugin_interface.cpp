@@ -30,29 +30,29 @@
 #include <QFileInfo>
 
 #include "doc_plugin_interface.h"
-#include "rs_graphicview.h"
-#include "rs_actioninterface.h"
-#include "rs_eventhandler.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
-#include "rs_line.h"
-#include "rs_point.h"
-#include "rs_mtext.h"
-#include "rs_text.h"
-#include "rs_layer.h"
-#include "rs_image.h"
-#include "rs_block.h"
-#include "rs_insert.h"
-#include "rs_polyline.h"
-#include "rs_ellipse.h"
-#include "rs_polyline.h"
-#include "lc_splinepoints.h"
-#include "lc_undosection.h"
+#include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
-#include "intern/qc_actiongetent.h"
-#include "rs_math.h"
+#include "lc_splinepoints.h"
+#include "lc_undosection.h"
+#include "rs_actioninterface.h"
+#include "rs_arc.h"
+#include "rs_block.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
+#include "rs_ellipse.h"
+#include "rs_eventhandler.h"
+#include "rs_graphicview.h"
+#include "rs_image.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_mtext.h"
+#include "rs_point.h"
+#include "rs_polyline.h"
+#include "rs_polyline.h"
+#include "rs_text.h"
 #include "rs_units.h"
 
 convLTW::convLTW(){
@@ -224,6 +224,10 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
 Plugin_Entity::~Plugin_Entity() {
     if(!hasContainer)
         delete entity;
+}
+
+RS2::EntityType Plugin_Entity::getEntityType(){
+    return entity->rtti();
 }
 
 void Plugin_Entity::getData(QHash<int, QVariant> *data){
@@ -1254,6 +1258,49 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 
 }
 
+bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
+    bool status = false;
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    if(type==DPI::LINE){
+        typeToSelect = RS2::EntityType::EntityLine;
+    } else if(type==DPI::POINT){
+        typeToSelect = RS2::EntityType::EntityPoint;
+    } else if (type==DPI::POLYLINE){
+        typeToSelect = RS2::EntityType::EntityPolyline;
+    } else {
+        //Unhandled case
+    }
+    
+    gView->setTypeToSelect(typeToSelect);
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
+
+
+    if (a) {
+        if (!(message.isEmpty()) )
+            a->setMessage(message);
+        gView->killAllActions();
+        gView->setCurrentAction(a);
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!gView->getEventHandler()->hasAction()){
+                break;
+            }
+
+        }
+    }
+    //check if a are cancelled by the user issue #349
+    RS_EventHandler* eh = gView->getEventHandler();
+    if (eh && eh->isValid(a) ) {
+        a->getSelected(sel, this);
+        status = true;
+    }
+    gView->killAllActions();
+    gView->setTypeToSelect(RS2::EntityType::EntityUnknown);
+    return status;
+}
+
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
     bool status = false;
 
@@ -1266,6 +1313,11 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
     }
     status = true;
     return status;
+}
+
+void Doc_plugin_interface::unselectEntities() {
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView);
+    a->unselectEntities();
 }
 
 bool Doc_plugin_interface::getVariableInt(const QString& key, int *num){

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_Rectangle1PointOptions</class>
+ <widget class="QWidget" name="LC_Rectangle1PointOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1345</width>
+    <height>24</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item row="0" column="26">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="11">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="24">
+    <widget class="QLabel" name="lblEdges">
+     <property name="text">
+      <string>Edges:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="17">
+    <widget class="QCheckBox" name="cbSnapRadiusCenter">
+     <property name="toolTip">
+      <string>If checked, specifies that snap point should be shifted by radius of corners.</string>
+     </property>
+     <property name="text">
+      <string>Snap shift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="22">
+    <widget class="QLineEdit" name="leLenY">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Length of bevel corner for Y direction. </string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="25">
+    <widget class="QComboBox" name="cbEdges">
+     <property name="toolTip">
+      <string>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Both</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Vertical</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Horizontal</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="leWidth">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Width of rectangle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="14">
+    <widget class="QComboBox" name="cbCorners">
+     <property name="toolTip">
+      <string>Controls how corners of rectangle should be drawn.</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Straight</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Round</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bevel</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QCheckBox" name="chkFixedBaseAngle">
+     <property name="toolTip">
+      <string>If checked, rectangle will be rotated on specified angle.</string>
+     </property>
+     <property name="text">
+      <string>Base Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="18">
+    <widget class="QCheckBox" name="cbInnerSize">
+     <property name="toolTip">
+      <string>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</string>
+     </property>
+     <property name="text">
+      <string>Size inner</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="21">
+    <widget class="QLabel" name="lblLenY">
+     <property name="text">
+      <string>Length Y:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, rectangle will be created as polyline instead of individual segments.</string>
+     </property>
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblHeight">
+     <property name="text">
+      <string>Height:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <widget class="QLabel" name="lblRadius">
+     <property name="text">
+      <string>Radius:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="20">
+    <widget class="QLineEdit" name="leX">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Length of bevel corner for X direction. </string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="19">
+    <widget class="QLabel" name="lblX">
+     <property name="text">
+      <string>Length X:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLineEdit" name="leHeight">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Height of rectangle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="16">
+    <widget class="QLineEdit" name="leRadius">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Radius of rounded corners.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QComboBox" name="cbSnapPoint">
+     <property name="toolTip">
+      <string>Point of rectangle wich will be placed to insertion point.</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Top-left</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Top</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Top-right</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Left</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Middle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Right</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bottom-left</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bottom</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bottom-right</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Rotation angle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblWidth">
+     <property name="text">
+      <string>Width:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Corners:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QCheckBox" name="cbFreeAngle">
+     <property name="toolTip">
+      <string>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="23">
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

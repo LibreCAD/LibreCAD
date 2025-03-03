@@ -30,7 +30,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_graphic.h"
 #include "rs_painterqt.h"
 #include "lc_quadratic.h"
 #include "rs_information.h"
@@ -1158,6 +1157,18 @@ void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
 	update();
 }
 
+RS_Entity& LC_SplinePoints::shear(double k)
+{
+    for(auto & v: data.splinePoints){
+        v.shear(k);
+    }
+    for(auto& v: data.controlPoints){
+        v.shear(k);
+    }
+    update();
+    return *this;
+}
+
 void LC_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 {
 	for(auto & v: data.splinePoints){
@@ -1364,9 +1375,12 @@ std::vector<double> GetMatrix(size_t iCount, bool bClosed, const std::vector<dou
 
 void LC_SplinePoints::UpdateControlPoints()
 {
-	if(data.cut) return; // no update after trim operation
+    if(data.cut)
+        return; // no update after trim operation
 
-	data.controlPoints.clear();
+    if (!data.useControlPoints){
+        data.controlPoints.clear();
+    }
 
 	size_t n = data.splinePoints.size();
 
@@ -1379,6 +1393,9 @@ void LC_SplinePoints::UpdateControlPoints()
 
 	if(!data.closed && n < 4)
 	{
+        // use control points directly, reserved for parabola
+        if (data.useControlPoints && data.controlPoints.size() == 3)
+            return;
 		if(n > 0) data.controlPoints.push_back(data.splinePoints.at(0));
 		if(n > 2)
 		{

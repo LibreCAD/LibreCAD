@@ -39,7 +39,6 @@ namespace RS2
  * Stores a line type pattern.
  */
 struct RS_LineTypePattern {
-	RS_LineTypePattern()=delete;
 	RS_LineTypePattern(std::initializer_list<double> const& pattern);
 
 	std::vector<double> pattern;

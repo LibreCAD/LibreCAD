@@ -25,12 +25,14 @@
 **********************************************************************/
 
 
-#ifndef RS_LINE_H
-#define RS_LINE_H
+#pragma once
+
 
 #include "rs_atomicentity.h"
 
+
 class LC_Quadratic;
+
 
 /**
  * Holds the data that defines a line.
@@ -46,6 +48,10 @@ struct RS_LineData {
         startpoint( point1),
         endpoint( point2)
     {}
+
+    void reverse() {
+        std::swap(startpoint, endpoint);
+    }
 
     RS_Vector startpoint;
     RS_Vector endpoint;
@@ -93,12 +99,12 @@ public:
         return data.endpoint;
     }
     /** Sets the startpoint */
-    void setStartpoint(RS_Vector s) {
+    void setStartpoint(const RS_Vector& s) {
         data.startpoint = s;
         calculateBorders();
     }
     /** Sets the endpoint */
-    void setEndpoint(RS_Vector e) {
+    void setEndpoint(const RS_Vector& e) {
         data.endpoint = e;
         calculateBorders();
     }
@@ -197,6 +203,7 @@ public:
     void scale(const RS_Vector& factor) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear(double k) override;
     void stretch(const RS_Vector& firstCorner,
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
@@ -235,6 +242,10 @@ protected:
      */
     void drawInfinite(RS_Painter& painter, RS_GraphicView& view);
     RS_LineData data;
+
+    private:
+
+        RS_Vector highlightedVertex;
+
 };
 
-#endif

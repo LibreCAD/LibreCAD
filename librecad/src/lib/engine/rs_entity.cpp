@@ -51,6 +51,18 @@
 
 #include "lc_quadratic.h"
 
+namespace {
+
+// Whether the entity is a member of cross hatch filling curves
+bool isHatchMember(const RS_Entity* entity) {
+    if (entity == nullptr || entity->getParent() == nullptr)
+        return false;
+
+    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
+}
+
+}
+
 /**
  * Default constructor.
  * @param parent The parent entity of this entity.
@@ -163,7 +175,7 @@ bool RS_Entity::toggleSelected() {
  */
 bool RS_Entity::isSelected() const {
 	//bug 557, Selected entities in invisible layers are deleted
-	return isVisible() && getFlag(RS2::FlagSelected);
+	return getFlag(RS2::FlagSelected) && isVisible();
 }
 
 
@@ -217,10 +229,8 @@ bool RS_Entity::isProcessed() const {
  * @param undone true: entity has become invisible.
  *               false: entity has become visible.
  */
-void RS_Entity::undoStateChanged(bool undone)
+void RS_Entity::undoStateChanged([[maybe_unused]] bool undone)
 {
-    Q_UNUSED( undone);
-
     setSelected(false);
     update();
 }
@@ -435,6 +445,18 @@ void RS_Entity::setHighlighted(bool on) {
         setFlag(RS2::FlagHighlighted);
     } else {
         delFlag(RS2::FlagHighlighted);
+    }
+}
+
+bool RS_Entity::isTransparent() const{
+    return getFlag(RS2::FlagTransparent);
+}
+
+void RS_Entity::setTransparent(bool on) {
+    if (on) {
+        setFlag(RS2::FlagTransparent);
+    } else {
+        delFlag(RS2::FlagTransparent);
     }
 }
 
@@ -1000,24 +1022,28 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
             // do not expand entities on construction layers, except lines
             return false;
     }
-	if (layer) return layer->isConstruction();
-    return false;
+
+    // Issue #1773, hatch filling curves are not shown as infinite on construction layers
+    if (isHatchMember(this))
+        return false;
+
+    return (layer != nullptr) && layer->isConstruction();
 }
 
 //! whether printing is enabled or disabled for the entity's layer
 bool RS_Entity::isPrint(void) const{
-    if (nullptr != layer) return layer->isPrint();
-    return true;
+    return nullptr == layer || layer->isPrint();
 }
 
 bool RS_Entity::trimmable() const
 {
     switch(rtti()){
     case RS2::EntityArc:
-    case RS2::EntityCircle:
+    case RS2::EntityCircle: // fixme - check whether prepareTrim() is supported there?
     case RS2::EntityEllipse:
     case RS2::EntityLine:
-    case RS2::EntitySplinePoints:
+    case RS2::EntityParabola:
+    case RS2::EntitySplinePoints: // fixme - check whether prepareTrim() is supported there?
         return true;
     default:
         return false;
@@ -1128,3 +1154,6 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     return os;
 }
 
+bool RS_Entity::isParentIgnoredOnModifications() const {
+     return parent != nullptr && parent->ignoredOnModification();
+}

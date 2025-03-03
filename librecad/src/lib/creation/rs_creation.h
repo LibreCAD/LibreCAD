@@ -28,6 +28,7 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
+#include <memory>
 #include "rs_vector.h"
 
 class RS_Document;
@@ -54,8 +55,8 @@ class QString;
 struct RS_LibraryInsertData {
     QString file;
     RS_Vector insertionPoint;
-    double factor;
-    double angle;
+    double factor = 0.;
+    double angle = 0.;
 };
 
 
@@ -75,16 +76,17 @@ public:
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
                                      int number,
-                                     RS_Entity* e);
+                                     RS_Entity* e,
+                                     bool symmetric);
 
     RS_Entity* createParallel(const RS_Vector& coord,
                               double distance,
                               int number,
-                              RS_Entity* e);
+                              RS_Entity* e, bool symmetric = false);
 
     RS_Line* createParallelLine(const RS_Vector& coord,
                                 double distance, int number,
-                                RS_Line* e);
+                                RS_Line* e, bool symmetric = false);
 
     RS_Arc* createParallelArc(const RS_Vector& coord,
                               double distance, int number,
@@ -107,22 +109,19 @@ public:
 
     RS_Line* createTangent1(const RS_Vector& coord,
                             const RS_Vector& point,
-                            RS_Entity* circle);
+                            RS_Entity* circle,
+                            RS_Vector& tangentPoint,
+                            RS_Vector& altTangentPoint);
 /**
  * create a tangent line which is orthogonal to the given RS_Line(normal)
  */
     RS_Line* createLineOrthTan(const RS_Vector& coord,
                                RS_Line* normal,
-                               RS_Entity* circle);
-    RS_Line* createTangent2(const RS_Vector& coord,
+                               RS_Entity* circle,
+                               RS_Vector& alternativeTangent);
+    std::vector<std::unique_ptr<RS_Line>> createTangent2(
                             RS_Entity* circle1,
                             RS_Entity* circle2);
-    /**
-      * create the path of centers of common tangent circles of the two given circles
-      *@ return nullptr, if failed
-      *@ at success return either an ellipse or hyperbola
-      */
-    std::vector<RS_Entity*> createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2);
 
     RS_Line* createLineRelAngle(const RS_Vector& coord,
                                 RS_Entity* entity,
@@ -152,11 +151,11 @@ public:
     RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 protected:
-    RS_EntityContainer* container;
-    RS_Graphic* graphic;
-    RS_Document* document;
-    RS_GraphicView* graphicView;
-    bool handleUndo;
+    RS_EntityContainer* container = nullptr;
+    RS_Graphic* graphic = nullptr;
+    RS_Document* document = nullptr;
+    RS_GraphicView* graphicView = nullptr;
+    bool handleUndo = false;
 private:
     void setEntity(RS_Entity* en) const;
 };

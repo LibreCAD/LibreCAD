@@ -393,7 +393,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation>&amp;Многострочный текст</translation>
+        <translation>&amp;Текст</translation>
     </message>
     <message>
         <source>&amp;Text</source>

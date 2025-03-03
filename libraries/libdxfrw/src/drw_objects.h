@@ -799,6 +799,3 @@ const unsigned char dxfColors[][3] = {
 }
 
 #endif
-
-// EOF
-

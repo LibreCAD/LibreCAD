@@ -29,13 +29,16 @@
 #define RS_PAINTER_H
 
 #include "rs.h"
+#include "qnamespace.h"
 #include "rs_vector.h"
 
 class RS_Color;
 class RS_GraphicView;
 class RS_Pen;
+class RS_Polyline;
 class RS_Spline;
 class QPainterPath;
+class QRect;
 class QRectF;
 class QPolygon;
 class QPolygonF;
@@ -95,10 +98,6 @@ public:
     virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
-                         const RS_Vector& p1, const RS_Vector& p2,
-                         bool reversed) = 0;
-    virtual void drawArc(const RS_Vector& cp, double radius,
-                         double a1, double a2,
                          bool reversed) = 0;
     void createArc(QPolygon& pa,
                    const RS_Vector& cp, double radius,
@@ -116,6 +115,7 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed) = 0;
+    virtual void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) = 0;
     virtual void drawSplinePoints(const LC_SplinePointsData& splineData) = 0;
     virtual void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) = 0;
     virtual void drawImg(QImage& img, const RS_Vector& pos,
@@ -124,6 +124,7 @@ public:
                            const QString& text) = 0;
     virtual void drawTextV(int x1, int y1, int x2, int y2,
                            const QString& text) = 0;
+    virtual void drawText(const QRect& rect, const QString& text, QRect* boundingBox) = 0;
 
     virtual void fillRect(int x1, int y1, int w, int h, const RS_Color& col) = 0;
     virtual void fillRect ( const QRectF & rectangle, const RS_Color & color ) = 0;

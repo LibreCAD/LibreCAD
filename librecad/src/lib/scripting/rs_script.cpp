@@ -35,5 +35,3 @@ RS_Script::RS_Script(const QString& name, const QString& /*path*/):
 name{name}
 {
 }
-
-// EOF

@@ -72,7 +72,7 @@
        sodipodi:cx="9.0311108"
        sodipodi:type="arc"
        id="path4394"
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#130000;stroke-width:2.25777793;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <path
        sodipodi:open="true"
        d="M 9.0311116,19.191109 A 44.026672,44.026672 0 0 1 53.057783,63.217781"
@@ -83,7 +83,7 @@
        sodipodi:cy="63.217781"
        sodipodi:cx="9.0311108"
        sodipodi:type="arc"
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#130000;stroke-width:2.25777793;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:9.03111172, 4.51555586;stroke-dashoffset:3.38666677;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:9.03111172, 4.51555586;stroke-dashoffset:3.38666677;stroke-opacity:1"
        id="circle4396" />
     <path
        sodipodi:open="true"
@@ -96,6 +96,6 @@
        sodipodi:cx="9.0311108"
        sodipodi:type="arc"
        id="circle4398"
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#130000;stroke-width:2.25777793;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
 </svg>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_CircleByArcOptions</class>
+ <widget class="QWidget" name="LC_CircleByArcOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>478</width>
+    <height>24</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbReplace">
+     <property name="toolTip">
+      <string>If checked, original arc will be removed</string>
+     </property>
+     <property name="text">
+      <string>Replace arc</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QComboBox" name="cbLayer">
+     <property name="toolTip">
+      <string>Layer to which created circle should be placed</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Active</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Original</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLineEdit" name="leRadiusShift">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Pen:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QComboBox" name="cbPen">
+     <property name="toolTip">
+      <string>Pen to apply to created circle</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Active</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Original</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Original Resolved</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Layer:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="lblRadiusShift">
+     <property name="toolTip">
+      <string>Delta of circle's radius to arc's radius</string>
+     </property>
+     <property name="text">
+      <string>Radius Shift:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

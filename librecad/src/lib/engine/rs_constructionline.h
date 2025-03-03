@@ -60,7 +60,7 @@ public:
     RS_ConstructionLine(RS_EntityContainer* parent,
                         const RS_ConstructionLineData& d);
 
-    virtual RS_Entity* clone() const override;
+     RS_Entity* clone() const override;
 
 	virtual ~RS_ConstructionLine()=default;
 
@@ -117,6 +117,7 @@ m0 x + m1 y + m2 =0
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear(double k) override;
 
     void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/,
                 double& /*patternOffset*/) override {}
@@ -127,7 +128,7 @@ m0 x + m1 y + m2 =0
     void calculateBorders() override;
 
 protected:
-    RS_ConstructionLineData data;
+    RS_ConstructionLineData data{};
 };
 
 #endif

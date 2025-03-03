@@ -38,33 +38,33 @@ class QPolygon;
  */
 class RS_InfoArea {
 public:
-	RS_InfoArea();
-
+    RS_InfoArea();
     void reset();
-    void push_back(const RS_Vector& p);
+    void push_back(const RS_Vector &p);
     //whether the point p is already in contour
-    bool duplicated(const RS_Vector& p);
+    bool duplicated(const RS_Vector &p);
     void pop_back();
-	double getArea() const;
-	double getCircumference();
-	int size();
-	const RS_Vector& at(int i) const;
+    double getArea() const;
+    double getCircumference();
+    int size();
+    const RS_Vector &at(int i) const;
     /**
      * @brief getArea of polygon
      * @param polygon
      * @return area
      */
-    static double getArea(const QPolygon& polygon);
+    static double getArea(const QPolygon &polygon);
+    const RS_Vector &back() const;
 
 private:
     void calculate();
-    double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
-
-	std::vector<RS_Vector> thePoints;
+    double calcSubArea(const RS_Vector &p1, const RS_Vector &p2);
+    std::vector<RS_Vector> thePoints;
     double baseY = 0.;
     double area = 0.;
     double circumference = 0.;
     bool calculationNeeded = false;
+
 };
 
 #endif

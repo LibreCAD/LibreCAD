@@ -9,7 +9,7 @@
 ;Include version information
   !include /NONFATAL "generated_scmrev.nsh"
 !ifndef SCMREVISION
-    !define SCMREVISION "2.2.x"
+    !define SCMREVISION "2.2.2.x"
 !endif
 
 ;--------------------------------
@@ -97,19 +97,19 @@ ${EndIf}
 FunctionEnd
 
 ;--- define Qt folders if not already defined in custom-5.3.nsi
-!ifndef Qt_Dir
-    !define Qt_Dir 	"C:\Qt\Qt5.15.2"
+!ifndef Qt6_Dir
+    !define Qt6_Dir 	"d:\a\LibreCAD\Qt"
 !endif
 !ifndef Qt_Version
-    !define Qt_Version 	"5.15.2"
+    !define Qt_Version 	"6.6.3"
 !endif
 !ifndef Mingw_Ver
-    !define Mingw_Ver 	"mingw81_64"
+    !define Mingw_Ver 	"mingw_64"
 !endif
-;--- folder contains mingw32-make.exe
-!define MINGW_DIR 	"${Qt_Dir}\Tools\${Mingw_Ver}\bin"
-!define QTCREATOR_DIR 	"${Qt_Dir}\Tools\QtCreator\bin"
-!define QTMINGW_DIR 	"${Qt_Dir}\${Qt_Version}\${Mingw_Ver}"
+;--- folder contains mingw64-make.exe
+!define MINGW_DIR 	"C:\mingw64\bin"
+!define QTCREATOR_DIR 	"${Qt6_Dir}\Tools\QtCreator\bin"
+!define QTMINGW_DIR 	"${Qt6_Dir}\${Qt_Version}\${Mingw_Ver}"
 ;--- folder contains qmake.exe
 !define QMAKE_DIR 	"${QTMINGW_DIR}\bin"
 !define PLUGINS_DIR 	"${QTMINGW_DIR}\plugins"
@@ -144,7 +144,7 @@ Section "Install Section" SecInstall
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
-  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2"
+  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2.2_rc1"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
