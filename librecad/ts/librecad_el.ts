@@ -32,6 +32,79 @@
     </message>
 </context>
 <context>
+    <name>CustomToolbarCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Πλαίσιο</translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input a name and then press +</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Αποθήκευση</translation>
+    </message>
+</context>
+<context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Πλαίσιο</translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Αποθήκευση</translation>
+    </message>
+</context>
+<context>
+    <name>DlgParabola</name>
+    <message>
+        <source>Parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Στρώση:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Γεωμετρία</translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished">Σημεία Ελέγχου</translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -63,6 +136,96 @@
     </message>
 </context>
 <context>
+    <name>LC_AbstractActionDrawLine</name>
+    <message>
+        <source>Start point may set in distance or point state only</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_AbstractActionDrawRectangle</name>
+    <message>
+        <source>Invalid Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Καθορίστε το σημείο εισαγωγής</translation>
+    </message>
+    <message>
+        <source>Specify angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify size (width, height)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify corners type
+[str|round|bevels]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify corner bevel length (x,y)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify corner radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify edges mode
+[both|hor|vert]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_AbstractActionWithPreview</name>
+    <message>
+        <source> is not divided as it is locked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> is not divided as it is part of polyline. Expand polyline first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionCircleDimBase</name>
+    <message>
+        <source>Not a circle or arc entity</source>
+        <translation type="unfinished">Μη οντότητα κύκλου ή τόξου</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Μη έγκυρη έκφραση</translation>
+    </message>
+    <message>
+        <source>Select arc or circle entity</source>
+        <translation type="unfinished">Επιλέξτε οντότητα τόξου ή κύκλου</translation>
+    </message>
+    <message>
+        <source>Free angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify dimension line position or enter angle:</source>
+        <translation type="unfinished">Καθορίστε τη θέση της γραμμής διάστασης ή εισάγετε γωνία:</translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation type="unfinished">Εισάγετε το κείμενο διάστασης:</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
@@ -70,11 +233,38 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDimLinearBase</name>
+    <message>
+        <source>Specify first extension line origin</source>
+        <translation type="unfinished">Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
+    </message>
+    <message>
+        <source>Specify second extension line origin</source>
+        <translation type="unfinished">Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
+    </message>
+    <message>
+        <source>Specify dimension line location</source>
+        <translation type="unfinished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
+    </message>
+    <message>
+        <source>Snap to Adjacent Dim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation type="unfinished">Εισάγετε το κείμενο διάστασης:</translation>
+    </message>
+    <message>
+        <source>Enter dimension line angle:</source>
+        <translation type="unfinished">Εισάγετε τη γωνία της γραμμής διάστασης:</translation>
     </message>
 </context>
 <context>
@@ -95,7 +285,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -103,7 +293,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Πίσω</translation>
+        <translation type="vanished">Πίσω</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -111,10 +301,161 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawCircleByArc</name>
+    <message>
+        <source>Select arc or ellipse arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawCross</name>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">Επιλέξτε κύκλο, τόξο ή έλλειψη</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawDimBaseline</name>
+    <message>
+        <source>Select base linear/aligned dimension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify second extension line origin</source>
+        <translation type="unfinished">Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
+    </message>
+    <message>
+        <source>Specify dimension line location</source>
+        <translation type="unfinished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
+    </message>
+    <message>
+        <source>Snap to Adjacent Dim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation type="unfinished">Εισάγετε το κείμενο διάστασης:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawEllipse1Point</name>
+    <message>
+        <source>Specify ellipse center</source>
+        <translation type="unfinished">Καθορίστε το κέντρο της έλλειψης</translation>
+    </message>
+    <message>
+        <source>Specify angle for major axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set start angle of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set end angle of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Μη έγκυρη έκφραση</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLineAngleRel</name>
+    <message>
+        <source>Select base line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify length</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLineFromPointToLine</name>
+    <message>
+        <source>Select Initial Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePoints</name>
+    <message>
+        <source>Specify First Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify Second Point
+or [number|x|y|angle|p|edges|distance]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify line direction
+[x|y|angle|p|distance]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify line direction angle
+or [x|y|p|number|edges|distance]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify edge points mode
+[none|start|end|both|distance]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify fixed distance between points
+or[x|y|p|number|edges]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify distance (%1)
+or [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <source>Specify  distance (angle %1 deg)
+or [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify points count</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonBase</name>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Μη έγκυρη έκφραση</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Καθορίστε το κέντρο</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
@@ -122,14 +463,203 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Enter number:</source>
+        <translation type="unfinished">Εισάγετε αριθμό:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLineSnake</name>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">Καθορίστε το πρώτο σημείο</translation>
+    </message>
+    <message>
+        <source>Specify direction (x or y) or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Not a valid number. Try 1..9999</source>
+        <source>Specify distance (%1) or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Not a valid expression</source>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <source>Specify distance (%1 deg) or [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify angle or [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify point or [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Begin of history reached</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot redo: End of history reached</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawParabola4Points</name>
+    <message>
+        <source>Specify the first point on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the second point on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the third point on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the Axis on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawParabolaFD</name>
+    <message>
+        <source>Specify the focus of parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select line that is parallel to directrix of parabola or set vertex point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the start point on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the end point on parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawRectangle1Point</name>
+    <message>
+        <source>Specify height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify size (width, height))</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify point that defines base angle for rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t keep insertion point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawRectangle2Points</name>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Καθορίστε το δεύτερο σημείο</translation>
+    </message>
+    <message>
+        <source>Draw Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify size (width, height)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawRectangle3Points</name>
+    <message>
+        <source>Specify first point first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify width or second point first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify start point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Καθορίστε το δεύτερο σημείο</translation>
+    </message>
+    <message>
+        <source>Specify third point</source>
+        <translation type="unfinished">Καθορίστε το τρίτο σημείο</translation>
+    </message>
+    <message>
+        <source>Specify angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify inner angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawSliceDivide</name>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Γραμμή</translation>
+    </message>
+    <message>
+        <source>Arc</source>
+        <translation type="unfinished">Τόξο</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Κύκλος</translation>
+    </message>
+    <message>
+        <source>Select line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select circle or arc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -141,7 +671,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
@@ -162,6 +692,52 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Δεν είναι δυνατή η αναίρεση: Δεν υπήρχε τίποτα προς επαναφορά.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawStar</name>
+    <message>
+        <source>Invalid rays number, should be in range [3..99]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set center point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set outer point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set inner point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set rounding radiuses (outer, inner)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set rays number</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionEditPasteTransform</name>
+    <message>
+        <source>Clipboard is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set paste reference point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste Multiple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -299,11 +875,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Ε&amp;γγεγραμμένος κύκλος</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -389,7 +960,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Δημιουργία πολυγραμμής από &amp;υπάρχοντα τμήματα</translation>
+        <translation type="vanished">Δημιουργία πολυγραμμής από &amp;υπάρχοντα τμήματα</translation>
     </message>
     <message>
         <source>&amp;MText</source>
@@ -442,10 +1013,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>&amp;Delete</source>
         <translation>&amp;Διαγραφή</translation>
-    </message>
-    <message>
-        <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
@@ -517,7 +1084,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>Απόσταση Οντότητα σε Σημείο</translation>
+        <translation type="vanished">Απόσταση Οντότητα σε Σημείο</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
@@ -525,7 +1092,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation>Συνολικό μήκος επιλεγμένων οντοτήτων</translation>
+        <translation type="vanished">Συνολικό μήκος επιλεγμένων οντοτήτων</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
@@ -533,7 +1100,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation>&amp;Δείκτης επιλογής</translation>
+        <translation type="vanished">&amp;Δείκτης επιλογής</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -641,11 +1208,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Προτιμήσεις Τρέχοντος Σχεδίου</translation>
+        <translation type="vanished">Προτιμήσεις Τρέχοντος Σχεδίου</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>Διαγραφή επιλεγμένων</translation>
+        <translation type="vanished">Διαγραφή επιλεγμένων</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
@@ -721,7 +1288,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation>Προεπισκόπηση Εκτύπωσης</translation>
+        <translation type="vanished">Προεπισκόπηση Εκτύπωσης</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -737,7 +1304,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Κάνναβος</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
@@ -874,6 +1441,250 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Save A&amp;ll...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Snake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snake (X)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snake (Y)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle (1 Point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle (2 Points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle (3 Points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle From Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal From Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Point To Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slice/Divide Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slice/Divide Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line of Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tangential 2 Circles, Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Para&amp;bola 4 points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parabola &amp;Focus Directrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse (1 Point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse Arc (1 Point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline from Existing &amp;Segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Baseline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Break/Divide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Pick Pen From Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Pick Pen From Entity (Resolved)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply Pen to Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished">Έλξη στον κάνναβο</translation>
+    </message>
+    <message>
+        <source>Snap Middle Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished">Έλξη σε άκρα</translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished">Έλξη σε οντότητες</translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished">Έλξη σε κέντρα</translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished">Έλξη στη μέση</translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Έλξη με απόσταση</translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished">Έλξη σε διασταύρωση</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished">Περιορισμός Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished">Περιορισμός κατακόρυφα</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished">Περιορισμός Ορθογώνια</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Χωρίς περιορισμό</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished">Καθορισμός θέσης του σχετικού σημείου μηδέν</translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished">Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished">Χωρίς έλξη</translation>
+    </message>
+    <message>
+        <source>Distance &amp;Entity to Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance &amp;Point to Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total &amp;length of selected entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity Pro&amp;perties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collect &amp;Coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ang&amp;le between 3 points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Focus on &amp;Options Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut Quic&amp;k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy &amp;Quick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste &amp;Transform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Delete Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Selection Pointer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -883,9 +1694,616 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionGroupManager</name>
+    <message>
+        <source>Block</source>
+        <translation type="unfinished">Μπλοκ</translation>
+    </message>
+    <message>
+        <source>Block related operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Κύκλος</translation>
+    </message>
+    <message>
+        <source>Circle drawing commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation type="unfinished">Καμπύλη</translation>
+    </message>
+    <message>
+        <source>Curve drawing commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>Editing operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Έλλειψη</translation>
+    </message>
+    <message>
+        <source>Ellipse drawing commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">Αρχείο</translation>
+    </message>
+    <message>
+        <source>File Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimension</source>
+        <translation type="unfinished">Διάσταση</translation>
+    </message>
+    <message>
+        <source>Dimensions creation commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Πληροφορίες</translation>
+    </message>
+    <message>
+        <source>Informational commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Γραμμή</translation>
+    </message>
+    <message>
+        <source>Line drawing commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify</source>
+        <translation type="unfinished">Τροποποίηση</translation>
+    </message>
+    <message>
+        <source>Modification operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished">Επιλογές</translation>
+    </message>
+    <message>
+        <source>Options management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Polyline drawing commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restriction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap restrictions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Επιλογή</translation>
+    </message>
+    <message>
+        <source>Entity selection operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Έλξη</translation>
+    </message>
+    <message>
+        <source>Snapping operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Extras</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Additional Snaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished">Εμφάνιση</translation>
+    </message>
+    <message>
+        <source>View related operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Widgets management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PenTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen related operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionInfo3PointsAngle</name>
+    <message>
+        <source>Angle: %1 (%2)
+ Start Edge Point: (%3 , %4)
+ Intersection Point :(%5, %6)
+ End Edge Point: (%7 , %8)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select first edge point of angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select second (intersection) point of angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select second edge point of angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionInfoPickCoordinates</name>
+    <message>
+        <source>Select point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionInfoProperties</name>
+    <message>
+        <source>Select entity</source>
+        <translation type="unfinished">Επιλέξτε οντότητα</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>selected</source>
+        <comment>Layers to export</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>visible</source>
+        <comment>Layers to export</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyBreakDivide</name>
+    <message>
+        <source>Select line, arc or circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyDuplicate</name>
+    <message>
+        <source>Select entity to duplicate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interactive Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select direction of offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyLineGap</name>
+    <message>
+        <source>Select line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Alternative Line Endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select endpoint of gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyLineJoin</name>
+    <message>
+        <source>No line selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lines are parallel, can&apos;t merge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lines already intersects, can&apos;t merge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select first line</source>
+        <translation type="unfinished">Επιλέξτε την πρώτη γραμμή</translation>
+    </message>
+    <message>
+        <source>Select second line</source>
+        <translation type="unfinished">Επιλέξτε τη δεύτερη γραμμή</translation>
+    </message>
+    <message>
+        <source>Select part of first line that should remain after trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifySelectionBase</name>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished">Δεν έχει επιλεχθεί κάποια οντότητα!</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionPenApply</name>
+    <message>
+        <source>Specify entity to pick the pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify entity to apply pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply Resolved Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionPenPick</name>
+    <message>
+        <source>Specify entity to pick the pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionPreSelectionAwareBase</name>
+    <message>
+        <source>No valid entities selected, select them first</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionSnapMiddleManual</name>
+    <message>
+        <source>Specify percentage / start-point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify start point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify end point</source>
+        <translation type="unfinished">Καθορίστε το τελικό σημείο</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionsShortcutsDialog</name>
+    <message>
+        <source>Action Shortcuts Mappings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key Sequence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset shortcut for current action to it&apos;s default value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut key sequence recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removes shortcut for the action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Εκκαθάριση</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Action Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click on action for details. Double click on action to edit. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loads shortcuts mapping from external file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export shortcuts mappings to external file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All changes made during editing sessions are discarded to initial values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filtering actions by name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, matched actions will be highlighted onlye, otherwide - non-matched actions are hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select file to save mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcuts mappings were loaded successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t read provided file - please check that it is exists and it is allowed to read from it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcuts mappings were not imported.
+
+ Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcuts mappings were not imported. 
+
+XML parsing error occurred during file processing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcuts mappings were saved successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcuts mappings were not imported. 
+
+Some error occurred during XML generation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Shortcuts Mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Shortcuts Mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid key sequence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resolve conflicts before saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key sequence has potential conflicts. &lt;a href=&quot;#conflicts&quot;&gt;Show.&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some mappings are modified.
+Are you sure you are going to discard changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_CircleByArcOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original arc will be removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer to which created circle should be placed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen to apply to created circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Original Resolved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Στρώση:</translation>
+    </message>
+    <message>
+        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius Shift:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_CrossOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal dimension of cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines how to apply dimensions of cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Length</source>
+        <translation type="unfinished">Ολικό μήκος</translation>
+    </message>
+    <message>
+        <source>Percent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical dimension of the cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation angle for cross around center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <source>Add or Remove Action</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -905,6 +2323,2505 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_DlgParabola</name>
+    <message>
+        <source>Parabola control points cannot be collinear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_DuplicateOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical offset of duplicate from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal offset of duplicate from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In Place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Στρώση:</translation>
+    </message>
+    <message>
+        <source>Pen to apply to created duplicate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Original Resolved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer to which duplicate should be placed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_Ellipse1PointOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minor Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value of angle for major radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, angle for major radius may be specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">Αριστερόστροφα</translation>
+    </message>
+    <message>
+        <source>If checked, major radius angle is specified by mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of major radius of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Major Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of minor radius of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Δεξιόστροφα</translation>
+    </message>
+</context>
+<context>
+    <name>LC_EllipseArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Επιλογές τόξου</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Δεξιόστροφα</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">Αριστερόστροφα</translation>
+    </message>
+</context>
+<context>
+    <name>LC_InfoDist2Options</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the point will be always inside selected entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap On Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LayerDialogEx</name>
+    <message>
+        <source>Layer Settings</source>
+        <translation type="unfinished">Ρυθμίσεις στρώσης</translation>
+    </message>
+    <message>
+        <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parent Layers Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer for various infromational elements, notes, drafts etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Informational</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normal layer with drawing eleements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer that holds dimensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimensions</source>
+        <translation type="unfinished">Διαστάσεις</translation>
+    </message>
+    <message>
+        <source>Layer with alternate position of entities located on normal layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alternative Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
+       The contents of a Construction Layer should not appear in printout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction Layer</source>
+        <translation type="unfinished">Στρώση κατασκευής</translation>
+    </message>
+    <message>
+        <source>Layer Name:</source>
+        <translation type="unfinished">Όνομα στρώσης:</translation>
+    </message>
+    <message>
+        <source>Rename Virtual Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Secondary Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Pen</source>
+        <translation type="unfinished">Προεπιλεγμένη πένα</translation>
+    </message>
+    <message>
+        <source>Rename Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LayerTreeOptionsDialog</name>
+    <message>
+        <source>Layers Tree Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Naming Convention</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Separator used for split inner name of layer to hierarchical names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer Level Name Separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secondary Layer Suffixes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimensional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Informational</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alternative Position </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicating Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display and operations settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display and Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show full name as ToolTip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, icons for layer types will be shown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show layer type icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indentation for child layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show indented layer names. Ident size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow restructuring via Drag&amp;Drop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If primary layer is renames, secondary layers are renamed too.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename secondary layers on primary rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Various colors settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background color for selected items in layers tree.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color for separator lines in layers tree view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background color for virtual layers items in layers list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matched item in highlight filter mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color for items that matches filter conditions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Virtual layer background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threeview items separator grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected items background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background color for active layer item in layers tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active layer background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pens that will be set for newly created layers of different types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Pens</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normal Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimensional Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Informational Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alternative Position Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LayerTreeWidget</name>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Looking for matching layer names</source>
+        <translation type="unfinished">Αναζήτηση για σύμφωνα ονόματα στρώσεων</translation>
+    </message>
+    <message>
+        <source>Highlight Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show all layers</source>
+        <translation type="unfinished">Εμφάνιση όλων των στρώσεων</translation>
+    </message>
+    <message>
+        <source>Hide all layers</source>
+        <translation type="unfinished">Απόκρυψη όλων των στρώσεων</translation>
+    </message>
+    <message>
+        <source>Show Secondary Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Active Layer Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expand All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collapse All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collapse Secondary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a layer</source>
+        <translation type="unfinished">Προσθήκη στρώσης</translation>
+    </message>
+    <message>
+        <source>Add dimensions Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify layer attributes / rename</source>
+        <translation type="unfinished">Τροποποίηση των χαρακτηριστικών στρώσης / μετονομασία</translation>
+    </message>
+    <message>
+        <source>Flat List Mode)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer Menu</source>
+        <translation type="unfinished">Μενού στρώσεων</translation>
+    </message>
+    <message>
+        <source>&amp;Add Child Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layers (Sub-Tree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Copy Structure (Sub-Tree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Duplicate Content (Sub-Tree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select Entities (Sub-Tree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Dimensions Sub-Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Info Sub-Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Alternative View Sub-Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove Sub-layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to Dimensional Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to Info Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to Alternative Position Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to Normal Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select Layer&apos;s Entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create Layer Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Duplicate Layer With Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Selection to Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate Selection to Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Freeze Others Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze All Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Freeze All Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock All Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock All Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable &amp;Printing All Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Disable Printing All Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Find And Remove Empty Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LineAngleRelOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the length of line is defined by mouse position instead of setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset of tick snap point from intersection point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entity will be divided by intersection point.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation type="unfinished">Διαίρεση</translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance of intersection point from specified line snap point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines which part of created line will be snapped to intersection point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Αρχή</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Τέλος</translation>
+    </message>
+    <message>
+        <source>Tick Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Μήκος γραμμής</translation>
+    </message>
+    <message>
+        <source>If checked, angle is relative to angle of selected entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Μήκος:</translation>
+    </message>
+    <message>
+        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Snap Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LineFromPointToLineOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset for created line from intersection point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap point for created line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Αρχή</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Τέλος</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Μήκος:</translation>
+    </message>
+    <message>
+        <source>Fixed length of created line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Intersection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, created line will be orthogonal to selected line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal</source>
+        <translation type="unfinished">Ορθογώνια</translation>
+    </message>
+    <message>
+        <source>Angle between original line and created one</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LineJoinOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, polyline will be created instead of individual lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policy for the line was selected second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend/Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add segment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policy for joining line that was selected first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines how pen should be applied to created entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Both lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attributes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original lines will be removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_LinePointsOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Controls how points on the edges (start/end points) should be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Κανένα</translation>
+    </message>
+    <message>
+        <source>Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Αρχή</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Τέλος</translation>
+    </message>
+    <message>
+        <source>Number of points to create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edge Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance between points.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, line of points will be drawn with specified angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Number of points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyBreakDivideOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyGapOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap point of gap to line snap point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Αρχή</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Τέλος</translation>
+    </message>
+    <message>
+        <source>Line Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gap Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap point for gap on the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gap Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance from snap point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of the gap, if not free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If cheched, the size of the gap is determined by mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyMirrorOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, mirror will be performed by selected line entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirror to selected line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Επιλογές μετακίνησης περιστροφής</translation>
+    </message>
+    <message>
+        <source>Free selection of factor should be performed by mouse if checked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Absolute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle to rotate entity around rotation center point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, second rotation is around reference point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate twice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle for additional rotation around refrence point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple copies will be created if checked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specifies whether angle is defined by entered value or by mouse position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation type="unfinished">Αριθμός αντιγράφων</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyScaleOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Επιλογές μετακίνησης περιστροφής</translation>
+    </message>
+    <message>
+        <source>Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, multiple copies will be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isotropic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will survive, otherwise they will be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation type="unfinished">Αριθμός αντιγράφων</translation>
+    </message>
+    <message>
+        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale factor for Y axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale factor for X axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyStretchOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will survive, otherwise they will be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_MoveOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation type="unfinished">Αριθμός αντιγράφων</translation>
+    </message>
+    <message>
+        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will survive, otherwise they will be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, multiple copies will be created. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_OptionsWidgetsHolder</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_PasteTransformOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation angle for pasted entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing between entities insertion points in rows. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Συντελεστής κλίμακας</translation>
+    </message>
+    <message>
+        <source>Rotation angle for array.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array rows number.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Same Angles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Διάκενο:</translation>
+    </message>
+    <message>
+        <source>Array columns number.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, arrays of copies will be created on paste.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale factor for pasted entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing between insertion points of entities in columns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_PenPaletteOptionsDialog</name>
+    <message>
+        <source>Pen Palette Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Columns to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Type Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Type Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Width Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Width Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Pen Background:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entire table row is bold for active pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matched Item Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case-insensitive pens filtering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Controls whether tooltip will be shown for table item or not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show tooltip for table items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pens file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show colorn name as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HEX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RGB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Natural name where possible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show info message if no entities may be selected by pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On double click on table item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do nothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entities by attributes pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entities by drawing pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_PenPaletteWidget</name>
+    <message>
+        <source>Pen Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill Pen Editor by Entity Drawing Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill Pen Editor by Entity Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Entities By Drawing Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Entities By Pen Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Apply Pen To Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill Editor Pen by Current Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply Editor Pen As Current Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pick from Active Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply Editor Pen to Active Layer Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply To Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Selected Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">Πλάτος:</translation>
+    </message>
+    <message>
+        <source>Pen Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation type="unfinished">Χρώμα:</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filtering pens by name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pens Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Apply Pen To Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Set As Current Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Apply Pen To Active Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select Entities With Attributes Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select Entities With Drawing Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove Pens</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location of pens file is changed, please restart the application so new pens file will be used.
+
+Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_QuickInfoEntityData</name>
+    <message>
+        <source>SOLID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CONSTRUCTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UNKNOWN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LINE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CIRCLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ARC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ELLIPSE ARC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ELLIPSE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>POINT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>POLYLINE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>INSERT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Centered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished">Ταίριασμα</translation>
+    </message>
+    <message>
+        <source>Baseline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished">Πυθμένας</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Κορυφή</translation>
+    </message>
+    <message>
+        <source>Normal text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrored in X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrored in Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left To Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right To Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top To Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At Least</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPLINE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PARABOLA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HATCH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMLEADER</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMARC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMANGULAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMDIAMETRIC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMRADIAL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMLINEAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIMALIGNED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_QuickInfoPointsData</name>
+    <message>
+        <source>Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points Path Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No data - select coordinates first...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_QuickInfoWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entity for properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Select current entity in drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Εκκαθάριση</translation>
+    </message>
+    <message>
+        <source>Collect Coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coordinates:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode to display collected coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Absolute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delta to First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delta to Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Copy All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;To Cmd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select in Drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Collect Coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No data - select entity of coordinates first...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_QuickInfoWidgetOptionsDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collected Coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display distance and angle to point in addition to coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw points path on preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include polyline child entities information to vertexes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display entity boundaries (Min, Max) coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entity under cursor if not active action and CTRL is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always select entity under cursor if no active action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points highlight pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_Rectangle1PointOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap shift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of bevel corner for Y direction. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="unfinished">Κάθετα</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="unfinished">Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Width of rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Controls how corners of rectangle should be drawn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, rectangle will be rotated on specified angle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size inner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished">Ύψος:</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Ακτίνα:</translation>
+    </message>
+    <message>
+        <source>Length of bevel corner for X direction. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height of rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of rounded corners.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point of rectangle wich will be placed to insertion point.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top-left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Κορυφή</translation>
+    </message>
+    <message>
+        <source>Top-right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom-left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished">Πυθμένας</translation>
+    </message>
+    <message>
+        <source>Bottom-right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">Πλάτος:</translation>
+    </message>
+    <message>
+        <source>Corners:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_Rectangle2PointsOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="unfinished">Κάθετα</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="unfinished">Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Defines which point of rectangle should be placed into start point position.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mid-Vertical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mid-Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>Corners:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines which point of rectangle should be placed into end point position. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of bevel in Y direction. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap shift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Ακτίνα:</translation>
+    </message>
+    <message>
+        <source>If checked, allows to specify rotation angle for rectangle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle rotation angle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End Snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines how corners of rectangle should be drawn. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of rounded corners. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the entire rectangle will be drawn as polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Length of bevel in X direction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_Rectangle3PointsOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inner angle of quadrangle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Inner Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base angle of rectangle. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of bevel in X direction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines how corners should be drawn for rectangle. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Straight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corners:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap shift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of bevel in Y direction. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of rounded corners.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Ακτίνα:</translation>
+    </message>
+    <message>
+        <source>If checked, the shape will be created as polyline. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Edges:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="unfinished">Κάθετα</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="unfinished">Οριζόντια</translation>
+    </message>
+    <message>
+        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Base Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, quadrangle will be created instead of rectangle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quadrangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_Rotate2Options</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Επιλογές μετακίνησης περιστροφής</translation>
+    </message>
+    <message>
+        <source>Specifies whetether copies will be inserted to current or original layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angles mirrored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines whether current or original drawing attributes will be applied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle for rotation over absolute reference point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, multiple copies will be created. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of copies to create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secondary Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Same secondary angle for copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will survive, otherwise they will be removed. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Primary Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle to rotate over secondary reference point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ShortcutButton</name>
+    <message>
+        <source>Click and type the new key sequence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Record Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_SimpleTests</name>
     <message>
         <source>De&amp;bugging</source>
@@ -913,6 +4830,183 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Insert Image</source>
         <translation>Εισαγωγή εικόνας</translation>
+    </message>
+</context>
+<context>
+    <name>LC_SliceDivideOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Circle Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start angle for circle from which ticks will start. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset of tick snap point to intersection point. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Απόσταση:</translation>
+    </message>
+    <message>
+        <source>Distance between ticks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, selected entity will be divided by tick intersection points. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation type="unfinished">Διαίρεση</translation>
+    </message>
+    <message>
+        <source>Length of tick.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tick snap:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle between tick and selected entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tick Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Αρχή</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Τέλος</translation>
+    </message>
+    <message>
+        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count of ticks between edges of selected entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Devines how ticks on entity edges should be placed. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Κανένα</translation>
+    </message>
+    <message>
+        <source>Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edge Tick:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SnapOptionsWidgetsHolder</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_StarOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, symmetric star will be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symmetric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius for inner edges.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Αριθμός:</translation>
+    </message>
+    <message>
+        <source>Number of rays.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, outer edges will be rounded. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius Outer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, inner edges will be rounded. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius Inner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the star will be drawn as polyline. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Radius for outer rays (edges).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -969,6 +5063,238 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Γραμμή</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Κύκλος</translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation type="unfinished">Καμπύλη</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Έλλειψη</translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Dimension</source>
+        <translation type="unfinished">Διάσταση</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Πληροφορίες</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer List</source>
+        <translation type="unfinished">Λίστα στρώσεων</translation>
+    </message>
+    <message>
+        <source>Layer Tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block List</source>
+        <translation type="unfinished">Λίστα μπλοκ</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">Αρχείο</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished">Εμφάνιση</translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished">Επιλογή έλξης</translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Πένα</translation>
+    </message>
+    <message>
+        <source>Tool Options</source>
+        <translation type="unfinished">Επιλογές εργαλείου</translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished">Κατηγορίες</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Αρχείο</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Εισαγωγή</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished">Εξαγωγή</translation>
+    </message>
+    <message>
+        <source>&amp;Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished">Πρόσθετα</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished">Ε&amp;μφάνιση</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished">Εργαλεία</translation>
+    </message>
+    <message>
+        <source>&amp;Line</source>
+        <translation type="unfinished">&amp;Γραμμή</translation>
+    </message>
+    <message>
+        <source>&amp;Circle</source>
+        <translation type="unfinished">&amp;Κύκλος</translation>
+    </message>
+    <message>
+        <source>&amp;Curve</source>
+        <translation type="unfinished">Καμπύλη</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse</source>
+        <translation type="unfinished">Έ&amp;λλειψη</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">&amp;Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>&amp;Select</source>
+        <translation type="unfinished">Ε&amp;πιλογή</translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished">Διάσταση</translation>
+    </message>
+    <message>
+        <source>Ot&amp;her</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Modify</source>
+        <translation type="unfinished">&amp;Τροποποίηση</translation>
+    </message>
+    <message>
+        <source>&amp;Info</source>
+        <translation type="unfinished">&amp;Πληροφορίες</translation>
+    </message>
+    <message>
+        <source>&amp;Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Drawings</source>
+        <translation type="unfinished">Σχεδιαγράμματα</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Βοήθεια</translation>
+    </message>
+    <message>
+        <source>On&amp;line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User&apos;s &amp;Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zulip &amp;Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Release Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Περί</translation>
+    </message>
+    <message>
+        <source>&amp;Donate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished">Γραμμές &amp;εργαλείων</translation>
+    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -1013,11 +5339,19 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>side length in pixels</source>
+        <source>Use themed icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use themed icons</source>
+        <source>Side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left toolbar columns:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of columns for actions in left toolbar.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1062,6 +5396,10 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Copies:</source>
         <translation>Αντίγραφα:</translation>
     </message>
+    <message>
+        <source>Number of copies</source>
+        <translation type="unfinished">Αριθμός αντιγράφων</translation>
+    </message>
 </context>
 <context>
     <name>QC_ActionGetEnt</name>
@@ -1096,39 +5434,39 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Αρχείο</translation>
+        <translation type="vanished">&amp;Αρχείο</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Επεξεργασία</translation>
+        <translation type="vanished">&amp;Επεξεργασία</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>Ε&amp;μφάνιση</translation>
+        <translation type="vanished">Ε&amp;μφάνιση</translation>
     </message>
     <message>
         <source>&amp;Select</source>
-        <translation>Ε&amp;πιλογή</translation>
+        <translation type="vanished">Ε&amp;πιλογή</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation>&amp;Γραμμή</translation>
+        <translation type="vanished">&amp;Γραμμή</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation>&amp;Κύκλος</translation>
+        <translation type="vanished">&amp;Κύκλος</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation>Έ&amp;λλειψη</translation>
+        <translation type="vanished">Έ&amp;λλειψη</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation>&amp;Τροποποίηση</translation>
+        <translation type="vanished">&amp;Τροποποίηση</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Πληροφορίες</translation>
+        <translation type="vanished">&amp;Πληροφορίες</translation>
     </message>
     <message>
         <source>About</source>
@@ -1136,7 +5474,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Βοήθεια</translation>
+        <translation type="vanished">&amp;Βοήθεια</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -1180,31 +5518,31 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>File</source>
-        <translation>Αρχείο</translation>
+        <translation type="vanished">Αρχείο</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Επεξεργασία</translation>
+        <translation type="vanished">Επεξεργασία</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Εμφάνιση</translation>
+        <translation type="vanished">Εμφάνιση</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Πένα</translation>
+        <translation type="vanished">Πένα</translation>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation>Επιλογές εργαλείου</translation>
+        <translation type="vanished">Επιλογές εργαλείου</translation>
     </message>
     <message>
         <source>Layer List</source>
-        <translation>Λίστα στρώσεων</translation>
+        <translation type="vanished">Λίστα στρώσεων</translation>
     </message>
     <message>
         <source>Block List</source>
-        <translation>Λίστα μπλοκ</translation>
+        <translation type="vanished">Λίστα μπλοκ</translation>
     </message>
     <message>
         <source>Print preview for %1</source>
@@ -1264,7 +5602,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>&amp;Πολυγραμμή</translation>
+        <translation type="vanished">&amp;Πολυγραμμή</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -1286,11 +5624,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
-        <translation>Εισαγωγή</translation>
+        <translation type="vanished">Εισαγωγή</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation>Γραμμές &amp;εργαλείων</translation>
+        <translation type="vanished">Γραμμές &amp;εργαλείων</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
@@ -1334,7 +5672,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation>Επιλογή έλξης</translation>
+        <translation type="vanished">Επιλογή έλξης</translation>
     </message>
     <message>
         <source>Export as</source>
@@ -1358,11 +5696,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation>Εξαγωγή ως PDF</translation>
+        <translation type="vanished">Εξαγωγή ως PDF</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Εξαγωγή</translation>
+        <translation type="vanished">Εξαγωγή</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -1378,59 +5716,47 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Categories</source>
-        <translation>Κατηγορίες</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Κατηγορίες</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Επιλογή</translation>
+        <translation type="vanished">Επιλογή</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Γραμμή</translation>
+        <translation type="vanished">Γραμμή</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Κύκλος</translation>
+        <translation type="vanished">Κύκλος</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation>Καμπύλη</translation>
+        <translation type="vanished">Καμπύλη</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation>Καμπύλη</translation>
+        <translation type="vanished">Καμπύλη</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Έλλειψη</translation>
+        <translation type="vanished">Έλλειψη</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Πολυγραμμή</translation>
+        <translation type="vanished">Πολυγραμμή</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation>Διάσταση</translation>
+        <translation type="vanished">Διάσταση</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation>Τροποποίηση</translation>
+        <translation type="vanished">Τροποποίηση</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Πληροφορίες</translation>
     </message>
     <message>
         <source>Grid Status</source>
@@ -1453,20 +5779,12 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pl&amp;ugins</source>
-        <translation>Πρόσθετα</translation>
+        <translation type="vanished">Πρόσθετα</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation>Διάσταση</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Διάσταση</translation>
     </message>
     <message>
         <source>Recent Files</source>
@@ -1510,11 +5828,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>Εργαλεία</translation>
+        <translation type="vanished">Εργαλεία</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation>Σχεδιαγράμματα</translation>
+        <translation type="vanished">Σχεδιαγράμματα</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
@@ -1535,11 +5853,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Αποθήκευση</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Αποθήκευση ως</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
@@ -1614,46 +5932,6 @@ Please check its existence and permissions.</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_ActionHandler</name>
@@ -1661,6 +5939,14 @@ Please check its existence and permissions.</source>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>διαφυγή</translation>
+    </message>
+    <message>
+        <source>Spacebar: restored snapping mode to normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacebar: temporarily set snapping mode to free snapping</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1727,7 +6013,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Block Menu</source>
-        <translation>Μενού μπλοκ</translation>
+        <translation type="vanished">Μενού μπλοκ</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Blocks</source>
@@ -1881,10 +6167,6 @@ in a separate window</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
-        <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Custom Picked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1964,6 +6246,14 @@ in a separate window</source>
     </message>
 </context>
 <context>
+    <name>QG_DimOptions</name>
+    <message>
+        <source>R</source>
+        <comment>Radial dimension prefix</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DimensionLabelEditor</name>
     <message>
         <source>Dimension Label Editor</source>
@@ -2004,6 +6294,24 @@ in a separate window</source>
     <message>
         <source>π (Pi)</source>
         <translation>π (Πι)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R (Radial)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R</source>
+        <comment>Radial dimension prefix</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R</source>
+        <comment>Radial dimesnion prefix</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2199,6 +6507,10 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Enable Preview</source>
         <translation>Ενεργοποίηση προεπισκόπησης</translation>
     </message>
+    <message>
+        <source>Area</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgImage</name>
@@ -2277,7 +6589,9 @@ This recursively modifies all entities of the Block itself.</source>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
+Please choose the unit you want to use for new drawings
+&lt;br&gt;
+and your preferred language for Ui and Command.&lt;br&gt;
 (You can changes these settings later.)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3059,7 +7373,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Number of copies. Maximum 100</source>
-        <translation>Αριθμός αντιγράφων. Μέγιστο 100</translation>
+        <translation type="vanished">Αριθμός αντιγράφων. Μέγιστο 100</translation>
     </message>
 </context>
 <context>
@@ -3094,7 +7408,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Πολλαπλά αντίγραφα</translation>
+        <translation type="vanished">&amp;Πολλαπλά αντίγραφα</translation>
     </message>
     <message>
         <source>...</source>
@@ -3103,6 +7417,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3533,6 +7851,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Screen %</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Extend axis lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Grid type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lines</source>
+        <translation type="unfinished">Γραμμές</translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
@@ -3794,10 +8128,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Relative-Zero Marker Color:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3838,10 +8168,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3851,6 +8177,122 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show reference points on hover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight entities on mouse hover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unitless grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operations preview shows reference points and entities </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show snap options in Snap Selection Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview Reference Entity Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview Selectable Reference Entity Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcuts Mappings:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle snap single step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>15</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show keyboard shortcuts in actions tooltips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Persistent dialogs location and size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Persist dialog size only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open last opened files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Preview Reference Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Point Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dwg Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size relative to screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size in drawing units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(0 =&gt; 5% relative to screen size)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3946,6 +8388,53 @@ but ignored by other</source>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether to export points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsVariables</name>
+    <message>
+        <source>Drawing Variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4124,6 +8613,10 @@ so default step value required for baking</source>
     <message>
         <source>Y</source>
         <translation>Y</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4795,12 +9288,16 @@ so default step value required for baking</source>
         <translation>ξανά δεν δόθηκε κείμενο.</translation>
     </message>
     <message>
-        <source>Close All</source>
+        <source>Close</source>
+        <translation type="obsolete">Κλείσιμο</translation>
+    </message>
+    <message>
+        <source>Discard All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="unfinished">Κλείσιμο</translation>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4876,6 +9373,14 @@ so default step value required for baking</source>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4998,7 +9503,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation>Μενού στρώσεων</translation>
+        <translation type="vanished">Μενού στρώσεων</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Layers</source>
@@ -5062,7 +9567,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Εναλλαγή &amp;Κλειδώματος Στρώσης</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
@@ -5254,9 +9759,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PolylineOptions</name>
+    <name>QG_PrintPreviewOptions</name>
     <message>
-        <source>wrong action type</source>
+        <source>Invalid scale provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper scale factor larger than max print ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper scale factor smaller than min print ratio</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5362,63 +9875,59 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Free Snap</source>
-        <translation>Χωρίς έλξη</translation>
+        <translation type="vanished">Χωρίς έλξη</translation>
     </message>
     <message>
         <source>Snap on grid</source>
-        <translation>Έλξη στον κάνναβο</translation>
+        <translation type="vanished">Έλξη στον κάνναβο</translation>
     </message>
     <message>
         <source>Snap on Endpoints</source>
-        <translation>Έλξη σε άκρα</translation>
+        <translation type="vanished">Έλξη σε άκρα</translation>
     </message>
     <message>
         <source>Snap on Entity</source>
-        <translation>Έλξη σε οντότητες</translation>
+        <translation type="vanished">Έλξη σε οντότητες</translation>
     </message>
     <message>
         <source>Snap Center</source>
-        <translation>Έλξη σε κέντρα</translation>
+        <translation type="vanished">Έλξη σε κέντρα</translation>
     </message>
     <message>
         <source>Snap Middle</source>
-        <translation>Έλξη στη μέση</translation>
+        <translation type="vanished">Έλξη στη μέση</translation>
     </message>
     <message>
         <source>Snap Distance</source>
-        <translation>Έλξη με απόσταση</translation>
+        <translation type="vanished">Έλξη με απόσταση</translation>
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation>Έλξη σε διασταύρωση</translation>
+        <translation type="vanished">Έλξη σε διασταύρωση</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
-        <translation>Περιορισμός Οριζόντια</translation>
+        <translation type="vanished">Περιορισμός Οριζόντια</translation>
     </message>
     <message>
         <source>Restrict Vertical</source>
-        <translation>Περιορισμός κατακόρυφα</translation>
+        <translation type="vanished">Περιορισμός κατακόρυφα</translation>
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation>Περιορισμός Ορθογώνια</translation>
+        <translation type="vanished">Περιορισμός Ορθογώνια</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation>Χωρίς περιορισμό</translation>
+        <translation type="vanished">Χωρίς περιορισμό</translation>
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation>Καθορισμός θέσης του σχετικού σημείου μηδέν</translation>
+        <translation type="vanished">Καθορισμός θέσης του σχετικού σημείου μηδέν</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation>Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
     </message>
     <message>
         <source>Relative zero position is %1</source>
@@ -5646,6 +10155,162 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>Blocks for removal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer empty name is not allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attempt to create layer with duplicating name. Duplicated layer name is 
+[%1].
+Please specify a different name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer list separator string is empty. It will not be possible to build layers tree.
+Please specify a different value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid value provide for %1 color.
+Please specify a different value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove empty layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer(s) without entities found, yet they are filtered and not visible.
+
+Clear filtering mask and repeat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No layers without entities found, nothing to remove.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Such child layer already exist for 
+[%1].
+Please specify a different name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Such child layer already exist for 
+[%1].
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimensional layer may be added only for normal active layer.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace &quot;By Layer&quot; value to source layers values?
+
+If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+
+If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer DialogEx</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid value provided for %1 color.
+Please specify a different value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid path to pens file.
+%1 
+Please specify a different value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen will be removed from palette, drawing entities will not be affected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you&apos;d like to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen for removal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove pens</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pens will be removed from palette, drawing entities will not be affected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pens for removal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Entities </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are no entities that matches pen on visible layers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Such entities exist on frozen layers.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Such entities exist on locked layers.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please use different pen attributes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set pen by entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select only one entity to pick pen setting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving Pens Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6599,7 +11264,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="unfinished">μήκος χορδής</translation>
+        <translation type="obsolete">μήκος χορδής</translation>
     </message>
     <message>
         <source>columns</source>
@@ -6663,11 +11328,6 @@ Do you want to replace it?</source>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cl</source>
-        <comment>chord length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6872,21 +11532,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished">Δεκτός κωδικός πλήκτρου: %1</translation>
+        <translation type="obsolete">Δεκτός κωδικός πλήκτρου: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
         <translation type="unfinished">Διαθέσιμες εντολές:</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>None</source>
@@ -6930,23 +11580,23 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">Μπλοκ</translation>
+        <translation type="obsolete">Μπλοκ</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Κύκλος</translation>
+        <translation type="obsolete">Κύκλος</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished">Καμπύλη</translation>
+        <translation type="obsolete">Καμπύλη</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Επεξεργασία</translation>
+        <translation type="obsolete">Επεξεργασία</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Έλλειψη</translation>
+        <translation type="obsolete">Έλλειψη</translation>
     </message>
     <message>
         <source>File</source>
@@ -6954,63 +11604,35 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">Διάσταση</translation>
+        <translation type="obsolete">Διάσταση</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Πληροφορίες</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Γραμμή</translation>
+        <translation type="obsolete">Γραμμή</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Τροποποίηση</translation>
+        <translation type="obsolete">Τροποποίηση</translation>
     </message>
     <message>
         <source>Options</source>
         <translation type="unfinished">Επιλογές</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Πολυγραμμή</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Επιλογή</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Επιλογή</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Εμφάνιση</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Εμφάνιση</translation>
     </message>
     <message>
         <source>All</source>
@@ -8167,6 +12789,585 @@ Do you want to replace it?</source>
         <comment>default layer name</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>R</source>
+        <comment>Radial dimension prefix</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sline</source>
+        <comment>draw snake line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sli</source>
+        <comment>draw snake line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sl</source>
+        <comment>draw snake line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>slinex</source>
+        <comment>draw snake line (X)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>slix</source>
+        <comment>draw snake line (X)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rlx</source>
+        <comment>draw snake line (X)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sliney</source>
+        <comment>draw snake line (Y)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sliy</source>
+        <comment>draw snake line (Y)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rly</source>
+        <comment>draw snake line (Y)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rect1</source>
+        <comment>draw rectangle (1 Point)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>re1</source>
+        <comment>draw rectangle (1 Point)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rect2</source>
+        <comment>draw rectangle (2 Points)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>re2</source>
+        <comment>draw rectangle (2 Points)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rect3</source>
+        <comment>draw rectangle (3 Points)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>re3</source>
+        <comment>draw rectangle (3 Points)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>slicel</source>
+        <comment>slice/divide line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sll</source>
+        <comment>slice/divide line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>slicec</source>
+        <comment>slice/divide circle/arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>slc</source>
+        <comment>slice/divide circle/arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>star</source>
+        <comment>draw star</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>st</source>
+        <comment>draw star</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross</source>
+        <comment>draw cross for circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cx</source>
+        <comment>draw cross for circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linepoints</source>
+        <comment>draw line of points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lpoints</source>
+        <comment>draw line of points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>criclebyarc</source>
+        <comment>draw circle by arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cba</source>
+        <comment>draw circle by arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duplicate</source>
+        <comment>duplicate entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dup</source>
+        <comment>duplicate entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linejoin</source>
+        <comment>lines join</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lj</source>
+        <comment>lines join</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>breakdivide</source>
+        <comment>break or divide entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bd</source>
+        <comment>break or divide entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gapline</source>
+        <comment>line gap</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gl</source>
+        <comment>line gap</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <comment>create parallel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arcellc1ax</source>
+        <comment>arc ellipse 1 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ae1</source>
+        <comment>arc ellipse 1 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parabola4p</source>
+        <comment>Parabola 4 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pl4</source>
+        <comment>Parabola 4 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parabolafd</source>
+        <comment>Parabola focus directrix</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plfd</source>
+        <comment>Parabola focus directrix</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipsec1p</source>
+        <comment>ellipse 1 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ea1</source>
+        <comment>ellipse 1 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>angleline</source>
+        <comment>draw angle from line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rortoline</source>
+        <comment>draw orthogonal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rort</source>
+        <comment>draw orthogonal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>point2line</source>
+        <comment>draw line from point to line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p2l</source>
+        <comment>draw line from point to line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <comment>modify - offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bevel</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snapmiddlemanual</source>
+        <comment>snap middle manual</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snapmanual</source>
+        <comment>snap middle manual</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>smm</source>
+        <comment>snap middle manual</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chordlen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>anglerel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linesnap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ticksnap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bevels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nopoly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>usepoly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>corners</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>str</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>round</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snap1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>topl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>topr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bottoml</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bottomr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snapcorner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snapshift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sizein</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sizeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snap2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mid-vert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mid-hor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noquad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>angle_inner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>edge-none</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>edge-both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>edge-start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>edge-end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nofit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dist_fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dist_flex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sym</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nosym</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chordlen</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>keycode: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid keycode: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle Snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished">Χωρίς έλξη</translation>
+    </message>
+    <message>
+        <source>Use Mirrored Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to Relative Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch:: loading pattern failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished">Εξαγωγή ως PDF</translation>
+    </message>
+    <message>
+        <source>User Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cal </source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate </source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By Layer</source>
+        <translation type="unfinished">Κατά στρώση</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation type="unfinished">Κατά μπλοκ</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation type="unfinished">- Αμετάβλητο -</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -8176,7 +13377,18 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksExplode</name>
+    <message>
+        <source>Select to explode container (Enter to complete)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select and explode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8191,7 +13403,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -8251,34 +13463,58 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+    <message>
+        <source>Set new position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lengthen Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lengthen Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set new ref position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll Vertically</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
+        <translation type="vanished">Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
+        <translation type="vanished">Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Καθορίστε τη θέση της γραμμής διάστασης</translation>
+        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Εισάγετε το κείμενο διάστασης:</translation>
+        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
     </message>
 </context>
 <context>
@@ -8289,7 +13525,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select second line</source>
@@ -8308,27 +13544,27 @@ This block cannot be inserted.</source>
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Μη οντότητα κύκλου ή τόξου</translation>
+        <translation type="vanished">Μη οντότητα κύκλου ή τόξου</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Μη έγκυρη έκφραση</translation>
+        <translation type="vanished">Μη έγκυρη έκφραση</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Επιλέξτε οντότητα τόξου ή κύκλου</translation>
+        <translation type="vanished">Επιλέξτε οντότητα τόξου ή κύκλου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Καθορίστε τη θέση της γραμμής διάστασης</translation>
+        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Εισάγετε το κείμενο διάστασης:</translation>
+        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
     </message>
 </context>
 <context>
@@ -8339,7 +13575,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -8358,58 +13594,58 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
+        <translation type="vanished">Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
+        <translation type="vanished">Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Καθορίστε τη θέση της γραμμής διάστασης</translation>
+        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Εισάγετε το κείμενο διάστασης:</translation>
+        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation>Εισάγετε τη γωνία της γραμμής διάστασης:</translation>
+        <translation type="vanished">Εισάγετε τη γωνία της γραμμής διάστασης:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Μη οντότητα κύκλου ή τόξου</translation>
+        <translation type="vanished">Μη οντότητα κύκλου ή τόξου</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Μη έγκυρη έκφραση</translation>
+        <translation type="vanished">Μη έγκυρη έκφραση</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Επιλέξτε οντότητα τόξου ή κύκλου</translation>
+        <translation type="vanished">Επιλέξτε οντότητα τόξου ή κύκλου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Καθορίστε τη θέση της γραμμής διάστασης ή εισάγετε γωνία:</translation>
+        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης ή εισάγετε γωνία:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Εισάγετε το κείμενο διάστασης:</translation>
+        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
     </message>
 </context>
 <context>
@@ -8428,7 +13664,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify radius</source>
@@ -8436,7 +13672,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -8452,7 +13688,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Καθορίστε την τελική γωνία ή [γωνία/μήκος χορδής]</translation>
+        <translation type="vanished">Καθορίστε την τελική γωνία ή [γωνία/μήκος χορδής]</translation>
+    </message>
+    <message>
+        <source>Length of chord should be non-zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify end angle or [angle/chordlen]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8463,7 +13707,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -8471,7 +13715,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -8490,7 +13734,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify end angle</source>
@@ -8498,7 +13742,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -8517,11 +13761,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -8540,7 +13784,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -8548,7 +13792,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -8563,7 +13807,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -8571,7 +13815,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -8590,7 +13834,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify circle radius</source>
@@ -8598,7 +13842,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -8621,7 +13865,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the second line</source>
@@ -8629,7 +13873,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -8640,7 +13884,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
@@ -8648,7 +13892,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -8671,7 +13915,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
@@ -8679,27 +13923,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
         <translation>Επιλέξτε το κέντρο του εφαπτόμενου κύκλου</translation>
-    </message>
-    <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
@@ -8714,7 +13942,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
@@ -8722,7 +13950,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -8737,11 +13965,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -8759,6 +13987,10 @@ This block cannot be inserted.</source>
         <source>Specify the third line/arc/circle</source>
         <translation>Καθορίστε την τρίτη γραμμή/τόξο/κύκλο</translation>
     </message>
+    <message>
+        <source>No common tangential circle for selected entities</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
@@ -8768,7 +14000,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
@@ -8776,7 +14008,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -8803,7 +14035,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
@@ -8811,7 +14043,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -8834,7 +14066,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
@@ -8846,7 +14078,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -8865,7 +14097,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
@@ -8873,7 +14105,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -8896,7 +14128,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify the second line</source>
@@ -8904,7 +14136,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -8966,7 +14198,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -8993,7 +14225,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -9001,7 +14233,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -9032,7 +14264,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -9040,7 +14272,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -9059,7 +14291,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select second line</source>
@@ -9067,7 +14299,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -9091,7 +14323,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -9102,7 +14334,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -9110,7 +14342,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -9121,7 +14353,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
@@ -9129,14 +14361,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -9163,7 +14395,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify through point</source>
@@ -9171,7 +14403,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -9209,11 +14441,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Μη έγκυρος αριθμός. Δοκιμάστε 1...9999</translation>
+        <translation type="vanished">Μη έγκυρος αριθμός. Δοκιμάστε 1...9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Μη έγκυρη έκφραση</translation>
+        <translation type="vanished">Μη έγκυρη έκφραση</translation>
     </message>
 </context>
 <context>
@@ -9224,7 +14456,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -9232,7 +14464,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -9240,11 +14472,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Μη έγκυρος αριθμός. Δοκιμάστε 1..9999</translation>
+        <translation type="vanished">Μη έγκυρος αριθμός. Δοκιμάστε 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Μη έγκυρη έκφραση.</translation>
+        <translation type="vanished">Μη έγκυρη έκφραση.</translation>
     </message>
 </context>
 <context>
@@ -9255,7 +14487,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -9263,7 +14495,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -9278,7 +14510,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify position</source>
@@ -9286,7 +14518,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -9297,7 +14529,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
@@ -9305,26 +14537,38 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
-        <translation>Επιλέξτε τον πρώτο κύκλο ή έλλειψη</translation>
+        <translation type="vanished">Επιλέξτε τον πρώτο κύκλο ή έλλειψη</translation>
     </message>
     <message>
         <source>Select second circle or ellipse</source>
-        <translation>Επιλέξτε το δεύτερο κύκλο ή έλλειψη</translation>
+        <translation type="vanished">Επιλέξτε το δεύτερο κύκλο ή έλλειψη</translation>
+    </message>
+    <message>
+        <source>Select first circle/ellipse/parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select second circle/ellipse/parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the tangent line closest to cursor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9335,7 +14579,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter text:</source>
@@ -9343,7 +14587,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -9354,7 +14598,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -9365,7 +14609,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -9373,7 +14617,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -9432,7 +14676,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
@@ -9440,7 +14684,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -9459,7 +14703,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter text:</source>
@@ -9467,7 +14711,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -9478,22 +14722,45 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Καθορίστε το σημείο αναφοράς</translation>
+        <translation type="vanished">Καθορίστε το σημείο αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionEditCopyPaste</name>
+    <message>
+        <source>Specify reference point</source>
+        <translation type="unfinished">Καθορίστε το σημείο αναφοράς</translation>
+    </message>
+    <message>
+        <source>Paste Immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set paste reference point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste Multiple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Set reference point</source>
-        <translation>Καθορίστε το σημείο αναφοράς</translation>
+        <translation type="vanished">Καθορίστε το σημείο αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Set paste reference point</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9519,7 +14786,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second line</source>
@@ -9527,11 +14794,17 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation>Γωνία: %1</translation>
+        <translation type="vanished">Γωνία: %1</translation>
+    </message>
+    <message>
+        <source>Angle: %1
+Intersection: (%2 , %3)
+Intersection :@(%4, %5)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9550,7 +14823,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
@@ -9573,7 +14846,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
@@ -9581,18 +14854,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished">Απόσταση: %1 Καρτεσιανή: (%2 , %3), Πολική: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
+        <translation type="obsolete">Απόσταση: %1 Καρτεσιανή: (%2 , %3), Πολική: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
+    </message>
+    <message>
+        <source>Distance: %1
+Cartesian: (%2 , %3)
+Polar: (%4 &lt; %5)
+Start: (%6 , %7)
+End: (%8 , %9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t move relative zero</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance: %1</source>
-        <translation>Απόσταση: %1</translation>
+        <translation type="vanished">Απόσταση: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
@@ -9600,7 +14885,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -9608,7 +14893,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+    <message>
+        <source>Distance: %1
+Cartesian: (%2 , %3)
+Polar: (%4 &lt; %5)
+Point On Entity: (%6 , %7)
+Point: (%8 , %9)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not snap to child entities in container</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative point is on entity</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9627,7 +14928,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -9642,10 +14943,21 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionInterface</name>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
-        <translation>Εισαγωγή αντικειμένου βιβλιοθήκης</translation>
+        <translation type="vanished">Εισαγωγή αντικειμένου βιβλιοθήκης</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -9657,7 +14969,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -9680,7 +14992,18 @@ This block cannot be inserted.</source>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Ξε-)Κ&amp;λείδωμα σχετικού μηδέν</translation>
+        <translation type="vanished">(Ξε-)Κ&amp;λείδωμα σχετικού μηδέν</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyAttributes</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished">Επιλέξτε για τροποποίηση χαρακτηριστικών</translation>
+    </message>
+    <message>
+        <source>Modify attributes immediately after selecting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9695,7 +15018,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -9703,7 +15026,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -9712,6 +15035,26 @@ This block cannot be inserted.</source>
     <message>
         <source>Enter length 2:</source>
         <translation>Εισάγετε το μήκος 2:</translation>
+    </message>
+    <message>
+        <source>Selected lines are parallel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected lines are not children of the same polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid entity selected (non-trimmable).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid entity selected (non-atomic).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid entity selected (non-trimmable with first entity).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9722,11 +15065,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation>Το σημείο κοπής δεν είναι έγκυρο.</translation>
+        <translation type="vanished">Το σημείο κοπής δεν είναι έγκυρο.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation>Το σημείο κοπής δεν βρίσκεται πάνω στην οντότητα.</translation>
+        <translation type="vanished">Το σημείο κοπής δεν βρίσκεται πάνω στην οντότητα.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
@@ -9734,7 +15077,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify cutting point</source>
@@ -9742,11 +15085,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation>Η οντότητα πρέπει να είναι γραμμή, τόξο, κύκλος, έλλειψη ή καμπύλη spline παρεμβολής.</translation>
+    </message>
+    <message>
+        <source>Cutting point may not be entity&apos;s endpoint.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyDelete</name>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished">Επιλέξτε για διαγραφή</translation>
+    </message>
+    <message>
+        <source>Delete immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9757,7 +15115,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
@@ -9765,7 +15123,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -9808,7 +15166,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -9819,7 +15177,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyExplodeText</name>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished">Επιλέξτε για διαχωρισμό κειμένου</translation>
+    </message>
+    <message>
+        <source>Explode immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9830,7 +15199,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
@@ -9838,7 +15207,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished">Επιλέξτε για συμμετρία</translation>
+    </message>
+    <message>
+        <source>Specify mirror line</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9849,7 +15226,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify target point</source>
@@ -9857,11 +15234,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Μη έγκυρος αριθμός αντιγράφων, χρήση %1 </translation>
+        <translation type="vanished">Μη έγκυρος αριθμός αντιγράφων, χρήση %1 </translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished">Επιλέξτε για μετακίνηση</translation>
+    </message>
+    <message>
+        <source>Move immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9876,7 +15261,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify target point</source>
@@ -9884,11 +15269,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
         <translation>Εισάγετε τη γωνία περιστροφής:</translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished">Επιλέξτε για μετακίνηση και περιστροφή</translation>
+    </message>
+    <message>
+        <source>Move and rotate immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9899,7 +15292,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+    <message>
+        <source>Specify reference point for direction of offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select lines, polylines, circles or arcs to create offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset immediately after selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyRevertDirection</name>
+    <message>
+        <source>Select to revert direction</source>
+        <translation type="unfinished">Επιλέξτε για αντιστροφή φοράς</translation>
+    </message>
+    <message>
+        <source>Revert immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9910,7 +15326,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -9919,6 +15335,22 @@ This block cannot be inserted.</source>
     <message>
         <source>Specify target point to rotate to</source>
         <translation>Καθορίστε το σημείο προορισμού της περιστροφής</translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished">Επιλέξτε για περιστροφή</translation>
+    </message>
+    <message>
+        <source>Rotate immediately after selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to center of selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify target point for rotation around reference point</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9929,7 +15361,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>
@@ -9937,7 +15369,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished">Επιλέξτε για περιστροφή δύο αξόνων</translation>
+    </message>
+    <message>
+        <source>Rotate 2 Axis immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9948,7 +15388,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -9960,7 +15400,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
@@ -9971,11 +15411,39 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Καθορίστε το σημείο αναφοράς</translation>
+        <translation type="vanished">Καθορίστε το σημείο αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify scale center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to center of selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify source point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify target point</source>
+        <translation type="unfinished">Καθορίστε το σημείο προορισμού</translation>
+    </message>
+    <message>
+        <source>Free snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished">Επιλέξτε για προσαρμογή κλίμακας</translation>
+    </message>
+    <message>
+        <source>Scale immediately after selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9986,7 +15454,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -9994,7 +15462,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -10013,7 +15481,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
@@ -10021,7 +15489,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -10036,11 +15504,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation>Δεν βρέθηκε οντότητα. </translation>
+        <translation type="vanished">Δεν βρέθηκε οντότητα. </translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>Η επιλεγμένη οντότητα ανήκει σε μπλοκ. Παρακαλούμε να επεξεργαστείτε το μπλοκ.</translation>
+        <translation type="vanished">Η επιλεγμένη οντότητα ανήκει σε μπλοκ. Παρακαλούμε να επεξεργαστείτε το μπλοκ.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
@@ -10052,11 +15520,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Επιλέξτε οντότητα προς διευθέτηση ή εισάγετε απόσταση:</translation>
+        <translation type="vanished">Επιλέξτε οντότητα προς διευθέτηση ή εισάγετε απόσταση:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+    <message>
+        <source>No entity found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select line, arc, ellipse or parabola to trim or enter distance:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10071,18 +15547,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10113,7 +15589,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10137,7 +15613,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -10156,11 +15632,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10191,11 +15667,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10225,6 +15701,14 @@ This block cannot be inserted.</source>
         <source>Deleting point is invalid.</source>
         <translation>Το σημείο προς διαγραφή δεν είναι έγκυρο.</translation>
     </message>
+    <message>
+        <source>No polyline found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least two segments of polyline should be between selected points.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
@@ -10242,7 +15726,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -10257,7 +15741,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
@@ -10272,11 +15756,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10288,11 +15772,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation>Το καθορισμένο σημείο δεν είναι έγκυρο.</translation>
+        <translation type="vanished">Το καθορισμένο σημείο δεν είναι έγκυρο.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation>Δεν βρέθηκε τμήμα πάνω στην οντότητα.</translation>
+        <translation type="vanished">Δεν βρέθηκε τμήμα πάνω στην οντότητα.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
@@ -10305,6 +15789,14 @@ This block cannot be inserted.</source>
     <message>
         <source>Specify second segment</source>
         <translation>Καθορίστε το δεύτερο τμήμα</translation>
+    </message>
+    <message>
+        <source>First segment should be on selected polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second segment should be on selected polyline and not equal to first one.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10350,7 +15842,19 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
+        <source>Limit of pages has been exceeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Vertically</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10358,15 +15862,15 @@ This block cannot be inserted.</source>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation>Επιλέξτε για τροποποίηση χαρακτηριστικών</translation>
+        <translation type="vanished">Επιλέξτε για τροποποίηση χαρακτηριστικών</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation>Επιλέξτε για διαγραφή</translation>
+        <translation type="vanished">Επιλέξτε για διαγραφή</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
@@ -10374,31 +15878,31 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select to move</source>
-        <translation>Επιλέξτε για μετακίνηση</translation>
+        <translation type="vanished">Επιλέξτε για μετακίνηση</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation>Επιλέξτε για περιστροφή</translation>
+        <translation type="vanished">Επιλέξτε για περιστροφή</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation>Επιλέξτε για προσαρμογή κλίμακας</translation>
+        <translation type="vanished">Επιλέξτε για προσαρμογή κλίμακας</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation>Επιλέξτε για συμμετρία</translation>
+        <translation type="vanished">Επιλέξτε για συμμετρία</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation>Επιλέξτε για μετακίνηση και περιστροφή</translation>
+        <translation type="vanished">Επιλέξτε για μετακίνηση και περιστροφή</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation>Επιλέξτε για περιστροφή δύο αξόνων</translation>
+        <translation type="vanished">Επιλέξτε για περιστροφή δύο αξόνων</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation>Επιλέξτε για διαχωρισμό κειμένου</translation>
+        <translation type="vanished">Επιλέξτε για διαχωρισμό κειμένου</translation>
     </message>
     <message>
         <source>Select to create block</source>
@@ -10418,7 +15922,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation>Επιλέξτε για δημιουργία αναπαραγωγής</translation>
+        <translation type="vanished">Επιλέξτε για δημιουργία αναπαραγωγής</translation>
     </message>
     <message>
         <source>Select entities to order</source>
@@ -10426,11 +15930,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation>Επιλέξτε για διαχωρισμό μπλοκ</translation>
+        <translation type="vanished">Επιλέξτε για διαχωρισμό μπλοκ</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation>Επιλέξτε για αντιστροφή φοράς</translation>
+        <translation type="vanished">Επιλέξτε για αντιστροφή φοράς</translation>
     </message>
 </context>
 <context>
@@ -10448,7 +15952,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
@@ -10456,14 +15960,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Choose second edge</source>
@@ -10471,11 +15975,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
         <translation>Κάντε κλικ και σύρετε για το παράθυρο επιλογής</translation>
+    </message>
+    <message>
+        <source>Select Intersecting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10486,18 +15994,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation>Καθορισμός &amp;σχετικού μηδέν</translation>
+        <translation type="vanished">Καθορισμός &amp;σχετικού μηδέν</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation>&amp;Τομή χειροκίνητα</translation>
+        <translation type="vanished">&amp;Τομή χειροκίνητα</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -10505,7 +16013,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -10531,7 +16039,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Zoom panning</source>
@@ -10546,7 +16054,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second edge</source>
@@ -10554,7 +16062,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Επιστροφή</translation>
+        <translation type="vanished">Επιστροφή</translation>
+    </message>
+</context>
+<context>
+    <name>RS_GraphicView</name>
+    <message>
+        <source>Draft</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10626,6 +16141,14 @@ This block cannot be inserted.</source>
         <source>Length 2:</source>
         <translation type="unfinished">Μήκος 2:</translation>
     </message>
+    <message>
+        <source>Length of bevel in X direction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of bevel in Y direction. </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_CircleOptions</name>
@@ -10636,6 +16159,10 @@ This block cannot be inserted.</source>
     <message>
         <source>Radius:</source>
         <translation type="unfinished">Ακτίνα:</translation>
+    </message>
+    <message>
+        <source>Radius of circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10666,6 +16193,10 @@ This block cannot be inserted.</source>
     <message>
         <source>Angle:</source>
         <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Angle of dimension</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10706,6 +16237,46 @@ This block cannot be inserted.</source>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Dimension angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Απόσταση:</translation>
+    </message>
+    <message>
+        <source>Distance between dimensions in baseline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, distance between dimenions is defined by mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle for dimension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, angle for dimension is defined by mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_ImageOptions</name>
@@ -10723,7 +16294,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished">Συντελεστής:</translation>
+        <translation type="obsolete">Συντελεστής:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
@@ -10731,11 +16302,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished">DPI</translation>
+        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
         <translation type="unfinished">DPI εικόνας</translation>
+    </message>
+    <message>
+        <source>Scale Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10846,6 +16425,10 @@ This block cannot be inserted.</source>
         <source>End</source>
         <translation type="unfinished">Τέλος</translation>
     </message>
+    <message>
+        <source>Point on created line that will be placed into insertion point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_LineBisectorOptions</name>
@@ -10902,6 +16485,94 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
+    <name>Ui_LineOptionsRel</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Επιλογές γραμμής</translation>
+    </message>
+    <message>
+        <source>Direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates polyline from line segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Vertical line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <source>Line by specified angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Γωνία</translation>
+    </message>
+    <message>
+        <source>Horizontal line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <source>If checked, angle is relative to previous segment</source>
+        <extracomment>Angle is relative to previous segment</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished">Αναίρεση της τελευταίας σχεδίασης γραμμής</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Αναίρεση</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished">Σχηματισμός ενός κλειστού περιγράμματος από τις σχεδιαζόμενες γραμμές</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Κλείσιμο</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished">Επαναφορά της τελευταίας σχεδίασης γραμμής</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Επαναφορά</translation>
+    </message>
+    <message>
+        <source>Angle of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line to arbitrary point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Σημείο</translation>
+    </message>
+</context>
+<context>
     <name>Ui_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
@@ -10937,6 +16608,14 @@ This block cannot be inserted.</source>
     <message>
         <source>Number of parallels to create</source>
         <translation type="unfinished">Αριθμός παραλλήλων προς δημιουργία</translation>
+    </message>
+    <message>
+        <source>If checked, parallels will be created on both sides of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symmetric</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11006,6 +16685,14 @@ This block cannot be inserted.</source>
         <source>Angle:</source>
         <translation type="unfinished">Γωνία:</translation>
     </message>
+    <message>
+        <source>Text to insert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_ModifyOffsetOptions</name>
@@ -11015,11 +16702,59 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished">Απόσταση:</translation>
+        <translation type="obsolete">Απόσταση:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation type="unfinished">Αναπαραγωγή από αρχική οντότητα</translation>
+        <translation type="obsolete">Αναπαραγωγή από αρχική οντότητα</translation>
+    </message>
+    <message>
+        <source>Distance for offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of copies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will survive, otherwise they will be removed. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, multiple copies will be created. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11031,6 +16766,62 @@ This block cannot be inserted.</source>
     <message>
         <source>Angle:</source>
         <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, multiple copies will be created. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Same angle for copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation angle. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of copies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, original entities will survive, otherwise they will be removed. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11079,6 +16870,14 @@ This block cannot be inserted.</source>
         <source>Clockwise</source>
         <translation type="unfinished">Δεξιόστροφα</translation>
     </message>
+    <message>
+        <source>Radius of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_PrintPreviewOptions</name>
@@ -11100,11 +16899,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Center to page</source>
-        <translation type="unfinished">Κεντράρισμα στη σελίδα</translation>
+        <translation type="obsolete">Κεντράρισμα στη σελίδα</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="unfinished">Ταίριασμα στη σελίδα</translation>
+        <translation type="obsolete">Ταίριασμα στη σελίδα</translation>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
@@ -11112,6 +16911,50 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Landscape Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portrait Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale:</source>
+        <translation type="unfinished">Κλίμακα:</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page in center of drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom to Print Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit to 1 Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tiled Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pages Rows::</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pages Columns:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11133,6 +16976,10 @@ This block cannot be inserted.</source>
         <source>Radius:</source>
         <translation type="unfinished">Ακτίνα:</translation>
     </message>
+    <message>
+        <source>Rounding radius</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
@@ -11142,7 +16989,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished">Απόσταση:</translation>
+        <translation type="obsolete">Απόσταση:</translation>
+    </message>
+    <message>
+        <source>Snap Distance:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11153,11 +17004,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished">Μεσαία σημεία:</translation>
+        <translation type="obsolete">Μεσαία σημεία:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
         <translation type="unfinished">Αριθμός ισαπεχόντων σημείων διαίρεσης</translation>
+    </message>
+    <message>
+        <source>Snap Middle Points:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11215,6 +17070,18 @@ This block cannot be inserted.</source>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="unfinished">Το μήκος εισόδου χρησιμοποιείται ως ολικό μήκος μετά τη διευθέτηση, αντί για αύξηση του μήκους</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, trim/extension is performed for both sides of line.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symmetric</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
