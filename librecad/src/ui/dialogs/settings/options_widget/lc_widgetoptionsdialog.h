@@ -27,9 +27,16 @@ public slots:
     void onBackIconColorChanged(const QString &);
     void showAdvancedSetup();
     void setIconsOverrideFoler();
+    void onSaveStylePressed();
+    void onRemoveStylePressed();
+    void onStyleChanged(const QString& val);
 protected:
+    QString currentIconsStyleName;
     LC_IconColorsOptions iconColorsOptions;
-    void set_color(QComboBox *combo);
-};
+    QString set_color(QComboBox *combo);
+
+    bool setupStylesCombobox();
+    void updateStylesCombobox(QStringList options);
+ };
 
 #endif // LC_WIDGETOPTIONSDIALOG_H

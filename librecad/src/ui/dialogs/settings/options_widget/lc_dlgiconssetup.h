@@ -69,11 +69,40 @@ public slots:
     void onPbDisabledOffMainClicked();
     void onPbDisabledOffAccentClicked();
     void onPbDisabledOffBackClicked();
+    void onGenericMainColorChanged(const QString &value);
+    void onGenericAccentColorChanged(const QString &value);
+    void onGenericBackColorChanged(const QString &value);
+    void onActiveOnMainColorChanged(const QString &value);
+    void onActiveOnAccentColorChanged(const QString &value);
+    void onActiveOnBackColorChanged(const QString &value);
+    void onActiveOffMainColorChanged(const QString &value);
+    void onActiveOffAccentColorChanged(const QString &value);
+    void onActiveOffBackColorChanged(const QString &value);
+    void onNormalOnMainColorChanged(const QString &value);
     void resetToDefaults();
+    void applyIconColors();
+
 protected:
     Ui::LC_DlgIconsSetup *ui;
     LC_IconColorsOptions *iconColorsOptions;
-    void set_color(QComboBox *combo);
+    void onNormalOnAccentColorChanged(const QString &value);
+    void onNormalOnBackColorChanged(const QString &value);
+    void onNormalOffMainColorChanged(const QString &value);
+    void onNormalOffAccentColorChanged(const QString &value);
+    void onNormalOffBackColorChanged(const QString &value);
+    void onSelectedOnMainColorChanged(const QString &value);
+    void onSelectedOnAccentColorChanged(const QString &value);
+    void onSelectedOnBackColorChanged(const QString &value);
+    void onSelectedOffMainColorChanged(const QString &value);
+    void onSelectedOffAccentColorChanged(const QString &value);
+    void onSelectedOffBackColorChanged(const QString &value);
+    void onDisabledOnMainColorChanged(const QString &value);
+    void onDisabledOnAccentColorChanged(const QString &value);
+    void onDisabledOnBackColorChanged(const QString &value);
+    void onDisabledOffMainColorChanged(const QString &value);
+    void onDisabledOffAccentColorChanged(const QString &value);
+    void onDisabledOffBackColorChanged(const QString &value);
+    QString set_color(QComboBox *combo);
     void initCombobox(LC_IconColorsOptions *options, LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state,
         LC_SVGIconEngineAPI::ColorType type, QComboBox *ctrl);
     void saveColor(LC_IconColorsOptions *options, LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state,

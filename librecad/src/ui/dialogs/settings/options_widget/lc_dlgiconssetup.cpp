@@ -24,8 +24,10 @@
 
 #include <QColorDialog>
 #include <QLineEdit>
+#include <QPixmapCache>
 
 #include "lc_iconcolorsoptions.h"
+#include "qc_applicationwindow.h"
 #include "ui_lc_dlgiconssetup.h"
 
 LC_DlgIconsSetup::LC_DlgIconsSetup(QWidget *parent)
@@ -66,6 +68,40 @@ LC_DlgIconsSetup::LC_DlgIconsSetup(QWidget *parent)
     connect(ui->pbDisabledOffBack, &QPushButton::clicked, this, &LC_DlgIconsSetup::onPbDisabledOffBackClicked);
 
     connect(ui->pbResetToDefaults,&QPushButton::clicked, this, &LC_DlgIconsSetup::resetToDefaults);
+
+
+    connect(ui->cbGenericMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onGenericMainColorChanged);
+    connect(ui->cbGenericAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onGenericAccentColorChanged);
+    connect(ui->cbBackGeneric->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onGenericBackColorChanged);
+
+    connect(ui->cbActiveOnMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onActiveOnMainColorChanged);
+    connect(ui->cbActiveOnAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onActiveOnAccentColorChanged);
+    connect(ui->cbActiveOnBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onActiveOnBackColorChanged);
+    connect(ui->cbActiveOffMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onActiveOffMainColorChanged);
+    connect(ui->cbActiveOffAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onActiveOffAccentColorChanged);
+    connect(ui->cbActiveOffBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onActiveOffBackColorChanged);
+
+    connect(ui->cbNormalOnMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onNormalOnMainColorChanged);
+    connect(ui->cbNormalOnAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onNormalOnAccentColorChanged);
+    connect(ui->cbNormalOnBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onNormalOnBackColorChanged);
+    connect(ui->cbNormalOffMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onNormalOffMainColorChanged);
+    connect(ui->cbNormalOffAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onNormalOffAccentColorChanged);
+    connect(ui->cbNormalOffBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onNormalOffBackColorChanged);
+
+    connect(ui->cbDisabledOnMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onDisabledOnMainColorChanged);
+    connect(ui->cbDisabledOnAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onDisabledOnAccentColorChanged);
+    connect(ui->cbDisabledOnBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onDisabledOnBackColorChanged);
+    connect(ui->cbDisabledOffMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onDisabledOffMainColorChanged);
+    connect(ui->cbDisabledOffAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onDisabledOffAccentColorChanged);
+    connect(ui->cbDisabledOffBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onDisabledOffBackColorChanged);
+
+    connect(ui->cbSelectedOnMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onSelectedOnMainColorChanged);
+    connect(ui->cbSelectedOnAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onSelectedOnAccentColorChanged);
+    connect(ui->cbSelectedOnBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onSelectedOnBackColorChanged);
+    connect(ui->cbSelectedOffMain->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onSelectedOffMainColorChanged);
+    connect(ui->cbSelectedOffAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onSelectedOffAccentColorChanged);
+    connect(ui->cbSelectedOffBack->lineEdit(), &QLineEdit::textEdited, this, &LC_DlgIconsSetup::onSelectedOffBackColorChanged);
+
 }
 
 LC_DlgIconsSetup::~LC_DlgIconsSetup(){
@@ -164,114 +200,331 @@ void LC_DlgIconsSetup::accept(){
 }
 
 void LC_DlgIconsSetup::onPbGenericMainClicked(){
-    set_color(ui->cbGenericMain);
+    QString colorName = set_color(ui->cbGenericMain);
+    if (!colorName.isEmpty()) {
+        onGenericMainColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::onPbGenericAccentClicked(){
-    set_color(ui->cbGenericAccent);
+void LC_DlgIconsSetup::onPbGenericAccentClicked(){    
+    QString colorName = set_color(ui->cbGenericAccent);
+    if (!colorName.isEmpty()) {
+        onGenericAccentColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::onPbGenericBackClicked(){
-    set_color(ui->cbBackGeneric);
+void LC_DlgIconsSetup::onPbGenericBackClicked(){    
+    QString colorName = set_color(ui->cbBackGeneric);
+    if (!colorName.isEmpty()) {
+        onGenericBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbActiveOnMainClicked(){
-    set_color(ui->cbActiveOnMain);
+    QString colorName = set_color(ui->cbActiveOnMain);
+    if (!colorName.isEmpty()) {
+        onActiveOnMainColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::onPbActiveOnAccentClicked(){
-    set_color(ui->cbActiveOnAccent);
+void LC_DlgIconsSetup::onPbActiveOnAccentClicked(){    
+    QString colorName = set_color(ui->cbActiveOnAccent);
+    if (!colorName.isEmpty()) {
+        onActiveOnAccentColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::onPbActiveOnBackClicked(){
-    set_color(ui->cbActiveOnBack);
+void LC_DlgIconsSetup::onPbActiveOnBackClicked(){    
+    QString colorName = set_color(ui->cbActiveOnBack);
+    if (!colorName.isEmpty()) {
+        onActiveOnBackColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::onPbActiveOffMainClicked(){
-    set_color(ui->cbActiveOffMain);
+void LC_DlgIconsSetup::onPbActiveOffMainClicked(){    
+    QString colorName = set_color(ui->cbActiveOffMain);
+    if (!colorName.isEmpty()) {
+        onActiveOffMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbActiveOffAccentClicked(){
-    set_color(ui->cbActiveOffAccent);
+    QString colorName = set_color(ui->cbActiveOffAccent);
+    if (!colorName.isEmpty()) {
+        onActiveOffAccentColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::onPbActiveOffBackClicked(){
-    set_color(ui->cbActiveOffBack);
+void LC_DlgIconsSetup::onPbActiveOffBackClicked(){    
+    QString colorName = set_color(ui->cbActiveOffBack);
+    if (!colorName.isEmpty()) {
+        onActiveOffBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbNormalOnMainClicked(){
-    set_color(ui->cbNormalOnMain);
+    QString colorName = set_color(ui->cbNormalOnMain);
+    if (!colorName.isEmpty()) {
+        onNormalOnMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbNormalOnAccentClicked(){
-    set_color(ui->cbNormalOnAccent);
+    QString colorName = set_color(ui->cbNormalOnAccent);
+    if (!colorName.isEmpty()) {
+        onNormalOnAccentColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbNormalOnBackClicked(){
-    set_color(ui->cbNormalOnBack);
+    QString colorName = set_color(ui->cbNormalOnBack);
+    if (!colorName.isEmpty()) {
+        onNormalOnBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbNormalOffMainClicked(){
-    set_color(ui->cbNormalOffMain);
+    QString colorName = set_color(ui->cbNormalOffMain);
+    if (!colorName.isEmpty()) {
+        onNormalOffMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbNormalOffAccentClicked(){
-    set_color(ui->cbNormalOffAccent);
+    QString colorName = set_color(ui->cbNormalOffAccent);
+    if (!colorName.isEmpty()) {
+        onNormalOffAccentColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbNormalOffBackClicked(){
-    set_color(ui->cbNormalOffBack);
+    QString colorName = set_color(ui->cbNormalOffBack);
+    if (!colorName.isEmpty()) {
+        onNormalOffBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbSelectedOnMainClicked(){
-    set_color(ui->cbSelectedOnMain);
+    QString colorName = set_color(ui->cbSelectedOnMain);
+    if (!colorName.isEmpty()) {
+        onSelectedOnMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbSelectedOnAccentClicked(){
-    set_color(ui->cbSelectedOnAccent);
+    QString colorName = set_color(ui->cbSelectedOnAccent);
+    if (!colorName.isEmpty()) {
+        onSelectedOnAccentColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbSelectedOnBackClicked(){
-    set_color(ui->cbSelectedOnBack);
+    QString colorName = set_color(ui->cbSelectedOnBack);
+    if (!colorName.isEmpty()) {
+        onSelectedOnBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbSelectedOffMainClicked(){
-    set_color(ui->cbSelectedOffMain);
+    QString colorName = set_color(ui->cbSelectedOffMain);
+    if (!colorName.isEmpty()) {
+        onSelectedOffMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbSelectedOffAccentClicked(){
-    set_color(ui->cbSelectedOffAccent);
+    QString colorName = set_color(ui->cbSelectedOffAccent);
+    if (!colorName.isEmpty()) {
+        onSelectedOffAccentColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbSelectedOffBackClicked(){
-    set_color(ui->cbSelectedOffBack);
+    QString colorName = set_color(ui->cbSelectedOffBack);
+    if (!colorName.isEmpty()) {
+        onSelectedOffBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbDisabledOnMainClicked(){
-    set_color(ui->cbDisabledOnMain);
+    QString colorName = set_color(ui->cbDisabledOnMain);
+    if (!colorName.isEmpty()) {
+        onDisabledOnMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbDisabledOnAccentClicked(){
-    set_color(ui->cbDisabledOnAccent);
+    QString colorName = set_color(ui->cbDisabledOnAccent);
+    if (!colorName.isEmpty()) {
+        onDisabledOnAccentColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbDisabledOnBackClicked(){
-    set_color(ui->cbDisabledOnBack);
+    QString colorName = set_color(ui->cbDisabledOnBack);
+    if (!colorName.isEmpty()) {
+        onDisabledOnBackColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbDisabledOffMainClicked(){
-    set_color(ui->cbDisabledOffMain);
+    QString colorName = set_color(ui->cbDisabledOffMain);
+    if (!colorName.isEmpty()) {
+        onDisabledOffMainColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbDisabledOffAccentClicked(){
-    set_color(ui->cbDisabledOffAccent);
+    QString colorName = set_color(ui->cbDisabledOffAccent);
+    if (!colorName.isEmpty()) {
+        onDisabledOffAccentColorChanged(colorName);
+    }
 }
 
 void LC_DlgIconsSetup::onPbDisabledOffBackClicked(){
-    set_color(ui->cbDisabledOffBack);
+    QString colorName = set_color(ui->cbDisabledOffBack);
+    if (!colorName.isEmpty()) {
+        onDisabledOffBackColorChanged(colorName);
+    }
 }
 
-void LC_DlgIconsSetup::set_color(QComboBox *combo) {
+void LC_DlgIconsSetup::onGenericMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onGenericAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onGenericBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onActiveOnMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onActiveOnAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onActiveOnBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onActiveOffMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onActiveOffAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onActiveOffBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onNormalOnMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onNormalOnAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onNormalOnBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onNormalOffMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onNormalOffAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onNormalOffBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onSelectedOnMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onSelectedOnAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onSelectedOnBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onSelectedOffMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onSelectedOffAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onSelectedOffBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onDisabledOnMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onDisabledOnAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onDisabledOnBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onDisabledOffMainColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onDisabledOffAccentColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_DlgIconsSetup::onDisabledOffBackColorChanged(const QString &value){
+    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+
+QString LC_DlgIconsSetup::set_color(QComboBox *combo) {
     QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
@@ -279,11 +532,26 @@ void LC_DlgIconsSetup::set_color(QComboBox *combo) {
 
     QColor color = dlg.getColor(current, this, tr("Select Color"), QColorDialog::DontUseNativeDialog);
     if (color.isValid()) {
-        combo->lineEdit()->setText(color.name());
+        auto colorName = color.name();
+        combo->lineEdit()->setText(colorName);
+        return colorName;
     }
+    return "";
 }
 
 void LC_DlgIconsSetup::resetToDefaults(){
     iconColorsOptions->resetToDefaults();
     setIconsOptions(iconColorsOptions);
+}
+
+void LC_DlgIconsSetup::applyIconColors(){
+    iconColorsOptions->applyOptions();
+    QPixmapCache::clear();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    if (appWindow != nullptr) {
+        appWindow->fireIconsRefresh();
+    }
+    appWindow->update();
+    appWindow->repaint();
+    QApplication::processEvents();
 }

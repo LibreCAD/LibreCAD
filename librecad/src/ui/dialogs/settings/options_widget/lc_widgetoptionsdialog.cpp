@@ -36,17 +36,8 @@
 #include <QInputDialog>
 
 #include "lc_dlgiconssetup.h"
-/**
-     *Fixme - sand - add preview for icon colors changes
-     *
-     * so far, when widget options dialog is invoked (in modal), applyIconColors has no effect during open dialog.
-     * this method is called, yet due to some reasons that are not clear for me, icons are rendered using old colors.
-     *
-     * Only on closing the dialog, icons are rendered with specified colors. At least, such behavior is uner Win.
-     *
-     * P.S - of course, it's possible to illustrate colors via custom widget and SvgRenderer (and replacing colors in svg here, in addition to
-     * iconengine. However, it might be an overkill - that implementation may be added if there will be no more important features to do.
-     */
+#include "lc_inputtextdialog.h"
+
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     : LC_Dialog(parent, "WidgetOptions"){
     setupUi(this);
@@ -153,9 +144,11 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     if (readingStyleEnabled){
         if (!setupStylesCombobox()){
             cbIconsStyle->setEnabled(false);
+            pbRemoveStyle->setEnabled(false);
         }
         else{
             cbIconsStyle->insertItem(0,"");
+            pbRemoveStyle->setEnabled(true);
         }
         connect(cbIconsStyle, &QComboBox::currentTextChanged, this, &LC_WidgetOptionsDialog::onStyleChanged);
     }
@@ -164,7 +157,7 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
         connect(pbStyleSave, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::onSaveStylePressed);
     }
 
-    connect(pbPreviewColors, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::applyIconColors);
+    connect(pbRemoveStyle, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::onRemoveStylePressed);
 }
 
 void LC_WidgetOptionsDialog::onStyleChanged(const QString &val){
@@ -190,13 +183,36 @@ bool LC_WidgetOptionsDialog::setupStylesCombobox() {
     return false;
 }
 
+void LC_WidgetOptionsDialog::updateStylesCombobox(QStringList options){
+    options.clear();
+    iconColorsOptions.getAvailableStyles(options);
+    pbRemoveStyle->setEnabled(!options.isEmpty());
+    cbIconsStyle->clear();
+    for (const auto& style:options){
+        cbIconsStyle->addItem(style);
+    }
+}
+
 void LC_WidgetOptionsDialog::onSaveStylePressed(){
     bool ok;
-    QString styleName = QInputDialog::getText(this, tr("Save Icons Style"),
-                                         tr("Enter name of icons style:"), QLineEdit::Normal,
-                                         currentIconsStyleName, &ok);
+    QStringList options;
+    iconColorsOptions.getAvailableStyles(options);
+    auto styleName = LC_InputTextDialog::getText(this, tr("Save Icons Style"), tr("Enter name of icons style:"), options, true, currentIconsStyleName, &ok);
     if (ok){
         iconColorsOptions.saveToFile(styleName);
+        updateStylesCombobox(options);
+    }
+}
+
+void LC_WidgetOptionsDialog::onRemoveStylePressed(){
+    bool ok;
+    QStringList options;
+    iconColorsOptions.getAvailableStyles(options);
+    auto styleName = LC_InputTextDialog::getText(this, tr("Remove Icons Style"), tr("Select style to remove:"), options, false, currentIconsStyleName, &ok);
+    if (ok) {
+        if (iconColorsOptions.removeStyle(styleName)) {
+            updateStylesCombobox(options);
+        }
     }
 }
 
@@ -371,6 +387,7 @@ void LC_WidgetOptionsDialog::showAdvancedSetup(){
     if (dlg.exec() == QDialog::Accepted){
         iconColorsOptions.apply(copy);
         updateUIByOptions();
+        applyIconColors();
     }
 }
 

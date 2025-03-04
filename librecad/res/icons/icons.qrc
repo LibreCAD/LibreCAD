@@ -344,5 +344,8 @@
         <file alias="zoom_pan.lci">zoom_pan.svg</file>
         <file alias="zoom_previous.lci">zoom_previous.svg</file>
         <file alias="zoom_window.lci">zoom_window.svg</file>
+        <file alias="workspace_save.lci">workspace_save.svg</file>
+        <file alias="workspace.lci">workspace.svg</file>
+        <file alias="workspace_remove.lci">workspace_remove.svg</file>
     </qresource>
 </RCC>

@@ -6,29 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>514</height>
+    <width>442</width>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Advanced Icons Styling</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_6">
-   <item row="5" column="0" colspan="3">
-    <widget class="QGroupBox" name="groupBox_2">
+   <item row="8" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>Normal Icon</string>
+      <string>Disabled Icon</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="label_8">
         <property name="text">
          <string>State ON: </string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="cbNormalOnMain">
+       <widget class="QComboBox" name="cbDisabledOnMain">
         <property name="toolTip">
          <string>Color for start handle of entity</string>
         </property>
@@ -39,7 +39,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -49,7 +49,7 @@
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QPushButton" name="pbNormalOnMain">
+       <widget class="QPushButton" name="pbDisabledOnMain">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -69,7 +69,7 @@
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QComboBox" name="cbNormalOnAccent">
+       <widget class="QComboBox" name="cbDisabledOnAccent">
         <property name="toolTip">
          <string>Color for start handle of entity</string>
         </property>
@@ -80,7 +80,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -90,7 +90,7 @@
        </widget>
       </item>
       <item row="0" column="4">
-       <widget class="QPushButton" name="pbNormalOnAccent">
+       <widget class="QPushButton" name="pbDisabledOnAccent">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -110,7 +110,7 @@
        </widget>
       </item>
       <item row="0" column="7">
-       <widget class="QPushButton" name="pbNormalOnBack">
+       <widget class="QPushButton" name="pbDisabledOnBack">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -130,14 +130,14 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="label_9">
         <property name="text">
          <string>State OFF:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="cbNormalOffMain">
+       <widget class="QComboBox" name="cbDisabledOffMain">
         <property name="toolTip">
          <string>Color for start handle of entity</string>
         </property>
@@ -148,7 +148,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -158,7 +158,7 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QPushButton" name="pbNormalOffMain">
+       <widget class="QPushButton" name="pbDisabledOffMain">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -178,7 +178,7 @@
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QComboBox" name="cbNormalOffAccent">
+       <widget class="QComboBox" name="cbDisabledOffAccent">
         <property name="toolTip">
          <string>Color for start handle of entity</string>
         </property>
@@ -189,7 +189,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -199,7 +199,7 @@
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QPushButton" name="pbNormalOffAccent">
+       <widget class="QPushButton" name="pbDisabledOffAccent">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -219,7 +219,7 @@
        </widget>
       </item>
       <item row="1" column="5">
-       <widget class="QComboBox" name="cbNormalOffBack">
+       <widget class="QComboBox" name="cbDisabledOffBack">
         <property name="toolTip">
          <string>Color for start handle of entity</string>
         </property>
@@ -230,7 +230,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -240,7 +240,7 @@
        </widget>
       </item>
       <item row="1" column="7">
-       <widget class="QPushButton" name="pbNormalOffBack">
+       <widget class="QPushButton" name="pbDisabledOffBack">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -260,7 +260,7 @@
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="QComboBox" name="cbNormalOnBack">
+       <widget class="QComboBox" name="cbDisabledOnBack">
         <property name="toolTip">
          <string>Color for start handle of entity</string>
         </property>
@@ -271,7 +271,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -413,7 +413,276 @@
      </layout>
     </widget>
    </item>
-   <item row="6" column="0" colspan="3">
+   <item row="5" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Active Icon</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pbActiveOnMain">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pbActiveOnBack">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QComboBox" name="cbActiveOffBack">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QComboBox" name="cbActiveOnAccent">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="QPushButton" name="pbActiveOffBack">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cbActiveOffMain">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="pbActiveOffMain">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="cbActiveOffAccent">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>State ON: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QComboBox" name="cbActiveOnBack">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="pbActiveOffAccent">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>State OFF:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cbActiveOnMain">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pbActiveOnAccent">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="3">
     <widget class="QGroupBox" name="groupBox_4">
      <property name="title">
       <string>Selected Icon</string>
@@ -438,7 +707,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -479,7 +748,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -547,7 +816,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -588,7 +857,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -629,7 +898,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -670,7 +939,7 @@
          <bool>true</bool>
         </property>
         <property name="currentText">
-         <string/>
+         <string>#00FFFF</string>
         </property>
         <item>
          <property name="text">
@@ -680,6 +949,19 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item row="2" column="1">
@@ -689,562 +971,280 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Active Icon</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pbActiveOnMain">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pbActiveOnBack">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QComboBox" name="cbActiveOffBack">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QComboBox" name="cbActiveOnAccent">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="7">
-       <widget class="QPushButton" name="pbActiveOffBack">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="cbActiveOffMain">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="pbActiveOffMain">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QComboBox" name="cbActiveOffAccent">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>State ON: </string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QComboBox" name="cbActiveOnBack">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QPushButton" name="pbActiveOffAccent">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>State OFF:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="cbActiveOnMain">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pbActiveOnAccent">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="3">
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="title">
-      <string>Disabled Icon</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>State ON: </string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="cbDisabledOnMain">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pbDisabledOnMain">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QComboBox" name="cbDisabledOnAccent">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pbDisabledOnAccent">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pbDisabledOnBack">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>State OFF:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="cbDisabledOffMain">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="pbDisabledOffMain">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QComboBox" name="cbDisabledOffAccent">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QPushButton" name="pbDisabledOffAccent">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QComboBox" name="cbDisabledOffBack">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="7">
-       <widget class="QPushButton" name="pbDisabledOffBack">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QComboBox" name="cbDisabledOnBack">
-        <property name="toolTip">
-         <string>Color for start handle of entity</string>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">#00FFFF</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="9" column="0" colspan="3">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-     <property name="centerButtons">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
+   <item row="0" column="0">
     <widget class="QPushButton" name="pbResetToDefaults">
      <property name="text">
       <string>Reset to Defaults</string>
      </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Normal Icon</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>State ON: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cbNormalOnMain">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pbNormalOnMain">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QComboBox" name="cbNormalOnAccent">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pbNormalOnAccent">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pbNormalOnBack">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>State OFF:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cbNormalOffMain">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="pbNormalOffMain">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="cbNormalOffAccent">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="pbNormalOffAccent">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QComboBox" name="cbNormalOffBack">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="QPushButton" name="pbNormalOffBack">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QComboBox" name="cbNormalOnBack">
+        <property name="toolTip">
+         <string>Color for start handle of entity</string>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="currentText">
+         <string>#00FFFF</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">#00FFFF</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

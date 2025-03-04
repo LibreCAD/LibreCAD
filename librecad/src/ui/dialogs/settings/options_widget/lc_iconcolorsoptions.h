@@ -48,6 +48,7 @@ public:
     QString loadStyleNameFromFile(QString styleName);
     QString getNameOfStyleFile(const QString &name) const;
     bool saveToFile(const QString &styleName) const;
+    bool removeStyle(const QString &styleName) const;
 protected:
     QHash<int, QString> colors;
     QHash<int, QString> colorsMarkCopy;

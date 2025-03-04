@@ -324,6 +324,15 @@ QString LC_IconColorsOptions::getNameOfStyleFile(const QString &styleName) const
     return absFileName;
 }
 
+bool LC_IconColorsOptions::removeStyle(const QString &styleName) const{
+    QString absFileName = getNameOfStyleFile(styleName);
+    QFile file = QFile(absFileName);
+    if (file.exists()) {
+       return file.remove();
+    }
+    return false;
+}
+
 bool LC_IconColorsOptions::saveToFile(const QString &styleName) const {
 
     QString absFileName = getNameOfStyleFile(styleName);
@@ -373,7 +382,7 @@ bool LC_IconColorsOptions::saveToFile(const QString &styleName) const {
     jsonFile.open(QFile::WriteOnly);
     jsonFile.write(doc.toJson());
 
-    LC_ERR << doc.toJson();
+    // LC_ERR << doc.toJson();
     return false;
 }
 
