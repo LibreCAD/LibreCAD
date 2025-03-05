@@ -787,6 +787,7 @@ void QC_ApplicationWindow::initSettings() {
     if (!first_load) {
         m_workspacesManager.init(this);
     }
+    fireWorkspacesChanged();
 
 
     LC_GROUP("Widgets");
@@ -2902,6 +2903,7 @@ void QC_ApplicationWindow::saveWorkspace(bool on) {
     auto name = LC_InputTextDialog::getText(this, tr("New Workspace"), tr("Name of workspace to save:"), options, true, "", &ok);
     if (ok) {
         m_workspacesManager.saveWorkspace(name, this);
+        fireWorkspacesChanged();
     }
 }
 
@@ -2920,6 +2922,7 @@ void QC_ApplicationWindow::removeWorkspace(bool on){
     int workspaceId = LC_InputTextDialog::selectId(this, tr("Remove Workspace"), tr("Select workspace to remove:"), options, &ok);
     if (ok) {
        m_workspacesManager.deleteWorkspace(workspaceId);
+        fireWorkspacesChanged();
     }
 }
 
@@ -3325,4 +3328,9 @@ void QC_ApplicationWindow::fireIconsRefresh(){
 
 void QC_ApplicationWindow::fireWidgetSettingsChanged(){
     emit widgetSettingsChanged();
+}
+
+void QC_ApplicationWindow::fireWorkspacesChanged(){
+    bool hasWorkspaces = m_workspacesManager.hasWorkspaces();
+    emit workspacesChanged(hasWorkspaces);
 }

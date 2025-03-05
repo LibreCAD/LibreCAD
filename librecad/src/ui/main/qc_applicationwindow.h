@@ -128,7 +128,7 @@ public:
 
     void fireIconsRefresh();
     void fireWidgetSettingsChanged();
-
+    void fireWorkspacesChanged();
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
@@ -280,6 +280,7 @@ signals:
     void showInfoCursorSettingChanged(bool enabled);
     void iconsRefreshed();
     void widgetSettingsChanged();
+    void workspacesChanged(bool hasWorkspaces);
 public:
     /**
      * @return Pointer to application window.

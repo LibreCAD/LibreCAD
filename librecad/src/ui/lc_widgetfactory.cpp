@@ -765,6 +765,9 @@ QToolBar* LC_WidgetFactory::createWorkspacesToolbar(const QString& title, const 
     auto restoreAction = ag_manager->getActionByName("WorkspaceRestore");
     workspacesListButton->setDefaultAction(restoreAction);
     result->addWidget(workspacesListButton);
+
+    connect(main_window, &QC_ApplicationWindow::workspacesChanged, workspacesListButton, &LC_WorkspaceListButton::enableSubActions);
+    connect(main_window, &QC_ApplicationWindow::workspacesChanged, restoreAction, &QAction::setEnabled);
     return result;
 }
 
