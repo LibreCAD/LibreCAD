@@ -37,8 +37,9 @@ public:
     static QString getText(QWidget *parent, const QString &title, const QString &label,
                            const QStringList &options,
                            bool allowsEditing,
-                           const QString &text = QString(), bool *ok = nullptr
-                           );
+                           const QString &text = QString(), bool *ok = nullptr);
+    static int selectId(QWidget *parent, const QString &title, const QString &label,
+                           const QList<QPair<int, QString>> &options, bool *ok = nullptr);
 private:
     Ui::LC_InputTextDialog *ui;
 };

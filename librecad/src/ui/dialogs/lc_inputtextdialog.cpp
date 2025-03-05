@@ -46,12 +46,35 @@ QString LC_InputTextDialog::getText(QWidget *parent, const QString &title, const
     dlg.ui->cbInput->setCurrentText(text);
     dlg.ui->cbInput->addItems(options);
 
-    if (dlg.exec() == QDialog::Accepted){
+    if (dlg.exec() == Accepted){
         *ok = true;
         return dlg.ui->cbInput->currentText();
     }
     else{
         *ok = false;
         return "";
+    }
+}
+
+int LC_InputTextDialog::selectId(QWidget *parent, const QString &title, const QString &label,
+                          const QList<QPair<int, QString>> &options, bool *ok){
+    LC_InputTextDialog dlg(parent);
+
+    dlg.setWindowTitle(title);
+    dlg.ui->lblLabel->setText(label);
+
+    auto cb_input = dlg.ui->cbInput;
+    cb_input->setEditable(false);
+    for (auto p: options) {
+        cb_input->addItem(p.second, p.first);
+    }
+
+    if (dlg.exec() == Accepted){
+        *ok = true;
+        return cb_input->itemData(cb_input->currentIndex()).toInt();
+    }
+    else{
+        *ok = false;
+        return -1;
     }
 }
