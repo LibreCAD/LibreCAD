@@ -34,12 +34,13 @@ public:
     ~LC_WorkspacesManager() override;
     void getWorkspaces(QList<QPair<int, QString>> &workspacesList);
     void getWorkspaceNames(QStringList &workspacesList);
-    void saveWorkspace(QString name);
+    void saveWorkspace(QString name, QWidget* parent = nullptr);
     void deleteWorkspace(int id);
     void activateWorkspace(int id);
     void init(QC_ApplicationWindow* win);
     void persist();
     bool isWorkspacesFileExists();
+    bool hasWorkspaces();
 protected:
     struct LC_Workspace {
         int id;
@@ -62,7 +63,7 @@ protected:
     int lastActivatedId = -1;
 
     QList<LC_Workspace*> workspaces;
-
+    QString getWorkspacesFileName();
     void restoreGeometryAndState(LC_Workspace &workspace);
     void restore(LC_Workspace& perspective);
     void applyToSettings(LC_Workspace &workspace);

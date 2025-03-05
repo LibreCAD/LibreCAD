@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>359</width>
-    <height>482</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,70 +20,6 @@
    <string>Pen Palette Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="10" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="0">
-    <widget class="QGroupBox" name="gbColumns">
-     <property name="title">
-      <string>Columns to display</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="2">
-       <widget class="QCheckBox" name="chkShowLineTypeName">
-        <property name="text">
-         <string>Line Type Name</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="chkShowColorName">
-        <property name="text">
-         <string>Color Name</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QCheckBox" name="chkShowLineTypeIcon">
-        <property name="text">
-         <string>Line Type Icon</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="chkShowColorIcon">
-        <property name="text">
-         <string>Color Icon</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QCheckBox" name="chkShowWidthIcon">
-        <property name="text">
-         <string>Line Width Icon</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QCheckBox" name="chkShowWidthName">
-        <property name="text">
-         <string>Line Width Name</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="7" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
@@ -209,26 +145,6 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbFilterCaseInsensitive">
-     <property name="toolTip">
-      <string>If set, filter will igore the case of pen's name</string>
-     </property>
-     <property name="text">
-      <string>Case-insensitive pens filtering</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QCheckBox" name="cbShowTooltip">
      <property name="toolTip">
@@ -240,36 +156,102 @@
     </widget>
    </item>
    <item row="9" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Pens file:</string>
+        <string>On double click on table item</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lePensFile">
+      <widget class="QComboBox" name="cbDoubleClickMode">
        <property name="toolTip">
-        <string>File where pens are stored</string>
+        <string>Defines how the program to react on double click on pen item in table</string>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="tbBrowse">
-       <property name="toolTip">
-        <string>Click to select file</string>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="text">
-        <string/>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/fileopen.lci</normaloff>:/icons/fileopen.lci</iconset>
-       </property>
-      </widget>
+      </spacer>
      </item>
     </layout>
+   </item>
+   <item row="6" column="0">
+    <widget class="QGroupBox" name="gbColumns">
+     <property name="title">
+      <string>Columns to display</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="chkShowLineTypeName">
+        <property name="text">
+         <string>Line Type Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="chkShowColorName">
+        <property name="text">
+         <string>Color Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="chkShowLineTypeIcon">
+        <property name="text">
+         <string>Line Type Icon</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="chkShowColorIcon">
+        <property name="text">
+         <string>Color Icon</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="chkShowWidthIcon">
+        <property name="text">
+         <string>Line Width Icon</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="chkShowWidthName">
+        <property name="text">
+         <string>Line Width Name</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item row="4" column="0" rowspan="2">
     <widget class="QGroupBox" name="groupBox">
@@ -320,44 +302,30 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>On double click on table item</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbDoubleClickMode">
-       <property name="toolTip">
-        <string>Defines how the program to react on double click on pen item in table</string>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+   <item row="10" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbFilterCaseInsensitive">
+     <property name="toolTip">
+      <string>If set, filter will igore the case of pen's name</string>
+     </property>
+     <property name="text">
+      <string>Case-insensitive pens filtering</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/controls/controls.qrc"/>
   <include location="../../../../res/controls/controls.qrc"/>
  </resources>
  <connections>

@@ -2896,17 +2896,12 @@ void QC_ApplicationWindow::saveNamedView() {
 }
 
 void QC_ApplicationWindow::saveWorkspace(bool on) {
-    if (m_workspacesManager.isWorkspacesFileExists()) {
-        bool ok;
-        QStringList options;
-        m_workspacesManager.getWorkspaceNames(options);
-        auto name = LC_InputTextDialog::getText(this, tr("New Workspace"), tr("Name of workspace to save:"), options, true, "", &ok);
-        if (ok) {
-           m_workspacesManager.saveWorkspace(name);
-        }
-    }
-    else{
-        QMessageBox::critical(this, tr("Workspace Error"), tr("Path to workspaces file is not set, please specify it in Application Preferences."));
+    bool ok;
+    QStringList options;
+    m_workspacesManager.getWorkspaceNames(options);
+    auto name = LC_InputTextDialog::getText(this, tr("New Workspace"), tr("Name of workspace to save:"), options, true, "", &ok);
+    if (ok) {
+        m_workspacesManager.saveWorkspace(name, this);
     }
 }
 

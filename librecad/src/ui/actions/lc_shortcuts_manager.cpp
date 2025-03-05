@@ -26,7 +26,7 @@
 #include "rs_settings.h"
 #include "lc_shortcutsstorage.h"
 #include "rs_debug.h"
-
+#include "rs_system.h"
 const char* LC_ShortcutsManager::PROPERTY_SHORTCUT_BACKUP = "tooltip.original";
 
 LC_ShortcutsManager::LC_ShortcutsManager() {}
@@ -175,11 +175,11 @@ QString LC_ShortcutsManager::strippedActionText(QString s) const{
 }
 
 QString LC_ShortcutsManager::getShortcutsMappingsFolder() const {
-    QString result = LC_GET_ONE_STR("Paths","ShortcutsMappings", QDir::homePath());
-    return result;
+    QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    return settingsDir;
 }
 
 QString LC_ShortcutsManager::getDefaultShortcutsFileName() const {
-    QString path =  getShortcutsMappingsFolder() + "/default.lcs";
+    QString path =  getShortcutsMappingsFolder() + "/shortcuts.lcsc";
     return QDir::toNativeSeparators(path);
 }

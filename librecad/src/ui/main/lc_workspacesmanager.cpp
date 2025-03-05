@@ -22,7 +22,7 @@
 
 #include "lc_workspacesmanager.h"
 
-#include <QFile>
+
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -31,7 +31,7 @@
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
-
+#include "rs_system.h"
 LC_WorkspacesManager::LC_WorkspacesManager() {}
 
 LC_WorkspacesManager::~LC_WorkspacesManager() {
@@ -50,7 +50,7 @@ void LC_WorkspacesManager::getWorkspaceNames(QStringList &workspacesList){
     }
 }
 
-void LC_WorkspacesManager::saveWorkspace(QString name){
+void LC_WorkspacesManager::saveWorkspace(QString name,QWidget*  parent){
     name = name.trimmed();
     QList<LC_Workspace *>::iterator it = workspaces.begin();
     while (it != workspaces.end()) {
@@ -58,11 +58,10 @@ void LC_WorkspacesManager::saveWorkspace(QString name){
             // just update existing perspective
             fillByState(**it);
             lastActivatedId = (*it)->id;
-            saveWorkspaces();
+            saveWorkspaces(parent);
             return;
         }
         ++it;
-
     }
     // nothing found by name, create new one
     auto* workspace = new LC_Workspace;
@@ -71,7 +70,7 @@ void LC_WorkspacesManager::saveWorkspace(QString name){
     lastActivatedId = workspace->id;
     fillByState(*workspace);
     workspaces << workspace;
-    saveWorkspaces();
+    saveWorkspaces(parent);
 }
 
 void LC_WorkspacesManager::deleteWorkspace(int id){
@@ -151,7 +150,6 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
 }
 
 void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
-    auto settings = RS_SETTINGS->getSettings();
     LC_GROUP("Geometry");
     LC_SET("WindowGeometry",workspace.geometry);
     LC_SET("WindowWidth", workspace.windowWidth);
@@ -217,8 +215,14 @@ void LC_WorkspacesManager::persist(){
     saveWorkspaces();
 }
 
+QString LC_WorkspacesManager::getWorkspacesFileName(){
+    QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    QString workspacesFile = settingsDir + "/workspaces.lcws";
+    return workspacesFile;
+}
+
 void LC_WorkspacesManager::loadWorkspaces(){
-    QString workspacesFile = LC_GET_ONE_STR("Paths", "WorkspacesFile", "");
+    QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
         QFile jsonFile(workspacesFile);
         if (jsonFile.exists()) {
@@ -280,7 +284,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
 }
 
 bool LC_WorkspacesManager::isWorkspacesFileExists(){
-    QString workspacesFile = LC_GET_ONE_STR("Paths", "WorkspacesFile", "");
+    QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
         QFile file(workspacesFile);
         return file.exists();
@@ -288,63 +292,62 @@ bool LC_WorkspacesManager::isWorkspacesFileExists(){
     return false;
 }
 
+bool LC_WorkspacesManager::hasWorkspaces(){
+    return !workspaces.isEmpty();
+}
+
 void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
-    QString workspacesFile = LC_GET_ONE_STR("Paths", "WorkspacesFile", "");
+    QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
         QFile file(workspacesFile);
-        if (file.exists()) {
-            bool canWrite = file.open(QFile::WriteOnly);
-            if (canWrite) {
-                QJsonObject objSettings;
-                objSettings.insert("type", QJsonValue::fromVariant("LibreCAD Workspaces file"));
-                objSettings.insert("maxId", QJsonValue::fromVariant(workspaceID));
-                objSettings.insert("lastActivatedId", QJsonValue::fromVariant(lastActivatedId));
+        bool canWrite = file.open(QFile::WriteOnly);
+        if (canWrite) {
+            QJsonObject objSettings;
+            objSettings.insert("type", QJsonValue::fromVariant("LibreCAD Workspaces file"));
+            objSettings.insert("maxId", QJsonValue::fromVariant(workspaceID));
+            objSettings.insert("lastActivatedId", QJsonValue::fromVariant(lastActivatedId));
 
-                QJsonArray perspectivesArray;
+            QJsonArray perspectivesArray;
 
-                for (auto p: workspaces) {
-                    QJsonObject wsObj;
+            for (auto p: workspaces) {
+                QJsonObject wsObj;
 
-                    wsObj.insert("name", QJsonValue::fromVariant(p->name));
-                    wsObj.insert("id", QJsonValue::fromVariant(p->id));
-                    wsObj.insert("geometry", QJsonValue::fromVariant(p->geometry));
-                    wsObj.insert("widgetState", QJsonValue::fromVariant(p->widgetsState));
-                    wsObj.insert("winX", QJsonValue::fromVariant(p->windowX));
-                    wsObj.insert("winY", QJsonValue::fromVariant(p->windowY));
-                    wsObj.insert("winHeight", QJsonValue::fromVariant(p->windowHeight));
-                    wsObj.insert("winWidth", QJsonValue::fromVariant(p->windowWidth));
+                wsObj.insert("name", QJsonValue::fromVariant(p->name));
+                wsObj.insert("id", QJsonValue::fromVariant(p->id));
+                wsObj.insert("geometry", QJsonValue::fromVariant(p->geometry));
+                wsObj.insert("widgetState", QJsonValue::fromVariant(p->widgetsState));
+                wsObj.insert("winX", QJsonValue::fromVariant(p->windowX));
+                wsObj.insert("winY", QJsonValue::fromVariant(p->windowY));
+                wsObj.insert("winHeight", QJsonValue::fromVariant(p->windowHeight));
+                wsObj.insert("winWidth", QJsonValue::fromVariant(p->windowWidth));
 
-                    wsObj.insert("dockLeft", QJsonValue::fromVariant(p->dockAreaLeftActive));
-                    wsObj.insert("dockRight", QJsonValue::fromVariant(p->dockAreaRightActive));
-                    wsObj.insert("dockTop", QJsonValue::fromVariant(p->dockAreaToptActive));
-                    wsObj.insert("dockBottom", QJsonValue::fromVariant(p->dockAreaBottomActive));
-                    wsObj.insert("dockFloat", QJsonValue::fromVariant(p->dockAreaBottomActive));
+                wsObj.insert("dockLeft", QJsonValue::fromVariant(p->dockAreaLeftActive));
+                wsObj.insert("dockRight", QJsonValue::fromVariant(p->dockAreaRightActive));
+                wsObj.insert("dockTop", QJsonValue::fromVariant(p->dockAreaToptActive));
+                wsObj.insert("dockBottom", QJsonValue::fromVariant(p->dockAreaBottomActive));
+                wsObj.insert("dockFloat", QJsonValue::fromVariant(p->dockAreaBottomActive));
 
-                    perspectivesArray.append(wsObj);
-                }
-
-                objSettings.insert("workspaces", perspectivesArray);
-
-                QJsonDocument doc (objSettings);
-                file.write(doc.toJson());
-            } else {
-                if (parent != nullptr) {
-                    QMessageBox::critical(parent, tr("Saving Workspaces"),
-                                          tr(
-                                              "Can't open provided file for writing - check that provided location is writable. Workspaces were not exported."));
-                }
-                else{
-                    LC_ERR << "Can't open provided file for writing - check that provided location is writable. Workspaces were not saved. File: " + workspacesFile;
-                }
+                perspectivesArray.append(wsObj);
             }
-        }
-        else {
+
+            objSettings.insert("workspaces", perspectivesArray);
+
+            QJsonDocument doc(objSettings);
+            file.write(doc.toJson());
+        } else {
             if (parent != nullptr) {
                 QMessageBox::critical(parent, tr("Saving Workspaces"),
-                                      tr("Workspaces file does not exists."));
+                                      tr("Can't open workspaces file for writing. Workspaces were not exported. File: ") + workspacesFile);
             } else {
-                LC_ERR << "Workspaces file does not exists. File: " + workspacesFile;
+                LC_ERR << "Can't open provided file for writing - check that provided location is writable. Workspaces were not saved. File: " + workspacesFile;
             }
+        }
+    } else {
+        if (parent != nullptr) {
+            QMessageBox::critical(parent, tr("Saving Workspaces"),
+                                  tr("Workspaces file does not exists."));
+        } else {
+            LC_ERR << "Workspaces file does not exists. File: " + workspacesFile;
         }
     }
 }

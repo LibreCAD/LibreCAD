@@ -88,8 +88,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
     connect(cbGridExtendAxisLines, &QCheckBox::toggled,
             this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
-    connect(tbShortcuts, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setShortcutsMappingsFolder);
+    connect(tbOtherSettings, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setOtherSettingsFolder);
     connect(cbCheckNewVersion, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::onCheckNewVersionChanged);
     connect(cbClassicStatusBar, stateChangedSignal,
@@ -513,8 +513,7 @@ void QG_DlgOptionsGeneral::init(){
         lePathLibrary->setText(originalLibraryPath);
         leTemplate->setText(LC_GET_STR("Template", "").trimmed());
         variablefile_field->setText(LC_GET_STR("VariableFile", "").trimmed());
-        leShortcutsMappingDirectory->setText(LC_GET_STR("ShortcutsMappings", "").trimmed());
-        leWorkspacesFile->setText(LC_GET_STR("WorkspacesFile", "").trimmed());
+        leOtherSettingsDirectory->setText(LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed());
     }
     LC_GROUP_END();
 
@@ -824,8 +823,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("Library", lePathLibrary->text().trimmed());
             LC_SET("Template", leTemplate->text().trimmed());
             LC_SET("VariableFile", variablefile_field->text());
-            LC_SET("ShortcutsMappings", leShortcutsMappingDirectory->text().trimmed());
-            LC_SET("WorkspacesFile", leWorkspacesFile->text().trimmed());
+            LC_SET("OtherSettingsDir", leOtherSettingsDirectory->text().trimmed());
         }
         LC_GROUP_END();
 
@@ -1091,10 +1089,10 @@ void QG_DlgOptionsGeneral::setHatchPatternsFolder(){
     }
 }
 
-void QG_DlgOptionsGeneral::setShortcutsMappingsFolder(){
-    QString folder = selectFolder(tr("Select Shortcuts Mappings Folder"));
+void QG_DlgOptionsGeneral::setOtherSettingsFolder(){
+    QString folder = selectFolder(tr("Select Other Settings Folder"));
     if (folder != nullptr) {
-        leShortcutsMappingDirectory->setText(QDir::toNativeSeparators(folder));
+        leOtherSettingsDirectory->setText(QDir::toNativeSeparators(folder));
     }
 }
 
@@ -1362,7 +1360,7 @@ void QG_DlgOptionsGeneral::exportSettings(){
 void QG_DlgOptionsGeneral::importSettings(){
     if (LC_SettingsExporter::importSettings(this)) {
         init();
-
+// fixme - icons - restoring layut via workspace manager!!!
             QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
             auto settings = RS_SETTINGS->getSettings();
             settings->beginGroup("Geometry");

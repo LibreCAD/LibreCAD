@@ -82,7 +82,7 @@ protected slots:
     void setFontsFolder();
     void setTranslationsFolder();
     void setHatchPatternsFolder();
-    void setShortcutsMappingsFolder();
+    void setOtherSettingsFolder();
     bool checkRestartNeeded();
     void on_pbOverlayBoxLine_clicked();
     void on_pbOverlayBoxFill_clicked();
