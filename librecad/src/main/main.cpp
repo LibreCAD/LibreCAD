@@ -304,9 +304,9 @@ int main(int argc, char** argv)
     }
     settings.endGroup();
 
-    if (!first_load) {
-        restoreWindowGeometry(appWin, settings);
-    }
+//    if (!first_load) {
+//        restoreWindowGeometry(appWin, settings);
+//    }
 
     bool maximize = settings.value("Startup/Maximize", 0).toBool();
 

@@ -366,6 +366,7 @@ HEADERS += \
     lib/engine/rs_pen.h \
     lib/engine/document/entities/rs_point.h \
     lib/engine/document/entities/rs_polyline.h \
+    lib/engine/settings/lc_settingsexporter.h \
     lib/engine/settings/rs_settings.h \
     lib/engine/document/entities/rs_solid.h \
     lib/engine/document/entities/rs_spline.h \
@@ -396,6 +397,7 @@ HEADERS += \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
     lib/gui/render/lc_graphicviewportrenderer.h \
+    ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
@@ -430,6 +432,9 @@ HEADERS += \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.h \
     ui/dock_widgets/views_list/lc_namedviewslistwidget.h \
     ui/dock_widgets/views_list/lc_namedviewsmodel.h \
+    ui/dock_widgets/workspaces/lc_workspacelistbutton.h \
+    ui/lc_menufactory.h \
+    ui/main/lc_perspectivesmanager.h \
     ui/main/lc_releasechecker.h \
     lib/gui/grid/lc_gridsystem.h \
     lib/gui/grid/lc_isometricgrid.h \
@@ -504,11 +509,13 @@ SOURCES += \
     lib/engine/overlays/ucs_mark/lc_overlayrelativezero.cpp \
     lib/engine/overlays/ucs_mark/lc_overlayucszero.cpp \
     lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp \
+    lib/engine/settings/lc_settingsexporter.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    ui/dialogs/lc_inputtextdialog.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
     lib/gui/render/lc_graphicviewportrenderer.cpp \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
@@ -626,7 +633,10 @@ SOURCES += \
     ui/dock_widgets/views_list/lc_namedviewsbutton.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp \
-    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \    
+    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \     \
+    ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp \
+    ui/lc_menufactory.cpp \
+    ui/main/lc_perspectivesmanager.cpp
     ui/main/lc_releasechecker.cpp \
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
@@ -1511,6 +1521,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgspline.ui \
        ui/dialogs/entity/qg_dlgtext.ui \
        ui/dialogs/file/export/qg_dlgoptionsmakercam.ui \
+       ui/dialogs/lc_inputtextdialog.ui \
        ui/dialogs/main/lc_dlgabout.ui \
        ui/dialogs/main/lc_dlgnewversionavailable.ui \
        ui/dialogs/main/qg_dlginitial.ui \

@@ -332,7 +332,7 @@ void LC_NamedViewsListWidget::addNewView() {
             } else {
                 LC_View *existingView = currentViewList->find(text);
                 if (existingView == nullptr) {
-                    doCreateNewView(text);
+                        doCreateNewView(text);
                     tryCreate = false;
                 } else {
                     if (options->duplicatedNameReplacesSilently) {

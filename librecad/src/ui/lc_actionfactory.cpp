@@ -88,6 +88,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createFileActionsUncheckable(a_map, agm->file);
     createViewActionsUncheckable(a_map, agm->view);
     createNamedViewActionsUncheckable(a_map, agm->namedViews);
+    createWorkspacesActionsUncheckable(a_map, agm->workspaces);
     createWidgetActionsUncheckable(a_map, agm->widgets);
     createEditActionsUncheckable(a_map, agm->edit);
     setupCreatedActions(a_map);
@@ -376,6 +377,13 @@ void LC_ActionFactory::createUCSActions(QMap<QString, QAction *> &map, QActionGr
     });
 }
 
+void LC_ActionFactory::createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
+    createMainWindowActions(map, group, {
+        {"WorkspaceCreate",        SLOT(saveWorkspace(bool)),        tr("Save Workspace"),     ":/icons/workspace_save.lci"},
+        {"WorkspaceRemove",        SLOT(removeWorkspace(bool)),        tr("Remove Workspace"),     ":/icons/workspace_remove.lci"},
+        {"WorkspaceRestore",        SLOT(restoreWorkspace(bool)),        tr("Restore Workspace"),     ":/icons/workspace.lci"}
+    });
+}
 
 void LC_ActionFactory::createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {

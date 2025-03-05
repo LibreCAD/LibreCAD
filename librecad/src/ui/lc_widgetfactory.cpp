@@ -25,9 +25,7 @@
 #include <QMenu>
 #include <QFile>
 #include <QMenuBar>
-#include <QStatusBar>
-#include <QActionGroup>
-#include <QDesktopServices>
+
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
@@ -56,6 +54,7 @@
 #include "lc_namedviewslistwidget.h"
 #include "lc_namedviewsbutton.h"
 #include "lc_ucslistwidget.h"
+#include "lc_workspacelistbutton.h"
 
 namespace {
     // only enable the penpallet by settings
@@ -70,9 +69,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     , main_window(main_win)
     , ag_manager(agm){
 
-    allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
+   fillActionLists();
+}
 
-    fillActionsList(file_actions,  {
+void LC_WidgetFactory::fillActionLists(){
+        ag_manager->fillActionsList(ag_manager->file_actions,  {
         "FileNew",
         "FileNewTemplate",
         "FileOpen",
@@ -81,7 +82,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "FileSaveAll"
     });
 
-    fillActionsList(shape_actions, {
+    ag_manager->fillActionsList(ag_manager->shape_actions, {
         "DrawLineRectangle",
         "DrawLineRectangle1Point",
         "DrawLineRectangle2Points",
@@ -93,7 +94,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawStar"
     });
 
-    fillActionsList(line_actions, {
+    ag_manager->fillActionsList(ag_manager->line_actions, {
         "DrawLine",
         "DrawLineAngle",
         "DrawLineHorizontal",
@@ -118,7 +119,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineMiddle"
     });
 
-    fillActionsList(point_actions , {
+    ag_manager->fillActionsList(ag_manager->point_actions , {
         "DrawPoint",
         "DrawLinePoints",
         "DrawPointsMiddle",
@@ -127,7 +128,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "PasteToPoints"
     });
 
-    fillActionsList(circle_actions, {
+    ag_manager->fillActionsList(ag_manager->circle_actions, {
         "DrawCircle",
         "DrawCircle2P",
         "DrawCircle2PR",
@@ -142,7 +143,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawCircleByArc"
     });
 
-    fillActionsList(curve_actions, {
+    ag_manager->fillActionsList(ag_manager->curve_actions, {
         "DrawArc",
         "DrawArcChord",
         "DrawArcAngleLen",
@@ -156,7 +157,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawEllipseArc1Point"
     });
 
-    fillActionsList(spline_actions, {
+    ag_manager->fillActionsList(ag_manager->spline_actions, {
         "DrawParabola4Points",
         "DrawParabolaFD",
         "DrawSpline",
@@ -170,7 +171,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineFree"
     });
 
-    fillActionsList(ellipse_actions, {
+    ag_manager->fillActionsList(ag_manager->ellipse_actions, {
         "DrawEllipse1Point",
         "DrawEllipseAxis",
         "DrawEllipseFociPoint",
@@ -179,7 +180,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawEllipseInscribe"
     });
 
-    fillActionsList(polyline_actions, {
+    ag_manager->fillActionsList(ag_manager->polyline_actions, {
         "DrawPolyline",
         "PolylineAdd",
         "PolylineAppend",
@@ -192,7 +193,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "PolylineSegmentType"
     });
 
-    fillActionsList(select_actions, {
+    ag_manager->fillActionsList(ag_manager->select_actions, {
         "DeselectAll",
         "SelectAll",
         "SelectSingle",
@@ -205,7 +206,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "SelectInvert"
     });
 
-    fillActionsList(dimension_actions, {
+    ag_manager->fillActionsList(ag_manager->dimension_actions, {
         "DimAligned",
         "DimLinear",
         "DimLinearHor",
@@ -219,7 +220,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DimLeader"
     });
 
-    fillActionsList(other_drawing_actions, {
+    ag_manager->fillActionsList(ag_manager->other_drawing_actions, {
         "DrawText",
         "DrawMText",
         "DrawHatch",
@@ -227,7 +228,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawBoundingBox"
     });
 
-    fillActionsList(modify_actions, {
+    ag_manager->fillActionsList(ag_manager->modify_actions, {
         "ModifyMove",
         "ModifyDuplicate",
         "ModifyAlign",
@@ -259,14 +260,14 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 //            "ModifyDeleteQuick"});
     });
 
-    fillActionsList(order_actions, {
+    ag_manager->fillActionsList(ag_manager->order_actions, {
         "OrderTop",
         "OrderBottom",
         "OrderRaise",
         "OrderLower"
     });
 
-    fillActionsList(info_actions, {
+    ag_manager->fillActionsList(ag_manager->info_actions, {
         "InfoDist",
         "InfoDist2",
         "InfoDist3",
@@ -277,7 +278,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "EntityInfo"
     });
 
-    fillActionsList(layer_actions, {
+    ag_manager->fillActionsList(ag_manager->layer_actions, {
         "LayersDefreezeAll",
         "LayersFreezeAll",
         "LayersUnlockAll",
@@ -293,7 +294,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "LayersExportVisible"
     });
 
-    fillActionsList(block_actions, {
+    ag_manager->fillActionsList(ag_manager->block_actions, {
         "BlocksDefreezeAll",
         "BlocksFreezeAll",
         "BlocksToggleView",
@@ -307,7 +308,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "BlocksExplode"
     });
 
-    fillActionsList(pen_actions, {
+    ag_manager->fillActionsList(ag_manager->pen_actions, {
         "PenSyncFromLayer",
         "PenPick",
         "PenPickResolved",
@@ -315,7 +316,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "PenCopy"
     });
 
-    fillActionsList(actionsToDisableInPrintPreview, {
+    ag_manager->fillActionsList(actionsToDisableInPrintPreview, {
         "EditCut",
         "EditCutQuick",
         "EditCopy",
@@ -343,39 +344,38 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "UCSCreate"
     });
 
-    actionsToDisableInPrintPreview.append(line_actions);
-    actionsToDisableInPrintPreview.append(point_actions);
-    actionsToDisableInPrintPreview.append(circle_actions);
-    actionsToDisableInPrintPreview.append(curve_actions);
-    actionsToDisableInPrintPreview.append(spline_actions);
-    actionsToDisableInPrintPreview.append(ellipse_actions);
-    actionsToDisableInPrintPreview.append(polyline_actions);
-    actionsToDisableInPrintPreview.append(select_actions);
-    actionsToDisableInPrintPreview.append(dimension_actions);
-    actionsToDisableInPrintPreview.append(other_drawing_actions);
-    actionsToDisableInPrintPreview.append(modify_actions);
-    actionsToDisableInPrintPreview.append(order_actions);
-    actionsToDisableInPrintPreview.append(info_actions);
-    actionsToDisableInPrintPreview.append(block_actions);
-    actionsToDisableInPrintPreview.append(pen_actions);
-
+    actionsToDisableInPrintPreview.append(ag_manager->line_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->point_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->circle_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->curve_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->spline_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->ellipse_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->polyline_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->select_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->dimension_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->other_drawing_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->modify_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->order_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->info_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->block_actions);
+    actionsToDisableInPrintPreview.append(ag_manager->pen_actions);
 }
 
 void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size, bool flatButtons){
-    auto* line = leftDocWidget(tr("Line"), "Line", line_actions, columns, icon_size, flatButtons);
-    auto* point = leftDocWidget(tr("Point"), "Point", point_actions, columns, icon_size, flatButtons);
-    auto* shape = leftDocWidget(tr("Polygon"), "Polygon", shape_actions, columns, icon_size, flatButtons);
-    auto* circle = leftDocWidget(tr("Circle"), "Circle", circle_actions, columns, icon_size, flatButtons);
-    auto* curve = leftDocWidget(tr("Arc"), "Curve", curve_actions, columns, icon_size, flatButtons);
-    auto* spline = leftDocWidget(tr("Spline"), "Spline", spline_actions, columns, icon_size, flatButtons);
-    auto* ellipse = leftDocWidget(tr("Ellipse"), "Ellipse", ellipse_actions, columns, icon_size, flatButtons);
-    auto* polyline = leftDocWidget(tr("Polyline"), "Polyline", polyline_actions, columns, icon_size, flatButtons);
-    auto* select = leftDocWidget(tr("Select"), "Select", select_actions, columns, icon_size, flatButtons);
-    auto* dimension = leftDocWidget(tr("Dimension"), "Dimension", dimension_actions, columns, icon_size, flatButtons);
-    auto* other = leftDocWidget(tr("Other"), "Other", other_drawing_actions, columns, icon_size, flatButtons);
-    auto* modify = leftDocWidget(tr("Modify"), "Modify", modify_actions, columns, icon_size, flatButtons);
-    auto* info = leftDocWidget(tr("Info"), "Info", info_actions, columns, icon_size, flatButtons);
-    auto* order = leftDocWidget(tr("Order"), "Order", order_actions, columns, icon_size, flatButtons);
+    auto* line = leftDocWidget(tr("Line"), "Line", ag_manager->line_actions, columns, icon_size, flatButtons);
+    auto* point = leftDocWidget(tr("Point"), "Point", ag_manager->point_actions, columns, icon_size, flatButtons);
+    auto* shape = leftDocWidget(tr("Polygon"), "Polygon", ag_manager->shape_actions, columns, icon_size, flatButtons);
+    auto* circle = leftDocWidget(tr("Circle"), "Circle", ag_manager->circle_actions, columns, icon_size, flatButtons);
+    auto* curve = leftDocWidget(tr("Arc"), "Curve", ag_manager->curve_actions, columns, icon_size, flatButtons);
+    auto* spline = leftDocWidget(tr("Spline"), "Spline", ag_manager->spline_actions, columns, icon_size, flatButtons);
+    auto* ellipse = leftDocWidget(tr("Ellipse"), "Ellipse", ag_manager->ellipse_actions, columns, icon_size, flatButtons);
+    auto* polyline = leftDocWidget(tr("Polyline"), "Polyline", ag_manager->polyline_actions, columns, icon_size, flatButtons);
+    auto* select = leftDocWidget(tr("Select"), "Select", ag_manager->select_actions, columns, icon_size, flatButtons);
+    auto* dimension = leftDocWidget(tr("Dimension"), "Dimension", ag_manager->dimension_actions, columns, icon_size, flatButtons);
+    auto* other = leftDocWidget(tr("Other"), "Other", ag_manager->other_drawing_actions, columns, icon_size, flatButtons);
+    auto* modify = leftDocWidget(tr("Modify"), "Modify", ag_manager->modify_actions, columns, icon_size, flatButtons);
+    auto* info = leftDocWidget(tr("Info"), "Info", ag_manager->info_actions, columns, icon_size, flatButtons);
+    auto* order = leftDocWidget(tr("Order"), "Order", ag_manager->order_actions, columns, icon_size, flatButtons);
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, line);
     main_window->tabifyDockWidget(line, polyline);
@@ -523,7 +523,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto *file = createGenericToolbar(tr("File"), "file", tbPolicy, {});
-    file->addActions(file_actions);
+    file->addActions(ag_manager->file_actions);
     file->addAction(ag_manager->getActionByName("FilePrint"));
     file->addAction(ag_manager->getActionByName("FilePrintPreview"));
 
@@ -545,6 +545,8 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 
     auto *ucsList = createUCSToolbar(tr("UCS"), "UCS", tbPolicy);
 
+    auto *perspectivesToolbar = createWorkspacesToolbar(tr("Workspaces"), "Workspaces", tbPolicy);
+
     snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
     snap_toolbar->setWindowTitle(tr("Snap Selection"));
     snap_toolbar->setSizePolicy(tbPolicy);
@@ -562,7 +564,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     pen_toolbar = new QG_PenToolBar(tr("Pen"), main_window);
     pen_toolbar->setSizePolicy(tbPolicy);
     pen_toolbar->setObjectName("pen_toolbar");
-    pen_toolbar->addActions(pen_actions);
+    pen_toolbar->addActions(ag_manager->pen_actions);
     pen_toolbar->setProperty("_group", 0);
 
     options_toolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {});
@@ -587,6 +589,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     addToTop(file);
     addToTop(edit);
     addToTop(view);
+    addToTop(perspectivesToolbar);
     addToTop(viewsList);
     addToTop(ucsList);
     addToTop(preferences);
@@ -641,19 +644,19 @@ void LC_WidgetFactory::addInfoCursorOptionAction(QMenu *menu, const char *name, 
 void LC_WidgetFactory::createCADToolbars(){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    auto* line = toolbarWithActions(tr("Line"), "Line", tbPolicy, line_actions);
-    auto* point = toolbarWithActions(tr("Point"), "Point", tbPolicy, point_actions);
-    auto* shape = toolbarWithActions(tr("Polygon"), "Polygon", tbPolicy, shape_actions);
-    auto* circle = toolbarWithActions(tr("Circle"), "Circle", tbPolicy, circle_actions);
-    auto* curve = toolbarWithActions(tr("Arc"), "Curve", tbPolicy, curve_actions);
-    auto* spline = toolbarWithActions(tr("Spline"), "Spline", tbPolicy, curve_actions);
-    auto* ellipse = toolbarWithActions(tr("Ellipse"), "Ellipse", tbPolicy, ellipse_actions);
-    auto* polyline = toolbarWithActions(tr("Polyline"), "Polyline", tbPolicy, polyline_actions);
-    auto* select = toolbarWithActions(tr("Select"), "Select", tbPolicy, select_actions);
-    auto* dimension = toolbarWithActions(tr("Dimension"), "Dimension", tbPolicy, dimension_actions);
-    auto* other = toolbarWithActions(tr("Other"), "other_drawing", tbPolicy, other_drawing_actions);
-    auto* modify = toolbarWithActions(tr("Modify"), "Modify", tbPolicy, modify_actions);
-    auto* info = toolbarWithActions(tr("Info"), "Info", tbPolicy, info_actions);
+    auto* line = toolbarWithActions(tr("Line"), "Line", tbPolicy, ag_manager->line_actions);
+    auto* point = toolbarWithActions(tr("Point"), "Point", tbPolicy, ag_manager->point_actions);
+    auto* shape = toolbarWithActions(tr("Polygon"), "Polygon", tbPolicy, ag_manager->shape_actions);
+    auto* circle = toolbarWithActions(tr("Circle"), "Circle", tbPolicy, ag_manager->circle_actions);
+    auto* curve = toolbarWithActions(tr("Arc"), "Curve", tbPolicy, ag_manager->curve_actions);
+    auto* spline = toolbarWithActions(tr("Spline"), "Spline", tbPolicy, ag_manager->curve_actions);
+    auto* ellipse = toolbarWithActions(tr("Ellipse"), "Ellipse", tbPolicy, ag_manager->ellipse_actions);
+    auto* polyline = toolbarWithActions(tr("Polyline"), "Polyline", tbPolicy, ag_manager->polyline_actions);
+    auto* select = toolbarWithActions(tr("Select"), "Select", tbPolicy, ag_manager->select_actions);
+    auto* dimension = toolbarWithActions(tr("Dimension"), "Dimension", tbPolicy, ag_manager->dimension_actions);
+    auto* other = toolbarWithActions(tr("Other"), "other_drawing", tbPolicy, ag_manager->other_drawing_actions);
+    auto* modify = toolbarWithActions(tr("Modify"), "Modify", tbPolicy, ag_manager->modify_actions);
+    auto* info = toolbarWithActions(tr("Info"), "Info", tbPolicy, ag_manager->info_actions);
 
     addToBottom(line);
     addToBottom(point);
@@ -674,372 +677,32 @@ QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
     auto *toolbar = createGenericToolbar(tr("Categories"), "Categories",
                                          QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
 
-    toolButton(toolbar, tr("Lines"), ":/icons/line.lci", line_actions);
-    toolButton(toolbar, tr("Points"), ":/icons/points.lci", point_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", circle_actions);
-    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", curve_actions);
-    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", spline_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", shape_actions);
-    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.lci", ellipse_actions);
-    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.lci", polyline_actions);
-    toolButton(toolbar, tr("Select"), ":/icons/select.lci", select_actions);
-    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.lci", dimension_actions);
-    toolButton(toolbar, tr("Other"), ":/icons/text.lci", other_drawing_actions);
-    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.lci", modify_actions);
-    toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", info_actions);
-    toolButton(toolbar, tr("Order"), ":/icons/order.lci", order_actions);
+    toolButton(toolbar, tr("Lines"), ":/icons/line.lci", ag_manager->line_actions);
+    toolButton(toolbar, tr("Points"), ":/icons/points.lci", ag_manager->point_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", ag_manager->circle_actions);
+    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", ag_manager->curve_actions);
+    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", ag_manager->spline_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", ag_manager->shape_actions);
+    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.lci",ag_manager->ellipse_actions);
+    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.lci", ag_manager->polyline_actions);
+    toolButton(toolbar, tr("Select"), ":/icons/select.lci", ag_manager->select_actions);
+    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.lci", ag_manager->dimension_actions);
+    toolButton(toolbar, tr("Other"), ":/icons/text.lci", ag_manager->other_drawing_actions);
+    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.lci", ag_manager->modify_actions);
+    toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", ag_manager->info_actions);
+    toolButton(toolbar, tr("Order"), ":/icons/order.lci", ag_manager->order_actions);
 
     toolbar->setProperty("_group", 1);
 
     addToLeft(toolbar);
     return toolbar;
 }
-
-void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
-
-
-    file_menu = menu(tr("&File"),"file", menu_bar, {
-        "FileNew",
-        "FileNewTemplate",
-        "FileOpen",
-        "",
-        "FileSave",
-        "FileSaveAs",
-        "FileSaveAll",
-        ""
-    });
-
-    QList<QMenu*> topMenuMenus;
-    topMenuMenus << file_menu;
-
-    subMenu(file_menu, tr("Import"),"import", ":/icons/import.lci", {
-        "DrawImage",
-        "BlocksImport"
-    });
-
-    subMenu(file_menu, tr("Export"),"export", ":/icons/export.lci", {
-        "FileExportMakerCam",
-        "FilePrintPDF",
-        "FileExport"
-    });
-
-    addActions(file_menu, {
-        "",
-        "FilePrint",
-        "FilePrintPreview",
-        "",
-        "FileClose",
-        "FileCloseAll",
-        "FileQuit",
-        ""
-    });
-
-    auto settings = menu(tr("&Options"),"options", menu_bar, {
-        "OptionsGeneral",
-        "ShortcutsOptions",
-        "WidgetOptions",
-        "DeviceOptions",
-        "ReloadStyleSheet",
-        "",
-        "OptionsDrawing",
-    });
-
-    topMenuMenus << settings;
-
-    auto edit = menu(tr("&Edit"),"edit", menu_bar, {
-        "EditKillAllActions",
-        "",
-        "EditUndo",
-        "EditRedo",
-        "",
-        "EditCut",
-        "EditCopy",
-        "EditPaste",
-        "EditPasteTransform",
-        "PasteToPoints",
-        "",
-        "EditCutQuick",
-        "EditCopyQuick",
-        "ModifyDeleteQuick"
-    });
-
-    topMenuMenus << edit;
-
-
-    auto view_menu = menu(tr("&View"), "view", menu_bar, {
-        "Fullscreen",
-        "ViewStatusBar",
-        "ViewGrid",
-        "ViewDraft",
-        "ViewLinesDraft",
-        "ViewAntialiasing",
-        "",
-        "ViewGridOrtho",
-        "ViewGridIsoLeft",
-        "ViewGridIsoTop",
-        "ViewGridIsoRight",
-        "",
-        "ViewGridOrtho",
-        "ViewGridIsoLeft",
-        "ViewGridIsoTop",
-        "ViewGridIsoRight",
-        "",
-        "ZoomRedraw",
-        "ZoomIn",
-        "ZoomOut",
-        "ZoomAuto",
-        "ZoomPrevious",
-        "ZoomWindow",
-        "ZoomPan",
-        "",
-        "ZoomViewSave",
-    });
-
-    topMenuMenus << view_menu;
-
-    auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
-
-    topMenuMenus << plugins;
-
-
-    /*auto views_restore_menu = */subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.lci",
-                                      {"ZoomViewRestore1",
-                                       "ZoomViewRestore2",
-                                       "ZoomViewRestore3",
-                                       "ZoomViewRestore4",
-                                       "ZoomViewRestore5"});
-
-    LC_GROUP("Startup");
-    bool expandToolsMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
-
-    if (expandToolsMenu) {
-        bool expandToolsTillEntity = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
-        if (expandToolsTillEntity) {
-            auto line = menu(tr("&Line"), "line", menu_bar);
-            line->addActions(line_actions);
-            topMenuMenus << line;
-
-            auto point = menu(tr("Poin&t"), "point", menu_bar);
-            point->addActions(point_actions);
-            topMenuMenus << point;
-
-            auto circle = menu(tr("&Circle"), "circle", menu_bar);
-            circle->addActions(circle_actions);
-            topMenuMenus << circle;
-
-            auto arc = menu(tr("&Arc"), "arc", menu_bar);
-            arc->addActions(curve_actions);
-            topMenuMenus << arc;
-
-            auto shape = menu(tr("Poly&gon"), "shape", menu_bar);
-            shape->addActions(shape_actions);
-            topMenuMenus << shape;
-
-            auto spline = menu(tr("Splin&e"), "spline", menu_bar);
-            spline->addActions(spline_actions);
-            topMenuMenus << spline;
-
-            auto ellipse = menu(tr("Ellipse&e"), "ellipse", menu_bar);
-            ellipse->addActions(ellipse_actions);
-            topMenuMenus << ellipse;
-
-            auto polyline = menu(tr("&Polyline"), "polyline", menu_bar);
-            polyline->addActions(polyline_actions);
-            topMenuMenus << polyline;
-
-            auto other = menu(tr("&Other"), "other", menu_bar);
-            other->addActions(other_drawing_actions);
-            topMenuMenus << other;
-        }
-        else {
-            auto draw = menu(tr("&Draw"), "draw", menu_bar);
-            subMenuWithActions(draw, tr("&Line"), "line", ":/icons/line.lci", line_actions);
-            subMenuWithActions(draw, tr("Poin&t"), "point", ":/icons/points.lci", point_actions);
-            subMenuWithActions(draw, tr("&Circle"), "circle", ":/icons/circle.lci", circle_actions);
-            subMenuWithActions(draw, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", curve_actions);
-            subMenuWithActions(draw, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", shape_actions);
-            subMenuWithActions(draw, tr("Splin&e"), "spline", ":/icons/spline_points.lci", spline_actions);
-            subMenuWithActions(draw, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ellipse_actions);
-            subMenuWithActions(draw, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", polyline_actions);
-            subMenuWithActions(draw, tr("Ot&her"), "other", ":/icons/text.lci", other_drawing_actions);
-
-            topMenuMenus << draw;
-        }
-
-        auto modify = menu(tr("&Modify"), "info", menu_bar);
-        modify->addActions(modify_actions);
-        subMenuWithActions(modify, tr("&Order"), "order", ":/icons/order.lci", order_actions);
-
-        topMenuMenus << modify;
-
-        auto dims = menu(tr("&Dimensions"), "dims", menu_bar);
-        dims->addActions(dimension_actions);
-        topMenuMenus << dims;
-
-        auto info = menu(tr("&Info"), "info", menu_bar);
-        info->addActions(info_actions);
-        topMenuMenus << info;
-    }
-    else {
-        auto tools = menu(tr("&Tools"), "tools", menu_bar);
-        subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.lci", line_actions);
-        subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.lci", point_actions);
-        subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.lci", circle_actions);
-        subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", curve_actions);
-        subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", shape_actions);
-        subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.lci", spline_actions);
-        subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ellipse_actions);
-        subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", polyline_actions);
-        subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.lci", select_actions);
-        subMenuWithActions(tools, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", dimension_actions);
-        subMenuWithActions(tools, tr("Ot&her"), "other", ":/icons/text.lci", other_drawing_actions);
-        subMenuWithActions(tools, tr("&Modify"), "modify", ":/icons/move_rotate.lci", modify_actions);
-        subMenuWithActions(tools, tr("&Info"), "info", ":/icons/measure.lci", info_actions);
-        subMenuWithActions(tools, tr("&Order"), "order", ":/icons/order.lci", order_actions);
-
-        auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
-        topMenuMenus << tools;
-    }
-    LC_GROUP_END();
-
-    auto widgets = menu(tr("Widgets"),"widgets", menu_bar);
-
-    auto *dockareas = subMenu(widgets, tr("Dock Areas"),"dockareas", nullptr, {
-        "LeftDockAreaToggle",
-        "RightDockAreaToggle",
-        "TopDockAreaToggle",
-        "BottomDockAreaToggle",
-        "FloatingDockwidgetsToggle"
-    });
-
-    auto* dockwidgets_menu = doCreateSubMenu(widgets, tr("Dock Wid&gets"), "dockwidgets", nullptr);
-
-    dockwidgets_menu->addSeparator();
-
-    QList<QDockWidget*> dockwidgetsList = main_window->findChildren<QDockWidget*>();
-    main_window->sortWidgetsByTitle(dockwidgetsList);
-    
-    QAction* namedViewsToggleViewAction = nullptr;
-    QAction* ucsToggleViewAction = nullptr;
-
-    for (QDockWidget* dw: dockwidgetsList){
-        if (main_window->dockWidgetArea(dw) == Qt::RightDockWidgetArea) {
-            QAction *action = dw->toggleViewAction();
-            dockwidgets_menu->addAction(action);
-            QString objectName = dw->objectName();
-            if (objectName == "view_dockwidget"){
-                namedViewsToggleViewAction = action;
-            }
-            else if (objectName == "ucs_dockwidget"){
-                ucsToggleViewAction = action;
-            }
-        }
-    }
-
-    view_menu->addAction(namedViewsToggleViewAction);
-
-    view_menu->addSeparator();
-    view_menu->addAction(ag_manager->getActionByName("UCSCreate"));
-    view_menu->addAction(ag_manager->getActionByName("UCSSetWCS"));
-    view_menu->addAction(ucsToggleViewAction);
-
-    addAction(dockwidgets_menu, "RedockWidgets");
-
-    dockwidgets_menu->addSeparator();
-
-    for (QDockWidget* dw : dockwidgetsList){
-        if (main_window->dockWidgetArea(dw) == Qt::LeftDockWidgetArea)
-            dockwidgets_menu->addAction(dw->toggleViewAction());
-    }
-
-    auto* toolbars = doCreateSubMenu(widgets, tr("&Toolbars"),"toolbars", nullptr);
-
-    QList<QToolBar*> toolbarsList = main_window->findChildren<QToolBar*>();
-
-    main_window->sortWidgetsByGroupAndTitle(toolbarsList);
-
-    int previousGroup = -100;
-
-    for (QToolBar* tb: toolbarsList){
-        const QVariant &variant = tb->property("_group");
-        int group = variant.toInt();
-        if (group != previousGroup ){
-            if (previousGroup != -100) {
-                toolbars->addSeparator();
-            }
-            previousGroup = group;
-        }
-        toolbars->addAction(tb->toggleViewAction());
-    }
-
-    widgets->addMenu(dockareas);
-    widgets->addMenu(dockwidgets_menu);
-    widgets->addMenu(toolbars);
-
-    addAction(widgets, "InvokeMenuCreator");
-    addAction(widgets, "InvokeToolbarCreator");
-
-    topMenuMenus << widgets;
-
-    windows_menu = menu(tr("&Drawings"),"drawings", menu_bar, {
-        "Fullscreen" // temp way to show this menu on OS X
-        });
-
-    connect(windows_menu, SIGNAL(aboutToShow()),
-            main_window, SLOT(slotWindowsMenuAboutToShow()));
-
-    topMenuMenus << widgets;
-
-
-    auto help = menu(tr("&Help"), "help", menu_bar);
-
-    subMenuWithActions(help, tr("On&line Docs"),"OnlineInfo", nullptr, {
-        urlActionTR(tr("&Wiki"), "https://dokuwiki.librecad.org/"),
-        urlActionTR(tr("User's &Manual"), "https://librecad.readthedocs.io/"),
-        urlActionTR(tr("&Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
-        urlActionTR(tr("&Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"),
-        urlActionTR(tr("Wid&gets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets")
-    });
-
-
-    auto help_about = new QAction(QIcon(":/images/librecad.png"), tr("About"), main_window);
-    connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
-
-    auto license = new QAction(QObject::tr("License"), main_window);
-    connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
-
-    help->addSeparator();
-    help->addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
-    help->addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
-    help->addSeparator();
-    help->addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
-    help->addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    help->addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    help->addSeparator();
-    help->addAction(help_about);
-    help->addAction(license);
-    help->addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
-
-    topMenuMenus << help;
-
-    for (auto m : topMenuMenus) {
-        menu_bar->addMenu(m);
-    }
-}
-
 void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames){
-    for (QString actionName: actionNames) {
+    for (const QString& actionName: actionNames) {
         QAction *action = ag_manager->getActionByName(actionName);
         if (action != nullptr) {
             action->setVisible(false);
         }
-    }
-}
-
-void LC_WidgetFactory::addAction(QMenu* menu, const char* actionName){
-    QAction *action = ag_manager->getActionByName(actionName);
-    if (action != nullptr) {
-        menu->addAction(action);
     }
 }
 
@@ -1048,71 +711,6 @@ void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName){
     if (action != nullptr) {
         toolbar->addAction(action);
     }
-}
-
-
-QAction* LC_WidgetFactory::urlActionTR(const QString& title, const char* url ){
-    auto* result    = new QAction(  title, main_window);
-    connect(result, &QAction::triggered, main_window, [=](){
-        QDesktopServices::openUrl( QUrl( url));
-    });
-    return result;
-}
-
-QMenu*  LC_WidgetFactory::menu(const QString& title, const QString& name,  QMenuBar* parent, const std::vector<QString> &actionNames){
-    QMenu* result = menu(title, name, parent);
-    addActions(result, actionNames);
-    return result;
-}
-
-void LC_WidgetFactory::addActions(QMenu *result, const std::vector<QString> &actionNames) {
-    for (const QString& actionName : actionNames){
-        if (actionName.isEmpty()){
-            result->addSeparator();
-        }
-        else{
-            QAction* action = ag_manager->getActionByName(actionName);
-            if (action != nullptr){
-                result->addAction(action);
-            }
-        }
-    }
-}
-
-QMenu*  LC_WidgetFactory::menu(const QString& title, const QString& name, QMenuBar* parent){
-    auto result =  new QMenu(title, parent);
-    QString nameCleared(name);
-    nameCleared.remove(' ');
-    nameCleared.remove('&');
-    result->setObjectName(nameCleared.toLower() + "_menu");
-    result->setTearOffEnabled(allowTearOffMenus);
-    return result;
-}
-
-QMenu*  LC_WidgetFactory::subMenu(QMenu* parent, const QString& title, const QString& name, const char* icon, const std::vector<QString> &actionNames){
-    QMenu *result = doCreateSubMenu(parent, title, name, icon);
-    addActions(result, actionNames);
-    return result;
-}
-
-QMenu*  LC_WidgetFactory::subMenuWithActions(QMenu* parent, const QString& title, const QString& name, const char* icon, const QList<QAction*> &actions){
-    QMenu *sub_menu = doCreateSubMenu(parent, title, name, icon);
-    sub_menu->addActions(actions);
-    return sub_menu;
-}
-
-QMenu *LC_WidgetFactory::doCreateSubMenu(QMenu *parent, const QString& title, const QString& name, const char *icon) const {
-    auto sub_menu = parent->addMenu(title);
-    if (icon != nullptr) {
-        sub_menu->setIcon(QIcon(icon));
-    }
-    sub_menu->setTearOffEnabled(allowTearOffMenus);
-    QString nameCleared(name);
-    nameCleared.remove(' ');
-    nameCleared.remove('&');
-    const QString &objectName = nameCleared.toLower() + "_menu";
-    sub_menu->setObjectName(objectName);
-    return sub_menu;
 }
 
 QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
@@ -1150,6 +748,25 @@ QToolBar* LC_WidgetFactory::createUCSToolbar(const QString& title, const QString
     return result;
 }
 
+QToolBar* LC_WidgetFactory::createWorkspacesToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
+    auto * result = doCreateToolBar(title, name, toolBarPolicy);
+
+    auto* toolButton = new QToolButton(result);
+    auto *createAction = ag_manager->getActionByName("WorkspaceCreate");
+
+    toolButton->setDefaultAction(createAction);
+    QAction *removeAction = ag_manager->getActionByName("WorkspaceRemove");
+    toolButton->addAction(removeAction);
+    toolButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+    result->addWidget(toolButton);
+
+    auto* workspacesListButton = new LC_WorkspaceListButton(main_window);
+    auto restoreAction = ag_manager->getActionByName("WorkspaceRestore");
+    workspacesListButton->setDefaultAction(restoreAction);
+    result->addWidget(workspacesListButton);
+    return result;
+}
 
 QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
 
@@ -1167,7 +784,7 @@ QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QSt
     return result;
 }
 
-QToolBar *LC_WidgetFactory::doCreateToolBar(const QString title, const QString &name, const QSizePolicy &toolBarPolicy) const {
+QToolBar *LC_WidgetFactory::doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy) const {
     auto* result = new QToolBar(title, main_window);
     result->setSizePolicy(toolBarPolicy);
     QString nameCleared(name);
@@ -1186,11 +803,7 @@ QToolBar* LC_WidgetFactory::toolbarWithActions(const QString& title, const QStri
     return result;
 }
 
-void  LC_WidgetFactory::fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames){
-    for (const char* actionName: actionNames){
-        list << ag_manager->getActionByName(actionName);
-    }
-}
+
 
 LC_DockWidget* LC_WidgetFactory::leftDocWidget(const QString& title, const char* name, const QList<QAction*> &actions, int columns, int iconSize, bool flatButtons){
     auto* result = new LC_DockWidget(main_window);
@@ -1327,15 +940,6 @@ void LC_WidgetFactory::initStatusBar() {
         main_window->grid_status->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
         connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
 
-/*
-        tb->addSeparator();
-
-        addAction(tb,"ViewGrid");
-        addAction(tb,"ViewGridOrtho");
-        addAction(tb,"ViewGridIsoLeft");
-        addAction(tb,"ViewGridIsoTop");
-        addAction(tb,"ViewGridIsoRight");
-*/
     }
     connect(main_window->anglesBasisWidget, &LC_AnglesBasisWidget::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
 

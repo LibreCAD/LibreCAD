@@ -1,0 +1,350 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2025 LibreCAD.org
+ Copyright (C) 2025 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
+#include "lc_workspacesmanager.h"
+
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMessageBox>
+
+#include "qc_applicationwindow.h"
+#include "rs_debug.h"
+#include "rs_settings.h"
+
+LC_WorkspacesManager::LC_WorkspacesManager() {}
+
+LC_WorkspacesManager::~LC_WorkspacesManager() {
+    qDeleteAll(workspaces);
+}
+
+void LC_WorkspacesManager::getWorkspaces(QList<QPair<int, QString>> &workspacesList){
+    for(auto p: workspaces){
+        workspacesList << QPair<int, QString>(p->id, p->name);
+    }
+}
+
+void LC_WorkspacesManager::getWorkspaceNames(QStringList &workspacesList){
+    for(auto p: workspaces){
+        workspacesList << p->name;
+    }
+}
+
+void LC_WorkspacesManager::saveWorkspace(QString name){
+    name = name.trimmed();
+    QList<LC_Workspace *>::iterator it = workspaces.begin();
+    while (it != workspaces.end()) {
+        if ((*it)->name == name) {
+            // just update existing perspective
+            fillByState(**it);
+            lastActivatedId = (*it)->id;
+            saveWorkspaces();
+            return;
+        }
+        ++it;
+
+    }
+    // nothing found by name, create new one
+    auto* workspace = new LC_Workspace;
+    workspace->name = name;
+    workspace->id = workspaceID++;
+    lastActivatedId = workspace->id;
+    fillByState(*workspace);
+    workspaces << workspace;
+    saveWorkspaces();
+}
+
+void LC_WorkspacesManager::deleteWorkspace(int id){
+    LC_Workspace perspective;
+    QList<LC_Workspace *>::iterator it = workspaces.begin();
+    while (it != workspaces.end()) {
+        if ((*it)->id == id) {
+            LC_Workspace* w = *it;
+            workspaces.erase(it);
+            delete w;
+            saveWorkspaces();
+            return;
+        }
+        else {
+            ++it;
+        }
+    }
+    saveWorkspaces();
+}
+
+void LC_WorkspacesManager::activateWorkspace(int id){
+    if (id < 0) {
+       id = lastActivatedId;
+    }
+    QList<LC_Workspace *>::iterator it = workspaces.begin();
+    while (it != workspaces.end()) {
+         if ((*it)->id == id) {
+            restore(**it);
+            if (lastActivatedId != id) {
+                lastActivatedId = id;
+                persist();
+            }
+            return;
+         }
+        ++it;
+    }
+}
+
+void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
+    auto settings = RS_SETTINGS->getSettings();
+    settings->beginGroup("Geometry");
+    auto geometryB64 = settings->value("WindowGeometry").toString();
+
+    workspace.geometry = geometryB64;
+    workspace.windowWidth = settings->value("WindowWidth", 1024).toInt();
+    workspace.windowHeight = settings->value("WindowHeight", 1024).toInt();
+    workspace.windowX = settings->value("WindowX", 32).toInt();
+    workspace.windowY = settings->value("WindowY", 32).toInt();
+
+    workspace.widgetsState = settings->value("StateOfWidgets", "").toString();
+
+    workspace.dockAreaLeftActive = LC_GET_BOOL("LeftDockArea", false);
+    workspace.dockAreaRightActive = LC_GET_BOOL("RightDockArea", true);
+    workspace.dockAreaToptActive = LC_GET_BOOL("TopDockArea", false);
+    workspace.dockAreaBottomActive = LC_GET_BOOL("BottomDockArea", false);
+    workspace.docAreaFloatingtActive = LC_GET_BOOL("FloatingDockwidgets", false);
+    settings->endGroup();
+}
+
+
+void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
+    QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
+    QString geometryB64 = appWin.saveGeometry().toBase64(QByteArray::Base64Encoding);
+    QString stateB64 = appWin.saveState().toBase64(QByteArray::Base64Encoding);
+    workspace.geometry = geometryB64;
+    workspace.widgetsState = stateB64;
+    workspace.windowHeight = appWin.height();
+    workspace.windowWidth = appWin.width();
+    workspace.windowX = appWin.x();
+    workspace.windowY = appWin.y();
+
+    workspace.dockAreaLeftActive = appWin.getDockAreas().left->isChecked();
+    workspace.dockAreaRightActive = appWin.getDockAreas().right->isChecked();
+    workspace.dockAreaBottomActive = appWin.getDockAreas().bottom->isChecked();
+    workspace.dockAreaToptActive = appWin.getDockAreas().top->isChecked();
+    workspace.docAreaFloatingtActive = appWin.getDockAreas().floating->isChecked();
+}
+
+void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
+    auto settings = RS_SETTINGS->getSettings();
+    LC_GROUP("Geometry");
+    LC_SET("WindowGeometry",workspace.geometry);
+    LC_SET("WindowWidth", workspace.windowWidth);
+    LC_SET("WindowHeight", workspace.windowHeight);
+    LC_SET("WindowY", workspace.windowY);
+    LC_SET("WindowX", workspace.windowX);
+    LC_SET("StateOfWidgets",workspace.widgetsState);
+    LC_SET("LeftDockArea", workspace.dockAreaLeftActive);
+    LC_SET("RightDockArea", workspace.dockAreaRightActive);
+    LC_SET("TopDockArea", workspace.dockAreaToptActive);
+    LC_SET("BottomDockArea", workspace.dockAreaBottomActive);
+    LC_SET("FloatingDockwidgets", workspace.docAreaFloatingtActive);
+    LC_GROUP_END();
+}
+
+void LC_WorkspacesManager::restoreGeometryAndState(LC_Workspace &workspace){
+    QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
+    restoreGeometryAndState(workspace, appWin);
+}
+
+void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::LC_Workspace &workspace, QC_ApplicationWindow &appWin) const {
+    appWin.setUpdatesEnabled(false);
+    auto geometry = QByteArray::fromBase64(workspace.geometry.toUtf8(), QByteArray::Base64Encoding);
+    if (!geometry.isEmpty()) {
+        appWin.restoreGeometry(geometry);
+    } else {
+        // fallback
+        int windowWidth = workspace.windowWidth;
+        int windowHeight = workspace.windowHeight;
+        int windowX = workspace.windowX;
+        int windowY = workspace.windowY;
+        appWin.resize(windowWidth, windowHeight);
+        appWin.move(windowX, windowY);
+    }
+
+    auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
+    appWin.restoreState(widgetsState);
+
+    appWin.getDockAreas().left->setChecked(workspace.dockAreaLeftActive);
+    appWin.getDockAreas().right->setChecked(workspace.dockAreaRightActive);
+    appWin.getDockAreas().bottom->setChecked(workspace.dockAreaBottomActive);
+    appWin.getDockAreas().top->setChecked(workspace.dockAreaToptActive);
+    appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingtActive);
+    appWin.setUpdatesEnabled(true);
+}
+
+void LC_WorkspacesManager::restore(LC_Workspace& perspective){
+    restoreGeometryAndState(perspective);
+    applyToSettings(perspective);
+}
+
+void LC_WorkspacesManager::init(QC_ApplicationWindow* win){
+    LC_Workspace perspective;
+    fillBySettings(perspective);
+    restoreGeometryAndState(perspective, *win);
+    loadWorkspaces();
+}
+
+void LC_WorkspacesManager::persist(){
+    LC_Workspace perspective;
+    fillByState(perspective);
+    applyToSettings(perspective);
+    saveWorkspaces();
+}
+
+void LC_WorkspacesManager::loadWorkspaces(){
+    QString workspacesFile = LC_GET_ONE_STR("Paths", "WorkspacesFile", "");
+    if (!workspacesFile.isEmpty()) {
+        QFile jsonFile(workspacesFile);
+        if (jsonFile.exists()) {
+            bool canRead = jsonFile.open(QFile::ReadOnly);
+            if (canRead) {
+                QJsonParseError parseError;
+                auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
+                if (parseError.error != QJsonParseError::NoError) {
+                    LC_ERR << "Unexpected error during workspaces parsing. Message:" + parseError.errorString();
+                }
+                else {
+                    bool canParse;
+                    QJsonObject obj;
+                    if (doc.isObject()) {
+                        obj = doc.object();
+                        auto type = obj.value("type").toString();
+                        canParse = "LibreCAD Workspaces file" == type;
+                    } else {
+                        canParse = false;
+                        LC_ERR << "Invalid content of workspaces file. File: " + workspacesFile;
+                    }
+                    if (canParse) {
+                        workspaceID = obj.value("maxId").toInt(0);
+                        lastActivatedId = obj.value("lastActivatedId").toInt(0);
+                        QJsonArray jsonArray = obj.value("workspaces").toArray();
+                            foreach (const QJsonValue & value, jsonArray) {
+                                QJsonObject wsObj = value.toObject();
+
+                                auto* p = new LC_Workspace;
+                                p->name = wsObj["name"].toString();
+                                p->id = wsObj["id"].toInt();
+
+                                p->geometry = wsObj["geometry"].toString();
+                                p->widgetsState = wsObj["widgetState"].toString();
+                                p->windowX = wsObj["winX"].toInt();
+                                p->windowY = wsObj["winY"].toInt();
+                                p->windowWidth = wsObj["winHeight"].toInt();
+                                p->windowHeight = wsObj["winWidth"].toInt();
+
+                                p->dockAreaLeftActive = wsObj["dockLeft"].toBool();
+                                p->dockAreaRightActive = wsObj["dockRight"].toBool();
+                                p->dockAreaToptActive = wsObj["dockTop"].toBool();
+                                p->dockAreaBottomActive = wsObj["dockBottom"].toBool();
+                                p->docAreaFloatingtActive = wsObj["dockFloat"].toBool();
+
+                                workspaces << p;
+                            }
+                    }
+                }
+            }
+            else {
+                LC_ERR << "Can't read workspaces file. File: " + workspacesFile;
+            }
+        }
+        else {
+            LC_ERR << "Workspaces file does not exists. File: " + workspacesFile;
+        }
+    }
+}
+
+bool LC_WorkspacesManager::isWorkspacesFileExists(){
+    QString workspacesFile = LC_GET_ONE_STR("Paths", "WorkspacesFile", "");
+    if (!workspacesFile.isEmpty()) {
+        QFile file(workspacesFile);
+        return file.exists();
+    }
+    return false;
+}
+
+void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
+    QString workspacesFile = LC_GET_ONE_STR("Paths", "WorkspacesFile", "");
+    if (!workspacesFile.isEmpty()) {
+        QFile file(workspacesFile);
+        if (file.exists()) {
+            bool canWrite = file.open(QFile::WriteOnly);
+            if (canWrite) {
+                QJsonObject objSettings;
+                objSettings.insert("type", QJsonValue::fromVariant("LibreCAD Workspaces file"));
+                objSettings.insert("maxId", QJsonValue::fromVariant(workspaceID));
+                objSettings.insert("lastActivatedId", QJsonValue::fromVariant(lastActivatedId));
+
+                QJsonArray perspectivesArray;
+
+                for (auto p: workspaces) {
+                    QJsonObject wsObj;
+
+                    wsObj.insert("name", QJsonValue::fromVariant(p->name));
+                    wsObj.insert("id", QJsonValue::fromVariant(p->id));
+                    wsObj.insert("geometry", QJsonValue::fromVariant(p->geometry));
+                    wsObj.insert("widgetState", QJsonValue::fromVariant(p->widgetsState));
+                    wsObj.insert("winX", QJsonValue::fromVariant(p->windowX));
+                    wsObj.insert("winY", QJsonValue::fromVariant(p->windowY));
+                    wsObj.insert("winHeight", QJsonValue::fromVariant(p->windowHeight));
+                    wsObj.insert("winWidth", QJsonValue::fromVariant(p->windowWidth));
+
+                    wsObj.insert("dockLeft", QJsonValue::fromVariant(p->dockAreaLeftActive));
+                    wsObj.insert("dockRight", QJsonValue::fromVariant(p->dockAreaRightActive));
+                    wsObj.insert("dockTop", QJsonValue::fromVariant(p->dockAreaToptActive));
+                    wsObj.insert("dockBottom", QJsonValue::fromVariant(p->dockAreaBottomActive));
+                    wsObj.insert("dockFloat", QJsonValue::fromVariant(p->dockAreaBottomActive));
+
+                    perspectivesArray.append(wsObj);
+                }
+
+                objSettings.insert("workspaces", perspectivesArray);
+
+                QJsonDocument doc (objSettings);
+                file.write(doc.toJson());
+            } else {
+                if (parent != nullptr) {
+                    QMessageBox::critical(parent, tr("Saving Workspaces"),
+                                          tr(
+                                              "Can't open provided file for writing - check that provided location is writable. Workspaces were not exported."));
+                }
+                else{
+                    LC_ERR << "Can't open provided file for writing - check that provided location is writable. Workspaces were not saved. File: " + workspacesFile;
+                }
+            }
+        }
+        else {
+            if (parent != nullptr) {
+                QMessageBox::critical(parent, tr("Saving Workspaces"),
+                                      tr("Workspaces file does not exists."));
+            } else {
+                LC_ERR << "Workspaces file does not exists. File: " + workspacesFile;
+            }
+        }
+    }
+}

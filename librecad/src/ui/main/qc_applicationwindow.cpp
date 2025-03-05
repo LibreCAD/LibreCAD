@@ -48,6 +48,7 @@
 #include <QtSvg>
 
 #include <boost/version.hpp>
+#include <QInputDialog>
 
 #include "comboboxoption.h"
 #include "doc_plugin_interface.h"
@@ -103,6 +104,8 @@
 #include "lc_releasechecker.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_dlgabout.h"
+#include "lc_inputtextdialog.h"
+#include "lc_menufactory.h"
 #include "lc_printviewportrenderer.h"
 
 #ifndef QC_APP_ICON
@@ -252,7 +255,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
         addToolBar(Qt::LeftToolBarArea, toolbar);
     }
 
-    widget_factory.createMenus(menuBar());
+    m_menuFactory = new LC_MenuFactory(this, ag_manager);
+    m_menuFactory->createMenus(menuBar());
 
     undoButton = getAction("EditUndo");
     redoButton = getAction("EditRedo");
@@ -292,10 +296,6 @@ QC_ApplicationWindow::QC_ApplicationWindow():
         getAction("ZoomViewRestore5")->setEnabled(itemsCount > 4);
     });
 
-
-    file_menu = widget_factory.file_menu;
-    windowsMenu = widget_factory.windows_menu;
-
     actionsToDisableInPrintPreview = widget_factory.actionsToDisableInPrintPreview;
 
     connect(getAction("FileClose"), &QAction::triggered, mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
@@ -334,9 +334,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     RS_DEBUG->print("setting dialog factory object: OK");
 
     recentFiles = new QG_RecentFiles(this, 9);
-    auto recent_menu = new QMenu(tr("Recent Files"), file_menu);
-    file_menu->addMenu(recent_menu);
-    recentFiles->addFiles(recent_menu);
+    recentFiles->addFiles(m_menuFactory->getRecentFilesMenu());
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
@@ -784,19 +782,12 @@ void QC_ApplicationWindow::slotUpdateActiveLayer() {
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
     QSettings settings;
-    // fixme - inconsistent work with settings...
-    settings.beginGroup("Geometry");
-    LC_GROUP("Geometry");
-    {
-//        restoreState(LC_GET_BARRAY("StateOfWidgets"));
-        restoreState(settings.value("StateOfWidgets", "").toByteArray());
 
-        dock_areas.left->setChecked(LC_GET_BOOL("LeftDockArea", false));
-        dock_areas.right->setChecked(LC_GET_BOOL("RightDockArea", true));
-        dock_areas.top->setChecked(LC_GET_BOOL("TopDockArea", false));
-        dock_areas.bottom->setChecked(LC_GET_BOOL("BottomDockArea", false));
-        dock_areas.floating->setChecked(LC_GET_BOOL("FloatingDockwidgets", false));
+    bool first_load = settings.value("Startup/FirstLoad", 1).toBool();
+    if (!first_load) {
+        m_workspacesManager.init(this);
     }
+
 
     LC_GROUP("Widgets");
     {
@@ -836,23 +827,9 @@ void QC_ApplicationWindow::storeSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings()");
 
     if (RS_Settings::save_is_allowed) {
-        LC_GROUP_GUARD("Geometry");
-        {
-            LC_SET("WindowWidth", width());
-            LC_SET("WindowHeight", height());
-            LC_SET("WindowX", x());
-            LC_SET("WindowY", y());
-            QString geometry{saveGeometry().toBase64(QByteArray::Base64Encoding)};
-            LC_SET("WindowGeometry", geometry);
-            RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant(saveState())); // fixme
-            LC_SET("LeftDockArea", dock_areas.left->isChecked());
-            LC_SET("RightDockArea", dock_areas.right->isChecked());
-            LC_SET("TopDockArea", dock_areas.top->isChecked());
-            LC_SET("BottomDockArea", dock_areas.bottom->isChecked());
-            LC_SET("FloatingDockwidgets", dock_areas.floating->isChecked());
-        }
+       m_workspacesManager.persist();
         //save snapMode
-        snapToolBar->saveSnapMode();
+       snapToolBar->saveSnapMode();
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
@@ -913,7 +890,6 @@ void QC_ApplicationWindow::slotFocusOptionsWidget(){
     }
 }
 
-
 /**
  * Shows the given error on the command line.
  */
@@ -937,8 +913,6 @@ void QC_ApplicationWindow::slotShowDrawingOptionsUnits() {
 void QC_ApplicationWindow::slotFocus() {
     setFocus();
 }
-
-
 
 /**
  * Called when a document window was activated.
@@ -1143,91 +1117,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
  * This is used to update the window list in the menu.
  */
 void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
-
     RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
-    LC_GROUP_GUARD("WindowOptions");{
-
-        QMenu *menu;
-        QAction *menuItem;
-        bool tabbed = mdiAreaCAD->viewMode() == QMdiArea::TabbedView;
-        windowsMenu->clear(); // this is a temporary menu; constructed on-demand
-
-        menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, &LC_MDIApplicationWindow::slotToggleTab);
-        menuItem->setCheckable(true);
-        menuItem->setChecked(tabbed);
-
-        menuItem = windowsMenu->addAction(tr("&Window mode"), this, &LC_MDIApplicationWindow::slotToggleTab);
-        menuItem->setCheckable(true);
-        menuItem->setChecked(!tabbed);
-
-
-        if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
-            menu = new QMenu(tr("&Layout"), windowsMenu);
-            windowsMenu->addMenu(menu);
-
-            menuItem = menu->addAction(tr("Rounded"), this, &LC_MDIApplicationWindow::slotTabShapeRounded);
-            menuItem->setCheckable(true);
-
-            int tabShape = LC_GET_INT("TabShape");
-            menuItem->setChecked(tabShape == RS2::Rounded);
-
-            menuItem = menu->addAction(tr("Triangular"), this, &LC_MDIApplicationWindow::slotTabShapeTriangular);
-            menuItem->setCheckable(true);
-            menuItem->setChecked(tabShape == RS2::Triangular);
-
-            menu->addSeparator();
-            int tabPosition = LC_GET_INT("TabPosition");
-
-            menuItem = menu->addAction(tr("North"), this, &LC_MDIApplicationWindow::slotTabPositionNorth);
-            menuItem->setCheckable(true);
-            menuItem->setChecked(tabPosition == RS2::North);
-
-            menuItem = menu->addAction(tr("South"), this, &LC_MDIApplicationWindow::slotTabPositionSouth);
-            menuItem->setCheckable(true);
-            menuItem->setChecked(tabPosition == RS2::South);
-
-            menuItem = menu->addAction(tr("East"), this, &LC_MDIApplicationWindow::slotTabPositionEast);
-            menuItem->setCheckable(true);
-            menuItem->setChecked(tabPosition == RS2::East);
-
-            menuItem = menu->addAction(tr("West"), this, &LC_MDIApplicationWindow::slotTabPositionWest);
-            menuItem->setCheckable(true);
-            menuItem->setChecked(tabPosition == RS2::West);
-
-        } else {
-            menu = new QMenu(tr("&Arrange"), windowsMenu);
-            windowsMenu->addMenu(menu);
-
-            menuItem = menu->addAction(tr("&Maximized"), this, &LC_MDIApplicationWindow::slotSetMaximized);
-            menuItem->setCheckable(true);
-            menuItem->setChecked(LC_GET_INT("SubWindowMode") == RS2::Maximized);
-
-            menu->addAction(tr("&Cascade"), this, &LC_MDIApplicationWindow::slotCascade);
-            menu->addAction(tr("&Tile"), this, &LC_MDIApplicationWindow::slotTile);
-            menu->addAction(tr("Tile &Vertically"), this, &LC_MDIApplicationWindow::slotTileVertical);
-            menu->addAction(tr("Tile &Horizontally"), this, &LC_MDIApplicationWindow::slotTileHorizontal);
-        }
-    }
-
-
-    windowsMenu->addSeparator();
-    QMdiSubWindow *active = mdiAreaCAD->activeSubWindow();
-    for (int i = 0; i < window_list.size(); ++i) {
-        QString title = window_list.at(i)->windowTitle();
-        if (title.contains("[*]")) { // modification mark placeholder
-            int idx = title.lastIndexOf("[*]");
-            if (window_list.at(i)->isWindowModified()) {
-                title.replace(idx, 3, "*");
-            } else {
-                title.remove(idx, 3);
-            }
-        }
-        QAction *id = windowsMenu->addAction(title,
-                                             this, SLOT(slotWindowsMenuActivated(bool)));
-        id->setCheckable(true);
-        id->setData(i);
-        id->setChecked(window_list.at(i) == active);
-    }
+    m_menuFactory->slotWindowsMenuAboutToShow(window_list);
 }
 
 /**
@@ -1243,7 +1134,6 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
         if(w==mdiAreaCAD->activeSubWindow()) {
             return;
         }
-
 		doActivate(w);
     }
 }
@@ -1262,20 +1152,8 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     if (m) {
         m->slotPenChanged(pen);
     }
-
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() end");
 }
-
-///**
-// * Called when something changed in the snaps tool bar
-// */
-//void QC_ApplicationWindow::slotSnapsChanged(const RS_SnapMode& snaps) {
-//    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
-
-//    actionHandler->slotSetSnaps(snaps);
-//}
-
-
 
 /**
  * Creates a new MDI window with the given document or a new
@@ -2674,6 +2552,8 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
             getAction("InfoCursorCatchedEntity")->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
         }
         LC_GROUP_END();
+
+        m_menuFactory->recreateMenuIfNeeded(menuBar());
     }
 }
 
@@ -3012,6 +2892,53 @@ void QC_ApplicationWindow::updateDevice(QString device) {
 void QC_ApplicationWindow::saveNamedView() {
     if (namedViewsWidget != nullptr){
         namedViewsWidget->addNewView();
+    }
+}
+
+void QC_ApplicationWindow::saveWorkspace(bool on) {
+    if (m_workspacesManager.isWorkspacesFileExists()) {
+        bool ok;
+        QStringList options;
+        m_workspacesManager.getWorkspaceNames(options);
+        auto name = LC_InputTextDialog::getText(this, tr("New Workspace"), tr("Name of workspace to save:"), options, true, "", &ok);
+        if (ok) {
+           m_workspacesManager.saveWorkspace(name);
+        }
+    }
+    else{
+        QMessageBox::critical(this, tr("Workspace Error"), tr("Path to workspaces file is not set, please specify it in Application Preferences."));
+    }
+}
+
+void  QC_ApplicationWindow::fillWorkspacesList(QList<QPair<int, QString>> &list){
+    m_workspacesManager.getWorkspaces(list);
+}
+
+void QC_ApplicationWindow::applyWorkspaceById(int id){
+    m_workspacesManager.activateWorkspace(id);
+}
+
+void QC_ApplicationWindow::removeWorkspace(bool on){
+    bool ok;
+    QList<QPair<int, QString>> options;
+    m_workspacesManager.getWorkspaces(options);
+    int workspaceId = LC_InputTextDialog::selectId(this, tr("Remove Workspace"), tr("Select workspace to remove:"), options, &ok);
+    if (ok) {
+       m_workspacesManager.deleteWorkspace(workspaceId);
+    }
+}
+
+void QC_ApplicationWindow::restoreWorkspace(bool on){
+    auto *action = qobject_cast<QAction*>(sender());
+    if (action != nullptr) {
+        QVariant variant = action->property("_WSPS_IDX");
+        if (variant.isValid()){
+            int id = variant.toInt();
+            applyWorkspaceById(id);
+        }
+        else {
+            m_workspacesManager.activateWorkspace(-1);
+        }
     }
 }
 

@@ -47,7 +47,8 @@
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_anglesbasiswidget.h"
-
+#include "lc_workspacesmanager.h"
+class LC_MenuFactory;
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
 class LC_PenWizard;
@@ -242,6 +243,9 @@ public slots:
     void invokeMenuCreator();
     void invokeToolbarCreator();
     void saveNamedView();
+    void saveWorkspace(bool on);
+    void removeWorkspace(bool on);
+    void restoreWorkspace(bool on);
     void restoreNamedView1();
     void restoreNamedView2();
     void restoreNamedView3();
@@ -305,7 +309,15 @@ public:
         return snapToolBar;
     }
 
+
+
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
+
+    DockAreas& getDockAreas(){
+        return dock_areas;
+    }
+
+
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
     LC_AnglesBasisWidget* getAnglesBasisWidget() const {return anglesBasisWidget;};
@@ -322,6 +334,9 @@ public:
     void doClose(QC_MDIWindow* w, bool activateNext = true);
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
     void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
+
+    void  fillWorkspacesList(QList<QPair<int, QString>> &list);
+    void  applyWorkspaceById(int id);
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -358,6 +373,9 @@ private:
 
 //    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
     LC_ActionGroupManager* ag_manager {nullptr};
+
+    LC_WorkspacesManager m_workspacesManager;
+    LC_MenuFactory* m_menuFactory = nullptr;
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
@@ -413,12 +431,6 @@ private:
 
     LC_QTStatusbarManager* statusbarManager {nullptr};
 
-    // --- Menus ---
-    QMenu* windowsMenu {nullptr};
-    QMenu* scriptMenu {nullptr};
-    QMenu* helpMenu {nullptr};
-    QMenu* testMenu {nullptr};
-    QMenu* file_menu {nullptr};
 
     // --- Toolbars ---
     QG_SnapToolBar* snapToolBar {nullptr};

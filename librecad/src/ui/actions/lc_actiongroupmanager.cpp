@@ -61,6 +61,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , snap_extras(new LC_ActionGroup(this,tr("Snap Extras"), tr("Additional Snaps"), ":/icons/snap_free.lci"))
     , view(new LC_ActionGroup(this,tr("View"),tr("View related operations"), ":/icons/zoom_in.lci"))
     , namedViews(new LC_ActionGroup(this,tr("Named Views"),tr("Persistent Views operations"), ":/icons/visible.lci"))
+    , workspaces(new LC_ActionGroup(this,tr("Workspaces"),tr("Workspaces operations"), ":/icons/workspace.lci"))
     , ucs(new LC_ActionGroup(this,tr("UCS"),tr("UCS operations"), ":/icons/set_ucs.lci"))
     , widgets(new LC_ActionGroup(this,tr("Widgets"), tr("Widgets management"),":/icons/dockwidgets_bottom.lci"))
     , pen(new LC_ActionGroup(this,tr("PenTB"),tr("Pen related operations"), ":/icons/pen_apply.lci"))
@@ -216,4 +217,10 @@ LC_ActionGroup* LC_ActionGroupManager::getActionGroup(QString groupName) {
         }
     }
     return nullptr;
+}
+
+void  LC_ActionGroupManager::fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames){
+    for (const char* actionName: actionNames){
+        list << getActionByName(actionName);
+    }
 }

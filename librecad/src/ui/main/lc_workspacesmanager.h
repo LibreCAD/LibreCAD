@@ -1,0 +1,77 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2025 LibreCAD.org
+ Copyright (C) 2025 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
+#ifndef LC_WORKSPACESMANAGER_H
+#define LC_WORKSPACESMANAGER_H
+#include <QObject>
+#include <QStringList>
+
+class QC_ApplicationWindow;
+
+class LC_WorkspacesManager : public QObject{
+    Q_OBJECT
+public:
+    LC_WorkspacesManager();
+    ~LC_WorkspacesManager() override;
+    void getWorkspaces(QList<QPair<int, QString>> &workspacesList);
+    void getWorkspaceNames(QStringList &workspacesList);
+    void saveWorkspace(QString name);
+    void deleteWorkspace(int id);
+    void activateWorkspace(int id);
+    void init(QC_ApplicationWindow* win);
+    void persist();
+    bool isWorkspacesFileExists();
+protected:
+    struct LC_Workspace {
+        int id;
+        QString name;
+        QString geometry;
+        int windowWidth;
+        int windowHeight;
+        int windowX;
+        int windowY;
+        QString widgetsState;
+
+        bool dockAreaLeftActive = false;
+        bool dockAreaRightActive = false;
+        bool dockAreaToptActive = false;
+        bool dockAreaBottomActive = false;
+        bool docAreaFloatingtActive = false;
+    };
+
+    int workspaceID = 0;
+    int lastActivatedId = -1;
+
+    QList<LC_Workspace*> workspaces;
+
+    void restoreGeometryAndState(LC_Workspace &workspace);
+    void restore(LC_Workspace& perspective);
+    void applyToSettings(LC_Workspace &workspace);
+    void fillBySettings(LC_Workspace &workspace);
+    void fillByState(LC_Workspace &workspace);
+    void loadWorkspaces();
+    void saveWorkspaces(QWidget* parent = nullptr);
+
+    void restoreGeometryAndState(const LC_Workspace &workspace, QC_ApplicationWindow &appWin) const;
+};
+
+#endif // LC_PERSPECTIVESMANAGER_H

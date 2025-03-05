@@ -99,7 +99,7 @@ include_directories(librecad/src/actions/dock_widgets/library)
 include_directories(librecad/src/actions/dock_widgets/layer)
 include_directories(librecad/src/actions/dock_widgets/entity_info)
 include_directories(librecad/src/actions/dock_widgets/ucs_list)
-
+include_directories(librecad/src/actions/dock_widgets/workspaces)
 include_directories(librecad/src/actions/file)
 include_directories(librecad/src/actions/options)
 include_directories(librecad/src/actions/print_preview)
@@ -213,6 +213,7 @@ include_directories(librecad/src/ui/dock_widgets/library_widget)
 include_directories(librecad/src/ui/dock_widgets/layer_widget)
 include_directories(librecad/src/ui/dock_widgets/views_list)
 include_directories(librecad/src/ui/dock_widgets/ucs_list)
+include_directories(librecad/src/ui/dock_widgets/workspaces)
 #Temporary disabled for build
 #include_directories(plugins/align)
 #include_directories(plugins/asciifile)
@@ -972,6 +973,8 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.h
         librecad/src/ui/lc_widgetfactory.cpp
         librecad/src/ui/lc_widgetfactory.h
+		librecad/src/ui/lc_menufactory.cpp
+		librecad/src/ui/lc_menufactory.h
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.h
         librecad/src/ui/qg_actionhandler.cpp
@@ -1389,6 +1392,16 @@ set(SOURCES
 		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.h
 		librecad/src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp
+		librecad/src/lib/engine/settings/lc_settingsexporter.h
+		librecad/src/lib/engine/settings/lc_settingsexporter.cpp
+		librecad/src/lib/engine/settings/lc_settingsexporter.cpp
+		librecad/src/ui/main/LC_WorkspacesManager.h
+		librecad/src/ui/main/LC_WorkspacesManager.h
+		librecad/src/ui/main/LC_WorkspacesManager.cpp
+		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.h
+		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp
+		librecad/src/ui/dialogs/lc_inputtextdialog.h
+		librecad/src/ui/dialogs/lc_inputtextdialog.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

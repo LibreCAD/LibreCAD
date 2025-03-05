@@ -11,8 +11,7 @@
 class QAction;
 class QC_ApplicationWindow;
 
-class LC_ActionGroupManager : public QObject
-{
+class LC_ActionGroupManager : public QObject{
     Q_OBJECT
 public:
     explicit LC_ActionGroupManager(QC_ApplicationWindow *parent);
@@ -41,10 +40,31 @@ public:
     LC_ActionGroup* snap_extras;
     LC_ActionGroup* view;
     LC_ActionGroup* namedViews;
+    LC_ActionGroup* workspaces;
     LC_ActionGroup* ucs;
     LC_ActionGroup* widgets;
     LC_ActionGroup* pen;
     LC_ActionGroup* infoCursor;
+
+    QList<QAction*> file_actions;
+    QList<QAction*> line_actions;
+    QList<QAction*> point_actions;
+    QList<QAction*> shape_actions;
+    QList<QAction*> circle_actions;
+    QList<QAction*> curve_actions;
+    QList<QAction*> spline_actions;
+    QList<QAction*> ellipse_actions;
+    QList<QAction*> polyline_actions;
+    QList<QAction*> select_actions;
+    QList<QAction*> dimension_actions;
+    QList<QAction*> other_drawing_actions;
+    QList<QAction*> modify_actions;
+    QList<QAction*> order_actions;
+    QList<QAction*> info_actions;
+    QList<QAction*> layer_actions;
+    QList<QAction*> block_actions;
+    QList<QAction*> pen_actions;
+
 
     QList<LC_ActionGroup*> toolGroups();
     QMap<QString, LC_ActionGroup*> allGroups();
@@ -60,6 +80,7 @@ public:
     QAction *getActionByName(const QString &name);
     bool hasActionGroup(QString categoryName);
     LC_ActionGroup* getActionGroup(QString groupName);
+    void fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames);
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);
