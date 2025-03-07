@@ -166,7 +166,7 @@ bool LC_SettingsExporter::importSettings(QWidget *parent) {
                 }
             }
         } else {
-            QMessageBox::critical(parent, tr("Settings Import Error"), tr("Can't open provided file for reading. Preferences were not exported."));
+            QMessageBox::critical(parent, tr("Settings Import Error"), tr("Can't open provided file for reading. Preferences were not imported."));
         }
     }
     return result;

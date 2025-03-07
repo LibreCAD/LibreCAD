@@ -338,6 +338,7 @@ public:
 
     void  fillWorkspacesList(QList<QPair<int, QString>> &list);
     void  applyWorkspaceById(int id);
+    void  rebuildMenuIfNecessary();
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open

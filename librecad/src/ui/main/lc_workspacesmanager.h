@@ -57,6 +57,14 @@ protected:
         bool dockAreaToptActive = false;
         bool dockAreaBottomActive = false;
         bool docAreaFloatingtActive = false;
+
+        int iconsSizeToolbar = 24;
+        int iconsSizeLeftDock = 24;
+        int iconsSizeRightDoc = 16;
+        int columnCountLeftDoc = 6;
+
+        bool extendMenu = false;
+        bool extendMenuTillEntities = false;
     };
 
     int workspaceID = 0;
@@ -71,8 +79,8 @@ protected:
     void fillByState(LC_Workspace &workspace);
     void loadWorkspaces();
     void saveWorkspaces(QWidget* parent = nullptr);
-
     void restoreGeometryAndState(const LC_Workspace &workspace, QC_ApplicationWindow &appWin) const;
+    void fillIconsAndMenuState(LC_WorkspacesManager::LC_Workspace &workspace);
 };
 
 #endif // LC_PERSPECTIVESMANAGER_H

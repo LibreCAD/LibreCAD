@@ -109,6 +109,23 @@ void LC_WorkspacesManager::activateWorkspace(int id){
     }
 }
 
+void LC_WorkspacesManager::fillIconsAndMenuState(LC_WorkspacesManager::LC_Workspace &workspace){
+    LC_GROUP("Widgets");
+    {
+        workspace.columnCountLeftDoc = LC_GET_INT("LeftToolbarColumnsCount", 5);
+        workspace.iconsSizeLeftDock = LC_GET_INT("LeftToolbarIconSize", 24);
+        workspace.iconsSizeRightDoc = LC_GET_INT("DockWidgetsIconSize", 16);
+        workspace.iconsSizeToolbar = LC_GET_INT("ToolbarIconSize", 25);
+    }
+    LC_GROUP_END();
+    LC_GROUP("Startup");
+    {
+        workspace.extendMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
+        workspace.extendMenuTillEntities = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
+    }
+    LC_GROUP_END();
+}
+
 void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
     auto settings = RS_SETTINGS->getSettings();
     settings->beginGroup("Geometry");
@@ -128,6 +145,8 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
     workspace.dockAreaBottomActive = LC_GET_BOOL("BottomDockArea", false);
     workspace.docAreaFloatingtActive = LC_GET_BOOL("FloatingDockwidgets", false);
     settings->endGroup();
+
+    fillIconsAndMenuState(workspace);
 }
 
 
@@ -147,21 +166,39 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     workspace.dockAreaBottomActive = appWin.getDockAreas().bottom->isChecked();
     workspace.dockAreaToptActive = appWin.getDockAreas().top->isChecked();
     workspace.docAreaFloatingtActive = appWin.getDockAreas().floating->isChecked();
+
+    fillIconsAndMenuState(workspace);
 }
 
 void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
     LC_GROUP("Geometry");
-    LC_SET("WindowGeometry",workspace.geometry);
-    LC_SET("WindowWidth", workspace.windowWidth);
-    LC_SET("WindowHeight", workspace.windowHeight);
-    LC_SET("WindowY", workspace.windowY);
-    LC_SET("WindowX", workspace.windowX);
-    LC_SET("StateOfWidgets",workspace.widgetsState);
-    LC_SET("LeftDockArea", workspace.dockAreaLeftActive);
-    LC_SET("RightDockArea", workspace.dockAreaRightActive);
-    LC_SET("TopDockArea", workspace.dockAreaToptActive);
-    LC_SET("BottomDockArea", workspace.dockAreaBottomActive);
-    LC_SET("FloatingDockwidgets", workspace.docAreaFloatingtActive);
+    {
+        LC_SET("WindowGeometry",workspace.geometry);
+        LC_SET("WindowWidth", workspace.windowWidth);
+        LC_SET("WindowHeight", workspace.windowHeight);
+        LC_SET("WindowY", workspace.windowY);
+        LC_SET("WindowX", workspace.windowX);
+        LC_SET("StateOfWidgets",workspace.widgetsState);
+        LC_SET("LeftDockArea", workspace.dockAreaLeftActive);
+        LC_SET("RightDockArea", workspace.dockAreaRightActive);
+        LC_SET("TopDockArea", workspace.dockAreaToptActive);
+        LC_SET("BottomDockArea", workspace.dockAreaBottomActive);
+        LC_SET("FloatingDockwidgets", workspace.docAreaFloatingtActive);
+    }
+    LC_GROUP_END();
+    LC_GROUP("Widgets");
+    {
+        LC_SET("LeftToolbarColumnsCount", workspace.columnCountLeftDoc);
+        LC_SET("LeftToolbarIconSize", workspace.iconsSizeLeftDock);
+        LC_SET("DockWidgetsIconSize", workspace.iconsSizeRightDoc);
+        LC_SET("ToolbarIconSize", workspace.iconsSizeToolbar);
+    }
+    LC_GROUP_END();
+    LC_GROUP("Startup");
+    {
+        LC_SET("ExpandedToolsMenu", workspace.extendMenu);
+        LC_SET("ExpandedToolsMenuTillEntity", workspace.extendMenuTillEntities);
+    }
     LC_GROUP_END();
 }
 
@@ -193,12 +230,16 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::L
     appWin.getDockAreas().bottom->setChecked(workspace.dockAreaBottomActive);
     appWin.getDockAreas().top->setChecked(workspace.dockAreaToptActive);
     appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingtActive);
+
+    appWin.rebuildMenuIfNecessary();
+    appWin.setIconSize(QSize(workspace.iconsSizeToolbar, workspace.iconsSizeToolbar));
     appWin.setUpdatesEnabled(true);
+    appWin.fireWidgetSettingsChanged();
 }
 
 void LC_WorkspacesManager::restore(LC_Workspace& perspective){
-    restoreGeometryAndState(perspective);
     applyToSettings(perspective);
+    restoreGeometryAndState(perspective);
 }
 
 void LC_WorkspacesManager::init(QC_ApplicationWindow* win){
@@ -268,6 +309,14 @@ void LC_WorkspacesManager::loadWorkspaces(){
                                 p->dockAreaBottomActive = wsObj["dockBottom"].toBool();
                                 p->docAreaFloatingtActive = wsObj["dockFloat"].toBool();
 
+                                p->columnCountLeftDoc = wsObj["columnCountLeftDock"].toInt(6);
+                                p->iconsSizeToolbar = wsObj["iconSizeToolbar"].toInt(24);
+                                p->iconsSizeLeftDock = wsObj["iconSizeLeftDock"].toInt(24);
+                                p->iconsSizeRightDoc = wsObj["iconSizeRightDock"].toInt(16);
+
+                                p->extendMenu  = wsObj["expandMenu"].toBool(false);
+                                p->extendMenuTillEntities = wsObj["expandMenuTillEntity"].toBool(false);
+
                                 workspaces << p;
                             }
                     }
@@ -326,6 +375,14 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
                 wsObj.insert("dockTop", QJsonValue::fromVariant(p->dockAreaToptActive));
                 wsObj.insert("dockBottom", QJsonValue::fromVariant(p->dockAreaBottomActive));
                 wsObj.insert("dockFloat", QJsonValue::fromVariant(p->dockAreaBottomActive));
+
+                wsObj.insert("columnCountLeftDock", QJsonValue::fromVariant(p->columnCountLeftDoc));
+                wsObj.insert("iconSizeToolbar", QJsonValue::fromVariant(p->iconsSizeToolbar));
+                wsObj.insert("iconSizeLeftDock", QJsonValue::fromVariant(p->iconsSizeLeftDock));
+                wsObj.insert("iconSizeRightDock", QJsonValue::fromVariant(p->iconsSizeRightDoc));
+
+                wsObj.insert("expandMenu", QJsonValue::fromVariant(p->extendMenu));
+                wsObj.insert("expandMenuTillEntity", QJsonValue::fromVariant(p->extendMenuTillEntities));
 
                 perspectivesArray.append(wsObj);
             }

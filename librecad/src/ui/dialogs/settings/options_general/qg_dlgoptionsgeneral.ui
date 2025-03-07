@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -4729,7 +4729,7 @@
           <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="left_sidebar_checkbox">
             <property name="toolTip">
-             <string>If checked, doc widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </string>
+             <string>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </string>
             </property>
             <property name="text">
              <string>Enable CAD dockwidgets</string>

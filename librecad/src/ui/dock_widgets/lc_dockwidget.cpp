@@ -58,6 +58,9 @@ void LC_DockWidget::add_actions(const QList<QAction *> &list, int columns, int i
 		toolbutton->setAutoRaise(flatButton);
 		toolbutton->setIconSize(QSize(icon_size, icon_size));
 		int const count = grid->count();
+		if (columns == 0) {
+			columns = 5;
+		}
 		grid->addWidget(toolbutton, count / columns, count % columns);
 	}
 }
@@ -75,6 +78,10 @@ void LC_DockWidget::updateWidgetSettings(){
 		QGridLayout* newGrid = new QGridLayout();
 		newGrid->setSpacing(0);
 		newGrid->setContentsMargins(0, 0, 0, 0);
+
+		if (leftToolbarColumnsCount == 0) {
+			leftToolbarColumnsCount = 5;
+		}
 
 		foreach(QToolButton *w, widgets) {
 			w->setAutoRaise(leftToolbarFlatIcons);

@@ -103,11 +103,6 @@ int main(int argc, char** argv)
     iconColorsOptions.loadSettings();
     iconColorsOptions.applyOptions();
 
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
-    if (appWindow != nullptr) {
-        appWindow->fireIconsRefresh();
-    }
-
     QGuiApplication::setDesktopFileName("librecad.desktop");
 
     QSettings settings; // fixme - direct invocation of settings
@@ -284,6 +279,10 @@ int main(int argc, char** argv)
 
     RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    if (appWindow != nullptr) {
+        appWindow->fireIconsRefresh();
+    }
 #ifdef Q_OS_MAC
     app.installEventFilter(&appWin);
 #endif

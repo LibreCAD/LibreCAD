@@ -462,7 +462,7 @@
       <item row="3" column="2" colspan="2">
        <widget class="QComboBox" name="cbIconColorAccent">
         <property name="toolTip">
-         <string>Color for start handle of entity</string>
+         <string>Color for accent elements (originally green)</string>
         </property>
         <property name="accessibleDescription">
          <string notr="true"/>
@@ -490,7 +490,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Overrides Directory:</string>
+         <string>External Icons Directory:</string>
         </property>
        </widget>
       </item>
@@ -517,7 +517,7 @@
       <item row="2" column="2" colspan="2">
        <widget class="QComboBox" name="cbIconColorMain">
         <property name="toolTip">
-         <string>Color for start handle of entity</string>
+         <string>Color for main elements (originally black)</string>
         </property>
         <property name="accessibleDescription">
          <string notr="true"/>
@@ -543,20 +543,10 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="lStartHandleColor_2">
-        <property name="text">
-         <string>Accent Color:</string>
-        </property>
-        <property name="buddy">
-         <cstring>cbIconColorMain</cstring>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="2" colspan="2">
        <widget class="QComboBox" name="cbIconColorBack">
         <property name="toolTip">
-         <string>Color for start handle of entity</string>
+         <string>Color for filled background (originally white)</string>
         </property>
         <property name="accessibleDescription">
          <string notr="true"/>
@@ -642,6 +632,16 @@
         </property>
         <property name="text">
          <string>Advanced Setup ...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QLabel" name="lStartHandleColor_2">
+        <property name="text">
+         <string>Accent Color:</string>
+        </property>
+        <property name="buddy">
+         <cstring>cbIconColorMain</cstring>
         </property>
        </widget>
       </item>

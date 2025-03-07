@@ -217,7 +217,7 @@ void LC_WidgetOptionsDialog::onRemoveStylePressed(){
 }
 
 void LC_WidgetOptionsDialog::setIconsOverrideFoler() {
-    QString folder = selectFolder(tr("Select Shortcuts Mappings Folder"));
+    QString folder = selectFolder(tr("Select External Icons Folder"));
     if (folder != nullptr) {
         leIconsOverrideDir->setText(QDir::toNativeSeparators(folder));
     }

@@ -2500,6 +2500,10 @@ void QC_ApplicationWindow::slotOptionsShortcuts() {
     RS_DIALOGFACTORY->requestKeyboardShortcutsDialog(ag_manager);
 }
 
+void QC_ApplicationWindow::rebuildMenuIfNecessary(){
+    m_menuFactory->recreateMenuIfNeeded(menuBar());
+}
+
 /**
  * Shows the dialog for general application preferences.
  */
@@ -2554,7 +2558,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         }
         LC_GROUP_END();
 
-        m_menuFactory->recreateMenuIfNeeded(menuBar());
+        rebuildMenuIfNecessary();
     }
 }
 
