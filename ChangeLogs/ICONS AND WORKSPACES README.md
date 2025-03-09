@@ -6,6 +6,12 @@ This PR is concentrated on generic UI and face-lifting, and includes support of
 2) User-defined workspaces
 3) Application preferences exchange (export/import).
 
+### Demo
+
+https://youtu.be/mbYkwPAdKJU - icons styling
+
+https://youtu.be/FwvXs1eDYBA - workspaces
+
 ### 1) Styled Icons
 
 Now the user may specify the color scheme of icons. That's convenient for users with non-standard windows color scheme (dark etc.), where default LibreCAD look non-naturl. 
@@ -138,6 +144,13 @@ Here is the description of adding icons so that colors substitution/external ico
 4) Add icon to resources file (.qrc)
 5) Add alias for icon (name of file + .lci)
 6) Refer icon resources from .ui or code using alias.
+
+**Important!**
+
+Icons should be initialized **AFTER** qApp macro start returning not-null value (in other workds, QCoreApplication::instance() is initialized).
+
+If initialization is performed earlier - loading icons from external direction will not work. 
+
 
 ### 5) Icons size control
 
