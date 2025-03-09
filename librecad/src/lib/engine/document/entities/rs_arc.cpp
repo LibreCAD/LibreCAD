@@ -41,6 +41,12 @@
 #include "emu_c99.h"
 #endif
 
+namespace {
+// Issue #2035: if the arc radius in GUI is larger than the viewport size by this factor,
+// the arc is considered a tiny arc, and tiny arcs are rendered as spline
+constexpr int g_tinyArcRadiusFactor = 10.;
+}
+
 RS_ArcData::RS_ArcData(const RS_Vector& _center,
 					   double _radius,
 					   double _angle1, double _angle2,
@@ -917,6 +923,116 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 void RS_Arc::draw(RS_Painter* painter) {
     painter->updateDashOffset(this);
     painter->drawArcWCS(data.center, data.radius, data.startAngleDegrees, data.angularLength);
+
+    /**
+     *fix
+     */
+
+/*
+ *    if (painter == nullptr || view == nullptr)
+        return;
+
+    //only draw the visible portion of line
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+
+    RS_Vector vpStart(isReversed()?getEndpoint():getStartpoint());
+    RS_Vector vpEnd(isReversed()?getStartpoint():getEndpoint());
+
+    std::vector<RS_Vector> vertex(0);
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vertex.push_back(RS_Vector(vp.x(),vp.y()));
+    }
+    /** angles at cross points */
+  /*  std::vector<double> crossPoints(0);
+
+    double baseAngle=isReversed()?getAngle2():getAngle1();
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line{vertex.at(i),vertex.at((i+1)%4)};
+        auto vpIts=RS_Information::getIntersection(
+            static_cast<RS_Entity*>(this),
+            &line,
+            true);
+        if( vpIts.size()==0) continue;
+        for(const RS_Vector& vp: vpIts){
+            auto ap1=getTangentDirection(vp).angle();
+            auto ap2=line.getTangentDirection(vp).angle();
+            //ignore tangent points, because the arc doesn't cross over
+            if (std::abs(std::remainder(ap2 - ap1, M_PI) ) >= RS_TOLERANCE_ANGLE)
+                crossPoints.push_back(
+                    RS_Math::getAngleDifference(baseAngle, getCenter().angleTo(vp))
+                    );
+        }
+    }
+    if (vpStart.isInWindowOrdered(vpMin, vpMax))
+        crossPoints.push_back(0.);
+    if (vpEnd.isInWindowOrdered(vpMin, vpMax))
+        crossPoints.push_back(getAngleLength());
+
+    //sorting
+    std::sort(crossPoints.begin(),crossPoints.end());
+    //draw visible
+    RS_Arc arc(*this);
+    arc.setPen(getPen());
+    arc.setSelected(isSelected());
+    arc.setReversed(false);
+    for(size_t i=1;i<crossPoints.size();i+=2){
+        arc.setAngle1(baseAngle+crossPoints[i-1]);
+        arc.setAngle2(baseAngle+crossPoints[i]);
+        arc.drawVisible(painter,view,patternOffset);
+    }*/
+}
+/*
+/** directly draw the arc, assuming the whole arc is within visible window */
+void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
+                         double& patternOffset) {
+/*
+    if (painter == nullptr || view == nullptr)
+        return;
+    //visible in graphic view
+    if(!isVisibleInWindow(view))
+        return;
+
+    // Adjust dash offset
+    updateDashOffset(*painter, *view, patternOffset);
+
+    const double angularLength = RS_Math::getAngleDifference(getAngle1(), getAngle2());
+    const double radiusGui = view->toGuiDX(getRadius());
+
+    // Issue #2035: when the arc radius is much larger than the viewport size, QPainter::arcTo()
+    // rendering precision may fail to maintain pixel-level precisions.
+    // Only call painter->drawArcEntity(), which is based on QPainter::arcTo(), if the arc center
+    // close to the viewport sizes.
+    if (int(radiusGui) <= g_tinyArcRadiusFactor * (painter->getWidth() + painter->getHeight())) {
+        painter->drawArcEntity(view->toGui(getCenter()),
+                         radiusGui,
+                         radiusGui,
+                         RS_Math::rad2deg(getAngle1()),
+                         RS_Math::rad2deg(angularLength));
+    } else {
+        // Issue #2035
+        // Estimate the rendering error by using a quadratic bezier to render an arc. The bezier
+        // curve(lc_splinepoints) is defined by a set of equidistant arc points
+        // Second order error of bezier approximation:
+        // r sin^4(dA/2)/2
+        // with the radius r, and dA as the line segment spanning angle around the arc center
+        // for maximum error up to 1 pixel: 1 > r sin^4(dA/2)/2,
+        // dA < 2 (2/r)^{1/4}
+        // The number of points needed is by angularLength/dA
+        const double dA = 2. * std::pow(2./radiusGui, 1./4.);
+        int arcPoints = int(std::ceil(angularLength/dA));
+        // At minimum control points: 4
+        arcPoints = std::max(3, arcPoints);
+        std::vector<RS_Vector> uiPoints;
+        for (int i = 0; i <= arcPoints; ++i) {
+            const double angle = (getAngle1() * i  + getAngle2() * (arcPoints - i))/arcPoints;
+            uiPoints.push_back(view->toGui(getCenter() + RS_Vector{angle} * getRadius()));
+        }
+        painter->drawSplinePoints(uiPoints, false);
+    }
+    */
 }
 
 /**

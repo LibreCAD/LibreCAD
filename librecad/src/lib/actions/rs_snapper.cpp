@@ -183,11 +183,11 @@ RS_SnapMode RS_SnapMode::fromInt(unsigned int ret){
   */
 struct RS_Snapper::Indicator{
     bool drawLines = false;
-    int lines_type;
+    int lines_type = 0;
     RS_Pen lines_pen;
 
     bool drawShape = false;
-    int shape_type;
+    int shape_type = 0;
     RS_Pen shape_pen;
     
     int pointType = LC_DEFAULTS_PDMode;
@@ -213,8 +213,8 @@ enum SnapType{
 struct RS_Snapper::ImpData {
     RS_Vector snapCoord;
     RS_Vector snapSpot;
-    int snapType;
-    double angle;
+    int snapType = 0;
+    double angle = 0.;
     int restriction = RS2::RestrictNothing;
 };
 
@@ -300,11 +300,7 @@ void RS_Snapper::initFromSettings() {
 
 void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
     if (graphic != nullptr) {
-        linearFormat = graphic->getLinearFormat();
-        linearPrecision = graphic->getLinearPrecision();
-        angleFormat = graphic->getAngleFormat();
-        anglePrecision = graphic->getAnglePrecision();
-        unit = graphic->getUnit();
+        updateUnitFormat();
 
         snap_indicator->pointType = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
         snap_indicator->pointSize = graphic->getVariableInt("$PDSIZE", LC_DEFAULTS_PDSize);
@@ -985,7 +981,7 @@ void RS_Snapper::drawInfoCursor(){
             if (pImpData->snapType == ANGLE || pImpData->snapType == ANGLE_REL || pImpData->snapType == ANGLE_ON_ENTITY) {
                 double ucsAbsSnapAngle = pImpData->angle;
                 double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAbsSnapAngle, m_anglesBase, m_anglesCounterClockWise);
-                restrictionName = RS_Units::formatAngle(ucsBasisAngle, angleFormat, anglePrecision);
+                restrictionName = RS_Units::formatAngle(ucsBasisAngle, m_angleFormat, m_anglePrecision);
             } else {
                 restrictionName = getRestrictionName(pImpData->restriction);
             }
@@ -1172,11 +1168,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
         RS_Graphic* graphic = graphicView->getGraphic();
         if (graphic != nullptr) {
             if (updateFormat) {
-                linearFormat = graphic->getLinearFormat();
-                linearPrecision = graphic->getLinearPrecision();
-                angleFormat = graphic->getAngleFormat();
-                anglePrecision = graphic->getAnglePrecision();
-                unit = graphic->getUnit();
+                updateUnitFormat();
             }
 
             bool showLabels = prefs->showLabels;
@@ -1239,12 +1231,24 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
     infoCursorOverlayData.setZone3(coordPolar);
 }
 
+void RS_Snapper::updateUnitFormat()
+{
+    RS_Graphic* graphic = graphicView->getGraphic();
+    if (nullptr != graphic) {
+        m_linearFormat = graphic->getLinearFormat();
+        m_linearPrecision = graphic->getLinearPrecision();
+        m_angleFormat = graphic->getAngleFormat();
+        m_anglePrecision = graphic->getAnglePrecision();
+        m_unit = graphic->getUnit();
+    }
+}
+
 void RS_Snapper::invalidateSnapSpot() {
     pImpData->snapSpot.valid = false;
 }
 
 QString RS_Snapper::formatLinear(double value) const{
-    return RS_Units::formatLinear(value, unit, linearFormat, linearPrecision);
+    return RS_Units::formatLinear(value, m_unit, m_linearFormat, m_linearPrecision);
 }
 
 QString RS_Snapper::formatWCSAngle(double wcsAngle) const{
@@ -1256,11 +1260,11 @@ QString RS_Snapper::formatWCSAngle(double wcsAngle) const{
         ucsAbsAngle = wcsAngle;
     }
     double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAbsAngle, m_anglesBase, m_anglesCounterClockWise);
-    return RS_Units::formatAngle(ucsBasisAngle, angleFormat, anglePrecision);
+    return RS_Units::formatAngle(ucsBasisAngle, m_angleFormat, m_anglePrecision);
 }
 
 QString RS_Snapper::formatAngleRaw(double angle) const {
-    return RS_Units::formatAngle(angle, angleFormat, anglePrecision);
+    return RS_Units::formatAngle(angle, m_angleFormat, m_anglePrecision);
 }
 // fixme - ucs-  move to coordinate mapper?
 QString RS_Snapper::formatVector(const RS_Vector &value) const{

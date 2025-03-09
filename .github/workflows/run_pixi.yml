@@ -5,10 +5,10 @@ jobs:
   build_with_pixi:
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 4
+      max-parallel: 5
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest, macos-13]
+        os: [windows-latest, ubuntu-latest, ubuntu-22.04-arm, macos-latest, macos-13]
 
     steps:
     - uses: actions/checkout@v2
@@ -16,6 +16,6 @@ jobs:
 
     - uses: prefix-dev/setup-pixi@v0.8.1
       with:
-        pixi-version: v0.40.2
+        pixi-version: v0.41.4
         cache: true
     - run: pixi run build

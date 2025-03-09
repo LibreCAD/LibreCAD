@@ -115,6 +115,7 @@ parts:
       - qt6-wayland-dev-tools
       - qt6-image-formats-plugins
       - qt6-qmltooling-plugins
+      - libcups2-dev
     override-build: |
       # craftctl default
       #export QT_SELECT=qt6
