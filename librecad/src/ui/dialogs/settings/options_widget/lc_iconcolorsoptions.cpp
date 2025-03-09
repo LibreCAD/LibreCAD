@@ -261,6 +261,7 @@ bool LC_IconColorsOptions::loadFromFile(QString styleName){
             LC_ERR << "Invalid json file. Parsing failed:" << parseError.error << parseError.errorString();
         } else {
             if (doc.isObject()) {
+                colors.clear();
                 QJsonObject obj = doc.object();
                 auto name = obj.value("name").toString();
                 auto type = obj.value("type").toString();

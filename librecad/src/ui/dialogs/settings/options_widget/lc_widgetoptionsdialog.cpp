@@ -148,6 +148,9 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
         }
         else{
             cbIconsStyle->insertItem(0,"");
+            cbIconsStyle->blockSignals(true);
+            cbIconsStyle->setCurrentIndex(0);
+            cbIconsStyle->blockSignals(true);
             pbRemoveStyle->setEnabled(true);
         }
         connect(cbIconsStyle, &QComboBox::currentTextChanged, this, &LC_WidgetOptionsDialog::onStyleChanged);
