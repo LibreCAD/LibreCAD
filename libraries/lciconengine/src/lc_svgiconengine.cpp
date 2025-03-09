@@ -255,57 +255,60 @@ void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &,
     if (!fileName.isEmpty()) {
         // first, try to check that icon override is not provided by the user
         if (fileName.startsWith(":")) {
-            auto vBaseDir = qApp->property(LC_SVGIconEngineAPI::KEY_ICONS_OVERRIDES_DIR);
-            if (vBaseDir.isValid()){
-                QString sBaseDir = vBaseDir.toString();
-                QDir dirFile(sBaseDir);
-                if (dirFile.exists()) {
-                    QString noExtensions = fileName.mid(0, fileName.lastIndexOf('.'));
-                    if (noExtensions.endsWith(".svg")) { // handle .svg.lc format of file in resources
-                        noExtensions = noExtensions.mid(0, noExtensions.lastIndexOf('.'));
+            auto application = qApp;
+            if (application != nullptr) {
+                auto vBaseDir = application->property(LC_SVGIconEngineAPI::KEY_ICONS_OVERRIDES_DIR);
+                if (vBaseDir.isValid()){
+                    QString sBaseDir = vBaseDir.toString();
+                    QDir dirFile(sBaseDir);
+                    if (dirFile.exists()) {
+                        QString noExtensions = fileName.mid(0, fileName.lastIndexOf('.'));
+                        if (noExtensions.endsWith(".svg")) { // handle .svg.lc format of file in resources
+                            noExtensions = noExtensions.mid(0, noExtensions.lastIndexOf('.'));
+                        }
+
+                        if (noExtensions.startsWith(":/")){
+                            noExtensions = noExtensions.remove(":/");
+                        }
+                        else{
+                            noExtensions = noExtensions.remove(":");
+                        }
+
+                        QString baseName = dirFile.absoluteFilePath(noExtensions);
+
+                        // try to find all possible variants for icons overrides.
+
+                        // first check for fullest file name of explicit icon that does not require colors substitution
+                        d->checkFileOverride(baseName, mode, state, PlainSVG);
+                        d->checkFileOverrideForAnyState(baseName, mode, state,PlainSVG);
+                        d->checkFileOverrideForAnyMode(baseName, mode, state,PlainSVG);
+
+                        // check whether overriden icon with colors substitution exists
+                        d->checkFileOverride(baseName, mode, state, TemplateSVG);
+                        d->checkFileOverrideForAnyState(baseName, mode, state,TemplateSVG);
+                        d->checkFileOverrideForAnyMode(baseName, mode, state,TemplateSVG);
+
+                        // try to check whether there are overrides for other states
+                        d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::Off,PlainSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::Off,PlainSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::Off,PlainSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::Off,PlainSVG);
+
+                        d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::On,PlainSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::On,PlainSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::On,PlainSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::On,PlainSVG);
+
+                        d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::Off,TemplateSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::Off,TemplateSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::Off,TemplateSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::Off,TemplateSVG);
+
+                        d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::On,TemplateSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::On,TemplateSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::On,TemplateSVG);
+                        d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::On,TemplateSVG);
                     }
-
-                    if (noExtensions.startsWith(":/")){
-                        noExtensions = noExtensions.remove(":/");
-                    }
-                    else{
-                        noExtensions = noExtensions.remove(":");
-                    }
-
-                    QString baseName = dirFile.absoluteFilePath(noExtensions);
-
-                    // try to find all possible variants for icons overrides.
-
-                    // first check for fullest file name of explicit icon that does not require colors substitution
-                    d->checkFileOverride(baseName, mode, state, PlainSVG);
-                    d->checkFileOverrideForAnyState(baseName, mode, state,PlainSVG);
-                    d->checkFileOverrideForAnyMode(baseName, mode, state,PlainSVG);
-
-                    // check whether overriden icon with colors substitution exists
-                    d->checkFileOverride(baseName, mode, state, TemplateSVG);
-                    d->checkFileOverrideForAnyState(baseName, mode, state,TemplateSVG);
-                    d->checkFileOverrideForAnyMode(baseName, mode, state,TemplateSVG);
-
-                    // try to check whether there are overrides for other states
-                    d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::Off,PlainSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::Off,PlainSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::Off,PlainSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::Off,PlainSVG);
-
-                    d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::On,PlainSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::On,PlainSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::On,PlainSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::On,PlainSVG);
-
-                    d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::Off,TemplateSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::Off,TemplateSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::Off,TemplateSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::Off,TemplateSVG);
-
-                    d->checkFileOverride(baseName, QIcon::Mode::Active, QIcon::On,TemplateSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Disabled, QIcon::On,TemplateSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Normal, QIcon::On,TemplateSVG);
-                    d->checkFileOverride(baseName, QIcon::Mode::Selected, QIcon::On,TemplateSVG);
                 }
             }
         }
