@@ -28,13 +28,13 @@
 #define RS_ACTIONINFOAREA_H
 
 #include <memory>
+
 #include "rs_previewactioninterface.h"
 
 class RS_InfoArea;
 
 /**
- * This action class can handle user events to measure distances between
- * two points.
+ * This action class can handle user events to measure a polygon area
  *
  * @author Andrew Mustun
  */
@@ -55,7 +55,7 @@ protected:
         SetFirstPoint,    /**< Setting the 1st point of the polygon. */
         SetNextPoint      /**< Setting a next point. */
     };
-    std::unique_ptr<RS_InfoArea> ia;
+    std::unique_ptr<RS_InfoArea> m_infoArea;
 
     bool lastPointRequested = false;
 

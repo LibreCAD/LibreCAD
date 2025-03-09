@@ -24,34 +24,33 @@
 **
 **********************************************************************/
 
-
-#include "lc_linemath.h"
-#include "rs_actioninterface.h"
-#include "rs_selection.h"
-#include "rs_preview.h"
-#include "rs_overlaybox.h"
-#include "rs_modification.h"
-#include "rs_commandevent.h"
-#include "rs_actiondefault.h"
-#include "qc_applicationwindow.h"
 #include <algorithm>
-#include<cmath>
+#include <cmath>
 
 #include<QMouseEvent>
 
+#include "lc_crosshair.h"
+#include "lc_cursoroverlayinfo.h"
+#include "lc_defaults.h"
+#include "lc_linemath.h"
+#include "qc_applicationwindow.h"
+#include "rs_actiondefault.h"
+#include "rs_actioninterface.h"
 #include "rs_circle.h"
+#include "rs_commandevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
 #include "rs_line.h"
+#include "rs_modification.h"
+#include "rs_overlaybox.h"
 #include "rs_pen.h"
+#include "rs_preview.h"
+#include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_snapper.h"
-#include "lc_crosshair.h"
-#include "lc_defaults.h"
-#include "lc_cursoroverlayinfo.h"
 #include "rs_units.h"
 
 namespace {
@@ -190,11 +189,11 @@ RS_SnapMode RS_SnapMode::fromInt(unsigned int ret){
   */
 struct RS_Snapper::Indicator{
     bool drawLines = false;
-    int lines_type;
+    int lines_type = 0;
     RS_Pen lines_pen;
 
     bool drawShape = false;
-    int shape_type;
+    int shape_type = 0;
     RS_Pen shape_pen;
     
     int pointType = LC_DEFAULTS_PDMode;
@@ -219,8 +218,8 @@ enum SnapType{
 struct RS_Snapper::ImpData {
     RS_Vector snapCoord;
     RS_Vector snapSpot;
-    int snapType;
-    double angle;
+    int snapType = 0;
+    double angle = 0.;
     int restriction = RS2::RestrictNothing;
 };
 
@@ -235,6 +234,7 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
 {}
 
 RS_Snapper::~RS_Snapper() = default;
+
 RS_Entity *catchEntity(const RS_Vector &coord, const EntityTypeList &enTypeList, RS2::ResolveLevel level);
 
 QString getSnapName(int snapType);
@@ -287,12 +287,7 @@ void RS_Snapper::init(){
 
     catchEntityGuiRange = LC_GET_ONE_INT("Snapping", "CatchEntityGuiDistance", 32); // fixme - sand - add to option ui?
 
-    RS_Graphic* graphic = graphicView->getGraphic();
-    linearFormat = graphic->getLinearFormat();
-    linearPrecision = graphic->getLinearPrecision();
-    angleFormat = graphic->getAngleFormat();
-    anglePrecision = graphic->getAnglePrecision();
-    unit = graphic->getUnit();
+    updateUnitFormat();
 }
 
 void RS_Snapper::finish() {
@@ -960,7 +955,7 @@ void RS_Snapper::drawInfoCursor(){
             QString snapName = getSnapName(pImpData->snapType);
             QString restrictionName;
             if (pImpData->snapType == ANGLE || pImpData->snapType == ANGLE_ON_ENTITY) {
-                restrictionName = RS_Units::formatAngle(pImpData->angle, angleFormat, anglePrecision);
+                restrictionName = RS_Units::formatAngle(pImpData->angle, m_angleFormat, m_anglePrecision);
             } else {
                 restrictionName = getRestrictionName(pImpData->restriction);
             }
@@ -1117,11 +1112,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
         RS_Graphic* graphic = graphicView->getGraphic();
         if (graphic != nullptr) {
             if (updateFormat) {
-                linearFormat = graphic->getLinearFormat();
-                linearPrecision = graphic->getLinearPrecision();
-                angleFormat = graphic->getAngleFormat();
-                anglePrecision = graphic->getAnglePrecision();
-                unit = graphic->getUnit();
+                updateUnitFormat();
             }
 
             bool showLabels = prefs->showLabels;
@@ -1155,16 +1146,28 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
     infoCursorOverlayData.setZone3(coordPolar);
 }
 
+void RS_Snapper::updateUnitFormat()
+{
+    RS_Graphic* graphic = graphicView->getGraphic();
+    if (nullptr != graphic) {
+        m_linearFormat = graphic->getLinearFormat();
+        m_linearPrecision = graphic->getLinearPrecision();
+        m_angleFormat = graphic->getAngleFormat();
+        m_anglePrecision = graphic->getAnglePrecision();
+        m_unit = graphic->getUnit();
+    }
+}
+
 void RS_Snapper::invalidateSnapSpot() {
     pImpData->snapSpot.valid = false;
 }
 
 QString RS_Snapper::formatLinear(double value){
-    return RS_Units::formatLinear(value, unit, linearFormat, linearPrecision);
+    return RS_Units::formatLinear(value, m_unit, m_linearFormat, m_linearPrecision);
 }
 
 QString RS_Snapper::formatAngle(double value){
-    return RS_Units::formatAngle(value, angleFormat, anglePrecision);
+    return RS_Units::formatAngle(value, m_angleFormat, m_anglePrecision);
 }
 
 QString RS_Snapper::formatVector(const RS_Vector &value) {
