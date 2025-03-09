@@ -65,6 +65,8 @@ protected:
 
         bool extendMenu = false;
         bool extendMenuTillEntities = false;
+
+        bool showStatusBar = false;
     };
 
     int workspaceID = 0;

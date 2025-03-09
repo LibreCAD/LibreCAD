@@ -124,27 +124,32 @@ void LC_WorkspacesManager::fillIconsAndMenuState(LC_WorkspacesManager::LC_Worksp
         workspace.extendMenuTillEntities = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
     }
     LC_GROUP_END();
+
+    workspace.showStatusBar = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
 }
 
 void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
-    auto settings = RS_SETTINGS->getSettings();
-    settings->beginGroup("Geometry");
-    auto geometryB64 = settings->value("WindowGeometry").toString();
+    LC_GROUP("Geometry");
+    {
+        auto geometryB64 = LC_GET_STR("WindowGeometry");
 
-    workspace.geometry = geometryB64;
-    workspace.windowWidth = settings->value("WindowWidth", 1024).toInt();
-    workspace.windowHeight = settings->value("WindowHeight", 1024).toInt();
-    workspace.windowX = settings->value("WindowX", 32).toInt();
-    workspace.windowY = settings->value("WindowY", 32).toInt();
+        workspace.geometry = geometryB64;
+        workspace.windowWidth = LC_GET_INT("WindowWidth", 1024);
+        workspace.windowHeight = LC_GET_INT("WindowHeight", 1024);
+        workspace.windowX = LC_GET_INT("WindowX", 32);
+        workspace.windowY = LC_GET_INT("WindowY", 32);
 
-    workspace.widgetsState = settings->value("StateOfWidgets", "").toString();
+        workspace.widgetsState = LC_GET_STR("StateOfWidgets", "");
 
-    workspace.dockAreaLeftActive = LC_GET_BOOL("LeftDockArea", false);
-    workspace.dockAreaRightActive = LC_GET_BOOL("RightDockArea", true);
-    workspace.dockAreaToptActive = LC_GET_BOOL("TopDockArea", false);
-    workspace.dockAreaBottomActive = LC_GET_BOOL("BottomDockArea", false);
-    workspace.docAreaFloatingtActive = LC_GET_BOOL("FloatingDockwidgets", false);
-    settings->endGroup();
+        workspace.dockAreaLeftActive = LC_GET_BOOL("LeftDockArea", false);
+        workspace.dockAreaRightActive = LC_GET_BOOL("RightDockArea", true);
+        workspace.dockAreaToptActive = LC_GET_BOOL("TopDockArea", false);
+        workspace.dockAreaBottomActive = LC_GET_BOOL("BottomDockArea", false);
+        workspace.docAreaFloatingtActive = LC_GET_BOOL("FloatingDockwidgets", false);
+    }
+    LC_GROUP_END();
+
+    workspace.showStatusBar = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
 
     fillIconsAndMenuState(workspace);
 }
@@ -200,6 +205,11 @@ void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
         LC_SET("ExpandedToolsMenuTillEntity", workspace.extendMenuTillEntities);
     }
     LC_GROUP_END();
+
+    LC_GROUP("Appearance");
+    {
+        LC_SET("StatusBarVisible",workspace.showStatusBar);
+    }
 }
 
 void LC_WorkspacesManager::restoreGeometryAndState(LC_Workspace &workspace){
@@ -209,6 +219,19 @@ void LC_WorkspacesManager::restoreGeometryAndState(LC_Workspace &workspace){
 
 void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::LC_Workspace &workspace, QC_ApplicationWindow &appWin) const {
     appWin.setUpdatesEnabled(false);
+
+    auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
+    appWin.restoreState(widgetsState);
+
+    appWin.getDockAreas().left->setChecked(workspace.dockAreaLeftActive);
+    appWin.getDockAreas().right->setChecked(workspace.dockAreaRightActive);
+    appWin.getDockAreas().bottom->setChecked(workspace.dockAreaBottomActive);
+    appWin.getDockAreas().top->setChecked(workspace.dockAreaToptActive);
+    appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingtActive);
+
+    appWin.rebuildMenuIfNecessary();
+    appWin.setIconSize(QSize(workspace.iconsSizeToolbar, workspace.iconsSizeToolbar));
+
     auto geometry = QByteArray::fromBase64(workspace.geometry.toUtf8(), QByteArray::Base64Encoding);
     if (!geometry.isEmpty()) {
         appWin.restoreGeometry(geometry);
@@ -222,17 +245,7 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::L
         appWin.move(windowX, windowY);
     }
 
-    auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
-    appWin.restoreState(widgetsState);
-
-    appWin.getDockAreas().left->setChecked(workspace.dockAreaLeftActive);
-    appWin.getDockAreas().right->setChecked(workspace.dockAreaRightActive);
-    appWin.getDockAreas().bottom->setChecked(workspace.dockAreaBottomActive);
-    appWin.getDockAreas().top->setChecked(workspace.dockAreaToptActive);
-    appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingtActive);
-
-    appWin.rebuildMenuIfNecessary();
-    appWin.setIconSize(QSize(workspace.iconsSizeToolbar, workspace.iconsSizeToolbar));
+    appWin.slotViewStatusBar(workspace.showStatusBar);
     appWin.setUpdatesEnabled(true);
     appWin.fireWidgetSettingsChanged();
 }
@@ -317,6 +330,8 @@ void LC_WorkspacesManager::loadWorkspaces(){
                                 p->extendMenu  = wsObj["expandMenu"].toBool(false);
                                 p->extendMenuTillEntities = wsObj["expandMenuTillEntity"].toBool(false);
 
+                                p->showStatusBar  = wsObj["statusBarVisible"].toBool(false);
+
                                 workspaces << p;
                             }
                     }
@@ -383,6 +398,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
 
                 wsObj.insert("expandMenu", QJsonValue::fromVariant(p->extendMenu));
                 wsObj.insert("expandMenuTillEntity", QJsonValue::fromVariant(p->extendMenuTillEntities));
+                wsObj.insert("statusBarVisible", QJsonValue::fromVariant(p->showStatusBar));
 
                 perspectivesArray.append(wsObj);
             }
