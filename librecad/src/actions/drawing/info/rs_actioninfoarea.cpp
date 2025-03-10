@@ -41,7 +41,7 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Info Area",
                                container, graphicView)
-    , ia(std::make_unique<RS_InfoArea>()){
+    , m_infoArea(std::make_unique<RS_InfoArea>()){
     actionType=RS2::ActionInfoArea;
 }
 
@@ -50,7 +50,7 @@ RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 void RS_ActionInfoArea::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(status==SetFirstPoint){
-        ia = std::make_unique<RS_InfoArea>();
+        m_infoArea = std::make_unique<RS_InfoArea>();
     }
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
 }
@@ -66,55 +66,55 @@ void RS_ActionInfoArea::doTrigger() {
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
 void RS_ActionInfoArea::display(bool forPreview){
-    if (ia->size() < 1){
+    if (m_infoArea->size() < 1){
         return;
     }
-    switch (ia->size()) {
+    switch (m_infoArea->size()) {
         case 1: {
             if (showRefEntitiesOnPreview && forPreview) {
-                previewRefSelectablePoint(ia->at(0));
+                previewRefSelectablePoint(m_infoArea->at(0));
             }
             break;
         }
         case 2: {
             if (forPreview) {
-                previewLine(ia->at(0), ia->at(1));
+                previewLine(m_infoArea->at(0), m_infoArea->at(1));
                 if (showRefEntitiesOnPreview) {
-                    previewRefLine(ia->at(0), ia->at(1));
-                    previewRefPoint(ia->at(0));
-                    previewRefSelectablePoint(ia->at(1));
+                    previewRefLine(m_infoArea->at(0), m_infoArea->at(1));
+                    previewRefPoint(m_infoArea->at(0));
+                    previewRefSelectablePoint(m_infoArea->at(1));
                 }
             }
             break;
         }
         default: {
-            QString const length = formatLinear(ia->getCircumference());
-            double area = ia->getArea();
+            QString const length = formatLinear(m_infoArea->getCircumference());
+            double area = m_infoArea->getArea();
             if (forPreview) {
-                for (int i = 0; i < ia->size(); i++) {
-                    previewLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                for (int i = 0; i < m_infoArea->size(); i++) {
+                    previewLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
                     if (showRefEntitiesOnPreview) {
-                        previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                        previewRefLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
                     }
                 }
                 if (showRefEntitiesOnPreview) {
-                    for (int i = 0; i < ia->size() - 1; i++) {
-                        previewRefPoint(ia->at(i));
+                    for (const RS_Vector& point: *m_infoArea) {
+                        previewRefPoint(point);
                     }
-                    previewRefSelectablePoint(ia->at(ia->size() - 1));
+                    previewRefSelectablePoint(m_infoArea->back());
                 }
                 if (infoCursorOverlayPrefs->enabled) {
                     QString msg = "\n";
                     msg.append(tr("Circumference: %1").arg(length));
                     msg.append("\n");
-                    msg.append(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(unit)));
+                    msg.append(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(m_unit)));
                     appendInfoCursorZoneMessage(msg, 2, true);
                 }
             }
             else {
                 commandMessage("---");
                 commandMessage(tr("Circumference: %1").arg(length));
-                commandMessage(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(unit)));
+                commandMessage(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(m_unit)));
                 commandMessage("");
             }
             break;
@@ -133,10 +133,10 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetNextPoint: {
-            mouse = getSnapAngleAwarePoint(e, ia->back(), mouse, true);
-            ia->push_back(mouse);
+            mouse = getSnapAngleAwarePoint(e, m_infoArea->back(), mouse, true);
+            m_infoArea->push_back(mouse);
             display(true);
-            ia->pop_back();
+            m_infoArea->pop_back();
             break;
         }
         default:
@@ -149,7 +149,7 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     if (status == SetNextPoint){
-        snap = getSnapAngleAwarePoint(e, ia->back(), snap);
+        snap = getSnapAngleAwarePoint(e, m_infoArea->back(), snap);
     }
     lastPointRequested = isControl(e);
     fireCoordinateEvent(snap);
@@ -161,16 +161,16 @@ void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[
 }
 
 void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    bool shouldComplete = ia->duplicated(mouse) || lastPointRequested;
+    bool shouldComplete = m_infoArea->duplicated(mouse) || lastPointRequested;
     if (shouldComplete){
-        ia->push_back(mouse);
+        m_infoArea->push_back(mouse);
         commandMessage(tr("Closing Point: %1").arg(formatVector(mouse)));
         trigger();
         return;
     }
     moveRelativeZero(mouse);
 
-    ia->push_back(mouse);
+    m_infoArea->push_back(mouse);
     commandMessage(tr("Point: %1").arg(formatVector(mouse)));
     switch (status) {
         case SetFirstPoint: {
@@ -192,7 +192,7 @@ void RS_ActionInfoArea::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Specify first point of polygon"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
-            bool enoughPointsForArea = ia->size() > 1;
+            bool enoughPointsForArea = m_infoArea->size() > 1;
             updateMouseWidgetTRCancel(tr("Specify next point of polygon"), enoughPointsForArea ? MOD_SHIFT_AND_CTRL_ANGLE(tr("Specify point and complete")) :
                                                                            MOD_SHIFT_RELATIVE_ZERO);
             break;

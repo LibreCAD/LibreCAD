@@ -230,11 +230,11 @@ protected:
     LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
     LC_InfoCursorData infoCursorOverlayData = LC_InfoCursorData();
 
-    RS2::LinearFormat linearFormat;
-    int linearPrecision;
-    RS2::AngleFormat angleFormat;
-    int anglePrecision;
-    RS2::Unit unit;
+    RS2::LinearFormat m_linearFormat{};
+    int m_linearPrecision = 0;
+    RS2::AngleFormat m_angleFormat{};
+    int m_anglePrecision = 0;
+    RS2::Unit m_unit{};
 
     RS_Vector toGraph(const QMouseEvent *e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
@@ -258,6 +258,12 @@ protected:
     bool isInfoCursorForModificationEnabled() const;
 
 private:
+
+    /**
+     * @brief updateUnitFormat update format parameters (m_linearFormat etc.) from the current rs_graphic
+     */
+    void updateUnitFormat();
+
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;
     struct Indicator;

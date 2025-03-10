@@ -41,17 +41,17 @@ RS_InfoArea::RS_InfoArea():
  * @param p coordinate of the point
  */
 void RS_InfoArea::push_back(const RS_Vector &p){
-    if (thePoints.empty()){
+    if (m_points.empty()){
         baseY = p.y;
     }
 
-    thePoints.push_back(p);
+    m_points.push_back(p);
     calculationNeeded = true;
 }
 
 //remove the last point
 void RS_InfoArea::pop_back(){
-    thePoints.pop_back();
+    m_points.pop_back();
     calculationNeeded = true;
 }
 
@@ -59,7 +59,7 @@ void RS_InfoArea::pop_back(){
  * Resets the points.
  */
 void RS_InfoArea::reset(){
-    thePoints.clear();
+    m_points.clear();
     area = 0.0;
     circumference = 0.0;
 }
@@ -70,8 +70,8 @@ void RS_InfoArea::reset(){
   *@return false if the point is not in contour
   **/
 bool RS_InfoArea::duplicated(const RS_Vector &p){
-    if (thePoints.size() < 1) return false;
-    for (const RS_Vector &v: thePoints) {
+    if (m_points.size() < 1) return false;
+    for (const RS_Vector &v: m_points) {
         if ((v - p).squared() < RS_TOLERANCE2) return true;
     }
 
@@ -84,18 +84,18 @@ bool RS_InfoArea::duplicated(const RS_Vector &p){
 void RS_InfoArea::calculate(){
     area = 0.0;
     circumference = 0.0;
-    if (thePoints.size() < 3) return;
+    if (m_points.size() < 3) return;
 
-    RS_Vector p1 = thePoints.front();
-    for (size_t i = 0; i < thePoints.size(); ++i) {
+    RS_Vector p1 = m_points.front();
+    for (size_t i = 0; i < m_points.size(); ++i) {
 //        std::cout<<"RS_InfoArea::calculate(): "<<i<<" , "<<p1<<std::endl;
-        RS_Vector p2 = thePoints.at((i + 1) % thePoints.size());
+        RS_Vector p2 = m_points.at((i + 1) % m_points.size());
         area += calcSubArea(p1, p2);
         circumference += p1.distanceTo(p2);
         p1 = p2;
     }
 
-    area = 0.5 * fabs(area);
+    area = 0.5 * std::abs(area);
     calculationNeeded = false;
 }
 
@@ -108,7 +108,7 @@ double RS_InfoArea::getArea(const QPolygon &polygon){
         const QPoint &p1 = polygon.at((i + 1) % polygon.size());
         ret += p0.x() * p1.y() - p0.y() * p1.x();
     }
-    return 0.5 * fabs(ret);
+    return 0.5 * std::abs(ret);
 }
 
 /**
@@ -124,24 +124,41 @@ double RS_InfoArea::calcSubArea(const RS_Vector &p1, const RS_Vector &p2){
     return width * height; //moved a factor of 0.5 to calculate()
 }
 
+// ---------------------------------//
 double RS_InfoArea::getArea() const{
     return area;
 }
 
+// ---------------------------------//
 double RS_InfoArea::getCircumference(){
-    if (calculationNeeded) calculate();
+    if (calculationNeeded)
+        calculate();
     return circumference;
 }
 
+// ---------------------------------//
 int RS_InfoArea::size(){
-    if (calculationNeeded) calculate();
-    return thePoints.size();
+    if (calculationNeeded)
+        calculate();
+    return m_points.size();
 }
 
+// ---------------------------------//
 const RS_Vector &RS_InfoArea::at(int i) const{
-    return thePoints.at(i);
+    return m_points.at(i);
 }
 
+// ---------------------------------//
+RS_Vector &RS_InfoArea::at(int i) {
+    return m_points.at(i);
+}
+
+// ---------------------------------//
 const RS_Vector &RS_InfoArea::back() const{
-    return thePoints.back();
+    return m_points.back();
+}
+
+// ---------------------------------//
+RS_Vector &RS_InfoArea::back() {
+    return m_points.back();
 }
