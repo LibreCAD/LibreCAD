@@ -139,6 +139,16 @@ public:
     double getArcAngle(const RS_Vector& vp) {
         return (vp - data.center).angle();
     }
+
+    /**
+     * @brief getPointAtParameter - get arc point at the given angle
+     * @param angle - arc angle
+     * @return RS_Vector - arc point, which may not be within the arc angular range
+     */
+    RS_Vector getPointAtParameter(double angle) const {
+        return getCenter() + RS_Vector::polar(getRadius(), angle);
+    }
+
     /**
      * @return Direction 1. The angle at which the arc starts at
      * the startpoint.
