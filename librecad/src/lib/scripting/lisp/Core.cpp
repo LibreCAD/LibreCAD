@@ -1934,7 +1934,7 @@ BUILTIN("entget")
                         lclValueVec *rowCount = new lclValueVec(3);
                         rowCount->at(0) = lcl::integer(71);
                         rowCount->at(1) = lcl::symbol(".");
-                        rowCount->at(2) = lcl::ldouble(i->getCols());
+                        rowCount->at(2) = lcl::ldouble(i->getRows());
                         entity->push_back(lcl::list(rowCount));
 
                         lclValueVec *columnSpacing = new lclValueVec(3);
@@ -2124,9 +2124,9 @@ BUILTIN("entget")
                         if (t->getStyle() != "STANDARD")
                         {
                             lclValueVec *style = new lclValueVec(3);
-                            style->at(0) = lcl::integer(50);
+                            style->at(0) = lcl::integer(7);
                             style->at(1) = lcl::symbol(".");
-                            style->at(2) = lcl::string(qUtf8Printable(t->getText()));
+                            style->at(2) = lcl::string(qUtf8Printable(t->getStyle()));
                             entity->push_back(lcl::list(style));
                         }
 
@@ -2219,25 +2219,25 @@ BUILTIN("entget")
 
                         lclValueVec *cor1 = new lclValueVec(4);
                         cor1->at(0) = lcl::integer(11);
-                        cor1->at(1) = lcl::ldouble(sol->getCorner(0).x);
-                        cor1->at(2) = lcl::ldouble(sol->getCorner(0).y);
-                        cor1->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                        cor1->at(1) = lcl::ldouble(sol->getCorner(1).x);
+                        cor1->at(2) = lcl::ldouble(sol->getCorner(1).y);
+                        cor1->at(3) = lcl::ldouble(sol->getCorner(1).z);
                         entity->push_back(lcl::list(cor1));
 
                         lclValueVec *cor2 = new lclValueVec(4);
                         cor2->at(0) = lcl::integer(12);
-                        cor2->at(1) = lcl::ldouble(sol->getCorner(0).x);
-                        cor2->at(2) = lcl::ldouble(sol->getCorner(0).y);
-                        cor2->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                        cor2->at(1) = lcl::ldouble(sol->getCorner(2).x);
+                        cor2->at(2) = lcl::ldouble(sol->getCorner(2).y);
+                        cor2->at(3) = lcl::ldouble(sol->getCorner(2).z);
                         entity->push_back(lcl::list(cor2));
 
                         if (!sol->isTriangle())
                         {
                             lclValueVec *cor3 = new lclValueVec(4);
                             cor3->at(0) = lcl::integer(13);
-                            cor3->at(1) = lcl::ldouble(sol->getCorner(0).x);
-                            cor3->at(2) = lcl::ldouble(sol->getCorner(0).y);
-                            cor3->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                            cor3->at(1) = lcl::ldouble(sol->getCorner(3).x);
+                            cor3->at(2) = lcl::ldouble(sol->getCorner(3).y);
+                            cor3->at(3) = lcl::ldouble(sol->getCorner(3).z);
                             entity->push_back(lcl::list(cor3));
                         }
 
