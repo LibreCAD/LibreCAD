@@ -230,7 +230,7 @@ PyObject *RS_PythonCore::entget(const std::string &ename) const
 
                             for (auto &v : pl->getRefPoints())
                             {
-                                PyList_SET_ITEM(list, n++, Py_BuildValue("(iddd)", 10, v.x, v.y, v.z));
+                                PyList_SET_ITEM(list, n++, Py_BuildValue("(idd)", 10, v.x, v.y));
                                 PyList_SET_ITEM(list, n++, Py_BuildValue("(id)", 40, 0.0));
                                 PyList_SET_ITEM(list, n++, Py_BuildValue("(id)", 41, 0.0));
                                 PyList_SET_ITEM(list, n++, Py_BuildValue("(id)", 42, 0.0));
