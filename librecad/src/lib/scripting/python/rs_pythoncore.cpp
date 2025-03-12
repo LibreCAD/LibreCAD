@@ -86,6 +86,28 @@ PyObject *RS_PythonCore::entdel(const std::string &ename) const
     return RS_SCRIPTINGAPI->entdel(RS_SCRIPTINGAPI->getEntityId(ename)) ? Py_BuildValue("s", ename.c_str()) : Py_None;
 }
 
+PyObject *RS_PythonCore::entmod(const PyObject &entity) const
+{
+
+    Py_RETURN_NONE;
+}
+
+PyObject *RS_PythonCore::entnext(const std::string &ename) const
+{
+    unsigned int id = 0;
+
+    if (ename == "")
+    {
+        id = RS_SCRIPTINGAPI->entnext();
+    }
+    else
+    {
+        id = RS_SCRIPTINGAPI->entnext(RS_SCRIPTINGAPI->getEntityId(ename));
+    }
+
+    return id > 0 ? Py_BuildValue("s", RS_SCRIPTINGAPI->getEntityName(id).c_str()) : Py_None;
+}
+
 PyObject *RS_PythonCore::entsel(const char* prompt) const
 {
     QString prom = "Select object:";

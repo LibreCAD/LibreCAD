@@ -45,6 +45,8 @@ public:
     PyObject *entlast() const;
     PyObject *entdel(const std::string &ename) const;
     PyObject *entget(const std::string &ename) const;
+    PyObject *entmod(const PyObject &entity) const;
+    PyObject *entnext(const std::string &ename) const;
     PyObject *entsel(const char* prompt = "") const;
 
     RS_Document *getDocument() const;
