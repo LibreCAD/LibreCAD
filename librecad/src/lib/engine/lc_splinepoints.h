@@ -95,7 +95,7 @@ private:
     LC_SplinePointsData data;
 
 public:
-    LC_SplinePoints(RS_EntityContainer* parent, const LC_SplinePointsData& d);
+    LC_SplinePoints(RS_EntityContainer* parent, LC_SplinePointsData d);
 	RS_Entity* clone() const override;
 
 	/**	@return RS2::EntitySpline */

@@ -569,10 +569,14 @@ std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
  * Constructor.
  */
 LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
-								 const LC_SplinePointsData& d) :
+                                 LC_SplinePointsData d) :
 	RS_AtomicEntity(parent)
-  ,data(d)
+    ,data(std::move(d))
 {
+    if (!data.useControlPoints) {
+        UpdateControlPoints();
+    }
+
 	calculateBorders();
 }
 

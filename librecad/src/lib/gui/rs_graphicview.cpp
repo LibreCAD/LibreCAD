@@ -1598,7 +1598,7 @@ void RS_GraphicView::setSnapRestriction(RS2::SnapRestriction sr) {
 /**
  * Translates a vector in real coordinates to a vector in screen coordinates.
  */
-RS_Vector RS_GraphicView::toGui(RS_Vector v) const{
+RS_Vector RS_GraphicView::toGui(const RS_Vector& v) const{
 	return RS_Vector(toGuiX(v.x), toGuiY(v.y));
 }
 

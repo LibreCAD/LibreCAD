@@ -44,10 +44,10 @@
 
 namespace {
 // Issue #2035 : arc render precision
-// tiny arcs: arc with angular length smaller than this cutoff will be rendered as a lc_splinepoints
-constexpr double g_tinyArcAngle = 1e-2;
-// number of points used to render the arc as a lc_splinepoints
-constexpr int g_tinyArcPoints = 6;
+// QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
+// 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+// The maximum approximation error is 3e-4
+constexpr double g_maxArcSplineError = 3e-4;
 }
 
 RS_ArcData::RS_ArcData(const RS_Vector& _center,
@@ -905,6 +905,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
     if (painter == nullptr || view == nullptr)
         return;
+    painter->setPen(getPen());
 
     //only draw the visible portion of line
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
@@ -920,7 +921,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 		vertex.push_back(RS_Vector(vp.x(),vp.y()));
     }
     /** angles at cross points */
-	std::vector<double> crossPoints(0);
+    std::vector<double> crossPoints;
 
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
@@ -973,22 +974,40 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     // Adjust dash offset
     updateDashOffset(*painter, *view, patternOffset);
 
-    const double angularLength = RS_Math::getAngleDifference(getAngle1(), getAngle2());
-    if (angularLength <= RS_TOLERANCE_ANGLE || angularLength >= g_tinyArcAngle) {
+    const double radiusGui = view->toGuiDX(getRadius());
+    const double angularLength = getAngleLength();
+    // issue #2035, estimate the arc max rendering error due to cubic spline approximation
+    // If the error is less than 1 pixel, call the QPainter method directly
+    if (radiusGui * g_maxArcSplineError <= 1.) {
         painter->drawArc(view->toGui(getCenter()),
                          view->toGuiDX(getRadius()),
                          getAngle1(),
                          getAngle2(),
                          isReversed());
     } else {
-        // Issue #2035: when zoomed in, the QPainter arc rendering is not precise enough
-        // The fix: render a tiny arc (angular length cutoff: g_tinyArcAngle) as lc_splinepoints
-        LC_SplinePointsData data;
-        for (int i = 0; i <= g_tinyArcPoints; ++i) {
-            const double angle = (getAngle1() * i  + getAngle2() * (g_tinyArcPoints - i))/g_tinyArcPoints;
-            data.controlPoints.push_back(view->toGui(getCenter() + RS_Vector{angle} * getRadius()));
+        // Issue #2035
+        // Estimate the rendering error from quadratic bezier approximation. The bezier
+        // curve(lc_splinepoints) is defined by a set of equidistant arc points
+        // Second order error of bezier approximation:
+        // r sin^4(dA/2)/2
+        // with the radius r, and dA as the line segment spanning angle around the arc center
+        // for maximum error up to 1 pixel: 1 > r sin^4(dA/2)/2,
+        // dA < 2 (2/r)^{1/4}
+        // The number of points needed is by angularLength/dA
+        const double dA = 2. * std::pow(2./radiusGui, 1./4.);
+        int steps = int(std::ceil(angularLength/dA));
+        // Minimum control points: 3
+        steps = std::max(2, steps);
+        if (steps > 12) {
+            LC_ERR <<__func__<<"(): line "<<__LINE__<<", "<<steps << " interpolation steps, potential performance issue";
         }
-        painter->drawSplinePoints(data);
+        LC_SplinePointsData splineData;
+        for (int i = 0; i <= steps; ++i) {
+            const double angle = (getAngle1() * i  + getAngle2() * (steps - i))/steps;
+            splineData.splinePoints.push_back(view->toGui(getPointAtParameter(angle)));
+        }
+        LC_SplinePoints spline{nullptr, std::move(splineData)};
+        painter->drawSplinePoints(spline.getData());
     }
 }
 

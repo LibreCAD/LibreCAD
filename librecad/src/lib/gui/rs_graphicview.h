@@ -299,7 +299,7 @@ public:
 	void setCrosshairType(RS2::CrosshairType chType);
 	RS2::CrosshairType getCrosshairType() const;
 
-	RS_Vector toGui(RS_Vector v) const;
+    RS_Vector toGui(const RS_Vector& v) const;
 	double toGuiX(double x) const;
 	double toGuiY(double y) const;
 	double toGuiDX(double d) const;
