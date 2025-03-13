@@ -203,6 +203,7 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     painter->updatePointsScreenSize(pdsize);
     painter->setPointsMode(pdmode);
     painter->setDefaultWidthFactor(defaultWidthFactor);
+    painter->setWorldBoundingRect(renderBoundingClipRect);
 }
 
 bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double d) {
