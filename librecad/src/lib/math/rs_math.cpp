@@ -278,7 +278,7 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
  */
 double RS_Math::eval(const QString& expr, double def) {
 
-    bool ok;
+    bool ok = false;
     double res = RS_Math::eval(expr, &ok);
 
     if (!ok) {
