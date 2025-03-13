@@ -928,8 +928,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
     if (painter == nullptr || view == nullptr)
         return;
-    drawVisible(painter, view, patternOffset);
-    return;
 
     //only draw the visible portion of line
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
@@ -977,10 +975,12 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     arc.setPen(getPen());
     arc.setSelected(isSelected());
     arc.setReversed(false);
-    for(size_t i=1;i<crossPoints.size();i+=2){
+    for(size_t i=1; i<crossPoints.size(); ++i){
         arc.setAngle1(baseAngle+crossPoints[i-1]);
         arc.setAngle2(baseAngle+crossPoints[i]);
-        arc.drawVisible(painter,view,patternOffset);
+        arc.updateMiddlePoint();
+        if (arc.getMiddlePoint().isInWindowOrdered(vpMin, vpMax))
+            arc.drawVisible(painter,view,patternOffset);
     }
 
 }
@@ -1030,7 +1030,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 
         LC_SplinePointsData splineData;
         for (int i = 0; i <= steps; ++i) {
-            const double angle = (getAngle1() * i  + getAngle2() * (steps - i))/steps;
+            const double angle = getAngle1()  + angularLength * i /steps;
             splineData.splinePoints.push_back(view->toGui(getPointAtParameter(angle)));
         }
         LC_SplinePoints spline{nullptr, std::move(splineData)};
