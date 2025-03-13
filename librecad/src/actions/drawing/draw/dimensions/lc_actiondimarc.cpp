@@ -25,8 +25,6 @@
 
 #include <iostream>
 
-#include <QMouseEvent>
-
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_preview.h"

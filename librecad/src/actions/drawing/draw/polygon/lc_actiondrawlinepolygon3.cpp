@@ -27,8 +27,6 @@
 **********************************************************************/
 
 #include "lc_actiondrawlinepolygon3.h"
-
-#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"

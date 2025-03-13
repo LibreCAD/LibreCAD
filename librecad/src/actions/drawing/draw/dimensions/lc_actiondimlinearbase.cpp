@@ -28,7 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_preview.h"
 #include "rs_coordinateevent.h"
 #include "rs_constructionline.h"
-#include <QMouseEvent>
 #include "lc_actiondimlinearbase.h"
 #include "rs_settings.h"
 #include "rs_actiondimension.h"

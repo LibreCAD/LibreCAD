@@ -21,7 +21,6 @@
  ******************************************************************************/
 
 #include "rs_ellipse.h"
-#include <QMouseEvent>
 #include "rs_graphicview.h"
 #include "lc_actiondrawcirclebase.h"
 
