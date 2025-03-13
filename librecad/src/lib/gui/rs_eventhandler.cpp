@@ -46,11 +46,6 @@ namespace {
     }
 
     QString evaluateFraction(QString input, QRegularExpression rx, int index, int tailI) {
-        // if the expression is already valid, bypass fraction processing
-        bool okay = false;
-        double value = RS_Math::eval(input, &okay);
-        if (okay)
-            return QString{}.setNum(value, 'g', 10);
 
         QString copy = input;
         QString tail = QString{R"(\)"} + QString::number(tailI);
@@ -77,6 +72,12 @@ namespace {
      *                      (1"1/2) to (1+1/2")
     */
     QString updateForFraction(QString input) {
+        // if the expression is already valid, bypass fraction processing
+        bool okay = false;
+        double value = RS_Math::eval(input, &okay);
+        if (okay)
+            return QString{}.setNum(value, 'g', 10);
+
         // support fraction at the end: (1'1/2) => (1 1/2')
         QRegularExpression rx{R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)"};
         QRegularExpressionMatch match = rx.match(input);
