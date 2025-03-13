@@ -402,6 +402,7 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
 
         double currentCos = cos(angle);
         double currentSin = sin(angle);
+        // fit point is on the arc
         double uiX = uiCenterX + currentCos * uiRadiusX;
         double uiY = uiCenterY - currentSin * uiRadiusX;
         const RS_Vector fitPoint = RS_Vector(uiX, uiY);
@@ -423,6 +424,7 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
     double cosCurrent = cosStart;
     double sinCurrent = sinStart;
     for (int i = 0; i <= arcPoints; ++i) {
+        // fit point is on the arc
         double uiX = uiCenterX + cosCurrent * uiRadiusX;
         double uiY = uiCenterY - sinCurrent * uiRadiusX;
         const RS_Vector fitPoint = RS_Vector(uiX, uiY);
