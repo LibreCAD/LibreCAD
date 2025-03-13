@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionsnapintersectionmanual.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"

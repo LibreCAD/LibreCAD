@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifydeletefree.h"
 #include "rs_dialogfactory.h"
 #include "rs_document.h"

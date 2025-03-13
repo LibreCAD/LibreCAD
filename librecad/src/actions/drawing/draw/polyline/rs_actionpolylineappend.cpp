@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionpolylineappend.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"

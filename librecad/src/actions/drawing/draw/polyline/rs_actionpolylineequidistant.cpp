@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include<cmath>
-#include <QMouseEvent>
-
 #include "rs_actionpolylineequidistant.h"
 #include "rs_arc.h"
 #include "rs_debug.h"

@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actionorder.h"
 #include "rs_document.h"
 #include "rs_dialogfactory.h"
