@@ -245,7 +245,7 @@ protected:
     int m_linearPrecision= 0;
     RS2::AngleFormat m_angleFormat{};
     int m_anglePrecision = 0;
-    RS2::Unit unit{};
+    RS2::Unit m_unit{};
     double m_anglesBase = 0.0;
     bool m_anglesCounterClockWise = true;
 
@@ -302,11 +302,10 @@ protected:
     virtual void initFromSettings();
     virtual void initFromGraphic(RS_Graphic* graphic);
 private:
-
     /**
      * @brief updateUnitFormat update format parameters (m_linearFormat etc.) from the current rs_graphic
      */
-    void updateUnitFormat();
+    void updateUnitFormat( RS_Graphic* graphic);
 
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;
