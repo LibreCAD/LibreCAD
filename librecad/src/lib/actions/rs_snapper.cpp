@@ -227,6 +227,8 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
     ,pImpData(new ImpData)
     ,snap_indicator(new Indicator){
     viewport = graphicView.getViewPort();
+
+    infoCursorOverlayPrefs = graphicView.getInfoCursorOverlayPreferences();
 }
 
 RS_Snapper::~RS_Snapper() = default;
@@ -300,7 +302,7 @@ void RS_Snapper::initFromSettings() {
 
 void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
     if (graphic != nullptr) {
-        updateUnitFormat();
+        updateUnitFormat(graphic);
 
         snap_indicator->pointType = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
         snap_indicator->pointSize = graphic->getVariableInt("$PDSIZE", LC_DEFAULTS_PDSize);
@@ -1168,7 +1170,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
         RS_Graphic* graphic = graphicView->getGraphic();
         if (graphic != nullptr) {
             if (updateFormat) {
-                updateUnitFormat();
+                updateUnitFormat(graphic);
             }
 
             bool showLabels = prefs->showLabels;
@@ -1231,16 +1233,12 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
     infoCursorOverlayData.setZone3(coordPolar);
 }
 
-void RS_Snapper::updateUnitFormat()
-{
-    RS_Graphic* graphic = graphicView->getGraphic();
-    if (nullptr != graphic) {
-        m_linearFormat = graphic->getLinearFormat();
-        m_linearPrecision = graphic->getLinearPrecision();
-        m_angleFormat = graphic->getAngleFormat();
-        m_anglePrecision = graphic->getAnglePrecision();
-        m_unit = graphic->getUnit();
-    }
+void RS_Snapper::updateUnitFormat(RS_Graphic* graphic){
+    m_linearFormat = graphic->getLinearFormat();
+    m_linearPrecision = graphic->getLinearPrecision();
+    m_angleFormat = graphic->getAngleFormat();
+    m_anglePrecision = graphic->getAnglePrecision();
+    m_unit = graphic->getUnit();
 }
 
 void RS_Snapper::invalidateSnapSpot() {
