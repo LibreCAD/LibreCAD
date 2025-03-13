@@ -404,7 +404,7 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
         double currentSin = sin(angle);
         double uiX = uiCenterX + currentCos * uiRadiusX;
         double uiY = uiCenterY - currentSin * uiRadiusX;
-        const RS_Vector  fitPoint = RS_Vector(uiX, uiY);
+        const RS_Vector fitPoint = RS_Vector(uiX, uiY);
         data.splinePoints.push_back(fitPoint);
         // faster
         angle = angle + deltaAngleRad;
@@ -425,7 +425,7 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
     for (int i = 0; i <= arcPoints; ++i) {
         double uiX = uiCenterX + cosCurrent * uiRadiusX;
         double uiY = uiCenterY - sinCurrent * uiRadiusX;
-        const RS_Vector  fitPoint = RS_Vector(uiX, uiY);
+        const RS_Vector fitPoint = RS_Vector(uiX, uiY);
         data.splinePoints.push_back(fitPoint);
 
         double tmp = cosCurrent * cosDelta - sinCurrent * sinDelta;
