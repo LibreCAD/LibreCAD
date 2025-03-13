@@ -26,8 +26,6 @@
 
 #include <cmath>
 
-#include <QMouseEvent>
-
 #include "muParser.h"
 
 #include "rs_actiondrawpolyline.h"

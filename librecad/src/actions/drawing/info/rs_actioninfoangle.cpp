@@ -26,8 +26,6 @@
 
 #include <cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actioninfoangle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

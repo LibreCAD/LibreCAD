@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actioninfoarea.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"

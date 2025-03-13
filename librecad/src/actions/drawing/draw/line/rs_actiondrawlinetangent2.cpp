@@ -26,8 +26,6 @@
 
 #include <vector>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinetangent2.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"

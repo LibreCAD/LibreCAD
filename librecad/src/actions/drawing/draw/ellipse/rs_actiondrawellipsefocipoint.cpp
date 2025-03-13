@@ -23,8 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
 #include "rs_arc.h"

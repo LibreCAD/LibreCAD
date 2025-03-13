@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include <QMouseEvent>
 
 LC_ActionPenApply::LC_ActionPenApply(RS_EntityContainer &container, RS_GraphicView &graphicView, bool copy):
   RS_PreviewActionInterface(copy? "PenCopy" : "PenApply", container, graphicView){

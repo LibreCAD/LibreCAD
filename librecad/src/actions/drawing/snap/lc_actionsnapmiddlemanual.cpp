@@ -23,8 +23,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_actionsnapmiddlemanual.h"
 
 #include "rs_commandevent.h"

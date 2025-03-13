@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"

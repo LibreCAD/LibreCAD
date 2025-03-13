@@ -27,8 +27,6 @@
 
 #include <vector>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawline.h"
 #include "rs_actioneditundo.h"
 #include "rs_commandevent.h"

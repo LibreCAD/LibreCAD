@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qc_applicationwindow.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include <QMouseEvent>
 
 LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
     :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){

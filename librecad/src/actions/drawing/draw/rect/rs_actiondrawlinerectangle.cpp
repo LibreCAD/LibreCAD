@@ -23,8 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinerectangle.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"

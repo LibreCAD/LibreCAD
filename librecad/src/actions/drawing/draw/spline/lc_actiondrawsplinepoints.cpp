@@ -25,8 +25,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
 #include "lc_actiondrawsplinepoints.h"
 #include "lc_splinepoints.h"
 #include "rs_dialogfactory.h"

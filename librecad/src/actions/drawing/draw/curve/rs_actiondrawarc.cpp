@@ -26,8 +26,6 @@
 
 #include<cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawarc.h"
 #include "rs_arc.h"
 #include "rs_line.h"

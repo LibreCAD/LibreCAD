@@ -20,8 +20,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_quadratic.h"
 #include "rs_actiondrawcircletan1_2p.h"
 #include "rs_circle.h"
