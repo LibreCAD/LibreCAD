@@ -42,9 +42,11 @@
 #endif
 
 namespace {
-// Issue #2035: if the arc radius in GUI is larger than the viewport size by this factor,
-// the arc is considered a tiny arc, and tiny arcs are rendered as spline
-constexpr int g_tinyArcRadiusFactor = 10.;
+// Issue #2035 : arc render precision
+// QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
+// 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+// The maximum approximation error is 3e-4
+constexpr double g_maxArcSplineError = 3e-4;
 }
 
 RS_ArcData::RS_ArcData(const RS_Vector& _center,
@@ -300,7 +302,7 @@ void RS_Arc::updatePaintingInfo() {
 }
 
 RS_Vector RS_Arc::getStartpoint() const{
-    return startPoint;    
+    return startPoint;
 }
 
 /** @return End point of the entity. */
@@ -978,10 +980,12 @@ void RS_Arc::draw(RS_Painter* painter) {
     arc.setPen(getPen());
     arc.setSelected(isSelected());
     arc.setReversed(false);
-    for(size_t i=1;i<crossPoints.size();i+=2){
+    for(size_t i=1; i<crossPoints.size(); ++i){
         arc.setAngle1(baseAngle+crossPoints[i-1]);
         arc.setAngle2(baseAngle+crossPoints[i]);
-        arc.drawVisible(painter,view,patternOffset);
+        arc.updateMiddlePoint();
+        if (arc.getMiddlePoint().isInWindowOrdered(vpMin, vpMax))
+            arc.drawVisible(painter,view,patternOffset);
     }*/
 }
 /*
@@ -998,22 +1002,20 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     // Adjust dash offset
     updateDashOffset(*painter, *view, patternOffset);
 
-    const double angularLength = RS_Math::getAngleDifference(getAngle1(), getAngle2());
     const double radiusGui = view->toGuiDX(getRadius());
-
-    // Issue #2035: when the arc radius is much larger than the viewport size, QPainter::arcTo()
-    // rendering precision may fail to maintain pixel-level precisions.
-    // Only call painter->drawArcEntity(), which is based on QPainter::arcTo(), if the arc center
-    // close to the viewport sizes.
-    if (int(radiusGui) <= g_tinyArcRadiusFactor * (painter->getWidth() + painter->getHeight())) {
+    const double angularLength = getAngleLength();
+    // issue #2035, estimate the arc max rendering error due to cubic spline approximation
+    // If the error is less than 1 pixel, call the QPainter method directly
+    if (radiusGui * g_maxArcSplineError <= 1.) {
         painter->drawArcEntity(view->toGui(getCenter()),
                          radiusGui,
                          radiusGui,
                          RS_Math::rad2deg(getAngle1()),
                          RS_Math::rad2deg(angularLength));
     } else {
+
         // Issue #2035
-        // Estimate the rendering error by using a quadratic bezier to render an arc. The bezier
+        // Estimate the rendering error from quadratic bezier approximation. The bezier
         // curve(lc_splinepoints) is defined by a set of equidistant arc points
         // Second order error of bezier approximation:
         // r sin^4(dA/2)/2
@@ -1022,15 +1024,20 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
         // dA < 2 (2/r)^{1/4}
         // The number of points needed is by angularLength/dA
         const double dA = 2. * std::pow(2./radiusGui, 1./4.);
-        int arcPoints = int(std::ceil(angularLength/dA));
-        // At minimum control points: 4
-        arcPoints = std::max(3, arcPoints);
-        std::vector<RS_Vector> uiPoints;
-        for (int i = 0; i <= arcPoints; ++i) {
-            const double angle = (getAngle1() * i  + getAngle2() * (arcPoints - i))/arcPoints;
-            uiPoints.push_back(view->toGui(getCenter() + RS_Vector{angle} * getRadius()));
+        int steps = int(std::ceil(angularLength/dA));
+        // Minimum control points: 3
+        steps = std::max(2, steps);
+        if (steps > 12) {
+            LC_ERR <<__func__<<"(): line "<<__LINE__<<", "<<steps << " interpolation steps, potential performance issue";
         }
-        painter->drawSplinePoints(uiPoints, false);
+
+        LC_SplinePointsData splineData;
+        for (int i = 0; i <= steps; ++i) {
+            const double angle = getAngle1()  + angularLength * i /steps;
+            splineData.splinePoints.push_back(view->toGui(getPointAtParameter(angle)));
+        }
+        LC_SplinePoints spline{nullptr, std::move(splineData)};
+        painter->drawSplinePoints(spline.getData().controlPoints, false);
     }
     */
 }
@@ -1135,7 +1142,7 @@ void RS_Arc::updateMiddlePoint() {
 }
 
 void RS_Arc::moveMiddlePoint(RS_Vector vector) {
-    auto arc = RS_Arc(nullptr, RS_ArcData());    
+    auto arc = RS_Arc(nullptr, RS_ArcData());
     bool suc = arc.createFrom3P(startPoint, vector,endPoint);
     if (suc) {
         RS_ArcData &arcData = arc.data;
