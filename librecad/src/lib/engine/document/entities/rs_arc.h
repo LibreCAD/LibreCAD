@@ -289,10 +289,6 @@ protected:
     void updateLength() override;
     void updatePaintingInfo();
     void moveMiddlePoint(RS_Vector vector);
-
-private:
-    /*void drawVisible(RS_Painter* painter, RS_GraphicView* view,
-                             double& patternOffset);*/
 };
 
 #endif

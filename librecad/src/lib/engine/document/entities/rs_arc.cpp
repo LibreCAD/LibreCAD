@@ -241,7 +241,7 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
     return true;
 }
 
-void RS_Arc::calculateBorders() {    
+void RS_Arc::calculateBorders() {
     startPoint = data.center.relative(data.radius, data.angle1);
     endPoint = data.center.relative(data.radius, data.angle2);
     LC_Rect const rect{startPoint, endPoint};
@@ -1019,7 +1019,7 @@ void RS_Arc::updateMiddlePoint() {
 }
 
 void RS_Arc::moveMiddlePoint(RS_Vector vector) {
-    auto arc = RS_Arc(nullptr, RS_ArcData());    
+    auto arc = RS_Arc(nullptr, RS_ArcData());
     bool suc = arc.createFrom3P(startPoint, vector,endPoint);
     if (suc) {
         RS_ArcData &arcData = arc.data;
