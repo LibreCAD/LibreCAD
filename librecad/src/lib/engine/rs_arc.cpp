@@ -950,15 +950,13 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     std::sort(crossPoints.begin(),crossPoints.end());
     //draw visible
     RS_Arc arc(*this);
-    arc.setPen(getPen());
-    arc.setSelected(isSelected());
     arc.setReversed(false);
-	for(size_t i=1;i<crossPoints.size();i+=2){
-		arc.setAngle1(baseAngle+crossPoints[i-1]);
-		arc.setAngle2(baseAngle+crossPoints[i]);
-        arc.drawVisible(painter,view,patternOffset);
+    for(size_t i=1; i<crossPoints.size(); i++){
+        arc.setAngle1(baseAngle+crossPoints[i-1]);
+        arc.setAngle2(baseAngle+crossPoints[i]);
+        if (arc.getMiddlePoint().isInWindowOrdered(vpMin, vpMax))
+            arc.drawVisible(painter,view,patternOffset);
     }
-
 }
 
 /** directly draw the arc, assuming the whole arc is within visible window */
