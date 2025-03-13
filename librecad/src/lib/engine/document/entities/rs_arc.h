@@ -278,6 +278,7 @@ m0 x + m1 y + m2 =0
      */
     double areaLineIntegral() const override;
 
+    void updateMiddlePoint();
 protected:
     RS_ArcData data{};
     // cached values for performance
@@ -287,14 +288,11 @@ protected:
 
     void updateLength() override;
     void updatePaintingInfo();
-
-    void updateMiddlePoint();
-
     void moveMiddlePoint(RS_Vector vector);
 
 private:
-    void drawVisible(RS_Painter* painter, RS_GraphicView* view,
-                             double& patternOffset);
+    /*void drawVisible(RS_Painter* painter, RS_GraphicView* view,
+                             double& patternOffset);*/
 };
 
 #endif

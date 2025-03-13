@@ -67,6 +67,13 @@ public:
     explicit RS_Painter(QPaintDevice* pd);
     ~RS_Painter() = default;
 
+    enum ArcRenderHint{
+        FULL_IN_VIEW,
+        ARC_IN_VIEW,
+        SEGMENT,
+        ANY
+    };
+
     // coordinates translations
     void toGui(const RS_Vector& pos, double &x, double &y);
     double toGuiDX(double d) const;
@@ -96,10 +103,11 @@ public:
     void drawPointEntityWCS(const RS_Vector &p);
     void drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize);
     void drawSolidWCS(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3, const RS_Vector &wcsP4);
-    void drawArcWCS(const RS_Vector &wcsCenter, double wcsRadius, double wcsStartAngleDegrees, double angularLength);
+    void drawEntityArc(RS_Arc* arc);
+
     void drawSplineWCS(const RS_Spline &spline);
     void drawLineWCS(const RS_Vector &wcsP1, const RS_Vector &wcP2);
-    void drawPolylineWCS(const RS_Polyline *polyline);
+    void drawEntityPolyline(const RS_Polyline *polyline);
     void drawHandleWCS(const RS_Vector &wcsPosition, const RS_Color &c, int size = -1);
     void drawImgWCS(QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector);
 
@@ -183,6 +191,12 @@ public:
     void setRenderCirclesSameAsArcs(bool val) {circleRenderSameAsArcs = val;}
 
     void disableUCS();
+
+    void setWorldBoundingRect(LC_Rect &worldBoundingRect) {wcsBoundingRect = worldBoundingRect;};
+    bool isFullyWithinBoundingRect(RS_Entity* e);
+    bool isFullyWithinBoundingRect(const LC_Rect &rect);
+
+    const LC_Rect &getWcsBoundingRect() const;
 protected:
     /**
      * Current drawing mode.
@@ -225,6 +239,8 @@ protected:
     int viewPortOffsetY = 0;
     double viewPortHeight = 0.0;
 
+    LC_Rect wcsBoundingRect;
+
     LC_GraphicViewportRenderer* renderer = nullptr;
     LC_GraphicViewport* viewport = nullptr;
 
@@ -232,16 +248,15 @@ protected:
     void debugOutPath(const QPainterPath &tmpPath) const;
     double getDpmmCached() const {return cachedDpmm;};
 
+    void drawArcEntity(RS_Arc* arc, QPainterPath &path);
 
     // painting in UI coordinates
     void drawEllipseUI(double uiCenterX, double uiCenterY, double uiRadiusMajor, double uiRadiusMinor, double uiAngleDegrees);
     void drawEllipseArcUI(double uiCenterX, double uiCenterY, double uiMajorRadius, double uiMinorRadius, double uiMajorAngleDegrees,
                            double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
     void drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed);
+    void drawArcSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, QPainterPath &path);
 
-    void drawArcEntityUI( double uiCenterX,double uiCenterY,double uiRadiusX,double uiRadiusY,double uiStartAngleDegrees,double angularLength);
-    void drawArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY,
-                 double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
     void drawLineUI(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawImgUI(QImage& img, double uiInsertX, double uiInsertY, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
@@ -254,10 +269,17 @@ protected:
                    const QString& text);
 
 // fixme - sand, ucs - temporary, remove
-   bool printinMode = false;
-   bool printPreview = false;
+    bool printinMode = false;
+    bool printPreview = false;
 
-    void drawInterpolatedArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
+    void drawArcInterpolatedByLines(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees,
+                                    double angularLength, QPainterPath &path) const;
+
+    void drawArcQT(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY, double uiStartAngleDegrees,
+                   double angularLength, QPainterPath &path);
+
+    void drawArcSegmentBySplinePointsUI(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees,
+                                        double angularLength, QPainterPath &path);
 };
 
 #endif
