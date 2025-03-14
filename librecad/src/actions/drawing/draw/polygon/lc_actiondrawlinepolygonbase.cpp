@@ -1,19 +1,47 @@
-#include "rs_math.h"
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+**  Copyright (C) 2025 LibreCAD.org
+**  Copyright (C) 2025 sand1024
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
+
+#include <cmath>
+
+#include <QMouseEvent>
+
+#include "lc_actiondrawlinepolygonbase.h"
+#include "lc_linemath.h"
+#include "qg_linepolygonoptions.h"
 #include "rs_actiondrawlinepolygon2.h"
 #include "rs_actioninterface.h"
-#include "rs_debug.h"
-#include "rs_preview.h"
-#include "rs_coordinateevent.h"
-#include "rs_point.h"
-#include "rs_creation.h"
-#include "rs_graphicview.h"
-#include "rs_dialogfactory.h"
-#include "rs_polyline.h"
-#include <QMouseEvent>
-#include "lc_actiondrawlinepolygonbase.h"
-#include "qg_linepolygonoptions.h"
 #include "rs_commandevent.h"
-#include "lc_linemath.h"
+#include "rs_coordinateevent.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_math.h"
+#include "rs_point.h"
+#include "rs_polyline.h"
+#include "rs_preview.h"
 
 LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, RS_EntityContainer &container,
                                                             RS_GraphicView &graphicView,

@@ -20,13 +20,15 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs.h"
-#include "rs_math.h"
-#include "rs_vector.h"
+#include <cmath>
+
 #include "lc_gridsystem.h"
-#include "rs_graphicview.h"
-#include "rs_pen.h"
+#include "rs.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_math.h"
+#include "rs_pen.h"
+#include "rs_vector.h"
 
 namespace {
 //maximum number grid points to draw, for performance consideration
@@ -35,16 +37,11 @@ namespace {
     const double minimumGridWidth=1.0e-8;
 }
 
-LC_GridSystem::LC_GridSystem(LC_GridSystem::LC_GridOptions *options) {
-   gridOptions = options;
-   gridLattice = new LC_Lattice();
-   metaGridLattice = new LC_Lattice();
-}
-
-LC_GridSystem::~LC_GridSystem() {
-    delete gridOptions;
-    delete gridLattice;
-    delete metaGridLattice;
+LC_GridSystem::LC_GridSystem(LC_GridSystem::LC_GridOptions *options):
+    gridOptions{std::make_unique<LC_GridSystem::LC_GridOptions>(options != nullptr ? *options: LC_GridSystem::LC_GridOptions{})}
+, gridLattice{std::make_unique<LC_Lattice>()}
+, metaGridLattice{std::make_unique<LC_Lattice>()}
+{
 }
 
 void LC_GridSystem::createGrid(
@@ -121,9 +118,8 @@ void LC_GridSystem::setCellSize(const RS_Vector &gridWidth, const RS_Vector &met
     gridCellSize = gridWidth;
 }
 
-void LC_GridSystem::setOptions(LC_GridSystem::LC_GridOptions *options) {
-    delete gridOptions;
-    gridOptions = options;
+void LC_GridSystem::setOptions(std::unique_ptr<LC_GridSystem::LC_GridOptions> options) {
+    gridOptions = std::move(options);
 }
 
 void LC_GridSystem::invalidate() {
@@ -179,7 +175,7 @@ void LC_GridSystem::drawGridPoints(RS_Painter *painter, [[maybe_unused]]RS_Graph
 }
 
 void LC_GridSystem::drawGridLines(RS_Painter *painter, RS_GraphicView *view) {
-    doDrawLines(painter, view, gridLattice);
+    doDrawLines(painter, view, gridLattice.get());
 }
 
 void LC_GridSystem::doDrawLines(RS_Painter *painter, [[maybe_unused]]RS_GraphicView *view, LC_Lattice* linesLattice) {

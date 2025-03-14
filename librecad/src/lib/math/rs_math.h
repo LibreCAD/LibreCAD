@@ -27,14 +27,13 @@
 #ifndef RS_MATH_H
 #define RS_MATH_H
 
-#include <cmath>
-#include <limits>
 #include <vector>
+
+class QString;
+class QRegularExpressionMatch;
 
 class RS_Vector;
 class RS_VectorSolutions;
-class QString;
-class QRegularExpressionMatch;
 
 /**
  * Math functions.
@@ -43,7 +42,7 @@ namespace RS_Math {
 int round(double v);
 double round(double v, double precision);
 double pow(double x, double y);
-RS_Vector pow(const RS_Vector &x, double y);
+RS_Vector pow(const RS_Vector &x, int y);
 /**
  * @brief equal test whether two floating points are equal
  * @param d1 number 1
@@ -126,7 +125,7 @@ bool linearSolver(const std::vector<std::vector<double> > &m, std::vector<double
 
 /** solver quadratic simultaneous equations of a set of two **/
 /* solve the following quadratic simultaneous equations,
-      *  ma000 x^2 + ma011 y^2 - 1 =0
+      * ma000 x^2 + ma011 y^2 - 1 =0
       * ma100 x^2 + 2 ma101 xy + ma111 y^2 + mb10 x + mb11 y +mc1 =0
       *
       *@m, a vector of size 8 contains coefficients in the strict order of:
@@ -179,7 +178,7 @@ QString doubleToString(double value, int prec);
 
 void test();
 
-    int getPeriodsCount(double a1, double a2, bool reversed);
-}; // namespace
+int getPeriodsCount(double a1, double a2, bool reversed);
+}; // namespace RS_Math
 
 #endif
