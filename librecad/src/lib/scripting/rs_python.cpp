@@ -738,9 +738,6 @@ int RS_Python::evalString(const QString& command, QString& buf_out, QString& buf
             return 0;
         }
 
-
-
-
         buf_out = QStringLiteral("Traceback (most recent call last):\nFile \"<string>\", line 1, in <module>\nTypeError: value is not a String");
         Py_XDECREF(pRes);
     }

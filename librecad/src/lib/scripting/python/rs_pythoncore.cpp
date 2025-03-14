@@ -86,8 +86,79 @@ PyObject *RS_PythonCore::entdel(const std::string &ename) const
     return RS_SCRIPTINGAPI->entdel(RS_SCRIPTINGAPI->getEntityId(ename)) ? Py_BuildValue("s", ename.c_str()) : Py_None;
 }
 
-PyObject *RS_PythonCore::entmod(const PyObject &entity) const
+PyObject *RS_PythonCore::entmake(PyObject *args) const
 {
+    Q_UNUSED(args);
+
+    qDebug() << "[RS_PythonCore::entmake] - start";
+
+    Py_RETURN_NONE;
+}
+
+PyObject *RS_PythonCore::entmod(PyObject *args) const
+{
+    qDebug() << "[RS_PythonCore::entmod] - start";
+
+    PyObject *pList;
+
+    if (!PyArg_ParseTuple(args, "O!", &PyList_Type, &pList)) {
+        PyErr_SetString(PyExc_TypeError, "parameter must be a entity list.");
+        Py_RETURN_NONE;
+    }
+
+    int gc;
+    QString ename;
+    PyObject *pTuple;
+    PyObject *pGc;
+    PyObject *pEname;
+    Py_ssize_t n = PyList_Size(pList);
+
+    for (int i=0; i<n; i++) {
+        pTuple = PyList_GetItem(pList, i);
+        if(!PyTuple_Check(pTuple)) {
+            PyErr_SetString(PyExc_TypeError, "list items must be a tuple.");
+            Py_RETURN_NONE;
+        }
+        pGc = PyTuple_GetItem(pTuple, 0);
+        if(!PyLong_Check(pGc)) {
+            PyErr_SetString(PyExc_TypeError, "first tuple item must be an integer.");
+            Py_RETURN_NONE;
+        }
+        gc = PyLong_AsLong(pGc);
+        qDebug() << "[RS_PythonCore::entmod] i:" << i << "GC:" << gc;
+
+        if(gc == 0)
+        {
+            pEname = PyTuple_GetItem(pTuple, 1);
+            if(!PyUnicode_Check(pEname)) {
+                PyErr_SetString(PyExc_TypeError, "tuple item must be a string.");
+                Py_RETURN_NONE;
+            }
+            ename = QString::fromUtf8(PyUnicode_AsUTF8(pEname));
+            qDebug() << "[RS_PythonCore::entmod] ename:" << ename;
+            break;
+        }
+    }
+
+    if (ename == "")
+        Py_RETURN_NONE;
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    RS_EntityContainer* entityContainer = graphicView->getContainer();
+
+    if(entityContainer->count())
+    {
+        for (auto entity: *entityContainer)
+        {
+            if (entity->getId() == RS_SCRIPTINGAPI->getEntityId(qUtf8Printable(ename)))
+            {
+                qDebug() << "[RS_PythonCore::entmod] ename found!";
+            }
+        }
+    }
+
+    qDebug() << "[RS_PythonCore::entmod] - end";
 
     Py_RETURN_NONE;
 }
