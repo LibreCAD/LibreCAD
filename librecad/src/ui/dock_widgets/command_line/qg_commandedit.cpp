@@ -185,7 +185,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
         processInput(text());
         break;
     case Qt::Key_Space:
-        if (LC_GET_BOOL("Keyboard/EvaluateCommandOnSpace", true))
+        if (LC_GET_BOOL("Keyboard/EvaluateCommandOnSpace", false))
             processInput(text());
         else if (!text().isEmpty())
             QLineEdit::keyPressEvent(e);
