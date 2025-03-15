@@ -37,7 +37,7 @@ LC_IsometricGrid::LC_IsometricGrid(LC_GridSystem::LC_GridOptions *options, int i
     drawLeftLine = projection == ISO_TOP || projection == ISO_LEFT;
     drawTopLines = projection == ISO_RIGHT || projection == ISO_LEFT || gridOptions->drawIsometricVerticalsAlways;
 
-    gridLattice = new LC_Lattice();
+    gridLattice = std::make_unique<LC_Lattice>();
 }
 
 void LC_IsometricGrid::setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth) {
@@ -448,7 +448,7 @@ void LC_IsometricGrid::createGridLines(const RS_Vector &min, const RS_Vector &ma
 #endif
 
 void LC_IsometricGrid::drawMetaGridLines(RS_Painter *painter, LC_GraphicViewport *view) {
-    doDrawLines(painter, view, metaGridLattice);
+    doDrawLines(painter, view, metaGridLattice.get());
 
 #ifdef DEBUG_ISO_META
 

@@ -23,22 +23,25 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
+#include <cmath>
+
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 
-#include <cmath>
 #include <muParser.h>
+
 #include <QString>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QDebug>
 
 #include "rs.h"
+#include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_vector.h"
-#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -67,7 +70,7 @@ const QRegularExpression unitreg(
  * Rounds the given double to the closest int.
  */
 int RS_Math::round(double v) {
-    return (int) std::lrint(v);
+    return int(std::lrint(v));
 }
 
 double RS_Math::round(double v, double precision)
@@ -95,8 +98,8 @@ double RS_Math::pow(double x, double y) {
 }
 
 /* pow of vector components */
-RS_Vector RS_Math::pow(const RS_Vector& vp, double y) {
-    return RS_Vector(std::pow(vp.x, y), std::pow(vp.y, y));
+RS_Vector RS_Math::pow(const RS_Vector& vp, int y) {
+    return { RS_Math::pow(vp.x, y), RS_Math::pow(vp.y, y) };
 }
 
 /**
@@ -104,7 +107,7 @@ RS_Vector RS_Math::pow(const RS_Vector& vp, double y) {
  */
 bool RS_Math::equal(double d1, double d2, double tolerance)
 {
-    return std::abs(d1 - d2) < std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
+    return std::abs(d1 - d2) <= std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
 }
 
 /**
@@ -583,8 +586,10 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 // x^3 + ce[0] x^2 + ce[1] x + ce[2] = 0
 {
     //    std::cout<<"x^3 + ("<<ce[0]<<")*x^2+("<<ce[1]<<")*x+("<<ce[2]<<")==0"<<std::endl;
-    std::vector<double> ans(0,0.);
-    if (ce.size() != 3) return ans;
+    std::vector<double> ans;
+    if (ce.size() != 3)
+        return {};
+
     // depressed cubic, Tschirnhaus transformation, x= t - b/(3a)
     // t^3 + p t +q =0
     double shift=(1./3)*ce[0];
@@ -602,7 +607,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     //		-q/2 \pm sqrt(q^2/4 + p^3/27)
     //	discriminant= q^2/4 + p^3/27
     //std::cout<<"p="<<p<<"\tq="<<q<<std::endl;
-    double discriminant= (1./27)*p*p*p+(1./4)*q*q;
+    const double discriminant= (1./27)*p*p*p+(1./4)*q*q;
     if ( std::abs(p)< 1.0e-75) {
         ans.push_back(std::cbrt(q));
         ans[0] -= shift;
@@ -611,19 +616,16 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
         return ans;
     }
     //std::cout<<"discriminant="<<discriminant<<std::endl;
-    if(discriminant>0) {
-        std::vector<double> ce2(2,0.);
-        ce2[0]=q;
-        ce2[1]=-1./27*p*p*p;
+    if(!std::signbit(discriminant)) {
+        std::vector<double> ce2 = { { q, -1./27*p*p*p } };
         auto r=quadraticSolver(ce2);
         if ( r.empty() ) { //should not happen
-            std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+            LC_ERR<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
             return {};
         }
-        double u,v;
-        u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
+        double u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
-        v=(-1./3)*p/u;
+        double v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;
         //std::cout<<"u^3="<<u*u*u<<"\tv^3="<<v*v*v<<std::endl;
         ans.push_back(u+v - shift);
@@ -989,7 +991,7 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
  */
 double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
 {
-    double a= remainder(phi-M_PI_2,M_PI);
+    double a= std::remainder(phi-M_PI_2,M_PI);
     if(a>0.) {
         return boost::math::ellint_2<double,double>(k,a);
     } else {
