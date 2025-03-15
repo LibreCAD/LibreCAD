@@ -399,13 +399,13 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
 // The number of points needed is by angularLength/dA
     const double dA = 2. * pow(2./uiRadiusX, 1./4.);
     int arcPoints = int(ceil(std::abs(angularLengthRad) / dA));
-    // At minimum control points: 4
+    // At minimum control points: 3
     arcPoints = std::max(2, arcPoints);
     std::vector<RS_Vector> uiPoints;
 
     double deltaAngleRad = angularLengthRad / arcPoints;
 
-    LC_SplinePointsData data = LC_SplinePointsData();
+    LC_SplinePointsData data;
 
 #ifdef STRAIGHT_ARC_INTERPOLATION
     double angle = startAngleRad;
@@ -431,28 +431,20 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
 #endif
     }
 #else
-    double cosStart = cos(startAngleRad);
-    double sinStart = sin(startAngleRad);
+    RS_Vector fromCenter = RS_Vector{startAngleRad} * uiRadiusX;
+    // The QPainter y-axis is pointing downward
+    // TODO: get the rotation direction automatically, instead of hard-coded
+    const RS_Vector rotationStep{-deltaAngleRad};
 
-    double cosDelta = cos(deltaAngleRad);
-    double sinDelta = sin(deltaAngleRad);
-
-    double cosCurrent = cosStart;
-    double sinCurrent = sinStart;
+    const RS_Vector center{uiCenterX, uiCenterY};
     for (int i = 0; i <= arcPoints; ++i) {
         // fit point is on the arc
-        double uiX = uiCenterX + cosCurrent * uiRadiusX;
-        double uiY = uiCenterY - sinCurrent * uiRadiusX;
-        const RS_Vector fitPoint = RS_Vector(uiX, uiY);
-        data.splinePoints.push_back(fitPoint);
-
-        double tmp = cosCurrent * cosDelta - sinCurrent * sinDelta;
-        sinCurrent = sinCurrent * cosDelta + cosCurrent * sinDelta;
-        cosCurrent = tmp;
-
+        const RS_Vector arcPoint = center + fromCenter;
+        data.splinePoints.push_back(arcPoint);
+        fromCenter.rotate(rotationStep);
 #ifdef DEBUG_ARC_RENDERING
         // draw fit point
-        drawPointEntityUI(uiX, uiY, 3, 15);
+        drawPointEntityUI(arcPoint.x, arcPoint.y, 3, 15);
 #endif
     }
 #endif
