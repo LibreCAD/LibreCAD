@@ -26,17 +26,19 @@
 **
 **********************************************************************/
 
-#include <cfloat>
-#include <QPolygonF>
-#include "rs_circle.h"
+#include <cmath>
 
-#include "rs_line.h"
-#include "rs_information.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
-#include "rs_math.h"
+#include <QPolygonF>
+
 #include "lc_quadratic.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
 
 namespace {
 // tangent condition tolerance
@@ -788,7 +790,21 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
 }
 
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
+    if (painter == nullptr || view == nullptr)
+        return;
+
+    if (!isVisibleInWindow(view))
+        return;
+
+    const double radiusGui = view->toGuiDX(getRadius());
+    if (radiusGui * RS_Painter::getMaximumArcSplineError() <= 1.) {
+        painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
+    } else {
+        // Issue #2035, avoid rendering error by rendering arcs as quadratic splines
+        RS_Arc arc{nullptr, {getCenter(), getRadius(), 0., 2.*M_PI, false}};
+        double pattern=0.;
+        arc.draw(painter, view, pattern);
+    }
 }
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {

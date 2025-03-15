@@ -30,16 +30,12 @@
 
 #include <QPen>
 #include <QPainter>
-#include "rs.h"
-#include "qnamespace.h"
-#include "rs_vector.h"
-#include "rs_entity.h"
+#include <Qt>
 
-class RS_Color;
-class RS_GraphicView;
-class RS_Pen;
-class RS_Polyline;
-class RS_Spline;
+#include "rs.h"
+#include "rs_entity.h"
+#include "rs_vector.h"
+
 class QPainterPath;
 class QRect;
 class QRectF;
@@ -50,6 +46,13 @@ class QBrush;
 class QString;
 
 struct LC_SplinePointsData;
+
+class RS_Color;
+class RS_GraphicView;
+class RS_Pen;
+class RS_Polyline;
+class RS_Spline;
+
 
 /**
  * This class is a common interface for a painter class. Such
@@ -156,6 +159,22 @@ public:
     void setMinEllipseMajorRadius(double minEllipseMajorRadius);
     void setMinEllipseMinorRadius(double minEllipseMinorRadius);
     void setMinLineDrawingLen(double minLineDrawingLen);
+
+    /**
+     * @brief getMaximumArcSplineError - the maximum rendering error due to QPainter arc rendering by cubic spline approximation,
+     *                                   for an arc of raidus 1, the maximum rendering error from approximating the and arc of 0
+     *                                   to 90 degrees by a cubic spline with control points:
+     *                                   (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+     * @return - the QPainter implementation has the maximum error at 3e-4 for r=1
+     */
+    static constexpr double getMaximumArcSplineError() {
+        // Issue #2035 : arc render precision
+        // QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
+        // 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+        // The maximum approximation error is 3e-4
+        return 3e-4;
+    }
+
 protected:
     /**
      * Current drawing mode.
