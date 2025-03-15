@@ -217,7 +217,10 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
     if ((fileDialogMode == ExportLayersSelected) || (fileDialogMode == ExportLayersVisible))    {
         checkBox_combinedSave = std::make_unique<QCheckBox>(QObject::tr("Combine all layers"));
 
-        saveFileDialog->layout()->addWidget(checkBox_combinedSave.get());
+       QLayout* layout = saveFileDialog->layout();
+       if (layout != nullptr) {
+           layout->addWidget(checkBox_combinedSave.get());
+       }
     }
     /* Styling the QFileDialog widget - END */
 
