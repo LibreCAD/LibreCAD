@@ -42,14 +42,6 @@
 #include "emu_c99.h"
 #endif
 
-namespace {
-// Issue #2035 : arc render precision
-// QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
-// 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
-// The maximum approximation error is 3e-4
-constexpr double g_maxArcSplineError = 3e-4;
-}
-
 RS_ArcData::RS_ArcData(const RS_Vector& _center,
 					   double _radius,
 					   double _angle1, double _angle2,
@@ -905,7 +897,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
     if (painter == nullptr || view == nullptr)
         return;
-    painter->setPen(getPen());
 
     //only draw the visible portion of line
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
@@ -951,11 +942,14 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     //draw visible
     RS_Arc arc(*this);
     arc.setReversed(false);
+    LC_ERR<<__func__;
     for(size_t i=1; i<crossPoints.size(); i++){
         arc.setAngle1(baseAngle+crossPoints[i-1]);
         arc.setAngle2(baseAngle+crossPoints[i]);
-        if (arc.getMiddlePoint().isInWindowOrdered(vpMin, vpMax))
+        if (arc.getMiddlePoint().isInWindowOrdered(vpMin, vpMax)) {
+            printf("%.15g - %.15g\n", arc.getAngle1(), arc.getAngle2());
             arc.drawVisible(painter,view,patternOffset);
+        }
     }
 }
 
@@ -976,7 +970,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     const double angularLength = getAngleLength();
     // issue #2035, estimate the arc max rendering error due to cubic spline approximation
     // If the error is less than 1 pixel, call the QPainter method directly
-    if (radiusGui * g_maxArcSplineError <= 1.) {
+    if (radiusGui * RS_Painter::getMaximumArcSplineError() <= 1.) {
         painter->drawArc(view->toGui(getCenter()),
                          view->toGuiDX(getRadius()),
                          getAngle1(),
