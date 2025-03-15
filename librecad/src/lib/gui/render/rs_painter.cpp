@@ -114,7 +114,6 @@ void RS_Painter::drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, doub
     drawPointEntityUI(uiX, uiY,  pdMode, screenPDSize);
 }
 
-
 /**
  * Draws a point at (x1, y1).
  */
@@ -252,14 +251,29 @@ void RS_Painter::drawEntityArc(RS_Arc* arc) {
     QPainter::drawPath(path);
 }
 
-namespace {
-// Issue #2035 : arc render precision
-// QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
-// 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
-// The maximum approximation error is 3e-4
-    constexpr double g_maxArcSplineError = 3e-4;
-    // fixme - sand - move to the setting??
-    constexpr double ARC_UI_RADIUS_WITHOUT_QT_ERRORS = 3000;
+void RS_Painter::drawEntityCircle(RS_Circle *circle) {
+    const RS_CircleData &data = circle->getData();
+    double uiRadiusX = toGuiDX(data.radius);
+    double uiCenterX, uiCenterY;
+    toGui(data.center, uiCenterX, uiCenterY);
+    if (uiRadiusX < minCircleDrawingRadius){
+        QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
+    }
+    else if (circleRenderSameAsArcs &&  arcRenderInterpolate) {
+        QPainterPath path;
+        drawArcInterpolatedByLines(uiCenterX, uiCenterY, uiRadiusX, 0, 360, path);
+        QPainter::drawPath(path);
+    }
+    else if (uiRadiusX <= getMaximumArcNonErrorRadius()){ // draw arc using QT
+        double uiRadiusY = toGuiDY(data.radius);
+        QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadiusX, uiRadiusY);
+    }
+    else {
+        // Issue #2035, avoid rendering error by rendering arcs as quadratic splines
+        RS_Arc arc{nullptr, {data.center, data.radius, 0., 2.*M_PI, false}};
+        clearDashOffset();
+        drawEntityArc(&arc);
+    }
 }
 
 void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath &path){
@@ -279,8 +293,10 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath &path){
         drawArcInterpolatedByLines(uiCenterX, uiCenterY, uiRadiusX, toUCSAngleDegrees(data.startAngleDegrees), data.angularLength, path);
     }
     else {
-        if (uiRadiusX <= ARC_UI_RADIUS_WITHOUT_QT_ERRORS){ // draw arc using QT
-//        if (uiRadiusX * g_maxArcSplineError <= 1){
+        // same as
+        // if (radiusGui * RS_Painter::getMaximumArcSplineError() <= 1.) {
+        // yet faster
+        if (uiRadiusX <= getMaximumArcNonErrorRadius()){ // draw arc using QT
             drawArcQT(uiCenterX, uiCenterY, uiRadiusX, uiRadiusY, toUCSAngleDegrees(data.startAngleDegrees), data.angularLength, path);
         }
         else { // draw arc by visible segments, interpolation by splines
@@ -348,7 +364,7 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath &path){
                     arcSegment.setAngle2(baseAngle + crossPoints[i]);
 
                     // fixme - sand - it seems this check is redundant if i is increased by 2
-                    // fixme - sand - it applies an additional check and performance overhead
+                    // fixme - sand - so it seems checking that segment is visible via middle point applies an additional check and performance overhead?
                     arcSegment.updateMiddlePoint();
                     if (arcSegment.getMiddlePoint().isInWindowOrdered(wcsBoundingBox.minP(), wcsBoundingBox.maxP())) {
                         drawArcSegmentBySplinePointsUI(uiCenterX, uiCenterY, uiRadiusX, toUCSAngle(arcSegment.getAngle1()), arcSegment.getAngleLength(), path);

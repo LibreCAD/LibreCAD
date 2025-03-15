@@ -24,7 +24,6 @@
 #define LIBRECAD_LC_DRAWABLE_H
 
 #include "rs.h"
-#include "rs_pen.h"
 
 class RS_Painter;
 

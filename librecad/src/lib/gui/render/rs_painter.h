@@ -89,6 +89,10 @@ public:
     void clearDashOffset() {currenPatternOffset = 0.0;};
     double currentDashOffset() const {return currenPatternOffset;}
 
+    void drawEntityArc(RS_Arc* arc);
+    void drawEntityPolyline(const RS_Polyline *polyline);
+    void drawEntityCircle(RS_Circle* circle);
+
     int determinePointScreenSize(double pdsize) const;
 
     // methods called form entities to render them. All methods with WCS suffix - obtains world coordinates!
@@ -103,11 +107,9 @@ public:
     void drawPointEntityWCS(const RS_Vector &p);
     void drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize);
     void drawSolidWCS(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3, const RS_Vector &wcsP4);
-    void drawEntityArc(RS_Arc* arc);
 
     void drawSplineWCS(const RS_Spline &spline);
     void drawLineWCS(const RS_Vector &wcsP1, const RS_Vector &wcP2);
-    void drawEntityPolyline(const RS_Polyline *polyline);
     void drawHandleWCS(const RS_Vector &wcsPosition, const RS_Color &c, int size = -1);
     void drawImgWCS(QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector);
 
@@ -197,6 +199,26 @@ public:
     bool isFullyWithinBoundingRect(const LC_Rect &rect);
 
     const LC_Rect &getWcsBoundingRect() const;
+    /**
+     * @brief getMaximumArcSplineError - the maximum rendering error due to QPainter arc rendering by cubic spline approximation,
+     *                                   for an arc of raidus 1, the maximum rendering error from approximating the and arc of 0
+     *                                   to 90 degrees by a cubic spline with control points:
+     *                                   (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+     * @return - the QPainter implementation has the maximum error at 3e-4 for r=1
+     */
+    static constexpr double getMaximumArcSplineError() {
+        // Issue #2035 : arc render precision
+        // QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
+        // 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+        // The maximum approximation error is 3e-4
+        return 3e-4;
+    }
+
+    static constexpr int getMaximumArcNonErrorRadius(){
+        // fixme - sand - move to the setting??
+        return 3000;
+    }
+
 protected:
     /**
      * Current drawing mode.

@@ -27,6 +27,7 @@
 #ifndef RS_MATH_H
 #define RS_MATH_H
 
+#include <cmath>
 #include <vector>
 
 class QString;

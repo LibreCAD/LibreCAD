@@ -23,6 +23,7 @@
 #ifndef LIBRECAD_LC_COORDINATES_MAPPER_H
 #define LIBRECAD_LC_COORDINATES_MAPPER_H
 
+#include "rs_vector.h"
 class RS_Vector;
 class QPointF;
 

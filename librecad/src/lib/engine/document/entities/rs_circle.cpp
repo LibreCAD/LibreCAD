@@ -764,7 +764,7 @@ RS_Entity& RS_Circle::shear(double k)
 
 
 void RS_Circle::draw(RS_Painter* painter) {
-    painter->drawCircleWCS(data.center, data.radius);
+    painter->drawEntityCircle(this);
 }
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
