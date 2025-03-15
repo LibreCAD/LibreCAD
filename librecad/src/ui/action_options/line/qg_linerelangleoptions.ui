@@ -121,7 +121,7 @@
  <resources/>
  <connections/>
  <slots>
-  <slot>updateAngle(QString)</slot>
+  <slot>onAngleChanged(QString)</slot>
   <slot>updateLength(QString)</slot>
  </slots>
 </ui>

@@ -47,11 +47,11 @@ public:
 
     void init(int status) override;
     void reset();
-    void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 //    void updateToolBar() override;
-    double getAngle() const;
-    void setAngle(double a) const;
+    double getUcsAngleDegrees() const;
+    void setUcsAngleDegrees(double ucsRelAngleDegrees);
+    void setAngle(double wcsAngle) const;
     double getFactor() const;
     void setFactor(double f) const;
     double dpiToScale(double dpi) const;
@@ -78,9 +78,9 @@ protected:
     Status lastStatus = ShowDialog;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

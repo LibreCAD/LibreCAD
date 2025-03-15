@@ -98,6 +98,7 @@ public:
     void setScreenWidth(double w) {
         screenWidth = w;
     }
+
     RS_Color getColor() const {
         return color;
     }

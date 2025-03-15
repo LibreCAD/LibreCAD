@@ -29,17 +29,17 @@ class LC_ActionInfoProperties:public RS_PreviewActionInterface{
     Q_OBJECT
 public:
     LC_ActionInfoProperties(RS_EntityContainer &container, RS_GraphicView &graphicView);
-    void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
 private:
     RS_Entity* highlightedEntity = nullptr;
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void clearQuickInfoWidget();
-    void highlightHoveredEntity(QMouseEvent *event, bool resolveChildren);
-    void highlightAndShowEntityInfo(QMouseEvent *e, bool resolveChildren);
+    void highlightHoveredEntity(LC_MouseEvent *event, bool resolveChildren);
+    void highlightAndShowEntityInfo(LC_MouseEvent *e, bool resolveChildren);
 protected:
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     RS2::CursorType doGetMouseCursor(int status) override;
 };

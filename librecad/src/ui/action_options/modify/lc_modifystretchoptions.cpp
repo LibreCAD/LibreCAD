@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_modifystretchoptions.h"
+#include "rs_actionmodifystretch.h"
 #include "ui_lc_modifystretchoptions.h"
 
 LC_ModifyStretchOptions::LC_ModifyStretchOptions()

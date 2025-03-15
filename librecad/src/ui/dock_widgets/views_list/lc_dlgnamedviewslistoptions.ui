@@ -6,112 +6,113 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>503</width>
-    <height>200</height>
+    <width>393</width>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Named Views Settings</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1">
-   <item row="9" column="0">
-    <widget class="QLabel" name="lblDoubleClick">
-     <property name="text">
-      <string>On double-click on table item</string>
+  <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Editing</string>
      </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cbRemovalConfirmation">
+        <property name="toolTip">
+         <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </string>
+        </property>
+        <property name="text">
+         <string>Ask for confirmation before views removal</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbSilentUpdate">
+        <property name="toolTip">
+         <string>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</string>
+        </property>
+        <property name="text">
+         <string>Silently update existing view with same name by created one</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="9" column="1">
-    <widget class="QComboBox" name="cbDoubleClickPolicy">
-     <property name="toolTip">
-      <string>Defines which action should be performed on double click on view item of the table. </string>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Display</string>
      </property>
-     <item>
-      <property name="text">
-       <string>Do Nothing</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Rename View</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Update View</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Restore View</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="9" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="8" column="0" colspan="3">
-    <widget class="QCheckBox" name="cbSingleClickRestore">
-     <property name="toolTip">
-      <string>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</string>
-     </property>
-     <property name="text">
-      <string>Restore view on single click by table item</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="3">
-    <widget class="QCheckBox" name="cbShowTooltip">
-     <property name="toolTip">
-      <string>If show, tooltip with additional information about view will be shown for table item.</string>
-     </property>
-     <property name="text">
-      <string>Show toolip with view details for table items</string>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="5" column="0">
+       <widget class="QCheckBox" name="cbShowTooltip">
+        <property name="toolTip">
+         <string>If show, tooltip with additional information about view will be shown for table item.</string>
+        </property>
+        <property name="text">
+         <string>Toolip with view details for table items</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="cbColumnUCSDetails">
+        <property name="toolTip">
+         <string>If checked, the column with details of view's coordinate system will be show</string>
+        </property>
+        <property name="text">
+         <string>UCS Details column</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbColumnGridType">
+        <property name="toolTip">
+         <string>If checked, type of grid for saved view will be shown</string>
+        </property>
+        <property name="text">
+         <string>Grid Type icon column</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cbShowViewTypeIcon">
+        <property name="toolTip">
+         <string>If checked, the column with view type icon will be shown.</string>
+        </property>
+        <property name="text">
+         <string>Type icon column</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="cbColumnUCSType">
+        <property name="toolTip">
+         <string>If checked, the column with icon for type of coordinate system for the view will be shown.</string>
+        </property>
+        <property name="text">
+         <string>UCS Type icon column</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="cbShowColumnVIewDetails">
+        <property name="toolTip">
+         <string>If checked, the column with view details will be shown in the table.</string>
+        </property>
+        <property name="text">
+         <string>VIew Details column</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="6" column="0" colspan="3">
-    <widget class="QCheckBox" name="cbShowViewTypeIcon">
-     <property name="toolTip">
-      <string>If checked, the column with icon for type of view will be shown in the table. </string>
-     </property>
-     <property name="text">
-      <string>Show view type icon</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QCheckBox" name="cbSilentUpdate">
-     <property name="toolTip">
-      <string>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</string>
-     </property>
-     <property name="text">
-      <string>Silently update existing view by current values on duplicated name during view creation</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QCheckBox" name="cbRemovalConfirmation">
-     <property name="toolTip">
-      <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </string>
-     </property>
-     <property name="text">
-      <string>Ask for confirmation before views removal</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -122,6 +123,72 @@
      <property name="centerButtons">
       <bool>false</bool>
      </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Operations</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblDoubleClick">
+        <property name="text">
+         <string>On double-click on table item</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cbDoubleClickPolicy">
+        <property name="toolTip">
+         <string>Defines which action should be performed on double click on view item of the table. </string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Do Nothing</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Rename View</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Update View</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Restore View</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QCheckBox" name="cbSingleClickRestore">
+        <property name="toolTip">
+         <string>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</string>
+        </property>
+        <property name="text">
+         <string>Restore view on single click by table item</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

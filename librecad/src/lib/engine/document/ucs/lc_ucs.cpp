@@ -21,6 +21,11 @@
  ******************************************************************************/
 
 #include "lc_ucs.h"
+#include "rs_math.h"
+#include "lc_linemath.h"
+
+LC_UCS LC_WCS::instance = LC_WCS();
+
 
 LC_UCS::LC_UCS() {}
 
@@ -47,3 +52,81 @@ void LC_UCS::setYAxis(RS_Vector axis) {
 void LC_UCS::setOrthoType(int type) {
   ucsOrthoType = type;
 }
+
+void LC_UCS::setName(const QString &name) {
+    LC_UCS::name = name;
+}
+
+const QString LC_UCS::getName() const {
+    return name;
+}
+
+const RS_Vector LC_UCS::getOrthoOrigin() const {
+    return orthoOrigin;
+}
+
+void LC_UCS::setOrthoOrigin(const RS_Vector &orthoOrigin) {
+    LC_UCS::orthoOrigin = orthoOrigin;
+}
+
+long LC_UCS::getNamedUcsId() const {
+    return namedUCS_ID;
+}
+
+long LC_UCS::getBaseUcsId() const {
+    return baseUCS_ID;
+}
+
+bool LC_UCS::isValidName([[maybe_unused]]QString &nameCandidate) {
+    // fixme - implement UCS name validation rule here
+    return true;
+}
+
+bool LC_UCS::isSameTo(LC_UCS *other) {
+    bool result = false;
+    if (other != nullptr){
+//        if (isUCS() == other->isUCS()) {
+            if (ucsOrthoType == other->getOrthoType()) {
+                if (LC_LineMath::isNotMeaningfulDistance(other->getOrigin(), getOrigin())) { // same origin
+                    double ownAngle = RS_Math::correctAnglePlusMinusPi(getXAxisDirection());
+                    double otherAngle = RS_Math::correctAnglePlusMinusPi(other->getXAxisDirection());
+                    result = RS_Math::getAngleDifference(ownAngle, otherAngle) < RS_TOLERANCE_ANGLE;
+                }
+            }
+        }
+//    }
+    return result;
+}
+
+
+RS2::IsoGridViewType LC_UCS::getIsoGridViewType() {
+    RS2::IsoGridViewType isoType;
+    switch (ucsOrthoType){
+        case LC_UCS::FRONT:
+        case LC_UCS::BACK:
+            break;
+        case LC_UCS::LEFT:{
+            isoType = RS2::IsoLeft;
+            break;
+        }
+        case LC_UCS::RIGHT:{
+            isoType = RS2::IsoRight;
+            break;
+        }
+        case LC_UCS::TOP:
+        case LC_UCS::BOTTOM:{
+            isoType = RS2::IsoTop;
+            break;
+        }
+        default:
+            isoType = RS2::Ortho;
+            break;
+    }
+    return isoType;
+}
+
+bool LC_UCS::isIsometric() {
+    return ucsOrthoType != LC_UCS::NON_ORTHO;
+}
+
+LC_UCS::~LC_UCS() = default;

@@ -43,5 +43,5 @@ void RS_ActionLockRelativeZero::init(int status) {
 }
 
 void RS_ActionLockRelativeZero::trigger() {
-    graphicView->lockRelativeZero(on);
+    viewport->lockRelativeZero(on);
 }

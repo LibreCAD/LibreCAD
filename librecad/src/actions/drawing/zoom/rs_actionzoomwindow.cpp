@@ -34,6 +34,7 @@
 #include "rs_preview.h"
 
 struct RS_ActionZoomWindow::Points {
+ RS_Vector ucsV1;
 	RS_Vector v1;
 	RS_Vector v2;
 };
@@ -67,8 +68,10 @@ void RS_ActionZoomWindow::init(int status){
 void RS_ActionZoomWindow::doTrigger() {
     RS_DEBUG->print("RS_ActionZoomWindow::trigger()");
     if (pPoints->v1.valid && pPoints->v2.valid){
-        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
-            graphicView->zoomWindow(pPoints->v1, pPoints->v2, keepAspectRatio);
+        if (viewport->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
+            RS_Vector point1 = toUCS(pPoints->v1);
+            RS_Vector point2 = toUCS(pPoints->v2);
+            viewport->zoomWindow(point1, point2, keepAspectRatio);
             init(SetFirstCorner);
         }
     }
@@ -80,7 +83,14 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
     drawSnapper();
     if (getStatus() == SetSecondCorner && pPoints->v1.valid){
         pPoints->v2 = snapFree(e);
-        preview->addRectangle(pPoints->v1, pPoints->v2);
+
+        RS_Vector worldCorner1 = pPoints->v1;
+        RS_Vector worldCorner3 = pPoints->v2;
+
+        RS_Vector worldCorner2,worldCorner4;
+        calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
+
+        preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
     }
     drawPreview();
 }
@@ -103,10 +113,10 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
     if (status == SetSecondCorner){
-        pPoints->v2 = snapFree(e);
+        pPoints->v2 = e->graphPoint;
         if (fabs(pPoints->v1.x - pPoints->v2.x) < RS_TOLERANCE
             || fabs(pPoints->v1.y - pPoints->v2.y) < RS_TOLERANCE){//invalid zoom window
             deletePreview();
@@ -116,7 +126,7 @@ void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionZoomWindow::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionZoomWindow::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
     if (status == SetSecondCorner){
         deletePreview();

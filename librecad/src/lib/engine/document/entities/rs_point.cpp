@@ -185,29 +185,9 @@ RS_Entity& RS_Point::shear(double k){
     return *this;
 }
 
-void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
-/*    if (painter == nullptr || view == nullptr){
-        return;
-    }*/
-    RS_Vector guiPos = view->toGui(getPos());
-    painter->drawPoint(guiPos, view->getPointMode(), view->getPointSize());
+void RS_Point::draw(RS_Painter* painter) {
+    painter->drawPointEntityWCS(data.pos);
 }
-
-int RS_Point::determinePointSreenSize(const RS_Painter *painter, const RS_GraphicView *view, double pdsize) const{
-    int deviceHeight = painter->getHeight();
-    int screenPDSize;
-    if (pdsize == 0){
-        screenPDSize = deviceHeight / 20;
-    }
-    else if (DXF_FORMAT_PDSize_isPercent(pdsize)){
-        screenPDSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
-    }
-    else {
-        screenPDSize = view->toGuiDY(pdsize);
-    }
-    return screenPDSize;
-}
-
 
 /**
  * Dumps the point's data to stdout.

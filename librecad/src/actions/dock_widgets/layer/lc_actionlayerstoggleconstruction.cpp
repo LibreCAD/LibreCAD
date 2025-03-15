@@ -64,7 +64,7 @@ void LC_ActionLayersToggleConstruction::trigger() {
             graphic->toggleLayerConstruction(a_layer);
             deselectEntities(a_layer);
         }
-        graphicView->redraw();
+        redrawDrawing();
     }
     finish(false);
 }

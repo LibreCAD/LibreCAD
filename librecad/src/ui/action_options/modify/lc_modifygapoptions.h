@@ -22,16 +22,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_MODIFYGAPOPTIONS_H
 #define LC_MODIFYGAPOPTIONS_H
 
-#include "lc_actionmodifylinegap.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionModifyLineGap;
 namespace Ui {
-class LC_ModifyGapOptions;
+    class LC_ModifyGapOptions;
 }
 
 class LC_ModifyGapOptions :public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_ModifyGapOptions();
     ~LC_ModifyGapOptions() override;

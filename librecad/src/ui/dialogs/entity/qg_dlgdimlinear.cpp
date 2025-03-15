@@ -36,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimLinear::QG_DlgDimLinear(QWidget* parent)
-    : LC_Dialog(parent, "DimLinearProperties"){
+QG_DlgDimLinear::QG_DlgDimLinear(QWidget *parent, LC_GraphicViewport *pViewport,RS_DimLinear* dim)
+    :LC_EntityPropertiesDlg(parent, "DimLinearProperties", pViewport){
     setupUi(this);
+    setEntity(dim);
 }
 
 /*
@@ -56,27 +57,29 @@ void QG_DlgDimLinear::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
-    dim = &d;
+void QG_DlgDimLinear::setEntity(RS_DimLinear* d) {
+    entity = d;
 
-    RS_Graphic* graphic = dim->getGraphic();
+    RS_Graphic* graphic = entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = dim->getLayer(false);
+    RS_Layer* lay = entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(dim,lay, "Pen");
-
-    wLabel->setLabel(dim->getLabel(false));
-    leAngle->setText(QString("%1").arg(RS_Math::rad2deg(dim->getAngle())));
+    wPen->setPen(entity, lay, "Pen");
+    wLabel->setLabel(entity->getLabel(false));
+    toUIAngleDeg(entity->getAngle(), leAngle);
 }
 
-void QG_DlgDimLinear::updateDim() {
-    dim->setLabel(wLabel->getLabel());
-    dim->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0)));
-    dim->setPen(wPen->getPen());
-    dim->setLayer(cbLayer->currentText());
+void QG_DlgDimLinear::updateEntity() {
+    entity->setLabel(wLabel->getLabel());
+    entity->setAngle(toWCSAngle(leAngle, entity->getAngle()));
+
+    entity->setPen(wPen->getPen());
+    entity->setLayer(cbLayer->getLayer());
+
+    entity->updateDim(true);
 }

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionlibraryinsert.h"
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
@@ -78,18 +76,15 @@ void RS_ActionLibraryInsert::trigger() {
     deletePreview();
     RS_Creation creation(container, graphicView);
     creation.createLibraryInsert(pPoints->data);
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 }
 
-void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    switch (getStatus()) {
+void RS_ActionLibraryInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status) {
         case SetTargetPoint:
-            pPoints->data.insertionPoint = snapPoint(e);
-
+            pPoints->data.insertionPoint = e->snapPoint;
             //if (block) {
-
-            preview->addAllFrom(pPoints->prev, graphicView);
+            preview->addAllFrom(pPoints->prev, viewport);
             preview->move(pPoints->data.insertionPoint);
             preview->scale(pPoints->data.insertionPoint,
                            RS_Vector(pPoints->data.factor, pPoints->data.factor));
@@ -111,14 +106,13 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
 }
 
-void RS_ActionLibraryInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    fireCoordinateEvent(snapPoint(e));
+void RS_ActionLibraryInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    fireCoordinateEvent(e->snapPoint);
 }
 
-void RS_ActionLibraryInsert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionLibraryInsert::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 
@@ -133,12 +127,12 @@ bool RS_ActionLibraryInsert::doProcessCommand(int status, const QString &c) {
         case SetTargetPoint: {
             if (checkCommand("angle", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = SetTargetPoint;
                 setStatus(SetAngle);
                 accept = true;
             } else if (checkCommand("factor", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetFactor);
                 accept = true;
             }

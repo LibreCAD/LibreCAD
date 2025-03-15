@@ -19,7 +19,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QMouseEvent>
 
 #include "lc_actiondrawdimbaseline.h"
 #include "qg_dimoptions.h"
@@ -90,11 +89,8 @@ bool LC_ActionDrawDimBaseline::isBaseline(){
     return actionType == RS2::ActionDimBaseline;
 }
 
-void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-    int status = getStatus();
-    RS_Vector mouse = snapPoint(e); // snap on entity?
+void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint; // snap on entity?
     switch (status){
         case SetExtPoint1: {
             auto dimCandidate = RS_Snapper::catchEntity(mouse, dimEntityTypes, RS2::ResolveNone);
@@ -130,7 +126,7 @@ void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
                 double dist2 = mouse.distanceTo(dim2);
 
                 bool dim1CloserToMouse = dist1 < dist2;
-                if (isControl(e)){
+                if (e->isControl){
                     dim1CloserToMouse = !dim1CloserToMouse;
                 }
                 if (dim1CloserToMouse){
@@ -166,7 +162,7 @@ void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
                 if (isBaseline()) {
                     // for base line, we need to offset definition point on infinite line that corresponds old dim line to specified distance
                     double dimAngle = dimDirectionAngle; // angle we use for offset vector - it's the same as angle from base dimension
-                    if (isControl(e)) { // swap direction of the offset, if needed, so we'll offset in opposite direction
+                    if (e->isControl) { // swap direction of the offset, if needed, so we'll offset in opposite direction
                         dimAngle = M_PI + dimAngle;
                     }
                     double previewDistance = baselineDistance;
@@ -238,16 +234,14 @@ void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
             break;
 
     }
-    drawPreview();
-    drawHighlights();
 }
 
-void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetExtPoint1:
         case SetExtPoint2:{
-            alternateMode = isControl(e);
+            alternateMode = e->isControl;
             break;
         }
         case SetDefPoint: {
@@ -366,7 +360,7 @@ bool LC_ActionDrawDimBaseline::doProcessCommand(int status, const QString &c) {
         case SetText: {
             setText(c);
             updateOptions();
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             setStatus(lastStatus);
             accept = true;
             break;
@@ -375,7 +369,7 @@ bool LC_ActionDrawDimBaseline::doProcessCommand(int status, const QString &c) {
             lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)) {
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
             }

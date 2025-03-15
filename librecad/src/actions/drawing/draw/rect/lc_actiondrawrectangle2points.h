@@ -61,18 +61,18 @@ protected:
     int secondPointSnapMode = SNAP_CORNER;
 
     ShapeData createPolyline(const RS_Vector &snapPoint) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void processCommandValue(double value, bool &toMainStatus) override;
     bool processCustomCommand(int status, const QString &command, bool &toMainStatus) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *pEvent, int status) override;
     void doAfterTrigger() override;
     void doUpdateMouseButtonHints(int status) override;
     RS_Vector createSecondCornerSnapForGivenRectSize(RS_Vector size);
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
 };
 
 #endif // LC_ACTIONDRAWRECTANGLE2POINTS_H

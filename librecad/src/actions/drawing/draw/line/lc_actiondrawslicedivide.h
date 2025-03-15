@@ -99,8 +99,8 @@ public:
     bool isDivideEntity() const{return doDivideEntity;}
     void setTickLength(double len){tickLength = len;}
     void setDrawTickOnEdgeMode(int i){tickEdgeDrawMode = i;}
-    void setTickAngle(double a){tickAngle = a;}
-    void setCircleStartTickAngle(double a){circleStartTickAngle = a;}
+    void setTickAngle(double a){ tickAngleDegrees = a;}
+    void setCircleStartTickAngle(double a){ circleStartTickAngleDegrees = a;}
     void setTickAngleRelative(bool b){tickAngleIsRelative = b;}
     void setDivideEntity(bool value){doDivideEntity = value;}
     void setTickCount(int c){tickCount = c;}
@@ -109,10 +109,10 @@ public:
     int getTickSnapMode() const{return tickSnapMode;}
     int getTickCount() const{return tickCount;}
     int getDrawTickOnEdgeMode() const{return tickEdgeDrawMode;}
-    double getTickAngle() const{return tickAngle;}
+    double getTickAngle() const{return tickAngleDegrees;}
     double getTickLength() const{return tickLength;}
     double getTickOffset() const{return tickOffset;}
-    double getCircleStartAngle() const{return circleStartTickAngle;}
+    double getCircleStartAngle() const{return circleStartTickAngleDegrees;}
     void setDistance(double val){distance = val;};
     double getDistance() const{return distance;};
     void setFixedDistance(bool value){fixedDistance = value;};
@@ -134,11 +134,11 @@ private:
      * angle used to draw ticks. For alternative action mode (if shift is pressed on click), we'll use alternative (mirrored) angle
      * of tick instead of one set in options.
      */
-    double tickAngle = 90;
+    double tickAngleDegrees = 90;
     /**
      * start angle used for drawing ticks for circle
      */
-    double circleStartTickAngle = 0;
+    double circleStartTickAngleDegrees = 0;
 
     /**
      * Flag that indicates that the distance between ticks is fixed and is not calculated based on provided number of ticks
@@ -198,9 +198,9 @@ protected:
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doAfterTrigger() override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     bool isSetActivePenAndLayerOnTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     EntityTypeList getCatchEntityTypeList() const;

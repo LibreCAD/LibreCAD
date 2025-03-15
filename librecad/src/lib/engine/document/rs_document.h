@@ -32,6 +32,8 @@
 #include "rs_entitycontainer.h"
 #include "rs_undo.h"
 #include "lc_viewslist.h"
+#include "lc_ucslist.h"
+#include "rs_graphicview.h"
 
 class RS_BlockList;
 class RS_LayerList;
@@ -52,6 +54,7 @@ public:
     virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
     virtual LC_ViewList* getViewList() { return nullptr;};
+    virtual LC_UCSList* getUCSList() {return nullptr;}
 
     virtual void newDoc() = 0;
     virtual bool save(bool isAutoSave = false) = 0;
@@ -121,7 +124,7 @@ public:
      void endUndoCycle() override;
 
     void setGraphicView(RS_GraphicView * g) {gv = g;}
-    RS_GraphicView* getGraphicView() {return gv;}
+    RS_GraphicView* getGraphicView() {return gv;} // fixme - sand -- REALLY BAD DEPENDANCE TO UI here, REWORK!
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
@@ -135,7 +138,7 @@ protected:
 	/** Format type */
     RS2::FormatType formatType = RS2::FormatUnknown;
     //used to read/save current view
-    RS_GraphicView * gv = nullptr;
+    RS_GraphicView * gv = nullptr; // fixme - sand -- REALLY BAD DEPENDANCE TO UI here, REWORK!
 
 };
 #endif

@@ -22,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QMouseEvent>
 #include <cmath>
 
 #include "rs_line.h"
@@ -56,7 +55,7 @@ LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(
     }
 }
 
-bool LC_ActionDrawSliceDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawSliceDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetEntity;
 }
 /**
@@ -78,11 +77,11 @@ EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
  * @param list  list to create preview entities
  * @param status current status of the action
  */
-void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     ticksData.clear();
     deleteSnapper();
     EntityTypeList catchEntityTypes = getCatchEntityTypeList();
-    RS_Entity *en = catchModifiableEntityOnPreview(e, catchEntityTypes);
+    RS_Entity *en = catchModifiableAndDescribe(e, catchEntityTypes);
     int optionsMode = SELECTION_NONE;
     if (en != nullptr){
         int rtti = en->rtti();
@@ -236,7 +235,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
     }
 }
 
-void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     switch (status) {
         case SetEntity: {
             EntityTypeList catchEntityTypes = getCatchEntityTypeList();
@@ -389,7 +388,7 @@ void LC_ActionDrawSliceDivide::prepareArcTicks(RS_Arc *arc){
 void LC_ActionDrawSliceDivide::prepareCircleTicks(RS_Circle *circle){
     double radius = circle->getRadius();
     RS_Vector center = circle->getCenter();
-    double startPointAngle = RS_Math::deg2rad(getCircleStartAngle());
+    double startPointAngle = toWorldAngleFromUCSBasisDegrees(circleStartTickAngleDegrees);
 
     RS_Vector startPoint = LC_LineMath::findPointOnCircle(radius, startPointAngle, center);
 
@@ -440,7 +439,6 @@ void LC_ActionDrawSliceDivide::prepareLineTicks(RS_Line *line){
         // for fixed distance between ticks, adjust length and ticks count
         segmentLength = distance;
         segmentsCount = std::ceil(lineLength / segmentLength + 1);
-//        remainingPartOfLine = lineLength - (segmentLength + 1)* segmentsCount;
     }
     else {
         segmentLength = lineLength / segmentsCount;
@@ -516,21 +514,24 @@ void LC_ActionDrawSliceDivide::addTick(RS_Vector &tickSnapPoint, RS_LineData &li
  * @param tickLineData tick line data
  */
 void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_Entity *ent, RS_LineData &tickLineData){
-
     double actualTickLength = tickLength;
     auto const vp = ent->getNearestPointOnEntity(tickSnapPosition, false);
 
-    double tickAngleToUse = tickAngle;
+    double tickAngleToUse = tickAngleDegrees;
     if (alternativeActionMode){
         // if SHIFT is pressed, we'll mirror angle specified in options
-        tickAngleToUse = 180 - tickAngle;
+        tickAngleToUse = 180 - tickAngleDegrees;
     }
-    double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
-    double actualTickAngle = tickAngleRad;
+
+    double actualTickAngle;
 
     // if angle should be related, take into consideration own angle of entity
     if (tickAngleIsRelative){
-        actualTickAngle = actualTickAngle + ent->getTangentDirection(vp).angle();
+        double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
+        actualTickAngle = tickAngleRad + toUCSAngle(ent->getTangentDirection(vp).angle());
+    }
+    else{
+        actualTickAngle = toWorldAngleFromUCSBasisDegrees(tickAngleToUse);
     }
 
     // proceed offset of tick specified by options

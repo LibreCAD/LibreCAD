@@ -48,12 +48,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_dimarc.h"
 #include "lc_quickinfowidgetoptions.h"
 
-class LC_QuickInfoEntityData: public LC_QuickInfoBaseData
-{
+class LC_QuickInfoEntityData: public LC_QuickInfoBaseData{
     Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoEntityData)
 
 public:
-
     explicit LC_QuickInfoEntityData();
     virtual ~LC_QuickInfoEntityData();
 
@@ -154,8 +152,6 @@ protected:
     void collectDimRadialProperties(RS_DimRadial *dim);
     void collectDimLinearProperties(RS_DimLinear *dim);
     void collectDimAlignedProperties(RS_DimAligned *dim);
-    QString formatDouble(const double &x) const;
-    QString formatInt(const int &x) const;
     static QString getHAlignStr(RS_TextData::HAlign align);
     static QString getVAlignStr(RS_TextData::VAlign align);
     static QString getTextGenerationStr(RS_TextData::TextGeneration generation);
@@ -165,10 +161,12 @@ protected:
     static QString getLineSpacingStyleStr(RS_MTextData::MTextLineSpacingStyle style);
 
     void addAngleProperty(const QString name, double value);
+    void addRawAngleProperty(const QString name, double value);
     void addLinearProperty(const QString name, double value, PropertyType type=LINEAR);
     void addAreaProperty(const QString name, double value);
     void addDoubleProperty(const QString name, const QString &valueStr, double value, PropertyType type);
     void addVectorProperty(const QString name,const RS_Vector &value, PropertyType type=VECTOR);
+    void addDeltaVectorProperty(const QString name,const RS_Vector &value, PropertyType type=VECTOR);
     void addVectorProperty(const QString name, const QString &valueStr, const RS_Vector& coord, PropertyType type=VECTOR);
     void addVectorProperty(const QString name, int count, const RS_Vector &value, PropertyType type=VECTOR);
     void addVectorProperty(QString name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=VECTOR);
@@ -196,16 +194,6 @@ protected:
     QString prepareDimRadialDescription(RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimLinearDescription(RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimAlignedDescription(RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
-
-
-    void appendLinear(QString &result, const QString &label, double value);
-    void appendDouble(QString &result, const QString &label, double value);
-    void appendAngle(QString &result, const QString &label, double value);
-    void appendArea(QString &result, const QString &label, double value);
-    void appendAbsolute(QString &result, const QString &label, const RS_Vector& value);
-    void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value);
-    void appendInt(QString &result, const QString &label, const int& value);
-    void appendValue(QString &result, const QString &label, const QString& value);
 };
 
 #endif // LC_QUICKINFOENTITYDATA_H

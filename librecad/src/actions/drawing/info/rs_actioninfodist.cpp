@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
 #include "rs_actioninfodist.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
@@ -59,15 +58,12 @@ void RS_ActionInfoDist::doTrigger() {
     if (pPoints->point1.valid && pPoints->point2.valid){
         RS_Vector dV = pPoints->point2 - pPoints->point1;
         QStringList dists;
-        int linearPrecision = graphic->getLinearPrecision();
-        RS2::Unit unit = graphic->getUnit();
-        RS2::LinearFormat linearFormat = graphic->getLinearFormat();
         for (double a: {dV.magnitude(), dV.x, dV.y, pPoints->point1.x, pPoints->point1.y, pPoints->point2.x, pPoints->point2.y}) {
-            dists << RS_Units::formatLinear(a, unit,linearFormat, linearPrecision);
+            dists << formatLinear(a);
         }
 
-        QString angle = RS_Units::formatAngle(dV.angle(),
-                                              graphic->getAngleFormat(), graphic->getAnglePrecision());
+        double wcsAngle = dV.angle();
+        QString angle = formatWCSAngle(wcsAngle);
         commandMessage("--- ");
         const QString &templateStr = tr("Distance: %1\nCartesian: (%2 , %3)\nPolar: (%4 < %5)\nStart: (%6 , %7)\nEnd: (%8 , %9)");
         QString message = templateStr.arg(dists[0],dists[1],dists[2],dists[0],angle, dists[3], dists[4], dists[5], dists[6]);
@@ -75,11 +71,8 @@ void RS_ActionInfoDist::doTrigger() {
     }
 }
 
-void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    int status = getStatus();
-    RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
+void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -103,8 +96,6 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
-    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent end");
 }
 
 void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
@@ -112,15 +103,15 @@ void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector
         double distance = startPoint.distanceTo(mouse);
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Distance:"), formatLinear(distance));
-        msg.add(tr("Angle:"), formatAngle(startPoint.angleTo(mouse)));
+        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
         msg.add(tr("From:"), formatVector(startPoint));
         msg.add(tr("To:"), formatVector(mouse));
         appendInfoCursorZoneMessage(msg.toString(), 2, false);
     }
 }
 
-void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetPoint1:{
             fireCoordinateEvent(snap);
@@ -130,7 +121,7 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
         case (SetPoint2):{
             snap = getSnapAngleAwarePoint(e, pPoints->point1,  snap);
             fireCoordinateEvent(snap);
-            if (!isControl(e)){
+            if (!e->isControl){
                 moveRelativeZero(pPoints->point2);
             }
             break;
@@ -140,7 +131,7 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

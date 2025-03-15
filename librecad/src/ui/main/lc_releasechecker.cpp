@@ -28,6 +28,7 @@
 #include "main.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_settings.h"
 
 #ifdef major
@@ -38,8 +39,8 @@
 #undef minor
 #endif
 
-LC_TagInfo::LC_TagInfo(int major, int minor, int revision, int bugfix, const QString &label, const QString &tagName):major(major), minor(minor), revision(
-    revision), bugfix(bugfix), label(label), tagName(tagName) {
+LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):major(majorVer), minor(minorVer), revision(
+    revisionNum), bugfix(bugfixVer), label(labelVer), tagName(tagNameVer) {
 }
 
 

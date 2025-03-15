@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionsnapintersectionmanual.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
@@ -79,17 +77,15 @@ void RS_ActionSnapIntersectionManual::trigger(){
     }
 }
 
-void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent begin");
+void RS_ActionSnapIntersectionManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Entity *se = catchEntityByEvent(e);
+    RS_Vector mouse = e->graphPoint;
 
-    RS_Entity *se = catchEntity(e);
-    RS_Vector mouse = toGraph(e);
-
-    switch (getStatus()) {
-        case ChooseEntity1:
+    switch (status) {
+        case ChooseEntity1: {
             entity1 = se;
             break;
-
+        }
         case ChooseEntity2: {
             entity2 = se;
             *coord = mouse;
@@ -106,27 +102,22 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent *e){
 
             if (ip.valid){
                 deletePreview();
-                preview->addEntity(
-                    new RS_Circle(preview.get(),
-                                  {ip, graphicView->toGraphDX(4)}));
+                preview->addEntity(new RS_Circle(preview.get(),{ip, toGraphDX(4)}));
                 drawPreview();
 
                 updateCoordinateWidgetByRelZero(ip);
 
             }
-        }
             break;
-
+        }
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent end");
 }
 
-void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = toGraph(e);
-    RS_Entity *se = catchEntity(e);
+void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
+    RS_Entity *se = catchEntityByEvent(e);
 
     switch (status) {
         case ChooseEntity1:
@@ -149,7 +140,7 @@ void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, QMous
     }
 }
 
-void RS_ActionSnapIntersectionManual::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSnapIntersectionManual::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

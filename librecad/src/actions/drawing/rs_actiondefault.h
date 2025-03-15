@@ -28,8 +28,9 @@
 #define RS_ACTIONDEFAULT_H
 
 #include <memory>
+#include "lc_overlayboxaction.h"
 
-#include "rs_previewactioninterface.h"
+
 
 
 /**
@@ -39,7 +40,7 @@
  */
 //todo - support of moving by keyboard
 //todo - joint move of endpoint ref? So if moving ref will move refs for adjusent entities
-class RS_ActionDefault : public RS_PreviewActionInterface {
+class RS_ActionDefault : public LC_OverlayBoxAction {
     Q_OBJECT
 
     using BASE_CLASS = RS_PreviewActionInterface;
@@ -56,8 +57,6 @@ public:
     void suspend() override;
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mousePressEvent(QMouseEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
@@ -86,23 +85,28 @@ protected:
 
     bool allowEntityQuickInfoForCTRL = false;
     bool allowEntityQuickInfoAuto = false;
+    bool m_selectWithPressedMouseOnly = true; // fixme - sand - retrieve from setting (for backward compatibility or rather historic bug support)
+
     void checkSupportOfQuickEntityInfo();
     void clearQuickInfoWidget();
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 
-    void highlightHoveredEntities(QMouseEvent* currentMousePosition);
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonPress(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonPress(int status, LC_MouseEvent *e) override;
+
+    void highlightHoveredEntities(LC_MouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
     void updateMouseButtonHints() override;
-
     void createEditedLineDescription(RS_Line* clone, bool ctrlPressed, bool shiftPressed);
     void createEditedArcDescription(RS_Arc* clone, bool ctrlPressed, bool shiftPressed);
     void createEditedCircleDescription(RS_Circle* clone, bool ctrlPressed, bool shiftPressed);
-
     bool isShowEntityDescriptionOnHighlight();
-    void forceUpdateInfoCursor(const QMouseEvent *event);
+    void forceUpdateInfoCursor(const LC_MouseEvent *event);
+    RS_Entity* getClone(RS_Entity* e);
 };
 #endif

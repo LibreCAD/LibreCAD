@@ -42,10 +42,10 @@ void LC_ActionRemoveSplinePoints::doAfterTrigger() {
     }
 }
 
-void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
+void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr){
                if (mayModifySplineEntity(entity)) {
                    highlightHoverWithRefPoints(entity, true);
@@ -70,20 +70,20 @@ void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, QMous
     }
 }
 
-void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
-                graphicView->redraw(RS2::RedrawDrawing);
+                redrawDrawing();
                 setStatus(SetControlPoint);
             }
             break;
         }
         case SetControlPoint: {
-            RS_Vector mouse = snapPoint(e);
+            RS_Vector mouse = e->snapPoint;
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){

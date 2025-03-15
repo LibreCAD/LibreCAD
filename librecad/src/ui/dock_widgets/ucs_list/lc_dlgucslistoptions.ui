@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_DlgUCSListOptions</class>
+ <widget class="QDialog" name="LC_DlgUCSListOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>454</width>
+    <height>478</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>UCS List Options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Display</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="cbShowTooltip">
+        <property name="toolTip">
+         <string>If сhecked, the tooltip with additional information about UCS will be shown for table item.</string>
+        </property>
+        <property name="text">
+         <string>Toolip with UCS details for table items</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cbShowTypeIcon">
+        <property name="toolTip">
+         <string>If checked, the column with icon for type of UCS will be shown in the table. </string>
+        </property>
+        <property name="text">
+         <string>Type icon column</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbShowPositionAndAngle">
+        <property name="toolTip">
+         <string>If checked, column with details of UCS origin and angle will be shown in the table</string>
+        </property>
+        <property name="text">
+         <string>UCS Details column</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="cbShowGridType">
+        <property name="toolTip">
+         <string>If checked, the column with type of grid for UCS will be shown</string>
+        </property>
+        <property name="text">
+         <string>Grid Type column</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Editing</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cbRemovalConfirmation">
+        <property name="toolTip">
+         <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </string>
+        </property>
+        <property name="text">
+         <string>Ask for confirmation before UCS removal</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbSilentUpdate">
+        <property name="toolTip">
+         <string>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</string>
+        </property>
+        <property name="text">
+         <string>Silently update existing UCS if the same exists</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Operations</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="2" column="1">
+       <widget class="QComboBox" name="cbUCSApplyPolicy">
+        <property name="toolTip">
+         <string>Defines how drawing's view window should be adjusted after UCS is applied</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Zoom Auto</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pan, UCS Origin in Center</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pan, UCS Origin in Left-Bottom</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QCheckBox" name="cbSingleClickRestore">
+        <property name="toolTip">
+         <string>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</string>
+        </property>
+        <property name="text">
+         <string>Restore UCS on single click by table item</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblDoubleClick">
+        <property name="text">
+         <string>On double-click on table item</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cbDoubleClickPolicy">
+        <property name="toolTip">
+         <string>Defines which action should be performed on double click on the item of the table. </string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Do Nothing</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Edit UCS</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Apply UCS</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Highlight UCS</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>As UCS is applied, perform</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>UCS Highlight</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="3">
+       <widget class="QSpinBox" name="sbHighlightBlinkDelay">
+        <property name="toolTip">
+         <string>Defines delay between UCS marker blinks</string>
+        </property>
+        <property name="suffix">
+         <string> ms</string>
+        </property>
+        <property name="minimum">
+         <number>50</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="singleStep">
+         <number>25</number>
+        </property>
+        <property name="value">
+         <number>250</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Blink:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Blink Delay:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="sbHighlightBlinkCount">
+        <property name="toolTip">
+         <string>Defines amount of blinks of UCS marker for UCS highlighting</string>
+        </property>
+        <property name="suffix">
+         <string> times</string>
+        </property>
+        <property name="minimum">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <number>30</number>
+        </property>
+        <property name="value">
+         <number>15</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>LC_DlgUCSListOptions</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>LC_DlgUCSListOptions</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

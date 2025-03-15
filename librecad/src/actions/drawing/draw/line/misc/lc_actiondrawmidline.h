@@ -31,7 +31,6 @@ class LC_ActionDrawMidLine: public RS_PreviewActionInterface
     Q_OBJECT
 public:
     LC_ActionDrawMidLine(RS_EntityContainer &container, RS_GraphicView &graphicView);
-    void mouseMoveEvent(QMouseEvent *event) override;
     QStringList getAvailableCommands() override;
     double getOffset() const;
     void setOffset(double offset);
@@ -40,11 +39,12 @@ protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-protected:
+
     enum State{
         SetEntity1,
         SetEntity2,
@@ -72,6 +72,8 @@ protected:
     void restoreMainStatus(){setStatus(mainStatus);}
     void prepareLine(LineInfo &info, RS_Entity* ent, bool alternate);
     void doTrigger() override;
+
+
 };
 
 #endif // LC_ACTIONDRAWMIDLINE_H

@@ -26,8 +26,6 @@
 
 
 #include <QList>
-#include <QMouseEvent>
-
 #include "rs_actionpolylinesegment.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
@@ -68,7 +66,7 @@ void RS_ActionPolylineSegment::init(int status){
         initWithTarget = false;
         convertPolyline(container, targetEntity, false);
         commandMessage(tr("Polyline created"));
-        graphicView->redraw();
+        redraw();
         updateSelectionWidget();
         finish(false);
         return;
@@ -89,7 +87,7 @@ void RS_ActionPolylineSegment::init(int status){
             if (targetEntity){
                 convertPolyline(container, targetEntity, true);
                 commandMessage(tr("Polyline created"));
-                graphicView->redraw();
+                redraw();
                 updateSelectionWidget();
                 finish(false);
                 return;
@@ -293,10 +291,6 @@ void RS_ActionPolylineSegment::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineSegment::trigger()");
 
     if (targetEntity != nullptr /*&& selectedSegment && targetPoint.valid */){
-//        targetEntity->setHighlighted(false);
-//        graphicView->drawEntity(targetEntity);
-//RLZ: do not use container->optimizeContours(); because it invalidate targetEntity
-//        container->optimizeContours();
         convertPolyline(container, targetEntity);
 
         targetEntity = nullptr;
@@ -304,36 +298,26 @@ void RS_ActionPolylineSegment::doTrigger() {
     }
 }
 
-void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){
-    deletePreview();
-    deleteHighlights();
-    snapPoint(event);
-    RS_Entity* en = catchEntityOnPreview(event, entityType);
+void RS_ActionPolylineSegment::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
+    RS_Entity* en = catchAndDescribe(event, entityType, RS2::ResolveNone);
     if (en != nullptr){
         highlightHover(en);
         if (!(en->rtti() == RS2::EntityPolyline && ((RS_Polyline *) en)->isClosed())){
             convertPolyline(preview.get(), en, false, true);
         }
     }
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity:
-            targetEntity = catchEntity(e, entityType);
+            targetEntity = catchEntityByEvent(e, entityType);
             if (targetEntity == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
                 commandMessage(tr("Entity can not be a closed polyline."));
             } else {
-                //TODO, verify topology of selected
-//                    targetEntity->setHighlighted(true);
-//                    graphicView->drawEntity(targetEntity);
-
-//                setStatus(SetReferencePoint);
-                graphicView->redraw();
+                redraw();
                 trigger();
             }
             break;
@@ -342,10 +326,10 @@ void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent 
     }
 }
 
-void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {
+void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  LC_MouseEvent *e) {
     deleteSnapper();
     if (targetEntity){
-         graphicView->redraw();
+         redraw();
     }
     initPrevious(status);
 }

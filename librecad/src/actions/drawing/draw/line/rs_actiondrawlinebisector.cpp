@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinebisector.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
@@ -101,18 +99,12 @@ void RS_ActionDrawLineBisector::doTrigger() {
                             line2);
 }
 
-
-void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
-
-    snapPoint(e); // update coordinates widget
-    RS_Vector mouse = toGraph(e);
+void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     deleteSnapper();
-    switch (getStatus()) {
+    switch (status) {
         case SetLine1: {
-            RS_Entity *en = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -121,7 +113,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
         case SetLine2: {
             highlightSelected(line1);
             pPoints->coord2 = mouse;
-            RS_Entity *en = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, enTypeList, RS2::ResolveAll);
             if (en == line1){
                 line2 = nullptr;
             } else if (en != nullptr){
@@ -135,8 +127,13 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
                                                    line1,
                                                    line2);
                 if (ent != nullptr){
-                    // fixme sand - more than one mya be created, but if only one - it's good to show description
                     highlightHover(line2);
+                    if (number == 1){
+                        prepareEntityDescription(ent, RS2::EntityDescriptionLevel::DescriptionCreating);
+                    }
+                    else{
+                        appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
+                    }
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
                         previewRefPoint(ent->getStartpoint());
@@ -157,18 +154,14 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
-
-    RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = toGraph(e);
+void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetLine1: {
             pPoints->coord1 = mouse;
-            RS_Entity *en = catchEntity(mouse,enTypeList,RS2::ResolveAll);
+            RS_Entity *en = RS_Snapper::catchEntity(mouse,enTypeList,RS2::ResolveAll);
             if (isLine(en)){
                 line1 = dynamic_cast<RS_Line *>(en);
                 line2 = nullptr;
@@ -184,10 +177,9 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, QMouseEvent
         default:
             break;
     }
-
 }
 
-void RS_ActionDrawLineBisector::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineBisector::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

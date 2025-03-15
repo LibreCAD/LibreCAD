@@ -123,7 +123,7 @@ void QG_DlgOptionsGeneral::init() {
         }
     }
 
-    LC_GROUP("Appearance");
+    LC_GROUP("Appearance"); // fixme - refactor to several groups?
     {
         // set current language:
         QString def_lang = "en";
@@ -303,6 +303,58 @@ void QG_DlgOptionsGeneral::init() {
         checked = LC_GET_BOOL("FirstTimeNoZoom", false);
         cbFirstTimeNoZoom->setChecked(checked);
 
+        checked = LC_GET_BOOL("ShowUCSZeroMarker", false);
+        cbShowUCSZeroMarker->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowWCSZeroMarker", true);
+        cbShowWCSZeroMarker->setChecked(checked);
+
+        int zeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
+        sbCoordinateSystemMarkerSize->setValue(zeroMarkerSize);
+
+        int zeroMarkerFntSize = LC_GET_INT("ZeroMarkerFontSize", 10);
+        sbUCSFontSize->setValue(zeroMarkerFntSize);
+
+        QString fontName = LC_GET_STR("ZeroMarkerFontName", "Verdana");
+        QFont font(fontName);
+        fcbUCSFont->setCurrentFont(font);
+
+        checked = LC_GET_BOOL("ShowDraftModeMarker", true);
+        cbShowDraftModeMarker->setChecked(checked);
+
+        fontName =  LC_GET_STR("DraftMarkerFontName", "Verdana");
+        fcbDraftModeFont->setCurrentFont(QFont(fontName));
+
+        int draftMarkerFntSize = LC_GET_INT("DraftMarkerFontSize", 10);
+        sbDraftModeFontSize->setValue(draftMarkerFntSize);
+
+        bool showAnglesBasisMark = LC_GET_BOOL("AnglesBasisMarkEnabled", true);
+        cbAnglesMarkVisible->setChecked(showAnglesBasisMark);
+
+        int anglesBasisMarkPolicy = LC_GET_INT("AnglesBasisMarkPolicy", 0);
+        cbAnglesBaseShowPolicy->setCurrentIndex(anglesBasisMarkPolicy);
+
+        int angleSnapMarkerSize = LC_GET_INT("AngleSnapMarkerSize", 20);
+        sbAngleSnapMarkRadius->setValue(angleSnapMarkerSize);
+
+        checked = LC_GET_BOOL("ModifyOnViewChange", true);
+        cbChangingViewOnlyModifiesDrawing->setChecked(checked);
+
+        checked = LC_GET_BOOL("SnapGridIgnoreIfNoGrid", false);
+        cbDontSnapToInvisibleGrid->setChecked(checked);
+    }
+    LC_GROUP_END();
+
+    LC_GROUP("Snap");
+    {
+        double val = LC_GET_INT("AdvSnapOnEntitySwitchToFreeDistance", 500) / 100.0;
+        sbFreeSnapSwitchDistance->setValue(val);
+
+        int catchEntitySnapDistance =  LC_GET_INT("AdvSnapEntityCatchRange", 32);
+        sbCatchEntitySnapDistance->setValue(catchEntitySnapDistance);
+
+        double gridCellFactor = LC_GET_INT("AdvSnapGridCellSnapFactor", 25) / 100.0;
+        sbMinGridCellSnapFactor->setValue(gridCellFactor);
     }
     LC_GROUP_END();
 
@@ -313,6 +365,9 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("ShowAbsolute", true);
         cbInfoOverlayAbsolutePosition->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowAbsoluteWCS", false);
+        cbShowWorldCoordinates->setChecked(checked);
 
         checked = LC_GET_BOOL("ShowRelativeDA", true);
         cbInfoOverlayRelative->setChecked(checked);
@@ -385,6 +440,24 @@ void QG_DlgOptionsGeneral::init() {
 
         bool drawTextsAsDraftInPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
         cbTextDraftInPreview->setChecked(drawTextsAsDraftInPreview);
+
+
+        bool drawInterpolate = LC_GET_BOOL("ArcRenderInterpolate", false);
+        rbRenderArcInterpolate->setChecked(drawInterpolate);
+        rbRenderArcQT->setChecked(!drawInterpolate);
+
+        bool segmentFixed = LC_GET_BOOL("ArcRenderInterpolateSegmentFixed", true);
+        rbRenderArcMethodFixed->setChecked(segmentFixed);
+        rbRenderArcMethodSagitta->setChecked(!segmentFixed);
+
+        int angle100 = LC_GET_INT("ArcRenderInterpolateSegmentAngle", 500);
+        sbRenderArcSegmentAngle->setValue(angle100 / 100.0);
+
+        int sagittaMax = LC_GET_INT("ArcRenderInterpolateSegmentSagitta",90);
+        sbRenderArcMaxSagitta->setValue(sagittaMax / 100.0);
+
+        bool checked = LC_GET_BOOL("CircleRenderAsArcs", false);
+        rbRenderCirclesAsArcs->setChecked(checked);
     }
 
     LC_GROUP("NewDrawingDefaults");
@@ -398,7 +471,7 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbMetaGridPointsColor, LC_GET_STR("meta_grid", RS_Settings::color_meta_grid_points));
         initComboBox(cbMetaGridLinesColor, LC_GET_STR("meta_grid_lines", RS_Settings::color_meta_grid_lines));
         initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::select));
-        initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::highlight));
+        initComboBox(cbHighlightedColor, LC_GET_STR("highlight",RS_Settings::select));
         initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::start_handle));
         initComboBox(cbHandleColor, LC_GET_STR("handle", RS_Settings::handle));
         initComboBox(cbEndHandleColor, LC_GET_STR("end_handle", RS_Settings::end_handle));
@@ -419,6 +492,11 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbInfoOverlaySnapColor, LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
         initComboBox(cbInfoOverlayCommandPromptColor, LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
         initComboBox(cbInfoOverlayRelativeColor, LC_GET_STR("info_overlay_relative",RS_Settings::overlayInfoCursorRelativePos));
+
+        initComboBox(cbDraftModeMarkerColor, LC_GET_STR("draft_mode_marker",RS_Settings::select));
+
+        initComboBox(cbAnglesMarkColorDirection, LC_GET_STR("angles_basis_direction",RS_Settings::anglesBasisDirection));
+        initComboBox(cbAnglesMarkColorAngleRay, LC_GET_STR("angles_basis_angleray",RS_Settings::anglesBasisAngleRay));
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -491,6 +569,11 @@ void QG_DlgOptionsGeneral::init() {
         else{
             rbGridOrtho->setChecked(true);
         }
+
+        const QString &defaultAnglesBase = LC_GET_STR("AnglesBaseAngle", "0.0");
+        bool anglesCounterClockwise = LC_GET_BOOL("AnglesCounterClockwise", true);
+        rbDefAngleBasePositive->setChecked(anglesCounterClockwise);
+        leDefAngleBaseZero->setText(defaultAnglesBase);
     }
     LC_GROUP_END();
 
@@ -509,6 +592,7 @@ void QG_DlgOptionsGeneral::init() {
     LC_GROUP("CADPreferences");
     {
         cbAutoZoomDrawing->setChecked(LC_GET_BOOL("AutoZoomDrawing"));
+        cbAnglesInputInDecimalDegreesOnly->setChecked(LC_GET_BOOL("InputAnglesAsDecimalsOnly",false));
     }
     LC_GROUP_END();
 
@@ -628,6 +712,31 @@ void QG_DlgOptionsGeneral::ok(){
 
             LC_SET("PanOnZoom", cbPanOnWheelZoom->isChecked());
             LC_SET("FirstTimeNoZoom", cbFirstTimeNoZoom->isChecked());
+
+            LC_SET("ShowUCSZeroMarker", cbShowUCSZeroMarker->isChecked());
+            LC_SET("ShowWCSZeroMarker",cbShowWCSZeroMarker->isChecked());
+            LC_SET("ZeroMarkerSize", sbCoordinateSystemMarkerSize->value());
+            LC_SET("ZeroMarkerFontSize",sbUCSFontSize->value());
+            LC_SET("ZeroMarkerFontName", fcbUCSFont->currentText());
+
+
+            LC_SET("ShowDraftModeMarker", cbShowDraftModeMarker->isChecked());
+            LC_SET("DraftMarkerFontName", fcbDraftModeFont->currentText());
+            LC_SET("DraftMarkerFontSize", sbDraftModeFontSize->value());
+
+            LC_SET("AnglesBasisMarkEnabled", cbAnglesMarkVisible->isChecked());
+            LC_SET("AnglesBasisMarkPolicy", cbAnglesBaseShowPolicy->currentIndex());
+            LC_SET("AngleSnapMarkerSize", sbAngleSnapMarkRadius->value());
+            LC_SET("ModifyOnViewChange", cbChangingViewOnlyModifiesDrawing->isChecked());
+            LC_SET("SnapGridIgnoreIfNoGrid", cbDontSnapToInvisibleGrid->isChecked());
+        }
+        LC_GROUP_END();
+
+        LC_GROUP("Snap");
+        {
+            LC_SET("AdvSnapOnEntitySwitchToFreeDistance", (int)(sbFreeSnapSwitchDistance->value()*100));
+            LC_SET("AdvSnapEntityCatchRange", sbCatchEntitySnapDistance->value());
+            LC_SET("AdvSnapGridCellSnapFactor", (int) (sbMinGridCellSnapFactor->value()*100));
         }
         LC_GROUP_END();
 
@@ -635,6 +744,7 @@ void QG_DlgOptionsGeneral::ok(){
         {
             LC_SET("Enabled", cbInfoOverlayEnable->isChecked());
             LC_SET("ShowAbsolute", cbInfoOverlayAbsolutePosition->isChecked());
+            LC_SET("ShowAbsoluteWCS",cbShowWorldCoordinates->isChecked());
             LC_SET("ShowRelativeDA", cbInfoOverlayRelative->isChecked());
             LC_SET("ShowRelativeDD", cbInfoOverlayRelativeDeltas->isChecked());
             LC_SET("ShowSnapInfo", cbInfoOverlaySnap->isChecked());
@@ -660,6 +770,12 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("MinEllipseMinor", (int)(sbRenderMinEllipseMinor->value()*100));
             LC_SET("DrawTextsAsDraftInPanning", cbTextDraftOnPanning->isChecked());
             LC_SET("DrawTextsAsDraftInPreview", cbTextDraftInPreview->isChecked());
+
+            LC_SET("ArcRenderInterpolate", rbRenderArcInterpolate->isChecked());
+            LC_SET("ArcRenderInterpolateSegmentFixed", rbRenderArcMethodFixed->isChecked());
+            LC_SET("ArcRenderInterpolateSegmentAngle", sbRenderArcSegmentAngle->value()*100);
+            LC_SET("ArcRenderInterpolateSegmentSagitta", sbRenderArcMaxSagitta->value()*100);
+            LC_SET("CircleRenderAsArcs", rbRenderCirclesAsArcs->isChecked());
         }
 
         LC_GROUP("Colors");
@@ -688,11 +804,15 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("overlay_box_fill_inv", cbOverlayBoxFillInverted->currentText());
             LC_SET("overlay_box_transparency",sbOverlayBoxTransparency->value());
 
-
             LC_SET("info_overlay_absolute",cbInfoOverlayAbsolutePositionColor->currentText());
             LC_SET("info_overlay_snap", cbInfoOverlaySnapColor->currentText());
-            LC_GET_STR("info_overlay_prompt",cbInfoOverlayCommandPromptColor->currentText());
-            LC_GET_STR("info_overlay_relative",cbInfoOverlayRelativeColor->currentText());
+            LC_SET("info_overlay_prompt",cbInfoOverlayCommandPromptColor->currentText());
+            LC_SET("info_overlay_relative",cbInfoOverlayRelativeColor->currentText());
+
+            LC_SET("angles_basis_direction",cbAnglesMarkColorDirection->currentText());
+            LC_SET("angles_basis_angleray",cbAnglesMarkColorAngleRay->currentText());
+
+            LC_SET("draft_mode_marker",cbDraftModeMarkerColor->currentText());
         }
         LC_GROUP_END();
 
@@ -741,6 +861,9 @@ void QG_DlgOptionsGeneral::ok(){
 
                 LC_SET("IsoGridView", defaultIsoView);
             }
+
+            LC_SET("AnglesBaseAngle", leDefAngleBaseZero->text());
+            LC_SET("AnglesCounterClockwise", rbDefAngleBasePositive->isChecked());
         }
         LC_GROUP_END();
 
@@ -755,6 +878,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP("CADPreferences");
         {
             LC_SET("AutoZoomDrawing", cbAutoZoomDrawing->isChecked());
+            LC_SET("InputAnglesAsDecimalsOnly", cbAnglesInputInDecimalDegreesOnly->isChecked());
         }
         LC_GROUP_END();
 
@@ -896,6 +1020,10 @@ void QG_DlgOptionsGeneral::on_pbOverlayBoxFillInverted_clicked() {
     set_color(cbOverlayBoxFillInverted, QColor(RS_Settings::overlayBoxFillInverted));
 }
 
+void QG_DlgOptionsGeneral::on_pbDraftModeColor_clicked() {
+    set_color(cbDraftModeMarkerColor, QColor(RS_Settings::select));
+}
+
 void QG_DlgOptionsGeneral::on_pbcbInfoOverlayAbsolutePositionColor_clicked() {
     set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorAbsolutePos));
 }
@@ -910,6 +1038,14 @@ void QG_DlgOptionsGeneral::on_pbInfoOverlayRelativeColor_clicked() {
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlayCommandPromptColor_clicked() {
     set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorCommandPrompt));
+}
+
+void QG_DlgOptionsGeneral::on_pbAnglesMarkDirection_clicked() {
+    set_color(cbAnglesMarkColorDirection, QColor(RS_Settings::anglesBasisDirection));
+}
+
+void QG_DlgOptionsGeneral::on_pbAnglesMarkAngleRay_clicked() {
+    set_color(cbAnglesMarkColorAngleRay, QColor(RS_Settings::anglesBasisAngleRay));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {

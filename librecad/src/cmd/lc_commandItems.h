@@ -1031,6 +1031,8 @@ const LC_CommandItem g_commandList[] = {
     // translations
 std::vector<std::pair<QString, QString>> g_transList={
         {"angle",QObject::tr("angle")},
+        {"angle1",QObject::tr("angle1")},
+        {"angle2",QObject::tr("angle2")},
         {"dpi",QObject::tr("dpi")},
         {"close",QObject::tr("close")},
         {"chordlen",QObject::tr("chordlen")},
@@ -1124,6 +1126,8 @@ std::vector<std::pair<QString, QString>> g_transList={
         //not used as command keywords
         // used in function,checkCommand()
         {QObject::tr("angle"),"angle"},
+        {QObject::tr("angle1"),"angle1"},
+        {QObject::tr("angle2"),"angle2"},
         {QObject::tr("ang", "angle"),"angle"},
         {QObject::tr("an", "angle"),"angle"},
 

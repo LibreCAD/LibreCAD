@@ -33,6 +33,7 @@
 #include <QList>
 #include "rs.h"
 #include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 
 class RS_Entity;
 class RS_GraphicView;
@@ -40,6 +41,8 @@ class RS_Vector;
 class RS_Preview;
 class QMouseEvent;
 class RS_EntityContainer;
+class LC_GraphicViewport;
+
 
 /**
   * This class holds information on how to snap the mouse.
@@ -80,8 +83,6 @@ struct RS_SnapMode {
     bool snapAngle          {false}; //< Whether to snap along line under certain angle
 
     RS2::SnapRestriction restriction {RS2::RestrictNothing}; /// The restriction on the free snap.
-
-    double distance {5.0}; //< The distance to snap before defaulting to free snapping.
 
     /**
       * Disable all snapping.
@@ -148,10 +149,11 @@ public:
      * @see catchEntity()
      */
     void setSnapRange(int r){
-        catchEntityGuiRange = r;
+        m_catchEntityGuiRange = r;
     }
 
     /**manually set snapPoint*/
+    bool isSnapToGrid();
     RS_Vector snapPoint(const RS_Vector &coord, bool setSpot = false);
     RS_Vector snapPoint(QMouseEvent *e);
     RS_Vector snapFree(QMouseEvent *e);
@@ -169,8 +171,9 @@ public:
     RS_Vector restrictOrthogonal(const RS_Vector &coord);
     RS_Vector restrictHorizontal(const RS_Vector &coord);
     RS_Vector restrictVertical(const RS_Vector &coord);
-    //RS_Entity* catchLeafEntity(const RS_Vector& pos);
-    //RS_Entity* catchLeafEntity(QMouseEvent* e);
+    RS_Vector restrictHorizontal(const RS_Vector &base, const RS_Vector &coord) const;
+    RS_Vector restrictVertical(const RS_Vector &base, const RS_Vector &coord) const;
+    RS_Vector restrictAngle(const RS_Vector &basePoint, const RS_Vector& snap, double angle);
     RS_Entity *catchEntity(
         const RS_Vector &pos,
         RS2::ResolveLevel level = RS2::ResolveNone);
@@ -202,15 +205,20 @@ public:
     void hideSnapOptions();
     virtual void drawSnapper();
     void drawInfoCursor();
+    bool hasNonDefaultAnglesBasis();
+    LC_GraphicViewport* getViewPort() {return viewport;}
 protected:
     void deleteSnapper();
     void deleteInfoCursor();
     double getSnapRange() const;
     RS_EntityContainer *container = nullptr;
     RS_GraphicView *graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     RS_Entity *keyEntity = nullptr;
     RS_SnapMode snapMode{};
-    //RS2::SnapRestriction snapRes;
+
+    double m_distanceBeforeSwitchToFreeSnap {5.0}; //< The distance to snap before defaulting to free snapping.
+    double m_minGridCellSnapFactor = 0.25;
     /**
      * Snap distance for snapping to points with a
      * given distance from endpoints.
@@ -224,17 +232,24 @@ protected:
     /**
      * Snap range for catching entities. In GUI units
      */
-    int catchEntityGuiRange = 32;
+    int m_catchEntityGuiRange = 32;
+
+
     bool finished{false};
 
     LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
     LC_InfoCursorData infoCursorOverlayData = LC_InfoCursorData();
 
+    // values cached for the efficiency
     RS2::LinearFormat m_linearFormat{};
-    int m_linearPrecision = 0;
+    int m_linearPrecision= 0;
     RS2::AngleFormat m_angleFormat{};
     int m_anglePrecision = 0;
     RS2::Unit m_unit{};
+    double m_anglesBase = 0.0;
+    bool m_anglesCounterClockWise = true;
+
+    bool m_ignoreSnapToGridIfNoGrid = false;
 
     RS_Vector toGraph(const QMouseEvent *e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
@@ -244,25 +259,53 @@ protected:
     QString getSnapName(int snapType);
     QString getRestrictionName(int restriction);
     void preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs, const RS_Vector &relative);
-    LC_InfoCursor* obtainInfoCursor();
-    void clearInfoCursor();
+    LC_OverlayInfoCursor* obtainInfoCursor();
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
 
-    QString formatLinear(double value);
-    QString formatAngle(double value);
-    QString formatVector(const RS_Vector& value);
-    QString formatRelative(const RS_Vector& value);
-    QString formatPolar(const RS_Vector& value);
-    QString formatRelativePolar(const RS_Vector& value);
+    RS_Vector doSnapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution);
+
+    QString formatLinear(double value) const;
+    QString formatWCSAngle(double wcsAngle) const;
+    QString formatAngleRaw(double angle) const;
+    QString formatVector(const RS_Vector& value) const;
+    QString formatVectorWCS(const RS_Vector &value) const;
+    QString formatRelative(const RS_Vector& value) const;
+    QString formatPolar(const RS_Vector& value) const;
+    QString formatRelativePolar(const RS_Vector& wcsAngle) const;
     void forceUpdateInfoCursor(const RS_Vector &pos);
     bool isInfoCursorForModificationEnabled() const;
-
+    double toWorldAngle(double ucsAbsAngle) const;
+    double toWorldAngleDegrees(double ucsAbsAngleDegrees) const;
+    double toUCSAngle(double wcsAngle) const;
+    double toUCSBasisAngle(double wcsAngle) const;
+    double toUCSBasisAngleDegrees(double wcsAngle) const;
+    double ucsAbsToBasisAngle(double ucsAbsAngle) const;
+    double ucsBasisToAbsAngle(double ucsRelAngle) const;
+    double adjustRelativeAngleSignByBasis(double relativeAngle) const;
+    double toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const;
+    double toWorldAngleFromUCSBasis(double ucBasisAngle) const;
+    RS_Vector toWorld(const RS_Vector& ucsPos) const;
+    RS_Vector toWorldDelta(const RS_Vector &ucsDelta) const;
+    RS_Vector toUCS(const RS_Vector& worldPos) const;
+    RS_Vector toUCSDelta(const RS_Vector& worldPos) const;
+    void calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const;
+    double getCatchDistance(double catchDistance, int catchEntityGuiRange);
+    double toGuiDX(double wcsDX) const;
+    double toGraphDX(int wcsDX) const;
+    void redraw(RS2::RedrawMethod method = RS2::RedrawMethod::RedrawAll)/* {graphicView->redraw(method);}*/;
+    void redrawDrawing();
+    void redrawAll();
+    void enableCoordinateInput();
+    void disableCoordinateInput();
+    RS_Vector const &getRelativeZero() const;
+    void initSettings();
+    virtual void initFromSettings();
+    virtual void initFromGraphic(RS_Graphic* graphic);
 private:
-
     /**
      * @brief updateUnitFormat update format parameters (m_linearFormat etc.) from the current rs_graphic
      */
-    void updateUnitFormat();
+    void updateUnitFormat( RS_Graphic* graphic);
 
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

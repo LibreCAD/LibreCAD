@@ -32,9 +32,8 @@
 
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
@@ -243,14 +242,24 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double 
         double a1 = center.angleTo(prepend ? v : data.endpoint);
         double a2 = center.angleTo(prepend ? data.startpoint : v);
 
-        RS_EllipseData const d{
-            center,
-            RS_Vector{radius, 0.},
-            1.,
-            a1, a2,
-            reversed};
+        // fixme - SAND - Should we ALWAYS create ellipse arc in polyline? How such polyline will be saved then?
+        if (createEllipticArcs) {
+            RS_EllipseData const d{
+                center,
+                RS_Vector{radius, 0.},
+                1.,
+                a1, a2,
+                reversed};
 
-        entity = std::make_unique<RS_Ellipse>(this, d);
+            entity = std::make_unique<RS_Ellipse>(this, d);
+        }
+        else{
+            RS_ArcData const d(center, radius,
+                               a1, a2,
+                               reversed);
+
+            entity = std::make_unique<RS_Arc>(this, d);
+        }
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
         entity->setLayer(nullptr);
@@ -682,13 +691,15 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
 /**
  * Slightly optimized drawing for polylines.
  */
-void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
-//    if (painter == nullptr || view == nullptr) return;
-    painter->drawPolyline(*this, *view);
+void RS_Polyline::draw(RS_Painter* painter) {
+    if (count() == 0){
+        return;
+    }
+    painter->drawEntityPolyline(this);
 }
 
-void RS_Polyline::drawAsChild(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
-    painter->drawPolyline(*this, *view);
+void RS_Polyline::drawAsChild(RS_Painter *painter) {
+    painter->drawEntityPolyline(this);
 }
 
 /**

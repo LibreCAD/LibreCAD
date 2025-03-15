@@ -23,14 +23,14 @@
 #ifndef RS_ACTIONSELECTBASE_H
 #define RS_ACTIONSELECTBASE_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_overlayboxaction.h"
 
 /**
  * This class is the base class to all select actions.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectBase:public RS_PreviewActionInterface {
+class RS_ActionSelectBase:public LC_OverlayBoxAction {
 Q_OBJECT
 
 public:
@@ -47,7 +47,7 @@ protected:
     const QList<RS2::EntityType> catchForSelectionEntityTypes;
     virtual bool isEntityAllowedToSelect([[maybe_unused]]RS_Entity *ent) const { return true; };
     bool selectEntity(RS_Entity* entityToSelect, bool selectContour);
-    RS_Entity *selectionMouseMove(QMouseEvent *event);
+    RS_Entity *selectionMouseMove(LC_MouseEvent *event);
     virtual void selectionFinishedByKey(QKeyEvent *e, bool escape) = 0;
     virtual bool isShowRefPointsOnHighlight();
     void deselectAll();

@@ -30,11 +30,16 @@
 #include "rs_eventhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_snapper.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_settings.h"
+#include "rs_units.h"
+#include "lc_convert.h"
 
 namespace {
     bool isActive(const std::shared_ptr<RS_ActionInterface>& action) {
@@ -101,9 +106,8 @@ namespace {
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(QObject *parent):QObject(parent) {
-    connect(parent, SIGNAL(relative_zero_changed(const RS_Vector&)),
-            this, SLOT(setRelativeZero(const RS_Vector&)));
+RS_EventHandler::RS_EventHandler(RS_GraphicView *parent):QObject(parent), graphicView{parent} {
+    connect(parent, &RS_GraphicView::relativeZeroChanged,this, &RS_EventHandler::setRelativeZero);
 }
 
 /**
@@ -288,19 +292,22 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 
     if (coordinateInputEnabled) {
         if (!e->isAccepted()) {
-
             if(hasAction()){
                 // handle quick shortcuts for absolute/current origins:
                 if (cmd.length() == 1) {
-                    RS_Vector at = relative_zero;
                     switch (cmd[0].toLatin1()) {
-                        case '0':
-                            at.set(0,0);
-                            [[fallthrough]];
+                        case '0': {
+                            RS_Vector ucs0 = RS_Vector(0,0,0);
+                            RS_Vector wcs0 = toWCS(ucs0);
+                            RS_CoordinateEvent ce(wcs0, true, false);
+                            currentActions.last()->coordinateEvent(&ce);
+                            e->accept();
+                            break;
+                        }
                         case '.':
-                        case ',':
-                        {
-                            RS_CoordinateEvent ce(at);
+                        case ',':{
+                            RS_Vector wcs0 = relative_zero;
+                            RS_CoordinateEvent ce(wcs0, false, true);
                             currentActions.last()->coordinateEvent(&ce);
                             e->accept();
                             break;
@@ -310,87 +317,130 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     }
                 }
 
-                // handle absolute cartesian coordinate input:
-                if (!e->isAccepted() && cmd.contains(',') && cmd.at(0)!='@') {
-                    int commaPos = cmd.indexOf(',');
-                    RS_DEBUG->print("RS_EventHandler::commandEvent: 001");
-                    bool ok1, ok2;
-                    RS_DEBUG->print("RS_EventHandler::commandEvent: 002");
-                    double x = RS_Math::eval(updateForFraction(cmd.left(commaPos)), &ok1);
-                    RS_DEBUG->print("RS_EventHandler::commandEvent: 003a");
-                    double y = RS_Math::eval(updateForFraction(cmd.mid(commaPos+1)), &ok2);
-                    RS_DEBUG->print("RS_EventHandler::commandEvent: 004");
-
-                    if (ok1 && ok2) {
-                        RS_DEBUG->print("RS_EventHandler::commandEvent: 005");
-                        RS_CoordinateEvent ce(RS_Vector(x,y));
-                        RS_DEBUG->print("RS_EventHandler::commandEvent: 006");
-                        currentActions.last()->coordinateEvent(&ce);
-                    } else
-                        RS_DIALOGFACTORY->commandMessage(
-                            "Expression Syntax Error");
-                    e->accept();
-                }
-
-                // handle relative cartesian coordinate input:
-                if (!e->isAccepted()) {
-                    if (cmd.contains(',') && cmd.at(0)=='@') {
-                        int commaPos = cmd.indexOf(',');
+                bool wcsCoordinates = cmd.at(0) == '!';
+                if (wcsCoordinates){ // proceed absolute wcs coordinates
+                    bool isCartesian = cmd.contains(',');
+                    cmd = cmd.mid(1);
+                    if (isCartesian) {
+                        int separatorPos = cmd.indexOf(',');
                         bool ok1, ok2;
-                        double x = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos-1)), &ok1);
-                        double y = RS_Math::eval(updateForFraction(cmd.mid(commaPos+1)), &ok2);
-
+                        double x = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
+                        double y = RS_Math::eval(updateForFraction(cmd.mid(separatorPos + 1)), &ok2);
                         if (ok1 && ok2) {
-                            RS_CoordinateEvent ce(RS_Vector(x,y) + relative_zero);
-
+                            const RS_Vector &wcsPosition = RS_Vector(x, y);
+                            RS_CoordinateEvent ce(wcsPosition);
                             currentActions.last()->coordinateEvent(&ce);
-                            //                            currentActions[actionIndex]->coordinateEvent(&ce);
-                        } else
-                            RS_DIALOGFACTORY->commandMessage(
-                                "Expression Syntax Error");
+                        } else {
+                            RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                        }
                         e->accept();
                     }
-                }
-
-                // handle absolute polar coordinate input:
-                if (!e->isAccepted()) {
-                    if (cmd.contains('<') && cmd.at(0)!='@') {
-                        int commaPos = cmd.indexOf('<');
-                        bool ok1, ok2;
-                        double r = RS_Math::eval(updateForFraction(cmd.left(commaPos)), &ok1);
-                        double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
-
-                        if (ok1 && ok2) {
-                            RS_Vector pos{
-                                RS_Vector::polar(r,RS_Math::deg2rad(a))};
-                            RS_CoordinateEvent ce(pos);
-                            currentActions.last()->coordinateEvent(&ce);
-                        } else
-                            RS_DIALOGFACTORY->commandMessage(
-                                "Expression Syntax Error");
-                        e->accept();
+                    else{
+                        bool isPolar = cmd.contains('<');
+                        if (isPolar) {  // proceed absolute polar coordinates
+                            int separatorPos = cmd.indexOf('<');
+                            bool ok1, ok2;
+                            double r = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
+                            const QString &angleStr = cmd.mid(separatorPos + 1);
+                            double angleDegrees = evalAngleValue(angleStr, ok2);
+                            if (ok1 && ok2) {
+                                double wcsAngle = RS_Math::deg2rad(angleDegrees);
+                                RS_Vector wcsPos = RS_Vector(r, wcsAngle);
+                                RS_CoordinateEvent ce(wcsPos);
+                                currentActions.last()->coordinateEvent(&ce);
+                            } else {
+                                RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                            }
+                            e->accept();
+                        }
+                        else{
+                            RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                            e->accept();
+                        }
                     }
                 }
+                else {
+                    bool absoluteCoordinates = cmd.at(0) != '@';
+                    if (!e->isAccepted()) {
+                        bool isCartesian = cmd.contains(',');
+                        if (isCartesian) {
+                            int separatorPos = cmd.indexOf(',');
+                            if (absoluteCoordinates) { // absolute cartesian coordinates
+                                bool ok1, ok2;
+                                double x = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
+                                double y = RS_Math::eval(updateForFraction(cmd.mid(separatorPos + 1)), &ok2);
+                                if (ok1 && ok2) {
+                                    const RS_Vector &ucsPosition = RS_Vector(x, y);
+                                    RS_Vector wcsPosition = toWCS(ucsPosition);
+                                    RS_CoordinateEvent ce(wcsPosition);
+                                    currentActions.last()->coordinateEvent(&ce);
+                                } else {
+                                    RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                                }
+                                e->accept();
+                            } else { // relative cartesian coordinates
+                                bool ok1, ok2;
+                                double x = RS_Math::eval(updateForFraction(cmd.mid(1, separatorPos - 1)), &ok1);
+                                double y = RS_Math::eval(updateForFraction(cmd.mid(separatorPos + 1)), &ok2);
 
-                // handle relative polar coordinate input:
-                if (!e->isAccepted()) {
-                    if (cmd.contains('<') && cmd.at(0)=='@') {
-                        int commaPos = cmd.indexOf('<');
-                        bool ok1, ok2;
-                        double r = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos-1)), &ok1);
-                        double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
+                                if (ok1 && ok2) {
+                                    const RS_Vector &ucsOffset = RS_Vector(x, y);
+                                    const RS_Vector ucsRelZero = toUCS(relative_zero);
+                                    const RS_Vector ucsPosition = ucsOffset + ucsRelZero;
+                                    const RS_Vector &wcsPosition = toWCS(ucsPosition);
+                                    RS_CoordinateEvent ce(wcsPosition);
+                                    currentActions.last()->coordinateEvent(&ce);
+                                } else {
+                                    RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                                }
+                                e->accept();
+                            }
+                        } else { // try to handle polar coordinate input:
+                            bool isPolar = cmd.contains('<');
+                            if (isPolar) {
+                                int separatorPos = cmd.indexOf('<');
+                                if (absoluteCoordinates) { // handle absolute polar coordinate input:
+                                    bool ok1, ok2;
+                                    double ucsR = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
+                                    const QString &angleStr = cmd.mid(separatorPos + 1);
+                                    double ucsBasisAngleDegrees = evalAngleValue(angleStr, ok2);
 
-                        if (ok1 && ok2) {
-                            RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
-                            RS_CoordinateEvent ce(pos + relative_zero);
-                            currentActions.last()->coordinateEvent(&ce);
-                        } else
-                            RS_DIALOGFACTORY->commandMessage(
-                                "Expression Syntax Error");
-                        e->accept();
+                                    if (ok1 && ok2) {
+                                        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
+                                        double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
+                                        RS_Vector ucsPos{RS_Vector::polar(ucsR, ucsAngle)};
+                                        RS_Vector wcsPos = toWCS(ucsPos);
+                                        RS_CoordinateEvent ce(wcsPos);
+                                        currentActions.last()->coordinateEvent(&ce);
+                                    } else {
+                                        RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                                    }
+                                    e->accept();
+                                } else { // handle relative polar coordinate input:
+                                    int commaPos = cmd.indexOf('<');
+                                    bool ok1, ok2;
+                                    double r = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos - 1)), &ok1);
+                                    const QString &angleStr = cmd.mid(commaPos + 1);
+                                    double ucsBasisAngleDegrees = evalAngleValue(angleStr, ok2);
+
+                                    if (ok1 && ok2) {
+                                        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
+                                        double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
+                                        RS_Vector ucsOffset = RS_Vector::polar(r, ucsAngle);
+                                        const RS_Vector ucsRelZero = toUCS(relative_zero);
+                                        const RS_Vector ucsPosition = ucsOffset + ucsRelZero;
+                                        const RS_Vector &wcsPosition = toWCS(ucsPosition);
+                                        RS_CoordinateEvent ce(wcsPosition);
+                                        currentActions.last()->coordinateEvent(&ce);
+                                    } else {
+                                        RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                                    }
+                                    e->accept();
+                                }
+                            }
+                        }
                     }
                 }
-
                 // send command event directly to current action:
                 if (!e->isAccepted()) {
 //                    std::cout<<"RS_EventHandler::commandEvent(RS_CommandEvent* e): sending cmd("<<qPrintable(e->getCommand()) <<") to action: "<<currentActions.last()->rtti()<<std::endl;
@@ -408,6 +458,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
     }
 
     RS_DEBUG->print("RS_EventHandler::commandEvent: OK");
+}
+
+double RS_EventHandler::evalAngleValue(const QString &angleStr, bool &ok2) const {
+    double angleDegrees;
+    ok2 = LC_Convert::parseToToDoubleAngleDegrees(angleStr, angleDegrees, 0.0, false);
+    return angleDegrees;
 }
 
 /**
@@ -687,4 +743,20 @@ bool RS_EventHandler::inSelectionMode() {
         default:
             return false;
     }
+}
+
+RS_Vector RS_EventHandler::toWCS(const RS_Vector &ucs) {
+    return graphicView->getViewPort()->toWorld(ucs);
+}
+
+RS_Vector RS_EventHandler::toUCS(const RS_Vector &wcs) {
+    return graphicView->getViewPort()->toUCS(wcs);
+}
+
+double RS_EventHandler::toAbsUCSAngle(double ucsBasisAngle) {
+    return graphicView->getViewPort()->toAbsUCSAngle(ucsBasisAngle);
+}
+
+double RS_EventHandler::toWCSAngle(double ucsAngle) {
+    return graphicView->getViewPort()->toWorldAngle(ucsAngle);
 }

@@ -60,7 +60,7 @@ void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
     finish(false);
 }
 
-void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] QMouseEvent *event) {
+void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] LC_MouseEvent *event) {
     const RS_EntityContainer::LC_SelectionInfo &selectionInfo = container->getSelectionInfo();
     unsigned int selectedCount = selectionInfo.count;
     LC_InfoMessageBuilder msg;

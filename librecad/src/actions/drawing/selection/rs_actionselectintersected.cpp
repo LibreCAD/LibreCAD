@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselectintersected.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
@@ -64,18 +62,17 @@ void RS_ActionSelectIntersected::init(int status) {
 
 void RS_ActionSelectIntersected::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
-        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-            RS_Selection s(*container, graphicView);
+        if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
+            RS_Selection s(*container, viewport);
             s.selectIntersected(pPoints->v1, pPoints->v2, select);
             init(SetPoint1);
         }
     }
 }
 
-void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_Vector snap = snapPoint(e);
-    if (getStatus() == SetPoint2 && pPoints->v1.valid){
+void RS_ActionSelectIntersected::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    if (status == SetPoint2 && pPoints->v1.valid){
         pPoints->v2 = snap;
         previewLine(pPoints->v1, pPoints->v2);
         // todo - of course, ideally it will be also to highlight entities that will be selected...
@@ -83,35 +80,29 @@ void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent *e){
         // todo - review preview for selected entities after indexing
 
     }
-    drawPreview();
 }
 
-void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case SetPoint1:
-                pPoints->v1 = snapPoint(e);
-                setStatus(SetPoint2);
-                break;
+void RS_ActionSelectIntersected::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
+    switch (status) {
+        case SetPoint1:
+            pPoints->v1 = e->snapPoint;
+            setStatus(SetPoint2);
+            break;
 
-            default:
-                break;
-        }
+        default:
+            break;
     }
-
-    RS_DEBUG->print("RS_ActionSelectIntersected::mousePressEvent(): %f %f",
-                    pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionSelectIntersected::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionSelectIntersected::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
     if (status == SetPoint2){
-        pPoints->v2 = snapPoint(e);
+        pPoints->v2 = e->snapPoint;
         trigger();
     }
 }
 
-void RS_ActionSelectIntersected::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionSelectIntersected::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
     if (getStatus() == SetPoint2){
         deletePreview();

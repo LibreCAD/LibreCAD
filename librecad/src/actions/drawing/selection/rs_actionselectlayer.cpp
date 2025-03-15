@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselectlayer.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -39,36 +37,30 @@ RS_ActionSelectLayer::RS_ActionSelectLayer(
     actionType = RS2::ActionSelectLayer;
 }
 
-void RS_ActionSelectLayer::mouseMoveEvent(QMouseEvent *event){
-    deletePreview();
+void RS_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     deleteSnapper();
-    deleteHighlights();
-    snapPoint(event);
-
-    auto ent = catchEntityOnPreview(event);
+    auto ent = catchAndDescribe(event);
     if (ent != nullptr){
         highlightHover(ent);
     }
-    drawHighlights();
-    drawPreview();
 }
 
 void RS_ActionSelectLayer::doTrigger() {
     if (en){
-        RS_Selection s(*container, graphicView);
+        RS_Selection s(*container, viewport);
         s.selectLayer(en);
     } else {
         RS_DEBUG->print("RS_ActionSelectLayer::trigger: Entity is NULL\n");
     }
 }
 
-void RS_ActionSelectLayer::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
-    en = catchEntity(e);
+void RS_ActionSelectLayer::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+    en = catchEntityByEvent(e);
     trigger();
     invalidateSnapSpot();
 }
 
-void RS_ActionSelectLayer::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectLayer::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 

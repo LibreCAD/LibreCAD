@@ -124,4 +124,3 @@ void QG_ExitDialog::slotSaveAll() {
 void QG_ExitDialog::slotSave() {
     done(Save);
 }
-

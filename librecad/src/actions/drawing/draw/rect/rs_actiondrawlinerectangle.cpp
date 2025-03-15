@@ -23,8 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinerectangle.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -56,31 +54,35 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
 
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 
+
+
 void RS_ActionDrawLineRectangle::doTrigger() {
     auto *polyline = new RS_Polyline(container);
 
 // create and add rectangle:
-    polyline->addVertex(pPoints->corner1);
-    polyline->addVertex({pPoints->corner2.x, pPoints->corner1.y});
-    polyline->addVertex(pPoints->corner2);
-    polyline->addVertex({pPoints->corner1.x, pPoints->corner2.y});
+    RS_Vector worldCorner1 = pPoints->corner1;
+    RS_Vector worldCorner3 = pPoints->corner2;
+
+    RS_Vector worldCorner2,worldCorner4;
+    calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
+
+
+    polyline->addVertex(worldCorner1);
+    polyline->addVertex(worldCorner2);
+    polyline->addVertex(worldCorner3);
+    polyline->addVertex(worldCorner4);
     polyline->setClosed(true);
     polyline->endPolyline();
 
     setPenAndLayerToActive(polyline);
 
-    moveRelativeZero(pPoints->corner2);
+    moveRelativeZero(worldCorner3);
 
     undoCycleAdd(polyline);
 }
 
-void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-
-    int status = getStatus();
+void RS_ActionDrawLineRectangle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetCorner1:{
             trySnapToRelZeroCoordinateEvent(e);
@@ -89,7 +91,14 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         case SetCorner2:{
             if (pPoints->corner1.valid){
                 pPoints->corner2 = mouse;
-                preview->addRectangle(pPoints->corner1, pPoints->corner2);
+
+                RS_Vector worldCorner1 = pPoints->corner1;
+                RS_Vector worldCorner3 = pPoints->corner2;
+
+                RS_Vector worldCorner2,worldCorner4;
+                calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
+
+                preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->corner1);
                     previewRefPoint(pPoints->corner2);
@@ -109,16 +118,14 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+
+void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawLineRectangle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineRectangle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

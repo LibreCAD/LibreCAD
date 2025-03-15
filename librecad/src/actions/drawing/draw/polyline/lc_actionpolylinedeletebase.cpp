@@ -20,7 +20,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QMouseEvent>
 #include "rs_polyline.h"
 #include "rs_graphicview.h"
 #include "lc_actionpolylinedeletebase.h"
@@ -29,16 +28,16 @@ LC_ActionPolylineDeleteBase::LC_ActionPolylineDeleteBase(const char *name, RS_En
    :RS_PreviewActionInterface(name,container, graphicView){
 }
 
-void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(QMouseEvent *e, RS_Vector &vertex, RS_Entity *&segment){
+void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(LC_MouseEvent *e, RS_Vector &vertex, RS_Entity *&segment){
     bool oldSnapOnEntity = snapMode.snapOnEntity;
     snapMode.snapOnEntity = true;
-    RS_Vector snap = snapPoint(e);
+    RS_Vector snap = e->snapPoint;
     snapMode.snapOnEntity = oldSnapOnEntity;
     deletePreview();
-    auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
+    auto polyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e, RS2::EntityPolyline));
     if (polyline == polylineToModify){
         RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
-        segment = catchEntity(coordinate, RS2::ResolveAll);
+        segment = RS_Snapper::catchEntity(coordinate, RS2::ResolveAll);
         vertex  = segment->getNearestEndpoint(coordinate);
     }
     else{
@@ -46,7 +45,7 @@ void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(QMouseEvent *e, RS_V
     }
 }
 
-void LC_ActionPolylineDeleteBase::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPolylineDeleteBase::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
 }
 
 RS2::CursorType LC_ActionPolylineDeleteBase::doGetMouseCursor([[maybe_unused]] int status){
@@ -63,10 +62,10 @@ void LC_ActionPolylineDeleteBase::clean(){
         polylineToModify->setSelected(false);
     }
     deletePreview();
-    graphicView->redraw();
+    redraw();
 }
 
-void LC_ActionPolylineDeleteBase::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPolylineDeleteBase::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     deleteSnapper();
     deletePreview();
     drawPreview();

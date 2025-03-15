@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_splineexplodeoptions.h"
+#include "lc_actionsplineexplode.h"
 #include "ui_lc_splineexplodeoptions.h"
 
 LC_SplineExplodeOptions::LC_SplineExplodeOptions()

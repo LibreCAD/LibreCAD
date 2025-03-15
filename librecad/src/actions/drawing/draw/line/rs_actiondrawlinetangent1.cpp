@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"
@@ -59,16 +57,11 @@ void RS_ActionDrawLineTangent1::doTrigger() {
     }
 }
 
-void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    deleteHighlights();
+void RS_ActionDrawLineTangent1::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
+    const RS_Vector &snap = e->snapPoint;
 
-    RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
-
-    RS_Vector mouse{toGraph(e)};
-    const RS_Vector &snap = snapPoint(e);
-
-    switch (getStatus()) {
+    switch (status) {
         case SetPoint: {
             *point = snap;
             trySnapToRelZeroCoordinateEvent(e);
@@ -77,7 +70,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
         case SetCircle: {
             deleteSnapper();
 
-            RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
@@ -104,13 +97,9 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionDrawLineTangent1::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineTangent1::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetPoint: {
             fireCoordinateEventForSnap(e);
@@ -127,7 +116,7 @@ void RS_ActionDrawLineTangent1::onMouseLeftButtonRelease(int status, QMouseEvent
     }
 }
 
-void RS_ActionDrawLineTangent1::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineTangent1::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

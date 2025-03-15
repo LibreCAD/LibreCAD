@@ -26,7 +26,6 @@
 
 #include "rs_settings.h"
 #include "lc_actiondimlinearbase.h"
-#include <QMouseEvent>
 #include "rs_constructionline.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
@@ -166,6 +165,7 @@ LC_ActionOptionsWidget* RS_ActionDimension::createOptionsWidget(){
     return new QG_DimOptions();
 }
 
+// FIXME - sand - REWORK
 void RS_ActionDimension::readSettings() {
     previewShowsFullDimension = LC_GET_ONE_BOOL("Appearance", "PreviewFullDimOnExt2", true);
 }

@@ -25,13 +25,13 @@
 **********************************************************************/
 
 #include <QImage>
-#include <QMouseEvent>
 
 #include "rs_actiondrawimage.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_line.h"
@@ -99,17 +99,16 @@ void RS_ActionDrawImage::doTrigger() {
         creation.createImage(&pImg->data);
     }
 
-    graphicView->zoomAuto();
+    viewport->zoomAuto();
     finish(false);
 }
 
-void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    if (getStatus() == SetTargetPoint){
+void RS_ActionDrawImage::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status == SetTargetPoint){
         bool snappedToRelZero = trySnapToRelZeroCoordinateEvent(e);
         if (!snappedToRelZero){
-            pImg->data.insertionPoint = snapPoint(e);
-
+            pImg->data.insertionPoint = e->snapPoint;
+            // fixme - ucs - review this code
 //RS_Creation creation(preview, nullptr, false);
             //creation.createInsert(data);
             double const w = pImg->img.width();
@@ -125,14 +124,13 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
             preview->move(pImg->data.insertionPoint);
         }
     }
-    drawPreview();
 }
 
-void RS_ActionDrawImage::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawImage::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawImage::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawImage::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     finish(false);
 }
 
@@ -164,10 +162,10 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetAngle: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
+            double wcsAngle;
+            bool ok = parseToWCSAngle(c, wcsAngle);
             if (ok){
-                setAngle(RS_Math::deg2rad(a));
+                setAngle(wcsAngle);
                 accept = true;
             } else {
                 commandMessage(tr("Not a valid expression"));
@@ -209,14 +207,19 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
     return accept;
 }
 
-double RS_ActionDrawImage::getAngle() const{
-    return pImg->data.uVector.angle();
+double RS_ActionDrawImage::getUcsAngleDegrees() const{
+    return toUCSBasisAngleDegrees(pImg->data.uVector.angle());
 }
 
-void RS_ActionDrawImage::setAngle(double a) const{
+void RS_ActionDrawImage::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    double wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
+    setAngle(wcsAngle);
+}
+
+void RS_ActionDrawImage::setAngle(double wcsAngle) const{
     double l = pImg->data.uVector.magnitude();
-    pImg->data.uVector.setPolar(l, a);
-    pImg->data.vVector.setPolar(l, a + M_PI_2);
+    pImg->data.uVector.setPolar(l, wcsAngle);
+    pImg->data.vVector.setPolar(l, wcsAngle + M_PI_2);
 }
 
 double RS_ActionDrawImage::getFactor() const{

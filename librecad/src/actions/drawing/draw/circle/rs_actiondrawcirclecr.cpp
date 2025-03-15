@@ -26,8 +26,6 @@
 
 #include <cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawcirclecr.h"
 #include "rs_circle.h"
 #include "rs_commandevent.h"
@@ -80,12 +78,9 @@ void RS_ActionDrawCircleCR::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawCircleCR::trigger(): circle added: %lu",circle->getId());
 }
 
-
-void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDrawCircleCR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetCenter: {
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 data->center = mouse;
@@ -96,10 +91,9 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
             }
             break;
         }
+        default:
+            break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent end");
-    drawPreview();
 }
 
 void RS_ActionDrawCircleCR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {

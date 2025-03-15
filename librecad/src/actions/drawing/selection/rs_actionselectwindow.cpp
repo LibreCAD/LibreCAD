@@ -48,7 +48,7 @@ struct RS_ActionSelectWindow::Points {
 RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView,
                                              bool select)
-    : RS_PreviewActionInterface("Select Window",
+    : LC_OverlayBoxAction("Select Window",
                                 container, graphicView)
     , pPoints(std::make_unique<Points>())
     , select(select){
@@ -60,8 +60,7 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView,
         bool select)
-    : RS_PreviewActionInterface("Select Window",
-                                container, graphicView)
+    : LC_OverlayBoxAction("Select Window",container, graphicView)
     , pPoints(std::make_unique<Points>())
     , select(select){
     actionType=RS2::ActionSelectWindow;
@@ -87,59 +86,52 @@ void RS_ActionSelectWindow::init(int status) {
 
 void RS_ActionSelectWindow::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
-        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-            bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
-            RS_Selection s(*container, graphicView);
+        if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
+            // restore selection box to ucs
+            RS_Vector ucsP1 = toUCS(pPoints->v1);
+            RS_Vector ucsP2 = toUCS(pPoints->v2);
+
+            bool cross = (ucsP1.x > ucsP2.x) || selectIntersecting;
+            RS_Selection s(*container, viewport);
             bool doSelect = select;
             if (invertSelectionOperation){
                 doSelect = !doSelect;
             }
+            // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
+            RS_Vector wcsP1, wcsP2;
+            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+
             if (selectAllEntityTypes) {
-                s.selectWindow(RS2::EntityType::EntityUnknown, pPoints->v1, pPoints->v2, doSelect, cross);
+                s.selectWindow(RS2::EntityType::EntityUnknown, wcsP1, wcsP2, doSelect, cross);
             }
             else{
-                s.selectWindow(entityTypesToSelect, pPoints->v1, pPoints->v2, doSelect, cross);
+                s.selectWindow(entityTypesToSelect, wcsP1, wcsP2, doSelect, cross);
             }
             init(SetCorner1);
         }
     }
 }
 
-void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
-    drawSnapper();
-    deletePreview();
-    snapPoint(e);
-    RS_Vector snapped = toGraph(e);
+void RS_ActionSelectWindow::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->graphPoint;
     updateCoordinateWidgetByRelZero(snapped);
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
         pPoints->v2 = snapped;
-
-        auto* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
-        preview->addEntity(ob);
-
-        //RLZ: not needed overlay have contour
-        /*                RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
-
-                // TODO change to a rs_box sort of entity
-                RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1->x, v1->y),  RS_Vector(v2->x, v1->y)));
-                e->setPen(pen);
-        preview->addEntity(e);
-
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v2->x, v1->y),  RS_Vector(v2->x, v2->y)));
-                e->setPen(pen);
-        preview->addEntity(e);
-
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v2->x, v2->y),  RS_Vector(v1->x, v2->y)));
-                e->setPen(pen);
-        preview->addEntity(e);
-
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v1->x, v2->y),  RS_Vector(v1->x, v1->y)));
-                e->setPen(pen);
-        preview->addEntity(e);*/
-
-
+        drawOverlayBox(pPoints->v1, pPoints->v2);
+        if (isInfoCursorForModificationEnabled()) {
+            // restore selection box to ucs
+            RS_Vector ucsP1 = toUCS(pPoints->v1);
+            RS_Vector ucsP2 = toUCS(pPoints->v2);
+            bool cross = (ucsP1.x > ucsP2.x) || e->isControl;
+            bool deselect = e->isShift ? select : !select;
+            QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
+            msg.append(tr(" entities "));
+            msg.append(cross? tr("that intersect with box") : tr("that are within box"));
+            infoCursorOverlayData.setZone2(msg);
+            const RS_Vector pos = e->graphPoint;
+            forceUpdateInfoCursor(pos);
+        }
     }
-    drawPreview();
 }
 
 void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
@@ -158,17 +150,17 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
-        pPoints->v2 = toGraph(e);
-        selectIntersecting = isControl(e);
-        invertSelectionOperation = isShift(e);
+        pPoints->v2 = e->graphPoint;
+        selectIntersecting = e->isControl;
+        invertSelectionOperation = e->isShift;
         trigger();
     }
 }
 
-void RS_ActionSelectWindow::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectWindow::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
         deletePreview();

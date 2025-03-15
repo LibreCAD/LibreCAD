@@ -29,6 +29,8 @@
 #include "rs_actionselect.h"
 #include "rs_actionselectsingle.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 
 

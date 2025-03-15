@@ -38,7 +38,6 @@ class LC_ActionDimArc : public RS_ActionDimension{
 public:
     LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
     ~LC_ActionDimArc() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
     enum Status{
@@ -51,8 +50,9 @@ protected:
     void setRadius(const RS_Vector& selectedPosition);
     void updateMouseButtonHints() override;
     bool doProcessCommand(int status, const QString &command)  override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
 };

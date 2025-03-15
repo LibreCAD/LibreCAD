@@ -18,8 +18,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_actiondrawparabola4points.h"
 
 #include "lc_parabola.h"
@@ -66,10 +64,8 @@ void LC_ActionDrawParabola4Points::doTrigger() {
     setStatus(SetPoint1);
 }
 
-void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void LC_ActionDrawParabola4Points::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     pPoints->points.set(status, mouse);
     if (showRefEntitiesOnPreview) {
         for (int i = 0; i < status;i++) {
@@ -87,14 +83,13 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
             preparePreview(mouse, true);
             break;
         case SetAxis:{
-            RS_Vector m0 = toGraph(e);
+            RS_Vector m0 = e->graphPoint;
             preparePreview(m0,false);
             break;
         }
         default:
             break;
     }
-    drawPreview();
 }
 
 bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse, bool rebuild){
@@ -123,13 +118,13 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse, bool r
     return pPoints->valid;
 }
 
-void LC_ActionDrawParabola4Points::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     // Proceed to next status
-    const RS_Vector &coord = getStatus() != SetAxis ? snapPoint(e) : snapFree(e);
+    const RS_Vector &coord = getStatus() != SetAxis ? e->snapPoint : e->graphPoint;
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawParabola4Points::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     deletePreview();
     initPrevious(status);

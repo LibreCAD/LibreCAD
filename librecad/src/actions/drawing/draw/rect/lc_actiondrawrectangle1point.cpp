@@ -19,7 +19,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QMouseEvent>
 #include "rs_arc.h"
 #include "rs_math.h"
 #include "lc_linemath.h"
@@ -126,27 +125,33 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle1Point::createPo
 
     center.move(moveVector);
 
-    double actualBaseAngle = 0.0;
+    double wcsActualBaseAngle = 0.0;
     if (baseAngleIsFixed){
-        actualBaseAngle = RS_Math::deg2rad(angle);
+        wcsActualBaseAngle = toWorldAngleFromUCSBasis(ucsBasisBaseAngleRad);
         if (angleIsFree){
             if (inFreeAngleMode){
-                actualBaseAngle = insertionPoint.angleTo(snapPoint);
-                angle = RS_Math::rad2deg(actualBaseAngle);
+                wcsActualBaseAngle = insertionPoint.angleTo(snapPoint);
+                double ucsBasisAngle = toUCSBasisAngle(wcsActualBaseAngle);
+                doSetAngle(ucsBasisAngle);
                 updateOptionsUI(LC_Rectangle1PointOptions::UPDATE_ANGLE);
             }
         }
     }
+    else{
+        wcsActualBaseAngle = toWorldAngleFromUCSBasis(0.0);
+    }
 
-    if (LC_LineMath::isMeaningfulAngle(actualBaseAngle)){
+    double wcsBaseAngle = wcsActualBaseAngle;
+
+    if (LC_LineMath::isMeaningfulAngle(wcsBaseAngle)){
         // now we'll rotate shape on specific angle
         if (inFreeAngleMode){
-            polyline->rotate(insertionPoint, actualBaseAngle);
-            center.rotate(insertionPoint, actualBaseAngle);
+            polyline->rotate(insertionPoint, wcsBaseAngle);
+            center.rotate(insertionPoint, wcsBaseAngle);
         }
         else {
-            polyline->rotate(snapPoint, actualBaseAngle);
-            center.rotate(snapPoint, actualBaseAngle);
+            polyline->rotate(snapPoint, wcsBaseAngle);
+            center.rotate(snapPoint, wcsBaseAngle);
         }
     }
     result.centerPoint = center;
@@ -189,7 +194,7 @@ void LC_ActionDrawRectangle1Point::doAfterTrigger() {
     setStatus(newStatus);
 }
 
-void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snap){
+void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snap){
     switch (status) {
         case SetPoint1: {
             if (angleIsFree){
@@ -197,14 +202,14 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QM
                 setStatus(SetAngleFree);
             }
             else{
-                controlPressedOnMouseRelease = isControl(e);
+                controlPressedOnMouseRelease = e->isControl;
                 createShapeData(snap);
                 trigger();
             }
             break;
         }
         case SetAngleFree:{
-            controlPressedOnMouseRelease = isControl(e);
+            controlPressedOnMouseRelease = e->isControl;
             createShapeData(snap);
             trigger();
             break;
@@ -214,8 +219,8 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QM
     }
 }
 
-RS_Vector LC_ActionDrawRectangle1Point::doGetMouseSnapPoint(QMouseEvent *e) {
-   RS_Vector result = snapPoint(e);
+RS_Vector LC_ActionDrawRectangle1Point::doGetMouseSnapPoint(LC_MouseEvent *e) {
+   RS_Vector result = e->snapPoint;
    if (getStatus() == SetAngleFree){
        result = getSnapAngleAwarePoint(e, insertionPoint, result, isMouseMove(e));
    }
@@ -229,7 +234,7 @@ void LC_ActionDrawRectangle1Point::setBaseAngleFree(bool val) {
     }
 }
 
-void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]QMouseEvent *e, int status) {
+void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]LC_MouseEvent *e, int status) {
     switch (status){
         case SetAngleFree: {
             setStatus(SetPoint1);
@@ -244,7 +249,7 @@ void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]QMouseEvent *e, int st
     }
 }
 
-void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
     createRefSelectablePoint(snap, list);
     if (showRefEntitiesOnPreview) {
@@ -495,7 +500,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]int stat
     return result;
 }
 
-bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, [[maybe_unused]]int status){
+bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, [[maybe_unused]]int status){
     return true;
 }
 

@@ -40,8 +40,6 @@ public:
     QG_DlgOptionsGeneral(QWidget* parent = nullptr);
     ~QG_DlgOptionsGeneral() override = default;
     static int current_tab;
-
-
 protected slots:
     void ok();
     void languageChange();
@@ -90,11 +88,14 @@ protected slots:
     void on_pbOverlayBoxFill_clicked();
     void on_pbOverlayBoxLineInverted_clicked();
     void on_pbOverlayBoxFillInverted_clicked();
+    void on_pbAnglesMarkDirection_clicked();
+    void on_pbAnglesMarkAngleRay_clicked();
 
     void onInfoCursorPromptChanged();
     void onInfoCursorAbsolutePositionChanged();
     void onInfoCursorRelativeChanged();
     void onInfoCursorSnapChanged();
+    void on_pbDraftModeColor_clicked();
 
     void set_color(QComboBox* combo, QColor custom);
 private:

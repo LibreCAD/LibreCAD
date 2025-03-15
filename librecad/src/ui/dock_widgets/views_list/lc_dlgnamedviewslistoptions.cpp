@@ -29,11 +29,15 @@ LC_DlgNamedViewsListOptions::LC_DlgNamedViewsListOptions(LC_NamedViewsListOption
     ui->setupUi(this);
 
     ui->cbShowTooltip->setChecked(options->showViewInfoToolTip);
-    ui->cbShowViewTypeIcon->setChecked(options->showTypeIcon);
+    ui->cbShowViewTypeIcon->setChecked(options->showColumnIconType);
     ui->cbSilentUpdate->setChecked(options->duplicatedNameReplacesSilently);
     ui->cbRemovalConfirmation->setChecked(options->askForDeletionConfirmation);
     ui->cbSingleClickRestore->setChecked(options->restoreViewBySingleClick);
     ui->cbDoubleClickPolicy->setCurrentIndex(options->doubleClickPolicy);
+    ui->cbColumnGridType->setChecked(options->showColumnGridType);
+    ui->cbColumnUCSType->setChecked(options->showColumnUCSType);
+    ui->cbColumnUCSDetails->setChecked(options->showColumnUCSDetails);
+    ui->cbShowColumnVIewDetails->setChecked(options->showColumnViewDetails);
 
     QObject::connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgNamedViewsListOptions::validate);
 }
@@ -47,10 +51,14 @@ void LC_DlgNamedViewsListOptions::languageChange() {
 }
 
 void LC_DlgNamedViewsListOptions::validate() {
-    options->showTypeIcon = ui->cbShowViewTypeIcon->isChecked();
+    options->showColumnIconType = ui->cbShowViewTypeIcon->isChecked();
     options->restoreViewBySingleClick = ui->cbSingleClickRestore->isChecked();
     options->duplicatedNameReplacesSilently = ui->cbSilentUpdate->isChecked();
     options->showViewInfoToolTip = ui->cbShowTooltip->isChecked();
     options->askForDeletionConfirmation = ui->cbRemovalConfirmation->isChecked();
     options->doubleClickPolicy = ui->cbDoubleClickPolicy->currentIndex();
+    options->showColumnGridType = ui->cbColumnGridType->isChecked();
+    options->showColumnUCSType = ui->cbColumnUCSType->isChecked();
+    options->showColumnUCSDetails = ui->cbColumnUCSDetails->isChecked();
+    options->showColumnViewDetails = ui->cbShowColumnVIewDetails->isChecked();
 }

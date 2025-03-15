@@ -29,104 +29,75 @@
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
+// fixme - sand - rework!!!. Remove reference to layer list, copy list of layer and sort them independenly
 
 /**
  * Default Constructor. You must call init manually before using 
  * this class.
  */
 QG_LayerBox::QG_LayerBox(QWidget* parent)
-        : QComboBox(parent) {
+    : QComboBox(parent) {
 
     showByBlock = false;
-	showUnchanged = false;
-	unchanged = false;
-    layerList = NULL;
-    currentLayer = NULL;
+    showUnchanged = false;
+    unchanged = false;
+    layerList = nullptr;
+    currentLayer = nullptr;
 }
-
-
 
 /**
  * Destructor
  */
 QG_LayerBox::~QG_LayerBox() {}
 
-
-
 /**
  * Initialisation (called manually only once).
  *
- * @param layerList Layer list which provides the layer names that are 
+ * @param ll Layer list which provides the layer names that are
  *                  available.
- * @param showByBlock true: Show attribute ByBlock.
+ * @param doShowByBlock true: Show attribute ByBlock.
  */
-void QG_LayerBox::init(RS_LayerList& layerList, 
-		bool showByBlock, bool showUnchanged) {
-    this->showByBlock = showByBlock;
-	this->showUnchanged = showUnchanged;
-    layerList.sort();
-    this->layerList = &layerList;
+void QG_LayerBox::init(RS_LayerList& ll,
+                       bool doShowByBlock, bool doShowUnchanged) {
+    showByBlock = doShowByBlock;
+    showUnchanged = doShowUnchanged;
+    ll.sort(); // fixme !!!!!!
+    layerList = &ll;
 
-    if (showUnchanged) {
+    if (doShowUnchanged) {
         addItem(tr("- Unchanged -"));
-	}
+    }
 
-    for (unsigned i=0; i<layerList.count(); ++i) {
-        RS_Layer* lay = layerList.at(i);
-        if (lay && (lay->getName()!="ByBlock" || showByBlock)) {
+    for (unsigned i=0; i < ll.count(); ++i) {
+        RS_Layer* lay = ll.at(i);
+        if (lay && (lay->getName()!="ByBlock" || doShowByBlock)) {
             addItem(lay->getName());
         }
     }
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotLayerChanged(int)));
-
+    connect(this, SIGNAL(activated(int)),this, SLOT(slotLayerChanged(int)));
     setCurrentIndex(0);
-
     slotLayerChanged(currentIndex());
 }
-
-
 
 /**
  * Sets the layer shown in the combobox to the given layer.
  */
 void QG_LayerBox::setLayer(RS_Layer& layer) {
     currentLayer = &layer;
-
-    //if (layer.getName()=="ByBlock" && showByBlock) {
-    //    setCurrentItem(0);
-    //} else {
-
     int i = findText(layer.getName());
     setCurrentIndex(i);
-    //}
-
-    //if (currentItem()!=7+(int)showByBlock*2) {
     slotLayerChanged(currentIndex());
-    //}
 }
-
-
 
 /**
  * Sets the layer shown in the combobox to the given layer.
  */
 void QG_LayerBox::setLayer(QString& layer) {
-
-    //if (layer.getName()=="ByBlock" && showByBlock) {
-    //    setCurrentItem(0);
-    //} else {
     int i = findText(layer);
     setCurrentIndex(i);
-    //}
-
-    //if (currentItem()!=7+(int)showByBlock*2) {
     slotLayerChanged(currentIndex());
-    //}
 }
-
-
 
 /**
  * Called when the color has changed. This method 
@@ -135,21 +106,12 @@ void QG_LayerBox::setLayer(QString& layer) {
  * choose an individual color.
  */
 void QG_LayerBox::slotLayerChanged(int index) {
-    //currentLayer.resetFlags();
-
-	if (index==0 && showUnchanged) {
-		unchanged = true;
-	}
-	else {
-		unchanged = false;
-	}
-
+    if (index==0 && showUnchanged) {
+        unchanged = true;
+    }
+    else {
+        unchanged = false;
+    }
     currentLayer = layerList->find(itemText(index));
-
-    //printf("Current color is (%d): %s\n",
-    //       index, currentLayer.name().latin1());
-
     emit layerChanged(currentLayer);
 }
-
-

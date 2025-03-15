@@ -46,6 +46,8 @@ public:
     virtual void addVport(const DRW_Vport& data) = 0;
     /** Called for every VIEW table. */
     virtual void addView(const DRW_View& data) = 0;
+    /** Called for every UCS table. */
+    virtual void addUCS(const DRW_UCS& data) = 0;
     /** Called for every text style. */
     virtual void addTextStyle(const DRW_Textstyle& data) = 0;
     /** Called for every AppId entry. */
@@ -199,6 +201,7 @@ public:
     virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;
     virtual void writeViews() = 0;
+    virtual void writeUCSs() = 0;
     virtual void writeTextstyles() = 0;
     virtual void writeVports() = 0;
     virtual void writeDimstyles() = 0;

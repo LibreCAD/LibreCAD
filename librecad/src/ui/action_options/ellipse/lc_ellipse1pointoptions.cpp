@@ -22,6 +22,7 @@
 
 #include "lc_ellipse1pointoptions.h"
 #include "ui_lc_ellipse1pointoptions.h"
+#include "lc_actiondrawellipse1point.h"
 #include "rs_math.h"
 
 LC_Ellipse1PointOptions::LC_Ellipse1PointOptions()
@@ -73,7 +74,7 @@ void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
     if (update){
         majorRadius = fromDouble(action->getMajorRadius());
         minorRadius = fromDouble(action->getMinorRadius());
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+        angle = fromDouble(action->getUcsMajorAngleDegrees());
         useAngle = action->hasAngle();
         freeAngle = action->isAngleFree();
         if (arcAction){
@@ -126,8 +127,8 @@ void LC_Ellipse1PointOptions::setMinorRadiusToActionAndView(QString val) {
 
 void LC_Ellipse1PointOptions::setAngleToActionAndView(QString val) {
     double y;
-    if (toDoubleAngle(val, y, 0, false)){
-        action->setAngle(RS_Math::deg2rad(y));
+    if (toDoubleAngleDegrees(val, y, 0, false)){
+        action->setUcsMajorAngleDegrees(y);
         ui->leAngle->setText(fromDouble(y));
     }
 }

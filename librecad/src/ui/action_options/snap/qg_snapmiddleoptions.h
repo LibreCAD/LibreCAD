@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include<QWidget>
 
 namespace Ui {
-class Ui_SnapMiddleOptions;
+    class Ui_SnapMiddleOptions;
 }
 
 /**
@@ -52,5 +52,4 @@ private:
    	void saveSettings();
 	   std::unique_ptr<Ui::Ui_SnapMiddleOptions> ui;
 };
-
 #endif // QG_SNAPMIDDLEOPTIONS_H

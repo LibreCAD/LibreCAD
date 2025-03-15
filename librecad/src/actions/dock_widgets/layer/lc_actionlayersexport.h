@@ -44,31 +44,23 @@ class RS_LayerList;
 */
 
 
-class LC_ActionLayersExport : public RS_ActionInterface
-{
-    Q_OBJECT
+class LC_ActionLayersExport : public RS_ActionInterface{
+Q_OBJECT
+public:
+    enum Mode
+    {
+        SelectedMode = 0,
+        VisibleMode
+    };
 
-    public:
-
-        enum Mode
-        {
-            SelectedMode = 0,
-            VisibleMode 
-        };
-
-        LC_ActionLayersExport( RS_EntityContainer& document, 
-                               RS_GraphicView& graphicView, 
-                               RS_LayerList* inputLayersList, 
-                               Mode inputExportMode);
-
-        void init(int status) override;
-
-        void trigger() override;
-
-    private:
-
-        RS_LayerList* layersList = nullptr;
-
-        Mode exportMode = SelectedMode;
+    LC_ActionLayersExport( RS_EntityContainer& document,
+                           RS_GraphicView& graphicView,
+                           RS_LayerList* inputLayersList,
+                           Mode inputExportMode);
+    void init(int status) override;
+    void trigger() override;
+private:
+    RS_LayerList* layersList = nullptr;
+    Mode exportMode = SelectedMode;
 };
 #endif // LC_ACTIONLAYERSEXPORT_H

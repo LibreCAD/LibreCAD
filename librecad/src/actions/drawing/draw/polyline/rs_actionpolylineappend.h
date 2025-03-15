@@ -40,10 +40,10 @@ class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {
 public:
 	   RS_ActionPolylineAppend(RS_EntityContainer& container, RS_GraphicView& graphicView);
     void undo() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
 protected:
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     RS2::CursorType doGetMouseCursor(int status) override;

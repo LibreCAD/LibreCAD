@@ -26,19 +26,17 @@
 **
 **********************************************************************/
 
-#include <cmath>
-
+#include <cfloat>
 #include <QPolygonF>
-
-#include "lc_quadratic.h"
-#include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_debug.h"
-#include "rs_graphicview.h"
-#include "rs_information.h"
+
 #include "rs_line.h"
-#include "rs_math.h"
+#include "rs_information.h"
+#include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "rs_math.h"
+#include "lc_quadratic.h"
+#include "rs_debug.h"
 
 namespace {
 // tangent condition tolerance
@@ -765,46 +763,8 @@ RS_Entity& RS_Circle::shear(double k)
 }
 
 
-
-/** whether the entity's bounding box intersects with visible portion of graphic view
-//fix me, need to handle overlay container separately
-*/
-bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
-{
-
-    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
-    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
-    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-	std::vector<RS_Vector> vps;
-    for(unsigned short i=0;i<4;i++){
-        const QPointF& vp(visualBox.at(i));
-		vps.emplace_back(vp.x(),vp.y());
-    }
-    for(unsigned short i=0;i<4;i++){
-		RS_Line line{nullptr, {vps.at(i),vps.at((i+1)%4)}};
-		RS_Circle c0{nullptr, getData()};
-        if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
-    }
-    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
-    return (vpMin-getCenter()).squared() > getRadius()*getRadius();
-}
-
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter == nullptr || view == nullptr)
-        return;
-
-    if (!isVisibleInWindow(view))
-        return;
-
-    const double radiusGui = view->toGuiDX(getRadius());
-    if (radiusGui * RS_Painter::getMaximumArcSplineError() <= 1.) {
-        painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
-    } else {
-        // Issue #2035, avoid rendering error by rendering arcs as quadratic splines
-        RS_Arc arc{nullptr, {getCenter(), getRadius(), 0., 2.*M_PI, false}};
-        double pattern=0.;
-        arc.draw(painter, view, pattern);
-    }
+void RS_Circle::draw(RS_Painter* painter) {
+    painter->drawEntityCircle(this);
 }
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {

@@ -49,7 +49,7 @@ void RS_ActionZoomPan::trigger() {
         v1 = v2;
 }*/
     if (getStatus()==SetPanning && (std::abs(x2-x1)>7 || std::abs(y2-y1)>7)) {
-        graphicView->zoomPan(x2-x1, y2-y1);
+        viewport->zoomPan(x2-x1, y2-y1);
         x1 = x2;
         y1 = y2;
     }
@@ -60,8 +60,8 @@ void RS_ActionZoomPan::trigger() {
 
 void RS_ActionZoomPan::finish(bool updateTB) {
     RS_ActionInterface::finish(updateTB);
-    graphicView->setPanning(false);
-    graphicView->redraw();
+    viewport->setPanning(false);
+    redraw();
 }
 
 void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent *e){
@@ -81,7 +81,7 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
         x1 = e->position().x();
         y1 = e->position().y();
         setStatus(SetPanning);
-        graphicView->setPanning(true);
+        viewport->setPanning(true);
     }
 }
 

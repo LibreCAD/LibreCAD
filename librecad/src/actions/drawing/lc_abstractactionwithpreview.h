@@ -44,8 +44,6 @@ public:
 
    // inherited methods with basic template method implementation
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
     void updateMouseButtonHints() override;
     /**
@@ -120,15 +118,15 @@ protected:
      * @param status current status of action
      * @return true if we need preview
      */
-    virtual bool doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status);
+    virtual bool doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status);
     /**
      * method for handling
      * @param e
      * @param status
      * @param snapPoint
      */
-    virtual void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint);
-    virtual RS_Vector doGetMouseSnapPoint(QMouseEvent *e);
+    virtual void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint);
+    virtual RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e);
 
     /**
      * extension point for performing cleanup on action finish
@@ -141,18 +139,18 @@ protected:
      * @param pEvent
      * @param status
      */
-    virtual void doBack([[maybe_unused]]QMouseEvent *pEvent, int status);
+    virtual void doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status);
 
-    virtual bool onMouseMove([[maybe_unused]]QMouseEvent *e, RS_Vector snap, int status);
-    virtual void doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status);
+    virtual bool onMouseMove([[maybe_unused]]LC_MouseEvent *e, RS_Vector snap, int status);
+    virtual void doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status);
     virtual bool doCheckMayTrigger();
     virtual void doAfterTrigger();
     RS2::CursorType doGetMouseCursor(int status) override;
     virtual RS_Vector doGetRelativeZeroAfterTrigger();
     virtual int doGetStatusForInitialSnapToRelativeZero();
     virtual void doInitialSnapToRelativeZero(RS_Vector relZero);
-    virtual void doMouseMoveEnd(int status, [[maybe_unused]]QMouseEvent *e);
-    virtual void doMouseMoveStart(int status, QMouseEvent *pEvent);
+    virtual void doMouseMoveEnd(int status, [[maybe_unused]]LC_MouseEvent *e);
+    virtual void doMouseMoveStart(int status, LC_MouseEvent *pEvent);
     virtual void doPrepareTriggerEntities(QList<RS_Entity *> &list);
 
     // additional setup methods, that may be overridden if necessary
@@ -173,10 +171,10 @@ protected:
     virtual void doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list);
 
     // utility functions
-    virtual void drawPreviewForPoint(QMouseEvent *e, RS_Vector& snap);
+    virtual void drawPreviewForPoint(LC_MouseEvent *e, RS_Vector& snap);
 
     // default implementation of right mouse release
-    virtual void onRightMouseButtonRelease(QMouseEvent *e, int status);
+    virtual void onRightMouseButtonRelease(LC_MouseEvent *e, int status);
 
 
     void unHighlightEntity();
@@ -185,8 +183,8 @@ protected:
 
     void drawPreviewForLastPoint();
 
-    virtual void checkPreSnapToRelativeZero(int status, QMouseEvent *pEvent);
-    virtual bool doCheckMouseEventValidForInitialSnap(QMouseEvent *e);
+    virtual void checkPreSnapToRelativeZero(int status, LC_MouseEvent *pEvent);
+    virtual bool doCheckMouseEventValidForInitialSnap(LC_MouseEvent *e);
 
     // main status support
     void setMainStatus(int status) {mainStatus = status; setStatus(status);}
@@ -204,16 +202,22 @@ protected:
     RS_Point* createPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     RS_Line* createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
     RS_Line *createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const;
-    virtual void checkAlternativeActionMode(const QMouseEvent *e, int status, bool shiftPressed);
+    virtual void checkAlternativeActionMode(const LC_MouseEvent *e, int status);
     virtual void clearAlternativeActionMode();
-    void updateSnapperAndCoordinateWidget(QMouseEvent *e, int status);
-    void doUpdateCoordinateWidgetByMouse(QMouseEvent *e);
+    void updateSnapperAndCoordinateWidget(LC_MouseEvent *e, int status);
+    void doUpdateCoordinateWidgetByMouse(LC_MouseEvent *e);
     void createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
     void createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
-    static bool isMouseMove(QMouseEvent* e);
+    static bool isMouseMove(LC_MouseEvent* e);
     void createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const;
 
     void doTrigger() override;
+
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
 };
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

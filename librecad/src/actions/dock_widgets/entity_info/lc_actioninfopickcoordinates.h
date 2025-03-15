@@ -34,9 +34,9 @@ public:
     void init(int status) override;
     void resume() override;
 protected:
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
     void doFinish(bool updateTB) override;
     void updateMouseButtonHints() override;
 private:

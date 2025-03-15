@@ -24,13 +24,12 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
 #include "rs_actionmodifyentity.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
@@ -62,7 +61,7 @@ void RS_ActionModifyEntity::doTrigger() {
         unsigned long originalEntityId = en->getId();
 
         graphicView->setForcedActionKillAllowed(false);
-        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get())) {
+        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get(), viewport)) {
             container->addEntity(clone.get());
 
             en->setSelected(false);
@@ -88,24 +87,21 @@ void RS_ActionModifyEntity::doTrigger() {
     }
 }
 
-void RS_ActionModifyEntity::mouseMoveEvent(QMouseEvent *e) {
-    deleteHighlights();
-    snapPoint(e);
-    RS_Entity* entity = catchEntityOnPreview(e);
+void RS_ActionModifyEntity::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Entity* entity = catchAndDescribe(e);
     if (entity != nullptr){
         highlightHoverWithRefPoints(entity, true);
     }
-    drawHighlights();
 }
 
-void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    en = catchEntity(e);
+void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    en = catchEntityByEvent(e);
     if (en != nullptr) {
         trigger();
     }
 }
 
-void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

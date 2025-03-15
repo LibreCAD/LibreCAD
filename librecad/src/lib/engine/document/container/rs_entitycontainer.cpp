@@ -45,6 +45,7 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_solid.h"
+#include "rs_painter.h"
 
 namespace {
 
@@ -136,7 +137,7 @@ RS_Entity *RS_EntityContainer::clone() const {
     return ec;
 }
 
-RS_Entity *RS_EntityContainer::cloneProxy(RS_GraphicView *view) const {
+RS_Entity *RS_EntityContainer::cloneProxy() const {
     RS_DEBUG->print("RS_EntityContainer::cloneproxy: ori autoDel: %d",
                     autoDelete);
 
@@ -144,7 +145,7 @@ RS_Entity *RS_EntityContainer::cloneProxy(RS_GraphicView *view) const {
     if (isOwner()) {
         for (const auto *entity: std::as_const(entities)) {
             if (entity != nullptr) {
-                ec->entities.push_back(entity->cloneProxy(view));
+                ec->entities.push_back(entity->cloneProxy());
             }
         }
     } else {
@@ -284,6 +285,8 @@ void RS_EntityContainer::setHighlighted(bool on) {
  *
  * @param select True to select, False to invertSelectionOperation the entities.
  */
+ // todo - sand - ucs - add method for selecting entities within rect that is rotated in wcs
+ // Such method is needed for better support UCS with rotation and more precise selection of entities.
 void RS_EntityContainer::selectWindow(
     enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
     bool select, bool cross) {
@@ -913,6 +916,13 @@ void RS_EntityContainer::addRectangle(RS_Vector const &v0, RS_Vector const &v1) 
     addEntity(new RS_Line{this, {v1.x, v0.y}, v1});
     addEntity(new RS_Line{this, v1, {v0.x, v1.y}});
     addEntity(new RS_Line{this, {v0.x, v1.y}, v0});
+}
+
+void RS_EntityContainer::addRectangle(RS_Vector const& v0, RS_Vector const& v1,RS_Vector const& v2, RS_Vector const& v3){
+    addEntity(new RS_Line(this, v0, v1));
+    addEntity(new RS_Line(this, v1, v2));
+    addEntity(new RS_Line(this, v2, v3));
+    addEntity(new RS_Line(this, v3, v0));
 }
 
 /**
@@ -1953,19 +1963,19 @@ void RS_EntityContainer::revertDirection() {
 }
 
 /**
- * @brief RS_EntityContainer::draw() draw entities in order
+ * @brief draw entities in order
  * @param painter
  * @param view
  */
-void RS_EntityContainer::draw(RS_Painter *painter, RS_GraphicView *view, double & /*patternOffset*/) {
+void RS_EntityContainer::draw(RS_Painter *painter) {
     foreach (auto *e, entities){
-        view->drawEntity(painter, e);
+        painter->drawEntity(e);
     }
 }
 
-void RS_EntityContainer::drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+void RS_EntityContainer::drawAsChild(RS_Painter *painter) {
     foreach (auto *e, entities){
-            view->drawAsChild(painter, e, patternOffset);
+        painter->drawAsChild(e);
     }
 }
 
@@ -1997,7 +2007,7 @@ double RS_EntityContainer::areaLineIntegral() const {
         double lineIntegral = e->areaLineIntegral();
         RS_Vector startPoint = e->getStartpoint();
         RS_Vector endPoint = e->getEndpoint();
-        LC_ERR << e->getId() << ": int = " << lineIntegral << ": " << startPoint.x << " - " << endPoint.x;
+//        LC_ERR << e->getId() << ": int = " << lineIntegral << ": " << startPoint.x << " - " << endPoint.x;
 
         // the line integral is always by the direction: from the start point to the end point
         if (previousPoint.valid) {

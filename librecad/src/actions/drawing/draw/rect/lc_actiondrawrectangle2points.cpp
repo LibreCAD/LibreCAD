@@ -20,8 +20,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include <QMouseEvent>
-
 #include "lc_abstractactiondrawrectangle.h"
 #include "lc_actiondrawrectangle2points.h"
 #include "lc_linemath.h"
@@ -36,7 +34,7 @@ LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
     :LC_AbstractActionDrawRectangle("Draw rectangle 2 points",
                                     container, graphicView){
     actionType = RS2::ActionDrawRectangle2Points;
-    angle = 0;
+    ucsBasisBaseAngleRad = 0;
     LC_ActionDrawRectangle2Points::init(SetPoint1);
     setMainStatus(SetPoint1);
 }
@@ -186,7 +184,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle2Points::createP
     return result;
 }
 
-void LC_ActionDrawRectangle2Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawRectangle2Points::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
     if (showRefEntitiesOnPreview) {
         if (corner1Set) {
@@ -238,7 +236,7 @@ void LC_ActionDrawRectangle2Points::doAfterTrigger(){
     corner1Set = false;
 }
 
-void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case SetPoint1: {
             moveRelativeZero(snapPoint);
@@ -426,7 +424,7 @@ LC_ActionOptionsWidget* LC_ActionDrawRectangle2Points::createOptionsWidget(){
     return new LC_Rectangle2PointsOptions();
 }
 
-bool LC_ActionDrawRectangle2Points::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *pEvent, [[maybe_unused]]int status){
+bool LC_ActionDrawRectangle2Points::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *pEvent, [[maybe_unused]]int status){
     return corner1Set;
 }
 

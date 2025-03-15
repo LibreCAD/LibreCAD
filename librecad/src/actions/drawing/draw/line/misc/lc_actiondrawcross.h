@@ -72,12 +72,12 @@ public:
 
     double getLenX() const {return lenX;};
     double getLenY() const {return lenY;};
-    double getCrossAngle() const{return angle;};
+    double getCrossAngle() const{return ucsBasisAngleDegrees;};
     int getCrossMode() const{return crossSizeMode;};
 
     void setXLength(double d) {lenX = d;};
     void setYLength(double d) {lenY = d;};
-    void setCrossAngle(double d) {angle = d;};
+    void setCrossAngle(double d) { ucsBasisAngleDegrees = d;};
     void setCrossMode(int i) {crossSizeMode = i;};
 protected:
     enum Status {
@@ -116,16 +116,16 @@ protected:
     /**
      * Angle between axis x and horizontal cross line
      */
-    double angle = 0.0;
+    double ucsBasisAngleDegrees = 0.0;
 
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doAfterTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     bool doCheckMayTriggerOnInit(int status) override;
     bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
     void doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS_Entity *> &list) override;

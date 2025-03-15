@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actiondrawcircle.h"
 #include "rs_circle.h"
 #include "rs_commandevent.h"
@@ -68,11 +65,9 @@ void RS_ActionDrawCircle::doTrigger() {
                     circle->getId());
 }
 
-void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
-    RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent begin");
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDrawCircle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetCenter: {
             data->center = mouse;
             trySnapToRelZeroCoordinateEvent(e);
@@ -80,8 +75,6 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetRadius: {
             if (data->center.valid){
-//                fixme - complete support
-                //mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
                 previewToCreateCircle(*data);
                 if (showRefEntitiesOnPreview) {
@@ -92,9 +85,9 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
             }
             break;
         }
+        default:
+            break;
     }
-    drawPreview();
-    RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent end");
 }
 
 void RS_ActionDrawCircle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {

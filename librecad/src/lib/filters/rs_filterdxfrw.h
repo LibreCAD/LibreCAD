@@ -89,6 +89,7 @@ public:
     void addDimStyle(const DRW_Dimstyle& data) override;
     void addVport(const DRW_Vport& data) override;
     void addView(const DRW_View &data) override;
+    void addUCS(const DRW_UCS &data) override;
 public:
     void addTextStyle(const DRW_Textstyle& /*data*/) override{}
     void addAppId(const DRW_AppId& /*data*/) override{}
@@ -138,6 +139,7 @@ public:
     void writeLTypes() override;
     void writeLayers() override;
     void writeViews() override;
+    void writeUCSs() override;
     void writeTextstyles() override;
     void writeVports() override;
     void writeBlockRecords() override;

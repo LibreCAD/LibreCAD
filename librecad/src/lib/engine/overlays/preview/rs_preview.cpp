@@ -59,7 +59,7 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     bool refEntity = false;
 
     switch (rtti) {
-        case RS2::EntityImage:
+//        case RS2::EntityImage:
         case RS2::EntityHatch:
         case RS2::EntityInsert:
             addBorder = true;
@@ -92,6 +92,7 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 
     if (addBorder){
+        // fixme - sand - ucs - better displaying of placeholders is needed if there is UCS with rotation
         RS_Vector min = entity->getMin();
         RS_Vector max = entity->getMax();
         auto l1 = new RS_Line(this, {min.x, min.y}, {max.x, min.y});
@@ -136,12 +137,12 @@ void RS_Preview::clear() {
 /**
  * Clones the given entity and adds the clone to the preview.
  */
-void RS_Preview::addCloneOf(RS_Entity* entity, RS_GraphicView* view) {
+void RS_Preview::addCloneOf(RS_Entity* entity, [[maybe_unused]]LC_GraphicViewport* view) {
     if (!entity) {
         return;
     }
 
-    RS_Entity* clone = entity->cloneProxy(view);
+    RS_Entity* clone = entity->cloneProxy();
     clone->reparent(this);
     addEntity(clone);
 }
@@ -149,11 +150,11 @@ void RS_Preview::addCloneOf(RS_Entity* entity, RS_GraphicView* view) {
 /**
  * Adds all entities from 'container' to the preview (unselected).
  */
-void RS_Preview::addAllFrom(RS_EntityContainer& container, RS_GraphicView* view) {
+void RS_Preview::addAllFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view) {
     unsigned int c=0;
     for(auto e: container){
         if (c < maxEntities) {
-            RS_Entity* clone = e->cloneProxy(view);
+            RS_Entity* clone = e->cloneProxy();
             clone->setSelected(false);
             clone->reparent(this);
 
@@ -167,13 +168,11 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container, RS_GraphicView* view)
 /**
  * Adds all selected entities from 'container' to the preview (unselected).
  */
-void RS_Preview::addSelectionFrom(RS_EntityContainer& container, RS_GraphicView* view) {
+void RS_Preview::addSelectionFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view) {
     unsigned int c=0;
     for(auto e: container){ // fixme - sand - wow - iterating over all entities!!! Rework selection
         if (e->isSelected() && c<maxEntities) {
-            RS_Entity* clone = e->cloneProxy(view);
-            clone->setSelected(false);
-            clone->reparent(this);
+            RS_Entity* clone = e->cloneProxy();
 
             c+=clone->countDeep();
             addEntity(clone);
@@ -186,7 +185,7 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container, RS_GraphicView*
  * Adds all entities in the given range and those which have endpoints
  * in the given range to the preview.
  */
-void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, RS_GraphicView* view,
+void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view,
                                      const RS_Vector& v1, const RS_Vector& v2) {
     unsigned int c=0;
 
@@ -195,7 +194,7 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, RS_GraphicVi
             ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
             c < maxEntities) {
 
-            RS_Entity *clone = e->cloneProxy(view);
+            RS_Entity *clone = e->cloneProxy();
             //clone->setSelected(false);
             clone->reparent(this);
 
@@ -206,24 +205,30 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, RS_GraphicVi
     }
 }
 
-void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
-                              double& patternOffset) {
-    if (view->isDrawTextsAsDraftForPreview()) {
-        for (auto e: std::as_const(entities)) {
-            e->drawDraft(painter, view, patternOffset);
-        }
-    } else {
-        for (auto e: std::as_const(entities)) {
-            int type = e->rtti();
-            switch (type) {
-                case RS2::EntityMText:
-                case RS2::EntityText: {
-                    e->draw(painter, view, patternOffset);
-                    break;
+void RS_Preview::draw(RS_Painter* painter) {
+//    bool drawTextsAsDraftsForPreview = view->isDrawTextsAsDraftForPreview();
+// fixme - ucs - achieve view - store as field? This temporary for compilation...
+    bool drawTextsAsDraftsForPreview = false;
+
+    for (auto e: std::as_const(entities)) {
+        int type = e->rtti();
+        switch (type) {
+            case RS2::EntityMText:
+            case RS2::EntityText: {
+                if (drawTextsAsDraftsForPreview){
+                    e->drawDraft(painter);
                 }
-                default:
-                    e->drawDraft(painter, view, patternOffset);
+                else {
+                    e->draw(painter);
+                }
+                break;
             }
+            case RS2::EntityImage: {
+                e->drawDraft(painter);
+                break;
+            }
+            default:
+                e->draw(painter);
         }
     }
 }

@@ -20,8 +20,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_quadratic.h"
 #include "rs_actiondrawcircletan1_2p.h"
 #include "rs_circle.h"
@@ -73,7 +71,7 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
     }
 
     if (status <= SetCircle1){
-       graphicView->redraw(RS2::RedrawDrawing);
+       redrawDrawing();
        pPoints->points.clear();
     }
 }
@@ -81,7 +79,7 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
 
 void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
     if (baseEntity){
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
@@ -101,12 +99,9 @@ void RS_ActionDrawCircleTan1_2P::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger(): entity added: %lu", c->getId());
 }
 
-void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent begin");
-    RS_Vector const &mouse = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector const &mouse = e->snapPoint;
+    switch (status) {
         case SetCircle1:{
             deleteSnapper();
             RS_Entity *en = catchCircle(e, true);
@@ -185,7 +180,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
         case SetCenter: {
             deleteSnapper();
             highlightSelected(baseEntity);
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
             if (preparePreview()){
                 previewToCreateCircle(pPoints->cData);
                 for (const auto &center: pPoints->centers) {
@@ -211,9 +206,6 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
 RS_Vector RS_ActionDrawCircleTan1_2P::getTangentPoint(RS_Vector& creatingCircleCenter, bool fromOriginalCircle) const{
@@ -296,11 +288,11 @@ bool RS_ActionDrawCircleTan1_2P::preparePreview(){
     return true;
 }
 
-RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e, bool forPreview){
+RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(LC_MouseEvent *e, bool forPreview){
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview){
-        en = catchModifiableEntityOnPreview(e, enTypeList);
+        en = catchModifiableAndDescribe(e, enTypeList);
     }
     else{
         en = catchModifiableEntity(e, enTypeList);
@@ -315,7 +307,7 @@ RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e, bool forPrevi
     return en;
 }
 
-void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1: {
             RS_Entity *en = catchCircle(e, false);
@@ -323,7 +315,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEven
                 return;
             }
             baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
             setStatus(status + 1);
             invalidateSnapSpot();
             break;
@@ -334,7 +326,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEven
             break;
         }
         case SetCenter:
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
             if (preparePreview()) {
                 trigger();
             }
@@ -346,7 +338,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEven
     }
 }
 
-void RS_ActionDrawCircleTan1_2P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleTan1_2P::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (status > 0){
         deletePreview();

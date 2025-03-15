@@ -239,21 +239,13 @@ public:
                          const RS_Vector& offset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
-
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-
-    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
-
-    RS_Entity *cloneProxy(RS_GraphicView* view) const override;
-
+    void draw(RS_Painter* painter) override;
+    void drawDraft(RS_Painter *painter) override;
+    RS_Entity *cloneProxy() const override;
     RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
-
     void moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) override;
-
     RS_Vector getNearestRef(const RS_Vector &coord, double *dist) const override;
-
     void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
-
 protected:
     RS_TextData data;
 

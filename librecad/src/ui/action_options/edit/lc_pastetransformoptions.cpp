@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_pastetransformoptions.h"
 #include "ui_lc_pastetransformoptions.h"
+#include "lc_actioneditpastetransform.h"
 #include "rs_math.h"
 
 LC_PasteTransformOptions::LC_PasteTransformOptions()
@@ -101,7 +102,7 @@ void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
 void LC_PasteTransformOptions::setAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setAngle(RS_Math::deg2rad(angle));
         ui->leAngle->setText(fromDouble(angle));
     }
@@ -173,7 +174,7 @@ void LC_PasteTransformOptions::setArrayYSpacingToActionAndView(QString val) {
 
 void LC_PasteTransformOptions::setArrayAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setArrayAngle(RS_Math::deg2rad(angle));
         const QString &angleStr = fromDouble(angle);
         ui->leArrayAngle->setText(angleStr);

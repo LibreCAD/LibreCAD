@@ -32,8 +32,8 @@
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_settings.h"
 #include "lc_actionoptionswidget.h"
@@ -142,7 +142,14 @@ void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
  * The default implementation does nothing.
  */
 // todo - add default implementation?
-void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
+void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
+    Qt::MouseButton button = e->button();
+    if (button == Qt::LeftButton){
+        onMouseLeftButtonPress(status, e);
+    } else if (button == Qt::RightButton){
+        onMouseRightButtonPress(status, e);
+    }
+}
 
 /**
  * Called when the left mouse button is released and this is
@@ -161,6 +168,8 @@ void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
 
 void RS_ActionInterface::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
 void RS_ActionInterface::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::onMouseLeftButtonPress([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::onMouseRightButtonPress([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
 
 /**
  * Called when a key is pressed and this is the current action.
@@ -193,16 +202,16 @@ void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     // retrieve coordinates
-    RS_Vector pos = e->getCoordinate();
-    if (!pos.valid){
+    RS_Vector wcsPos = e->getCoordinate();
+    if (!wcsPos.valid){
         return;
     }
     // check whether it's zero - so it might be from "0" shortcut
-    RS_Vector zero = RS_Vector(0, 0, 0);
-    bool isZero = pos == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
+    // use it to handle "0" shortcut (it is passed as 0,0 vector)
+    bool isZero = e->isZero();
 
     // delegate further processing
-    onCoordinateEvent(status, isZero, pos);
+    onCoordinateEvent(status, isZero, wcsPos);
 }
 
 /**
@@ -497,7 +506,7 @@ void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
  * @param right right string (key for tr())
  */
 void RS_ActionInterface::updateMouseWidgetTRBack(const QString &msg, const LC_ModifiersInfo& modifiers){
-    if  (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if  (infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(msg, modifiers);
     }
     RS_DIALOGFACTORY->updateMouseWidget(msg,tr("Back"), modifiers);
@@ -545,7 +554,7 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, c
  * @param right right string (key for tr())
  */
 void RS_ActionInterface::updateMouseWidgetTRCancel(const QString &msg, const LC_ModifiersInfo& modifiers){
-    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(msg, modifiers);
     }
     RS_DIALOGFACTORY->updateMouseWidget(msg,tr("Cancel"), modifiers);
@@ -557,7 +566,7 @@ void RS_ActionInterface::updateMouseWidgetTRCancel(const QString &msg, const LC_
  * @param right string
  */
 void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& right, const LC_ModifiersInfo& modifiers){
-    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(left, modifiers);
     }
     RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
@@ -568,7 +577,6 @@ void RS_ActionInterface::clearMouseWidgetIcon(){
     RS_DIALOGFACTORY->clearMouseWidgetIcon();
 }
 
-
 /**
  * Shortcut for displaying command message string
  * @param msg string
@@ -577,33 +585,48 @@ void RS_ActionInterface::commandMessage(const QString &msg) const{
     RS_DIALOGFACTORY->commandMessage(msg);
 }
 
+void RS_ActionInterface::commandPrompt(const QString &msg) const{
+    RS_DIALOGFACTORY->commandPrompt(msg);
+}
+
 void RS_ActionInterface::updateSnapAngleStep() {
     int stepType = LC_GET_ONE_INT("Defaults", "AngleSnapStep", 3);
+    double snapStepDegrees;
     switch (stepType){
         case 0:
-            snapToAngleStep = 1.0;
+            snapStepDegrees = 1.0;
             break;
         case 1:
-            snapToAngleStep = 3.0;
+            snapStepDegrees = 3.0;
             break;
         case 2:
-            snapToAngleStep = 5.0;
+            snapStepDegrees = 5.0;
             break;
         case 3:
-            snapToAngleStep = 15.0;
+            snapStepDegrees = 10.0;
             break;
         case 4:
-            snapToAngleStep = 30.0;
+            snapStepDegrees = 15.0;
             break;
         case 5:
-            snapToAngleStep = 45.0;
+            snapStepDegrees = 18.0;
             break;
         case 6:
-            snapToAngleStep = 90.0;
+            snapStepDegrees = 22.5;
+            break;
+        case 7:
+            snapStepDegrees = 30.0;
+            break;
+        case 8:
+            snapStepDegrees = 45.0;
+            break;
+        case 9:
+            snapStepDegrees = 90.0;
             break;
         default:
-            snapToAngleStep = 15.0;
+            snapStepDegrees = 15.0;
     }
+    snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
 }
 
 bool RS_ActionInterface::isControl(const QInputEvent *e){
@@ -617,10 +640,6 @@ bool RS_ActionInterface::isShift(const QInputEvent *e){
 void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
     auto ce = RS_CoordinateEvent(coord);
     coordinateEvent(&ce);
-}
-
-void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
-    fireCoordinateEvent(snapPoint(e));
 }
 
 void RS_ActionInterface::initPrevious(int stat) {
@@ -660,7 +679,7 @@ void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity 
 }
 
 void RS_ActionInterface::undoCycleEnd() const {
-    RS_Undoable* relZeroUndoable = graphicView->getRelativeZeroUndoable();
+    RS_Undoable* relZeroUndoable = viewport->getRelativeZeroUndoable();
     if (relZeroUndoable != nullptr) {
         document->addUndoable(relZeroUndoable);
     }

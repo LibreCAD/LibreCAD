@@ -23,8 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -88,12 +86,10 @@ void RS_ActionDrawEllipseFociPoint::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():entity added: %lu", ellipse->getId());
 }
 
-void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawEllipseFociPoint::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
 
-    switch (getStatus()) {
+    switch (status) {
         case SetFocus1:
             trySnapToRelZeroCoordinateEvent(e);
             break;
@@ -126,20 +122,17 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawEllipseFociPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionDrawEllipseFociPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     if (status == SetFocus2){
         snap = getSnapAngleAwarePoint(e, pPoints->focus1, snap);
     }
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawEllipseFociPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseFociPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

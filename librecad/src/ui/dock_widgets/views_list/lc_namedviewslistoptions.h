@@ -40,7 +40,11 @@ public:
     int doubleClickPolicy {RENAME};
     bool askForDeletionConfirmation{true};
     bool duplicatedNameReplacesSilently{false};
-    bool showTypeIcon{true};
+    bool showColumnIconType{true};
+    bool showColumnGridType{true};
+    bool showColumnUCSType{true};
+    bool showColumnUCSDetails{true};
+    bool showColumnViewDetails{true};
     bool showViewInfoToolTip{true};
     bool restoreViewBySingleClick{true};
 };

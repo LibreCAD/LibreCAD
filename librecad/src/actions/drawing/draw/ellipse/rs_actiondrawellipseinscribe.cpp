@@ -59,7 +59,7 @@ void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus){
         pPoints->lines.back()->setHighlighted(false);
         pPoints->lines.pop_back();
     }
-    graphicView->redraw();
+    redrawDrawing();
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status){
@@ -99,18 +99,12 @@ void RS_ActionDrawEllipseInscribe::drawSnapper() {
     // disable snapper
 }
 
-void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
-    deleteHighlights();
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
-    snapPoint(e);
-    int status = getStatus();
-
+void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
 
-    RS_Entity *en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
+    RS_Entity *en = catchModifiableAndDescribe(e, RS2::EntityLine);
    // bool shouldIgnore = false;
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
@@ -166,11 +160,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
                     break;
             }
         }
-
     }
-    drawPreview();
-    drawHighlights();
-    RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent end");
 }
 
 bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent){
@@ -187,7 +177,7 @@ bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, 
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
 
     if (en != nullptr){
@@ -225,12 +215,10 @@ void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, QMouseEv
     }
 }
 
-void RS_ActionDrawEllipseInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (status > 0){
         clearLines(true);
-//            pPoints->lines.back()->setHighlighted(false);
-//            graphicView->drawEntity(pPoints->lines.back());
         pPoints->lines.pop_back();
         deletePreview();
     }

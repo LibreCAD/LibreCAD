@@ -75,7 +75,7 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
             line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
             preview->addEntity(line);
             RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent: draw preview");
-            preview->addSelectionFrom(*container,graphicView);
+            preview->addSelectionFrom(*container,viewport);
         }
     } else {
         pPoints->targetPoint = mouse;

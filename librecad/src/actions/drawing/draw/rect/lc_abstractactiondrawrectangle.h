@@ -48,8 +48,8 @@ public:
     double getLengthX() const{return bevelX;};
     void setLengthY(double value);
     double getLengthY() const{return bevelY;};
-    void setAngle(double angle);
-    double getAngle() const{return angle;}
+    void setUcsAngleDegrees(double angle);
+    double getUcsAngleDegrees() const;
     void setCornersMode(int value);
     int getCornersMode() const{return cornersDrawMode;};
     void setInsertionPointSnapMode(int value);
@@ -116,7 +116,7 @@ protected:
     /**
      * angle of rectangle's rotation (angle between bottom edge and x axis)
      */
-    double angle = 0;
+    double ucsBasisBaseAngleRad = 0;
     /**
      * flag that controls how to position rect relative to insertion point - may have different meanings in different actions
      */
@@ -169,17 +169,18 @@ protected:
     virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
     static void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner);
     bool doProcessCommand(int status, const QString &c) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void stateUpdated(bool toMainStatus);
     double getActualBaseAngle() const;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     void doAfterTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doBack(QMouseEvent *pEvent, int status) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
     bool doCheckPolylineEntityAllowedInTrigger(int index) const;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    void doSetAngle(double value);
 };
 
 #endif // LC_ABSTRACTACTIONDRAWRECTANGLE_H

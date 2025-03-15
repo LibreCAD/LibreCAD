@@ -29,23 +29,19 @@
 class RS_Line;
 
 #include "ui_qg_dlgline.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgLine : public LC_Dialog, public Ui::QG_DlgLine{
+class QG_DlgLine : public LC_EntityPropertiesDlg, public Ui::QG_DlgLine{
     Q_OBJECT
 public:
-    QG_DlgLine(QWidget* parent = nullptr);
-
+    QG_DlgLine(QWidget *parent, LC_GraphicViewport *pViewport, RS_Line* line);
 public slots:
-    virtual void setLine( RS_Line & l );
-    virtual void updateLine();
-
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
-private:
-    RS_Line* line;
-
+protected:
+    RS_Line* entity;
+    void setEntity(RS_Line * l);
 };
 
 #endif // QG_DLGLINE_H

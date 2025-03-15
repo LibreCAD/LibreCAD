@@ -25,10 +25,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_QUICKINFOBASEDATA_H
 
 #include <QCoreApplication>
-
-#include "rs_document.h"
 #include "rs_vector.h"
-#include "qg_graphicview.h"
+#include "rs.h"
+
+class LC_GraphicViewport;
+class RS_Document;
+
 
 class QString;
 
@@ -42,14 +44,11 @@ public:
     virtual bool updateForCoordinateViewMode(int mode) = 0;
     virtual void clear() = 0;
     virtual bool hasData() const = 0;
-    void setDocumentAndView(RS_Document *document, QG_GraphicView* view);
+    void setDocumentAndView(RS_Document *document, LC_GraphicViewport* view);
+    void updateFormats(); // fixme - sand - this method should be called as soon as settings will be updated..
 
-    int getCoordinatesMode() const {
-        return coordinatesMode;
-    }
-    void setCoordinatesMode(int value) {
-        coordinatesMode = value;
-    }
+    int getCoordinatesMode() const{return coordinatesMode;};
+    void setCoordinatesMode(int value){coordinatesMode = value;};
 
     /**
      * Defines the mode for displaying coordinates
@@ -63,13 +62,42 @@ public:
 
 protected:
     RS_Document* document = nullptr;
-    RS_GraphicView* graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     int coordinatesMode = COORD_ABSOLUTE;
 
-    QString formatVector(const RS_Vector &vector) const;
-    QString formatAngle(double angle);
+    RS2::Unit m_unit;
+    RS2::LinearFormat m_linearFormat;
+    int m_linearPrecision;
+    RS2::AngleFormat m_angleFormat;
+    int m_anglePrecision;
+
+    double m_anglesBase = 0;
+    bool m_anglesCounterClockWise = true;
+
+    // fixme - sand - think about these formatting methods.. they are present there, and similar ones are in snapper...
+    // fixme - what about moving them to RS_GraphicView which is shared anyway may be? And this will simplify updating cached formats...
+    QString formatWCSVector(const RS_Vector &wcsPos) const;
+    QString formatUCSVector(const RS_Vector &ucsPos) const;
+    QString formatWCSDeltaVector(const RS_Vector &wcsDelta) const;
+    QString formatWCSAngle(double wcsAngle);
+    QString formatUCSAngle(double wcsAngle);
     QString formatLinear(double length);
+    QString formatDouble(const double &x) const;
+    QString formatInt(const int &x) const;
     QString createLink(QString &data, const QString &path, int index, QString title, QString &value);
+    void appendLinear(QString &result, const QString &label, double value);
+    void appendDouble(QString &result, const QString &label, double value);
+    void appendWCSAngle(QString &result, const QString &label, double value);
+    void appendRawAngle(QString &result, const QString &label, double value);
+    void appendArea(QString &result, const QString &label, double value);
+    void appendWCSAbsolute(QString &result, const QString &label, const RS_Vector& value);
+    void appendWCSAbsoluteDelta(QString &result, const QString &label, const RS_Vector& value);
+    void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value);
+    void appendInt(QString &result, const QString &label, const int& value);
+    void appendValue(QString &result, const QString &label, const QString& value);
+    QString formatRawAngle(double angle) const;
+
+    const RS_Vector& getRelativeZero() const;
 };
 
 #endif // LC_QUICKINFOBASEDATA_H

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -49,7 +47,7 @@ void RS_ActionInfoDist2::init(int status){
         if (selectionMode == FIRST_IS_POINT){
             setStatus(SetPoint);
         } else {
-            savedRelZero = graphicView->getRelativeZero();
+            savedRelZero = getRelativeZero();
         }
     } else if (status < 0){
         restoreRelZero();
@@ -77,31 +75,26 @@ void RS_ActionInfoDist2::doTrigger() {
         } else {
             dV = entityNearestPoint - point;
         }
-        int linearPrecision = graphic->getLinearPrecision();
-        RS2::Unit unit = graphic->getUnit();
-        RS2::LinearFormat linearFormat = graphic->getLinearFormat();
         QStringList dists;
         for (double a: {dV.magnitude(), dV.x, dV.y, entityNearestPoint.x, entityNearestPoint.y, point.x, point.y}) {
-            dists << RS_Units::formatLinear(a, unit, linearFormat, linearPrecision);
-        }
+            dists << formatLinear(a);
 
-        QString angle = RS_Units::formatAngle(dV.angle(), graphic->getAngleFormat(), graphic->getAnglePrecision());
+        }
+        double wcsAngle = dV.angle();
+        QString angle = formatWCSAngle(wcsAngle);
         commandMessage("---");
         const QString &msgTemplate = tr("Distance: %1\nCartesian: (%2 , %3)\nPolar: (%4 < %5)\nPoint On Entity: (%6 , %7)\nPoint: (%8 , %9)");
         QString message = msgTemplate.arg(dists[0], dists[1], dists[2], dists[0], angle, dists[3], dists[4], dists[5], dists[6]);
         commandMessage(message);
         restoreRelZero();
         deletePreview();
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
     }
 }
 
-void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
-    deleteHighlights();
-    deletePreview();
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case SetEntity: {
             deleteSnapper();
             auto en = doCatchEntity(e, true);
@@ -158,7 +151,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
                         }
 
                         // move relative point so we'll have proper distance and angle from entity to point in coordinates widget
-                        if (isControl(e)){
+                        if (e->isControl){
                             moveRelativeZero(nearest);
                         }
                     }
@@ -170,12 +163,9 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
             entity = doCatchEntity(e, false);
@@ -197,7 +187,7 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case SetPoint: {
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snap = getRelZeroAwarePoint(e, snap);
             switch (selectionMode) {
                 case FIRST_IS_POINT: {
@@ -218,7 +208,7 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     bool firstIsPoint = selectionMode == FIRST_IS_POINT;
@@ -242,16 +232,16 @@ RS_Vector RS_ActionInfoDist2::obtainNearestPointOnEntity(const RS_Vector &snap) 
     return entity->getNearestPointOnEntity(snap, nearestPointShouldBeOnEntity);
 }
 
-RS_Entity *RS_ActionInfoDist2::doCatchEntity(QMouseEvent *e, bool preview){
+RS_Entity *RS_ActionInfoDist2::doCatchEntity(LC_MouseEvent *e, bool preview){
     RS2::ResolveLevel level = RS2::ResolveAll;
-    if (isControl(e)){
+    if (e->isControl){
         level = RS2::ResolveNone;
     }
     if (preview) {
-        return catchEntityOnPreview(e, level);
+        return catchAndDescribe(e, level);
     }
     else{
-        return catchEntity(e, level);
+        return catchEntityByEvent(e, level);
     }
 }
 
@@ -310,7 +300,7 @@ void RS_ActionInfoDist2::updateInfoCursor(const RS_Vector &mouse, const RS_Vecto
         double distance = startPoint.distanceTo(mouse);
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Distance:"), formatLinear(distance));
-        msg.add(tr("Angle:"), formatAngle(startPoint.angleTo(mouse)));
+        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
         msg.add(tr("From:"), formatVector(startPoint));
         msg.add(tr("To:"), formatVector(mouse));
         appendInfoCursorZoneMessage(msg.toString(), 2, false);

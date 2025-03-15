@@ -48,7 +48,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircle() override;
     void reset() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
 protected:
     /**
  * Action States.
@@ -66,5 +65,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+
+    void onMouseMoveEvent(int status, LC_MouseEvent *e) override;
 };
 #endif

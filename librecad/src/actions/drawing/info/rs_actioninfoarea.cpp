@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actioninfoarea.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
@@ -55,12 +53,12 @@ void RS_ActionInfoArea::init(int status) {
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
 }
 
-void RS_ActionInfoArea::doTrigger() {
-    RS_DEBUG->print("RS_ActionInfoArea::trigger()");
-    display(false);
-    lastPointRequested = false;
-    init(SetFirstPoint);
-}
+    void RS_ActionInfoArea::doTrigger() {
+        RS_DEBUG->print("RS_ActionInfoArea::trigger()");
+        display(false);
+        lastPointRequested = false;
+        init(SetFirstPoint);
+    }
 // fixme - sand - consider displaying information in EntityInfo widget
 // fixme - sand - add area info to entity info widget for coordinates mode
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
@@ -122,11 +120,8 @@ void RS_ActionInfoArea::display(bool forPreview){
     }
 }
 
-void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
-    //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent begin");
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionInfoArea::onMouseMoveEvent(int status, LC_MouseEvent *e){
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetFirstPoint: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -142,20 +137,19 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
-    //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
 }
 
-void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+
+void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, m_infoArea->back(), snap);
     }
-    lastPointRequested = isControl(e);
+    lastPointRequested = e->isControl;;
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     trigger();
 //    initPrevious(status);
 }

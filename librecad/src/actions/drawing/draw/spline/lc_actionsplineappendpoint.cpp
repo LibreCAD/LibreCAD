@@ -19,8 +19,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QMouseEvent>
-
 #include "lc_actionsplineappendpoint.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
@@ -41,10 +39,10 @@ void LC_ActionSplineAppendPoint::doCompleteTrigger() {
     moveRelativeZero(vertexPoint);
 }
 
-void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
+void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -69,7 +67,7 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, QMouse
         case SetControlPoint:{
             previewRefSelectablePoint(mouse);
             bool appendMode = directionFromStart;
-            if (isShift(e)){
+            if (e->isShift){
                 double dist;
                 RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
                 appendMode = nearestPoint == entityToModify->getStartpoint();
@@ -85,20 +83,20 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, QMouse
     }
 }
 
-void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
-                graphicView->redraw(RS2::RedrawDrawing);
+                redrawDrawing();
                 setStatus(SetBeforeControlPoint);
             }
             break;
         }
         case SetBeforeControlPoint: {
-            RS_Vector mouse = snapPoint(e);
+            RS_Vector mouse = e->snapPoint;
             mouse = getRelZeroAwarePoint(e, mouse);
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
@@ -109,8 +107,8 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEven
             break;
         }
         case SetControlPoint:{
-            RS_Vector mouse = snapPoint(e);
-            if (isShift(e)){
+            RS_Vector mouse = e->snapPoint;
+            if (e->isShift){
                 double dist;
                 RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
                 if (nearestPoint.valid) {

@@ -24,8 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<vector>
 
-#include <QMouseEvent>
-
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -79,7 +77,7 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
                 p->setHighlighted(false);
             }
         }
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         pPoints->circles.clear();
     }
     RS_PreviewActionInterface::finish(updateTB);
@@ -107,11 +105,7 @@ void RS_ActionDrawCircleTan2::drawSnapper() {
     // disable snapper for action
 }
 
-void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
-    snapPoint(e);
+void RS_ActionDrawCircleTan2::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected
         highlightSelected(pc);
     }
@@ -133,7 +127,7 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetCenter: {
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
             if (preparePreview()){
                 previewToCreateCircle(pPoints->cData);
                 for (const auto &center: pPoints->centers) {
@@ -156,9 +150,6 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
 void RS_ActionDrawCircleTan2::setRadius(double r){
@@ -192,17 +183,21 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
     return pPoints->valid;
 }
 
-RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e, bool forPreview){
-    RS_Entity *en;
+RS_Entity *RS_ActionDrawCircleTan2::catchCircle(LC_MouseEvent *e, bool forPreview){
+    RS_Entity* en;
     // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
     if (forPreview) {
-        en = catchModifiableEntityOnPreview(e, enTypeList);
+        en = catchModifiableAndDescribe(e, enTypeList);
     }
     else{
         en = catchModifiableEntity(e, enTypeList);
     }
-    if (!en) return nullptr;
-    if (!en->isVisible()) return nullptr;
+    if (!en){
+        return nullptr;
+    }
+    if (!en->isVisible()) {
+        return nullptr;
+    }
     for (int i = 0; i < getStatus(); i++) {
         if (en->getId() == pPoints->circles[i]->getId()) return nullptr; //do not pull in the same line again
     }
@@ -210,7 +205,7 @@ RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e, bool forPreview)
     return en;
 }
 
-void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1: {
             RS_Entity *en = catchCircle(e,false);
@@ -242,7 +237,7 @@ void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetCenter:
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
             if (preparePreview()) {
                 trigger();
             }
@@ -253,12 +248,12 @@ void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, QMouseEvent *
     }
 }
 
-void RS_ActionDrawCircleTan2::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleTan2::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (getStatus() > 0){
 //            pPoints->circles[getStatus() - 1]->setHighlighted(false);
         pPoints->circles.pop_back();
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         deletePreview();
     }
     initPrevious(status);

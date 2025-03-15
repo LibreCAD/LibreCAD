@@ -37,6 +37,7 @@
 #include "lc_actiondrawparabolaFD.h"
 
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 
@@ -222,6 +223,7 @@
 #include "lc_actiondrawlinepolygon4.h"
 #include "lc_actionmodifyalignref.h"
 #include "lc_actiondrawboundingbox.h"
+#include "lc_actionucscreate.h"
 
 /**
  * Constructor
@@ -315,7 +317,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
                 // DO we need to call some form of a 'clean' function?
                 view->killAllActions();
 
-                RS_Selection s((RS_EntityContainer&)*document, view);
+                RS_Selection s((RS_EntityContainer&)*document, view->getViewPort());
                 s.selectAll(false);
                 RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(),document->totalSelectedLength());
             }
@@ -473,17 +475,17 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawLine(*document, *view);
             break;
         case RS2::ActionDrawLineAngle:
-            a = new RS_ActionDrawLineAngle(*document, *view, 0.0, false);
+            a = new RS_ActionDrawLineAngle(*document, *view,false);
             break;
         case RS2::ActionDrawLineHorizontal:
-            a = new RS_ActionDrawLineAngle(*document, *view, 0.0, true,
+            a = new RS_ActionDrawLineAngle(*document, *view, true,
                                            RS2::ActionDrawLineHorizontal);
             break;
         case RS2::ActionDrawLineHorVert:
             a = new RS_ActionDrawLineHorVert(*document, *view);
             break;
         case RS2::ActionDrawLineVertical:
-            a = new RS_ActionDrawLineAngle(*document, *view, 90, true,
+            a = new RS_ActionDrawLineAngle(*document, *view, true,
                                            RS2::ActionDrawLineVertical);
             break;
         case RS2::ActionDrawLineFree:
@@ -992,8 +994,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionInfoPickCoordinates:
             a = new LC_ActionInfoPickCoordinates(*document, *view);
             break;
-
-
             // Layer actions:
             //
         case RS2::ActionLayersDefreezeAll:
@@ -1098,6 +1098,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionOptionsDrawingGrid:
             a = new RS_ActionOptionsDrawing(*document, *view, 2);
+            break;
+        case RS2::ActionOptionsDrawingUnits:
+            a = new RS_ActionOptionsDrawing(*document, *view, 1);
+            break;
+        case RS2::ActionUCSCreate:
+            a = new LC_ActionUCSCreate(*document, *view);
             break;
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -2014,17 +2020,14 @@ void QG_ActionHandler::slotSetRelativeZero() {
     setCurrentAction(RS2::ActionSetRelativeZero);
 }
 
+
 void QG_ActionHandler::slotLockRelativeZero(bool on){
 	   if (snap_toolbar) {
         snap_toolbar->setLockedRelativeZero(on);
     }
-//    if (on) {
-    // calling view directly instead of action to ensure that button for action will not be unchecked after anction init/finish
-    view->lockRelativeZero(on);
-//        setCurrentAction(RS2::ActionLockRelativeZero);
-//    } else {
-//        setCurrentAction(RS2::ActionUnlockRelativeZero);
-//    }
+    // calling view directly instead of action to ensure that button for action will not be unchecked after action init/finish
+    view->getViewPort()->lockRelativeZero(on);
+
 }
 
 void QG_ActionHandler::slotInfoInside() {

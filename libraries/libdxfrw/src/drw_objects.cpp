@@ -24,6 +24,9 @@
 //! Base class for tables entries
 /*!
 *  Base class for tables entries
+ *
+ *  DXF Format reference:
+ *  https://documentation.help/AutoCAD-DXF
 *  @author Rallaz
 */
 bool DRW_TableEntry::parseCode(int code, dxfReader *reader){
@@ -1298,6 +1301,88 @@ bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+bool DRW_UCS::parseDwg([[maybe_unused]]DRW::Version version, dwgBuffer *buf, [[maybe_unused]]duint32 bs) {
+    // fixme - sand - complete reading UCS from DWG
+    DRW_DBG("\n********************** parsing UCS Settings from DWG is not yet implemented **************************\n");
+    return buf->isGood();
+}
+
+bool DRW_UCS::parseCode(int code, dxfReader *reader) {
+    switch (code) {
+        case 10: {
+            origin.x = reader->getDouble();
+            break;
+        }
+        case 20: {
+            origin.y = reader->getDouble();
+            break;
+        }
+        case 30: {
+            origin.z = reader->getDouble();
+            break;
+        }
+        case 11: {
+            xAxisDirection.x = reader->getDouble();
+            break;
+        }
+        case 21: {
+            xAxisDirection.y = reader->getDouble();
+            break;
+        }
+        case 31: {
+            xAxisDirection.z = reader->getDouble();
+            break;
+        }
+        case 12: {
+            yAxisDirection.x = reader->getDouble();
+            break;
+        }
+        case 22: {
+            yAxisDirection.y = reader->getDouble();
+            break;
+        }
+        case 32: {
+            yAxisDirection.z = reader->getDouble();
+            break;
+        }
+        case 79: {
+            // always 0
+            break;
+        }
+        case 146:{
+            elevation = reader->getDouble();
+            break;
+        }
+        case 346:{
+            // ID/handle of base UCS if this is an orthographic. This code is not present if the 79 code is 0.
+            // If this code is not present and 79 code is non-zero, then base UCS is assumed to be WORLD
+            break;
+        }
+        case 71:{
+//            Orthographic type (optional; always appears in pairs with the 13, 23, 33 codes):
+//            1 = Top; 2 = Bottom
+//            3 = Front; 4 = Back
+//            5 = Left; 6 = Right
+            orthoType = reader->getInt32();
+            break;
+        }
+        case 13: {
+            orthoOrigin.x = reader->getDouble();
+            break;
+        }
+        case 23: {
+            orthoOrigin.y = reader->getDouble();
+            break;
+        }
+        case 33: {
+            orthoOrigin.z = reader->getDouble();
+            break;
+        }
+        default:
+            return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
 
 bool DRW_View::parseCode(int code, dxfReader *reader) {
     switch (code) {

@@ -30,12 +30,10 @@
 #include <QAction>
 #include "lc_namedviewslistwidget.h"
 
-class LC_NamedViewsButton : public QToolButton
-{
+class LC_NamedViewsButton : public QToolButton{
 Q_OBJECT
 public:
     LC_NamedViewsButton(LC_NamedViewsListWidget* widget);
-
 protected:
     LC_NamedViewsListWidget* widget{nullptr};
     QMenu* menu;

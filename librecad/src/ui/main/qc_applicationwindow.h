@@ -44,6 +44,9 @@
 #include "lc_releasechecker.h"
 #include "lc_qtstatusbarmanager.h"
 #include "lc_namedviewslistwidget.h"
+#include "lc_ucslistwidget.h"
+#include "lc_ucsstatewidget.h"
+#include "lc_anglesbasiswidget.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -56,11 +59,11 @@ class QC_PluginInterface;
 class QG_ActionHandler;
 class QG_ActiveLayerName;
 class QG_BlockWidget;
-class QG_CadToolBar;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
 class QG_LayerWidget;
 class LC_LayerTreeWidget;
+class LC_RelZeroCoordinatesWidget;
 class QG_LibraryWidget;
 class QG_MouseWidget;
 class QG_PenToolBar;
@@ -132,6 +135,7 @@ public slots:
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
     void slotShowDrawingOptions();
+    void slotShowDrawingOptionsUnits();
 
     void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
     void slotWindowsMenuAboutToShow();
@@ -299,6 +303,7 @@ public:
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
+    LC_AnglesBasisWidget* getAnglesBasisWidget() const {return anglesBasisWidget;};
 
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
@@ -309,11 +314,9 @@ public:
 
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
-
     void doClose(QC_MDIWindow* w, bool activateNext = true);
-
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
-
+    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -387,6 +390,7 @@ private:
     LC_PenWizard* pen_wiz {nullptr};
     LC_PenPaletteWidget* penPaletteWidget {nullptr};
     LC_NamedViewsListWidget* namedViewsWidget {nullptr};
+    LC_UCSListWidget* ucsListWidget {nullptr};
 
     // --- Statusbar ---
     /** Coordinate widget */
@@ -398,6 +402,9 @@ private:
     QG_SelectionWidget* selectionWidget {nullptr};
     QG_ActiveLayerName* m_pActiveLayerName {nullptr};
     TwoStackedLabels* grid_status {nullptr};
+    LC_UCSStateWidget* ucsStateWidget {nullptr};
+    LC_AnglesBasisWidget* anglesBasisWidget{nullptr};
+
 
     LC_QTStatusbarManager* statusbarManager {nullptr};
 
@@ -445,8 +452,6 @@ private:
     void enableWidgets(bool enable);
 
     friend class LC_WidgetFactory;
-
-    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
 
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
 

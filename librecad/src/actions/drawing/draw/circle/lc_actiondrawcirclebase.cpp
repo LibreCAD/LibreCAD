@@ -21,7 +21,6 @@
  ******************************************************************************/
 
 #include "rs_ellipse.h"
-#include <QMouseEvent>
 #include "rs_graphicview.h"
 #include "lc_actiondrawcirclebase.h"
 
@@ -30,11 +29,11 @@ LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, RS_EntityCont
 
 LC_ActionDrawCircleBase::~LC_ActionDrawCircleBase() = default;
 
-void LC_ActionDrawCircleBase::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionDrawCircleBase::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionDrawCircleBase::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawCircleBase::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

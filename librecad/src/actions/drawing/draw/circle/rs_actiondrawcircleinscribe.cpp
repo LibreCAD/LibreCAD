@@ -21,8 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include<vector>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawcircleinscribe.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -91,19 +89,11 @@ void RS_ActionDrawCircleInscribe::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger(): entity added: %lu", circle->getId());
 }
 
-void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
-    deleteHighlights();
-    deletePreview();
-
-
-    RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent begin");
-    snapPoint(e);
-    int status = getStatus();
-
+void RS_ActionDrawCircleInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
-    auto en = catchModifiableEntityOnPreview(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
+    auto en = catchModifiableAndDescribe(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
 
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
@@ -120,7 +110,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
             }
             case SetLine3: {
                 if (pPoints->lines[SetLine1] != line && pPoints->lines[SetLine2] != line){
-                    pPoints->coord = toGraph(e);
+                    pPoints->coord = e->graphPoint;
                     if (preparePreview(line)){
                         highlightHover(en);
                         previewToCreateCircle(pPoints->cData);
@@ -138,12 +128,9 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
-    RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
     if (!en) return;
     if (!(en->isVisible() && isLine(en))) return;
@@ -151,7 +138,7 @@ void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, QMouseEve
         if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
     }
 
-    pPoints->coord = toGraph(e);
+    pPoints->coord = e->graphPoint;
     auto *line = dynamic_cast<RS_Line *>(en);
 
     switch (status) {
@@ -174,7 +161,7 @@ void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, QMouseEve
     }
 }
 
-void RS_ActionDrawCircleInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (status > 0){
         pPoints->lines.pop_back();

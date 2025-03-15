@@ -19,7 +19,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QMouseEvent>
 #include <cmath>
 #include "rs_polyline.h"
 #include "rs_graphicview.h"
@@ -44,8 +43,8 @@ void LC_ActionModifyLineJoin::init(int status){
 /*
  * utility method that catches line based on mouse event
  */
-RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e, bool forPreview){
-    RS_Entity *en = forPreview ? catchModifiableEntityOnPreview(e, lineType) :catchModifiableEntity(e, lineType);
+RS_Line *LC_ActionModifyLineJoin::catchLine(LC_MouseEvent *e, bool forPreview){
+    RS_Entity *en = forPreview ? catchModifiableAndDescribe(e, lineType) :catchModifiableEntity(e, lineType);
     RS_Line *snappedLine = nullptr;
     if (isLine(en)){
         snappedLine = dynamic_cast<RS_Line *>(en);
@@ -57,7 +56,7 @@ void LC_ActionModifyLineJoin::drawSnapper() {
     // disable snapper
 }
 
-void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionModifyLineJoin::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, int status){
     RS_Line *snappedLine = catchLine(e, true);
     switch (status) {
         case SetLine1: {
@@ -74,7 +73,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
             if (snappedLine != nullptr){
                 highlightHover(snappedLine);
                 // here we do not rely on snap point, simply get coordinates from event
-                RS_Vector coord = toGraph(e);
+                RS_Vector coord = e->graphPoint;
                 LC_LineJoinData *lineJoinData = createLineJoinData(snappedLine, coord);
                 if (lineJoinData != nullptr){
                     RS_Polyline *polyline = lineJoinData->polyline;
@@ -126,7 +125,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
             if (snappedLine != nullptr){
                 // retrieve current mouse position and recalculate line join data considering that mose position denotes part of line 1 that
                 // will survive trim operation
-                RS_Vector coord = toGraph(e);
+                RS_Vector coord = e->graphPoint;
                 updateLine1TrimData(coord);
 
                 RS_Polyline *polyline = linesJoinData->polyline;
@@ -149,7 +148,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
     }
 }
 
-void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     RS_Line *snappedLine = catchLine(e, false);
     switch (status) {
         case SetLine1:
@@ -167,7 +166,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
             }
             if (snappedLine != nullptr){
                 line2 = snappedLine;
-                RS_Vector snap = toGraph(e);
+                RS_Vector snap = e->graphPoint;
                 LC_LineJoinData *joinData = createLineJoinData(snappedLine, snap);
                 if (joinData != nullptr){
                     // check whether parallel lines were selected
@@ -199,7 +198,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                                 // we need to addition hint from the user for proper trim, so go to the corresponding state
                                 setStatus(ResolveFirstLineTrim);
                                 highlightEntity(line1);
-                                graphicView->redraw();
+                                redraw();
                             } else {
                                 // we are find for joining/trimming lines, just invoke trigger
                                 trigger();
@@ -214,7 +213,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
 
         case ResolveFirstLineTrim:
             if (snappedLine == line1){ // we need trim hint on the first line
-                RS_Vector snap = toGraph(e);
+                RS_Vector snap = e->graphPoint;
                 // update trim data according to selected part of line 1
                 updateLine1TrimData(snap);
                 // check if polyline is built and if it so - trigger action
@@ -232,7 +231,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
     }
 }
 
-void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
+void LC_ActionModifyLineJoin::doBack(LC_MouseEvent *pEvent, int status){
     LC_AbstractActionWithPreview::doBack(pEvent, status);
     switch (status) {
         case SetLine1:
@@ -254,7 +253,7 @@ void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
 void LC_ActionModifyLineJoin::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     delete linesJoinData; // cleanup
-    graphicView->redraw();
+    redraw();
     // return to selection first line mode
     init(SetLine1);
 }

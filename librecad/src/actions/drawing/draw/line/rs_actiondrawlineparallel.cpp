@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlineparallel.h"
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_commandevent.h"
@@ -79,14 +77,10 @@ void RS_ActionDrawLineParallel::doTrigger() {
     }
 }
 
-void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
-    snapPoint(e);
-    *coord = {toGraph(e)};
+void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    *coord = {e->graphPoint};
 
-    entity = catchEntityOnPreview(e, RS2::ResolveAll);
+    entity = catchAndDescribe(e, RS2::ResolveAll);
 
     switch (getStatus()) {
         case SetEntity: {
@@ -114,17 +108,13 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionDrawLineParallel::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallel::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     trigger();
 }
 
-void RS_ActionDrawLineParallel::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallel::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 
@@ -150,9 +140,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
             if (checkCommand("through", c)){
                 finish(false);
                 accept = true;
-                graphicView->setCurrentAction(
-                    new RS_ActionDrawLineParallelThrough(*container,
-                                                         *graphicView));
+                graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(*container,*graphicView));
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);

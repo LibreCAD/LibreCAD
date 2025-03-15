@@ -23,8 +23,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_actionsnapmiddlemanual.h"
 
 #include "rs_commandevent.h"
@@ -32,6 +30,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_document.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
@@ -87,13 +86,10 @@ void LC_ActionSnapMiddleManual::init(int status){
     drawSnapper();
 }
 
-void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
-    RS_Vector mouse = snapPoint(e);
-
-    if (getStatus() == SetEndPoint){
+void LC_ActionSnapMiddleManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    if (status == SetEndPoint){
         /* Snapping to an angle defined by settings, if the shift key is pressed. */
-        deletePreview();
-
         mouse = getSnapAngleAwarePoint(e, m_pPoints->startPoint, mouse,true);
 
         auto *line = previewLine(m_pPoints->startPoint, mouse);
@@ -103,7 +99,6 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
             previewRefPoint(m_pPoints->startPoint);
             previewRefPoint(mouse);
         }
-        drawPreview();
     } else if (getStatus() == SetPercentage){
         if (predecessor != nullptr){
             if (predecessor->getName().compare("Snap Middle Manual") == 0){
@@ -114,13 +109,13 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void LC_ActionSnapMiddleManual::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void LC_ActionSnapMiddleManual::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     snapped = getSnapAngleAwarePoint(e, m_pPoints->startPoint, snapped);
     fireCoordinateEvent(snapped);
 }
 
-void LC_ActionSnapMiddleManual::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void LC_ActionSnapMiddleManual::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
 
     switch (status) {

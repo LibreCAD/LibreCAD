@@ -26,8 +26,6 @@
 
 #include <cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actioninfoangle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -52,11 +50,10 @@ struct RS_ActionInfoAngle::Points {
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Info Angle",
-						   container, graphicView)
-		,entity1(nullptr)
-        ,entity2(nullptr)
-    , pPoints(std::make_unique<Points>()){
+    :RS_PreviewActionInterface("Info Angle",container, graphicView)
+    ,entity1(nullptr)
+    ,entity2(nullptr)
+    ,pPoints(std::make_unique<Points>()){
     actionType = RS2::ActionInfoAngle;
 }
 
@@ -65,7 +62,6 @@ RS_ActionInfoAngle::~RS_ActionInfoAngle() = default;
 void RS_ActionInfoAngle::init(int status){
     RS_PreviewActionInterface::init(status);
 }
-
 
 void RS_ActionInfoAngle::drawSnapper() {
     // disable snapper
@@ -81,15 +77,15 @@ void RS_ActionInfoAngle::doTrigger() {
                 auto line = dynamic_cast<RS_Line*>(entity1);
                 double angle1 = line->getAngle1();
                 double angle2 = line->getAngle2();
-                QString strAngle1 = formatAngle(angle1);
+                QString strAngle1 = formatWCSAngle(angle1);
                 if (angle1 < 0.) {
                     strAngle1 += " or ";
-                    strAngle1 += formatAngle(angle1 + 2. * M_PI);
+                    strAngle1 += formatWCSAngle(angle1 + 2. * M_PI);
                 }
-                QString strAngle2 = formatAngle(angle2);
+                QString strAngle2 = formatWCSAngle(angle2);
                 if (angle2 < 0.) {
                     strAngle2 += " or ";
-                    strAngle2 += formatAngle(angle2 + 2. * M_PI);
+                    strAngle2 += formatWCSAngle(angle2 + 2. * M_PI);
                 }
                 commandMessage("---");
                 const QString &msgTemplate = tr("Angle 1: %1\nAngle 2: %2");
@@ -108,20 +104,23 @@ void RS_ActionInfoAngle::doTrigger() {
                     double angle1 = pPoints->intersection.angleTo(pPoints->point1);
                     double angle2 = pPoints->intersection.angleTo(pPoints->point2);
                     double angle = remainder(angle2 - angle1, 2. * M_PI);
-                    QString str = formatAngle(angle);
-                    QString intersectX = formatLinear(pPoints->intersection.x);
-                    QString intersectY = formatLinear(pPoints->intersection.y);
+                    QString str = formatAngleRaw(angle);
+
+                    RS_Vector ucsIntersection = toUCS(pPoints->intersection);
+                    QString intersectX = formatLinear(ucsIntersection.x);
+                    QString intersectY = formatLinear(ucsIntersection.y);
                     if (angle < 0.) {
                         str += " or ";
-                        str += formatAngle(angle + 2. * M_PI);
+                        str += formatAngleRaw(angle + 2. * M_PI);
                     }
 
-                    RS_Vector relPoint = graphicView->getRelativeZero();
+                    RS_Vector wcsRelPoint = getRelativeZero(); // fixme - ucs - review this, why relative zero is invoked there?
+                    RS_Vector ucsRelPoint = toUCS(wcsRelPoint);
                     RS_Vector intersectRel;
-                    if (relPoint.valid) {
-                        intersectRel = pPoints->intersection - relPoint;
+                    if (wcsRelPoint.valid) {
+                        intersectRel = ucsIntersection - ucsRelPoint;
                     } else {
-                        intersectRel = pPoints->intersection;
+                        intersectRel = ucsIntersection;
                     }
 
                     QString intersectRelX = formatLinear(intersectRel.x);
@@ -143,18 +142,11 @@ void RS_ActionInfoAngle::doTrigger() {
     }
 }
 
-void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
-    deleteHighlights();
-    deletePreview();
-
-    int status = getStatus();
-    snapPoint(event);
-
-    RS_Vector mouse = toGraph(event);
-
+void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+    RS_Vector mouse = event->graphPoint;
     switch (status) {
         case SetEntity1: {
-            auto en = catchEntityOnPreview(event, RS2::ResolveAll);
+            auto en = catchAndDescribe(event, RS2::ResolveAll);
             if (isLine(en)){
                 RS_Vector p = en->getNearestPointOnEntity(mouse);
                 highlightHover(en);
@@ -163,7 +155,7 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
             break;
         }
         case SetEntity2: {
-            auto en = catchEntityOnPreview(event, RS2::ResolveAll);
+            auto en = catchAndDescribe(event, RS2::ResolveAll);
             highlightSelected(entity1);
             if (showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->point1);
@@ -194,19 +186,16 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
         default:
             break;
     }
-
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = toGraph(e);
+void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetEntity1:
-            entity1 = catchEntity(e, RS2::ResolveAll);
+            entity1 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(entity1)){
                 pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
-                if (isControl(e)){
+                if (e->isControl){
                     trigger();
                 }
                 else {
@@ -216,7 +205,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
 
         case SetEntity2:
-            entity2 = catchEntity(e, RS2::ResolveAll);
+            entity2 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(entity2)){
                 pPoints->point2 = entity2->getNearestPointOnEntity(mouse);
                 trigger();
@@ -229,7 +218,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionInfoAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }
@@ -257,16 +246,16 @@ void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vect
         double angle1 = intersection.angleTo(pPoints->point1);
         double angle2 = intersection.angleTo(point2);
         double angle = remainder(angle2 - angle1, 2. * M_PI);
-        QString str = formatAngle(angle);
+        QString str = formatAngleRaw(angle);
 
         LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Angle:"),formatAngle(angle));
+        msg.add(tr("Angle:"), formatAngleRaw(angle));
         if (angle < 0) {
-            msg.add(tr("Angle (alt): "), formatAngle(angle + 2. * M_PI));
+            msg.add(tr("Angle (alt): "), formatAngleRaw(angle + 2. * M_PI));
         }
         msg.add(tr("Intersection:"), formatVector(intersection));
-        msg.add(tr("Line 1 Angle:"), formatAngle(angle1));
-        msg.add(tr("Line 2 Angle:"), formatAngle(angle2));
+        msg.add(tr("Line 1 Angle:"), formatWCSAngle(angle1));
+        msg.add(tr("Line 2 Angle:"), formatWCSAngle(angle2));
         appendInfoCursorZoneMessage(msg.toString(), 2, true);
     }
 }

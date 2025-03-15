@@ -55,3 +55,11 @@ void TwoStackedLabels::mouseReleaseEvent(QMouseEvent *e) {
     }
     QWidget::mouseReleaseEvent(e);
 }
+
+void TwoStackedLabels::setTopLabelToolTip(const QString &tooltip) {
+  top_label->setToolTip(tooltip);
+}
+
+void TwoStackedLabels::setBottomLabelToolTips(const QString &tooltip) {
+    bottom_label->setToolTip(tooltip);
+}

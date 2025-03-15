@@ -26,9 +26,10 @@
 
 #include "rs_actionblocksadd.h"
 
-
+#include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_debug.h"
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
@@ -42,8 +43,7 @@ void RS_ActionBlocksAdd::trigger(){
     if (graphic){
         RS_BlockList *blockList = graphic->getBlockList();
         if (blockList){
-            RS_BlockData d =
-                RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
+            RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
             if (d.isValid()){
                 // Block cannot contain blocks.
                 if (container->is(RS2::EntityBlock)){

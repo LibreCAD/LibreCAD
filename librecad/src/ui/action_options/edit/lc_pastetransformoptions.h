@@ -24,11 +24,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "lc_actioneditpastetransform.h"
 
 namespace Ui {
     class LC_PasteTransformOptions;
 }
+
+class LC_ActionEditPasteTransform;
 
 class LC_PasteTransformOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT

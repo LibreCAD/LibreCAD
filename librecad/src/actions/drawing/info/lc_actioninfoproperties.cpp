@@ -21,7 +21,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QMouseEvent>
 #include "rs.h"
 #include "lc_actioninfoproperties.h"
 #include "lc_quickinfowidget.h"
@@ -67,38 +66,33 @@ void LC_ActionInfoProperties::init(int status){
     }
 }
 
-void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     // notify widget
-    highlightAndShowEntityInfo(e, isControl(e));
+    highlightAndShowEntityInfo(e, e->isControl);
     setStatus(-1);
     finish();
 }
 
-void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     setStatus(-1);
     finish();
 }
 
-void LC_ActionInfoProperties::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    deleteHighlights();
-    snapPoint(e);
-    highlightAndShowEntityInfo(e, isControl(e));
-    drawPreview();
-    drawHighlights();
+void LC_ActionInfoProperties::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    highlightAndShowEntityInfo(e, e->isControl);
 }
 
-void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e, bool resolveChildren){
-    RS_Vector mouse = toGraph(e);
+void LC_ActionInfoProperties::highlightAndShowEntityInfo(LC_MouseEvent *e, bool resolveChildren){
+    RS_Vector mouse = e->graphPoint;
     updateCoordinateWidgetByRelZero(mouse);
     deleteSnapper();
     highlightHoveredEntity(e, resolveChildren);
 }
 
-void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event, bool resolveChildren){
+void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool resolveChildren){
     bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
 
-    RS_Entity* entity = catchEntity(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
+    RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
     if (entity == nullptr) {
         clearQuickInfoWidget();
         return;
@@ -112,18 +106,18 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event, bool re
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
 
-    const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
+    const double hoverTolerance { hoverToleranceFactor / viewport->getFactor().magnitude() };
 
     double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
-    double screenTolerance = graphicView->toGraphDX( (int)(0.01*std::min(graphicView->getWidth(), graphicView->getHeight())));
+    double screenTolerance = toGraphDX( (int)(0.01*std::min(viewport->getWidth(), viewport->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
 
     bool isPointOnEntity = false;
 
-    RS_Vector currentMousePosition = toGraph(event);
+    RS_Vector currentMousePosition = event->graphPoint;
     if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
         || (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText)) {
         double nearestDistanceTo_pointOnEntity = 0.;

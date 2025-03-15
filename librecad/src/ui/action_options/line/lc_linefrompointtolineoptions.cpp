@@ -21,9 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
 #include "lc_linefrompointtolineoptions.h"
+#include "lc_actiondrawlinefrompointtoline.h"
 #include "ui_lc_linefrompointtolineoptions.h"
 #include "rs_math.h"
-
 
 LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawLineFromPointToLine, "Draw", "LinePointToLine"),
@@ -141,7 +141,7 @@ void LC_LineFromPointToLineOptions::setSizeModelIndexToActionAndView(int index){
 
 void LC_LineFromPointToLineOptions::setAngleToActionAndView(const QString& value){
     double angle;
-    if (toDoubleAngle(value, angle, 1.0, false)){
+    if (toDoubleAngleDegrees(value, angle, 1.0, false)){
         // ensure angle in 0..180
         double angleRad = RS_Math::deg2rad(angle);
         double correctedAngle = std::remainder(angleRad, M_PI);

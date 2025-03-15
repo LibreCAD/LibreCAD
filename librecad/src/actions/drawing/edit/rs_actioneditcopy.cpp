@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actioneditcopy.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
@@ -65,7 +63,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
         case CUT_QUICK:
         case COPY:
         case COPY_QUICK:{
-            RS_Modification m(*container, graphicView);
+            RS_Modification m(*container, viewport);
             m.copy(*referencePoint, mode == CUT || mode == CUT_QUICK);
 
             if (invokedWithControl){
@@ -80,7 +78,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
             break;
         }
         case PASTE: {
-            RS_Modification m(*container, graphicView);
+            RS_Modification m(*container, viewport);
             m.paste(RS_PasteData(*referencePoint, 1.0, 0.0, false, ""));
 
             if (!invokedWithControl) {
@@ -91,18 +89,17 @@ void RS_ActionEditCopyPaste::doTrigger() {
     }
 }
 
-void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    if (getStatus()==SetReferencePoint) {
+void RS_ActionEditCopyPaste::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status==SetReferencePoint) {
         switch (mode) {
             case CUT:
             case COPY:{
-                (void) snapPoint(e);
+//                (void) e->snapPoint;
                 break;
             }
             case PASTE:{
-                *referencePoint = snapPoint(e);
-                preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), graphicView);
+                *referencePoint = e->snapPoint;
+                preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), viewport);
                 preview->move(*referencePoint);
 
                 if (graphic) {
@@ -120,15 +117,14 @@ void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
     else {
         deleteSnapper();
     }
-    drawPreview();
 }
 
-void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    invokedWithControl = isControl(e);
+void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionEditCopyPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

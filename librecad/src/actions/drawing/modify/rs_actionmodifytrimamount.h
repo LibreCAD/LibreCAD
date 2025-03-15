@@ -50,7 +50,6 @@ public:
     void setDistanceIsTotalLength(bool on){distanceIsTotalLength = on;}
     void setSymmetricDistance(bool val){symmetricDistance = val;};
     bool isSymmetricDistance() const {return symmetricDistance;};
-    void mouseMoveEvent(QMouseEvent *event) override;
 protected:
     /**
  * Action States.
@@ -74,8 +73,9 @@ protected:
     */
     double determineDistance(const RS_AtomicEntity *e) const;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

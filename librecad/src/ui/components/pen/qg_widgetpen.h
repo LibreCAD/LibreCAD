@@ -52,13 +52,10 @@ public slots:
 
 protected slots:
     virtual void languageChange();
-
 protected:
     bool initialized = false;
-
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
-
 };
 
 #endif // QG_WIDGETPEN_H

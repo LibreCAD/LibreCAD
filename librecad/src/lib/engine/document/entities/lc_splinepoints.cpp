@@ -1677,18 +1677,10 @@ double DrawPatternQuad(std::vector<double> const& pdPattern, int iPattern, doubl
     return(dSegOffs);
 }
 
-
-
-void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset){
-//    update();
+void LC_SplinePoints::draw(RS_Painter* painter){
     // Adjust dash offset
-    updateDashOffset(*painter, *view, patternOffset);
-    int controlPointsCount = data.controlPoints.size();
-    std::vector<RS_Vector> controlPointsUI = std::vector<RS_Vector>(controlPointsCount);
-    for (int i = 0; i < controlPointsCount; i++){
-        controlPointsUI[i] = view->toGui(data.controlPoints[i]);
-    }
-    painter->drawSplinePoints(controlPointsUI, data.closed);
+    painter->updateDashOffset(this);
+    painter->drawSplinePointsWCS(data.controlPoints, data.closed);
 }
 
 void LC_SplinePoints::updateLength() {
@@ -1705,8 +1697,7 @@ void LC_SplinePoints::updateLength() {
 
     double dRes = 0.0;
 
-    if(data.closed)
-    {
+    if(data.closed){
         if(n < 3) {
             cachedLength = 0.0;
             return;
@@ -1718,8 +1709,7 @@ void LC_SplinePoints::updateLength() {
 
         dRes = GetQuadLength(vStart, vControl, vEnd, 0.0, 1.0);
 
-        for(size_t i = 1; i < n - 1; i++)
-        {
+        for(size_t i = 1; i < n - 1; i++){
             vStart = vEnd;
             vControl = data.controlPoints.at(i);
             vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
@@ -3065,67 +3055,61 @@ RS_VectorSolutions getQuadraticLineIntersect(std::vector<double> dQuadCoefs,
 void addQuadraticQuadIntersect(RS_VectorSolutions *pVS, std::vector<double> dQuadCoefs,
 	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
 {
-	if(dQuadCoefs.size() < 3) return;
+    if(dQuadCoefs.size() < 3) return;
 
-	RS_Vector x1 = vx2 - vc1*2.0 + vx1;
-	RS_Vector x2 = vc1 - vx1;
+    RS_Vector x1 = vx2 - vc1*2.0 + vx1;
+    RS_Vector x2 = vc1 - vx1;
 
-	double a0 = 0.0;
-	double a1 = 0.0;
-	double a2 = 0.0;
-	double a3 = 0.0;
-	double a4 = 0.0;
+    double a0 = 0.0;
+    double a1 = 0.0;
+    double a2 = 0.0;
+    double a3 = 0.0;
+    double a4 = 0.0;
 
-	if(dQuadCoefs.size() > 3)
-	{
-		a4 = dQuadCoefs[0]*x1.x*x1.x + dQuadCoefs[1]*x1.x*x1.y + dQuadCoefs[2]*x1.y*x1.y;
-		a3 = 4.0*dQuadCoefs[0]*x1.x*x2.x + 2.0*dQuadCoefs[1]*(x1.x*x2.y + x1.y*x2.x) +
-			4.0*dQuadCoefs[2]*x1.y*x2.y;
-		a2 = dQuadCoefs[0]*(2.0*x1.x*vx1.x + 4.0*x2.x*x2.x) +
-			dQuadCoefs[1]*(x1.x*vx1.y + x1.y*vx1.x + 4.0*x2.x*x2.y) +
-			dQuadCoefs[2]*(2.0*x1.y*vx1.y + 4.0*x2.y*x2.y) +
-			dQuadCoefs[3]*x1.x + dQuadCoefs[4]*x1.y;
-		a1 = 4.0*(dQuadCoefs[0]*x2.x*vx1.x + dQuadCoefs[2]*x2.y*vx1.y) +
-			2.0*(dQuadCoefs[1]*(x2.x*vx1.y + x2.y*vx1.x) + dQuadCoefs[3]*x2.x + dQuadCoefs[4]*x2.y);
-		a0 = dQuadCoefs[0]*vx1.x*vx1.x + dQuadCoefs[1]*vx1.x*vx1.y + dQuadCoefs[2]*vx1.y*vx1.y +
-			dQuadCoefs[3]*vx1.x + dQuadCoefs[4]*vx1.y + dQuadCoefs[5];
-	}
-	else
-	{
-		a2 = dQuadCoefs[0]*x1.x + dQuadCoefs[1]*x1.y;
-		a1 = 2.0*(dQuadCoefs[0]*x2.x + dQuadCoefs[1]*x2.y);
-		a0 = dQuadCoefs[0]*vx1.x + dQuadCoefs[1]*vx1.y + dQuadCoefs[2];
-	}
+    if(dQuadCoefs.size() > 3) {
+        a4 = dQuadCoefs[0]*x1.x*x1.x + dQuadCoefs[1]*x1.x*x1.y + dQuadCoefs[2]*x1.y*x1.y;
+        a3 = 4.0*dQuadCoefs[0]*x1.x*x2.x + 2.0*dQuadCoefs[1]*(x1.x*x2.y + x1.y*x2.x) +
+             4.0*dQuadCoefs[2]*x1.y*x2.y;
+        a2 = dQuadCoefs[0]*(2.0*x1.x*vx1.x + 4.0*x2.x*x2.x) +
+             dQuadCoefs[1]*(x1.x*vx1.y + x1.y*vx1.x + 4.0*x2.x*x2.y) +
+             dQuadCoefs[2]*(2.0*x1.y*vx1.y + 4.0*x2.y*x2.y) +
+             dQuadCoefs[3]*x1.x + dQuadCoefs[4]*x1.y;
+        a1 = 4.0*(dQuadCoefs[0]*x2.x*vx1.x + dQuadCoefs[2]*x2.y*vx1.y) +
+             2.0*(dQuadCoefs[1]*(x2.x*vx1.y + x2.y*vx1.x) + dQuadCoefs[3]*x2.x + dQuadCoefs[4]*x2.y);
+        a0 = dQuadCoefs[0]*vx1.x*vx1.x + dQuadCoefs[1]*vx1.x*vx1.y + dQuadCoefs[2]*vx1.y*vx1.y +
+             dQuadCoefs[3]*vx1.x + dQuadCoefs[4]*vx1.y + dQuadCoefs[5];
+    }
+    else{
+        a2 = dQuadCoefs[0]*x1.x + dQuadCoefs[1]*x1.y;
+        a1 = 2.0*(dQuadCoefs[0]*x2.x + dQuadCoefs[1]*x2.y);
+        a0 = dQuadCoefs[0]*vx1.x + dQuadCoefs[1]*vx1.y + dQuadCoefs[2];
+    }
 
-	std::vector<double> dSol(0, 0.);
-	std::vector<double> dCoefs(0, 0.);
+    std::vector<double> dSol(0, 0.);
+    std::vector<double> dCoefs(0, 0.);
 
-    if(std::abs(a4) > RS_TOLERANCE)
-	{
-		dCoefs.push_back(a3/a4);
-		dCoefs.push_back(a2/a4);
-		dCoefs.push_back(a1/a4);
-		dCoefs.push_back(a0/a4);
-		dSol = RS_Math::quarticSolver(dCoefs);
-	}
-    else if(std::abs(a3) > RS_TOLERANCE)
-	{
-		dCoefs.push_back(a2/a3);
-		dCoefs.push_back(a1/a3);
-		dCoefs.push_back(a0/a3);
-		dSol = RS_Math::cubicSolver(dCoefs);
-	}
-    else if(std::abs(a2) > RS_TOLERANCE)
-	{
-		dCoefs.push_back(a1/a2);
-		dCoefs.push_back(a0/a2);
-		dSol = RS_Math::quadraticSolver(dCoefs);
+    if(std::abs(a4) > RS_TOLERANCE){
+        dCoefs.push_back(a3/a4);
+        dCoefs.push_back(a2/a4);
+        dCoefs.push_back(a1/a4);
+        dCoefs.push_back(a0/a4);
+        dSol = RS_Math::quarticSolver(dCoefs);
+    }
+    else if(std::abs(a3) > RS_TOLERANCE){
+        dCoefs.push_back(a2/a3);
+        dCoefs.push_back(a1/a3);
+        dCoefs.push_back(a0/a3);
+        dSol = RS_Math::cubicSolver(dCoefs);
+    }
+    else if(std::abs(a2) > RS_TOLERANCE){
+        dCoefs.push_back(a1/a2);
+        dCoefs.push_back(a0/a2);
+        dSol = RS_Math::quadraticSolver(dCoefs);
 
-	}
-    else if(std::abs(a1) > RS_TOLERANCE)
-	{
-		dSol.push_back(-a0/a1);
-	}
+    }
+    else if(std::abs(a1) > RS_TOLERANCE){
+        dSol.push_back(-a0/a1);
+    }
 
     for (double& d: dSol) {
         if (d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE) {
@@ -3140,146 +3124,131 @@ void addQuadraticQuadIntersect(RS_VectorSolutions *pVS, std::vector<double> dQua
     }
 }
 
-RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity const* e1)
-{
-	RS_VectorSolutions ret;
+RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity const* e1){
+    RS_VectorSolutions ret;
 
-	size_t n = data.controlPoints.size();
-	if(n < 2) return ret;
+    size_t n = data.controlPoints.size();
+    if(n < 2) return ret;
 
-	LC_Quadratic lcQuad = e1->getQuadratic();
-	std::vector<double> dQuadCoefs = lcQuad.getCoefficients();
+    LC_Quadratic lcQuad = e1->getQuadratic();
+    std::vector<double> dQuadCoefs = lcQuad.getCoefficients();
 
-	RS_Vector vStart(false), vEnd(false), vControl(false);
+    RS_Vector vStart(false), vEnd(false), vControl(false);
 
-	if(data.closed)
-	{
-		if(n < 3) return ret;
+    if(data.closed){
+        if(n < 3) return ret;
 
-		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
-		vControl = data.controlPoints.at(0);
-		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+        vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+        vControl = data.controlPoints.at(0);
+        vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
 
-		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+        addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
 
-		for(size_t i = 1; i < n - 1; i++)
-		{
-			vStart = vEnd;
-			vControl = data.controlPoints.at(i);
-			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+        for(size_t i = 1; i < n - 1; i++){
+            vStart = vEnd;
+            vControl = data.controlPoints.at(i);
+            vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
 
-			addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
-		}
+            addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+        }
 
-		vStart = vEnd;
-		vControl = data.controlPoints.at(n - 1);
-		vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+        vStart = vEnd;
+        vControl = data.controlPoints.at(n - 1);
+        vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
 
-		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
-	}
-	else
-	{
-		vStart = data.controlPoints.at(0);
-		vEnd = data.controlPoints.at(1);
-		if(n < 3)
-		{
-			return getQuadraticLineIntersect(dQuadCoefs, vStart, vEnd);
-		}
+        addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+    }
+    else{
+        vStart = data.controlPoints.at(0);
+        vEnd = data.controlPoints.at(1);
+        if(n < 3) {
+            return getQuadraticLineIntersect(dQuadCoefs, vStart, vEnd);
+        }
 
-		vControl = vEnd;
-		vEnd = data.controlPoints.at(2);
-		if(n < 4)
-		{
-			addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
-			return ret;
-		}
+        vControl = vEnd;
+        vEnd = data.controlPoints.at(2);
+        if(n < 4) {
+            addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+            return ret;
+        }
 
-		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
-		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+        vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
+        addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
 
-		for(size_t i = 2; i < n - 2; i++)
-		{
-			vStart = vEnd;
-			vControl = data.controlPoints.at(i);
-			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+        for(size_t i = 2; i < n - 2; i++) {
+            vStart = vEnd;
+            vControl = data.controlPoints.at(i);
+            vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
 
-			addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
-		}
+            addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+        }
 
-		vStart = vEnd;
-		vControl = data.controlPoints.at(n - 2);
-		vEnd = data.controlPoints.at(n - 1);
+        vStart = vEnd;
+        vControl = data.controlPoints.at(n - 2);
+        vEnd = data.controlPoints.at(n - 1);
 
-		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
-	}
+        addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+    }
 
     return ret;
 }
 
 
-RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity const* e1, RS_Entity const* e2)
-{
+RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity const* e1, RS_Entity const* e2){
     if(e2 == nullptr || (e1 != nullptr && e1->rtti() != RS2::EntitySplinePoints)) std::swap(e1, e2);
     if(e1 == nullptr || e1->rtti() != RS2::EntitySplinePoints) return {};
 
     auto spline = static_cast<LC_SplinePoints*>(const_cast<RS_Entity*>(e1));
 
-	switch(e2->rtti())
-	{
-    case RS2::EntityLine:
-        return {spline->getLineIntersect(e2->getStartpoint(), e2->getEndpoint())};
-	case RS2::EntitySplinePoints:
-        return {spline->getSplinePointsIntersect(static_cast<LC_SplinePoints*>(const_cast<RS_Entity*>(e2)))};
-	default:
-        return {spline->getQuadraticIntersect(e2)};
+    switch(e2->rtti())
+    {
+        case RS2::EntityLine:
+            return {spline->getLineIntersect(e2->getStartpoint(), e2->getEndpoint())};
+        case RS2::EntitySplinePoints:
+            return {spline->getSplinePointsIntersect(static_cast<LC_SplinePoints*>(const_cast<RS_Entity*>(e2)))};
+        default:
+            return {spline->getQuadraticIntersect(e2)};
     }
 }
 
-RS2::EntityType LC_SplinePoints::rtti() const
-{
-	return RS2::EntitySplinePoints;
+RS2::EntityType LC_SplinePoints::rtti() const{
+    return RS2::EntitySplinePoints;
 }
 
 /** @return false */
-bool LC_SplinePoints::isEdge() const
-{
-	return true;
+bool LC_SplinePoints::isEdge() const{
+    return true;
 }
 
 /** @return Copy of data that defines the spline. */
-LC_SplinePointsData const& LC_SplinePoints::getData() const
-{
-	return data;
+LC_SplinePointsData const& LC_SplinePoints::getData() const{
+    return data;
 }
 
 /** @return Copy of data that defines the spline. */
-LC_SplinePointsData& LC_SplinePoints::getData()
-{
-	return data;
+LC_SplinePointsData& LC_SplinePoints::getData(){
+    return data;
 }
 
 /** @return Number of control points. */
-size_t LC_SplinePoints::getNumberOfControlPoints() const
-{
-	return data.controlPoints.size();
+size_t LC_SplinePoints::getNumberOfControlPoints() const{
+    return data.controlPoints.size();
 }
 
 /**
 * @retval true if the spline is closed.
 * @retval false otherwise.
 */
-bool LC_SplinePoints::isClosed() const
-{
-	return data.closed;
+bool LC_SplinePoints::isClosed() const{
+    return data.closed;
 }
 
 /**
 * Sets the closed flag of this spline.
 */
-void LC_SplinePoints::setClosed(bool c)
-{
-	data.closed = c;
-	update();
+void LC_SplinePoints::setClosed(bool c){
+    data.closed = c;
+    update();
 }
 /*void LC_SplinePoints::trimStartpoint(const RS_Vector& pos)
 {
@@ -3289,8 +3258,7 @@ void LC_SplinePoints::trimEndpoint(const RS_Vector& pos)
 {
 }*/
 
-LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
-{
+LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos){
 	LC_SplinePoints *ret = nullptr;
 
 	double dt;

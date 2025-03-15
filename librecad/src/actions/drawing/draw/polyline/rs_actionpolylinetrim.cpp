@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actionpolylinetrim.h"
 #include "rs_atomicentity.h"
 #include "rs_debug.h"
@@ -54,7 +51,7 @@ void RS_ActionPolylineTrim::doTrigger() {
 
     polylineToModify->setSelected(false);
 
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     auto newPolyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *Segment2, false);
     if (newPolyline != nullptr){
         polylineToModify = newPolyline;
@@ -63,22 +60,18 @@ void RS_ActionPolylineTrim::doTrigger() {
     }
 }
 
-void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent begin");
-    snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionPolylineTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status) {
         case ChooseEntity: {
             deleteSnapper();
-            RS_Entity *pl = catchEntityOnPreview(e, RS2::EntityPolyline);
+            RS_Entity *pl = catchAndDescribe(e, RS2::EntityPolyline);
             if (pl != nullptr){
                 highlightHover(pl);
             }
             break;
         }
         case SetSegment1:{
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr){
                 if (en->getParent() == polylineToModify){
                     highlightHover(en);
@@ -90,7 +83,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
         }
         case SetSegment2:{
             highlightSelected(Segment1);
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr){
                 if (en->getParent() == polylineToModify){
                     if (en != Segment1){
@@ -100,7 +93,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
                             previewRefPoint(Segment1->getStartpoint());
                             previewRefPoint(Segment1->getEndpoint());
 
-                            RS_Modification m(*preview, graphicView);
+                            RS_Modification m(*preview, viewport);
                             auto polyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *candidate, true);
                             if (polyline != nullptr){
                                 highlightHover(en);
@@ -116,15 +109,12 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity: {
-            auto en = catchEntity(e);
+            auto en = catchEntityByEvent(e);
             if (en == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (en->rtti() != RS2::EntityPolyline){
@@ -132,15 +122,15 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->redraw();
+                redraw();
                 setStatus(SetSegment1);
-                graphicView->redraw();
+                redraw(); // fixme - why redraw twice??
             }
             invalidateSnapSpot();
             break;
         }
         case SetSegment1:{
-            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic()){
                 Segment1 = dynamic_cast<RS_AtomicEntity *>(en);
                 setStatus(SetSegment2);
@@ -151,7 +141,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
             break;
         }
         case SetSegment2: {
-            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic() && en != Segment1){
                 Segment2 = dynamic_cast<RS_AtomicEntity *>(en);
                 deleteSnapper();
@@ -168,14 +158,14 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
 
 }
 
-void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deleteSnapper();
     deletePreview();
     int newStatus = status - 1;
     if (newStatus == ChooseEntity){
         if (polylineToModify){
             polylineToModify->setSelected(false);
-            graphicView->redraw();
+            redraw();
         }
     }
     setStatus(newStatus);
@@ -184,7 +174,7 @@ void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused
 void RS_ActionPolylineTrim::finish(bool updateTB){
     if (polylineToModify){
         polylineToModify->setSelected(false);
-        graphicView->redraw();
+        redraw();
     }
     RS_PreviewActionInterface::finish(updateTB);
 }

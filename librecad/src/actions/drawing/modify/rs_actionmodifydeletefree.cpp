@@ -24,10 +24,9 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifydeletefree.h"
 #include "rs_dialogfactory.h"
+#include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
@@ -68,7 +67,7 @@ void RS_ActionModifyDeleteFree::trigger(){
                     // splits up the polyline in the container:
                     RS_Polyline *pl1 = nullptr;
                     RS_Polyline *pl2 = nullptr;
-                    RS_Modification m(*container);
+                    RS_Modification m(*container,viewport);
                     m.splitPolyline(*polyline,
                                     *e1, pPoints->v1,
                                     *e2, pPoints->v2,
@@ -83,7 +82,7 @@ void RS_ActionModifyDeleteFree::trigger(){
                     }
 
                     // draws the new polylines on the screen:
-                    graphicView->redraw(RS2::RedrawDrawing);
+                    redraw(RS2::RedrawDrawing);
 
                     init(0);
 

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifyoffset.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -59,20 +57,17 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer &container,RS_Gr
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 void RS_ActionModifyOffset::doTrigger(bool keepSelected) {
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.offset(*data, selectedEntities, false, keepSelected);
     finish(false);
 }
 
-void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
-//    RS_DEBUG->print("RS_ActionModifyOffset::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-    deletePreview();
-    switch (getStatus()){
+void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status){
         case SetReferencePoint:{
             data->coord = getRelZeroAwarePoint(e, mouse);
-            RS_Modification m(*preview, nullptr, false);
+            RS_Modification m(*preview, viewport, false);
             m.offset(*data, selectedEntities, true, false);
             break;
         }
@@ -82,7 +77,7 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
             if (!distanceIsFixed){
                 data->distance = offset.magnitude();
             }
-            RS_Modification m(*preview, nullptr, false);
+            RS_Modification m(*preview, viewport, false);
             m.offset(*data, selectedEntities, true, false);
 
             if (showRefEntitiesOnPreview) {
@@ -101,13 +96,12 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
 }
 
-void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
+void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
-            referencePoint = getRelZeroAwarePoint(e, snapPoint(e));
+            referencePoint = getRelZeroAwarePoint(e, e->snapPoint);
             data->coord = referencePoint;
             if (!distanceIsFixed){
                 moveRelativeZero(referencePoint);
@@ -154,7 +148,7 @@ bool RS_ActionModifyOffset::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
         if (selectionComplete) {

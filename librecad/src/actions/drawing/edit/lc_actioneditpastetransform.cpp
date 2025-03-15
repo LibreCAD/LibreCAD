@@ -19,8 +19,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QMouseEvent>
-
 #include "lc_actioneditpastetransform.h"
 #include "lc_pastetransformoptions.h"
 #include "rs_clipboard.h"
@@ -49,7 +47,7 @@ void LC_ActionEditPasteTransform::init(int status) {
 }
 
 void LC_ActionEditPasteTransform::doTrigger() {
-    RS_Modification m(*container, graphicView, false);
+    RS_Modification m(*container, viewport, false);
 
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
@@ -75,7 +73,7 @@ void LC_ActionEditPasteTransform::doTrigger() {
                                                          false, "");
             m.paste(pasteData);
             // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
-            LC_ERR << "Paste: " << x+y;
+//            LC_ERR << "Paste: " << x+y;
         }
     }
 
@@ -86,11 +84,10 @@ void LC_ActionEditPasteTransform::doTrigger() {
     }
 }
 
-void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    if (getStatus()==SetReferencePoint) {
-        *referencePoint = snapPoint(e);
-        preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),graphicView);
+void LC_ActionEditPasteTransform::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status==SetReferencePoint) {
+        *referencePoint = e->snapPoint;
+        preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),viewport);
         preview->move(*referencePoint);
 
         if (graphic) {
@@ -108,15 +105,14 @@ void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
     else {
         deleteSnapper();
     }
-    drawPreview();
 }
 
-void LC_ActionEditPasteTransform::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    invokedWithControl = isControl(e);
+void LC_ActionEditPasteTransform::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status,[[maybe_unused]] QMouseEvent *e) {
+void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status,[[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 

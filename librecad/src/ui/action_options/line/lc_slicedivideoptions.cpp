@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_slicedivideoptions.h"
+#include "lc_actiondrawslicedivide.h"
 #include "ui_lc_slicedivideoptions.h"
 
 LC_SliceDivideOptions::LC_SliceDivideOptions() :
@@ -254,7 +255,7 @@ void LC_SliceDivideOptions::setTickLengthToActionAndView(const QString &val){
 
 void LC_SliceDivideOptions::setTickAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setTickAngle(angle);
         ui->leTickAngle->setText(fromDouble(angle));
     }
@@ -270,7 +271,7 @@ void LC_SliceDivideOptions::setTickOffsetToActionAndView(const QString &val){
 
 void LC_SliceDivideOptions::setCircleStartAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setCircleStartTickAngle(angle);
         ui->leCircleStartAngle->setText(fromDouble(angle));
     }

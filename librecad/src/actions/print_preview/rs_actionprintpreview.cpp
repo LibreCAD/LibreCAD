@@ -29,11 +29,13 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_printpreviewview.h"
 
 struct RS_ActionPrintPreview::Points {
     RS_Vector v1{};
@@ -246,13 +248,13 @@ RS2::CursorType RS_ActionPrintPreview::doGetMouseCursor([[maybe_unused]] int sta
 void RS_ActionPrintPreview::center() {
     if (graphic) {
         graphic->centerToPage();
-        graphicView->zoomPage();
+        viewport->zoomPage();
     }
 }
 
 void RS_ActionPrintPreview::zoomToPage(){
     if (graphic) {
-        graphicView->zoomPageEx();
+        viewport->zoomPageEx();
     }
 }
 
@@ -274,8 +276,8 @@ void RS_ActionPrintPreview::fit() {
             updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
         }
         graphic->centerToPage();
-        graphicView->zoomPage();
-        graphicView->redraw();
+        viewport->zoomPage();
+        redraw();
     }
 }
 
@@ -299,22 +301,22 @@ bool RS_ActionPrintPreview::setScale(double newScale, bool autoZoom) {
         if(autoZoom) {
             zoomPageExWithBorder(100);
         }
-        graphicView->redraw();
+        redraw();
         return true;
     }
     return false;
 }
 
 void RS_ActionPrintPreview::zoomPageExWithBorder(int borderSize) {
-    int bBottom = this->graphicView->getBorderBottom();
-    int bTop = this->graphicView->getBorderTop();
-    int bLeft = this->graphicView->getBorderLeft();
-    int bRight = this->graphicView->getBorderRight();
+    int bBottom = viewport->getBorderBottom();
+    int bTop = viewport->getBorderTop();
+    int bLeft = viewport->getBorderLeft();
+    int bRight = viewport->getBorderRight();
     // just a small usability improvement - we set additional borders on zoom to let the user
-// see that there might be drawing elements around paper
-    this->graphicView->setBorders(borderSize, borderSize, borderSize, borderSize);
-    this->graphicView->zoomPageEx();
-    this->graphicView->setBorders(bLeft, bTop, bRight, bBottom);
+   // see that there might be drawing elements around paper
+    viewport->setBorders(borderSize, borderSize, borderSize, borderSize);
+    viewport->zoomPageEx();
+    viewport->setBorders(bLeft, bTop, bRight, bBottom);
 }
 
 double RS_ActionPrintPreview::getScale() const{
@@ -331,21 +333,26 @@ bool RS_ActionPrintPreview::isLineWidthScaling(){
 
 void RS_ActionPrintPreview::setLineWidthScaling(bool state) {
     graphicView->setLineWidthScaling(state);
-    graphicView->redraw();
+    redraw();
 }
 
 bool RS_ActionPrintPreview::isBlackWhite() {
-    return graphicView->getDrawingMode() == RS2::ModeBW;
+    LC_PrintPreviewView* printPreview = dynamic_cast<LC_PrintPreviewView *>(graphicView);
+    if (printPreview != nullptr) {
+        return printPreview->getDrawingMode() == RS2::ModeBW;
+    }
+    return false;
 }
 
 void RS_ActionPrintPreview::setBlackWhite(bool bw) {
-    if (bw) {
-        graphicView->setDrawingMode(RS2::ModeBW);
+    auto* printPreview = dynamic_cast<LC_PrintPreviewView *>(graphicView);
+    if (printPreview != nullptr) {
+        if (bw) {
+            printPreview->setDrawingMode(RS2::ModeBW);
+        } else {
+            printPreview->setDrawingMode(RS2::ModeFull);
+        }
     }
-    else {
-        graphicView->setDrawingMode(RS2::ModeFull);
-    }
-    graphicView->redraw();
 }
 
 RS2::Unit RS_ActionPrintPreview::getUnit() {
@@ -383,7 +390,7 @@ void RS_ActionPrintPreview::calcPagesNum(bool multiplePages) {
 
             graphic->setPagesNum(pX, pY);
             graphic->centerToPage();
-            graphicView->zoomPage();
+            viewport->zoomPage();
         }
         else {
             graphic->setPagesNum(1, 1);
@@ -403,7 +410,7 @@ void RS_ActionPrintPreview::setPagesNumHorizontal(int pagesCount) {
 
 //    zoomPageExWithBorder(100);
     graphic->centerToPage();
-    graphicView->zoomPage();
+    viewport->zoomPage();
     updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
     updateOptions();
 }
@@ -424,7 +431,7 @@ void RS_ActionPrintPreview::setPagesNumVertical(int pagesCount) {
 
 //    zoomPageExWithBorder(100);
     graphic->centerToPage();
-    graphicView->zoomPage();
+    viewport->zoomPage();
     updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
     updateOptions();
 }

@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -37,13 +34,13 @@
 #include "rs_preview.h"
 #include "qg_lineparallelthroughoptions.h"
 #include "rs_actioninterface.h"
+// fixme - sand - consider relaxing existing restrictions, if any - and use no-restrictions mode for this action.
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
-		,coord(new RS_Vector{})
-		,lastStatus(SetEntity){
+		, coord(new RS_Vector{}),lastStatus(SetEntity){
     actionType=RS2::ActionDrawLineParallelThrough;
     m_SnapDistance=1.;
 }
@@ -69,14 +66,11 @@ void RS_ActionDrawLineParallelThrough::doTrigger() {
     }
 }
 
-void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
-    const RS_Vector &snap = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    const RS_Vector &snap = e->snapPoint;
+    switch (status) {
         case SetEntity: {
-            entity = catchEntityOnPreview(e, RS2::ResolveAll);
+            entity = catchAndDescribe(e, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
                 if (showRefEntitiesOnPreview) {
@@ -106,7 +100,8 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
                     previewRefLine(nearest, *coord);
 
                     if (symmetric && isLine(entity)){
-                        RS_Vector otherPoint = coord->mirror(entity->getStartpoint(), entity->getEndpoint());
+                        RS_Vector otherPoint = *coord;
+                        otherPoint.mirror(entity->getStartpoint(), entity->getEndpoint());
                         previewRefPoint(otherPoint);
                         previewRefLine(nearest, otherPoint);
                     }
@@ -117,16 +112,12 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
-
 }
 
-void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity:
-            entity = catchEntity(e, RS2::ResolveAll);
+            entity = catchEntityByEvent(e, RS2::ResolveAll);
             if (entity){
                 setStatus(SetPos);
             }
@@ -138,10 +129,9 @@ void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, QMou
         default:
             break;
     }
-
 }
 
-void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (entity){
         entity = nullptr;
@@ -152,7 +142,8 @@ void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[m
 void RS_ActionDrawLineParallelThrough::onCoordinateEvent(int status,[[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPos: {
-            *coord = mouse;
+            auto pos = mouse;
+            *coord = pos;
             trigger();
             break;
         }

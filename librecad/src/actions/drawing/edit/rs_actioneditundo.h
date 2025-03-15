@@ -37,13 +37,11 @@
 class RS_ActionEditUndo : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionEditUndo(bool undo,
-                      RS_EntityContainer& container,
-					  RS_GraphicView& graphicView);
-	
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionEditUndo(bool undo,RS_EntityContainer& container,
+                      RS_GraphicView& graphicView);
 
+    void init(int status) override;
+    void trigger() override;
 protected:
     /** Undo (true) or redo (false) */
     bool const undo = false;

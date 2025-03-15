@@ -23,12 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_CIRCLEBYARCOPTIONS_H
 #define LC_CIRCLEBYARCOPTIONS_H
 
-#include "lc_actiondrawcirclebyarc.h"
 #include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_CircleByArcOptions;
 }
+
+class LC_ActionDrawCircleByArc;
 /**
  * Options for CircleByArc action
  */
@@ -50,7 +51,7 @@ protected slots:
     void onLayerModeIndexChanged(int mode);
     void onRadiusShiftEditingFinished();
 private:
-    Ui::LC_CircleByArcOptions *ui;
+    Ui::LC_CircleByArcOptions *ui = nullptr;
     LC_ActionDrawCircleByArc* action;
 
     void setReplaceArcToActionAndView(bool value);

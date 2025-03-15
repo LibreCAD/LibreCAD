@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -117,10 +115,8 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():entity added: %lu", ellipse->getId());
 }
 
-void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (getStatus()) {
         case SetCenter: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -210,12 +206,10 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetMajor:
         case SetAngle1:
@@ -229,7 +223,7 @@ void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent 
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawEllipseAxis::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseAxis::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }
@@ -260,22 +254,30 @@ void RS_ActionDrawEllipseAxis::onCoordinateEvent(int status, [[maybe_unused]] bo
             break;
         }
         case SetAngle1: {
-            //angle1 = center.angleTo(mouse);
-            RS_Vector m = mouse;
-            m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-            RS_Vector v = m - pPoints->center;
-            v.y /= pPoints->ratio;
-            pPoints->angle1 = v.angle();
+            if (isZero){
+                pPoints->angle1 = 0;
+            }
+            else {
+                RS_Vector m = mouse;
+                m.rotate(pPoints->center, toUCSAngle(-pPoints->m_vMajorP.angle()));
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->ratio;
+                pPoints->angle1 = v.angle();
+            }
             setStatus(SetAngle2);
             break;
         }
         case SetAngle2: {
-            //angle2 = center.angleTo(mouse);
-            RS_Vector m = mouse;
-            m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-            RS_Vector v = m - pPoints->center;
-            v.y /= pPoints->ratio;
-            pPoints->angle2 = v.angle();
+            if (isZero){
+                pPoints->angle2 = 0;
+            }
+            else {
+                RS_Vector m = mouse;
+                m.rotate(pPoints->center, toUCSAngle(-pPoints->m_vMajorP.angle()));
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->ratio;
+                pPoints->angle2 = v.angle();
+            }
             trigger();
             break;
         }
@@ -292,6 +294,7 @@ void RS_ActionDrawEllipseAxis::setReversed(bool b) const {
     pPoints->reversed = b;
 }
 
+// fixme - sand - complete support of command line!
 bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
     bool accept = false;
     switch (status) {

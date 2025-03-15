@@ -24,8 +24,8 @@
 #define LC_LATTICE_H
 
 #include "rs_vector.h"
-#include "rs_graphicview.h"
 
+class LC_GraphicViewport;
 
 
 class LC_Lattice{
@@ -71,7 +71,7 @@ public:
     const std::vector<double> &getPointsX() const;
     const std::vector<double> &getPointsY() const;
 
-    void toGui(RS_GraphicView *view);
+    void toGui(LC_GraphicViewport *viewport);
 
     void addLine(double d, double d1, double d2, double d3);
 

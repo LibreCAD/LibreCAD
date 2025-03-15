@@ -57,7 +57,7 @@ class QC_MDIWindow: public QMdiSubWindow,
 public:
     QC_MDIWindow(RS_Document* doc,
                  QWidget* parent,
-                 Qt::WindowFlags wflags = {});
+                 bool printPreview);
     ~QC_MDIWindow() override;
 
 public slots:

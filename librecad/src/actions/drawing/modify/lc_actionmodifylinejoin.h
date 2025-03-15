@@ -71,11 +71,11 @@ public:
     void drawSnapper() override;;
 protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doBack(QMouseEvent *pEvent, int status) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS2::CursorType doGetMouseCursor(int status) override;
 
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void doAfterTrigger() override;
     void performTriggerDeletions() override;
     bool doCheckMayTrigger() override;
@@ -196,7 +196,7 @@ private:
         const RS_Vector &line2Start, const RS_Vector &line2End);
 
     void applyAttributes(RS_Entity *entity, bool forLine1);
-    RS_Line *catchLine(QMouseEvent *e, bool forPreview);
+    RS_Line *catchLine(LC_MouseEvent *e, bool forPreview);
 };
 
 #endif // LC_ACTIONMODIFYLINEJOIN_H

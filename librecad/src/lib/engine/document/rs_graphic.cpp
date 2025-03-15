@@ -36,11 +36,15 @@
 #include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_actioninterface.h"
 #include "rs_fileio.h"
 #include "rs_layer.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_graphicviewport.h"
 
 /**
  * Default constructor.
@@ -63,6 +67,14 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         addVariable("$SNAPSTYLE", static_cast<int>(LC_GET_INT("IsometricGrid", 0)), 70);
         addVariable("$SNAPISOPAIR", static_cast<int>(LC_GET_INT("IsoGridView", 1)), 70);
         setGridOn(!LC_GET_BOOL("GridOffForNewDrawing", false));
+
+        const QString &defaultAnglesBase = LC_GET_STR("AnglesBaseAngle", "0.0");
+        bool anglesCounterClockwise = LC_GET_BOOL("AnglesCounterClockwise", true);
+
+        double angleBaseDegrees = RS_Math::eval(defaultAnglesBase, 0.0);
+        double angleBaseRadians = RS_Math::deg2rad(angleBaseDegrees);
+        setAnglesCounterClockwise(anglesCounterClockwise);
+        setAnglesBase(angleBaseRadians);
     }
     RS2::Unit unit = getUnit();
 
@@ -89,7 +101,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     setPaperScale(getPaperScale());
     setPaperInsertionBase(getPaperInsertionBase());
 
-//set default values for point style
+    //set default values for point style
     addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
     addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
 
@@ -504,9 +516,23 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
     if (ret) {
+        RS_GraphicView *gv = getGraphicView(); // fixme - eliminate this dependency!
+        if (gv != nullptr) {
+            // fixme - sand - review and probably move initialization of UCS - as normal support of VIEWPORT will be available
+            // todo - not sure whether this is right place for setting up current wcs.
+            // Actually, it seems that it's better to rely on reading viewport (were setting for the offset and zoom are set.
+            // however, must probably with proper support of VIEW, they will be reworked too..
+            // So let it have here for now so far
+            LC_GraphicViewport* viewport = gv->getViewPort();
+            viewport->initAfterDocumentOpen();
+        }
+
         setModified(false);
         layerList.setModified(false);
         blockList.setModified(false);
+        namedViewsList.setModified(false);
+        ucsList.setModified(false);
+
         modifiedTime = finfo.lastModified();
         currentFileName = QString(filename);
 
@@ -538,6 +564,10 @@ void RS_Graphic::addVariable(const QString& key, int value, int code) {
     variableDict.add(key, value, code);
 }
 
+void RS_Graphic::addVariable(const QString& key, bool value, int code) {
+    variableDict.add(key, value, code);
+}
+
 void RS_Graphic::addVariable(const QString& key, double value, int code) {
     variableDict.add(key, value, code);
 }
@@ -558,6 +588,10 @@ int RS_Graphic::getVariableInt(const QString& key, int def) const {
     return variableDict.getInt(key, def);
 }
 
+bool RS_Graphic::getVariableBool(const QString& key, bool def) const {
+    return variableDict.getInt(key, def ? 1 : 0) != 0;
+}
+
 double RS_Graphic::getVariableDouble(const QString& key, double def) const {
     return variableDict.getDouble(key, def);
 }
@@ -566,18 +600,31 @@ QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
     return variableDict.getVariableDict();
 }
 
+//
+// fixme - sand - actually, some additional caching of variables may be used,
+// in order to avoid loading/writing them into hashmap on each access...
+// need to measure and provile the cost of direct access to variables map first.
+// so it might be something like common initialization below..
+//  void RS_Graphic::loadVariables(){
+//    gridOn = getVariableInt("$GRIDMODE", 1) != 0;
+//     etc...
+//  }
+//
+
 /**
  * @return true if the grid is switched on (visible).
  */
 bool RS_Graphic::isGridOn() const {
     int on = getVariableInt("$GRIDMODE", 1);
     return on != 0;
+//    return gridOn;
 }
 
 /**
  * Enables / disables the grid.
  */
 void RS_Graphic::setGridOn(bool on) {
+//    gridOn = on;
     addVariable("$GRIDMODE", (int)on, 70);
 }
 
@@ -596,6 +643,76 @@ bool RS_Graphic::isIsometricGrid() const{
 void RS_Graphic::setIsometricGrid(bool on) {
     //$ISOMETRICGRID == $SNAPSTYLE
     addVariable("$SNAPSTYLE", (int)on, 70);
+}
+
+double RS_Graphic::getAnglesBase(){
+    double result = getVariableDouble("$ANGBASE",0.0);
+    return result;
+}
+
+void RS_Graphic::setAnglesBase(double baseAngle){
+    addVariable("$ANGBASE", baseAngle, 50);
+}
+
+bool RS_Graphic::areAnglesCounterClockWise(){
+    int on = getVariableInt("$ANGDIR", 0);
+    return on == 0;
+}
+
+void RS_Graphic::setAnglesCounterClockwise(bool on){
+    addVariable("$ANGDIR", on ? 0: 1, 70);
+}
+
+void RS_Graphic::setCurrentUCS(LC_UCS* ucs){
+    QString name = ucs->getName();
+    if (!ucs->isUCS()){
+        name = "";
+    }
+    addVariable("$UCSNAME", name, 2);
+    addVariable("$UCSORG", ucs->getOrigin(), 10);
+
+    // so far we don't support the following variables
+    // http://entercad.ru/acad_dxf.en/ws1a9193826455f5ff18cb41610ec0a2e719-7a6f.htm
+    /*
+    $UCSORGBACK
+    $UCSORGBOTTOM
+    $UCSORGFRONT
+    $UCSORGLEFT
+    $UCSORGRIGHT
+    $UCSORGTOP
+    */
+
+    // as for these variables... well, so far it' snot clear who they are related to $SNAPSTYLE.... should we rely on them for isometric mode?
+    /*
+      $UCSORTHOREF
+    */
+
+    addVariable("$UCSORTHOVIEW", ucs->getOrthoType(), 70);
+    addVariable("$UCSXDIR", ucs->getXAxis(), 10);
+    addVariable("$UCSYDIR", ucs->getYAxis(), 10);
+}
+
+LC_UCS* RS_Graphic::getCurrentUCS(){
+    QString name = getVariableString("$UCSNAME", "");
+    RS_Vector origin = getVariableVector("$UCSORG", RS_Vector(0.0, 0.0));
+    int orthoType = getVariableInt("$UCSORTHOVIEW", 0);
+    RS_Vector xAxis = getVariableVector("$UCSXDIR", RS_Vector(1.0, 0.0));
+    RS_Vector yAxis = xAxis;
+    yAxis = getVariableVector("$UCSYDIR", yAxis.rotate(M_PI_2));
+
+    LC_UCS* wcs = ucsList.getWCS();
+
+    auto result = new LC_UCS(name);
+    result->setOrigin(origin);
+    result->setOrthoType(orthoType);
+    result->setXAxis(xAxis);
+    result->setYAxis(yAxis);
+
+    if (wcs->isSameTo(result)){
+        delete result;
+        result = new LC_WCS();
+    }
+    return result;
 }
 
 RS2::IsoGridViewType RS_Graphic::getIsoView() const{
@@ -632,31 +749,6 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() {
     // fixme - sand - add caching
     int lunits = getVariableInt("$LUNITS", 2);
     return getLinearFormat(lunits);
-/* changed by RS2::LinearFormat getLinearFormat(int f)
-    switch (lunits) {
-    default:
-    case 2:
-        return RS2::Decimal;
-        break;
-
-    case 1:
-        return RS2::Scientific;
-        break;
-
-    case 3:
-        return RS2::Engineering;
-        break;
-
-    case 4:
-        return RS2::Architectural;
-        break;
-
-    case 5:
-        return RS2::Fractional;
-        break;
-    }
-
-    return RS2::Decimal;*/
 }
 
 /**
@@ -1004,4 +1096,12 @@ void RS_Graphic::setPagesNum(const QString &horizXvert) {
         if (ok1 && ok2)
             setPagesNum(h, v);
     }
+}
+
+QString RS_Graphic::formatAngle(double angle) {
+    return RS_Units::formatAngle(angle, getAngleFormat(), getAnglePrecision());
+}
+
+QString RS_Graphic::formatLinear(double linear) {
+    return RS_Units::formatLinear(linear, getUnit(), getLinearFormat(), getLinearPrecision(), false);
 }

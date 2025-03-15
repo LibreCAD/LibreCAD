@@ -45,11 +45,11 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionPolylineDelBetween() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     void drawSnapper() override;
 protected:
     RS_Vector vertexToDelete2 = RS_Vector(false);
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void collectEntitiesToRemove(RS_Vector vector, RS_Vector vector1, QList<RS_Entity *> &list);
     void updateMouseButtonHints() override;
     void doTrigger() override;

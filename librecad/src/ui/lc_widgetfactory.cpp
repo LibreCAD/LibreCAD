@@ -55,6 +55,7 @@
 #include "rs_settings.h"
 #include "lc_namedviewslistwidget.h"
 #include "lc_namedviewsbutton.h"
+#include "lc_ucslistwidget.h"
 
 namespace {
     // only enable the penpallet by settings
@@ -337,7 +338,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "ViewGridOrtho",
         "ViewGridIsoLeft",
         "ViewGridIsoTop",
-        "ViewGridIsoRight"
+        "ViewGridIsoRight",
+        "UCSSetWCS",
+        "UCSCreate"
     });
 
     actionsToDisableInPrintPreview.append(line_actions);
@@ -424,6 +427,16 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     named_views_widget->setFocusPolicy(Qt::NoFocus);
     dock_views->setWidget(named_views_widget);
 
+    auto* dock_ucss = new QDockWidget(main_window);
+    dock_ucss->setWindowTitle(tr("UCSs"));
+    dock_ucss->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_ucss->setObjectName("ucs_dockwidget");
+    ucs_widget = new LC_UCSListWidget("UCS", dock_ucss);
+    ucs_widget->setFocusPolicy(Qt::NoFocus);
+    dock_ucss->setWidget(ucs_widget);
+
+    connect(ucs_widget, &LC_UCSListWidget::ucsListChanged, named_views_widget, &LC_NamedViewsListWidget::onUcsListChanged);
+
     QDockWidget* dock_layer_tree = nullptr;
     if (usePenPallet()) {
         dock_layer_tree = new QDockWidget(main_window);
@@ -500,6 +513,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
         main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
     }
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_views);
+    main_window->tabifyDockWidget(dock_views, dock_ucss);
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
     command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }
@@ -526,12 +540,9 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
 
-
-
-
     auto *viewsList = createNamedViewsToolbar(tr("Named Views"), "Views", tbPolicy);
 
-
+    auto *ucsList = createUCSToolbar(tr("UCS"), "UCS", tbPolicy);
 
     snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
     snap_toolbar->setWindowTitle(tr("Snap Selection"));
@@ -576,6 +587,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     addToTop(edit);
     addToTop(view);
     addToTop(viewsList);
+    addToTop(ucsList);
     addToTop(preferences);
     main_window->addToolBarBreak();
     addToTop(pen_toolbar);
@@ -851,18 +863,30 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     QList<QDockWidget*> dockwidgetsList = main_window->findChildren<QDockWidget*>();
     main_window->sortWidgetsByTitle(dockwidgetsList);
+    
+    QAction* namedViewsToggleViewAction = nullptr;
+    QAction* ucsToggleViewAction = nullptr;
 
     for (QDockWidget* dw: dockwidgetsList){
         if (main_window->dockWidgetArea(dw) == Qt::RightDockWidgetArea) {
             QAction *action = dw->toggleViewAction();
             dockwidgets_menu->addAction(action);
-            if (dw->objectName() == "view_dockwidget"){
-                view_menu->addAction(action);
+            QString objectName = dw->objectName();
+            if (objectName == "view_dockwidget"){
+                namedViewsToggleViewAction = action;
+            }
+            else if (objectName == "ucs_dockwidget"){
+                ucsToggleViewAction = action;
             }
         }
     }
 
+    view_menu->addAction(namedViewsToggleViewAction);
 
+    view_menu->addSeparator();
+    view_menu->addAction(ag_manager->getActionByName("UCSCreate"));
+    view_menu->addAction(ag_manager->getActionByName("UCSSetWCS"));
+    view_menu->addAction(ucsToggleViewAction);
 
     addAction(dockwidgets_menu, "RedockWidgets");
 
@@ -1020,6 +1044,27 @@ QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const 
     return result;
 }
 
+QToolBar* LC_WidgetFactory::createUCSToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+
+    QAction *ucsCreateAction = ag_manager->getActionByName("UCSCreate");
+    result->addAction(ucsCreateAction);
+
+    QAction *setWCSAction = ag_manager->getActionByName("UCSSetWCS");
+
+    auto ucsSelectionWidget = ucs_widget->createSelectionWidget(ucsCreateAction, setWCSAction);
+    ucsSelectionWidget->setParent(result);
+    result->addWidget(ucsSelectionWidget);
+
+    setWCSAction->setCheckable(false);
+    connect(setWCSAction, &QAction::triggered, ucs_widget, &LC_UCSListWidget::setWCS);
+
+    ucs_widget->setStateWidget(main_window->ucsStateWidget);
+
+    return result;
+}
+
+
 QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
 
     QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
@@ -1088,8 +1133,15 @@ void LC_WidgetFactory::initStatusBar() {
     main_window->mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
     main_window->selectionWidget = new QG_SelectionWidget(status_bar, "selections");
     main_window->m_pActiveLayerName = new QG_ActiveLayerName(status_bar);
+
     main_window->grid_status = new TwoStackedLabels(status_bar);
     main_window->grid_status->setTopLabel(tr("Grid Status"));
+
+    auto* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
+    main_window->ucsStateWidget = ucsStateWidget;
+
+    auto* anglesBasisWidget = new LC_AnglesBasisWidget(status_bar, "anglesBase");
+    main_window->anglesBasisWidget = anglesBasisWidget;
 
     main_window->statusbarManager = new LC_QTStatusbarManager(status_bar);
     main_window->statusbarManager->loadSettings();
@@ -1102,6 +1154,8 @@ void LC_WidgetFactory::initStatusBar() {
         status_bar->addWidget(main_window->m_pActiveLayerName);
         status_bar->addWidget(main_window->grid_status);
         status_bar->addWidget(main_window->relativeZeroCoordinatesWidget);
+        status_bar->addWidget(main_window->ucsStateWidget);
+        status_bar->addWidget(main_window->anglesBasisWidget);
 
         LC_GROUP_GUARD("Widgets");{
             bool allow_statusbar_fontsize = LC_GET_BOOL("AllowStatusbarFontSize", false);
@@ -1163,11 +1217,25 @@ void LC_WidgetFactory::initStatusBar() {
         tb->setObjectName("TBGridStatus");
         tb->addWidget(main_window->grid_status);
         tb->setProperty("_group", 3);
+        addToBottom(tb);
+
+        tb = new QToolBar(tr("UCS Status"), main_window);
+        tb->setSizePolicy(tbPolicy);
+        tb->setObjectName("TBUCSStatus");
+        tb->addWidget(main_window->ucsStateWidget);
+        tb->setProperty("_group", 3);
+        addToBottom(tb);
+
+        tb = new QToolBar(tr("Angles Basis"), main_window);
+        tb->setSizePolicy(tbPolicy);
+        tb->setObjectName("TBAnglesBasis");
+        tb->addWidget(main_window->anglesBasisWidget);
+        tb->setProperty("_group", 3);
+        addToBottom(tb);
 
         main_window->statusbarManager->setup();
 
         main_window->grid_status->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
-
         connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
 
 /*
@@ -1179,8 +1247,8 @@ void LC_WidgetFactory::initStatusBar() {
         addAction(tb,"ViewGridIsoTop");
         addAction(tb,"ViewGridIsoRight");
 */
-        addToBottom(tb);
     }
+    connect(main_window->anglesBasisWidget, &LC_AnglesBasisWidget::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
 }
 
 

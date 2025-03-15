@@ -23,17 +23,28 @@
 #include "lc_convert.h"
 #include "rs_math.h"
 #include "lc_linemath.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 // fixme - sand - review the entire codebase and insure uniform string/double and vice-versa conversion
 QString LC_Convert::asString(double value, int precision){
+    if (LC_LineMath::isNotMeaningful(value)){
+        value = 0.0;
+    }
     return QString::number(value, 'g', precision);
 }
 
 QString LC_Convert::asStringAngle(double value, int precision){
+    if (!LC_LineMath::isMeaningfulAngle(value)){
+        value = 0.0;
+    }
     return QString::number(value, 'g', precision);
 }
 
 QString LC_Convert::asStringAngleDeg(double value, int precision){
+    if (!LC_LineMath::isMeaningfulAngle(value)){
+        value = 0.0;
+    }
     double angleDeg = RS_Math::rad2deg(value);
     return QString::number(angleDeg, 'g', precision);
 }
@@ -69,18 +80,27 @@ bool LC_Convert::toDouble(const QString& strValue, double &res, double notMeanin
  */
 bool LC_Convert::toDoubleAngleRad(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
     double radValue;
-    bool result = toDoubleAngle(strValue, radValue, notMeaningful, positiveOnly);
+    bool result = parseToToDoubleAngleDegrees(strValue, radValue, notMeaningful, positiveOnly);
     if (result){
         res = RS_Math::deg2rad(radValue);
     }
     return result;
 }
 
-bool LC_Convert::toDoubleAngle(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
+
+bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
     bool ok = false;
-    double x = RS_Math::eval(strValue, &ok);
+    bool doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
+    double angleDegrees;
+    if (doNotAllowNonDecimalAnglesInput){
+        angleDegrees = RS_Math::eval(strValue, &ok);
+    }
+    else{
+        QString stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(strValue, &ok);
+        angleDegrees = RS_Math::eval(stringToEval, &ok);
+    }
     if(ok){
-        res = LC_LineMath::getMeaningfulAngle(x, notMeaningful);
+        res = LC_LineMath::getMeaningfulAngle(angleDegrees, notMeaningful);
         if (positiveOnly){
             res = std::abs(res);
         }

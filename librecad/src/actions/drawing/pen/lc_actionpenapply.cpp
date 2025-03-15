@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include <QMouseEvent>
 
 LC_ActionPenApply::LC_ActionPenApply(RS_EntityContainer &container, RS_GraphicView &graphicView, bool copy):
   RS_PreviewActionInterface(copy? "PenCopy" : "PenApply", container, graphicView){
@@ -49,23 +48,19 @@ void LC_ActionPenApply::init(int status){
     }
 }
 
-void LC_ActionPenApply::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-
-    snapPoint(e);
-
-    switch (getStatus()){
+void LC_ActionPenApply::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status){
         case SelectEntity:
-        case ApplyToEntity:
-            RS_Entity* en = catchEntityOnPreview(e, RS2::ResolveNone);
+        case ApplyToEntity:{
+            RS_Entity* en = catchAndDescribe(e, RS2::ResolveNone);
             if (en != nullptr && en != srcEntity){ // exclude entity we use as source, if any
                 highlightHover(en);
             }
             break;
+        }
+        default:
+            break;
     }
-    drawPreview();
-    drawHighlights();
 }
 
 /**
@@ -77,8 +72,8 @@ void LC_ActionPenApply::finish(bool updateTB){
     srcEntity = nullptr;
 }
 
-void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    RS_Entity* en= catchEntity(e, RS2::ResolveNone);
+void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Entity* en= catchEntityByEvent(e, RS2::ResolveNone);
 
     if(en != nullptr){
         switch (getStatus()){
@@ -93,7 +88,7 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
                     RS_Pen penToApply;
                     if (copyMode){
                         // we apply pen from source entity, if Shift is pressed - resolved pen is used.
-                        bool resolvePen = e->modifiers() & Qt::ShiftModifier;
+                        bool resolvePen = e->isShift;
                         penToApply = srcEntity->getPen(resolvePen);
 
                     } else {
@@ -117,17 +112,17 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
                     // fixme - sand - replace by version with explicitly provided entity rather than one that relies on selection
                     en->setSelected(true);
 
-                    RS_Modification m(*container, graphicView);
+                    RS_Modification m(*container, viewport);
                     m.changeAttributes(data, false);
                 }
                 break;
             }
         }
     }
-    graphicView->redraw();
+    redraw();
 }
 
-void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     switch (status){
         case SelectEntity:{
             init(-1);
@@ -146,7 +141,7 @@ void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QM
         default:
             break;
     }
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPenApply::updateMouseButtonHints(){

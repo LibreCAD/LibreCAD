@@ -24,13 +24,12 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawtext.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
@@ -60,8 +59,10 @@ void RS_ActionDrawText::init(int status){
         case ShowDialog: {
             reset();
             RS_Text tmp(nullptr, *data);
-            if (RS_DIALOGFACTORY->requestTextDialog(&tmp)){
-                data.reset(new RS_TextData(tmp.getData()));
+            
+            if (RS_DIALOGFACTORY->requestTextDialog(&tmp, viewport)){
+                const RS_TextData &editedData = tmp.getData();
+                data.reset(new RS_TextData(editedData));
                 setStatus(SetPos);
                 updateOptions();
             } else {
@@ -103,6 +104,7 @@ void RS_ActionDrawText::reset(){
 void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
     if (pPoints->pos.valid){
+        data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
         auto *text = new RS_Text(container, *data);
         text->update();
 
@@ -121,6 +123,7 @@ void RS_ActionDrawText::doTrigger() {
 }
 
 void RS_ActionDrawText::preparePreview(){
+    data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
     if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned){
         if (pPoints->secPos.valid){
             auto *text = new RS_Line(data->insertionPoint, pPoints->secPos);
@@ -135,25 +138,12 @@ void RS_ActionDrawText::preparePreview(){
     textChanged = false;
 }
 
-void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDrawText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetPos:{
-            bool shift = isShift(e);
-            if (shift){
-                RS_Vector relZero = graphicView->getRelativeZero();
-                if (relZero.valid){
-                    snappedToRelZero = true;
-                    fireCoordinateEvent(relZero);
-                }
-                else{
-                    shift = false;
-                }
-            }
-            if (!shift) {
+            bool snapped = trySnapToRelZeroCoordinateEvent(e);
+            if (!snapped) {
                 pPoints->pos = mouse;
                 preparePreview();
             }
@@ -169,12 +159,10 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
             break;
     }
     appendInfoCursorZoneMessage(tr("Text: ")/*.append("\n")*/.append(data->text), 2, false);
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    RS_Vector pos = snapPoint(e);
+void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector pos = e->snapPoint;
     switch (status){
         case SetPos:{
             pos = getRelZeroAwarePoint(e, pos);
@@ -190,7 +178,7 @@ void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
     fireCoordinateEvent(pos);
 }
 
-void RS_ActionDrawText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     setStatus(-1);
 }
 
@@ -216,13 +204,14 @@ void RS_ActionDrawText::onCoordinateEvent(int status, [[maybe_unused]]bool isZer
     }
 }
 
+// fixme - sand - cmd - expand by other attributes (angle?, height?)
 bool RS_ActionDrawText::doProcessCommand(int status, const QString &c) {
     bool accept = true;
     switch (status) {
         case SetPos: {
             if (checkCommand("text", c)){
                 deletePreview();
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
             }
@@ -231,7 +220,7 @@ bool RS_ActionDrawText::doProcessCommand(int status, const QString &c) {
         case SetText: {
             setText(c);
             updateOptions();
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             setStatus(SetPos);
             accept = true;
             break;
@@ -280,13 +269,14 @@ const QString &RS_ActionDrawText::getText() const{
     return data->text;
 }
 
-void RS_ActionDrawText::setAngle(double a){
-    data->angle = a;
+void RS_ActionDrawText::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    ucsBasicAngleDegrees = ucsRelAngleDegrees;
+    data->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
     textChanged = true;
 }
 
-double RS_ActionDrawText::getAngle() const{
-    return data->angle;
+double RS_ActionDrawText::getUcsAngleDegrees() const{
+    return ucsBasicAngleDegrees;
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawText::createOptionsWidget(){

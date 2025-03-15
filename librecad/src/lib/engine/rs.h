@@ -458,6 +458,7 @@ namespace RS2 {
         ActionOptionsGeneral,
         ActionOptionsDrawing,
         ActionOptionsDrawingGrid,
+        ActionOptionsDrawingUnits,
 
         ActionToolRegenerateDimensions,
 
@@ -469,6 +470,9 @@ namespace RS2 {
         ActionPenApply,
         ActionPenCopy,
         ActionPenSyncFromLayer,
+
+
+        ActionUCSCreate,
 
         /** Needed to loop through all actions */
         ActionLast
@@ -490,7 +494,7 @@ namespace RS2 {
     enum UpdateMode {
         NoUpdate,       /**< No automatic updates. */
         Update,         /**< Always update automatically when modified. */
-                PreviewUpdate   /**< Update automatically but only for previews (quick update) */
+        PreviewUpdate   /**< Update automatically but only for previews (quick update) */
     };
 
     /**
@@ -695,7 +699,8 @@ namespace RS2 {
     enum IsoGridViewType {
         IsoLeft,         /**< Left type isometric view */
         IsoTop,         /**< Top type isometric view */
-        IsoRight         /**< Right type isometric view */
+        IsoRight,       /**< Right type isometric view */
+        Ortho
     };
 
     enum CrossHairType{
@@ -1005,10 +1010,11 @@ namespace RS2 {
          * it always shows up
          */
         enum OverlayGraphics: short {
+                OverlayEffects = 0,      // special effects, like glowing on hover
                 ActionPreviewEntity = 1, // Action Entities
-                Snapper = 2, // Snapper
-                InfoCursor = 3, // Info Cursor
-                OverlayEffects = 0 // special effects, like glowing on hover
+                Snapper = 2,             // Snapper
+                InfoCursor = 3,          // Info Cursor
+                LAST
         };
 
         //Different re-draw methods to speed up rendering of the screen

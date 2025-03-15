@@ -20,9 +20,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actiondimdiametric.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -62,7 +59,7 @@ RS_Vector RS_ActionDimDiametric::preparePreview(RS_Entity *en, RS_Vector &positi
     if (en != nullptr){
         double radius = en->getRadius();
         RS_Vector center = en->getCenter();
-        double angleToUse = angle;
+        double angleToUse = m_currentAngle;
         if (angleIsFree || forcePosition){
             angleToUse = center.angleTo(position);
         }

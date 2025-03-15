@@ -29,7 +29,9 @@
 #include "rs_actionblockscreate.h"
 
 #include "rs_creation.h"
+#include "rs_block.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
@@ -78,8 +80,7 @@ void RS_ActionBlocksCreate::trigger() {
         }
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
-
+    redrawDrawing();
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
     graphicView->killSelectActions();
@@ -109,7 +110,7 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
+        fireCoordinateEvent(snapPoint(e));
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }

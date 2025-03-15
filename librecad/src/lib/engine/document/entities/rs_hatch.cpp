@@ -569,18 +569,18 @@ void RS_Hatch::activateContour(bool on) {
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
-void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+void RS_Hatch::draw(RS_Painter* painter) {
     if (data.solid) {
-        drawSolidFill(painter, view);
+        drawSolidFill(painter);
     }
     else{
         foreach (auto se, entities){
-            view->drawEntity(painter,se);
+            painter->drawEntity(se);
         }
     }
 }
 
-void RS_Hatch::drawSolidFill(RS_Painter *painter, const RS_GraphicView *view) {//area of solid fill. Use polygon approximation, except trivial cases
+void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use polygon approximation, except trivial cases
 
     if (needOptimization == true) {
         foreach (auto l, entities){
@@ -598,18 +598,11 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter, const RS_GraphicView *view) {/
 
     const QBrush brush(painter->brush());
     const RS_Pen pen=painter->getPen();
-    painter->setBrush(pen.getColor());
+    painter->setBrushColor(pen.getColor());
 //    painter->disablePen();
 
-    createSolidFillPath(painter, view, path);
-    /*  if(pa.size()>2){
-            pa<<pa.first();
-            paClosed<<pa;
-        }
+    createSolidFillPath(painter, path);
 
-        for(auto& p:paClosed){
-            path.addPolygon(p);
-        }*/
 
     //bug#474, restore brush after solid fill
 /*    const QBrush brush(painter->brush());
@@ -629,8 +622,8 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter, const RS_GraphicView *view) {/
     painter->setPen(pen);
 }
 
-void RS_Hatch::createSolidFillPath(RS_Painter *painter, const RS_GraphicView *view, QPainterPath &path) {
-    painter->createSolidFillPath(path, view, entities);
+void RS_Hatch::createSolidFillPath(RS_Painter *painter, QPainterPath &path) {
+    painter->createSolidFillPath(path, entities);
 }
 
 void RS_Hatch::debugOutPath(const QPainterPath &tmpPath) const {

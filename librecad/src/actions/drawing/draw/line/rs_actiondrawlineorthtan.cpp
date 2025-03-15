@@ -20,8 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
@@ -66,27 +64,20 @@ void RS_ActionDrawLineOrthTan::doTrigger() {
     circle = nullptr;
 }
 
-void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent begin");
-    e->accept();
-
-    snapPoint(e);
-
-    switch (getStatus()) {
+void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status) {
         case SetLine: {
-            RS_Entity *en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
+            RS_Entity *en = catchModifiableAndDescribe(e, RS2::EntityLine);
             if (en != nullptr){
                 highlightHover(en);
             }
             break;
         }
         case SetCircle: {
-            RS_Vector mouse{toGraph(e)};
+            RS_Vector mouse = e->graphPoint;
             highlightSelected(normal);
             deleteSnapper();
-            RS_Entity *en = catchEntityOnPreview(e, circleList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, circleList, RS2::ResolveAll);
             if (en != nullptr){
                 circle = en;
                 highlightHover(en);
@@ -108,9 +99,6 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
 void RS_ActionDrawLineOrthTan::clearLines(){
@@ -118,7 +106,7 @@ void RS_ActionDrawLineOrthTan::clearLines(){
     deletePreview();
 }
 
-void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetLine: {
             RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
@@ -144,7 +132,7 @@ void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, QMouseEvent 
     }
 }
 
-void RS_ActionDrawLineOrthTan::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineOrthTan::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     clearLines();
     if (status == SetLine){
         finish(true);

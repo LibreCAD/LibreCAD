@@ -119,8 +119,7 @@ m0 x + m1 y + m2 =0
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     RS_Entity& shear(double k) override;
 
-    void draw(RS_Painter* painter, RS_GraphicView* view,
-                double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_ConstructionLine& l);

@@ -55,6 +55,7 @@
 #include "rs_text.h"
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"
 #include "dxf_format.h"
 #include "lc_defaults.h"
@@ -64,6 +65,7 @@
 #include "rs_debug.h"
 #include "lc_view.h"
 #include "lc_ucs.h"
+#include "lc_graphicviewport.h"
 
 #endif
 
@@ -298,6 +300,9 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
     }
 }
 
+
+// todo - sand - ucs - rework to direct setup of LC_GraphicViewport instead of RS_GraphicView
+// But this modification requires cleanup of the overall file open flow, so leave it as it is for now
 /**
  * Implementation of the method which handles vports.
  */
@@ -307,32 +312,63 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         data.grid == 1? graphic->setGridOn(true):graphic->setGridOn(false);
         graphic->setIsometricGrid(data.snapStyle);
         graphic->setIsoView( (RS2::IsoGridViewType)data.snapIsopair);
-        RS_GraphicView *gv = graphic->getGraphicView();
+        RS_GraphicView *gv = graphic->getGraphicView();  // fixme - sand - review this dependency
         if (gv ) {
             double width = data.height * data.ratio;
+            // todo - sand - ucs - investigate support/usage of different x and y factors.
             double factorX= gv->getWidth() / width;
             double factorY= gv->getHeight() / data.height;
             if (factorX > factorY)
                 factorX = factorY;
-            int ox = gv->getWidth() -data.center.x*2*factorX;
-            int oy = gv->getHeight() -data.center.y*2*factorX;
-            gv->setOffset(ox, oy);
-            gv->setFactor(factorX);
+            int ox = gv->getWidth() - data.center.x*2*factorX;
+            int oy = gv->getHeight() - data.center.y*2*factorX;
+            gv->getViewPort()->justSetOffsetAndFactor(ox, oy, factorX);
+
         }
     }
+}
+
+void RS_FilterDXFRW::addUCS(const DRW_UCS &data) {
+    RS_DEBUG->print("RS_FilterDXF::addUCS");
+    RS_DEBUG->print("  adding ucs: %s", data.name.c_str());
+    RS_DEBUG->print("RS_FilterDXF::addUCS: creating ucs");
+
+    QString name = QString::fromUtf8(data.name.c_str());
+    if (!name.isEmpty() && graphic->findNamedUCS(name) != nullptr) {
+        return;
+    }
+
+    auto* ucs = new LC_UCS(name);
+    RS_Vector origin = RS_Vector(data.origin.x, data.origin.y, data.origin.z);
+    ucs->setOrigin(origin);
+
+    ucs->setElevation(data.elevation);
+    ucs->setOrthoType(data.orthoType);
+
+    RS_Vector orthoOrigin = RS_Vector(data.orthoOrigin.x, data.orthoOrigin.y, data.orthoOrigin.z);
+    ucs->setOrthoOrigin(orthoOrigin);
+
+    RS_Vector xAxis = RS_Vector(data.xAxisDirection.x, data.xAxisDirection.y, data.xAxisDirection.z);
+    ucs->setXAxis(xAxis);
+
+    RS_Vector yAxis = RS_Vector(data.yAxisDirection.x, data.yAxisDirection.y, data.yAxisDirection.z);
+    ucs->setYAxis(yAxis);
+
+    RS_DEBUG->print("RS_FilterDXF::addUCS: add ucs to graphic");
+    graphic->addUCS(ucs);
+    RS_DEBUG->print("RS_FilterDXF::addUCS: OK");
 }
 
 void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("RS_FilterDXF::addView");
     RS_DEBUG->print("  adding view: %s", data.name.c_str());
-
     RS_DEBUG->print("RS_FilterDXF::addView: creating view");
 
     QString name = QString::fromUtf8(data.name.c_str());
     if (!name.isEmpty() && graphic->findNamedView(name) != nullptr) {
         return;
     }
-    LC_View* view = new LC_View(name);
+    auto* view = new LC_View(name);
     RS_Vector center = RS_Vector(data.center.x, data.center.y, data.center.z);
     view->setCenter(center);
 
@@ -356,18 +392,17 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     view->setViewMode(data.viewMode); // todo - probably it might be simpler than long?
 
     if (data.hasUCS){
-        LC_UCS* ucs = new LC_UCS();
+        auto ucs = new LC_UCS();
 
         RS_Vector ucsOrigin = RS_Vector(data.ucsOrigin.x, data.ucsOrigin.y, data.ucsOrigin.z);
         RS_Vector ucsXAxis = RS_Vector(data.ucsXAxis.x, data.ucsXAxis.y, data.ucsXAxis.z);
         RS_Vector ucsYAxis = RS_Vector(data.ucsYAxis.x, data.ucsYAxis.y, data.ucsYAxis.z);
-
+        ucs->setOrthoOrigin(RS_Vector(false));
         ucs->setOrigin(ucsOrigin);
         ucs->setXAxis(ucsXAxis);
         ucs->setYAxis(ucsYAxis);
         ucs->setElevation(data.ucsElevation);
         ucs->setOrthoType(data.ucsOrthoType);
-
         view->setUCS(ucs);
     }
 
@@ -376,7 +411,6 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("RS_FilterDXF::addView: add view to graphic");
     graphic->addNamedView(view);
     RS_DEBUG->print("RS_FilterDXF::addView: OK");
-
 }
 
 
@@ -1202,99 +1236,99 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     currentContainer->appendEntity(hatch);
 
     for (unsigned int i=0; i < data->looplist.size(); i++) {
-		auto& loop = data->looplist.at(i);
+        auto& loop = data->looplist.at(i);
         if ((loop->type & 32) == 32) continue;
         hatchLoop = new RS_EntityContainer(hatch);
-		hatchLoop->setLayer(nullptr);
+        hatchLoop->setLayer(nullptr);
         hatch->addEntity(hatchLoop);
 
-		RS_Entity* e = nullptr;
+        RS_Entity* e = nullptr;
         if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
-			DRW_LWPolyline* pline = (DRW_LWPolyline *)loop->objlist.at(0).get();
-			RS_Polyline polyline{nullptr,
-					RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
-			for (auto const& vert: pline->vertlist)
-				polyline.addVertex(RS_Vector{vert->x, vert->y}, vert->bulge);
+            DRW_LWPolyline* pline = (DRW_LWPolyline *)loop->objlist.at(0).get();
+            RS_Polyline polyline{nullptr,
+                                 RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
+            for (auto const& vert: pline->vertlist)
+                polyline.addVertex(RS_Vector{vert->x, vert->y}, vert->bulge);
 
-			for (RS_Entity* e=polyline.firstEntity(); e;
-					e=polyline.nextEntity()) {
+            for (RS_Entity* e=polyline.firstEntity(); e;
+                 e=polyline.nextEntity()) {
                 RS_Entity* tmp = e->clone();
                 tmp->reparent(hatchLoop);
-				tmp->setLayer(nullptr);
+                tmp->setLayer(nullptr);
                 hatchLoop->addEntity(tmp);
-			}
+            }
 
         } else {
             for (unsigned int j=0; j<loop->objlist.size(); j++) {
-				e = nullptr;
-				auto& ent = loop->objlist.at(j);
+                e = nullptr;
+                auto& ent = loop->objlist.at(j);
                 switch (ent->eType) {
-                case DRW::LINE: {
-					DRW_Line *e2 = (DRW_Line *)ent.get();
-					e = new RS_Line{hatchLoop,
-					{{e2->basePoint.x, e2->basePoint.y},
-					{e2->secPoint.x, e2->secPoint.y}}};
-					break;
-                }
-                case DRW::ARC: {
-					DRW_Arc *e2 = (DRW_Arc *)ent.get();
-                    if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
-                        e = new RS_Circle(hatchLoop,
-						{{e2->basePoint.x, e2->basePoint.y},
-														e2->radious});
-                    } else {
-
-                        if (e2->isccw) {
-                            e = new RS_Arc(hatchLoop,
-                                        RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
-                                                   RS_Math::correctAngle(e2->staangle),
-                                                   RS_Math::correctAngle(e2->endangle),
-                                                   false));
+                    case DRW::LINE: {
+                        DRW_Line *e2 = (DRW_Line *)ent.get();
+                        e = new RS_Line{hatchLoop,
+                                        {{e2->basePoint.x, e2->basePoint.y},
+                                         {e2->secPoint.x, e2->secPoint.y}}};
+                        break;
+                    }
+                    case DRW::ARC: {
+                        DRW_Arc *e2 = (DRW_Arc *)ent.get();
+                        if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
+                            e = new RS_Circle(hatchLoop,
+                                              {{e2->basePoint.x, e2->basePoint.y},
+                                               e2->radious});
                         } else {
-                            e = new RS_Arc(hatchLoop,
-                                        RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
-                                                   RS_Math::correctAngle(2*M_PI-e2->staangle),
-                                                   RS_Math::correctAngle(2*M_PI-e2->endangle),
-                                                   true));
+
+                            if (e2->isccw) {
+                                e = new RS_Arc(hatchLoop,
+                                               RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
+                                                          RS_Math::correctAngle(e2->staangle),
+                                                          RS_Math::correctAngle(e2->endangle),
+                                                          false));
+                            } else {
+                                e = new RS_Arc(hatchLoop,
+                                               RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
+                                                          RS_Math::correctAngle(2*M_PI-e2->staangle),
+                                                          RS_Math::correctAngle(2*M_PI-e2->endangle),
+                                                          true));
+                            }
                         }
+                        break;
                     }
-                    break;
-                }
-                case DRW::ELLIPSE: {
-					DRW_Ellipse *e2 = (DRW_Ellipse *)ent.get();
-                    double ang1 = e2->staparam;
-                    double ang2 = e2->endparam;
-					if ( fabs(ang2 - 2.*M_PI) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
-                        ang2 = 0.0;
-                    else { //convert angle to parameter
-                        ang1 = atan(tan(ang1)/e2->ratio);
-                        ang2 = atan(tan(ang2)/e2->ratio);
-                        if (ang1 < 0){//quadrant 2 & 4
-                            ang1 +=M_PI;
-                            if (e2->staparam > M_PI) //quadrant 4
+                    case DRW::ELLIPSE: {
+                        DRW_Ellipse *e2 = (DRW_Ellipse *)ent.get();
+                        double ang1 = e2->staparam;
+                        double ang2 = e2->endparam;
+                        if ( fabs(ang2 - 2.*M_PI) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
+                            ang2 = 0.0;
+                        else { //convert angle to parameter
+                            ang1 = atan(tan(ang1)/e2->ratio);
+                            ang2 = atan(tan(ang2)/e2->ratio);
+                            if (ang1 < 0){//quadrant 2 & 4
                                 ang1 +=M_PI;
-                        } else if (e2->staparam > M_PI){//3 quadrant
-                            ang1 +=M_PI;
-                        }
-                        if (ang2 < 0){//quadrant 2 & 4
-                            ang2 +=M_PI;
-                            if (e2->endparam > M_PI) //quadrant 4
+                                if (e2->staparam > M_PI) //quadrant 4
+                                    ang1 +=M_PI;
+                            } else if (e2->staparam > M_PI){//3 quadrant
+                                ang1 +=M_PI;
+                            }
+                            if (ang2 < 0){//quadrant 2 & 4
                                 ang2 +=M_PI;
-                        } else if (e2->endparam > M_PI){//3 quadrant
-                            ang2 +=M_PI;
+                                if (e2->endparam > M_PI) //quadrant 4
+                                    ang2 +=M_PI;
+                            } else if (e2->endparam > M_PI){//3 quadrant
+                                ang2 +=M_PI;
+                            }
                         }
+                        e = new RS_Ellipse{hatchLoop,
+                                           {{e2->basePoint.x, e2->basePoint.y},
+                                            {e2->secPoint.x, e2->secPoint.y},
+                                            e2->ratio, ang1, ang2, !e2->isccw}};
+                        break;
                     }
-					e = new RS_Ellipse{hatchLoop,
-					{{e2->basePoint.x, e2->basePoint.y},
-					{e2->secPoint.x, e2->secPoint.y},
-							e2->ratio, ang1, ang2, !e2->isccw}};
-					break;
-                }
-                default:
-                    break;
+                    default:
+                        break;
                 }
                 if (e) {
-					e->setLayer(nullptr);
+                    e->setLayer(nullptr);
                     hatchLoop->addEntity(e);
                 }
             }
@@ -1308,7 +1342,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     } else {
         graphic->removeEntity(hatch);
         RS_DEBUG->print(RS_Debug::D_ERROR,
-                    "RS_FilterDXFRW::endEntity(): updating hatch failed: invalid hatch area");
+                        "RS_FilterDXFRW::endEntity(): updating hatch failed: invalid hatch area");
     }
 }
 
@@ -2041,6 +2075,41 @@ void RS_FilterDXFRW::writeLayers(){
     }
 }
 
+
+void RS_FilterDXFRW::writeUCSs() {
+    LC_UCSList* vl = graphic->getUCSList();
+    DRW_UCS ucs;
+    for (unsigned int i = 1; i < vl->count(); i++) {
+        ucs.reset();
+
+        LC_UCS* u = vl->at(i);
+        if (u->isTemporary()){ // temporary ucs without name are not persistent
+            continue;
+        }
+        ucs.name = u->getName().toUtf8().data();
+        ucs.origin.x = u->getOrigin().x;
+        ucs.origin.y = u->getOrigin().y;
+        ucs.origin.z = u->getOrigin().z;
+
+        ucs.xAxisDirection.x = u->getXAxis().x;
+        ucs.xAxisDirection.y = u->getXAxis().y;
+        ucs.xAxisDirection.z = u->getXAxis().z;
+
+        ucs.yAxisDirection.x = u->getYAxis().x;
+        ucs.yAxisDirection.y = u->getYAxis().y;
+        ucs.yAxisDirection.z = u->getYAxis().z;
+
+        ucs.orthoOrigin.x = u->getOrthoOrigin().x;
+        ucs.orthoOrigin.y = u->getOrthoOrigin().y;
+        ucs.orthoOrigin.z = u->getOrthoOrigin().z;
+
+        ucs.orthoType = u->getOrthoType();
+        ucs.elevation = u->getElevation();
+
+        dxfW->writeUCS(&ucs);
+    }
+}
+
 void RS_FilterDXFRW::writeViews() {
     LC_ViewList* vl = graphic->getViewList();
     DRW_View vie;
@@ -2083,7 +2152,7 @@ void RS_FilterDXFRW::writeViews() {
             vie.ucsOrigin.z = ucs->getOrigin().z;
             
             vie.ucsOrthoType = ucs->getOrthoType();
-            vie.ucsElevation = ucs->getElevataion();
+            vie.ucsElevation = ucs->getElevation();
 
             vie.ucsXAxis.x = ucs->getXAxis().x;
             vie.ucsXAxis.y = ucs->getXAxis().y;
@@ -2182,11 +2251,12 @@ void RS_FilterDXFRW::writeVports(){
     }
     RS_GraphicView *gv = graphic->getGraphicView();
 	if (gv ) {
-        RS_Vector fac =gv->getFactor();
+     LC_GraphicViewport *viewport = gv->getViewPort();
+     RS_Vector fac = viewport->getFactor();
         vp.height = gv->getHeight()/fac.y;
         vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
-        vp.center.x = ( gv->getWidth() - gv->getOffsetX() )/ (fac.x * 2.0);
-        vp.center.y = ( gv->getHeight() - gv->getOffsetY() )/ (fac.y * 2.0);
+        vp.center.x = ( gv->getWidth() - viewport->getOffsetX() )/ (fac.x * 2.0);
+        vp.center.y = ( gv->getHeight() - viewport->getOffsetY() )/ (fac.y * 2.0);
     }
     dxfW->writeVport(&vp);
 }
@@ -2239,6 +2309,8 @@ void RS_FilterDXFRW::writeAppId(){
     DRW_AppId ai;
     ai.name ="LibreCad";
     dxfW->writeAppId(&ai);
+
+    // fixme - sand - probably we can add version there, check format
 }
 
 void RS_FilterDXFRW::writeEntities(){

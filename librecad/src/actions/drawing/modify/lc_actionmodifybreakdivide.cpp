@@ -21,8 +21,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cfloat>
-#include <QMouseEvent>
-
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_entitycontainer.h"
@@ -46,7 +44,7 @@ LC_ActionModifyBreakDivide::LC_ActionModifyBreakDivide(RS_EntityContainer &conta
     actionType = RS2::ActionModifyBreakDivide;
 }
 
-bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetLine;
 }
 
@@ -57,10 +55,10 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEve
  * @param list
  * @param status
  */
-void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionModifyBreakDivide::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
         deleteSnapper();
-        RS_Entity *en = catchModifiableEntityOnPreview(e, enTypeList);
+        RS_Entity *en = catchModifiableAndDescribe(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {
@@ -86,7 +84,7 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vec
     }
 }
 
-void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     if (status == SetLine){
         RS_Entity *en = catchModifiableEntity(e, enTypeList);
         if (en != nullptr){
@@ -355,9 +353,9 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
 
                 if (isInfoCursorForModificationEnabled()){
                     LC_InfoMessageBuilder msg(tr("Break/Divide Circle"));
-                    msg.add(tr("Angle 1:"), formatAngle(data->snapSegmentStartAngle));
+                    msg.add(tr("Angle 1:"), formatWCSAngle(data->snapSegmentStartAngle));
                     msg.add(tr("Point 1:"), formatVector(dividePoint1));
-                    msg.add(tr("Angle 2:"), formatAngle(data->snapSegmentEndAngle));
+                    msg.add(tr("Angle 2:"), formatWCSAngle(data->snapSegmentEndAngle));
                     msg.add(tr("Point 2:"), formatVector(dividePoint2));
                     appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
@@ -452,9 +450,9 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
 
                     if (isInfoCursorForModificationEnabled()){
                         LC_InfoMessageBuilder msg(tr("Break/Divide Arc"));
-                        msg.add(tr("Angle 1:"), formatAngle(data->snapSegmentStartAngle));
+                        msg.add(tr("Angle 1:"), formatWCSAngle(data->snapSegmentStartAngle));
                         msg.add(tr("Point 1:"), formatVector(segmentStart));
-                        msg.add(tr("Angle 2:"), formatAngle(data->snapSegmentEndAngle));
+                        msg.add(tr("Angle 2:"), formatWCSAngle(data->snapSegmentEndAngle));
                         msg.add(tr("Point 2:"), formatVector(segmentEnd));
                         appendInfoCursorZoneMessage(msg.toString(), 2, false);
                     }
@@ -494,10 +492,8 @@ void LC_ActionModifyBreakDivide::createArcEntity(const RS_ArcData &arcData, bool
  * @param e
  * @return
  */
-RS_Vector LC_ActionModifyBreakDivide::doGetMouseSnapPoint(QMouseEvent *e){
-    snapPoint(e);
-    RS_Vector result = toGraph(e);
-    return result;
+RS_Vector LC_ActionModifyBreakDivide::doGetMouseSnapPoint(LC_MouseEvent *e){
+    return e->graphPoint;
 }
 
 /**

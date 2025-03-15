@@ -53,22 +53,18 @@ void LC_ActionPolylineChangeSegmentType::doTrigger() {
     }
 }
 
-void LC_ActionPolylineChangeSegmentType::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetEntity: {
-            auto entity = catchEntityOnPreview(e, RS2::EntityPolyline);
+            auto entity = catchAndDescribe(e, RS2::EntityPolyline);
             if (entity != nullptr){
                 highlightHover(entity);
             }
             break;
         }
         case SetSegment:{
-            auto entity = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
+            auto entity = catchAndDescribe(e, RS2::ResolveAllButTextImage);
             bool segmentFound = false;
             if (entity != nullptr && entity->isAtomic()){
                 if (polyline == entity->getParent()){
@@ -89,6 +85,8 @@ void LC_ActionPolylineChangeSegmentType::mouseMoveEvent(QMouseEvent *e) {
                             previewRefSelectablePoint(midPoint);
                             break;
                         }
+                        default:
+                            break;
                     }
                 }
             }
@@ -113,11 +111,7 @@ void LC_ActionPolylineChangeSegmentType::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-
-    drawPreview();
-    drawHighlights();
 }
-
 
 RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
     auto* result = new RS_Polyline(container);
@@ -159,15 +153,14 @@ RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
     }
 
     result->addVertex(polyline->getEndpoint());
-
     result->setClosed(polyline->isClosed());
     return result;
 }
 
-void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity: {
-            auto entity = catchEntity(e, RS2::EntityPolyline);
+            auto entity = catchEntityByEvent(e, RS2::EntityPolyline);
             if (entity != nullptr){
                 polyline = static_cast<RS_Polyline *>(entity);
                 setStatus(SetSegment);
@@ -175,7 +168,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, QM
             break;
         }
         case SetSegment:{
-            auto entity = catchEntity(e, RS2::ResolveAllButTextImage);
+            auto entity = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
             if (entity != nullptr && entity->isAtomic()){
                 if (polyline == entity->getParent()){
                     int rtti = entity->rtti();
@@ -198,7 +191,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, QM
             break;
         }
         case SetArcPoint:{
-            arcPoint = snapPoint(e);
+            arcPoint = e->snapPoint;
             trigger();
             break;
         }
@@ -215,15 +208,13 @@ void LC_ActionPolylineChangeSegmentType::onCoordinateEvent(int status, [[maybe_u
     }
 }
 
-
-void LC_ActionPolylineChangeSegmentType::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void LC_ActionPolylineChangeSegmentType::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 
 RS2::CursorType LC_ActionPolylineChangeSegmentType::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }
-
 
 void LC_ActionPolylineChangeSegmentType::updateMouseButtonHints() {
     switch (getStatus()){

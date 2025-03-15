@@ -20,7 +20,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include <QMouseEvent>
 #include "qc_applicationwindow.h"
 #include "lc_actioninfopickcoordinates.h"
 #include "lc_quickinfowidget.h"
@@ -73,24 +72,24 @@ void LC_ActionInfoPickCoordinates::doFinish(bool updateTB){
     }
 }
 
-void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]int status, const RS_Vector &snapPoint){
+void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]int status, const RS_Vector &snapPoint){
     // add point
     points << snapPoint;
     updateQuickInfoWidget(snapPoint);
     drawPreviewForLastPoint();
 }
 
-RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(QMouseEvent *e){
-    bool freeSnap = isShift(e);
+RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(LC_MouseEvent *e){
+    bool freeSnap = e->isShift;
     if (freeSnap){ // let free point snap if shift pressed
-        return toGraph(e);
+        return e->graphPoint;
     }
     else{
-        return snapPoint(e);
+        return e->snapPoint;
     }
 }
 
-void LC_ActionInfoPickCoordinates::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionInfoPickCoordinates::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     // preview for this point
     // todo - review - should we display normal or reference point?
     createPoint(snap, list);

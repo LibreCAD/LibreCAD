@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselectsingle.h"
 
 #include "rs_graphicview.h"
@@ -40,14 +38,14 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
     actionType = RS2::ActionSelectSingle;
 }
 
-RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
+RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType selectType,
                                              RS_EntityContainer& container,
                                              RS_GraphicView& graphicView,
                                              RS_ActionInterface* action_select,
                                              const QList<RS2::EntityType> &entityTypeList)
     :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
     ,actionSelect(action_select)
-    ,typeToSelect(typeToSelect){
+    ,typeToSelect(selectType){
     actionType = RS2::ActionSelectSingle;
 }
 
@@ -56,12 +54,8 @@ void RS_ActionSelectSingle::trigger(){
     selectContour = false;
 }
 
-void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
-    deletePreview();
-    deleteHighlights();
+void RS_ActionSelectSingle::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     selectionMouseMove(event);
-    drawPreview();
-    drawHighlights();
 }
 
 void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]]bool escape) {
@@ -69,17 +63,17 @@ void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]
     actionSelect->keyPressEvent(e);
 }
 
-void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
-    entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
+void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+    entityToSelect = catchEntityByEvent(e, catchForSelectionEntityTypes);
     if (entityToSelect != nullptr){
-       selectContour = isShift(e);
+       selectContour = e->isShift;
        trigger();
     }
 }
 
 void RS_ActionSelectSingle::doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const {
     if (entityToSelect != nullptr){
-        RS_Selection s(*container, graphicView);
+        RS_Selection s(*container, viewport);
         // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
         if (entityToSelect->isAtomic() && selectContour) {
             s.selectContour(entityToSelect);
@@ -90,12 +84,12 @@ void RS_ActionSelectSingle::doSelectEntity(RS_Entity *entityToSelect, bool selec
     }
 }
 
-void RS_ActionSelectSingle::onMouseRightButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionSelectSingle::onMouseRightButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     finish();
     if (actionSelect->rtti() == RS2::ActionSelect)
         actionSelect->finish();
     else
-        actionSelect->mouseReleaseEvent(e);
+        actionSelect->mouseReleaseEvent(e->originalEvent); // fixme - sand - review, rework
 }
 
 RS2::CursorType RS_ActionSelectSingle::doGetMouseCursor([[maybe_unused]] int status){

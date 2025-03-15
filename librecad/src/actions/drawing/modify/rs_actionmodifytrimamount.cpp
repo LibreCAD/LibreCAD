@@ -26,9 +26,6 @@
 
 #include<cmath>
 
-
-#include <QMouseEvent>
-
 #include "rs_actionmodifytrimamount.h"
 #include "rs_atomicentity.h"
 #include "rs_commandevent.h"
@@ -71,7 +68,7 @@ void RS_ActionModifyTrimAmount::doTrigger() {
 
     if (trimEntity && trimEntity->isAtomic()){
 
-        RS_Modification m(*container, graphicView, true);
+        RS_Modification m(*container, viewport, true);
         auto* e = dynamic_cast<RS_AtomicEntity *>(trimEntity);
         double dist = determineDistance(e);
 
@@ -97,18 +94,15 @@ double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) co
     return d;
 }
 
-void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    snapPoint(e);
-    RS_Vector coord =  toGraph(e);
-    auto en = catchEntityOnPreview(e, enTypeList, RS2::ResolveNone);
+void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector coord =  e->graphPoint;
+    auto en = catchAndDescribe(e, enTypeList, RS2::ResolveNone);
     deleteSnapper();
     if (en != nullptr){
         if (en->isAtomic()){
             highlightHover(en);
             auto* atomic = reinterpret_cast<RS_AtomicEntity *>(en);
-            RS_Modification m(*container, nullptr, false);
+            RS_Modification m(*container, viewport, false);
             double dist = determineDistance(atomic);
             bool trimBoth = symmetricDistance && !distanceIsTotalLength;
             bool trimStart;
@@ -170,15 +164,13 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
             }
         }
     }
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseTrimEntity: {
-            *trimCoord = toGraph(e);
-            RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveNone);
+            *trimCoord = e->graphPoint;
+            RS_Entity* en = catchEntityByEvent(e, enTypeList, RS2::ResolveNone);
             if (en == nullptr){
                 commandMessage(tr("No entity found."));
             }
@@ -197,7 +189,7 @@ void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, QMouseEvent
     invalidateSnapSpot();
 }
 
-void RS_ActionModifyTrimAmount::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyTrimAmount::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 

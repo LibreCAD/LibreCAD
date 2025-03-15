@@ -23,8 +23,10 @@
 #ifndef LC_UCS_H
 #define LC_UCS_H
 
+#include <QObject>
 #include <QString>
 #include "rs_vector.h"
+#include "rs.h"
 
 /**
  * So far this is temporary data holder for UCS (if one is defined, say, in AutoCAD). The main idea - try to dont lose data in dxf on open/save cycle.
@@ -33,34 +35,66 @@
  * and in this case, this class will be transformed to full-fledge entity
  */
 class LC_UCS {
- public:
+public:
     LC_UCS();
     LC_UCS(QString name);
+    virtual ~LC_UCS();
 
     void setOrigin(RS_Vector o);
     RS_Vector getOrigin() {return ucsOrigin;};
-
     void setElevation(double d);
-    double getElevataion(){return ucsElevation;};
-
+    double getElevation(){return ucsElevation;};
     void setXAxis(RS_Vector pos);
     RS_Vector getXAxis(){return ucsXAxis;}
-
     void setYAxis(RS_Vector axis);
     RS_Vector getYAxis(){return ucsYAxis;}
-
     void setOrthoType(int type);
     int getOrthoType(){return ucsOrthoType;};
+    void setName(const QString &name);
+    const QString getName() const;
+    long getNamedUcsId() const;
+    long getBaseUcsId() const;
+    static bool isValidName(QString &nameCandidate);
+    bool isSameTo(LC_UCS* other);
+    const RS_Vector getOrthoOrigin() const;
+    void setOrthoOrigin(const RS_Vector &orthoOrigin);
+    virtual bool isUCS(){return true;};
+    bool isTemporary(){return temporary;};
+    void setTemporary(bool temp){temporary = temp;}
+    double getXAxisDirection(){
+        return ucsXAxis.angle();
+    }
+    RS2::IsoGridViewType getIsoGridViewType();
+    bool isIsometric();
 
+    enum UCSOrthoType{
+        NON_ORTHO,
+        TOP,
+        BOTTOM,
+        FRONT,
+        BACK,
+        LEFT,
+        RIGHT
+    };
 protected:
-    QString name;
-    RS_Vector ucsOrigin; // UCS origin, 110, 120, 130
-    RS_Vector ucsXAxis; // UCS X-axis, 111, 121, 131
-    RS_Vector ucsYAxis; // UCS Y-axis, 112, 122, 132
-    int ucsOrthoType; // Orthographic type of UCS, 0 = UCS is not orthographic, 1 = Top; 2 = Bottom, 3 = Front; 4 = Back, 5 = Left; 6 = Right, code 79
-    double ucsElevation; // UCS elevation, code 146
+    bool temporary = false;
+    QString name = "";
+    RS_Vector ucsOrigin = RS_Vector(0,0,0); // UCS origin, 110, 120, 130
+    RS_Vector ucsXAxis = RS_Vector(1,0,0); // UCS X-axis, 111, 121, 131
+    RS_Vector ucsYAxis = RS_Vector(0,1,0); // UCS Y-axis, 112, 122, 132
+    RS_Vector orthoOrigin = RS_Vector(0,0,0);
+    int ucsOrthoType = 0; // Orthographic type of UCS, 0 = UCS is not orthographic, 1 = Top; 2 = Bottom, 3 = Front; 4 = Back, 5 = Left; 6 = Right, code 79
+    double ucsElevation = 0.0; // UCS elevation, code 146
     long         namedUCS_ID;// ID/handle of AcDbUCSTableRecord if UCS is a named UCS. If not present, then UCS is unnamed, code 345
     long         baseUCS_ID;// ID/handle of AcDbUCSTableRecord of base UCS if UCS is orthographic, If not present and 79 code is non-zero, then base UCS is taken to be WORLD, code 346
+};
+
+class LC_WCS: public LC_UCS{
+public:
+    explicit LC_WCS():LC_UCS(QObject::tr("WCS")) {}
+    bool isUCS() override {return false;}
+
+    static LC_UCS instance;
 };
 
 #endif // LC_UCS_H

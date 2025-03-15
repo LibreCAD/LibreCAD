@@ -48,13 +48,13 @@ void LC_ActionPasteToPoints::init(int status) {
 
 void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
     undoCycleStart();
-    RS_Modification m(*container, graphicView, false);
+    RS_Modification m(*container, viewport, false);
     for (auto p: selectedEntities){
         RS_Vector currentPoint = p->getCenter();
         const RS_PasteData &pasteData = RS_PasteData(currentPoint, scaleFactor , angle, false, "");
         m.paste(pasteData);
         // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
-        LC_ERR << "Paste: " << currentPoint;
+//        LC_ERR << "Paste: " << currentPoint;
 
         if (removePointAfterPaste){
             undoableDeleteEntity(p);

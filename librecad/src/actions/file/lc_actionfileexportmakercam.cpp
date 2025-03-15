@@ -31,6 +31,7 @@
 #include "lc_xmlwriterqxmlstreamwriter.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 
@@ -63,20 +64,17 @@ namespace {
 
 LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)
-    : RS_ActionInterface("Export as CAM/plain SVG...", container, graphicView)
-{
+    : RS_ActionInterface("Export as CAM/plain SVG...", container, graphicView){
     setActionType(RS2::ActionFileExportMakerCam);
 }
 
 
 void LC_ActionFileExportMakerCam::init(int status) {
-
     RS_ActionInterface::init(status);
     trigger();
 }
 
-bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& graphic)
-{
+bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& graphic){
     if (fileName.isEmpty()) {
         LC_ERR<<__func__<<"(): empty file name, no SVG is generated";
         return false;
@@ -106,7 +104,6 @@ void LC_ActionFileExportMakerCam::trigger() {
         bool accepted = RS_DIALOGFACTORY->requestOptionsMakerCamDialog();
 
         if (accepted) {
-
             QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog(tr("Export as"),
                                                                          "",
                                                                          "Scalable Vector Graphics (*.svg)");

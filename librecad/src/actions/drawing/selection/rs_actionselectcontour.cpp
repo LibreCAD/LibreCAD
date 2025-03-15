@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselectcontour.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -39,10 +37,8 @@ RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectContour;
 }
 
-void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
-    snapPoint(event);
-    deleteHighlights();
-    auto ent = catchEntityOnPreview(event);
+void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
+    auto ent = catchAndDescribe(event);
     if (ent != nullptr){
         // fixme - proper highlighting of planned selection - yet after fixing underlying logic!
 //        RS_Selection s(*container, graphicView);
@@ -50,13 +46,12 @@ void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
         // fixme - temporarily highlight only caught entity only
         highlightHover(ent);
     }
-    drawHighlights();
 }
 
 void RS_ActionSelectContour::doTrigger() {
     if (en){
         if (en->isAtomic()){ // fixme - why it is so??? why it's not suitable to select, say, polyline here too?
-            RS_Selection s(*container, graphicView);
+            RS_Selection s(*container, viewport);
             s.selectContour(en);
         } else
            commandMessage(tr("Entity must be an Atomic Entity."));
@@ -64,12 +59,12 @@ void RS_ActionSelectContour::doTrigger() {
         RS_DEBUG->print("RS_ActionSelectContour::trigger: Entity is NULL\n");
 }
 
-void RS_ActionSelectContour::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
-    en = catchEntity(e);
+void RS_ActionSelectContour::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+    en = catchEntityByEvent(e);
     trigger();
 }
 
-void RS_ActionSelectContour::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectContour::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 

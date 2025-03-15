@@ -49,10 +49,9 @@ public:
     ~RS_ActionDrawLineRelAngle() override;
     RS2::ActionType rtti() const override;
     void finish(bool updateTB) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    void setAngle(double a){angle = a;}
-    double getAngle() const{return angle;}
+    void setAngle(double angleDeg);
+    double getAngle() const;
     void setLength(double l){length = l;}
     double getLength() const{return length;}
     bool hasFixedAngle() const{return fixedAngle;}
@@ -70,7 +69,7 @@ protected:
     /**
      * Line angle.
      */
-    double angle = 0.;
+    double relativeAngleRad = 0.;
     /**
      * Line length.
      */
@@ -81,11 +80,13 @@ protected:
     bool fixedAngle = false;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+
     void doTrigger() override;
 };
 

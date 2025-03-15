@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qc_applicationwindow.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include <QMouseEvent>
 
 LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
     :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
@@ -49,26 +48,22 @@ void LC_ActionPenPick::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void LC_ActionPenPick::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    if (getStatus() == SelectEntity){
-        RS_Entity *en = catchEntityOnPreview(e, RS2::ResolveNone);
+void LC_ActionPenPick::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status == SelectEntity){
+        RS_Entity *en = catchAndDescribe(e, RS2::ResolveNone);
         deleteHighlights();
         if (en != nullptr){
             highlightHover(en);
         }
     }
-    drawHighlights();
-    drawPreview();
 }
 
-void LC_ActionPenPick::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPenPick::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (status == SelectEntity){
         // Well, actually, it's possible to use Shift modifier for determining whether pen should be
         // resolved or not.  However, in UI there are two separate actions for consistency of
         // UIX with Pen Palette Widget
-        RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+        RS_Entity *en = catchEntityByEvent(e, RS2::ResolveNone);
         if (en != nullptr){
             applyPenToPenToolBar(en);
             init( getStatus() - 1);
@@ -76,13 +71,13 @@ void LC_ActionPenPick::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             graphicView->back();
         }
     }
-    graphicView->redraw();
+    redraw();
 }
 
-void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     finish(true);
     initPrevious(status);
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPenPick::updateMouseButtonHints(){

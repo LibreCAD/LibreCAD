@@ -20,8 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawcircletan3.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -81,7 +79,7 @@ void RS_ActionDrawCircleTan3::init(int status){
 
 void RS_ActionDrawCircleTan3::finish(bool updateTB){
     if (!pPoints->circles.empty()){
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         pPoints->circles.clear();
     }
     RS_PreviewActionInterface::finish(updateTB);
@@ -102,15 +100,11 @@ void RS_ActionDrawCircleTan3::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawCircleTan3::trigger(): entity added: %lu", circle->getId());
 }
 
-void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent begin");
-    deleteHighlights();
-    deletePreview();
-    snapPoint(e);
+void RS_ActionDrawCircleTan3::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
         highlightSelected(pc);
     }
-    switch (getStatus()) {
+    switch (status) {
         case SetCircle1:
         case SetCircle2: {
             auto *c = catchCircle(e, true); // fixme - sand - CHECK! Modifiable catch for preview?
@@ -130,7 +124,7 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetCenter: {
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
 
             if (preparePreview()){
                 previewToCreateCircle(*pPoints->cData);
@@ -154,9 +148,6 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
 bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
@@ -356,11 +347,11 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
     return pPoints->valid;
 }
 
-RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e, bool forPreview) {
+RS_Entity *RS_ActionDrawCircleTan3::catchCircle(LC_MouseEvent *e, bool forPreview) {
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview){
-        en = catchModifiableEntityOnPreview(e, enTypeList);
+        en = catchModifiableAndDescribe(e, enTypeList);
     }
     else{
         en = catchModifiableEntity(e, enTypeList);
@@ -374,7 +365,7 @@ RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e, bool forPreview)
     return en;
 }
 
-void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1:
         case SetCircle2:{
@@ -417,7 +408,7 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetCenter:
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
             if (preparePreview()) trigger();
             break;
 
@@ -427,12 +418,12 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
 
 }
 
-void RS_ActionDrawCircleTan3::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleTan3::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (status > 0){
         pPoints->circles[status - 1]->setHighlighted(false);
         pPoints->circles.pop_back();
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         deletePreview();
     }
     initPrevious(status);
