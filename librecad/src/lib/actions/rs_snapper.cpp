@@ -29,7 +29,6 @@
 #include <QMouseEvent>
 
 #include "lc_linemath.h"
-#include "rs_actioninterface.h"
 #include "rs_modification.h"
 #include "rs_commandevent.h"
 #include "rs_actiondefault.h"
@@ -38,7 +37,6 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_actioninterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
@@ -55,8 +53,7 @@
 namespace {
 
     // whether a floating point is positive by tolerance
-    bool isPositive(double x)
-    {
+    bool isPositive(double x){
         return x > RS_TOLERANCE;
     }
 
@@ -311,7 +308,6 @@ void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
         m_anglesCounterClockWise = graphic->areAnglesCounterClockWise();
     }
 }
-
 
 void RS_Snapper::finish() {
     finished = true;
