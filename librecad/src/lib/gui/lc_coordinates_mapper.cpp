@@ -123,8 +123,8 @@ void LC_CoordinatesMapper::setXAxisAngle(double angle){
     m_ucsRotation = RS_Vector{angle};
     cosXAngle = m_ucsRotation.x;
     sinXAngle = m_ucsRotation.y;
-    sinNegativeXAngle = sin(-angle);
-    cosNegativeXAngle = cos(-angle);
+    sinNegativeXAngle = - sinXAngle;
+    cosNegativeXAngle = cosXAngle;
 }
 
 void LC_CoordinatesMapper::update(const RS_Vector &origin, double angle) {

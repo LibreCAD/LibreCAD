@@ -1463,13 +1463,13 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
 
 RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
 {
-    RS_Vector ucsPosition = worldCoordinates;
+    RS_Vector uiPosition = worldCoordinates;
     if (m_hasUcs){
-        ucsPosition.move(-ucsOrigin).rotate(m_ucsRotation);
+        uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
     }
-    ucsPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
-    ucsPosition.y = viewPortHeight - ucsPosition.y;
-    return ucsPosition;
+    uiPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
+    uiPosition.y = viewPortHeight - uiPosition.y;
+    return uiPosition;
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {
