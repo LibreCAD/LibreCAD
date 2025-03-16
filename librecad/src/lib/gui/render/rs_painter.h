@@ -76,17 +76,27 @@ public:
 
     // coordinates translations
     void toGui(const RS_Vector& pos, double &x, double &y);
+    RS_Vector toGui(const RS_Vector& worldCoordinates) const;
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
 
-    bool isPrinting() {return printinMode;}; // fixme - temporary support, refactor further
-    bool isPrintPreview() {return printPreview;}; // fixme - temporary support, refactor further
+    bool isPrinting() const
+    {
+        return printinMode;
+    } // fixme - temporary support, refactor further
+    bool isPrintPreview() const
+    {
+        return printPreview;
+    } // fixme - temporary support, refactor further
 
-    LC_GraphicViewport* getViewPort() {return viewport;}
+    LC_GraphicViewport* getViewPort() const
+    {
+        return viewport;
+    }
     void setViewPort(LC_GraphicViewport* v);
     void setRenderer(LC_GraphicViewportRenderer *r) {renderer = r;}
     void updateDashOffset(RS_Entity* e);
-    void clearDashOffset() {currenPatternOffset = 0.0;};
+    void clearDashOffset() {currenPatternOffset = 0.0;}
     double currentDashOffset() const {return currenPatternOffset;}
 
     void drawEntityArc(RS_Arc* arc);
@@ -114,7 +124,7 @@ public:
     void drawImgWCS(QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector);
 
     // drawing in screen coordinates
-    void drawCircleUI(double uiCenterX, double uiCenterY, double uiRadius);
+    void drawCircleUI(const RS_Vector& uiCenter, double uiRadius);
     void drawLineUISimple(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawLineUISimple(const RS_Vector &p1, const RS_Vector &p2);
     void drawText(const QRect &uiRect, int flags, const QString &text, QRect *uiBoundingBox);
@@ -124,7 +134,7 @@ public:
 
     // methods invoked from entity containers and printing
     void drawEntity(RS_Entity* entity) {renderer->renderEntity(this, entity);}
-    void drawAsChild(RS_Entity* entity){renderer->renderEntityAsChild(this, entity);};
+    void drawAsChild(RS_Entity* entity){renderer->renderEntityAsChild(this, entity);}
     void drawInfiniteWCS(RS_Vector start, RS_Vector end);
 
     /**
@@ -181,7 +191,7 @@ public:
     void setMinEllipseMinorRadius(double minEllipseMinorRadius);
     void setMinLineDrawingLen(double minLineDrawingLen);
     void setMinRenderableTextHeightInPx(int i);
-    void setDefaultWidthFactor(double factor){ defaultWidthFactor = factor;};
+    void setDefaultWidthFactor(double factor){ defaultWidthFactor = factor;}
     void updatePointsScreenSize(double pdSize);
 
     bool isTextLineNotRenderable(double d);
@@ -194,7 +204,7 @@ public:
 
     void disableUCS();
 
-    void setWorldBoundingRect(LC_Rect &worldBoundingRect) {wcsBoundingRect = worldBoundingRect;};
+    void setWorldBoundingRect(LC_Rect &worldBoundingRect) {wcsBoundingRect = worldBoundingRect;}
     bool isFullyWithinBoundingRect(RS_Entity* e);
     bool isFullyWithinBoundingRect(const LC_Rect &rect);
 
@@ -259,6 +269,7 @@ protected:
     double viewPortFactorY = 1.0;
     int viewPortOffsetX = 0;
     int viewPortOffsetY = 0;
+    RS_Vector m_viewPortOffset;
     double viewPortHeight = 0.0;
 
     LC_Rect wcsBoundingRect;
@@ -268,13 +279,13 @@ protected:
 
 //    void drawPolygonF(const QPolygonF &a, Qt::FillRule rule);
     void debugOutPath(const QPainterPath &tmpPath) const;
-    double getDpmmCached() const {return cachedDpmm;};
+    double getDpmmCached() const {return cachedDpmm;}
 
     void drawArcEntity(RS_Arc* arc, QPainterPath &path);
 
     // painting in UI coordinates
-    void drawEllipseUI(double uiCenterX, double uiCenterY, double uiRadiusMajor, double uiRadiusMinor, double uiAngleDegrees);
-    void drawEllipseArcUI(double uiCenterX, double uiCenterY, double uiMajorRadius, double uiMinorRadius, double uiMajorAngleDegrees,
+    void drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees);
+    void drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                            double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
     void drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed);
     void drawArcSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, QPainterPath &path);
@@ -294,13 +305,13 @@ protected:
     bool printinMode = false;
     bool printPreview = false;
 
-    void drawArcInterpolatedByLines(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees,
+    void drawArcInterpolatedByLines(const RS_Vector& uiCenter, double uiRadiusX, double uiStartAngleDegrees,
                                     double angularLength, QPainterPath &path) const;
 
-    void drawArcQT(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY, double uiStartAngleDegrees,
+    void drawArcQT(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiStartAngleDegrees,
                    double angularLength, QPainterPath &path);
 
-    void drawArcSegmentBySplinePointsUI(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees,
+    void drawArcSegmentBySplinePointsUI(const RS_Vector& center, double uiRadiusX, double uiStartAngleDegrees,
                                         double angularLength, QPainterPath &path);
 };
 

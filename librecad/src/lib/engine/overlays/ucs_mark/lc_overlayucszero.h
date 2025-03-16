@@ -56,9 +56,9 @@ public:
     void draw(RS_Painter *painter) override;
     void updateOrigin(double uiOriginX, double uiOriginY) {uiOriginPointX = uiOriginX; uiOriginPointY = uiOriginY;}
 protected:
-    LC_OverlayUCSZeroOptions *options;
     double uiOriginPointX = 0.0;
     double uiOriginPointY = 0.0;
+    LC_OverlayUCSZeroOptions *options = nullptr;
 };
 
 #endif // LC_OVERLAYUCSZERO_H

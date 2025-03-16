@@ -39,14 +39,17 @@ void LC_OverlayRelZeroOptions::loadSettings() {
 }
 
 LC_OverlayRelativeZero::LC_OverlayRelativeZero(const RS_Vector &wcsPos, LC_OverlayRelZeroOptions *options)
-  :wcsPosition(wcsPos), options(options) {}
+    :wcsPosition(wcsPos)
+    , options(options)
+{}
 
   LC_OverlayRelativeZero::LC_OverlayRelativeZero(LC_OverlayRelZeroOptions *options)
-  :wcsPosition(RS_Vector(false)), options(options) {}
+  :wcsPosition(RS_Vector(false))
+    , options(options)
+{}
 
 void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
-    double vpx, vpy;
-    painter->toGui(wcsPosition, vpx, vpy);
+    RS_Vector vp = painter->toGui(wcsPosition);
 
     RS2::LineType relativeZeroPenType = RS2::SolidLine;
 
@@ -54,22 +57,20 @@ void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    int const zr = options->m_relativeZeroRadius * 2;// todo - why diameter is used there?? Is is correct?
-
-    double xmin = vpx - zr;
-    double xmax = vpx + zr;
-    double ymin = vpy - zr;
-    double ymax = vpy + zr;
+    const double zr = options->m_relativeZeroRadius * 2;// todo - why diameter is used there?? Is is correct?
+    const RS_Vector zrSize{zr, zr};
+    const RS_Vector xyMin = vp - zrSize;
+    const RS_Vector xyMax = vp + zrSize;
 
     LC_GraphicViewport *viewport = painter->getViewPort();
 
-    if (xmax < 0 || xmin > viewport->getWidth()) return;
-    if (ymax < 0 || ymin > viewport->getHeight()) return;
+    if (xyMax.x < 0 || xyMin.x > viewport->getWidth()) return;
+    if (xyMax.y < 0 || xyMin.x > viewport->getHeight()) return;
 
-    painter->drawLineUISimple(xmin, vpy, xmax, vpy);
-    painter->drawLineUISimple(vpx, ymin,vpx,ymax);
+    painter->drawLineUISimple(xyMin.x, vp.y, xyMax.x, vp.y);
+    painter->drawLineUISimple(vp.x, xyMin.y, vp.x, xyMax.y);
 
-    painter->drawCircleUI(vpx, vpy, options->m_relativeZeroRadius);
+    painter->drawCircleUI(vp, options->m_relativeZeroRadius);
 }
 
 void LC_OverlayRelativeZero::setPos(const RS_Vector &wcsPos) {

@@ -24,7 +24,6 @@
 #define LIBRECAD_LC_COORDINATES_MAPPER_H
 
 #include "rs_vector.h"
-class RS_Vector;
 class QPointF;
 
 class LC_CoordinatesMapper {
@@ -70,6 +69,7 @@ protected:
     double xAxisAngleDegrees = 0.0;
     double sinXAngle = 0.0;
     double cosXAngle = 0.0;
+    RS_Vector m_ucsRotation;
     double sinNegativeXAngle = 0.0;
     double cosNegativeXAngle = 0.0;
     void setXAxisAngle(double angle);
