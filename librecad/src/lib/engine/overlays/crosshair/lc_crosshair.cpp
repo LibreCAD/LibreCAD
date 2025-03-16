@@ -45,7 +45,7 @@ double LC_Crosshair::drawIndicator(RS_Painter* painter, double uiPosX, double ui
       switch (indicatorShape) {
           case Circle: {
               offset = 4.0;
-              painter->drawCircleUI(uiPosX, uiPosY, offset);
+              painter->drawCircleUIDirect(uiPosX, uiPosY, offset);
               break;
           }
           case Point:{

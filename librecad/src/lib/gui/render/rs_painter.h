@@ -127,6 +127,8 @@ public:
 
     // drawing in screen coordinates
     void drawCircleUI(const RS_Vector& uiCenter, double uiRadius);
+    // just draws circle without trying to use any interpolations, used by overlays etc...
+    void drawCircleUIDirect(double uiCenterX, double uiCenterY, double uiRadius);
     void drawCircleUI(double uiCenterX, double uiCenterY, double uiRadius);
     void drawLineUISimple(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawLineUISimple(const RS_Vector &p1, const RS_Vector &p2);
@@ -289,6 +291,7 @@ protected:
     // painting in UI coordinates
     void drawEllipseUI(double uiCenterX, double uiCenterY, double uiRadiusMajor, double uiRadiusMinor, double uiAngleDegrees);
     void drawEllipseArcUI(double uiCenterX, double uiCenterY, double uiMajorRadius, double uiMinorRadius, double uiMajorAngleDegrees,
+                          double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
     void drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees);
     void drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                            double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);

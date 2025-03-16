@@ -61,7 +61,7 @@ void LC_OverlayAnglesBaseMark::draw(RS_Painter *painter) {
     painter->setPen(penRadius);
 
     int radius = options->m_markerRadius;
-    painter->drawCircleUI(origin.x, origin.y, radius);
+    painter->drawCircleUIDirect(origin.x, origin.y, radius);
 
     RS_Pen penAngle(options->m_colorAnglePointer, RS2::Width00, RS2::SolidLine);
     penAngle.setScreenWidth(0);

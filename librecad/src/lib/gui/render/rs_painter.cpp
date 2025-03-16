@@ -592,6 +592,15 @@ void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, double uiRadius){
     }
 }
 
+void RS_Painter::drawCircleUIDirect(double uiCenterX, double uiCenterY, double uiRadius){
+    if (uiRadius < minCircleDrawingRadius){
+        QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
+    }
+    else {
+       QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+    }
+}
+
 void RS_Painter::drawEllipseWCS(const RS_Vector& wcsCenter, double wcsMajorRadius, double ratio, double wcsAngleDegrees) {
     double uiMajorRadius = toGuiDX(wcsMajorRadius);
     double uiMinorRadius = ratio * uiMajorRadius;
@@ -605,16 +614,6 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
     if (uiRadii.x < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
-    else if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
-        QTransform t1;
-        t1.translate(uiCenter.x, uiCenter.y);
-        t1.rotate(-uiAngleDegrees);
-        t1.translate(-uiCenter.x, -uiCenter.y);
-        save();
-        setTransform(t1, false);
-        QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
-        restore();
-    }
     else {
         QTransform t1;
         t1.translate(uiCenter.x, uiCenter.y);
@@ -622,8 +621,12 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
         t1.translate(-uiCenter.x, -uiCenter.y);
         save();
         setTransform(t1, false);
-        const RS_Vector uiSize = uiRadii + uiRadii;
-        QPainter::drawEllipse(QRectF(uiCenter.x - uiRadii.x, uiCenter.y - uiRadii.y, uiSize.x, uiSize.y));
+        if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
+            QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
+        } else {
+            const RS_Vector uiSize = uiRadii + uiRadii;
+            QPainter::drawEllipse(QRectF(uiCenter.x - uiRadii.x, uiCenter.y - uiRadii.y, uiSize.x, uiSize.y));
+        }
         restore();
     }
 }

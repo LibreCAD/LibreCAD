@@ -73,7 +73,7 @@ void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
     painter->drawLineUISimple(xmin, vpy, xmax, vpy);
     painter->drawLineUISimple(vpx, ymin,vpx,ymax);
 
-    painter->drawCircleUI(vpx, vpy, options->m_relativeZeroRadius);
+    painter->drawCircleUIDirect(vpx, vpy, options->m_relativeZeroRadius);
 }
 
 void LC_OverlayRelativeZero::setPos(const RS_Vector &wcsPos) {
