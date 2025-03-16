@@ -292,7 +292,7 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
         if (edge->getLength() > RS_TOLERANCE)
             edgeLength = std::min({edgeLength, std::max(edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint()))});
 
-    if (RS_Math::equal(edgeLength, RS_MAXDOUBLE))
+    if (edgeLength >= RS_MAXDOUBLE)
         assert(!"Contour size too large");
 
     // draw a small circle around the current end point

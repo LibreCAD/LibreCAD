@@ -23,6 +23,8 @@
 #ifndef LC_GRIDSYSTEM_H
 #define LC_GRIDSYSTEM_H
 
+#include <memory>
+
 #include "rs_vector.h"
 #include "rs_color.h"
 
@@ -37,7 +39,7 @@ public:
         bool drawLines = false;
 
         bool drawGrid = true;
-        RS2::LineType gridLineType;
+        RS2::LineType gridLineType{};
         int gridWidthPx = 1;
 
         RS_Color gridColorLine;
@@ -45,17 +47,19 @@ public:
         bool drawMetaGrid = true;
         RS_Color metaGridColor;
         int metaGridLineWidthPx = 1;
-        RS2::LineType metaGridLineType;
+        RS2::LineType metaGridLineType{};
         bool disableGridOnPanning = false;
         bool drawIsometricVerticalsAlways = true; // fixme - complete initialization
     };
 
     LC_GridSystem(LC_GridOptions* options);
-    virtual ~LC_GridSystem();
+    virtual ~LC_GridSystem() = default;
 
-    void setOptions(LC_GridOptions* options);
+    void setOptions(std::unique_ptr<LC_GridOptions> options);
     void invalidate();
-    RS_Vector const &getCellVector() {return cellVector;};
+    RS_Vector const &getCellVector() const {
+        return cellVector;
+    }
 
     virtual RS_Vector snapGrid(const RS_Vector &coord) const = 0;
     void createGrid(LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
@@ -71,10 +75,10 @@ public:
 
 protected:
     bool valid = false;
-    RS_Vector cellVector = RS_Vector(0,0);
-    LC_GridOptions* gridOptions = nullptr;
-    LC_Lattice* gridLattice = nullptr;
-    LC_Lattice* metaGridLattice = nullptr;
+    RS_Vector cellVector = {0., 0.};
+    std::unique_ptr<LC_GridOptions> gridOptions;
+    std::unique_ptr<LC_Lattice> gridLattice;
+    std::unique_ptr<LC_Lattice> metaGridLattice;
 
     /**
     * Grid metrics

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifyoffset.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"

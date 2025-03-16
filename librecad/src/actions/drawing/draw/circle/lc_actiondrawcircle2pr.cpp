@@ -19,7 +19,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
-#include <QMouseEvent>
 
 #include "lc_actiondrawcircle2pr.h"
 #include "rs_circle.h"

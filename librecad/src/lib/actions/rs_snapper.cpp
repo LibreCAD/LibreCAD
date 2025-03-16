@@ -29,7 +29,6 @@
 #include <QMouseEvent>
 
 #include "lc_linemath.h"
-#include "rs_actioninterface.h"
 #include "rs_modification.h"
 #include "rs_commandevent.h"
 #include "rs_actiondefault.h"
@@ -38,7 +37,6 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_actioninterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
@@ -55,8 +53,7 @@
 namespace {
 
     // whether a floating point is positive by tolerance
-    bool isPositive(double x)
-    {
+    bool isPositive(double x){
         return x > RS_TOLERANCE;
     }
 
@@ -183,11 +180,11 @@ RS_SnapMode RS_SnapMode::fromInt(unsigned int ret){
   */
 struct RS_Snapper::Indicator{
     bool drawLines = false;
-    int lines_type;
+    int lines_type = 0;
     RS_Pen lines_pen;
 
     bool drawShape = false;
-    int shape_type;
+    int shape_type = 0;
     RS_Pen shape_pen;
     
     int pointType = LC_DEFAULTS_PDMode;
@@ -213,8 +210,8 @@ enum SnapType{
 struct RS_Snapper::ImpData {
     RS_Vector snapCoord;
     RS_Vector snapSpot;
-    int snapType;
-    double angle;
+    int snapType = 0;
+    double angle = 0.;
     int restriction = RS2::RestrictNothing;
 };
 
@@ -248,7 +245,7 @@ void RS_Snapper::init(){
 void RS_Snapper::initSettings() {
     initFromSettings();
 
-    RS_Graphic* graphic = this->graphicView->getGraphic();
+    RS_Graphic* graphic = graphicView->getGraphic();
     if (graphic != nullptr) {
         initFromGraphic(graphic);
     }
@@ -301,11 +298,7 @@ void RS_Snapper::initFromSettings() {
 
 void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
     if (graphic != nullptr) {
-        linearFormat = graphic->getLinearFormat();
-        linearPrecision = graphic->getLinearPrecision();
-        angleFormat = graphic->getAngleFormat();
-        anglePrecision = graphic->getAnglePrecision();
-        unit = graphic->getUnit();
+        updateUnitFormat(graphic);
 
         snap_indicator->pointType = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
         snap_indicator->pointSize = graphic->getVariableInt("$PDSIZE", LC_DEFAULTS_PDSize);
@@ -314,7 +307,6 @@ void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
         m_anglesCounterClockWise = graphic->areAnglesCounterClockWise();
     }
 }
-
 
 void RS_Snapper::finish() {
     finished = true;
@@ -958,7 +950,7 @@ LC_OverlayInfoCursor* RS_Snapper::obtainInfoCursor(){
     // fixme - this is not absolutely safe if someone put another cursor to overlay container! Rework later!!
     auto entity = overlayContainer->first(); // note - this is not absolutely safe if someone put another cursor to overlay container!
     result = dynamic_cast<LC_OverlayInfoCursor *>(entity);
-    if (result == nullptr){
+    if (result == nullptr && infoCursorOverlayPrefs != nullptr){
         result = new LC_OverlayInfoCursor(pImpData->snapCoord, &infoCursorOverlayPrefs->options);
         overlayContainer->add(result);
     }
@@ -967,7 +959,7 @@ LC_OverlayInfoCursor* RS_Snapper::obtainInfoCursor(){
 
 void RS_Snapper::drawInfoCursor(){
     auto overlayContainer = viewport->getOverlaysDrawablesContainer(RS2::InfoCursor);
-    if (infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
         // fixme - this is not absolutely safe if someone put another cursor to overlay container! Rework later!!
         auto entity = overlayContainer->first();
         auto* infoCursor = dynamic_cast<LC_OverlayInfoCursor *>(entity);
@@ -986,7 +978,7 @@ void RS_Snapper::drawInfoCursor(){
             if (pImpData->snapType == ANGLE || pImpData->snapType == ANGLE_REL || pImpData->snapType == ANGLE_ON_ENTITY) {
                 double ucsAbsSnapAngle = pImpData->angle;
                 double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAbsSnapAngle, m_anglesBase, m_anglesCounterClockWise);
-                restrictionName = RS_Units::formatAngle(ucsBasisAngle, angleFormat, anglePrecision);
+                restrictionName = RS_Units::formatAngle(ucsBasisAngle, m_angleFormat, m_anglePrecision);
             } else {
                 restrictionName = getRestrictionName(pImpData->restriction);
             }
@@ -1173,11 +1165,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
         RS_Graphic* graphic = graphicView->getGraphic();
         if (graphic != nullptr) {
             if (updateFormat) {
-                linearFormat = graphic->getLinearFormat();
-                linearPrecision = graphic->getLinearPrecision();
-                angleFormat = graphic->getAngleFormat();
-                anglePrecision = graphic->getAnglePrecision();
-                unit = graphic->getUnit();
+                updateUnitFormat(graphic);
             }
 
             bool showLabels = prefs->showLabels;
@@ -1240,12 +1228,20 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
     infoCursorOverlayData.setZone3(coordPolar);
 }
 
+void RS_Snapper::updateUnitFormat(RS_Graphic* graphic){
+    m_linearFormat = graphic->getLinearFormat();
+    m_linearPrecision = graphic->getLinearPrecision();
+    m_angleFormat = graphic->getAngleFormat();
+    m_anglePrecision = graphic->getAnglePrecision();
+    m_unit = graphic->getUnit();
+}
+
 void RS_Snapper::invalidateSnapSpot() {
     pImpData->snapSpot.valid = false;
 }
 
 QString RS_Snapper::formatLinear(double value) const{
-    return RS_Units::formatLinear(value, unit, linearFormat, linearPrecision);
+    return RS_Units::formatLinear(value, m_unit, m_linearFormat, m_linearPrecision);
 }
 
 QString RS_Snapper::formatWCSAngle(double wcsAngle) const{
@@ -1257,11 +1253,11 @@ QString RS_Snapper::formatWCSAngle(double wcsAngle) const{
         ucsAbsAngle = wcsAngle;
     }
     double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAbsAngle, m_anglesBase, m_anglesCounterClockWise);
-    return RS_Units::formatAngle(ucsBasisAngle, angleFormat, anglePrecision);
+    return RS_Units::formatAngle(ucsBasisAngle, m_angleFormat, m_anglePrecision);
 }
 
 QString RS_Snapper::formatAngleRaw(double angle) const {
-    return RS_Units::formatAngle(angle, angleFormat, anglePrecision);
+    return RS_Units::formatAngle(angle, m_angleFormat, m_anglePrecision);
 }
 // fixme - ucs-  move to coordinate mapper?
 QString RS_Snapper::formatVector(const RS_Vector &value) const{

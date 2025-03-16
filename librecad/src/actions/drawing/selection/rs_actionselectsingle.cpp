@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselectsingle.h"
 
 #include "rs_graphicview.h"

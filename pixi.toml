@@ -4,7 +4,7 @@ channels = ["conda-forge"]
 description = "LibreCAD is a 2D CAD drawing tool."
 name = "LibreCAD"
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
-version = "0.1.0"
+version = "2.2.2"
 
 [tasks]
 configure = { cmd = [ "cmake", "-G", "Ninja", "-B", "build",
@@ -22,4 +22,7 @@ ninja = ">=1.12.1,<2"
 cmake = ">=3.31.4,<4"
 
 [target.linux-64.dependencies]
+libgl-devel = "*"
+
+[target.linux-aarch64.dependencies]
 libgl-devel = "*"

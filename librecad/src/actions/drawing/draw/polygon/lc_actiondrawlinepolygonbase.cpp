@@ -30,6 +30,7 @@
 #include "rs_point.h"
 #include "rs_creation.h"
 #include "rs_graphicview.h"
+#include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 #include "rs_polyline.h"
 #include "lc_actiondrawlinepolygonbase.h"

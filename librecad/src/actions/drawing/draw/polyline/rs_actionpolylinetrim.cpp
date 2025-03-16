@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actionpolylinetrim.h"
 #include "rs_atomicentity.h"
 #include "rs_debug.h"

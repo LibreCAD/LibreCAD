@@ -26,9 +26,6 @@
 
 #include<cmath>
 
-
-#include <QMouseEvent>
-
 #include "rs_actionmodifytrimamount.h"
 #include "rs_atomicentity.h"
 #include "rs_commandevent.h"

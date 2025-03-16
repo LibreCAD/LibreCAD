@@ -23,11 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
-
-#include <QMouseEvent>
-
 #include "rs_actionpolylinedel.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

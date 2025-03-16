@@ -41,7 +41,6 @@
 
 #include "qg_blockwidget.h"
 #include "qg_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "qg_graphicview.h"
 #include "qg_scrollbar.h"
 

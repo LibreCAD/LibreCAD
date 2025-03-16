@@ -67,20 +67,41 @@ public:
     explicit RS_Painter(QPaintDevice* pd);
     ~RS_Painter() = default;
 
+    enum ArcRenderHint{
+        FULL_IN_VIEW,
+        ARC_IN_VIEW,
+        SEGMENT,
+        ANY
+    };
+
     // coordinates translations
     void toGui(const RS_Vector& pos, double &x, double &y);
+    RS_Vector toGui(const RS_Vector& worldCoordinates) const;
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
 
-    bool isPrinting() {return printinMode;}; // fixme - temporary support, refactor further
-    bool isPrintPreview() {return printPreview;}; // fixme - temporary support, refactor further
+    bool isPrinting() const
+    {
+        return printinMode;
+    } // fixme - temporary support, refactor further
+    bool isPrintPreview() const
+    {
+        return printPreview;
+    } // fixme - temporary support, refactor further
 
-    LC_GraphicViewport* getViewPort() {return viewport;}
+    LC_GraphicViewport* getViewPort() const
+    {
+        return viewport;
+    }
     void setViewPort(LC_GraphicViewport* v);
     void setRenderer(LC_GraphicViewportRenderer *r) {renderer = r;}
     void updateDashOffset(RS_Entity* e);
-    void clearDashOffset() {currenPatternOffset = 0.0;};
+    void clearDashOffset() {currenPatternOffset = 0.0;}
     double currentDashOffset() const {return currenPatternOffset;}
+
+    void drawEntityArc(RS_Arc* arc);
+    void drawEntityPolyline(const RS_Polyline *polyline);
+    void drawEntityCircle(RS_Circle* circle);
 
     int determinePointScreenSize(double pdsize) const;
 
@@ -96,6 +117,7 @@ public:
     void drawPointEntityWCS(const RS_Vector &p);
     void drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize);
     void drawSolidWCS(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3, const RS_Vector &wcsP4);
+
     void drawArcWCS(const RS_Vector &wcsCenter, double wcsRadius, double wcsStartAngleDegrees, double angularLength);
     void drawSplineWCS(const RS_Spline &spline);
     void drawLineWCS(const RS_Vector &wcsP1, const RS_Vector &wcP2);
@@ -104,6 +126,7 @@ public:
     void drawImgWCS(QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector);
 
     // drawing in screen coordinates
+    void drawCircleUI(const RS_Vector& uiCenter, double uiRadius);
     void drawCircleUI(double uiCenterX, double uiCenterY, double uiRadius);
     void drawLineUISimple(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawLineUISimple(const RS_Vector &p1, const RS_Vector &p2);
@@ -114,7 +137,7 @@ public:
 
     // methods invoked from entity containers and printing
     void drawEntity(RS_Entity* entity) {renderer->renderEntity(this, entity);}
-    void drawAsChild(RS_Entity* entity){renderer->renderEntityAsChild(this, entity);};
+    void drawAsChild(RS_Entity* entity){renderer->renderEntityAsChild(this, entity);}
     void drawInfiniteWCS(RS_Vector start, RS_Vector end);
 
     /**
@@ -171,7 +194,7 @@ public:
     void setMinEllipseMinorRadius(double minEllipseMinorRadius);
     void setMinLineDrawingLen(double minLineDrawingLen);
     void setMinRenderableTextHeightInPx(int i);
-    void setDefaultWidthFactor(double factor){ defaultWidthFactor = factor;};
+    void setDefaultWidthFactor(double factor){ defaultWidthFactor = factor;}
     void updatePointsScreenSize(double pdSize);
 
     bool isTextLineNotRenderable(double d);
@@ -183,6 +206,32 @@ public:
     void setRenderCirclesSameAsArcs(bool val) {circleRenderSameAsArcs = val;}
 
     void disableUCS();
+
+    void setWorldBoundingRect(LC_Rect &worldBoundingRect) {wcsBoundingRect = worldBoundingRect;}
+    bool isFullyWithinBoundingRect(RS_Entity* e);
+    bool isFullyWithinBoundingRect(const LC_Rect &rect);
+
+    const LC_Rect &getWcsBoundingRect() const;
+    /**
+     * @brief getMaximumArcSplineError - the maximum rendering error due to QPainter arc rendering by cubic spline approximation,
+     *                                   for an arc of raidus 1, the maximum rendering error from approximating the and arc of 0
+     *                                   to 90 degrees by a cubic spline with control points:
+     *                                   (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+     * @return - the QPainter implementation has the maximum error at 3e-4 for r=1
+     */
+    static constexpr double getMaximumArcSplineError() {
+        // Issue #2035 : arc render precision
+        // QPainter::arcTo() approximates an arc or radius=1, with angle from 0 to 90 degrees by a cubic spline with
+        // 4 control points: (1, 0), (1, 4/3 (\sqrt 2 - 1)), (4/3 (\sqrt 2 - 1), 1), (0, 1)
+        // The maximum approximation error is 3e-4
+        return 3e-4;
+    }
+
+    static constexpr int getMaximumArcNonErrorRadius(){
+        // fixme - sand - move to the setting??
+        return 3000;
+    }
+
 protected:
     /**
      * Current drawing mode.
@@ -223,21 +272,28 @@ protected:
     double viewPortFactorY = 1.0;
     int viewPortOffsetX = 0;
     int viewPortOffsetY = 0;
+    RS_Vector m_viewPortOffset;
     double viewPortHeight = 0.0;
+
+    LC_Rect wcsBoundingRect;
 
     LC_GraphicViewportRenderer* renderer = nullptr;
     LC_GraphicViewport* viewport = nullptr;
 
 //    void drawPolygonF(const QPolygonF &a, Qt::FillRule rule);
     void debugOutPath(const QPainterPath &tmpPath) const;
-    double getDpmmCached() const {return cachedDpmm;};
+    double getDpmmCached() const {return cachedDpmm;}
 
+    void drawArcEntity(RS_Arc* arc, QPainterPath &path);
 
     // painting in UI coordinates
     void drawEllipseUI(double uiCenterX, double uiCenterY, double uiRadiusMajor, double uiRadiusMinor, double uiAngleDegrees);
     void drawEllipseArcUI(double uiCenterX, double uiCenterY, double uiMajorRadius, double uiMinorRadius, double uiMajorAngleDegrees,
+    void drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees);
+    void drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                            double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
     void drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed);
+    void drawArcSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, QPainterPath &path);
 
     void drawArcEntityUI( double uiCenterX,double uiCenterY,double uiRadiusX,double uiRadiusY,double uiStartAngleDegrees,double angularLength);
     void drawArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY,
@@ -254,10 +310,17 @@ protected:
                    const QString& text);
 
 // fixme - sand, ucs - temporary, remove
-   bool printinMode = false;
-   bool printPreview = false;
+    bool printinMode = false;
+    bool printPreview = false;
 
-    void drawInterpolatedArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
+    void drawArcInterpolatedByLines(const RS_Vector& uiCenter, double uiRadiusX, double uiStartAngleDegrees,
+                                    double angularLength, QPainterPath &path) const;
+
+    void drawArcQT(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiStartAngleDegrees,
+                   double angularLength, QPainterPath &path);
+
+    void drawArcSegmentBySplinePointsUI(const RS_Vector& center, double uiRadiusX, double uiStartAngleDegrees,
+                                        double angularLength, QPainterPath &path);
 };
 
 #endif

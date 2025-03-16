@@ -26,8 +26,6 @@
 
 #include<cmath>
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawarctangential.h"
 #include "rs_arc.h"
 #include "rs_coordinateevent.h"

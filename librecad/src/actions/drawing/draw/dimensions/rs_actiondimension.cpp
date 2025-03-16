@@ -26,7 +26,6 @@
 
 #include "rs_settings.h"
 #include "lc_actiondimlinearbase.h"
-#include <QMouseEvent>
 #include "rs_constructionline.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"

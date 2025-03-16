@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifytrim.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"

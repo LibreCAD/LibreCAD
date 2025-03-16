@@ -22,8 +22,6 @@
 
 #include <cmath>
 
-#include <QMouseEvent>
-
 #include "lc_actiondrawparabolaFD.h"
 
 #include "lc_parabola.h"

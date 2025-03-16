@@ -568,8 +568,13 @@ std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
  * Constructor.
  */
 LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
-								 const LC_SplinePointsData& d) : LC_CachedLengthEntity(parent)
-  ,data(d){
+                                 LC_SplinePointsData d) : LC_CachedLengthEntity(parent)
+    ,data(std::move(d))
+{
+    if (!data.useControlPoints) {
+        UpdateControlPoints();
+    }
+
 	calculateBorders();
 }
 
@@ -1672,6 +1677,7 @@ double DrawPatternQuad(std::vector<double> const& pdPattern, int iPattern, doubl
     return(dSegOffs);
 }
 
+void LC_SplinePoints::draw(RS_Painter* painter){
 
 
 void LC_SplinePoints::draw(RS_Painter* painter){
@@ -1694,8 +1700,7 @@ void LC_SplinePoints::updateLength() {
 
     double dRes = 0.0;
 
-    if(data.closed)
-    {
+    if(data.closed){
         if(n < 3) {
             cachedLength = 0.0;
             return;
@@ -1707,8 +1712,7 @@ void LC_SplinePoints::updateLength() {
 
         dRes = GetQuadLength(vStart, vControl, vEnd, 0.0, 1.0);
 
-        for(size_t i = 1; i < n - 1; i++)
-        {
+        for(size_t i = 1; i < n - 1; i++){
             vStart = vEnd;
             vControl = data.controlPoints.at(i);
             vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;

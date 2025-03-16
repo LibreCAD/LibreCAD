@@ -24,8 +24,7 @@
 **
 **********************************************************************/
 #include <algorithm>
-
-#include<QMouseEvent>
+#include <QKeyEvent>
 
 #include "qc_applicationwindow.h"
 #include "rs_actiondefault.h"

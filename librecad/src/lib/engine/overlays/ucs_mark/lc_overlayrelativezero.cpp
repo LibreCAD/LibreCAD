@@ -39,10 +39,14 @@ void LC_OverlayRelZeroOptions::loadSettings() {
 }
 
 LC_OverlayRelativeZero::LC_OverlayRelativeZero(const RS_Vector &wcsPos, LC_OverlayRelZeroOptions *options)
-  :wcsPosition(wcsPos), options(options) {}
+    :wcsPosition(wcsPos)
+    , options(options)
+{}
 
   LC_OverlayRelativeZero::LC_OverlayRelativeZero(LC_OverlayRelZeroOptions *options)
-  :wcsPosition(RS_Vector(false)), options(options) {}
+    :wcsPosition(RS_Vector(false))
+    , options(options)
+{}
 
 void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
     double vpx, vpy;

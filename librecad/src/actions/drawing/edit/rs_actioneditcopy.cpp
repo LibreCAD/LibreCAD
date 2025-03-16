@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actioneditcopy.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"

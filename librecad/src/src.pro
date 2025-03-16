@@ -136,7 +136,7 @@ INCLUDEPATH += \
     lib/generators \
     lib/gui \
     lib/gui/grid \
-    lib/gui/render \    
+    lib/gui/render \
     lib/gui/render/headless \
     lib/gui/render/widget \
     lib/information \
@@ -443,7 +443,7 @@ HEADERS += \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
-    lib/gui/rs_dialogfactoryinterface.h \    
+    lib/gui/rs_dialogfactoryinterface.h \
     lib/gui/rs_eventhandler.h \
     lib/gui/rs_graphicview.h \
     lib/gui/grid/rs_grid.h \
@@ -451,7 +451,7 @@ HEADERS += \
     lib/gui/rs_mainwindowinterface.h \
     lib/gui/render/rs_painter.h \
     lib/gui/lc_coordinates_mapper.h \
-    ui/view/lc_printpreviewview.h \    
+    ui/view/lc_printpreviewview.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
@@ -649,7 +649,7 @@ SOURCES += \
     lib/gui/rs_linetypepattern.cpp \
     lib/gui/render/rs_painter.cpp \
     lib/gui/lc_coordinates_mapper.cpp \
-    ui/view/lc_printpreviewview.cpp \    
+    ui/view/lc_printpreviewview.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \

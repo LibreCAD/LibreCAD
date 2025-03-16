@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselectintersected.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"

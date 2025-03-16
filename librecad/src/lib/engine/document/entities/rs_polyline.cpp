@@ -695,11 +695,11 @@ void RS_Polyline::draw(RS_Painter* painter) {
     if (count() == 0){
         return;
     }
-    painter->drawPolylineWCS(this);
+    painter->drawEntityPolyline(this);
 }
 
 void RS_Polyline::drawAsChild(RS_Painter *painter) {
-    painter->drawPolylineWCS(this);
+    painter->drawEntityPolyline(this);
 }
 
 /**

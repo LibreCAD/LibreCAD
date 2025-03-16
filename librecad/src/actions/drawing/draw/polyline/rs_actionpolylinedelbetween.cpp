@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"

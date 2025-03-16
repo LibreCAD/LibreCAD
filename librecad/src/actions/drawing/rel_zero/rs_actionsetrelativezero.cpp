@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
 #include "rs_actionsetrelativezero.h"
 #include "rs_document.h"
 #include "rs_coordinateevent.h"

@@ -25,8 +25,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondimangular.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"

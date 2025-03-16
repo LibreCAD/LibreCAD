@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
 #include "rs_actionmodifyentity.h"

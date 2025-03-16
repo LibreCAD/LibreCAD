@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawlinebisector.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"

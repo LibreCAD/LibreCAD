@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondrawpoint.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"

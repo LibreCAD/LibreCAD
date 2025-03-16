@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actiondrawcircle.h"
 #include "rs_circle.h"
 #include "rs_commandevent.h"

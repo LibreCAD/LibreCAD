@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "qg_beveloptions.h"
 #include "rs_actionmodifybevel.h"
 #include "rs_commandevent.h"

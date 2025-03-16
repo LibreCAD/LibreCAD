@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
-
 #include "rs_actionmodifycut.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

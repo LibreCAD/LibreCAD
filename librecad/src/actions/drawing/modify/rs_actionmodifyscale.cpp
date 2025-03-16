@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionmodifyscale.h"
-#include <QMouseEvent>
-
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

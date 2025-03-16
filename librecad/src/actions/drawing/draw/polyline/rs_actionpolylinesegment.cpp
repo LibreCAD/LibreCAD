@@ -26,8 +26,6 @@
 
 
 #include <QList>
-#include <QMouseEvent>
-
 #include "rs_actionpolylinesegment.h"
 #include "rs_arc.h"
 #include "rs_debug.h"

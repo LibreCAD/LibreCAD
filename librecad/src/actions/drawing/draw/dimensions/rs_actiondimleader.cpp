@@ -24,10 +24,7 @@
 **
 **********************************************************************/
 #include<vector>
-
-
-#include <QMouseEvent>
-
+#include <QKeyEvent>
 #include "rs_actiondimleader.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -38,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_preview.h"
 #include "rs_actioninterface.h"
+
 
 struct RS_ActionDimLeader::Points {
 std::vector<RS_Vector> points;
