@@ -431,9 +431,9 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(
 #endif
     }
 #else
-    RS_Vector fromCenter = RS_Vector{startAngleRad} * uiRadiusX;
-    // The QPainter y-axis is pointing downward
+    // The QPainter y-axis is pointing downwards
     // TODO: get the rotation direction automatically, instead of hard-coded
+    RS_Vector fromCenter = RS_Vector{-startAngleRad} * uiRadiusX;
     const RS_Vector rotationStep{-deltaAngleRad};
 
     const RS_Vector center{uiCenterX, uiCenterY};
