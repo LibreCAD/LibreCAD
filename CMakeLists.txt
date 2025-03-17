@@ -1396,9 +1396,8 @@ set(SOURCES
 		librecad/src/lib/engine/settings/lc_settingsexporter.h
 		librecad/src/lib/engine/settings/lc_settingsexporter.cpp
 		librecad/src/lib/engine/settings/lc_settingsexporter.cpp
-		librecad/src/ui/main/LC_WorkspacesManager.h
-		librecad/src/ui/main/LC_WorkspacesManager.h
-		librecad/src/ui/main/LC_WorkspacesManager.cpp
+		librecad/src/ui/main/lc_workspacesmanager.h
+		librecad/src/ui/main/lc_workspacesmanager.cpp
 		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.h
 		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp
 		librecad/src/ui/dialogs/lc_inputtextdialog.h
