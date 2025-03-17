@@ -1431,7 +1431,7 @@ void RS_Painter::setViewPort(LC_GraphicViewport *v) {
 //  2) methods unwrapping/inlining
 // ----------------------------------------------------------------------------------------------------------------
 
-void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) {
+void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) const {
 //    viewport->toUI(pos, x,y);
 
     if (m_hasUcs){
@@ -1464,15 +1464,31 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
     }
 }
 
-RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
-{
+/*RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
     RS_Vector ucsPosition = worldCoordinates;
     if (m_hasUcs){
         ucsPosition.move(-ucsOrigin).rotate(m_ucsRotation);
     }
     ucsPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
     ucsPosition.y = viewPortHeight - ucsPosition.y;
-    return ucsPosition;
+    
+    double x, y;
+    toGui(worldCoordinates, x, y);
+    
+    RS_Vector result = RS_Vector(x, y);
+
+    viewport->toUI(worldCoordinates, x, y);
+    RS_Vector result1 = RS_Vector(x,y);
+    LC_ERR << "New Position " << ucsPosition << " Original Result"
+           << result << " Differerence " << (result - ucsPosition) << " Result VP"
+                                                                   << result1 << "Diff 2" << (result-result1);
+    return result1;
+}*/
+
+RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
+    double x, y;
+    viewport->toUI(worldCoordinates, x, y);
+    return RS_Vector(x,y);
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {

@@ -75,7 +75,7 @@ public:
     };
 
     // coordinates translations
-    void toGui(const RS_Vector& pos, double &x, double &y);
+    void toGui(const RS_Vector& pos, double &x, double &y) const;
     RS_Vector toGui(const RS_Vector& worldCoordinates) const;
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
