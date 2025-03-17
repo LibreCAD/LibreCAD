@@ -239,6 +239,7 @@ INCLUDEPATH += \
     ui/dock_widgets/pen_wizard \
     ui/dock_widgets/views_list \
     ui/dock_widgets/ucs_list \
+    ui/dock_widgets/workspaces \
     ui/main \
     ui/view \
     # ui/not_used \
@@ -254,12 +255,6 @@ RESOURCES += ../res/icons/icons.qrc
 RESOURCES += ../res/controls/controls.qrc
 RESOURCES += ../res/images/images.qrc
 RESOURCES += ../../licenses/licenses.qrc
-
-# RESOURCES += ../res/ui/ui.qrc
-# RESOURCES += ../res/main/main.qrc
-# RESOURCES += ../res/extui/extui.qrc
-# RESOURCES += ../res/actions/actions.qrc
-
 
 
 # ################################################################################
