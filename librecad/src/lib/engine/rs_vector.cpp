@@ -297,6 +297,19 @@ RS_Vector& RS_Vector::rotate(const RS_Vector& angleVector) {
 }
 
 /**
+ * @brief RS_Vector::rotated - returns a rotated copy of the current vector
+ * @param angleVector - the direction vector of the rotation
+ * @return - the rotated vector
+ */
+RS_Vector RS_Vector::rotated(const RS_Vector& angleVector) const {
+    return RS_Vector{*this}.rotate(angleVector);
+}
+
+RS_Vector RS_Vector::rotated(double angle) const {
+    return rotated(RS_Vector{angle});
+}
+
+/**
  * Rotates this vector around the given center by the given angle.
  */
 RS_Vector& RS_Vector::rotate(const RS_Vector& center, double ang) {

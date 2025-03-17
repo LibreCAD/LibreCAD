@@ -251,7 +251,6 @@ void LC_GraphicViewRenderer::drawRelativeZero(RS_Painter *painter) {
 }
 
 void LC_GraphicViewRenderer::drawOverlay(RS_Painter *painter) {
-    double patternOffset(0.);
     // todo - using inOverlayDrawing flag is ugly, yet needed for proper drawing of containers (like dimensions or texts) that are in overlays
     // while draw for container is performed, the pen is resolved as sub-entities of containers as they are in normal drawing...
 

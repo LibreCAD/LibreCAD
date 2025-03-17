@@ -36,7 +36,6 @@ class QG_DlgEllipse : public LC_EntityPropertiesDlg, public Ui::QG_DlgEllipse{
     Q_OBJECT
 public:
     QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse);
-    ~QG_DlgEllipse();
 public slots:
     void updateEntity() override;
 protected slots:

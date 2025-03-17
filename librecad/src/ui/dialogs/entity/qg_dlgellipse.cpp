@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "qg_dlgellipse.h"
 
+#include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
@@ -41,13 +42,6 @@ QG_DlgEllipse::QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_
     :LC_EntityPropertiesDlg(parent, "EllipseProperties", pViewport){
     setupUi(this);
     setEntity(ellipse);
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgEllipse::~QG_DlgEllipse(){
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -73,8 +67,8 @@ void QG_DlgEllipse::setEntity(RS_Ellipse* e) {
 
     toUI(entity->getCenter(), leCenterX, leCenterY);
 
-    double majorAxisLen = entity->getMajorP().magnitude();
-    double minorAxisLen = majorAxisLen * entity->getRatio();
+    double majorAxisLen = entity->getMajorRadius();
+    double minorAxisLen = entity->getMinorRadius();
 
     toUIValue(majorAxisLen, leMajor);
     toUIValue(minorAxisLen, leMinor);
@@ -99,24 +93,22 @@ void QG_DlgEllipse::setEntity(RS_Ellipse* e) {
 }
 
 void QG_DlgEllipse::updateEntity() {
-    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
+    if (entity == nullptr)
+        return;
 
-    double majorAxisLen = entity->getMajorP().magnitude();
-    double minorAxisLen = majorAxisLen * entity->getRatio();
-
-    double major = toWCSValue(leMajor, majorAxisLen);
-    double minor = toWCSValue(leMinor, minorAxisLen);
-
-    double wcsMajorAngle = entity->getMajorP().angle();
-    double rotation = toWCSAngle(leRotation, wcsMajorAngle);
-
-    RS_Vector v = RS_Vector::polar(major, rotation);
-    entity->setMajorP(v);
-    double ratio = 1.0;
-    if (minor > 1.0e-6) { // fixme -  use RS_Tolerance?? introduce other constant?
-        ratio = major / minor;
+    double major = toWCSValue(leMajor, entity->getMajorRadius());
+    if (major < RS_TOLERANCE) {
+        LC_ERR << __func__<<"(): invalid ellipse major radius: "<< major<<", ellipse not modified";
+        return;
     }
-    entity->setRatio(ratio);
+    double minor = toWCSValue(leMinor, entity->getMinorRadius());
+
+    double rotation = toWCSAngle(leRotation, entity->getMajorP().angle());
+
+    entity->setMajorP(RS_Vector::polar(major, rotation));
+    entity->setRatio(minor/major);
+
+    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
 
     entity->setAngle1(toRawAngleValue(leAngle1, entity->getAngle1()));
     entity->setAngle2(toRawAngleValue(leAngle2, entity->getAngle2()));

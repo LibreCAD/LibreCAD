@@ -77,6 +77,25 @@ namespace {
                 return Qt::CustomDashLine;
         }
     }
+
+    // RAII style QPainter
+    class PainterGuard {
+        QPainter* m_painter = nullptr;
+    public:
+    PainterGuard(QPainter& painter):
+            m_painter{&painter}
+        {
+        painter.save();
+        }
+    ~PainterGuard()
+        {
+        try{
+                m_painter->restore();
+            } catch(...) {
+            // should not happen
+        }
+        }
+    };
 }
 /**
  * Constructor.
@@ -216,10 +235,9 @@ void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, co
 
 
 void RS_Painter::drawLineWCS(const RS_Vector& wcsP1, const RS_Vector& wcsP2){
-    double uiX1, uiY1, uiX2, uiY2;
-    toGui(wcsP1, uiX1, uiY1);
-    toGui(wcsP2, uiX2, uiY2);
-    drawLineUI(uiX1, uiY1, uiX2, uiY2);
+    const RS_Vector uiP1 = toGui(wcsP1);
+    const RS_Vector uiP2 = toGui(wcsP2);
+    drawLineUI(uiP1.x, uiP1.y, uiP2.x, uiP2.y);
 }
 
 /**
@@ -611,21 +629,29 @@ void RS_Painter::drawEllipseWCS(const RS_Vector& wcsCenter, double wcsMajorRadiu
 }
 
 void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees) {
+
     if (uiRadii.x < minEllipseMajorRadius){
+        // as we have everything there, no need to transform, and save/restore the painter context
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
     else {
-        QTransform t1;
-        t1.translate(uiCenter.x, uiCenter.y);
-        t1.rotate(-uiAngleDegrees);
-        t1.translate(-uiCenter.x, -uiCenter.y);
-        save();
-        setTransform(t1, false);
+        // RAII style restoring painter status
+        PainterGuard painterGuard{*this};
+        // ellipse transform
+        QTransform ellipseTransform;
+        ellipseTransform.translate(uiCenter.x, uiCenter.y);
+        ellipseTransform.rotate(-uiAngleDegrees);
+        setTransform(ellipseTransform, true);
+
+        QPointF radii{uiRadii.x, uiRadii.y};
+
         if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
-            QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
+//            QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
+            QPainter::drawLine( - radii, radii);
         } else {
-            const RS_Vector uiSize = uiRadii + uiRadii;
-            QPainter::drawEllipse(QRectF(uiCenter.x - uiRadii.x, uiCenter.y - uiRadii.y, uiSize.x, uiSize.y));
+//            const RS_Vector uiSize = uiRadii + uiRadii;
+//            QPainter::drawEllipse(QRectF(uiCenter.x - uiRadii.x, uiCenter.y - uiRadii.y, uiSize.x, uiSize.y));
+            QPainter::drawEllipse(QRectF{- radii, radii});
         }
         restore();
     }
@@ -971,12 +997,11 @@ void RS_Painter::drawImgWCS(QImage& img, const RS_Vector& wcsInsertionPoint,
     double magnitudeU = uVector.magnitude(); // fixme - sand - render - cache?
     double magnitudeV = vVector.magnitude(); // fixme - sand - render - cache?
     RS_Vector scale{toGuiDX(magnitudeU),toGuiDY(magnitudeV)};
-    double uiInsertX, uiInsertY;
-    toGui(wcsInsertionPoint, uiInsertX, uiInsertY);
-    drawImgUI(img,uiInsertX, uiInsertY,ucsUVector, ucsVVector, scale);
+    const RS_Vector uiInsert = toGui(wcsInsertionPoint);
+    drawImgUI(img, uiInsert, ucsUVector, ucsVVector, scale);
 }
 
-void RS_Painter::drawImgUI(QImage& img, double uiInsertX, double uiInsertY,
+void RS_Painter::drawImgUI(QImage& img, const RS_Vector& uiInsert,
                            const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
     save();
 
@@ -996,10 +1021,10 @@ void RS_Painter::drawImgUI(QImage& img, double uiInsertX, double uiInsertY,
     // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
     // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
     std::unique_ptr<QTransform> wm;
-    if(RS_Vector::crossP(uVector, vVector).z < 0) { // mirrored
-        wm = std::make_unique<QTransform>(un.x, -vn.x, -un.y, vn.y, uiInsertX, uiInsertY);
+    if(std::signbit(RS_Vector::crossP(uVector, vVector).z)) { // mirrored
+        wm = std::make_unique<QTransform>(un.x, -vn.x, -un.y, vn.y, uiInsert.x, uiInsert.y);
     } else {
-        wm = std::make_unique<QTransform>(un.x, vn.x, un.y, vn.y, uiInsertX, uiInsertY);
+        wm = std::make_unique<QTransform>(un.x, vn.x, un.y, vn.y, uiInsert.x, uiInsert.y);
     }
 
     wm->scale(factor.x, factor.y);
@@ -1411,9 +1436,7 @@ bool RS_Painter::isTextLineNotRenderable(double wcsLineHeight) {
 void RS_Painter::setViewPort(LC_GraphicViewport *v) {
     viewport = v;
     apply(viewport);
-    RS_Vector factor = v->getFactor();
-    viewPortFactorX = factor.x;
-    viewPortFactorY = factor.y;
+    m_viewPortFactor = v->getFactor();
     viewPortOffsetX = v->getOffsetX();
     viewPortOffsetY = v->getOffsetY();
     m_viewPortOffset.set(viewPortOffsetX, viewPortOffsetY);
@@ -1464,51 +1487,42 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
     }
 }
 
-/*RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
-    RS_Vector ucsPosition = worldCoordinates;
+RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
+{
+    RS_Vector uiPosition = worldCoordinates;
     if (m_hasUcs){
         uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
     }
-    uiPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
+    uiPosition.scale(m_viewPortFactor).move(m_viewPortOffset);
     uiPosition.y = viewPortHeight - uiPosition.y;
-    double uiX=0., uiY=0.;
-    const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
-    using namespace RS_Math;
-    assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
+
+    // TODO: remove this
+    {
+        double uiX=0., uiY=0.;
+        const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
+        using namespace RS_Math;
+        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
+    }
+
+    /*
+     //    double x, y;
+     //    viewport->toUI(worldCoordinates, x, y);
+     //    return RS_Vector(x,y);
+     double x, y;
+     toGui(worldCoordinates, x, y);
+     return RS_Vector(x, y);
+     */
     return uiPosition;
-    ucsPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
-    ucsPosition.y = viewPortHeight - ucsPosition.y;
-
-    double x, y;
-    toGui(worldCoordinates, x, y);
-
-    RS_Vector result = RS_Vector(x, y);
-
-    viewport->toUI(worldCoordinates, x, y);
-    RS_Vector result1 = RS_Vector(x,y);
-    LC_ERR << "New Position " << ucsPosition << " Original Result"
-           << result << " Differerence " << (result - ucsPosition) << " Result VP"
-                                                                   << result1 << "Diff 2" << (result-result1);
-    return result1;
-}*/
-
-RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
-//    double x, y;
-//    viewport->toUI(worldCoordinates, x, y);
-//    return RS_Vector(x,y);
-    double x, y;
-    toGui(worldCoordinates, x, y);
-    return RS_Vector(x, y);
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {
 //    return viewport->toGuiDX(d);
-   return ucsDX * viewPortFactorX;
+   return ucsDX * m_viewPortFactor.x;
 }
 
 double RS_Painter::toGuiDY(double ucsDY) const {
 //    return viewport->toGuiDY(d);
-    return ucsDY * viewPortFactorY;
+    return ucsDY * m_viewPortFactor.y;
 }
 
 void RS_Painter::disableUCS(){

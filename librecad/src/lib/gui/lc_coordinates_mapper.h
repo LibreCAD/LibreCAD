@@ -40,7 +40,7 @@ public:
     void toUCS(const RS_Vector& wcsPos, double& ucsX, double &ucsY) const;
     RS_Vector toWorld(double ucsX, double ucsY) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
-    bool hasUCS() const {return m_hasUcs;};
+    bool hasUCS() const {return m_hasUcs;}
     void ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vector&wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const;
     void worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector &ucsMax, RS_Vector& worlMin, RS_Vector& worldMax) const;
     RS_Vector restrictHorizontal(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;
@@ -67,19 +67,22 @@ protected:
     RS_Vector ucsOrigin = RS_Vector(0, 0, 0);
     double xAxisAngle = 0.0;
     double xAxisAngleDegrees = 0.0;
-    double sinXAngle = 0.0;
-    double cosXAngle = 0.0;
     RS_Vector m_ucsRotation;
-    double sinNegativeXAngle = 0.0;
-    double cosNegativeXAngle = 0.0;
+    double& sinXAngle = m_ucsRotation.y;
+    double& cosXAngle = m_ucsRotation.x;
+    RS_Vector m_AxisNegRotation;
+    double& sinNegativeXAngle = m_AxisNegRotation.y;
+    double& cosNegativeXAngle = m_AxisNegRotation.x;
     void setXAxisAngle(double angle);
 
     double toUCSAngleDegree(double angle) const;
     void doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
-    void doWCS2UCS(const RS_Vector &worldCoordinate, RS_Vector& ucsCoordinate) const;
+    RS_Vector doWCS2UCS(const RS_Vector &worldCoordinate) const;
+    RS_Vector doWCSDelta2UCSDelta(const RS_Vector &worldDelta) const;
     void doWCSDelta2UCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const;
+    RS_Vector doUCSDelta2WCSDelta(const RS_Vector &ucsDelta) const;
     void doUCSDelta2WCSDelta(const RS_Vector &ucsDelta, double &wcsDX, double &wcsDY) const;
-    void doUCS2WCS(const RS_Vector &ucsCoordinate, RS_Vector& worldCoordinate) const;
+    RS_Vector doUCS2WCS(const RS_Vector &ucsCoordinate) const;
     void doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const;
     void update(const RS_Vector& origin, double angle);
 };
