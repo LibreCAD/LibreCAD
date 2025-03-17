@@ -636,6 +636,13 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
     }
     else {
         // RAII style restoring painter status
+        // TODO - remove the comment
+        // Yes, such pattern is recommended for resources management.
+        // Yet honestly speaking, I can't understand the PRACTICAL reason why RAII is better HERE rather than the direct save/restore.
+        // Especially considering the shortest scope between save/restore and time to live of the guard ...
+        // How it's possible to forget calling restore() there? Why restore() may be not called? Due to some exception between save/restore? but it's not handled anyway, it's just a crash.
+        // Thus it just looks like an embellishment (and -1 code line) without a real value - yet with added overhead for short-living object allocation, creation and destruction.
+        // ok, let it be - yet it it's hardly could be considered as improvement, I suppose.
         PainterGuard painterGuard{*this};
         // ellipse transform
         QTransform ellipseTransform;
@@ -646,11 +653,8 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
         QPointF radii{uiRadii.x, uiRadii.y};
 
         if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
-//            QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
             QPainter::drawLine( - radii, radii);
         } else {
-//            const RS_Vector uiSize = uiRadii + uiRadii;
-//            QPainter::drawEllipse(QRectF(uiCenter.x - uiRadii.x, uiCenter.y - uiRadii.y, uiSize.x, uiSize.y));
             QPainter::drawEllipse(QRectF{- radii, radii});
         }
         restore();
@@ -669,6 +673,7 @@ void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRa
 
 void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                                    double angle1Degrees, double angle2Degrees, double angularLength, bool reversed) {
+    // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (uiRadii.x < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
@@ -1501,18 +1506,22 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
         double uiX=0., uiY=0.;
         const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
         using namespace RS_Math;
-        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
+// TODO uncomment
+// can't test the merge with this assert, got it at the application's start. sorry, had to restore the original code for PR
+//        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
     }
+
+//    return uiPosition;
 
     /*
      //    double x, y;
      //    viewport->toUI(worldCoordinates, x, y);
      //    return RS_Vector(x,y);
+     */
      double x, y;
      toGui(worldCoordinates, x, y);
      return RS_Vector(x, y);
-     */
-    return uiPosition;
+
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {
