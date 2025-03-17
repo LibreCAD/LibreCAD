@@ -1360,34 +1360,7 @@ void QG_DlgOptionsGeneral::exportSettings(){
 void QG_DlgOptionsGeneral::importSettings(){
     if (LC_SettingsExporter::importSettings(this)) {
         init();
-// fixme - icons - restoring layut via workspace manager!!!
-            QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
-            auto settings = RS_SETTINGS->getSettings();
-            settings->beginGroup("Geometry");
-            auto geometryB64 = settings->value("/WindowGeometry").toString().toUtf8();
-            auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
-            if (!geometry.isEmpty()) {
-                appWin.restoreGeometry(geometry);
-            } else {
-                // fallback
-                int windowWidth = settings->value("WindowWidth", 1024).toInt();
-                int windowHeight = settings->value("WindowHeight", 1024).toInt();
-                int windowX = settings->value("WindowX", 32).toInt();
-                int windowY = settings->value("WindowY", 32).toInt();
-                appWin.resize(windowWidth, windowHeight);
-                appWin.move(windowX, windowY);
-            }
-
-        appWin.restoreState(settings->value("StateOfWidgets", "").toByteArray());
-
-        /*appWin.dock_areas.left->setChecked(LC_GET_BOOL("LeftDockArea", false));
-        appWindock_areas.right->setChecked(LC_GET_BOOL("RightDockArea", true));
-        dock_areas.top->setChecked(LC_GET_BOOL("TopDockArea", false));
-        dock_areas.bottom->setChecked(LC_GET_BOOL("BottomDockArea", false));
-        dock_areas.floating->setChecked(LC_GET_BOOL("FloatingDockwidgets", false));*/
-
-            settings->endGroup();
-
-
+        QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
+        appWin.initSettings();
     }
 }

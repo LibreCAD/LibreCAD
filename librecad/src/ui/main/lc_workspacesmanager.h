@@ -69,10 +69,10 @@ protected:
         bool showStatusBar = false;
     };
 
-    int workspaceID = 0;
-    int lastActivatedId = -1;
+    int m_workspaceID = 0;
+    int m_lastActivatedId = -1;
 
-    QList<LC_Workspace*> workspaces;
+    QList<LC_Workspace*> m_workspacesList;
     QString getWorkspacesFileName();
     void restoreGeometryAndState(LC_Workspace &workspace);
     void restore(LC_Workspace& perspective);

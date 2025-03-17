@@ -37,12 +37,15 @@ bool LC_SettingsExporter::obtainFileName(QWidget *parent, QString &fileName, boo
     QString defDir = LC_GET_STR("ExportSettingsDir", RS_SYSTEM->getHomeDir());
     LC_GROUP_END();
 
+    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
+
     QFileDialog fileDlg(parent, forRead ? tr("Import settings")  : tr("Export Settings"));
 
     fileDlg.setNameFilters(QStringList("*.lcs"));
     fileDlg.setFileMode(forRead ? QFileDialog::ExistingFile : QFileDialog::AnyFile);
     fileDlg.selectNameFilter("*.lcs");
     fileDlg.setAcceptMode(forRead ? QFileDialog::AcceptOpen : QFileDialog::AcceptSave);
+    fileDlg.setOption(QFileDialog::DontUseNativeDialog, useQtFileDialog);
     fileDlg.setDirectory(defDir);
     fileDlg.selectFile("LCSettings");
 
@@ -143,7 +146,7 @@ bool LC_SettingsExporter::importSettings(QWidget *parent) {
                                         auto propertyValue = property.value().toString();
 
 //                                        LC_ERR << "Property: " << propertyName << "  Value: " << propertyValue;
-                                        LC_GET_STR(propertyName, propertyValue);
+                                        LC_SET(propertyName, propertyValue);
 
                                         property++;
                                     }

@@ -35,29 +35,29 @@
 LC_WorkspacesManager::LC_WorkspacesManager() {}
 
 LC_WorkspacesManager::~LC_WorkspacesManager() {
-    qDeleteAll(workspaces);
+    qDeleteAll(m_workspacesList);
 }
 
 void LC_WorkspacesManager::getWorkspaces(QList<QPair<int, QString>> &workspacesList){
-    for(auto p: workspaces){
+    for(auto p: m_workspacesList){
         workspacesList << QPair<int, QString>(p->id, p->name);
     }
 }
 
 void LC_WorkspacesManager::getWorkspaceNames(QStringList &workspacesList){
-    for(auto p: workspaces){
+    for(auto p: m_workspacesList){
         workspacesList << p->name;
     }
 }
 
 void LC_WorkspacesManager::saveWorkspace(QString name,QWidget*  parent){
     name = name.trimmed();
-    QList<LC_Workspace *>::iterator it = workspaces.begin();
-    while (it != workspaces.end()) {
+    QList<LC_Workspace *>::iterator it = m_workspacesList.begin();
+    while (it != m_workspacesList.end()) {
         if ((*it)->name == name) {
             // just update existing perspective
             fillByState(**it);
-            lastActivatedId = (*it)->id;
+            m_lastActivatedId = (*it)->id;
             saveWorkspaces(parent);
             return;
         }
@@ -66,20 +66,20 @@ void LC_WorkspacesManager::saveWorkspace(QString name,QWidget*  parent){
     // nothing found by name, create new one
     auto* workspace = new LC_Workspace;
     workspace->name = name;
-    workspace->id = workspaceID++;
-    lastActivatedId = workspace->id;
+    workspace->id = m_workspaceID++;
+    m_lastActivatedId = workspace->id;
     fillByState(*workspace);
-    workspaces << workspace;
+    m_workspacesList << workspace;
     saveWorkspaces(parent);
 }
 
 void LC_WorkspacesManager::deleteWorkspace(int id){
     LC_Workspace perspective;
-    QList<LC_Workspace *>::iterator it = workspaces.begin();
-    while (it != workspaces.end()) {
+    QList<LC_Workspace *>::iterator it = m_workspacesList.begin();
+    while (it != m_workspacesList.end()) {
         if ((*it)->id == id) {
             LC_Workspace* w = *it;
-            workspaces.erase(it);
+            m_workspacesList.erase(it);
             delete w;
             saveWorkspaces();
             return;
@@ -93,14 +93,14 @@ void LC_WorkspacesManager::deleteWorkspace(int id){
 
 void LC_WorkspacesManager::activateWorkspace(int id){
     if (id < 0) {
-       id = lastActivatedId;
+       id = m_lastActivatedId;
     }
-    QList<LC_Workspace *>::iterator it = workspaces.begin();
-    while (it != workspaces.end()) {
+    QList<LC_Workspace *>::iterator it = m_workspacesList.begin();
+    while (it != m_workspacesList.end()) {
          if ((*it)->id == id) {
             restore(**it);
-            if (lastActivatedId != id) {
-                lastActivatedId = id;
+            if (m_lastActivatedId != id) {
+                m_lastActivatedId = id;
                 persist();
             }
             return;
@@ -299,9 +299,10 @@ void LC_WorkspacesManager::loadWorkspaces(){
                         LC_ERR << "Invalid content of workspaces file. File: " + workspacesFile;
                     }
                     if (canParse) {
-                        workspaceID = obj.value("maxId").toInt(0);
-                        lastActivatedId = obj.value("lastActivatedId").toInt(0);
+                        m_workspaceID = obj.value("maxId").toInt(0);
+                        m_lastActivatedId = obj.value("lastActivatedId").toInt(0);
                         QJsonArray jsonArray = obj.value("workspaces").toArray();
+                        m_workspacesList.clear();
                             foreach (const QJsonValue & value, jsonArray) {
                                 QJsonObject wsObj = value.toObject();
 
@@ -332,7 +333,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
 
                                 p->showStatusBar  = wsObj["statusBarVisible"].toBool(false);
 
-                                workspaces << p;
+                                m_workspacesList << p;
                             }
                     }
                 }
@@ -357,7 +358,7 @@ bool LC_WorkspacesManager::isWorkspacesFileExists(){
 }
 
 bool LC_WorkspacesManager::hasWorkspaces(){
-    return !workspaces.isEmpty();
+    return !m_workspacesList.isEmpty();
 }
 
 void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
@@ -368,12 +369,12 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
         if (canWrite) {
             QJsonObject objSettings;
             objSettings.insert("type", QJsonValue::fromVariant("LibreCAD Workspaces file"));
-            objSettings.insert("maxId", QJsonValue::fromVariant(workspaceID));
-            objSettings.insert("lastActivatedId", QJsonValue::fromVariant(lastActivatedId));
+            objSettings.insert("maxId", QJsonValue::fromVariant(m_workspaceID));
+            objSettings.insert("lastActivatedId", QJsonValue::fromVariant(m_lastActivatedId));
 
             QJsonArray perspectivesArray;
 
-            for (auto p: workspaces) {
+            for (auto p: m_workspacesList) {
                 QJsonObject wsObj;
 
                 wsObj.insert("name", QJsonValue::fromVariant(p->name));

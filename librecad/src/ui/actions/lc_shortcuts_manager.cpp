@@ -150,7 +150,7 @@ void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QActi
                 // it might be either due to incorrect data in settings file, or if the action was created somewhere in
                 // code that is outside actions factory.
                 // in any case, just ignore that key
-                LC_ERR << "Action is null in map, key "  << key;
+                LC_ERR << "LC_ShortcutsManager::updateActionShortcutTooltips - Action is null in the map, ignored. Key "  << key;
             }
         }
     }

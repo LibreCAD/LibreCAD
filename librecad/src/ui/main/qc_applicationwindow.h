@@ -142,7 +142,7 @@ public slots:
     void slotShowDrawingOptionsUnits();
 
     void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
-    void slotWindowsMenuAboutToShow();
+    void slotWorkspacesMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
 
     void slotPenChanged(RS_Pen p);
@@ -310,15 +310,11 @@ public:
         return snapToolBar;
     }
 
-
-
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
     DockAreas& getDockAreas(){
         return dock_areas;
     }
-
-
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
     LC_AnglesBasisWidget* getAnglesBasisWidget() const {return anglesBasisWidget;};
@@ -328,7 +324,6 @@ public:
 
     // Auto-save
     void startAutoSave(bool enabled);
-
 
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
@@ -346,7 +341,6 @@ protected:
     void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
-
 private:
     QC_ApplicationWindow();
 
@@ -384,7 +378,6 @@ private:
     std::unique_ptr<QTimer> m_autosaveTimer;
 
     QG_ActionHandler* actionHandler {nullptr};
-
 
     /** Dialog factory */
     QC_DialogFactory* dialogFactory {nullptr};

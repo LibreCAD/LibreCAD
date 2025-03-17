@@ -49,7 +49,7 @@ void LC_MenuFactory::recreateMenuIfNeeded(QMenuBar* menuBar){
     if (m_menuOptions.isDifferent(options)) {
         m_menuOptions.apply(options);
         menuBar->clear();
-        doCreateMenus(menuBar);
+        doCreateMenus(menuBar, false);
     }
 }
 
@@ -58,20 +58,48 @@ void LC_MenuFactory::createMenus(QMenuBar* menuBar){
         m_menuOptions.expandToolsMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
         m_menuOptions.expandToolsTillEntity = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
     }
-    doCreateMenus(menuBar);
+    doCreateMenus(menuBar, true);
 }
 
-void LC_MenuFactory::doCreateMenus(QMenuBar* menu_bar){
+void LC_MenuFactory::doCreateMenus(QMenuBar *menu_bar, bool firstCreation) {
     QList<QMenu *> topMenuMenus;
-    createFileMenu(menu_bar, topMenuMenus);
-    createSettingsMenu(menu_bar, topMenuMenus);
-    createEditMenu(menu_bar, topMenuMenus);
-    createViewMenu(menu_bar, topMenuMenus);
-    createPluginsMenu(menu_bar, topMenuMenus);
-    createToolsMenu(menu_bar, topMenuMenus);
-    createWorkspaceMenu(menu_bar, topMenuMenus);
-    prepareWorkspaceMenuComponents();
-    createHelpMenu(menu_bar, topMenuMenus);
+    if (firstCreation) {
+        createFileMenu(menu_bar, topMenuMenus);
+        createSettingsMenu(menu_bar, topMenuMenus);
+        createEditMenu(menu_bar, topMenuMenus);
+        createViewMenu(menu_bar, topMenuMenus);
+        createPluginsMenu(menu_bar, topMenuMenus);
+        createToolsMenu(menu_bar, topMenuMenus);
+        createWorkspaceMenu(menu_bar, topMenuMenus);
+        prepareWorkspaceMenuComponents();
+        createHelpMenu(menu_bar, topMenuMenus);
+    }
+    else{
+        // we re-add previously created menus into the menu bar.
+        // we can't recreate them fully, as recent files menu should survive the menu update, as it referenced by RS_RecentFiles instance.
+        topMenuMenus << m_menuFile;
+        topMenuMenus << m_menuSettings;
+        topMenuMenus << m_menuEdit;
+        topMenuMenus << m_menuView;
+        topMenuMenus << m_menuPlugins;
+        if (m_menuOptions.expandToolsMenu) {
+            // fixme - sand - icons - potentially this may lead to the waste if menus are switched often (which is hardly the case but still).
+            // this is due to the fact that menubar.clear() does not delete original actions/sub menus, but just removes them from the list.
+            // From the other side, as menubar is the owner for them, they will be deleted as menu bar will be deleted.
+            // potentially, we should create all menus just once.
+            createToolsMenuExpanded(menu_bar, topMenuMenus);
+        }
+        else{
+            if (m_menuToolsCombined == nullptr){
+                createToolsMenuCombined(menu_bar, topMenuMenus);
+            }
+            else{
+                topMenuMenus << topMenuMenus;
+            }
+        }
+        topMenuMenus << m_menuWorkspace;
+        topMenuMenus << m_menuHelp;
+    }
 
     for (auto m : topMenuMenus) {
         menu_bar->addMenu(m);
@@ -79,9 +107,9 @@ void LC_MenuFactory::doCreateMenus(QMenuBar* menu_bar){
 }
 
 void LC_MenuFactory::createHelpMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    auto help = menu(tr("&Help"), "help", menu_bar);
+    m_menuHelp = menu(tr("&Help"), "help", menu_bar);
 
-    subMenuWithActions(help, tr("On&line Docs"),"OnlineInfo", nullptr, {
+    subMenuWithActions(m_menuHelp, tr("On&line Docs"),"OnlineInfo", nullptr, {
                            urlActionTR(tr("&Wiki"), "https://dokuwiki.librecad.org/"),
                            urlActionTR(tr("User's &Manual"), "https://librecad.readthedocs.io/"),
                            urlActionTR(tr("&Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
@@ -96,112 +124,120 @@ void LC_MenuFactory::createHelpMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
     auto license = new QAction(QObject::tr("License"), main_window);
     connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
 
-    help->addSeparator();
-    help->QWidget::addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
-    help->QWidget::addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
-    help->addSeparator();
-    help->QWidget::addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
-    help->QWidget::addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    help->QWidget::addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
-    help->addSeparator();
-    help->QWidget::addAction(help_about);
-    help->QWidget::addAction(license);
-    help->QWidget::addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
+    m_menuHelp->addSeparator();
+    m_menuHelp->QWidget::addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
+    m_menuHelp->QWidget::addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
+    m_menuHelp->addSeparator();
+    m_menuHelp->QWidget::addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
+    m_menuHelp->QWidget::addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
+    m_menuHelp->QWidget::addAction(urlActionTR(tr("&Releases Page"), "https://github.com/LibreCAD/LibreCAD/releases"));
+    m_menuHelp->addSeparator();
+    m_menuHelp->QWidget::addAction(help_about);
+    m_menuHelp->QWidget::addAction(license);
+    m_menuHelp->QWidget::addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
 
-    topMenuMenus << help;
+    topMenuMenus << m_menuHelp;
 }
 
 void LC_MenuFactory::createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
     if (m_menuOptions.expandToolsMenu) {
-        if (m_menuOptions.expandToolsTillEntity) {
-            auto line = menu(tr("&Line"), "line", menu_bar);
-            line->addActions(ag_manager->line_actions);
-            topMenuMenus << line;
-
-            auto point = menu(tr("Poin&t"), "point", menu_bar);
-            point->addActions(ag_manager->point_actions);
-            topMenuMenus << point;
-
-            auto circle = menu(tr("&Circle"), "circle", menu_bar);
-            circle->addActions(ag_manager->circle_actions);
-            topMenuMenus << circle;
-
-            auto arc = menu(tr("&Arc"), "arc", menu_bar);
-            arc->addActions(ag_manager->curve_actions);
-            topMenuMenus << arc;
-
-            auto shape = menu(tr("Poly&gon"), "shape", menu_bar);
-            shape->addActions(ag_manager->shape_actions);
-            topMenuMenus << shape;
-
-            auto spline = menu(tr("Splin&e"), "spline", menu_bar);
-            spline->addActions(ag_manager->spline_actions);
-            topMenuMenus << spline;
-
-            auto ellipse = menu(tr("Ellipse&e"), "ellipse", menu_bar);
-            ellipse->addActions(ag_manager->ellipse_actions);
-            topMenuMenus << ellipse;
-
-            auto polyline = menu(tr("&Polyline"), "polyline", menu_bar);
-            polyline->addActions(ag_manager->polyline_actions);
-            topMenuMenus << polyline;
-
-            auto other = menu(tr("&Other"), "other", menu_bar);
-            other->addActions(ag_manager->other_drawing_actions);
-            topMenuMenus << other;
-        }
-        else {
-            auto draw = menu(tr("&Draw"), "draw", menu_bar);
-            subMenuWithActions(draw, tr("&Line"), "line", ":/icons/line.lci", ag_manager->line_actions);
-            subMenuWithActions(draw, tr("Poin&t"), "point", ":/icons/points.lci", ag_manager->point_actions);
-            subMenuWithActions(draw, tr("&Circle"), "circle", ":/icons/circle.lci", ag_manager->circle_actions);
-            subMenuWithActions(draw, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", ag_manager->curve_actions);
-            subMenuWithActions(draw, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", ag_manager->shape_actions);
-            subMenuWithActions(draw, tr("Splin&e"), "spline", ":/icons/spline_points.lci", ag_manager->spline_actions);
-            subMenuWithActions(draw, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ag_manager->ellipse_actions);
-            subMenuWithActions(draw, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", ag_manager->polyline_actions);
-            subMenuWithActions(draw, tr("Ot&her"), "other", ":/icons/text.lci", ag_manager->other_drawing_actions);
-
-            topMenuMenus << draw;
-        }
-
-        auto modify = menu(tr("&Modify"), "info", menu_bar);
-        modify->addActions(ag_manager->modify_actions);
-        subMenuWithActions(modify, tr("&Order"), "order", ":/icons/order.lci", ag_manager->order_actions);
-
-        topMenuMenus << modify;
-
-        auto dims = menu(tr("&Dimensions"), "dims", menu_bar);
-        dims->addActions(ag_manager->dimension_actions);
-        topMenuMenus << dims;
-
-        auto info = menu(tr("&Info"), "info", menu_bar);
-        info->addActions(ag_manager->info_actions);
-        topMenuMenus << info;
+        createToolsMenuExpanded(menu_bar, topMenuMenus);
     }
     else {
-        auto tools = menu(tr("&Tools"), "tools", menu_bar);
-        subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.lci", ag_manager->line_actions);
-        subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.lci", ag_manager->point_actions);
-        subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.lci", ag_manager->circle_actions);
-        subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", ag_manager->curve_actions);
-        subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", ag_manager->shape_actions);
-        subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.lci", ag_manager->spline_actions);
-        subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ag_manager->ellipse_actions);
-        subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", ag_manager->polyline_actions);
-        subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.lci", ag_manager->select_actions);
-        subMenuWithActions(tools, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", ag_manager->dimension_actions);
-        subMenuWithActions(tools, tr("Ot&her"), "other", ":/icons/text.lci", ag_manager->other_drawing_actions);
-        subMenuWithActions(tools, tr("&Modify"), "modify", ":/icons/move_rotate.lci", ag_manager->modify_actions);
-        subMenuWithActions(tools, tr("&Info"), "info", ":/icons/measure.lci", ag_manager->info_actions);
-        subMenuWithActions(tools, tr("&Order"), "order", ":/icons/order.lci", ag_manager->order_actions);
-
-        topMenuMenus << tools;
+        createToolsMenuCombined(menu_bar, topMenuMenus);
     }
 }
 
+void LC_MenuFactory::createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) {
+    if (m_menuOptions.expandToolsTillEntity) {
+        auto line = menu(tr("&Line"), "line", menu_bar);
+        line->addActions(ag_manager->line_actions);
+        topMenuMenus << line;
+
+        auto point = menu(tr("Poin&t"), "point", menu_bar);
+        point->addActions(ag_manager->point_actions);
+        topMenuMenus << point;
+
+        auto circle = menu(tr("&Circle"), "circle", menu_bar);
+        circle->addActions(ag_manager->circle_actions);
+        topMenuMenus << circle;
+
+        auto arc = menu(tr("&Arc"), "arc", menu_bar);
+        arc->addActions(ag_manager->curve_actions);
+        topMenuMenus << arc;
+
+        auto shape = menu(tr("Poly&gon"), "shape", menu_bar);
+        shape->addActions(ag_manager->shape_actions);
+        topMenuMenus << shape;
+
+        auto spline = menu(tr("Splin&e"), "spline", menu_bar);
+        spline->addActions(ag_manager->spline_actions);
+        topMenuMenus << spline;
+
+        auto ellipse = menu(tr("Ellipse&e"), "ellipse", menu_bar);
+        ellipse->addActions(ag_manager->ellipse_actions);
+        topMenuMenus << ellipse;
+
+        auto polyline = menu(tr("&Polyline"), "polyline", menu_bar);
+        polyline->addActions(ag_manager->polyline_actions);
+        topMenuMenus << polyline;
+
+        auto other = menu(tr("&Other"), "other", menu_bar);
+        other->addActions(ag_manager->other_drawing_actions);
+        topMenuMenus << other;
+    }
+    else {
+        auto draw = menu(tr("&Draw"), "draw", menu_bar);
+        subMenuWithActions(draw, tr("&Line"), "line", ":/icons/line.lci", ag_manager->line_actions);
+        subMenuWithActions(draw, tr("Poin&t"), "point", ":/icons/points.lci", ag_manager->point_actions);
+        subMenuWithActions(draw, tr("&Circle"), "circle", ":/icons/circle.lci", ag_manager->circle_actions);
+        subMenuWithActions(draw, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", ag_manager->curve_actions);
+        subMenuWithActions(draw, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", ag_manager->shape_actions);
+        subMenuWithActions(draw, tr("Splin&e"), "spline", ":/icons/spline_points.lci", ag_manager->spline_actions);
+        subMenuWithActions(draw, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ag_manager->ellipse_actions);
+        subMenuWithActions(draw, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", ag_manager->polyline_actions);
+        subMenuWithActions(draw, tr("Ot&her"), "other", ":/icons/text.lci", ag_manager->other_drawing_actions);
+
+        topMenuMenus << draw;
+    }
+
+    auto modify = this->menu(tr("&Modify"), "info", menu_bar);
+    modify->addActions(this->ag_manager->modify_actions);
+    this->subMenuWithActions(modify, tr("&Order"), "order", ":/icons/order.lci", this->ag_manager->order_actions);
+
+    topMenuMenus << modify;
+
+    auto dims = this->menu(tr("&Dimensions"), "dims", menu_bar);
+    dims->addActions(this->ag_manager->dimension_actions);
+    topMenuMenus << dims;
+
+    auto info = this->menu(tr("&Info"), "info", menu_bar);
+    info->addActions(this->ag_manager->info_actions);
+    topMenuMenus << info;
+}
+
+void LC_MenuFactory::createToolsMenuCombined(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) {
+    m_menuToolsCombined = menu(tr("&Tools"), "tools", menu_bar);
+    subMenuWithActions(m_menuToolsCombined, tr("&Line"), "line", ":/icons/line.lci", ag_manager->line_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Poin&t"), "line", ":/icons/points.lci", ag_manager->point_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Circle"), "circle", ":/icons/circle.lci", ag_manager->circle_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", ag_manager->curve_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", ag_manager->shape_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Splin&e"), "spline", ":/icons/spline_points.lci", ag_manager->spline_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ag_manager->ellipse_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", ag_manager->polyline_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Select"), "select", ":/icons/select.lci", ag_manager->select_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", ag_manager->dimension_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Ot&her"), "other", ":/icons/text.lci", ag_manager->other_drawing_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Modify"), "modify", ":/icons/move_rotate.lci", ag_manager->modify_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Info"), "info", ":/icons/measure.lci", ag_manager->info_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Order"), "order", ":/icons/order.lci", ag_manager->order_actions);
+
+    topMenuMenus << m_menuToolsCombined;
+}
+
 void LC_MenuFactory::createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    file_menu = menu(tr("&File"),"file", menu_bar, {
+    m_menuFile = menu(tr("&File"), "file", menu_bar, {
                          "FileNew",
                          "FileNewTemplate",
                          "FileOpen",
@@ -212,21 +248,22 @@ void LC_MenuFactory::createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
                          ""
                      });
 
-    recentFilesMenu = new QMenu(tr("Recent Files"), file_menu);
-    file_menu->addMenu(recentFilesMenu);
+    recentFilesMenu = new QMenu(tr("Recent Files"), m_menuFile);
 
-    subMenu(file_menu, tr("Import"),"import", ":/icons/import.lci", {
+    m_menuFile->addMenu(recentFilesMenu);
+
+    subMenu(m_menuFile, tr("Import"), "import", ":/icons/import.lci", {
              "DrawImage",
              "BlocksImport"
          });
 
-    subMenu(file_menu, tr("Export"),"export", ":/icons/export.lci", {
+    subMenu(m_menuFile, tr("Export"), "export", ":/icons/export.lci", {
         "FileExportMakerCam",
         "FilePrintPDF",
         "FileExport"
     });
 
-    addActions(file_menu, {
+    addActions(m_menuFile, {
         "",
         "FilePrint",
         "FilePrintPreview",
@@ -238,11 +275,11 @@ void LC_MenuFactory::createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
     });
 
 
-    topMenuMenus << file_menu;
+    topMenuMenus << m_menuFile;
 }
 
 void LC_MenuFactory::createSettingsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    auto settings = menu(tr("&Options"),"options", menu_bar, {
+    m_menuSettings = menu(tr("&Options"),"options", menu_bar, {
                              "OptionsGeneral",
                              "ShortcutsOptions",
                              "WidgetOptions",
@@ -252,11 +289,11 @@ void LC_MenuFactory::createSettingsMenu(QMenuBar *menu_bar, QList<QMenu *> &topM
                              "OptionsDrawing",
                          });
 
-    topMenuMenus << settings;
+    topMenuMenus << m_menuSettings;
 }
 
 void LC_MenuFactory::createEditMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    auto edit = menu(tr("&Edit"),"edit", menu_bar, {
+    m_menuEdit = menu(tr("&Edit"),"edit", menu_bar, {
                          "EditKillAllActions",
                          "",
                          "EditUndo",
@@ -273,11 +310,11 @@ void LC_MenuFactory::createEditMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
                          "ModifyDeleteQuick"
                      });
 
-    topMenuMenus << edit;
+    topMenuMenus << m_menuEdit;
 }
 
 void LC_MenuFactory::createViewMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    view_menu = menu(tr("&View"), "view", menu_bar, {
+    m_menuView = menu(tr("&View"), "view", menu_bar, {
                          /*     "Fullscreen",
         "ViewStatusBar",*/
                          "ViewGrid",
@@ -306,36 +343,34 @@ void LC_MenuFactory::createViewMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
                          "ZoomViewSave",
                      });
 
-    subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.lci",
+    subMenu(m_menuView, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.lci",
                                      {"ZoomViewRestore1",
                                       "ZoomViewRestore2",
                                       "ZoomViewRestore3",
                                       "ZoomViewRestore4",
                                       "ZoomViewRestore5"});
 
-    topMenuMenus << view_menu;
+    topMenuMenus << m_menuView;
 }
 
 void LC_MenuFactory::createPluginsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
-    topMenuMenus << plugins;
+    m_menuPlugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
+    topMenuMenus << m_menuPlugins;
 }
 
 void LC_MenuFactory::createWorkspaceMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus){
-    workspaceMenu = menu(tr("&Workspace"),"workspaces", menu_bar, {
+    m_menuWorkspace = menu(tr("&Workspace"), "workspaces", menu_bar, {
                              "Fullscreen" // temp way to show this menu on OS X
                          });
 
-    connect(workspaceMenu, SIGNAL(aboutToShow()),
-            main_window, SLOT(slotWindowsMenuAboutToShow()));
-
-    topMenuMenus << workspaceMenu;
+    connect(m_menuWorkspace, &QMenu::aboutToShow, main_window, &QC_ApplicationWindow::slotWorkspacesMenuAboutToShow);
+    topMenuMenus << m_menuWorkspace;
 }
 
 
 void LC_MenuFactory::prepareWorkspaceMenuComponents(){
 
-    dockareas = subMenu(workspaceMenu, tr("Dock Areas"),"dockareas", nullptr, {
+    dockareas = subMenu(m_menuWorkspace, tr("Dock Areas"), "dockareas", nullptr, {
                             "LeftDockAreaToggle",
                             "RightDockAreaToggle",
                             "TopDockAreaToggle",
@@ -343,7 +378,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
                             "FloatingDockwidgetsToggle"
                         });
 
-    dockwidgets_menu = doCreateSubMenu(workspaceMenu, tr("Dock Wid&gets"), "dockwidgets", nullptr);
+    dockwidgets_menu = doCreateSubMenu(m_menuWorkspace, tr("Dock Wid&gets"), "dockwidgets", nullptr);
 
     dockwidgets_menu->addSeparator();
 
@@ -367,11 +402,11 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
         }
     }
 
-    view_menu->QWidget::addAction(namedViewsToggleViewAction);
-    view_menu->addSeparator();
-    view_menu->QWidget::addAction(ag_manager->getActionByName("UCSCreate"));
-    view_menu->QWidget::addAction(ag_manager->getActionByName("UCSSetWCS"));
-    view_menu->QWidget::addAction(ucsToggleViewAction);
+    m_menuView->QWidget::addAction(namedViewsToggleViewAction);
+    m_menuView->addSeparator();
+    m_menuView->QWidget::addAction(ag_manager->getActionByName("UCSCreate"));
+    m_menuView->QWidget::addAction(ag_manager->getActionByName("UCSSetWCS"));
+    m_menuView->QWidget::addAction(ucsToggleViewAction);
 
     dockwidgets_menu->addSeparator();
 
@@ -381,7 +416,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
         }
     }
 
-    toolbars = doCreateSubMenu(workspaceMenu, tr("&Toolbars"),"toolbars", nullptr);
+    toolbars = doCreateSubMenu(m_menuWorkspace, tr("&Toolbars"), "toolbars", nullptr);
 
     QList<QToolBar*> toolbarsList = main_window->findChildren<QToolBar*>();
 
@@ -402,29 +437,29 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
     }
 }
 
-void LC_MenuFactory::slotWindowsMenuAboutToShow(const QList<QC_MDIWindow*> &window_list){
+void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &window_list){
     LC_GROUP_GUARD("WindowOptions");
     {
          QIcon wsIcon = QIcon(":/icons/workspace.lci");
-         workspaceMenu->clear(); // this is a temporary menu; constructed on-demand
+         m_menuWorkspace->clear(); // this is a temporary menu; constructed on-demand
          allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
          QMenu *menu;
 
-         workspaceMenu->addAction(ag_manager->getActionByName("Fullscreen"));
-         workspaceMenu->addAction(ag_manager->getActionByName("ViewStatusBar"));
+         m_menuWorkspace->addAction(ag_manager->getActionByName("Fullscreen"));
+         m_menuWorkspace->addAction(ag_manager->getActionByName("ViewStatusBar"));
 
-         workspaceMenu->addMenu(dockareas);
-         workspaceMenu->addMenu(dockwidgets_menu);
-         workspaceMenu->addMenu(toolbars);
-         addAction(workspaceMenu, "RedockWidgets");
-         workspaceMenu->addSeparator();
+         m_menuWorkspace->addMenu(dockareas);
+         m_menuWorkspace->addMenu(dockwidgets_menu);
+         m_menuWorkspace->addMenu(toolbars);
+         addAction(m_menuWorkspace, "RedockWidgets");
+         m_menuWorkspace->addSeparator();
 
-         workspaceMenu->addAction(ag_manager->getActionByName("WorkspaceCreate"));
+         m_menuWorkspace->addAction(ag_manager->getActionByName("WorkspaceCreate"));
 
          QList<QPair<int, QString>> workspacesList;
          main_window->fillWorkspacesList(workspacesList);
          if (!workspacesList.isEmpty()){
-             auto workspaces = new QMenu(tr("&Workspaces"), workspaceMenu);
+             auto workspaces = new QMenu(tr("&Workspaces"), m_menuWorkspace);
              workspaces->setTearOffEnabled(allowTearOffMenus);
              workspaces->setIcon(wsIcon);
              int workspacesCount = workspacesList.size();
@@ -438,18 +473,18 @@ void LC_MenuFactory::slotWindowsMenuAboutToShow(const QList<QC_MDIWindow*> &wind
                  a->setVisible(true);
                  a->setProperty("_WSPS_IDX", QVariant(w.first));
              }
-             workspaceMenu->addMenu(workspaces);
-             workspaceMenu->addAction(ag_manager->getActionByName("WorkspaceRemove"));
+             m_menuWorkspace->addMenu(workspaces);
+             m_menuWorkspace->addAction(ag_manager->getActionByName("WorkspaceRemove"));
          }
-         workspaceMenu->addSeparator();
+         m_menuWorkspace->addSeparator();
 
-         addAction(workspaceMenu, "InvokeMenuCreator");
-         addAction(workspaceMenu, "InvokeToolbarCreator");
-         workspaceMenu->addSeparator();
+         addAction(m_menuWorkspace, "InvokeMenuCreator");
+         addAction(m_menuWorkspace, "InvokeToolbarCreator");
+         m_menuWorkspace->addSeparator();
 
-         auto drawings = new QMenu(tr("&Drawinsgs"), workspaceMenu);
+         auto drawings = new QMenu(tr("&Drawinsgs"), m_menuWorkspace);
          drawings->setTearOffEnabled(allowTearOffMenus);
-         workspaceMenu->addMenu(drawings);
+         m_menuWorkspace->addMenu(drawings);
          QAction *menuItem;
 
          auto mdi_area = main_window->getMdiArea();
@@ -466,7 +501,7 @@ void LC_MenuFactory::slotWindowsMenuAboutToShow(const QList<QC_MDIWindow*> &wind
 
 
          if (tabbed) {
-             menu = new QMenu(tr("&Layout"), workspaceMenu);
+             menu = new QMenu(tr("&Layout"), m_menuWorkspace);
              menu->setTearOffEnabled(allowTearOffMenus);
              drawings->addMenu(menu);
 
@@ -501,9 +536,9 @@ void LC_MenuFactory::slotWindowsMenuAboutToShow(const QList<QC_MDIWindow*> &wind
 
          } else {
 
-             menu = new QMenu(tr("&Arrange"), workspaceMenu);
+             menu = new QMenu(tr("&Arrange"), m_menuWorkspace);
              menu->setTearOffEnabled(allowTearOffMenus);
-             workspaceMenu->addMenu(menu);
+             m_menuWorkspace->addMenu(menu);
 
              menuItem = menu->addAction(tr("&Maximized"), main_window, &LC_MDIApplicationWindow::slotSetMaximized);
              menuItem->setCheckable(true);
@@ -515,7 +550,7 @@ void LC_MenuFactory::slotWindowsMenuAboutToShow(const QList<QC_MDIWindow*> &wind
              menu->addAction(tr("Tile &Horizontally"), main_window, &LC_MDIApplicationWindow::slotTileHorizontal);
          }
 
-         workspaceMenu->addSeparator();
+         m_menuWorkspace->addSeparator();
          QMdiSubWindow *active = mdi_area->activeSubWindow();
          for (int i = 0; i < window_list.size(); ++i) {
              QString title = window_list.at(i)->windowTitle();
@@ -527,7 +562,7 @@ void LC_MenuFactory::slotWindowsMenuAboutToShow(const QList<QC_MDIWindow*> &wind
                      title.remove(idx, 3);
                  }
              }
-             QAction *id = workspaceMenu->addAction(title,main_window, SLOT(slotWindowsMenuActivated(bool)));
+             QAction *id = m_menuWorkspace->addAction(title, main_window, SLOT(slotWindowsMenuActivated(bool)));
              id->setCheckable(true);
              id->setData(i);
              id->setChecked(window_list.at(i) == active);

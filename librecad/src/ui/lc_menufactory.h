@@ -35,19 +35,8 @@ public:
     LC_MenuFactory(QC_ApplicationWindow* main_win,
                    LC_ActionGroupManager* agm);
     void recreateMenuIfNeeded(QMenuBar *menuBar);
-    void prepareWorkspaceMenuComponents();
-    void createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createHelpMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createSettingsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createEditMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createViewMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createPluginsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createWorkspaceMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-
     void createMenus(QMenuBar* menu_bar);
-    void doCreateMenus(QMenuBar *menu_bar);
-    void slotWindowsMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
+    void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
 
     QMenu * getRecentFilesMenu() const{
         return recentFilesMenu;
@@ -74,18 +63,35 @@ protected:
     MenuOptions m_menuOptions;
 
     // --- Menus ---
-    QMenu* workspaceMenu {nullptr};
-    QMenu* scriptMenu {nullptr};
-    QMenu* helpMenu {nullptr};
-    QMenu* testMenu {nullptr};
-    QMenu* file_menu {nullptr};
+
+    QMenu* m_menuFile {nullptr};
+    QMenu* m_menuSettings {nullptr};
+    QMenu* m_menuEdit {nullptr};
+    QMenu* m_menuView {nullptr};
+    QMenu* m_menuPlugins {nullptr};
+    QMenu* m_menuWorkspace {nullptr};
+    QMenu* m_menuHelp {nullptr};
+    QMenu* m_menuToolsCombined {nullptr};
+
     QMenu* recentFilesMenu{nullptr};
-    QMenu *view_menu {nullptr};
     QMenu* dockareas {nullptr};
     QMenu* dockwidgets_menu {nullptr};
     QMenu* toolbars {nullptr};
 
     bool allowTearOffMenus = true;
+
+
+    void prepareWorkspaceMenuComponents();
+    void createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createHelpMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createSettingsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createEditMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createViewMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createPluginsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createWorkspaceMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void doCreateMenus(QMenuBar *menu_bar, bool firstCreation);
+
     QAction* urlActionTR(const QString& title, const char *url);
     void addAction(QMenu *menu, const char *actionName);
     void addActions(QMenu *result, const std::vector<QString> &actionNames);
@@ -94,6 +100,8 @@ protected:
     QMenu *menu(const QString& title, const QString& name,  QMenuBar *parent, const std::vector<QString> &actionNames);
     QMenu *doCreateSubMenu(QMenu *parent, const QString& title, const QString& name, const char *icon) const;
     QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames);
+    void createToolsMenuCombined(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
 };
 
 #endif // LC_MENUFACTORY_H

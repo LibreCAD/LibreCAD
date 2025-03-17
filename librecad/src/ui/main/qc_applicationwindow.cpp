@@ -1117,9 +1117,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
  * Called when the menu 'windows' is about to be shown.
  * This is used to update the window list in the menu.
  */
-void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
-    RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
-    m_menuFactory->slotWindowsMenuAboutToShow(window_list);
+void QC_ApplicationWindow::slotWorkspacesMenuAboutToShow() {
+    RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWorkspacesMenuAboutToShow");
+    m_menuFactory->onWorkspaceMenuAboutToShow(window_list);
 }
 
 /**
