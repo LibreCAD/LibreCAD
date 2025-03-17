@@ -120,10 +120,11 @@ void LC_CoordinatesMapper::doUCS2WCS(double ucsX, double ucsY, double &worldX, d
 void LC_CoordinatesMapper::setXAxisAngle(double angle){
     xAxisAngle = angle;
     xAxisAngleDegrees = RS_Math::rad2deg(angle);
-    sinXAngle = sin(angle);
-    cosXAngle = cos(angle);
-    sinNegativeXAngle = sin(-angle);
-    cosNegativeXAngle = cos(-angle);
+    m_ucsRotation = RS_Vector{angle};
+    cosXAngle = m_ucsRotation.x;
+    sinXAngle = m_ucsRotation.y;
+    sinNegativeXAngle = - sinXAngle;
+    cosNegativeXAngle = cosXAngle;
 }
 
 void LC_CoordinatesMapper::update(const RS_Vector &origin, double angle) {

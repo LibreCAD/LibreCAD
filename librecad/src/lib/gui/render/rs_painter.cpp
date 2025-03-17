@@ -1467,14 +1467,21 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
 /*RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
     RS_Vector ucsPosition = worldCoordinates;
     if (m_hasUcs){
-        ucsPosition.move(-ucsOrigin).rotate(m_ucsRotation);
+        uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
     }
+    uiPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
+    uiPosition.y = viewPortHeight - uiPosition.y;
+    double uiX=0., uiY=0.;
+    const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
+    using namespace RS_Math;
+    assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
+    return uiPosition;
     ucsPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
     ucsPosition.y = viewPortHeight - ucsPosition.y;
-    
+
     double x, y;
     toGui(worldCoordinates, x, y);
-    
+
     RS_Vector result = RS_Vector(x, y);
 
     viewport->toUI(worldCoordinates, x, y);
@@ -1486,9 +1493,12 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
 }*/
 
 RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
+//    double x, y;
+//    viewport->toUI(worldCoordinates, x, y);
+//    return RS_Vector(x,y);
     double x, y;
-    viewport->toUI(worldCoordinates, x, y);
-    return RS_Vector(x,y);
+    toGui(worldCoordinates, x, y);
+    return RS_Vector(x, y);
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {
