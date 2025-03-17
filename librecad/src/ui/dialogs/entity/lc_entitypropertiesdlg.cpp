@@ -151,19 +151,15 @@ double LC_EntityPropertiesDlg::toWCSAngle(QLineEdit* ed, double wcsDefault){
 }
 
 double LC_EntityPropertiesDlg::toDouble(const QString &strValue, double notMeaningful, double defValue) const {
-    double result;
-    if (!toDouble(strValue, result, notMeaningful, false)){
-        result = defValue;
-    }
-    return result;
+    double result = 0.;
+    const bool meaningful =  toDouble(strValue, result, notMeaningful, false);
+    return meaningful ? result : defValue;
 }
 
 double LC_EntityPropertiesDlg::toDoubleAngle(const QString &strValue, double notMeaningful, double defValue) const {
-    double result;
-    if (!toDoubleAngle(strValue, result, notMeaningful, false)){
-        result = defValue;
-    }
-    return result;
+    double result = 0.;
+    const bool meaningful =  toDoubleAngle(strValue, result, notMeaningful, false);
+    return meaningful ? result : defValue;
 }
 
 bool LC_EntityPropertiesDlg::toDouble(const QString& strValue, double &res, double notMeaningful, bool positiveOnly) const{

@@ -79,7 +79,9 @@ public:
 
     RS_Vector& move(const RS_Vector& offset);
     RS_Vector& rotate(double ang);
+    RS_Vector rotated(double angle) const;
     RS_Vector& rotate(const RS_Vector& angleVector);
+    RS_Vector rotated(const RS_Vector& angleVector) const;
     RS_Vector& rotate(const RS_Vector& center, double ang);
     RS_Vector& rotate(const RS_Vector& center, const RS_Vector& angleVector);
     RS_Vector& scale(double factor);

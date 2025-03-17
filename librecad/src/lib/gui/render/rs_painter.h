@@ -265,8 +265,9 @@ protected:
     int pointsMode = 0;
 
     // cached factor and offset from viewport - for efficiency of coordinates translations.
-    double viewPortFactorX = 1.0;
-    double viewPortFactorY = 1.0;
+    RS_Vector m_viewPortFactor{1., 1.};
+    double& viewPortFactorX = m_viewPortFactor.x;
+    double& viewPortFactorY = m_viewPortFactor.y;
     int viewPortOffsetX = 0;
     int viewPortOffsetY = 0;
     RS_Vector m_viewPortOffset;
@@ -291,7 +292,7 @@ protected:
     void drawArcSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, QPainterPath &path);
 
     void drawLineUI(const double &x1, const double &y1, const double &x2, const double &y2);
-    void drawImgUI(QImage& img, double uiInsertX, double uiInsertY, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
+    void drawImgUI(QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
     void drawRectUI(const RS_Vector& p1, const RS_Vector& p2);
 
