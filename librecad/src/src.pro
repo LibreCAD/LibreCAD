@@ -434,7 +434,7 @@ HEADERS += \
     ui/dock_widgets/views_list/lc_namedviewsmodel.h \
     ui/dock_widgets/workspaces/lc_workspacelistbutton.h \
     ui/lc_menufactory.h \
-    ui/main/lc_perspectivesmanager.h \
+    ui/main/lc_workspacesmanager.h \
     ui/main/lc_releasechecker.h \
     lib/gui/grid/lc_gridsystem.h \
     lib/gui/grid/lc_isometricgrid.h \
@@ -633,11 +633,11 @@ SOURCES += \
     ui/dock_widgets/views_list/lc_namedviewsbutton.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp \
-    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \     \
+    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \
     ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp \
-    ui/lc_menufactory.cpp \
-    ui/main/lc_perspectivesmanager.cpp
+    ui/lc_menufactory.cpp \    
     ui/main/lc_releasechecker.cpp \
+    ui/main/lc_workspacesmanager.cpp\
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
     lib/gui/grid/lc_lattice.cpp \
