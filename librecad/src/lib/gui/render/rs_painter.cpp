@@ -1469,6 +1469,10 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
     }
     uiPosition.scale({viewPortFactorX, viewPortFactorY}).move(m_viewPortOffset);
     uiPosition.y = viewPortHeight - uiPosition.y;
+    double uiX=0., uiY=0.;
+    const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
+    using namespace RS_Math;
+    assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
     return uiPosition;
 }
 
