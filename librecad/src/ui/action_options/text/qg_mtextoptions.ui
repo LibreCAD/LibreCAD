@@ -81,10 +81,10 @@
       <string>Text to insert</string>
      </property>
      <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
      </property>
     </widget>
    </item>
@@ -114,7 +114,7 @@
    <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -133,31 +133,15 @@
    <sender>teText</sender>
    <signal>textChanged()</signal>
    <receiver>Ui_MTextOptions</receiver>
-   <slot>updateEntity()</slot>
+   <slot>updateText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>139</x>
+     <y>11</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_MTextOptions</receiver>
-   <slot>onAngleChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>195</x>
+     <y>11</y>
     </hint>
    </hints>
   </connection>
