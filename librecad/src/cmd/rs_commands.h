@@ -67,6 +67,8 @@ public:
                              RS2::ActionType action=RS2::ActionNone);
 
     static QString msgAvailableCommands();
+
+    static QString getALiasFile();
     void updateAlias();
 
     ~RS_Commands()=delete;

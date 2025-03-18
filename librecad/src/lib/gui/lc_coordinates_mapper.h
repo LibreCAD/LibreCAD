@@ -23,7 +23,8 @@
 #ifndef LIBRECAD_LC_COORDINATES_MAPPER_H
 #define LIBRECAD_LC_COORDINATES_MAPPER_H
 
-class RS_Vector;
+#include "rs_vector.h"
+
 class QPointF;
 
 class LC_CoordinatesMapper {
@@ -64,7 +65,7 @@ protected:
      * will be faster than virtual method call.
      */
     bool m_hasUcs = false;
-    RS_Vector ucsOrigin = RS_Vector(0, 0, 0);
+    RS_Vector ucsOrigin{0., 0., 0.};
     double xAxisAngle = 0.0;
     double xAxisAngleDegrees = 0.0;
     RS_Vector m_ucsRotation;

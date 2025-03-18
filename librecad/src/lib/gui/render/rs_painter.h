@@ -249,7 +249,7 @@ protected:
     Qt::PenJoinStyle penJoinStyle = Qt::RoundJoin;
     Qt::PenCapStyle penCapStyle = Qt::RoundCap;
     QPen lastUsedPen;
-    double cachedDpmm;
+    double cachedDpmm = 0.;
     double minCircleDrawingRadius = 2.0;
     double minArcDrawingRadius = 0.8;
     double minEllipseMajorRadius = 2.;

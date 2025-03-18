@@ -118,4 +118,5 @@ void QG_DlgEllipse::updateEntity() {
 
     entity->setPen(wPen->getPen());
     entity->setLayer(cbLayer->getLayer());
+    entity->calculateBorders();
 }

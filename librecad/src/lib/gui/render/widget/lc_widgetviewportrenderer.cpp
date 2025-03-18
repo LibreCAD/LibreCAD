@@ -264,8 +264,7 @@ void LC_WidgetViewPortRenderer::drawLayerEntities(RS_Painter* painter) {
 }
 
 void LC_WidgetViewPortRenderer::doSetupBeforeContainerDraw() {
-    double patternOffset = 0.;
-    lastPaintEntityPen = RS_Pen();
+    lastPaintEntityPen = RS_Pen{};
     lastPaintEntityPen.setFlags(RS2::FlagInvalid);
 }
 

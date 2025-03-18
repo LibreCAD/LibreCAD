@@ -42,6 +42,14 @@
 
 
 namespace {
+
+namespace {
+const RS_Color colorBlack = RS_Color(Qt::black);
+const RS_Color colorWhite = RS_Color(Qt::white);
+const QColor qcolorBlack = colorBlack.toQColor();
+const QColor qcolorWhite = colorWhite.toQColor();
+}
+
 // Convert from LibreCAD line style pattern to QPen Dash Pattern.
 // QPen dash pattern by default is in the unit of pixel
     QVector<qreal> rsToQDashPattern(const RS2::LineType &t, double screenWidth, double dpmm, double &newDashOffset) {
@@ -102,10 +110,9 @@ namespace {
  */
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_Painter::RS_Painter( QPaintDevice* pd)
-    : QPainter{pd}, lastUsedPen() {
-    drawingMode = RS2::ModeFull;
-    drawSelectedEntities=false;
-    cachedDpmm = getDpmm();
+    : QPainter{pd}
+    , cachedDpmm{getDpmm()}
+{
 }
 
 /**
@@ -120,9 +127,8 @@ void RS_Painter::drawGridPoint(const double &x, const double &y) {
 }
 
 void RS_Painter::drawPointEntityWCS(const RS_Vector& wcsPos) {
-    double uiX, uiY;
-    toGui(wcsPos, uiX, uiY);
-    drawPointEntityUI(uiX, uiY, pointsMode, screenPointsSize);
+    RS_Vector uiPos = toGui(wcsPos);
+    drawPointEntityUI(uiPos.x, uiPos.y, pointsMode, screenPointsSize);
 }
 
 void RS_Painter::drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize){
@@ -1116,13 +1122,6 @@ RS_Pen RS_Painter::getPen() const{
     return lpen;
 }
 
-namespace {
-    const RS_Color colorBlack = RS_Color(Qt::black);
-    const RS_Color colorWhite = RS_Color(Qt::white);
-    const QColor qcolorBlack = colorBlack.toQColor();
-    const QColor qcolorWhite = colorWhite.toQColor();
-}
-
 void RS_Painter::noCapStyle(){
     QPen pen = QPainter::pen();
     pen.setCapStyle(Qt::PenCapStyle::FlatCap);
@@ -1346,10 +1345,8 @@ void RS_Painter::drawRectUI(const RS_Vector& p1, const RS_Vector& p2) {
 }
 
 void RS_Painter::drawHandleWCS(const RS_Vector& wcsPos, const RS_Color& c, int size) {
-    int doubleSize = 2 * size;
-    double uiX, uiY;
-    toGui(wcsPos, uiX, uiY);
-    fillRect((int)(uiX - size), (int)(uiY - size), doubleSize, doubleSize, c);
+    RS_Vector uiPos = toGui(wcsPos);
+    fillRect((int)(uiPos.x - size), (int)(uiPos.y - size), 2 * size, 2 * size, c);
 }
 
 void RS_Painter::setMinRenderableTextHeightInPx(int i) {
