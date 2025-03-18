@@ -27,7 +27,6 @@
 
 LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *ops) :QAbstractItemModel(parent) {
     layerVisible = QIcon(":/icons/visible.lci");
-//    layerHidden = QIcon(":/icons/invisible.lci");
     layerHidden = QIcon(":/icons/not_visible.lci");
     layerDefreeze = QIcon(":/icons/unlocked.lci");
     layerFreeze = QIcon(":/icons/locked.lci");
@@ -364,7 +363,8 @@ void LC_LayerTreeModel::setupDisplayNames(LC_LayerTreeItem* item){
     if (options->showIndentedName){
         int ident = item->getIndent() - 1;
         if (ident > 0){
-           displayName = layerName.rightJustified(ident*options->identSize + layerName.length(), ' ', false);
+            qsizetype justifyWidth = ((qsizetype)ident) * options->identSize;
+            displayName = layerName.rightJustified(justifyWidth + layerName.length(), ' ', false);
            if (options->hideLayerTypeIcons){
                displayName = restoreNamePart(displayName, item->getLayerType()  );
            }
