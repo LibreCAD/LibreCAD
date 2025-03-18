@@ -222,29 +222,29 @@ void QG_CommandWidget::spacePressed() {
 
 void QG_CommandWidget::tabPressed() {
     if (actionHandler) {
-        QStringList reducedChoice;
         QString typed = leCommand->text();
-        QStringList choice;
 
         // check current command:
-        choice = actionHandler->getAvailableCommands();
-        if (choice.count()==0) {
-            choice = RS_COMMANDS->complete(typed);
+        QStringList choices = actionHandler->getAvailableCommands();
+        if (choices.empty()) {
+            choices = RS_COMMANDS->complete(typed);
         }
 
-        for (QStringList::Iterator it = choice.begin(); it != choice.end(); ++it) {
-            if (typed.isEmpty() || (*it).startsWith(typed)) {
-                reducedChoice << (*it);
-            }
-        }
+        QStringList reducedChoices;
+        std::copy_if(choices.cbegin(), choices.cend(), std::back_inserter(reducedChoices), [&typed](const QString& cmd) {
+            return typed.isEmpty() || cmd.startsWith(typed, Qt::CaseInsensitive);
+        });
 
         // command found:
-        if (reducedChoice.count()==1) {
-            leCommand->setText(reducedChoice.first());
+        if (reducedChoices.count()==1) {
+            leCommand->setText(reducedChoices.first());
         }
-        else if (reducedChoice.count()>0) {
-			QString const& proposal = this->getRootCommand(reducedChoice, typed);
-            appendHistory(reducedChoice.join(", "));
+        else if (!reducedChoices.isEmpty()) {
+            const QString proposal = getRootCommand(reducedChoices, typed);
+            appendHistory(reducedChoices.join(", "));
+            const QString aliasFile = RS_Commands::getALiasFile();
+            if (!aliasFile.isEmpty())
+                appendHistory(tr("Command Alias File: %1").arg(aliasFile));
             leCommand -> setText(proposal);
         }
     }

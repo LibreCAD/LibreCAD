@@ -209,6 +209,17 @@ RS_Commands::RS_Commands() {
     }
 }
 
+QString RS_Commands::getALiasFile()
+{
+    QString aliasName = RS_SYSTEM->getAppDataDir();
+    if (aliasName.isEmpty()) {
+        LC_ERR << __func__ << "(): line "<<__LINE__<<": empty alias folder name: aborting";
+        return {};
+    }
+    aliasName += "/librecad.alias";
+    return aliasName;
+}
+
 /**
  * Read existing alias file or create one new.
  * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD\librecad.alias"
@@ -219,12 +230,11 @@ void RS_Commands::updateAlias()
 {
     LC_LOG << __func__ << "(): begin";
 
-    QString aliasName = RS_SYSTEM->getAppDataDir();
+    QString aliasName = getALiasFile();
     if (aliasName.isEmpty()) {
         LC_ERR << __func__ << "(): line "<<__LINE__<<": empty alias folder name: aborting";
         return;
     }
-    aliasName += "/librecad.alias";
 
     QFile aliasFile{aliasName};
     std::map<QString, QString> aliasList = readAliasFile(aliasFile);
