@@ -79,11 +79,12 @@ void RS_ActionBlocksSave::trigger() {
 
             RS2::FormatType t = RS2::FormatDXFRW;
 
-            QG_FileDialog dlg(appWindow->getMDIWindow(), {}, QG_FileDialog::BlockFile);
+            QG_FileDialog dlg(appWindow->getCurrentMDIWindow(), {}, QG_FileDialog::BlockFile);
             const QString fn = dlg.getSaveFile(&t);
             QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 //            g.setModified(true);
-            g.saveAs(fn, t);
+            // fixme - sand - files - restore!!!
+            // g.saveAs(fn, t);
             QApplication::restoreOverrideCursor();
         } else
             commandMessage(tr("No block activated to save"));

@@ -352,7 +352,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     //plugin load
     loadPlugins();
 
-    statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+    showStatusMessage(qApp->applicationName() + " Ready", 2000);
     const char *ownBuildVersion = XSTR(LC_VERSION);
     releaseChecker = new LC_ReleaseChecker( ownBuildVersion,XSTR(LC_PRERELEASE));
     connect(releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
@@ -418,20 +418,20 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
     bool cancelled;
     if (!w) return false;
     if (w->getDocument()->isModified() || forceSaveAs) {
-        name = w->getDocument()->getFilename();
+        name = w->getFileName();
         if (name.isEmpty())
             doActivate(w); // show the user the drawing for save as
         msg = name.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(name);
-        statusBar()->showMessage(msg);
-        bool res = forceSaveAs ? w->slotFileSaveAs(cancelled) : w->slotFileSave(cancelled);
+        showStatusMessage(msg);
+        bool res = forceSaveAs ? w->saveDocumentAs(cancelled) : w->saveDocument(cancelled);
         if (res) {
             if (cancelled) {
-                statusBar()->showMessage(tr("Save cancelled"), 2000);
+                showStatusMessage(tr("Save cancelled"), 2000);
                 return false;
             }
-            name = w->getDocument()->getFilename();
+            name = w->getFileName();
             msg = tr("Saved drawing: %1").arg(name);
-            statusBar()->showMessage(msg, 2000);
+            showStatusMessage(msg, 2000);
             commandWidget->appendHistory(msg);
 
             if (!recentFiles->contains(name)) {
@@ -446,9 +446,9 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
             bool autoBackup = LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true);
             startAutoSave(autoBackup);
         } else {
-            msg = tr("Cannot save the file ") +  w->getDocument()->getFilename()
+            msg = tr("Cannot save the file ") +  w->getFileName()
                   + tr(" , please check the filename and permissions.");
-            statusBar()->showMessage(msg, 2000);
+            showStatusMessage(msg, 2000);
             commandWidget->appendHistory(msg);
             return doSave(w, true);
         }
@@ -511,7 +511,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
         penPaletteWidget->setLayerList(nullptr);
     }
 
-    openedFiles.removeAll(w->getDocument()->getFilename());
+    openedFiles.removeAll(w->getFileName());
 
     activedMdiSubWindow = nullptr;
     actionHandler->set_view(nullptr);
@@ -549,7 +549,7 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
     dlg.setShowSaveAll(showSaveAll);
     dlg.setTitle(tr("Closing Drawing"));
     if (w && w->getDocument()->isModified()) {
-        QString fn = w->getDocument()->getFilename();
+        QString fn = w->getFileName();
         if (fn.isEmpty())
             fn = w->windowTitle();
         else if (fn.length() > 50)
@@ -565,11 +565,11 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
  * Enable the available file actions for this sub-window.
  */
 void QC_ApplicationWindow::enableFileActions(QC_MDIWindow *w) {
-    if (!w || w->getDocument()->getFilename().isEmpty()) {
+    if (!w || w->getFileName().isEmpty()) {
         getAction("FileSave")->setText(tr("&Save"));
         getAction("FileSaveAs")->setText(tr("Save &as..."));
     } else {
-        QString name = format_filename_caption(w->getDocument()->getFilename());
+        QString name = format_filename_caption(w->getFileName());
         getAction("FileSave")->setText(tr("&Save %1").arg(name));
         getAction("FileSaveAs")->setText(tr("Save %1 &as...").arg(name));
     }
@@ -668,7 +668,7 @@ void QC_ApplicationWindow::execPlug() {
     QAction *action = qobject_cast<QAction *>(sender());
     QC_PluginInterface *plugin = qobject_cast<QC_PluginInterface *>(action->parent());
 //get actual drawing
-    QC_MDIWindow *w = getMDIWindow();
+    QC_MDIWindow *w = getCurrentMDIWindow();
     RS_Document *currdoc = w->getDocument();
 //create document interface instance
     QG_GraphicView* graphicView = w->getGraphicView();
@@ -866,7 +866,7 @@ void QC_ApplicationWindow::slotBack() {
 
 void QC_ApplicationWindow::slotKillAllActions() {
     RS_GraphicView* gv = getGraphicView();
-    QC_MDIWindow* m = getMDIWindow();
+    QC_MDIWindow* m = getCurrentMDIWindow();
     if (gv && m && m->getDocument()) {
         gv->killAllActions();
 
@@ -1104,7 +1104,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             updateGridViewActions(isometricGrid, isoViewType);
         }
 
-
         updateActionsAndWidgetsForPrintPreview(printPreview);
 
         if (snapToolBar) {
@@ -1232,14 +1231,12 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
  */
 void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowsMenuActivated");
-
     int ii = qobject_cast<QAction*>(sender())->data().toInt();
     QMdiSubWindow* w = mdiAreaCAD->subWindowList().at(ii);
     if (w) {
         if(w==mdiAreaCAD->activeSubWindow()) {
             return;
         }
-
 		doActivate(w);
     }
 }
@@ -1251,10 +1248,8 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
  */
 void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() begin");
-
     RS_DEBUG->print("Setting active pen...");
-
-    QC_MDIWindow *m = getMDIWindow();
+    QC_MDIWindow *m = getCurrentMDIWindow();
     if (m) {
         m->slotPenChanged(pen);
     }
@@ -1286,7 +1281,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     static int id = 0;
     id++;
 
-    statusBar()->showMessage(tr("Creating new file..."));
+    showStatusMessage(tr("Creating new file..."));
 
     RS_DEBUG->print("  creating MDI window");
 
@@ -1424,7 +1419,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     RS_DEBUG->print("  showing MDI window");
     doActivate(w);
     doArrangeWindows(RS2::CurrentMode);
-    statusBar()->showMessage(tr("New Drawing created."), 2000);
+    showStatusMessage(tr("New Drawing created."), 2000);
 
     layerWidget->activateLayer(0);
 
@@ -1478,7 +1473,7 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
 
     // loads the template file in the new view:
     if (!fileName.isEmpty()) {
-        ret = w->slotFileNewTemplate(fileName, type);
+        ret = w->loadDocumentFromTemplate(fileName, type);
     } else
         //new without template is OK;
         ret = true;
@@ -1510,7 +1505,7 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
     if (!fileName.isEmpty()) {
         QString message = tr("New document from template: ") + fileName;
         commandWidget->appendHistory(message);
-        statusBar()->showMessage(message, 2000);
+        showStatusMessage(message, 2000);
     }
     if (graphic) {
         emit(gridChanged(graphic->isGridOn()));
@@ -1554,7 +1549,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
     QString fileName = dlg.getOpenFile(&type);
 
     if (fileName.isEmpty()) {
-        statusBar()->showMessage(tr("Select Template aborted"), 2000);
+        showStatusMessage(tr("Select Template aborted"), 2000);
         return;
     }
 
@@ -1668,7 +1663,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         if (openedFiles.indexOf(fileName) >= 0) {
             QString message = tr("Warning: File already opened : ") + fileName;
             commandWidget->appendHistory(message);
-            statusBar()->showMessage(message, 2000);
+            showStatusMessage(message, 2000);
         }
         // Create new document window:
         QMdiSubWindow *old = activedMdiSubWindow;
@@ -1712,7 +1707,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         // open the file in the new view:
         bool success = false;
         if (QFileInfo(fileName).exists()) {
-            success = w->slotFileOpen(fileName, type);
+            success = w->loadDocument(fileName, type);
         } else {
             QString msg = tr("Cannot open the file\n%1\nPlease "
                              "check its existence and permissions.").arg(fileName);
@@ -1808,11 +1803,11 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
 
         QString message = tr("Loaded document: ") + fileName;
         commandWidget->appendHistory(message);
-        statusBar()->showMessage(message, 2000);
+        showStatusMessage(message, 2000);
 
     } else {
         QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
-        statusBar()->showMessage(tr("Opening aborted"), 2000);
+        showStatusMessage(tr("Opening aborted"), 2000);
     }
 
     QApplication::restoreOverrideCursor();
@@ -1830,7 +1825,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName) {
 void QC_ApplicationWindow::slotFileSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSave()");
 
-    if (doSave(getMDIWindow()))
+    if (doSave(getCurrentMDIWindow()))
         recentFiles->updateRecentFilesMenu();
 }
 
@@ -1840,18 +1835,18 @@ void QC_ApplicationWindow::slotFileSave() {
  */
 void QC_ApplicationWindow::slotFileSaveAs() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
-    if (doSave(getMDIWindow(), true))
+    if (doSave(getCurrentMDIWindow(), true))
         recentFiles->updateRecentFilesMenu();
 }
 
 bool QC_ApplicationWindow::slotFileSaveAll() {
-    QC_MDIWindow *current = getMDIWindow();
+    QC_MDIWindow *current = getCurrentMDIWindow();
     bool result{true};
     for (auto w: window_list) {
         if (w && w->getDocument()->isModified()) {
             result = doSave(w);
             if (!result) {
-                statusBar()->showMessage(tr("Save All cancelled"), 2000);
+                showStatusMessage(tr("Save All cancelled"), 2000);
                 break;
             }
         }
@@ -1869,34 +1864,34 @@ void QC_ApplicationWindow::slotFileAutoSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave(): begin");
 
     if (!LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true)) {
-        RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::%s: /Defaults/AutoBackupDocument is disabled\n", __func__);
         startAutoSave(false);
         return;
     }
 
-    statusBar()->showMessage(tr("Auto-saving drawing..."), 2000);
+    showStatusMessage(tr("Auto-saving drawing..."), 2000);
 
-    QC_MDIWindow *w = getMDIWindow();
+    QC_MDIWindow *w = getCurrentMDIWindow();
     if (w) {
-        bool cancelled;
-        if (w->slotFileSave(cancelled, true)) {
+        QString autosaveFileName;
+        if (w->autoSaveDocument(autosaveFileName)) {
             // auto-save cannot be cancelled by user, so the
             // "cancelled" parameter is a dummy
-            statusBar()->showMessage(tr("Auto-saved drawing"), 2000);
+            showStatusMessage(tr("Auto-saved drawing"), 2000);
         } else {
             // error
             m_autosaveTimer->stop();
             QMessageBox::information(this, QMessageBox::tr("Warning"),
-                                     tr("Cannot auto-save the file\n%1\nPlease "
-                                        "check the permissions.\n"
-                                        "Auto-save disabled.")
-                                         .arg(w->getDocument()->getAutoSaveFilename()),
-                                     QMessageBox::Ok);
-            statusBar()->showMessage(tr("Auto-saving failed"), 2000);
+                                     tr("Cannot auto-save the file\n%1\nPlease check the permissions.\n"
+                                        "Auto-save disabled.").arg(autosaveFileName),QMessageBox::Ok);
+            showStatusMessage(tr("Auto-saving failed"), 2000);
         }
     }
 }
 
+
+void QC_ApplicationWindow::showStatusMessage(const QString& msg, int timeout){
+    statusBar()->showMessage(msg, 2000);
+}
 
 /**
  * Menu file -> export.
@@ -1904,9 +1899,9 @@ void QC_ApplicationWindow::slotFileAutoSave() {
 void QC_ApplicationWindow::slotFileExport() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
 
-    statusBar()->showMessage(tr("Exporting drawing..."), 2000);
+    showStatusMessage(tr("Exporting drawing..."), 2000);
 
-    QC_MDIWindow *w = getMDIWindow();
+    QC_MDIWindow *w = getCurrentMDIWindow();
     QString fn;
     if (w) {
 
@@ -1948,7 +1943,7 @@ void QC_ApplicationWindow::slotFileExport() {
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
         fileDlg.setDirectory(defDir);
-        fn = QFileInfo(w->getDocument()->getFilename()).baseName();
+        fn = QFileInfo(w->getFileName()).baseName();
         if (fn == nullptr)
             fn = "unnamed";
         fileDlg.selectFile(fn);
@@ -2001,15 +1996,13 @@ void QC_ApplicationWindow::slotFileExport() {
                                           dlg.isBackgroundBlack(), dlg.isBlackWhite());
                 if (ret) {
                     QString message = tr("Exported: %1").arg(fn);
-                    statusBar()->showMessage(message, 2000);
+                    showStatusMessage(message, 2000);
                     commandWidget->appendHistory(message);
                 }
             }
         }
     }
-
 }
-
 
 /**
  * Exports the drawing as a bitmap or another picture format.
@@ -2024,7 +2017,7 @@ bool QC_ApplicationWindow::slotFileExport(
     const QString &name,
     const QString &format, QSize size, QSize borders, bool black, bool bw) {
 
-    QC_MDIWindow *w = getMDIWindow();
+    QC_MDIWindow *w = getCurrentMDIWindow();
     if (w == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "QC_ApplicationWindow::slotFileExport: "
@@ -2040,7 +2033,7 @@ bool QC_ApplicationWindow::slotFileExport(
         return false;
     }
 
-    statusBar()->showMessage(tr("Exporting..."));
+    showStatusMessage(tr("Exporting..."));
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     bool ret = false;
@@ -2100,7 +2093,7 @@ bool QC_ApplicationWindow::slotFileExport(
     }
     QApplication::restoreOverrideCursor();
 
-    statusBar()->showMessage(ret ? tr("Export complete") : tr("Export failed!"), 2000);
+    showStatusMessage(ret ? tr("Export complete") : tr("Export failed!"), 2000);
 
     return ret;
 }
@@ -2164,7 +2157,7 @@ bool QC_ApplicationWindow::slotFileCloseAll() {
                 }
             }
             if (cancel) {
-                statusBar()->showMessage(tr("Close All cancelled"), 2000);
+                showStatusMessage(tr("Close All cancelled"), 2000);
                 return false;
             }
 
@@ -2181,7 +2174,7 @@ bool QC_ApplicationWindow::slotFileCloseAll() {
 void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::slotFilePrint(%s)", printPDF ? "PDF" : "Native");
 
-    QC_MDIWindow *w = getMDIWindow();
+    QC_MDIWindow *w = getCurrentMDIWindow();
     if (w == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "QC_ApplicationWindow::slotFilePrint: "
@@ -2203,11 +2196,11 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         return;
     }
 
-    statusBar()->showMessage(tr("Printing..."));
+    showStatusMessage(tr("Printing..."));
     using namespace LC_Printing;
     PrinterType type = printPDF ? PrinterType::PDF : PrinterType::Printer;
     LC_Printing::Print(*w, type);
-    statusBar()->showMessage(tr("Printing complete"), 2000);
+    showStatusMessage(tr("Printing complete"), 2000);
 }
 
 void QC_ApplicationWindow::slotFilePrintPDF() {
@@ -2232,7 +2225,7 @@ void QC_ApplicationWindow::slotFilePrintPDF() {
 void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview()");
 
-    QC_MDIWindow *parent = getMDIWindow();
+    QC_MDIWindow *parent = getCurrentMDIWindow();
 
     if (!parent) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -2357,7 +2350,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 void QC_ApplicationWindow::slotFileQuit() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileQuit()");
 
-    statusBar()->showMessage(tr("Exiting application..."));
+    showStatusMessage(tr("Exiting application..."));
 
     if (queryExit(false)) {
         qApp->quit();
@@ -2373,7 +2366,7 @@ void QC_ApplicationWindow::slotFileQuit() {
 void QC_ApplicationWindow::slotViewGrid(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewGrid()");
 
-    QC_MDIWindow *m = getMDIWindow();
+    QC_MDIWindow *m = getCurrentMDIWindow();
     if (m) {
         RS_Graphic *g = m->getGraphic();
         if (g) {
@@ -2679,7 +2672,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
  */
 void QC_ApplicationWindow::slotImportBlock() {
 
-    if (getMDIWindow() == nullptr) {
+    if (getCurrentMDIWindow() == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "QC_ApplicationWindow::slotImportBlock: "
                         "no window opened");
@@ -2735,7 +2728,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
         QString activeFile = "";
         if (saveOpenedFiles) {
             for (auto w: window_list) {
-                QString fileName = w->getDocument()->getFilename();
+                QString fileName = w->getFileName();
                 if (activedMdiSubWindow != nullptr && activedMdiSubWindow == w) {
                     activeFile = fileName;
                 }
@@ -2811,20 +2804,20 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
     QMainWindow::keyPressEvent(e);
 }
 
-
-
-
 void QC_ApplicationWindow::createNewDocument(
     const QString &fileName, RS_Document *doc) {
-
     slotFileNew(doc);
-    if (fileName != QString() && getDocument()) {
-        getDocument()->setFilename(fileName);
+    if (!fileName.isEmpty()) {
+        RS_Document* doc = getCurrentDocument();
+        if (doc != nullptr) {
+            RS_Graphic* g = doc->getGraphic();
+            // fixme - sand - files - check for blocks and fonts case!!!
+            g->setFilename(fileName);
+        }
     }
 }
 
 void QC_ApplicationWindow::updateWindowTitle(QWidget *w) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
     bool draftMode = LC_GET_ONE_BOOL("Appearance","DraftMode");
     if (draftMode) {
         QString draft_string = " [" + tr("Draft Mode") + "]";
@@ -2836,7 +2829,7 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w) {
 void QC_ApplicationWindow::relayAction(QAction *q_action) {
     // author: ravas
 
-    auto view = getMDIWindow()->getGraphicView();
+    auto view = getCurrentMDIWindow()->getGraphicView();
     if (!view) {   // when switching back to LibreCAD from another program
         // occasionally no drawings are activated
         qWarning("relayAction: graphicView is nullptr");
@@ -2846,6 +2839,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
     // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
     bool setAsCurrentActionInView = true;
     if (ag_manager->getActionByName("LockRelativeZero") == q_action){
+        // other actions may be added later
         setAsCurrentActionInView = false;
     }
     if (setAsCurrentActionInView) {
@@ -2902,7 +2896,7 @@ void QC_ApplicationWindow::hideOptions(QC_MDIWindow *win) {
 void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
 
-    statusBar()->showMessage(tr("Opening recent file..."));
+    showStatusMessage(tr("Opening recent file..."));
     QString fileName = action->data().toString();
     slotFileOpen(fileName, RS2::FormatUnknown);
 }

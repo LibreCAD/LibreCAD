@@ -41,8 +41,8 @@ public:
 	   * @return Pointer to the currently active MDI Window or nullptr if no
      * MDI Window is active.
      */
-    const QC_MDIWindow* getMDIWindow() const;
-    QC_MDIWindow* getMDIWindow();
+    const QC_MDIWindow* getCurrentMDIWindow() const;
+    QC_MDIWindow* getCurrentMDIWindow();
 
     /**
    * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -59,10 +59,9 @@ public:
      * @return Pointer to the graphic document of the currently active document
 	    * window or nullptr if no window is available.
      */
-    const RS_Document* getDocument() const;
-    RS_Document* getDocument();
-
-
+    const RS_Document* getCurrentDocument() const;
+    RS_Document* getCurrentDocument();
+    QString getCurrentDocumentFileName() const;
     /**
      * Find opened window for specified document.
      */

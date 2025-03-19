@@ -125,6 +125,8 @@ public:
         }
     }
 
+    void showStatusMessage(const QString& msg, int timeout = 0);
+
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();

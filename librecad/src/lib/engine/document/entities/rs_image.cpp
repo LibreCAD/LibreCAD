@@ -40,25 +40,36 @@
 
 namespace
 {
+// fixme - sand - files - move to utility for relative paths calculations
+
+
 // Return the file path name to use relative to the dxf file folder
     QString imageRelativePathName(QString& imageFile){
-        auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
-        if (doc == nullptr || imageFile.isEmpty())
+        // fixme - sand - files - this logic is incorrect, as it relies on the currently open document.
+        // relative part should be calculated via graphics...
+        auto currentDocumentFileName = QC_ApplicationWindow::getAppWindow()->getCurrentDocumentFileName();
+        if (currentDocumentFileName.isEmpty() || imageFile.isEmpty()) {
             return imageFile;
-        QFileInfo dxfFileInfo(doc->getFilename());
+        }
+
+        QFileInfo dxfFileInfo(currentDocumentFileName);
         QFileInfo fileInfo(imageFile);
-        // file exists as input file path
-        if (fileInfo.exists()) {
+        QString result;
+        if (fileInfo.exists()) {  // file exists as input file path
             QDir dxfDir(dxfFileInfo.canonicalPath());
             imageFile = dxfDir.relativeFilePath(imageFile);
-            return fileInfo.canonicalFilePath();
+            result = fileInfo.canonicalFilePath();
         }
-        // test a relative file path from the dxf file folder
-        fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
-        if (fileInfo.exists())
-            return fileInfo.canonicalFilePath();
-        // search the current folder of the dxf for the dxf file name
-        return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
+        else { // test a relative file path from the dxf file folder
+            fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
+            if (fileInfo.exists()) {
+                result = fileInfo.canonicalFilePath();
+            }
+            else { // search the current folder of the dxf for the dxf file name
+                result = dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
+            }
+        }
+        return result;
     }
 }
 

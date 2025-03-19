@@ -54,7 +54,7 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow()");
 
     auto& appWindow = QC_ApplicationWindow::getAppWindow();
-    QC_MDIWindow* parent = appWindow->getMDIWindow();
+    QC_MDIWindow* parent = appWindow->getCurrentMDIWindow();
 
     if (!appWindow || !parent) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QC_DialogFactory::requestEditBlockWindow(): nullptr ApplicationWindow or MDIWindow");

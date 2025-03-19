@@ -2250,13 +2250,13 @@ void RS_FilterDXFRW::writeVports(){
         vp.gridSpacing.y = 10;
     }
     RS_GraphicView *gv = graphic->getGraphicView();
-	if (gv ) {
-     LC_GraphicViewport *viewport = gv->getViewPort();
-     RS_Vector fac = viewport->getFactor();
-        vp.height = gv->getHeight()/fac.y;
-        vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
-        vp.center.x = ( gv->getWidth() - viewport->getOffsetX() )/ (fac.x * 2.0);
-        vp.center.y = ( gv->getHeight() - viewport->getOffsetY() )/ (fac.y * 2.0);
+    if (gv) {
+        LC_GraphicViewport *viewport = gv->getViewPort();
+        RS_Vector fac = viewport->getFactor();
+        vp.height = gv->getHeight() / fac.y;
+        vp.ratio = (double) gv->getWidth() / (double) gv->getHeight();
+        vp.center.x = (gv->getWidth() - viewport->getOffsetX()) / (fac.x * 2.0);
+        vp.center.y = (gv->getHeight() - viewport->getOffsetY()) / (fac.y * 2.0);
     }
     dxfW->writeVport(&vp);
 }

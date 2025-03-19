@@ -39,7 +39,7 @@ LC_MDIApplicationWindow::LC_MDIApplicationWindow():
 
 
 RS_GraphicView const *LC_MDIApplicationWindow::getGraphicView() const {
-    QC_MDIWindow const *m = getMDIWindow();
+    QC_MDIWindow const *m = getCurrentMDIWindow();
     if (m) {
         return m->getGraphicView();
     }
@@ -47,34 +47,44 @@ RS_GraphicView const *LC_MDIApplicationWindow::getGraphicView() const {
 }
 
 RS_GraphicView *LC_MDIApplicationWindow::getGraphicView() {
-    QC_MDIWindow *m = getMDIWindow();
+    QC_MDIWindow *m = getCurrentMDIWindow();
     if (m) {
         return m->getGraphicView();
     }
     return nullptr;
 }
 
-RS_Document const *LC_MDIApplicationWindow::getDocument() const {
-    QC_MDIWindow const *m = getMDIWindow();
+RS_Document const *LC_MDIApplicationWindow::getCurrentDocument() const {
+    QC_MDIWindow const *m = getCurrentMDIWindow();
     if (m) {
         return m->getDocument();
     }
     return nullptr;
 }
 
-RS_Document *LC_MDIApplicationWindow::getDocument() {
-    QC_MDIWindow *m = getMDIWindow();
+RS_Document *LC_MDIApplicationWindow::getCurrentDocument() {
+    QC_MDIWindow *m = getCurrentMDIWindow();
     if (m) {
         return m->getDocument();
     }
     return nullptr;
+}
+
+QString LC_MDIApplicationWindow::getCurrentDocumentFileName() const{
+    const RS_Document* doc = getCurrentDocument();
+    if (doc == nullptr) {
+        return "";
+    }
+    else {
+        return doc->getGraphic()->getFilename();
+    }
 }
 
 /**
  * @return Pointer to the currently active MDI Window or nullptr if no
  * MDI Window is active.
  */
-QC_MDIWindow const* LC_MDIApplicationWindow::getMDIWindow() const{
+QC_MDIWindow const* LC_MDIApplicationWindow::getCurrentMDIWindow() const{
     if (mdiAreaCAD) {
         QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
         if(w) {
@@ -84,7 +94,7 @@ QC_MDIWindow const* LC_MDIApplicationWindow::getMDIWindow() const{
     return nullptr;
 }
 
-QC_MDIWindow* LC_MDIApplicationWindow::getMDIWindow(){
+QC_MDIWindow* LC_MDIApplicationWindow::getCurrentMDIWindow(){
     if (mdiAreaCAD) {
         QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
         if(w) {
@@ -144,10 +154,8 @@ QC_MDIWindow *LC_MDIApplicationWindow::getWindowWithDoc(const RS_Document *doc) 
 void LC_MDIApplicationWindow::activateWindowWithFile(QString &fileName) {
     if (!fileName.isEmpty()) {
             foreach (QC_MDIWindow *w, window_list) {
-                if (w != nullptr) {}
-                RS_Document *doc = w->getDocument();
-                if (doc != nullptr) {
-                    const QString &docFileName = doc->getFilename();
+                if (w != nullptr) {
+                    const QString &docFileName = w->getDocumentFileName();
                     if (fileName == docFileName) {
                         doActivate(w);
                         break;

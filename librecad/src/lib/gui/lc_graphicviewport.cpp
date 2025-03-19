@@ -390,7 +390,8 @@ void LC_GraphicViewport::fireUcsChanged(LC_UCS *ucs) {
 }
 
 void LC_GraphicViewport::firePreviousZoomChanged([[maybe_unused]]bool value) {
-// fixme - ucs - complete
+// fixme - ucs - complete - restore!!!
+//     emit previous_zoom_state(true);
 }
 
 void LC_GraphicViewport::fireRelativeZeroChanged(const RS_Vector &pos){
@@ -657,7 +658,6 @@ void LC_GraphicViewport::saveView() {
     if (savedViewCount < savedViews.size()) savedViewCount++;
 
     if (savedViewCount == 1) {
-//        emit previous_zoom_state(true);
         firePreviousZoomChanged(true);
     }
 }

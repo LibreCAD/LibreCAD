@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.30)
+#cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.28)
 project(LibreCAD VERSION 2.2.2)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -187,7 +188,6 @@ include_directories(librecad/src/ui/action_options/image)
 include_directories(librecad/src/ui/action_options/misc)
 include_directories(librecad/src/ui/action_options/insert)
 include_directories(librecad/src/ui/action_options/other)
-#include_directories(librecad/src/ui/not_used)
 include_directories(librecad/src/ui/actions)
 include_directories(librecad/src/ui/components)
 include_directories(librecad/src/ui/components/comboboxes)
@@ -201,6 +201,7 @@ include_directories(librecad/src/ui/forms)
 include_directories(librecad/src/ui/generic)
 include_directories(librecad/src/ui/view)
 include_directories(librecad/src/ui/main)
+include_directories(librecad/src/ui/main/persistence)
 include_directories(librecad/src/ui/dock_widgets)
 include_directories(librecad/src/ui/dock_widgets/command_line)
 include_directories(librecad/src/ui/dock_widgets/pen_wizard)
@@ -440,20 +441,12 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/text/rs_actiondrawtext.h
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.h
-		librecad/src/actions/not_used/rs_actioneditpaste.cpp
-		librecad/src/actions/not_used/rs_actioneditpaste.h
 		librecad/src/actions/drawing/edit/rs_actioneditundo.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditundo.h
-		librecad/src/actions/file/rs_actionfilenew.cpp
-		librecad/src/actions/file/rs_actionfilenew.h
 		librecad/src/actions/file/rs_actionfilenewtemplate.cpp
 		librecad/src/actions/file/rs_actionfilenewtemplate.h
 		librecad/src/actions/file/rs_actionfileopen.cpp
 		librecad/src/actions/file/rs_actionfileopen.h
-		librecad/src/actions/file/rs_actionfilesave.cpp
-		librecad/src/actions/file/rs_actionfilesave.h
-		librecad/src/actions/file/rs_actionfilesaveas.cpp
-		librecad/src/actions/file/rs_actionfilesaveas.h
 		librecad/src/actions/drawing/info/rs_actioninfoangle.cpp
 		librecad/src/actions/drawing/info/rs_actioninfoangle.h
 		librecad/src/actions/drawing/info/rs_actioninfoarea.cpp
@@ -496,8 +489,6 @@ set(SOURCES
 		librecad/src/actions/drawing/modify/rs_actionmodifydelete.h
 		librecad/src/actions/drawing/modify/rs_actionmodifydeletefree.cpp
 		librecad/src/actions/drawing/modify/rs_actionmodifydeletefree.h
-		librecad/src/actions/not_used/rs_actionmodifydeletequick.cpp
-		librecad/src/actions/not_used/rs_actionmodifydeletequick.h
 		librecad/src/actions/drawing/modify/rs_actionmodifyentity.cpp
 		librecad/src/actions/drawing/modify/rs_actionmodifyentity.h
 		librecad/src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp
@@ -566,18 +557,12 @@ set(SOURCES
 		librecad/src/actions/drawing/selection/rs_actionselectwindow.h
 		librecad/src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp
 		librecad/src/actions/drawing/rel_zero/rs_actionsetrelativezero.h
-		librecad/src/actions/not_used/rs_actionsetsnapmode.cpp
-		librecad/src/actions/not_used/rs_actionsetsnapmode.h
-		librecad/src/actions/not_used/rs_actionsetsnaprestriction.cpp
-		librecad/src/actions/not_used/rs_actionsetsnaprestriction.h
 		librecad/src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp
 		librecad/src/actions/drawing/snap/rs_actionsnapintersectionmanual.h
 		librecad/src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp
 		librecad/src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.h
 		librecad/src/actions/drawing/zoom/rs_actionzoomauto.cpp
 		librecad/src/actions/drawing/zoom/rs_actionzoomauto.h
-		librecad/src/actions/not_used/rs_actionzoomautoy.cpp
-		librecad/src/actions/not_used/rs_actionzoomautoy.h
 		librecad/src/actions/drawing/zoom/rs_actionzoomin.cpp
 		librecad/src/actions/drawing/zoom/rs_actionzoomin.h
 		librecad/src/actions/drawing/zoom/rs_actionzoompan.cpp
@@ -592,7 +577,7 @@ set(SOURCES
 		librecad/src/actions/drawing/zoom/rs_actionzoomwindow.h
         librecad/src/cmd/rs_commands.cpp
         librecad/src/cmd/rs_commands.h
-	librecad/src/cmd/lc_commandItems.h
+		librecad/src/cmd/lc_commandItems.h
         librecad/src/lib/actions/rs_actioninterface.cpp
         librecad/src/lib/actions/rs_actioninterface.h
 		librecad/src/lib/engine/overlays/preview/rs_preview.cpp
@@ -873,8 +858,6 @@ set(SOURCES
 		librecad/src/ui/components/status_bar/qg_coordinatewidget.h
 		librecad/src/ui/dialogs/entity/qg_dimensionlabeleditor.cpp
 		librecad/src/ui/dialogs/entity/qg_dimensionlabeleditor.h
-		#[[	librecad/src/ui/not_used/qg_dimlinearoptions.cpp
-            librecad/src/ui/not_used/qg_dimlinearoptions.h]]
 		librecad/src/ui/action_options/dimensions/qg_dimoptions.cpp
 		librecad/src/ui/action_options/dimensions/qg_dimoptions.h
 		librecad/src/ui/dialogs/entity/qg_dlgarc.cpp
@@ -953,8 +936,6 @@ set(SOURCES
 		librecad/src/ui/action_options/line/qg_lineparalleloptions.h
 		librecad/src/ui/action_options/line/qg_lineparallelthroughoptions.cpp
 		librecad/src/ui/action_options/line/qg_lineparallelthroughoptions.h
-        librecad/src/ui/not_used/qg_linepolygon2options.cpp
-        librecad/src/ui/not_used/qg_linepolygon2options.h
 		librecad/src/ui/action_options/polygon/qg_linepolygonoptions.cpp
 		librecad/src/ui/action_options/polygon/qg_linepolygonoptions.h
 		librecad/src/ui/action_options/line/qg_linerelangleoptions.cpp
@@ -1005,8 +986,6 @@ set(SOURCES
 #        librecad/src/ui/generic/customtoolbarcreator.h
 #        librecad/src/ui/generic/customwidgetcreator.cpp
 #        librecad/src/ui/generic/customwidgetcreator.h
-#		librecad/src/ui/not_used/linklist.cpp
-#		librecad/src/ui/not_used/linklist.h
 		librecad/src/ui/components/textfileviewer.cpp
 		librecad/src/ui/components/textfileviewer.h
 		librecad/src/ui/components/creators/widgetcreator.cpp
@@ -1017,8 +996,6 @@ set(SOURCES
 		librecad/src/ui/actions/lc_actiongroupmanager.h
 		librecad/src/ui/view/lc_centralwidget.cpp
 		librecad/src/ui/view/lc_centralwidget.h
-#		librecad/src/ui/not_used/lc_customtoolbar.cpp
-#		librecad/src/ui/not_used/lc_customtoolbar.h
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.cpp
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.h
 		librecad/src/ui/dock_widgets/lc_dockwidget.cpp
@@ -1065,7 +1042,6 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/library_widget/qg_librarywidget.h
 		librecad/src/ui/components/comboboxes/qg_linetypebox.cpp
 		librecad/src/ui/components/comboboxes/qg_linetypebox.h
-#		librecad/src/ui/not_used/qg_mainwindowinterface.h
 		librecad/src/ui/components/comboboxes/qg_patternbox.cpp
 		librecad/src/ui/components/comboboxes/qg_patternbox.h
 		librecad/src/ui/components/toolbars/qg_pentoolbar.cpp
@@ -1441,6 +1417,38 @@ set(SOURCES
 		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
 		librecad/src/lib/engine/utils/lc_rectregion.h
 		librecad/src/lib/engine/utils/lc_rectregion.cpp
+		librecad/src/lib/engine/document/io/lc_graphicio.h
+		librecad/src/lib/engine/document/io/lc_graphicio.cpp
+		librecad/src/ui/main/persistence/lc_documentsstorage.h
+		librecad/src/ui/main/persistence/lc_documentsstorage.cpp
+
+
+#[[	librecad/src/ui/not_used/qg_dimlinearoptions.cpp
+                   librecad/src/ui/not_used/qg_dimlinearoptions.h]]
+#		librecad/src/ui/not_used/qg_linepolygon2options.cpp
+#		librecad/src/ui/not_used/qg_linepolygon2options.h
+#		librecad/src/ui/not_used/linklist.cpp
+#		librecad/src/ui/not_used/linklist.h
+#		librecad/src/ui/not_used/lc_customtoolbar.cpp
+#		librecad/src/ui/not_used/lc_customtoolbar.h
+#		librecad/src/ui/not_used/qg_mainwindowinterface.h
+#		librecad/src/actions/not_used/rs_actionzoomautoy.cpp
+#		librecad/src/actions/not_used/rs_actionzoomautoy.h
+#		librecad/src/actions/not_used/rs_actionsetsnapmode.cpp
+#		librecad/src/actions/not_used/rs_actionsetsnapmode.h
+#		librecad/src/actions/not_used/rs_actionsetsnaprestriction.cpp
+#		librecad/src/actions/not_used/rs_actionsetsnaprestriction.h
+#		librecad/src/actions/not_used/rs_actionmodifydeletequick.cpp
+#		librecad/src/actions/not_used/rs_actionmodifydeletequick.h
+#		librecad/src/actions/not_used/rs_actioneditpaste.cpp
+#		librecad/src/actions/not_used/rs_actioneditpaste.h
+#		librecad/src/actions/not_used/rs_actionfilenew.cpp
+#		librecad/src/actions/not_used/rs_actionfilenew.h
+#		librecad/src/actions/not_used/rs_actionfilesave.cpp
+#		librecad/src/actions/not_used/rs_actionfilesave.h
+#		librecad/src/actions/not_used/rs_actionfilesaveas.cpp
+#		librecad/src/actions/not_used/rs_actionfilesaveas.h
+
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

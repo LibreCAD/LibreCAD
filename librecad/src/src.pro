@@ -286,6 +286,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
     lib/actions/lc_overlayboxaction.h \
+    lib/engine/document/io/lc_graphicio.h \
     lib/engine/document/ucs/lc_ucslist.h \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h \
     lib/engine/overlays/highlight/lc_highlight.h \
@@ -388,7 +389,8 @@ HEADERS += \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
-    lib/gui/render/lc_graphicviewportrenderer.h \    
+    lib/gui/render/lc_graphicviewportrenderer.h \     \
+    ui/main/persistence/lc_documentsstorage.h
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
     lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
@@ -485,6 +487,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     lib/actions/lc_overlayboxaction.cpp \
+    lib/engine/document/io/lc_graphicio.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
@@ -499,7 +502,8 @@ SOURCES += \
     lib/engine/utils/lc_rectregion.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
-    lib/gui/render/headless/lc_printviewportrenderer.cpp \    
+    lib/gui/render/headless/lc_printviewportrenderer.cpp \     \
+    ui/main/persistence/lc_documentsstorage.cpp
     lib/gui/render/lc_graphicviewportrenderer.cpp \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \

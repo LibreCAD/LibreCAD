@@ -30,13 +30,14 @@
 #include <QMdiSubWindow>
 #include <QList>
 #include "rs.h"
+#include "rs_graphic.h"
 #include "rs_layerlistlistener.h"
 #include "rs_blocklistlistener.h"
 #include "lc_viewslist.h"
-
+#include "persistence/lc_documentsstorage.h"
 class QG_GraphicView;
 class RS_Document;
-class RS_Graphic;
+
 class RS_Pen;
 class QMdiArea;
 class RS_EventHandler;
@@ -52,58 +53,51 @@ class QC_MDIWindow: public QMdiSubWindow,
                     public RS_BlockListListener,
                     public LC_ViewListListener
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    QC_MDIWindow(RS_Document* doc,
-                 QWidget* parent,
-                 bool printPreview);
-    ~QC_MDIWindow() override;
+void addWidgetsListeners();
+void setupGraphicView(QWidget *parent, bool printPreview);
+QC_MDIWindow(RS_Document* doc,
+             QWidget* parent,
+             bool printPreview);
+void removeWidgetsListeners();
+~QC_MDIWindow() override;
 
 public slots:
-
-	void slotPenChanged(const RS_Pen& p);
+    void slotPenChanged(const RS_Pen& p);
     void slotFileNew();
-    bool slotFileNewTemplate(const QString& fileName, RS2::FormatType type);
-    bool slotFileOpen(const QString& fileName, RS2::FormatType type);
-    bool slotFileSave(bool &cancelled, bool isAutoSave=false);
-    bool slotFileSaveAs(bool &cancelled);
+    bool loadDocumentFromTemplate(const QString& fileName, RS2::FormatType type);
+    bool loadDocument(const QString& fileName, RS2::FormatType type);
+    bool saveDocument(bool &cancelled, bool isAutoSave=false);
+bool autoSaveDocument(QString &autosaveFileName);
+bool saveDocumentAs(bool &cancelled);
     void slotFilePrint();
     void slotZoomAuto();
 
 public:
     /** @return Pointer to graphic view */
-	QG_GraphicView* getGraphicView() const;
+    QG_GraphicView* getGraphicView() const;
 
     /** @return Pointer to document */
-	RS_Document* getDocument() const;
-	
-    /** @return Pointer to graphic or NULL */
-	RS_Graphic* getGraphic() const;
+    RS_Document* getDocument() const;
+QString getDocumentFileName() const;
+/** @return Pointer to graphic or NULL */
+    RS_Graphic* getGraphic() const;
 
-	/** @return Pointer to current event handler */
-	RS_EventHandler* getEventHandler() const;
+/** @return Pointer to current event handler */
+    RS_EventHandler* getEventHandler() const;
 
     void addChildWindow(QC_MDIWindow* w);
     void removeChildWindow(QC_MDIWindow* w);
-	QList<QC_MDIWindow*>& getChildWindows();
+    QList<QC_MDIWindow*>& getChildWindows();
 
     QC_MDIWindow* getPrintPreview();
 
-    // Methods from RS_LayerListListener Interface:
-    void layerListModified(bool) override {
-        setWindowModified(document->isModified());
-    }
-
-    // Methods from RS_BlockListListener Interface:
-    void blockListModified(bool) override {
-        setWindowModified(document->isModified());
-    }
-
-    void viewsListModified([[maybe_unused]]bool changed) override {
-        setWindowModified(document->isModified());
-    }
-
+    void layerListModified(bool) override;
+    void blockListModified(bool) override;
+    void viewsListModified([[maybe_unused]]bool changed);
+    QString getFileName() const;
     /**
      * Sets the parent window that will be notified if this window
      * is closed or NULL.
@@ -116,36 +110,31 @@ public:
      */
     unsigned getId() const;
 
-	friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
-
+    friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
     bool has_children() const;
-
 protected:
-    void closeEvent(QCloseEvent*) override;
+    LC_DocumentsStorage* storage;
 
-private:
-    void drawChars();
-
-private:
-    /** window ID */
+     // window ID
     unsigned id = 0;
-    /** Graphic view */
+
+     // Graphic view
     QG_GraphicView* graphicView = nullptr;
-    /** Document */
+
+     // Document
     RS_Document* document = nullptr;
-    /** Does the window own the document? */
+
+    // Does the window own the document?
     bool m_owner = false;
-    /**
-     * List of known child windows that show blocks of the same drawing.
-     */
+
+    // List of known child windows that show blocks of the same drawing.
     QList<QC_MDIWindow*> childWindows;
-    /**
-     * Pointer to parent window which needs to know if this window 
-     * is closed or NULL.
-     */
+
+    //  Pointer to parent window which needs to know if this window is closed or NULL.
     QC_MDIWindow* parentWindow{nullptr};
     QMdiArea* cadMdiArea = nullptr;
+
+    void drawChars();
+    void closeEvent(QCloseEvent*) override;
 };
-
-
 #endif
