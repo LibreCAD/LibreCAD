@@ -785,6 +785,9 @@ void RS_Graphic::setModified(bool m) {
         namedViewsList.setModified(m);
         ucsList.setModified(m);
     }
+    if (modificationListener != nullptr) {
+        modificationListener->graphicModified(this, m);
+    }
 }
 
 void RS_Graphic::markSaved(const QDateTime &lastSaveTime){

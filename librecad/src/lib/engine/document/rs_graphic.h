@@ -35,6 +35,11 @@
 
 class QG_LayerWidget;
 
+class LC_GraphicModificationListener {
+public:
+    virtual void graphicModified(RS_Graphic* g, bool modified) = 0;
+};
+
 /**
  * A graphic document which can contain entities layers and blocks.
  *
@@ -249,7 +254,7 @@ public:
 
     void setAutosaveFileName(const QString &autosaveFilename);
 
-
+    void setModificationListener(LC_GraphicModificationListener * listener) {modificationListener = listener;};
 private:
     QDateTime lastSaveTime;
     QString currentFileName; //keep a copy of filename for the modifiedTime
@@ -279,5 +284,7 @@ private:
     QString filename;
     /** Auto-save file name of document. */
     QString autosaveFilename;
+
+    LC_GraphicModificationListener* modificationListener = nullptr;
 };
 #endif

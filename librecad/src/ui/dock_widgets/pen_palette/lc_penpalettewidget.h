@@ -45,8 +45,7 @@ public:
     virtual ~LC_PenPaletteWidget() = default ;
 
     void setMdiWindow(QC_MDIWindow* mdiWindow);
-    void setLayerList(RS_LayerList *ll);
-
+    void setDocumentAndView(RS_Document *doc, RS_GraphicView *gview);
 signals:
     void escape();
 
@@ -88,7 +87,7 @@ public slots:
     void onModelChanged();
     void doDoubleClick();
     void updatePenToolbarByActiveLayer();
-private:
+protected:
     // mouse click counter used for handling both single click and double-click on table view
     int clicksCount {0};
      QC_MDIWindow* mdi_win = nullptr;
@@ -127,6 +126,7 @@ private:
     void onTableRowDoubleClicked();
     void onPersistentItemsChanged();
     bool invokeUnableToSavePenDataDialog();
+    void setLayerList(RS_LayerList *ll);
 };
 
 

@@ -606,7 +606,6 @@ void LC_NamedViewsListWidget::restoreView(LC_View *view) {
    }
 }
 
-
 void LC_NamedViewsListWidget::fillViewsList(QList<LC_View *> &list) {
     if (currentViewList != nullptr){
         viewsModel->fillViewsList(list);

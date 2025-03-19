@@ -1283,6 +1283,15 @@ void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index)
     markEditingPenChanged(true);
 }
 
+void LC_PenPaletteWidget::setDocumentAndView(RS_Document *doc, [maybe_unused]RS_GraphicView *gview){
+    if (doc == nullptr) {
+        setLayerList(nullptr);
+    }
+    else {
+        setLayerList(doc->getLayerList());
+    }
+}
+
 /**
  * setter for layers list
  * @param ll

@@ -1184,7 +1184,7 @@ void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {
     bool allowBackup = cbAutoBackup->isChecked();
     cbAutoSaveTime->setEnabled(allowBackup);
     auto &appWindow = QC_ApplicationWindow::getAppWindow();
-    appWindow->startAutoSave(allowBackup);
+    appWindow->startAutoSaveTimer(allowBackup);
 }
 
 void QG_DlgOptionsGeneral::initReferencePoints() {

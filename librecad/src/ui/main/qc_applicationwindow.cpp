@@ -343,7 +343,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     // Activate autosave timer
     bool allowAutoSave = settings.value("Defaults/AutoBackupDocument", 1).toBool();
-    startAutoSave(allowAutoSave);
+    startAutoSaveTimer(allowAutoSave);
 
     // Disable menu and toolbar items
     //emit windowsChanged(false);
@@ -373,25 +373,27 @@ void QC_ApplicationWindow::onNewVersionAvailable() {
     }
 }
 
-void QC_ApplicationWindow::startAutoSave(bool startAutoBackup) {
+void QC_ApplicationWindow::startAutoSaveTimer(bool startAutoBackup) {
     if (startAutoBackup) {
         if (m_autosaveTimer == nullptr) {
             m_autosaveTimer = std::make_unique<QTimer>(this);
             m_autosaveTimer->setObjectName("autosave");
-            connect(m_autosaveTimer.get(), &QTimer::timeout, this, &QC_ApplicationWindow::slotFileAutoSave);
+            connect(m_autosaveTimer.get(), &QTimer::timeout, this, &QC_ApplicationWindow::autoSaveCurrentDrawing);
         }
         if (!m_autosaveTimer->isActive()) {
             // autosaving has been turned on. Make a backup immediately
             LC_GROUP_GUARD("Defaults");
             {
                 LC_SET("AutoBackupDocument", 1);
-                slotFileAutoSave();
+                autoSaveCurrentDrawing();
                 int ms = 60000 * LC_GET_INT("AutoSaveTime", 5);
                 m_autosaveTimer->start(ms);
             }
         }
     } else {
-        m_autosaveTimer.reset();
+        if (m_autosaveTimer != nullptr) {
+            m_autosaveTimer.reset();
+        }
     }
 }
 
@@ -406,8 +408,6 @@ std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow(){
     return instance;
 }
 
-
-
 /**
  * Force-Save(as) the content of the sub window.  Retry on failure.
  * @return true success (or window was not modified)
@@ -416,11 +416,14 @@ std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow(){
 bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
     QString name, msg;
     bool cancelled;
-    if (!w) return false;
+    if (!w) {
+        return false;
+    }
     if (w->getDocument()->isModified() || forceSaveAs) {
         name = w->getFileName();
-        if (name.isEmpty())
+        if (name.isEmpty()) {
             doActivate(w); // show the user the drawing for save as
+        }
         msg = name.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(name);
         showStatusMessage(msg);
         bool res = forceSaveAs ? w->saveDocumentAs(cancelled) : w->saveDocument(cancelled);
@@ -444,7 +447,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
 
 
             bool autoBackup = LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true);
-            startAutoSave(autoBackup);
+            startAutoSaveTimer(autoBackup);
         } else {
             msg = tr("Cannot save the file ") +  w->getFileName()
                   + tr(" , please check the filename and permissions.");
@@ -481,9 +484,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
         layerWidget->setLayerList(nullptr, false);
 
         if (layerTreeWidget != nullptr) {
-            layerTreeWidget->setLayerList(nullptr);
-            layerTreeWidget->set_view(nullptr);
-            layerTreeWidget->set_document(nullptr);
+            layerTreeWidget->setGraphicAndView(nullptr, nullptr);
         }
 
         if (namedViewsWidget != nullptr){
@@ -738,7 +739,6 @@ void QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent *event) {
     }
 }
 
-
 void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
     previousZoomEnable=enable;
     if(previousZoom){
@@ -769,8 +769,9 @@ void QC_ApplicationWindow::slotEnableActions(bool enable) {
 }
 
 void QC_ApplicationWindow::slotUpdateActiveLayer() {
-    if (layerWidget && m_pActiveLayerName)
+    if (layerWidget && m_pActiveLayerName) {
         m_pActiveLayerName->activeLayerChanged(layerWidget->getActiveName());
+    }
 }
 
 /**
@@ -858,25 +859,21 @@ void QC_ApplicationWindow::storeSettings() {
  * Goes back to the previous menu or one step in the current action.
  */
 void QC_ApplicationWindow::slotBack() {
-    RS_GraphicView* graphicView = getGraphicView();
+    RS_GraphicView* graphicView = getCurrentGraphicView();
     if (graphicView) {
         graphicView->back();
     }
 }
 
 void QC_ApplicationWindow::slotKillAllActions() {
-    RS_GraphicView* gv = getGraphicView();
+    RS_GraphicView* gv = getCurrentGraphicView();
     QC_MDIWindow* m = getCurrentMDIWindow();
     if (gv && m && m->getDocument()) {
         gv->killAllActions();
 
         RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv->getViewPort());
         s.selectAll(false);
-        RS_DIALOGFACTORY->updateSelectionWidget(
-                    m->getDocument()->countSelected(),
-                    m->getDocument()->totalSelectedLength()
-                    );
-
+        RS_DIALOGFACTORY->updateSelectionWidget(m->getDocument()->countSelected(),m->getDocument()->totalSelectedLength());
         gv->redraw(RS2::RedrawAll);
     }
 }
@@ -886,7 +883,7 @@ void QC_ApplicationWindow::slotKillAllActions() {
  */
 void QC_ApplicationWindow::slotEnter() {
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): begin\n");
-    RS_GraphicView *graphicView = getGraphicView();
+    RS_GraphicView *graphicView = getCurrentGraphicView();
     if (graphicView) {
         graphicView->enter();
     }
@@ -909,12 +906,11 @@ void QC_ApplicationWindow::slotFocusOptionsWidget(){
     }
 }
 
-
 /**
  * Shows the given error on the command line.
  */
 void QC_ApplicationWindow::slotError(const QString& msg) {
-        commandWidget->appendHistory(msg);
+  commandWidget->appendHistory(msg);
 }
 
 void QC_ApplicationWindow::slotShowDrawingOptions() {
@@ -933,7 +929,6 @@ void QC_ApplicationWindow::slotShowDrawingOptionsUnits() {
 void QC_ApplicationWindow::slotFocus() {
     setFocus();
 }
-
 
 
 /**
@@ -958,7 +953,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
 
     if (w == activedMdiSubWindow) {
         // this may occur after file open, so additional update is needed :(
-        RS_GraphicView* activatedGraphicView = getGraphicView();
+        RS_GraphicView* activatedGraphicView = getCurrentGraphicView();
         if (activatedGraphicView == nullptr || activatedGraphicView->getGraphic() == nullptr)
             return;
 
@@ -1021,34 +1016,25 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
                         "document: %lu", activatedDocument->getId());
 
-        bool showByBlock = activatedDocument->rtti() == RS2::EntityBlock;
 
         RS_LayerList *layerList = activatedDocument->getLayerList();
-
-        layerWidget->setLayerList(layerList, showByBlock);
-
+        layerWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
         if (layerTreeWidget != nullptr) {
-            layerTreeWidget->setLayerList(layerList);
-            layerTreeWidget->set_view(activatedGraphicView);
-            layerTreeWidget->set_document(activatedDocument);
+            layerTreeWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
         }
-
         if (quickInfoWidget != nullptr) {
             quickInfoWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
         }
-
         if (penPaletteWidget != nullptr) {
-            penPaletteWidget->setLayerList(layerList);
+            penPaletteWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
+            penPaletteWidget->setMdiWindow(windowActivated);
         }
-
         if (namedViewsWidget != nullptr){
             namedViewsWidget->setGraphicView(activatedGraphicView,w);
         }
-
         if (ucsListWidget != nullptr){
             ucsListWidget->setGraphicView(activatedGraphicView, w);
         }
-
         if (anglesBasisWidget != nullptr){
             anglesBasisWidget->update(activatedGraphic);
         }
@@ -1056,18 +1042,19 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         coordinateWidget->setGraphic(activatedGraphic,activatedGraphicView);
         relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
 
-        QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
-        if (lockRelZeroAction != nullptr){
-            bool locked = activatedGraphicView->getViewPort()->isRelativeZeroLocked();
-            lockRelZeroAction->setChecked(locked);
-        }
-        
         blockWidget->setBlockList(activatedDocument->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):
         activatedDocument->updateInserts();
         // whether to enable undo/redo buttons
         activatedDocument->setGUIButtons();
+
+        QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
+        if (lockRelZeroAction != nullptr){
+            bool locked = activatedGraphicView->getViewPort()->isRelativeZeroLocked();
+            lockRelZeroAction->setChecked(locked);
+        }
+
         if (activatedGraphicView != nullptr) {
             activatedGraphicView->redraw();
         }
@@ -1079,9 +1066,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         slotPenChanged(penToolBar->getPen());
 
         pen_wiz->setMdiWindow(windowActivated);
-        if (penPaletteWidget != nullptr) {
-            penPaletteWidget->setMdiWindow(windowActivated);
-        }
+
 
         if (!forced) {
             // update toggle button status:
@@ -1138,7 +1123,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
  * This is used to update the window list in the menu.
  */
 void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
-
     RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
     LC_GROUP_GUARD("WindowOptions");{
 
@@ -1257,17 +1241,6 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() end");
 }
 
-///**
-// * Called when something changed in the snaps tool bar
-// */
-//void QC_ApplicationWindow::slotSnapsChanged(const RS_SnapMode& snaps) {
-//    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
-
-//    actionHandler->slotSetSnaps(snaps);
-//}
-
-
-
 /**
  * Creates a new MDI window with the given document or a new
  *  document if 'doc' is nullptr.
@@ -1359,7 +1332,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     if (layerTreeWidget != nullptr) {
         layerTreeWidget->setLayerList(layerList);
         layerTreeWidget->set_view(view);
-        layerTreeWidget->set_document(w->getDocument());
+        layerTreeWidget->setDocument(w->getDocument());
     }
 
     if (quickInfoWidget != nullptr) {
@@ -1521,8 +1494,6 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
  */
 void QC_ApplicationWindow::slotFileNewNew() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewNew()");
-
-//    RS2::FormatType type = RS2::FormatDXFRW;
     //tried to load template file indicated in RS_Settings
     QString fileName = LC_GET_ONE_STR("Paths","Template", "");
 /*    QFileInfo finfo(fileName);
@@ -1598,13 +1569,9 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
  */
 void QC_ApplicationWindow::slotFileOpen() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen()");
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 001");
     RS2::FormatType type = RS2::FormatUnknown;
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 002");
     QG_FileDialog dlg(this);
     QString fileName = dlg.getOpenFile(&type);
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 003");
     slotFileOpen(fileName, type);
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(): OK");
 }
@@ -1818,15 +1785,15 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName) {
     slotFileOpen(fileName, RS2::FormatUnknown);
 }
 
-
 /**
  * Menu file -> save.
  */
 void QC_ApplicationWindow::slotFileSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSave()");
 
-    if (doSave(getCurrentMDIWindow()))
+    if (doSave(getCurrentMDIWindow())) {
         recentFiles->updateRecentFilesMenu();
+    }
 }
 
 
@@ -1835,8 +1802,9 @@ void QC_ApplicationWindow::slotFileSave() {
  */
 void QC_ApplicationWindow::slotFileSaveAs() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
-    if (doSave(getCurrentMDIWindow(), true))
+    if (doSave(getCurrentMDIWindow(), true)) {
         recentFiles->updateRecentFilesMenu();
+    }
 }
 
 bool QC_ApplicationWindow::slotFileSaveAll() {
@@ -1860,11 +1828,11 @@ bool QC_ApplicationWindow::slotFileSaveAll() {
 /**
  * Autosave.
  */
-void QC_ApplicationWindow::slotFileAutoSave() {
+void QC_ApplicationWindow::autoSaveCurrentDrawing() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave(): begin");
 
     if (!LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true)) {
-        startAutoSave(false);
+        startAutoSaveTimer(false);
         return;
     }
 
@@ -2386,7 +2354,6 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
  * @param toggle true: enable, false: disable.
  */
 void QC_ApplicationWindow::slotViewDraft(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
 
     LC_SET_ONE("Appearance","DraftMode", toggle);
 
@@ -2415,9 +2382,6 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
 }
 
 void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewEntityInfo()");
-
-//    LC_SET_ONE("InfoOverlayCursor","ShowEntityDescription", toggle);
 
     for (QC_MDIWindow *win: window_list) {
         QG_GraphicView *graphicView = win->getGraphicView();
@@ -2428,7 +2392,6 @@ void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
 }
 
 void QC_ApplicationWindow::slotInfoCursorSetting(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotInfoCursorSetting()");
 
     auto *action = qobject_cast<QAction*>(sender());
     if (action != nullptr) {
@@ -2482,8 +2445,6 @@ void QC_ApplicationWindow::slotInfoCursorSetting(bool toggle) {
 }
 
 void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewLinesDraft()");
-
     LC_SET_ONE("Appearance","DraftLinesMode", toggle);
 
     for (QC_MDIWindow *win: window_list) {
@@ -2495,8 +2456,6 @@ void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
 }
 
 void QC_ApplicationWindow::slotViewAntialiasing(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewAntialiasing()");
-
     LC_SET_ONE("Appearance","Antialiasing", toggle);
 
     for (QC_MDIWindow *win: window_list) {
@@ -2519,7 +2478,6 @@ void QC_ApplicationWindow::updateGrids() {
             if (m) {
                 QG_GraphicView *gv = m->getGraphicView();
                 if (gv) {
-                    // gv->updateGrid();
                     gv->loadSettings();
                     gv->redraw(RS2::RedrawGrid);
                 }
@@ -2558,7 +2516,7 @@ void QC_ApplicationWindow::slotViewGridIsoTop(bool toggle) {
 
 void QC_ApplicationWindow::setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) {
     if (toggle) {
-        RS_GraphicView *view = getGraphicView();
+        RS_GraphicView *view = getCurrentGraphicView();
         if (view != nullptr) {
             if (!view->isPrintPreview()) {
                 RS_Graphic *graphic = view->getGraphic();
@@ -2821,8 +2779,9 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w) {
     bool draftMode = LC_GET_ONE_BOOL("Appearance","DraftMode");
     if (draftMode) {
         QString draft_string = " [" + tr("Draft Mode") + "]";
-        if (!w->windowTitle().contains(draft_string))
+        if (!w->windowTitle().contains(draft_string)) {
             w->setWindowTitle(w->windowTitle() + draft_string);
+        }
     }
 }
 
@@ -2860,9 +2819,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
  * See QMainWindow::createPopupMenu() for more information.
  */
 QMenu *QC_ApplicationWindow::createPopupMenu() {
-    // author: ravas
-
-    auto *context_menu = new QMenu("Context");
+     auto *context_menu = new QMenu(tr("Context"));
     context_menu->setAttribute(Qt::WA_DeleteOnClose);
     // todo - a bit ugly way to find them by name... review whether direct reference may be use
     auto *tb_menu = menuBar()->findChild<QMenu *>("toolbars_menu");
@@ -2882,15 +2839,13 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
 }
 
 void QC_ApplicationWindow::toggleFullscreen(bool checked) {
-    // author: ravas
-
     checked ? showFullScreen() : showMaximized();
 }
 
 void QC_ApplicationWindow::hideOptions(QC_MDIWindow *win) {
-    // author: ravas
-
-    win->getGraphicView()->getDefaultAction()->hideOptions();
+    auto graphicView = win->getGraphicView();
+    auto defaultAction = graphicView->getDefaultAction();
+    defaultAction->hideOptions();
 }
 
 void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
@@ -2906,8 +2861,6 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
  * and reads / writes the associated settings.
  */
 void QC_ApplicationWindow::widgetOptionsDialog() {
-    // author: ravas
-
     LC_WidgetOptionsDialog dlg;
 
     if (dlg.exec() == QDialog::Accepted) {
@@ -2919,8 +2872,6 @@ void QC_ApplicationWindow::widgetOptionsDialog() {
  * depending on the dock area it is moved to.
  */
 void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area) {
-    // author: ravas
-
     auto *cmdDockWidget = findChild<QDockWidget *>("command_dockwidget");
 
     auto *commandWidget = static_cast<QG_CommandWidget *>(cmdDockWidget->widget());
@@ -2933,13 +2884,13 @@ void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area) {
         | QDockWidget::DockWidgetMovable
         | QDockWidget::DockWidgetFloatable;
 
-    if (docked) features |= QDockWidget::DockWidgetVerticalTitleBar;
+    if (docked) {
+        features |= QDockWidget::DockWidgetVerticalTitleBar;
+    }
     cmdDockWidget->setFeatures(features);
 }
 
 bool QC_ApplicationWindow::loadStyleSheet(QString path) {
-    // author: ravas
-
     if (!path.isEmpty() && QFile::exists(path)) {
         QFile file(path);
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -2951,8 +2902,6 @@ bool QC_ApplicationWindow::loadStyleSheet(QString path) {
 }
 
 void QC_ApplicationWindow::reloadStyleSheet() {
-    // author: ravas
-
     loadStyleSheet(style_sheet_path);
 }
 
@@ -2962,19 +2911,14 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
         slotFileOpen(openEvent->file(), RS2::FormatUnknown);
         return true;
     }
-
     return QObject::eventFilter(obj, event);
 }
 
 void QC_ApplicationWindow::updateGridStatus(const QString &status) {
-    // author: ravas
-
     grid_status->setBottomLabel(status);
 }
 
 void QC_ApplicationWindow::showDeviceOptions() {
-    // author: ravas
-
     QSettings settings;
 
     QDialog dlg;
@@ -2992,7 +2936,6 @@ void QC_ApplicationWindow::showDeviceOptions() {
 }
 
 void QC_ApplicationWindow::updateDevice(QString device) {
-    // author: ravas
     QSettings settings;
     settings.setValue("Hardware/Device", device);
         foreach (auto win, window_list) {

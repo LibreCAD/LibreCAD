@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-
 #include <QBitmap>
 #include <QBoxLayout>
 #include <QContextMenuEvent>
@@ -54,27 +53,19 @@ QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerNoConstruction = QIcon(":/icons/noconstruction.svg");
 }
 
-
-
 int QG_LayerModel::rowCount ( const QModelIndex & /*parent*/ ) const {
     return listLayer.size();
 }
 
-
-
 QModelIndex QG_LayerModel::parent ( const QModelIndex & /*index*/ ) const {
     return QModelIndex();
 }
-
-
 
 QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
     if ( row >= listLayer.size() || row < 0)
         return QModelIndex();
     return createIndex ( row, column);
 }
-
-
 
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
     /* since 4.6 the recommended way is to use begin/endResetModel()
@@ -98,105 +89,100 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
     endResetModel();
 }
 
-
-
 RS_Layer *QG_LayerModel::getLayer(int row) const {
-    if ( row >= listLayer.size() || row < 0)
+    if ( row >= listLayer.size() || row < 0) {
         return nullptr;
+    }
     return listLayer.at(row);
 }
 
 QModelIndex QG_LayerModel::getIndex (RS_Layer * lay) const {
     int row = listLayer.indexOf(lay);
-    if (row<0)
+    if (row<0) {
         return {};
+    }
     return createIndex (row, NAME);
 }
-
-
-
-QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
+QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const{
     if (!index.isValid() || index.row() >= listLayer.size())
         return QVariant();
 
-    RS_Layer* layer {listLayer.at(index.row())};
-    int col {index.column()};
+    RS_Layer *layer{listLayer.at(index.row())};
+    int col{index.column()};
 
     switch (role) {
-    case Qt::DecorationRole:
-        switch (col){
-        case VISIBLE:
-            if (!layer->isFrozen()) {
-                return layerVisible;
-            }
-            return layerHidden;
+        case Qt::DecorationRole:
+            switch (col) {
+                case VISIBLE:
+                    if (!layer->isFrozen()) {
+                        return layerVisible;
+                    }
+                    return layerHidden;
 
-        case LOCKED:
-            if (!layer->isLocked()) {
-                return layerDefreeze;
-            }
-            return layerFreeze;
+                case LOCKED:
+                    if (!layer->isLocked()) {
+                        return layerDefreeze;
+                    }
+                    return layerFreeze;
 
-        case PRINT:
-            if( !layer->isPrint()) {
-                return layerNoPrint;
-            }
-            return layerPrint;
+                case PRINT:
+                    if (!layer->isPrint()) {
+                        return layerNoPrint;
+                    }
+                    return layerPrint;
 
-        case CONSTRUCTION:
-            if( !layer->isConstruction()) {
-                return layerNoConstruction;
-            }
-            return layerConstruction;
+                case CONSTRUCTION:
+                    if (!layer->isConstruction()) {
+                        return layerNoConstruction;
+                    }
+                    return layerConstruction;
 
-        default:
+                default:
+                    break;
+            }
             break;
-        }
-        break;
 
-    case Qt::DisplayRole:
-        if (NAME == col) {
-            return layer->getName();
-        }
-        break;
+        case Qt::DisplayRole:
+            if (NAME == col) {
+                return layer->getName();
+            }
+            break;
 
-#if QT_VERSION > QT_VERSION_CHECK(6,0,0)
-    case Qt::BackgroundRole:
+#if QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
+        case Qt::BackgroundRole:
 #else
     case Qt::BackgroundColorRole:
 #endif
-        if( COLOR_SAMPLE == col) {
-            return layer->getPen().getColor().toQColor();
-        }
-        break;
-
-    case Qt::FontRole:
-        if (NAME == col) {
-            if (activeLayer && activeLayer == layer) {
-                QFont font;
-                font.setBold(true);
-                return font;
+            if (COLOR_SAMPLE == col) {
+                return layer->getPen().getColor().toQColor();
             }
-        }
-        break;
+            break;
+
+        case Qt::FontRole:
+            if (NAME == col) {
+                if (activeLayer && activeLayer == layer) {
+                    QFont font;
+                    font.setBold(true);
+                    return font;
+                }
+            }
+            break;
+        default:
+            break;
     }
 
     return QVariant();
 }
 
-
-
 /**
  * Constructor.
  */
-QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
-                               const char* name, Qt::WindowFlags f)
-        : QWidget(parent, f) {
-
+QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char *name, Qt::WindowFlags f)
+    : QWidget(parent, f){
     setObjectName(name);
     actionHandler = ah;
-    layerList = nullptr;
-    showByBlock = false;
+    m_layerList = nullptr;
+    m_showByBlock = false;
     lastLayer = nullptr;
 
     layerModel = new QG_LayerModel(this);
@@ -290,12 +276,10 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     lay->addWidget(layerView);
     this->setLayout(lay);
 
-    connect( layerView, &QTableView::clicked, this, &QG_LayerWidget::slotActivated);
-    connect( layerView->selectionModel(), &QItemSelectionModel::selectionChanged,
+    connect(layerView, &QTableView::clicked, this, &QG_LayerWidget::slotActivated);
+    connect(layerView->selectionModel(), &QItemSelectionModel::selectionChanged,
              this, &QG_LayerWidget::slotSelectionChanged);
 }
-
-
 
 /**
  * Sets the layerlist this layer widget should show.
@@ -305,18 +289,15 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
  *                    false: don't show special layer "ByBlock"
  */
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
-    this->layerList = layerList;
-    this->showByBlock = showByBlock;
+    m_layerList = layerList;
+    m_showByBlock = showByBlock;
     if (layerList != nullptr) {
-        this->layerList->setLayerWitget(this);
+        m_layerList->setLayerWitget(this);
     }
     update();
 }
 
-
-
-void QG_LayerWidget::layerAdded(RS_Layer* layer)
-{
+void QG_LayerWidget::layerAdded(RS_Layer* layer){
     update();   // 1st apply the new layer to the view
     if (! matchLayerName->text().isEmpty()) {
         slotUpdateLayerList();
@@ -325,28 +306,24 @@ void QG_LayerWidget::layerAdded(RS_Layer* layer)
     update();   // update again, if new layer is last row, the height was wrong
 }
 
-
-
 /**
  * @brief getActiveName
  * @return the name of the active layer
  */
-QString QG_LayerWidget::getActiveName() const
-{
-    if(layerList){
-        RS_Layer* p=layerList->getActive();
-        if(p) return p->getName();
+QString QG_LayerWidget::getActiveName() const{
+    if (m_layerList != nullptr) {
+        RS_Layer *activeLayer = m_layerList->getActive();
+        if (activeLayer != nullptr) {
+            return activeLayer->getName();
+        }
     }
     return QString();
 }
-
-
 
 /**
  * Updates the layer box from the layers in the graphic.
  */
 void QG_LayerWidget::update() {
-
     RS_DEBUG->print("QG_LayerWidget::update() begin");
 
     if (!layerView) {
@@ -357,17 +334,17 @@ void QG_LayerWidget::update() {
     layerView->resizeRowsToContents();
     layerView->verticalScrollBar()->setValue(yPos);
 
-    layerModel->setLayerList(layerList); // allow a null layerList; this clears the widget
+    layerModel->setLayerList(m_layerList); // allow a null layerList; this clears the widget
 
-    if (!layerList) {
+    if (m_layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
         return;
     }
 
     RS_DEBUG->print("QG_LayerWidget::update: reactivating current layer");
 
-    RS_Layer* activeLayer = layerList->getActive();
-    if (!activeLayer) {
+    RS_Layer* activeLayer = m_layerList->getActive();
+    if (activeLayer == nullptr) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr activeLayer");
         layerModel->setActiveLayer(nullptr);
         return;
@@ -383,12 +360,9 @@ void QG_LayerWidget::update() {
     RS_DEBUG->print("QG_LayerWidget::update(): OK");
 }
 
-
 void QG_LayerWidget::restoreSelections() {
-
     QItemSelectionModel* selectionModel = layerView->selectionModel();
-
-    for (auto* layer: *layerList) {
+    for (auto* layer: *m_layerList) {
         if (!layer) continue;
         if (!layer->isVisibleInLayerList()) continue;
         if (!layer->isSelectedInLayerList()) continue;
@@ -399,7 +373,6 @@ void QG_LayerWidget::restoreSelections() {
     }
 }
 
-
 /**
  * Activates the given layer and makes it the active
  * layer in the layerlist.
@@ -407,12 +380,12 @@ void QG_LayerWidget::restoreSelections() {
 void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (!layer || !layerList) {
+    if (!layer || !m_layerList) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
 
-    layerList->activate(layer);
+    m_layerList->activate(layer);
 
     if (!layerModel) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layerModel");
@@ -453,13 +426,11 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
 
-
-
 /**
  * Called when the user activates (highlights) a layer.
  */
 void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerName*/) {
-    if (!layerIdx.isValid() || layerList==nullptr) {
+    if (!layerIdx.isValid() || m_layerList==nullptr) {
         return;
     }
 
@@ -468,25 +439,25 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         return;
 
     if (layerIdx.column() == QG_LayerModel::NAME) {
-        layerList->activate(lay, true);
+        m_layerList->activate(lay, true);
         return;
     }
 
-    switch(layerIdx.column()){
-    case QG_LayerModel::VISIBLE:
-        actionHandler->toggleVisibility(lay);
-        break;
-    case QG_LayerModel::LOCKED:
-        actionHandler->toggleLock(lay);
-        break;
-    case QG_LayerModel::PRINT:
-        actionHandler->togglePrint(lay);
-        break;
-    case QG_LayerModel::CONSTRUCTION:
-        actionHandler->toggleConstruction(lay);
-        break;
-    default:
-        break;
+    switch (layerIdx.column()) {
+        case QG_LayerModel::VISIBLE:
+            actionHandler->toggleVisibility(lay);
+            break;
+        case QG_LayerModel::LOCKED:
+            actionHandler->toggleLock(lay);
+            break;
+        case QG_LayerModel::PRINT:
+            actionHandler->togglePrint(lay);
+            break;
+        case QG_LayerModel::CONSTRUCTION:
+            actionHandler->toggleConstruction(lay);
+            break;
+        default:
+            break;
     }
 }
 
@@ -496,8 +467,7 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
  */
 void QG_LayerWidget::slotSelectionChanged(
     const QItemSelection &selected,
-    const QItemSelection &deselected)
-{
+    const QItemSelection &deselected){
     QModelIndex index;
     QItemSelectionModel *selectionModel {layerView->selectionModel()};
 
@@ -525,7 +495,7 @@ void QG_LayerWidget::slotSelectionChanged(
 void QG_LayerWidget::slotUpdateLayerList() {
     QRegularExpression rx = QRegularExpression::fromWildcard(matchLayerName->text());
 
-    for (unsigned i=0; i<layerList->count() ; i++) {
+    for (unsigned i=0; i<m_layerList->count() ; i++) {
         QString s=layerModel->getLayer(i)->getName();
         if (matchLayerName->text().isEmpty() || s.indexOf(rx) == 0) {
             layerView->showRow(i);
@@ -543,7 +513,6 @@ void QG_LayerWidget::slotUpdateLayerList() {
  * Shows a context menu for the layer widget. Launched with a right click.
  */
 void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
-
     if (actionHandler) {
         auto contextMenu = std::make_unique<QMenu>(this);
 
@@ -581,29 +550,37 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
     e->accept();
 }
 
-
 /**
  * Escape releases focus.
  */
 void QG_LayerWidget::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
 
-    case Qt::Key_Escape:
+    case Qt::Key_Escape: {
         emit escape();
         break;
-
+    }
     default:
         QWidget::keyPressEvent(e);
         break;
     }
 }
 
-
-void QG_LayerWidget::activateLayer(int row)
-{
+void QG_LayerWidget::activateLayer(int row){
     auto layer = layerModel->getLayer(row);
-    if (layer)
-        layerList->activate(layer, true);
+    if (layer) {
+        m_layerList->activate(layer, true);
+    }
     else
         qWarning("activateLayer: row %d doesn't exist", row);
+}
+
+void QG_LayerWidget::setDocumentAndView(RS_Document *doc, [maybe_unused]RS_GraphicView *gview){
+    if (doc == nullptr) {
+        setLayerList(nullptr, false);
+    }
+    else {
+        bool showByBlock = doc->rtti() == RS2::EntityBlock;
+        setLayerList(doc->getLayerList(), showByBlock);
+    }
 }

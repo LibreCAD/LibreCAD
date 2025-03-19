@@ -59,7 +59,6 @@ public:
     };
     LC_LayerTreeWidget(QG_ActionHandler *ah, QWidget *parent, const char *name = nullptr, Qt::WindowFlags f = {});
     ~LC_LayerTreeWidget() override = default;
-    void setLayerList(RS_LayerList *ll);
     void activateLayer(RS_Layer *layer);
     void layerActivated(RS_Layer *layer) override;
     void layerAdded(RS_Layer *layer) override;
@@ -71,15 +70,10 @@ public:
     void layerToggledConstruction(RS_Layer *) override;
     void onDragEnterEvent(QModelIndex dropIndex);
     void onDropEvent(QModelIndex dropIndex, DropIndicatorPosition position);
-    void set_view(RS_GraphicView *gview){view = gview;}
-    void set_document(RS_Document *doc){document = doc;}
-
+    void setDocumentAndView(RS_Document *doc, RS_GraphicView* gview);
 signals:
-
     void escape();
-
 public slots:
-
     void slotTreeClicked(QModelIndex layerIdx);
     void slotTreeDoubleClicked(QModelIndex layerIdx);
     void slotFilteringMaskChanged();
@@ -102,6 +96,7 @@ public slots:
     void toggleFlatView();
     void removeEmptyLayers();
 protected:
+    void setLayerList(RS_LayerList *ll);
     void update();
     void keyPressEvent(QKeyEvent *e) override;
     void expandItems(int depth);
@@ -163,7 +158,8 @@ private:
 				void manageLayersPrintFlag(QList<RS_Layer *> &layersToPrint, QList<RS_Layer *> &layersNoPrint, bool toggleMode);
     void doSelectLayersEntities(QList<RS_Layer *> &layers);
     void copyLayerAttributes(RS_Layer *copyLayer, RS_Layer *sourceLayer);
-    void doCreateLayersCopy(QModelIndex sourceIndex, bool duplicateEntities);
+void redrawView();
+void doCreateLayersCopy(QModelIndex sourceIndex, bool duplicateEntities);
     void duplicateLayerEntities(RS_Layer *sourceLayer, RS_Layer *copyLayer);
     void doMoveSelectionToLayer(LC_LayerTreeItem *layerItem, bool duplicate, bool resolvePens = false);
     void doRemoveLayersFromSource(LC_LayerTreeItem *source, bool removeChildrenOnly);

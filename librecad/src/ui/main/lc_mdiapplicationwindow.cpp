@@ -38,7 +38,7 @@ LC_MDIApplicationWindow::LC_MDIApplicationWindow():
 
 
 
-RS_GraphicView const *LC_MDIApplicationWindow::getGraphicView() const {
+RS_GraphicView const *LC_MDIApplicationWindow::getCurrentGraphicView() const {
     QC_MDIWindow const *m = getCurrentMDIWindow();
     if (m) {
         return m->getGraphicView();
@@ -46,7 +46,7 @@ RS_GraphicView const *LC_MDIApplicationWindow::getGraphicView() const {
     return nullptr;
 }
 
-RS_GraphicView *LC_MDIApplicationWindow::getGraphicView() {
+RS_GraphicView *LC_MDIApplicationWindow::getCurrentGraphicView() {
     QC_MDIWindow *m = getCurrentMDIWindow();
     if (m) {
         return m->getGraphicView();
@@ -493,7 +493,9 @@ void LC_MDIApplicationWindow::redrawAll() {
         for (const QC_MDIWindow *win: window_list) {
             if (win != nullptr) {
                 QG_GraphicView *gv = win->getGraphicView();
-                if (gv != nullptr) { gv->redraw(); }
+                if (gv != nullptr) {
+                    gv->redraw();
+                }
             }
         }
     }

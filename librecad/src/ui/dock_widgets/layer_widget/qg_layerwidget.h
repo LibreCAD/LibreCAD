@@ -111,7 +111,7 @@ public:
                  const char *name = nullptr, Qt::WindowFlags f = {});
   virtual ~QG_LayerWidget() = default;
 
-  void setLayerList(RS_LayerList *layerList, bool showByBlock);
+
 
   void update();
   void activateLayer(RS_Layer *layer, bool updateScroll = true);
@@ -121,7 +121,7 @@ public:
   void layerEdited(RS_Layer *) override { update(); }
   void layerRemoved(RS_Layer *) override {
         update();
-        activateLayer(layerList->at(0));
+        activateLayer(m_layerList->at(0));
     }
     void layerToggled(RS_Layer*) override {
         update();
@@ -145,6 +145,8 @@ public:
      */
     QString getActiveName() const;
 
+    void setDocumentAndView(RS_Document *doc, RS_GraphicView* gview);
+
 signals:
     void escape();
 
@@ -158,11 +160,12 @@ public slots:
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
-     void keyPressEvent(QKeyEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void setLayerList(RS_LayerList *layerList, bool showByBlock);
 
 private:
-    RS_LayerList* layerList = nullptr;
-    bool showByBlock = false;
+    RS_LayerList* m_layerList = nullptr;
+    bool m_showByBlock = false;
     QLineEdit* matchLayerName = nullptr;
     QTableView* layerView = nullptr;
     QG_LayerModel *layerModel = nullptr;

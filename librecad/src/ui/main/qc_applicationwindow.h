@@ -169,7 +169,7 @@ public slots:
 	/** saves all open documents; return false == operation cancelled **/
     bool slotFileSaveAll();
     /** auto-save document */
-    void slotFileAutoSave();
+    void autoSaveCurrentDrawing();
     /** exports the document as bitmap */
     void slotFileExport();
     bool slotFileExport(const QString& name,
@@ -311,7 +311,7 @@ public:
     void showBlockActivated(const RS_Block* block);
 
     // Auto-save
-    void startAutoSave(bool enabled);
+    void startAutoSaveTimer(bool enabled);
 
 
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);

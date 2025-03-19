@@ -323,14 +323,13 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
  * set one, that leads to complete rebuild of underlying model
  */
 void LC_LayerTreeWidget::setLayerList(RS_LayerList *ll){
-    RS_DEBUG->print("LC_LayerTreeWidget::setLayerList()");
     if (ll == nullptr){
-        this->layerList = nullptr;
+        layerList = nullptr;
         update();
     }
     else{
         if (ll != this->layerList){
-           this->layerList = ll;
+          layerList = ll;
           update();
         }
     }
@@ -1441,7 +1440,7 @@ QList<RS_Layer *> LC_LayerTreeWidget::collectLayersForSelectedItem(){
  * @param layer
  */
 void LC_LayerTreeWidget::deselectEntitiesOnLockedLayer(RS_Layer *layer){
-    if (!layer) return;
+    if (layer == nullptr) return;
     if (!layer->isLocked()) return;
 
     for (auto e: *document) {
@@ -1449,25 +1448,22 @@ void LC_LayerTreeWidget::deselectEntitiesOnLockedLayer(RS_Layer *layer){
             e->setSelected(false);
         }
     }
-    if (view){
-        view->redraw();
-    }
+    redrawView();
 }
+
 /**
  * Utility method that deselects entities on given layer.
  * @param layer
  */
 void LC_LayerTreeWidget::deselectEntities(RS_Layer *layer){
-    if (!layer) return;
+    if (layer == nullptr) return;
 
     for (auto e: *document) {
         if (e && e->isVisible() && e->getLayer() == layer){
             e->setSelected(false);
         }
     }
-    if (view){
-        view->redraw();
-    }
+    redrawView();
 }
 
 /**
@@ -1477,7 +1473,7 @@ void LC_LayerTreeWidget::deselectEntities(RS_Layer *layer){
  * @param toggleMode - flag whether toggle mode should be called internally. if true, list in layersToDisable is ignored
  */
 void LC_LayerTreeWidget::manageLayersVisibilityFlag(QList<RS_Layer *> &layersToEnable, QList<RS_Layer *> &layersToDisable, bool toggleMode){
-    if (view){
+    if (view != nullptr){
         if (toggleMode){
             layerList->toggleFreezeMulti(layersToEnable);
         } else {
@@ -1533,7 +1529,7 @@ void LC_LayerTreeWidget::manageLayersConstructionFlag(QList<RS_Layer *> &layersT
     int count = layersForEntitiesUpdate.count();
     for (int i = 0; i < count; i++) {
         RS_Layer *layer = layersForEntitiesUpdate.at(i);
-        if (layer){
+        if (layer!= nullptr){
             deselectEntities(layer);
         }
     }
@@ -1557,7 +1553,7 @@ void LC_LayerTreeWidget::manageLayersPrintFlag(QList<RS_Layer *> &layersToPrint,
     int count = layersForEntitiesUpdate.count();
     for (int i = 0; i < count; i++) {
         RS_Layer *layer = layersForEntitiesUpdate.at(i);
-        if (layer){
+        if (layer != nullptr){
             deselectEntities(layer);
         }
     }
@@ -1580,9 +1576,7 @@ void LC_LayerTreeWidget::doSelectLayersEntities(QList<RS_Layer *> &layers){
         }
     }
 
-    if (view){
-        view->redraw();
-    }
+    redrawView();
 
     RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
 }
@@ -1656,6 +1650,12 @@ void LC_LayerTreeWidget::copyLayerAttributes(RS_Layer *copyLayer, RS_Layer *sour
     copyLayer->freeze(sourceLayer->isFrozen());
 }
 
+void LC_LayerTreeWidget::redrawView(){
+    if (view != nullptr){
+        view->redraw();
+    }
+}
+
 // TODO - actually this operations are good candidates for moving them into separate actions
 // that may be invoked  not only from layers widget... at least, moving to active layer may be...
 /**
@@ -1711,9 +1711,7 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(LC_LayerTreeItem* layerItem, boo
             }
         }
     }
-    if (view){
-        view->redraw();
-    }
+    redrawView();
 }
 // TBD - Undo support?
 /**
@@ -1936,5 +1934,16 @@ void LC_LayerTreeWidget::invokeSettingsDialog(){
     if (dialogResult == QDialog::Accepted){
         options->save();
         update();
+    }
+}
+
+void LC_LayerTreeWidget::setDocumentAndView(RS_Document *doc, RS_GraphicView *gview){
+    view = gview;
+    document = doc;
+    if (doc == nullptr) {
+        setLayerList(nullptr);
+    }
+    else {
+        setLayerList(doc->getLayerList());
     }
 }

@@ -621,7 +621,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		graphic->addEntity(ins);
 
 
-		RS_GraphicView* v = appWin->getGraphicView();
+		RS_GraphicView* v = appWin->getCurrentGraphicView();
 		if (v) {
 			v->redraw();
 		}
@@ -770,7 +770,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 			  }
 		*/
 
-		RS_GraphicView* v = appWin->getGraphicView();
+		RS_GraphicView* v = appWin->getCurrentGraphicView();
 		if (v) {
 			v->redraw();
 		}
@@ -1066,7 +1066,7 @@ void LC_SimpleTests::slotTestMath01() {
 		//                   RS_Vector(6.0,cos(x_0)-sin(x_0)*(6.0-x_0))));
 
 
-		RS_GraphicView* v = appWin->getGraphicView();
+		RS_GraphicView* v = appWin->getCurrentGraphicView();
 		if (v) {
 			v->redraw();
 		}

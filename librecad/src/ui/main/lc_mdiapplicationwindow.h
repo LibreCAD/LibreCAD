@@ -50,8 +50,8 @@ public:
    * @return Pointer to the graphic view of the currently active document
    * window or nullptr if no window is available.
    */
-    const RS_GraphicView* getGraphicView() const;
-    RS_GraphicView* getGraphicView();
+    const RS_GraphicView* getCurrentGraphicView() const;
+    RS_GraphicView* getCurrentGraphicView();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
