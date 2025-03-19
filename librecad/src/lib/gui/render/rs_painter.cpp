@@ -1482,7 +1482,15 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
         double uiX=0., uiY=0.;
         const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
         using namespace RS_Math;
-        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
+        if (!(equal(uiX, uiPosition.x, 1E-12) && equal(uiY, uiPosition.y, 1E-12))) {
+            LC_ERR<<QString{" : (%1, %2) vs (%3, %4)"}
+                          .arg(uiPosition.x, 10, 'g', 10)
+                          .arg(uiPosition.y, 10, 'g', 10)
+                          .arg(uiX, 10, 'g', 10)
+                          .arg(uiY, 10, 'g', 10);
+            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<ulp(uiY);
+            assert(!"toGui() failure");
+        }
     }
     return uiPosition;
 }
