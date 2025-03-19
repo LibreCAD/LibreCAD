@@ -1479,13 +1479,13 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
 //        uiX = toGuiX(uiX);
         uiX = ucsX * viewPortFactorX + viewPortOffsetX;
 //        uiY = toGuiY(uiY);
-        uiY = -ucsY * viewPortFactorY + viewPortHeight - viewPortOffsetY;
+        uiY = -ucsY * viewPortFactorY - viewPortOffsetY + viewPortHeight;
     }
     else{
 //        uiX = toGuiX(wcsCoordinate.x);
         uiX = wcsCoordinate.x * viewPortFactorX + viewPortOffsetX;
 //        uiY = toGuiY(wcsCoordinate.y);
-        uiY = -wcsCoordinate.y * viewPortFactorY + viewPortHeight - viewPortOffsetY;
+        uiY = -wcsCoordinate.y * viewPortFactorY - viewPortOffsetY + viewPortHeight;
     }
 }
 
@@ -1500,18 +1500,16 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
 
     // TODO: remove this
     {
+        using namespace RS_Math;
         double uiX=0., uiY=0.;
         const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
-// TODO uncomment
-// can't test the merge with this assert, got it at the application's start. sorry, had to restore the original code for PR
-//        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
-        if (!(RS_Math::equal(uiX, uiPosition.x, 1E-12) && RS_Math::equal(uiY, uiPosition.y, 1E-12))) {
+        if (!(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y))) {
             LC_ERR<<QString{" : (%1, %2) vs (%3, %4)"}
                           .arg(uiPosition.x, 10, 'g', 10)
                           .arg(uiPosition.y, 10, 'g', 10)
                           .arg(uiX, 10, 'g', 10)
                           .arg(uiY, 10, 'g', 10);
-            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<RS_Math::ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<RS_Math::ulp(uiY);
+            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<ulp(uiY);
             assert(!"toGui() failure");
         }
     }
