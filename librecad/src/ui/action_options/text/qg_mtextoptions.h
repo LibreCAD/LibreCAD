@@ -47,7 +47,7 @@ public slots:
     void languageChange() override;
 protected:
     RS_ActionDrawMText* action = nullptr;
-	   std::unique_ptr<Ui::Ui_MTextOptions> ui;
+    std::unique_ptr<Ui::Ui_MTextOptions> ui;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 };

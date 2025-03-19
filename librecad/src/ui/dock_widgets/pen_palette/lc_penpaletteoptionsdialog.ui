@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>359</width>
-    <height>482</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,7 +20,142 @@
    <string>Pen Palette Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="10" column="0">
+   <item row="7" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Colors</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cbColorActiveBg">
+        <property name="toolTip">
+         <string>Background color for pen element currently edited in pen's table</string>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cbColorGrid">
+        <property name="toolTip">
+         <string>Color of grid for pens list</string>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QToolButton" name="tbGridColorSelect">
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Active Pen Background:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="tbActiveColorSelect">
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="cbAllRowBold">
+        <property name="toolTip">
+         <string>If set, bold font is used for all elements of active pen item (otherwise, only for name)</string>
+        </property>
+        <property name="text">
+         <string>Entire table row is bold for active pen</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Grid Color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Matched Item Color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="cbColorMatchedItem">
+        <property name="toolTip">
+         <string>Color of pen item that is matched by filter</string>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QToolButton" name="tbMatchedItemColorSelect">
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="cbShowTooltip">
+     <property name="toolTip">
+      <string>Controls whether tooltip will be shown for table item or not</string>
+     </property>
+     <property name="text">
+      <string>Show tooltip for table items</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -32,6 +167,40 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>On double click on table item</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbDoubleClickMode">
+       <property name="toolTip">
+        <string>Defines how the program to react on double click on pen item in table</string>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item row="6" column="0">
     <widget class="QGroupBox" name="gbColumns">
@@ -84,193 +253,6 @@
      </layout>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Colors</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_5">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="cbColorActiveBg">
-        <property name="toolTip">
-         <string>Background color for pen element currently edited in pen's table</string>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="cbColorGrid">
-        <property name="toolTip">
-         <string>Color of grid for pens list</string>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QToolButton" name="tbGridColorSelect">
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../res/ui/ui.qrc">
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Active Pen Background:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QToolButton" name="tbActiveColorSelect">
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../res/ui/ui.qrc">
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QCheckBox" name="cbAllRowBold">
-        <property name="toolTip">
-         <string>If set, bold font is used for all elements of active pen item (otherwise, only for name)</string>
-        </property>
-        <property name="text">
-         <string>Entire table row is bold for active pen</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Grid Color:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Matched Item Color:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="cbColorMatchedItem">
-        <property name="toolTip">
-         <string>Color of pen item that is matched by filter</string>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QToolButton" name="tbMatchedItemColorSelect">
-        <property name="toolTip">
-         <string>Click to select color</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../res/ui/ui.qrc">
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbFilterCaseInsensitive">
-     <property name="toolTip">
-      <string>If set, filter will igore the case of pen's name</string>
-     </property>
-     <property name="text">
-      <string>Case-insensitive pens filtering</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QCheckBox" name="cbShowTooltip">
-     <property name="toolTip">
-      <string>Controls whether tooltip will be shown for table item or not</string>
-     </property>
-     <property name="text">
-      <string>Show tooltip for table items</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Pens file:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lePensFile">
-       <property name="toolTip">
-        <string>File where pens are stored</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbBrowse">
-       <property name="toolTip">
-        <string>Click to select file</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/actions/actions.qrc">
-         <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="4" column="0" rowspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -320,45 +302,31 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>On double click on table item</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbDoubleClickMode">
-       <property name="toolTip">
-        <string>Defines how the program to react on double click on pen item in table</string>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+   <item row="10" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbFilterCaseInsensitive">
+     <property name="toolTip">
+      <string>If set, filter will igore the case of pen's name</string>
+     </property>
+     <property name="text">
+      <string>Case-insensitive pens filtering</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/ui/ui.qrc"/>
-  <include location="../../../../res/actions/actions.qrc"/>
+  <include location="../../../../res/controls/controls.qrc"/>
+  <include location="../../../../res/controls/controls.qrc"/>
  </resources>
  <connections>
   <connection>

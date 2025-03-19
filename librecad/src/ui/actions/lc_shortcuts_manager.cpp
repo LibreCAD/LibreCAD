@@ -26,7 +26,7 @@
 #include "rs_settings.h"
 #include "lc_shortcutsstorage.h"
 #include "rs_debug.h"
-
+#include "rs_system.h"
 const char* LC_ShortcutsManager::PROPERTY_SHORTCUT_BACKUP = "tooltip.original";
 
 LC_ShortcutsManager::LC_ShortcutsManager() {}
@@ -150,7 +150,7 @@ void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QActi
                 // it might be either due to incorrect data in settings file, or if the action was created somewhere in
                 // code that is outside actions factory.
                 // in any case, just ignore that key
-                LC_ERR << "Action is null in map, key "  << key;
+                LC_ERR << "LC_ShortcutsManager::updateActionShortcutTooltips - Action is null in the map, ignored. Key "  << key;
             }
         }
     }
@@ -175,11 +175,11 @@ QString LC_ShortcutsManager::strippedActionText(QString s) const{
 }
 
 QString LC_ShortcutsManager::getShortcutsMappingsFolder() const {
-    QString result = LC_GET_ONE_STR("Paths","ShortcutsMappings", QDir::homePath());
-    return result;
+    QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    return settingsDir;
 }
 
 QString LC_ShortcutsManager::getDefaultShortcutsFileName() const {
-    QString path =  getShortcutsMappingsFolder() + "/default.lcs";
+    QString path =  getShortcutsMappingsFolder() + "/shortcuts.lcsc";
     return QDir::toNativeSeparators(path);
 }

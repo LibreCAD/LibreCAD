@@ -178,7 +178,7 @@ QString RS_Settings::readStrSingle(const QString& group, const QString &key,cons
     QString fullName = getFullName(group, key);
     QVariant value = readEntryCache(fullName);
     if (!value.isValid()) {
-        value = settings->value(fullName, QVariant(def));
+        value = settings->value(fullName, QVariant(def)).toString();
         cache[fullName] = value;
     }
     return value.toString();

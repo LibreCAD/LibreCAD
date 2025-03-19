@@ -26,6 +26,8 @@
 #include <QMessageBox>
 #include "lc_penpaletteoptionsdialog.h"
 
+#include <QLineEdit>
+
 LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnFile) :
     QDialog(parent)
 {
@@ -66,18 +68,9 @@ LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPa
             break;
     }
 
-
-
-    lePensFile->setText(options->pensFileName);
-    if (focusOnFile){
-        lePensFile->setFocus();
-    }
     connect(tbActiveColorSelect, &QToolButton::clicked, this, &LC_PenPaletteOptionsDialog::selectActivePenBGColor);
     connect(tbGridColorSelect, &QToolButton::clicked, this, &LC_PenPaletteOptionsDialog::selectGridColor);
     connect(tbMatchedItemColorSelect, &QToolButton::clicked, this, &LC_PenPaletteOptionsDialog::selectMatchedItemColor);
-
-    connect(tbBrowse, &QToolButton::clicked,
-            this, &LC_PenPaletteOptionsDialog::setPensFile);
 
     initComboBox(cbColorActiveBg, options->activeItemBGColor);
     initComboBox(cbColorGrid, options->itemsGridColor);
@@ -137,23 +130,6 @@ void LC_PenPaletteOptionsDialog::set_color(QComboBox* combo, QColor &custom)
 }
 
 /**
- * Pens file selection
- */
-void LC_PenPaletteOptionsDialog::setPensFile()
-{
-    QString fileName = lePensFile ->text();
-
-    QFileDialog dlg(this);
-    dlg.setFileMode(QFileDialog::AnyFile);
-    dlg.setNameFilter("Pens Palette (*.pens)");
-    dlg.selectFile(fileName);
-
-    if (dlg.exec()){
-        auto dir = dlg.selectedFiles()[0];
-        lePensFile->setText(QDir::toNativeSeparators(dir));
-    }
-}
-/**
  * Validation of entered data on button closing
  */
 void LC_PenPaletteOptionsDialog::validate(){
@@ -206,26 +182,6 @@ void LC_PenPaletteOptionsDialog::validate(){
         doAccept = false;
     }
 
-    QString fileName = lePensFile->text().trimmed();
-    if (fileName.isEmpty()){
-        showInvalidFileMessage("Name may not be empty.");
-        lePensFile->setFocus();
-        doAccept = false;
-    }
-    else{
-        // check whether we are able to open specified file
-        QFile file(fileName);
-        if (!file.exists()){
-            if (file.open(QIODevice::ReadWrite)){
-                file.close();
-            }
-            else{
-                showInvalidFileMessage("Unable to create pens palette file by given path.");
-                doAccept = false;
-                lePensFile->setFocus();
-            }
-        }
-    }
     // all fine, store user's input to options
     if (doAccept){
 
@@ -246,8 +202,6 @@ void LC_PenPaletteOptionsDialog::validate(){
 
         options->colorNameDisplayMode = colorMode;
         options->doubleClickOnTableMode = doubleClickMode;
-        options -> pensFileName = fileName;
-
         accept();
     }
 }
@@ -263,15 +217,3 @@ void LC_PenPaletteOptionsDialog::showInvalidColorMessage(const QString &name){
                              .arg(QMessageBox::tr(name.toStdString().c_str())),
                          QMessageBox::Ok);
 }
-/**
- * report invalid file specified for pens
- * @param msg
- */
-void LC_PenPaletteOptionsDialog::showInvalidFileMessage(const QString &msg){
-    QMessageBox::warning(this, QMessageBox::tr("Error"),
-                         QMessageBox::tr("Invalid path to pens file.\n%1 \n"
-                                         "Please specify a different value.")
-                             .arg(QMessageBox::tr(msg.toStdString().c_str())),
-                         QMessageBox::Ok);
-}
-

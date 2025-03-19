@@ -95,6 +95,7 @@ public slots:
     void addLayer();
     void toggleFlatView();
     void removeEmptyLayers();
+    void updateWidgetSettings();
 protected:
     void setLayerList(RS_LayerList *ll);
     void update();

@@ -157,12 +157,11 @@ public slots:
         const QItemSelection &deselected);
     void slotUpdateLayerList();
     void activateLayer(int row);
-
+    void updateWidgetSettings();
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void setLayerList(RS_LayerList *layerList, bool showByBlock);
-
 private:
     RS_LayerList* m_layerList = nullptr;
     bool m_showByBlock = false;

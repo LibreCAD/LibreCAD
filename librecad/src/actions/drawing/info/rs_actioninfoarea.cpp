@@ -139,13 +139,12 @@ void RS_ActionInfoArea::onMouseMoveEvent(int status, LC_MouseEvent *e){
     }
 }
 
-
 void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, m_infoArea->back(), snap);
     }
-    lastPointRequested = e->isControl;;
+    lastPointRequested = e->isControl;
     fireCoordinateEvent(snap);
 }
 

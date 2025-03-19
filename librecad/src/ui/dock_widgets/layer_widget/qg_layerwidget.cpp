@@ -40,17 +40,21 @@
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "qg_layerwidget.h"
+
+#include "lc_flexlayout.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
-    layerVisible = QIcon(":/icons/visible.svg");
-    layerHidden = QIcon(":/icons/invisible.svg");
-    layerDefreeze = QIcon(":/icons/unlocked.svg");
-    layerFreeze = QIcon(":/icons/locked.svg");
-    layerPrint = QIcon(":/icons/print.svg");
-    layerNoPrint = QIcon(":/icons/noprint.svg");
-    layerConstruction = QIcon(":/icons/construction_layer.svg");
-    layerNoConstruction = QIcon(":/icons/noconstruction.svg");
+    layerVisible = QIcon(":/icons/visible.lci");
+    //layerHidden = QIcon(":/icons/invisible.lci");
+    layerHidden = QIcon(":/icons/not_visible.lci");
+    layerDefreeze = QIcon(":/icons/unlocked.lci");
+    layerFreeze = QIcon(":/icons/locked.lci");
+    layerPrint = QIcon(":/icons/print.lci");
+    layerNoPrint = QIcon(":/icons/noprint.lci");
+    layerConstruction = QIcon(":/icons/construction_layer.lci");
+    layerNoConstruction = QIcon(":/icons/noconstruction.lci");
 }
 
 int QG_LayerModel::rowCount ( const QModelIndex & /*parent*/ ) const {
@@ -211,53 +215,56 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
     auto* lay = new QVBoxLayout(this);
     lay->setContentsMargins(2, 2, 2, 2);
 
-    auto* layButtons = new QHBoxLayout;
+    auto *layButtons = new LC_FlexLayout(0,5,5);
+
+    // auto* layButtons = new QHBoxLayout;
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/visible.svg"));
+    but->setIcon(QIcon(":/icons/visible.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersDefreezeAll);
     layButtons->addWidget(but);
     // hide all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/invisible.svg"));
+//    but->setIcon(QIcon(":/icons/invisible.lci"));
+    but->setIcon(QIcon(":/icons/not_visible.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersFreezeAll);
     layButtons->addWidget(but);
     // unlock all layers:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/unlocked.svg"));
+    but->setIcon(QIcon(":/icons/unlocked.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Unlock all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersUnlockAll);
     layButtons->addWidget(but);
     // lock all layers:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/locked.svg"));
+    but->setIcon(QIcon(":/icons/locked.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Lock all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersLockAll);
     layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/add.svg"));
+    but->setIcon(QIcon(":/icons/add.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersAdd);
     layButtons->addWidget(but);
     // remove layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/remove.svg"));
+    but->setIcon(QIcon(":/icons/remove.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove layer"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersRemove);
     layButtons->addWidget(but);
     // rename layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/rename_active_block.svg"));
+    but->setIcon(QIcon(":/icons/rename_active_block.lci"));
     // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersEdit);
@@ -279,6 +286,8 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
     connect(layerView, &QTableView::clicked, this, &QG_LayerWidget::slotActivated);
     connect(layerView->selectionModel(), &QItemSelectionModel::selectionChanged,
              this, &QG_LayerWidget::slotSelectionChanged);
+
+    updateWidgetSettings();
 }
 
 /**
@@ -573,6 +582,22 @@ void QG_LayerWidget::activateLayer(int row){
     }
     else
         qWarning("activateLayer: row %d doesn't exist", row);
+}
+
+void QG_LayerWidget::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }
 
 void QG_LayerWidget::setDocumentAndView(RS_Document *doc, [maybe_unused]RS_GraphicView *gview){

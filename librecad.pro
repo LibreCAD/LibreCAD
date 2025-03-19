@@ -17,4 +17,3 @@ OTHER_FILES = \
     README.md \
     desktop/librecad.desktop \
     desktop/org.librecad.librecad.appdata.xml
-

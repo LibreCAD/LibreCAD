@@ -44,7 +44,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../../../res/icons/icons.qrc">:/icons/dirpos_plus.svg</pixmap>
+      <pixmap resource="../../../../res/icons/icons.qrc">:/icons/dirpos_plus.lci</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

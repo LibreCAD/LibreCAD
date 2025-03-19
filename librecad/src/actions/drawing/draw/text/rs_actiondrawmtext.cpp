@@ -94,9 +94,10 @@ void RS_ActionDrawMText::reset() {
 void RS_ActionDrawMText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
     if (pos->valid){
-        auto *text = new RS_MText(container, *data);
+        auto text = std::make_unique<RS_MText>(container, *data);
         text->update();
-        undoCycleAdd(text);
+        undoCycleAdd(text.get());
+        text.release();
         textChanged = true;
         setStatus(SetPos);
     }
@@ -104,10 +105,12 @@ void RS_ActionDrawMText::doTrigger() {
 
 void RS_ActionDrawMText::preparePreview() {
     data->insertionPoint = *pos;
-    auto *text = new RS_MText(preview.get(), *data);
+    auto text = std::make_unique<RS_MText>(preview.get(), *data);
     text->update();
-    previewEntity(text);
+    previewEntity(text.get());
+    text.release();
     textChanged = false;
+    preview->setVisible(true);
 }
 
 void RS_ActionDrawMText::onMouseMoveEvent(int status, LC_MouseEvent *e) {

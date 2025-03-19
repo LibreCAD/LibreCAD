@@ -42,7 +42,7 @@ void aboutImageLabels(QLabel* label)
         return;
 
     QString versionLabel = LCReleaseLabel();
-    label->setPixmap(QPixmap{":main/librecad01_" + versionLabel.toLower() + ".png"});
+    label->setPixmap(QPixmap{":images/librecad01_" + versionLabel.toLower() + ".png"});
     auto pixmap = label->pixmap();
 
     QPainter painter(&pixmap);

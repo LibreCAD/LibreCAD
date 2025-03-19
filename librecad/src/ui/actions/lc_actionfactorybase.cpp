@@ -71,6 +71,7 @@ QAction *LC_ActionFactoryBase::justCreateAction(QMap<QString, QAction *> &a_map,
             action->setIcon(icon);
     }
     action->setObjectName(name);
+    action->setIconVisibleInMenu(true);
     a_map.insert(name, action);
     return action;
 }

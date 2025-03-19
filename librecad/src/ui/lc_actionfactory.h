@@ -80,6 +80,7 @@ private:
     void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 };
 

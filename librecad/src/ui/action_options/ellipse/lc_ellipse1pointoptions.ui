@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
+    <width>514</width>
     <height>24</height>
    </rect>
   </property>
@@ -71,8 +71,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
      </property>
     </widget>
    </item>
@@ -160,15 +160,16 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/dirneg.lci</normaloff>:/icons/dirneg.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

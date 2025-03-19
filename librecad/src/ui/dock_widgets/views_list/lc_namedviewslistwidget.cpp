@@ -33,6 +33,7 @@
 #include "lc_dlgnamedviewslistoptions.h"
 #include "lc_namedviewsbutton.h"
 #include "qc_applicationwindow.h"
+#include "rs_settings.h"
 
 LC_NamedViewsListWidget::LC_NamedViewsListWidget(const QString& title, QWidget* parent)
     : QWidget(parent)
@@ -46,6 +47,7 @@ LC_NamedViewsListWidget::LC_NamedViewsListWidget(const QString& title, QWidget* 
     loadOptions();
     createModel();
     updateButtonsState();
+    updateWidgetSettings();
 }
 
 LC_NamedViewsListWidget::~LC_NamedViewsListWidget(){
@@ -330,7 +332,7 @@ void LC_NamedViewsListWidget::addNewView() {
             } else {
                 LC_View *existingView = currentViewList->find(text);
                 if (existingView == nullptr) {
-                    doCreateNewView(text);
+                        doCreateNewView(text);
                     tryCreate = false;
                 } else {
                     if (options->duplicatedNameReplacesSilently) {
@@ -621,4 +623,20 @@ QWidget *LC_NamedViewsListWidget::createSelectionWidget(QAction* saveAction, QAc
     namedViewsButton->setDefaultAction(defaultAction);
     saveViewAction = saveAction;
     return namedViewsButton;
+}
+
+void LC_NamedViewsListWidget::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }

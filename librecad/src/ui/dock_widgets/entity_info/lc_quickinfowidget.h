@@ -84,6 +84,8 @@ public:
 
     void onEntityPropertiesEdited(unsigned long originalId, unsigned long editedCloneId);
     void updateFormats();
+public slots:
+    void updateWidgetSettings();
 protected slots:
     void onSettings();
     void onClearAll();
@@ -103,7 +105,6 @@ protected slots:
     void onRemoveCoordinate(int index);
     void onInsertCoordinates(int index);
     void onRelativeZeroChanged(const RS_Vector& relZero);
-
 private:
     Ui::LC_QuickInfoWidget *ui = nullptr;
     RS_GraphicView* graphicView = nullptr; // fixme - sand - review dependency

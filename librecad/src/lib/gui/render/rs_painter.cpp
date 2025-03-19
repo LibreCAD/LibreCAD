@@ -616,34 +616,54 @@ void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, double uiRadius){
     }
 }
 
+void RS_Painter::drawCircleUIDirect(double uiCenterX, double uiCenterY, double uiRadius){
+    if (uiRadius < minCircleDrawingRadius){
+        QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
+    }
+    else {
+       QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+    }
+}
+
 void RS_Painter::drawEllipseWCS(const RS_Vector& wcsCenter, double wcsMajorRadius, double ratio, double wcsAngleDegrees) {
     double uiMajorRadius = toGuiDX(wcsMajorRadius);
     double uiMinorRadius = ratio * uiMajorRadius;
 
     RS_Vector uiCenter = toGui(wcsCenter);
     const double uiAngleDegrees = toUCSAngleDegrees(wcsAngleDegrees);
-    // RAII style restoring painter status
-    PainterGuard painterGuard{*this};
     drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees);
 }
 
 void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees) {
 
-    // ellipse transform
-    QTransform ellipseTransform;
-    ellipseTransform.translate(uiCenter.x, uiCenter.y);
-    ellipseTransform.rotate(-uiAngleDegrees);
-    setTransform(ellipseTransform, true);
-
-    QPointF radii{uiRadii.x, uiRadii.y};
     if (uiRadii.x < minEllipseMajorRadius){
-        QPainter::drawPoint(QPointF{0., 0.});
-    }
-    else if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
-        QPainter::drawLine( - radii, radii);
+        // as we have everything there, no need to transform, and save/restore the painter context
+        QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
     else {
-        QPainter::drawEllipse(QRectF{- radii, radii});
+        // RAII style restoring painter status
+        // TODO - remove the comment
+        // Yes, such pattern is recommended for resources management.
+        // Yet honestly speaking, I can't understand the PRACTICAL reason why RAII is better HERE rather than the direct save/restore.
+        // Especially considering the shortest scope between save/restore and time to live of the guard ...
+        // How it's possible to forget calling restore() there? Why restore() may be not called? Due to some exception between save/restore? but it's not handled anyway, it's just a crash.
+        // Thus it just looks like an embellishment (and -1 code line) without a real value - yet with added overhead for short-living object allocation, creation and destruction.
+        // ok, let it be - yet it it's hardly could be considered as improvement, I suppose.
+        PainterGuard painterGuard{*this};
+        // ellipse transform
+        QTransform ellipseTransform;
+        ellipseTransform.translate(uiCenter.x, uiCenter.y);
+        ellipseTransform.rotate(-uiAngleDegrees);
+        setTransform(ellipseTransform, true);
+
+        QPointF radii{uiRadii.x, uiRadii.y};
+
+        if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
+            QPainter::drawLine( - radii, radii);
+        } else {
+            QPainter::drawEllipse(QRectF{- radii, radii});
+        }
+        restore();
     }
 }
 
@@ -659,6 +679,7 @@ void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRa
 
 void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                                    double angle1Degrees, double angle2Degrees, double angularLength, bool reversed) {
+    // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (uiRadii.x < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
@@ -1435,7 +1456,7 @@ void RS_Painter::setViewPort(LC_GraphicViewport *v) {
 //  2) methods unwrapping/inlining
 // ----------------------------------------------------------------------------------------------------------------
 
-void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) {
+void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) const {
 //    viewport->toUI(pos, x,y);
 
     if (m_hasUcs){
@@ -1490,7 +1511,7 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
 
 RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
     RS_Vector uiPosition = worldCoordinates;
-    if (m_hasUcs){
+    if (m_hasUcs) {
         uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
     }
     uiPosition.scale(m_viewPortFactor).move(m_viewPortOffset);
@@ -1500,18 +1521,31 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
     {
         double uiX=0., uiY=0.;
         const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
-        using namespace RS_Math;
-        if (!(equal(uiX, uiPosition.x, 1E-12) && equal(uiY, uiPosition.y, 1E-12))) {
+// TODO uncomment
+// can't test the merge with this assert, got it at the application's start. sorry, had to restore the original code for PR
+//        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
+        if (!(RS_Math::equal(uiX, uiPosition.x, 1E-12) && RS_Math::equal(uiY, uiPosition.y, 1E-12))) {
             LC_ERR<<QString{" : (%1, %2) vs (%3, %4)"}
-            .arg(uiPosition.x, 10, 'g', 10)
-            .arg(uiPosition.y, 10, 'g', 10)
-            .arg(uiX, 10, 'g', 10)
-            .arg(uiY, 10, 'g', 10);
-            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<ulp(uiY);
+                          .arg(uiPosition.x, 10, 'g', 10)
+                          .arg(uiPosition.y, 10, 'g', 10)
+                          .arg(uiX, 10, 'g', 10)
+                          .arg(uiY, 10, 'g', 10);
+            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<RS_Math::ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<RS_Math::ulp(uiY);
             assert(!"toGui() failure");
         }
     }
-    return uiPosition;
+
+//    return uiPosition;
+
+    /*
+     //    double x, y;
+     //    viewport->toUI(worldCoordinates, x, y);
+     //    return RS_Vector(x,y);
+     */
+     double x, y;
+     toGui(worldCoordinates, x, y);
+     return RS_Vector(x, y);
+
 }
 
 

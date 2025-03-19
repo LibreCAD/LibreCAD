@@ -44,12 +44,13 @@ LC_OverlayRelativeZero::LC_OverlayRelativeZero(const RS_Vector &wcsPos, LC_Overl
 {}
 
   LC_OverlayRelativeZero::LC_OverlayRelativeZero(LC_OverlayRelZeroOptions *options)
-  :wcsPosition(RS_Vector(false))
+    :wcsPosition(RS_Vector(false))
     , options(options)
 {}
 
 void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
-    RS_Vector vp = painter->toGui(wcsPosition);
+    double vpx, vpy;
+    painter->toGui(wcsPosition, vpx, vpy);
 
     RS2::LineType relativeZeroPenType = RS2::SolidLine;
 
@@ -57,20 +58,22 @@ void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    const double zr = options->m_relativeZeroRadius * 2;// todo - why diameter is used there?? Is is correct?
-    const RS_Vector zrSize{zr, zr};
-    const RS_Vector xyMin = vp - zrSize;
-    const RS_Vector xyMax = vp + zrSize;
+    int const zr = options->m_relativeZeroRadius * 2;// todo - why diameter is used there?? Is is correct?
+
+    double xmin = vpx - zr;
+    double xmax = vpx + zr;
+    double ymin = vpy - zr;
+    double ymax = vpy + zr;
 
     LC_GraphicViewport *viewport = painter->getViewPort();
 
-    if (xyMax.x < 0 || xyMin.x > viewport->getWidth()) return;
-    if (xyMax.y < 0 || xyMin.x > viewport->getHeight()) return;
+    if (xmax < 0 || xmin > viewport->getWidth()) return;
+    if (ymax < 0 || ymin > viewport->getHeight()) return;
 
-    painter->drawLineUISimple(xyMin.x, vp.y, xyMax.x, vp.y);
-    painter->drawLineUISimple(vp.x, xyMin.y, vp.x, xyMax.y);
+    painter->drawLineUISimple(xmin, vpy, xmax, vpy);
+    painter->drawLineUISimple(vpx, ymin,vpx,ymax);
 
-    painter->drawCircleUI(vp, options->m_relativeZeroRadius);
+    painter->drawCircleUIDirect(vpx, vpy, options->m_relativeZeroRadius);
 }
 
 void LC_OverlayRelativeZero::setPos(const RS_Vector &wcsPos) {

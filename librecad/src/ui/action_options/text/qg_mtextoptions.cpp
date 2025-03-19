@@ -26,9 +26,9 @@
 #include "qg_mtextoptions.h"
 
 #include "rs_actiondrawmtext.h"
+#include "rs_debug.h"
 #include "rs_math.h"
 #include "ui_qg_mtextoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_TextOptions as a child of 'parent', with the
@@ -36,8 +36,10 @@
  */
 QG_MTextOptions::QG_MTextOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawMText, "", "")
-	, ui(new Ui::Ui_MTextOptions{}){
+    , ui{std::make_unique<Ui::Ui_MTextOptions>()}
+{
 	ui->setupUi(this);
+    connect(ui->leAngle, &QLineEdit::textEdited, this, &QG_MTextOptions::updateAngle);
 }
 
 /*
@@ -89,7 +91,7 @@ void QG_MTextOptions::updateText() {
 }
 
 void QG_MTextOptions::updateAngle() {
-    double angle;
+    double angle = 0.;
     QString val = ui->leAngle->text();
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         action->setUcsAngleDegrees(angle);

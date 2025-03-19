@@ -100,18 +100,17 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-        addItem(QIcon(":/ui/color00.png"), tr("Unchanged"));
+        addItem(QIcon(":/colors/color00.png"), tr("Unchanged"));
     }
     if (showByLayer) {
-        addItem(QIcon(":/ui/color00.png"), tr("By Layer"));
-        addItem(QIcon(":/ui/color00.png"), tr("By Block"));
+        addItem(QIcon(":/colors/color00.png"), tr("By Layer"));
+        addItem(QIcon(":/colors/color00.png"), tr("By Block"));
     }
 
     // a special "Custom" color
-    addItem(QIcon(":/ui/colorxx.png"), tr("Custom"));
+    addItem(QIcon(":/controls/colorxx.png"), tr("Custom"));
 
     //static colors starts here
-    //addColor(QIcon(":/ui/color01.png"), red,Qt::red);
     QString red(tr("Red"));
     addColor(Qt::red,red);
     colorIndexStart=findText(red); // keep the starting point of static colors
@@ -119,7 +118,6 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
         {Qt::darkRed, tr("Dark Red")},
     });
     addColor(QColor("orange"), tr("Orange"));
-//    addColor(QColor("darkorange"), tr("Dark Orange"));
     addColor(QColor(127,78,0), tr("Dark Orange"));
     addColors(*this, {
         {Qt::yellow,tr("Yellow")},
@@ -135,7 +133,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     });
 
     // a special "Black/White" color
-    addItem(QIcon(":/ui/color07.png"), tr("Black / White"), QColor(Qt::black));
+    addItem(QIcon(":/colors/color07.png"), tr("Black / White"), QColor(Qt::black));
 
     // Gray colors
     addColors(*this, {
@@ -228,7 +226,7 @@ void QG_ColorBox::setColor(const RS_Color& color){
  * generate icon from color, then add to color box
  */
 void QG_ColorBox::addColor(QColor color, QString text){
-    QPixmap pixmap(":/ui/color00.png");
+    QPixmap pixmap(":/colors/color00.png");
     int width = pixmap.width();
     int height = pixmap.height();
     QPainter painter(&pixmap);
@@ -273,7 +271,7 @@ int QG_ColorBox::addCustomColor(const RS_Color& color){
 void QG_ColorBox::setLayerColor(const RS_Color& color) {
     if (! showByLayer ) return;
     QPixmap pixmap;
-    pixmap = QPixmap(":/ui/color00.png");
+    pixmap = QPixmap(":/colors/color00.png");
     int w = pixmap.width();
     int h = pixmap.height();
     QPainter painter(&pixmap);

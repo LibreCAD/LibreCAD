@@ -24,6 +24,7 @@
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
 #include "rs_preview.h"
+#include "rs_graphic.h"
 #include "rs_coordinateevent.h"
 #include "rs_document.h"
 #include "rs_point.h"

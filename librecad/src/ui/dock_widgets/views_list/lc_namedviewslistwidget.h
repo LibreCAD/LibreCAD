@@ -39,8 +39,7 @@ namespace Ui {
 }
 
 class LC_NamedViewsListWidget : public QWidget{
-Q_OBJECT
-
+ Q_OBJECT
 public:
     explicit LC_NamedViewsListWidget(const QString& title, QWidget* parent);
     virtual ~LC_NamedViewsListWidget();
@@ -58,6 +57,7 @@ signals:
 public slots:
     void addNewView();
     void onUcsListChanged();
+    void updateWidgetSettings();
 protected slots:
     void invokeOptionsDialog();
     void updateView();

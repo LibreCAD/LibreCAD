@@ -42,10 +42,12 @@
 #include "qg_blockwidget.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
-    blockVisible = QIcon(":/icons/visible.svg");
-    blockHidden = QIcon(":/icons/invisible.svg");
+    blockVisible = QIcon(":/icons/visible.lci");
+//    blockHidden = QIcon(":/icons/invisible.svg");
+    blockHidden = QIcon(":/icons/not_visible.lci");
 }
 
 int QG_BlockModel::rowCount ( const QModelIndex & /*parent*/ ) const {
@@ -165,42 +167,43 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     QToolButton* but;
     // show all blocks:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/visible.svg"));
+    but->setIcon(QIcon(":/icons/visible.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Show all blocks"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksDefreezeAll);
     layButtons->addWidget(but);
     // hide all blocks:
     but = new QToolButton(this);
-    but->setIcon( QIcon(":/icons/invisible.svg") );
+//    but->setIcon( QIcon(":/icons/invisible.svg") );
+    but->setIcon( QIcon(":/icons/not_visible.lci") );
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Hide all blocks"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksFreezeAll);
     layButtons->addWidget(but);
     // create block:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/create_block.svg"));
+    but->setIcon(QIcon(":/icons/create_block.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Create Block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksCreate);
     layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/add.svg"));
+    but->setIcon(QIcon(":/icons/add.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Add an empty block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksAdd);
     layButtons->addWidget(but);
     // remove block:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/remove.svg"));
+    but->setIcon(QIcon(":/icons/remove.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Remove block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksRemove);
     layButtons->addWidget(but);
     // edit attributes:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/rename_active_block.svg"));
+    but->setIcon(QIcon(":/icons/rename_active_block.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Rename the active block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksAttributes);
@@ -208,7 +211,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // edit block:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/properties.svg"));
+    but->setIcon(QIcon(":/icons/properties.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Edit the active block\n"
                           "in a separate window"));
@@ -216,14 +219,14 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // save block:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/save.svg"));
+    but->setIcon(QIcon(":/icons/save.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("save the active block to a file"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksSave);
     layButtons->addWidget(but);
     // insert block:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/insert_active_block.svg"));
+    but->setIcon(QIcon(":/icons/insert_active_block.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Insert the active block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksInsert);
@@ -245,6 +248,8 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(blockView, &QTableView::clicked, this, &QG_BlockWidget::slotActivated);
     connect(blockView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &QG_BlockWidget::slotSelectionChanged);
+
+    updateWidgetSettings();
 }
 
 
@@ -457,4 +462,20 @@ void QG_BlockWidget::slotUpdateBlockList() {
     }
 
     restoreSelections();
+}
+
+void QG_BlockWidget::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }

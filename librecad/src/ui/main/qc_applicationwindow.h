@@ -47,7 +47,8 @@
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_anglesbasiswidget.h"
-
+#include "lc_workspacesmanager.h"
+class LC_MenuFactory;
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
 class LC_PenWizard;
@@ -125,6 +126,9 @@ public:
         }
     }
 
+    void fireIconsRefresh();
+    void fireWidgetSettingsChanged();
+    void fireWorkspacesChanged();
     void showStatusMessage(const QString& msg, int timeout = 0);
 
 public slots:
@@ -140,7 +144,7 @@ public slots:
     void slotShowDrawingOptionsUnits();
 
     void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
-    void slotWindowsMenuAboutToShow();
+    void slotWorkspacesMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
 
     void slotPenChanged(RS_Pen p);
@@ -241,6 +245,9 @@ public slots:
     void invokeMenuCreator();
     void invokeToolbarCreator();
     void saveNamedView();
+    void saveWorkspace(bool on);
+    void removeWorkspace(bool on);
+    void restoreWorkspace(bool on);
     void restoreNamedView1();
     void restoreNamedView2();
     void restoreNamedView3();
@@ -273,6 +280,9 @@ signals:
     void signalEnableRelativeZeroSnaps(const bool);
     void showEntityDescriptionOnHoverChanged(bool show);
     void showInfoCursorSettingChanged(bool enabled);
+    void iconsRefreshed();
+    void widgetSettingsChanged();
+    void workspacesChanged(bool hasWorkspaces);
 public:
     /**
      * @return Pointer to application window.
@@ -304,6 +314,10 @@ public:
 
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
+    DockAreas& getDockAreas(){
+        return dock_areas;
+    }
+
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
     LC_AnglesBasisWidget* getAnglesBasisWidget() const {return anglesBasisWidget;};
 
@@ -313,12 +327,15 @@ public:
     // Auto-save
     void startAutoSaveTimer(bool enabled);
 
-
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
     void doClose(QC_MDIWindow* w, bool activateNext = true);
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
     void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
+
+    void  fillWorkspacesList(QList<QPair<int, QString>> &list);
+    void  applyWorkspaceById(int id);
+    void  rebuildMenuIfNecessary();
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -326,7 +343,6 @@ protected:
     void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
-
 private:
     QC_ApplicationWindow();
 
@@ -356,12 +372,14 @@ private:
 //    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
     LC_ActionGroupManager* ag_manager {nullptr};
 
+    LC_WorkspacesManager m_workspacesManager;
+    LC_MenuFactory* m_menuFactory = nullptr;
+
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     std::unique_ptr<QTimer> m_autosaveTimer;
 
     QG_ActionHandler* actionHandler {nullptr};
-
 
     /** Dialog factory */
     QC_DialogFactory* dialogFactory {nullptr};
@@ -410,12 +428,6 @@ private:
 
     LC_QTStatusbarManager* statusbarManager {nullptr};
 
-    // --- Menus ---
-    QMenu* windowsMenu {nullptr};
-    QMenu* scriptMenu {nullptr};
-    QMenu* helpMenu {nullptr};
-    QMenu* testMenu {nullptr};
-    QMenu* file_menu {nullptr};
 
     // --- Toolbars ---
     QG_SnapToolBar* snapToolBar {nullptr};
