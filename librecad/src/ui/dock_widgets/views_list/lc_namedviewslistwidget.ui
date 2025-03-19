@@ -44,7 +44,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/nview_add.svg</normaloff>:/icons/nview_add.svg</iconset>
+         <normaloff>:/icons/nview_add.lci</normaloff>:/icons/nview_add.lci</iconset>
        </property>
       </widget>
      </item>
@@ -58,7 +58,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/nview_visible.svg</normaloff>:/icons/nview_visible.svg</iconset>
+         <normaloff>:/icons/nview_visible.lci</normaloff>:/icons/nview_visible.lci</iconset>
        </property>
       </widget>
      </item>
@@ -72,7 +72,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/zoom_auto.svg</normaloff>:/icons/zoom_auto.svg</iconset>
+         <normaloff>:/icons/zoom_auto.lci</normaloff>:/icons/zoom_auto.lci</iconset>
        </property>
       </widget>
      </item>
@@ -86,7 +86,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/rename_active_block.svg</normaloff>:/icons/rename_active_block.svg</iconset>
+         <normaloff>:/icons/rename_active_block.lci</normaloff>:/icons/rename_active_block.lci</iconset>
        </property>
       </widget>
      </item>
@@ -100,7 +100,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
+         <normaloff>:/icons/remove.lci</normaloff>:/icons/remove.lci</iconset>
        </property>
       </widget>
      </item>
@@ -157,8 +157,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/actions/actions.qrc">
-       <normaloff>:/actions/configure.png</normaloff>:/actions/configure.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/settings.lci</normaloff>:/icons/settings.lci</iconset>
      </property>
     </widget>
    </item>
@@ -180,7 +180,6 @@
  <resources>
   <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
-  <include location="../../../../res/actions/actions.qrc"/>
  </resources>
  <connections/>
 </ui>

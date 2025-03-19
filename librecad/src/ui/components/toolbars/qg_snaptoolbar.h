@@ -32,8 +32,6 @@ class LC_ActionGroupManager;
 #include <QToolBar>
 
 #include "rs_snapper.h"
-
-#include "ui_qg_snaptoolbar.h"
 #include "lc_snapoptionswidgetsholder.h"
 
 class QG_SnapToolBar : public QToolBar

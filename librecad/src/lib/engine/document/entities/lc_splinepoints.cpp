@@ -2257,8 +2257,8 @@ std::vector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
     LC_SplinePointsData spd1(false, false);
     LC_SplinePointsData spd2(false, false);
 
-    LC_SplinePoints *sp1 = new LC_SplinePoints(nullptr, spd1);
-    LC_SplinePoints *sp2 = new LC_SplinePoints(nullptr, spd2);
+    auto *sp1 = new LC_SplinePoints(nullptr, spd1);
+    auto *sp2 = new LC_SplinePoints(nullptr, spd2);
 
     dDist = distance/dDist;
 

@@ -74,9 +74,9 @@ private:
     QMap<QRgba64, QString> colorNamesMap;
     QMap<QRgba64, QString> standardLCColorNamesMap;
 
-    QIcon iconByLayer = QIcon(":/icons/point_blank_square.svg");
-    QIcon iconByBlock = QIcon(":/icons/point_plus_square.svg");
-    QIcon iconUnchanged = QIcon(":/icons/point_cross.svg");
+    QIcon iconByLayer = QIcon(":/icons/point_blank_square.lci");
+    QIcon iconByBlock = QIcon(":/icons/point_plus_square.lci");
+    QIcon iconUnchanged = QIcon(":/icons/point_cross.lci");
 
     void registerLineTypes();
     void registerLineWidths();

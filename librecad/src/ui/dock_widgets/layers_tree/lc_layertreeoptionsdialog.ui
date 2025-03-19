@@ -420,8 +420,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../../res/ui/ui.qrc">
-           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+          <iconset resource="../../../../res/controls/controls.qrc">
+           <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
          </property>
         </widget>
        </item>
@@ -496,8 +496,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../../res/ui/ui.qrc">
-           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+          <iconset resource="../../../../res/controls/controls.qrc">
+           <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
          </property>
         </widget>
        </item>
@@ -523,8 +523,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../../res/ui/ui.qrc">
-           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+          <iconset resource="../../../../res/controls/controls.qrc">
+           <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
          </property>
         </widget>
        </item>
@@ -554,8 +554,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../../res/ui/ui.qrc">
-           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+          <iconset resource="../../../../res/controls/controls.qrc">
+           <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
          </property>
         </widget>
        </item>
@@ -568,8 +568,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../../res/ui/ui.qrc">
-           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+          <iconset resource="../../../../res/controls/controls.qrc">
+           <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
          </property>
         </widget>
        </item>
@@ -655,7 +655,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../res/ui/ui.qrc"/>
+  <include location="../../../../res/controls/controls.qrc"/>
  </resources>
  <connections>
   <connection>

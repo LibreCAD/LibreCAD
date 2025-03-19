@@ -75,7 +75,7 @@ public:
     };
 
     // coordinates translations
-    void toGui(const RS_Vector& pos, double &x, double &y);
+    void toGui(const RS_Vector& pos, double &x, double &y) const;
     RS_Vector toGui(const RS_Vector& worldCoordinates) const;
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
@@ -118,13 +118,18 @@ public:
     void drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize);
     void drawSolidWCS(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3, const RS_Vector &wcsP4);
 
+    void drawArcWCS(const RS_Vector &wcsCenter, double wcsRadius, double wcsStartAngleDegrees, double angularLength);
     void drawSplineWCS(const RS_Spline &spline);
     void drawLineWCS(const RS_Vector &wcsP1, const RS_Vector &wcP2);
+    void drawPolylineWCS(const RS_Polyline *polyline);
     void drawHandleWCS(const RS_Vector &wcsPosition, const RS_Color &c, int size = -1);
     void drawImgWCS(QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector);
 
     // drawing in screen coordinates
     void drawCircleUI(const RS_Vector& uiCenter, double uiRadius);
+    // just draws circle without trying to use any interpolations, used by overlays etc...
+    void drawCircleUIDirect(double uiCenterX, double uiCenterY, double uiRadius);
+    void drawCircleUI(double uiCenterX, double uiCenterY, double uiRadius);
     void drawLineUISimple(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawLineUISimple(const RS_Vector &p1, const RS_Vector &p2);
     void drawText(const QRect &uiRect, int flags, const QString &text, QRect *uiBoundingBox);
@@ -285,12 +290,18 @@ protected:
     void drawArcEntity(RS_Arc* arc, QPainterPath &path);
 
     // painting in UI coordinates
+    void drawEllipseUI(double uiCenterX, double uiCenterY, double uiRadiusMajor, double uiRadiusMinor, double uiAngleDegrees);
+    void drawEllipseArcUI(double uiCenterX, double uiCenterY, double uiMajorRadius, double uiMinorRadius, double uiMajorAngleDegrees,
+                          double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
     void drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees);
     void drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                            double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
     void drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed);
     void drawArcSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, QPainterPath &path);
 
+    void drawArcEntityUI( double uiCenterX,double uiCenterY,double uiRadiusX,double uiRadiusY,double uiStartAngleDegrees,double angularLength);
+    void drawArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY,
+                 double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
     void drawLineUI(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawImgUI(QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 

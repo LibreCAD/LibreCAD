@@ -9,6 +9,7 @@ TEMPLATE = subdirs
 TARGET = libraries
 
 SUBDIRS     = \
+        lciconengine \
         libdxfrw \
         jwwlib
 

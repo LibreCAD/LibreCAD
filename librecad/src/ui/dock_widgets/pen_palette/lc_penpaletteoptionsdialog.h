@@ -48,9 +48,7 @@ private:
     LC_PenPaletteOptions* options = nullptr;
     void selectGridColor();
     void selectMatchedItemColor();
-    void setPensFile();
     void showInvalidColorMessage(const QString &name);
-    void showInvalidFileMessage(const QString &msg);
 };
 
 #endif // LC_PENPALETTEOPTIONSDIALOG_H

@@ -19,7 +19,7 @@ protected slots:
     void setColorForSelected(QColor color);
     void selectByColor(QColor color);
     void setActivePenColor(QColor color);
-
+    void updateWidgetSettings();
 private:
     QC_MDIWindow* mdi_win = nullptr;
     ColorWizard* color_wiz = nullptr;

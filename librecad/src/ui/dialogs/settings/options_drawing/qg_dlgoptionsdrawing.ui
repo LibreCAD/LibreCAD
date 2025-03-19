@@ -641,7 +641,7 @@
                    </property>
                    <property name="icon">
                     <iconset resource="../../../../../res/icons/icons.qrc">
-                     <normaloff>:/icons/dirpos_plus.svg</normaloff>:/icons/dirpos_plus.svg</iconset>
+                     <normaloff>:/icons/dirpos_plus.lci</normaloff>:/icons/dirpos_plus.lci</iconset>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
@@ -670,7 +670,7 @@
                    </property>
                    <property name="icon">
                     <iconset resource="../../../../../res/icons/icons.qrc">
-                     <normaloff>:/icons/dirneg_plus.svg</normaloff>:/icons/dirneg_plus.svg</iconset>
+                     <normaloff>:/icons/dirneg_plus.lci</normaloff>:/icons/dirneg_plus.lci</iconset>
                    </property>
                    <property name="checkable">
                     <bool>true</bool>
@@ -2063,7 +2063,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_dot.svg</normaloff>:/icons/point_dot.svg</iconset>
+                    <normaloff>:/icons/point_dot.lci</normaloff>:/icons/point_dot.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2107,7 +2107,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_blank.svg</normaloff>:/icons/point_blank.svg</iconset>
+                    <normaloff>:/icons/point_blank.lci</normaloff>:/icons/point_blank.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2139,7 +2139,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_plus.svg</normaloff>:/icons/point_plus.svg</iconset>
+                    <normaloff>:/icons/point_plus.lci</normaloff>:/icons/point_plus.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2180,7 +2180,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_cross.svg</normaloff>:/icons/point_cross.svg</iconset>
+                    <normaloff>:/icons/point_cross.lci</normaloff>:/icons/point_cross.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2221,7 +2221,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_tick.svg</normaloff>:/icons/point_tick.svg</iconset>
+                    <normaloff>:/icons/point_tick.lci</normaloff>:/icons/point_tick.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2262,7 +2262,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_dot_circle.svg</normaloff>:/icons/point_dot_circle.svg</iconset>
+                    <normaloff>:/icons/point_dot_circle.lci</normaloff>:/icons/point_dot_circle.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2303,7 +2303,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_blank_circle.svg</normaloff>:/icons/point_blank_circle.svg</iconset>
+                    <normaloff>:/icons/point_blank_circle.lci</normaloff>:/icons/point_blank_circle.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2344,7 +2344,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_plus_circle.svg</normaloff>:/icons/point_plus_circle.svg</iconset>
+                    <normaloff>:/icons/point_plus_circle.lci</normaloff>:/icons/point_plus_circle.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2385,7 +2385,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_cross_circle.svg</normaloff>:/icons/point_cross_circle.svg</iconset>
+                    <normaloff>:/icons/point_cross_circle.lci</normaloff>:/icons/point_cross_circle.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2426,7 +2426,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_tick_circle.svg</normaloff>:/icons/point_tick_circle.svg</iconset>
+                    <normaloff>:/icons/point_tick_circle.lci</normaloff>:/icons/point_tick_circle.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2467,7 +2467,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_dot_square.svg</normaloff>:/icons/point_dot_square.svg</iconset>
+                    <normaloff>:/icons/point_dot_square.lci</normaloff>:/icons/point_dot_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2508,7 +2508,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_blank_square.svg</normaloff>:/icons/point_blank_square.svg</iconset>
+                    <normaloff>:/icons/point_blank_square.lci</normaloff>:/icons/point_blank_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2549,7 +2549,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_plus_square.svg</normaloff>:/icons/point_plus_square.svg</iconset>
+                    <normaloff>:/icons/point_plus_square.lci</normaloff>:/icons/point_plus_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2590,7 +2590,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_cross_square.svg</normaloff>:/icons/point_cross_square.svg</iconset>
+                    <normaloff>:/icons/point_cross_square.lci</normaloff>:/icons/point_cross_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2631,7 +2631,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_tick_square.svg</normaloff>:/icons/point_tick_square.svg</iconset>
+                    <normaloff>:/icons/point_tick_square.lci</normaloff>:/icons/point_tick_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2672,7 +2672,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_dot_circle_square.svg</normaloff>:/icons/point_dot_circle_square.svg</iconset>
+                    <normaloff>:/icons/point_dot_circle_square.lci</normaloff>:/icons/point_dot_circle_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2713,7 +2713,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_blank_circle_square.svg</normaloff>:/icons/point_blank_circle_square.svg</iconset>
+                    <normaloff>:/icons/point_blank_circle_square.lci</normaloff>:/icons/point_blank_circle_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2754,7 +2754,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_plus_circle_square.svg</normaloff>:/icons/point_plus_circle_square.svg</iconset>
+                    <normaloff>:/icons/point_plus_circle_square.lci</normaloff>:/icons/point_plus_circle_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2795,7 +2795,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_cross_circle_square.svg</normaloff>:/icons/point_cross_circle_square.svg</iconset>
+                    <normaloff>:/icons/point_cross_circle_square.lci</normaloff>:/icons/point_cross_circle_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2836,7 +2836,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../../../../res/icons/icons.qrc">
-                    <normaloff>:/icons/point_tick_circle_square.svg</normaloff>:/icons/point_tick_circle_square.svg</iconset>
+                    <normaloff>:/icons/point_tick_circle_square.lci</normaloff>:/icons/point_tick_circle_square.lci</iconset>
                   </property>
                   <property name="iconSize">
                    <size>

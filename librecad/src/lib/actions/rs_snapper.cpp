@@ -224,7 +224,6 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
     ,pImpData(new ImpData)
     ,snap_indicator(new Indicator){
     viewport = graphicView.getViewPort();
-
     infoCursorOverlayPrefs = graphicView.getInfoCursorOverlayPreferences();
 }
 
@@ -246,7 +245,7 @@ void RS_Snapper::init(){
 void RS_Snapper::initSettings() {
     initFromSettings();
 
-    RS_Graphic* graphic = this->graphicView->getGraphic();
+    RS_Graphic* graphic = graphicView->getGraphic();
     if (graphic != nullptr) {
         initFromGraphic(graphic);
     }
@@ -1135,7 +1134,7 @@ void RS_Snapper::updateCoordinateWidgetFormat(){
 }
 
 void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat){
-    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs->enabled) {
         preparePositionsInfoCursorOverlay(updateFormat, abs, rel);
     }
     RS_DIALOGFACTORY->updateCoordinateWidget(abs, rel, updateFormat);
@@ -1143,7 +1142,7 @@ void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& r
 
 void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat){
     const RS_Vector &relative = abs - viewport->getRelativeZero();
-    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs->enabled) {
         preparePositionsInfoCursorOverlay(updateFormat, abs, relative);
     }
     RS_DIALOGFACTORY->updateCoordinateWidget(abs, relative, updateFormat);
@@ -1154,7 +1153,7 @@ LC_InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {
 }
 
 bool RS_Snapper::isInfoCursorForModificationEnabled() const {
-    return infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification;
+    return infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification;
 }
 
 void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs,  const RS_Vector &relative) {

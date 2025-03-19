@@ -111,7 +111,7 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
 
     options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
 
-    LC_GROUP_GUARD("QuickInfoWidget");
+    LC_GROUP_GUARD("Widget.QuickInfo");
     {
         entityData.setCoordinatesMode(LC_GET_INT("EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
         pointsData.setCoordinatesMode(LC_GET_INT("PointsCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
@@ -119,6 +119,8 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
 
     // initial message
     showNoDataMessage();
+
+    updateWidgetSettings();
 }
 
 LC_QuickInfoWidget::~LC_QuickInfoWidget(){
@@ -248,7 +250,7 @@ void LC_QuickInfoWidget::onClearAll(){
  * @param index
  */
 void LC_QuickInfoWidget::onCoordinateModeIndexChanged(int index){
-    LC_GROUP_GUARD("QuickInfoWidget");
+    LC_GROUP_GUARD("Widget.QuickInfo");
     {
         if (widgetMode == MODE_ENTITY_INFO) {
             setEntityPointsCoordinateViewMode(index);
@@ -795,4 +797,20 @@ void LC_QuickInfoWidget::onEntityPropertiesEdited(unsigned long originalId, unsi
           }
       }
   }
+}
+
+void LC_QuickInfoWidget::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }

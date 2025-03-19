@@ -275,14 +275,14 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../../../res/main/main.qrc">:/main/intro_librecad.png</pixmap>
+      <pixmap resource="../../../../res/images/images.qrc">:/images/intro_librecad.png</pixmap>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/main/main.qrc"/>
+  <include location="../../../../res/images/images.qrc"/>
  </resources>
  <connections>
   <connection>

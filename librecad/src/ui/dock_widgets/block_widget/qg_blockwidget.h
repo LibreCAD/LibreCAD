@@ -69,7 +69,6 @@ public:
 
     RS_Block* getActiveBlock() const { return activeBlock; }
     void setActiveBlock(RS_Block* b) { activeBlock = b; }
-
 private:
     QList<RS_Block*> listBlock;
     QIcon blockVisible;
@@ -122,7 +121,7 @@ public slots:
         const QItemSelection &selected,
         const QItemSelection &deselected);
     void slotUpdateBlockList();
-
+    void updateWidgetSettings();
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
     void keyPressEvent(QKeyEvent* e) override;

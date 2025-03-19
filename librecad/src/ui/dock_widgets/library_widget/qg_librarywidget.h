@@ -71,6 +71,7 @@ public slots:
     virtual void updatePreview( QModelIndex idx );
     virtual void expandView( QModelIndex idx );
     virtual void collapseView( QModelIndex idx );
+    void updateWidgetSettings();
 
 signals:
     void escape();

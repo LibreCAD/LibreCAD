@@ -88,6 +88,7 @@ public slots:
     void onModelChanged();
     void doDoubleClick();
     void updatePenToolbarByActiveLayer();
+    void updateWidgetSettings();
 private:
     // mouse click counter used for handling both single click and double-click on table view
     int clicksCount {0};

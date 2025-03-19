@@ -82,7 +82,7 @@ protected slots:
     void setFontsFolder();
     void setTranslationsFolder();
     void setHatchPatternsFolder();
-    void setShortcutsMappingsFoler();
+    void setOtherSettingsFolder();
     bool checkRestartNeeded();
     void on_pbOverlayBoxLine_clicked();
     void on_pbOverlayBoxFill_clicked();
@@ -96,14 +96,20 @@ protected slots:
     void onInfoCursorRelativeChanged();
     void onInfoCursorSnapChanged();
     void on_pbDraftModeColor_clicked();
+    void onExpandToolsMenuToggled(bool checked);
 
     void set_color(QComboBox* combo, QColor custom);
+
+    void exportSettings();
+    void importSettings();
 private:
     bool restartNeeded=false;
 
     QString originalLibraryPath;
     bool originalUseClassicToolbar;
     bool originalAllowsMenusTearOff;
+    bool originalExpandedToolsMenu;
+    bool originalExpandedToolsMenuTillEntity;
 
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
@@ -111,9 +117,7 @@ private:
     void initReferencePoints();
     void updateLPtSzUnits();
     void saveReferencePoints();
-    QString selectFolder(const char* title);
-
-
+    QString selectFolder(const QString& title);
 };
 
 #endif // QG_DLGOPTIONSGENERAL_H

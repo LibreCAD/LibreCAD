@@ -344,7 +344,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_middleright.svg</normaloff>:/icons/mtext_align_middleright.svg</iconset>
+                <normaloff>:/icons/mtext_align_middleright.lci</normaloff>:/icons/mtext_align_middleright.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -376,7 +376,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_topright.svg</normaloff>:/icons/mtext_align_topright.svg</iconset>
+                <normaloff>:/icons/mtext_align_topright.lci</normaloff>:/icons/mtext_align_topright.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -408,7 +408,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_bottomright.svg</normaloff>:/icons/mtext_align_bottomright.svg</iconset>
+                <normaloff>:/icons/mtext_align_bottomright.lci</normaloff>:/icons/mtext_align_bottomright.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -440,7 +440,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_topcenter.svg</normaloff>:/icons/mtext_align_topcenter.svg</iconset>
+                <normaloff>:/icons/mtext_align_topcenter.lci</normaloff>:/icons/mtext_align_topcenter.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -472,7 +472,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_bottomcenter.svg</normaloff>:/icons/mtext_align_bottomcenter.svg</iconset>
+                <normaloff>:/icons/mtext_align_bottomcenter.lci</normaloff>:/icons/mtext_align_bottomcenter.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -504,7 +504,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_middlecenter.svg</normaloff>:/icons/mtext_align_middlecenter.svg</iconset>
+                <normaloff>:/icons/mtext_align_middlecenter.lci</normaloff>:/icons/mtext_align_middlecenter.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -536,7 +536,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_middleleft.svg</normaloff>:/icons/mtext_align_middleleft.svg</iconset>
+                <normaloff>:/icons/mtext_align_middleleft.lci</normaloff>:/icons/mtext_align_middleleft.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -568,7 +568,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_topleft.svg</normaloff>:/icons/mtext_align_topleft.svg</iconset>
+                <normaloff>:/icons/mtext_align_topleft.lci</normaloff>:/icons/mtext_align_topleft.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -600,7 +600,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../../res/icons/icons.qrc">
-                <normaloff>:/icons/mtext_align_bottomleft.svg</normaloff>:/icons/mtext_align_bottomleft.svg</iconset>
+                <normaloff>:/icons/mtext_align_bottomleft.lci</normaloff>:/icons/mtext_align_bottomleft.lci</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -744,7 +744,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
+             <normaloff>:/icons/new.lci</normaloff>:/icons/new.lci</iconset>
            </property>
           </widget>
          </item>
@@ -758,7 +758,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+             <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
            </property>
           </widget>
          </item>
@@ -772,7 +772,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
+             <normaloff>:/icons/save.lci</normaloff>:/icons/save.lci</iconset>
            </property>
           </widget>
          </item>
@@ -786,7 +786,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/cut.svg</normaloff>:/icons/cut.svg</iconset>
+             <normaloff>:/icons/cut.lci</normaloff>:/icons/cut.lci</iconset>
            </property>
           </widget>
          </item>
@@ -800,7 +800,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/copy.svg</normaloff>:/icons/copy.svg</iconset>
+             <normaloff>:/icons/copy.lci</normaloff>:/icons/copy.lci</iconset>
            </property>
           </widget>
          </item>
@@ -814,7 +814,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/paste.svg</normaloff>:/icons/paste.svg</iconset>
+             <normaloff>:/icons/paste.lci</normaloff>:/icons/paste.lci</iconset>
            </property>
           </widget>
          </item>

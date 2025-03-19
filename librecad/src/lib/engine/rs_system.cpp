@@ -550,7 +550,9 @@ QStringList RS_System::getFileList(const QString& subDirectory,
 
     QStringList fileList;
 
-    foreach(const QString& path, getDirectoryList( subDirectory)) {
+    auto directoryList = getDirectoryList( subDirectory);
+
+    foreach(const QString& path, directoryList) {
         QDir dir {path};
 
         if (dir.exists() && dir.isReadable()) {

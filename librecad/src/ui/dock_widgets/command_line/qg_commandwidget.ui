@@ -55,7 +55,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/options.svg</normaloff>:/icons/options.svg</iconset>
+       <normaloff>:/icons/options.lci</normaloff>:/icons/options.lci</iconset>
      </property>
      <property name="iconSize">
       <size>
