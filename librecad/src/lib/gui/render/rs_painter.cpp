@@ -1511,7 +1511,7 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
                           .arg(uiPosition.y, 10, 'g', 10)
                           .arg(uiX, 10, 'g', 10)
                           .arg(uiY, 10, 'g', 10);
-            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<ulp(uiY);
+            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<RS_Math::ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<RS_Math::ulp(uiY);
             assert(!"toGui() failure");
         }
     }
