@@ -103,7 +103,7 @@
 #include "lc_actionfileexportmakercam.h"
 #include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
-#include "rs_actionfilesaveas.h"
+#include "librecad/src/actions/not_used/rs_actionfilesaveas.h"
 #include "rs_actioninfoangle.h"
 #include "rs_actioninfoarea.h"
 #include "rs_actioninfodist.h"
@@ -285,27 +285,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
 
     switch (id) {
-        //case RS2::ActionFileNew:
-        //    a = new RS_ActionFileNew(*document, *view);
-        //	break;
         case RS2::ActionFileNewTemplate:
             a = new RS_ActionFileNewTemplate(*document, *view);
             break;
-            //case RS2::ActionFileSave:
-            //    a = new RS_ActionFileSave(*document, *view);
-            //	break;
-            //case RS2::ActionFileClose:
-            //    //a = new RS_ActionFileClose(*document, *view);
-            //	break;
-            //case RS2::ActionFileQuit:
-            //    //a = new RS_ActionFileQuit(*document, *view);
-            //	break;
         case RS2::ActionFileOpen:
             a = new RS_ActionFileOpen(*document, *view);
             break;
-        case RS2::ActionFileSaveAs:
+     /*   case RS2::ActionFileSaveAs:
             a = new RS_ActionFileSaveAs(*document, *view);
-            break;
+            break;*/
         case RS2::ActionFileExportMakerCam:
             a = new LC_ActionFileExportMakerCam(*document, *view);
             break;
@@ -1329,7 +1317,7 @@ bool QG_ActionHandler::command(const QString& cmd)
         if (type!=RS2::ActionNone) {
             RS_DEBUG->print("QG_ActionHandler::command: setting current action");
              //special handling, currently needed for snap actions
-			if (!commandLineActions(type)){
+            if (!commandLineActions(type)){
                 //not handled yet
                 setCurrentAction(type);
             }
@@ -1344,37 +1332,9 @@ bool QG_ActionHandler::command(const QString& cmd)
     return false;
 }
 
-
-//void QG_ActionHandler::slotFileNew() {
-//	setCurrentAction(RS2::ActionFileNew);
-//}
-
 void QG_ActionHandler::slotFileNewTemplate() {
     setCurrentAction(RS2::ActionFileNewTemplate);
 }
-
-void QG_ActionHandler::slotFileOpen() {
-    setCurrentAction(RS2::ActionFileOpen);
-}
-/*
-void QG_ActionHandler::slotFileSave() {
-        setCurrentAction(RS2::ActionFileSave);
-}
-*/
-
-void QG_ActionHandler::slotFileSaveAs() {
-    setCurrentAction(RS2::ActionFileSaveAs);
-}
-
-/*
-void QG_ActionHandler::slotFileClose() {
-        setCurrentAction(RS2::ActionFileClose);
-}
-
-void QG_ActionHandler::slotFilePrint() {
-        setCurrentAction(RS2::ActionFilePrint);
-}
-*/
 
 void QG_ActionHandler::slotFileExportMakerCam() {
     setCurrentAction(RS2::ActionFileExportMakerCam);
@@ -1492,9 +1452,6 @@ void QG_ActionHandler::slotSelectLayer() {
     setCurrentAction(RS2::ActionSelectLayer);
 }
 
-/*void QG_ActionHandler::slotDrawPoint() {
-        setCurrentAction(RS2::ActionDrawPoint);
-}*/
 
 void QG_ActionHandler::slotDrawLine() {
     setCurrentAction(RS2::ActionDrawLine);

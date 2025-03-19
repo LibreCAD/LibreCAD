@@ -65,14 +65,10 @@ public:
     void set_snap_toolbar(QG_SnapToolBar *snap_toolbar);
 
 public slots:
-/*void slotFileNew();*/
     void slotFileNewTemplate();
-    void slotFileOpen();
-/*
-   void slotFileOpen(const QString& fileName);
-   void slotFileSave();
- */
-    void slotFileSaveAs();
+    // void slotFileOpen();
+
+//    void slotFileSaveAs();
     void slotFileExportMakerCam(); // fixme - remove
 /*
   void slotFileClose();
