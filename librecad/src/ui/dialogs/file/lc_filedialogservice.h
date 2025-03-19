@@ -37,29 +37,23 @@
 /*
     This service class centralizes the file I/O user interface.
 */
-namespace LC_FileDialogService
-{
-        enum FileDialogMode
-        {
-            /* List of open modes. */
+namespace LC_FileDialogService {
+    enum FileDialogMode {
+        /* List of open modes. */
+        /* List of save modes.*/
+        SaveDrawing = 0,
+        ExportLayersSelected = 1,
+        ExportLayersVisible = 2
+    };
 
-
-            /* List of save modes.*/
-            SaveDrawing = 0,
-            ExportLayersSelected = 1,
-            ExportLayersVisible = 2
-        };
-
-        struct FileDialogResult
-        {
-            QString dirPath;
-            QString filePath;
-            QString fileName;
-            QString fileExtension;
-            RS2::FormatType fileType = RS2::FormatUnknown;
-            int checkState = 0;
-        };
-
-        FileDialogResult getFileDetails(FileDialogMode const& fileDialogMode);
+    struct FileDialogResult {
+        QString dirPath;
+        QString filePath;
+        QString fileName;
+        QString fileExtension;
+        RS2::FormatType fileType = RS2::FormatUnknown;
+        int checkState = 0;
+    };
+    FileDialogResult getFileDetails(FileDialogMode const &fileDialogMode);
 }
 #endif // LC_FILEDIALOGSERVICE_H
