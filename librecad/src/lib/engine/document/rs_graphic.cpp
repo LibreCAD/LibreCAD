@@ -40,7 +40,6 @@
 #include "rs_actioninterface.h"
 #include "rs_fileio.h"
 #include "rs_layer.h"
-#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
@@ -141,14 +140,14 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
         const QString &layerName = layer->getName();
         if (layerName != "0") {
             std::vector<RS_Entity *> toRemove;
-//find entities on layer
+            //find entities on layer
             for (RS_Entity *e: entities) {
                 if (e->getLayer() &&
                     e->getLayer()->getName() == layerName) {
                     toRemove.push_back(e);
                 }
             }
-// remove all entities on that layer:
+            // remove all entities on that layer:
             if (!toRemove.empty()) {
                 startUndoCycle();
                 for (RS_Entity *e: toRemove) {
@@ -193,6 +192,7 @@ void RS_Graphic::newDoc() {
     addLayer(new RS_Layer("0"));
     setModified(false);
 }
+
 /**
  * Loads the given file into this graphic.
  */
@@ -785,8 +785,8 @@ void RS_Graphic::setModified(bool m) {
         namedViewsList.setModified(m);
         ucsList.setModified(m);
     }
-    if (modificationListener != nullptr) {
-        modificationListener->graphicModified(this, m);
+    if (m_modificationListener != nullptr) {
+        m_modificationListener->graphicModified(this, m);
     }
 }
 
@@ -810,4 +810,10 @@ const QString &RS_Graphic::getAutosaveFilename() const {
 
 void RS_Graphic::setAutosaveFileName(const QString &fileName) {
     autosaveFilename = fileName;
+}
+
+void RS_Graphic::fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const{
+    if (m_modificationListener != nullptr) {
+        m_modificationListener->undoStateChanged(this, undoAvailable, redoAvailable);
+    }
 }

@@ -48,8 +48,7 @@ public:
 
     virtual bool undo();
     virtual bool redo();
-
-//	virtual std::shared_ptr<RS_UndoCycle> getUndoCycle();
+    //	virtual std::shared_ptr<RS_UndoCycle> getUndoCycle();
 //	virtual std::shared_ptr<RS_UndoCycle> getRedoCycle();
 
     virtual int countUndoCycles();
@@ -71,14 +70,12 @@ public:
 	  *\brief enable/disable redo/undo buttons in main application window
 	  *\author: Dongxu Li
       **/
-	void setGUIButtons() const;
-
+	void updateUndoState() const;
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
-
     static bool test();
-
+protected:
+    virtual void fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const {};
 private:
-
 	void addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i);
     //! List of undo list items. every item is something that can be undone.
 	std::vector<std::shared_ptr<RS_UndoCycle>> undoList;
@@ -113,4 +110,3 @@ class RS_UndoStub : public RS_Undo {
 #endif
 
 #endif
-

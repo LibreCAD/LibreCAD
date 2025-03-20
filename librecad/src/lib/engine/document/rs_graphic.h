@@ -37,7 +37,8 @@ class QG_LayerWidget;
 
 class LC_GraphicModificationListener {
 public:
-    virtual void graphicModified(RS_Graphic* g, bool modified) = 0;
+    virtual void graphicModified(const RS_Graphic* g, bool modified) = 0;
+    virtual void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) = 0;
 };
 
 /**
@@ -254,7 +255,10 @@ public:
 
     void setAutosaveFileName(const QString &autosaveFilename);
 
-    void setModificationListener(LC_GraphicModificationListener * listener) {modificationListener = listener;};
+    void setModificationListener(LC_GraphicModificationListener * listener) {m_modificationListener = listener;}
+
+protected:
+    void fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const override;
 private:
     QDateTime lastSaveTime;
     QString currentFileName; //keep a copy of filename for the modifiedTime
@@ -285,6 +289,6 @@ private:
     /** Auto-save file name of document. */
     QString autosaveFilename;
 
-    LC_GraphicModificationListener* modificationListener = nullptr;
+    LC_GraphicModificationListener* m_modificationListener = nullptr;
 };
 #endif
