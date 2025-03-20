@@ -204,9 +204,7 @@ RS_Commands::RS_Commands() {
     // prefer to use translated commands and aliases
     for (const auto& [command, translation]: m_cmdTranslation) {
         m_revTranslation[translation] = command;
-        if (m_mainCommands.count(translation) == 1)
-            m_mainCommands[command] = m_mainCommands[translation];
-        else if (m_shortCommands.count(translation) == 1)
+        if (m_shortCommands.count(translation) == 1)
             m_shortCommands[command] = m_shortCommands[translation];
     }
 

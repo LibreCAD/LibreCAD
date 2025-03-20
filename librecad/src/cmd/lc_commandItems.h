@@ -528,7 +528,7 @@ const LC_CommandItem g_commandList[] = {
         // draw angle line from line
         {
             {{"angleline", QObject::tr("angleline", "draw angle from line")}},
-            {{"aline", QObject::tr("angleline", "draw angle from line")}},
+            {{"aline", QObject::tr("aline", "draw angle from line")}},
             RS2::ActionDrawLineAngleRel
         },
         // draw orthogonal line from line
@@ -1195,11 +1195,11 @@ std::vector<std::pair<QString, QString>> g_transList={
         {QObject::tr("through"),"through"},
         {QObject::tr("t","through"),"through"},
 
-        {QObject::tr("undo"),"undo"},
-        {QObject::tr("u","undo"),"undo"},
+        {QObject::tr("undo"),"undo cycle"},
+        {QObject::tr("u","undo cycle"),"undo"},
 
-        {QObject::tr("redo"),"redo"},
-        {QObject::tr("r","redo"),"redo"},
+        {QObject::tr("redo"),"redo cycle"},
+        {QObject::tr("r","redo redo cycle"),"redo"},
 
         {QObject::tr("back"),"back"},
         {QObject::tr("b","back"),"back"},
