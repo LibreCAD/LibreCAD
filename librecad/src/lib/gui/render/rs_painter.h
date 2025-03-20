@@ -30,17 +30,25 @@
 
 #include <QPen>
 #include <QPainter>
-#include "rs.h"
-#include "qnamespace.h"
-#include "rs_vector.h"
-#include "rs_entity.h"
-#include "lc_graphicviewportrenderer.h"
-#include "lc_coordinates_mapper.h"
+#include <Qt>
 
+#include "lc_coordinates_mapper.h"
+#include "rs.h"
+#include "rs_pen.h"
+#include "lc_rect.h"
+#include "lc_rect.h"
+#include "rs_vector.h"
+
+
+class RS_Arc;
+class RS_Circle;
 class RS_Color;
+class RS_Ellipse;
+class RS_Entity;
 class RS_Pen;
 class RS_Polyline;
 class RS_Spline;
+
 class QPainterPath;
 class QRect;
 class QRectF;
@@ -49,7 +57,9 @@ class QPolygonF;
 class QImage;
 class QBrush;
 class QString;
+
 class LC_GraphicViewport;
+class LC_GraphicViewportRenderer;
 
 struct LC_SplinePointsData;
 
@@ -138,8 +148,8 @@ public:
     void drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsize);
 
     // methods invoked from entity containers and printing
-    void drawEntity(RS_Entity* entity) {renderer->renderEntity(this, entity);}
-    void drawAsChild(RS_Entity* entity){renderer->renderEntityAsChild(this, entity);}
+    void drawEntity(RS_Entity* entity);
+    void drawAsChild(RS_Entity* entity);
     void drawInfiniteWCS(RS_Vector start, RS_Vector end);
 
     /**
@@ -199,7 +209,7 @@ public:
     void setDefaultWidthFactor(double factor){ defaultWidthFactor = factor;}
     void updatePointsScreenSize(double pdSize);
 
-    bool isTextLineNotRenderable(double d);
+    bool isTextLineNotRenderable(double d) const;
 
     void setRenderArcsInterpolate(bool value){ arcRenderInterpolate = value;}
     void setRenderArcsInterpolationAngleFixed(bool value){arcRenderInterpolationAngleFixed = value;}
@@ -229,7 +239,7 @@ public:
         return 3e-4;
     }
 
-    static constexpr int getMaximumArcNonErrorRadius(){
+    static constexpr int getMaximumArcNonErrorRadius() {
         // fixme - sand - move to the setting??
         return 3000;
     }

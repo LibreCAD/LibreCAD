@@ -20,18 +20,27 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "lc_widgetviewportrenderer.h"
-#include "rs_painter.h"
-#include "rs_settings.h"
+#include <memory>
+
 #include "lc_graphicviewport.h"
+#include "lc_widgetviewportrenderer.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_math.h"
+#include "rs_painter.h"
+#include "rs_settings.h"
 
-LC_WidgetViewPortRenderer::LC_WidgetViewPortRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice):LC_GraphicViewportRenderer(viewport){
-    pd = paintDevice;
-    PixmapLayer1.reset(new QPixmap(1,1));
+LC_WidgetViewPortRenderer::LC_WidgetViewPortRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice):
+    LC_GraphicViewportRenderer(viewport, paintDevice)
+    , pixmapLayerBackground{ std::make_unique<QPixmap>() }
+    , pixmapLayerDrawing{ std::make_unique<QPixmap>() }
+    , pixmapLayerOverlays{ std::make_unique<QPixmap>() }
+    , m_pixmapLayer1{ std::make_unique<QPixmap>(1,1) }
+{
 }
+
+LC_WidgetViewPortRenderer::~LC_WidgetViewPortRenderer() = default;
+
 
 void LC_WidgetViewPortRenderer::loadSettings() {
     LC_GraphicViewportRenderer::loadSettings();
@@ -119,14 +128,14 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
     int height = viewport->getHeight();
 
     QSize const s0(width, height);
-    if (pixmapLayerBackground.size() != s0){
-        pixmapLayerBackground = QPixmap(width, height);
+    if (pixmapLayerBackground->size() != s0){
+        pixmapLayerBackground = std::make_unique<QPixmap>(width, height);
         redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawGrid);
     }
 
     if (redrawMethod & RS2::RedrawGrid) {
-        pixmapLayerBackground.fill(m_colorBackground);
-        RS_Painter painterBackground(&pixmapLayerBackground);
+        pixmapLayerBackground->fill(m_colorBackground);
+        RS_Painter painterBackground(pixmapLayerBackground.get());
         setupPainter(&painterBackground);
         drawLayerBackground(&painterBackground);
         painterBackground.end();
@@ -135,8 +144,8 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
 
     if (redrawMethod & RS2::RedrawDrawing) {
         // DRaw layer 2
-        pixmapLayerDrawing = pixmapLayerBackground;
-        RS_Painter painterLayerDrawing(&pixmapLayerDrawing);
+        *pixmapLayerDrawing = *pixmapLayerBackground;
+        RS_Painter painterLayerDrawing(pixmapLayerDrawing.get());
         setupPainter(&painterLayerDrawing);
 
         drawLayerEntities(&painterLayerDrawing);
@@ -146,18 +155,16 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
     }
 
     if (redrawMethod & RS2::RedrawOverlay) {
-        pixmapLayerOverlays = pixmapLayerDrawing;
-        RS_Painter painterLayerOverlays(&pixmapLayerOverlays);
+        *pixmapLayerOverlays = *pixmapLayerDrawing;
+        RS_Painter painterLayerOverlays(pixmapLayerOverlays.get());
         setupPainter(&painterLayerOverlays);
 
         painterLayerOverlays.setRenderHint(QPainter::Antialiasing);
         drawLayerOverlays(&painterLayerOverlays);
-        painterLayerOverlays.end();
     }
 
     RS_Painter wPainter(pd);
-    wPainter.drawPixmap(0, 0, pixmapLayerOverlays);
-    wPainter.end();
+    wPainter.drawPixmap(0, 0, *pixmapLayerOverlays);
 }
 
 
@@ -165,47 +172,43 @@ void LC_WidgetViewPortRenderer::paintClassicalBuffered(QPaintDevice* pd) {
     int width = viewport->getWidth();
     int height = viewport->getHeight();
     QSize const s0(width, height);
-    bool sizeDifferent = PixmapLayer1->size() != s0;
+    bool sizeDifferent = m_pixmapLayer1->size() != s0;
     if (sizeDifferent){
-        PixmapLayer1.reset(new QPixmap(width, height));
-        PixmapLayer2.reset(new QPixmap(width, height));
-        PixmapLayer3.reset(new QPixmap(width, height));
+        m_pixmapLayer1 = std::make_unique<QPixmap>(width, height);
+        m_pixmapLayer2 = std::make_unique<QPixmap>(width, height);
+        m_pixmapLayer3 = std::make_unique<QPixmap>(width, height);
         redrawMethod = RS2::RedrawAll;
     }
 
     // Draw Layer 1
     if (redrawMethod & RS2::RedrawGrid) {
-        PixmapLayer1->fill(m_colorBackground);
-        RS_Painter painterBackground(PixmapLayer1.get());
+        m_pixmapLayer1->fill(m_colorBackground);
+        RS_Painter painterBackground(m_pixmapLayer1.get());
         setupPainter(&painterBackground);
         drawLayerBackground(&painterBackground);
-        painterBackground.end();
     }
 
     if (redrawMethod & RS2::RedrawDrawing) {
         // DRaw layer 2
-        PixmapLayer2->fill(Qt::transparent);
-        RS_Painter painterLayerDrawing(PixmapLayer2.get());
+        m_pixmapLayer2->fill(Qt::transparent);
+        RS_Painter painterLayerDrawing(m_pixmapLayer2.get());
         setupPainter(&painterLayerDrawing);
         drawLayerEntities(&painterLayerDrawing);
         drawLayerEntitiesOver(&painterLayerDrawing);
-        painterLayerDrawing.end();
     }
 
     if (redrawMethod & RS2::RedrawOverlay) {
-        PixmapLayer3->fill(Qt::transparent);
-        RS_Painter painter3(PixmapLayer3.get());
+        m_pixmapLayer3->fill(Qt::transparent);
+        RS_Painter painter3(m_pixmapLayer3.get());
         setupPainter(&painter3);
         drawLayerOverlays( &painter3);
-        painter3.end();
     }
 
     // Finally paint the layers back on the screen, bitblk to the rescue!
     RS_Painter wPainter(pd);
-    wPainter.drawPixmap(0, 0, *PixmapLayer1);
-    wPainter.drawPixmap(0, 0, *PixmapLayer2);
-    wPainter.drawPixmap(0, 0, *PixmapLayer3);
-    wPainter.end();
+    wPainter.drawPixmap(0, 0, *m_pixmapLayer1);
+    wPainter.drawPixmap(0, 0, *m_pixmapLayer2);
+    wPainter.drawPixmap(0, 0, *m_pixmapLayer3);
 }
 
 void LC_WidgetViewPortRenderer::setupPainter(RS_Painter *painter) {

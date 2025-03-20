@@ -30,8 +30,11 @@
 #include "lc_defaults.h"
 #include "lc_linemath.h"
 
-LC_GraphicViewportRenderer::LC_GraphicViewportRenderer(LC_GraphicViewport* v):viewport{v}{
-    graphic = viewport->getGraphic();
+LC_GraphicViewportRenderer::LC_GraphicViewportRenderer(LC_GraphicViewport* v, QPaintDevice* painterDevice):
+    pd{painterDevice}
+    , viewport{v}
+    , graphic {viewport->getGraphic()}
+{
 }
 
 void LC_GraphicViewportRenderer::render() {
@@ -206,7 +209,7 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     painter->setWorldBoundingRect(renderBoundingClipRect);
 }
 
-bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double d) {
+bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double d) const {
     return false;
 }
 

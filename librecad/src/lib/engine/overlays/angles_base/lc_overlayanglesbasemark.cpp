@@ -43,10 +43,15 @@ void LC_AnglesBaseMarkOptions::loadSettings() {
 }
 
 LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(RS_Vector uiOrigin, double ucsAngle, bool counterClockWise, LC_AnglesBaseMarkOptions *opt)
-   :origin{uiOrigin}, baseAngle{ucsAngle}, dirCounterClockWise{counterClockWise}, options{opt}{}
+   :origin{uiOrigin}
+    , baseAngle{ucsAngle}
+    , dirCounterClockWise{counterClockWise}
+    , options{opt}
+{}
 
-LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(LC_AnglesBaseMarkOptions *opt) {
-     options = opt;
+LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(LC_AnglesBaseMarkOptions *options):
+    options{options}
+{
 }
 
 void LC_OverlayAnglesBaseMark::update(const RS_Vector &uiOrigin, double angle, bool counterclock) {

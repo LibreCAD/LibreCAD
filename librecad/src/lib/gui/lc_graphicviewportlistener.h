@@ -23,17 +23,16 @@
 #ifndef LC_GRAPHICVIEWPORTLISTENER_H
 #define LC_GRAPHICVIEWPORTLISTENER_H
 
-#include "rs_vector.h"
-
 class LC_UCS;
+class RS_Vector;
 
 class LC_GraphicViewPortListener{
 public:
-    virtual void onViewportChanged(){};
-    virtual void onViewportRedrawNeeded() {};
-    virtual void previousZoomChanged([[maybe_unused]]bool value) {};
-    virtual void onRelativeZeroChanged([[maybe_unused]]const RS_Vector& pos){}
-    virtual void onUCSChanged([[maybe_unused]]LC_UCS* ucs){};
+    virtual void onViewportChanged() {}
+    virtual void onViewportRedrawNeeded() {}
+    virtual void previousZoomChanged([[maybe_unused]]bool value) {}
+    virtual void onRelativeZeroChanged([[maybe_unused]]const RS_Vector& pos) {}
+    virtual void onUCSChanged([[maybe_unused]]LC_UCS* ucs) {}
 };
 
 

@@ -23,26 +23,53 @@
 #ifndef LC_WIDGETVIEWPORTRENDERER_H
 #define LC_WIDGETVIEWPORTRENDERER_H
 
-#include <QPixmap>
 #include "lc_graphicviewportrenderer.h"
+
+class QPixmap;
 
 class LC_WidgetViewPortRenderer:public LC_GraphicViewportRenderer
 {
 public:
     explicit LC_WidgetViewPortRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice);
+    ~LC_WidgetViewPortRenderer() override;
     void loadSettings() override;
     void setupPainter(RS_Painter* painter) override;
     void setAntialiasing(bool state) {antialiasing = state;}
-    void invalidate(RS2::RedrawMethod method) {redrawMethod = static_cast<RS2::RedrawMethod>(redrawMethod | method);};
+    void invalidate(RS2::RedrawMethod method) {redrawMethod = static_cast<RS2::RedrawMethod>(redrawMethod | method);}
 protected:
     void doRender() override;
 
-    bool antialiasing{false};
+    virtual void doSetupBeforeContainerDraw();
+    void paintClassicalBuffered(QPaintDevice* pd);
+    void paintSequental(QPaintDevice* pd);
+
+    void drawLayerBackground(RS_Painter *painter);
+    void drawLayerEntities(RS_Painter* painter);
+    void drawLayerOverlays(RS_Painter *painter);
+
+    virtual void drawLayerEntitiesOver([[maybe_unused]]RS_Painter* painter){}
+    virtual void doDrawLayerBackground([[maybe_unused]]RS_Painter *painter) {}
+    virtual void doDrawLayerOverlays([[maybe_unused]]RS_Painter *painter) {}
+    int getMinRenderableTextHeightInPx() const {
+        return m_render_minRenderableTextHeightInPx;
+    }
+
+#ifdef DEBUG_RENDERING
+    QElapsedTimer drawLayerBackgroundTimer;
+    QElapsedTimer drawLayerEntitiesTimer;
+    QElapsedTimer drawLayerOverlaysTimer;
+    long drawLayerBackgroundTime = 0;
+    long drawLayerEntitiesTime = 0;
+    long drawLayerOverlaysTime = 0;
+#endif
+
+private:
+    bool antialiasing = false;
     bool classicRenderer = true;
 
-    QPixmap pixmapLayerBackground;
-    QPixmap pixmapLayerDrawing;
-    QPixmap pixmapLayerOverlays;
+    std::unique_ptr<QPixmap> pixmapLayerBackground;
+    std::unique_ptr<QPixmap> pixmapLayerDrawing;
+    std::unique_ptr<QPixmap> pixmapLayerOverlays;
 
     RS2::RedrawMethod redrawMethod = RS2::RedrawAll;
 
@@ -60,32 +87,9 @@ protected:
     bool m_render_circlesSameAsArcs = false;
 
     // Used for buffering different paint layers
-    std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
-    std::unique_ptr<QPixmap> PixmapLayer2;  // Used for the actual CAD drawing
-    std::unique_ptr<QPixmap> PixmapLayer3;  // Used for crosshair and actionitems
-
-    virtual void doSetupBeforeContainerDraw();
-    void paintClassicalBuffered(QPaintDevice* pd);
-    void paintSequental(QPaintDevice* pd);
-
-    void drawLayerBackground(RS_Painter *painter);
-    void drawLayerEntities(RS_Painter* painter);
-    void drawLayerOverlays(RS_Painter *painter);
-
-    virtual void drawLayerEntitiesOver([[maybe_unused]]RS_Painter* painter){}
-    virtual void doDrawLayerBackground([[maybe_unused]]RS_Painter *painter) {};
-    virtual void doDrawLayerOverlays([[maybe_unused]]RS_Painter *painter) {};
-
-#ifdef DEBUG_RENDERING
-    QElapsedTimer drawLayerBackgroundTimer;
-    QElapsedTimer drawLayerEntitiesTimer;
-    QElapsedTimer drawLayerOverlaysTimer;
-    long drawLayerBackgroundTime = 0;
-    long drawLayerEntitiesTime = 0;
-    long drawLayerOverlaysTime = 0;
-#endif
-
-
+    std::unique_ptr<QPixmap> m_pixmapLayer1;  // Used for grids and absolute 0
+    std::unique_ptr<QPixmap> m_pixmapLayer2;  // Used for the actual CAD drawing
+    std::unique_ptr<QPixmap> m_pixmapLayer3;  // Used for crosshair and actionitems
 };
 
 #endif // LC_WIDGETVIEWPORTRENDERER_H

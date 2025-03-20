@@ -49,10 +49,10 @@ public:
     void draw(RS_Painter *painter) override;
     void update(const RS_Vector &uiOrigin, double angle, bool counterclockwise);
 protected:
-    LC_AnglesBaseMarkOptions* options = nullptr;
     RS_Vector origin = RS_Vector(false);
     double baseAngle = 0.0;
     bool dirCounterClockWise = true;
+    LC_AnglesBaseMarkOptions* options = nullptr;
     void createArrowShape(const RS_Vector &point, double angle, double arrowSize, RS_Vector &p1, RS_Vector &p2, RS_Vector &p3);
 };
 

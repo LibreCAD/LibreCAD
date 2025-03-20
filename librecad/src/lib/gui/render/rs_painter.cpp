@@ -26,6 +26,7 @@
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
+#include "lc_graphicviewportrenderer.h"
 #include "lc_linemath.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
@@ -1430,7 +1431,17 @@ void RS_Painter::drawInfiniteWCS(RS_Vector startpoint, RS_Vector endpoint) {
     }
 }
 
-bool RS_Painter::isTextLineNotRenderable(double wcsLineHeight) {
+void RS_Painter::drawEntity(RS_Entity* entity)
+{
+    renderer->renderEntity(this, entity);
+}
+
+void RS_Painter::drawAsChild(RS_Entity* entity)
+{
+    renderer->renderEntityAsChild(this, entity);
+}
+
+bool RS_Painter::isTextLineNotRenderable(double wcsLineHeight) const {
     double uiHeight = toGuiDY(wcsLineHeight);
     return renderer->isTextLineNotRenderable(uiHeight);
 }

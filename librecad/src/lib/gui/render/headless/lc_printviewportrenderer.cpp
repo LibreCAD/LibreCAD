@@ -29,7 +29,9 @@
 #include "rs_entitycontainer.h"
 
 LC_PrintViewportRenderer::LC_PrintViewportRenderer(LC_GraphicViewport *viewport, RS_Painter* p)
-   :LC_GraphicViewportRenderer(viewport),painter{p}{
+   :LC_GraphicViewportRenderer(viewport, nullptr)
+    ,painter{p}
+{
    setBackground({255,255,255});
 }
 

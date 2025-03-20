@@ -33,7 +33,7 @@ public:
     LC_PrintPreviewViewRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice);
     void renderEntity(RS_Painter *painter, RS_Entity *e) override;
 
-    RS2::DrawingMode getDrawingMode() {
+    RS2::DrawingMode getDrawingMode() const {
         return drawingMode;
     }
 
@@ -42,16 +42,18 @@ public:
         viewport->notifyChanged();
     }
 
-    bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) override { return false;};
+    bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) const override { return false;}
 protected:
-    RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
-    double paperScale = 1.0;
     void drawPaper(RS_Painter *painter);
     void setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e);
     void doDrawLayerBackground(RS_Painter *painter) override;
     void setupPainter(RS_Painter *painter) override;
 
     void doRender() override;
+
+private:
+    RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
+    double paperScale = 1.0;
 };
 
 #endif // LC_PRINTPREVIEWVIEWRENDERER_H
