@@ -128,6 +128,7 @@ jobs:
           mkdir -p ${{github.workspace}}/librecad/res/main
           rsync ${{github.workspace}}/desktop/media/splash/librecad01_dark.png ${{github.workspace}}/librecad/res/main/splash_librecad.png
           sed -i 's/Qt::black/Qt::white/g' ${{github.workspace}}/librecad/src/main/main.cpp
+          sed -i'' -e '/fontweight/d' ${{github.workspace}}/librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui
 
       - name: Build and analyze
         run: |
