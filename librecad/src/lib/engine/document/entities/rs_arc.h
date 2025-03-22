@@ -89,7 +89,10 @@ public:
     }
 
     /** @return Copy of data that defines the arc. **/
-    RS_ArcData getData() const {
+    const RS_ArcData& getData() const {
+        return data;
+    }
+    RS_ArcData& getData() {
         return data;
     }
 
