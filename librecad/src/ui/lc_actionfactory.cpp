@@ -330,15 +330,15 @@ void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGr
 
 void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
-        {"EntityDescriptionInfo", SLOT(slotShowEntityDescriptionOnHover(bool)), tr("Show Entity Description"), ":/icons/entity_description_info.lci"}
+        {"EntityDescriptionInfo", &QC_ApplicationWindow::slotShowEntityDescriptionOnHover, tr("Show Entity Description"), ":/icons/entity_description_info.lci"}
     });
     createActions(map, group, {
-        {"InfoCursorEnable", tr("Enable Info Cursor"), ":/icons/info_cursor_enable.lci"},
-        {"InfoCursorAbs", tr("Absolute Pos"), ":/icons/info_cursor_zone1.lci"},
-        {"InfoCursorSnap", tr("Snap"), ":/icons/info_cursor_zone2.lci"},
-        {"InfoCursorRel", tr("Relative"), ":/icons/info_cursor_zone3.lci"},
-        {"InfoCursorPrompt", tr("Prompt"), ":/icons/info_cursor_zone4.lci"},
-        {"InfoCursorCatchedEntity", tr("Caught Entity"), ":/icons/info_cursor_zone2_entity.lci"},
+        {"InfoCursorEnable",        tr("Enable Info Cursor"), ":/icons/info_cursor_enable.lci"},
+        {"InfoCursorAbs",           tr("Absolute Pos"),       ":/icons/info_cursor_zone1.lci"},
+        {"InfoCursorSnap",          tr("Snap"),               ":/icons/info_cursor_zone2.lci"},
+        {"InfoCursorRel",           tr("Relative"),           ":/icons/info_cursor_zone3.lci"},
+        {"InfoCursorPrompt",        tr("Prompt"),             ":/icons/info_cursor_zone4.lci"},
+        {"InfoCursorCatchedEntity", tr("Caught Entity"),      ":/icons/info_cursor_zone2_entity.lci"},
     });
 }
 
@@ -366,10 +366,8 @@ void LC_ActionFactory::createRestrictActions(QMap<QString, QAction *> &map, QAct
 
 void LC_ActionFactory::createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group){
     createActions(map, group, {
-//        {"TMP_FlipUCS",    tr("TMP: Flip UCS"),  ":/icons/modify.lci"},
         {"UCSSetWCS",   RS2::ActionUCSCreate,   tr("To WCS"),  ":/icons/ucs_set_wcs.lci"}
         // todo - add action for hiding/showing related zero
-        //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.lci"}
     });
 
     createActionHandlerActions(map, group, {
@@ -379,9 +377,9 @@ void LC_ActionFactory::createUCSActions(QMap<QString, QAction *> &map, QActionGr
 
 void LC_ActionFactory::createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
     createMainWindowActions(map, group, {
-        {"WorkspaceCreate",        SLOT(saveWorkspace(bool)),        tr("Save Workspace"),     ":/icons/workspace_save.lci"},
-        {"WorkspaceRemove",        SLOT(removeWorkspace(bool)),        tr("Remove Workspace"),     ":/icons/workspace_remove.lci"},
-        {"WorkspaceRestore",        SLOT(restoreWorkspace(bool)),        tr("Restore Workspace"),     ":/icons/workspace.lci"}
+        {"WorkspaceCreate",  &QC_ApplicationWindow::saveWorkspace,    tr("Save Workspace"),    ":/icons/workspace_save.lci"},
+        {"WorkspaceRemove",  &QC_ApplicationWindow::removeWorkspace,  tr("Remove Workspace"),  ":/icons/workspace_remove.lci"},
+        {"WorkspaceRestore", &QC_ApplicationWindow::restoreWorkspace, tr("Restore Workspace"), ":/icons/workspace.lci"}
     });
 }
 
@@ -430,16 +428,16 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"ZoomWindow",RS2::ActionZoomWindow, tr("&Window Zoom"), ":/icons/zoom_window.lci","zoom-select"}});
 
     createMainWindowActions(map, group, {
-        {"Fullscreen",       SLOT(toggleFullscreen(bool)),          tr("&Fullscreen")},
-        {"ViewGrid",         SLOT(slotViewGrid(bool)),              tr("&Grid"),                 ":/icons/grid.lci"},
-        {"ViewDraft",        SLOT(slotViewDraft(bool)),             tr("&Draft"),                ":/icons/draft.lci"},
-        {"ViewLinesDraft",   SLOT(slotViewDraftLines(bool)),        tr("&Draft Lines"),          ":/icons/draftLineWidth.lci"},
-        {"ViewAntialiasing", SLOT(slotViewAntialiasing(bool)),      tr("&Antialiasing"),         ":/icons/anti_aliasing.lci"},
-        {"ViewStatusBar",    SLOT(slotViewStatusBar(bool)),         tr("&Statusbar")},
-        {"ViewGridOrtho",    SLOT(slotViewGridOrtho(bool)),         tr("&Orthogonal Grid"),      ":/icons/grid_ortho.lci"},
-        {"ViewGridIsoLeft",  SLOT(slotViewGridIsoLeft(bool)),       tr("&Isometric Left Grid"),  ":/icons/grid_iso_left.lci"},
-        {"ViewGridIsoTop",   SLOT(slotViewGridIsoTop(bool)),        tr("&Isometric Top Grid"),   ":/icons/grid_iso_top.lci"},
-        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)),      tr("&Isometric Right Grid"), ":/icons/grid_iso_right.lci"},
+        {"Fullscreen",       &QC_ApplicationWindow::toggleFullscreen,     tr("&Fullscreen")},
+        {"ViewGrid",         &QC_ApplicationWindow::slotViewGrid,         tr("&Grid"),                 ":/icons/grid.lci"},
+        {"ViewDraft",        &QC_ApplicationWindow::slotViewDraft,        tr("&Draft"),                ":/icons/draft.lci"},
+        {"ViewLinesDraft",   &QC_ApplicationWindow::slotViewDraftLines,   tr("&Draft Lines"),          ":/icons/draftLineWidth.lci"},
+        {"ViewAntialiasing", &QC_ApplicationWindow::slotViewAntialiasing, tr("&Antialiasing"),         ":/icons/anti_aliasing.lci"},
+        {"ViewStatusBar",    &QC_ApplicationWindow::slotViewStatusBar,    tr("&Statusbar")},
+        {"ViewGridOrtho",    &QC_ApplicationWindow::slotViewGridOrtho,    tr("&Orthogonal Grid"),      ":/icons/grid_ortho.lci"},
+        {"ViewGridIsoLeft",  &QC_ApplicationWindow::slotViewGridIsoLeft,  tr("&Isometric Left Grid"),  ":/icons/grid_iso_left.lci"},
+        {"ViewGridIsoTop",   &QC_ApplicationWindow::slotViewGridIsoTop,   tr("&Isometric Top Grid"),   ":/icons/grid_iso_top.lci"},
+        {"ViewGridIsoRight", &QC_ApplicationWindow::slotViewGridIsoRight, tr("&Isometric Right Grid"), ":/icons/grid_iso_right.lci"},
     }, true);
 }
 
@@ -476,41 +474,44 @@ void LC_ActionFactory::createBlockActionsUncheckable(QMap<QString, QAction *> &m
     });
 }
 
-void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
     createActionHandlerActions(map, group, {
         {"OptionsDrawing",RS2::ActionOptionsDrawing, tr("Current &Drawing Preferences"), ":/icons/drawing_settings.lci"}
     });
 
     createMainWindowActions(map, group, {
-        {"OptionsGeneral",   SLOT(slotOptionsGeneral()),   tr("&Application Preferences"), ":/icons/settings.lci"},
-        {"WidgetOptions",    SLOT(widgetOptionsDialog()),  tr("Widget Options")},
-        {"ShortcutsOptions", SLOT(slotOptionsShortcuts()), tr("Keyboard Shortcuts"),       ":/icons/shortcuts_settings.lci"},
-        {"DeviceOptions",    SLOT(showDeviceOptions()),    tr("Device Options")},
-        {"ReloadStyleSheet", SLOT(reloadStyleSheet()),     tr("Reload Style Sheet")}
+        {"OptionsGeneral", &QC_ApplicationWindow::slotOptionsGeneral, tr("&Application Preferences"), ":/icons/settings.lci"},
+        {"WidgetOptions", &QC_ApplicationWindow::widgetOptionsDialog, tr("Widget Options")},
+        {"ShortcutsOptions", &QC_ApplicationWindow::slotOptionsShortcuts, tr("Keyboard Shortcuts"), ":/icons/shortcuts_settings.lci"},
+        {"DeviceOptions", &QC_ApplicationWindow::showDeviceOptions, tr("Device Options")},
+        {"ReloadStyleSheet", &QC_ApplicationWindow::reloadStyleSheet, tr("Reload Style Sheet")}
     });
 }
 
 void LC_ActionFactory::createFileActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
-        {"FilePrintPreview", SLOT(slotFilePrintPreview(bool)),  tr("Print Pre&view"),     ":/icons/print_preview.lci",     "document-print-preview"},
+        {"FilePrintPreview",&QC_ApplicationWindow::slotFilePrintPreview,  tr("Print Pre&view"), ":/icons/print_preview.lci", "document-print-preview"},
     });
 }
 
-void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
+    createActions(map, group, {
+        {"FileClose", tr("&Close"), ":/icons/close.lci"},
+    });
+
     createMainWindowActions(map, group, {
-        {"FileExport",       SLOT(slotFileExport()),       tr("&Export as image"),   ":/icons/export.lci"},
-        {"FileClose", nullptr,                             tr("&Close"),             ":/icons/close.lci"},
-        {"FileCloseAll",     SLOT(slotFileCloseAll()),     tr("Close All"),          ":/icons/close_all.lci"},
-        {"FilePrintPDF",     SLOT(slotFilePrintPDF()),     tr("Export as PDF"),      ":/icons/export_pdf.lci"},
-        {"BlocksImport",     SLOT(slotImportBlock()),      tr("&Block"),             ":/icons/insert_active_block.lci"},
-        {"FileNew",          SLOT(slotFileNewNew()),       tr("&New"),               ":/icons/new.lci",               "document-new"},
-        {"FileNewTemplate",  SLOT(slotFileNewTemplate()),  tr("New From &Template"), ":/icons/new_from_template.lci", "document-new"},// fixme - check
-        {"FileOpen",         SLOT(slotFileOpen()),         tr("&Open..."),           ":/icons/open.lci",              "document-open"},
-        {"FileSave",         SLOT(slotFileSave()),         tr("&Save"),              ":/icons/save.lci",              "document-save"},
-        {"FileSaveAs",       SLOT(slotFileSaveAs()),       tr("Save &as..."),        ":/icons/save_as.lci",           "document-save-as"},
-        {"FileSaveAll",      SLOT(slotFileSaveAll()),      tr("Save A&ll..."),       ":/icons/save_all.lci"},
-        {"FilePrint",        SLOT(slotFilePrint()),        tr("&Print..."),          ":/icons/print.lci",             "document-print"},
-        {"FileQuit",         SLOT(slotFileQuit()),         tr("&Quit"),              ":/icons/quit.lci",              "application-exit"},
+        {"FileExport",      &QC_ApplicationWindow::slotFileExport,      tr("&Export as image"),   ":/icons/export.lci"},
+        {"FileCloseAll",    &QC_ApplicationWindow::slotFileCloseAll,    tr("Close All"),          ":/icons/close_all.lci"},
+        {"FilePrintPDF",    &QC_ApplicationWindow::slotFilePrintPDF,    tr("Export as PDF"),      ":/icons/export_pdf.lci"},
+        {"BlocksImport",    &QC_ApplicationWindow::slotImportBlock,     tr("&Block"),             ":/icons/insert_active_block.lci"},
+        {"FileNew",         &QC_ApplicationWindow::slotFileNewNew,      tr("&New"),               ":/icons/new.lci",               "document-new"},
+        {"FileNewTemplate", &QC_ApplicationWindow::slotFileNewTemplate, tr("New From &Template"), ":/icons/new_from_template.lci", "document-new"},// fixme - check
+        {"FileOpen",        &QC_ApplicationWindow::slotFileOpen,        tr("&Open..."),           ":/icons/open.lci",              "document-open"},
+        {"FileSave",        &QC_ApplicationWindow::slotFileSave,        tr("&Save"),              ":/icons/save.lci",              "document-save"},
+        {"FileSaveAs",      &QC_ApplicationWindow::slotFileSaveAs,      tr("Save &as..."),        ":/icons/save_as.lci",           "document-save-as"},
+        {"FileSaveAll",     &QC_ApplicationWindow::slotFileSaveAll,     tr("Save A&ll..."),       ":/icons/save_all.lci"},
+        {"FilePrint",       &QC_ApplicationWindow::slotFilePrint,       tr("&Print..."),          ":/icons/print.lci",             "document-print"},
+        {"FileQuit",        &QC_ApplicationWindow::slotFileQuit,        tr("&Quit"),              ":/icons/quit.lci",              "application-exit"},
     });
 
     createAction_AH("FileExportMakerCam",RS2::ActionFileExportMakerCam,  tr("Export as CA&M/plain SVG..."), nullptr, nullptr, group, map);
@@ -518,25 +519,27 @@ void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &ma
 
 void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
-        {"LeftDockAreaToggle",        SLOT(toggleLeftDockArea(bool)),        tr("Left"),     ":/icons/dockwidgets_left.lci"},
-        {"RightDockAreaToggle",       SLOT(toggleRightDockArea(bool)),       tr("Right"),    ":/icons/dockwidgets_right.lci"},
-        {"TopDockAreaToggle",         SLOT(toggleTopDockArea(bool)),         tr("Top"),      ":/icons/dockwidgets_top.lci"},
-        {"BottomDockAreaToggle",      SLOT(toggleBottomDockArea(bool)),      tr("Bottom"),   ":/icons/dockwidgets_bottom.lci"},
-        {"FloatingDockwidgetsToggle", SLOT(toggleFloatingDockwidgets(bool)), tr("Floating"), ":/icons/dockwidgets_floating.lci"}
+        {"LeftDockAreaToggle",        &QC_ApplicationWindow::toggleLeftDockArea,        tr("Left"),     ":/icons/dockwidgets_left.lci"},
+        {"RightDockAreaToggle",       &QC_ApplicationWindow::toggleRightDockArea,       tr("Right"),    ":/icons/dockwidgets_right.lci"},
+        {"TopDockAreaToggle",         &QC_ApplicationWindow::toggleTopDockArea,         tr("Top"),      ":/icons/dockwidgets_top.lci"},
+        {"BottomDockAreaToggle",      &QC_ApplicationWindow::toggleBottomDockArea,      tr("Bottom"),   ":/icons/dockwidgets_bottom.lci"},
+        {"FloatingDockwidgetsToggle", &QC_ApplicationWindow::toggleFloatingDockwidgets, tr("Floating"), ":/icons/dockwidgets_floating.lci"}
     }, true);
 }
 
 void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
-        {"RedockWidgets",        SLOT(slotRedockWidgets()),    tr("Re-dock Widgets")},
-        {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    tr("Menu Creator"), ":/icons/create_menu.lci"},
-        {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), tr("Toolbar Creator"), ":/icons/create_toolbar.lci"}
+        {"RedockWidgets",        &QC_ApplicationWindow::slotRedockWidgets,    tr("Re-dock Widgets")},
+        {"InvokeMenuCreator",    &QC_ApplicationWindow::invokeMenuCreator,    tr("Menu Creator"),    ":/icons/create_menu.lci"},
+        {"InvokeToolbarCreator", &QC_ApplicationWindow::invokeToolbarCreator, tr("Toolbar Creator"), ":/icons/create_toolbar.lci"}
     });
 }
 
 void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    createAction_MW("FocusCommand",SLOT(slotFocusCommandLine()), tr("Focus on &Command Line"), ":/icons/editclear.lci", nullptr, group, map);
-    createAction_MW("FocusOptions",SLOT(slotFocusOptionsWidget()), tr("Focus on &Options Widget"), ":/icons/drawing_settings.lci", nullptr, group, map);
+    createMainWindowActions(map, group, {
+        {"FocusCommand", &QC_ApplicationWindow::slotFocusCommandLine,   tr("Focus on &Command Line"),   ":/icons/editclear.lci"},
+        {"FocusOptions", &QC_ApplicationWindow::slotFocusOptionsWidget, tr("Focus on &Options Widget"), ":/icons/drawing_settings.lci"}
+    });
 
     createActionHandlerActions(map, group, {
         {"ZoomIn",       RS2::ActionZoomIn,       tr("Zoom &In"),       ":/icons/zoom_in.lci",       "zoom-in"},
@@ -547,16 +550,16 @@ void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &ma
     });
 }
 
-void LC_ActionFactory::createNamedViewActionsUncheckable(QMap<QString, QAction*> &map, QActionGroup *group) {
+void LC_ActionFactory::createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
-        {"ZoomViewSave",     SLOT(saveNamedView()),           tr("&Save View"),           ":/icons/nview_add.lci"},
+        {"ZoomViewSave",     &QC_ApplicationWindow::saveNamedView,           tr("&Save View"),           ":/icons/nview_add.lci"},
         // fixme - quite an ugly approach, think about direct invocation of action for views list?
-        {"ZoomViewRestore",  SLOT(restoreNamedViewCurrent()), tr("Restore Current View"), ":/icons/nview_visible.lci"},
-        {"ZoomViewRestore1", SLOT(restoreNamedView1()),       tr("Restore View 1"),       ":/icons/nview_visible.lci"},
-        {"ZoomViewRestore2", SLOT(restoreNamedView2()),       tr("Restore View 2"),       ":/icons/nview_visible.lci"},
-        {"ZoomViewRestore3", SLOT(restoreNamedView3()),       tr("Restore View 3"),       ":/icons/nview_visible.lci"},
-        {"ZoomViewRestore4", SLOT(restoreNamedView4()),       tr("Restore View 4"),       ":/icons/nview_visible.lci"},
-        {"ZoomViewRestore5", SLOT(restoreNamedView5()),       tr("Restore View 5"),       ":/icons/nview_visible.lci"},
+        {"ZoomViewRestore",  &QC_ApplicationWindow::restoreNamedViewCurrent, tr("Restore Current View"), ":/icons/nview_visible.lci"},
+        {"ZoomViewRestore1", &QC_ApplicationWindow::restoreNamedView1,       tr("Restore View 1"),       ":/icons/nview_visible.lci"},
+        {"ZoomViewRestore2", &QC_ApplicationWindow::restoreNamedView2,       tr("Restore View 2"),       ":/icons/nview_visible.lci"},
+        {"ZoomViewRestore3", &QC_ApplicationWindow::restoreNamedView3,       tr("Restore View 3"),       ":/icons/nview_visible.lci"},
+        {"ZoomViewRestore4", &QC_ApplicationWindow::restoreNamedView4,       tr("Restore View 4"),       ":/icons/nview_visible.lci"},
+        {"ZoomViewRestore5", &QC_ApplicationWindow::restoreNamedView5,       tr("Restore View 5"),       ":/icons/nview_visible.lci"},
     });
 }
 
@@ -675,8 +678,6 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_Acti
 #else
         {"Fullscreen", QKeySequence::FullScreen},
         {"ExclusiveSnapMode", QKeySequence(Qt::ALT | Qt::Key_X)},
-
-
 #endif
     };
 

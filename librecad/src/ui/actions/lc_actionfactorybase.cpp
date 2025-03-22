@@ -25,22 +25,27 @@
 #include "lc_actionfactorybase.h"
 #include "lc_shortcutinfo.h"
 #include "qg_actionhandler.h"
-#include "rs_dialogfactory.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
     QObject(parent), main_window(parent),action_handler(a_handler){
 }
 
-QAction *LC_ActionFactoryBase::createAction_MW(const char *name, const char *slot, const QString& text,
+QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_ApplicationWindow::*slotPtr)(), void (QC_ApplicationWindow::*slotBoolPtr)(bool),const QString& text,
                                            const char *iconName, const char *themeIconName,
                                            QActionGroup *parent, QMap<QString, QAction *> &a_map, bool useToggled) const {
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
-    if (slot != nullptr) {
+    if (slotPtr != nullptr) {
         if (useToggled) {
-            connect(action, SIGNAL(toggled(bool)), main_window, slot);
+            connect(action, &QAction::toggled, main_window, slotPtr);
         } else {
-            connect(action, SIGNAL(triggered(bool)), main_window, slot);
+            connect(action, &QAction::triggered, main_window, slotPtr);
         }
+    }else if (slotBoolPtr != nullptr) {
+            if (useToggled) {
+                connect(action, &QAction::toggled, main_window, slotBoolPtr);
+            } else {
+                connect(action, &QAction::triggered, main_window, slotBoolPtr);
+            }
     }
     return action;
 }
@@ -90,7 +95,7 @@ void LC_ActionFactoryBase::createActionHandlerActions(QMap<QString, QAction *> &
 
 void LC_ActionFactoryBase::createMainWindowActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList, bool useToggled) const {
     for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
-        createAction_MW(a.key, a.slot, a.text, a.iconName, a.themeIconName, group, map, useToggled);
+        createAction_MW(a.key, a.slotPtr, a.slotPtrBool, a.text, a.iconName, a.themeIconName, group, map, useToggled);
     }
 }
 
