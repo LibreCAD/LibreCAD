@@ -51,7 +51,6 @@ debug/
 *.exe
 *.exp
 *.ilk
-*.rc
 *.bak
 *.obj
 object_script.LibreCAD.*

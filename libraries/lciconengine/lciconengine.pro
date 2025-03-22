@@ -19,7 +19,7 @@ HEADERS += \
 DISTFILES += src/lc_svgicons.json
 
 
-#win32:RC_FILE = src/lc_svgicons.rc
+win32:RC_FILE = src/lc_svgicons.rc
 
 win32-msvc*: QMAKE_LFLAGS_RELEASE += /RELEASE
 

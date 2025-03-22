@@ -18,8 +18,8 @@
   !include "MUI2.nsh"
   !include "WinVer.nsh"
 
-  !define MUI_ICON "..\..\librecad\res\main\librecad.ico"
-  !define MUI_UNICON "..\..\librecad\res\main\uninstall.ico"
+  !define MUI_ICON "..\..\librecad\res\images\librecad.ico"
+  !define MUI_UNICON "..\..\desktop\res_old\main\uninstall.ico"
 
   !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 
@@ -101,7 +101,7 @@ FunctionEnd
     !define Qt6_Dir 	"d:\a\LibreCAD\Qt"
 !endif
 !ifndef Qt_Version
-    !define Qt_Version 	"6.6.3"
+    !define Qt_Version 	"6.9.0"
 !endif
 !ifndef Mingw_Ver
     !define Mingw_Ver 	"mingw_64"

@@ -128,7 +128,7 @@ jobs:
           mkdir -p ${{github.workspace}}/librecad/res/main
           rsync ${{github.workspace}}/desktop/media/splash/librecad01_dark.png ${{github.workspace}}/librecad/res/main/splash_librecad.png
           sed -i 's/Qt::black/Qt::white/g' ${{github.workspace}}/librecad/src/main/main.cpp
-          sed -i'' -e '/fontweight/d' ${{github.workspace}}/librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui
+          sed -i '/fontweight/d' ${{github.workspace}}/librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui
 
       - name: Build and analyze
         run: |
@@ -267,23 +267,13 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.6.*'
+          version: '6.9.*'
           host: 'windows'
           arch: 'win64_mingw'
           target: 'desktop'
-          dir: '..'
-          install-deps: 'true'
-          cache: 'false'
-          cache-key-prefix: 'install-qt-action'
-          setup-python: 'true'
-          set-env: 'true'
           tools-only: 'false'
-          extra: '--external 7z'
-          modules: 'qt5compat'
-
-      - name: install mingw-1120
-        run: |
-          aqt install-tool windows desktop tools_mingw90
+          modules: 'qt5compat qtimageformats'
+          tools: 'tools_mingw1310'
 
       - name: list folders
         run: |
