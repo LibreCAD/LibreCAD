@@ -1,0 +1,93 @@
+/****************************************************************************
+**
+* Utility base class for widgets that represents options for actions
+
+Copyright (C) 2025 LibreCAD.org
+Copyright (C) 2025 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+
+#include "lc_actionoptionsmanager.h"
+
+#include <QToolBar>
+
+#include "lc_actionoptionswidget.h"
+#include "lc_optionswidgetsholder.h"
+#include "lc_snapoptionswidgetsholder.h"
+#include "rs_settings.h"
+
+LC_ActionOptionsManager::LC_ActionOptionsManager(QWidget* parent, QToolBar* optionsToolbar, LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
+{
+    snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
+    setOptionWidget(optionsToolbar);
+}
+
+void LC_ActionOptionsManager::setOptionWidget(QToolBar* ow) {
+    optionWidget = ow;
+    optionWidgetHolder = new LC_OptionsWidgetsHolder(ow);
+    optionWidget->addWidget(optionWidgetHolder);
+    snapOptionsWidgetHolderOptionsToolbar = optionWidgetHolder->getSnapOptionsHolder();
+}
+
+void LC_ActionOptionsManager::addOptionsWidget(LC_ActionOptionsWidget * options){
+    optionWidgetHolder->addOptionsWidget(options);
+    optionWidget->update();
+}
+
+void LC_ActionOptionsManager::removeOptionsWidget(LC_ActionOptionsWidget * options){
+    optionWidgetHolder->removeOptionsWidget(options);
+}
+
+void LC_ActionOptionsManager::hideSnapOptions(){
+    getSnapOptionsHolder()->hideSnapOptions();
+}
+
+/**
+ * Shows a widget for 'snap to equidistant middle points ' options.
+ */
+void LC_ActionOptionsManager::requestSnapMiddleOptions(int* middlePoints, bool on) {
+    getSnapOptionsHolder()->showSnapMiddleOptions(middlePoints, on);
+}
+
+/**
+ * Shows a widget for 'snap to a point with a given distance' options.
+ */
+void LC_ActionOptionsManager::requestSnapDistOptions(double* dist, bool on) {
+    getSnapOptionsHolder()->showSnapDistOptions(dist, on);
+}
+
+LC_SnapOptionsWidgetsHolder* LC_ActionOptionsManager::getSnapOptionsHolder(){
+    LC_SnapOptionsWidgetsHolder* result = nullptr;
+    bool useSnapToolbar = LC_GET_ONE_BOOL("Appearance", "showSnapOptionsInSnapToolbar", false);
+    if (useSnapToolbar){
+        result = snapOptionsWidgetHolderSnapToolbar;
+        snapOptionsWidgetHolderOptionsToolbar->setVisible(false);
+    }
+    else{
+        result = snapOptionsWidgetHolderOptionsToolbar;
+        snapOptionsWidgetHolderOptionsToolbar->setVisible(true);
+    }
+    if (lastUsedSnapOptionsWidgetHolder != nullptr && lastUsedSnapOptionsWidgetHolder != result){
+        result->updateBy(lastUsedSnapOptionsWidgetHolder);
+    }
+    lastUsedSnapOptionsWidgetHolder = result;
+
+    return result;
+}
+
+void LC_ActionOptionsManager::update(){
+    getSnapOptionsHolder();
+}
