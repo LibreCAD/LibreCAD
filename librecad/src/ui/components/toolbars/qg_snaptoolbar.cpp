@@ -88,7 +88,6 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     bRelZero = justAddAction("SetRelativeZero", actionsMap);
     connect(bRelZero, &QAction::triggered, actionHandler, &QG_ActionHandler::slotSetRelativeZero);
 
-    //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     bLockRelZero = justAddAction("LockRelativeZero", actionsMap);
     bLockRelZero->setCheckable(true);
     connect(bLockRelZero, &QAction::triggered, actionHandler, &QG_ActionHandler::slotLockRelativeZero);

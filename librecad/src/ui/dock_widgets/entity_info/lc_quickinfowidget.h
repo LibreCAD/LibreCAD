@@ -51,7 +51,7 @@ public:
     LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map);
 
     ~LC_QuickInfoWidget() override;
-    void setDocumentAndView(RS_Document *document, QG_GraphicView* view);
+    void setDocumentAndView(RS_Document *document, RS_GraphicView* view);
 
     void processEntity(RS_Entity *en);
     QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);

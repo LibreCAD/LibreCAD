@@ -699,7 +699,7 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
  * @param doc
  * @param v
  */
-void LC_QuickInfoWidget::setDocumentAndView(RS_Document *doc, QG_GraphicView* v){
+void LC_QuickInfoWidget::setDocumentAndView(RS_Document *doc, RS_GraphicView* v){
 
     // add tracking of relative point for new view
     if (v != nullptr){

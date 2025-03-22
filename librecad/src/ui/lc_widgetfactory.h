@@ -72,19 +72,19 @@ private:
     LC_ActionGroupManager* ag_manager = nullptr;
 
     LC_DockWidget *leftDocWidget(const QString& title, const char* name, const QList<QAction *> &actions, int columns, int iconSize, bool flatButtons);
-    QToolBar *createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames);
+    QToolBar *createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group);
     void addToTop(QToolBar *toolbar);
     void addToBottom(QToolBar *toolbar);
     void addToLeft(QToolBar *toolbar);
     QToolButton *toolButton(QToolBar *toolbar, const QString &tooltip, const char *icon, const QList<QAction *>& actions);
-    QToolBar *toolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions);
-
+    QToolBar *createCADToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions);
+    QToolBar *genericToolbarWithActions(
+        const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions, int toolbarGroup);
     void addAction(QToolBar* toolbar, const char* actionName);
-    void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
     QToolBar *createNamedViewsToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy);
     QToolBar* createUCSToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy);
     void makeActionsInvisible(const std::vector<QString> &actionNames);
-    QToolBar *doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy) const;
+    QToolBar *doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy, int group) const;
     void createInfoCursorToolbar(QSizePolicy &tbPolicy);
     void addInfoCursorOptionAction(QMenu *menu, const char *name, int tag);
 

@@ -33,12 +33,15 @@
 #include <QAbstractTableModel>
 #include <QItemSelection>
 
+
 #include "rs_layerlistlistener.h"
 #include "rs_layerlist.h"
 
 class QG_ActionHandler;
 class QTableView;
 class QLineEdit;
+class RS_Document;
+class RS_GraphicView;
 
 /**
  * Implementation of a model to use in QG_LayerWidget
@@ -98,7 +101,6 @@ private:
     RS_Layer* activeLayer {nullptr};
 };
 
-
 /**
  * This is the Qt implementation of a widget which can view a
  * layer list and provides a user interface for basic layer actions.
@@ -110,8 +112,6 @@ public:
   QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent,
                  const char *name = nullptr, Qt::WindowFlags f = {});
   virtual ~QG_LayerWidget() = default;
-
-
 
   void update();
   void activateLayer(RS_Layer *layer, bool updateScroll = true);
@@ -144,9 +144,7 @@ public:
      * @return the name of the active layer
      */
     QString getActiveName() const;
-
     void setDocumentAndView(RS_Document *doc, RS_GraphicView* gview);
-
 signals:
     void escape();
 

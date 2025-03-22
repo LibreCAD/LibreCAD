@@ -230,9 +230,9 @@ void LC_PenPaletteWidget::initPenEditor(){
     cbType->init(true, true);
     connect(lePenName, &QLineEdit::textChanged, this, &LC_PenPaletteWidget::onPenEditorChanged);
     connect(lePenName, &QLineEdit::returnPressed, this, &LC_PenPaletteWidget::createOrUpdatePenItem);
-    connect(cbColor, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorColorChanged(int)));
-    connect(cbWidth, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorWidthChanged(int)));
-    connect(cbType, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorLineTypeChanged(int)));
+    connect(cbColor, &QG_ColorBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorColorChanged);
+    connect(cbWidth, &QG_WidthBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorWidthChanged);
+    connect(cbType, &QG_LineTypeBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorLineTypeChanged);
 }
 /**
  * Filtering section initialization
@@ -1284,7 +1284,7 @@ void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index)
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::setDocumentAndView(RS_Document *doc, [maybe_unused]RS_GraphicView *gview){
+void LC_PenPaletteWidget::setDocumentAndView(RS_Document *doc, [[maybe_unused]]RS_GraphicView *gview){
     if (doc == nullptr) {
         setLayerList(nullptr);
     }

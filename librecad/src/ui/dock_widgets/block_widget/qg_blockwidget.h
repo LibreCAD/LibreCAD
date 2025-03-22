@@ -88,10 +88,7 @@ public:
     QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
 
-    void setBlockList(RS_BlockList* blockList) {
-        this->blockList = blockList;
-        update();
-    }
+    void setDocument(RS_Document* doc);
 
     RS_BlockList* getBlockList() {
         return blockList;
@@ -99,9 +96,7 @@ public:
 
     void update();
     void activateBlock(RS_Block* block);
-
     void blockAdded(RS_Block*) override;
-
     void blockEdited(RS_Block*) override{
         update();
     }
@@ -111,10 +106,8 @@ public:
     void blockToggled(RS_Block*) override{
         update();
     }
-
 signals:
     void escape();
-
 public slots:
     void slotActivated(QModelIndex blockIdx);
     void slotSelectionChanged(
@@ -125,16 +118,14 @@ public slots:
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
     void keyPressEvent(QKeyEvent* e) override;
-
+    void setBlockList(RS_BlockList* blockList);
 private:
     RS_BlockList* blockList = nullptr;
     QLineEdit* matchBlockName = nullptr;
     QTableView* blockView = nullptr;
     QG_BlockModel *blockModel = nullptr;
     RS_Block* lastBlock = nullptr;
-
     QG_ActionHandler* actionHandler = nullptr;
-
     void restoreSelections();
 };
 

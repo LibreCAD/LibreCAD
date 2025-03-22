@@ -479,3 +479,18 @@ void QG_BlockWidget::updateWidgetSettings(){
     }
     LC_GROUP_END();
 }
+
+void QG_BlockWidget::setDocument(RS_Document* doc){
+    RS_BlockList* list;
+    if (doc == nullptr) {
+        setBlockList(nullptr);
+    }
+    else {
+        setBlockList(doc->getBlockList());
+    }
+}
+
+void QG_BlockWidget::setBlockList(RS_BlockList* blockList) {
+    blockList = blockList;
+    update();
+}

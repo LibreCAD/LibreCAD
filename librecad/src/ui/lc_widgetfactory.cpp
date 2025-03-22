@@ -405,7 +405,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
         dock_pen_palette->setObjectName("pen_palette_dockwidget");
         pen_palette = new LC_PenPaletteWidget("PenPalette", dock_pen_palette);
         pen_palette->setFocusPolicy(Qt::NoFocus);
-        connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+        connect(pen_palette, &LC_PenPaletteWidget::escape, main_window, &QC_ApplicationWindow::slotFocus);
         connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, pen_palette, &LC_PenPaletteWidget::updateWidgetSettings);
         dock_pen_palette ->setWidget(pen_palette);
     }
@@ -415,7 +415,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     dock_layer->setObjectName("layer_dockwidget");
     layer_widget = new QG_LayerWidget(action_handler, dock_layer, "Layer");
     layer_widget->setFocusPolicy(Qt::NoFocus);
-    connect(layer_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(layer_widget, &QG_LayerWidget::escape, main_window, &QC_ApplicationWindow::slotFocus);
     dock_layer->setWidget(layer_widget);
 
     connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, layer_widget, &QG_LayerWidget::updateWidgetSettings);
@@ -449,7 +449,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
         dock_layer_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         layer_tree_widget = new LC_LayerTreeWidget(action_handler, dock_layer_tree, "Layer Tree");
         layer_tree_widget->setFocusPolicy(Qt::NoFocus);
-        connect(layer_tree_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+        connect(layer_tree_widget,&LC_LayerTreeWidget::escape, main_window,  &QC_ApplicationWindow::slotFocus);
 //        connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
         layer_tree_widget->setVisible(false);
         dock_layer_tree->setWidget(layer_tree_widget);
@@ -475,7 +475,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     dock_block->setObjectName("block_dockwidget");
     block_widget = new QG_BlockWidget(action_handler, dock_block, "Block");
     block_widget->setFocusPolicy(Qt::NoFocus);
-    connect(block_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(block_widget, &QG_BlockWidget::escape, main_window, &QC_ApplicationWindow::slotFocus);
     connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, block_widget, &QG_BlockWidget::updateWidgetSettings);
     dock_block->setWidget(block_widget);
 
@@ -486,7 +486,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     library_widget = new QG_LibraryWidget(dock_library, "Library");
     library_widget->setActionHandler(action_handler);
     library_widget->setFocusPolicy(Qt::NoFocus);
-    connect(library_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(library_widget, QG_LibraryWidget::escape, main_window, &QC_ApplicationWindow::slotFocus);
     connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, library_widget, &QG_LibraryWidget::updateWidgetSettings);
     dock_library->setWidget(library_widget);
     dock_library->resize(240, 400);
@@ -496,14 +496,12 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
-    connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
+    connect(command_widget->leCommand, &QG_CommandEdit::escape, main_window, &QC_ApplicationWindow::slotFocus);
     dock_command->setWidget(command_widget);
 
-    connect(dock_command, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),
-            main_window, SLOT(modifyCommandTitleBar(Qt::DockWidgetArea)));
+    connect(dock_command, &QDockWidget::dockLocationChanged,main_window, &QC_ApplicationWindow::modifyCommandTitleBar);
 
-    main_window->setDockOptions(QMainWindow::AnimatedDocks
-                                | QMainWindow::AllowTabbedDocks );
+    main_window->setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks );
 
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
@@ -522,24 +520,24 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    auto *file = createGenericToolbar(tr("File"), "file", tbPolicy, {});
+    auto *file = createGenericToolbar(tr("File"), "file", tbPolicy, {},1);
     file->addActions(ag_manager->file_actions);
     file->addAction(ag_manager->getActionByName("FilePrint"));
     file->addAction(ag_manager->getActionByName("FilePrintPreview"));
 
     auto *edit = createGenericToolbar(tr("Edit"), "Edit", tbPolicy, {
         "EditKillAllActions", "EntityDescriptionInfo", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
-    });
+    },1);
 
     auto *order = createGenericToolbar(tr("Order"), "Order", tbPolicy, {
         "OrderTop", "OrderBottom", "OrderRaise", "OrderLower"
-    });
+    },1);
     order->hide();
 
     auto *view = createGenericToolbar(tr("View"), "View", tbPolicy, {
         "ViewGrid", "ViewDraft", "ViewLinesDraft", "ViewAntialiasing", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
-    });
+    },1);
 
     auto *viewsList = createNamedViewsToolbar(tr("Named Views"), "Views", tbPolicy);
 
@@ -555,36 +553,30 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 
     action_handler->set_snap_toolbar(snap_toolbar);
 
-    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps,
-             snap_toolbar, &QG_SnapToolBar::slotEnableRelativeZeroSnaps);
-
-
-//    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
+    connect(main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps,snap_toolbar, &QG_SnapToolBar::slotEnableRelativeZeroSnaps);
 
     pen_toolbar = new QG_PenToolBar(tr("Pen"), main_window);
     pen_toolbar->setSizePolicy(tbPolicy);
     pen_toolbar->setObjectName("pen_toolbar");
     pen_toolbar->addActions(ag_manager->pen_actions);
-    pen_toolbar->setProperty("_group", 0);
+    pen_toolbar->setProperty("_group", 1);
 
-    options_toolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {});
-
-//    edit->addAction("InfoCursorEnable")
+    options_toolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {},1);
 
     createInfoCursorToolbar(tbPolicy);
 
     auto *dockareas = createGenericToolbar(tr("Dock Areas"), "Dock Areas", tbPolicy, {
         "LeftDockAreaToggle", "RightDockAreaToggle", "TopDockAreaToggle",
         "BottomDockAreaToggle", "FloatingDockwidgetsToggle"
-    });
+    },1);
 
     auto *creators = createGenericToolbar(tr("Creators"), "Creators", tbPolicy, {
         "InvokeMenuCreator", "InvokeToolbarCreator"
-    });
+    },1);
 
     auto *preferences = createGenericToolbar(tr("Preferences"), "Preferences", tbPolicy, {
         "OptionsGeneral", "OptionsDrawing"
-    });
+    },1);
 
     addToTop(file);
     addToTop(edit);
@@ -607,7 +599,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 void LC_WidgetFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
     auto infoCursorTB = createGenericToolbar(tr("Info Cursor"), "Info Cursor", tbPolicy, {
         "InfoCursorEnable"
-    });
+    },1);
 
     QAction* action = ag_manager->getActionByName("InfoCursorEnable");
     action->setProperty("InfoCursorActionTag", 0);
@@ -644,19 +636,19 @@ void LC_WidgetFactory::addInfoCursorOptionAction(QMenu *menu, const char *name, 
 void LC_WidgetFactory::createCADToolbars(){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    auto* line = toolbarWithActions(tr("Line"), "Line", tbPolicy, ag_manager->line_actions);
-    auto* point = toolbarWithActions(tr("Point"), "Point", tbPolicy, ag_manager->point_actions);
-    auto* shape = toolbarWithActions(tr("Polygon"), "Polygon", tbPolicy, ag_manager->shape_actions);
-    auto* circle = toolbarWithActions(tr("Circle"), "Circle", tbPolicy, ag_manager->circle_actions);
-    auto* curve = toolbarWithActions(tr("Arc"), "Curve", tbPolicy, ag_manager->curve_actions);
-    auto* spline = toolbarWithActions(tr("Spline"), "Spline", tbPolicy, ag_manager->curve_actions);
-    auto* ellipse = toolbarWithActions(tr("Ellipse"), "Ellipse", tbPolicy, ag_manager->ellipse_actions);
-    auto* polyline = toolbarWithActions(tr("Polyline"), "Polyline", tbPolicy, ag_manager->polyline_actions);
-    auto* select = toolbarWithActions(tr("Select"), "Select", tbPolicy, ag_manager->select_actions);
-    auto* dimension = toolbarWithActions(tr("Dimension"), "Dimension", tbPolicy, ag_manager->dimension_actions);
-    auto* other = toolbarWithActions(tr("Other"), "other_drawing", tbPolicy, ag_manager->other_drawing_actions);
-    auto* modify = toolbarWithActions(tr("Modify"), "Modify", tbPolicy, ag_manager->modify_actions);
-    auto* info = toolbarWithActions(tr("Info"), "Info", tbPolicy, ag_manager->info_actions);
+    auto* line = createCADToolbar(tr("Line"), "Line", tbPolicy, ag_manager->line_actions);
+    auto* point = createCADToolbar(tr("Point"), "Point", tbPolicy, ag_manager->point_actions);
+    auto* shape = createCADToolbar(tr("Polygon"), "Polygon", tbPolicy, ag_manager->shape_actions);
+    auto* circle = createCADToolbar(tr("Circle"), "Circle", tbPolicy, ag_manager->circle_actions);
+    auto* curve = createCADToolbar(tr("Arc"), "Curve", tbPolicy, ag_manager->curve_actions);
+    auto* spline = createCADToolbar(tr("Spline"), "Spline", tbPolicy, ag_manager->curve_actions);
+    auto* ellipse = createCADToolbar(tr("Ellipse"), "Ellipse", tbPolicy, ag_manager->ellipse_actions);
+    auto* polyline = createCADToolbar(tr("Polyline"), "Polyline", tbPolicy, ag_manager->polyline_actions);
+    auto* select = createCADToolbar(tr("Select"), "Select", tbPolicy, ag_manager->select_actions);
+    auto* dimension = createCADToolbar(tr("Dimension"), "Dimension", tbPolicy, ag_manager->dimension_actions);
+    auto* other = createCADToolbar(tr("Other"), "other_drawing", tbPolicy, ag_manager->other_drawing_actions);
+    auto* modify = createCADToolbar(tr("Modify"), "Modify", tbPolicy, ag_manager->modify_actions);
+    auto* info = createCADToolbar(tr("Info"), "Info", tbPolicy, ag_manager->info_actions);
 
     addToBottom(line);
     addToBottom(point);
@@ -675,7 +667,7 @@ void LC_WidgetFactory::createCADToolbars(){
 
 QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
     auto *toolbar = createGenericToolbar(tr("Categories"), "Categories",
-                                         QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
+                                         QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {},0);
 
     toolButton(toolbar, tr("Lines"), ":/icons/line.lci", ag_manager->line_actions);
     toolButton(toolbar, tr("Points"), ":/icons/points.lci", ag_manager->point_actions);
@@ -692,7 +684,7 @@ QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
     toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", ag_manager->info_actions);
     toolButton(toolbar, tr("Order"), ":/icons/order.lci", ag_manager->order_actions);
 
-    toolbar->setProperty("_group", 1);
+
 
     addToLeft(toolbar);
     return toolbar;
@@ -714,7 +706,7 @@ void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName){
 }
 
 QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
-    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, 1);
 
     QAction *saveViewAction = ag_manager->getActionByName("ZoomViewSave");
     result->addAction(saveViewAction);
@@ -729,7 +721,7 @@ QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const 
 }
 
 QToolBar* LC_WidgetFactory::createUCSToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
-    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, 1);
 
     QAction *ucsCreateAction = ag_manager->getActionByName("UCSCreate");
     result->addAction(ucsCreateAction);
@@ -743,13 +735,13 @@ QToolBar* LC_WidgetFactory::createUCSToolbar(const QString& title, const QString
     setWCSAction->setCheckable(false);
     connect(setWCSAction, &QAction::triggered, ucs_widget, &LC_UCSListWidget::setWCS);
 
-    ucs_widget->setStateWidget(main_window->ucsStateWidget);
+    ucs_widget->setStateWidget(main_window->m_ucsStateWidget);
 
     return result;
 }
 
 QToolBar* LC_WidgetFactory::createWorkspacesToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
-    auto * result = doCreateToolBar(title, name, toolBarPolicy);
+    auto * result = doCreateToolBar(title, name, toolBarPolicy, 1);
 
     auto* toolButton = new QToolButton(result);
     auto *createAction = ag_manager->getActionByName("WorkspaceCreate");
@@ -771,9 +763,9 @@ QToolBar* LC_WidgetFactory::createWorkspacesToolbar(const QString& title, const 
     return result;
 }
 
-QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
+QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group){
 
-    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, group);
 
     for (const QString& actionName: actionNames){
         if (actionName.isEmpty()){
@@ -783,26 +775,30 @@ QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QSt
             result->addAction(ag_manager->getActionByName(actionName));
         }
     }
-    result->setProperty("_group", 0);
     return result;
 }
 
-QToolBar *LC_WidgetFactory::doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy) const {
+QToolBar *LC_WidgetFactory::doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy, int group) const {
     auto* result = new QToolBar(title, main_window);
     result->setSizePolicy(toolBarPolicy);
     QString nameCleared(name);
     nameCleared.remove(' ');
     const QString &objectName = nameCleared.toLower() + "_toolbar";
     result->setObjectName(objectName);
+    result->setProperty("_group", group);
     return result;
 }
 
-QToolBar* LC_WidgetFactory::toolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
-    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+QToolBar* LC_WidgetFactory::createCADToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
+    return genericToolbarWithActions(title, name, toolBarPolicy, actions, 2);
+}
+
+QToolBar* LC_WidgetFactory::genericToolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions, int toolbarGroup){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, toolbarGroup);
 
     result->addActions(actions);
     result->hide();
-    result->setProperty("_group", 1);
+    result->setProperty("_group", toolbarGroup);
     return result;
 }
 
@@ -833,34 +829,34 @@ QToolButton*LC_WidgetFactory::toolButton(QToolBar* toolbar, const QString &toolt
 void LC_WidgetFactory::initStatusBar() {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     QStatusBar* status_bar = main_window->statusBar();
-    main_window->coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
-    main_window->relativeZeroCoordinatesWidget = new LC_RelZeroCoordinatesWidget(status_bar, "relZeroCordinates");
-    main_window->mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
-    main_window->selectionWidget = new QG_SelectionWidget(status_bar, "selections");
-    main_window->m_pActiveLayerName = new QG_ActiveLayerName(status_bar);
+    main_window->m_coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
+    main_window->m_relativeZeroCoordinatesWidget = new LC_RelZeroCoordinatesWidget(status_bar, "relZeroCordinates");
+    main_window->m_mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
+    main_window->m_selectionWidget = new QG_SelectionWidget(status_bar, "selections");
+    main_window->m_activeLayerName = new QG_ActiveLayerName(status_bar);
 
-    main_window->grid_status = new TwoStackedLabels(status_bar);
-    main_window->grid_status->setTopLabel(tr("Grid Status"));
+    main_window->m_gridStatusWidget = new TwoStackedLabels(status_bar);
+    main_window->m_gridStatusWidget->setTopLabel(tr("Grid Status"));
 
     auto* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
-    main_window->ucsStateWidget = ucsStateWidget;
+    main_window->m_ucsStateWidget = ucsStateWidget;
 
     auto* anglesBasisWidget = new LC_AnglesBasisWidget(status_bar, "anglesBase");
-    main_window->anglesBasisWidget = anglesBasisWidget;
+    main_window->m_anglesBasisWidget = anglesBasisWidget;
 
-    main_window->statusbarManager = new LC_QTStatusbarManager(status_bar);
-    main_window->statusbarManager->loadSettings();
+    main_window->m_statusbarManager = new LC_QTStatusbarManager(status_bar);
+    main_window->m_statusbarManager->loadSettings();
 
     bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
     if (useClassicalStatusBar) {
-        status_bar->addWidget(main_window->coordinateWidget);
-        status_bar->addWidget(main_window->mouseWidget);
-        status_bar->addWidget(main_window->selectionWidget);
-        status_bar->addWidget(main_window->m_pActiveLayerName);
-        status_bar->addWidget(main_window->grid_status);
-        status_bar->addWidget(main_window->relativeZeroCoordinatesWidget);
-        status_bar->addWidget(main_window->ucsStateWidget);
-        status_bar->addWidget(main_window->anglesBasisWidget);
+        status_bar->addWidget(main_window->m_coordinateWidget);
+        status_bar->addWidget(main_window->m_mouseWidget);
+        status_bar->addWidget(main_window->m_selectionWidget);
+        status_bar->addWidget(main_window->m_activeLayerName);
+        status_bar->addWidget(main_window->m_gridStatusWidget);
+        status_bar->addWidget(main_window->m_relativeZeroCoordinatesWidget);
+        status_bar->addWidget(main_window->m_ucsStateWidget);
+        status_bar->addWidget(main_window->m_anglesBasisWidget);
 
         LC_GROUP_GUARD("Widgets");{
             bool allow_statusbar_fontsize = LC_GET_BOOL("AllowStatusbarFontSize", false);
@@ -884,14 +880,14 @@ void LC_WidgetFactory::initStatusBar() {
         QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
         auto *tb = new QToolBar(tr("Coordinates"), main_window);
         tb->setSizePolicy(tbPolicy);
-        tb->addWidget(main_window->coordinateWidget);
+        tb->addWidget(main_window->m_coordinateWidget);
         tb->setObjectName("TBCoordinates");
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
         tb = new QToolBar(tr("Relative Zero"), main_window);
         tb->setSizePolicy(tbPolicy);
-        tb->addWidget(main_window->relativeZeroCoordinatesWidget);
+        tb->addWidget(main_window->m_relativeZeroCoordinatesWidget);
         tb->setObjectName("TBRelZero");
         tb->setProperty("_group", 3);
         addToBottom(tb);
@@ -899,56 +895,56 @@ void LC_WidgetFactory::initStatusBar() {
         tb = new QToolBar(tr("Mouse"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBMouse");
-        tb->addWidget(main_window->mouseWidget);
+        tb->addWidget(main_window->m_mouseWidget);
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
         tb = new QToolBar(tr("Selection Info"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBSelection");
-        tb->addWidget(main_window->selectionWidget);
+        tb->addWidget(main_window->m_selectionWidget);
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
         tb = new QToolBar(tr("Active Layer"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBActiveLayer");
-        tb->addWidget(main_window->m_pActiveLayerName);
+        tb->addWidget(main_window->m_activeLayerName);
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
         tb = new QToolBar(tr("Grid Status"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBGridStatus");
-        tb->addWidget(main_window->grid_status);
+        tb->addWidget(main_window->m_gridStatusWidget);
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
         tb = new QToolBar(tr("UCS Status"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBUCSStatus");
-        tb->addWidget(main_window->ucsStateWidget);
+        tb->addWidget(main_window->m_ucsStateWidget);
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
         tb = new QToolBar(tr("Angles Basis"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBAnglesBasis");
-        tb->addWidget(main_window->anglesBasisWidget);
+        tb->addWidget(main_window->m_anglesBasisWidget);
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
-        main_window->statusbarManager->setup();
+        main_window->m_statusbarManager->setup();
 
-        main_window->grid_status->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
-        connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
+        main_window->m_gridStatusWidget->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
+        connect(main_window->m_gridStatusWidget, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
 
     }
-    connect(main_window->anglesBasisWidget, &LC_AnglesBasisWidget::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
+    connect(main_window->m_anglesBasisWidget, &LC_AnglesBasisWidget::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
 
-    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->ucsStateWidget, &LC_UCSStateWidget::onIconsRefreshed);
-    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->anglesBasisWidget, &LC_AnglesBasisWidget::onIconsRefreshed);
-    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->mouseWidget, &QG_MouseWidget::onIconsRefreshed);
+    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->m_ucsStateWidget, &LC_UCSStateWidget::onIconsRefreshed);
+    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->m_anglesBasisWidget, &LC_AnglesBasisWidget::onIconsRefreshed);
+    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->m_mouseWidget, &QG_MouseWidget::onIconsRefreshed);
 }
 
 

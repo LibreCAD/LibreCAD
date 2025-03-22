@@ -600,7 +600,7 @@ void QG_LayerWidget::updateWidgetSettings(){
     LC_GROUP_END();
 }
 
-void QG_LayerWidget::setDocumentAndView(RS_Document *doc, [maybe_unused]RS_GraphicView *gview){
+void QG_LayerWidget::setDocumentAndView(RS_Document *doc, [[maybe_unused]]RS_GraphicView *gview){
     if (doc == nullptr) {
         setLayerList(nullptr, false);
     }
