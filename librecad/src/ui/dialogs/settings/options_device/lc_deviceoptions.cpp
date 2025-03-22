@@ -26,7 +26,6 @@
 #include "lc_deviceoptions.h"
 #include "ui_lc_deviceoptions.h"
 
-
 LC_DeviceOptions::LC_DeviceOptions(QWidget* parent) :
     QFrame(parent),
     ui(new Ui::LC_DeviceOptions)
@@ -38,18 +37,15 @@ LC_DeviceOptions::LC_DeviceOptions(QWidget* parent) :
     int index = ui->device_combobox->findText(device);
     ui->device_combobox->setCurrentIndex(index);
 
-    connect(ui->save_button, SIGNAL(pressed()), this, SLOT(save()));
-    connect(ui->save_button, SIGNAL(released()), parent, SLOT(close()));
+    connect(ui->save_button,  &QPushButton::pressed, this, &LC_DeviceOptions::save);
+    connect(ui->save_button, &QPushButton::released, parent, &LC_DeviceOptions::close);
 }
 
-LC_DeviceOptions::~LC_DeviceOptions()
-{
+LC_DeviceOptions::~LC_DeviceOptions(){
     delete ui;
 }
 
-
-void LC_DeviceOptions::save()
-{
+void LC_DeviceOptions::save(){
     int index = ui->device_combobox->currentIndex();
     QString device = ui->device_combobox->itemText(index);
 
