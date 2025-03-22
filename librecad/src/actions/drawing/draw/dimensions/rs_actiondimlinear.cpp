@@ -36,7 +36,6 @@
 #include "rs_preview.h"
 #include "lc_actiondimlinearbase.h"
 
-
 /**
  * Constructor.
  *
@@ -44,15 +43,10 @@
  * @param fixedAngle true: The user can't change the angle.
  *                   false: The user can change the angle in a option widget.
  */
-RS_ActionDimLinear::RS_ActionDimLinear(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    double angle,
-    bool _fixedAngle, RS2::ActionType type)
-    :LC_ActionDimLinearBase("Draw linear dimensions",container, graphicView),
+RS_ActionDimLinear::RS_ActionDimLinear(LC_ActionContext *actionContext,double angle,bool _fixedAngle, RS2::ActionType type)
+    :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, type),
      edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      fixedAngle(_fixedAngle), lastStatus(SetExtPoint1){
-    actionType = type;
     setUcsAngleDegrees(angle);
     updateOptions();
     reset();

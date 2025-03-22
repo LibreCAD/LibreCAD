@@ -34,9 +34,8 @@
 #include "rs_graphicview.h"
 #include "rs_layer.h"
 
-RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Layer", container, graphicView) {}
+RS_ActionLayersEdit::RS_ActionLayersEdit(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Layer", actionContext) {}
 
 void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");

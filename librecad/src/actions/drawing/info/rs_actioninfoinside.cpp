@@ -32,10 +32,8 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
-RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
-										 RS_GraphicView& graphicView)
-	:RS_ActionInterface("Info Inside",
-                        container, graphicView)
+RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
+	:RS_ActionInterface("Info Inside", actionContext)
     , pt(std::make_unique<RS_Vector>())
     ,contour(std::make_unique<RS_EntityContainer>()){
     actionType=RS2::ActionInfoInside;

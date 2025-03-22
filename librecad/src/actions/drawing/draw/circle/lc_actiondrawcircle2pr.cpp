@@ -33,9 +33,8 @@ struct LC_ActionDrawCircle2PR::Points{
 	RS_Vector point2;
 };
 
-LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
-                                               RS_GraphicView& graphicView)
-    :RS_ActionDrawCircleCR(container, graphicView)
+LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(LC_ActionContext *actionContext)
+    :RS_ActionDrawCircleCR(actionContext)
     , pPoints(std::make_unique<Points>()){
     actionType=RS2::ActionDrawCircle2PR;
     reset();

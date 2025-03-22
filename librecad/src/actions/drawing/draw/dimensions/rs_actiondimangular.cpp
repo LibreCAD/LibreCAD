@@ -36,9 +36,8 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 
-RS_ActionDimAngular::RS_ActionDimAngular(RS_EntityContainer& container,
-                                         RS_GraphicView& graphicView) :
-    RS_ActionDimension( "Draw Angular Dimensions", container, graphicView){
+RS_ActionDimAngular::RS_ActionDimAngular(LC_ActionContext *actionContext) :
+    RS_ActionDimension( "Draw Angular Dimensions", actionContext,  RS2::ActionDimAngular){
     reset();
 }
 
@@ -46,8 +45,6 @@ RS_ActionDimAngular::~RS_ActionDimAngular() = default;
 
 void RS_ActionDimAngular::reset(){
     RS_ActionDimension::reset();
-
-    actionType = RS2::ActionDimAngular;
     edata = std::make_unique<RS_DimAngularData>( RS_Vector( false),
                                         RS_Vector( false),
                                         RS_Vector( false),
@@ -61,11 +58,8 @@ void RS_ActionDimAngular::doTrigger() {
 
         setPenAndLayerToActive(newEntity);
         newEntity->update();
-
         undoCycleAdd(newEntity);
-
         setStatus( SetLine1);
-
         RS_Snapper::finish();
     }
     else {
@@ -108,10 +102,8 @@ void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         previewRefPoint(refPoint);
                     }
                 }
-
                 d->update();
                 previewEntity(d);
-
             }
             break;
         }
@@ -164,14 +156,14 @@ void RS_ActionDimAngular::onMouseRightButtonRelease(int status, [[maybe_unused]]
 
 void RS_ActionDimAngular::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
-        case SetPos:
-            if (setData(pos)){
+        case SetPos: {
+            if (setData(pos)) {
                 trigger();
                 reset();
                 setStatus(SetLine1);
             }
             break;
-
+        }
         default:
             break;
     }
@@ -198,15 +190,14 @@ bool RS_ActionDimAngular::doProcessCommand(int status, const QString &c) {
 
 QStringList RS_ActionDimAngular::getAvailableCommands(){
     QStringList cmd;
-
     switch (getStatus()) {
-    case SetLine1:
-    case SetLine2:
-    case SetPos:
-        cmd += command( QStringLiteral( "text"));
-        break;
-    default:
-        break;
+        case SetLine1:
+        case SetLine2:
+        case SetPos:
+            cmd += command(QStringLiteral("text"));
+            break;
+        default:
+            break;
     }
     return cmd;
 }
@@ -243,9 +234,7 @@ void RS_ActionDimAngular::updateMouseButtonHints(){
  */
 RS_LineData RS_ActionDimAngular::justify(RS_Line* line, const RS_Vector &click){
     RS_Vector vStartPoint( line->getStartpoint());
-
     RS_LineData lineData = line->getData();
-
     if( ! RS_Math::equal( vStartPoint.angleTo(center), click.angleTo( center), RS_TOLERANCE_ANGLE)
         || vStartPoint.distanceTo( center) < click.distanceTo( center)) {
         lineData.reverse();
@@ -267,7 +256,6 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
     if( ! center.valid) {
         return;
     }
-
     // starting point angles and selection point angle from intersection point
     double  a0  =  (dimPos - center).angle();
     double  a1  = (ld1.startpoint - center).angle();

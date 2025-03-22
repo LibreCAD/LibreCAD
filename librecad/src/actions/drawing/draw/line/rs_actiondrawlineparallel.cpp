@@ -36,16 +36,13 @@
 #include "rs_preview.h"
 #include "qg_lineparalleloptions.h"
 
-RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView, RS2::ActionType actionType)
-	:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
+RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(LC_ActionContext *actionContext, RS2::ActionType actionType)
+	:RS_PreviewActionInterface("Draw Parallels", actionContext, actionType)
 	,parallel(nullptr)
 	,distance(1.0)
 	,number(1)
 	, coord(new RS_Vector{})
 	,entity(nullptr){
-    this->actionType= actionType;
 }
 
 RS_ActionDrawLineParallel::~RS_ActionDrawLineParallel() = default;

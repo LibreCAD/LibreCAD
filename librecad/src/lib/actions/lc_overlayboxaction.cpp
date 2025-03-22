@@ -23,8 +23,8 @@
 #include "lc_overlayboxaction.h"
 #include "rs_overlaybox.h"
 
-LC_OverlayBoxAction::LC_OverlayBoxAction(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, container, graphicView, actionType) {}
+LC_OverlayBoxAction::LC_OverlayBoxAction(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext, actionType) {}
 
 void LC_OverlayBoxAction::drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2) {
     auto* ob = new RS_OverlayBox(corner1, corner2, &overlayBoxOptions);

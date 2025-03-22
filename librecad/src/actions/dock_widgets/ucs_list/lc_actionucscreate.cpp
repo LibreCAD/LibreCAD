@@ -29,9 +29,8 @@
 #include "lc_overlayentitiescontainer.h"
 #include "lc_overlayanglesbasemark.h"
 
-LC_ActionUCSCreate::LC_ActionUCSCreate(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("UCSCreate", container, graphicView){
-    actionType = RS2::ActionUCSCreate;
+LC_ActionUCSCreate::LC_ActionUCSCreate(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("UCSCreate", actionContext, RS2::ActionUCSCreate){
 }
 
 LC_ActionUCSCreate::~LC_ActionUCSCreate() = default;

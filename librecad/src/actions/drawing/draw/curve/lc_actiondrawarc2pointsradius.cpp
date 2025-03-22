@@ -24,9 +24,8 @@
 
 #include "rs_arc.h"
 
-LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionDrawArc2PointsBase("DrawArc2PRadius",container, graphicView) {
-    actionType = RS2::ActionDrawArc2PRadius;
+LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(LC_ActionContext *actionContext)
+    :LC_ActionDrawArc2PointsBase("DrawArc2PRadius",actionContext, RS2::ActionDrawArc2PRadius) {
 }
 
 bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {

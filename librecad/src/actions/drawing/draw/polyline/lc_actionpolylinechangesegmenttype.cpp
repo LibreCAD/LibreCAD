@@ -25,13 +25,11 @@
 #include "rs_document.h"
 #include "rs_graphicview.h"
 
-LC_ActionPolylineChangeSegmentType::LC_ActionPolylineChangeSegmentType(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("PolylineChangeSegment",container,graphicView) {
-    actionType = RS2::ActionPolylineChangeSegmentType;
+LC_ActionPolylineChangeSegmentType::LC_ActionPolylineChangeSegmentType(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("PolylineChangeSegment",actionContext, RS2::ActionPolylineChangeSegmentType) {
 }
 
 LC_ActionPolylineChangeSegmentType::~LC_ActionPolylineChangeSegmentType() {
-
 }
 
 void LC_ActionPolylineChangeSegmentType::doTrigger() {

@@ -28,8 +28,7 @@
 class LC_ActionEditPasteTransform :public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionEditPasteTransform(RS_EntityContainer& container,
-                                RS_GraphicView& graphicView);
+    LC_ActionEditPasteTransform(LC_ActionContext *actionContext);
     void init(int status) override;
     void setAngle(double value);
     double getFactor() const;

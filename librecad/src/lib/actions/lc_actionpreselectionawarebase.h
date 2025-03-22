@@ -28,10 +28,8 @@
 class LC_ActionPreSelectionAwareBase:public RS_ActionSelectBase{
     Q_OBJECT
 public:
-    LC_ActionPreSelectionAwareBase(
-        const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
+    LC_ActionPreSelectionAwareBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone,
         const QList<RS2::EntityType> &entityTypeList = {}, bool countSelectionDeep = false);
-
     ~LC_ActionPreSelectionAwareBase() override;
     void mousePressEvent(QMouseEvent*) override;
     void init(int status) override;

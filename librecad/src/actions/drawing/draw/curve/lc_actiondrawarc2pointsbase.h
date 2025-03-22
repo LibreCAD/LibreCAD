@@ -28,7 +28,7 @@
 class LC_ActionDrawArc2PointsBase:public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionDrawArc2PointsBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawArc2PointsBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     bool isReversed() const;
     void setReversed(bool reversed);
     double getParameter() const;

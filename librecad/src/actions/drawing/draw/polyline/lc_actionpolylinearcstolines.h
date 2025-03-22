@@ -28,7 +28,7 @@
 class LC_ActionPolylineArcsToLines:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionPolylineArcsToLines(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionPolylineArcsToLines(LC_ActionContext *actionContext);
     ~LC_ActionPolylineArcsToLines() override;
     void init(int status) override;
 protected:

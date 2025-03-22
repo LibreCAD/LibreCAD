@@ -69,8 +69,7 @@ class RS_PreviewActionInterface : public RS_ActionInterface {
 public:
     RS_PreviewActionInterface(
         const char *name,
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
+        LC_ActionContext *actionContext,
         RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
     void init(int status) override;

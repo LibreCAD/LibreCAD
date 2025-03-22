@@ -38,12 +38,10 @@ struct RS_ActionModifyTrim::Points {
 /**
  * @param both Trim both entities.
  */
-RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer &container,
-                                         RS_GraphicView &graphicView, bool both)
-        : RS_PreviewActionInterface("Trim Entity",
-                                    container, graphicView), trimEntity{nullptr}, limitEntity{nullptr},
-          pPoints(std::make_unique<Points>()), both{both} {
-    this->actionType = both ? RS2::ActionModifyTrim2 : RS2::ActionModifyTrim;
+RS_ActionModifyTrim::RS_ActionModifyTrim(LC_ActionContext *actionContext, bool both)
+    : RS_PreviewActionInterface("Trim Entity",actionContext, both ? RS2::ActionModifyTrim2 : RS2::ActionModifyTrim)
+    , trimEntity{nullptr}, limitEntity{nullptr}
+    , pPoints(std::make_unique<Points>()), both{both} {
 }
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim() = default;

@@ -31,12 +31,9 @@
 #include "rs_modification.h"
 #include "lc_linemath.h"
 
-RS_ActionModifyCut::RS_ActionModifyCut(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Cut Entity",
-                               container, graphicView), cutEntity(nullptr), cutCoord(new RS_Vector{}){
-    actionType = RS2::ActionModifyCut;
+RS_ActionModifyCut::RS_ActionModifyCut(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Cut Entity",actionContext, RS2::ActionModifyCut)
+    ,cutEntity(nullptr), cutCoord(new RS_Vector{}){
 }
 
 RS_ActionModifyCut::~RS_ActionModifyCut() = default;

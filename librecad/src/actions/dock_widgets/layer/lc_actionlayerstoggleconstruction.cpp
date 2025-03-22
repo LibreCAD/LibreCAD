@@ -20,7 +20,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
 #include "lc_actionlayerstoggleconstruction.h"
 
 #include "rs_dialogfactory.h"
@@ -37,12 +36,11 @@
  * @author Armin Stebich
  */
 LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
+    LC_ActionContext *actionContext,
     RS_Layer* layer)
-        : RS_ActionInterface("Toggle Construction Layer", container, graphicView)
-        , a_layer(layer)
-{}
+        : RS_ActionInterface("Toggle Construction Layer", actionContext)
+        , a_layer(layer){
+}
 
 
 void LC_ActionLayersToggleConstruction::trigger() {
@@ -74,10 +72,8 @@ void LC_ActionLayersToggleConstruction::init(int status) {
     trigger();
 }
 
-void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer)
-{
+void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer){
     if (!layer) return;
-
     for(auto e: *container){ // fixme - sand -  iteration over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
             e->setSelected(false);

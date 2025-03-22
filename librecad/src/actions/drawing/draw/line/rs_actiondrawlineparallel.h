@@ -39,9 +39,7 @@ class RS_Vector;
 class RS_ActionDrawLineParallel:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineParallel(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView, RS2::ActionType actionType);
+    RS_ActionDrawLineParallel(LC_ActionContext *actionContext, RS2::ActionType actionType);
     ~RS_ActionDrawLineParallel() override;
     QStringList getAvailableCommands() override;
     double getDistance() const;

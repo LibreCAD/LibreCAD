@@ -36,12 +36,9 @@
 #include "rs_actioninterface.h"
 // fixme - sand - consider relaxing existing restrictions, if any - and use no-restrictions mode for this action.
 
-RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
+RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(LC_ActionContext *actionContext)
+		:RS_PreviewActionInterface("Draw Parallels", actionContext,RS2::ActionDrawLineParallelThrough)
 		, coord(new RS_Vector{}),lastStatus(SetEntity){
-    actionType=RS2::ActionDrawLineParallelThrough;
     m_SnapDistance=1.;
 }
 

@@ -30,14 +30,9 @@ namespace {
     const auto enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::Entity,CircleRS2::EntityEllipse*/};
 }
 
-LC_ActionModifyLineGap::LC_ActionModifyLineGap(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_AbstractActionWithPreview("Line Gap",
-                                  container,
-                                  graphicView){
-    actionType = RS2::ActionModifyLineGap;
+LC_ActionModifyLineGap::LC_ActionModifyLineGap(LC_ActionContext *actionContext)
+    :LC_AbstractActionWithPreview("Line Gap",actionContext, RS2::ActionModifyLineGap){
 }
-
-
 
 void LC_ActionModifyLineGap::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status){

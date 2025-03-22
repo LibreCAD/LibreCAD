@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to save the current file.
  *
@@ -38,9 +37,7 @@
 class RS_ActionFileSave : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionFileSave(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-
+    RS_ActionFileSave(LC_ActionContext *actionContext);
 	void init(int status) override;
 	void trigger() override;
 };

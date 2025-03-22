@@ -31,9 +31,8 @@
 #include "rs_point.h"
 
 
-LC_ActionDrawPointsLattice::LC_ActionDrawPointsLattice(RS_EntityContainer &container,RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Points Lattice", container,graphicView) {
-    actionType = RS2::ActionDrawPointsLattice;
+LC_ActionDrawPointsLattice::LC_ActionDrawPointsLattice(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Points Lattice", actionContext,RS2::ActionDrawPointsLattice) {
 }
 
 void LC_ActionDrawPointsLattice::doTrigger() {

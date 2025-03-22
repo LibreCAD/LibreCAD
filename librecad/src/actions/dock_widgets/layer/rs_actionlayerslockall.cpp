@@ -28,11 +28,8 @@
 #include "rs_debug.h"
 #include "rs_graphic.h"
 
-RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Lock all Layers",
-                    container, graphicView) {
+RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock, LC_ActionContext *actionContext)
+        :RS_ActionInterface("Lock all Layers",actionContext) {
 
     this->lock = lock;
 }

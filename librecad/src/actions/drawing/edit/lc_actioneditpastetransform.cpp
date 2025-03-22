@@ -31,11 +31,10 @@
 #include "rs_preview.h"
 #include "rs_units.h"
 
-LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("PasteTransform",container, graphicView),
+LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("PasteTransform", actionContext,  RS2::ActionEditPasteTransform),
     referencePoint{new RS_Vector(false)},
     data{new PasteData()}{
-    actionType = RS2::ActionEditPasteTransform;
 }
 
 void LC_ActionEditPasteTransform::init(int status) {

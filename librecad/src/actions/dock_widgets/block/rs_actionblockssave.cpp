@@ -29,9 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_insert.h"
 
 
-RS_ActionBlocksSave::RS_ActionBlocksSave(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block", container, graphicView) {}
+RS_ActionBlocksSave::RS_ActionBlocksSave(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Block", actionContext) {}
 
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert *in, RS_Graphic *g) {

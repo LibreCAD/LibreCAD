@@ -31,9 +31,8 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
-RS_ActionLayersRemove::RS_ActionLayersRemove(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Remove Layer", container, graphicView) {}
+RS_ActionLayersRemove::RS_ActionLayersRemove(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Remove Layer", actionContext) {}
 
 
 void RS_ActionLayersRemove::trigger() {

@@ -26,8 +26,8 @@
 #include "rs_graphicview.h"
 #include "lc_actionsplinemodifybase.h"
 
-LC_ActionSplineModifyBase::LC_ActionSplineModifyBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView)
-:RS_PreviewActionInterface(name, container, graphicView) {
+LC_ActionSplineModifyBase::LC_ActionSplineModifyBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext, actionType) {
 }
 
 void LC_ActionSplineModifyBase::doTrigger() {

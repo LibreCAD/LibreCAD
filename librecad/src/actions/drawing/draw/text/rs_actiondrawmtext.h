@@ -40,9 +40,7 @@ struct RS_MTextData;
 class RS_ActionDrawMText:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawMText(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawMText(LC_ActionContext *actionContext);
     ~RS_ActionDrawMText() override;
     void init(int status) override;
     void reset();

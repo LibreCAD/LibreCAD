@@ -45,12 +45,9 @@ struct RS_ActionDrawCircle3P::Points {
 	RS_Vector point3 = RS_Vector(false);
 };
 
-RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw circles",
-						   container, graphicView)
+RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(LC_ActionContext *actionContext)
+        :LC_ActionDrawCircleBase("Draw circles",actionContext,RS2::ActionDrawCircle3P)
         , pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawCircle3P;
 }
 
 RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() = default;

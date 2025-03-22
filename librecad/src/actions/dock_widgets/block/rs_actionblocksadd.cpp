@@ -32,15 +32,14 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_debug.h"
 
-RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-		:RS_ActionInterface("Add Block", container, graphicView) {
+RS_ActionBlocksAdd::RS_ActionBlocksAdd(LC_ActionContext *actionContext)
+		:RS_ActionInterface("Add Block", actionContext) {
 	actionType = RS2::ActionBlocksAdd;
 }
 
 void RS_ActionBlocksAdd::trigger(){
     RS_DEBUG->print("adding block");
-    if (graphic){
+    if (graphic != nullptr){
         RS_BlockList *blockList = graphic->getBlockList();
         if (blockList){
             RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
@@ -56,7 +55,6 @@ void RS_ActionBlocksAdd::trigger(){
     }
     finish(false);
 }
-
 
 void RS_ActionBlocksAdd::init(int status) {
     RS_ActionInterface::init(status);

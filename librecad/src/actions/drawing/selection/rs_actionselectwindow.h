@@ -29,7 +29,6 @@
 
 #include "lc_overlayboxaction.h"
 
-
 /**
  * This action class can handle user events to select all entities.
  *
@@ -39,14 +38,8 @@ class RS_ActionSelectWindow:public LC_OverlayBoxAction {
     Q_OBJECT
 
 public:
-    RS_ActionSelectWindow(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool select);
-    RS_ActionSelectWindow(
-        enum RS2::EntityType typeToSelect, RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool select);
+    RS_ActionSelectWindow(LC_ActionContext *actionContext,bool select);
+    RS_ActionSelectWindow(enum RS2::EntityType typeToSelect, LC_ActionContext *actionContext,bool select);
     ~RS_ActionSelectWindow() override;
     void init(int status) override;
     void mousePressEvent(QMouseEvent *e) override;

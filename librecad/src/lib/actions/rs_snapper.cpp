@@ -29,20 +29,16 @@
 #include <QMouseEvent>
 
 #include "lc_linemath.h"
-#include "rs_modification.h"
-#include "rs_commandevent.h"
 #include "rs_actiondefault.h"
 #include "qc_applicationwindow.h"
-#include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_snapper.h"
+#include "lc_actioncontext.h"
 #include "lc_crosshair.h"
 #include "lc_defaults.h"
 #include "rs_units.h"
@@ -218,13 +214,14 @@ struct RS_Snapper::ImpData {
 /**
  * Constructor.
  */
-RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView)
-    :container(&container)
-    ,graphicView(&graphicView)
+RS_Snapper::RS_Snapper(LC_ActionContext *actionContext)
+    :container(actionContext->getEntityContainer())
+    ,graphicView(actionContext->getGraphicView())
     ,pImpData(new ImpData)
-    ,snap_indicator(new Indicator){
-    viewport = graphicView.getViewPort();
-    infoCursorOverlayPrefs = graphicView.getInfoCursorOverlayPreferences();
+    ,snap_indicator(new Indicator),
+    m_actionContext(actionContext){
+    viewport = graphicView->getViewPort();
+    infoCursorOverlayPrefs = graphicView->getInfoCursorOverlayPreferences();
 }
 
 RS_Snapper::~RS_Snapper() = default;
@@ -316,9 +313,11 @@ void RS_Snapper::finish() {
 
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
-    RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
-    RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
-//std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
+    m_actionContext->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
+    m_actionContext->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
+
+    // RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
+    // RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
 }
 
 
@@ -384,7 +383,9 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
     if (snapMode.snapMiddle) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapMiddleOptions
-        RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
+
+        m_actionContext->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
+        // RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
         t = snapMiddle(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -396,7 +397,8 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
     if (snapMode.snapDistance) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapDistOptions
-        RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
+        m_actionContext->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
+        // RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
         t = snapDist(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -897,7 +899,8 @@ void RS_Snapper::resume() {
  * Hides the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::hideSnapOptions() {
-    RS_DIALOGFACTORY->hideSnapOptions();
+    m_actionContext->hideSnapOptions();
+    // RS_DIALOGFACTORY->hideSnapOptions();
 }
 
 /**
@@ -1130,14 +1133,16 @@ RS_Vector const &RS_Snapper::getRelativeZero() const {
 }
 
 void RS_Snapper::updateCoordinateWidgetFormat(){
-    RS_DIALOGFACTORY->updateCoordinateWidget(toWorld(RS_Vector(0.0,0.0)),toWorld(RS_Vector(0.0,0.0)), true);
+    m_actionContext->updateCoordinateWidget(toWorld(RS_Vector(0.0,0.0)),toWorld(RS_Vector(0.0,0.0)), true);
+    // RS_DIALOGFACTORY->updateCoordinateWidget(toWorld(RS_Vector(0.0,0.0)),toWorld(RS_Vector(0.0,0.0)), true);
 }
 
 void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat){
     if (infoCursorOverlayPrefs->enabled) {
         preparePositionsInfoCursorOverlay(updateFormat, abs, rel);
     }
-    RS_DIALOGFACTORY->updateCoordinateWidget(abs, rel, updateFormat);
+    m_actionContext->updateCoordinateWidget(abs, rel, updateFormat);
+    // RS_DIALOGFACTORY->updateCoordinateWidget(abs, rel, updateFormat);
 }
 
 void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat){
@@ -1145,7 +1150,8 @@ void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool upda
     if (infoCursorOverlayPrefs->enabled) {
         preparePositionsInfoCursorOverlay(updateFormat, abs, relative);
     }
-    RS_DIALOGFACTORY->updateCoordinateWidget(abs, relative, updateFormat);
+    m_actionContext->updateCoordinateWidget(abs, relative, updateFormat);
+    // RS_DIALOGFACTORY->updateCoordinateWidget(abs, relative, updateFormat);
 }
 
 LC_InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {

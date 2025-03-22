@@ -78,15 +78,11 @@ namespace {
 /**
  * Constructor.
  */
-RS_ActionDefault::RS_ActionDefault(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_OverlayBoxAction("Default",
-                               container, graphicView), pPoints(std::make_unique<Points>()), snapRestriction(RS2::RestrictNothing){
+RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
+    :LC_OverlayBoxAction("Default",actionContext, RS2::ActionDefault), pPoints(std::make_unique<Points>()), snapRestriction(RS2::RestrictNothing){
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
-    setActionType(RS2::ActionDefault);
-    typeToSelect = graphicView.getTypeToSelect();
+    typeToSelect = graphicView->getTypeToSelect();
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 

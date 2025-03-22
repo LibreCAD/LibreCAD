@@ -31,12 +31,9 @@
 #include "rs_modification.h"
 #include "rs_polyline.h"
 
-RS_ActionPolylineAdd::RS_ActionPolylineAdd(RS_EntityContainer& container,
-                                           RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Add node",
-                               container, graphicView)
+RS_ActionPolylineAdd::RS_ActionPolylineAdd(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Add node", actionContext, RS2::ActionPolylineAdd)
     , addCoord(std::make_unique<RS_Vector>()){
-    setActionType(RS2::ActionPolylineAdd);
 }
 
 RS_ActionPolylineAdd::~RS_ActionPolylineAdd() = default;

@@ -37,12 +37,9 @@ class RS_AtomicEntity;
  * @author Andrew Mustun
  */
 class RS_ActionPolylineDelBetween:public LC_ActionPolylineDeleteBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    RS_ActionPolylineDelBetween(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionPolylineDelBetween(LC_ActionContext *actionContext);
     ~RS_ActionPolylineDelBetween() override;
     void init(int status) override;
     void drawSnapper() override;

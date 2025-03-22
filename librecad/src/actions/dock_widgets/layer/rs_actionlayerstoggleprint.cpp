@@ -33,11 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * @author Dongxu Li
  */
-RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
-    RS_Layer* layer)
-        : RS_ActionInterface("Toggle Layer Printing", container, graphicView)
+RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(LC_ActionContext *actionContext, RS_Layer* layer)
+        : RS_ActionInterface("Toggle Layer Printing", actionContext)
         , a_layer(layer)
 {}
 

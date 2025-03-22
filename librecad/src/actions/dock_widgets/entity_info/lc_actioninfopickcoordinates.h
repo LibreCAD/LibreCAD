@@ -26,11 +26,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_abstractactionwithpreview.h"
 
-class LC_ActionInfoPickCoordinates:public LC_AbstractActionWithPreview
-{
+class LC_ActionInfoPickCoordinates:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
-    LC_ActionInfoPickCoordinates(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionInfoPickCoordinates(LC_ActionContext *actionContext);
     void init(int status) override;
     void resume() override;
 protected:

@@ -25,15 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
-LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
-    :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
-    resolveMode  = resolve;
-    if (resolve){
-        actionType = RS2::ActionPenPickResolved;
-    }
-    else{
-        actionType = RS2::ActionPenPick;
-    }
+LC_ActionPenPick::LC_ActionPenPick(LC_ActionContext *actionContext, bool resolve)
+    :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", actionContext,
+        resolve?  RS2::ActionPenPickResolved : RS2::ActionPenPick), resolveMode{resolve}{
 }
 
 void LC_ActionPenPick::init(int status){

@@ -29,9 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionDrawLineAngleRel :public LC_AbstractActionWithPreview {
     Q_OBJECT
-
 public:
-
     /**
      * Snapping for angle tick line
      */
@@ -49,10 +47,8 @@ public:
         SetTickLength
     };
 
-    LC_ActionDrawLineAngleRel(RS_EntityContainer& container, RS_GraphicView& graphicView, double angle = 0.0, bool fixedAngle = false);
-
+    LC_ActionDrawLineAngleRel(LC_ActionContext *actionContext, double angle = 0.0, bool fixedAngle = false);
     ~LC_ActionDrawLineAngleRel() override;
-
     void setLineSnapMode(int mode) {  lineSnapMode = mode;};
     int getLineSnapMode() const{return lineSnapMode;};
     void setTickSnapMode(int mode) {tickSnapMode = mode;};
@@ -72,7 +68,6 @@ public:
     void setLengthIsFree(bool value){lengthIsFree = value;};
     bool isDivideLine() const{return divideLine;};
     void setDivideLine(bool value){divideLine = value;};
-
 private:
     /**
      * Controls in which point of original line snap is performed

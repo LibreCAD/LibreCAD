@@ -42,15 +42,13 @@ struct RS_ActionModifyMirror::Points {
     RS_Vector axisPoint2;
 };
 
-RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Mirror Entities",container, graphicView)
+RS_ActionModifyMirror::RS_ActionModifyMirror(LC_ActionContext *actionContext)
+        :LC_ActionModifyBase("Mirror Entities", actionContext, RS2::ActionModifyMirror)
         , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionModifyMirror;
     mirrorToExistingLine = false;
 }
-RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
+RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
 void RS_ActionModifyMirror::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");

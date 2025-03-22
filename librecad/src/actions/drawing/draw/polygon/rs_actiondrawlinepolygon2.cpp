@@ -37,10 +37,8 @@
 #include "rs_actioninterface.h"
 #include "lc_actiondrawlinepolygonbase.h"
 
-RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-		  :LC_ActionDrawLinePolygonBase("Draw Polygons (Corner,Corner)", container, graphicView, actionType=RS2::ActionDrawLinePolygonCorCor){
+RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(LC_ActionContext *actionContext)
+		  :LC_ActionDrawLinePolygonBase("Draw Polygons (Corner,Corner)", actionContext, actionType=RS2::ActionDrawLinePolygonCorCor){
 }
 
 RS_ActionDrawLinePolygonCorCor::~RS_ActionDrawLinePolygonCorCor() = default;

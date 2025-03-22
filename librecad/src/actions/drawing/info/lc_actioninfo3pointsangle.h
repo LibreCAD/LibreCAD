@@ -28,9 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionInfo3PointsAngle :public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionInfo3PointsAngle(RS_EntityContainer &container,
-                                  RS_GraphicView &graphicView);
-
+    LC_ActionInfo3PointsAngle(LC_ActionContext *actionContext);
     ~LC_ActionInfo3PointsAngle() override;
 protected:
     enum Status{

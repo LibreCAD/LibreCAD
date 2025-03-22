@@ -29,11 +29,8 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 
-RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,
-                                                   RS_EntityContainer& container,
-                                                   RS_GraphicView& graphicView)
-    :RS_ActionInterface("Freeze all Blocks",
-                        container, graphicView) {
+RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,LC_ActionContext *actionContext)
+    :RS_ActionInterface("Freeze all Blocks", actionContext) {
 
     this->freeze = freeze;
 }

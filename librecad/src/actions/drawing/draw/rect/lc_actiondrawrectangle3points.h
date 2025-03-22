@@ -31,9 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionDrawRectangle3Points :public LC_AbstractActionDrawRectangle {
     Q_OBJECT
-
 public:
-
     enum{
         SNAP_CORNER1,
         SNAP_CORNER2,
@@ -41,8 +39,7 @@ public:
         SNAP_CORNER4
     };
 
-    LC_ActionDrawRectangle3Points(RS_EntityContainer& container,
-                                  RS_GraphicView& graphicView);
+    LC_ActionDrawRectangle3Points(LC_ActionContext *actionContext);
     ~LC_ActionDrawRectangle3Points() override;
 
     void init(int status) override;

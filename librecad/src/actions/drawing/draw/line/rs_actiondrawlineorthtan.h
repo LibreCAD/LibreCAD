@@ -36,8 +36,7 @@ class RS_Line;
 class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+    RS_ActionDrawLineOrthTan(LC_ActionContext *actionContext);
     void finish(bool updateTB) override;
 protected:
     enum Status {

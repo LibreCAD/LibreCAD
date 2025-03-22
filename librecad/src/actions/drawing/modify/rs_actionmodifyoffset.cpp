@@ -32,12 +32,11 @@
 #include "qg_modifyoffsetoptions.h"
 #include "rs_debug.h"
 
-RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer &container,RS_GraphicView &graphicView)
-    :LC_ActionModifyBase("Modify Offset",container, graphicView,
+RS_ActionModifyOffset::RS_ActionModifyOffset(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Modify Offset", actionContext,RS2::ActionModifyOffset,
                          {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
                          true)
     , data(new RS_OffsetData()){
-    actionType = RS2::ActionModifyOffset;
 
     data->distance = 0.;
     data->number = 1;

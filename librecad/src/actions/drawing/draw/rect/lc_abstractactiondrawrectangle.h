@@ -37,7 +37,7 @@ public:
         CORNER_BEVEL // bevels
     };
 
-    LC_AbstractActionDrawRectangle(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_AbstractActionDrawRectangle(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_AbstractActionDrawRectangle() override;
 
     bool isUsePolyline() const{return usePolyline;};

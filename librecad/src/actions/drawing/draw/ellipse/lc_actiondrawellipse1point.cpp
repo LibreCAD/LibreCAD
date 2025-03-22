@@ -49,12 +49,11 @@ struct LC_ActionDrawEllipse1Point::Points {
     }
 };
 
-LC_ActionDrawEllipse1Point::LC_ActionDrawEllipse1Point(RS_EntityContainer &container, RS_GraphicView &graphicView,   bool isArc)
-    :LC_ActionDrawCircleBase("Draw ellipse by 1 point", container, graphicView),
+LC_ActionDrawEllipse1Point::LC_ActionDrawEllipse1Point(LC_ActionContext *actionContext,  bool isArc)
+    :LC_ActionDrawCircleBase("Draw ellipse by 1 point", actionContext, isArc ? RS2::ActionDrawEllipseArc1Point : RS2::ActionDrawEllipse1Point),
     pPoints(std::make_unique<Points>()){
     pPoints->isArc = isArc;
     pPoints->angle2 = isArc ? 2. * M_PI : 0.;
-    actionType = isArc ? RS2::ActionDrawEllipseArc1Point : RS2::ActionDrawEllipse1Point;
 }
 
 void LC_ActionDrawEllipse1Point::init(int status) {

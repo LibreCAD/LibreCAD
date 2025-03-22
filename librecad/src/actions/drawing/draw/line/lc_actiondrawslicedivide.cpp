@@ -42,11 +42,8 @@ namespace {
 // todo - think about free mode for selection of tick length... not clear how to do this in convenient way yet
 // todo - think whether dividing arc/circle for fixed angle (similar to fixed length for lines is needed
 
-LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    bool forCircle)
-    :LC_AbstractActionWithPreview("Draw slice divide", container, graphicView){
+LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(LC_ActionContext *actionContext,bool forCircle)
+    :LC_AbstractActionWithPreview("Draw slice divide", actionContext){
     if (forCircle){
         actionType = RS2::ActionDrawSliceDivideCircle;
     }

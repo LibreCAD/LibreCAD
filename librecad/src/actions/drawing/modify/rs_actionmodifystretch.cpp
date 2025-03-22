@@ -40,9 +40,8 @@ struct RS_ActionModifyStretch::Points {
     RS_Vector targetPoint;
 };
 
-RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,RS_GraphicView& graphicView)
-	 :RS_PreviewActionInterface("Stretch Entities",container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionModifyStretch;
+RS_ActionModifyStretch::RS_ActionModifyStretch(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Stretch Entities", actionContext, RS2::ActionModifyStretch), pPoints(std::make_unique<Points>()){
 }
 
 void RS_ActionModifyStretch::init(int status) {

@@ -38,7 +38,7 @@ struct RS_DimLinearData;
  * @author Andrew Mustun
  */
 class RS_ActionDimLinear: public LC_ActionDimLinearBase {
-Q_OBJECT
+    Q_OBJECT
 public:
 /**
  * Varitions of this action.
@@ -50,9 +50,7 @@ public:
     };
 
 public:
-    RS_ActionDimLinear(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
+    RS_ActionDimLinear(LC_ActionContext *actionContext,
         double angle = 0.0, bool fixedAngle = false,
         RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear() override;

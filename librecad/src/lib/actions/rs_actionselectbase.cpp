@@ -26,10 +26,8 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,QList<RS2::EntityType> entityTypeList)
-        :LC_OverlayBoxAction(name, container, graphicView),
+RS_ActionSelectBase::RS_ActionSelectBase(const char* name,LC_ActionContext *actionContext, RS2::ActionType actionType, QList<RS2::EntityType> entityTypeList)
+        :LC_OverlayBoxAction(name, actionContext, actionType),
         catchForSelectionEntityTypes(std::move(entityTypeList)){
 }
 

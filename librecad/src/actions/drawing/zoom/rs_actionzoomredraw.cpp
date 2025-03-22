@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include "rs_actionzoomredraw.h"
 #include "rs_graphicview.h"
 
@@ -34,9 +33,8 @@
  * @param keepAspectRatio true: keep same zoom value for x/y.
  *                        false: adjust both x and y individually
  */
-RS_ActionZoomRedraw::RS_ActionZoomRedraw(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Redraw", container, graphicView) {
+RS_ActionZoomRedraw::RS_ActionZoomRedraw(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Redraw", actionContext) {
 }
 
 void RS_ActionZoomRedraw::init(int status) {

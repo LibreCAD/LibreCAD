@@ -37,8 +37,7 @@
 class RS_ActionDrawLinePolygonCenCor : public LC_ActionDrawLinePolygonBase {
 Q_OBJECT
 public:
-    RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
-                                   RS_GraphicView& graphicView);
+    RS_ActionDrawLinePolygonCenCor(LC_ActionContext *actionContext);
     ~RS_ActionDrawLinePolygonCenCor() override;
 protected:
     /* Status

@@ -31,15 +31,9 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectBase:public LC_OverlayBoxAction {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    RS_ActionSelectBase(
-        const char *name,
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        QList<RS2::EntityType> entityTypeList = {});
-
+    RS_ActionSelectBase(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone, QList<RS2::EntityType> entityTypeList = {});
     void keyReleaseEvent(QKeyEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;
 protected:

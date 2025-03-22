@@ -393,8 +393,14 @@ HEADERS += \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
     lib/gui/render/lc_graphicviewportrenderer.h \
+    plugins/lc_plugininvoker.h \
+    ui/actions/lc_actioncontext.h \
+    ui/components/creators/lc_creatorinvoker.h \
+    ui/components/toolbars/lc_snapoptionsholdermanager.h \
     ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
+    ui/main/lc_applicationwindowdialogshelper.h \
+    ui/main/lc_defaultactioncontext.h \
     ui/main/persistence/lc_documentsstorage.h \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
@@ -513,8 +519,14 @@ SOURCES += \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    plugins/lc_plugininvoker.cpp \
+    ui/actions/lc_actioncontext.cpp \
+    ui/components/creators/lc_creatorinvoker.cpp \
+    ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
+    ui/main/lc_applicationwindowdialogshelper.cpp \
+    ui/main/lc_defaultactioncontext.cpp \
     ui/main/persistence/lc_documentsstorage.cpp \
     lib/gui/render/lc_graphicviewportrenderer.cpp \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \

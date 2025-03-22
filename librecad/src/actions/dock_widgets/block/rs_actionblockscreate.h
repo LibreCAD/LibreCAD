@@ -38,8 +38,7 @@
 class RS_ActionBlocksCreate : public RS_PreviewActionInterface {
         Q_OBJECT
 public:
-    RS_ActionBlocksCreate(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    RS_ActionBlocksCreate(LC_ActionContext *actionContext);
     ~RS_ActionBlocksCreate() override;
     void init(int status) override;
     void trigger() override;

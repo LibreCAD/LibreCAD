@@ -30,11 +30,9 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-		:RS_PreviewActionInterface("Select Contours", container, graphicView)
-		,en(nullptr){
-	actionType=RS2::ActionSelectContour;
+RS_ActionSelectContour::RS_ActionSelectContour(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Select Contours", actionContext, RS2::ActionSelectContour)
+	,en(nullptr){
 }
 
 void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {

@@ -37,9 +37,7 @@ class RS_AtomicEntity;
 class RS_ActionDrawCircleTan3:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleTan3(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleTan3(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleTan3() override;
     void init(int status) override;
 //    void coordinateEvent(RS_CoordinateEvent* e) override;

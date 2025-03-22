@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to select all entities.
  *
@@ -38,10 +37,7 @@
 class RS_ActionSelectIntersected:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionSelectIntersected(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool select);
+    RS_ActionSelectIntersected(LC_ActionContext *actionContext,bool select);
     ~RS_ActionSelectIntersected() override;
     void init(int status) override;
 protected:

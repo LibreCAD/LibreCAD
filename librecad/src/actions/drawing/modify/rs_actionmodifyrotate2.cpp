@@ -34,10 +34,9 @@
 #include "rs_modification.h"
 #include "lc_rotate2options.h"
 
-RS_ActionModifyRotate2::RS_ActionModifyRotate2(RS_EntityContainer& container, RS_GraphicView& graphicView)
-    :LC_ActionModifyBase("Rotate Entities around two centers",container, graphicView)
+RS_ActionModifyRotate2::RS_ActionModifyRotate2(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Rotate Entities around two centers",actionContext, RS2::ActionModifyRotate2)
     ,data(new RS_Rotate2Data()){
-    actionType=RS2::ActionModifyRotate2;
 }
 
 // fixme - The logic of Rotate2 action should be deeply reviewed... this is very old implementation, and for

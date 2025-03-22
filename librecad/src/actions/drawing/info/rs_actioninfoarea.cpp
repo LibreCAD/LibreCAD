@@ -35,12 +35,9 @@
 #include "rs_preview.h"
 #include "rs_units.h"
 
-RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Info Area",
-                               container, graphicView)
+RS_ActionInfoArea::RS_ActionInfoArea(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Info Area", actionContext, RS2::ActionInfoArea)
     , m_infoArea(std::make_unique<RS_InfoArea>()){
-    actionType=RS2::ActionInfoArea;
 }
 
 RS_ActionInfoArea::~RS_ActionInfoArea() = default;

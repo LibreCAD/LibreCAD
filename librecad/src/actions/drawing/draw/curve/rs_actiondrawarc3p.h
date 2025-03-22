@@ -35,9 +35,7 @@ struct RS_ArcData;
 class RS_ActionDrawArc3P:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawArc3P(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawArc3P(LC_ActionContext *actionContext);
     ~RS_ActionDrawArc3P() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;

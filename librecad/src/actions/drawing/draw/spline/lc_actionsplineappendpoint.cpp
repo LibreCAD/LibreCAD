@@ -30,9 +30,8 @@ namespace {
     const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
 }
 
-LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionSplineModifyBase("SplineAppendPoint", container, graphicView) {
-    actionType = RS2::ActionDrawSplinePointAppend;
+LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(LC_ActionContext *actionContext)
+    :LC_ActionSplineModifyBase("SplineAppendPoint",actionContext, RS2::ActionDrawSplinePointAppend) {
 }
 
 void LC_ActionSplineAppendPoint::doCompleteTrigger() {

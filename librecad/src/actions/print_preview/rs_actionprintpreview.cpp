@@ -45,9 +45,8 @@ struct RS_ActionPrintPreview::Points {
 /**
  * Constructor.
  */
-RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView)
-    :RS_ActionInterface("Print Preview",container, graphicView, RS2::ActionFilePrintPreview)
+RS_ActionPrintPreview::RS_ActionPrintPreview(LC_ActionContext *actionContext)
+    :RS_ActionInterface("Print Preview", actionContext, RS2::ActionFilePrintPreview)
     , pPoints(std::make_unique<Points>()){
 
     bool fixed = LC_GET_ONE_BOOL("PrintPreview", "PrintScaleFixed");

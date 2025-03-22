@@ -34,10 +34,8 @@
 #include "rs_insert.h"
 
 
-RS_ActionBlocksRemove::RS_ActionBlocksRemove(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_ActionInterface("Remove Block", container, graphicView) {}
+RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
+    :RS_ActionInterface("Remove Block", actionContext) {}
 
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");

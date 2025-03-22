@@ -41,13 +41,10 @@ struct RS_ActionDrawText::Points {
 	RS_Vector secPos;
 };
 
-RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Text",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>())
-		,textChanged(true){
-    actionType=RS2::ActionDrawText;
+RS_ActionDrawText::RS_ActionDrawText(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Text",actionContext, RS2::ActionDrawText)
+	, pPoints(std::make_unique<Points>())
+	,textChanged(true){
 }
 
 RS_ActionDrawText::~RS_ActionDrawText() = default;

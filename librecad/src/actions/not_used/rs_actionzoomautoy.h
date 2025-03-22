@@ -28,8 +28,6 @@
 #define RS_ACTIONZOOMAUTOY_H
 
 #include "rs_actioninterface.h"
-
-
 /**
  * This action triggers an auto zoom in Y only.
  *
@@ -38,9 +36,7 @@
 class RS_ActionZoomAutoY : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionZoomAutoY(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-
+    RS_ActionZoomAutoY(LC_ActionContext *actionContext);
 	void init(int status) override;
 	void trigger() override;
 };

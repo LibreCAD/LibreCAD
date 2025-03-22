@@ -34,13 +34,9 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 
-RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw circles",
-                           container, graphicView)
-    , data(std::make_unique<RS_CircleData>())
-{
-	actionType=RS2::ActionDrawCircle;
+RS_ActionDrawCircle::RS_ActionDrawCircle(LC_ActionContext *actionContext)
+        :LC_ActionDrawCircleBase("Draw circles",actionContext, RS2::ActionDrawCircle)
+    , data(std::make_unique<RS_CircleData>()){
 }
 
 RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
@@ -61,8 +57,7 @@ void RS_ActionDrawCircle::doTrigger() {
     setStatus(SetCenter);
     reset();
 
-    RS_DEBUG->print("RS_ActionDrawCircle::trigger(): circle added: %lu",
-                    circle->getId());
+    RS_DEBUG->print("RS_ActionDrawCircle::trigger(): circle added: %lu",circle->getId());
 }
 
 void RS_ActionDrawCircle::onMouseMoveEvent(int status, LC_MouseEvent *e) {

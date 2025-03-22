@@ -36,7 +36,7 @@
 #include "rs.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
-
+class LC_ActionContext;
 class RS_Entity;
 class RS_GraphicView;
 class RS_Vector;
@@ -116,7 +116,7 @@ using EntityTypeList = QList<RS2::EntityType>;
 class RS_Snapper: public QObject{
     Q_OBJECT
 public:
-    RS_Snapper(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    RS_Snapper(LC_ActionContext *actionContext);
     virtual ~RS_Snapper();
     void init();
 //!
@@ -217,6 +217,7 @@ protected:
     LC_GraphicViewport* viewport = nullptr;
     RS_Entity *keyEntity = nullptr;
     RS_SnapMode snapMode{};
+    LC_ActionContext* m_actionContext {nullptr};
 
     double m_distanceBeforeSwitchToFreeSnap {5.0}; //< The distance to snap before defaulting to free snapping.
     double m_minGridCellSnapFactor = 0.25;

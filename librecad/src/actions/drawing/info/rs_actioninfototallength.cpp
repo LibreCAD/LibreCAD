@@ -30,13 +30,9 @@
 #include "rs_units.h"
 
 
-RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionPreSelectionAwareBase("Info Total Length",
-					container, graphicView){
-	actionType=RS2::ActionInfoTotalLength;
+RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(LC_ActionContext *actionContext)
+        :LC_ActionPreSelectionAwareBase("Info Total Length",actionContext, RS2::ActionInfoTotalLength){
 }
-
 
 void RS_ActionInfoTotalLength::drawSnapper() {
     // disable snapper;

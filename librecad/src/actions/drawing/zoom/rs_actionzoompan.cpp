@@ -30,9 +30,8 @@
 #include "rs_graphicview.h"
 #include "rs_debug.h"
 
-RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
-                                   RS_GraphicView& graphicView)
-        :RS_ActionInterface("Zoom Panning", container, graphicView) {}
+RS_ActionZoomPan::RS_ActionZoomPan(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Zoom Panning", actionContext) {}
 
 void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);

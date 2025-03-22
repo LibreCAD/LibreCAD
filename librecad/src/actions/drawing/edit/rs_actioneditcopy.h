@@ -48,11 +48,8 @@ public:
         PASTE
     };
 
-    RS_ActionEditCopyPaste(ActionMode mode,
-                           RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionEditCopyPaste(ActionMode mode,LC_ActionContext *actionContext);
     ~RS_ActionEditCopyPaste() override;
-
     void init(int status) override;
 protected:
     /**

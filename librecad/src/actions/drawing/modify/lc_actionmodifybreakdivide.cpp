@@ -37,11 +37,8 @@ namespace {
     const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle/*,RS2::EntityEllipse*/};
 }
 
-LC_ActionModifyBreakDivide::LC_ActionModifyBreakDivide(RS_EntityContainer &container, RS_GraphicView &graphicView)
-   :LC_AbstractActionWithPreview("Break Out",
-                                 container,
-                                 graphicView){
-    actionType = RS2::ActionModifyBreakDivide;
+LC_ActionModifyBreakDivide::LC_ActionModifyBreakDivide(LC_ActionContext *actionContext)
+   :LC_AbstractActionWithPreview("Break Out",actionContext, RS2::ActionModifyBreakDivide){
 }
 
 bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){

@@ -46,14 +46,9 @@
 #include "emu_c99.h"
 #endif
 
-
-
-RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw polylines",
-						   container, graphicView)
+RS_ActionDrawPolyline::RS_ActionDrawPolyline(LC_ActionContext *actionContext)
+        :RS_PreviewActionInterface("Draw polylines",actionContext, RS2::ActionDrawPolyline)
         , pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawPolyline;
     reset();
 }
 

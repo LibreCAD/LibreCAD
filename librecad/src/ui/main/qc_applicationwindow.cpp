@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
-** 
+**
 ** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
 ** Copyright (C) 2018 Simon Wells (simonrwells@gmail.com)
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
@@ -39,7 +39,6 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QPagedPaintDevice>
-#include <QPluginLoader>
 #include <QRegularExpression>
 #include <QStatusBar>
 #include <QStyleFactory>
@@ -48,12 +47,9 @@
 #include <QtSvg>
 
 #include <boost/version.hpp>
-#include <QInputDialog>
 
-#include "comboboxoption.h"
 #include "doc_plugin_interface.h"
 #include "main.h"
-#include "textfileviewer.h"
 #include "twostackedlabels.h"
 #include "widgetcreator.h"
 
@@ -72,13 +68,15 @@
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_actionsshortcutsdialog.h"
+#include "lc_applicationwindowdialogshelper.h"
 #include "lc_centralwidget.h"
+#include "lc_creatorinvoker.h"
 #include "lc_penwizard.h"
 #include "qg_librarywidget.h"
 #include "lc_printing.h"
 #include "lc_widgetfactory.h"
 #include "lc_widgetoptionsdialog.h"
-#include "lc_undosection.h"
 
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
@@ -102,10 +100,9 @@
 #include "qg_recentfiles.h"
 #include "lc_mdiapplicationwindow.h"
 #include "lc_releasechecker.h"
-#include "lc_dlgnewversionavailable.h"
-#include "lc_dlgabout.h"
 #include "lc_inputtextdialog.h"
 #include "lc_menufactory.h"
+#include "lc_plugininvoker.h"
 #include "lc_printviewportrenderer.h"
 
 #ifndef QC_APP_ICON
@@ -130,13 +127,13 @@
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow():
-     actionHandler(new QG_ActionHandler(this))
-    , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
+     m_actionHandler(new QG_ActionHandler(this))
+    , m_penWizard(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
-    ag_manager = new LC_ActionGroupManager(this);
-    connect(RS_SETTINGS, &RS_Settings::optionsChanged, ag_manager, &LC_ActionGroupManager::onOptionsChanged);
+    m_actionGroupManager = new LC_ActionGroupManager(this);
+    connect(RS_SETTINGS, &RS_Settings::optionsChanged, m_actionGroupManager, &LC_ActionGroupManager::onOptionsChanged);
 
 #ifdef _WINDOWS
 	qt_ntfs_permission_lookup++; // turn checking on
@@ -153,21 +150,19 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     QSettings settings;
 
-
-
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
 
-    pen_wiz->setObjectName("pen_wiz");
+    m_penWizard->setObjectName("pen_wiz");
     connect(this, &QC_ApplicationWindow::windowsChanged,
-            pen_wiz, &LC_PenWizard::setEnabled);
-    addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
+            m_penWizard, &LC_PenWizard::setEnabled);
+    addDockWidget(Qt::RightDockWidgetArea, m_penWizard);
 
-    LC_ActionFactory a_factory(this, actionHandler);
+    LC_ActionFactory a_factory(this, m_actionHandler);
     bool using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
-    a_factory.fillActionContainer(ag_manager, using_theme);
+    a_factory.fillActionContainer(m_actionGroupManager, using_theme);
 
-    LC_WidgetFactory widget_factory(this, ag_manager);
+    LC_WidgetFactory widget_factory(this, m_actionGroupManager);
 
     widget_factory.initStatusBar();
 
@@ -198,8 +193,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
     settings.endGroup();
 
-    connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-            this, SLOT(slotWindowActivated(QMdiSubWindow*)));
+    connect(mdiAreaCAD, &QMdiArea::subWindowActivated,this, &QC_ApplicationWindow::slotWindowActivated);
 
     LC_GROUP("Widgets");
     {
@@ -219,23 +213,16 @@ QC_ApplicationWindow::QC_ApplicationWindow():
         if (enable_cad_toolbars) {
             widget_factory.createCADToolbars();
         }
-        widget_factory.createRightSidebar(actionHandler);
+        widget_factory.createRightSidebar(m_actionHandler);
         widget_factory.createCategoriesToolbar();
-        widget_factory.createStandardToolbars(actionHandler);
+        widget_factory.createStandardToolbars(m_actionHandler);
     }
     LC_GROUP_END();
 
-    settings.beginGroup("CustomToolbars");
-    foreach (auto key, settings.childKeys())
-    {
-        auto toolbar = new QToolBar(key, this);
-        toolbar->setObjectName(key);
-        foreach (auto actionName, settings.value(key).toStringList()){
-            toolbar->addAction(getAction(actionName));
-        }
-        addToolBar(toolbar);
-    }
-    settings.endGroup();
+    m_creatorInvoker = new LC_CreatorInvoker(this, m_actionGroupManager);
+    m_creatorInvoker->createCustomToolbars();
+
+    m_dlgHelpr = new LC_ApplicationWindowDialogsHelper(this);
 
     if (settings.value("Startup/FirstLoad", 1).toBool())
     {
@@ -255,58 +242,53 @@ QC_ApplicationWindow::QC_ApplicationWindow():
         addToolBar(Qt::LeftToolBarArea, toolbar);
     }
 
-    m_menuFactory = new LC_MenuFactory(this, ag_manager);
-    m_menuFactory->createMenus(menuBar());
+    m_menuFactory = new LC_MenuFactory(this, m_actionGroupManager);
+    m_menuFactory->createMainMenu(menuBar());
 
-    undoButton = getAction("EditUndo");
-    redoButton = getAction("EditRedo");
-    previousZoom = getAction("ZoomPrevious");
+    m_dockAreas.left = getAction("LeftDockAreaToggle");
+    m_dockAreas.right = getAction("RightDockAreaToggle");
+    m_dockAreas.top = getAction("TopDockAreaToggle");
+    m_dockAreas.bottom = getAction("BottomDockAreaToggle");
+    m_dockAreas.floating = getAction("FloatingDockwidgetsToggle");
 
-    dock_areas.left = getAction("LeftDockAreaToggle");
-    dock_areas.right = getAction("RightDockAreaToggle");
-    dock_areas.top = getAction("TopDockAreaToggle");
-    dock_areas.bottom = getAction("BottomDockAreaToggle");
-    dock_areas.floating = getAction("FloatingDockwidgetsToggle");
+    m_snapToolBar = widget_factory.snap_toolbar;
+    m_penToolBar = widget_factory.pen_toolbar;
+    m_optionWidget = widget_factory.options_toolbar;
 
-    snapToolBar = widget_factory.snap_toolbar;
-    penToolBar = widget_factory.pen_toolbar;
-    optionWidget = widget_factory.options_toolbar;
+    m_layerWidget = widget_factory.layer_widget;
 
-    layerWidget = widget_factory.layer_widget;
+    m_layerTreeWidget = widget_factory.layer_tree_widget;
 
-    layerTreeWidget = widget_factory.layer_tree_widget;
+    m_quickInfoWidget = widget_factory.quick_info_widget;
 
-    quickInfoWidget = widget_factory.quick_info_widget;
-
-    libraryWidget = widget_factory.library_widget;
+    m_libraryWidget = widget_factory.library_widget;
     /**/
-    blockWidget = widget_factory.block_widget;
-    commandWidget = widget_factory.command_widget;
+    m_blockWidget = widget_factory.block_widget;
+    m_commandWidget = widget_factory.command_widget;
 
-    penPaletteWidget = widget_factory.pen_palette;
-    namedViewsWidget = widget_factory.named_views_widget;
-    ucsListWidget = widget_factory.ucs_widget;
+    m_penPaletteWidget = widget_factory.pen_palette;
+    m_namedViewsWidget = widget_factory.named_views_widget;
+    m_ucsListWidget = widget_factory.ucs_widget;
 
 
-    connect(namedViewsWidget, &LC_NamedViewsListWidget::viewListChanged, [this](int itemsCount){
-        getAction("ZoomViewRestore1")->setEnabled(itemsCount > 0);
-        getAction("ZoomViewRestore2")->setEnabled(itemsCount > 1);
-        getAction("ZoomViewRestore3")->setEnabled(itemsCount > 2);
-        getAction("ZoomViewRestore4")->setEnabled(itemsCount > 3);
-        getAction("ZoomViewRestore5")->setEnabled(itemsCount > 4);
+    connect(m_namedViewsWidget, &LC_NamedViewsListWidget::viewListChanged, [this](int itemsCount){
+        enableAction("ZoomViewRestore1",itemsCount > 0);
+        enableAction("ZoomViewRestore2",itemsCount > 1);
+        enableAction("ZoomViewRestore3",itemsCount > 2);
+        enableAction("ZoomViewRestore4",itemsCount > 3);
+        enableAction("ZoomViewRestore5",itemsCount > 4);
     });
 
-    actionsToDisableInPrintPreview = widget_factory.actionsToDisableInPrintPreview;
+    m_actionsToDisableInPrintPreviewList = widget_factory.actionsToDisableInPrintPreview;
 
     connect(getAction("FileClose"), &QAction::triggered, mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
 
-    connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
-            this, SLOT(slotPenChanged(const RS_Pen&)));
+    connect(m_penToolBar, &QG_PenToolBar::penChanged, this, &QC_ApplicationWindow::slotPenChanged);
 
     // fixme - sand - remove hardcoded shortcuts!!!
     // fixme - review the entire keyboard support
     auto ctrl_l = new QShortcut(QKeySequence("Ctrl+L"), this);
-    connect(ctrl_l, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
+    connect(ctrl_l, SIGNAL(activated()), m_actionHandler, SLOT(slotLayersAdd()));
 
     auto ctrl_m = new QShortcut(QKeySequence("Ctrl+M"), this);
     connect(ctrl_m, SIGNAL(activated()), this, SLOT(slotFocusCommandLine()));
@@ -316,12 +298,12 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     // Since this nice feature causes a bug of lost key events when the command widget is on
     // a screen different from the main window, disabled for the time being
     // send key events for mdiAreaCAD to command widget by default
-    mdiAreaCAD->installEventFilter(commandWidget);
+    mdiAreaCAD->installEventFilter(m_commandWidget);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     LC_SnapOptionsWidgetsHolder *snapOptionsHolder = nullptr;
-    snapOptionsHolder = snapToolBar->getSnapOptionsHolder();
-    dialogFactory = new QC_DialogFactory(this, optionWidget, snapOptionsHolder);
+    snapOptionsHolder = m_snapToolBar->getSnapOptionsHolder();
+    m_dialogFactory = new QC_DialogFactory(this, m_optionWidget, snapOptionsHolder);
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
 
     RS_DEBUG->print("setting dialog factory object");
@@ -330,18 +312,18 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     } else {
         RS_DEBUG->print("got RS_DialogFactory instance");
     }
-    RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
+    RS_DialogFactory::instance()->setFactoryObject(m_dialogFactory);
     RS_DEBUG->print("setting dialog factory object: OK");
 
-    recentFiles = new QG_RecentFiles(this, 9);
-    recentFiles->addFiles(m_menuFactory->getRecentFilesMenu());
+    m_recentFilesList = new QG_RecentFiles(this, 9);
+    m_recentFilesList->addFiles(m_menuFactory->getRecentFilesMenu());
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
 
     auto command_file = settings.value("Paths/VariableFile", "").toString();
     if (!command_file.isEmpty())
-        commandWidget->leCommand->readCommandFile(command_file);
+        m_commandWidget->leCommand->readCommandFile(command_file);
 
     // Activate autosave timer
     bool allowAutoSave = settings.value("Defaults/AutoBackupDocument", 1).toBool();
@@ -352,27 +334,25 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     RS_COMMANDS->updateAlias();
     //plugin load
-    loadPlugins();
+    m_pluginInvoker = new LC_PluginInvoker(this);
+    m_pluginInvoker->loadPlugins();
 
     showStatusMessage(qApp->applicationName() + " Ready", 2000);
     const char *ownBuildVersion = XSTR(LC_VERSION);
-    releaseChecker = new LC_ReleaseChecker( ownBuildVersion,XSTR(LC_PRERELEASE));
-    connect(releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
+    m_releaseChecker = new LC_ReleaseChecker( ownBuildVersion,XSTR(LC_PRERELEASE));
+    connect(m_releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
 }
 
 void QC_ApplicationWindow::checkForNewVersion() {
-    releaseChecker->checkForNewVersion();
+    m_releaseChecker->checkForNewVersion();
 }
 
 void QC_ApplicationWindow::forceCheckForNewVersion() {
-    releaseChecker->checkForNewVersion(true);
+    m_releaseChecker->checkForNewVersion(true);
 }
 
 void QC_ApplicationWindow::onNewVersionAvailable() {
-    LC_DlgNewVersionAvailable dlg(this, releaseChecker);
-    if (dlg.exec()) {
-
-    }
+   m_dlgHelpr->showNewVersionAvailableDialog(m_releaseChecker);
 }
 
 void QC_ApplicationWindow::startAutoSaveTimer(bool startAutoBackup) {
@@ -410,23 +390,35 @@ std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow(){
     return instance;
 }
 
+void QC_ApplicationWindow::setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode){
+    setupMDIWindowTitleByName(w, getFileNameFromFullPath(drawingFileFullPath), draftMode);
+}
+
+void QC_ApplicationWindow::setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleStr, bool draftMode){
+    auto title = baseTitleStr + "[*]";
+    if (draftMode) {
+        title = title + " [" + tr("Draft Mode") + "]";
+    }
+    w->setWindowTitle(title);
+}
+
 /**
  * Force-Save(as) the content of the sub window.  Retry on failure.
  * @return true success (or window was not modified)
  * @return false user cancelled (or window was null)
  */
 bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
-    QString name, msg;
+    QString drawingFileFullPath, msg;
     bool cancelled;
     if (!w) {
         return false;
     }
     if (w->getDocument()->isModified() || forceSaveAs) {
-        name = w->getFileName();
-        if (name.isEmpty()) {
+        drawingFileFullPath = w->getFileName();
+        if (drawingFileFullPath.isEmpty()) {
             doActivate(w); // show the user the drawing for save as
         }
-        msg = name.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(name);
+        msg = drawingFileFullPath.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(drawingFileFullPath);
         showStatusMessage(msg);
         bool res = forceSaveAs ? w->saveDocumentAs(cancelled) : w->saveDocument(cancelled);
         if (res) {
@@ -434,19 +426,17 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
                 showStatusMessage(tr("Save cancelled"), 2000);
                 return false;
             }
-            name = w->getFileName();
-            msg = tr("Saved drawing: %1").arg(name);
+            drawingFileFullPath = w->getFileName();
+            msg = tr("Saved drawing: %1").arg(drawingFileFullPath);
             showStatusMessage(msg, 2000);
-            commandWidget->appendHistory(msg);
+            m_commandWidget->appendHistory(msg);
 
-            if (!recentFiles->contains(name)) {
-                recentFiles->add(name);
+            if (!m_recentFilesList->contains(drawingFileFullPath)) {
+                m_recentFilesList->add(drawingFileFullPath);
             }
 
-            w->setWindowTitle(format_filename_caption(name) + "[*]");
-            if (w->getGraphicView()->isDraftMode())
-                w->setWindowTitle(w->windowTitle() + " [" + tr("Draft Mode") + "]");
-
+            bool draftMode = w->getGraphicView()->isDraftMode();
+            setupMDIWindowTitleByFile(w, drawingFileFullPath, draftMode);
 
             bool autoBackup = LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true);
             startAutoSaveTimer(autoBackup);
@@ -454,7 +444,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
             msg = tr("Cannot save the file ") +  w->getFileName()
                   + tr(" , please check the filename and permissions.");
             showStatusMessage(msg, 2000);
-            commandWidget->appendHistory(msg);
+            m_commandWidget->appendHistory(msg);
             return doSave(w, true);
         }
     }
@@ -483,42 +473,13 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
     window_list.removeOne(w);
 
     if (!activedMdiSubWindow || activedMdiSubWindow == w) {
-        layerWidget->setLayerList(nullptr, false);
-
-        if (layerTreeWidget != nullptr) {
-            layerTreeWidget->setGraphicAndView(nullptr, nullptr);
-        }
-
-        if (namedViewsWidget != nullptr){
-            namedViewsWidget->setGraphicView(nullptr, nullptr);
-        }
-
-        if (ucsListWidget != nullptr){
-            ucsListWidget->setGraphicView(nullptr, nullptr);
-        }
-
-        if (quickInfoWidget != nullptr) {
-            quickInfoWidget->setDocumentAndView(nullptr, nullptr);
-        }
-
-        if (anglesBasisWidget != nullptr){
-            anglesBasisWidget->update(nullptr);
-        }
-
-        blockWidget->setBlockList(nullptr);
-        coordinateWidget->setGraphic(nullptr, nullptr);
-        relativeZeroCoordinatesWidget->setGraphicView(nullptr);
-    }
-
-    if (penPaletteWidget != nullptr) {
-        penPaletteWidget->setLayerList(nullptr);
+        setupWidgetsByWindow(nullptr);
     }
 
     openedFiles.removeAll(w->getFileName());
 
     activedMdiSubWindow = nullptr;
-    actionHandler->set_view(nullptr);
-    actionHandler->set_document(nullptr);
+    m_actionHandler->setDocumentAndView(nullptr, nullptr);
 
     if (activateNext && !window_list.empty()) {
         if (nullptr != parentWindow) {
@@ -529,6 +490,40 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::doClose end");
+}
+
+void QC_ApplicationWindow::setupWidgetsByWindow(QC_MDIWindow *w){
+    RS_Document* doc = nullptr;
+    RS_GraphicView* gv = nullptr;
+
+    if (w != nullptr) {
+        doc = w->getDocument();
+        gv = w->getGraphicView();
+    }
+    m_layerWidget->setDocumentAndView(doc, gv);
+
+    if (m_layerTreeWidget != nullptr) {
+        m_layerTreeWidget->setDocumentAndView(doc, gv);
+    }
+    if (m_namedViewsWidget != nullptr){
+        m_namedViewsWidget->setGraphicView(gv, w);
+    }
+    if (m_ucsListWidget != nullptr){
+        m_ucsListWidget->setGraphicView(gv, w);
+    }
+    if (m_quickInfoWidget != nullptr) {
+        m_quickInfoWidget->setDocumentAndView(doc, gv);
+    }
+    if (m_anglesBasisWidget != nullptr){
+        m_anglesBasisWidget->update(nullptr);
+    }
+    if (m_penPaletteWidget != nullptr) {
+        m_penPaletteWidget->setDocumentAndView(doc, gv);
+        m_penPaletteWidget->setMdiWindow(w);
+    }
+    m_blockWidget->setDocument(doc);
+    m_coordinateWidget->setGraphic(nullptr, gv);
+    m_relativeZeroCoordinatesWidget->setGraphicView(gv);
 }
 
 /**
@@ -551,12 +546,14 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
     QG_ExitDialog dlg(this);
     dlg.setShowSaveAll(showSaveAll);
     dlg.setTitle(tr("Closing Drawing"));
-    if (w && w->getDocument()->isModified()) {
+    if (w != nullptr && w->getDocument()->isModified()) {
         QString fn = w->getFileName();
-        if (fn.isEmpty())
+        if (fn.isEmpty()) {
             fn = w->windowTitle();
-        else if (fn.length() > 50)
+        }
+        else if (fn.length() > 50) {
             fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
+        }
 
         dlg.setText(tr("Save changes to the following item?\n%1").arg(fn));
         return dlg.exec();
@@ -568,121 +565,40 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
  * Enable the available file actions for this sub-window.
  */
 void QC_ApplicationWindow::enableFileActions(QC_MDIWindow *w) {
-    if (!w || w->getFileName().isEmpty()) {
+    bool hasWindow = w != nullptr;
+    auto fileName = w->getFileName();
+    if (!hasWindow || fileName.isEmpty()) {
         getAction("FileSave")->setText(tr("&Save"));
         getAction("FileSaveAs")->setText(tr("Save &as..."));
     } else {
-        QString name = format_filename_caption(w->getFileName());
+        QString name = getFileNameFromFullPath(fileName);
         getAction("FileSave")->setText(tr("&Save %1").arg(name));
         getAction("FileSaveAs")->setText(tr("Save %1 &as...").arg(name));
     }
-    getAction("FileSave")->setEnabled(w);
-    getAction("FileSaveAs")->setEnabled(w);
-    getAction("FileSaveAll")->setEnabled(w && window_list.count() > 1);
-    getAction("FileExportMakerCam")->setEnabled(w);
-    getAction("FilePrintPDF")->setEnabled(w);
-    getAction("FileExport")->setEnabled(w);
-    getAction("FilePrint")->setEnabled(w);
-    getAction("FilePrintPreview")->setEnabled(w);
-    getAction("FileClose")->setEnabled(w);
-    getAction("FileCloseAll")->setEnabled(w && window_list.count() > 1);
+
+    enableActions({
+            "FileSave",
+            "FileSaveAs",
+            "FileExportMakerCam",
+            "FilePrintPDF",
+            "FileExport",
+            "FilePrint",
+            "FilePrintPreview",
+            "FileClose"
+        },hasWindow);
+
+    enableActions({
+        "FileSaveAll",
+        "FileCloseAll"
+        },hasWindow && window_list.count() > 1);
 }
 
 /**
  * Loads the found plugins.
  */
 void QC_ApplicationWindow::loadPlugins() {
-
-    loadedPlugins.clear();
-    QStringList lst = RS_SYSTEM->getDirectoryList("plugins");
-    // Keep track of plugin filenames loaded to skip duplicate plugins.
-    QStringList loadedPluginFileNames;
-
-    for (int i = 0; i < lst.size(); ++i) {
-        QDir pluginsDir(lst.at(i));
-        for(const QString& fileName: pluginsDir.entryList(QDir::Files)) {
-            // Skip loading a plugin if a plugin with the same
-            // filename has already been loaded.
-            #ifdef Q_OS_MAC
-            if (!fileName.contains(".dylib"))
-                continue;
-            #endif
-#if (defined (_WIN32) || defined (_WIN32) || defined (_WIN64))
-            if (!fileName.contains(".dll"))
-                continue;
-#endif
-
-            if (loadedPluginFileNames.contains(fileName)) {
-                continue;
-            }
-            QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
-            QObject *plugin = pluginLoader.instance();
-            if (plugin) {
-                QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
-                if (pluginInterface) {
-                    loadedPlugins.push_back(pluginInterface);
-                    loadedPluginFileNames.push_back(fileName);
-                    PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
-                    for(const PluginMenuLocation& loc: pluginCapabilities.menuEntryPoints) {
-                        QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
-                        actpl->setData(loc.menuEntryActionName);
-                        connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
-                        connect(this, SIGNAL(windowsChanged(bool)), actpl, SLOT(setEnabled(bool)));
-                        QMenu *atMenu = findMenu("/"+loc.menuEntryPoint, menuBar()->children(), "");
-                        if (atMenu) {
-                            atMenu->addAction(actpl);
-                        } else {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-                            QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
-#else
-                            QStringList treemenu = loc.menuEntryPoint.split('/', QString::SkipEmptyParts);
-#endif
-                            QString currentLevel="";
-                            QMenu *parentMenu=0;
-                            do {
-                                QString menuName=treemenu.at(0); treemenu.removeFirst();
-                                currentLevel=currentLevel+"/"+menuName;
-                                atMenu = findMenu(currentLevel, menuBar()->children(), "");
-                                if (atMenu==0) {
-                                    if (parentMenu==0) {
-                                        parentMenu=menuBar()->addMenu(menuName);
-                                    } else {
-                                        parentMenu=parentMenu->addMenu(menuName);
-                                    }
-                                    parentMenu->setObjectName(menuName);
-                                }
-                            } while(treemenu.size()>0);
-							if (parentMenu) parentMenu->addAction(actpl);
-                        }
-                    }
-                }
-            } else {
-                QMessageBox::information(this, "Info", pluginLoader.errorString());
-                RS_DEBUG->print("QC_ApplicationWindow::loadPlugin: %s", pluginLoader.errorString().toLatin1().data());
-            }
-        }
-    }
+   m_pluginInvoker->loadPlugins();
 }
-
-/**
- * Execute the plugin.
- */
-void QC_ApplicationWindow::execPlug() {
-    QAction *action = qobject_cast<QAction *>(sender());
-    QC_PluginInterface *plugin = qobject_cast<QC_PluginInterface *>(action->parent());
-//get actual drawing
-    QC_MDIWindow *w = getCurrentMDIWindow();
-    RS_Document *currdoc = w->getDocument();
-//create document interface instance
-    QG_GraphicView* graphicView = w->getGraphicView();
-    Doc_plugin_interface pligundoc(currdoc, graphicView, this);
-//execute plugin
-    LC_UndoSection undo(currdoc,graphicView->getViewPort());
-    plugin->execComm(&pligundoc, this, action->data().toString());
-//TODO call update view
-    graphicView->redraw();
-}
-
 
 /**
  * Destructor.
@@ -690,17 +606,14 @@ void QC_ApplicationWindow::execPlug() {
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
 
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting dialog factory");
-
 #ifdef _WINDOWS
 	qt_ntfs_permission_lookup--; // turn it off again
 #endif
 
-    delete dialogFactory;
-
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting dialog factory: OK");
+    delete m_dialogFactory;
+    delete m_pluginInvoker;
+    delete m_creatorInvoker;
+    delete m_dlgHelpr;
 }
 
 
@@ -710,7 +623,7 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 void QC_ApplicationWindow::closeEvent(QCloseEvent *ce) {
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent()");
 
-    queryExit(false) ? ce->accept() : ce->ignore();
+    queryMayExit() ? ce->accept() : ce->ignore();
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -742,37 +655,62 @@ void QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
-    previousZoomEnable=enable;
-    if(previousZoom){
-        previousZoom->setEnabled(enable);
-    }
+    m_previousZoomEnable=enable;
+    enableAction("ZoomPrevious", enable);
 }
 
 void QC_ApplicationWindow::setUndoEnable(bool enable){
-    undoEnable=enable;
-    if(undoButton){
-        undoButton->setEnabled(enable);
-    }
+    m_undoEnable = enable;
+    enableAction("EditUndo", enable);
 }
 
 void QC_ApplicationWindow::setRedoEnable(bool enable){
-    redoEnable=enable;
-    if(redoButton){
-        redoButton->setEnabled(enable);
+    m_redoEnable = enable;
+    enableAction("EditRedo", enable);
+}
+
+QAction* QC_ApplicationWindow::enableAction(const QString& name, bool enable) const{
+    QAction* action = getAction(name);
+    if (action != nullptr) {
+        action->setEnabled(enable);
+    }
+    return action;
+}
+
+QAction* QC_ApplicationWindow::checkAction(const QString& name, bool enable) const{
+    QAction* action = getAction(name);
+    if (action != nullptr) {
+        action->setChecked(enable);
+    }
+    return action;
+}
+
+void QC_ApplicationWindow::checkActions(const std::vector<QString> &actionList, bool enable) const {
+    for (const QString &a: actionList){
+        checkAction(a, enable);
     }
 }
 
-void QC_ApplicationWindow::slotEnableActions(bool enable) {
-    if(previousZoom){
-        previousZoom->setEnabled(enable&& previousZoomEnable);
-        undoButton->setEnabled(enable&& undoEnable);
-        redoButton->setEnabled(enable&& redoEnable);
+void QC_ApplicationWindow::enableActions(const std::vector<QString> &actionList, bool enable) const {
+    for (const QString &a: actionList){
+        enableAction(a, enable);
     }
+}
+
+void QC_ApplicationWindow::setSaveEnable(bool enable){
+    enableAction("FileSave", enable);
+}
+
+
+void QC_ApplicationWindow::slotEnableActions(bool enable) {
+    enableAction("ZoomPrevious", enable && m_previousZoomEnable);
+    enableAction("EditUndo", enable && m_undoEnable);
+    enableAction("EditRedo", enable && m_redoEnable);
 }
 
 void QC_ApplicationWindow::slotUpdateActiveLayer() {
-    if (layerWidget && m_pActiveLayerName) {
-        m_pActiveLayerName->activeLayerChanged(layerWidget->getActiveName());
+    if (m_layerWidget && m_activeLayerName) {
+        m_activeLayerName->activeLayerChanged(m_layerWidget->getActiveName());
     }
 }
 
@@ -801,7 +739,7 @@ void QC_ApplicationWindow::initSettings() {
 
         QString sheet_path = LC_GET_STR("StyleSheet", "");
         if (loadStyleSheet(sheet_path)) {
-            style_sheet_path = sheet_path;
+            m_styleSheetPath = sheet_path;
         }
     }
     LC_GROUP("Appearance");
@@ -831,7 +769,7 @@ void QC_ApplicationWindow::storeSettings() {
     if (RS_Settings::save_is_allowed) {
        m_workspacesManager.persist();
         //save snapMode
-       snapToolBar->saveSnapMode();
+       m_snapToolBar->saveSnapMode();
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
@@ -877,14 +815,14 @@ void QC_ApplicationWindow::slotEnter() {
  */
 void QC_ApplicationWindow::slotFocusCommandLine() {
 //    if (commandWidget->isVisible()) {
-    commandWidget->show();
-    commandWidget->setFocus();
+    m_commandWidget->show();
+    m_commandWidget->setFocus();
 //    }
 }
 
 void QC_ApplicationWindow::slotFocusOptionsWidget(){
-    if (optionWidget != nullptr){
-        optionWidget->setFocus();
+    if (m_optionWidget != nullptr){
+        m_optionWidget->setFocus();
     }
 }
 
@@ -892,15 +830,15 @@ void QC_ApplicationWindow::slotFocusOptionsWidget(){
  * Shows the given error on the command line.
  */
 void QC_ApplicationWindow::slotError(const QString& msg) {
-  commandWidget->appendHistory(msg);
+  m_commandWidget->appendHistory(msg);
 }
 
 void QC_ApplicationWindow::slotShowDrawingOptions() {
-    actionHandler->setCurrentAction(RS2::ActionOptionsDrawingGrid);
+    m_actionHandler->setCurrentAction(RS2::ActionOptionsDrawingGrid);
 }
 
 void QC_ApplicationWindow::slotShowDrawingOptionsUnits() {
-    actionHandler->setCurrentAction(RS2::ActionOptionsDrawingUnits);
+    m_actionHandler->setCurrentAction(RS2::ActionOptionsDrawingUnits);
 }
 
 /**
@@ -916,17 +854,20 @@ void QC_ApplicationWindow::slotFocus() {
 /**
  * Called when a document window was activated.
  */
-void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
+
+
+
+void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
     if (w == nullptr) {
         enableWidgets(false);
-        enableWidget(layerTreeWidget, false);
-        enableWidget(layerWidget, false);
-        enableWidget(commandWidget, false);
+        enableWidget(m_layerTreeWidget, false);
+        enableWidget(m_layerWidget, false);
+        enableWidget(m_commandWidget, false);
         RS_DIALOGFACTORY->hideSnapOptions();
-        coordinateWidget->clearContent();
-        relativeZeroCoordinatesWidget->clearContent();
+        m_coordinateWidget->clearContent();
+        m_relativeZeroCoordinatesWidget->clearContent();
         // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
         activedMdiSubWindow = w;
@@ -998,40 +939,14 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
                         "document: %lu", activatedDocument->getId());
 
-
-        RS_LayerList *layerList = activatedDocument->getLayerList();
-        layerWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
-        if (layerTreeWidget != nullptr) {
-            layerTreeWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
-        }
-        if (quickInfoWidget != nullptr) {
-            quickInfoWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
-        }
-        if (penPaletteWidget != nullptr) {
-            penPaletteWidget->setDocumentAndView(activatedDocument, activatedGraphicView);
-            penPaletteWidget->setMdiWindow(windowActivated);
-        }
-        if (namedViewsWidget != nullptr){
-            namedViewsWidget->setGraphicView(activatedGraphicView,w);
-        }
-        if (ucsListWidget != nullptr){
-            ucsListWidget->setGraphicView(activatedGraphicView, w);
-        }
-        if (anglesBasisWidget != nullptr){
-            anglesBasisWidget->update(activatedGraphic);
-        }
-
-        coordinateWidget->setGraphic(activatedGraphic,activatedGraphicView);
-        relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
-
-        blockWidget->setBlockList(activatedDocument->getBlockList());
+        setupWidgetsByWindow(windowActivated);
 
         // Update all inserts in this graphic (blocks might have changed):
         activatedDocument->updateInserts();
         // whether to enable undo/redo buttons
-        activatedDocument->setGUIButtons();
+        activatedDocument->updateUndoState();
 
-        QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
+        QAction *lockRelZeroAction = m_actionGroupManager->getActionByName("LockRelativeZero");
         if (lockRelZeroAction != nullptr){
             bool locked = activatedGraphicView->getViewPort()->isRelativeZeroLocked();
             lockRelZeroAction->setChecked(locked);
@@ -1045,9 +960,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         //actionHandler->updateSnapMode();
 
         // set pen from pen toolbar
-        slotPenChanged(penToolBar->getPen());
-
-        pen_wiz->setMdiWindow(windowActivated);
+        slotPenChanged(m_penToolBar->getPen());
+/// fixme - setup too in setupWidgetsByWindow???
+        m_penWizard->setMdiWindow(windowActivated);
 
 
         if (!forced) {
@@ -1055,8 +970,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             emit gridChanged(activatedGraphic->isGridOn());
         }
         bool printPreview = false;
-        actionHandler->set_view(activatedGraphicView);
-        actionHandler->set_document(activatedDocument);
+        m_actionHandler->setDocumentAndView(activatedDocument, activatedGraphicView);
         if (activatedGraphicView != nullptr) {
             printPreview = activatedGraphicView->isPrintPreview();
             RS_ActionInterface *currentAction = activatedGraphicView->getCurrentAction();
@@ -1073,24 +987,14 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
 
         updateActionsAndWidgetsForPrintPreview(printPreview);
 
-        if (snapToolBar) {
+        if (m_snapToolBar) {
             if (!printPreview) {
-                actionHandler->slotSetSnaps(snapToolBar->getSnaps());
+                m_actionHandler->slotSetSnaps(m_snapToolBar->getSnaps());
             }
         } else {
             RS_DEBUG->print(RS_Debug::D_ERROR, "snapToolBar is nullptr\n");
         }
     }
-
-//    // show action options for active window only
-//        foreach (QMdiSubWindow* sw, mdiAreaCAD->subWindowList()) {
-//            auto* sm = qobject_cast<QC_MDIWindow*>(sw);
-//            RS_ActionInterface* ai = sm->getGraphicView()->getCurrentAction();
-//            if (ai) {
-//                ai->hideOptions();
-//            }
-//        }
-
 
     // Disable/Enable menu and toolbar items
     emit windowsChanged(hasDocumentInActivatedWindow);
@@ -1192,99 +1096,65 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
             view->setMenu(activator, menu);
         }
 
-    connect(view, SIGNAL(gridStatusChanged(QString)),
-            this, SLOT(updateGridStatus(QString)));
+    connect(view, &QG_GraphicView::gridStatusChanged, this, &QC_ApplicationWindow::updateGridStatus);
 
-    actionHandler->set_view(view);
-    actionHandler->set_document(w->getDocument());
+    m_actionHandler->setDocumentAndView(w->getDocument(), view);
 
+    QString baseTitleString;
     if (w->getDocument()->rtti() == RS2::EntityBlock) {
-        w->setWindowTitle(tr("Block '%1'").arg(((RS_Block *) (w->getDocument()))->getName()) + "[*]");
+        baseTitleString = tr("Block '%1'").arg(((RS_Block *) (w->getDocument()))->getName()) + "[*]";
     } else {
-        w->setWindowTitle(tr("unnamed document %1").arg(id) + "[*]");
+        baseTitleString = tr("unnamed document %1").arg(id) + "[*]";
     }
 
-    //check for draft mode
-    // fixme - settings
-    if (settings.value("Appearance/DraftMode", 0).toBool()) {
-        QString draft_string = " [" + tr("Draft Mode") + "]";
-        view->setDraftMode(true);
-        QString title = w->windowTitle();
-        w->setWindowTitle(title + draft_string);
-    }
+    bool draftMode = LC_GET_ONE_BOOL("Appearance", "DraftMode", false);
+    setupMDIWindowTitleByName(w, baseTitleString, draftMode);
 
     w->setWindowIcon(QIcon(":/icons/document.lci"));
 
-    RS_DEBUG->print("  adding listeners");
     RS_Graphic *graphic = w->getDocument()->getGraphic();
 
-    RS_LayerList *layerList = w->getDocument()->getLayerList();
+    setupWidgetsByWindow(w);
 
-    if (layerWidget != nullptr) {
-        layerWidget->setLayerList(layerList, false);
-    }
+    // fixme - sand - review and complete initialization. check why we check for graphic, when it might be null, and how that affects init
 
-    if (penPaletteWidget != nullptr) {
-        penPaletteWidget->setLayerList(layerList);
-    }
-
-    if (layerTreeWidget != nullptr) {
-        layerTreeWidget->setLayerList(layerList);
-        layerTreeWidget->set_view(view);
-        layerTreeWidget->setDocument(w->getDocument());
-    }
-
-    if (quickInfoWidget != nullptr) {
-        quickInfoWidget->setDocumentAndView(w->getDocument(), view);
-    }
-
-    if (blockWidget) {
-        blockWidget->setBlockList(w->getDocument()->getBlockList());
-    }
     if (graphic) {
         // Link the graphic's layer list to the pen tool bar
-        graphic->addLayerListListener(penToolBar);
+        graphic->addLayerListListener(m_penToolBar);
         // Link the layer list to the layer widget
-        graphic->addLayerListListener(layerWidget);
+        graphic->addLayerListListener(m_layerWidget);
 
-        if (layerTreeWidget != nullptr) {
-            graphic->addLayerListListener(layerTreeWidget);
+        if (m_layerTreeWidget != nullptr) {
+            graphic->addLayerListListener(m_layerTreeWidget);
         }
 
         // Link the block list to the block widget
-        graphic->addBlockListListener(blockWidget);
+        graphic->addBlockListListener(m_blockWidget);
 
-        if (namedViewsWidget != nullptr){
-            namedViewsWidget->setGraphicView(view, w);
+        if (m_namedViewsWidget != nullptr){
+            m_namedViewsWidget->setGraphicView(view, w);
         }
 
-        if (ucsListWidget != nullptr){
-            ucsListWidget->setGraphicView(view, w);
+        if (m_ucsListWidget != nullptr){
+            m_ucsListWidget->setGraphicView(view, w);
         }
 
-        if (anglesBasisWidget != nullptr){
-            anglesBasisWidget->update(graphic);
+        if (m_anglesBasisWidget != nullptr){
+            m_anglesBasisWidget->update(graphic);
         }
     }
 
-
-// Link the dialog factory to the coordinate widget:
-    if (coordinateWidget != nullptr) {
-        coordinateWidget->setGraphic(graphic, view);
-    }
-    if (relativeZeroCoordinatesWidget != nullptr){
-        relativeZeroCoordinatesWidget->setGraphicView(view);
-    }
+// fixme - sand - is it really necessary to do this each time?
 // Link the dialog factory to the mouse widget:
-    QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
-    QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
-    QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(relativeZeroCoordinatesWidget);
-    QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
+    QG_DIALOGFACTORY->setMouseWidget(m_mouseWidget);
+    QG_DIALOGFACTORY->setCoordinateWidget(m_coordinateWidget);
+    QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(m_relativeZeroCoordinatesWidget);
+    QG_DIALOGFACTORY->setSelectionWidget(m_selectionWidget);
 // Link the dialog factory to the option widget:
 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
 // Link the dialog factory to the command widget:
-    QG_DIALOGFACTORY->setCommandWidget(commandWidget);
-    QG_DIALOGFACTORY->setStatusBarManager(statusbarManager);
+    QG_DIALOGFACTORY->setCommandWidget(m_commandWidget);
+    QG_DIALOGFACTORY->setStatusBarManager(m_statusbarManager);
 
     mdiAreaCAD->addSubWindow(w);
 
@@ -1293,7 +1163,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     doArrangeWindows(RS2::CurrentMode);
     showStatusMessage(tr("New Drawing created."), 2000);
 
-    layerWidget->activateLayer(0);
+    m_layerWidget->activateLayer(0);
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() OK");
 
@@ -1314,32 +1184,7 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
     /*QC_MDIWindow* */ w = slotFileNew();
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
-    // link the layer widget to the new document:
-    RS_Document *document = w->getDocument();
-    RS_LayerList *layerList = document->getLayerList();
-    layerWidget->setLayerList(layerList, false);
-    if (layerTreeWidget != nullptr)
-        layerTreeWidget->setLayerList(layerList);
-
-    if (penPaletteWidget != nullptr) {
-        penPaletteWidget->setLayerList(layerList);
-    }
-
-    QG_GraphicView *graphicView = w->getGraphicView();
-    if (namedViewsWidget != nullptr){
-        namedViewsWidget->setGraphicView(graphicView, w);
-    }
-
-    if (ucsListWidget != nullptr){
-        ucsListWidget->setGraphicView(graphicView, w);
-    }
-
-    // link the block widget to the new document:
-    blockWidget->setBlockList(document->getBlockList());
-    auto graphic = w->getGraphic();
-    // link coordinate widget to graphic
-    coordinateWidget->setGraphic(graphic,graphicView);
-    relativeZeroCoordinatesWidget->setGraphicView(graphicView);
+    setupWidgetsByWindow(w);
 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
@@ -1358,27 +1203,25 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: load Template: OK");
 
-    layerWidget->slotUpdateLayerList();
-    if (layerTreeWidget != nullptr) {
-        layerTreeWidget->slotFilteringMaskChanged();
+    m_layerWidget->slotUpdateLayerList();
+    if (m_layerTreeWidget != nullptr) {
+        m_layerTreeWidget->slotFilteringMaskChanged();
     }
-    if (namedViewsWidget != nullptr){
-        namedViewsWidget->reload();
+    if (m_namedViewsWidget != nullptr){
+        m_namedViewsWidget->reload();
     }
-    if (ucsListWidget != nullptr){
-        ucsListWidget->reload();
+    if (m_ucsListWidget != nullptr){
+        m_ucsListWidget->reload();
     }
 
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: update coordinate widget");
-    // update coordinate widget format:
-    RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0, 0.0),
-                                             RS_Vector(0.0, 0.0), true);
+    updateCoordinateWidgetFormat();
 
     if (!fileName.isEmpty()) {
         QString message = tr("New document from template: ") + fileName;
-        commandWidget->appendHistory(message);
+        m_commandWidget->appendHistory(message);
         showStatusMessage(message, 2000);
     }
+    auto graphic = w->getGraphic();
     if (graphic) {
         emit(gridChanged(graphic->isGridOn()));
     }
@@ -1437,7 +1280,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         // error
         QString msg = tr("Cannot open the file\n%1\nPlease "
                          "check the permissions.").arg(fileName);
-        commandWidget->appendHistory(msg);
+        m_commandWidget->appendHistory(msg);
         QMessageBox::information(this, QMessageBox::tr("Warning"),
                                  msg, QMessageBox::Ok);
         //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
@@ -1462,7 +1305,6 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate() OK");
 }
 
-
 /**
  * Menu file -> open.
  */
@@ -1471,34 +1313,17 @@ void QC_ApplicationWindow::slotFileOpen() {
     RS2::FormatType type = RS2::FormatUnknown;
     QG_FileDialog dlg(this);
     QString fileName = dlg.getOpenFile(&type);
-    slotFileOpen(fileName, type);
+    openFile(fileName, type);
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(): OK");
 }
 
+QString QC_ApplicationWindow::getFileNameFromFullPath(const QString &path) {
+    QFileInfo info(path);
+    return info.fileName();
+}
 
-/**
- *
- *	\brief	- Format a string that hold a file name path
- *						  such a way that it can displayed on the
- *						  windows title bar.
- *
- *	\author		Claude Sylvain
- *	\date			30 July 2011
- *	Last modified:
- *
- *	Parameters:		const QString &qstring_in:
- *							String to format (in).
- *
- *						QString &qstring_out:
- *							Formatted string (out).
- *
- *	Returns:			void
- *	*/
-
-QString QC_ApplicationWindow::
-format_filename_caption(const QString &qstring_in) {
-    QFileInfo info = QFileInfo(qstring_in);
-    return info.fileName(); // don't include the full path
+void QC_ApplicationWindow::updateCoordinateWidgetFormat(){
+    m_coordinateWidget->setCoordinates({0.0, 0.0}, {0.0, 0.0}, true);
 }
 
 /*	*
@@ -1517,7 +1342,7 @@ format_filename_caption(const QString &qstring_in) {
  *	Returns:			void
  *	Notes:			Menu file -> open.
  *	*/
-void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType type) {
+void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType type) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
     QSettings settings;
@@ -1528,47 +1353,29 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
         if (openedFiles.indexOf(fileName) >= 0) {
             QString message = tr("Warning: File already opened : ") + fileName;
-            commandWidget->appendHistory(message);
+            m_commandWidget->appendHistory(message);
             showStatusMessage(message, 2000);
         }
         // Create new document window:
         QMdiSubWindow *old = activedMdiSubWindow;
-        QRect geo;
-        //bool maximized=false;
+
 
         auto w = slotFileNew(nullptr);
-        // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
-        auto document = w->getDocument();
-        auto layerList = document->getLayerList();
+
         // link the layer widget to the new document:
 // fixme - sand - it seems that setup below is duplicated, as it is called from slotFileNew already
-        layerWidget->setLayerList(layerList, false);
-        if (layerTreeWidget != nullptr) {
-            layerTreeWidget->setLayerList(layerList);
-        }
-        if (penPaletteWidget != nullptr) {
-            penPaletteWidget->setLayerList(layerList);
-        }
+        setupWidgetsByWindow(w);
 
-        // link the block widget to the new document:
-        blockWidget->setBlockList(document->getBlockList());
         // link coordinate widget to graphic
-        auto graphic = w->getGraphic();
+
         auto graphicView = w->getGraphicView();
-        coordinateWidget->setGraphic(graphic,graphicView);
-        relativeZeroCoordinatesWidget->setGraphicView(graphicView);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
 
         qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-        if (old != nullptr) {//save old geometry
-            geo = old->geometry();
-            //maximized=old->isMaximized();
-        }
 
         // open the file in the new view:
         bool success = false;
@@ -1577,7 +1384,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         } else {
             QString msg = tr("Cannot open the file\n%1\nPlease "
                              "check its existence and permissions.").arg(fileName);
-            commandWidget->appendHistory(msg);
+            m_commandWidget->appendHistory(msg);
             QMessageBox::information(this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
         }
         if (!success) {
@@ -1597,42 +1404,35 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 1");
 
         // update recent files menu:
-        recentFiles->add(fileName);
+        m_recentFilesList->add(fileName);
         openedFiles.push_back(fileName);
-        layerWidget->slotUpdateLayerList();
-        if (layerTreeWidget != nullptr) { // fixme - sand - rewrite widget updates in initialization - move to single codebase
-            layerTreeWidget->slotFilteringMaskChanged();
+        m_layerWidget->slotUpdateLayerList();
+        if (m_layerTreeWidget != nullptr) { // fixme - sand - rewrite widget updates in initialization - move to single codebase
+            m_layerTreeWidget->slotFilteringMaskChanged();
         }
-        if (namedViewsWidget != nullptr){
-            namedViewsWidget->reload();
+        if (m_namedViewsWidget != nullptr){
+            m_namedViewsWidget->reload();
         }
-        if (ucsListWidget != nullptr){
-            ucsListWidget->reload();
+        if (m_ucsListWidget != nullptr){
+            m_ucsListWidget->reload();
         }
         // fixme - sand - the overall workflow of file opening is suxx with lots of redundancy. Review it.
-        if (quickInfoWidget != nullptr) {
-            quickInfoWidget->updateFormats();
+        if (m_quickInfoWidget != nullptr) {
+            m_quickInfoWidget->updateFormats();
         }
 
-
+         auto graphic = w->getGraphic();
         if (graphic) {
             if (int objects_removed = graphic->clean()) {
                 auto msg = QObject::tr("Invalid objects removed:");
-                commandWidget->appendHistory(msg + " " + QString::number(objects_removed));
+                m_commandWidget->appendHistory(msg + " " + QString::number(objects_removed));
             }
             emit(gridChanged(graphic->isGridOn()));
 
-            if (anglesBasisWidget != nullptr){
-                anglesBasisWidget->update(graphic);
+            if (m_anglesBasisWidget != nullptr){
+                m_anglesBasisWidget->update(graphic);
             }
         }
-
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
-
-
-        /*	Format and set caption.
-         *	----------------------- */
-        w->setWindowTitle(format_filename_caption(fileName) + "[*]");
 
         if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
             QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
@@ -1641,34 +1441,24 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
                 tabBar->setExpanding(false);
                 tabBar->setTabToolTip(tabBar->currentIndex(), fileName);
             }
-        } else
+        } else {
             doArrangeWindows(RS2::CurrentMode);
-
-
+        }
 
         if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing")) {
             graphicView->zoomAuto(false);
         }
 
-// fixme - settings inconsistent call
-        if (settings.value("Appearance/DraftMode", 0).toBool()) {
-            QString draft_string = " [" + tr("Draft Mode") + "]";
-            graphicView->setDraftMode(true);
-            QString title = w->windowTitle();
-            w->setWindowTitle(title + draft_string);
-        }
+        bool draftMode = LC_GET_ONE_BOOL("Appearance", "DraftMode", false);
+        setupMDIWindowTitleByName(w, fileName, draftMode);
+        graphicView->setDraftMode(draftMode);
 
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
-
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update coordinate widget");
         // update coordinate widget format:
-        RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0, 0.0),
-                                                 RS_Vector(0.0, 0.0),
-                                                 true);
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update coordinate widget: OK");
+
+        updateCoordinateWidgetFormat();
 
         QString message = tr("Loaded document: ") + fileName;
-        commandWidget->appendHistory(message);
+        m_commandWidget->appendHistory(message);
         showStatusMessage(message, 2000);
 
     } else {
@@ -1681,7 +1471,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
 }
 
 void QC_ApplicationWindow::slotFileOpen(const QString &fileName) {
-    slotFileOpen(fileName, RS2::FormatUnknown);
+    openFile(fileName, RS2::FormatUnknown);
 }
 
 /**
@@ -1691,10 +1481,9 @@ void QC_ApplicationWindow::slotFileSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSave()");
 
     if (doSave(getCurrentMDIWindow())) {
-        recentFiles->updateRecentFilesMenu();
+        m_recentFilesList->updateRecentFilesMenu();
     }
 }
-
 
 /**
  * Menu file -> save as.
@@ -1702,11 +1491,11 @@ void QC_ApplicationWindow::slotFileSave() {
 void QC_ApplicationWindow::slotFileSaveAs() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
     if (doSave(getCurrentMDIWindow(), true)) {
-        recentFiles->updateRecentFilesMenu();
+        m_recentFilesList->updateRecentFilesMenu();
     }
 }
 
-bool QC_ApplicationWindow::slotFileSaveAll() {
+bool QC_ApplicationWindow::doSaveAllFiles(){
     QC_MDIWindow *current = getCurrentMDIWindow();
     bool result{true};
     for (auto w: window_list) {
@@ -1719,10 +1508,13 @@ bool QC_ApplicationWindow::slotFileSaveAll() {
         }
     }
     doActivate(current);
-    recentFiles->updateRecentFilesMenu();
+    m_recentFilesList->updateRecentFilesMenu();
     return result;
 }
 
+void QC_ApplicationWindow::slotFileSaveAll(){
+    doSaveAllFiles();
+}
 
 /**
  * Autosave.
@@ -1864,7 +1656,7 @@ void QC_ApplicationWindow::slotFileExport() {
                 if (ret) {
                     QString message = tr("Exported: %1").arg(fn);
                     showStatusMessage(message, 2000);
-                    commandWidget->appendHistory(message);
+                    m_commandWidget->appendHistory(message);
                 }
             }
         }
@@ -1967,7 +1759,7 @@ bool QC_ApplicationWindow::slotFileExport(
 
 
 /**
- * Called when a sub window is about to close. 
+ * Called when a sub window is about to close.
  * If modified, show the Save/Close/Cancel dialog, then do the request.
  * If a save is needed but the user cancels, the window is not closed.
  */
@@ -1983,12 +1775,50 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow *win) {
             case QG_ExitDialog::Cancel:
                 cancel = true;
                 break;
+            default:
+                break;
         }
     }
     if (!cancel) {
         doClose(win);
         doArrangeWindows(RS2::CurrentMode);
     }
+}
+
+bool QC_ApplicationWindow::doCloseAllFiles(){
+    bool cancel(false), closeAll(false), hasParent(false);
+    for (auto w: window_list)
+        if (w) {
+            hasParent = w->getParentWindow() != nullptr;
+
+            if (w->getDocument()->isModified() && !hasParent && !closeAll) {
+                doActivate(w);
+                switch (showCloseDialog(w, window_list.count() > 1)) {
+                    case QG_ExitDialog::Discard:
+                        closeAll = true;
+                        break;
+                    case QG_ExitDialog::SaveAll:
+                        closeAll = doSaveAllFiles();
+                        break;
+                    case QG_ExitDialog::Save:
+                        cancel = !doSave(w);
+                        break;
+                    case QG_ExitDialog::Cancel:
+                        cancel = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (cancel) {
+                showStatusMessage(tr("Close All cancelled"), 2000);
+                return true;
+            }
+
+            doClose(w);
+            doArrangeWindows(RS2::CurrentMode);
+        }
+    return false;
 }
 
 /**
@@ -1999,39 +1829,8 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow *win) {
  * @return true success
  * @return false the user cancelled.
  */
-bool QC_ApplicationWindow::slotFileCloseAll() {
-    bool cancel(false), closeAll(false), hasParent(false);
-    for (auto w: window_list)
-        if (w) {
-
-            hasParent = w->getParentWindow() != nullptr;
-
-            if (w->getDocument()->isModified() && !hasParent && !closeAll) {
-                doActivate(w);
-                switch (showCloseDialog(w, window_list.count() > 1)) {
-                    case QG_ExitDialog::Discard:
-                        closeAll = true;
-                        break;
-                    case QG_ExitDialog::SaveAll:
-                        closeAll = slotFileSaveAll();
-                        break;
-                    case QG_ExitDialog::Save:
-                        cancel = !doSave(w);
-                        break;
-                    case QG_ExitDialog::Cancel:
-                        cancel = true;
-                        break;
-                }
-            }
-            if (cancel) {
-                showStatusMessage(tr("Close All cancelled"), 2000);
-                return false;
-            }
-
-            doClose(w);
-            doArrangeWindows(RS2::CurrentMode);
-        }
-    return true;
+void QC_ApplicationWindow::slotFileCloseAll() {
+    doCloseAllFiles();
 }
 
 
@@ -2151,31 +1950,31 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 RS_Graphic *graphic = w->getDocument()->getGraphic();
                 if (graphic) {
                     // Link the layer list to the pen tool bar
-                    graphic->addLayerListListener(penToolBar);
+                    graphic->addLayerListListener(m_penToolBar);
                     // Link the layer list to the layer widget
-                    graphic->addLayerListListener(layerWidget);
+                    graphic->addLayerListListener(m_layerWidget);
                     // link the layer list ot the layer tree widget
-                    graphic->addLayerListListener(layerTreeWidget);
+                    graphic->addLayerListListener(m_layerTreeWidget);
 
                     // Link the block list to the block widget
-                    graphic->addBlockListListener(blockWidget);
+                    graphic->addBlockListListener(m_blockWidget);
 
                     // fixme - sand - check whether we should setup ViewListener for NamedViewsList widget?
 
                 }
 
                 // Link the graphic view to the mouse widget:
-                QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
+                QG_DIALOGFACTORY->setMouseWidget(m_mouseWidget);
                 // fixme - sand - check whether coordinates, selection and relzero are really necessary for print preview!!!
                 // Link the graphic view to the coordinate widget:
-                QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
-                QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(relativeZeroCoordinatesWidget);
-                QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
+                QG_DIALOGFACTORY->setCoordinateWidget(m_coordinateWidget);
+                QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(m_relativeZeroCoordinatesWidget);
+                QG_DIALOGFACTORY->setSelectionWidget(m_selectionWidget);
                 // Link the graphic view to the option widget:
                 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
                 // Link the graphic view to the command widget:
-                QG_DIALOGFACTORY->setCommandWidget(commandWidget);
-                QG_DIALOGFACTORY->setStatusBarManager(statusbarManager);
+                QG_DIALOGFACTORY->setCommandWidget(m_commandWidget);
+                QG_DIALOGFACTORY->setStatusBarManager(m_statusbarManager);
 
                 RS_DEBUG->print("  showing MDI window");
 
@@ -2218,12 +2017,10 @@ void QC_ApplicationWindow::slotFileQuit() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileQuit()");
 
     showStatusMessage(tr("Exiting application..."));
-
-    if (queryExit(false)) {
+    if (queryMayExit()) {
         qApp->quit();
     }
 }
-
 
 /**
  * Shows / hides the grid.
@@ -2267,6 +2064,11 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
             QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
             printPreviewGraphicView->setDraftMode(toggle);
         }
+
+        /*setupMDIWindowTitle(win, drawingFileFullPath, toggle);*/
+
+
+
         QString title = win->windowTitle();
 
         if (toggle && !title.contains(draft_string)) {
@@ -2332,24 +2134,29 @@ void QC_ApplicationWindow::slotInfoCursorSetting(bool toggle) {
                 }
 
                 if (doUpdate){
-                    for (QC_MDIWindow *win: window_list) {
-                        QG_GraphicView *graphicView = win->getGraphicView();
-                        graphicView->loadSettings();
-                    }
-                    redrawAll();
+                    doForEachWindowGraphicView([](QG_GraphicView *gv){
+                        gv->loadSettings();
+                        gv->redraw();
+                    });
                 }
             }
         }
     }
 }
 
+void QC_ApplicationWindow::doForEachWindowGraphicView(std::function<void(QG_GraphicView*)> callback) const{
+    for (QC_MDIWindow* value : window_list) {
+        QG_GraphicView *graphicView = value->getGraphicView();
+        callback(graphicView);
+    }
+}
+
 void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     LC_SET_ONE("Appearance","DraftLinesMode", toggle);
 
-    for (QC_MDIWindow *win: window_list) {
-        QG_GraphicView *graphicView = win->getGraphicView();
-        graphicView->setDraftLinesMode(toggle);
-    }
+    doForEachWindowGraphicView([toggle](QG_GraphicView *gv){
+        gv->setDraftLinesMode(toggle);
+    });
     emit draftLinesChanged(toggle);
     redrawAll();
 }
@@ -2464,11 +2271,12 @@ void QC_ApplicationWindow::updateGridViewActions(bool isometric, RS2::IsoGridVie
 }
 
 void QC_ApplicationWindow::slotOptionsShortcuts() {
-    RS_DIALOGFACTORY->requestKeyboardShortcutsDialog(ag_manager);
+    LC_ActionsShortcutsDialog dlg(this, m_actionGroupManager);
+    dlg.exec();
 }
 
 void QC_ApplicationWindow::rebuildMenuIfNecessary(){
-    m_menuFactory->recreateMenuIfNeeded(menuBar());
+    m_menuFactory->recreateMainMenuIfNeeded(menuBar());
 }
 
 /**
@@ -2485,7 +2293,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         bool antialiasing = LC_GET_ONE_BOOL("Appearance", "Antialiasing", false);
         emit antialiasingChanged(antialiasing);
 
-        statusbarManager->loadSettings();
+        m_statusbarManager->loadSettings();
         onCADTabBarIndexChanged(0); // force update if settings changed
 
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
@@ -2517,11 +2325,11 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 action->setChecked(infoCursorEnabled);
             }
             // todo - is necessary to check for null there?
-            getAction("InfoCursorAbs")->setChecked(LC_GET_BOOL("ShowAbsolute", true));
-            getAction("InfoCursorSnap")->setChecked(LC_GET_BOOL("ShowSnapInfo", true));
-            getAction("InfoCursorRel")->setChecked(LC_GET_BOOL("ShowRelativeDA", true));
-            getAction("InfoCursorPrompt")->setChecked(LC_GET_BOOL("ShowPrompt", true));
-            getAction("InfoCursorCatchedEntity")->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
+            checkAction("InfoCursorAbs", LC_GET_BOOL("ShowAbsolute", true));
+            checkAction("InfoCursorSnap",LC_GET_BOOL("ShowSnapInfo", true));
+            checkAction("InfoCursorRel",LC_GET_BOOL("ShowRelativeDA", true));
+            checkAction("InfoCursorPrompt",LC_GET_BOOL("ShowPrompt", true));
+            checkAction("InfoCursorCatchedEntity",LC_GET_BOOL("ShowPropertiesCatched", true));
         }
         LC_GROUP_END();
 
@@ -2529,10 +2337,10 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     }
 }
 
-
 /**
  * Menu File -> import -> importBlock
  */
+// fixme - sand - files - rework
 void QC_ApplicationWindow::slotImportBlock() {
 
     if (getCurrentMDIWindow() == nullptr) {
@@ -2550,9 +2358,9 @@ void QC_ApplicationWindow::slotImportBlock() {
     }
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler) {
+        if (m_actionHandler) {
             RS_ActionInterface *a =
-                actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
+                m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
                 auto *action = (RS_ActionLibraryInsert *) a;
                 action->setFile(dxfPath);
@@ -2570,52 +2378,37 @@ void QC_ApplicationWindow::slotImportBlock() {
 
 
 void QC_ApplicationWindow::showAboutWindow() {
-    LC_DlgAbout dlg(this);
-    dlg.exec();
+    m_dlgHelpr->showAboutWindow();
 }
 
-/**
- * overloaded for Message box on last window exit.
- */
-bool QC_ApplicationWindow::queryExit(bool force) {
+bool QC_ApplicationWindow::queryMayExit() {
     RS_DEBUG->print("QC_ApplicationWindow::queryExit()");
-    bool succ = true;
-    if (force)
+
+    bool saveOpenedFiles = LC_GET_ONE_BOOL("Startup", "OpenLastOpenedFiles");
+    QString openedFiles;
+    QString activeFile = "";
+    if (saveOpenedFiles) {
         for (auto w: window_list) {
-            doClose(w);
-        }
-    else {
-        bool saveOpenedFiles = LC_GET_ONE_BOOL("Startup", "OpenLastOpenedFiles");
-
-        QString openedFiles;
-        QString activeFile = "";
-        if (saveOpenedFiles) {
-            for (auto w: window_list) {
-                QString fileName = w->getFileName();
-                if (activedMdiSubWindow != nullptr && activedMdiSubWindow == w) {
-                    activeFile = fileName;
-                }
-                openedFiles += fileName;
-                openedFiles += ";";
+            QString fileName = w->getFileName();
+            if (activedMdiSubWindow != nullptr && activedMdiSubWindow == w) {
+                activeFile = fileName;
             }
+            openedFiles += fileName;
+            openedFiles += ";";
         }
-        succ = slotFileCloseAll();
+    }
+    bool mayExit = !doCloseAllFiles();
 
-        if (succ) {
-            if (!openedFiles.isEmpty()) {
-                LC_GROUP_GUARD("Startup");
-                {
-                    LC_SET("LastOpenFilesList", openedFiles);
-                    LC_SET("LastOpenFilesActive", activeFile);
-                }
-            }
-            storeSettings();
+    if (mayExit) {
+        LC_GROUP_GUARD("Startup"); {
+            LC_SET("LastOpenFilesList", openedFiles);
+            LC_SET("LastOpenFilesActive", activeFile);
         }
+        storeSettings();
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::queryExit(): OK");
-
-    return succ;
+    return mayExit;
 }
 
 /**
@@ -2636,12 +2429,12 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
 
         case Qt::Key_Plus:
         case Qt::Key_Equal:
-            actionHandler->slotZoomIn();
+            m_actionHandler->slotZoomIn();
             e->accept();
             break;
 
         case Qt::Key_Minus:
-            actionHandler->slotZoomOut();
+            m_actionHandler->slotZoomOut();
             e->accept();
             break;
 
@@ -2691,18 +2484,18 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w) {
 }
 
 void QC_ApplicationWindow::relayAction(QAction *q_action) {
-    // author: ravas
-
     auto view = getCurrentMDIWindow()->getGraphicView();
-    if (!view) {   // when switching back to LibreCAD from another program
+    if (!view) {
+        // when switching back to LibreCAD from another program
         // occasionally no drawings are activated
         qWarning("relayAction: graphicView is nullptr");
         return;
     }
 
     // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
+    // probably there could be the list of ignored actions in the future
     bool setAsCurrentActionInView = true;
-    if (ag_manager->getActionByName("LockRelativeZero") == q_action){
+    if (getAction("LockRelativeZero") == q_action){
         // other actions may be added later
         setAsCurrentActionInView = false;
     }
@@ -2710,13 +2503,26 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         view->setCurrentQAction(q_action);
     }
 
-    RS_DIALOGFACTORY->setCurrentQAction(q_action);
+    setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty()) {
         const QString title(q_action->text().remove("&"));
-        commandWidget->appendHistory(title + " : " + commands);
+        m_commandWidget->appendHistory(title + " : " + commands);
     }
+}
+
+void QC_ApplicationWindow::setCurrentQAction(QAction* q_action) {
+    if (m_mouseWidget != nullptr){
+        m_mouseWidget->setCurrentQAction(q_action);
+    }
+    if (m_statusbarManager != nullptr){
+        m_statusbarManager->setCurrentQAction(q_action);
+    }
+    // fixme - sand - files - restore
+    /*if (optionWidgetHolder != nullptr){
+        optionWidgetHolder->setCurrentQAction(q_action);
+    }*/
 }
 
 /**
@@ -2724,23 +2530,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
  * See QMainWindow::createPopupMenu() for more information.
  */
 QMenu *QC_ApplicationWindow::createPopupMenu() {
-     auto *context_menu = new QMenu(tr("Context"));
-    context_menu->setAttribute(Qt::WA_DeleteOnClose);
-    // todo - a bit ugly way to find them by name... review whether direct reference may be use
-    auto *tb_menu = menuBar()->findChild<QMenu *>("toolbars_menu");
-    auto *temp_tb_menu = new QMenu(tr("Toolbars"), context_menu);
-    temp_tb_menu->addActions(tb_menu->actions());
-    context_menu->addMenu(temp_tb_menu);
-
-    auto *dw_menu = menuBar()->findChild<QMenu *>("dockwidgets_menu");
-    auto *temp_dw_menu = new QMenu(tr("Dockwidgets"), context_menu);
-    temp_dw_menu->addActions(dw_menu->actions());
-    context_menu->addMenu(temp_dw_menu);
-
-    QAction *viewStatusBarAction = getAction("ViewStatusBar");
-    context_menu->addAction(viewStatusBarAction);
-
-    return context_menu;
+   return  m_menuFactory->createMainWindowPopupMenu();
 }
 
 void QC_ApplicationWindow::toggleFullscreen(bool checked) {
@@ -2753,12 +2543,13 @@ void QC_ApplicationWindow::hideOptions(QC_MDIWindow *win) {
     defaultAction->hideOptions();
 }
 
-void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
-
-    showStatusMessage(tr("Opening recent file..."));
-    QString fileName = action->data().toString();
-    slotFileOpen(fileName, RS2::FormatUnknown);
+void QC_ApplicationWindow::slotFileOpenRecent(QAction *action){
+    auto variant = action->data();
+    if (variant.isValid()) {
+        showStatusMessage(tr("Opening recent file..."));
+        QString fileName = variant.toString();
+        openFile(fileName, RS2::FormatUnknown);
+    }
 }
 
 /**
@@ -2766,9 +2557,7 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
  * and reads / writes the associated settings.
  */
 void QC_ApplicationWindow::widgetOptionsDialog() {
-    LC_WidgetOptionsDialog dlg;
-
-    if (dlg.exec() == QDialog::Accepted) {
+    if (m_dlgHelpr->widgetOptionsDialog()) {
         fireWidgetSettingsChanged();
     }
 }
@@ -2808,50 +2597,36 @@ bool QC_ApplicationWindow::loadStyleSheet(QString path) {
 }
 
 void QC_ApplicationWindow::reloadStyleSheet() {
-    loadStyleSheet(style_sheet_path);
+    loadStyleSheet(m_styleSheetPath);
 }
 
 bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
     if (QEvent::FileOpen == event->type()) {
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
-        slotFileOpen(openEvent->file(), RS2::FormatUnknown);
+        openFile(openEvent->file(), RS2::FormatUnknown);
         return true;
     }
     return QObject::eventFilter(obj, event);
 }
 
 void QC_ApplicationWindow::updateGridStatus(const QString &status) {
-    grid_status->setBottomLabel(status);
+    m_gridStatusWidget->setBottomLabel(status);
 }
 
 void QC_ApplicationWindow::showDeviceOptions() {
-    QSettings settings;
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Device Options"));
-    auto layout = new QVBoxLayout;
-    auto device_combo = new ComboBoxOption(&dlg);
-    device_combo->setTitle(tr("Device"));
-    device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
-    device_combo->setCurrentOption(settings.value("Hardware/Device", "Mouse").toString());
-    layout->addWidget(device_combo);
-    dlg.setLayout(layout);
-    connect(device_combo, &ComboBoxOption::optionToSave,
-            this, &QC_ApplicationWindow::updateDevice);
-    dlg.exec();
+   m_dlgHelpr->showDeviceOptions();
 }
 
 void QC_ApplicationWindow::updateDevice(QString device) {
-    QSettings settings;
-    settings.setValue("Hardware/Device", device);
-        foreach (auto win, window_list) {
-            win->getGraphicView()->device = device;
-        }
+    LC_SET_ONE("Hardware", "Device", device);
+    for (const auto &win: window_list) {
+        win->getGraphicView()->device = device;
+    }
 }
 
 void QC_ApplicationWindow::saveNamedView() {
-    if (namedViewsWidget != nullptr){
-        namedViewsWidget->addNewView();
+    if (m_namedViewsWidget != nullptr){
+        m_namedViewsWidget->addNewView();
     }
 }
 
@@ -2881,7 +2656,7 @@ void QC_ApplicationWindow::removeWorkspace(bool on){
     int workspaceId = LC_InputTextDialog::selectId(this, tr("Remove Workspace"), tr("Select workspace to remove:"), options, &ok);
     if (ok) {
        m_workspacesManager.deleteWorkspace(workspaceId);
-        fireWorkspacesChanged();
+       fireWorkspacesChanged();
     }
 }
 
@@ -2917,8 +2692,8 @@ void QC_ApplicationWindow::restoreNamedView4() {
 }
 
 void QC_ApplicationWindow::restoreNamedViewCurrent() {
-    if (namedViewsWidget != nullptr){
-        namedViewsWidget->restoreSelectedView();
+    if (m_namedViewsWidget != nullptr){
+        m_namedViewsWidget->restoreSelectedView();
     }
 }
 
@@ -2927,256 +2702,26 @@ void QC_ApplicationWindow::restoreNamedView5() {
 }
 
 void QC_ApplicationWindow::restoreNamedView(const QString& viewName){
-    if (namedViewsWidget != nullptr){
-        namedViewsWidget->restoreView(viewName);
+    if (m_namedViewsWidget != nullptr){
+        m_namedViewsWidget->restoreView(viewName);
     }
 }
 
 void QC_ApplicationWindow::doRestoreNamedView(int i) const {
-    if (namedViewsWidget != nullptr){
-        namedViewsWidget->restoreView(i);
+    if (m_namedViewsWidget != nullptr){
+        m_namedViewsWidget->restoreView(i);
     }
 }
 
 void QC_ApplicationWindow::invokeToolbarCreator() {
-    // author: ravas
-
-    auto tb_creator = findChild<QDialog *>("Toolbar Creator");
-    if (tb_creator) {
-        tb_creator->raise();
-        tb_creator->activateWindow();
-        return;
-    }
-
-    auto dlg = new LC_Dialog(this, "ToolbarCreator");
-    dlg->setAttribute(Qt::WA_DeleteOnClose);
-    dlg->setWindowTitle(tr("Toolbar Creator"));
-    dlg->setObjectName("Toolbar Creator");
-
-    auto toolbar_creator = new WidgetCreator(dlg, ag_manager);
-    toolbar_creator->addCustomWidgets("CustomToolbars");
-
-    connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),
-            this, SLOT(createToolbar(QString)));
-    connect(toolbar_creator, SIGNAL(widgetToDestroy(QString)),
-            this, SLOT(destroyToolbar(QString)));
-
-    auto layout = new QVBoxLayout;
-    layout->addWidget(toolbar_creator);
-    dlg->setLayout(layout);
-
-    dlg->show();
+    m_creatorInvoker->invokeToolbarCreator();
 }
-
-void QC_ApplicationWindow::createToolbar(const QString &toolbar_name) {
-    // author: ravas
-
-    QSettings settings;
-    auto tb = QString("CustomToolbars/%1").arg(toolbar_name);
-    auto a_list = settings.value(tb).toStringList();
-
-    auto toolbar = findChild<QToolBar *>(toolbar_name);
-
-    if (toolbar)
-        toolbar->clear();
-    else {
-        toolbar = new QToolBar(toolbar_name, this);
-        toolbar->setObjectName(toolbar_name);
-        addToolBar(Qt::BottomToolBarArea, toolbar);
-    }
-
-    foreach (auto key, a_list) {
-        toolbar->addAction(getAction(key));
-    }
-}
-
-void QC_ApplicationWindow::destroyToolbar(const QString &toolbar_name) {
-    // author: ravas
-
-    auto toolbar = findChild<QToolBar *>(toolbar_name);
-    if (toolbar) delete toolbar;
-}
-
 
 void QC_ApplicationWindow::invokeMenuCreator() {
-    // author: ravas
-
-    auto menu_creator = findChild<QDialog *>("Menu Creator");
-    if (menu_creator) {
-        menu_creator->raise();
-        menu_creator->activateWindow();
-        return;
-    }
-
-    auto dlg = new LC_Dialog(this, "MenuCreator");
-    dlg->setAttribute(Qt::WA_DeleteOnClose);
-    dlg->setWindowTitle(tr("Menu Creator"));
-    auto layout = new QVBoxLayout;
-    auto widget_creator = new WidgetCreator(dlg, ag_manager, true);
-    widget_creator->addCustomWidgets("CustomMenus");
-
-    connect(widget_creator, SIGNAL(widgetToDestroy(QString)),
-            this, SLOT(destroyMenu(QString)));
-    connect(widget_creator, SIGNAL(widgetToAssign(QString)),
-            this, SLOT(invokeMenuAssigner(QString)));
-    connect(widget_creator, SIGNAL(widgetToUpdate(QString)),
-            this, SLOT(updateMenu(QString)));
-
-    layout->addWidget(widget_creator);
-    dlg->setLayout(layout);
-    dlg->show();
-}
-
-void QC_ApplicationWindow::invokeMenuAssigner(const QString &menu_name) {
-    //author: ravas
-
-    QSettings settings;
-    settings.beginGroup("Activators");
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Menu Assigner"));
-
-    auto cb_1 = new QCheckBox("Double-Click");
-    auto cb_2 = new QCheckBox("Right-Click");
-    auto cb_3 = new QCheckBox("Ctrl+Right-Click");
-    auto cb_4 = new QCheckBox("Shift+Right-Click");
-    cb_1->setChecked(settings.value("Double-Click").toString() == menu_name);
-    cb_2->setChecked(settings.value("Right-Click").toString() == menu_name);
-    cb_3->setChecked(settings.value("Ctrl+Right-Click").toString() == menu_name);
-    cb_4->setChecked(settings.value("Shift+Right-Click").toString() == menu_name);
-
-    auto button_box = new QDialogButtonBox;
-    button_box->setStandardButtons(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
-
-    connect(button_box, SIGNAL(accepted()), &dlg, SLOT(accept()));
-    connect(button_box, SIGNAL(rejected()), &dlg, SLOT(reject()));
-
-    auto layout = new QVBoxLayout;
-    dlg.setLayout(layout);
-
-    auto frame = new QFrame;
-    layout->addWidget(frame);
-
-    auto f_layout = new QVBoxLayout;
-    frame->setLayout(f_layout);
-
-    f_layout->addWidget(cb_1);
-    f_layout->addWidget(cb_2);
-    f_layout->addWidget(cb_3);
-    f_layout->addWidget(cb_4);
-    f_layout->addWidget(button_box);
-
-    if (dlg.exec()) {
-        if (cb_1->isChecked())
-            assignMenu("Double-Click", menu_name);
-        else
-            unassignMenu("Double-Click", menu_name);
-
-        if (cb_2->isChecked())
-            assignMenu("Right-Click", menu_name);
-        else
-            unassignMenu("Right-Click", menu_name);
-
-        if (cb_3->isChecked())
-            assignMenu("Ctrl+Right-Click", menu_name);
-        else
-            unassignMenu("Ctrl+Right-Click", menu_name);
-
-        if (cb_4->isChecked())
-            assignMenu("Shift+Right-Click", menu_name);
-        else
-            unassignMenu("Shift+Right-Click", menu_name);
-    }
-    settings.endGroup();
-}
-
-void QC_ApplicationWindow::unassignMenu(const QString &activator, const QString &menu_name) {
-    // author: ravas
-
-    QSettings settings;
-    settings.beginGroup("Activators");
-
-    if (settings.value(activator).toString() == menu_name) {
-        settings.remove(activator);
-    }
-    settings.endGroup();
-
-        foreach (auto win, window_list) {
-            auto view = win->getGraphicView();
-            view->destroyMenu(activator);
-        }
-}
-
-void QC_ApplicationWindow::assignMenu(const QString &activator, const QString &menu_name) {
-    // author: ravas
-
-    QSettings settings;
-
-    settings.beginGroup("Activators");
-    settings.setValue(activator, menu_name);
-    settings.endGroup();
-
-    auto menu_key = QString("CustomMenus/%1").arg(menu_name);
-    auto a_list = settings.value(menu_key).toStringList();
-
-        foreach (auto win, window_list) {
-            auto view = win->getGraphicView();
-            auto menu = new QMenu(activator, view);
-            menu->setObjectName(menu_name);
-                foreach (auto key, a_list) {
-                    menu->addAction(getAction(key));
-                }
-            view->setMenu(activator, menu);
-        }
-}
-
-void QC_ApplicationWindow::updateMenu(const QString &menu_name) {
-    // author: ravas
-
-    QSettings settings;
-
-    auto menu_key = QString("CustomMenus/%1").arg(menu_name);
-    auto a_list = settings.value(menu_key).toStringList();
-
-    settings.beginGroup("Activators");
-    auto activators = settings.childKeys();
-
-        foreach (auto activator, activators) {
-            if (settings.value(activator).toString() == menu_name) {
-                    foreach (auto win, window_list) {
-                        auto view = win->getGraphicView();
-                        auto menu = new QMenu(activator, view);
-                        menu->setObjectName(menu_name);
-                            foreach (auto key, a_list) {
-                                menu->addAction(getAction(key));
-                            }
-                        view->setMenu(activator, menu);
-                    }
-            }
-        }
-}
-
-void QC_ApplicationWindow::destroyMenu(const QString &menu_name) {
-    //author: ravas
-
-    QSettings settings;
-    settings.beginGroup("Activators");
-    auto activators = settings.childKeys();
-
-        foreach (auto activator, activators) {
-            if (settings.value(activator).toString() == menu_name) {
-                settings.remove(activator);
-                    foreach (auto win, window_list) {
-                        auto view = win->getGraphicView();
-                        view->destroyMenu(activator);
-                    }
-            }
-        }
-    settings.endGroup();
+    m_creatorInvoker->invokeMenuCreator();
 }
 
 void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent *event) {
-    // author: ravas
     // returning to LC via Command+Tab won't always activate a subwindow #821
 
 #if defined(Q_OS_MACOS)
@@ -3196,80 +2741,63 @@ void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent *event) {
 }
 
 void QC_ApplicationWindow::invokeLicenseWindow() {
-    // author: ravas
-
-    QDialog dlg;
-
-    dlg.setWindowTitle(QObject::tr("License"));
-
-    auto viewer = new TextFileViewer(&dlg);
-    auto layout = new QVBoxLayout;
-    layout->addWidget(viewer);
-    dlg.setLayout(layout);
-
-    viewer->addFile("readme", ":/readme.md");
-    viewer->addFile("GPLv2", ":/gpl-2.0.txt");
-
-    viewer->setFile("readme");
-
-    dlg.exec();
+    m_dlgHelpr-> invokeLicenseWindow();
 }
 
 void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) {
-    if (blockWidget != nullptr && block != nullptr) {
-        blockWidget->activateBlock(const_cast<RS_Block *>(block));
+    if (m_blockWidget != nullptr && block != nullptr) {
+        m_blockWidget->activateBlock(const_cast<RS_Block *>(block));
     }
 }
 
 QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
-    return ag_manager->getActionByName(actionName);
+    return m_actionGroupManager->getActionByName(actionName);
 }
 
 // todo - think later about staying with signal-slot approach... current one is too explicit
 void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(bool printPreviewOn) {
     bool enable = !printPreviewOn;
     enableWidgets(enable);
-    for (auto a: actionsToDisableInPrintPreview) {
+    for (auto a: m_actionsToDisableInPrintPreviewList) {
         if (a->isEnabled() != enable) {
             a->setEnabled(enable);
         }
     }
 
-    coordinateWidget->setEnabled(!printPreviewOn);
-    selectionWidget->setEnabled(!printPreviewOn);
-    m_pActiveLayerName->setEnabled(!printPreviewOn);
-    grid_status->setEnabled(!printPreviewOn);
-    relativeZeroCoordinatesWidget->setEnabled(!printPreviewOn);
+    m_coordinateWidget->setEnabled(!printPreviewOn);
+    m_selectionWidget->setEnabled(!printPreviewOn);
+    m_activeLayerName->setEnabled(!printPreviewOn);
+    m_gridStatusWidget->setEnabled(!printPreviewOn);
+    m_relativeZeroCoordinatesWidget->setEnabled(!printPreviewOn);
     if (printPreviewOn){
-        mouseWidget->setActionIcon(QIcon());
+        m_mouseWidget->setActionIcon(QIcon());
     }
 
-//    LC_ERR << "Preview Changed " << (printPreviewOn ? " +ON" : " -OFF");
     emit printPreviewChanged(printPreviewOn);
 }
 
 void QC_ApplicationWindow::enableWidgets(bool enable) {
-    enableWidget(penPaletteWidget, enable);
-    enableWidget(quickInfoWidget, enable);
-    enableWidget(blockWidget, enable);
-    enableWidget(penToolBar, enable);
-    enableWidget(pen_wiz, enable);
+    enableWidget(m_penPaletteWidget, enable);
+    enableWidget(m_quickInfoWidget, enable);
+    enableWidget(m_blockWidget, enable);
+    enableWidget(m_penToolBar, enable);
+    enableWidget(m_penWizard, enable);
 //    enableWidget(namedViewsWidget,enable);
-    enableWidget(ucsListWidget, enable);
-    enableWidget(ucsStateWidget, enable);
-    enableWidget(anglesBasisWidget, enable);
+    enableWidget(m_ucsListWidget, enable);
+    enableWidget(m_ucsStateWidget, enable);
+    enableWidget(m_anglesBasisWidget, enable);
 
-    if (libraryWidget != nullptr) {
-        enableWidget(libraryWidget->getInsertButton(), enable);
+    if (m_libraryWidget != nullptr) {
+        enableWidget(m_libraryWidget->getInsertButton(), enable);
     }
-    enableWidget(snapToolBar, enable);
+    enableWidget(m_snapToolBar, enable);
 
     if (enable) {
-        enableWidget(layerTreeWidget, enable);
-        enableWidget(layerWidget, enable);
+        enableWidget(m_layerTreeWidget, enable);
+        enableWidget(m_layerWidget, enable);
         // command widget should be enabled for print preview as it supports commands...
         // fixme - command widget should be aware of print preview mode and do not support other commands...
-        enableWidget(commandWidget, enable);
+        enableWidget(m_commandWidget, enable);
     }
 
     // fixme - disable widgets from status bar
@@ -3277,8 +2805,9 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
 
 void QC_ApplicationWindow::slotRedockWidgets() {
     const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
-    for (auto *dockwidget: dockwidgets)
+    for (auto *dockwidget: dockwidgets) {
         dockwidget->setFloating(false);
+    }
 }
 
 void QC_ApplicationWindow::fireIconsRefresh(){

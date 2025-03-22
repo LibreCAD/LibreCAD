@@ -29,7 +29,7 @@
 class LC_ActionDrawCircleBase:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionDrawCircleBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawCircleBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_ActionDrawCircleBase() override;
     void init(int status) override;
     virtual bool isReversed() const{return false;}

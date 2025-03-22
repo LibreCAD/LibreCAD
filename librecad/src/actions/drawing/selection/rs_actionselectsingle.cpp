@@ -29,24 +29,20 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-											 RS_GraphicView& graphicView,
+RS_ActionSelectSingle::RS_ActionSelectSingle(LC_ActionContext *actionContext,
 											 RS_ActionInterface* action_select,
             const QList<RS2::EntityType> &entityTypeList)
-    :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
+    :RS_ActionSelectBase("Select Entities", actionContext,RS2::ActionSelectSingle, entityTypeList)
     ,actionSelect(action_select){
-    actionType = RS2::ActionSelectSingle;
 }
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType selectType,
-                                             RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView,
+                                             LC_ActionContext *actionContext,
                                              RS_ActionInterface* action_select,
                                              const QList<RS2::EntityType> &entityTypeList)
-    :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
+    :RS_ActionSelectBase("Select Entities", actionContext, RS2::ActionSelectSingle, entityTypeList)
     ,actionSelect(action_select)
     ,typeToSelect(selectType){
-    actionType = RS2::ActionSelectSingle;
 }
 
 void RS_ActionSelectSingle::trigger(){

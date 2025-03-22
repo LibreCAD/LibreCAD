@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawLinePoints :public LC_AbstractActionDrawLine {
     Q_OBJECT
 public:
-    LC_ActionDrawLinePoints(RS_EntityContainer &container,RS_GraphicView &graphicView, bool drawMiddle);
+    LC_ActionDrawLinePoints(LC_ActionContext *actionContext, bool drawMiddle);
     ~LC_ActionDrawLinePoints() override;
     int getPointsCount() const {return pointsCount;};
     void setPointsCount(int count) {pointsCount = count;};

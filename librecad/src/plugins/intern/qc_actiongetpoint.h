@@ -40,8 +40,7 @@ class QPointF;
 class QC_ActionGetPoint : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
-    QC_ActionGetPoint(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+    QC_ActionGetPoint(LC_ActionContext *actionContext);
     ~QC_ActionGetPoint();
 
     void trigger() override;

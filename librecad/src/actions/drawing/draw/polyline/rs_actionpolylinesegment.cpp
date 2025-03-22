@@ -39,19 +39,12 @@ QList<RS2::EntityType>
 entityType{RS2::EntityLine, RS2::EntityPolyline, RS2::EntityArc};
 }
 
-RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Create Polyline Existing from Segments",
-						   container, graphicView) {
-	actionType=RS2::ActionPolylineSegment;
+RS_ActionPolylineSegment::RS_ActionPolylineSegment(LC_ActionContext *actionContext)
+        :RS_PreviewActionInterface("Create Polyline Existing from Segments",actionContext,RS2::ActionPolylineSegment) {
 }
 
-RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container,
-                                                   RS_GraphicView& graphicView,
-                                                   RS_Entity* target)
-    :RS_PreviewActionInterface("Create Polyline Existing from Segments",
-                               container, graphicView) {
-    actionType=RS2::ActionPolylineSegment;
+RS_ActionPolylineSegment::RS_ActionPolylineSegment(LC_ActionContext *actionContext,RS_Entity* target)
+    :RS_PreviewActionInterface("Create Polyline Existing from Segments",actionContext, RS2::ActionPolylineSegment) {
     targetEntity = target;
     initWithTarget = true;
 }

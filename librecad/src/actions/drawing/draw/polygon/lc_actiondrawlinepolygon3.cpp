@@ -38,10 +38,8 @@
 #include "rs_actioninterface.h"
 #include "lc_actiondrawlinepolygonbase.h"
 
-LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", container, graphicView, actionType=RS2::ActionDrawLinePolygonCenTan){
+LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(LC_ActionContext *actionContext)
+        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, actionType=RS2::ActionDrawLinePolygonCenTan){
 }
 
 LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;

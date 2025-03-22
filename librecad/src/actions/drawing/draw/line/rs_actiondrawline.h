@@ -40,8 +40,7 @@
 class RS_ActionDrawLine : public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    RS_ActionDrawLine(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+    RS_ActionDrawLine(LC_ActionContext *actionContext);
     ~RS_ActionDrawLine() override;
     void reset();
     void init(int status) override;

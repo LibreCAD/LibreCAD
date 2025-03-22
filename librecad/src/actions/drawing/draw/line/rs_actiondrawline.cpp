@@ -93,12 +93,10 @@ size_t RS_ActionDrawLine::Points::index(const int offset /*= 0*/)
     return static_cast<size_t>( std::max( 0, historyIndex + offset));
 }
 
-RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView) :
-    RS_PreviewActionInterface( "Draw lines", container, graphicView),
+RS_ActionDrawLine::RS_ActionDrawLine(LC_ActionContext *actionContext) :
+    RS_PreviewActionInterface( "Draw lines", actionContext, RS2::ActionDrawLine),
     pPoints( new Points{}){
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
-    actionType=RS2::ActionDrawLine;
 }
 
 RS_ActionDrawLine::~RS_ActionDrawLine() = default;

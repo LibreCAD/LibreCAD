@@ -45,15 +45,10 @@ struct LC_ActionDrawRectangle3Points::Points {
     bool corner2Set = false;
 };
 
-
 // todo  - add support of UI options for width and height?
-LC_ActionDrawRectangle3Points::LC_ActionDrawRectangle3Points(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-    :LC_AbstractActionDrawRectangle("Draw rectangles rel",
-                               container, graphicView)
+LC_ActionDrawRectangle3Points::LC_ActionDrawRectangle3Points(LC_ActionContext *actionContext)
+    :LC_AbstractActionDrawRectangle("Draw rectangles rel",actionContext, RS2::ActionDrawRectangle3Points)
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionDrawRectangle3Points;
 }
 
 LC_ActionDrawRectangle3Points::~LC_ActionDrawRectangle3Points() = default;

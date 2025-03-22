@@ -30,13 +30,10 @@
 #include "rs_polyline.h"
 #include "rs_preview.h"
 
-RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw freehand lines",
-					container, graphicView)
+RS_ActionDrawLineFree::RS_ActionDrawLineFree(LC_ActionContext *actionContext)
+        :RS_PreviewActionInterface("Draw freehand lines", actionContext,RS2::ActionDrawLineFree)
 		,vertex(new RS_Vector{}){
 	preview->setOwner(false);
-	actionType=RS2::ActionDrawLineFree;
 }
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;

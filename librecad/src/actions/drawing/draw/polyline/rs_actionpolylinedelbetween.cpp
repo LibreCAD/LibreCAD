@@ -31,11 +31,8 @@
 #include "rs_preview.h"
 #include "rs_polyline.h"
 
-RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& container,
-                RS_GraphicView& graphicView)
-                :LC_ActionPolylineDeleteBase("Delete between two nodes",
-												   container, graphicView){
-	actionType=RS2::ActionPolylineDelBetween;
+RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(LC_ActionContext *actionContext)
+    :LC_ActionPolylineDeleteBase("Delete between two nodes", actionContext, RS2::ActionPolylineDelBetween){
 }
 
 RS_ActionPolylineDelBetween::~RS_ActionPolylineDelBetween()=default;

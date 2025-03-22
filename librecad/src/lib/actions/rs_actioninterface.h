@@ -66,8 +66,7 @@ class RS_ActionInterface : public RS_Snapper {
 Q_OBJECT
 public:
     RS_ActionInterface(const char* name,
-                       RS_EntityContainer& container,
-                       RS_GraphicView& graphicView,
+                       LC_ActionContext *actionContext,
                        RS2::ActionType actionType = RS2::ActionNone);
 	   ~RS_ActionInterface() override;
 

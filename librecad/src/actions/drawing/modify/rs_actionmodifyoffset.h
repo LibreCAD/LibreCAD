@@ -42,8 +42,7 @@ struct RS_OffsetData;
 class RS_ActionModifyOffset : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyOffset(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    RS_ActionModifyOffset(LC_ActionContext *actionContext);
     ~RS_ActionModifyOffset() override;
     double getDistance();
     void setDistance(double distance);

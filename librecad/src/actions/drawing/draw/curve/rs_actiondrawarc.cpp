@@ -43,12 +43,8 @@
 #include "qg_arcoptions.h"
 
 // fixme - sand -  expand actions options widget to support all possible settings (like angle, radius, start angle, end/total angle, chordlen)
-RS_ActionDrawArc::RS_ActionDrawArc(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    RS2::ActionType ownActionType)
-    :LC_ActionDrawCircleBase("Draw arcs",container, graphicView), data(std::make_unique<RS_ArcData>()){
-    actionType = ownActionType;
+RS_ActionDrawArc::RS_ActionDrawArc(LC_ActionContext *actionContext,RS2::ActionType ownActionType)
+    :LC_ActionDrawCircleBase("Draw arcs",actionContext, ownActionType), data(std::make_unique<RS_ArcData>()){
     reset();
 }
 

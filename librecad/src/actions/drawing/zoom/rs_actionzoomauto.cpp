@@ -33,10 +33,8 @@
  * @param keepAspectRatio true: keep same zoom value for x/y.
  *                        false: adjust both x and y individually
  */
-RS_ActionZoomAuto::RS_ActionZoomAuto(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView,
-                                     bool keepAspectRatio)
-        :RS_ActionInterface("Auto zoom", container, graphicView) {
+RS_ActionZoomAuto::RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio)
+        :RS_ActionInterface("Auto zoom", actionContext) {
     this->keepAspectRatio = keepAspectRatio;
 }
 

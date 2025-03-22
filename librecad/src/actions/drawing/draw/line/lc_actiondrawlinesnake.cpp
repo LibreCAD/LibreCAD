@@ -36,16 +36,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
 
-LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    int initialDirection)
-    :LC_AbstractActionDrawLine("Draw line snake",
-                               container, graphicView)
+LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext *actionContext,int initialDirection)
+    :LC_AbstractActionDrawLine("Draw line snake",actionContext, RS2::ActionDrawSnakeLine)
     , pPoints(new Points{}){
     primaryDirection = initialDirection;
     direction = initialDirection;
-    actionType = RS2::ActionDrawSnakeLine;
 }
 
 LC_ActionDrawLineSnake::~LC_ActionDrawLineSnake() = default;

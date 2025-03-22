@@ -52,12 +52,9 @@ struct RS_ActionDrawCircleTan3::Points {
  * Constructor.
  *
  */
-RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
-	:LC_ActionDrawCircleBase("Draw circle tan 3 circles",container, graphicView)
+RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(LC_ActionContext *actionContext)
+	:LC_ActionDrawCircleBase("Draw circle tan 3 circles", actionContext, RS2::ActionDrawCircleTan3)
     , pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawCircleTan3;
 }
 
 RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() = default;

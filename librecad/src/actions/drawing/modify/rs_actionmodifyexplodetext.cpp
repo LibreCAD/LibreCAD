@@ -30,11 +30,9 @@
 /**
  * Constructor.
  */
-RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionPreSelectionAwareBase("Explode Text",
-                           container, graphicView, {RS2::EntityMText, RS2::EntityText}) {
-	actionType=RS2::ActionModifyExplodeText;
+RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Explode Text", actionContext,RS2::ActionModifyExplodeText,
+        {RS2::EntityMText, RS2::EntityText}) {
 }
 
 RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;

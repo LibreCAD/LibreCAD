@@ -30,11 +30,8 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 
-RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Toggle Block Visibility",
-                    container, graphicView) {}
+RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Toggle Block Visibility",actionContext) {}
 
 
 void RS_ActionBlocksToggleView::trigger() {

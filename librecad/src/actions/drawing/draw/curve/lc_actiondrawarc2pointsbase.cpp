@@ -29,8 +29,8 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 
-LC_ActionDrawArc2PointsBase::LC_ActionDrawArc2PointsBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name, container, graphicView)  {
+LC_ActionDrawArc2PointsBase::LC_ActionDrawArc2PointsBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext,actionType)  {
 }
 
 void LC_ActionDrawArc2PointsBase::doTrigger() {

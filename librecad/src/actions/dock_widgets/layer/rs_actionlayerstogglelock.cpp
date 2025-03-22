@@ -31,12 +31,8 @@
 #include "rs_graphicview.h"
 #include "rs_layer.h"
 
-
-RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        RS_Layer* layer)
-    : RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
+RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(LC_ActionContext *actionContext,RS_Layer* layer)
+    : RS_ActionInterface("Toggle Layer Visibility", actionContext)
     , a_layer(layer){
 }
 

@@ -36,8 +36,7 @@ class LC_Parabola;
 class LC_ActionDrawParabolaFD : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionDrawParabolaFD(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
+    LC_ActionDrawParabolaFD(LC_ActionContext *actionContext);
     ~LC_ActionDrawParabolaFD() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;

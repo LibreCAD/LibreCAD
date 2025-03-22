@@ -27,12 +27,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_modification.h"
 
 class LC_ActionModifyBase:public LC_ActionPreSelectionAwareBase{
-
 public:
-    LC_ActionModifyBase(
-        const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
+    LC_ActionModifyBase(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone,
         const QList<RS2::EntityType> &entityTypeList = {}, bool countSelectionDeep = false);
-
     void setUseCurrentLayer(bool b);
     bool isUseCurrentLayer();
     void setUseCurrentAttributes(bool b);

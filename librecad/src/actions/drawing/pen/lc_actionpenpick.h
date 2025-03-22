@@ -33,14 +33,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionPenPick:public RS_PreviewActionInterface {
        Q_OBJECT
 public:
-
     enum {
           SelectEntity
      };
-    LC_ActionPenPick(RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
-        bool resolve);
-
+    LC_ActionPenPick(LC_ActionContext *actionContext,bool resolve);
     void init(int status) override;
     void finish(bool updateTB) override;
 private:

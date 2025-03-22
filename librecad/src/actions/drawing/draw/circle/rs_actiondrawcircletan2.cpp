@@ -49,12 +49,8 @@ struct RS_ActionDrawCircleTan2::Points {
  * Constructor.
  *
  */
-RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Tangential 2 Circles, Radius",
-                             container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionDrawCircleTan2;
+RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Tangential 2 Circles, Radius",actionContext,RS2::ActionDrawCircleTan2), pPoints(std::make_unique<Points>()){
 }
 
 RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2() = default;

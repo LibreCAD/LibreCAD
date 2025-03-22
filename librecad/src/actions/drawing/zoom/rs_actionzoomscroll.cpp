@@ -27,23 +27,18 @@
 #include "rs_actionzoomscroll.h"
 #include "rs_graphicview.h"
 
-RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction,
-										 RS_EntityContainer& container,
-										 RS_GraphicView& graphicView)
-	:RS_ActionInterface("Zoom scroll", container, graphicView)
+RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction, LC_ActionContext *actionContext)
+	:RS_ActionInterface("Zoom scroll", actionContext)
 	,direction(direction)
-	,hasOffset(false)
-{
+	,hasOffset(false){
 }
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
-										 RS_EntityContainer& container,
-										 RS_GraphicView& graphicView)
-	:RS_ActionInterface("Zoom scroll", container, graphicView)
+										 LC_ActionContext *actionContext)
+	:RS_ActionInterface("Zoom scroll", actionContext)
 	,hasOffset(true)
 	,offsetX(offsetX)
-	,offsetY(offsetY)
-{
+	,offsetY(offsetY){
 }
 
 void RS_ActionZoomScroll::trigger() {

@@ -26,9 +26,8 @@
 #include "lc_actionmodifyalignsingle.h"
 #include "lc_modifyalignoptions.h"
 
-LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle( RS_EntityContainer &container,RS_GraphicView &graphicView)
-  :RS_PreviewActionInterface("ModifyAlignSingle", container, graphicView){
-    actionType = RS2::ActionModifyAlignOne;
+LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle(LC_ActionContext *actionContext)
+  :RS_PreviewActionInterface("ModifyAlignSingle", actionContext, RS2::ActionModifyAlignOne){
 }
 
 void LC_ActionModifyAlignSingle::init(int status) {

@@ -29,10 +29,8 @@
 #include "rs_graphic.h"
 
 RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Freeze all Layers",
-                    container, graphicView) {
+        LC_ActionContext *actionContext)
+        :RS_ActionInterface("Freeze all Layers",actionContext) {
 
     this->freeze = freeze;
 }

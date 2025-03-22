@@ -28,7 +28,6 @@
 #include "lc_align.h"
 
 class LC_ActionModifyAlignData {
-
 public:
     int getHAlign() const {return hAlign;}
     void setHAlign(int h) { hAlign = h;}
@@ -50,7 +49,7 @@ class LC_ActionModifyAlign:public LC_ActionPreSelectionAwareBase, public LC_Acti
     Q_OBJECT
 
 public:
-    LC_ActionModifyAlign(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionModifyAlign(LC_ActionContext *actionContext);
     void setAlignType(int a) override;
     void init(int status) override;
 protected:

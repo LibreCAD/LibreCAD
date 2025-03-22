@@ -60,16 +60,11 @@ struct RS_ActionDrawEllipseAxis::Points {
  * @param isArc true if this action will produce an ellipse arc.
  *              false if it will produce a full ellipse.
  */
-RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView,
-		bool isArc)
-	:LC_ActionDrawCircleBase("Draw ellipse with axis",
-                               container, graphicView)
+RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(LC_ActionContext *actionContext, bool isArc)
+	:LC_ActionDrawCircleBase("Draw ellipse with axis",actionContext, isArc ? RS2::ActionDrawEllipseArcAxis : RS2::ActionDrawEllipseAxis)
     ,pPoints(std::make_unique<Points>()){
     pPoints->isArc = isArc;
     pPoints->angle2 = isArc ? 2. * M_PI : 0.;
-    this->actionType = isArc ? RS2::ActionDrawEllipseArcAxis : RS2::ActionDrawEllipseAxis;
 }
 
 RS_ActionDrawEllipseAxis::~RS_ActionDrawEllipseAxis() = default;

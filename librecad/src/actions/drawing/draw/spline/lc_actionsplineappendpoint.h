@@ -29,7 +29,7 @@
 class LC_ActionSplineAppendPoint:public LC_ActionSplineModifyBase{
 Q_OBJECT
 public:
-    LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineAppendPoint(LC_ActionContext *actionContext);
     ~LC_ActionSplineAppendPoint() override = default;
 protected:
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

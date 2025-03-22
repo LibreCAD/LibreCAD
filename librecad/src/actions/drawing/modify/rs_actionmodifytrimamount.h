@@ -38,9 +38,7 @@
 class RS_ActionModifyTrimAmount:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyTrimAmount(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionModifyTrimAmount(LC_ActionContext *actionContext);
     ~RS_ActionModifyTrimAmount() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;

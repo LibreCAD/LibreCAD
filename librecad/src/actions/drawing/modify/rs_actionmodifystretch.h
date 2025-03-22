@@ -37,8 +37,7 @@
 class RS_ActionModifyStretch : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyStretch(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionModifyStretch(LC_ActionContext *actionContext);
     ~RS_ActionModifyStretch() override;
 
     void init(int status) override;

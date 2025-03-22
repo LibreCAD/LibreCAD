@@ -27,9 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionDrawRectangle2Points :public LC_AbstractActionDrawRectangle {
     Q_OBJECT
-
 public:
-
     enum
     {
         SNAP_CORNER, // corner of rectangle
@@ -38,9 +36,8 @@ public:
         SNAP_MIDDLE // middle of rectangle
     };
 
-    LC_ActionDrawRectangle2Points(RS_EntityContainer& container, RS_GraphicView& graphicView);
+    LC_ActionDrawRectangle2Points(LC_ActionContext *actionContext);
     ~LC_ActionDrawRectangle2Points() override;
-
     QStringList getAvailableCommands() override;
     void init(int status) override;
     int getSecondPointSnapMode() const{return secondPointSnapMode;};

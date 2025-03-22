@@ -33,12 +33,9 @@
 #include "lc_quickinfowidget.h"
 #include "lc_anglesbasiswidget.h"
 
-RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
-        RS_GraphicView& graphicView, int tabIndex)
-        :RS_ActionInterface("Drawing Options",
-                    container, graphicView) {
-	actionType=RS2::ActionOptionsDrawing;
- tabToShow = tabIndex;
+RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex)
+        :RS_ActionInterface("Drawing Options",actionContext, RS2::ActionOptionsDrawing) {
+    tabToShow = tabIndex;
 }
 
 void RS_ActionOptionsDrawing::init(int status) {

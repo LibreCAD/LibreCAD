@@ -52,10 +52,8 @@ namespace {
     }
 }
 
-RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw Tangents 2", container, graphicView, RS2::ActionDrawLineTangent2), m_pPoints{std::make_unique<Points>()}{
+RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Tangents 2", actionContext, RS2::ActionDrawLineTangent2), m_pPoints{std::make_unique<Points>()}{
     init(SetCircle1);
 }
 

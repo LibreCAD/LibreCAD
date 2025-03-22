@@ -42,13 +42,8 @@ class RS_Vector;
 class RS_ActionPolylineSegment:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPolylineSegment(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
-    RS_ActionPolylineSegment(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        RS_Entity *targetEntity);
+    RS_ActionPolylineSegment(LC_ActionContext *actionContext);
+    RS_ActionPolylineSegment(LC_ActionContext *actionContext, RS_Entity *targetEntity);
     void init(int status) override;
     void drawSnapper() override;
 protected:

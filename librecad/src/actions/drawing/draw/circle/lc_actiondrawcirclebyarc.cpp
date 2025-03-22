@@ -29,9 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // Command line support - potentially, it's possible to use coordinates for selection of arc - yet it seems it is overkill,
 // selection by mouse is more convenient so do nothing there
 
-LC_ActionDrawCircleByArc::LC_ActionDrawCircleByArc(RS_EntityContainer& container,RS_GraphicView& graphicView):
-    LC_AbstractActionWithPreview("Circle By Arc", container, graphicView){
-    actionType = RS2::ActionDrawCircleByArc;
+LC_ActionDrawCircleByArc::LC_ActionDrawCircleByArc(LC_ActionContext *actionContext):
+    LC_AbstractActionWithPreview("Circle By Arc", actionContext, RS2::ActionDrawCircleByArc){
 }
 
 LC_ActionDrawCircleByArc::~LC_ActionDrawCircleByArc() = default;

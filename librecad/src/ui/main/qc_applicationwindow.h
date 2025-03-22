@@ -48,6 +48,9 @@
 #include "lc_ucsstatewidget.h"
 #include "lc_anglesbasiswidget.h"
 #include "lc_workspacesmanager.h"
+class LC_ApplicationWindowDialogsHelper;
+class LC_PluginInvoker;
+class LC_CreatorInvoker;
 class LC_MenuFactory;
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -109,12 +112,14 @@ public:
     void initSettings();
     void storeSettings();
 
-    bool queryExit(bool force);
+    bool queryMayExit();
 
     /** Catch hotkey for giving focus to command line. */
      void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
+
     void setUndoEnable(bool enable);
+    void setSaveEnable(bool enable);
     static bool loadStyleSheet(QString path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -142,15 +147,11 @@ public slots:
     void slotError(const QString& msg);
     void slotShowDrawingOptions();
     void slotShowDrawingOptionsUnits();
-
-    void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
     void slotWorkspacesMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
-
     void slotPenChanged(RS_Pen p);
     //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
-
     /** generates a new document for a graphic. */
     QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
     /** generates a new document based in predefined template */
@@ -163,15 +164,16 @@ public slots:
     /**
      * opens the given file.
      */
-    void slotFileOpen(const QString& fileName, RS2::FormatType type);
+    void openFile(const QString& fileName, RS2::FormatType type);
     void slotFileOpen(const QString& fileName); // Assume Unknown type
     void slotFileOpenRecent(QAction* action);
     /** saves a document */
     void slotFileSave();
     /** saves a document under a different filename*/
     void slotFileSaveAs();
-	/** saves all open documents; return false == operation cancelled **/
-    bool slotFileSaveAll();
+    bool doSaveAllFiles();
+    /** saves all open documents; return false == operation cancelled **/
+    void slotFileSaveAll();
     /** auto-save document */
     void autoSaveCurrentDrawing();
     /** exports the document as bitmap */
@@ -184,8 +186,9 @@ public slots:
                         bool bw=true);
     /** closing the current file */
     void slotFileClosing(QC_MDIWindow*);
-	/** close all files; return false == operation cancelled */
-	   bool slotFileCloseAll();
+    bool doCloseAllFiles();
+    /** close all files; return false == operation cancelled */
+	void slotFileCloseAll();
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -221,7 +224,7 @@ public slots:
      * update layer name when active layer changed
      */
     void slotUpdateActiveLayer();
-    void execPlug();
+
 
     //void invokeLinkList();
 
@@ -255,14 +258,6 @@ public slots:
     void restoreNamedView5();
     void restoreNamedViewCurrent();
     void restoreNamedView(const QString& viewName);
-    void createToolbar(const QString& toolbar_name);
-    void destroyToolbar(const QString& toolbar_name);
-    void destroyMenu(const QString& activator);
-    void unassignMenu(const QString& activator, const QString& menu_name);
-    void assignMenu(const QString& activator, const QString& menu_name);
-    void invokeMenuAssigner(const QString& menu_name);
-    void updateMenu(const QString& menu_name);
-
     void invokeLicenseWindow();
     void onNewVersionAvailable();
     void checkForNewVersion();
@@ -288,38 +283,37 @@ public:
      * @return Pointer to application window.
      */
     static std::unique_ptr<QC_ApplicationWindow>&  getAppWindow();
-
-
+    void setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleString, bool draftMode);
+    void setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode);
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
      */
     void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
 
-    QG_PenToolBar* getPenToolBar() {return penToolBar;};
-
+    QG_PenToolBar* getPenToolBar() {return m_penToolBar;};
 
     void updateGrids();
 
     QG_BlockWidget* getBlockWidget(void){
-        return blockWidget;
+        return m_blockWidget;
     }
 
     QG_SnapToolBar* getSnapToolBar(void){
-        return snapToolBar;
+        return m_snapToolBar;
     }
 
     QG_SnapToolBar const* getSnapToolBar(void) const{
-        return snapToolBar;
+        return m_snapToolBar;
     }
 
-    LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
+    LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return m_penPaletteWidget;};
 
     DockAreas& getDockAreas(){
-        return dock_areas;
+        return m_dockAreas;
     }
 
-    LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
-    LC_AnglesBasisWidget* getAnglesBasisWidget() const {return anglesBasisWidget;};
+    LC_QuickInfoWidget* getEntityInfoWidget(void) const {return m_quickInfoWidget;};
+    LC_AnglesBasisWidget* getAnglesBasisWidget() const {return m_anglesBasisWidget;};
 
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
@@ -330,12 +324,13 @@ public:
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
     void doClose(QC_MDIWindow* w, bool activateNext = true);
+    void setupWidgetsByWindow(QC_MDIWindow *w);
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
     void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
 
-    void  fillWorkspacesList(QList<QPair<int, QString>> &list);
-    void  applyWorkspaceById(int id);
-    void  rebuildMenuIfNecessary();
+    void fillWorkspacesList(QList<QPair<int, QString>> &list);
+    void applyWorkspaceById(int id);
+    void rebuildMenuIfNecessary();
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -343,135 +338,111 @@ protected:
     void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
-private:
+
+    QAction* enableAction(const QString& name, bool enable) const;
+    void enableActions(const std::vector<QString> &actionList, bool enable) const;
+    QAction* checkAction(const QString& name, bool enable) const;
+    void checkActions(const std::vector<QString> &actionList, bool enable) const;
     QC_ApplicationWindow();
 
     QMenu* createPopupMenu() override;
 
-    QString format_filename_caption(const QString &qstring_in);
-    /** Helper function for Menu file -> New & New.... */
-	   bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
-	// more helpers
-
-	   void doActivate(QMdiSubWindow* w) override;
+    QString getFileNameFromFullPath(const QString &path);
+    void updateCoordinateWidgetFormat();
+	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
+	void doActivate(QMdiSubWindow* w) override;
     void enableFileActions(QC_MDIWindow* w);
-
-    /**
-     * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title
-     * @param w, pointer to window widget
-     */
     void updateWindowTitle(QWidget* w);
-
-    //Plugin support
     void loadPlugins();
-
+    void doSlotWindowActivated(QMdiSubWindow *w, bool forced) override;
+    void setCurrentQAction(QAction * action);
 #ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
-//    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
-    LC_ActionGroupManager* ag_manager {nullptr};
-
+    LC_ActionGroupManager* m_actionGroupManager {nullptr};
+    LC_CreatorInvoker* m_creatorInvoker {nullptr};
+    LC_PluginInvoker* m_pluginInvoker{nullptr};
+    LC_ApplicationWindowDialogsHelper* m_dlgHelpr{nullptr};
     LC_WorkspacesManager m_workspacesManager;
-    LC_MenuFactory* m_menuFactory = nullptr;
+    LC_MenuFactory* m_menuFactory {nullptr};
+    LC_ReleaseChecker* m_releaseChecker;
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     std::unique_ptr<QTimer> m_autosaveTimer;
 
-    QG_ActionHandler* actionHandler {nullptr};
+    QG_ActionHandler* m_actionHandler {nullptr};
 
     /** Dialog factory */
-    QC_DialogFactory* dialogFactory {nullptr};
+    // fixme - sand - files rework, merge to one factory
+    QC_DialogFactory* m_dialogFactory {nullptr};
 
     /** Recent files list */
-    QG_RecentFiles* recentFiles {nullptr};
+    QG_RecentFiles* m_recentFilesList {nullptr};
 
     // --- Dockwidgets ---
     //! toggle actions for the dock areas
-    DockAreas dock_areas;
+    DockAreas m_dockAreas;
 
-    /** Layer list widget */
-    QG_LayerWidget* layerWidget {nullptr};
-
-    /** Layer tree widget */
-    LC_LayerTreeWidget* layerTreeWidget {nullptr};
-
-    /** Entity info widget */
-    LC_QuickInfoWidget* quickInfoWidget {nullptr};
-
-    /** Block list widget */
-    QG_BlockWidget* blockWidget {nullptr};
-    /** Library browser widget */
-    QG_LibraryWidget* libraryWidget {nullptr};
-    /** Command line */
-    QG_CommandWidget* commandWidget {nullptr};
-
-    LC_PenWizard* pen_wiz {nullptr};
-    LC_PenPaletteWidget* penPaletteWidget {nullptr};
-    LC_NamedViewsListWidget* namedViewsWidget {nullptr};
-    LC_UCSListWidget* ucsListWidget {nullptr};
+    // --- Dock widgets ---
+    QG_LayerWidget* m_layerWidget {nullptr};
+    LC_LayerTreeWidget* m_layerTreeWidget {nullptr};
+    LC_QuickInfoWidget* m_quickInfoWidget {nullptr};
+    QG_BlockWidget* m_blockWidget {nullptr};
+    QG_LibraryWidget* m_libraryWidget {nullptr};
+    QG_CommandWidget* m_commandWidget {nullptr};
+    LC_PenWizard* m_penWizard {nullptr};
+    LC_PenPaletteWidget* m_penPaletteWidget {nullptr};
+    LC_NamedViewsListWidget* m_namedViewsWidget {nullptr};
+    LC_UCSListWidget* m_ucsListWidget {nullptr};
 
     // --- Statusbar ---
-    /** Coordinate widget */
-    QG_CoordinateWidget* coordinateWidget {nullptr};
-    LC_RelZeroCoordinatesWidget* relativeZeroCoordinatesWidget {nullptr};
-    /** Mouse widget */
-    QG_MouseWidget* mouseWidget {nullptr};
-    /** Selection Status */
-    QG_SelectionWidget* selectionWidget {nullptr};
-    QG_ActiveLayerName* m_pActiveLayerName {nullptr};
-    TwoStackedLabels* grid_status {nullptr};
-    LC_UCSStateWidget* ucsStateWidget {nullptr};
-    LC_AnglesBasisWidget* anglesBasisWidget{nullptr};
-
-
-    LC_QTStatusbarManager* statusbarManager {nullptr};
-
+    QG_CoordinateWidget* m_coordinateWidget {nullptr};
+    LC_RelZeroCoordinatesWidget* m_relativeZeroCoordinatesWidget {nullptr};
+    QG_MouseWidget* m_mouseWidget {nullptr};
+    QG_SelectionWidget* m_selectionWidget {nullptr};
+    QG_ActiveLayerName* m_activeLayerName {nullptr};
+    TwoStackedLabels* m_gridStatusWidget {nullptr};
+    LC_UCSStateWidget* m_ucsStateWidget {nullptr};
+    LC_AnglesBasisWidget* m_anglesBasisWidget{nullptr};
+    LC_QTStatusbarManager* m_statusbarManager {nullptr};
 
     // --- Toolbars ---
-    QG_SnapToolBar* snapToolBar {nullptr};
-    QG_PenToolBar* penToolBar {nullptr}; //!< for selecting the current pen
-    QToolBar* optionWidget {nullptr}; //!< for individual tool options
+    QG_SnapToolBar* m_snapToolBar {nullptr};
+    QG_PenToolBar* m_penToolBar {nullptr}; //!< for selecting the current pen
+    QToolBar* m_optionWidget {nullptr}; //!< for individual tool options
 
     // --- Actions ---
-    QAction* previousZoom {nullptr};
-    QAction* undoButton {nullptr};
-    QAction* redoButton {nullptr};
-
     QAction* scriptOpenIDE {nullptr};
     QAction* scriptRun {nullptr};
     QAction* helpAboutApp {nullptr};
 
     // --- Flags ---
-    bool previousZoomEnable{false};
-    bool undoEnable{false};
-    bool redoEnable{false};
+    bool m_previousZoomEnable{false};
+    bool m_undoEnable{false};
+    bool m_redoEnable{false};
 
     // --- Lists ---
-    QList<QC_PluginInterface*> loadedPlugins;
-    QList<QAction*> toolbar_view_actions;
-    QList<QAction*> dockwidget_view_actions;
-    QList<QAction*> recentFilesAction;
+    QList<QAction*> m_toolbarViewActionList;
+    QList<QAction*> m_dockWidgetViewActionList;
+    QList<QAction*> m_recentFilesActionList;
 
     QStringList openedFiles;
 
-    // --- Strings ---
-    QString style_sheet_path;
 
-    QList<QAction*> actionsToDisableInPrintPreview;
+    QString m_styleSheetPath;
 
-    LC_ReleaseChecker* releaseChecker;
+    QList<QAction*> m_actionsToDisableInPrintPreviewList;
+
+
 
     void enableWidgets(bool enable);
-
     friend class LC_WidgetFactory;
-
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
-
     void doRestoreNamedView(int i) const;
 
-
+    void doForEachWindowGraphicView(std::function<void(QG_GraphicView*)> callback) const;
 };
 
 #ifdef _WINDOWS

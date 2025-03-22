@@ -21,9 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_actionmodifybase.h"
 
-LC_ActionModifyBase::LC_ActionModifyBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
+LC_ActionModifyBase::LC_ActionModifyBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType,
     const QList<RS2::EntityType> &entityTypeList, bool countSelectionDeep)
-    :LC_ActionPreSelectionAwareBase(name, container, graphicView, entityTypeList, countSelectionDeep){}
+    :LC_ActionPreSelectionAwareBase(name, actionContext, actionType, entityTypeList, countSelectionDeep){}
 
 void LC_ActionModifyBase::selectionCompleted([[maybe_unused]] bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);

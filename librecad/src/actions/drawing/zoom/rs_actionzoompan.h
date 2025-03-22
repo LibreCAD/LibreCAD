@@ -38,9 +38,7 @@
 class RS_ActionZoomPan : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionZoomPan(RS_EntityContainer& container,
-                     RS_GraphicView& graphicView);
-
+    RS_ActionZoomPan(LC_ActionContext *actionContext);
     void init(int status) override;
     void finish(bool updateTB) override;
     void trigger() override;

@@ -36,12 +36,8 @@
 #include "rs_preview.h"
 #include "lc_actiondimlinearbase.h"
 
-RS_ActionDimAligned::RS_ActionDimAligned(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDimLinearBase("Draw aligned dimensions",
-                        container, graphicView){
-    actionType = RS2::ActionDimAligned;
+RS_ActionDimAligned::RS_ActionDimAligned(LC_ActionContext *actionContext)
+    :LC_ActionDimLinearBase("Draw aligned dimensions",actionContext, RS2::ActionDimAligned){
     reset();
 }
 

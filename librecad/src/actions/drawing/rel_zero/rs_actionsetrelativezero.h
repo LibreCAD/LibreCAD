@@ -40,12 +40,10 @@ class RS_Vector;
  * @author Ulf Lehnert
  */
 class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionSetRelativeZero(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+    RS_ActionSetRelativeZero(LC_ActionContext *actionContext);
     ~RS_ActionSetRelativeZero() override;
-
     void trigger() override;
 protected:
     std::unique_ptr<RS_Vector> pt;

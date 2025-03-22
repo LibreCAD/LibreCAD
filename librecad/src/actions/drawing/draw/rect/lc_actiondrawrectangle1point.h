@@ -46,8 +46,7 @@ public:
         SNAP_BOTTOM_RIGHT // bottom-right corner
     };
 
-    LC_ActionDrawRectangle1Point(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
+    LC_ActionDrawRectangle1Point(LC_ActionContext *actionContext);
     ~LC_ActionDrawRectangle1Point() override;
 
     QStringList getAvailableCommands() override;

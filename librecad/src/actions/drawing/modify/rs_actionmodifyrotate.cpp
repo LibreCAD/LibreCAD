@@ -40,11 +40,9 @@
 // fixme - sand - add options for point selection mode (ref point/center)? Or just remove center selection first and have one way?
 // fixme - sand - GENERAL: NAVIGATE TO OPTIONS WIDGET BY KEYBOARD (FOCUS from action, TABS) - so it should be possible not to move mouse to change some option
 
-RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-    :LC_ActionModifyBase("Rotate Entities",container, graphicView)
+RS_ActionModifyRotate::RS_ActionModifyRotate(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Rotate Entities",actionContext, actionType=RS2::ActionModifyRotate)
     ,data(new RS_RotateData()){
-    actionType=RS2::ActionModifyRotate;
 }
 
 RS_ActionModifyRotate::~RS_ActionModifyRotate() = default;

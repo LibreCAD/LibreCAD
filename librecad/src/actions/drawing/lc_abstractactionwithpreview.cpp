@@ -61,11 +61,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @param container
  * @param graphicView
  */
-LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(
-    const char *name,
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name, container, graphicView),
+LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface(name, actionContext),
     highlightedEntity{nullptr}{
 }
 
@@ -651,6 +648,8 @@ void LC_AbstractActionWithPreview::restoreSnapMode(){
  * @param mode new snap mode
  */
 void LC_AbstractActionWithPreview::setGlobalSnapMode(const RS_SnapMode &mode){
+
+    // fixme - sand - files - move to the action context, eliminate ref to ActionHandler!!!
     setSnapMode(mode);
     if (actionhandler != nullptr){
         actionhandler->slotSetSnaps(mode);

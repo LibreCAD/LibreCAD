@@ -41,13 +41,10 @@ struct RS_ActionModifyBevel::Points {
     RS_BevelData data;
 };
 
-RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
-                                           RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Bevel Entities",
-                               container, graphicView)
+RS_ActionModifyBevel::RS_ActionModifyBevel(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Bevel Entities",actionContext, RS2::ActionModifyBevel)
     , pPoints(std::make_unique<Points>())
     ,lastStatus(SetEntity1){
-    setActionType(RS2::ActionModifyBevel);
 }
 
 RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;

@@ -98,14 +98,9 @@ struct LC_ActionDrawParabolaFD::Points {
  * Constructor.
  *
  */
-LC_ActionDrawParabolaFD::LC_ActionDrawParabolaFD(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw parabola by focus and directrix", container,
-                               graphicView,
-                               RS2::ActionDrawParabolaFD)
-    , pPoints(std::make_unique<Points>())
-{
+LC_ActionDrawParabolaFD::LC_ActionDrawParabolaFD(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw parabola by focus and directrix", actionContext,RS2::ActionDrawParabolaFD)
+    , pPoints(std::make_unique<Points>()){
 }
 
 LC_ActionDrawParabolaFD::~LC_ActionDrawParabolaFD() = default;

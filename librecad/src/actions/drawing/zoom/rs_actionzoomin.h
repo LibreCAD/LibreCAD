@@ -40,8 +40,7 @@
 class RS_ActionZoomIn : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionZoomIn(RS_EntityContainer& container,
-					RS_GraphicView& graphicView,
+    RS_ActionZoomIn(LC_ActionContext *actionContext,
                     RS2::ZoomDirection direction = RS2::In,
 					RS2::Axis axis = RS2::Both,
 					RS_Vector const* pCenter = nullptr,

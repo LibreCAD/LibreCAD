@@ -48,13 +48,11 @@ struct RS_ActionInfoAngle::Points {
 
 // fixme - sand - adding information about angle to entity info view
 
-RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Info Angle",container, graphicView)
+RS_ActionInfoAngle::RS_ActionInfoAngle(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Info Angle", actionContext, RS2::ActionInfoAngle)
     ,entity1(nullptr)
     ,entity2(nullptr)
     ,pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionInfoAngle;
 }
 
 RS_ActionInfoAngle::~RS_ActionInfoAngle() = default;

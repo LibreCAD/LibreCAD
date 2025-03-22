@@ -967,7 +967,7 @@ void LC_SimpleTests::slotTestUnicode() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
     auto& appWin= QC_ApplicationWindow::getAppWindow();
 
-	appWin->slotFileOpen("./fonts/unicode.cxf", RS2::FormatCXF);
+	appWin->openFile("./fonts/unicode.cxf", RS2::FormatCXF);
 	RS_Document* d =appWin->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;

@@ -37,8 +37,7 @@
 class RS_ActionDrawPoint : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionDrawPoint(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionDrawPoint(LC_ActionContext *actionContext);
     ~RS_ActionDrawPoint() override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;

@@ -39,11 +39,9 @@ struct RS_ArcData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawArcTangential:public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionDrawArcTangential(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawArcTangential(LC_ActionContext *actionContext);
     ~RS_ActionDrawArcTangential() override;
     void reset();
     void init(int status) override;

@@ -41,11 +41,9 @@ struct RS_ActionModifyMove::Points {
 	RS_Vector targetPoint;
 };
 
-RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Move Entities",container, graphicView)
+RS_ActionModifyMove::RS_ActionModifyMove(LC_ActionContext *actionContext)
+        :LC_ActionModifyBase("Move Entities", actionContext, RS2::ActionModifyMove)
         ,pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionModifyMove;
 }
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;

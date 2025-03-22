@@ -22,8 +22,8 @@
 
 #include "lc_actiondrawlinepolygon4.h"
 
-LC_ActionDrawLinePolygon4::LC_ActionDrawLinePolygon4(RS_EntityContainer& container,RS_GraphicView& graphicView)
-    :LC_ActionDrawLinePolygonBase("Draw Polygons (V,V)", container, graphicView, actionType=RS2::ActionDrawLinePolygonSideSide){
+LC_ActionDrawLinePolygon4::LC_ActionDrawLinePolygon4(LC_ActionContext *actionContext)
+    :LC_ActionDrawLinePolygonBase("Draw Polygons (V,V)", actionContext, actionType=RS2::ActionDrawLinePolygonSideSide){
 }
 
 LC_ActionDrawLinePolygon4::~LC_ActionDrawLinePolygon4() = default;

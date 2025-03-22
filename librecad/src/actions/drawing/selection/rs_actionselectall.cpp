@@ -28,11 +28,8 @@
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
-RS_ActionSelectAll::RS_ActionSelectAll(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView,
-                                       bool select)
-        :RS_ActionInterface("Select All Entities",
-					container, graphicView)
+RS_ActionSelectAll::RS_ActionSelectAll(LC_ActionContext *actionContext, bool select)
+        :RS_ActionInterface("Select All Entities",actionContext)
 		,select(select)
 {
 	actionType=RS2::ActionSelectAll;

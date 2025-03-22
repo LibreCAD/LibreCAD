@@ -59,10 +59,9 @@ namespace {
     }
 }
 
-RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container, RS_GraphicView& graphicView)
-    :LC_ActionModifyBase("Scale Entities",container, graphicView)
+RS_ActionModifyScale::RS_ActionModifyScale(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Scale Entities", actionContext, RS2::ActionModifyScale)
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionModifyScale;
 }
 
 RS_ActionModifyScale::~RS_ActionModifyScale() = default;

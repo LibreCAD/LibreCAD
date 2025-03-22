@@ -26,9 +26,8 @@
 #include "rs_debug.h"
 #include "rs_math.h"
 
-LC_ActionDrawArc2PointsAngle::LC_ActionDrawArc2PointsAngle(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",container, graphicView) {
-    actionType = RS2::ActionDrawArc2PAngle;
+LC_ActionDrawArc2PointsAngle::LC_ActionDrawArc2PointsAngle(LC_ActionContext *actionContext)
+    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",actionContext, RS2::ActionDrawArc2PAngle) {
 }
 
 bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {

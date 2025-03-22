@@ -29,10 +29,8 @@
 #include "rs_modification.h"
 #include "rs_debug.h"
 
-LC_ActionPasteToPoints::LC_ActionPasteToPoints(RS_EntityContainer &container,
-                                               RS_GraphicView &graphicView):
-    LC_ActionPreSelectionAwareBase("PasteToPoints", container, graphicView, {RS2::EntityPoint}){
-    actionType = RS2::ActionPasteToPoints;
+LC_ActionPasteToPoints::LC_ActionPasteToPoints(LC_ActionContext *actionContext):
+    LC_ActionPreSelectionAwareBase("PasteToPoints", actionContext, RS2::ActionPasteToPoints, {RS2::EntityPoint}){
 }
 
 void LC_ActionPasteToPoints::init(int status) {

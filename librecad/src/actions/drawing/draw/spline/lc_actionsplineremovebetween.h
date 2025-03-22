@@ -29,7 +29,7 @@
 class LC_ActionSplineRemoveBetween:public LC_ActionSplineModifyBase{
     Q_OBJECT
 public:
-    LC_ActionSplineRemoveBetween(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineRemoveBetween(LC_ActionContext *actionContext);
     ~LC_ActionSplineRemoveBetween() override = default;
 protected:
     bool splineIsClosed = false;

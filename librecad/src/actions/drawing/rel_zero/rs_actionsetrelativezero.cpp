@@ -32,13 +32,9 @@
 #include "rs_graphicview.h"
 #include "rs_previewactioninterface.h"
 
-RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    : RS_PreviewActionInterface("Set the relative Zero",
-                                container, graphicView)
-      , pt(std::make_unique<RS_Vector>()){
-    actionType = RS2::ActionSetRelativeZero;
+RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionContext)
+    : RS_PreviewActionInterface("Set the relative Zero",actionContext, RS2::ActionSetRelativeZero)
+    , pt(std::make_unique<RS_Vector>()){
 }
 
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;

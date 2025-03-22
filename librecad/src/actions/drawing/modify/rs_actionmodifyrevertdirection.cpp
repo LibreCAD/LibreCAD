@@ -29,9 +29,8 @@
 #include "rs_document.h"
 #include "rs_modification.h"
 
-RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
-	:LC_ActionPreSelectionAwareBase("Revert direction", container, graphicView,{}){
-    actionType = RS2::ActionModifyRevertDirection;
+RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(LC_ActionContext *actionContext)
+	:LC_ActionPreSelectionAwareBase("Revert direction", actionContext,RS2::ActionModifyRevertDirection,{}){
 }
 
 void RS_ActionModifyRevertDirection::doTrigger(bool keepSelected) {

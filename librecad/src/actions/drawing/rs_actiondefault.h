@@ -31,8 +31,6 @@
 #include "lc_overlayboxaction.h"
 
 
-
-
 /**
  * This action class can handle user events to select all entities.
  *
@@ -46,8 +44,7 @@ class RS_ActionDefault : public LC_OverlayBoxAction {
     using BASE_CLASS = RS_PreviewActionInterface;
 
 public:
-    RS_ActionDefault(RS_EntityContainer& container,
-                     RS_GraphicView& graphicView);
+    RS_ActionDefault(LC_ActionContext *actionContext);
     ~RS_ActionDefault() override;
 
     void finish(bool) override{}

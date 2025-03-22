@@ -41,8 +41,7 @@ class QImage;
 class RS_ActionDrawImage : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionDrawImage(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionDrawImage(LC_ActionContext *actionContext);
     ~RS_ActionDrawImage() override;
 
     void init(int status) override;

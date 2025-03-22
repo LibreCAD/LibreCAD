@@ -32,9 +32,8 @@
 #include "rs_polyline.h"
 #include "rs_spline.h"
 
-LC_ActionSplineFromPolyline::LC_ActionSplineFromPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView)
-:RS_PreviewActionInterface("ActionSplineFromPolyline",container, graphicView) {
-    actionType = RS2::ActionDrawSplineFromPolyline;
+LC_ActionSplineFromPolyline::LC_ActionSplineFromPolyline(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("ActionSplineFromPolyline", actionContext, RS2::ActionDrawSplineFromPolyline) {
 }
 
 void LC_ActionSplineFromPolyline::doTrigger() {

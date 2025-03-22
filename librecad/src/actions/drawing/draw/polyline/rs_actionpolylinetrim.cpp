@@ -33,11 +33,8 @@
 #include "rs_modification.h"
 #include "rs_polyline.h"
 
-RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Trim segments",
-						   container, graphicView) {
-	actionType=RS2::ActionPolylineTrim;
+RS_ActionPolylineTrim::RS_ActionPolylineTrim(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Trim segments",actionContext, RS2::ActionPolylineTrim) {
 }
 
 void RS_ActionPolylineTrim::init(int status) {

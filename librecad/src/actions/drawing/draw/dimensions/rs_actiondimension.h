@@ -39,11 +39,9 @@ struct RS_DimensionData;
  */
 class RS_ActionDimension:public RS_PreviewActionInterface {
 Q_OBJECT
-
-    void resume() override;
-
+    void resume() override; // fixme - sand - check?
 public:
-    RS_ActionDimension(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    RS_ActionDimension(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~RS_ActionDimension() override;
     void init(int status) override;
 
@@ -58,7 +56,6 @@ public:
     bool getDiameter() const;
     void setDiameter(bool d);
     static bool isDimensionAction(RS2::ActionType type);
-
 protected:
     /**
      * Generic dimension data.

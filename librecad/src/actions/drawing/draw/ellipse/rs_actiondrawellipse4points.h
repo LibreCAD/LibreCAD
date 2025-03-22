@@ -36,9 +36,7 @@ struct RS_EllipseData;
 class RS_ActionDrawEllipse4Points:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipse4Points(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawEllipse4Points(LC_ActionContext *actionContext);
     ~RS_ActionDrawEllipse4Points() override;
     void init(int status) override;
     bool preparePreview();

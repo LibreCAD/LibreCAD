@@ -43,9 +43,7 @@ struct RS_DimDiametricData;
 class RS_ActionDimDiametric:public LC_ActionCircleDimBase {
 Q_OBJECT
 public:
-    RS_ActionDimDiametric(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimDiametric(LC_ActionContext *actionContext);
     ~RS_ActionDimDiametric() override;
 protected:
     /** Data of new dimension */

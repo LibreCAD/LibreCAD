@@ -41,10 +41,8 @@
 class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionLibraryInsert(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionLibraryInsert(LC_ActionContext *actionContext);
     ~RS_ActionLibraryInsert() override;
-
     void init(int status) override;
     void reset();
     void trigger() override;

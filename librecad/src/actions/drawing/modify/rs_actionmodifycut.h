@@ -38,8 +38,7 @@
 class RS_ActionModifyCut : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyCut(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionModifyCut(LC_ActionContext *actionContext);
     ~RS_ActionModifyCut() override;
     void init(int status) override;
     void finish(bool updateTB) override;

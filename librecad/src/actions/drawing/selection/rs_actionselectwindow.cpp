@@ -45,25 +45,16 @@ struct RS_ActionSelectWindow::Points {
  *
  * @param select true: select window. false: invertSelectionOperation window
  */
-RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView,
-                                             bool select)
-    : LC_OverlayBoxAction("Select Window",
-                                container, graphicView)
+RS_ActionSelectWindow::RS_ActionSelectWindow(LC_ActionContext *actionContext,bool select)
+    : LC_OverlayBoxAction("Select Window",actionContext, RS2::ActionSelectWindow)
     , pPoints(std::make_unique<Points>())
     , select(select){
-    actionType=RS2::ActionSelectWindow;
 }
 
-RS_ActionSelectWindow::RS_ActionSelectWindow(
-        enum RS2::EntityType typeToSelect,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        bool select)
-    : LC_OverlayBoxAction("Select Window",container, graphicView)
+RS_ActionSelectWindow::RS_ActionSelectWindow(enum RS2::EntityType typeToSelect,LC_ActionContext *actionContext,bool select)
+    : LC_OverlayBoxAction("Select Window",actionContext, RS2::ActionSelectWindow)
     , pPoints(std::make_unique<Points>())
     , select(select){
-    actionType=RS2::ActionSelectWindow;
     if (typeToSelect == RS2::EntityUnknown){
         setSelectAllEntityTypes(true);
     }

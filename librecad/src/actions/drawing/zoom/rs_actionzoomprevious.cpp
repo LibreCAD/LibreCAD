@@ -24,18 +24,14 @@
 **
 **********************************************************************/
 
-
 #include "rs_actionzoomprevious.h"
 #include "rs_graphicview.h"
-
 
 /**
  * Constructor.
  */
-RS_ActionZoomPrevious::RS_ActionZoomPrevious(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_ActionInterface("Previous zoom", container, graphicView) {
-
+RS_ActionZoomPrevious::RS_ActionZoomPrevious(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Previous zoom", actionContext) {
 }
 
 void RS_ActionZoomPrevious::init(int status) {

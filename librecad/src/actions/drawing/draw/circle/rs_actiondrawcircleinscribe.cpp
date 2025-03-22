@@ -41,12 +41,8 @@ struct RS_ActionDrawCircleInscribe::Points {
  * Constructor.
  *
  */
-RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw circle inscribed",
-                             container, graphicView), pPoints(std::make_unique<Points>()), valid(false){
-    actionType = RS2::ActionDrawCircleInscribe;
+RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw circle inscribed",actionContext, RS2::ActionDrawCircleInscribe), pPoints(std::make_unique<Points>()), valid(false){
 }
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;

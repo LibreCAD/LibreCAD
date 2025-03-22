@@ -60,9 +60,8 @@ public:
         // RadAngCenp
     };
 
-    RS_ActionDrawPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    RS_ActionDrawPolyline(LC_ActionContext *actionContext);
     ~RS_ActionDrawPolyline() override;
-
     void reset();
     void init(int status) override;
     QStringList getAvailableCommands() override;

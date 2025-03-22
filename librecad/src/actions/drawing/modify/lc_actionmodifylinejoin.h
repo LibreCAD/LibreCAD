@@ -31,7 +31,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 class LC_ActionModifyLineJoin :public LC_AbstractActionWithPreview {
     Q_OBJECT
-
 public:
     // states for the action
     enum{
@@ -49,7 +48,7 @@ public:
         EDGE_NO_MODIFICATION // do not modify the line
     };
 
-    LC_ActionModifyLineJoin(RS_EntityContainer& container,RS_GraphicView& graphicView);
+    LC_ActionModifyLineJoin(LC_ActionContext *actionContext);
     ~LC_ActionModifyLineJoin() override;
     void init(int status) override;
 

@@ -38,8 +38,7 @@
 class LC_ActionDrawLinePolygonCenTan : public LC_ActionDrawLinePolygonBase {
     Q_OBJECT
 public:
-    LC_ActionDrawLinePolygonCenTan(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+    LC_ActionDrawLinePolygonCenTan(LC_ActionContext *actionContext);
     ~LC_ActionDrawLinePolygonCenTan() override;
 protected:
     /* Status

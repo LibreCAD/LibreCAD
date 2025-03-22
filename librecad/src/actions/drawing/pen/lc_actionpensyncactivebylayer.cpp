@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphic.h"
 #include "lc_actionpensyncactivebylayer.h"
 
-LC_ActionPenSyncActiveByLayer::LC_ActionPenSyncActiveByLayer(RS_EntityContainer &container, RS_GraphicView &graphicView)
-   :RS_ActionInterface("PenSyncByLayer", container, graphicView){
+LC_ActionPenSyncActiveByLayer::LC_ActionPenSyncActiveByLayer(LC_ActionContext *actionContext)
+   :RS_ActionInterface("PenSyncByLayer", actionContext){
 }
 
 void LC_ActionPenSyncActiveByLayer::init(int status){

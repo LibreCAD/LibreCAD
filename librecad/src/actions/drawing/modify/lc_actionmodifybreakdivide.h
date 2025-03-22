@@ -27,10 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
 
-class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview
-{
+class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview{
     Q_OBJECT
-
    /**
    * action state
    */
@@ -84,7 +82,7 @@ class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview
     };
 
 public:
-    LC_ActionModifyBreakDivide(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionModifyBreakDivide(LC_ActionContext *actionContext);
 
     bool isRemoveSegment() const{return removeSegments;}
     void setRemoveSegment(bool value){removeSegments = value;};

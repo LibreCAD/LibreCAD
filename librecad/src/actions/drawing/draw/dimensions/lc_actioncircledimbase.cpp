@@ -27,12 +27,11 @@
 #include "rs_preview.h"
 
 
-LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType type)
-  : RS_ActionDimension(name, container,  graphicView)
+LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+  : RS_ActionDimension(name, actionContext, actionType)
     , entity(nullptr)
     , lastStatus(SetEntity)
     , pos(std::make_unique<RS_Vector>()){
-    actionType = type;
 }
 
 LC_ActionCircleDimBase::~LC_ActionCircleDimBase() = default;

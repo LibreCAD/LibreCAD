@@ -48,9 +48,7 @@ class RS_Pen;
 class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionSnapMiddleManual( RS_EntityContainer& container,
-                               RS_GraphicView& graphicView, RS_Pen input_currentAppPen);
-
+    LC_ActionSnapMiddleManual(LC_ActionContext *actionContext, RS_Pen input_currentAppPen);
     ~LC_ActionSnapMiddleManual() override;
     void init(int status = SetPercentage)   override;
     void commandEvent    (RS_CommandEvent*    e) override;

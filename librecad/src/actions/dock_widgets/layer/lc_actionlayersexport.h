@@ -37,13 +37,10 @@ class RS_EntityContainer;
 class RS_GraphicView;
 class RS_LayerList;
 
-
 /*
     This action class exports the current selected layers as a drawing file, 
     either as individual files, or combined within a single file.
 */
-
-
 class LC_ActionLayersExport : public RS_ActionInterface{
 Q_OBJECT
 public:
@@ -53,8 +50,7 @@ public:
         VisibleMode
     };
 
-    LC_ActionLayersExport( RS_EntityContainer& document,
-                           RS_GraphicView& graphicView,
+    LC_ActionLayersExport( LC_ActionContext *actionContext,
                            RS_LayerList* inputLayersList,
                            Mode inputExportMode);
     void init(int status) override;

@@ -351,8 +351,6 @@ public:
      */
     virtual int requestOptionsGeneralDialog()  {return 0;};
 
-    virtual void requestKeyboardShortcutsDialog([[maybe_unused]]LC_ActionGroupManager *pManager) {  };
-
     /**
      * This virtual method must be overwritten and must present
      * a dialog for drawing options.
@@ -376,19 +374,7 @@ public:
                                             [[maybe_unused]]const QString& filter = QString(),
                                             [[maybe_unused]]QString* selectedFilter = nullptr) { return "";};
 
-    /**
-     * This virtual method must be overwritten if the graphic view has
-     * a component that is interested in the current mouse position.
-     * The implementation will be called every time the mouse position
-     * changes.
-     *
-     * @param abs Absolute coordinate of the mouse cursor or the
-     *            point it snaps to.
-     * @param rel Relative coordinate.
-     */
-    virtual void updateCoordinateWidget([[maybe_unused]]const RS_Vector& abs,
-                                        [[maybe_unused]]const RS_Vector& rel,
-                                        [[maybe_unused]]bool updateFormat=false) {};
+
 
     /**
      * This virtual method must be overwritten if the graphic view has
@@ -437,7 +423,7 @@ public:
     virtual void setCommandWidget([[maybe_unused]]QG_CommandWidget* ) {};
     virtual void clearMouseWidgetIcon() {};
     virtual void setStatusBarManager([[maybe_unused]]LC_QTStatusbarManager *statusBarManager){};
-    virtual void setCurrentQAction([[maybe_unused]]QAction *action){};
+    // virtual void setCurrentQAction([[maybe_unused]]QAction *action){};
 };
 
 

@@ -33,7 +33,7 @@ public:
     };
 
 
-    LC_ActionModifyDuplicate(RS_EntityContainer& container,RS_GraphicView& graphicView);
+    LC_ActionModifyDuplicate(LC_ActionContext *actionContext);
     ~LC_ActionModifyDuplicate() override;
 
     double getOffsetX() const {return offsetX;};

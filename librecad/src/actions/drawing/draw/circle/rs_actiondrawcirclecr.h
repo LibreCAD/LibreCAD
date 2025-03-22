@@ -41,9 +41,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleCR:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleCR(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleCR(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleCR() override;
     void reset() override;
     void init(int status) override;

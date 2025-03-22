@@ -62,10 +62,8 @@ namespace {
     }
 }
 
-LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
-                                                         RS_GraphicView& graphicView)
-    : RS_ActionInterface("Export as CAM/plain SVG...", container, graphicView){
-    setActionType(RS2::ActionFileExportMakerCam);
+LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(LC_ActionContext *actionContext)
+    : RS_ActionInterface("Export as CAM/plain SVG...", actionContext, RS2::ActionFileExportMakerCam){
 }
 
 

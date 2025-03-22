@@ -39,8 +39,7 @@ class RS_Line;
 class RS_ActionDrawLineTangent1 : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineTangent1(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+    RS_ActionDrawLineTangent1(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineTangent1() override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;

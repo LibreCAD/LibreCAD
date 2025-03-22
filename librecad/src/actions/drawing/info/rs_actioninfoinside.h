@@ -42,8 +42,7 @@ class RS_Vector;
 class RS_ActionInfoInside : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionInfoInside(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionInfoInside(LC_ActionContext *actionContext);
     ~RS_ActionInfoInside() override;
 
     void trigger() override;

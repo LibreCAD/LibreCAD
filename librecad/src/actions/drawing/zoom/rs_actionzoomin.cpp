@@ -34,18 +34,16 @@
  * @param direction In for zooming in, Out for zooming out.
  * @param axis Axis that are affected by the zoom (OnlyX, OnlyY or Both)
  */
-RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView,
+RS_ActionZoomIn::RS_ActionZoomIn(LC_ActionContext *actionContext,
                                  RS2::ZoomDirection direction,
                                  RS2::Axis axis,
 								 RS_Vector const* pCenter,
                                  double factor)
-        :RS_ActionInterface("Zoom in", container, graphicView)
+            :RS_ActionInterface("Zoom in", actionContext)
         ,zoom_factor(factor)
         ,direction(direction)
         ,axis(axis)
-		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{})
-{
+		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{}){
     setActionType(RS2::ActionZoomIn);
 }
 

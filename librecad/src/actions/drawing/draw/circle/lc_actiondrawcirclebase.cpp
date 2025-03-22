@@ -24,8 +24,8 @@
 #include "rs_graphicview.h"
 #include "lc_actiondrawcirclebase.h"
 
-LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name,container, graphicView){}
+LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType type)
+    :RS_PreviewActionInterface(name,actionContext, type){}
 
 LC_ActionDrawCircleBase::~LC_ActionDrawCircleBase() = default;
 

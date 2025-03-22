@@ -32,9 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawCircle2PR:public RS_ActionDrawCircleCR {
 Q_OBJECT
 public:
-    LC_ActionDrawCircle2PR(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    LC_ActionDrawCircle2PR(LC_ActionContext *actionContext);
     ~LC_ActionDrawCircle2PR() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;

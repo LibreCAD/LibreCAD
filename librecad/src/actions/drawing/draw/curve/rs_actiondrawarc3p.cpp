@@ -54,12 +54,9 @@ struct RS_ActionDrawArc3P::Points {
     RS_Vector point3;
 };
 
-RS_ActionDrawArc3P::RS_ActionDrawArc3P(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw arcs 3P", container, graphicView)
-, m_pPoints{std::make_unique<RS_ActionDrawArc3P::Points>()}{
-    actionType = RS2::ActionDrawArc3P;
+RS_ActionDrawArc3P::RS_ActionDrawArc3P(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw arcs 3P", actionContext,  RS2::ActionDrawArc3P)
+    , m_pPoints{std::make_unique<RS_ActionDrawArc3P::Points>()}{
 }
 
 RS_ActionDrawArc3P::~RS_ActionDrawArc3P() = default;

@@ -31,9 +31,8 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
-RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block", container, graphicView) {}
+RS_ActionBlocksEdit::RS_ActionBlocksEdit(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Block",actionContext) {}
 
 void RS_ActionBlocksEdit::trigger() {
 

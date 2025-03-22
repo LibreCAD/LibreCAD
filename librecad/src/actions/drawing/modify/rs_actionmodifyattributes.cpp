@@ -32,11 +32,8 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
-RS_ActionModifyAttributes::RS_ActionModifyAttributes(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-    :LC_ActionPreSelectionAwareBase("Change Attributes",container, graphicView) {
-    actionType=RS2::ActionModifyAttributes;
+RS_ActionModifyAttributes::RS_ActionModifyAttributes(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Change Attributes",actionContext, RS2::ActionModifyAttributes) {
 }
 
 void RS_ActionModifyAttributes::doTrigger(bool keepSelected){

@@ -30,11 +30,8 @@
 /**
  * Constructor.
  */
-RS_ActionBlocksExplode::RS_ActionBlocksExplode(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionPreSelectionAwareBase("Blocks Explode",
-                           container, graphicView) {
-    actionType=RS2::ActionBlocksExplode;
+RS_ActionBlocksExplode::RS_ActionBlocksExplode(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Blocks Explode", actionContext,actionType=RS2::ActionBlocksExplode) {
 }
 
 void RS_ActionBlocksExplode::doTrigger(bool keepSelected) {

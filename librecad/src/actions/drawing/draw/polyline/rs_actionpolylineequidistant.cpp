@@ -36,13 +36,10 @@
 #include "rs_polyline.h"
 #include "qg_polylineequidistantoptions.h"
 
-RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
-														   RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Create Equidistant Polylines",
-							   container, graphicView)
+RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(LC_ActionContext *actionContext)
+	:RS_PreviewActionInterface("Create Equidistant Polylines", actionContext, RS2::ActionPolylineEquidistant)
 	, dist(1.)
 	,number(1){
-	actionType=RS2::ActionPolylineEquidistant;
 }
 
 RS_ActionPolylineEquidistant::~RS_ActionPolylineEquidistant()=default;

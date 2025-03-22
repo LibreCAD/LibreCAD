@@ -39,10 +39,8 @@
 class RS_ActionModifyRotate2 : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyRotate2(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionModifyRotate2(LC_ActionContext *actionContext);
     ~RS_ActionModifyRotate2() override;
-
     void init(int status) override;
     void setAngle1(double d);
     double getAngle1();

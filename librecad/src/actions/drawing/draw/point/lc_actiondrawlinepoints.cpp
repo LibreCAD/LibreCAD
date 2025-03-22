@@ -28,11 +28,10 @@
 #include "lc_actiondrawlinepoints.h"
 #include "rs_previewactioninterface.h"
 
-LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView, bool drawMiddle)
-    :LC_AbstractActionDrawLine("LineDrawPoints",container, graphicView){
-    actionType = drawMiddle ? RS2::ActionDrawPointsMiddle: RS2::ActionDrawLinePoints;
+LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(LC_ActionContext *actionContext, bool drawMiddle)
+    :LC_AbstractActionDrawLine("LineDrawPoints", actionContext,
+        drawMiddle ? RS2::ActionDrawPointsMiddle: RS2::ActionDrawLinePoints){
 }
-
 LC_ActionDrawLinePoints::~LC_ActionDrawLinePoints()= default;
 
 /**

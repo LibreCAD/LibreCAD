@@ -39,8 +39,7 @@ struct RS_MoveData;
 class RS_ActionModifyMove : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyMove(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionModifyMove(LC_ActionContext *actionContext);
     ~RS_ActionModifyMove() override;
 protected:
     /**

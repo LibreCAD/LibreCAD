@@ -41,10 +41,8 @@ struct RS_MoveRotateData;
 class RS_ActionModifyMoveRotate : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyMoveRotate(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+    RS_ActionModifyMoveRotate(LC_ActionContext *actionContext);
     ~RS_ActionModifyMoveRotate() override;
-
     QStringList getAvailableCommands() override;
     void setAngle(double a);
     double getAngle() const;

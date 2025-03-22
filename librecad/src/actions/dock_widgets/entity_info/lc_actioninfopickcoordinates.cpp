@@ -24,9 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actioninfopickcoordinates.h"
 #include "lc_quickinfowidget.h"
 
-LC_ActionInfoPickCoordinates::LC_ActionInfoPickCoordinates(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_AbstractActionWithPreview("Pick Coordinates", container, graphicView){
-   actionType = RS2::ActionInfoPickCoordinates;
+LC_ActionInfoPickCoordinates::LC_ActionInfoPickCoordinates(LC_ActionContext *actionContext)
+    :LC_AbstractActionWithPreview("Pick Coordinates", actionContext,RS2::ActionInfoPickCoordinates){
 }
 
 void LC_ActionInfoPickCoordinates::init(int status){

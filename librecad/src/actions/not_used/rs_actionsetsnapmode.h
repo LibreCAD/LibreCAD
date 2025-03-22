@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action changes the current snap mode.
  *
@@ -38,13 +37,9 @@
 class RS_ActionSetSnapMode : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionSetSnapMode(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView,
-                         RS2::SnapMode snapMode);
-
+    RS_ActionSetSnapMode(LC_ActionContext *actionContext,RS2::SnapMode snapMode);
 	void init(int status) override;
 	void trigger() override;
-
 protected:
     RS2::SnapMode snapMode = RS2::SnapFree;
 };

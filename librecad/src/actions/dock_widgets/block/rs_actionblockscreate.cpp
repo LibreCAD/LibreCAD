@@ -41,13 +41,9 @@
 /**
  * Constructor.
  */
-RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Blocks Create",
-                               container, graphicView)
-    ,referencePoint(new RS_Vector{})
-{
-    actionType=RS2::ActionBlocksCreate;
+RS_ActionBlocksCreate::RS_ActionBlocksCreate(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Blocks Create",actionContext, RS2::ActionBlocksCreate)
+    ,referencePoint(new RS_Vector{}){
 }
 
 RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;

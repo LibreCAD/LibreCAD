@@ -38,8 +38,7 @@
 class RS_ActionBlocksToggleView : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionBlocksToggleView(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+    RS_ActionBlocksToggleView(LC_ActionContext *actionContext);
 
 	void init(int status) override;
 	void trigger() override;

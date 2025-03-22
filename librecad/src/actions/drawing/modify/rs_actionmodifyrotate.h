@@ -39,9 +39,7 @@ struct RS_RotateData;
 class RS_ActionModifyRotate: public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyRotate(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionModifyRotate(LC_ActionContext *actionContext);
     ~RS_ActionModifyRotate() override;
     void init(int status) override;
     double getAngle() const;

@@ -28,9 +28,8 @@
 #include "rs_graphicview.h"
 
 
-LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(RS_EntityContainer &container, RS_GraphicView &graphicView)
-  : LC_ActionModifyBase("ModifyAlignRef", container, graphicView) {
-    actionType = RS2::ActionModifyAlignRef;
+LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(LC_ActionContext *actionContext)
+  : LC_ActionModifyBase("ModifyAlignRef", actionContext, RS2::ActionModifyAlignRef) {
 }
 
 void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {

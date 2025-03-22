@@ -28,12 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_polyline.h"
 #include "rs_previewactioninterface.h"
 
-LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_AbstractActionDrawRectangle("Draw rectangle 2 points",
-                                    container, graphicView){
-    actionType = RS2::ActionDrawRectangle2Points;
+LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(LC_ActionContext *actionContext)
+    :LC_AbstractActionDrawRectangle("Draw rectangle 2 points",actionContext, RS2::ActionDrawRectangle2Points){
     ucsBasisBaseAngleRad = 0;
     LC_ActionDrawRectangle2Points::init(SetPoint1);
     setMainStatus(SetPoint1);

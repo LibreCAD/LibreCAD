@@ -26,10 +26,9 @@
 #include "lc_linejoinoptions.h"
 #include "lc_actionmodifylinejoin.h"
 
-LC_ActionModifyLineJoin::LC_ActionModifyLineJoin(RS_EntityContainer &container, RS_GraphicView &graphicView):
-    LC_AbstractActionWithPreview("ModifyLineJoin", container, graphicView),
+LC_ActionModifyLineJoin::LC_ActionModifyLineJoin(LC_ActionContext *actionContext):
+    LC_AbstractActionWithPreview("ModifyLineJoin", actionContext, RS2::ActionModifyLineJoin),
     line1(nullptr), line2(nullptr){
-    actionType = RS2::ActionModifyLineJoin;
 }
 
 LC_ActionModifyLineJoin::~LC_ActionModifyLineJoin() = default;

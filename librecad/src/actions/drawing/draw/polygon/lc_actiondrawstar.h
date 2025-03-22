@@ -31,7 +31,7 @@
 class LC_ActionDrawStar:public LC_AbstractActionWithPreview{
    Q_OBJECT
 public:
-    LC_ActionDrawStar(RS_EntityContainer &container,RS_GraphicView &graphicView);
+    LC_ActionDrawStar(LC_ActionContext *actionContext);
     QStringList getAvailableCommands() override;
     double getRadiusInner() const {return innerRadius;};
     void setRadiusInner(double d);

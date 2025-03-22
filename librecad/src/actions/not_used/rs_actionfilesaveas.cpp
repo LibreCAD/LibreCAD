@@ -28,9 +28,8 @@
 #include "rs_debug.h"
 #include "rs_graphic.h"
 
-RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Save as", container, graphicView) {}
+RS_ActionFileSaveAs::RS_ActionFileSaveAs(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Save as", actionContext) {}
 
 
 void RS_ActionFileSaveAs::trigger() {

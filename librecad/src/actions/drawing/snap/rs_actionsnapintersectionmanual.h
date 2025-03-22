@@ -39,10 +39,8 @@ class RS_Vector;
 class RS_ActionSnapIntersectionManual : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionSnapIntersectionManual(RS_EntityContainer& container,
-                                    RS_GraphicView& graphicView);
+    RS_ActionSnapIntersectionManual(LC_ActionContext *actionContext);
     ~RS_ActionSnapIntersectionManual() override;
-
     void init(int status) override;
     void trigger() override;
 protected:

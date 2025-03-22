@@ -28,9 +28,8 @@
 
 class LC_ActionModifyAlignRef: public LC_ActionModifyBase{
     Q_OBJECT
-
 public:
-    LC_ActionModifyAlignRef(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionModifyAlignRef(LC_ActionContext *actionContext);
     void setScale(bool val);
     bool isScale();
 protected:

@@ -34,11 +34,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * The lengths of created line may be either fixed, or be from start point to the point of intersection of created line and target line.
  */
-class LC_ActionDrawLineFromPointToLine:public LC_AbstractActionWithPreview
-{
+class LC_ActionDrawLineFromPointToLine:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
-    LC_ActionDrawLineFromPointToLine(QG_ActionHandler* a_handler, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawLineFromPointToLine(QG_ActionHandler* a_handler, LC_ActionContext *actionContext);
     ~LC_ActionDrawLineFromPointToLine() override = default;
     void setLineSnapMode(int val) {lineSnapMode = val;};
     int getLineSnapMode() const{return lineSnapMode;};

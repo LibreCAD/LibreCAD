@@ -33,8 +33,7 @@
 class RS_ActionDrawEllipseCenter3Points : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipseCenter3Points(RS_EntityContainer& container,
-                                      RS_GraphicView& graphicView);
+    RS_ActionDrawEllipseCenter3Points(LC_ActionContext *actionContext);
     ~RS_ActionDrawEllipseCenter3Points() override;
     void init(int status) override;
     bool preparePreview();

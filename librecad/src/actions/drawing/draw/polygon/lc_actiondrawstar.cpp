@@ -30,9 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_point.h"
 #include "rs_previewactioninterface.h"
 
-LC_ActionDrawStar::LC_ActionDrawStar(RS_EntityContainer &container, RS_GraphicView &graphicView)
-   :LC_AbstractActionWithPreview("Draw Star", container, graphicView){
-   actionType = RS2::ActionDrawStar;
+LC_ActionDrawStar::LC_ActionDrawStar(LC_ActionContext *actionContext)
+   :LC_AbstractActionWithPreview("Draw Star", actionContext, RS2::ActionDrawStar){
 }
 
 int LC_ActionDrawStar::doGetStatusForInitialSnapToRelativeZero(){

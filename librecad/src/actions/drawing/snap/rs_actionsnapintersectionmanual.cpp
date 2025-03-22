@@ -33,14 +33,9 @@
 #include "rs_information.h"
 #include "rs_preview.h"
 
-/**
- * @param both Trim both entities.
- */
-RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Trim Entity",
-							   container, graphicView)
+// fixme - sand - action type is not set!!
+RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(LC_ActionContext *actionContext)
+	:RS_PreviewActionInterface("Trim Entity", actionContext)
 	,entity1(nullptr)
     ,entity2(nullptr)
     ,coord(std::make_unique<RS_Vector>()){

@@ -39,7 +39,7 @@ public:
         DIRECTION_NONE, DIRECTION_X, DIRECTION_Y, DIRECTION_POINT, DIRECTION_ANGLE
     };
 
-    LC_AbstractActionDrawLine(const char* name, RS_EntityContainer &container,RS_GraphicView &graphicView);
+    LC_AbstractActionDrawLine(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_AbstractActionDrawLine() override;
     int getDirection() const{return direction;}
     void setNewStartPointState();

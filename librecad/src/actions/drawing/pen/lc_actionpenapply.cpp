@@ -26,16 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
-LC_ActionPenApply::LC_ActionPenApply(RS_EntityContainer &container, RS_GraphicView &graphicView, bool copy):
-  RS_PreviewActionInterface(copy? "PenCopy" : "PenApply", container, graphicView){
-    copyMode  = copy;
-    if (copy){
-        actionType = RS2::ActionPenCopy;
-    }
-    else{
-        actionType = RS2::ActionPenApply;
-    }
-    srcEntity = nullptr;
+LC_ActionPenApply::LC_ActionPenApply(LC_ActionContext *actionContext, bool copy):
+    RS_PreviewActionInterface(copy? "PenCopy" : "PenApply", actionContext, copy? RS2::ActionPenCopy :  RS2::ActionPenApply),
+    copyMode{copy}{
 }
 
 void LC_ActionPenApply::init(int status){

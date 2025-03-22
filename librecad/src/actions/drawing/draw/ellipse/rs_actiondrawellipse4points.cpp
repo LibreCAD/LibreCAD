@@ -40,12 +40,9 @@ struct RS_ActionDrawEllipse4Points::Points {
  * Constructor.
  *
  */
-RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
-	:LC_ActionDrawCircleBase("Draw ellipse from 4 points", container,graphicView)
+RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(LC_ActionContext *actionContext)
+	:LC_ActionDrawCircleBase("Draw ellipse from 4 points", actionContext, RS2::ActionDrawEllipse4Points)
     ,pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawEllipse4Points;
 }
 
 RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;

@@ -34,12 +34,10 @@
 #include "rs_graphicview.h"
 
 
-RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
-                                 RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView,
+RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,LC_ActionContext *actionContext,
                                  RS2::ActionType nextAction,
                                  QList<RS2::EntityType> allowedEntityTypes)
-	:RS_ActionInterface("Select Entities", container, graphicView)
+	:RS_ActionInterface("Select Entities", actionContext)
     ,action_handler(a_handler)
     ,nextAction(nextAction)
     , entityTypeList(std::move(allowedEntityTypes)){

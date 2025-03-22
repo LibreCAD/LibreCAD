@@ -35,12 +35,8 @@ namespace {
     const auto enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse*/};
 }
 
-LC_ActionDrawLineAngleRel:: LC_ActionDrawLineAngleRel(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
-    double angle,
-    bool fixedAngle)
-    :LC_AbstractActionWithPreview("Draw Line with angle",container, graphicView),
+LC_ActionDrawLineAngleRel:: LC_ActionDrawLineAngleRel(LC_ActionContext *actionContext,double angle,bool fixedAngle)
+    :LC_AbstractActionWithPreview("Draw Line with angle", actionContext),
      tickAngleDegrees(angle),
      tickData{nullptr}{
 

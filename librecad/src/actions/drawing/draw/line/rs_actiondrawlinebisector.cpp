@@ -50,12 +50,10 @@ struct RS_ActionDrawLineBisector::Points {
 	RS_Vector coord2;
 };
 
-RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw Bisectors", container, graphicView), bisector(nullptr), line1(nullptr), line2(nullptr), length(10.), number(1),
-     pPoints(std::make_unique<Points>()), lastStatus(SetLine1){
-    actionType = RS2::ActionDrawLineBisector;
+RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Bisectors", actionContext, RS2::ActionDrawLineBisector),
+    bisector(nullptr), line1(nullptr), line2(nullptr), length(10.), number(1),
+    pPoints(std::make_unique<Points>()), lastStatus(SetLine1){
 }
 
 RS_ActionDrawLineBisector::~RS_ActionDrawLineBisector() = default;

@@ -32,11 +32,8 @@
 #include "rs_polyline.h"
 #include "lc_actionpolylinedeletebase.h"
 
-RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionPolylineDeleteBase("Delete node",
-						   container, graphicView){
-	actionType=RS2::ActionPolylineDel;
+RS_ActionPolylineDel::RS_ActionPolylineDel(LC_ActionContext *actionContext)
+    :LC_ActionPolylineDeleteBase("Delete node",actionContext, RS2::ActionPolylineDel){
 }
 
 RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;

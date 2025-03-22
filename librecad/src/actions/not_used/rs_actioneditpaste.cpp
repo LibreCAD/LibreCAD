@@ -42,10 +42,8 @@
  *
  * @param undo true for undo and false for redo.
  */
-RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
-                                        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Edit Paste",
-						   container, graphicView)
+RS_ActionEditPaste::RS_ActionEditPaste(LC_ActionContext *actionContext)
+        :RS_PreviewActionInterface("Edit Paste",actionContext)
         , targetPoint(std::make_unique<RS_Vector>()){}
 
 

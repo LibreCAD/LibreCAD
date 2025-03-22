@@ -37,8 +37,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleTan2_1P : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleTan2_1P(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
+    RS_ActionDrawCircleTan2_1P(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleTan2_1P() override;
     void init(int status) override;
     bool getCenters();

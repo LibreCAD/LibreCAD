@@ -22,7 +22,6 @@
 **
 **********************************************************************/
 
-
 #include <iostream>
 
 #include "rs_arc.h"
@@ -35,8 +34,8 @@
 
 #include "lc_actiondimarc.h"
 
-LC_ActionDimArc::LC_ActionDimArc(RS_EntityContainer &container, RS_GraphicView &graphicView):
-    RS_ActionDimension("Draw Arc Dimensions", container, graphicView){
+LC_ActionDimArc::LC_ActionDimArc(LC_ActionContext *actionContext):
+    RS_ActionDimension("Draw Arc Dimensions", actionContext, RS2::ActionDimArc){
     reset();
 }
 
@@ -44,9 +43,6 @@ LC_ActionDimArc::~LC_ActionDimArc() = default;
 
 void LC_ActionDimArc::reset(){
     RS_ActionDimension::reset();
-
-    actionType = RS2::ActionDimArc;
-
     dimArcData.radius = 0.0;
     dimArcData.arcLength = 0.0;
 

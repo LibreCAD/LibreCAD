@@ -41,9 +41,7 @@ class RS_InfoArea;
 class RS_ActionInfoArea:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoArea(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionInfoArea(LC_ActionContext *actionContext);
     ~RS_ActionInfoArea() override;
     void init(int status) override;
 protected:

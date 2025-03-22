@@ -37,9 +37,7 @@
 class RS_ActionPolylineAdd:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPolylineAdd(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionPolylineAdd(LC_ActionContext *actionContext);
     ~RS_ActionPolylineAdd() override;
     void init(int status) override;
     void finish(bool updateTB) override;

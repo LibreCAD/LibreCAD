@@ -40,8 +40,7 @@ struct RS_HatchData;
 class RS_ActionDrawHatch : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 public:
-    RS_ActionDrawHatch(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionDrawHatch(LC_ActionContext *actionContext);
     ~RS_ActionDrawHatch() override;
     void init(int status) override;
     void setShowArea(bool s);

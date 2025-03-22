@@ -27,12 +27,11 @@
 #include "lc_abstractactionwithpreview.h"
 #include "lc_linemath.h"
 
-LC_AbstractActionDrawLine::LC_AbstractActionDrawLine(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView)
-     :LC_AbstractActionWithPreview(name, container, graphicView){
+LC_AbstractActionDrawLine::LC_AbstractActionDrawLine(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+     :LC_AbstractActionWithPreview(name, actionContext, actionType){
 }
 
 LC_AbstractActionDrawLine::~LC_AbstractActionDrawLine()= default;
-
 
 /**
  * Setting new line start point. Checks whether we're in state that allows to set new start point and changes the action state.

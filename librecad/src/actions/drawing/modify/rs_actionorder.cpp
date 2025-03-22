@@ -31,12 +31,8 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 
-RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
-        RS_GraphicView& graphicView, RS2::ActionType type)
-        :LC_ActionPreSelectionAwareBase("Sort Entities",
-						   container, graphicView)
-		,targetEntity(nullptr){
-	   actionType=type;
+RS_ActionOrder::RS_ActionOrder(LC_ActionContext *actionContext, RS2::ActionType type)
+    :LC_ActionPreSelectionAwareBase("Sort Entities", actionContext, type) ,targetEntity(nullptr){
 }
 
 void RS_ActionOrder::drawSnapper() {

@@ -8,10 +8,8 @@
 #include "rs_polyline.h"
 #include "lc_linemath.h"
 
-LC_ActionDrawBoundingBox::LC_ActionDrawBoundingBox(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView):LC_ActionPreSelectionAwareBase("DrawBoundingBox", container, graphicView){
-    actionType = RS2::ActionDrawBoundingBox;
+LC_ActionDrawBoundingBox::LC_ActionDrawBoundingBox(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("DrawBoundingBox", actionContext, RS2::ActionDrawBoundingBox){
 }
 
 void LC_ActionDrawBoundingBox::init(int status) {

@@ -30,7 +30,7 @@
 class LC_ActionPolylineChangeSegmentType:public RS_PreviewActionInterface {
  Q_OBJECT
 public:
-    LC_ActionPolylineChangeSegmentType(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionPolylineChangeSegmentType(LC_ActionContext *actionContext);
     ~LC_ActionPolylineChangeSegmentType() override;
 protected:
     enum State{

@@ -41,13 +41,9 @@ struct RS_ActionDrawEllipseInscribe::Points {
  * Constructor.
  *
  */
-RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw ellipse inscribed",
-                           container, graphicView)
+RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(LC_ActionContext *actionContext)
+        :LC_ActionDrawCircleBase("Draw ellipse inscribed",actionContext, RS2::ActionDrawEllipseInscribe)
     , pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
 RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;

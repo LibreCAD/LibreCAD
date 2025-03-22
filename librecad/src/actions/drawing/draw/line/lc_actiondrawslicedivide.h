@@ -28,10 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_abstractactionwithpreview.h"
 
 class LC_ActionDrawSliceDivide:public LC_AbstractActionWithPreview {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-
     /**
      * controls how to snap tick
      */
@@ -90,11 +88,7 @@ public:
         double arcAngle; // angle for snapping tick
     };
 
-    LC_ActionDrawSliceDivide(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool forCircle);
-
+    LC_ActionDrawSliceDivide(LC_ActionContext *actionContext, bool forCircle);
     bool isTickAngleRelative() const{return tickAngleIsRelative;}
     bool isDivideEntity() const{return doDivideEntity;}
     void setTickLength(double len){tickLength = len;}

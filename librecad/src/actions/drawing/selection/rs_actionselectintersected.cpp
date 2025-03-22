@@ -41,17 +41,12 @@ struct RS_ActionSelectIntersected::Points {
  *
  * @param select true: select window. false: deselect window
  */
-RS_ActionSelectIntersected::RS_ActionSelectIntersected(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    bool select)
-    :RS_PreviewActionInterface("Select Intersected",
-                               container, graphicView), pPoints(std::make_unique<Points>()), select(select){
-	actionType=RS2::ActionSelectIntersected;
+RS_ActionSelectIntersected::RS_ActionSelectIntersected(LC_ActionContext *actionContext, bool select)
+    :RS_PreviewActionInterface("Select Intersected",actionContext, RS2::ActionSelectIntersected),
+    pPoints(std::make_unique<Points>()), select(select){
 }
 
 RS_ActionSelectIntersected::~RS_ActionSelectIntersected() = default;
-
 
 void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);

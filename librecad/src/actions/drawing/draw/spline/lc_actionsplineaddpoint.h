@@ -29,7 +29,7 @@
 class LC_ActionSplineAddPoint:public LC_ActionSplineModifyBase{
     Q_OBJECT
 public:
-    LC_ActionSplineAddPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineAddPoint(LC_ActionContext *actionContext);
     ~LC_ActionSplineAddPoint() override = default;
 protected:
     bool endpointIsSelected = false;

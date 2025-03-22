@@ -36,17 +36,13 @@ struct RS_ActionModifyDeleteFree::Points {
 	RS_Vector v2;
 };
 
-RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Delete Entities Freehand",
-					container, graphicView)
+RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Delete Entities Freehand", actionContext)
 		, pPoints(std::make_unique<Points>()){
 	init(0);
 }
 
 RS_ActionModifyDeleteFree::~RS_ActionModifyDeleteFree() = default;
-
 
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);

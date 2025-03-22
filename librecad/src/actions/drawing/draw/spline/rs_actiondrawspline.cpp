@@ -57,12 +57,8 @@ struct RS_ActionDrawSpline::Points {
 //QList<double> bHistory;
 };
 
-RS_ActionDrawSpline::RS_ActionDrawSpline(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw splines",
-                               container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionDrawSpline;
+RS_ActionDrawSpline::RS_ActionDrawSpline(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw splines",actionContext, RS2::ActionDrawSpline), pPoints(std::make_unique<Points>()){
     reset();
 }
 

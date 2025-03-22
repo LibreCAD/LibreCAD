@@ -8,7 +8,7 @@
 class LC_ActionDrawBoundingBox : public LC_ActionPreSelectionAwareBase{
     Q_OBJECT
 public:
-    LC_ActionDrawBoundingBox(RS_EntityContainer &container,RS_GraphicView &graphicView);
+    LC_ActionDrawBoundingBox(LC_ActionContext *actionContext);
     bool isSelectionAsGroup() const{return selectionAsGroup;}
     void setSelectionAsGroup(bool val){selectionAsGroup = val;}
     bool isCornerPointsOnly() const {return cornerPointsOnly;}

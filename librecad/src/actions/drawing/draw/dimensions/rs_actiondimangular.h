@@ -43,8 +43,7 @@ struct RS_DimAngularData;
 class RS_ActionDimAngular : public RS_ActionDimension{
     Q_OBJECT
 public:
-    RS_ActionDimAngular(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionDimAngular(LC_ActionContext *actionContext);
     ~RS_ActionDimAngular() override;
     QStringList getAvailableCommands() override;
 protected:

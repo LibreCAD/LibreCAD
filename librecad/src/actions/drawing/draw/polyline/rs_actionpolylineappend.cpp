@@ -32,10 +32,8 @@
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
 
-RS_ActionPolylineAppend::RS_ActionPolylineAppend(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_ActionDrawPolyline(container, graphicView){
+RS_ActionPolylineAppend::RS_ActionPolylineAppend(LC_ActionContext *actionContext)
+    :RS_ActionDrawPolyline(actionContext){
     actionType = RS2::ActionPolylineAppend;
 }
 

@@ -33,12 +33,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 class LC_ActionDrawCircleByArc:public LC_AbstractActionWithPreview {
     Q_OBJECT
-
 public:
-    LC_ActionDrawCircleByArc(RS_EntityContainer& container,RS_GraphicView& graphicView);
+    LC_ActionDrawCircleByArc(LC_ActionContext *actionContext);
     ~LC_ActionDrawCircleByArc() override;
-
-
 
     bool isReplaceArcByCircle() const{return replaceArcByCircle;};
     void setReplaceArcByCircle(bool value);

@@ -38,8 +38,7 @@
 class RS_ActionModifyScale : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyScale(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView);
+    RS_ActionModifyScale(LC_ActionContext *actionContext);
     ~RS_ActionModifyScale() override;
 
     void init(int status) override;

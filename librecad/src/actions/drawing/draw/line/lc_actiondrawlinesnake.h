@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawLineSnake :public LC_AbstractActionDrawLine {
     Q_OBJECT
 public:
-    LC_ActionDrawLineSnake(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
+    LC_ActionDrawLineSnake(LC_ActionContext *actionContext, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
     ~LC_ActionDrawLineSnake() override;
     void init(int status) override;
     void close();

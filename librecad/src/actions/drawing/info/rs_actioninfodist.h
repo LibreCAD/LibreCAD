@@ -40,9 +40,7 @@
 class RS_ActionInfoDist:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoDist(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionInfoDist(LC_ActionContext *actionContext);
     ~RS_ActionInfoDist() override;
     void init(int status) override;
 protected:

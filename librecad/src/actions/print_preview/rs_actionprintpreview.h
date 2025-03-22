@@ -41,8 +41,7 @@ class QG_PrintPreviewOptions;
 class RS_ActionPrintPreview : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPrintPreview(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    RS_ActionPrintPreview(LC_ActionContext *actionContext);
     ~RS_ActionPrintPreview() override;
 
     void init(int status) override;

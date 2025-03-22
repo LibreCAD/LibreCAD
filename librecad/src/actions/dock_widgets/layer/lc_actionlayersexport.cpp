@@ -138,30 +138,20 @@ private:
     This action class exports the current selected layers as a drawing file, 
     either as individual files, or combined within a single file.
 */
-
-LC_ActionLayersExport::LC_ActionLayersExport( RS_EntityContainer& document, 
-                                              RS_GraphicView& graphicView, 
-                                              RS_LayerList* inputLayersList, 
-                                              Mode inputExportMode) 
-                                              :
-                                              RS_ActionInterface("Export selected layer(s)", document, graphicView), 
-                                              layersList(inputLayersList), 
-                                              exportMode(inputExportMode)
-{
+LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, RS_LayerList* inputLayersList, Mode inputExportMode)
+    : RS_ActionInterface("Export selected layer(s)",actionContext),
+    layersList(inputLayersList),
+    exportMode(inputExportMode){
 }
 
 
-void LC_ActionLayersExport::init(int status)
-{
+void LC_ActionLayersExport::init(int status){
     RS_DEBUG->print("LC_ActionLayersExport::init");
-
     RS_ActionInterface::init(status);
-
     trigger();
 }
 
-void LC_ActionLayersExport::trigger()
-{
+void LC_ActionLayersExport::trigger(){
     RS_DEBUG->print("LC_ActionLayersExport::trigger");
 
     RS_LayerList *originalLayersList = document->getLayerList();
@@ -170,8 +160,7 @@ void LC_ActionLayersExport::trigger()
     std::copy_if(originalLayersList->begin(), originalLayersList->end(), std::back_inserter(layersToUse),
                  (exportMode == SelectedMode) ? isSelected : isNotFrozen);
 
-    if (layersToUse.empty())
-    {
+    if (layersToUse.empty())    {
     /* No export layer found. */
         QString exportModeString = (exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
         QC_ApplicationWindow::getAppWindow()->statusBar()->showMessage( QObject::tr("No %1 layers found").arg(exportModeString),
@@ -187,8 +176,7 @@ void LC_ActionLayersExport::trigger()
 
     // Show file dialog for saving
     LC_FileDialogService::FileDialogResult result = LC_FileDialogService::getFileDetails (convertDialogMode(exportMode));
-    if (result.filePath.isEmpty())
-    {
+    if (result.filePath.isEmpty())    {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "LC_ActionLayersExport::trigger: User cancelled");
         finish();
         return;

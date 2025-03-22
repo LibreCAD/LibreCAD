@@ -47,13 +47,9 @@ struct RS_ActionDrawEllipseFociPoint::Points {
  * Constructor.
  *
  */
-RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw ellipse by foci and a point",
-                           container, graphicView)
+RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(LC_ActionContext *actionContext)
+        :LC_ActionDrawCircleBase("Draw ellipse by foci and a point", actionContext,RS2::ActionDrawEllipseFociPoint)
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionDrawEllipseFociPoint;
 }
 
 RS_ActionDrawEllipseFociPoint::~RS_ActionDrawEllipseFociPoint() = default;

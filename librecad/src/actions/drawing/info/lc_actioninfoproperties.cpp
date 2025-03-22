@@ -52,8 +52,8 @@ namespace {
 
 // todo - consider later relying on default action (probably with some specific flag) instead of this function...
 
-LC_ActionInfoProperties::LC_ActionInfoProperties(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Entity Info", container, graphicView, RS2::ActionInfoProperties){}
+LC_ActionInfoProperties::LC_ActionInfoProperties(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Entity Info", actionContext, RS2::ActionInfoProperties){}
 
 void LC_ActionInfoProperties::init(int status){
     RS_PreviewActionInterface::init(status);

@@ -25,9 +25,8 @@
 #include "rs_document.h"
 #include "lc_align.h"
 
-LC_ActionModifyAlign::LC_ActionModifyAlign(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionPreSelectionAwareBase("ModifyAlign", container, graphicView) {
-    actionType = RS2::ActionModifyAlign;
+LC_ActionModifyAlign::LC_ActionModifyAlign(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("ModifyAlign", actionContext, RS2::ActionModifyAlign) {
 }
 
 void LC_ActionModifyAlign::init(int status) {

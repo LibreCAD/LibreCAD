@@ -38,10 +38,7 @@
 class RS_ActionModifyTrim:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyTrim(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool both = false);
+    RS_ActionModifyTrim(LC_ActionContext *actionContext,bool both = false);
     ~RS_ActionModifyTrim() override;
     void init(int status) override;
     void finish(bool updateTB) override;

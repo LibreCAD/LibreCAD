@@ -26,11 +26,10 @@
 #include <QObject>
 #include "rs_previewactioninterface.h"
 
-class LC_ActionDrawMidLine: public RS_PreviewActionInterface
-{
+class LC_ActionDrawMidLine: public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionDrawMidLine(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawMidLine(LC_ActionContext *actionContext);
     QStringList getAvailableCommands() override;
     double getOffset() const;
     void setOffset(double offset);

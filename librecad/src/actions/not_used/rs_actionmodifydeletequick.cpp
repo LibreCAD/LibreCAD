@@ -31,14 +31,9 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
-
-RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Quick Delete Entities",
-					container, graphicView)
+RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Quick Delete Entities", actionContext, RS2::ActionModifyDeleteQuick)
 		,en(nullptr){
-	actionType=RS2::ActionModifyDeleteQuick;
 }
 
 /**

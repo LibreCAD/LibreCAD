@@ -30,9 +30,8 @@ class LC_ActionUCSCreate:public RS_PreviewActionInterface{
 Q_OBJECT
 
 public:
-    LC_ActionUCSCreate(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionUCSCreate(LC_ActionContext *actionContext);
     ~LC_ActionUCSCreate() override;
-
     double getAngle() const {return m_angle;};
     void setAngle(double mAngle) {m_angle = mAngle;};
     bool isFixedAngle() const {return m_fixedAngle;};
@@ -47,7 +46,6 @@ protected:
         SetOrigin,
         SetAngle
     };
-
 
     RS_Vector m_originPoint = RS_Vector(false);
     RS_Vector m_xAxisPoint = RS_Vector(false);

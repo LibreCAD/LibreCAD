@@ -64,14 +64,8 @@ struct RS_ActionDrawLineAngle::Points {
     int snpPoint{SNAP_START};
 };
 
-RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    bool fixedAngle, RS2::ActionType actionType)
-    :RS_PreviewActionInterface("Draw lines with given angle",
-                               container, graphicView), pPoints(std::make_unique<Points>()){
-
-    this->actionType = actionType;
+RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(LC_ActionContext *actionContext, bool fixedAngle, RS2::ActionType actionType)
+    :RS_PreviewActionInterface("Draw lines with given angle", actionContext, actionType), pPoints(std::make_unique<Points>()){
     pPoints->fixedAngle = fixedAngle;
     reset();
 }

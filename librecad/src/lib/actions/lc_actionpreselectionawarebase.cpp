@@ -30,9 +30,9 @@
 #include "rs_overlaybox.h"
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
-    const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
+    const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType,
     const QList<RS2::EntityType> &entityTypeList, const bool countSelectionDeep)
-    :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
+    :RS_ActionSelectBase(name, actionContext, actionType, entityTypeList),
     countDeep(countSelectionDeep){}
 
 void LC_ActionPreSelectionAwareBase::doTrigger() {

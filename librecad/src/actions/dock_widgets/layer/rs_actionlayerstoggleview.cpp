@@ -33,11 +33,8 @@
 #include "rs_graphic.h"
 #include "rs_layer.h"
 
-RS_ActionLayersToggleView::RS_ActionLayersToggleView(
-                                RS_EntityContainer& container,
-                                RS_GraphicView& graphicView,
-                                RS_Layer* layer)
-    : RS_ActionInterface("Toggle Layer Visibility", container, graphicView)
+RS_ActionLayersToggleView::RS_ActionLayersToggleView(LC_ActionContext *actionContext, RS_Layer* layer)
+    : RS_ActionInterface("Toggle Layer Visibility", actionContext)
     , a_layer(layer) {}
 
 void RS_ActionLayersToggleView::trigger() {

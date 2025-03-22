@@ -81,13 +81,14 @@ public:
     bool hasActionGroup(QString categoryName);
     LC_ActionGroup* getActionGroup(QString groupName);
     void fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames);
+
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);
     void onOptionsChanged();
 private:
-    QMap<QString, QAction*> a_map; // should be initialized by action factory by call of loadShortcuts()
-    LC_ShortcutsManager shortcutsManager;
+    QMap<QString, QAction*> m_actionsMap; // should be initialized by action factory by call of loadShortcuts()
+    LC_ShortcutsManager m_shortcutsManager;
     QList<bool> snap_memory;
 };
 

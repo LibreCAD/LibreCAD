@@ -44,12 +44,9 @@ namespace {
     const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc/*, RS2::EntityParabola,RS2::EntityEllipse*/};
 }
 
-RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Trim Entity by a given amount",
-                               container, graphicView), trimEntity(nullptr), trimCoord(new RS_Vector{}), distance(0.0), distanceIsTotalLength(false){
-    actionType = RS2::ActionModifyTrimAmount;
+RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Trim Entity by a given amount",actionContext, RS2::ActionModifyTrimAmount)
+    , trimEntity(nullptr), trimCoord(new RS_Vector{}), distance(0.0), distanceIsTotalLength(false){
 }
 
 RS_ActionModifyTrimAmount::~RS_ActionModifyTrimAmount() = default;

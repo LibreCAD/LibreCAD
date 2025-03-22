@@ -26,10 +26,8 @@
 #include "rs_entitycontainer.h"
 
 
-LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,
-                                                           RS_EntityContainer &container,
-                                                           RS_GraphicView &graphicView, RS2::ActionType actionType)
-                                                           :RS_PreviewActionInterface(name, container, graphicView,actionType){}
+LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
+                                                           :RS_PreviewActionInterface(name, m_actionContext,actionType){}
 
 void LC_ActionModifySelectionBase::onMouseMoveEvent(int status, LC_MouseEvent *event) {
     RS_PreviewActionInterface::onMouseMoveEvent(status, event);

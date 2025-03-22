@@ -52,6 +52,8 @@
 #include "rs_point.h"
 #include "rs_preview.h"
 #include "rs_previewactioninterface.h"
+
+#include "lc_actioncontext.h"
 #include "rs_settings.h"
 
 // fixme - sand - consider more generic support of overlays and containers,
@@ -64,13 +66,10 @@
  * Sets the entity container on which the action class inherited
  * from this interface operates.
  */
-RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
-                                                     RS_EntityContainer& container,
-                                                     RS_GraphicView& graphicView,
+RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,LC_ActionContext *actionContext,
                                                      RS2::ActionType actionType) :
-    RS_ActionInterface(name, container, graphicView, actionType)
-  ,preview(std::make_unique<RS_Preview>(&container)), highlight(std::make_unique<LC_Highlight>())
-{
+    RS_ActionInterface(name, actionContext, actionType)
+  ,preview(std::make_unique<RS_Preview>(actionContext->getEntityContainer())), highlight(std::make_unique<LC_Highlight>()){
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);
 

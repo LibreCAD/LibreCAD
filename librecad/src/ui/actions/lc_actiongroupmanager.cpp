@@ -79,7 +79,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
         connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
     }
 
-    shortcutsManager = LC_ShortcutsManager();
+    m_shortcutsManager = LC_ShortcutsManager();
 }
 
 void LC_ActionGroupManager::sortGroupsByName(QList<LC_ActionGroup *> &list) {
@@ -159,44 +159,44 @@ void LC_ActionGroupManager::toggleTools(bool state) {
 }
 
 void LC_ActionGroupManager::onOptionsChanged() {
-    shortcutsManager.updateActionTooltips(a_map);
+    m_shortcutsManager.updateActionTooltips(m_actionsMap);
 }
 
 void LC_ActionGroupManager::assignShortcutsToActions(QMap<QString, QAction *> &map, std::vector<LC_ShortcutInfo> &shortcutsList) {
-    shortcutsManager.assignShortcutsToActions(map, shortcutsList);
+    m_shortcutsManager.assignShortcutsToActions(map, shortcutsList);
 }
 
 int LC_ActionGroupManager::loadShortcuts([[maybe_unused]] const QMap<QString, QAction *> &map) {
 //    a_map = map;
-    int loadResult = shortcutsManager.loadShortcuts(a_map);
+    int loadResult = m_shortcutsManager.loadShortcuts(m_actionsMap);
     return loadResult;
 }
 
 int LC_ActionGroupManager::loadShortcuts(const QString &fileName, QMap<QString, QKeySequence> *result) {
-    int loadResult = shortcutsManager.loadShortcuts(fileName, result);
+    int loadResult = m_shortcutsManager.loadShortcuts(fileName, result);
     return loadResult;
 }
 
 int LC_ActionGroupManager::saveShortcuts(const QList<LC_ShortcutInfo*> &shortcutsList, const QString &fileName) {
-    int saveResult = shortcutsManager.saveShortcuts(fileName, shortcutsList);
+    int saveResult = m_shortcutsManager.saveShortcuts(fileName, shortcutsList);
     return saveResult;
 }
 
 int LC_ActionGroupManager::saveShortcuts(QMap<QString, LC_ShortcutInfo *> shortcutsMap) {
-    int saveResult = shortcutsManager.saveShortcuts(shortcutsMap, a_map);
+    int saveResult = m_shortcutsManager.saveShortcuts(shortcutsMap, m_actionsMap);
     return saveResult;
 }
 
 const QString LC_ActionGroupManager::getShortcutsMappingsFolder() {
-    return shortcutsManager.getShortcutsMappingsFolder();
+    return m_shortcutsManager.getShortcutsMappingsFolder();
 }
 
 QMap<QString, QAction *> &LC_ActionGroupManager::getActionsMap() {
-    return a_map;
+    return m_actionsMap;
 }
 
-QAction *LC_ActionGroupManager::getActionByName(const QString& name) {
-    return a_map[name];
+QAction* LC_ActionGroupManager::getActionByName(const QString& name) {
+     return m_actionsMap.value(name, nullptr);
 }
 
 bool LC_ActionGroupManager::hasActionGroup(QString categoryName) {

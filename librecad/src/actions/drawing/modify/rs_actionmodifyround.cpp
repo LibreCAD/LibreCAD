@@ -65,12 +65,8 @@ struct RS_ActionModifyRound::Points {
 // fixme - review cases for rounding circles and arcs, it's weird enough
 // fixme - potentially, it's better to support more fine grained trim mode that will control which entities should be trimmed (first, second, both)?
 
-RS_ActionModifyRound::RS_ActionModifyRound(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Round Entities",
-                               container, graphicView), pPoints(std::make_unique<Points>()), lastStatus(SetEntity1){
-    setActionType(RS2::ActionModifyRound);
+RS_ActionModifyRound::RS_ActionModifyRound(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Round Entities", actionContext, RS2::ActionModifyRound), pPoints(std::make_unique<Points>()), lastStatus(SetEntity1){
 }
 
 RS_ActionModifyRound::~RS_ActionModifyRound() = default;

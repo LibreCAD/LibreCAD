@@ -28,9 +28,7 @@
 class LC_ActionDrawPointsLattice:public RS_PreviewActionInterface{
    Q_OBJECT
 public:
-    LC_ActionDrawPointsLattice(RS_EntityContainer &container,
-                               RS_GraphicView &graphicView);
-
+    LC_ActionDrawPointsLattice(LC_ActionContext *actionContext);
     int getColumnPointsCount() const;
     void setColumnPointsCount(int pointsByX);
     int getRowPointsCount() const;

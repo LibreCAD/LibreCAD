@@ -37,14 +37,11 @@ namespace{
  *
  * @author Dongxu Li
  */
-RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView)
+RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Tangent Orthogonal", actionContext,RS2::ActionDrawLineOrthTan)
 	,normal(nullptr)
 	,tangent(nullptr)
 	,circle(nullptr){
-	actionType=RS2::ActionDrawLineOrthTan;
 }
 
 

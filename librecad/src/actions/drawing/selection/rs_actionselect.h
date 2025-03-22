@@ -40,13 +40,9 @@ class RS_ActionSelect:public RS_ActionInterface {
 Q_OBJECT
 
 public:
-    RS_ActionSelect(
-        QG_ActionHandler *a_handler,
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
+    RS_ActionSelect(QG_ActionHandler *a_handler,LC_ActionContext *actionContext,
         RS2::ActionType nextAction,
         QList<RS2::EntityType> allowedEntityTypes = {});
-
     void init(int status) override;
     void resume() override;
     int countSelected();

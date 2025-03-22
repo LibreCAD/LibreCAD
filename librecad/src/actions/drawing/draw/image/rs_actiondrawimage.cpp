@@ -48,13 +48,10 @@ struct RS_ActionDrawImage::ImageData {
 /**
  * Constructor.
  */
-RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Image",
-                               container, graphicView)
+RS_ActionDrawImage::RS_ActionDrawImage(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Image", actionContext, RS2::ActionDrawImage)
     , pImg(std::make_unique<ImageData>())
 	, lastStatus(ShowDialog){
-	actionType=RS2::ActionDrawImage;
 }
 
 RS_ActionDrawImage::~RS_ActionDrawImage() = default;

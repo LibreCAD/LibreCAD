@@ -33,13 +33,10 @@
 #include "rs_line.h"
 #include "rs_preview.h"
 
-RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Draw Tangents 1", container, graphicView)
+RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(LC_ActionContext *actionContext)
+	:RS_PreviewActionInterface("Draw Tangents 1", actionContext,RS2::ActionDrawLineTangent1)
 	,tangent(nullptr)
 	,point(new RS_Vector{}){
-    actionType=RS2::ActionDrawLineTangent1;
 }
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;

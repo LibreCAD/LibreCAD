@@ -38,10 +38,8 @@
 #include "rs_commandevent.h"
 #include "lc_linemath.h"
 
-LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, RS_EntityContainer &container,
-                                                            RS_GraphicView &graphicView,
-                                                            RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, container,graphicView,actionType),number(3), pPoints(std::make_unique<Points>()), lastStatus(SetPoint1){}
+LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext, actionType),number(3), pPoints(std::make_unique<Points>()), lastStatus(SetPoint1){}
 
 LC_ActionDrawLinePolygonBase::~LC_ActionDrawLinePolygonBase() = default;
 

@@ -38,10 +38,8 @@ class RS_Polyline;
  */
 class LC_AbstractActionWithPreview :public RS_PreviewActionInterface{
    Q_OBJECT
-
 public:
-    LC_AbstractActionWithPreview(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
-
+    LC_AbstractActionWithPreview(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
    // inherited methods with basic template method implementation
     void init(int status) override;
     void finish(bool updateTB) override;
@@ -76,8 +74,6 @@ public:
 
 
 protected:
-
-
     /**
      * Entity that is highlighted as part of mouse selection operation (if any)
      */

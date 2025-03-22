@@ -38,9 +38,8 @@ namespace {
 // fixme - potentially, the action may be expanded even more - and used to expand circle, arcs, and ellipses to lines.
 // fixme - todo - sand - potentially, the action may be improved by specifying maximum distance of approximation (instead of segments count).
 //  Need to think about this...
-LC_ActionSplineExplode::LC_ActionSplineExplode(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionSplineModifyBase("SplineExplode", container, graphicView) {
-    actionType = RS2::ActionDrawSplineExplode;
+LC_ActionSplineExplode::LC_ActionSplineExplode(LC_ActionContext *actionContext)
+    :LC_ActionSplineModifyBase("SplineExplode", actionContext, actionType = RS2::ActionDrawSplineExplode) {
 }
 
 void LC_ActionSplineExplode::doTrigger() {

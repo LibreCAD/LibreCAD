@@ -30,11 +30,9 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-RS_ActionSelectLayer::RS_ActionSelectLayer(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Select Layers", container, graphicView), en(nullptr){
-    actionType = RS2::ActionSelectLayer;
+RS_ActionSelectLayer::RS_ActionSelectLayer(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Select Layers", actionContext,RS2::ActionSelectLayer)
+    , en(nullptr){
 }
 
 void RS_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {

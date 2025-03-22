@@ -52,10 +52,8 @@ struct LC_ActionDrawSplinePoints::Points {
 	std::vector<RS_Vector> undoBuffer;
 };
 
-LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView):
-    RS_ActionDrawSpline(container, graphicView), pPoints(std::make_unique<Points>()){
+LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(LC_ActionContext *actionContext)
+    :RS_ActionDrawSpline(actionContext), pPoints(std::make_unique<Points>()){
     actionType = RS2::ActionDrawSplinePoints;
     setName("DrawSplinePoints");
 }

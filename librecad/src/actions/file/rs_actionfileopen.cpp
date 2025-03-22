@@ -26,9 +26,8 @@
 
 #include "rs_actionfileopen.h"
 
-RS_ActionFileOpen::RS_ActionFileOpen(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_ActionInterface("File Open", container, graphicView) {}
+RS_ActionFileOpen::RS_ActionFileOpen(LC_ActionContext *actionContext)
+        :RS_ActionInterface("File Open", actionContext) {}
 
 
 void RS_ActionFileOpen::trigger() {

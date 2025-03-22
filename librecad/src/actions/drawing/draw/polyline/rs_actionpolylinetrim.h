@@ -39,9 +39,7 @@ class RS_Entity;
 class RS_ActionPolylineTrim:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPolylineTrim(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionPolylineTrim(LC_ActionContext *actionContext);
     void init(int status) override;
     void finish(bool updateTB) override;
 protected:

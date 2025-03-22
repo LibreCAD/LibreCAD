@@ -37,13 +37,10 @@
 #include "rs_actioninterface.h"
 #include "qg_arctangentialoptions.h"
 
-RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
-                                                       RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw arcs tangential",
-                               container, graphicView)
+RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw arcs tangential",actionContext, RS2::ActionDrawArcTangential)
     , point(false)
     , data(std::make_unique<RS_ArcData>()){
-    actionType=RS2::ActionDrawArcTangential;
 }
 
 RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
@@ -118,7 +115,7 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
     switch (status){
         case SetBaseEntity: {
             deleteSnapper();
-            RS_Entity *entity = catchAndDescribe(e, RS2::ResolveAll);
+            auto entity = catchAndDescribe(e, RS2::ResolveAll);
             if (entity != nullptr){
                 if (entity->isAtomic()){
                     highlightHover(entity);
@@ -128,10 +125,9 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
         }
         case SetEndAngle: {
             highlightSelected(baseEntity);
-            RS_Vector center;
             if (byRadius){
                 if (e->isShift){ // double check for efficiency, eliminate center forecasting calculations if not needed
-                    center = forecastArcCenter();
+                    auto center = forecastArcCenter();
                     point = getSnapAngleAwarePoint(e, center, point, true);
                 }
             }
@@ -140,7 +136,7 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                 RS_Arc* arc;
                 bool alternateArcMode = e->isControl;
                 if (alternateArcMode) {
-                    RS_ArcData tmpArcData = *data;
+                    auto tmpArcData = *data;
                     tmpArcData.reversed = !data->reversed;
                     arc = previewToCreateArc(tmpArcData);
                 }
@@ -148,8 +144,8 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     arc = previewToCreateArc(*data);
                 }
                 if (showRefEntitiesOnPreview) {
-                    RS_Vector &center = data->center;
-                    const RS_Vector &startPoint = arc->getStartpoint();
+                    auto &center = data->center;
+                    const auto &startPoint = arc->getStartpoint();
                     previewRefPoint(center);
                     previewRefPoint(startPoint);
                     if (byRadius) {
@@ -159,10 +155,10 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     } else {
                         previewRefLine(center, arc->getEndpoint());
                         previewRefLine(center, startPoint);
-                        RS_Vector nearest = arc->getNearestPointOnEntity(point, false);
+                        auto nearest = arc->getNearestPointOnEntity(point, false);
                         previewRefLine(center, point);
                         previewRefSelectablePoint(nearest);
-                        RS_ArcData circleArcData = arc->getData();
+                        auto circleArcData = arc->getData();
                         std::swap(circleArcData.angle1, circleArcData.angle2);
                         previewRefArc(circleArcData);
                     }

@@ -43,11 +43,9 @@ struct RS_ActionDrawLineHorVert::Points {
 	RS_Vector p2;
 };
 
-RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw horizontal/vertical lines",
-                               container, graphicView), pPoints(std::make_unique<Points>()){
+RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw horizontal/vertical lines",actionContext),
+    pPoints(std::make_unique<Points>()){
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
 }
@@ -60,20 +58,15 @@ void RS_ActionDrawLineHorVert::reset(){
 
 void RS_ActionDrawLineHorVert::init(int status){
     RS_PreviewActionInterface::init(status);
-
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::init");
 }
 
 void RS_ActionDrawLineHorVert::doTrigger() {
     auto *line = new RS_Line(container, pPoints->data);
-
     setPenAndLayerToActive(line);
-
     moveRelativeZero(line->getMiddlePoint());
-
     undoCycleAdd(line);
-
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
 }
 
@@ -95,7 +88,6 @@ void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]]int status, LC_M
 
 void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
-
     switch (status) {
         case SetStartpoint: {
             pPoints->p1 = mouse;

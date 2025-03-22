@@ -41,11 +41,9 @@ struct RS_ActionModifyMoveRotate::Points {
     RS_Vector targetPoint{false};
 };
 
-RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(RS_EntityContainer& container,
-                                                     RS_GraphicView& graphicView)
-    :LC_ActionModifyBase("Move and Rotate Entities",container, graphicView)
+RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Move and Rotate Entities", actionContext, RS2::ActionModifyMoveRotate)
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionModifyMoveRotate;
 }
 
 RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;

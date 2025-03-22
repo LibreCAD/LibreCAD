@@ -40,10 +40,7 @@
 class RS_ActionInfoDist2:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoDist2(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool fromPointToEntity = false);
+    RS_ActionInfoDist2(LC_ActionContext *actionContext,bool fromPointToEntity = false);
     ~RS_ActionInfoDist2() override;
     void init(int status) override;
     bool isUseNearestPointOnEntity() const {return nearestPointShouldBeOnEntity;};

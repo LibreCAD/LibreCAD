@@ -44,28 +44,21 @@ struct RS_ActionDrawLineRectangle::Points {
     RS_Vector corner2;
 };
 
-RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw rectangles",
-                               container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionDrawLineRectangle;
+RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw rectangles",actionContext, RS2::ActionDrawLineRectangle), pPoints(std::make_unique<Points>()){
 }
 
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 
-
-
 void RS_ActionDrawLineRectangle::doTrigger() {
     auto *polyline = new RS_Polyline(container);
 
-// create and add rectangle:
+    // create and add rectangle:
     RS_Vector worldCorner1 = pPoints->corner1;
     RS_Vector worldCorner3 = pPoints->corner2;
 
     RS_Vector worldCorner2,worldCorner4;
     calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
-
 
     polyline->addVertex(worldCorner1);
     polyline->addVertex(worldCorner2);
@@ -75,9 +68,7 @@ void RS_ActionDrawLineRectangle::doTrigger() {
     polyline->endPolyline();
 
     setPenAndLayerToActive(polyline);
-
     moveRelativeZero(worldCorner3);
-
     undoCycleAdd(polyline);
 }
 
@@ -119,7 +110,6 @@ void RS_ActionDrawLineRectangle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             break;
     }
 }
-
 
 void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);

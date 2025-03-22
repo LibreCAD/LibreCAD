@@ -30,9 +30,7 @@
 class LC_ActionPasteToPoints: public LC_ActionPreSelectionAwareBase{
     Q_OBJECT
 public:
-    LC_ActionPasteToPoints(RS_EntityContainer &container,
-                           RS_GraphicView &graphicView);
-
+    LC_ActionPasteToPoints(LC_ActionContext *actionContext);
     double getAngle() const;
     void setAngle(double angle);
     double getScaleFactor() const;

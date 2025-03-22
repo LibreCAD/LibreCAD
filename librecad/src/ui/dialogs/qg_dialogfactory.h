@@ -154,7 +154,6 @@ public:
     bool requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) override;
     bool requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) override;
     int requestOptionsGeneralDialog() override;
-    void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;
     bool requestOptionsMakerCamDialog() override;
 
@@ -163,7 +162,7 @@ public:
                                     const QString& filter = QString(),
                                     QString* selectedFilter = 0) override;
 
-    void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) override;
+
 /**
  * \brief updateMouseWidget Called when an action has a mouse hint.
  * \param left mouse hint for left button
@@ -179,19 +178,15 @@ public:
 
     static QString extToFormat(const QString& ext);
     void displayBlockName(const QString& blockName, const bool& display) override;
-    void setCurrentQAction(QAction *action) override;
+    // void setCurrentQAction(QAction *action) override;
 
 protected:
 //! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;
-//! Pointer to the widget which can host individual tool options
-    QToolBar* optionWidget = nullptr;
-    LC_OptionsWidgetsHolder* optionWidgetHolder = nullptr;
-    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderSnapToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderOptionsToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder * lastUsedSnapOptionsWidgetHolder = nullptr;
+
+
 //! Pointer to the coordinate widget.
-    QG_CoordinateWidget* coordinateWidget = nullptr;
+
 //! Pointer to the mouse widget.
     QG_MouseWidget* mouseWidget = nullptr;
 //! Pointer to the selection widget.
@@ -201,7 +196,7 @@ protected:
     LC_QTStatusbarManager* statusBarManager = nullptr;
     LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
+
 
 
 };

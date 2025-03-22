@@ -31,10 +31,8 @@
 #include "rs_information.h"
 
 // fixme - review
-RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Tool Regen Dim",
-                    container, graphicView) {}
+RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Tool Regen Dim", actionContext) {}
 
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);
@@ -42,7 +40,6 @@ void RS_ActionToolRegenerateDimensions::init(int status) {
 }
 
 void RS_ActionToolRegenerateDimensions::trigger() {
-
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
     int num = 0;

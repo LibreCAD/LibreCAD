@@ -22,7 +22,8 @@
 
 #include "lc_actionselectpoints.h"
 
-LC_ActionSelectPoints::LC_ActionSelectPoints(RS_EntityContainer &container, RS_GraphicView &graphicView):RS_ActionSelectWindow(RS2::EntityPoint, container, graphicView, true) {
+LC_ActionSelectPoints::LC_ActionSelectPoints(LC_ActionContext *actionContext)
+    :RS_ActionSelectWindow(RS2::EntityPoint, actionContext, true) {
     actionType = RS2::ActionSelectPoints;
 }
 

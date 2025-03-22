@@ -38,11 +38,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @param container
  * @param graphicView
  */
-LC_ActionDrawCross::LC_ActionDrawCross(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_AbstractActionWithPreview("Draw Cross", container, graphicView), entity(nullptr){
-    actionType = RS2::ActionDrawCross;
+LC_ActionDrawCross::LC_ActionDrawCross(LC_ActionContext *actionContext)
+    :LC_AbstractActionWithPreview("Draw Cross", actionContext,RS2::ActionDrawCross), entity(nullptr){
 }
 
 LC_ActionDrawCross::~LC_ActionDrawCross() = default;

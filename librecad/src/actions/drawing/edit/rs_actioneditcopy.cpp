@@ -39,12 +39,11 @@
  *
  * @param undo true for undo and false for redo.
  */
-RS_ActionEditCopyPaste::RS_ActionEditCopyPaste(ActionMode actionMode,
-                                               RS_EntityContainer& container,
-                                               RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Edit Copy",container, graphicView)
-        , mode{actionMode}
-        , referencePoint{new RS_Vector{}}{
+// fixme - sand - no action type set!!!
+RS_ActionEditCopyPaste::RS_ActionEditCopyPaste(ActionMode actionMode, LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Edit Copy", actionContext)
+    , mode{actionMode}
+    , referencePoint{new RS_Vector{}}{
 }
 
 RS_ActionEditCopyPaste::~RS_ActionEditCopyPaste() = default;

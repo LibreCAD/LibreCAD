@@ -46,11 +46,9 @@ struct RS_ActionZoomWindow::Points {
  *          in x and y will stay the same. false Exactly the chosen
  *          area will be fit to the viewport.
  */
-RS_ActionZoomWindow::RS_ActionZoomWindow(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView, bool keepAspectRatio)
-    :RS_PreviewActionInterface("Zoom Window",
-                               container, graphicView), pPoints(std::make_unique<Points>()), keepAspectRatio(keepAspectRatio){
+RS_ActionZoomWindow::RS_ActionZoomWindow(LC_ActionContext *actionContext, bool keepAspectRatio)
+    :RS_PreviewActionInterface("Zoom Window",actionContext)
+    , pPoints(std::make_unique<Points>()), keepAspectRatio(keepAspectRatio){
 }
 
 RS_ActionZoomWindow::~RS_ActionZoomWindow() = default;

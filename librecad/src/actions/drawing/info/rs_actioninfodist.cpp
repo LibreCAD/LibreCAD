@@ -39,11 +39,8 @@ struct RS_ActionInfoDist::Points {
     RS_Vector point2;
 };
 
-RS_ActionInfoDist::RS_ActionInfoDist(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Info Dist", container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionInfoDistPoint2Point;
+RS_ActionInfoDist::RS_ActionInfoDist(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Info Dist", actionContext, RS2::ActionInfoDistPoint2Point), pPoints(std::make_unique<Points>()){
 }
 
 RS_ActionInfoDist::~RS_ActionInfoDist() = default;

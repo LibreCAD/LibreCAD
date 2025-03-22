@@ -44,13 +44,10 @@ struct RS_ActionDrawCircle2P::Points {
     RS_Vector point2;
 };
 
-RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView)
-    :LC_ActionDrawCircleBase("Draw circles",
-                               container, graphicView)
+RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw circles",actionContext, RS2::ActionDrawCircle2P)
     , data(new RS_CircleData())
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionDrawCircle2P;
     reset();
 }
 

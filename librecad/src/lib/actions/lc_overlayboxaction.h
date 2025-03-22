@@ -26,20 +26,13 @@
 #include "rs_previewactioninterface.h"
 #include "rs_overlaybox.h"
 
-
 class LC_OverlayBoxAction:public RS_PreviewActionInterface{
 public:
-    LC_OverlayBoxAction(
-        const char *name,
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        RS2::ActionType actionType = RS2::ActionNone);
-
+    LC_OverlayBoxAction(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~LC_OverlayBoxAction() override = default;
 protected:
     LC_OverlayBoxOptions overlayBoxOptions;
     void drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2);
-
     void initFromSettings() override;
 };
 

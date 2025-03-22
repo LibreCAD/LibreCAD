@@ -65,9 +65,7 @@ struct LC_CrossData {
 class LC_ActionDrawCross:public LC_AbstractActionWithPreview {
 Q_OBJECT
 public:
-    LC_ActionDrawCross(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    LC_ActionDrawCross(LC_ActionContext *actionContext);
     ~LC_ActionDrawCross() override;
 
     double getLenX() const {return lenX;};

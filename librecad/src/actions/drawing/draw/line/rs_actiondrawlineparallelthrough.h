@@ -40,9 +40,7 @@ class RS_Vector;
 class RS_ActionDrawLineParallelThrough:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineParallelThrough(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawLineParallelThrough(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineParallelThrough() override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB) override;

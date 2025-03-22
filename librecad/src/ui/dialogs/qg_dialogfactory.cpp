@@ -125,36 +125,9 @@ void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
     RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
 }
 
-void QG_DialogFactory::addOptionsWidget(QWidget * options){
-    optionWidgetHolder->addOptionsWidget(options);
-    optionWidget->update();
-}
 
-void QG_DialogFactory::removeOptionsWidget(QWidget * options){
-    optionWidgetHolder->removeOptionsWidget(options);
-
-}
 void QG_DialogFactory::hideSnapOptions(){
     getSnapOptionsHolder()->hideSnapOptions();
-}
-
-LC_SnapOptionsWidgetsHolder* QG_DialogFactory::getSnapOptionsHolder(){
-    LC_SnapOptionsWidgetsHolder* result = nullptr;
-    bool useSnapToolbar = LC_GET_ONE_BOOL("Appearance", "showSnapOptionsInSnapToolbar", false);
-    if (useSnapToolbar){
-        result = snapOptionsWidgetHolderSnapToolbar;
-        snapOptionsWidgetHolderOptionsToolbar->setVisible(false);
-    }
-    else{
-        result = snapOptionsWidgetHolderOptionsToolbar;
-        snapOptionsWidgetHolderOptionsToolbar->setVisible(true);
-    }
-    if (lastUsedSnapOptionsWidgetHolder != nullptr && lastUsedSnapOptionsWidgetHolder != result){
-        result->updateBy(lastUsedSnapOptionsWidgetHolder);
-    }
-    lastUsedSnapOptionsWidgetHolder = result;
-
-    return result;
 }
 
 /**
@@ -932,10 +905,7 @@ int QG_DialogFactory::requestOptionsGeneralDialog() {
     return result;
 }
 
-void QG_DialogFactory::requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) {
-    LC_ActionsShortcutsDialog dlg(parent, pManager);
-    dlg.exec();
-}
+
 
 /**
  * Shows dialog for drawing options.
@@ -949,9 +919,7 @@ int QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIn
 }
 
 bool QG_DialogFactory::requestOptionsMakerCamDialog() {
-
     QG_DlgOptionsMakerCam dlg(parent);
-
     return (dlg.exec() == QDialog::Accepted);
 }
 
@@ -963,15 +931,7 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
     return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
 }
 
-/**
- * Called whenever the mouse position changed.
- */
-void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
-                                              const RS_Vector& rel, bool updateFormat) {
-    if (coordinateWidget != nullptr) {
-        coordinateWidget->setCoordinates(abs, rel, updateFormat);
-    }
-}
+
 
 void QG_DialogFactory::updateMouseWidget(const QString& left,
                                          const QString& right,
@@ -989,17 +949,7 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
     }
 }
 
-void QG_DialogFactory::setCurrentQAction(QAction* q_action) {
-    if (mouseWidget != nullptr){
-        mouseWidget->setCurrentQAction(q_action);
-    }
-    if (statusBarManager != nullptr){
-        statusBarManager->setCurrentQAction(q_action);
-    }
-    if (optionWidgetHolder != nullptr){
-        optionWidgetHolder->setCurrentQAction(q_action);
-    }
-}
+
 
 void QG_DialogFactory::clearMouseWidgetIcon() {
    if (mouseWidget != nullptr){

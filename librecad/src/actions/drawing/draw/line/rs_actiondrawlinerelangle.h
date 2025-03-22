@@ -41,11 +41,7 @@ class RS_Vector;
 class RS_ActionDrawLineRelAngle:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineRelAngle(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        double angle = 0.0,
-        bool fixedAngle = false);
+    RS_ActionDrawLineRelAngle(LC_ActionContext *actionContext,double angle = 0.0,bool fixedAngle = false);
     ~RS_ActionDrawLineRelAngle() override;
     RS2::ActionType rtti() const override;
     void finish(bool updateTB) override;

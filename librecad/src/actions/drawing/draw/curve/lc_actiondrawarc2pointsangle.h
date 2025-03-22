@@ -28,7 +28,7 @@
 class LC_ActionDrawArc2PointsAngle:public LC_ActionDrawArc2PointsBase{
     Q_OBJECT
 public:
-    LC_ActionDrawArc2PointsAngle(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawArc2PointsAngle(LC_ActionContext *actionContext);
     ~LC_ActionDrawArc2PointsAngle() override = default;
 protected:
     bool createArcData(RS_ArcData &data, int status, RS_Vector vector, bool alternate, bool reportErrors) override;

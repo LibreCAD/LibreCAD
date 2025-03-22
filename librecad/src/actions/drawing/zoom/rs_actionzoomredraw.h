@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action triggers an auto zoom.
  *
@@ -38,9 +37,7 @@
 class RS_ActionZoomRedraw : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionZoomRedraw(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-
+    RS_ActionZoomRedraw(LC_ActionContext *actionContext);
 	void init(int status) override;
 	void trigger() override;
 };

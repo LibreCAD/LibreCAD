@@ -29,7 +29,7 @@
 class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase{
     Q_OBJECT
 public:
-    LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionRemoveSplinePoints(LC_ActionContext *actionContext);
     ~LC_ActionRemoveSplinePoints() override = default;
     void setStatus(int status) override;
 protected:

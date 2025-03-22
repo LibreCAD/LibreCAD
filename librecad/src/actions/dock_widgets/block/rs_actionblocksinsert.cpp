@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QMouseEvent>
 
 #include "rs_actionblocksinsert.h"
@@ -39,17 +38,13 @@
 #include "rs_preview.h"
 #include "qg_insertoptions.h"
 
-
 /**
  * Constructor.
  */
-RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
-											 RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Blocks Insert",
-							   container, graphicView)
+RS_ActionBlocksInsert::RS_ActionBlocksInsert(LC_ActionContext *actionContext)
+	:RS_PreviewActionInterface("Blocks Insert",actionContext, RS2::ActionBlocksInsert)
 	,block(nullptr)
 	,lastStatus(SetUndefined){
-	actionType = RS2::ActionBlocksInsert;
 	reset();    // init data Member
 }
 

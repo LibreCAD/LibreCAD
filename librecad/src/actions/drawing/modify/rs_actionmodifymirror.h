@@ -39,9 +39,7 @@ struct RS_MirrorData;
 class RS_ActionModifyMirror:public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyMirror(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionModifyMirror(LC_ActionContext *actionContext);
     ~RS_ActionModifyMirror() override;
     bool isMirrorToExistingLine() const {return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);

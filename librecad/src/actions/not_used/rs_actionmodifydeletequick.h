@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to delete entities
  * directly (every click removes an entity).
@@ -39,8 +38,7 @@
 class RS_ActionModifyDeleteQuick : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionModifyDeleteQuick(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
+    RS_ActionModifyDeleteQuick(LC_ActionContext *actionContext);
     void trigger() override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;

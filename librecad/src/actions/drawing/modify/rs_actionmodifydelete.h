@@ -37,8 +37,7 @@
 class RS_ActionModifyDelete : public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
-    RS_ActionModifyDelete(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    RS_ActionModifyDelete(LC_ActionContext *actionContext);
 protected:
     /**
      * Action States.

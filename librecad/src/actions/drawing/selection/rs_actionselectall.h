@@ -38,8 +38,7 @@
 class RS_ActionSelectAll : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionSelectAll(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView,
+    RS_ActionSelectAll(LC_ActionContext *actionContext,
                        bool select);
 
 	void init(int status) override;

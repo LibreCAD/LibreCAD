@@ -36,8 +36,7 @@
 class RS_ActionOrder : public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
-    RS_ActionOrder(RS_EntityContainer& container,
-                   RS_GraphicView& graphicView, RS2::ActionType type);
+    RS_ActionOrder(LC_ActionContext *actionContext, RS2::ActionType type);
     void drawSnapper() override;
 protected:
     RS_Entity* targetEntity = nullptr;

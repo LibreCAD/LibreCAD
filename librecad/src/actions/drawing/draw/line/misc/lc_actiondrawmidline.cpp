@@ -34,9 +34,8 @@ namespace {
     const auto enTypeList = EntityTypeList{RS2::EntityLine};
 }
 
-LC_ActionDrawMidLine::LC_ActionDrawMidLine(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("DrawMidLine", container, graphicView) {
-    actionType = RS2::ActionDrawLineMiddle;
+LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("DrawMidLine", actionContext,RS2::ActionDrawLineMiddle) {
 }
 
 void LC_ActionDrawMidLine::init(int status) {

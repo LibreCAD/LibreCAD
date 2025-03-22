@@ -29,8 +29,7 @@
 class LC_ActionDrawDimBaseline:public LC_ActionDimLinearBase{
     Q_OBJECT
 public:
-    LC_ActionDrawDimBaseline(RS_EntityContainer &container,RS_GraphicView &graphicView,RS2::ActionType type);
-
+    LC_ActionDrawDimBaseline(LC_ActionContext *actionContext,RS2::ActionType type);
     bool isFreeBaselineDistance() const;
     void setFreeBaselineDistance(bool freeDistance);
     double getBaselineDistance() const;

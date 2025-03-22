@@ -31,10 +31,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 LC_ActionDrawLineFromPointToLine::LC_ActionDrawLineFromPointToLine(
     QG_ActionHandler* a_handler,
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_AbstractActionWithPreview("Draw Line To Line", container, graphicView){
-    actionType = RS2::ActionDrawLineFromPointToLine;
+    LC_ActionContext *actionContext)
+    :LC_AbstractActionWithPreview("Draw Line To Line", actionContext,RS2::ActionDrawLineFromPointToLine){
     actionhandler = a_handler;
 }
 

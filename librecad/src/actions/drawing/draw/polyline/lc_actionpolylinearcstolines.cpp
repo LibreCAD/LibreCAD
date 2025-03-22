@@ -25,9 +25,8 @@
 #include "rs_document.h"
 #include "rs_graphicview.h"
 
-LC_ActionPolylineArcsToLines::LC_ActionPolylineArcsToLines(RS_EntityContainer &container, RS_GraphicView &graphicView)
-:RS_PreviewActionInterface("PolylineArcsToLines", container, graphicView) {
-    actionType = RS2::ActionPolylineArcsToLines;
+LC_ActionPolylineArcsToLines::LC_ActionPolylineArcsToLines(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("PolylineArcsToLines", actionContext, RS2::ActionPolylineArcsToLines) {
 }
 
 LC_ActionPolylineArcsToLines::~LC_ActionPolylineArcsToLines() {

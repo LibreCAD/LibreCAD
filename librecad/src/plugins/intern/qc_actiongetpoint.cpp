@@ -42,10 +42,9 @@ struct QC_ActionGetPoint::Points {
     QString message;
 };
 
-QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Get Point",
-						   container, graphicView)
+// fixme - sand actiontype is not set???
+QC_ActionGetPoint::QC_ActionGetPoint(LC_ActionContext *actionContext)
+        :RS_PreviewActionInterface("Get Point",actionContext)
         , canceled(false)
 		, completed{false}
 		, setTargetPoint{false}

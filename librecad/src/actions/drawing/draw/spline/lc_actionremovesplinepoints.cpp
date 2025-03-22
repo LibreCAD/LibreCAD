@@ -31,8 +31,8 @@ namespace {
     const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
 }
 
-LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView):LC_ActionSplineModifyBase("SplineRemovePoint", container, graphicView) {
-    actionType = RS2::ActionDrawSplinePointRemove;
+LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(LC_ActionContext *actionContext)
+    :LC_ActionSplineModifyBase("SplineRemovePoint", actionContext,RS2::ActionDrawSplinePointRemove) {
 }
 
 void LC_ActionRemoveSplinePoints::doAfterTrigger() {

@@ -25,8 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_abstractactionwithpreview.h"
 
-class LC_ActionModifyLineGap:public LC_AbstractActionWithPreview
-{
+class LC_ActionModifyLineGap:public LC_AbstractActionWithPreview{
     Q_OBJECT
 
     /**
@@ -38,7 +37,7 @@ class LC_ActionModifyLineGap:public LC_AbstractActionWithPreview
     };
 
 public:
-    LC_ActionModifyLineGap(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionModifyLineGap(LC_ActionContext *actionContext);
 
     double getGapSize()const{return gapSize;};
     void setGapSize(double value){gapSize =value;};

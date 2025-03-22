@@ -36,7 +36,7 @@
 class LC_ActionDimArc : public RS_ActionDimension{
    Q_OBJECT
 public:
-    LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
+    LC_ActionDimArc(LC_ActionContext *actionContext);
     ~LC_ActionDimArc() override;
     QStringList getAvailableCommands() override;
 protected:

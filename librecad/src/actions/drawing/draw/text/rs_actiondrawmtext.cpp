@@ -35,20 +35,15 @@
 #include "rs_preview.h"
 #include "qg_mtextoptions.h"
 
-RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Text",
-						   container, graphicView)
-        ,pos(std::make_unique<RS_Vector>())
-		,textChanged(true){
-    actionType=RS2::ActionDrawMText;
+RS_ActionDrawMText::RS_ActionDrawMText(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Text",actionContext, RS2::ActionDrawMText)
+    ,pos(std::make_unique<RS_Vector>()),textChanged(true){
 }
 
 RS_ActionDrawMText::~RS_ActionDrawMText() = default;
 
 void RS_ActionDrawMText::init(int status){
     RS_PreviewActionInterface::init(status);
-
     switch (status) {
         case ShowDialog: {
             reset();

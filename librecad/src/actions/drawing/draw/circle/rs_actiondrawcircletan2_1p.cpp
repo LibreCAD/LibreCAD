@@ -53,12 +53,8 @@ struct RS_ActionDrawCircleTan2_1P::Points {
  * Constructor.
  *
  */
-RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw tangent circle 2P",
-                               container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionDrawCircleTan2_1P;
+RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw tangent circle 2P", actionContext,RS2::ActionDrawCircleTan2_1P), pPoints(std::make_unique<Points>()){
 }
 
 RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P() = default;

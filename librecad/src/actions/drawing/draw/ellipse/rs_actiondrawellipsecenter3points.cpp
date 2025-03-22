@@ -41,13 +41,9 @@ struct RS_ActionDrawEllipseCenter3Points::Points {
  * Constructor.
  *
  */
-RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw ellipse by center and 3 points",
-                           container, graphicView)
+RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(LC_ActionContext *actionContext)
+        :LC_ActionDrawCircleBase("Draw ellipse by center and 3 points", actionContext, RS2::ActionDrawEllipseCenter3Points)
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionDrawEllipseCenter3Points;
 }
 
 RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points() = default;

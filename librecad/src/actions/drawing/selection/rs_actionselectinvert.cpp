@@ -29,10 +29,8 @@
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
-RS_ActionSelectInvert::RS_ActionSelectInvert(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Invert Selection",
-                    container, graphicView) {
+RS_ActionSelectInvert::RS_ActionSelectInvert(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Invert Selection",actionContext) {
 	actionType=RS2::ActionSelectInvert;
 }
 

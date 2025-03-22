@@ -29,9 +29,8 @@
 
 class LC_ActionSplineFromPolyline :public RS_PreviewActionInterface{
     Q_OBJECT
-
 public:
-    LC_ActionSplineFromPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineFromPolyline(LC_ActionContext *actionContext);
     ~LC_ActionSplineFromPolyline() override = default;
     bool isUseCurrentAttributes() {return useCurrentAttributes;};
     void setUseCurrentAttributes(bool b) {useCurrentAttributes  = b;};

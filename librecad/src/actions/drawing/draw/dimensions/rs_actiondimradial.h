@@ -41,12 +41,9 @@ struct RS_DimRadialData;
 class RS_ActionDimRadial:public LC_ActionCircleDimBase {
 Q_OBJECT
 public:
-    RS_ActionDimRadial(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimRadial(LC_ActionContext *actionContext);
     ~RS_ActionDimRadial() override;
 protected:
-
     /** Data of new dimension */
     std::unique_ptr<RS_DimRadialData> edata;
     void reset() override;

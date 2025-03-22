@@ -42,10 +42,8 @@ class RS_Entity;
 class RS_ActionModifyBevel : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyBevel(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView);
+    RS_ActionModifyBevel(LC_ActionContext *actionContext);
     ~RS_ActionModifyBevel() override;
-
     void init(int status) override;
     void finish(bool updateTB) override;
     QStringList getAvailableCommands() override;

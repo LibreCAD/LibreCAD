@@ -28,11 +28,8 @@
 class LC_ActionSelectPoints:public RS_ActionSelectWindow{
    Q_OBJECT
 public:
-    LC_ActionSelectPoints(RS_EntityContainer &container,
-                            RS_GraphicView &graphicView);
-
+    LC_ActionSelectPoints(LC_ActionContext *actionContext);
     ~LC_ActionSelectPoints() override = default;
-
 protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
 };

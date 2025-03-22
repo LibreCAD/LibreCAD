@@ -42,13 +42,10 @@ struct RS_ActionLibraryInsert::Points {
 /**
  * Constructor.
  */
-RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Library Insert",
-						   container, graphicView)
+RS_ActionLibraryInsert::RS_ActionLibraryInsert(LC_ActionContext *actionContext)
+        :RS_PreviewActionInterface("Library Insert", actionContext, RS2::ActionLibraryInsert)
 		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetTargetPoint){
-    actionType=RS2::ActionLibraryInsert;
 }
 
 RS_ActionLibraryInsert::~RS_ActionLibraryInsert() = default;
@@ -60,7 +57,6 @@ void RS_ActionLibraryInsert::init(int status) {
 
 void RS_ActionLibraryInsert::setFile(const QString& file) {
     pPoints->data.file = file;
-
     if (!pPoints->prev.open(file, RS2::FormatUnknown)) {
         commandMessage(tr("Cannot open file '%1'").arg(file));
     }

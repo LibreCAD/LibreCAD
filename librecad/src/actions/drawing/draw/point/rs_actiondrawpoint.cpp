@@ -31,12 +31,8 @@
 #include "rs_graphicview.h"
 #include "rs_point.h"
 
-RS_ActionDrawPoint::RS_ActionDrawPoint(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw Points",
-                               container, graphicView), pt(new RS_Vector{}){
-    actionType = RS2::ActionDrawPoint;
+RS_ActionDrawPoint::RS_ActionDrawPoint(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Points",actionContext, RS2::ActionDrawPoint), pt(new RS_Vector{}){
 }
 
 RS_ActionDrawPoint::~RS_ActionDrawPoint() = default;
@@ -48,7 +44,6 @@ void RS_ActionDrawPoint::doTrigger() {
         undoCycleAdd(point);
     }
 }
-
 
 RS_Vector RS_ActionDrawPoint::getFreeSnapAwarePointAlt(const LC_MouseEvent *e, const RS_Vector &pos) const{
     RS_Vector mouse = (e->isControl) ?  e->graphPoint : pos;

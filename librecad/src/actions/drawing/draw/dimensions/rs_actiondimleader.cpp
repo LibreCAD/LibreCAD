@@ -41,11 +41,9 @@ struct RS_ActionDimLeader::Points {
 std::vector<RS_Vector> points;
 };
 
-RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw leaders",container, graphicView)
+RS_ActionDimLeader::RS_ActionDimLeader(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw leaders", actionContext, RS2::ActionDimLeader)
 	, pPoints(std::make_unique<Points>()) {
-	actionType=RS2::ActionDimLeader;
     reset();
 }
 

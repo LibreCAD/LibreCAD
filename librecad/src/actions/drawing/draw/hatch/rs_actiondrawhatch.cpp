@@ -56,11 +56,9 @@ namespace {
 
 // fixme - review hatching and check the possibility to add preview mode!!
 
-RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
-    :LC_ActionPreSelectionAwareBase("Draw Hatch", container, graphicView)
-    , data{std::make_unique<RS_HatchData>()}
-{
-    actionType = RS2::ActionDrawHatch;
+RS_ActionDrawHatch::RS_ActionDrawHatch(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Draw Hatch", actionContext, RS2::ActionDrawHatch)
+    , data{std::make_unique<RS_HatchData>()}{
 }
 
 RS_ActionDrawHatch::~RS_ActionDrawHatch() = default;

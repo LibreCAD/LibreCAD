@@ -26,9 +26,8 @@
 #include "rs_circle.h"
 #include "rs_information.h"
 
-LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",container, graphicView) {
-    actionType = RS2::ActionDrawArc2PLength;
+LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(LC_ActionContext *actionContext)
+    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",actionContext, RS2::ActionDrawArc2PLength) {
 }
 
 bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {

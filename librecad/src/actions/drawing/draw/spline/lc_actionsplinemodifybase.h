@@ -29,7 +29,7 @@
 class LC_ActionSplineModifyBase:public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionSplineModifyBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineModifyBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_ActionSplineModifyBase() override = default;
     void drawSnapper() override;
     void finish(bool updateTB) override;

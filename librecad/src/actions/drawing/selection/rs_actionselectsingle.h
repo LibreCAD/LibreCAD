@@ -38,14 +38,11 @@
 class RS_ActionSelectSingle:public RS_ActionSelectBase {
 Q_OBJECT
 public:
-    RS_ActionSelectSingle(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
+    RS_ActionSelectSingle(LC_ActionContext *actionContext,
         RS_ActionInterface *actionSelect = nullptr,
         const QList<RS2::EntityType> &entityTypeList = {});
     RS_ActionSelectSingle(
-        enum RS2::EntityType typeToSelect, RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
+        enum RS2::EntityType typeToSelect,LC_ActionContext *actionContext,
         RS_ActionInterface *actionSelect = nullptr,
         const QList<RS2::EntityType> &entityTypeList = {});
     void trigger() override;

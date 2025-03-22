@@ -35,8 +35,7 @@
 class RS_ActionDrawEllipseAxis : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipseAxis(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView,
+    RS_ActionDrawEllipseAxis(LC_ActionContext *actionContext,
                              bool isArc);
     ~RS_ActionDrawEllipseAxis() override;
     void init(int status) override;

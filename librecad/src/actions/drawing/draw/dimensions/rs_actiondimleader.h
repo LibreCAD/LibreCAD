@@ -41,9 +41,7 @@ class RS_Leader;
 class RS_ActionDimLeader:public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionDimLeader(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimLeader(LC_ActionContext *actionContext);
     ~RS_ActionDimLeader() override;
     void init(int status) override;
     void keyPressEvent(QKeyEvent *) override;

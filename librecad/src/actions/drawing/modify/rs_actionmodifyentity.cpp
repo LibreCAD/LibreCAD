@@ -32,11 +32,9 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 
-RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
-        RS_GraphicView& graphicView, bool changeCursor)
-		:RS_PreviewActionInterface("Modify Entity", container, graphicView)
+RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext, bool changeCursor)
+		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity)
 		,en(nullptr){
-	  actionType=RS2::ActionModifyEntity;
    modifyCursor = changeCursor;
 }
 

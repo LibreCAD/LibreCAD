@@ -44,12 +44,8 @@ const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::Ent
 }
 
 // fixme - sand - add support of options for line snap point
-RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        double ang,
-        bool fixedAngle)
-    :RS_PreviewActionInterface("Draw Lines with relative angles",container, graphicView)
+RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(LC_ActionContext *actionContext,double ang,bool fixedAngle)
+    :RS_PreviewActionInterface("Draw Lines with relative angles",actionContext)
     , pos(std::make_unique<RS_Vector>())
     , fixedAngle(fixedAngle){
     relativeAngleRad = /*RS_Math::rad2deg(ang)*/ ang;
@@ -66,8 +62,7 @@ double RS_ActionDrawLineRelAngle::getAngle() const {
 }
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
-    if( fixedAngle &&
-        RS_Math::getAngleDifference(RS_Math::deg2rad(relativeAngleRad), M_PI_2) < RS_TOLERANCE_ANGLE)
+    if( fixedAngle && RS_Math::getAngleDifference(RS_Math::deg2rad(relativeAngleRad), M_PI_2) < RS_TOLERANCE_ANGLE)
         return RS2::ActionDrawLineOrthogonal;
     else
         return RS2::ActionDrawLineRelAngle;

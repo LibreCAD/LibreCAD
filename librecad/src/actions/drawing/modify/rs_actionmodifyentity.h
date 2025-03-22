@@ -39,7 +39,7 @@ class RS_Entity;
 class RS_ActionModifyEntity : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionModifyEntity(RS_EntityContainer& container,RS_GraphicView& graphicView,bool modifyCursor);
+    RS_ActionModifyEntity(LC_ActionContext *actionContext,bool modifyCursor);
     void setEntity(RS_Entity* entity) {
         en=entity;
     }

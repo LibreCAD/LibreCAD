@@ -28,11 +28,8 @@
 
 class LC_ActionCircleDimBase:public RS_ActionDimension {
     Q_OBJECT
-
 public:
-    LC_ActionCircleDimBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView,
-        RS2::ActionType type);
-
+    LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext,RS2::ActionType actionType);
     ~LC_ActionCircleDimBase() override;
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;

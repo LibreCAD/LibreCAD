@@ -28,12 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_polyline.h"
 
-
-LC_AbstractActionDrawRectangle::LC_AbstractActionDrawRectangle(
-    const char *name,
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_AbstractActionWithPreview(name, container, graphicView){
+LC_AbstractActionDrawRectangle::LC_AbstractActionDrawRectangle(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :LC_AbstractActionWithPreview(name, actionContext, actionType){
     mainStatus = SetPoint1;
 }
 

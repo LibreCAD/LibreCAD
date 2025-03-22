@@ -38,9 +38,7 @@
 class RS_ActionInfoAngle:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoAngle(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionInfoAngle(LC_ActionContext *actionContext);
     ~RS_ActionInfoAngle() override;
     void init(int status) override;
     void drawSnapper() override;

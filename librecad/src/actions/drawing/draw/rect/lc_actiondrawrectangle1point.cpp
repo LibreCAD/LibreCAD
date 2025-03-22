@@ -25,12 +25,8 @@
 #include "lc_actiondrawrectangle1point.h"
 #include "lc_rectangle1pointoptions.h"
 
-LC_ActionDrawRectangle1Point::LC_ActionDrawRectangle1Point(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_AbstractActionDrawRectangle("Draw rectangles rel",
-                               container, graphicView){
-    actionType = RS2::ActionDrawRectangle1Point;
+LC_ActionDrawRectangle1Point::LC_ActionDrawRectangle1Point(LC_ActionContext *actionContext)
+    :LC_AbstractActionDrawRectangle("Draw rectangles rel",actionContext, RS2::ActionDrawRectangle1Point){
 }
 
 LC_ActionDrawRectangle1Point::~LC_ActionDrawRectangle1Point() = default;

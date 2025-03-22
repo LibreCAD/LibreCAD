@@ -37,8 +37,7 @@
 class RS_ActionModifyRevertDirection : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 public:
-    RS_ActionModifyRevertDirection(RS_EntityContainer& container,
-                                   RS_GraphicView& graphicView);
+    RS_ActionModifyRevertDirection(LC_ActionContext *actionContext);
 protected:
     void updateMouseButtonHintsForSelection() override;
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;

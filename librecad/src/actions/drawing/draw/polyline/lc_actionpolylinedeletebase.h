@@ -28,7 +28,7 @@
 class LC_ActionPolylineDeleteBase:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionPolylineDeleteBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionPolylineDeleteBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_ActionPolylineDeleteBase() override = default;
 protected:
     /**

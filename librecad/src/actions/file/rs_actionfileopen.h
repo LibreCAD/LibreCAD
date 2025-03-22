@@ -38,8 +38,7 @@
 class RS_ActionFileOpen : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionFileOpen(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+    RS_ActionFileOpen(LC_ActionContext *actionContext);
 
 	void init(int status) override;
 	void trigger() override;

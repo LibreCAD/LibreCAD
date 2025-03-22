@@ -43,11 +43,8 @@ namespace {
     const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");
 }
 
-RS_ActionDimension::RS_ActionDimension(
-    const char *name,
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name,container, graphicView){
+RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name,actionContext, actionType){
     reset();
     readSettings();
 }

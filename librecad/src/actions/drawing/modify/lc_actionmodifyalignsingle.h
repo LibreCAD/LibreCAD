@@ -29,8 +29,7 @@
 class LC_ActionModifyAlignSingle:public RS_PreviewActionInterface, public LC_ActionModifyAlignData{
     Q_OBJECT
 public:
-    LC_ActionModifyAlignSingle(RS_EntityContainer &container,
-                                RS_GraphicView &graphicView);
+    LC_ActionModifyAlignSingle(LC_ActionContext *actionContext);
     void setAlignType(int a) override;
     void init(int status) override;
 protected:

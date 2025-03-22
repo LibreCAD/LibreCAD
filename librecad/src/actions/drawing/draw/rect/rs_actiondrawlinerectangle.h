@@ -38,8 +38,7 @@
 class RS_ActionDrawLineRectangle : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineRectangle(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
+    RS_ActionDrawLineRectangle(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineRectangle() override;
 protected:
     /**

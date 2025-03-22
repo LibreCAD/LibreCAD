@@ -39,12 +39,9 @@ struct RS_DimAlignedData;
  * @author Andrew Mustun
  */
 class RS_ActionDimAligned:public LC_ActionDimLinearBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    RS_ActionDimAligned(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimAligned(LC_ActionContext *actionContext);
     ~RS_ActionDimAligned() override;
     void preparePreview() override;
     QStringList getAvailableCommands() override;

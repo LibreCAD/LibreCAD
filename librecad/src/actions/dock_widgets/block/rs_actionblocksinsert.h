@@ -38,9 +38,7 @@ struct RS_InsertData;
 class RS_ActionBlocksInsert:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionBlocksInsert(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionBlocksInsert(LC_ActionContext *actionContext);
     ~RS_ActionBlocksInsert() override;
     void init(int status) override;
     void reset();

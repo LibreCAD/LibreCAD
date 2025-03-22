@@ -40,12 +40,9 @@
 class RS_ActionLockRelativeZero : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionLockRelativeZero(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView,
-                              bool on);
+    RS_ActionLockRelativeZero(LC_ActionContext *actionContext,bool on);
     void init(int status) override;
     void trigger() override;
-
 private:
     bool on = false;
 };

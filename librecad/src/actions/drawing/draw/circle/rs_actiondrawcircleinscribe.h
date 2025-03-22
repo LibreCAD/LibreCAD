@@ -37,9 +37,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleInscribe:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleInscribe(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleInscribe(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleInscribe() override;
     void init(int status) override;
     void finish(bool updateTB) override;

@@ -33,9 +33,9 @@
 #include "rs_actioninfodist2.h"
 #include "lc_infodist2options.h"
 
-RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer &container, RS_GraphicView &graphicView, bool fromPoint)
-    :RS_PreviewActionInterface("Info Dist2", container, graphicView), entity(nullptr){
-    actionType = RS2::ActionInfoDistEntity2Point;
+RS_ActionInfoDist2::RS_ActionInfoDist2(LC_ActionContext *actionContext, bool fromPoint)
+    :RS_PreviewActionInterface("Info Dist2", actionContext, RS2::ActionInfoDistEntity2Point)
+    ,entity(nullptr){
     selectionMode = fromPoint ? FIRST_IS_POINT : FIRST_IS_ENTITY;
 }
 

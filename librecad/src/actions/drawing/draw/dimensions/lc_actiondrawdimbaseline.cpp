@@ -30,10 +30,9 @@
 #include "rs_preview.h"
 
 // some functions are duplicated with DimLiner action, however, that's intentional as later we can support angular dimensions in additional to linear ones
-LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType type)
-       :LC_ActionDimLinearBase(type == RS2::ActionDimBaseline? "Draw Dim Baseline": "Draw Dim Continue", container, graphicView),
+LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(LC_ActionContext *actionContext, RS2::ActionType type)
+       :LC_ActionDimLinearBase(type == RS2::ActionDimBaseline? "Draw Dim Baseline": "Draw Dim Continue", actionContext, type),
        edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), 0, 0.)){
-    actionType = type;
 }
 
 namespace {

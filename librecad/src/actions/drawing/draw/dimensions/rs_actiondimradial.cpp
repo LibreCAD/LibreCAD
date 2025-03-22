@@ -35,11 +35,8 @@
 // fixme - sand - options for selection definition point angle, ability to specify whether label is inside or outside
 // todo - think about multiple adding dimensions to already selected circles
 
-RS_ActionDimRadial::RS_ActionDimRadial(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-    :LC_ActionCircleDimBase("Draw Radial Dimensions",
-                        container, graphicView, RS2::ActionDimRadial)
+RS_ActionDimRadial::RS_ActionDimRadial(LC_ActionContext *actionContext)
+    :LC_ActionCircleDimBase("Draw Radial Dimensions",actionContext, RS2::ActionDimRadial)
     , edata{ std::make_unique<RS_DimRadialData>()}{
     reset();
 }

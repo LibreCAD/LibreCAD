@@ -30,9 +30,8 @@
 class LC_ActionSplineExplode:public LC_ActionSplineModifyBase{
 Q_OBJECT
 public:
-    LC_ActionSplineExplode(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineExplode(LC_ActionContext *actionContext);
     ~LC_ActionSplineExplode() override = default;
-
     int getSegmentsCountFromDrawing();
     bool isUseCurrentAttributes() {return useCurrentAttributes;};
     void setUseCurrentAttributes(bool b) {useCurrentAttributes  = b;};

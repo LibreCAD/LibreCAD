@@ -35,28 +35,22 @@
 #include "rs_debug.h"
 
 
-RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block Attributes", container, graphicView) {}
-
-
+RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Block Attributes",actionContext) {}
 
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 
-	if (graphic) {
+	if (graphic != nullptr) {
         RS_Block* block = graphic->getActiveBlock();
         RS_BlockList* blockList = graphic->getBlockList();
         if (blockList && block) {
             QString oldName = block->getName();
 
             RS_BlockData d;
-            d = RS_DIALOGFACTORY->requestBlockAttributesDialog(
-                    blockList);
+            d = RS_DIALOGFACTORY->requestBlockAttributesDialog(blockList);
 
             if (d.isValid()) {
-
                 QString newName = d.name;
 
                 // update window title of opened block
@@ -78,12 +72,9 @@ void RS_ActionBlocksAttributes::trigger() {
                 graphic->addBlockNotification();
             }
         }
-
     }
     finish(false);
 }
-
-
 
 void RS_ActionBlocksAttributes::init(int status) {
     RS_ActionInterface::init(status);

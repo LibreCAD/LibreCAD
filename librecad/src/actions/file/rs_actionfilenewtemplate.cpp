@@ -28,9 +28,8 @@
 #include "rs_actionfilenewtemplate.h"
 
 
-RS_ActionFileNewTemplate::RS_ActionFileNewTemplate(RS_EntityContainer& container,
-                                   RS_GraphicView& graphicView)
-        :RS_ActionInterface("File New", container, graphicView) {}
+RS_ActionFileNewTemplate::RS_ActionFileNewTemplate(LC_ActionContext *actionContext)
+        :RS_ActionInterface("File New", actionContext) {}
 
 
 void RS_ActionFileNewTemplate::trigger() {

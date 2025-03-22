@@ -40,12 +40,9 @@
 /**
  * Constructor.
  */
-RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw circles CR",
-                               container, graphicView), data(std::make_unique<RS_CircleData>()){
-    actionType = RS2::ActionDrawCircleCR;
+RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw circles CR", actionContext, RS2::ActionDrawCircleCR)
+    , data(std::make_unique<RS_CircleData>()){
     reset();
 }
 

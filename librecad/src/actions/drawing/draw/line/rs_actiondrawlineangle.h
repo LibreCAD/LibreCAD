@@ -37,15 +37,8 @@
  */
 class RS_ActionDrawLineAngle : public RS_PreviewActionInterface {
 	Q_OBJECT
-
-
-
 public:
-    RS_ActionDrawLineAngle(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool fixedAngle = false,
-        RS2::ActionType actionType = RS2::ActionDrawLineAngle);
+    RS_ActionDrawLineAngle(LC_ActionContext *actionContext, bool fixedAngle = false, RS2::ActionType actionType = RS2::ActionDrawLineAngle);
     ~RS_ActionDrawLineAngle() override;
     void reset();
     void init(int status) override;
