@@ -96,7 +96,8 @@ public:
     friend std::ostream &operator <<(std::ostream &os, QC_MDIWindow &w);
     bool has_children() const;
 
-    void graphicModified(RS_Graphic *g, bool modified) override;
+    void graphicModified(const RS_Graphic *g, bool modified) override;
+    void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) override;
 protected:
     LC_DocumentsStorage *storage;
     // window ID

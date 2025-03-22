@@ -42,20 +42,24 @@ void ActionList::addActionItem(QAction *action) {
 
 void ActionList::fromActionList(const QList<QAction *> &a_list) {
     action_list = a_list;
-        foreach (QAction *a, a_list) {
+    foreach(QAction *a, a_list) {
+        if (a != nullptr) {
             addActionItem(a);
         }
+    }
 }
 
 void ActionList::fromActionMap(QMap<QString, QAction *> &a_map) {
-        foreach (QAction *a, a_map) {
+    foreach(QAction *a, a_map) {
+        if (a != nullptr) {
             addActionItem(a);
         }
+    }
 }
 
 void ActionList::activateAction(QListWidgetItem *item) {
-        foreach (QAction *a, action_list) {
-            if (a->text() == item->text())
-                a->activate(QAction::Trigger);
-        }
+    foreach(QAction *a, action_list) {
+        if (a->text() == item->text())
+            a->activate(QAction::Trigger);
+    }
 }

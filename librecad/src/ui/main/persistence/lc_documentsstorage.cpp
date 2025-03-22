@@ -186,7 +186,8 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
     //modifiedTime should only be used for the same filename
     if (sameFile && graphicLastSaveTime.isValid() && fileLastModifyTime != graphicLastSaveTime) {
         //file modified by others
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(filename));
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(filename));
         return false;
     }
 
@@ -225,8 +226,11 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
         QString autosaveFileName = graphic->getAutoSaveFileName();
         if (!autosaveFileName.isEmpty()) {
             ret = RS_FileIO::instance()->fileExport(*graphic, autosaveFileName, actualType);
-            QFileInfo finfo(autosaveFileName);
+            /*
+             fixme - sand - don't mark file as non-modified on auto-save.
+             *QFileInfo finfo(autosaveFileName);
             graphic->markSaved(finfo.lastModified());
+            */
         }
         fileName = autosaveFileName;
     } else {
@@ -262,6 +266,7 @@ bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &file
     // has been modified, to make sure the drawing file saved.
     if (!filenameIsSame || forceSave) {
         graphic->setModified(true);
+        filenameIsSame = false;
     }
     ret = doSave(graphic, filenameIsSame);
 

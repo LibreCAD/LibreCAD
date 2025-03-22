@@ -12,22 +12,6 @@
 #include "mainwindowx.h"
 
 class LC_MDIApplicationWindow:public MainWindowX{
-
-protected:
-    /** MdiArea for MDI */
-    QMdiArea* mdiAreaCAD {nullptr};
-    QMdiSubWindow* activedMdiSubWindow {nullptr};
-    QMdiSubWindow* current_subwindow {nullptr};
-    QList<QC_MDIWindow*> window_list;
-
-    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-    void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
-    void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
-    virtual void doActivate(QMdiSubWindow* w);
-    void setupCADAreaTabbar();
-
-protected slots:
-    void onCADTabBarIndexChanged(int index);
 public:
     LC_MDIApplicationWindow();
 
@@ -73,6 +57,7 @@ public:
     void redrawAll();
     void enableWidget(QWidget* w, bool enable);
 
+    void doForEachWindow(std::function<void(QC_MDIWindow*)> callback) const;
 public slots:
     void slotCascade();
     void slotTileHorizontal();
@@ -86,16 +71,27 @@ public slots:
     void slotTabPositionEast();
     void slotTabPositionWest();
     void slotToggleTab();
-
     void slotTile();
     void slotZoomAuto();
-    virtual void slotWindowActivated(QMdiSubWindow* w, bool forced=false) = 0;
-    void slotWindowActivated(int);
-
+    void slotWindowActivated(QMdiSubWindow *w);
+    void slotWindowActivatedByIndex(int);
     friend class QC_MDIWindow;
+    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+protected slots:
+    void onCADTabBarIndexChanged(int index);
 
-
-
+protected:
+    /** MdiArea for MDI */
+    QMdiArea* mdiAreaCAD {nullptr};
+    QMdiSubWindow* activedMdiSubWindow {nullptr};
+    QMdiSubWindow* current_subwindow {nullptr};
+    QList<QC_MDIWindow*> window_list;
+    void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
+    void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
+    virtual void doActivate(QMdiSubWindow* w);
+    void setupCADAreaTabbar();
+    void slotWindowActivatedForced(QMdiSubWindow *w);
+    virtual void doSlotWindowActivated(QMdiSubWindow *w, bool forced) = 0;
 };
 
 #endif // LC_MDIAPPLICATIONWINDOW_H

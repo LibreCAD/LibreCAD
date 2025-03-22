@@ -461,9 +461,20 @@ bool QC_MDIWindow::has_children() const{
     return !childWindows.isEmpty();
 }
 
-void QC_MDIWindow::graphicModified(RS_Graphic* g, bool modified){
+void QC_MDIWindow::graphicModified(const RS_Graphic* g, bool modified){
     setWindowModified(modified);
-    // fixme - sand - files - update save action?
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    if (appWin !=nullptr) {
+        appWin->setSaveEnable(modified);
+    }
+}
+
+void QC_MDIWindow::undoStateChanged(const RS_Graphic *g, bool undoAvailable, bool redoAvailable){
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    if (appWin !=nullptr) {
+        appWin->setRedoEnable(redoAvailable);
+        appWin->setUndoEnable(undoAvailable);
+    }
 }
 
 QString QC_MDIWindow::getFileName() const{

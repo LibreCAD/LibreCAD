@@ -93,7 +93,6 @@ include_directories(librecad/src/actions/drawing/pen)
 include_directories(librecad/src/actions/drawing/snap)
 include_directories(librecad/src/actions/drawing/edit)
 include_directories(librecad/src/actions/drawing/rel_zero)
-
 include_directories(librecad/src/actions/dock_widgets)
 include_directories(librecad/src/actions/dock_widgets/block)
 include_directories(librecad/src/actions/dock_widgets/library)
@@ -104,7 +103,6 @@ include_directories(librecad/src/actions/dock_widgets/workspaces)
 include_directories(librecad/src/actions/file)
 include_directories(librecad/src/actions/options)
 include_directories(librecad/src/actions/print_preview)
-
 include_directories(librecad/src/cmd)
 include_directories(librecad/src/lib/actions)
 include_directories(librecad/src/lib/creation)
@@ -941,6 +939,10 @@ set(SOURCES
 		librecad/src/ui/components/pen/qg_widgetpen.h
  		librecad/src/ui/components/creators/actionlist.cpp
 		librecad/src/ui/components/creators/actionlist.h
+		librecad/src/ui/components/creators/lc_creatorinvoker.h
+		librecad/src/ui/components/creators/lc_creatorinvoker.cpp
+		librecad/src/plugins/lc_plugininvoker.h
+		librecad/src/plugins/lc_plugininvoker.cpp
 		librecad/src/ui/dock_widgets/pen_wizard/colorcombobox.cpp
 		librecad/src/ui/dock_widgets/pen_wizard/colorcombobox.h
 		librecad/src/ui/dock_widgets/pen_wizard/colorwizard.cpp
@@ -1401,6 +1403,8 @@ set(SOURCES
         librecad/src/lib/engine/document/io/lc_graphicio.cpp
         librecad/src/ui/main/persistence/lc_documentsstorage.h
         librecad/src/ui/main/persistence/lc_documentsstorage.cpp
+		librecad/src/ui/main/lc_applicationwindowdialogshelper.h
+		librecad/src/ui/main/lc_applicationwindowdialogshelper.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

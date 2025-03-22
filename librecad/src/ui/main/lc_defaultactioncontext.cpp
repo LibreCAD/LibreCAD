@@ -3,6 +3,7 @@
 #include "lc_actionoptionsmanager.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
+#include "qg_selectionwidget.h"
 LC_DefaultActionContext::LC_DefaultActionContext() {}
 
 void LC_DefaultActionContext::addOptionsWidget(LC_ActionOptionsWidget *widet){
@@ -30,7 +31,10 @@ void LC_DefaultActionContext::clearMouseWidgetIcon(){
 }
 
 void LC_DefaultActionContext::updateSelectionWidget(int countSelected, double selectedLength){
-
+    if (selectionWidget != nullptr) {
+        selectionWidget->setNumber(countSelected);
+        selectionWidget->setTotalLength(selectedLength);
+    }
 }
 
 void LC_DefaultActionContext::updateMouseWidget(const QString &chars, const QString &string, const LC_ModifiersInfo &modifiers){
@@ -44,7 +48,9 @@ void LC_DefaultActionContext::commandMessage(const QString &message){
 }
 
 void LC_DefaultActionContext::commandPrompt(const QString &message){
-
+    if (commandWidget) {
+        commandWidget->setCommand(message);
+    }
 }
 
 void LC_DefaultActionContext::updateCoordinateWidget(const RS_Vector &abs, const RS_Vector &rel, bool updateFormat){

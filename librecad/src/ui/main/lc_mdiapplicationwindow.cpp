@@ -433,6 +433,12 @@ void LC_MDIApplicationWindow::slotToggleTab() {
     }
 }
 
+void LC_MDIApplicationWindow::doForEachWindow(std::function<void(QC_MDIWindow*)> callback) const{
+    for (QC_MDIWindow* value : window_list) {
+        callback(value);
+    }
+}
+
 void LC_MDIApplicationWindow::setupCADAreaTabbar() {
     mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
     QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
@@ -515,7 +521,7 @@ void LC_MDIApplicationWindow::enableWidget(QWidget *w, bool enable) {
 void LC_MDIApplicationWindow::doActivate(QMdiSubWindow *w) {
     bool maximized = LC_GET_ONE_BOOL("WindowOptions","Maximized");
     if (w) {
-        slotWindowActivated(w, true);
+        slotWindowActivatedForced(w);
         w->activateWindow();
         w->raise();
         w->setFocus();
@@ -530,7 +536,15 @@ void LC_MDIApplicationWindow::doActivate(QMdiSubWindow *w) {
     }
 }
 
-void LC_MDIApplicationWindow::slotWindowActivated(int index){
+void LC_MDIApplicationWindow::slotWindowActivatedByIndex(int index){
     if(index < 0 || index >= mdiAreaCAD->subWindowList().size()) return;
     slotWindowActivated(mdiAreaCAD->subWindowList().at(index));
+}
+
+void LC_MDIApplicationWindow::slotWindowActivated(QMdiSubWindow *w){
+    doSlotWindowActivated(w, false);
+}
+
+void LC_MDIApplicationWindow::slotWindowActivatedForced(QMdiSubWindow *w){
+    doSlotWindowActivated(w, true);
 }

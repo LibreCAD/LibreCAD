@@ -3,6 +3,7 @@
 #include "lc_actioncontext.h"
 #include "qg_actionhandler.h"
 #include "rs_document.h"
+class QG_SelectionWidget;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
 class LC_ActionOptionsManager;
@@ -29,6 +30,7 @@ private:
     RS_GraphicView * m_graphicView {nullptr};
     QG_CoordinateWidget* coordinateWidget{nullptr};
     QG_CommandWidget* commandWidget = nullptr;
+    QG_SelectionWidget* selectionWidget = nullptr;
 };
 
 #endif // LC_DEFAULTACTIONCONTEXT_H
