@@ -34,17 +34,16 @@ class LC_MenuFactory: public QObject{
 public:
     LC_MenuFactory(QC_ApplicationWindow* main_win,
                    LC_ActionGroupManager* agm);
-    void recreateMenuIfNeeded(QMenuBar *menuBar);
-    void createMenus(QMenuBar* menu_bar);
+    void recreateMainMenuIfNeeded(QMenuBar *menuBar);
+    void createMainMenu(QMenuBar* menu_bar);
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
-
+    QMenu* createMainWindowPopupMenu();
     QMenu * getRecentFilesMenu() const{
         return recentFilesMenu;
     }
-
 protected:
-    QC_ApplicationWindow* main_window = nullptr;
-    LC_ActionGroupManager* ag_manager = nullptr;
+    QC_ApplicationWindow* m_appWindow = nullptr;
+    LC_ActionGroupManager* m_actionGroupManager = nullptr;
 
     struct MenuOptions {
         bool expandToolsMenu = false;
@@ -75,8 +74,10 @@ protected:
 
     QMenu* recentFilesMenu{nullptr};
     QMenu* dockareas {nullptr};
-    QMenu* dockwidgets_menu {nullptr};
-    QMenu* toolbars {nullptr};
+    QMenu* m_menuDockWidgets {nullptr};
+    QMenu* m_menuCADDockWidgets {nullptr};
+    QMenu* m_menuToolbars {nullptr};
+    QMenu* m_menuCADToolbars {nullptr};
 
     bool allowTearOffMenus = true;
 
