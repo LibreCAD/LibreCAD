@@ -559,10 +559,10 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
 }
 
 void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
+    if (container==nullptr)
+        return;
     RS_Entity* entity = snapEntity(*this, event);
     if (entity == nullptr)
-    return;
-    if (container==nullptr)
         return;
     RS_Insert* insert = getAncestorInsert(entity);
     // MText/Text should not be edited as blocks
@@ -572,12 +572,12 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
         entity = toEdit;
     }
     QAction* action = (insert != nullptr) ?
-                // For an insert, show the menu entry to edit the block instead
-                new QAction(QIcon(":/icons/properties.lci"),
-                            QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
-                            &contextMenu) :
-                new QAction(QIcon(":/icons/properties.lci"),
-                            tr("Edit Properties"), &contextMenu);
+                          // For an insert, show the menu entry to edit the block instead
+                          new QAction(QIcon(":/icons/properties.lci"),
+                                      QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
+                                      &contextMenu) :
+                          new QAction(QIcon(":/icons/properties.lci"),
+                                      tr("Edit Properties"), &contextMenu);
 
     contextMenu.addAction(action);
     connect(action, &QAction::triggered, this, [this, insert, entity](){
@@ -585,7 +585,7 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
     });
 
     // Add "Activate Layer" for the current entity
-    if (getGraphic()->getActiveLayer() == entity->getLayer() || entity->getLayer() == nullptr)
+    if (getGraphic() == nullptr || getGraphic()->getActiveLayer() == entity->getLayer() || entity->getLayer() == nullptr)
         return;
     action = new QAction(tr("Activate Layer"), &contextMenu);
     contextMenu.addAction(action);
