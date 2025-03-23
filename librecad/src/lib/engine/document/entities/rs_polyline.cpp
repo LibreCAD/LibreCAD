@@ -25,12 +25,13 @@
 **********************************************************************/
 
 #include <cassert>
-#include<cmath>
-#include<iostream>
+#include <cmath>
+#include <iostream>
 
 #include <QObject>
 
 #include "qc_applicationwindow.h"
+#include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
@@ -44,7 +45,8 @@ RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
                                  const RS_Vector& _endpoint,
                                  bool _closed):
     startpoint(_startpoint)
-    ,endpoint(_endpoint){
+    ,endpoint(_endpoint)
+{
     if (_closed) {
         setFlag(RS2::FlagClosed);
     }
@@ -62,8 +64,7 @@ std::ostream& operator << (std::ostream& os,
  */
 RS_Polyline::RS_Polyline(RS_EntityContainer* parent)
     :RS_EntityContainer(parent, true)
-    ,closingEntity(nullptr)
-    ,nextBulge(0.){
+{
 }
 
 /**
@@ -74,8 +75,7 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
                          const RS_PolylineData& d)
     :RS_EntityContainer(parent, true)
     ,data(d)
-    ,closingEntity(nullptr)
-    ,nextBulge(0.){
+{
     calculateBorders();
 }
 
@@ -92,10 +92,10 @@ RS_Entity* RS_Polyline::clone() const {
  */
 void RS_Polyline::removeLastVertex() {
     RS_Entity* l = last();
-    if (l) {
+    if (l != nullptr) {
         removeEntity(l);
         l = last();
-        if (l) {
+        if (l != nullptr) {
             if (l->isAtomic()) {
                 data.endpoint = l->getEndpoint();
             }
@@ -131,13 +131,13 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
     // very first vertex:
     if (!data.startpoint.valid) {
         data.startpoint = data.endpoint = v;
-        nextBulge = bulge;
+        m_nextBulge = bulge;
     }
 
         // consequent vertices:
     else {
         // add entity to the polyline:
-        std::unique_ptr<RS_Entity> vertex = createVertex(v, nextBulge, prepend);
+        std::unique_ptr<RS_Entity> vertex = createVertex(v, m_nextBulge, prepend);
         entity = vertex.get();
         if (entity != nullptr) {
             if (!prepend) {
@@ -149,7 +149,7 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
             }
             vertex.release();
         }
-        nextBulge = bulge;
+        m_nextBulge = bulge;
         endPolyline();
     }
     return entity;
@@ -168,24 +168,23 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
  * @return None
  */
 void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> >& vl) {
-    RS_Entity* entity=nullptr;
     //static double nextBulge = 0.0;
     if (!vl.size()) return;
     size_t idx = 0;
     // very first vertex:
     if (!data.startpoint.valid) {
         data.startpoint = data.endpoint = vl.at(idx).first;
-        nextBulge = vl.at(idx++).second;
+        m_nextBulge = vl.at(idx++).second;
     }
 
     // consequent vertices:
     for (; idx< vl.size();idx++){
-        std::unique_ptr<RS_Entity> vertex = createVertex(vl.at(idx).first, nextBulge, false);
+        std::unique_ptr<RS_Entity> vertex = createVertex(vl.at(idx).first, m_nextBulge, false);
         data.endpoint = vertex->getEndpoint();
-        entity=vertex.get();
+        RS_Entity* entity=vertex.get();
         vertex.release();
         RS_EntityContainer::addEntity(entity);
-        nextBulge = vl.at(idx).second;
+        m_nextBulge = vl.at(idx).second;
     }
 
     endPolyline();
@@ -217,9 +216,6 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double 
         entity = std::make_unique<RS_Line>(this,
                                            prepend ? v : data.endpoint,
                                            prepend ? data.startpoint : v);
-        entity->setSelected(isSelected());
-        entity->setPen(RS_Pen(RS2::FlagInvalid));
-        entity->setLayer(nullptr);
     } else {
         // create arc for the polyline:
         bool reversed = std::signbit(bulge);
@@ -237,33 +233,33 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double 
         double angleNew = reversed ? angle - M_PI_2 : angle + M_PI_2;
         double h = (std::abs(alpha)>M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
 
-        RS_Vector center = RS_Vector::polar(h, angleNew);
-        center += middle;
-        double a1 = center.angleTo(prepend ? v : data.endpoint);
-        double a2 = center.angleTo(prepend ? data.startpoint : v);
+        auto center = middle + RS_Vector::polar(h, angleNew);
+        double startAngle = center.angleTo(prepend ? v : data.endpoint);
+        double endAngle = center.angleTo(prepend ? data.startpoint : v);
 
-        // fixme - SAND - Should we ALWAYS create ellipse arc in polyline? How such polyline will be saved then?
-        if (createEllipticArcs) {
+        // Issue #1946: always create Ellipse for fonts
+        // Issue #2067: limit elliptic segments for fonts
+        if (isFont()) {
             RS_EllipseData const d{
                 center,
                 RS_Vector{radius, 0.},
                 1.,
-                a1, a2,
+                startAngle, endAngle,
                 reversed};
 
             entity = std::make_unique<RS_Ellipse>(this, d);
         }
         else{
             RS_ArcData const d(center, radius,
-                               a1, a2,
+                               startAngle, endAngle,
                                reversed);
 
             entity = std::make_unique<RS_Arc>(this, d);
         }
-        entity->setSelected(isSelected());
-        entity->setPen(RS_Pen(RS2::FlagInvalid));
-        entity->setLayer(nullptr);
     }
+    entity->setSelected(isSelected());
+    entity->setPen(RS_Pen(RS2::FlagInvalid));
+    entity->setLayer(nullptr);
     return entity;
 }
 
@@ -277,16 +273,16 @@ void RS_Polyline::endPolyline() {
         RS_DEBUG->print("RS_Polyline::endPolyline: adding closing entity");
 
         // remove old closing entity:
-        if (closingEntity) {
-            removeEntity(closingEntity);
+        if (m_closingEntity) {
+            removeEntity(m_closingEntity);
         }
 
         // add closing entity to the polyline:
-        std::unique_ptr<RS_Entity> vertex = createVertex(data.startpoint, nextBulge);
-        closingEntity = vertex.get();
+        std::unique_ptr<RS_Entity> vertex = createVertex(data.startpoint, m_nextBulge);
+        m_closingEntity = vertex.get();
         vertex.release();
-        if (closingEntity && closingEntity->getLength()>1.0E-4) {
-            RS_EntityContainer::addEntity(closingEntity);
+        if (m_closingEntity && m_closingEntity->getLength()>1.0E-4) {
+            RS_EntityContainer::addEntity(m_closingEntity);
             //data.endpoint = data.startpoint;
         }
     }
@@ -464,24 +460,24 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     int length=count();
     std::vector<RS_Vector> intersections(length);
     if(length>1){//sort the polyline entity start/end point order
-        int i(0);
-        double d0,d1;
         RS_Entity* en0(entityAt(0));
         RS_Entity* en1(entityAt(1));
 
         RS_Vector vStart(en0->getStartpoint());
         RS_Vector vEnd(en0->getEndpoint());
+        double d0 = 0., d1 = 0.;
         en1->getNearestEndpoint(vStart,&d0);
         en1->getNearestEndpoint(vEnd,&d1);
         if(d0<d1) en0->revertDirection();
-        for(i=1;i<length;i++){
+        for(int i=1;i<length;i++){
             //linked to head-tail chain
             en1=entityAt(i);
             vStart=en1->getStartpoint();
             vEnd=en1->getEndpoint();
-            en0->getNearestEndpoint(vStart,&d0);
-            en0->getNearestEndpoint(vEnd,&d1);
-            if(d0>d1) en1->revertDirection();
+            en0->getNearestEndpoint(vStart, &d0);
+            en0->getNearestEndpoint(vEnd, &d1);
+            if(d0>d1)
+                en1->revertDirection();
             intersections[i-1]=(en0->getEndpoint()+en1->getStartpoint())*0.5;
             en0=en1;
         }
@@ -492,7 +488,8 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 
     }
     RS_Entity* en(getNearestEntity(coord, &dist, RS2::ResolveNone));
-    if(!en) return false;
+    if(!en)
+        return false;
     int indexNearest=findEntity(en);
     //        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
     //        RS_Vector direction(en->getTangentDirection(vp));
@@ -507,7 +504,6 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     int i=indexNearest;
     int previousIndex(i);
     pnew->entityAt(i)->offset(coord,distance);
-    RS_Vector vp;
     //offset all
     //fixme, this is too ugly
     for(i=indexNearest-1;i>=0;i--){
@@ -517,12 +513,13 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         RS_Vector trimP(false);
         for(const RS_Vector& vp: sol0){
 
-            double d0( (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
+            double d0 = (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared();//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
                 trimP=vp;
             }
         }
+        RS_Vector vp;
         if(trimP.valid){
             static_cast<RS_AtomicEntity*>(pnew->entityAt(previousIndex))->trimStartpoint(trimP);
             static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
@@ -548,6 +545,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                 trimP=vp;
             }
         }
+        RS_Vector vp;
         if(trimP.valid){
             static_cast<RS_AtomicEntity*>(pnew->entityAt(previousIndex))->trimEndpoint(trimP);
             static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimStartpoint(trimP);
@@ -744,4 +742,10 @@ RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vec
         }
     }
     return previous;
+}
+
+bool RS_Polyline::isFont() const
+{
+    const RS_EntityContainer* parent = getParent();
+    return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
 }

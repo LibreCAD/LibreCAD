@@ -104,7 +104,7 @@ public:
     void appendVertexs(const std::vector<std::pair<RS_Vector, double> > &vl);
 
     void setNextBulge(double bulge){
-        nextBulge = bulge;
+        m_nextBulge = bulge;
     }
 
     void addEntity(RS_Entity *entity) override;
@@ -140,9 +140,10 @@ protected:
     std::unique_ptr<RS_Entity> createVertex(
         const RS_Vector &v,
         double bulge = 0.0, bool prepend = false);
-protected:
+private:
+    // whether the polyline is used in fonts(RS2::EntityFontChar
+    bool isFont() const;
     RS_PolylineData data;
-    RS_Entity *closingEntity = nullptr;
-    double nextBulge = 0.;
-    bool createEllipticArcs = false;
+    RS_Entity *m_closingEntity = nullptr;
+    double m_nextBulge = 0.;
 };
