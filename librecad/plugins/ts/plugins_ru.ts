@@ -303,7 +303,7 @@ Align будет копировать, а не перемещать выбран
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>Колонны/рои</translation>
+        <translation>Колонки/строки</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>

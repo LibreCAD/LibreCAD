@@ -31,7 +31,7 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Legen Sie zuerst die Basispunkte fest</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -42,7 +42,8 @@
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf die Optionen, um sie einzustellen/zu deaktivieren,
+Ok zum Akzeptieren und Starten der Ausrichtung.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,7 +53,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn &quot;Originalobjekte beibehalten&quot; aktiviert ist,
+Ausrichten die ausgewählten Objekte kopieren und nicht verschieben.
+
+Wenn &apos;Basispunkte zuerst angeben&apos; angekreuzt ist,
+fragt Align nach den Ausrichtungspunkten in der Reihenfolge
+erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -610,12 +616,12 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilen</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie eine Linie, einen Kreis oder einen Bogen aus und drücken Sie die Eingabetaste</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -774,7 +780,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>MUSS eine Linie, ein Kreis oder ein Bogen sein</translation>
     </message>
 </context>
 <context>
@@ -782,7 +788,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Teilen - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
@@ -802,7 +808,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilen bei</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -812,17 +818,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>Orte</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Häkchen - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Unterbrechungen - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -837,7 +843,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Start eingeben
+Winkel, in
+Dezimalgrad
+0° auf 3 Uhr
+geht
+gegen den Uhrzeigersinn.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -847,7 +858,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Häkchen</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -890,27 +901,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusatz (bezogen auf das Modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fußhöhe (bezogen auf das Modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der zu zeichnenden Segmente (Fußhöhe)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der zu zeichnenden Segmente (Zusatz)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -960,12 +971,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Interferenzen berechnen?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der zu zeichnenden Segmente (Interferenz)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>

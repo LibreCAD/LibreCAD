@@ -273,7 +273,7 @@ première base, deuxième base, première cible, deuxième cible.</translation>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CONTENU DU TEXTE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
@@ -713,7 +713,7 @@ première base, deuxième base, première cible, deuxième cible.</translation>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation type="unfinished">centre</translation>
+        <translation>centre du point</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
@@ -788,7 +788,7 @@ première base, deuxième base, première cible, deuxième cible.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Diviser - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
@@ -813,12 +813,12 @@ première base, deuxième base, première cible, deuxième cible.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Taille</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>lieux</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
@@ -843,7 +843,11 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entrer l&apos;angle initial
+en degrés décimaux
+0° à trois heures
+va
+en sens anti-horaire.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -853,7 +857,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Marqueurs</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -896,7 +900,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Module</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
@@ -921,7 +925,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessiner toutes les dents&#x202f;?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
@@ -931,7 +935,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser des calques&#x202f;?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
