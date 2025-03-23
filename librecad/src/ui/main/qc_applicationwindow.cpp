@@ -1187,7 +1187,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
 
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
-    view->device = settings.value("Hardware/Device", "Mouse").toString();
+    view->setDeviceName(settings.value("Hardware/Device", "Mouse").toString());
     if (scrollbars) {
         view->addScrollbars();
     }
@@ -2165,7 +2165,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/icons/document.lci"));
                 QG_GraphicView *gv = w->getGraphicView();
-                gv->device = settings.value("Hardware/Device", "Mouse").toString();
+                gv->setDeviceName(settings.value("Hardware/Device", "Mouse").toString());
 //                gv->setBackground(RS_Color(255, 255, 255));
                 gv->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
 
@@ -2889,8 +2889,8 @@ void QC_ApplicationWindow::updateDevice(QString device) {
     // author: ravas
     QSettings settings;
     settings.setValue("Hardware/Device", device);
-        foreach (auto win, window_list) {
-            win->getGraphicView()->device = device;
+        foreach(QC_MDIWindow* win, window_list) {
+            win->getGraphicView()->setDeviceName(device);
         }
 }
 
@@ -3078,59 +3078,40 @@ void QC_ApplicationWindow::invokeMenuAssigner(const QString &menu_name) {
     QSettings settings;
     settings.beginGroup("Activators");
 
-    QDialog dlg;
+    QDialog dlg{this};
     dlg.setWindowTitle(tr("Menu Assigner"));
 
-    auto cb_1 = new QCheckBox("Double-Click");
-    auto cb_2 = new QCheckBox("Right-Click");
-    auto cb_3 = new QCheckBox("Ctrl+Right-Click");
-    auto cb_4 = new QCheckBox("Shift+Right-Click");
-    cb_1->setChecked(settings.value("Double-Click").toString() == menu_name);
-    cb_2->setChecked(settings.value("Right-Click").toString() == menu_name);
-    cb_3->setChecked(settings.value("Ctrl+Right-Click").toString() == menu_name);
-    cb_4->setChecked(settings.value("Shift+Right-Click").toString() == menu_name);
-
-    auto button_box = new QDialogButtonBox;
-    button_box->setStandardButtons(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
-
-    connect(button_box, SIGNAL(accepted()), &dlg, SLOT(accept()));
-    connect(button_box, SIGNAL(rejected()), &dlg, SLOT(reject()));
-
-    auto layout = new QVBoxLayout;
+    auto layout = new QVBoxLayout{&dlg};
     dlg.setLayout(layout);
 
-    auto frame = new QFrame;
+    auto frame = new QFrame{&dlg};
     layout->addWidget(frame);
 
-    auto f_layout = new QVBoxLayout;
+    auto f_layout = new QVBoxLayout{frame};
     frame->setLayout(f_layout);
 
-    f_layout->addWidget(cb_1);
-    f_layout->addWidget(cb_2);
-    f_layout->addWidget(cb_3);
-    f_layout->addWidget(cb_4);
+    constexpr char* boxes[] = {"Double-Click", "Right-Click", "Ctrl+Right-Click", "Shift+Right-Click"};
+    std::vector<QCheckBox*> checkBoxes;
+    for(const char* menuText: boxes) {
+        checkBoxes.push_back(new QCheckBox(menuText, &dlg));
+        checkBoxes.back()->setChecked(settings.value(menuText).toString() == menu_name);
+        f_layout->addWidget(checkBoxes.back());
+    }
+    
+    auto button_box = new QDialogButtonBox{&dlg};
+    button_box->setStandardButtons(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
+    
+    connect(button_box, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
+    connect(button_box, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
     f_layout->addWidget(button_box);
 
     if (dlg.exec()) {
-        if (cb_1->isChecked())
-            assignMenu("Double-Click", menu_name);
-        else
-            unassignMenu("Double-Click", menu_name);
-
-        if (cb_2->isChecked())
-            assignMenu("Right-Click", menu_name);
-        else
-            unassignMenu("Right-Click", menu_name);
-
-        if (cb_3->isChecked())
-            assignMenu("Ctrl+Right-Click", menu_name);
-        else
-            unassignMenu("Ctrl+Right-Click", menu_name);
-
-        if (cb_4->isChecked())
-            assignMenu("Shift+Right-Click", menu_name);
-        else
-            unassignMenu("Shift+Right-Click", menu_name);
+        for(QCheckBox* checkBox: checkBoxes) {
+            if (checkBox->isChecked())
+                assignMenu(checkBox->text(), menu_name);
+            else
+                unassignMenu(checkBox->text(), menu_name);
+        }
     }
     settings.endGroup();
 }
