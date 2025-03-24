@@ -35,20 +35,19 @@
 #include <QPushButton>
 #include <QStandardItemModel>
 #include <QStandardPaths>
+#include <QToolButton>
 #include <QTreeView>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
 
-#include "qg_librarywidget.h"
-
-#include <QToolButton>
-
+#include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
+#include "qg_librarywidget.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_system.h"
-#include "lc_printviewportrenderer.h"
 
 namespace {
     void writePng(const QString& pngPath, QPixmap pixmap)
@@ -77,7 +76,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     : QWidget(parent, fl)
 {
     setObjectName(name);
-	actionHandler = nullptr;
+    actionHandler = nullptr;
 
     QVBoxLayout *vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
@@ -92,7 +91,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     bInsert = new QPushButton(tr("Insert"), this);
     vboxLayout->addWidget(bInsert);
 
-    QHBoxLayout *refreshButtonsLayout = new QHBoxLayout(this);
+    QHBoxLayout *refreshButtonsLayout = new QHBoxLayout();
     bRefresh = new QPushButton(tr("Refresh"), this);
     refreshButtonsLayout->addWidget(bRefresh);
     bRebuild = new QPushButton(tr("Rebuild"), this);
