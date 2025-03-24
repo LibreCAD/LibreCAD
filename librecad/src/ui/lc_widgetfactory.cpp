@@ -479,10 +479,12 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, block_widget, &QG_BlockWidget::updateWidgetSettings);
     dock_block->setWidget(block_widget);
 
+    LC_ERR<<__LINE__;
     auto* dock_library = new QDockWidget(main_window);
     dock_library->setWindowTitle(tr("Library Browser"));
     dock_library->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     dock_library->setObjectName("library_dockwidget");
+    LC_ERR<<__LINE__;
     library_widget = new QG_LibraryWidget(dock_library, "Library");
     library_widget->setActionHandler(action_handler);
     library_widget->setFocusPolicy(Qt::NoFocus);
@@ -490,6 +492,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, library_widget, &QG_LibraryWidget::updateWidgetSettings);
     dock_library->setWidget(library_widget);
     dock_library->resize(240, 400);
+    LC_ERR<<__LINE__;
 
     auto* dock_command = new QDockWidget(tr("Command line"), main_window);
     // dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);

@@ -201,7 +201,7 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Pen& p);
 
 
-protected:
+private:
     RS2::LineType lineType = RS2::SolidLine;
     RS2::LineWidth width = RS2::Width00;
     double screenWidth = 0.;
