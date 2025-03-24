@@ -102,7 +102,7 @@ public:
 
 protected:
     RS_LeaderData data;
-    bool empty = false;
+    bool empty = true;
 };
 
 #endif

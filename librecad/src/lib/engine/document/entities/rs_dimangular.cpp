@@ -36,6 +36,7 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
 #include "rs_solid.h"
 #include "rs_units.h"
 

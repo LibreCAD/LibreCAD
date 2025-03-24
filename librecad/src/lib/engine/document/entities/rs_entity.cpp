@@ -27,7 +27,9 @@
 
 
 #include <iostream>
+#include <map>
 #include <utility>
+
 #include <QPolygon>
 #include <QString>
 
@@ -42,6 +44,7 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
@@ -51,12 +54,18 @@
 namespace {
 // fixme - renderperf - that should be cached as it is set once
 // Whether the entity is a member of cross hatch filling curves
-    bool isHatchMember(const RS_Entity* entity) {
-        if (entity == nullptr || entity->getParent() == nullptr)
-            return false;
-        return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
-    }
+bool isHatchMember(const RS_Entity* entity) {
+    if (entity == nullptr || entity->getParent() == nullptr)
+        return false;
+    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
 }
+}
+
+struct RS_Entity::Impl {
+    //! pen (attributes) for this entity
+    RS_Pen pen{};
+    std::map<QString, QString> varList;
+};
 
 /**
  * Default constructor.
@@ -65,9 +74,43 @@ namespace {
  *               a polyline entity as parent.
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
-    : parent{parent}{
+    : parent{parent}
+    , m_pImpl{std::make_unique<Impl>()}
+{
     init();
 }
+
+RS_Entity::RS_Entity(const RS_Entity& other):
+    parent{other.parent}
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
+{
+    init();
+}
+
+RS_Entity& RS_Entity::operator = (const RS_Entity& other)
+{
+    parent = other.parent;
+    *m_pImpl = *other.m_pImpl;
+    init();
+    return *this;
+}
+
+RS_Entity::RS_Entity(RS_Entity&& other):
+    parent{other.parent}
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
+{
+    init();
+}
+
+RS_Entity& RS_Entity::operator = (RS_Entity&& other)
+{
+    parent = other.parent;
+    *m_pImpl = *other.m_pImpl;
+    init();
+    return *this;
+}
+
+RS_Entity::~RS_Entity() = default;
 
 /**
  * Copy constructor.
@@ -726,7 +769,7 @@ void RS_Entity::setLayerToActive() {
 }
 
 RS_Pen RS_Entity::getPenResolved() const {
-    RS_Pen p = pen;
+    RS_Pen p = m_pImpl->pen;
     // use parental attributes (e.g. vertex of a polyline, block
     // entities when they are drawn in block documents):
     if (parent != nullptr && parent->rtti() != RS2::EntityGraphic) {
@@ -801,11 +844,11 @@ RS_Pen RS_Entity::getPenResolved() const {
  * @return Pen for this entity.
  */
 RS_Pen RS_Entity::getPen(bool resolve) const {
-    if (resolve) {
-        return getPenResolved();
-    } else {
-        return pen;
-    }
+    return resolve ? getPenResolved() : m_pImpl->pen;
+}
+
+void RS_Entity::setPen(const RS_Pen& pen) {
+    m_pImpl->pen = pen;
 }
 
 /**
@@ -815,8 +858,8 @@ RS_Pen RS_Entity::getPen(bool resolve) const {
  */
 void RS_Entity::setPenToActive() {
     RS_Document* doc = getDocument();
-    if (doc) {
-        pen = doc->getActivePen();
+    if (doc != nullptr) {
+        m_pImpl->pen = doc->getActivePen();
     } else {
         //RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Entity::setPenToActive(): "
         //                "No document / active pen linked to this entity.");
@@ -896,10 +939,10 @@ void RS_Entity::stretch(const RS_Vector& firstCorner,
  * @return User defined variable connected to this entity or nullptr if not found.
  */
 QString RS_Entity::getUserDefVar(const QString& key) const {
-    auto it=varList.find(key);
-    if(it==varList.end()) return nullptr;
-    return varList.at(key);
+    auto it=m_pImpl->varList.find(key);
+    return (it == m_pImpl->varList.end()) ? QString{} : it->second;
 }
+
 /*
  * @coord
  * @normal
@@ -917,14 +960,14 @@ RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
  * Add a user defined variable to this entity.
  */
 void RS_Entity::setUserDefVar(QString key, QString val) {
-    varList.insert(std::make_pair(key, val));
+    m_pImpl->varList.emplace(key, val);
 }
 
 /**
  * Deletes the given user defined variable.
  */
 void RS_Entity::delUserDefVar(QString key) {
-    varList.erase(key);
+    m_pImpl->varList.erase(key);
 }
 
 /**
@@ -932,8 +975,8 @@ void RS_Entity::delUserDefVar(QString key) {
  */
 std::vector<QString> RS_Entity::getAllKeys() const{
     std::vector<QString> ret(0);
-    for(auto const& v: varList){
-        ret.push_back(v.first);
+    for(auto const& [key, val]: m_pImpl->varList){
+        ret.push_back(key);
     }
     return ret;
 }
@@ -1019,10 +1062,10 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
         os << " layer address: " << e.layer << " ";
     }
 
-    os << e.pen << "\n";
+    os << e.m_pImpl->pen << "\n";
 
     os << "variable list:\n";
-    for(auto const& v: e.varList){
+    for(auto const& v: e.m_pImpl->varList){
         os << v.first.toLatin1().data()<< ": "
            << v.second.toLatin1().data()
            << ", ";

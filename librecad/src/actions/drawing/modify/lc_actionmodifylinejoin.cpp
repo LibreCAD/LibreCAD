@@ -20,11 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include <cmath>
-#include "rs_polyline.h"
-#include "rs_graphicview.h"
-#include "lc_linemath.h"
-#include "lc_linejoinoptions.h"
+
 #include "lc_actionmodifylinejoin.h"
+#include "lc_linejoinoptions.h"
+#include "lc_linemath.h"
+#include "rs_graphicview.h"
+#include "rs_pen.h"
+#include "rs_polyline.h"
 
 LC_ActionModifyLineJoin::LC_ActionModifyLineJoin(RS_EntityContainer &container, RS_GraphicView &graphicView):
     LC_AbstractActionWithPreview("ModifyLineJoin", container, graphicView),

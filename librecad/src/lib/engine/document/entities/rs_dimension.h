@@ -31,6 +31,8 @@
 #include "rs_entitycontainer.h"
 #include "rs_mtext.h"
 
+class RS_Color;
+
 /**
  * Holds the data that is common to all dimension entities.
  */

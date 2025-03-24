@@ -29,6 +29,7 @@
 
 #include "muParser.h"
 
+#include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_dimension.h"
 #include "rs_filterdxfrw.h" //for int <-> rs_color conversion

@@ -29,11 +29,11 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-#include <map>
-#include "rs_vector.h"
-#include "rs_pen.h"
-#include "rs_undoable.h"
+#include <memory>
+
 #include "lc_drawable.h"
+#include "rs_undoable.h"
+#include "rs_vector.h"
 
 class RS_Arc;
 class RS_Block;
@@ -44,6 +44,7 @@ class RS_Graphic;
 class RS_Insert;
 class RS_Line;
 class RS_Painter;
+class RS_Pen;
 class RS_Point;
 class RS_Polyline;
 class RS_Text;
@@ -62,6 +63,12 @@ class QString;
 class RS_Entity:public RS_Undoable, public LC_Drawable {
 public:
     RS_Entity(RS_EntityContainer *parent = nullptr);
+    RS_Entity(const RS_Entity& entity);
+    RS_Entity& operator = (const RS_Entity& entity);
+    RS_Entity(RS_Entity&& entity);
+    RS_Entity& operator = (RS_Entity&& entity);
+    ~RS_Entity() override;
+
     void init();
     virtual void initId();
     virtual RS_Entity *clone() const = 0;
@@ -143,9 +150,7 @@ public:
      * Sets the explicit pen for this entity or a pen with special
      * attributes such as BY_LAYER, ..
      */
-    void setPen(const RS_Pen &pen){
-        this->pen = pen;
-    }
+    void setPen(const RS_Pen &pen);
 
     void setPenToActive();
     RS_Pen getPen(bool resolve = true) const;
@@ -604,13 +609,13 @@ protected:
     RS_Layer *layer = nullptr;
     //! Entity id
     unsigned long long id = 0;
-    //! pen (attributes) for this entity
-    RS_Pen pen;
     //! auto updating enabled?
     bool updateEnabled = false;
 
 private:
-    std::map<QString, QString> varList;
+    // pImp to delay pulling in Qt headers
+    struct Impl;
+    const std::unique_ptr<Impl> m_pImpl;
 };
 
 #endif

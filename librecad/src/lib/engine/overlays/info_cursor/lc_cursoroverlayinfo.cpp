@@ -20,13 +20,52 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <QColor>
 #include <QFont>
+
 #include "lc_cursoroverlayinfo.h"
 #include "rs_painter.h"
 #include "rs_graphicview.h"
 #include "lc_overlayentity.h"
 #include "rs_settings.h"
 
+
+struct LC_InfoCursorOptions::ZoneSetup{
+    QColor color;
+    int fontSize = 10;
+    ZoneSetup(const QColor &color, int fontSize):
+        color(color)
+        , fontSize(fontSize)
+    {}
+};
+
+struct LC_InfoCursorOptions::Impl {
+    LC_InfoCursorOptions::ZoneSetup zones[4] = {{Qt::green, 10}, {Qt::cyan, 10}, {Qt::magenta, 10}, {Qt::gray, 10}};
+};
+
+LC_InfoCursorOptions::LC_InfoCursorOptions():
+    m_pImpl{std::make_unique<Impl>()}
+{}
+
+LC_InfoCursorOptions::~LC_InfoCursorOptions() = default;
+
+const LC_InfoCursorOptions::ZoneSetup& LC_InfoCursorOptions::zone(int index) const
+{
+    return m_pImpl->zones[index];
+}
+
+LC_InfoCursorOptions::ZoneSetup& LC_InfoCursorOptions::zone(int index)
+{
+    return m_pImpl->zones[index];
+}
+
+void LC_InfoCursorOptions::setFontSize(int size){
+    fontSize = size;
+    // todo - potentally, later we may use different font sizes for different zones?
+
+    for(ZoneSetup& zone: m_pImpl->zones)
+        zone.fontSize = size;
+}
 
 void LC_InfoCursorOverlayPrefs::loadSettings() {
     LC_GROUP("InfoOverlayCursor");
@@ -59,10 +98,10 @@ void LC_InfoCursorOverlayPrefs::loadSettings() {
     LC_GROUP("Colors");
     {
         if (enabled) {
-            options.zone1Settings.color = QColor(LC_GET_STR("info_overlay_absolute", RS_Settings::overlayInfoCursorAbsolutePos));
-            options.zone2Settings.color = QColor(LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
-            options.zone3Settings.color = QColor(LC_GET_STR("info_overlay_relative", RS_Settings::overlayInfoCursorRelativePos));
-            options.zone4Settings.color = QColor(LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
+            options.zone(0).color = QColor(LC_GET_STR("info_overlay_absolute", RS_Settings::overlayInfoCursorAbsolutePos));
+            options.zone(1).color = QColor(LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
+            options.zone(2).color = QColor(LC_GET_STR("info_overlay_relative", RS_Settings::overlayInfoCursorRelativePos));
+            options.zone(3).color = QColor(LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
         }
     }
     LC_GROUP_END();
@@ -81,10 +120,10 @@ void LC_OverlayInfoCursor::draw(RS_Painter *painter) {
 
     QString zone1String = zonesData->getZone1();
     if (!zone1String.isEmpty()){
-        RS_Color color = options->zone1Settings.color;
+        RS_Color color = options->zone(0).color;
         painter->setPen(color);
 
-        QFont fontToUse(options->fontName, options->zone1Settings.fontSize);
+        QFont fontToUse(options->fontName, options->zone(0).fontSize);
         painter->setFont(fontToUse);
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone1String);
@@ -99,10 +138,10 @@ void LC_OverlayInfoCursor::draw(RS_Painter *painter) {
 
     QString zone2String = zonesData->getZone2();
     if (!zone2String.isEmpty()){
-        RS_Color color = options->zone2Settings.color;
+        RS_Color color = options->zone(1).color;
         painter->setPen(color);
 
-        QFont fontToUse(options->fontName, options->zone2Settings.fontSize);
+        QFont fontToUse(options->fontName, options->zone(1).fontSize);
         painter->setFont(fontToUse);
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone2String);
@@ -118,10 +157,10 @@ void LC_OverlayInfoCursor::draw(RS_Painter *painter) {
     QString zone3String = zonesData->getZone3();
     if (!zone3String.isEmpty()){
 
-        RS_Color color = options->zone3Settings.color;
+        RS_Color color = options->zone(2).color;
         painter->setPen(color);
 
-        QFont fontToUse(options->fontName, options->zone3Settings.fontSize);
+        QFont fontToUse(options->fontName, options->zone(2).fontSize);
         painter->setFont(fontToUse);
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone3String);
@@ -136,10 +175,10 @@ void LC_OverlayInfoCursor::draw(RS_Painter *painter) {
 
     QString zone4String = zonesData->getZone4();
     if (!zone4String.isEmpty()){
-        RS_Color color = options->zone4Settings.color;
+        RS_Color color = options->zone(3).color;
         painter->setPen(color);
 
-        QFont fontToUse(options->fontName, options->zone4Settings.fontSize);
+        QFont fontToUse(options->fontName, options->zone(3).fontSize);
         painter->setFont(fontToUse);
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone4String);

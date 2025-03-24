@@ -21,15 +21,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cfloat>
-#include "rs_arc.h"
-#include "rs_circle.h"
-#include "rs_entitycontainer.h"
-#include "rs_information.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
+
 #include "lc_actionmodifybreakdivide.h"
 #include "lc_linemath.h"
 #include "lc_modifybreakdivideoptions.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "rs_math.h"
+#include "rs_pen.h"
 
 
 namespace {

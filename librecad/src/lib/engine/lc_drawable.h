@@ -30,6 +30,7 @@ class RS_Painter;
 class LC_Drawable {
 public:
     LC_Drawable();
+    virtual ~LC_Drawable() = default;
 
     virtual void draw(RS_Painter *painter) = 0;
 
