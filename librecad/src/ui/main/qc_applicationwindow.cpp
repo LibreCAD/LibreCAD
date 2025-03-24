@@ -3090,17 +3090,17 @@ void QC_ApplicationWindow::invokeMenuAssigner(const QString &menu_name) {
     auto f_layout = new QVBoxLayout{frame};
     frame->setLayout(f_layout);
 
-    constexpr char* boxes[] = {"Double-Click", "Right-Click", "Ctrl+Right-Click", "Shift+Right-Click"};
+    const char* boxes[] = {"Double-Click", "Right-Click", "Ctrl+Right-Click", "Shift+Right-Click"};
     std::vector<QCheckBox*> checkBoxes;
     for(const char* menuText: boxes) {
         checkBoxes.push_back(new QCheckBox(menuText, &dlg));
         checkBoxes.back()->setChecked(settings.value(menuText).toString() == menu_name);
         f_layout->addWidget(checkBoxes.back());
     }
-    
+
     auto button_box = new QDialogButtonBox{&dlg};
     button_box->setStandardButtons(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
-    
+
     connect(button_box, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
     connect(button_box, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
     f_layout->addWidget(button_box);
