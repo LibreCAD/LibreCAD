@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QList>
 #include <QMap>
+#include "rs.h"
 #include "lc_actiongroup.h"
 #include "lc_shortcuts_manager.h"
-
 
 class QAction;
 class QC_ApplicationWindow;
@@ -81,13 +81,17 @@ public:
     bool hasActionGroup(QString categoryName);
     LC_ActionGroup* getActionGroup(QString groupName);
     void fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames);
-
+    bool isActionTypeSetsTheIcon(RS2::ActionType actionType);
+    void completeInit();
+    QAction* getActionByType(RS2::ActionType actionType);
+    static void associateQActionWithActionType(QAction* action, RS2::ActionType actionType);
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);
     void onOptionsChanged();
 private:
     QMap<QString, QAction*> m_actionsMap; // should be initialized by action factory by call of loadShortcuts()
+    QMap<int, QAction*> m_actionsByTypes;
     LC_ShortcutsManager m_shortcutsManager;
     QList<bool> snap_memory;
 };

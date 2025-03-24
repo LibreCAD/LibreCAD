@@ -224,3 +224,27 @@ void  LC_ActionGroupManager::fillActionsList(QList<QAction *> &list, const std::
         list << getActionByName(actionName);
     }
 }
+
+bool LC_ActionGroupManager::isActionTypeSetsTheIcon(RS2::ActionType actionType){
+    return actionType != RS2::ActionSetRelativeZero;
+}
+
+void LC_ActionGroupManager::associateQActionWithActionType(QAction *action, RS2::ActionType actionType){
+    action->setProperty("RS2:actionType", actionType);
+}
+
+void LC_ActionGroupManager::completeInit(){
+   for (const auto action: m_actionsMap) {
+       auto property = action->property("RS2:actionType");
+       if (property.isValid()) {
+           auto actionType = property.value<RS2::ActionType>();
+           if (isActionTypeSetsTheIcon(actionType)){
+               m_actionsByTypes.insert(actionType, action);
+           }
+       }
+   }
+}
+
+QAction* LC_ActionGroupManager::getActionByType(RS2::ActionType actionType){
+    return m_actionsByTypes.value(actionType);
+}

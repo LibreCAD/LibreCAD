@@ -100,6 +100,8 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
 
     markNotEditableActionsShortcuts(a_map);
 
+    agm->completeInit();
+
     // fixme - review why this action is not used, is it really necessary or may be removed?
     //    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
 //    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));

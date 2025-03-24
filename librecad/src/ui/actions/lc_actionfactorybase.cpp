@@ -20,9 +20,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QActionGroup>
 
 #include "lc_actionfactorybase.h"
+#include "lc_actiongroupmanager.h"
 #include "lc_shortcutinfo.h"
 #include "qg_actionhandler.h"
 
@@ -62,6 +62,7 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
         // LC_ERR << " ++ captured action handler "<<   capturedHandler;
         capturedHandler->setCurrentAction(actionType);
     });
+    LC_ActionGroupManager::associateQActionWithActionType(action, actionType);
     return action;
 }
 
