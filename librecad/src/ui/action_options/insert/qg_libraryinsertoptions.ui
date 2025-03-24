@@ -90,10 +90,10 @@
       </sizepolicy>
      </property>
      <property name="frameShape">
-      <enum>QFrame::VLine</enum>
+      <enum>QFrame::Shape::VLine</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Shadow::Sunken</enum>
      </property>
     </widget>
    </item>
@@ -101,40 +101,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LibraryInsertOptions</receiver>
-   <slot>updateData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leFactor</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LibraryInsertOptions</receiver>
-   <slot>updateData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateData()</slot>
  </slots>
