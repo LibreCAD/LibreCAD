@@ -1186,7 +1186,10 @@ void Doc_plugin_interface::setCurrentLayerProperties(int c, QString const& w,
 bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 									QPointF *base){
     bool status = false;
-    auto* a = new QC_ActionGetPoint(*doc, *gView);
+
+    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
+
+    auto* a = new QC_ActionGetPoint(ctxt);
     if (a) {
         if (!(message.isEmpty()) ) a->setMessage(message);
         gView->killAllActions();
@@ -1210,7 +1213,8 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 }
 
 Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
-    auto* a = new QC_ActionGetEnt(*doc, *gView);
+    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
+    auto* a = new QC_ActionGetEnt(ctxt);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1232,7 +1236,8 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
 
 bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
     bool status = false;
-    auto* a = new QC_ActionGetSelect(*doc, *gView);
+    LC_ActionContext* actionContext = nullptr; // fixme - sand - files - restore!
+    auto* a = new QC_ActionGetSelect(actionContext);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1272,7 +1277,8 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     
     gView->setTypeToSelect(typeToSelect);
-    auto* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
+    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
+    auto* a = new QC_ActionGetSelect(typeToSelect, ctxt);
 
     if (a) {
         if (!(message.isEmpty()) )
@@ -1315,7 +1321,8 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
 }
 
 void Doc_plugin_interface::unselectEntities() {
-    auto a = new QC_ActionGetSelect(*doc, *gView);
+    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
+    auto a = new QC_ActionGetSelect(ctxt);
     a->unselectEntities();
 }
 

@@ -355,7 +355,7 @@ void RS_ActionDrawLine::undo(){
             }
             case HA_SetEndpoint:
             case HA_Close: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(true, *container, *graphicView));
+                graphicView->setCurrentAction( new RS_ActionEditUndo(true, m_actionContext));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetEndpoint);
                 break;
@@ -390,12 +390,12 @@ void RS_ActionDrawLine::redo(){
                 break;
             }
             case HA_SetEndpoint: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
+                graphicView->setCurrentAction( new RS_ActionEditUndo(false, m_actionContext));
                 setStatus(SetEndpoint);
                 break;
             }
             case HA_Close: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
+                graphicView->setCurrentAction( new RS_ActionEditUndo(false, m_actionContext));
                 setStatus(SetStartpoint);
                 break;
             }

@@ -26,7 +26,7 @@
 
 #ifndef QC_ACTIONGETENT_H
 #define QC_ACTIONGETENT_H
-
+#include "lc_actioncontext.h"
 #include "rs_previewactioninterface.h"
 #include "rs_modification.h"
 
@@ -42,8 +42,7 @@
 class QC_ActionGetEnt : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    QC_ActionGetEnt(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    QC_ActionGetEnt(LC_ActionContext* actionContext);
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
 

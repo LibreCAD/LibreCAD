@@ -47,8 +47,8 @@ RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,LC_ActionContext *a
 void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
     if(status >= 0 ) {
-        graphicView->setCurrentAction(
-                    new RS_ActionSelectSingle(*container, *graphicView, this, entityTypeList));
+        // fixme - sand - files direct action creation!
+        graphicView->setCurrentAction(new RS_ActionSelectSingle(m_actionContext, this, entityTypeList));
     }
     deleteSnapper();
 }

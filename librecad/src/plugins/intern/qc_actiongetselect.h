@@ -28,6 +28,8 @@
 #define QC_ACTIONGETSELECT_H
 
 #include <memory>
+
+#include "lc_actioncontext.h"
 #include "rs_actioninterface.h"
 
 class Doc_plugin_interface;
@@ -43,12 +45,8 @@ class QString;
 class QC_ActionGetSelect : public RS_ActionInterface {
     Q_OBJECT
 public:
-    QC_ActionGetSelect(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-
-    QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-
+    QC_ActionGetSelect(LC_ActionContext* actionContext );
+    QC_ActionGetSelect(RS2::EntityType typeToSelect,LC_ActionContext* actionContext);
     ~QC_ActionGetSelect() override;
     void init(int status) override;
     void mouseReleaseEvent(QMouseEvent* e) override;

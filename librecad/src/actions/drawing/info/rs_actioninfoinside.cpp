@@ -27,17 +27,18 @@
 #include <QMouseEvent>
 
 #include "rs_actioninfoinside.h"
-#include "rs_dialogfactory.h"
+
+#include "lc_actioncontext.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_entitycontainer.h"
 
 RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
-	:RS_ActionInterface("Info Inside", actionContext)
+	:RS_ActionInterface("Info Inside", actionContext, actionType=RS2::ActionInfoInside)
     , pt(std::make_unique<RS_Vector>())
     ,contour(std::make_unique<RS_EntityContainer>()){
-    actionType=RS2::ActionInfoInside;
-    for(auto e: container){
+    auto container = actionContext->getEntityContainer();
+    for(auto e: container->getEntityList()){
         if (e->isSelected()) {
             contour->addEntity(e);
         }

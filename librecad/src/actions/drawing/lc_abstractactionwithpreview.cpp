@@ -61,8 +61,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @param container
  * @param graphicView
  */
-LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface(name, actionContext),
+LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext, actionType),
     highlightedEntity{nullptr}{
 }
 

@@ -32,17 +32,15 @@
 #include "rs_graphicview.h"
 #include "rs_snapper.h"
 
-QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView)
-    :RS_ActionInterface("Get Select", container, graphicView)
+QC_ActionGetSelect::QC_ActionGetSelect(LC_ActionContext* actionContext)
+    :RS_ActionInterface("Get Select", actionContext)
     , completed(false)
     , message(std::make_unique<QString>(tr("Select objects:"))){
     actionType = RS2::ActionGetSelect;
 }
 
-QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-    :RS_ActionInterface("Get Select", container, graphicView)
+QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, LC_ActionContext* actionContext)
+    :RS_ActionInterface("Get Select", actionContext)
     , completed(false)
     , message(std::make_unique<QString>(tr("Select objects:"))),
      typeToSelect(typeToSelect){
@@ -73,7 +71,7 @@ void QC_ActionGetSelect::setMessage(QString msg){
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
         graphicView->setCurrentAction(
-                new RS_ActionSelectSingle(typeToSelect, *container, *graphicView, this));
+                new RS_ActionSelectSingle(typeToSelect, m_actionContext, this));
 }
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {

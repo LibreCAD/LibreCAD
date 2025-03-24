@@ -35,9 +35,8 @@
 #include "rs_snapper.h"
 
 
-QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView)
-        :RS_ActionInterface("Get Entity", container, graphicView) {
+QC_ActionGetEnt::QC_ActionGetEnt(LC_ActionContext* actionContext)
+        :RS_ActionInterface("Get Entity", actionContext) {
     completed = false;
     message = tr("Select object:");
     en = nullptr;

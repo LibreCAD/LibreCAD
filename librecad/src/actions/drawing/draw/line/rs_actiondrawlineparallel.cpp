@@ -137,7 +137,8 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
             if (checkCommand("through", c)){
                 finish(false);
                 accept = true;
-                graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(*container,*graphicView));
+                // fixme - sand - files - direct action creation
+                graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(m_actionContext));
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);
