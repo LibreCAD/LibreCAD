@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QString>
 
 #include "lc_modifiersinfo.h"
+class RS_Document;
 class RS_EntityContainer;
 class RS_GraphicView;
 class RS_Vector;
@@ -31,6 +32,10 @@ class LC_ModifiersInfo;
 class LC_ActionOptionsWidget;
 
 class LC_ActionContext{
+
+protected:
+    ~LC_ActionContext() = default;
+
 public:
     virtual void addOptionsWidget(LC_ActionOptionsWidget * widet){}
     virtual void removeOptionsWidget(LC_ActionOptionsWidget * widet){}
@@ -42,8 +47,8 @@ public:
 
     virtual void updateSelectionWidget(int countSelected, double selectedLength){}
 
-    virtual void updateMouseWidget([[maybe_unused]]const QString& = QString(),
-                                  [[maybe_unused]]const QString& = QString(),
+    virtual void updateMouseWidget([[maybe_unused]]const QString& left = QString(),
+                                  [[maybe_unused]]const QString& right = QString(),
                                   [[maybe_unused]]const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()){};
 
     virtual void commandMessage([[maybe_unused]]const QString& message) {};
@@ -57,6 +62,10 @@ public:
     virtual RS_EntityContainer* getEntityContainer();
     virtual RS_GraphicView* getGraphicView();
 
+    virtual void setDocumentAndView(RS_Document *document, RS_GraphicView *view);
+protected:
+    RS_EntityContainer * m_entityContainer {nullptr};
+    RS_GraphicView * m_graphicView {nullptr};
 };
 
 #endif // LC_ACTIONCONTEXT_H

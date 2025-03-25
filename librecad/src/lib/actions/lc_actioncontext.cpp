@@ -20,4 +20,17 @@
 
 #include "lc_actioncontext.h"
 
-LC_ActionContext::LC_ActionContext() {}
+#include "rs_document.h"
+
+RS_EntityContainer * LC_ActionContext::getEntityContainer(){
+    return m_entityContainer;
+}
+
+RS_GraphicView * LC_ActionContext::getGraphicView(){
+    return m_graphicView;
+}
+
+void LC_ActionContext::setDocumentAndView(RS_Document *document, RS_GraphicView *view){
+        m_graphicView = view;
+        m_entityContainer = document;
+}
