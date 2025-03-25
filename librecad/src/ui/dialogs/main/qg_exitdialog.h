@@ -47,13 +47,13 @@ public:
 	};
 
 public slots:
-    virtual void setText( const QString & text );
-    virtual void setTitle( const QString & text );
-    virtual void setForce( bool force );
-	virtual void setShowSaveAll(bool show);
-    virtual void slotSaveAll();
-    virtual void slotSave();
-    virtual void clicked(QAbstractButton * button);	
+    void setText( const QString & text );
+    void setTitle( const QString & text );
+    void setForce( bool force );
+	void setShowSaveAll(bool show);
+    void slotSaveAll();
+    void slotSave();
+    void clicked(QAbstractButton * button);
 
 protected slots:
     virtual void languageChange();

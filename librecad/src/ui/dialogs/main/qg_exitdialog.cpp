@@ -95,10 +95,6 @@ void QG_ExitDialog::clicked(QAbstractButton * button){
 
 void QG_ExitDialog::setText(const QString& text) {
 	ui->lQuestion->setText(text);
-/* RVT_PORT
-    resize(lQuestion->sizeHint().width()+32,
-           lQuestion->sizeHint().height() + layButtons->sizeHint().height()+32);
-           */
 }
 
 void QG_ExitDialog::setTitle(const QString& text) {
@@ -110,10 +106,10 @@ void QG_ExitDialog::setForce(bool force) {
      bCancel->setDisabled(force);
 }
 
-void QG_ExitDialog::setShowSaveAll(bool show)
-{
+void QG_ExitDialog::setShowSaveAll(bool show){
 	ui->buttonBox->button(QDialogButtonBox::SaveAll)->setVisible(show);
-    QString discard = show ? tr("Discard All") : tr("Discard");
+    // QString discard = show ? tr("Discard All") : tr("Discard");
+    QString discard = show ? tr("Save Nothing") : tr("Don't Save");
     ui->buttonBox->button(QDialogButtonBox::Discard)->setText(discard);
 }
 
