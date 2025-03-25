@@ -113,8 +113,8 @@ public:
     friend class RS_FontList;
 
 private:
-    void readCXF(QString path);
-    void readLFF(QString path);
+    void readCXF(const QString& path);
+    void readLFF(const QString& path);
     RS_Block* generateLffFont(const QString& key);
 
 private:

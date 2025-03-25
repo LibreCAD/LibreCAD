@@ -176,15 +176,14 @@ bool RS_Font::loadFont() {
 }
 
 
-void RS_Font::readCXF(QString path) {
-    QString line;
+void RS_Font::readCXF(const QString& path) {
     QFile f(path);
     f.open(QIODevice::ReadOnly);
     QTextStream ts(&f);
 
     // Read line by line until we find a new letter:
     while (!ts.atEnd()) {
-        line = ts.readLine();
+        QString line = ts.readLine();
 
         if (line.isEmpty())
             continue;
@@ -310,11 +309,9 @@ void RS_Font::readCXF(QString path) {
             }
         }
     }
-    f.close();
 }
 
-void RS_Font::readLFF(QString path) {
-    QString line;
+void RS_Font::readLFF(const QString& path) {
     QFile f(path);
     encoding = "UTF-8";
     f.open(QIODevice::ReadOnly);
@@ -322,7 +319,7 @@ void RS_Font::readLFF(QString path) {
 
     // Read line by line until we find a new letter:
     while (!ts.atEnd()) {
-        line = ts.readLine();
+        QString line = ts.readLine();
 
         if (line.isEmpty())
             continue;
@@ -383,7 +380,6 @@ void RS_Font::readLFF(QString path) {
             }
         }
     }
-    f.close();
 }
 
 void RS_Font::generateAllFonts()
@@ -400,7 +396,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
     }
 
     // create new letter:
-    auto* letter = std::make_unique<RS_FontChar>(nullptr, key, RS_Vector(0.0, 0.0));
+    auto letter = std::make_unique<RS_FontChar>(nullptr, key, RS_Vector(0.0, 0.0));
 
     // Read entities of this letter:
     QStringList fontData = rawLffFontList[key];
@@ -419,7 +415,6 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
             auto ch = charFromHex(line);
             if (ch == key) {   // recursion, a character can't include itself
                 RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : recursion, ignore this character from %s", uCode, qPrintable(fileName));
-                delete letter;
                 return nullptr;
             }
 
@@ -427,7 +422,6 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
             if (nullptr == bk) {
                 if (!rawLffFontList.contains(ch)) {
                     RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : can not find the letter C%04X in LFF file %s", QChar(key.at(0)), uCode, qPrintable(fileName));
-                    delete letter;
                     return nullptr;
                 }
                 generateLffFont(ch);
@@ -489,10 +483,10 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
 
 RS_Block* RS_Font::findLetter(const QString& name) {
     RS_Block* ret= letterList.find(name);
-    if (ret) return ret;
-    return generateLffFont(name);
+    return (ret != nullptr) ? ret : generateLffFont(name);
 
 }
+
 /**
  * Dumps the fonts data to stdout.
  */
