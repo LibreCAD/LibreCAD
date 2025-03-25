@@ -209,7 +209,7 @@ RS_Commands::RS_Commands() {
     }
 }
 
-QString RS_Commands::getALiasFile()
+QString RS_Commands::getAliasFile()
 {
     QString aliasName = RS_SYSTEM->getAppDataDir();
     if (aliasName.isEmpty()) {
@@ -230,7 +230,7 @@ void RS_Commands::updateAlias()
 {
     LC_LOG << __func__ << "(): begin";
 
-    QString aliasName = getALiasFile();
+    QString aliasName = getAliasFile();
     if (aliasName.isEmpty()) {
         LC_ERR << __func__ << "(): line "<<__LINE__<<": empty alias folder name: aborting";
         return;

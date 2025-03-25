@@ -47,9 +47,9 @@
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
+QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* parent, const char* name, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-    , actionHandler(nullptr)
+    , actionHandler(action_handler)
 {
     setObjectName(name);
     setupUi(this);
@@ -242,7 +242,7 @@ void QG_CommandWidget::tabPressed() {
         else if (!reducedChoices.isEmpty()) {
             const QString proposal = getRootCommand(reducedChoices, typed);
             appendHistory(reducedChoices.join(", "));
-            const QString aliasFile = RS_Commands::getALiasFile();
+            const QString aliasFile = RS_Commands::getAliasFile();
             if (!aliasFile.isEmpty())
                 appendHistory(tr("Command Alias File: %1").arg(aliasFile));
             leCommand -> setText(proposal);
