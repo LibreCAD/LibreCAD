@@ -45,6 +45,7 @@ public:
     ~QG_RecentFiles() override;
 
     void add(const QString& filename);
+    void addIfAbsent(const QString& filename);
 
     /**
      * @return complete path and name of the file stored in the

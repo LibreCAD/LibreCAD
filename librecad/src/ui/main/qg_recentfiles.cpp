@@ -94,7 +94,13 @@ void QG_RecentFiles::add(const QString &filename)
     RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
-QString QG_RecentFiles::get(int i) const
+    void QG_RecentFiles::addIfAbsent(const QString &filename){
+        if (!contains(filename)) {
+            add(filename);
+        }
+    }
+
+    QString QG_RecentFiles::get(int i) const
 {
     if (i >= 0 && i < m_files.size()) {
         return m_files[i];
