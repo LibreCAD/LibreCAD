@@ -1,26 +1,25 @@
-/*
-**********************************************************************************
-**
-** This file was created for the LibreCAD project (librecad.org), a 2D CAD program.
-**
-** Copyright (C) 2015 ravas (github.com/r-a-v-a-s)
-**
-** This program is free software; you can redistribute it and/or
-** modify it under the terms of the GNU General Public License
-** as published by the Free Software Foundation; either version 2
-** of the License, or (at your option) any later version.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-**
-**********************************************************************************
-*/
+// /****************************************************************************
+//
+// Utility base class for widgets that represents options for actions
+//
+// Copyright (C) 2025 LibreCAD.org
+// Copyright (C) 2025 sand1024
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+// **********************************************************************
+//
 
 // This file was first published at: github.com/r-a-v-a-s/LibreCAD.git
 
@@ -97,10 +96,14 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     agm->loadShortcuts(a_map);
 
     // todo - may we report errors somehow there?
-
     markNotEditableActionsShortcuts(a_map);
 
     agm->completeInit();
+
+    fillActionLists(agm);
+    addActionsToMainWindow(a_map);
+
+    prepareActionsToDisableInPrintPreview(agm, m_mainWin->m_actionsToDisableInPrintPreviewList);
 
     // fixme - review why this action is not used, is it really necessary or may be removed?
     //    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
@@ -115,7 +118,7 @@ void LC_ActionFactory::createDrawShapeActions(QMap<QString, QAction*>& map, QAct
         {"DrawLinePolygonCenCor",    RS2::ActionDrawLinePolygonCenCor,   tr("Pol&ygon (Cen,Cor)"),     ":/icons/line_polygon_cen_cor.lci"},
         {"DrawLinePolygonCenTan",    RS2::ActionDrawLinePolygonCenTan,   tr("Pol&ygon (Cen,Tan)"),     ":/icons/line_polygon_cen_tan.lci"},
         {"DrawLinePolygonCorCor",    RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Cor,Cor)"),     ":/icons/line_polygon_cor_cor.lci"},
-        {"DrawLinePolygonSideSide",  RS2::ActionDrawLinePolygonSideSide, tr("Polygo&n (Tan,Tan)"),   ":/icons/line_polygon_size_size.lci"},
+        {"DrawLinePolygonSideSide",  RS2::ActionDrawLinePolygonSideSide, tr("Polygo&n (Tan,Tan)"),     ":/icons/line_polygon_size_size.lci"},
         {"DrawStar",                 RS2::ActionDrawStar,                tr("Star"),                   ":/icons/line_polygon_star.lci"},
         {"DrawLineRectangle1Point",  RS2::ActionDrawRectangle1Point,     tr("Rectangle (1 Point)"),    ":/icons/rectangle_1_point.lci"},
         {"DrawLineRectangle2Points", RS2::ActionDrawRectangle2Points,    tr("Rectangle (2 Points)"),   ":/icons/rectangle_2_points.lci"},
@@ -155,7 +158,7 @@ void LC_ActionFactory::createDrawPointsActions(QMap<QString, QAction*>& map, QAc
     createActionHandlerActions(map, group,{
         {"DrawPoint",                RS2::ActionDrawPoint,               tr("&Points"),                ":/icons/points.lci"},
         {"DrawLinePoints",           RS2::ActionDrawLinePoints,          tr("Line of Points"),         ":/icons/line_points.lci"},
-        {"DrawPointsMiddle",         RS2::ActionDrawPointsMiddle,        tr("Middle Points"),         ":/icons/points_middle.lci"},
+        {"DrawPointsMiddle",         RS2::ActionDrawPointsMiddle,        tr("Middle Points"),          ":/icons/points_middle.lci"},
         {"DrawPointLattice",         RS2::ActionDrawPointsLattice,       tr("Lattice of Points"),      ":/icons/points_lattice.lci"},
         {"SelectPoints",             RS2::ActionSelectPoints,            tr("Select Points"),          ":/icons/select_points.lci"},
         {"PasteToPoints",            RS2::ActionPasteToPoints,           tr("Paste to Points"),        ":/icons/paste_to_points.lci"}
@@ -246,7 +249,7 @@ void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, 
         {"PolylineEquidistant", RS2::ActionPolylineEquidistant, tr("Create &Equidistant Polylines"),           ":/icons/create_equidistant_polyline.lci"},
         {"PolylineSegment",     RS2::ActionPolylineSegment,     tr("Polyline from Existing &Segments"),        ":/icons/create_polyline_from_existing_segments.lci"},
         {"PolylineArcToLines",  RS2::ActionPolylineArcsToLines, tr("Polyline Arcs to Chords"),                 ":/icons/polyline_arc_to_lines.lci"},
-        {"PolylineSegmentType", RS2::ActionPolylineChangeSegmentType, tr("Polyline Change Segment Type"),      ":/icons/polyline_segment_type.lci"}
+        {"PolylineSegmentType", RS2::ActionPolylineChangeSegmentType,    tr("Polyline Change Segment Type"),            ":/icons/polyline_segment_type.lci"}
     });
 }
 
@@ -593,26 +596,25 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     map["RightDockAreaToggle"]->setChecked(true);
     bool statusBarVisible = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
     map["ViewStatusBar"]->setChecked(statusBarVisible);
-
     map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
 
-    connect(main_window, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
-    connect(main_window, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
-    connect(main_window, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
-    connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
-    connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
-    connect(main_window, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
-    connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
+    connect(m_mainWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
+    connect(m_mainWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
+    connect(m_mainWin, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
+    connect(m_mainWin, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
+    connect(m_mainWin, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
+    connect(m_mainWin, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
+    connect(m_mainWin, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 
     QAction *&entityInfoAction = map["EntityDescriptionInfo"];
-    connect(main_window, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
-    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
+    connect(m_mainWin, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
+    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
 
-    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
-    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
-    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
-    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
-    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
+    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
+    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
+    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
+    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
+    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
 
     LC_GROUP("InfoOverlayCursor");
     {
@@ -627,8 +629,8 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
         map["EntityDescriptionInfo"]->setChecked(false);
 
         entityInfoAction->setVisible(cursorEnabled);
-
     }
+    LC_GROUP_END();
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {
@@ -699,4 +701,295 @@ void LC_ActionFactory::markNotEditableActionsShortcuts(QMap<QString, QAction *> 
     makeActionsShortcutsNonEditable(map, {
         "RestrictNothing"
     });
+}
+
+void LC_ActionFactory::fillActionLists(LC_ActionGroupManager* agm){
+    agm->fillActionsList(agm->file_actions,
+                         {
+                             "FileNew",
+                             "FileNewTemplate",
+                             "FileOpen",
+                             "FileSave",
+                             "FileSaveAs",
+                             "FileSaveAll"
+                         });
+
+    agm->fillActionsList(agm->shape_actions,
+                         {
+                             "DrawLineRectangle",
+                             "DrawLineRectangle1Point",
+                             "DrawLineRectangle2Points",
+                             "DrawLineRectangle3Points",
+                             "DrawLinePolygonCenCor",
+                             "DrawLinePolygonCenTan",
+                             "DrawLinePolygonCorCor",
+                             "DrawLinePolygonSideSide",
+                             "DrawStar"
+                         });
+
+    agm->fillActionsList(agm->line_actions, {
+                             "DrawLine",
+                             "DrawLineAngle",
+                             "DrawLineHorizontal",
+                             "DrawLineVertical",
+                             "DrawLineParallelThrough",
+                             "DrawLineParallel",
+                             "DrawLineBisector",
+                             "DrawLineTangent1",
+                             "DrawLineTangent2",
+                             "DrawLineOrthTan",
+                             "DrawLineOrthogonal",
+                             "DrawLineRelAngle",
+                             "DrawLineRel",
+                             "DrawLineRelX",
+                             "DrawLineRelY",
+                             "DrawLineAngleRel",
+                             "DrawLineOrthogonalRel",
+                             "DrawLineFromPointToLine",
+                             "DrawSliceDivideLine",
+                             "DrawSliceDivideCircle",
+                             "DrawCross",
+                             "DrawLineMiddle"
+                         });
+
+    agm->fillActionsList(agm->point_actions, {
+                             "DrawPoint",
+                             "DrawLinePoints",
+                             "DrawPointsMiddle",
+                             "DrawPointLattice",
+                             "SelectPoints",
+                             "PasteToPoints"
+                         });
+
+    agm->fillActionsList(agm->circle_actions, {
+                             "DrawCircle",
+                             "DrawCircle2P",
+                             "DrawCircle2PR",
+                             "DrawCircle3P",
+                             "DrawCircleCR",
+                             "DrawCircleTan2_1P",
+                             "DrawCircleTan1_2P",
+                             "DrawCircleTan2",
+                             "DrawCircleTan3",
+                             "DrawCircleInscribe",
+                             "DrawCircleParallel",
+                             "DrawCircleByArc"
+                         });
+
+    agm->fillActionsList(agm->curve_actions, {
+                             "DrawArc",
+                             "DrawArcChord",
+                             "DrawArcAngleLen",
+                             "DrawArc3P",
+                             "DrawArc2PAngle",
+                             "DrawArc2PRadius",
+                             "DrawArc2PLength",
+                             "DrawArc2PHeight",
+                             "DrawArcTangential",
+                             "DrawEllipseArcAxis",
+                             "DrawEllipseArc1Point"
+                         });
+
+    agm->fillActionsList(agm->spline_actions, {
+                             "DrawParabola4Points",
+                             "DrawParabolaFD",
+                             "DrawSpline",
+                             "DrawSplinePoints",
+                             "DrawSplineFromPolyline",
+                             "DrawSplinePointsAppend",
+                             "DrawSplinePointsAdd",
+                             "DrawSplinePointsRemove",
+                             "DrawSplinePointsDelTwo",
+                             "DrawSplineExplode",
+                             "DrawLineFree"
+                         });
+
+    agm->fillActionsList(agm->ellipse_actions, {
+                             "DrawEllipse1Point",
+                             "DrawEllipseAxis",
+                             "DrawEllipseFociPoint",
+                             "DrawEllipse4Points",
+                             "DrawEllipseCenter3Points",
+                             "DrawEllipseInscribe"
+                         });
+
+    agm->fillActionsList(agm->polyline_actions, {
+                             "DrawPolyline",
+                             "PolylineAdd",
+                             "PolylineAppend",
+                             "PolylineDel",
+                             "PolylineDelBetween",
+                             "PolylineTrim",
+                             "PolylineEquidistant",
+                             "PolylineSegment",
+                             "PolylineArcToLines",
+                             "PolylineSegmentType"
+                         });
+
+    agm->fillActionsList(agm->select_actions, {
+                             "DeselectAll",
+                             "SelectAll",
+                             "SelectSingle",
+                             "SelectContour",
+                             "SelectWindow",
+                             "DeselectWindow",
+                             "SelectIntersected",
+                             "DeselectIntersected",
+                             "SelectLayer",
+                             "SelectInvert"
+                         });
+
+    agm->fillActionsList(agm->dimension_actions, {
+                             "DimAligned",
+                             "DimLinear",
+                             "DimLinearHor",
+                             "DimLinearVer",
+                             "DimBaseline",
+                             "DimContinue",
+                             "DimRadial",
+                             "DimDiametric",
+                             "DimAngular",
+                             "DimArc",
+                             "DimLeader"
+                         });
+
+    agm->fillActionsList(agm->other_drawing_actions, {
+                             "DrawText",
+                             "DrawMText",
+                             "DrawHatch",
+                             "DrawImage",
+                             "DrawBoundingBox"
+                         });
+
+    agm->fillActionsList(agm->modify_actions, {
+                             "ModifyMove",
+                             "ModifyDuplicate",
+                             "ModifyAlign",
+                             "ModifyAlignOne",
+                             "ModifyAlignRef",
+                             "ModifyRotate",
+                             "ModifyScale",
+                             "ModifyMirror",
+                             "ModifyMoveRotate",
+                             "ModifyRotate2",
+                             "ModifyRevertDirection",
+                             "ModifyTrim",
+                             "ModifyTrim2",
+                             "ModifyTrimAmount",
+                             "ModifyLineJoin",
+                             "ModifyBreakDivide",
+                             "ModifyLineGap",
+                             "ModifyOffset",
+                             "ModifyBevel",
+                             "ModifyRound",
+                             "ModifyCut",
+                             "ModifyStretch",
+                             "ModifyEntity",
+                             "ModifyAttributes",
+                             "ModifyExplodeText",
+                             "BlocksExplode",
+                             "ModifyDelete"
+                         });
+
+    agm->fillActionsList(agm->order_actions, {
+                             "OrderTop",
+                             "OrderBottom",
+                             "OrderRaise",
+                             "OrderLower"
+                         });
+
+    agm->fillActionsList(agm->info_actions, {
+                             "InfoDist",
+                             "InfoDist2",
+                             "InfoDist3",
+                             "InfoAngle",
+                             "InfoAngle3Points",
+                             "InfoTotalLength",
+                             "InfoArea",
+                             "EntityInfo"
+                         });
+
+    agm->fillActionsList(agm->layer_actions, {
+                             "LayersDefreezeAll",
+                             "LayersFreezeAll",
+                             "LayersUnlockAll",
+                             "LayersLockAll",
+                             "LayersAdd",
+                             "LayersRemove",
+                             "LayersEdit",
+                             "LayersToggleLock",
+                             "LayersToggleView",
+                             "LayersTogglePrint",
+                             "LayersToggleConstruction",
+                             "LayersExportSelected",
+                             "LayersExportVisible"
+                         });
+
+    agm->fillActionsList(agm->block_actions, {
+                             "BlocksDefreezeAll",
+                             "BlocksFreezeAll",
+                             "BlocksToggleView",
+                             "BlocksAdd",
+                             "BlocksRemove",
+                             "BlocksAttributes",
+                             "BlocksInsert",
+                             "BlocksEdit",
+                             "BlocksSave",
+                             "BlocksCreate",
+                             "BlocksExplode"
+                         });
+
+    agm->fillActionsList(agm->pen_actions, {
+                             "PenSyncFromLayer",
+                             "PenPick",
+                             "PenPickResolved",
+                             "PenApply",
+                             "PenCopy"
+                         });
+}
+
+void LC_ActionFactory::prepareActionsToDisableInPrintPreview(LC_ActionGroupManager* agm, QList<QAction*>& actionsList){
+    agm->fillActionsList(actionsList, {
+        "EditCut",
+        "EditCutQuick",
+        "EditCopy",
+        "EditCopyQuick",
+        "EditPaste",
+        "EditPasteTransform",
+        "ViewGrid",
+        "ViewDraft",
+        "ViewLinesDraft",
+        "ViewAntialiasing",
+        "ModifyDeleteQuick",
+        "EditKillAllActions",
+        "ZoomIn",
+        "ZoomOut",
+        "ZoomAuto",
+        "ZoomPrevious",
+        "ZoomWindow",
+        "ZoomPan",
+        "OptionsDrawing",
+        "ViewGridOrtho",
+        "ViewGridIsoLeft",
+        "ViewGridIsoTop",
+        "ViewGridIsoRight",
+        "UCSSetWCS",
+        "UCSCreate"
+    });
+
+    actionsList.append(agm->line_actions);
+    actionsList.append(agm->point_actions);
+    actionsList.append(agm->circle_actions);
+    actionsList.append(agm->curve_actions);
+    actionsList.append(agm->spline_actions);
+    actionsList.append(agm->ellipse_actions);
+    actionsList.append(agm->polyline_actions);
+    actionsList.append(agm->select_actions);
+    actionsList.append(agm->dimension_actions);
+    actionsList.append(agm->other_drawing_actions);
+    actionsList.append(agm->modify_actions);
+    actionsList.append(agm->order_actions);
+    actionsList.append(agm->info_actions);
+    actionsList.append(agm->block_actions);
+    actionsList.append(agm->pen_actions);
 }

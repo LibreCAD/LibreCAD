@@ -27,7 +27,7 @@
 #include "qg_actionhandler.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
-    QObject(parent), main_window(parent),action_handler(a_handler){
+    QObject(parent), m_mainWin(parent),m_actionHandler(a_handler){
 }
 
 QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_ApplicationWindow::*slotPtr)(), void (QC_ApplicationWindow::*slotBoolPtr)(bool),const QString& text,
@@ -36,15 +36,15 @@ QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_Applic
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
     if (slotPtr != nullptr) {
         if (useToggled) {
-            connect(action, &QAction::toggled, main_window, slotPtr);
+            connect(action, &QAction::toggled, m_mainWin, slotPtr);
         } else {
-            connect(action, &QAction::triggered, main_window, slotPtr);
+            connect(action, &QAction::triggered, m_mainWin, slotPtr);
         }
     }else if (slotBoolPtr != nullptr) {
             if (useToggled) {
-                connect(action, &QAction::toggled, main_window, slotBoolPtr);
+                connect(action, &QAction::toggled, m_mainWin, slotBoolPtr);
             } else {
-                connect(action, &QAction::triggered, main_window, slotBoolPtr);
+                connect(action, &QAction::triggered, m_mainWin, slotBoolPtr);
             }
     }
     return action;
@@ -57,7 +57,7 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
     // LC_ERR <<  " ** original action handler" << this->action_handler;
     // well, a bit crazy hacky code to let the lambda properly capture action handler... without local var, class member is not captured
-    QG_ActionHandler* capturedHandler = action_handler;
+    QG_ActionHandler* capturedHandler = m_actionHandler;
     connect(action, &QAction::triggered, capturedHandler, [ capturedHandler, actionType](bool){ // fixme - sand - simplify by using data() on QAction and sender()
         // LC_ERR << " ++ captured action handler "<<   capturedHandler;
         capturedHandler->setCurrentAction(actionType);
@@ -110,4 +110,12 @@ void LC_ActionFactoryBase::makeActionsShortcutsNonEditable(const QMap<QString, Q
             }
         }
     }
+}
+
+void LC_ActionFactoryBase::addActionsToMainWindow(const QMap<QString, QAction *> &map) const{
+   // add actions to the main window to ensure that shortcuts for them will be invoked - even if the action is not visible.
+   // without this, pressing shortcut for the action that is not visible does not activate the action
+   for (const auto &a: map) {
+       m_mainWin->addAction(a);
+   }
 }
