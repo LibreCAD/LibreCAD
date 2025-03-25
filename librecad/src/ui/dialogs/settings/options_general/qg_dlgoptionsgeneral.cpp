@@ -532,6 +532,14 @@ void QG_DlgOptionsGeneral::init(){
         // Auto save timer
         cbAutoSaveTime->setValue(LC_GET_INT("AutoSaveTime", 5));
         bool autoBackup = LC_GET_BOOL("AutoBackupDocument", true);
+
+        QString autosaveFileNamePrefix = LC_GET_STR("AutosaveFilePrefix", "#");
+        cbAutoSaveFileNamePrefix->setCurrentText(autosaveFileNamePrefix);
+
+        QString backupFileNameSuffix = LC_GET_STR("BackupFileSuffix", "#");
+        cbBackupFileSuffix->setCurrentText(backupFileNameSuffix);
+
+
         cbAutoBackup->setChecked(autoBackup);
         cbAutoSaveTime->setEnabled(autoBackup);
         cbUseQtFileOpenDialog->setChecked(LC_GET_BOOL("UseQtFileOpenDialog", true));
@@ -831,6 +839,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("Unit", RS_Units::unitToString(RS_Units::stringToUnit(cbUnit->currentText()), false/*untr.*/));
             LC_SET("AutoSaveTime", cbAutoSaveTime->value());
             LC_SET("AutoBackupDocument", cbAutoBackup->isChecked());
+
+            QString autosaveFileNamePrefix = cbAutoSaveFileNamePrefix->currentText();
+            LC_SET("AutosaveFilePrefix", autosaveFileNamePrefix);
+
+            QString backupFileNameSuffix = cbBackupFileSuffix->currentText();
+            LC_SET("BackupFileSuffix", backupFileNameSuffix);
+
             LC_SET("UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked());
             LC_SET("WheelScrollInvertH", cbWheelScrollInvertH->isChecked());
             LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());

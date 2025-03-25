@@ -26,7 +26,7 @@
 #ifndef QG_DLGOPTIONSGENERAL_H
 #define QG_DLGOPTIONSGENERAL_H
 
-#include <QDialog>
+
 #include "ui_qg_dlgoptionsgeneral.h"
 #include "lc_dialog.h"
 
