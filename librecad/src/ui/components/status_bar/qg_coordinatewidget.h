@@ -39,7 +39,7 @@ public:
     QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget();
     void clearContent();
-    void setGraphic(RS_Graphic * g, RS_GraphicView* gv);
+    void setGraphicView(RS_GraphicView* gv);
 public slots:
     virtual void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
 protected slots:

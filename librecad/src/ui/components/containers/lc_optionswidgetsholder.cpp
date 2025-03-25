@@ -85,7 +85,7 @@ void LC_OptionsWidgetsHolder::clearActionIcon() {
 void LC_OptionsWidgetsHolder::setCurrentQAction(QAction *a) {
     QIcon icon;
     QString text="";
-    if (LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)){
+    if (a != nullptr && LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)){
         icon = a->icon();
         text = LC_ShortcutsManager::getPlainActionToolTip(a);
         hasActionIcon = true;

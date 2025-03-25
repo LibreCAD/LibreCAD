@@ -67,16 +67,18 @@ void QG_CoordinateWidget::languageChange(){
     retranslateUi(this);
 }
 
-void QG_CoordinateWidget::setGraphic(RS_Graphic* g, RS_GraphicView *gv) {
-    graphic = g;
+void QG_CoordinateWidget::setGraphicView(RS_GraphicView *gv) {
     graphicView = gv;
-    viewport = nullptr;
     if (gv != nullptr){
         viewport = gv->getViewPort();
+        graphic = gv->getGraphic();
+        if (graphic != nullptr) {
+            setCoordinates(0.0, 0.0, 0.0, 0.0, true);
+        }
     }
-    if (g != nullptr) {
-//        setCoordinates(graphicView->toWorld(RS_Vector(0.0, 0.0)), graphicView->toWorld(RS_Vector(0.0, 0.0)), true);
-        setCoordinates(0.0, 0.0, 0.0, 0.0, true);
+    else {
+        viewport = nullptr;
+        graphic = nullptr;
     }
 }
 

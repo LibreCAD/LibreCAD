@@ -8,10 +8,8 @@
  * It is intended to be generic,
  * for use with other projects.
  */
-class MainWindowX : public QMainWindow
-{
+class MainWindowX : public QMainWindow{
     Q_OBJECT
-
 public:
     explicit MainWindowX(QWidget* parent = nullptr);
 

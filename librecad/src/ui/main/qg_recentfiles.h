@@ -78,8 +78,8 @@ private:
     void saveToSettings() const;
 
     int const m_maxEntries;
-    QStringList m_files;
-    QList<QAction*> m_recentFilesActions;
+    QStringList m_files{};
+    QList<QAction*> m_recentFilesActions{};
 };
 
 #endif

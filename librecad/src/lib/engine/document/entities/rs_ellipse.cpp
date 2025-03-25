@@ -27,8 +27,8 @@
 
 #include "rs_ellipse.h"
 
-#include  "lc_quadratic.h"
-#include  "lc_rect.h"
+#include "lc_quadratic.h"
+#include "lc_rect.h"
 
 #include "rs_circle.h"
 #include "rs_debug.h"

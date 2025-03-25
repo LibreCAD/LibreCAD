@@ -32,20 +32,14 @@
 #include <QMouseEvent>
 #include <QtAlgorithms>
 #include "rs_graphicview.h"
-
-#include "rs_color.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
-#include "rs_line.h"
 #include "rs_linetypepattern.h"
-
 #include "rs_painter.h"
 #include "rs_snapper.h"
 #include "rs_settings.h"
-#include "rs_units.h"
 #include "lc_graphicviewport.h"
 #include "lc_widgetviewportrenderer.h"
 #include "lc_shortcuts_manager.h"
@@ -103,7 +97,7 @@ void RS_GraphicView::setContainer(RS_EntityContainer *c) {
  * @return Current action or nullptr.
  */
 RS_ActionInterface *RS_GraphicView::getDefaultAction() {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         return eventHandler->getDefaultAction();
     } else {
         return nullptr;
@@ -114,7 +108,7 @@ RS_ActionInterface *RS_GraphicView::getDefaultAction() {
  * Sets the default action of the event handler.
  */
 void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         eventHandler->setDefaultAction(action);
     }
 }
@@ -123,7 +117,7 @@ void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) {
  * @return Current action or nullptr.
  */
 RS_ActionInterface *RS_GraphicView::getCurrentAction() {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         return eventHandler->getCurrentAction();
     } else {
         return nullptr;
@@ -131,10 +125,9 @@ RS_ActionInterface *RS_GraphicView::getCurrentAction() {
 }
 
 QString  RS_GraphicView::getCurrentActionName() {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         QAction* qaction = eventHandler->getQAction();
         if (qaction != nullptr){
-//            return qaction->text();
           // todo - sand - actually, this is bad dependency, should be refactored
           return LC_ShortcutsManager::getPlainActionToolTip(qaction);
         }
@@ -143,7 +136,7 @@ QString  RS_GraphicView::getCurrentActionName() {
 }
 
 QIcon RS_GraphicView::getCurrentActionIcon() {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         QAction* qaction = eventHandler->getQAction();
         if (qaction != nullptr){
             return qaction->icon();
@@ -152,13 +145,23 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
     return QIcon();
 }
 
+void RS_GraphicView::setEventHandlerAction(RS_ActionInterface *action){
+    eventHandler->setCurrentAction(action);
+    if (eventHandler->hasAction()) {
+        emit currentActionChanged(action);
+    }
+    else {
+        emit currentActionChanged(nullptr);
+    }
+}
+
 /**
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface *action) {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         viewport->markRelativeZero();
-        eventHandler->setCurrentAction(action);
+        setEventHandlerAction(action);
     }
 }
 
@@ -167,7 +170,7 @@ void RS_GraphicView::setCurrentAction(RS_ActionInterface *action) {
  * is launched to reduce confusion.
  */
 void RS_GraphicView::killSelectActions() {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         eventHandler->killSelectActions();
     }
 }
@@ -176,8 +179,9 @@ void RS_GraphicView::killSelectActions() {
  * Kills all running actions.
  */
 void RS_GraphicView::killAllActions() {
-    if (eventHandler) {
+    if (eventHandler != nullptr) {
         if (forcedActionKillAllowed) {
+            emit currentActionChanged(nullptr);
             eventHandler->killAllActions();
         }
     }

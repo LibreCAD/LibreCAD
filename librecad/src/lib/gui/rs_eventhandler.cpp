@@ -533,27 +533,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     predecessor->suspend();
     predecessor->hideOptions();
 
-    //    // Forget about the oldest action and make space for the new action:
-    //    if (actionIndex==RS_MAXACTIONS-1) {
-    //        // delete oldest action if necessary (usually never happens):
-    //        if (currentActions[0]) {
-    //            currentActions[0]->finish();
-    //            delete currentActions[0];
-    //            currentActions[0] = NULL;
-    //        }
-    //        // Move up actionstack (optimize):
-    //        for (int i=0; i<RS_MAXACTIONS-1; ++i) {
-    //            currentActions[i] = currentActions[i+1];
-    //        }
-    //    } else if (actionIndex<RS_MAXACTIONS-1) {
-    //        actionIndex++;
-    //    }
-
     // Set current action:
     currentActions.push_back(actionHolder);
-    //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
-    //                    predecessor->getName().toLatin1().data(),
-    //                    currentActions.last()->getName().toLatin1().data());
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
@@ -616,8 +597,7 @@ void RS_EventHandler::killAllActions()
     }
 
     for(auto& p: currentActions){
-        if (isActive(p))
-        {
+        if (isActive(p)){
             p->finish();
         }
     }
@@ -718,7 +698,7 @@ QAction* RS_EventHandler::getQAction(){
 void RS_EventHandler::setQAction(QAction *action) {
 //    LC_ERR << __func__ << "()";
     debugActions();
-    if (q_action) {
+    if (q_action != nullptr && q_action != action) {
         q_action->setChecked(false);
         killAllActions();
     }

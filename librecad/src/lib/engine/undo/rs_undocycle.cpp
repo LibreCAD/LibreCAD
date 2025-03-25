@@ -27,7 +27,7 @@
 
 
 #include <ostream>
-#include"rs_undocycle.h"
+#include "rs_undocycle.h"
 
 /**
  * Adds an Undoable to this Undo Cycle. Every Cycle can contain one or
@@ -95,4 +95,3 @@ std::ostream& operator << (std::ostream& os,
 
 	return os;
 }
-
