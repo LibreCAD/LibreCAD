@@ -63,35 +63,35 @@ public:
 /**
  * Links this dialog factory to a coordinate widget.
  */
-    void setCoordinateWidget(QG_CoordinateWidget* cw) override{
-        coordinateWidget = cw;
-    }
+    // void setCoordinateWidget(QG_CoordinateWidget* cw) override{
+    //     coordinateWidget = cw;
+    // }
 
-    void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {
-        relZeroCoordinatesWidget = widget;
-    }
+    // void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {
+        // relZeroCoordinatesWidget = widget;
+    // }
 
 
 /**
  * Links this dialog factory to a mouse widget.
  */
-    void setMouseWidget(QG_MouseWidget* mw) override{
-        mouseWidget = mw;
-    }
+    // void setMouseWidget(QG_MouseWidget* mw) override{
+    //     mouseWidget = mw;
+    // }
 
 /**
  * Links this dialog factory to a selection widget.
  */
-    void setSelectionWidget(QG_SelectionWidget* sw) override{
-        selectionWidget = sw;
-    }
+    // void setSelectionWidget(QG_SelectionWidget* sw) override{
+        // selectionWidget = sw;
+    // }
 
 /**
  * Links this dialog factory to a command widget.
  */
-    void setCommandWidget(QG_CommandWidget* cw) override{
-        commandWidget = cw;
-    }
+    // void setCommandWidget(QG_CommandWidget* cw) override{
+        // commandWidget = cw;
+    // }
 
 /**
  * @return command widget or nullptr.
@@ -100,7 +100,7 @@ public:
         return commandWidget;
     }
 
-    void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override;
+    // void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override;
 
 
 /**
@@ -132,8 +132,6 @@ public:
 
     QString requestImageOpenDialog() override;
 
-    void addOptionsWidget(QWidget * options) override;
-    void removeOptionsWidget(QWidget * options) override;
 protected:
 
 public:
@@ -188,12 +186,12 @@ protected:
 //! Pointer to the coordinate widget.
 
 //! Pointer to the mouse widget.
-    QG_MouseWidget* mouseWidget = nullptr;
+
 //! Pointer to the selection widget.
     QG_SelectionWidget* selectionWidget = nullptr;
 //! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
-    LC_QTStatusbarManager* statusBarManager = nullptr;
+
     LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
 

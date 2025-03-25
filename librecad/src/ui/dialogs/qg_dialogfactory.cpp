@@ -101,10 +101,12 @@
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* optionsToolbar, LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
     : parent(parent)
 {
-    RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
+    // fixme - sand - files - restore
+ /*   RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
     snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
     setOptionWidget(optionsToolbar);
     RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
+    */
 }
 
 
@@ -117,31 +119,35 @@ QG_DialogFactory::~QG_DialogFactory() {
 }
 
 void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
-    RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
+    // fixme - sand - files - restore
+    /*RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
     optionWidget = ow;
     optionWidgetHolder = new LC_OptionsWidgetsHolder(ow);
     optionWidget->addWidget(optionWidgetHolder);
     snapOptionsWidgetHolderOptionsToolbar = optionWidgetHolder->getSnapOptionsHolder();
-    RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
+    RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");*/
 }
 
 
 void QG_DialogFactory::hideSnapOptions(){
-    getSnapOptionsHolder()->hideSnapOptions();
+    // fixme - sand - files - restore
+    // getSnapOptionsHolder()->hideSnapOptions();
 }
 
 /**
  * Shows a widget for 'snap to equidistant middle points ' options.
  */
 void QG_DialogFactory::requestSnapMiddleOptions(int* middlePoints, bool on) {
-    getSnapOptionsHolder()->showSnapMiddleOptions(middlePoints, on);
+    // fixme - sand - files - restore
+    // getSnapOptionsHolder()->showSnapMiddleOptions(middlePoints, on);
 }
 
 /**
  * Shows a widget for 'snap to a point with a given distance' options.
  */
 void QG_DialogFactory::requestSnapDistOptions(double* dist, bool on) {
-    getSnapOptionsHolder()->showSnapDistOptions(dist, on);
+    // fixme - sand - files - restore
+    // getSnapOptionsHolder()->showSnapDistOptions(dist, on);
 }
 
 /**
@@ -901,7 +907,8 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *v
 int QG_DialogFactory::requestOptionsGeneralDialog() {
     QG_DlgOptionsGeneral dlg(parent);
     int result = dlg.exec();
-    getSnapOptionsHolder(); // as side effect, should update location of snap options
+    // fixme - sand - files - restore
+    // getSnapOptionsHolder(); // as side effect, should update location of snap options
     return result;
 }
 
@@ -936,7 +943,8 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
 void QG_DialogFactory::updateMouseWidget(const QString& left,
                                          const QString& right,
                                          const LC_ModifiersInfo& modifiers) {
-    if (mouseWidget != nullptr) {
+    // fixme - sand - files - restore
+   /* if (mouseWidget != nullptr) {
         mouseWidget->setHelp(left, right, modifiers);
     }
 
@@ -946,13 +954,13 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
 
     if (statusBarManager != nullptr){
         statusBarManager->setActionHelp(left, right, modifiers);
-    }
+    }*/
 }
 
 
 
 void QG_DialogFactory::clearMouseWidgetIcon() {
-   if (mouseWidget != nullptr){
+/*   if (mouseWidget != nullptr){
        mouseWidget->clearActionIcon();
    }
    if (statusBarManager != nullptr){
@@ -960,7 +968,7 @@ void QG_DialogFactory::clearMouseWidgetIcon() {
    }
    if (optionWidgetHolder != nullptr){
        optionWidgetHolder->clearActionIcon();
-   }
+   }*/
 }
 
 /**
@@ -1070,6 +1078,6 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
     }
 }
 
-void QG_DialogFactory::setStatusBarManager(LC_QTStatusbarManager *statusBarManager) {
-    QG_DialogFactory::statusBarManager = statusBarManager;
-}
+// void QG_DialogFactory::setStatusBarManager(LC_QTStatusbarManager *statusBarManager) {
+    // QG_DialogFactory::statusBarManager = statusBarManager;
+// }

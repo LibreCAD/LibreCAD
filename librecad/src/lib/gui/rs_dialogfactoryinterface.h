@@ -234,8 +234,7 @@ public:
      */
     virtual QString requestImageOpenDialog() { return "";};
 
-    virtual void addOptionsWidget([[maybe_unused]]QWidget * options) { };
-    virtual void removeOptionsWidget([[maybe_unused]]QWidget * options) { };
+
 
     /**
      * This virtual method must be overwritten and must present
@@ -416,13 +415,13 @@ public:
     virtual void command([[maybe_unused]]const QString& message) {};
     virtual void commandPrompt([[maybe_unused]]const QString& message) {};
 
-    virtual void setMouseWidget([[maybe_unused]]QG_MouseWidget*) {};
-    virtual void setCoordinateWidget([[maybe_unused]]QG_CoordinateWidget* ){};
-    virtual void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget* ){};
-    virtual void setSelectionWidget([[maybe_unused]]QG_SelectionWidget* ) {};
-    virtual void setCommandWidget([[maybe_unused]]QG_CommandWidget* ) {};
+    // virtual void setMouseWidget([[maybe_unused]]QG_MouseWidget*) {};
+    // virtual void setCoordinateWidget([[maybe_unused]]QG_CoordinateWidget* ){};
+    // virtual void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget* ){};
+    // virtual void setSelectionWidget([[maybe_unused]]QG_SelectionWidget* ) {};
+    // virtual void setCommandWidget([[maybe_unused]]QG_CommandWidget* ) {};
     virtual void clearMouseWidgetIcon() {};
-    virtual void setStatusBarManager([[maybe_unused]]LC_QTStatusbarManager *statusBarManager){};
+    // virtual void setStatusBarManager([[maybe_unused]]LC_QTStatusbarManager *statusBarManager){};
     // virtual void setCurrentQAction([[maybe_unused]]QAction *action){};
 };
 
