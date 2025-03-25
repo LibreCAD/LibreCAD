@@ -400,16 +400,13 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
     }
 
     // create new letter:
-    RS_FontChar* letter = new RS_FontChar(nullptr, key, RS_Vector(0.0, 0.0));
+    auto* letter = std::make_unique<RS_FontChar>(nullptr, key, RS_Vector(0.0, 0.0));
 
     // Read entities of this letter:
-    QStringList vertex;
-    QStringList coords;
     QStringList fontData = rawLffFontList[key];
-    QString line;
 
     while(!fontData.isEmpty()) {
-        line = fontData.takeFirst();
+        QString line = fontData.takeFirst();
 
         if (line.isEmpty()) {
             continue;
@@ -446,21 +443,21 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
         //sequence:
         else {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-            vertex = line.split(';', Qt::SkipEmptyParts);
+            QStringList vertex = line.split(';', Qt::SkipEmptyParts);
 #else
-            vertex = line.split(';', QString::SkipEmptyParts);
+            QStringList vertex = line.split(';', QString::SkipEmptyParts);
 #endif \
     //at least is required two vertex
             if (vertex.size()<2)
                 continue;
-            RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
+            RS_Polyline* pline = new RS_Polyline(letter.get(), RS_PolylineData());
             pline->setPen(RS_Pen(RS2::FlagInvalid));
             pline->setLayer(nullptr);
             foreach(const QString& point, vertex) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-                coords = point.split(',', Qt::SkipEmptyParts);
+                QStringList coords = point.split(',', Qt::SkipEmptyParts);
 #else
-                coords = point.split(',', QString::SkipEmptyParts);
+                QStringList coords = point.split(',', QString::SkipEmptyParts);
 #endif \
     //at least X,Y is required
                 double x1 = coords.at(0).toDouble();
@@ -468,7 +465,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
                 double y1 = coords.size() >= 2 ? coords.at(1).toDouble() : 0.;
                 //check presence of bulge
                 double bulge = 0;
-                if (coords.size() == 3 && coords.at(2).at(0) == QChar('A')){
+                if (coords.size() >= 3 && coords.at(2).at(0) == QChar('A')){
                     QString bulgeStr = coords.at(2);
                     bulge = bulgeStr.remove(0,1).toDouble();
                 }
@@ -480,14 +477,14 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
 
     }
 
-    if (letter->isEmpty()) {
-        delete letter;
-        return nullptr;
-    } else {
+    if (!letter->isEmpty()) {
         letter->calculateBorders();
-        letterList.add(letter);
-        return letter;
+        letterList.add(letter.get());
+        auto ret = letter.get();
+        letter.release();
+        return ret;
     }
+    return nullptr;
 }
 
 RS_Block* RS_Font::findLetter(const QString& name) {
