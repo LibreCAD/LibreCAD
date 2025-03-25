@@ -1,0 +1,421 @@
+/*******************************************************************************
+*
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2025 LibreCAD.org
+ Copyright (C) 2025 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+#include "lc_toolbarfactory.h"
+
+#include <QMenu>
+#include <QSizePolicy>
+#include <QToolBar>
+
+#include "lc_actiongroupmanager.h"
+#include "lc_creatorinvoker.h"
+#include "lc_workspacelistbutton.h"
+#include "qc_applicationwindow.h"
+#include "qg_pentoolbar.h"
+#include "qg_snaptoolbar.h"
+#include "rs_settings.h"
+
+LC_ToolbarFactory::LC_ToolbarFactory(QC_ApplicationWindow *main_win): m_mainWin(main_win), m_agm(main_win->m_actionGroupManager) {}
+
+void LC_ToolbarFactory::initToolBars(){
+    initCADToolbars();
+    createCategoriesToolbar();
+    createStandardToolbars();
+    createCustomToolbars();
+}
+
+QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
+    auto result = new QG_PenToolBar(tr("Pen"), m_mainWin);
+    result->setSizePolicy(tbPolicy);
+    result->setObjectName("pen_toolbar");
+    result->addActions(m_agm->pen_actions);
+    result->setProperty("_group", 1);
+
+    m_mainWin->m_penToolBar = result;
+
+    connect(m_mainWin->m_penToolBar, &QG_PenToolBar::penChanged, m_mainWin, &QC_ApplicationWindow::slotPenChanged);
+    return result;
+}
+
+QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy){
+    auto ag_manager = m_mainWin->m_actionGroupManager;
+    auto result = new QG_SnapToolBar(m_mainWin, m_mainWin->m_actionHandler, ag_manager,ag_manager->getActionsMap());
+    result->setWindowTitle(tr("Snap Selection"));
+    result->setSizePolicy(tbPolicy);
+    result->setObjectName("snap_toolbar" );
+    result->setProperty("_group", 3);
+
+    m_mainWin->m_snapToolBar = result;
+    return result;
+}
+
+QToolBar* LC_ToolbarFactory::createFileToolbar(QSizePolicy &tbPolicy){
+    auto *result = createGenericToolbar(tr("File"), "file", tbPolicy, {},1);
+    result->addActions(m_agm->file_actions);
+    result->QWidget::addAction(m_agm->getActionByName("FilePrint"));
+    result->QWidget::addAction(m_agm->getActionByName("FilePrintPreview"));
+    return result;
+}
+
+QToolBar *LC_ToolbarFactory::createEditToolbar(QSizePolicy &tbPolicy){
+    auto *result = createGenericToolbar(tr("Edit"), "Edit", tbPolicy,
+                                        {
+                                            "EditKillAllActions",
+                                            "EntityDescriptionInfo",
+                                            "",
+                                            "EditUndo",
+                                            "EditRedo",
+                                            "",
+                                            "EditCut",
+                                            "EditCopy",
+                                            "EditPaste",
+                                            "EditPasteTransform"
+                                        }, 1);
+    return result;
+}
+
+QToolBar *LC_ToolbarFactory::createOrderToolbar(QSizePolicy &tbPolicy){
+    auto result = createGenericToolbar(tr("Order"), "Order", tbPolicy, {
+                                           "OrderTop",
+                                           "OrderBottom",
+                                           "OrderRaise",
+                                           "OrderLower"
+                                       }, 1);
+    result->hide();
+    return result;
+}
+
+QToolBar *LC_ToolbarFactory::createViewToolbar(QSizePolicy &tbPolicy){
+    auto result = createGenericToolbar(tr("View"), "View", tbPolicy, {
+                                           "ViewGrid",
+                                           "ViewDraft",
+                                           "ViewLinesDraft",
+                                           "ViewAntialiasing",
+                                           "",
+                                           "ZoomRedraw",
+                                           "ZoomIn",
+                                           "ZoomOut",
+                                           "ZoomAuto",
+                                           "ZoomPrevious",
+                                           "ZoomWindow",
+                                           "ZoomPan"
+                                       }, 1);
+    return result;
+}
+
+QToolBar *LC_ToolbarFactory::createDockAreasToolbar(QSizePolicy &tbPolicy){
+    return createGenericToolbar(tr("Dock Areas"), "Dock Areas", tbPolicy, {
+                                    "LeftDockAreaToggle",
+                                    "RightDockAreaToggle",
+                                    "TopDockAreaToggle",
+                                    "BottomDockAreaToggle",
+                                    "FloatingDockwidgetsToggle"
+                                }, 1);
+}
+
+QToolBar *LC_ToolbarFactory::createCreatorsToolbar(QSizePolicy &tbPolicy){
+    return createGenericToolbar(tr("Creators"), "Creators", tbPolicy, {
+                                    "InvokeMenuCreator",
+                                    "InvokeToolbarCreator"
+                                }, 1);
+}
+
+QToolBar *LC_ToolbarFactory::createPreferencesToolbar(QSizePolicy &tbPolicy){
+    return createGenericToolbar(tr("Preferences"), "Preferences", tbPolicy, {
+                                    "OptionsGeneral",
+                                    "OptionsDrawing"
+                                }, 1);
+}
+
+void LC_ToolbarFactory::createStandardToolbars(){
+    QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    auto file = createFileToolbar(tbPolicy);
+    auto edit = createEditToolbar(tbPolicy);
+    auto order = createOrderToolbar(tbPolicy);
+    auto *view = createViewToolbar(tbPolicy);
+    auto *viewsList = createNamedViewsToolbar(tbPolicy);
+    auto *ucsList = createUCSToolbar(tbPolicy);
+    auto *perspectivesToolbar = createWorkspacesToolbar(tbPolicy);
+
+    auto snap = createSnapToolbar(tbPolicy);
+
+    auto pen = createPenToolbar(tbPolicy);
+    m_mainWin->m_toolOptionsToolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {},1);
+
+    auto infoCursor = createInfoCursorToolbar(tbPolicy);
+
+    auto *dockareas = createDockAreasToolbar(tbPolicy);
+    auto *creators = createCreatorsToolbar(tbPolicy);
+    auto *preferences = createPreferencesToolbar(tbPolicy);
+
+    addToTop(infoCursor);
+    addToTop(file);
+    addToTop(edit);
+    addToTop(view);
+    addToTop(perspectivesToolbar);
+    addToTop(viewsList);
+    addToTop(ucsList);
+    addToTop(preferences);
+    m_mainWin->addToolBarBreak();
+    addToTop(pen);
+    addToTop(m_mainWin->m_toolOptionsToolbar);
+    addToLeft(order);
+
+    addToBottom(snap);
+    addToBottom(dockareas);
+    addToBottom(creators);
+}
+
+QToolBar* LC_ToolbarFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
+    auto result = createGenericToolbar(tr("Info Cursor"), "Info Cursor", tbPolicy, {
+        "InfoCursorEnable"
+    },1);
+
+    QAction* action = m_agm->getActionByName("InfoCursorEnable");
+    if (action != nullptr){
+        action->setProperty("InfoCursorActionTag", 0);
+        connect(action, &QAction::triggered, m_mainWin, &QC_ApplicationWindow::slotInfoCursorSetting);
+        QWidget* w = result->widgetForAction(action);
+        if (w != nullptr){
+            auto* btn = dynamic_cast<QToolButton *>(w);
+
+            if (btn != nullptr){
+                btn->setPopupMode(QToolButton::MenuButtonPopup);
+                auto* menu = new QMenu();
+
+                addInfoCursorOptionAction(menu, "InfoCursorAbs", 1);
+                addInfoCursorOptionAction(menu, "InfoCursorSnap", 2);
+                addInfoCursorOptionAction(menu, "InfoCursorRel", 3);
+                addInfoCursorOptionAction(menu, "InfoCursorPrompt", 4);
+                addInfoCursorOptionAction(menu, "InfoCursorCatchedEntity", 5);
+
+                btn->setMenu(menu);
+            }
+        }
+    }
+    return result;
+}
+
+void LC_ToolbarFactory::addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) {
+    QAction* action = m_agm->getActionByName(name);
+    action->setProperty("InfoCursorActionTag", tag);
+    menu->addAction(action);
+    connect(action, &QAction::triggered, m_mainWin, &QC_ApplicationWindow::slotInfoCursorSetting);
+}
+
+void LC_ToolbarFactory::initCADToolbars(){
+    bool enable_cad_toolbars = LC_GET_ONE_BOOL("Startup", "EnableCADToolbars", true);
+    if (enable_cad_toolbars) {
+        createCADToolbars();
+    }
+}
+
+void LC_ToolbarFactory::createCADToolbars(){
+    QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    auto *line      = createCADToolbar(tr("Line"), "Line", tbPolicy, m_agm->line_actions);
+    auto *point     = createCADToolbar(tr("Point"), "Point", tbPolicy, m_agm->point_actions);
+    auto *shape     = createCADToolbar(tr("Polygon"), "Polygon", tbPolicy, m_agm->shape_actions);
+    auto *circle    = createCADToolbar(tr("Circle"), "Circle", tbPolicy, m_agm->circle_actions);
+    auto *curve     = createCADToolbar(tr("Arc"), "Curve", tbPolicy, m_agm->curve_actions);
+    auto *spline    = createCADToolbar(tr("Spline"), "Spline", tbPolicy, m_agm->curve_actions);
+    auto *ellipse   = createCADToolbar(tr("Ellipse"), "Ellipse", tbPolicy, m_agm->ellipse_actions);
+    auto *polyline  = createCADToolbar(tr("Polyline"), "Polyline", tbPolicy, m_agm->polyline_actions);
+    auto *select    = createCADToolbar(tr("Select"), "Select", tbPolicy, m_agm->select_actions);
+    auto *dimension = createCADToolbar(tr("Dimension"), "Dimension", tbPolicy, m_agm->dimension_actions);
+    auto *other     = createCADToolbar(tr("Other"), "other_drawing", tbPolicy, m_agm->other_drawing_actions);
+    auto *modify    = createCADToolbar(tr("Modify"), "Modify", tbPolicy, m_agm->modify_actions);
+    auto *info      = createCADToolbar(tr("Info"), "Info", tbPolicy, m_agm->info_actions);
+
+    addToBottom(line);
+    addToBottom(point);
+    addToBottom(shape);
+    addToBottom(circle);
+    addToBottom(curve);
+    addToBottom(spline);
+    addToBottom(ellipse);
+    addToBottom(polyline);
+    addToBottom(dimension);
+    addToBottom(other);
+    addToBottom(modify);
+    addToBottom(info);
+    addToBottom(select);
+}
+
+QToolBar *LC_ToolbarFactory::createCategoriesToolbar() {
+    auto *toolbar = createGenericToolbar(tr("Categories"), "Categories",
+                                         QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {},0);
+
+    toolButton(toolbar, tr("Lines"), ":/icons/line.lci", m_agm->line_actions);
+    toolButton(toolbar, tr("Points"), ":/icons/points.lci", m_agm->point_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", m_agm->circle_actions);
+    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", m_agm->curve_actions);
+    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", m_agm->spline_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", m_agm->shape_actions);
+    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.lci", m_agm->ellipse_actions);
+    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.lci", m_agm->polyline_actions);
+    toolButton(toolbar, tr("Select"), ":/icons/select.lci", m_agm->select_actions);
+    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.lci", m_agm->dimension_actions);
+    toolButton(toolbar, tr("Other"), ":/icons/text.lci", m_agm->other_drawing_actions);
+    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.lci", m_agm->modify_actions);
+    toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", m_agm->info_actions);
+    toolButton(toolbar, tr("Order"), ":/icons/order.lci", m_agm->order_actions);
+
+    addToLeft(toolbar);
+    return toolbar;
+}
+
+QToolBar* LC_ToolbarFactory::createNamedViewsToolbar(QSizePolicy &toolBarPolicy){
+    QToolBar * result = doCreateToolBar(tr("Named Views"), "Views", toolBarPolicy, 1);
+
+    QAction *saveViewAction = m_agm->getActionByName("ZoomViewSave");
+    result->addAction(saveViewAction);
+
+    QAction *restoreCurrentViewAction = m_agm->getActionByName("ZoomViewRestore");
+
+    auto namedViewsSelectionWidget = m_mainWin->m_namedViewsWidget->createSelectionWidget(saveViewAction, restoreCurrentViewAction);
+    namedViewsSelectionWidget->setParent(result);
+    result->addWidget(namedViewsSelectionWidget);
+
+    return result;
+}
+
+QToolBar* LC_ToolbarFactory::createUCSToolbar(QSizePolicy &toolBarPolicy){
+    QToolBar * result = doCreateToolBar(tr("UCS"), "UCS", toolBarPolicy, 1);
+
+    QAction *ucsCreateAction = m_agm->getActionByName("UCSCreate");
+    result->addAction(ucsCreateAction);
+
+    QAction *setWCSAction = m_agm->getActionByName("UCSSetWCS");
+
+    auto ucsWidget = m_mainWin->m_ucsListWidget;
+    auto ucsSelectionWidget = ucsWidget->createSelectionWidget(ucsCreateAction, setWCSAction);
+    ucsSelectionWidget->setParent(result);
+    result->addWidget(ucsSelectionWidget);
+
+    setWCSAction->setCheckable(false);
+    connect(setWCSAction, &QAction::triggered, ucsWidget, &LC_UCSListWidget::setWCS);
+
+    ucsWidget->setStateWidget(m_mainWin->m_ucsStateWidget);
+
+    return result;
+}
+
+QToolBar* LC_ToolbarFactory::createWorkspacesToolbar(QSizePolicy &toolBarPolicy){
+    auto * result = doCreateToolBar( tr("Workspaces"), "Workspaces", toolBarPolicy, 1);
+
+    auto* toolButton = new QToolButton(result);
+    auto *createAction = m_agm->getActionByName("WorkspaceCreate");
+
+    toolButton->setDefaultAction(createAction);
+    QAction *removeAction = m_agm->getActionByName("WorkspaceRemove");
+    toolButton->addAction(removeAction);
+    toolButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+    result->addWidget(toolButton);
+
+    auto* workspacesListButton = new LC_WorkspaceListButton(m_mainWin);
+    auto restoreAction = m_agm->getActionByName("WorkspaceRestore");
+    workspacesListButton->setDefaultAction(restoreAction);
+    result->addWidget(workspacesListButton);
+
+    connect(m_mainWin, &QC_ApplicationWindow::workspacesChanged, workspacesListButton, &LC_WorkspaceListButton::enableSubActions);
+    connect(m_mainWin, &QC_ApplicationWindow::workspacesChanged, restoreAction, &QAction::setEnabled);
+    return result;
+}
+
+QToolBar* LC_ToolbarFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, group);    for (const QString& actionName: actionNames){
+        if (actionName.isEmpty()){
+            result->addSeparator();
+        }
+        else{
+            result->addAction(m_agm->getActionByName(actionName));
+        }
+    }
+    return result;
+}
+
+QToolBar *LC_ToolbarFactory::doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy, int group) const {
+    auto* result = new QToolBar(title, m_mainWin);
+    result->setSizePolicy(toolBarPolicy);
+    QString nameCleared(name);
+    nameCleared.remove(' ');
+    const QString &objectName = nameCleared.toLower() + "_toolbar";
+    result->setObjectName(objectName);
+    result->setProperty("_group", group);
+    return result;
+}
+
+QToolBar* LC_ToolbarFactory::createCADToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
+    return genericToolbarWithActions(title, name, toolBarPolicy, actions, 2);
+}
+
+QToolBar* LC_ToolbarFactory::genericToolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions, int toolbarGroup){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, toolbarGroup);
+
+    result->addActions(actions);
+    result->hide();
+    result->setProperty("_group", toolbarGroup);
+    return result;
+}
+
+
+QToolButton* LC_ToolbarFactory::toolButton(QToolBar* toolbar, const QString &tooltip, const char* icon, const QList<QAction*>& actions){
+    auto * result = new QToolButton(toolbar); // ignore memory warning leak, toolbar will delete button
+    result->setPopupMode(QToolButton::InstantPopup);
+    result->setIcon(QIcon(icon));
+    result->setToolTip(tooltip);
+    toolbar->addWidget(result);
+    result->addActions(actions);
+    return result;
+}
+
+void LC_ToolbarFactory::addToTop(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::TopToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToBottom(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::LeftToolBarArea, toolbar); }
+
+void LC_ToolbarFactory::createCustomToolbars(){
+    m_mainWin->m_creatorInvoker = new LC_CreatorInvoker(m_mainWin, m_agm);
+    m_mainWin->m_creatorInvoker->createCustomToolbars();
+
+    // fixme - sand - files - check whether we actually need default custom toolbar???? It's quite confusing, actually...
+    bool firstLoad = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
+    if (firstLoad){
+        QStringList list;
+        list << "DrawMText"
+             << "DrawHatch"
+             << "DrawImage"
+             << "BlocksCreate"
+             << "DrawPoint";
+
+        auto toolbar = new QToolBar("DefaultCustom", m_mainWin);
+        toolbar->setObjectName("DefaultCustom");
+        foreach (auto& actionName, list){
+            toolbar->addAction(m_mainWin->getAction(actionName));
+        }
+        m_mainWin->addToolBar(Qt::LeftToolBarArea, toolbar);
+
+        QSettings settings;
+        settings.setValue("CustomToolbars/DefaultCustom", list);
+    }
+}
