@@ -50,13 +50,11 @@ QG_ExitDialog::~QG_ExitDialog() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_ExitDialog::languageChange()
-{
+void QG_ExitDialog::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_ExitDialog::init()
-{
+void QG_ExitDialog::init(){
     QG_ExitDialog::setShowOptionsForAll(false);
 	//set dlg icon
     QMessageBox mb({}, "", "");
@@ -97,6 +95,20 @@ void QG_ExitDialog::setForce(bool force) {
 }
 
 void QG_ExitDialog::setShowOptionsForAll(bool show){
-    ui->buttonBox->button(QDialogButtonBox::YesToAll)->setVisible(show);
+
+    auto yesToAll = ui->buttonBox->button(QDialogButtonBox::YesToAll);
+    yesToAll->setVisible(show);
     ui->buttonBox->button(QDialogButtonBox::NoToAll)->setVisible(show);
+
+    QPushButton* defaultButton;
+    if (show) {
+        defaultButton = yesToAll;
+    }
+    else {
+        defaultButton = ui->buttonBox->button(QDialogButtonBox::Yes);
+    }
+
+    defaultButton->setAutoDefault(true);
+    defaultButton->setDefault(true);
+    defaultButton->setFocus();
 }
