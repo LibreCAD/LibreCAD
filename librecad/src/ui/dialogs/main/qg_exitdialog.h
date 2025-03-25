@@ -27,37 +27,31 @@
 #define QG_EXITDIALOG_H
 
 #include <memory>
-#include <QDialog>
 
+#include "lc_dialog.h"
 class QAbstractButton;
 
 namespace Ui {
 class QG_ExitDialog;
 }
 
-class QG_ExitDialog : public QDialog
-{
+class QG_ExitDialog : public LC_Dialog{
     Q_OBJECT
-
 public:
-    QG_ExitDialog(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    QG_ExitDialog(QWidget* parent = nullptr);
 	~QG_ExitDialog();
 	enum ExitDialogResult {
-        Cancel, Discard, Save, SaveAll
+        Cancel, DontSave, DontSaveAll, Save, SaveAll
 	};
 
 public slots:
     void setText( const QString & text );
     void setTitle( const QString & text );
     void setForce( bool force );
-	void setShowSaveAll(bool show);
-    void slotSaveAll();
-    void slotSave();
+	void setShowOptionsForAll(bool show);
     void clicked(QAbstractButton * button);
-
 protected slots:
     virtual void languageChange();
-
 private:
     void init();
 	std::unique_ptr<Ui::QG_ExitDialog> ui;

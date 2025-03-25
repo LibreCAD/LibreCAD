@@ -29,7 +29,7 @@
    <bool>false</bool>
   </property>
   <layout class="QGridLayout">
-   <property name="margin">
+   <property name="margin" stdset="0">
     <number>11</number>
    </property>
    <item row="0" column="1">
@@ -64,7 +64,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Discard|QDialogButtonBox::Save|QDialogButtonBox::SaveAll</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::No|QDialogButtonBox::NoToAll|QDialogButtonBox::Yes|QDialogButtonBox::YesToAll</set>
      </property>
      <property name="centerButtons">
       <bool>true</bool>

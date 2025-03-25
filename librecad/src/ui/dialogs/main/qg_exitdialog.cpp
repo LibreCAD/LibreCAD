@@ -37,11 +37,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_ExitDialog::QG_ExitDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
-	: QDialog(parent, fl)
-    , ui(std::make_unique<Ui::QG_ExitDialog>())
-{
-    setModal(modal);
+QG_ExitDialog::QG_ExitDialog(QWidget* parent)
+	: LC_Dialog(parent, "DlgExit")
+    , ui(std::make_unique<Ui::QG_ExitDialog>()){
 	ui->setupUi(this);
     init();
 }
@@ -56,21 +54,10 @@ void QG_ExitDialog::languageChange()
 {
 	ui->retranslateUi(this);
 }
-//sets additional accel, eg. Key_A for ALT+Key_A
-
-/*
-static void makeLetterAccell(QButton *btn)
-{
-    if (btn->accel().count()<1)
-        return;
-    Q3Accel *a = new Q3Accel( btn );
-    a->connectItem( a->insertItem( btn->accel() & ~(Qt::MODIFIER_MASK|Qt::UNICODE_ACCEL) ),
-                    btn, SLOT(animateClick()) );
-} */
 
 void QG_ExitDialog::init()
 {
-    QG_ExitDialog::setShowSaveAll(false);
+    QG_ExitDialog::setShowOptionsForAll(false);
 	//set dlg icon
     QMessageBox mb({}, "", "");
 	ui->l_icon->setPixmap( mb.iconPixmap());
@@ -79,14 +66,17 @@ void QG_ExitDialog::init()
 void QG_ExitDialog::clicked(QAbstractButton * button){
 	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton ( button );
     switch (bt){
-    case QDialogButtonBox::Discard:
-        done(Discard);
+    case QDialogButtonBox::No:
+        done(DontSave);
         break;
-    case QDialogButtonBox::Save:
-        slotSave();
+    case QDialogButtonBox::NoToAll:
+        done(DontSaveAll);
         break;
-    case QDialogButtonBox::SaveAll:
-        slotSaveAll();
+    case QDialogButtonBox::Yes:
+        done(Save);
+        break;
+    case QDialogButtonBox::YesToAll:
+        done(SaveAll);
         break;
     default:
         done(Cancel);
@@ -106,17 +96,7 @@ void QG_ExitDialog::setForce(bool force) {
      bCancel->setDisabled(force);
 }
 
-void QG_ExitDialog::setShowSaveAll(bool show){
-	ui->buttonBox->button(QDialogButtonBox::SaveAll)->setVisible(show);
-    // QString discard = show ? tr("Discard All") : tr("Discard");
-    QString discard = show ? tr("Save Nothing") : tr("Don't Save");
-    ui->buttonBox->button(QDialogButtonBox::Discard)->setText(discard);
-}
-
-void QG_ExitDialog::slotSaveAll() {
-    done(SaveAll);
-}
-
-void QG_ExitDialog::slotSave() {
-    done(Save);
+void QG_ExitDialog::setShowOptionsForAll(bool show){
+    ui->buttonBox->button(QDialogButtonBox::YesToAll)->setVisible(show);
+    ui->buttonBox->button(QDialogButtonBox::NoToAll)->setVisible(show);
 }
