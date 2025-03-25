@@ -63,6 +63,7 @@ public:
     RS2::SnapRestriction getSnapRestriction();
     void set_snap_toolbar(QG_SnapToolBar *snap_toolbar);
     void setDocumentAndView(RS_Document* document, RS_GraphicView* graphicView);
+    void setActionContext(LC_DefaultActionContext* actionContext) {m_actionContext = actionContext;};
 public slots:
     void slotZoomIn(); // fixme - remove
     void slotZoomOut();// fixme - remove
@@ -91,8 +92,35 @@ public slots:
     void togglePrint(RS_Layer *layer);
     void toggleConstruction(RS_Layer *layer);
 
+    void slotBlocksDefreezeAll(); // fixme - remove
+    void slotBlocksFreezeAll(); // fixme - remove
+    void slotBlocksAdd(); // fixme - remove
+    void slotBlocksRemove(); // fixme - remove
+    void slotBlocksAttributes(); // fixme - remove
+    void slotBlocksEdit(); // fixme - remove
+    void slotBlocksSave(); // fixme - remove
+    void slotBlocksInsert(); // fixme - remove
+    void slotBlocksToggleView(); // fixme - remove
+    void slotBlocksCreate(); // fixme - remove
+    void slotBlocksExplode(); // fixme - remove
+    void slotLayersDefreezeAll(); // fixme - remove
+    void slotLayersFreezeAll();// fixme - remove
+    void slotLayersUnlockAll();// fixme - remove
+    void slotLayersLockAll();// fixme - remove
+    void slotLayersAdd();// fixme - remove
+    void slotLayersRemove();// fixme - remove
+    void slotLayersEdit();// fixme - remove
+    void slotLayersToggleView();// fixme - remove
+    void slotLayersToggleLock();// fixme - remove
+    void slotLayersTogglePrint();// fixme - remove
+    void slotLayersToggleConstruction();// fixme - remove
+    void slotLayersExportSelected();// fixme - remove
+    void slotLayersExportVisible();// fixme - remove
+
 private:
     // Type of draw order selected command
+    RS_GraphicView *view {nullptr};
+    RS_Document* document {nullptr};
     RS2::ActionType orderType{RS2::ActionOrderTop};
     QG_SnapToolBar *snap_toolbar{nullptr};
     LC_DefaultActionContext* m_actionContext{nullptr}; // fixme complete initialization

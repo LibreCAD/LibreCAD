@@ -27,7 +27,7 @@
 
 class LC_PrintPreviewView :public QG_GraphicView{
 public:
-    LC_PrintPreviewView(QWidget* parent, RS_Document* doc);
+    LC_PrintPreviewView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext);
     ~LC_PrintPreviewView() override;
 
     /**

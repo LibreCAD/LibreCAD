@@ -1488,8 +1488,10 @@ void QG_ActionHandler::slotLockRelativeZero(bool on){
 }
 
 
-void QG_ActionHandler::setDocumentAndView(RS_Document *document, RS_GraphicView *graphicView){
-    m_actionContext->setDocumentAndView(document, graphicView);
+void QG_ActionHandler::setDocumentAndView(RS_Document *doc, RS_GraphicView *graphicView){
+    m_actionContext->setDocumentAndView(doc, graphicView);
+    view = graphicView;
+    document = doc;
 }
 
 void QG_ActionHandler::set_snap_toolbar(QG_SnapToolBar* snap_tb){
@@ -1513,4 +1515,101 @@ void QG_ActionHandler::togglePrint(RS_Layer* layer){
 void QG_ActionHandler::toggleConstruction(RS_Layer* layer){
     auto a = new LC_ActionLayersToggleConstruction(m_actionContext, layer);
     view->setCurrentAction(a);
+}
+
+
+void QG_ActionHandler::slotLayersDefreezeAll() {
+    setCurrentAction(RS2::ActionLayersDefreezeAll);
+}
+
+void QG_ActionHandler::slotLayersFreezeAll() {
+    setCurrentAction(RS2::ActionLayersFreezeAll);
+}
+
+void QG_ActionHandler::slotLayersUnlockAll() {
+    setCurrentAction(RS2::ActionLayersUnlockAll);
+}
+
+void QG_ActionHandler::slotLayersLockAll() {
+    setCurrentAction(RS2::ActionLayersLockAll);
+}
+
+void QG_ActionHandler::slotLayersAdd() {
+    setCurrentAction(RS2::ActionLayersAdd);
+}
+
+void QG_ActionHandler::slotLayersRemove() {
+    setCurrentAction(RS2::ActionLayersRemove);
+}
+
+void QG_ActionHandler::slotLayersEdit() {
+    setCurrentAction(RS2::ActionLayersEdit);
+}
+
+void QG_ActionHandler::slotLayersToggleView() {
+    setCurrentAction(RS2::ActionLayersToggleView);
+}
+
+void QG_ActionHandler::slotLayersToggleLock() {
+    setCurrentAction(RS2::ActionLayersToggleLock);
+}
+
+void QG_ActionHandler::slotLayersTogglePrint() {
+    setCurrentAction(RS2::ActionLayersTogglePrint);
+}
+
+void QG_ActionHandler::slotLayersToggleConstruction() {
+    setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
+void QG_ActionHandler::slotLayersExportSelected() {
+    setCurrentAction(RS2::ActionLayersExportSelected);
+}
+
+void QG_ActionHandler::slotLayersExportVisible() {
+    setCurrentAction(RS2::ActionLayersExportVisible);
+}
+
+void QG_ActionHandler::slotBlocksDefreezeAll() {
+    setCurrentAction(RS2::ActionBlocksDefreezeAll);
+}
+
+void QG_ActionHandler::slotBlocksFreezeAll() {
+    setCurrentAction(RS2::ActionBlocksFreezeAll);
+}
+
+void QG_ActionHandler::slotBlocksAdd() {
+    setCurrentAction(RS2::ActionBlocksAdd);
+}
+
+void QG_ActionHandler::slotBlocksRemove() {
+    setCurrentAction(RS2::ActionBlocksRemove);
+}
+
+void QG_ActionHandler::slotBlocksAttributes() {
+    setCurrentAction(RS2::ActionBlocksAttributes);
+}
+
+void QG_ActionHandler::slotBlocksEdit() {
+    setCurrentAction(RS2::ActionBlocksEdit);
+}
+
+void QG_ActionHandler::slotBlocksSave() {
+    setCurrentAction(RS2::ActionBlocksSave);
+}
+
+void QG_ActionHandler::slotBlocksInsert() {
+    setCurrentAction(RS2::ActionBlocksInsert);
+}
+
+void QG_ActionHandler::slotBlocksToggleView() {
+    setCurrentAction(RS2::ActionBlocksToggleView);
+}
+
+void QG_ActionHandler::slotBlocksCreate() {
+    setCurrentAction(RS2::ActionBlocksCreate);
+}
+
+void QG_ActionHandler::slotBlocksExplode() {
+    setCurrentAction(RS2::ActionBlocksExplode);
 }

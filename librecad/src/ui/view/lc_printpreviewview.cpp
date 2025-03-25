@@ -23,7 +23,7 @@
 #include "lc_printpreviewview.h"
 #include "lc_printpreviewviewrenderer.h"
 
-LC_PrintPreviewView::LC_PrintPreviewView(QWidget* parent, RS_Document* doc):QG_GraphicView(parent, doc){};
+LC_PrintPreviewView::LC_PrintPreviewView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext):QG_GraphicView(parent, doc, actionContext){};
 LC_PrintPreviewView::~LC_PrintPreviewView() {};
 
 void LC_PrintPreviewView::createViewRenderer() {
