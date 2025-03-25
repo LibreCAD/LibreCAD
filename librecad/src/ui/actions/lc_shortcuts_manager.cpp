@@ -83,6 +83,7 @@ void LC_ShortcutsManager::applyKeySequencesMapToActionsMap(QMap<QString, QKeySeq
         QAction* action = actionsMap[name];
         if (action != nullptr){
             action->setShortcut(shortcut);
+            action->setShortcutContext(Qt::ApplicationShortcut);
         }
     }
 }
