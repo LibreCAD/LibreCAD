@@ -463,8 +463,6 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
                 coords = point.split(',', QString::SkipEmptyParts);
 #endif \
     //at least X,Y is required
-                if (coords.size()<2)
-                    continue;
                 double x1 = coords.at(0).toDouble();
                 // Issue #2045, if y-coordinate is missing, default to 0
                 double y1 = coords.size() >= 2 ? coords.at(1).toDouble() : 0.;
