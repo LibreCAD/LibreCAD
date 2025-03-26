@@ -1361,7 +1361,6 @@ set(SOURCES
 		librecad/src/lib/gui/lc_graphicviewportlistener.h
 		librecad/src/lib/gui/lc_graphicviewportlistener.cpp
 		librecad/src/lib/engine/overlays/lc_overlayentity.h
-		librecad/src/lib/engine/lc_drawable.cpp
 		librecad/src/lib/engine/lc_drawable.h
 		librecad/src/lib/engine/overlays/lc_overlayentitiescontainer.h
 		librecad/src/lib/engine/overlays/lc_overlayentitiescontainer.cpp

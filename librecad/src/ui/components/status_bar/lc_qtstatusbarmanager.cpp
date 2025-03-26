@@ -21,8 +21,8 @@
  ******************************************************************************/
 
 #include "lc_qtstatusbarmanager.h"
-#include "rs_settings.h"
 #include "lc_shortcuts_manager.h"
+#include "rs_settings.h"
 
 LC_QTStatusbarManager::LC_QTStatusbarManager(QStatusBar *sBar):QObject(sBar) {
     statusBar = sBar;

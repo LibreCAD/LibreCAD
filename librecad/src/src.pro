@@ -593,7 +593,6 @@ SOURCES += \
     lib/engine/document/entities/rs_spline.cpp \
     lib/engine/document/entities/lc_splinepoints.cpp \
     lib/engine/rs_system.cpp \
-    lib/engine/lc_drawable.cpp \
     lib/engine/document/entities/rs_text.cpp \
     lib/engine/undo/rs_undo.cpp \
     lib/engine/undo/rs_undoable.cpp \

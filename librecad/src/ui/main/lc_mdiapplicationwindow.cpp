@@ -1,20 +1,4 @@
-#include "qg_recentfiles.h"
-#include "qg_graphicview.h"
-#include "qc_mdiwindow.h"
-#include "lc_undosection.h"
-#include "lc_widgetfactory.h"
-#include "lc_printing.h"
-#include "lc_penwizard.h"
-#include "lc_centralwidget.h"
-#include "rs_units.h"
-#include "rs_selection.h"
-#include "rs_settings.h"
-#include "rs_painter.h"
-#include "rs_document.h"
-#include "rs_debug.h"
-#include "rs_commands.h"
-#include "textfileviewer.h"
-#include <boost/version.hpp>
+
 #include <QtSvg>
 #include <QTimer>
 #include <QSysInfo>
@@ -30,8 +14,27 @@
 #include <QFileDialog>
 #include <QDockWidget>
 #include <QByteArray>
-#include "qc_applicationwindow.h"
+
+#include <boost/version.hpp>
+
+#include "lc_centralwidget.h"
 #include "lc_mdiapplicationwindow.h"
+#include "lc_penwizard.h"
+#include "lc_printing.h"
+#include "lc_undosection.h"
+#include "lc_widgetfactory.h"
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
+#include "qg_recentfiles.h"
+#include "rs_commands.h"
+#include "rs_debug.h"
+#include "rs_document.h"
+#include "rs_painter.h"
+#include "rs_selection.h"
+#include "rs_settings.h"
+#include "rs_units.h"
+#include "textfileviewer.h"
 
 LC_MDIApplicationWindow::LC_MDIApplicationWindow():
     current_subwindow(nullptr){}
