@@ -316,7 +316,6 @@ jobs:
 
       - name: Build
         run: |
-          set PATH=${{ github.workspace }}\Tools\mingw1120_64\bin;${{ github.workspace }}\Qt\6.6.3\mingw_64\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
