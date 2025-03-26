@@ -46,21 +46,26 @@
  */
 class RS_Color: public QColor, public RS_Flags {
 public:
-    RS_Color() : QColor(), RS_Flags() {}
-    RS_Color(int r, int g, int b) : QColor(r, g, b), RS_Flags() {}
-    RS_Color(int r, int g, int b, int a) : QColor(r, g, b, a), RS_Flags() {}
-    RS_Color(const QColor& c) : QColor(c), RS_Flags() {}
-    RS_Color(const Qt::GlobalColor color) : QColor(color), RS_Flags() {}
-    RS_Color(const RS_Color& c) : QColor(c), RS_Flags() {
-        setFlags(c.getFlags());
-    }
-    RS_Color(unsigned int f) : QColor(), RS_Flags(f) {}
-    RS_Color(QString name) : QColor(name), RS_Flags() {}
+    RS_Color() = default;
+    RS_Color(int r, int g, int b) :
+        QColor(r, g, b)
+    {}
+
+    RS_Color(int r, int g, int b, int a) : QColor(r, g, b, a)
+    {}
+    RS_Color(const QColor& c) : QColor(c)
+    {}
+    RS_Color(const Qt::GlobalColor color) : QColor(color)
+    {}
+    RS_Color(unsigned int f) : RS_Flags(f)
+    {}
+    RS_Color(QString name) : QColor(name)
+    {}
 
 
     /** @return A copy of this color without flags. */
     RS_Color stripFlags() const {
-        return RS_Color(red(), green(), blue(), alpha());
+        return {red(), green(), blue(), alpha()};
     }
 
     /** @return true if the color is defined by layer. */
@@ -74,9 +79,7 @@ public:
     }
 
     QColor toQColor(void) const {
-            QColor c0;
-            c0.setRgb(red(),green(),blue(), alpha());
-            return c0;
+        return {red(),green(),blue(), alpha()};
     }
 
     //These 3 methods are used for plugins
@@ -92,13 +95,6 @@ public:
          */
         MinColorDistance = 20,  //< in %
     };
-
-    RS_Color& operator = (const RS_Color& c) {
-        setRgb(c.red(), c.green(), c.blue(), c.alpha());
-        setFlags(c.getFlags());
-
-        return *this;
-    }
 
     bool isEqualIgnoringFlags(const RS_Color& c){
         return red()==c.red() &&
