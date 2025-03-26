@@ -151,7 +151,7 @@ protected:
 private:
     //helper method for getNearestPointOnEntity
     bool sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const;
-    void setDistPtr(double *dist, const double value) const;
+    void setDistPtr(double *dist, double value) const;
 };
 
 #endif

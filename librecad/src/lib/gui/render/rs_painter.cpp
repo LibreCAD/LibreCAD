@@ -224,19 +224,27 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
     }
 }
 
-void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3) {
+void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices)
+{
+    QPolygonF uiPolygon;
+    for(const RS_Vector& wcsVertex: wcsVertices) {
+        if (wcsVertex.valid) {
+            const RS_Vector& uiVertex = toGui(wcsVertex);
+            uiPolygon.push_back({uiVertex.x, uiVertex.y});
+        }
+    }
 
-    double uiX0, uiX1, uiX2, uiY0, uiY1, uiY2;
+    // For quadrilaterals from RS_Solid, the point order is switched for corner3 and corner4.
+    if (uiPolygon.size() == 4)
+        std::swap(uiPolygon[2], uiPolygon.back());
+    fillPolygonUI(uiPolygon);
+}
 
-    toGui(wcsP0, uiX0, uiY0);
-    toGui(wcsP1, uiX1, uiY1);
-    toGui(wcsP2, uiX2, uiY2);
-
-    fillTriangleUI(uiX0, uiY0,uiX1, uiY1, uiX2, uiY2);
+void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3)
+{
+    drawSolidWCS({wcsP0, wcsP1, wcsP2});
     if (wcsP3.valid) {
-        double uiX3, uiY3;
-        toGui(wcsP3, uiX3, uiY3);
-        fillTriangleUI(uiX0,uiY0, uiX1, uiY1, uiX3, uiY3);
+        drawSolidWCS({wcsP1, wcsP3, wcsP2});
     }
 }
 
@@ -1068,6 +1076,17 @@ void RS_Painter::drawTextV(int x1, int y1,
 void RS_Painter::fillRect(int x1, int y1, int w, int h,
                             const RS_Color& col) {
     QPainter::fillRect(x1, y1, w, h, col);
+}
+
+void RS_Painter::fillPolygonUI( const QPolygonF& uiPolygon)
+{
+    if (uiPolygon.size() <= 2)
+        return;
+
+    const QBrush brushSaved = brush();
+    setBrushColor(RS_Color(pen().color()));
+    QPainter::drawPolygon(uiPolygon, Qt::OddEvenFill);
+    QPainter::setBrush(brushSaved);
 }
 
 void RS_Painter::fillTriangleUI(

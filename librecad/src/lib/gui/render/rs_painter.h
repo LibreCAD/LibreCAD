@@ -127,6 +127,7 @@ public:
     void drawPointEntityWCS(const RS_Vector &p);
     void drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize);
     void drawSolidWCS(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3, const RS_Vector &wcsP4);
+    void drawSolidWCS(const RS_VectorSolutions& wcsVertices);
 
     void drawArcWCS(const RS_Vector &wcsCenter, double wcsRadius, double wcsStartAngleDegrees, double angularLength);
     void drawSplineWCS(const RS_Spline &spline);
@@ -176,6 +177,7 @@ public:
     void fillRect ( const QRectF & rectangle, const RS_Color & color );
     void fillRect ( const QRectF & rectangle, const QBrush & brush );
 
+    void fillPolygonUI(const QPolygonF& polygon);
     void fillTriangleUI(const RS_Vector& uiP1,const RS_Vector& uiP2,const RS_Vector& uiP3);
     void fillTriangleUI(double uiX1, double uiY1, double uiX2, double uiY2, double uiX3, double uiY3);
 

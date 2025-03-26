@@ -308,9 +308,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
 */
 bool RS_Solid::sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const
 {
-    double res = (v1.x - v3.x) * (v2.y - v3.y) - (v2.x - v3.x) * (v1.y - v3.y);
-
-    return (res >= 0.0);
+    return ! std::signbit(RS_Vector::crossP(v1 - v3, v2 - v3).z);
 }
 
 /**
@@ -465,10 +463,10 @@ void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2){
 }
 
 void RS_Solid::draw(RS_Painter* painter){
-    painter->drawSolidWCS(data.corner[0], data.corner[1], data.corner[2], data.corner[3]);
+    painter->drawSolidWCS(std::vector(data.corner.cbegin(), data.corner.cend()));
 }
 
-void RS_Solid::setDistPtr(double *dist, const double value) const{
+void RS_Solid::setDistPtr(double *dist, double value) const{
     if (nullptr != dist) {
         *dist = value;
     }

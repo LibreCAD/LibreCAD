@@ -611,15 +611,6 @@ RS_Vector RS_Vector::crossP(const RS_Vector& v1, const RS_Vector& v2) {
             v1.x*v2.y - v1.y*v2.x};
 }
 
-/**
- * Constructor for no solution.
- */
-RS_VectorSolutions::RS_VectorSolutions():
-    vector(0)
-    ,tangent(false)
-{
-}
-
 RS_VectorSolutions::RS_VectorSolutions(std::vector<RS_Vector> vectors):
     vector(std::move(vectors))
 {
