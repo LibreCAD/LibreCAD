@@ -1470,22 +1470,23 @@ void RS_Painter::setViewPort(LC_GraphicViewport *v) {
 void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) const {
 //    viewport->toUI(pos, x,y);
 
-    if (m_hasUcs){
+    if (hasUCS()){
 //   ucsToUCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
 // the code below is equivalent to
 
 /*
         RS_Vector wcs = RS_Vector(wcsCoordinate.x, wcsCoordinate.y);
-        RS_Vector newPos = wcs-ucsOrigin;
+        RS_Vector newPos = wcs-m_ucsOrigin;
         newPos.rotate(xAxisAngle);
         uiY = newPos.x;
         uiX = newPos.y;
 */
-        double ucsPositionX = wcsCoordinate.x - ucsOrigin.x;
-        double ucsPositionY = wcsCoordinate.y - ucsOrigin.y;
+        double ucsPositionX = wcsCoordinate.x - getUcsOrigin().x;
+        double ucsPositionY = wcsCoordinate.y - getUcsOrigin().y;
 
-        double ucsX = ucsPositionX * cosXAngle - ucsPositionY * sinXAngle;
-        double ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
+        const RS_Vector& ucsRotation = getUcsRotation();
+        double ucsX = ucsPositionX * ucsRotation.x - ucsPositionY * ucsRotation.y;
+        double ucsY = ucsPositionX * ucsRotation.y + ucsPositionY * ucsRotation.x;
 
 //        uiX = toGuiX(uiX);
         uiX = ucsX * viewPortFactorX + viewPortOffsetX;
@@ -1503,8 +1504,8 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
 RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
 {
     RS_Vector uiPosition = worldCoordinates;
-    if (m_hasUcs) {
-        uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
+    if (hasUCS()) {
+        uiPosition.move(-getUcsOrigin()).rotate(getUcsRotation());
     }
     uiPosition.scale(m_viewPortFactor).move(m_viewPortOffset);
     uiPosition.y = viewPortHeight - uiPosition.y;
@@ -1525,17 +1526,7 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
         }
     }
 
-//    return uiPosition;
-
-    /*
-     //    double x, y;
-     //    viewport->toUI(worldCoordinates, x, y);
-     //    return RS_Vector(x,y);
-     */
-     double x, y;
-     toGui(worldCoordinates, x, y);
-     return RS_Vector(x, y);
-
+   return uiPosition;
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {
@@ -1549,7 +1540,7 @@ double RS_Painter::toGuiDY(double ucsDY) const {
 }
 
 void RS_Painter::disableUCS(){
-    m_hasUcs = false;
+    useUCS(false);
 }
 
 bool RS_Painter::isFullyWithinBoundingRect(RS_Entity* e){

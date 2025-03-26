@@ -28,6 +28,7 @@
 #define RS_ARC_H
 
 #include <iosfwd>
+#include <vector>
 
 #include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
@@ -284,6 +285,7 @@ m0 x + m1 y + m2 =0
     void updateMiddlePoint();
 protected:
     RS_ArcData data{};
+private:
     // cached values for performance
     RS_Vector middlePoint;
     RS_Vector startPoint;

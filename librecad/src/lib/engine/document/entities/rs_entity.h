@@ -29,6 +29,7 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <iosfwd>
 #include <memory>
 
 #include "lc_drawable.h"

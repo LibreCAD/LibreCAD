@@ -39,21 +39,21 @@ RS_Vector LC_CoordinatesMapper::doWCS2UCS(const RS_Vector &worldCoordinate) cons
         uiY = newPos.x;
         uiX = newPos.y;
 */
-    return RS_Vector{worldCoordinate}.move(-ucsOrigin).rotate(m_ucsRotation);
+    return RS_Vector{worldCoordinate}.move(-m_ucsOrigin).rotate(m_ucsRotation);
 }
 
 void LC_CoordinatesMapper::doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const {
     // the code below is unwrapped equivalent to this
 /*
         RS_Vector wcs = RS_Vector(worldX, worldY);
-        RS_Vector newPos = wcs-ucsOrigin;
+        RS_Vector newPos = wcs-m_ucsOrigin;
         newPos.rotate(xAxisAngle);
         uiY = newPos.x;
         uiX = newPos.y;
 */
 
-    double ucsPositionX = worldX - ucsOrigin.x;
-    double ucsPositionY = worldY - ucsOrigin.y;
+    double ucsPositionX = worldX - m_ucsOrigin.x;
+    double ucsPositionY = worldY - m_ucsOrigin.y;
 
     ucsX = ucsPositionX * cosXAngle - ucsPositionY * sinXAngle;
     ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
@@ -93,7 +93,7 @@ RS_Vector LC_CoordinatesMapper::doUCS2WCS(const RS_Vector &ucsCoordinate) const 
     newPos.rotate(-xAxisAngle);
     worldCoordinate  = newPos + ucsOrigin;
 */
-    return ucsCoordinate.rotated(m_AxisNegRotation) + ucsOrigin;
+    return ucsCoordinate.rotated(m_AxisNegRotation) + m_ucsOrigin;
 }
 
 void LC_CoordinatesMapper::doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const{
@@ -110,8 +110,8 @@ void LC_CoordinatesMapper::doUCS2WCS(double ucsX, double ucsY, double &worldX, d
     double wcsX = ucsX * cosNegativeXAngle - ucsY * sinNegativeXAngle;
     double wcsY = ucsX * sinNegativeXAngle + ucsY * cosNegativeXAngle;
 
-    worldX = wcsX + ucsOrigin.x;
-    worldY = wcsY + ucsOrigin.y;
+    worldX = wcsX + m_ucsOrigin.x;
+    worldY = wcsY + m_ucsOrigin.y;
 }
 
 void LC_CoordinatesMapper::setXAxisAngle(double angle){
@@ -123,12 +123,17 @@ void LC_CoordinatesMapper::setXAxisAngle(double angle){
 }
 
 void LC_CoordinatesMapper::update(const RS_Vector &origin, double angle) {
-    ucsOrigin = origin;
+    m_ucsOrigin = origin;
     setXAxisAngle(angle);
 }
 
 const RS_Vector &LC_CoordinatesMapper::getUcsOrigin() const {
-    return ucsOrigin;
+    return m_ucsOrigin;
+}
+
+void LC_CoordinatesMapper::setUcsOrigin(const RS_Vector& origin)
+{
+    m_ucsOrigin = origin;
 }
 
 double LC_CoordinatesMapper::toWorldAngle(double ucsAngle) const{
