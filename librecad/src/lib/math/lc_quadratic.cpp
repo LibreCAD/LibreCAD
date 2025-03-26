@@ -441,7 +441,7 @@ LC_Quadratic LC_Quadratic::move(const RS_Vector& v)
 }
 
 
-LC_Quadratic LC_Quadratic::rotate(const double& angle)
+LC_Quadratic LC_Quadratic::rotate(double angle)
 {
     using namespace boost::numeric::ublas;
     matrix<double> m=rotationMatrix(angle);
@@ -454,7 +454,7 @@ LC_Quadratic LC_Quadratic::rotate(const double& angle)
     return *this;
 }
 
-LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, const double& angle)
+LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, double angle)
 {
     move(-center);
     rotate(angle);

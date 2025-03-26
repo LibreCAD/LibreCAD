@@ -921,7 +921,7 @@ void RS_Dimension::move(const RS_Vector& offset) {
     data.middleOfText.move(offset);
 }
 
-void RS_Dimension::rotate(const RS_Vector& center, const double& angle) {
+void RS_Dimension::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
 	data.definitionPoint.rotate(center, angleVector);
     data.middleOfText.rotate(center, angleVector);

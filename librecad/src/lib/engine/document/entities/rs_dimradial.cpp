@@ -201,7 +201,7 @@ void RS_DimRadial::move(const RS_Vector& offset) {
 
 
 
-void RS_DimRadial::rotate(const RS_Vector& center, const double& angle) {
+void RS_DimRadial::rotate(const RS_Vector& center, double angle) {
     rotate(center,RS_Vector(angle));
 }
 

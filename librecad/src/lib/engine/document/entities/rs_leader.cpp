@@ -167,7 +167,7 @@ void RS_Leader::move(const RS_Vector& offset) {
     update();
 }
 
-void RS_Leader::rotate(const RS_Vector& center, const double& angle) {
+void RS_Leader::rotate(const RS_Vector& center, double angle) {
     RS_EntityContainer::rotate(center, angle);
     update();
 }

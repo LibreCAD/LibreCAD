@@ -425,7 +425,7 @@ void RS_Solid::move(const RS_Vector& offset){
     calculateBorders();
 }
 
-void RS_Solid::rotate(const RS_Vector& center, const double& angle){
+void RS_Solid::rotate(const RS_Vector& center, double angle){
     RS_Vector angleVector(angle);
     for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
         if (data.corner[i].valid) {

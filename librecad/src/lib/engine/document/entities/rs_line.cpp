@@ -444,14 +444,14 @@ void RS_Line::move(const RS_Vector& offset) {
     moveBorders(offset);
 }
 
-void RS_Line::rotate(const double& angle) {
+void RS_Line::rotate(double angle) {
     RS_Vector rvp(angle);
     data.startpoint.rotate(rvp);
     data.endpoint.rotate(rvp);
     calculateBorders();
 }
 
-void RS_Line::rotate(const RS_Vector& center, const double& angle) {
+void RS_Line::rotate(const RS_Vector& center, double angle) {
     RS_Vector rvp(angle);
     data.startpoint.rotate(center, rvp);
     data.endpoint.rotate(center, rvp);

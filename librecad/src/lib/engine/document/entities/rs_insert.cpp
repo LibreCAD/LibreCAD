@@ -339,7 +339,7 @@ void RS_Insert::move(const RS_Vector& offset) {
 
 
 
-void RS_Insert::rotate(const RS_Vector& center, const double& angle) {
+void RS_Insert::rotate(const RS_Vector& center, double angle) {
         RS_DEBUG->print("RS_Insert::rotate1: insertionPoint: %f/%f "
             "/ center: %f/%f",
                 data.insertionPoint.x, data.insertionPoint.y,

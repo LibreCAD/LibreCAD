@@ -476,7 +476,7 @@ void RS_Text::move(const RS_Vector& offset) {
 //    update();
 }
 
-void RS_Text::rotate(const RS_Vector& center, const double& angle) {
+void RS_Text::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     RS_EntityContainer::rotate(center, angleVector);
     data.insertionPoint.rotate(center, angleVector);

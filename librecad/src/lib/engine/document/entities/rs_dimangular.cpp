@@ -405,7 +405,7 @@ void RS_DimAngular::move(const RS_Vector& offset)
     update();
 }
 
-void RS_DimAngular::rotate(const RS_Vector& center, const double& angle)
+void RS_DimAngular::rotate(const RS_Vector& center, double angle)
 {
     rotate( center, RS_Vector( angle));
 }

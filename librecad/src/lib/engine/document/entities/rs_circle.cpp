@@ -726,7 +726,7 @@ bool RS_Circle::offset(const RS_Vector& coord, const double& distance) {
     return true;
 }
 
-void RS_Circle::rotate(const RS_Vector& center, const double& angle) {
+void RS_Circle::rotate(const RS_Vector& center, double angle) {
 	data.center.rotate(center, angle);
     calculateBorders();
 }

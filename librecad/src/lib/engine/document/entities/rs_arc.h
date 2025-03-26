@@ -239,7 +239,7 @@ public:
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
     RS_Vector getTangentDirection(const RS_Vector& point) const override;
     void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     /**

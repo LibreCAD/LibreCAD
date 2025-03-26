@@ -707,7 +707,7 @@ void RS_Hatch::move(const RS_Vector& offset) {
     update();
 }
 
-void RS_Hatch::rotate(const RS_Vector& center, const double& angle) {
+void RS_Hatch::rotate(const RS_Vector& center, double angle) {
     RS_EntityContainer::rotate(center, angle);
     data.angle = RS_Math::correctAngle(data.angle+angle);
     update();

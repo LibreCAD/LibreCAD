@@ -159,7 +159,7 @@ void RS_Point::move(const RS_Vector& offset) {
     calculateBorders();
 }
 
-void RS_Point::rotate(const RS_Vector& center, const double& angle) {
+void RS_Point::rotate(const RS_Vector& center, double angle) {
     data.pos.rotate(center, angle);
     calculateBorders();
 }
