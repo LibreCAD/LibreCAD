@@ -100,14 +100,10 @@ bool RS_Font::loadFont() {
     // Open cxf file:
     QFile f(path);
     if (!f.open(QIODevice::ReadOnly)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Font::loadFont: Cannot open font file: %s",
-                        path.toLatin1().data());
+        LC_LOG(RS_Debug::D_WARNING) <<"RS_Font::loadFont: Cannot open font file: "<<path;
         return false;
     } else {
-        RS_DEBUG->print("RS_Font::loadFont: "
-                        "Successfully opened font file: %s",
-                        path.toLatin1().data());
+        LC_LOG<< "RS_Font::loadFont: Successfully opened font file: " << path;
     }
     f.close();
 
@@ -344,7 +340,7 @@ void RS_Font::readLFF(QString path) {
             }
             // only unicode allowed
             else {
-                RS_DEBUG->print(RS_Debug::D_WARNING,"Ignoring code from LFF font file: %s",qPrintable(line));
+                LC_LOG(RS_Debug::D_WARNING)<<"Ignoring code from LFF font file: "<<line;
                 continue;
             }
 
@@ -372,9 +368,11 @@ void RS_Font::generateAllFonts(){
 }
 
 RS_Block* RS_Font::generateLffFont(const QString& key){
+    if (key.isEmpty())
+        return nullptr;
 
     if (!rawLffFontList.contains( key)) {
-        RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : can not find the letter in LFF file %s", QChar(key.at(0)), qPrintable(fileName));
+        LC_ERR<<QString{"RS_Font::generateLffFont([%1]): can not find the letter in LFF file "}.arg(QChar(key.front())) << fileName;
         return nullptr;
     }
 
@@ -400,7 +398,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
 			int uCode = line.toInt(nullptr, 16);
             QChar ch = QChar(uCode);
             if (QString(ch) == key) {   // recursion, a character can't include itself
-                RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : recursion, ignore this character from %s", uCode, qPrintable(fileName));
+                LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : recursion, ignore this character from "}.arg(uCode, 4, 16)<<fileName;
                 delete letter;
                 return nullptr;
             }
@@ -408,7 +406,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
             RS_Block* bk = letterList.find(ch);
             if (nullptr == bk) {
                 if (!rawLffFontList.contains(ch)) {
-                    RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : can not find the letter C%04X in LFF file %s", QChar(key.at(0)), uCode, qPrintable(fileName));
+                LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : can not find the letter %2 in LFF file "}.arg(uCode, 4, 16).arg(QChar(key.front()))<<fileName;
                     delete letter;
                     return nullptr;
                 }

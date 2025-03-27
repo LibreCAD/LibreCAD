@@ -942,12 +942,10 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     //draw visible
     RS_Arc arc(*this);
     arc.setReversed(false);
-    LC_ERR<<__func__;
     for(size_t i=1; i<crossPoints.size(); i++){
         arc.setAngle1(baseAngle+crossPoints[i-1]);
         arc.setAngle2(baseAngle+crossPoints[i]);
         if (arc.getMiddlePoint().isInWindowOrdered(vpMin, vpMax)) {
-            printf("%.15g - %.15g\n", arc.getAngle1(), arc.getAngle2());
             arc.drawVisible(painter,view,patternOffset);
         }
     }
