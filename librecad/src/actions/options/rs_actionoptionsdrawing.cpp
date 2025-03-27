@@ -44,7 +44,7 @@ void RS_ActionOptionsDrawing::init(int status) {
 }
 
 void RS_ActionOptionsDrawing::trigger() {
-    if (graphic != nullptr) {
+        if (graphic != nullptr) {
         graphicView->setForcedActionKillAllowed(false);
         int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic,tabToShow);
         if (dialogResult == QDialog::Accepted){
