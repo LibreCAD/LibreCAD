@@ -34,7 +34,7 @@
 #include "rs_layer.h"
 
 RS_ActionLayersToggleView::RS_ActionLayersToggleView(LC_ActionContext *actionContext, RS_Layer* layer)
-    : RS_ActionInterface("Toggle Layer Visibility", actionContext)
+    : RS_ActionInterface("Toggle Layer Visibility", actionContext,  RS2::ActionLayersToggleView)
     , a_layer(layer) {}
 
 void RS_ActionLayersToggleView::trigger() {

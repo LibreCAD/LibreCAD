@@ -30,7 +30,7 @@
 
 RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
         LC_ActionContext *actionContext)
-        :RS_ActionInterface("Freeze all Layers",actionContext) {
+        :RS_ActionInterface("Freeze all Layers",actionContext, RS2::ActionLayersFreezeAll) {
 
     this->freeze = freeze;
 }

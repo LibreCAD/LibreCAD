@@ -32,7 +32,7 @@
 #include "rs_layer.h"
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(LC_ActionContext *actionContext,RS_Layer* layer)
-    : RS_ActionInterface("Toggle Layer Visibility", actionContext)
+    : RS_ActionInterface("Toggle Layer Visibility", actionContext, RS2::ActionLayersToggleLock)
     , a_layer(layer){
 }
 

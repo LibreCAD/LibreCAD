@@ -35,7 +35,7 @@
 #include "rs_layer.h"
 
 RS_ActionLayersEdit::RS_ActionLayersEdit(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Edit Layer", actionContext) {}
+        :RS_ActionInterface("Edit Layer", actionContext, RS2::ActionLayersEdit) {}
 
 void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");

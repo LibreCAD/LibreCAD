@@ -29,7 +29,7 @@
 #include "rs_graphic.h"
 
 RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock, LC_ActionContext *actionContext)
-        :RS_ActionInterface("Lock all Layers",actionContext) {
+        :RS_ActionInterface("Lock all Layers",actionContext, RS2::ActionLayersLockAll) {
 
     this->lock = lock;
 }

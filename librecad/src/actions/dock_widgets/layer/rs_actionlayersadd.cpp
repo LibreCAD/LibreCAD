@@ -32,7 +32,7 @@
 #include "rs_graphic.h"
 
 RS_ActionLayersAdd::RS_ActionLayersAdd(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Add Layer", actionContext) {}
+        :RS_ActionInterface("Add Layer", actionContext, RS2::ActionLayersAdd) {}
 
 void RS_ActionLayersAdd::trigger() {
     RS_DEBUG->print("add layer");

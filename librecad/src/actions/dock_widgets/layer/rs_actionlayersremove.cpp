@@ -32,7 +32,7 @@
 #include "rs_graphic.h"
 
 RS_ActionLayersRemove::RS_ActionLayersRemove(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Remove Layer", actionContext) {}
+        :RS_ActionInterface("Remove Layer", actionContext, RS2::ActionLayersRemove) {}
 
 
 void RS_ActionLayersRemove::trigger() {
