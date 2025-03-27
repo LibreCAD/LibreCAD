@@ -29,26 +29,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_snapoptionswidgetsholder.h"
 #include "rs_settings.h"
 
-LC_ActionOptionsManager::LC_ActionOptionsManager(QWidget* parent, QToolBar* optionsToolbar, LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
-{
-    snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
+LC_ActionOptionsManager::LC_ActionOptionsManager(QWidget* parent, QToolBar* optionsToolbar,
+    LC_SnapOptionsWidgetsHolder* snapOptionsHolder){
+    m_snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
     setOptionWidget(optionsToolbar);
 }
 
 void LC_ActionOptionsManager::setOptionWidget(QToolBar* ow) {
-    optionWidget = ow;
-    optionWidgetHolder = new LC_OptionsWidgetsHolder(ow);
-    optionWidget->addWidget(optionWidgetHolder);
-    snapOptionsWidgetHolderOptionsToolbar = optionWidgetHolder->getSnapOptionsHolder();
+    m_actionOptionsToolbar = ow;
+    m_actionOptionWidgetHolder = new LC_OptionsWidgetsHolder(ow);
+    m_actionOptionsToolbar->addWidget(m_actionOptionWidgetHolder);
+    m_snapOptionsWidgetHolderOptionsToolbar = m_actionOptionWidgetHolder->getSnapOptionsHolder();
 }
 
 void LC_ActionOptionsManager::addOptionsWidget(LC_ActionOptionsWidget * options){
-    optionWidgetHolder->addOptionsWidget(options);
-    optionWidget->update();
+    m_actionOptionWidgetHolder->addOptionsWidget(options);
+    m_actionOptionsToolbar->update();
 }
 
 void LC_ActionOptionsManager::removeOptionsWidget(LC_ActionOptionsWidget * options){
-    optionWidgetHolder->removeOptionsWidget(options);
+    m_actionOptionWidgetHolder->removeOptionsWidget(options);
 }
 
 void LC_ActionOptionsManager::hideSnapOptions(){
@@ -73,21 +73,25 @@ LC_SnapOptionsWidgetsHolder* LC_ActionOptionsManager::getSnapOptionsHolder(){
     LC_SnapOptionsWidgetsHolder* result = nullptr;
     bool useSnapToolbar = LC_GET_ONE_BOOL("Appearance", "showSnapOptionsInSnapToolbar", false);
     if (useSnapToolbar){
-        result = snapOptionsWidgetHolderSnapToolbar;
-        snapOptionsWidgetHolderOptionsToolbar->setVisible(false);
+        result = m_snapOptionsWidgetHolderSnapToolbar;
+        m_snapOptionsWidgetHolderOptionsToolbar->setVisible(false);
     }
     else{
-        result = snapOptionsWidgetHolderOptionsToolbar;
-        snapOptionsWidgetHolderOptionsToolbar->setVisible(true);
+        result = m_snapOptionsWidgetHolderOptionsToolbar;
+        m_snapOptionsWidgetHolderOptionsToolbar->setVisible(true);
     }
-    if (lastUsedSnapOptionsWidgetHolder != nullptr && lastUsedSnapOptionsWidgetHolder != result){
-        result->updateBy(lastUsedSnapOptionsWidgetHolder);
+    if (m_lastUsedSnapOptionsWidgetHolder != nullptr && m_lastUsedSnapOptionsWidgetHolder != result){
+        result->updateBy(m_lastUsedSnapOptionsWidgetHolder);
     }
-    lastUsedSnapOptionsWidgetHolder = result;
+    m_lastUsedSnapOptionsWidgetHolder = result;
 
     return result;
 }
 
 void LC_ActionOptionsManager::update(){
     getSnapOptionsHolder();
+}
+
+void LC_ActionOptionsManager::clearActionIcon(){
+    m_actionOptionWidgetHolder->clearActionIcon();
 }

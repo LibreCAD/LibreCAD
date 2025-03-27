@@ -30,6 +30,7 @@ class LC_SnapOptionsWidgetsHolder;
 class LC_ActionOptionsManager{
 public:
     LC_ActionOptionsManager(QWidget *parent, QToolBar *optionsToolbar, LC_SnapOptionsWidgetsHolder *snapOptionsHolder);
+    ~LC_ActionOptionsManager() = default;
     void setOptionWidget(QToolBar *ow);
     void addOptionsWidget(LC_ActionOptionsWidget *options);
     void removeOptionsWidget(LC_ActionOptionsWidget *options);
@@ -37,13 +38,17 @@ public:
     void requestSnapMiddleOptions(int *middlePoints, bool on);
     void requestSnapDistOptions(double *dist, bool on);
     void update();
+    void clearActionIcon();
+    LC_OptionsWidgetsHolder * getActionOptionWidgetHolder() const{
+        return m_actionOptionWidgetHolder;
+    }
 protected:
     //! Pointer to the widget which can host individual tool options
-    QToolBar* optionWidget = nullptr;
-    LC_OptionsWidgetsHolder* optionWidgetHolder = nullptr;
-    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderSnapToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderOptionsToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder * lastUsedSnapOptionsWidgetHolder = nullptr;
+    QToolBar* m_actionOptionsToolbar = nullptr;
+    LC_OptionsWidgetsHolder* m_actionOptionWidgetHolder = nullptr;
+    LC_SnapOptionsWidgetsHolder * m_snapOptionsWidgetHolderSnapToolbar = nullptr;
+    LC_SnapOptionsWidgetsHolder * m_snapOptionsWidgetHolderOptionsToolbar = nullptr;
+    LC_SnapOptionsWidgetsHolder * m_lastUsedSnapOptionsWidgetHolder = nullptr;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 };
 
