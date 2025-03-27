@@ -585,7 +585,7 @@ void RS_Hatch::draw(RS_Painter* painter) {
 void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use polygon approximation, except trivial cases
 
     if (needOptimization == true) {
-        foreach (auto l, entities){
+        for(auto* l: entities){
                 if (l->rtti()==RS2::EntityContainer) {
                     auto* loop = (RS_EntityContainer*)l;
                     loop->optimizeContours();
@@ -593,17 +593,13 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use pol
             }
         needOptimization = false;
     }
-    QPainterPath path;
-    QList<QPolygon> paClosed;
-    QPolygon pa;
-
 
     const QBrush brush(painter->brush());
     const RS_Pen pen=painter->getPen();
     painter->setBrushColor(pen.getColor());
 //    painter->disablePen();
 
-    createSolidFillPath(painter, path);
+    QPainterPath path = createSolidFillPath(painter);
 
 
     //bug#474, restore brush after solid fill
@@ -624,8 +620,9 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use pol
     painter->setPen(pen);
 }
 
-void RS_Hatch::createSolidFillPath(RS_Painter *painter, QPainterPath &path) {
-    painter->createSolidFillPath(path, entities);
+QPainterPath RS_Hatch::createSolidFillPath(RS_Painter *painter) const
+{
+    return painter->createSolidFillPath(entities);
 }
 
 void RS_Hatch::debugOutPath(const QPainterPath &tmpPath) const {

@@ -173,7 +173,7 @@ private:
 
     void debugOutPath(const QPainterPath &tmpPath) const;
 
-    void createSolidFillPath( RS_Painter *painter, QPainterPath &path);
+    QPainterPath createSolidFillPath( RS_Painter *painter) const;
 };
 
 #endif

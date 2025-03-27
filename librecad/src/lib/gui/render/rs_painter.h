@@ -197,7 +197,7 @@ public:
     double getDpmm() const;
     void setClipRect(int x, int y, int w, int h);
     void resetClipping();
-    void createSolidFillPath(QPainterPath &path,QList<RS_Entity *> entities);
+    QPainterPath createSolidFillPath(const QList<RS_Entity *>& entities);
     void noCapStyle();
     RS_Pen& getRsPen();
     void setPenJoinStyle(Qt::PenJoinStyle penJoinStyle);
