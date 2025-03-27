@@ -46,7 +46,7 @@ public:
 
     /** @return the fileName of this font. */
     QString getFileName() const {
-        return fileName;
+        return m_fileName;
     }
 
     /** @return the fileLicense of this font. */
@@ -125,7 +125,7 @@ private:
     RS_BlockList letterList;
 
     //! Font file name
-    QString fileName;
+    QString m_fileName;
 
     //! Font file license
     QString fileLicense;
