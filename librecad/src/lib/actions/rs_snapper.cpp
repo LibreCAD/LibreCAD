@@ -315,11 +315,7 @@ void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
     m_actionContext->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
     m_actionContext->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
-
-    // RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
-    // RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
 }
-
 
 RS_SnapMode const* RS_Snapper::getSnapMode() const{
     return &(this->snapMode);
@@ -385,7 +381,6 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
         //todo: accept value from widget QG_SnapMiddleOptions
 
         m_actionContext->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
-        // RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
         t = snapMiddle(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -398,7 +393,6 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
         //this is still brutal force
         //todo: accept value from widget QG_SnapDistOptions
         m_actionContext->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
-        // RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
         t = snapDist(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -900,15 +894,8 @@ void RS_Snapper::resume() {
  */
 void RS_Snapper::hideSnapOptions() {
     m_actionContext->hideSnapOptions();
-    // RS_DIALOGFACTORY->hideSnapOptions();
 }
 
-/**
- * Shows the snapper options. Default implementation does nothing.
- */
-//void RS_Snapper::showOptions() {
-    //not used any more, will be removed
-//}
 
 /**
  * Deletes the snapper from the screen.
@@ -1134,7 +1121,6 @@ RS_Vector const &RS_Snapper::getRelativeZero() const {
 
 void RS_Snapper::updateCoordinateWidgetFormat(){
     m_actionContext->updateCoordinateWidget(toWorld(RS_Vector(0.0,0.0)),toWorld(RS_Vector(0.0,0.0)), true);
-    // RS_DIALOGFACTORY->updateCoordinateWidget(toWorld(RS_Vector(0.0,0.0)),toWorld(RS_Vector(0.0,0.0)), true);
 }
 
 void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat){
@@ -1142,7 +1128,6 @@ void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& r
         preparePositionsInfoCursorOverlay(updateFormat, abs, rel);
     }
     m_actionContext->updateCoordinateWidget(abs, rel, updateFormat);
-    // RS_DIALOGFACTORY->updateCoordinateWidget(abs, rel, updateFormat);
 }
 
 void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat){
@@ -1151,7 +1136,6 @@ void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool upda
         preparePositionsInfoCursorOverlay(updateFormat, abs, relative);
     }
     m_actionContext->updateCoordinateWidget(abs, relative, updateFormat);
-    // RS_DIALOGFACTORY->updateCoordinateWidget(abs, relative, updateFormat);
 }
 
 LC_InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {
@@ -1396,6 +1380,7 @@ double RS_Snapper::getCatchDistance(double catchDistance, int catchEntityGuiRang
     return (graphicView != nullptr) ? std::min(catchDistance, toGraphDX(catchEntityGuiRange)) : catchDistance;
 }
 
+// fixme - sand - review
 void RS_Snapper::enableCoordinateInput(){
     graphicView->enableCoordinateInput();
 }

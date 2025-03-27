@@ -168,7 +168,6 @@ private:
     QG_LayerModel *layerModel = nullptr;
     RS_Layer* lastLayer = nullptr;
     QG_ActionHandler* actionHandler = nullptr;
-
     void restoreSelections();
 };
 

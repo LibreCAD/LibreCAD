@@ -49,13 +49,10 @@ RS_DialogFactory::~RS_DialogFactory() {
 /**
  * @return Instance to the unique font list.
  */
-RS_DialogFactory* RS_DialogFactory::instance()
-{
+RS_DialogFactory* RS_DialogFactory::instance(){
     static auto* uniqueInstance = new RS_DialogFactory{};
     return uniqueInstance;
 }
-
-
 
 /**
  * Sets the real factory object that can create and show dialogs.

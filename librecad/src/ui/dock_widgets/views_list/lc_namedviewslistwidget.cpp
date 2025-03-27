@@ -22,7 +22,6 @@
 
 #include <QInputDialog>
 #include <QMessageBox>
-#include <QMenu>
 #include <QTimer>
 #include <QStyleHints>
 #include <QContextMenuEvent>
@@ -34,6 +33,7 @@
 #include "lc_namedviewsbutton.h"
 #include "qc_applicationwindow.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 
 LC_NamedViewsListWidget::LC_NamedViewsListWidget(const QString& title, QWidget* parent)
     : QWidget(parent)
@@ -115,8 +115,9 @@ void LC_NamedViewsListWidget::createModel() {
     verticalHeader->hide();
 
     tableView->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
-
+#ifndef DONT_FORCE_WIDGETS_CSS
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
 
 
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_NamedViewsListWidget::onCustomContextMenu);

@@ -73,11 +73,9 @@ namespace {
  *
  * @author Rallaz
  */
-QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
+QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent, const char* name, Qt::WindowFlags fl)
+    : QWidget(parent, fl), actionHandler{action_handler}{
     setObjectName(name);
-	actionHandler = nullptr;
 
     QVBoxLayout *vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);

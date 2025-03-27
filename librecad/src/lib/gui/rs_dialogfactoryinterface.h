@@ -246,8 +246,7 @@ public:
      */
     virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) { };
     virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) { };
-    virtual void hideSnapOptions() {};
-
+    
     /**
      * This virtual method must be overwritten and must present
      * a widget for entity attributes.
