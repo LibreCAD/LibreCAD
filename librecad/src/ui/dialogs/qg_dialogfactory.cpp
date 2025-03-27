@@ -129,11 +129,6 @@ void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
 }
 
 
-void QG_DialogFactory::hideSnapOptions(){
-    // fixme - sand - files - restore
-    // getSnapOptionsHolder()->hideSnapOptions();
-}
-
 /**
  * Shows a widget for 'snap to equidistant middle points ' options.
  */

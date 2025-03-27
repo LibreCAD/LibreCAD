@@ -137,7 +137,7 @@ protected:
 public:
     void requestSnapDistOptions(double* dist, bool on) override;
     void requestSnapMiddleOptions(int* middlePoints, bool on) override;
-    void hideSnapOptions() override;
+
     bool requestAttributesDialog(RS_AttributesData& data,
                                  RS_LayerList& layerList) override;
     bool requestMoveDialog(RS_MoveData& data) override;

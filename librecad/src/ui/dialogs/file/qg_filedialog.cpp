@@ -109,13 +109,8 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
     //    on startup, when UseQtFileOpenDialog is not set, it is set to 1 for all Linux
     //    and 0 for other OS
     //    this is because QFileDialog is case insensitive for filters and the native not
-    QSettings settings;
-    if( 0 == settings.value("Defaults/UseQtFileOpenDialog", 0).toInt()) {
-        setOption( QFileDialog::DontUseNativeDialog, false );
-    }
-    else {
-        setOption( QFileDialog::DontUseNativeDialog, true );
-    }
+
+    setOption(QFileDialog::DontUseNativeDialog,LC_GET_ONE_BOOL("Defaults", "UseQtFileOpenDialog", false) );
     setOption ( QFileDialog::HideNameFilterDetails, false );
     ftype= RS2::FormatDXFRW;
 

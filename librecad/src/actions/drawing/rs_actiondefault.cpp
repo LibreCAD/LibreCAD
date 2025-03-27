@@ -89,7 +89,7 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
 RS_ActionDefault::~RS_ActionDefault() = default;
 
 void RS_ActionDefault::init(int status){
-    clearMouseWidgetIcon();
+    // clearMouseWidgetIcon();
     RS_DEBUG->print("RS_ActionDefault::init");
     if (status >= 0){
         checkSupportOfQuickEntityInfo();
@@ -966,7 +966,7 @@ void RS_ActionDefault::clearHighLighting(){
 }
 
 void RS_ActionDefault::resume(){
-    clearMouseWidgetIcon();
+    // clearMouseWidgetIcon();
     clearHighLighting();
     checkSupportOfQuickEntityInfo();
     BASE_CLASS::resume();

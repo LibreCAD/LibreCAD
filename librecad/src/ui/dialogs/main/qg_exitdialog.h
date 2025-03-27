@@ -40,6 +40,7 @@ class QG_ExitDialog : public LC_Dialog{
 public:
     QG_ExitDialog(QWidget* parent = nullptr);
 	~QG_ExitDialog();
+
 	enum ExitDialogResult {
         Cancel, DontSave, DontSaveAll, Save, SaveAll
 	};
