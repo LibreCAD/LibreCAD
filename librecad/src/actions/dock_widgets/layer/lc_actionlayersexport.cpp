@@ -139,7 +139,7 @@ private:
     either as individual files, or combined within a single file.
 */
 LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, RS_LayerList* inputLayersList, Mode inputExportMode)
-    : RS_ActionInterface("Export selected layer(s)",actionContext),
+    : RS_ActionInterface("Export selected layer(s)",actionContext, inputExportMode == SelectedMode ? RS2::ActionLayersExportSelected:RS2::ActionLayersExportVisible),
     layersList(inputLayersList),
     exportMode(inputExportMode){
 }
