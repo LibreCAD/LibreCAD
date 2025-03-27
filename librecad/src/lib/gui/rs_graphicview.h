@@ -114,6 +114,7 @@ public:
 
     void setDefaultAction(RS_ActionInterface *action);
     RS_ActionInterface *getDefaultAction();
+    void hideOptions();
     void setCurrentAction(RS_ActionInterface *action);
     RS_ActionInterface *getCurrentAction();
     QString getCurrentActionName();
@@ -121,7 +122,7 @@ public:
     void killSelectActions();
     void killAllActions();
     void back();
-    void enter();
+    void processEnterKey();
     void commandEvent(RS_CommandEvent *e);
     void keyPressEvent(QKeyEvent *event) override;
     void enableCoordinateInput();
@@ -185,6 +186,7 @@ signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);
     void previous_zoom_state(bool);
+    void currentActionChanged(RS_ActionInterface* action);
 protected:
     RS_EventHandler *eventHandler = nullptr;
     RS_EntityContainer *container = nullptr;
@@ -215,5 +217,7 @@ protected:
     bool m_panOnZoom = false;
     bool m_skipFirstZoom = false;
     const RS_LineTypePattern *getPattern(RS2::LineType t);
+
+    void setEventHandlerAction(RS_ActionInterface *action);
 };
 #endif

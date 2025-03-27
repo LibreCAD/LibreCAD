@@ -104,13 +104,8 @@ bool LC_DocumentsStorage::loadDocument(RS_Document* document, const QString& fil
     bool result = false;
     if (document != nullptr && !fileName.isEmpty()) {
         // cosmetics..
-        // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor));
         result = loadGraphic(document->getGraphic(), fileName, type);
-        QApplication::restoreOverrideCursor();
-
     } else {
         //statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
@@ -123,9 +118,9 @@ bool LC_DocumentsStorage::loadDocumentFromTemplate(RS_Document* document,RS_Grap
     if (document==nullptr || fileName.isEmpty()) {
         return result;
     }
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor));
+
     result = loadGraphicFromTemplate(document->getGraphic(), fileName, type);
-    QApplication::restoreOverrideCursor();
+
     if (result) {
         graphicView->zoomAuto(false);
     }
@@ -286,7 +281,7 @@ bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &file
 }
 
 bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName) {
-    QString backupFileSuffix = LC_GET_ONE_STR("Path", "BackupFileSuffix", "~");
+    QString backupFileSuffix = LC_GET_ONE_STR("Defaults", "BackupFileSuffix", "~");
     return backupDrawingFile(drawingFileName, backupFileSuffix);
 }
 
@@ -307,7 +302,7 @@ bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, cons
 }
 
 QString LC_DocumentsStorage::createAutoSaveFileName(const QFileInfo &fileInfo) const {
-    QString autosaveFilePrefix = LC_GET_ONE_STR("Path", "AutosaveFilePrefix", "#");
+    QString autosaveFilePrefix = LC_GET_ONE_STR("Defaults", "AutosaveFilePrefix", "#");
     QString autosaveFileName = createAutoSaveFileName(fileInfo, autosaveFilePrefix);
     return autosaveFileName;
 }

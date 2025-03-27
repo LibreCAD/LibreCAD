@@ -114,8 +114,8 @@ void LC_ApplicationWindowInitializer::initCentralWidget(){
 
     auto central = new LC_CentralWidget(m_appWin);
     m_appWin->setCentralWidget(central);
-    m_appWin->mdiAreaCAD = central->getMdiArea();
-    m_appWin->mdiAreaCAD->setDocumentMode(true);
+    m_appWin->m_mdiAreaCAD = central->getMdiArea();
+    m_appWin->m_mdiAreaCAD->setDocumentMode(true);
 
     LC_GROUP("WindowOptions");
     m_appWin->setTabLayout(static_cast<RS2::TabShape>(LC_GET_INT("TabShape", RS2::Triangular)),
@@ -127,16 +127,16 @@ void LC_ApplicationWindowInitializer::initCentralWidget(){
         m_appWin->setupCADAreaTabbar();
     }
 
-    connect(m_appWin->mdiAreaCAD, &QMdiArea::subWindowActivated,m_appWin, &QC_ApplicationWindow::slotWindowActivated);
+    connect(m_appWin->m_mdiAreaCAD, &QMdiArea::subWindowActivated,m_appWin, &QC_ApplicationWindow::slotWindowActivated);
 
     // This event filter allows sending key events to the command widget, therefore, no
     // need to activate the command widget before typing commands.
     // Since this nice feature causes a bug of lost key events when the command widget is on
     // a screen different from the main window, disabled for the time being
     // send key events for mdiAreaCAD to command widget by default
-    m_appWin->mdiAreaCAD->installEventFilter(m_appWin->m_commandWidget);
+    m_appWin->m_mdiAreaCAD->installEventFilter(m_appWin->m_commandWidget);
 
-    connect(m_appWin->getAction("FileClose"), &QAction::triggered, m_appWin->mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
+    connect(m_appWin->getAction("FileClose"), &QAction::triggered, m_appWin->m_mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
 }
 
 void LC_ApplicationWindowInitializer::initIconSize(){
@@ -185,11 +185,6 @@ void LC_ApplicationWindowInitializer::initRecentFilesList(){
 void LC_ApplicationWindowInitializer::initDialogFactory(){
     LC_SnapOptionsWidgetsHolder *snapOptionsHolder = m_appWin->m_snapToolBar->getSnapOptionsHolder();
     m_appWin->m_dialogFactory = new QC_DialogFactory(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
-    if (RS_DialogFactory::instance()==nullptr) {
-        RS_DEBUG->print("no RS_DialogFactory instance");
-    } else {
-        RS_DEBUG->print("got RS_DialogFactory instance");
-    }
     RS_DialogFactory::instance()->setFactoryObject(m_appWin->m_dialogFactory);
 }
 

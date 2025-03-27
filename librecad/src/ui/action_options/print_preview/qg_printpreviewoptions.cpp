@@ -132,6 +132,8 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
         updatePageNumbers();
     } else {
+
+        // fixme - sand - files - review this. Switch between previews should retain different print scales in different documents.
         paperScaleFixed = loadBool("PrintScaleFixed", false);
         scaleLineWidth = loadBool("ScaleLineWidth", false);
         blackAndWhiteMode = loadBool("BlackWhiteSet", false);

@@ -70,21 +70,21 @@ public:
     /**
      * @return Users home directory.
      */
-    QString getHomeDir() {
+    static QString getHomeDir() {
         return QDir::homePath();
     }
 
     /**
      * @return Users home directory.
      */
-    QString getTempDir() {
+    static QString getTempDir() {
         return QDir::tempPath();
     }
 
     /**
      * @return Current directory.
      */
-    QString getCurrentDir() {
+    static QString getCurrentDir() {
         return QDir::currentPath();
     }
 

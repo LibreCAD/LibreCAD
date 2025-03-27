@@ -43,7 +43,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_widgetviewportrenderer.h"
 #include "lc_shortcuts_manager.h"
-
+#include "rs_actioninterface.h"
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
@@ -101,6 +101,15 @@ RS_ActionInterface *RS_GraphicView::getDefaultAction() {
         return eventHandler->getDefaultAction();
     } else {
         return nullptr;
+    }
+}
+
+void RS_GraphicView::hideOptions(){
+    if (eventHandler != nullptr) {
+        auto defaultAction = eventHandler->getDefaultAction();
+        if (defaultAction != nullptr) {
+            defaultAction->hideOptions();
+        }
     }
 }
 
@@ -199,7 +208,7 @@ void RS_GraphicView::back() {
 /**
  * Go forward with the current action.
  */
-void RS_GraphicView::enter() {
+void RS_GraphicView::processEnterKey() {
     if (eventHandler && eventHandler->hasAction()) {
         eventHandler->enter();
     }
