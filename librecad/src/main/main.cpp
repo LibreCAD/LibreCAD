@@ -366,7 +366,7 @@ int main(int argc, char** argv)
                                     Qt::AlignRight | Qt::AlignBottom, Qt::black);
                 qApp->processEvents();
             }
-            appWin.slotFileOpen(*it);
+            appWin.openFile(*it);
             files_loaded = true;
         }
 
@@ -376,7 +376,7 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: loading files: OK");
 
         if (!files_loaded) {
-            appWin.slotFileNewNew();
+            appWin.slotFileNewFromDefaultTemplate();
         }
 
         if (show_splash) {
