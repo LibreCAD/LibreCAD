@@ -129,9 +129,9 @@ const QColor qcolorWhite = colorWhite.toQColor();
         painter.drawLine(left, right);
     }
 
-    void drawOctagon(QPainter& painter, const QPointF& uiPos, int size)
+    void drawOctagon(QPainter& painter, const QPointF& uiPos, int halfSize)
     {
-        QPointF dr0(double(size), std::sqrt(0.5) * size);
+        QPointF dr0(double(halfSize), std::sin(M_PI/8.) * halfSize);
         std::vector<QPointF> vertices{{dr0, dr0.transposed()}};
         // mirroring by y-axis
         for(int i = 1; i >= 0; --i)
@@ -147,10 +147,10 @@ const QColor qcolorWhite = colorWhite.toQColor();
         painter.drawPolygon(octagon);
     }
 
-    void drawSquare(QPainter& painter, const QPointF& uiPos, int size)
+    void drawSquare(QPainter& painter, const QPointF& uiPos, int halfSize)
     {
-        auto dr0 = QPoint(size, size).toPointF();
-        auto dr1 = QPoint(- size, size).toPointF();
+        auto dr0 = QPoint(halfSize, halfSize).toPointF();
+        auto dr1 = QPoint(- halfSize, halfSize).toPointF();
         QPolygonF square{{uiPos + dr0, uiPos + dr1, uiPos - dr0, uiPos - dr1}};
         PainterGuard guard(painter);
         painter.setBrush(Qt::NoBrush);
