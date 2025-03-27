@@ -27,7 +27,7 @@
 class QAction;
 class QToolBar;
 class QG_ActionHandler;
-class LC_DockWidget;
+class LC_CADDockWidget;
 class QC_ApplicationWindow;
 class LC_ActionGroupManager;
 /**
@@ -60,11 +60,13 @@ private:
     void initLeftCADSidebar();
     void createRightSidebar(QG_ActionHandler *action_handler);
     void initStatusBar();
-    void createLeftSidebar(int columns, int icon_size, bool flatButtons);
-    LC_DockWidget *leftDockWidget(const QString &title, const char *name, const QList<QAction *> &actions, int columns, int iconSize, bool flatButtons);
+    void createCADSidebar(int columns, int icon_size, bool flatButtons);
+    LC_CADDockWidget *cadDockWidget(const QString &title, const char *name, const QList<QAction *> &actions, int columns, int iconSize, bool flatButtons);
     void addToBottom(QToolBar *toolbar);
     QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, QString title, const char *name);
     void addAction(QToolBar *toolbar, const char *actionName);
     void makeActionsInvisible(const std::vector<QString> &actionNames);
+
+    void setVerticalTitle(QDockWidget *result);
 };
 #endif // LC_WIDGETFACTORY_H

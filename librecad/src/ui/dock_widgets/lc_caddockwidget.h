@@ -6,12 +6,12 @@
 class QFrame;
 class QGridLayout;
 
-class LC_DockWidget : public QDockWidget{
+class LC_CADDockWidget : public QDockWidget{
     Q_OBJECT
 public slots:
     void updateWidgetSettings();
 public:
-    LC_DockWidget(QWidget* parent);
+    LC_CADDockWidget(QWidget* parent);
 
     QFrame* frame = nullptr;
     QGridLayout* grid = nullptr;

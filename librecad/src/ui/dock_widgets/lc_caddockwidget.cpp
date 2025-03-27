@@ -29,14 +29,14 @@
 #include <QGridLayout>
 #include <QFrame>
 
-#include "lc_dockwidget.h"
+#include "lc_caddockwidget.h"
 
 #include "rs_settings.h"
 
 // fixme - sand - add support of flex layout, with it potentially will be possible to support something ribbon-like
 // oh - just have and options (hor/ver orientation)
 
-LC_DockWidget::LC_DockWidget(QWidget* parent)
+LC_CADDockWidget::LC_CADDockWidget(QWidget* parent)
     : QDockWidget(parent)
     , frame(new QFrame(this))
     , grid(new QGridLayout)
@@ -51,7 +51,7 @@ LC_DockWidget::LC_DockWidget(QWidget* parent)
     frame->setLayout(grid);
 }
 
-void LC_DockWidget::add_actions(const QList<QAction *> &list, int columns, int icon_size, bool flatButton){
+void LC_CADDockWidget::add_actions(const QList<QAction *> &list, int columns, int icon_size, bool flatButton){
 	for (auto const &item: list) {
 		auto *toolbutton = new QToolButton(this);
 		toolbutton->setDefaultAction(item);
@@ -65,7 +65,7 @@ void LC_DockWidget::add_actions(const QList<QAction *> &list, int columns, int i
 	}
 }
 
-void LC_DockWidget::updateWidgetSettings(){
+void LC_CADDockWidget::updateWidgetSettings(){
 	LC_GROUP("Widgets"); {
 		int leftToolbarColumnsCount = LC_GET_INT("LeftToolbarColumnsCount", 5);
 		bool leftToolbarFlatIcons = LC_GET_BOOL("LeftToolbarFlatIcons", true);
@@ -75,7 +75,7 @@ void LC_DockWidget::updateWidgetSettings(){
 
 		QList<QToolButton *> widgets = frame->findChildren<QToolButton *>();
 
-		QGridLayout* newGrid = new QGridLayout();
+		auto* newGrid = new QGridLayout();
 		newGrid->setSpacing(0);
 		newGrid->setContentsMargins(0, 0, 0, 0);
 
