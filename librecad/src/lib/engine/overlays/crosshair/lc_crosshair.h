@@ -60,7 +60,7 @@ protected:
     int pointSize;
     RS_Vector wcsPos;
 
-    double drawIndicator(RS_Painter *painter, double uiPosX, double uiPosY);
+    double drawIndicator(RS_Painter *painter, const RS_Vector& uiPos);
 
     void drawCrosshairLines(
         RS_Painter *painter, const RS_Vector &guiCoord, double offset, const RS_Vector &p1, const RS_Vector &p2, const RS_Vector &p3,

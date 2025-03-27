@@ -23,6 +23,7 @@
 
 #include<QPainterPath>
 #include<QPolygon>
+#include<QPointF>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -105,6 +106,56 @@ const QColor qcolorWhite = colorWhite.toQColor();
         }
         }
     };
+
+    // draw a plus sign by given halfSize
+    void drawPlus(QPainter& painter, QPointF uiPos, int halfSize)
+    {
+        QPointF left{uiPos.x() - halfSize, uiPos.y()};
+        QPointF right{uiPos.x() + halfSize, uiPos.y()};
+        painter.drawLine(left, right);
+        QPointF bottom{uiPos.x(), uiPos.y() - halfSize};
+        QPointF top{uiPos.x(), uiPos.y() + halfSize};
+        painter.drawLine(bottom, top);
+    }
+    // draw a plus sign by given halfSize
+    void drawCross(QPainter& painter, QPointF uiPos, int halfSize)
+    {
+        auto half = QPoint(halfSize, halfSize).toPointF();
+        QPointF left = uiPos - half;
+        QPointF right = uiPos + half;
+        painter.drawLine(left, right);
+        left.setY(left.y() + 2 * halfSize);
+        right.setY(right.y() - 2 * halfSize);
+        painter.drawLine(left, right);
+    }
+
+    void drawOctagon(QPainter& painter, const QPointF& uiPos, int size)
+    {
+        QPointF dr0(double(size), std::sqrt(0.5) * size);
+        std::vector<QPointF> vertices{{dr0, dr0.transposed()}};
+        // mirroring by y-axis
+        for(int i = 1; i >= 0; --i)
+            vertices.emplace_back( - vertices[i].x(), vertices[i].y());
+        // mirroring by x-axis
+        for(int i = 3; i >= 0; --i)
+            vertices.emplace_back( vertices[i].x(), - vertices[i].y());
+
+        QPolygonF octagon;
+        std::transform(vertices.cbegin(), vertices.cend(), std::back_inserter(octagon), [&uiPos](const QPointF& vertex) { return vertex + uiPos;});
+        PainterGuard guard(painter);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPolygon(octagon);
+    }
+
+    void drawSquare(QPainter& painter, const QPointF& uiPos, int size)
+    {
+        auto dr0 = QPoint(size, size).toPointF();
+        auto dr1 = QPoint(- size, size).toPointF();
+        QPolygonF square{{uiPos + dr0, uiPos + dr1, uiPos - dr0, uiPos - dr1}};
+        PainterGuard guard(painter);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPolygon(square);
+    }
 }
 /**
  * Constructor.
@@ -129,7 +180,7 @@ void RS_Painter::drawGridPoint(const double &x, const double &y) {
 
 void RS_Painter::drawPointEntityWCS(const RS_Vector& wcsPos) {
     RS_Vector uiPos = toGui(wcsPos);
-    drawPointEntityUI(uiPos.x, uiPos.y, pointsMode, screenPointsSize);
+    drawPointEntityUI(uiPos, pointsMode, screenPointsSize);
 }
 
 void RS_Painter::drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize){
@@ -137,13 +188,13 @@ void RS_Painter::drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, doub
     int screenPDSize = determinePointScreenSize(pdSize);
     double uiX, uiY;
     toGui(wcsPos, uiX, uiY);
-    drawPointEntityUI(uiX, uiY,  pdMode, screenPDSize);
+    drawPointEntityUI({uiX, uiY},  pdMode, screenPDSize);
 }
 
 /**
  * Draws a point at (x1, y1).
  */
-void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsize) {
+void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsize) {
     int halfPDSize = pdsize/2;
 
 /*	PDMODE values =>
@@ -155,12 +206,12 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
  bit 5 = 1 => added surrounding circle
  bit 6 = 1 => added surrounding square
 */
+    QPointF uiCoords {uiPos.x, uiPos.y};
     switch (DXF_FORMAT_PDMode_getCentre(pdmode)) {
         case DXF_FORMAT_PDMode_CentreDot:
         default: {
             /*	Centre dot - use a tiny + to make it visible  */
-            QPainter::drawLine(uiX - 1, uiY, uiX + 1, uiY);
-            QPainter::drawLine(uiX, uiY - 1, uiX, uiY + 1);
+            drawPlus(*this, uiCoords, 1);
             break;
         }
         case DXF_FORMAT_PDMode_CentreBlank: {
@@ -169,19 +220,17 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
         }
         case DXF_FORMAT_PDMode_CentrePlus: {
             /*	Centre +  */
-            QPainter::drawLine(uiX - pdsize, uiY, uiX + pdsize, uiY);
-            QPainter::drawLine(uiX, uiY - pdsize, uiX, uiY + pdsize);
+            drawPlus(*this, uiCoords, pdsize);
             break;
         }
         case DXF_FORMAT_PDMode_CentreCross: {
             /*	Centre X  */
-            QPainter::drawLine(uiX - pdsize, uiY - pdsize, uiX + pdsize, uiY + pdsize);
-            QPainter::drawLine(uiX + pdsize, uiY - pdsize, uiX - pdsize, uiY + pdsize);
+            drawCross(*this, uiCoords, pdsize);
             break;
         }
         case DXF_FORMAT_PDMode_CentreTick: {
             /*	Centre vertical tick  */
-            QPainter::drawLine(uiX, uiY - halfPDSize, uiX, uiY);
+            QPainter::drawLine(QPointF{uiPos.x, uiPos.y - halfPDSize}, uiCoords);
             break;
         }
     }
@@ -189,38 +238,12 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
 /*	Surrounding circle if required  */
     if (DXF_FORMAT_PDMode_hasEncloseCircle(pdmode)) {
         /*	Approximate circle by an octagon  */
-        int xMin = uiX - halfPDSize;
-        int xMax = uiX + halfPDSize;
-        int yMin = uiY - halfPDSize;
-        int yMax = uiY + halfPDSize;
-        int octOffset = halfPDSize * 0.71;
-        int xOctMin = uiX - octOffset;
-        int xOctMax = uiX + octOffset;
-        int yOctMin = uiY - octOffset;
-        int yOctMax = uiY + octOffset;
-
-        QPainter::drawLine(uiX, yMin, xOctMax, yOctMin);
-        QPainter::drawLine(uiX, yMin, xOctMin, yOctMin);
-        QPainter::drawLine(uiX, yMax, xOctMax, yOctMax);
-        QPainter::drawLine(uiX, yMax, xOctMin, yOctMax);
-
-        QPainter::drawLine(xMin, uiY, xOctMin, yOctMin);
-        QPainter::drawLine(xMin, uiY, xOctMin, yOctMax);
-        QPainter::drawLine(xMax, uiY, xOctMax, yOctMin);
-        QPainter::drawLine(xMax, uiY, xOctMax, yOctMax);
+        drawOctagon(*this, uiCoords, halfPDSize);
     }
 
 /*	Surrounding square if required  */
     if (DXF_FORMAT_PDMode_hasEncloseSquare(pdmode)) {
-        int xMin = uiX - halfPDSize;
-        int xMax = uiX + halfPDSize;
-        int yMin = uiY - halfPDSize;
-        int yMax = uiY + halfPDSize;
-
-        QPainter::drawLine(xMin, yMin, xMax, yMin);
-        QPainter::drawLine(xMin, yMax, xMax, yMax);
-        QPainter::drawLine(xMin, yMin, xMin, yMax);
-        QPainter::drawLine(xMax, yMin, xMax, yMax);
+        drawSquare(*this, uiCoords, halfPDSize);
     }
 }
 
@@ -625,12 +648,12 @@ void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, double uiRadius){
     }
 }
 
-void RS_Painter::drawCircleUIDirect(double uiCenterX, double uiCenterY, double uiRadius){
+void RS_Painter::drawCircleUIDirect(const RS_Vector& uiPos, double uiRadius) {
     if (uiRadius < minCircleDrawingRadius){
-        QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
+        QPainter::drawPoint(QPointF(uiPos.x, uiPos.y));
     }
     else {
-       QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+       QPainter::drawEllipse(QPointF(uiPos.x, uiPos.y), uiRadius, uiRadius);
     }
 }
 
