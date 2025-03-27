@@ -43,6 +43,7 @@
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     blockVisible = QIcon(":/icons/visible.lci");
@@ -154,8 +155,9 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     blockView->horizontalHeader()->setStretchLastSection(true);
     blockView->horizontalHeader()->hide();
 
+#ifndef DONT_FORCE_WIDGETS_CSS
     blockView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
-
+#endif
     auto* lay = new QVBoxLayout(this);
     lay->setSpacing ( 2 );
     lay->setContentsMargins(2, 2, 2, 2);

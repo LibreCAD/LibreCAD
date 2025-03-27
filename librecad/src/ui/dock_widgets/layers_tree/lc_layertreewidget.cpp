@@ -21,14 +21,6 @@
  ******************************************************************************/
 
 #include <QHeaderView>
-#include <QToolButton>
-#include <QMenu>
-#include <QBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QContextMenuEvent>
-#include <QMap>
-#include <QTreeView>
 #include <QtWidgets>
 
 #include "lc_layerdialog_ex.h"
@@ -45,6 +37,7 @@
 #include "rs_graphic.h"
 #include "lc_flexlayout.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 /**
  * Constructor.
  */
@@ -125,8 +118,9 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
     treeView->setExpandsOnDoubleClick(false);
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-
+#ifndef DONT_FORCE_WIDGETS_CSS
     treeView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
 
     connect(treeView, &QTreeView::customContextMenuRequested, this, &LC_LayerTreeWidget::onCustomContextMenu);
     connect(treeView, &QTreeView::clicked, this, &LC_LayerTreeWidget::slotTreeClicked);

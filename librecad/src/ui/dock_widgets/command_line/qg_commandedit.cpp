@@ -38,6 +38,7 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 
 namespace {
 // Limits for command file reading
@@ -79,7 +80,9 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
     , calculator_mode(false)
 
 {
+#ifndef DONT_FORCE_WIDGETS_CSS
     setStyleSheet("selection-color: white; selection-background-color: green;");
+#endif
     setFrame(false);
     setFocusPolicy(Qt::StrongFocus);
 }

@@ -27,6 +27,7 @@
 #include "qg_commandhistory.h"
 #include <QAction>
 #include <QMouseEvent>
+#include "lc_widgets_common.h"
 
 // -- commandline history (output) widget --
 
@@ -50,7 +51,9 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
     connect(clear, SIGNAL(triggered(bool)), this, SLOT(clear()));
     addAction(clear);
 
+#ifndef DONT_FORCE_WIDGETS_CSS
     setStyleSheet("selection-color: white; selection-background-color: green;");
+#endif
 }
 
 void QG_CommandHistory::mouseReleaseEvent(QMouseEvent* event){
@@ -64,4 +67,3 @@ void QG_CommandHistory::slotTextChanged(){
 //only show the selectAll item when there is text
     m_pSelectAll->setVisible(! toPlainText().isEmpty());
 }
-

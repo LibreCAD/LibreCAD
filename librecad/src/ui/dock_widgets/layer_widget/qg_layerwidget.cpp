@@ -28,14 +28,9 @@
 #include <QBitmap>
 #include <QBoxLayout>
 #include <QContextMenuEvent>
-#include <QHeaderView>
 #include <QKeyEvent>
-#include <QLabel>
-#include <QLineEdit>
 #include <QMenu>
 #include <QScrollBar>
-#include <QTableView>
-#include <QToolButton>
 
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
@@ -44,6 +39,7 @@
 #include "lc_flexlayout.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/icons/visible.lci");
@@ -210,7 +206,9 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
     layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, QG_LayerModel::ICONWIDTH);
     layerView->verticalHeader()->hide();
 
+#ifndef DONT_FORCE_WIDGETS_CSS
     layerView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
 
     auto* lay = new QVBoxLayout(this);
     lay->setContentsMargins(2, 2, 2, 2);

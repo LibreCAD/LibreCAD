@@ -22,16 +22,15 @@
 
 #include <QScrollBar>
 #include <QMessageBox>
-#include "qg_filedialog.h"
 #include "rs_settings.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "ui_lc_actionsshortcutsdialog.h"
 #include "lc_actionfactorybase.h"
 #include "lc_shortcutsstorage.h"
+#include "lc_widgets_common.h"
 
 // fixme - general application-wise shortcuts dispatching and keyboards support
 // todo - complex sequences conflicts? How to ensure that conflicts will not occur if key sequences overlapped partially?
-
 
 LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
     QWidget *parent, LC_ActionGroupManager *pManager)
@@ -63,9 +62,7 @@ LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
     ui->lblMessage->setPalette(palette);
     connect(ui->lblMessage, &QLabel::linkActivated, this, &LC_ActionsShortcutsDialog::showConflicts);
     ui->leFilter->setFocus();
-
     ui->gbShortcut->setVisible(false);
-
 }
 
 LC_ActionsShortcutsDialog::~LC_ActionsShortcutsDialog(){
@@ -94,7 +91,9 @@ void LC_ActionsShortcutsDialog::initTreeView(){
     treeView->setDropIndicatorShown(false);
     treeView->setExpandsOnDoubleClick(true);
 
+#ifndef DONT_FORCE_WIDGETS_CSS
     treeView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
     // todo - do we need context menu there?
     // treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     // connect(treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(QPoint)));

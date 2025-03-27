@@ -22,7 +22,6 @@
 
 #include <QCheckBox>
 #include <QKeyEvent>
-#include <QLabel>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPainter>
@@ -44,6 +43,7 @@
 #include "ui_lc_penpalettewidget.h"
 #include "lc_flexlayout.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 /**
  * Delegate used to paint underline lines for table grid
  */
@@ -184,8 +184,9 @@ void LC_PenPaletteWidget::initTableView(){
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_NAME), LC_PenPaletteModel::ICON_WIDTH * 5);
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::TYPE_ICON), LC_PenPaletteModel::ICON_WIDTH);
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::WIDTH_ICON), LC_PenPaletteModel::ICON_WIDTH);
-
+#ifndef DONT_FORCE_WIDGETS_CSS
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
 
     connect(tableView, &QTableView::clicked, this, &LC_PenPaletteWidget::onTableClicked);
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_PenPaletteWidget::onTableViewContextMenuInvoked);

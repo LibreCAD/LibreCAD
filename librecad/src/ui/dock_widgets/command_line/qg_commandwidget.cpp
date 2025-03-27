@@ -337,10 +337,8 @@ void QG_CommandWidget::setKeycodeMode(bool state)
     leCommand->keycode_mode = state;
 }
 
-void QG_CommandWidget::dockingButtonTriggered(bool /*docked*/)
-{
-    QDockWidget* cmd_dockwidget =
-            QC_ApplicationWindow::getAppWindow()->findChild<QDockWidget*>("command_dockwidget");
+void QG_CommandWidget::dockingButtonTriggered(bool /*docked*/){
+    auto* cmd_dockwidget = QC_ApplicationWindow::getAppWindow()->findChild<QDockWidget*>("command_dockwidget");
     cmd_dockwidget->setFloating(!cmd_dockwidget->isFloating());
     m_docking->setText(cmd_dockwidget->isFloating() ? tr("Dock") : tr("Float"));
     setWindowTitle(cmd_dockwidget->isFloating() ? tr("Command line") : tr("Cmd"));

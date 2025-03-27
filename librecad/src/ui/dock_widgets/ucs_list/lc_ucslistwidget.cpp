@@ -33,6 +33,7 @@
 #include "lc_ucslistbutton.h"
 #include "lc_graphicviewport.h"
 #include "rs_settings.h"
+#include "lc_widgets_common.h"
 
 LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
     : QWidget(parent)
@@ -129,8 +130,9 @@ void LC_UCSListWidget::createModel() {
     verticalHeader->setOffset(2);
     verticalHeader->hide();
 
+#ifndef DONT_FORCE_WIDGETS_CSS
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
-
+#endif
 
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_UCSListWidget::onCustomContextMenu);
     connect(tableView, &QTableView::clicked, this, &LC_UCSListWidget::slotTableClicked);
