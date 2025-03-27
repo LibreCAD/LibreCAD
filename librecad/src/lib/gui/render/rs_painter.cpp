@@ -714,35 +714,29 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
     // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (uiRadii.x < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
+        return;
     }
-    else if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
-        QTransform t1;
-        t1.translate(uiCenter.x, uiCenter.y);
-        t1.rotate(-uiMajorAngleDegrees);
-        t1.translate(-uiCenter.x, -uiCenter.y);
-        save();
-        setTransform(t1, false);
-        QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
-        restore();
+
+    PainterGuard guard(*this);
+    QTransform t1;
+    t1.translate(uiCenter.x, uiCenter.y);
+    t1.rotate(-uiMajorAngleDegrees);
+    setTransform(t1, true);
+
+    if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
+        QPainter::drawLine(QPointF(- uiRadii.x, 0.), QPointF(uiRadii.x, 0.));
     }
     else {
-        QTransform t1;
-        t1.translate(uiCenter.x, uiCenter.y);
-        t1.rotate(-uiMajorAngleDegrees);
-        t1.translate(-uiCenter.x, -uiCenter.y);
-        save();
-        setTransform(t1, false);
-        RS_Vector minPosition = uiCenter - uiRadii;
+        RS_Vector minPosition = - uiRadii;
         RS_Vector uiSize = uiRadii + uiRadii;
         if (reversed){
-            angle1Degrees = angle2Degrees - 360;
+            angle1Degrees = angle2Degrees - 360.;
             angularLength = -angularLength;
         }
         QPainterPath path;
         path.arcMoveTo(minPosition.x, minPosition.y, uiSize.x, uiSize.y, angle1Degrees);
         path.arcTo(minPosition.x, minPosition.y, uiSize.x, uiSize.y, angle1Degrees, angularLength);
         QPainter::drawPath(path);
-        restore();
     }
 }
 
