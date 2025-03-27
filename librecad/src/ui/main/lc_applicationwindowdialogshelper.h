@@ -36,6 +36,8 @@ public:
     void showDeviceOptions();
     bool widgetOptionsDialog();
     bool requestOptionsGeneralDialog();
+    int showCloseDialog(QC_MDIWindow *w, bool showSaveAll);
+    QPair<QString, QString> showExportFileSelectionDialog(const QString& drawingFileName);
 signals:
 private:
     QC_ApplicationWindow* m_appWindow;

@@ -20,12 +20,18 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include <qc_applicationwindow.h>
-#include "lc_applicationwindowdialogshelper.h"
+#include <QFileDialog>
+#include <QImageWriter>
 #include "comboboxoption.h"
+#include "qg_dialogfactory.h"
+#include "qg_dlgoptionsgeneral.h"
+#include "qg_exitdialog.h"
+#include "lc_applicationwindowdialogshelper.h"
 #include "lc_dlgabout.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_widgetoptionsdialog.h"
-#include "qg_dlgoptionsgeneral.h"
+#include "rs_settings.h"
+#include "rs_system.h"
 #include "textfileviewer.h"
 
 LC_ApplicationWindowDialogsHelper::LC_ApplicationWindowDialogsHelper(QC_ApplicationWindow *appWin):m_appWindow(appWin)
@@ -80,5 +86,111 @@ bool LC_ApplicationWindowDialogsHelper::requestOptionsGeneralDialog() {
     bool  result = dlg.exec() == QDialog::Accepted;
     // fixme - sand - files - restore
     // getSnapOptionsHolder(); // as side effect, should update location of snap options
-    return result  ;
+    return result;
+}
+
+/**
+ * Show a Save/Close/Cancel(All) dialog for the content of this sub-window.
+ * The window handle must not be null, and the document must actually have been modified.
+ *
+ * @param showSaveAll show a Save All button and rename Close -> Close All
+ * @return QG_ExitDialog::ExitDialogResult the button that was pressed, or -1 if invoked in error
+ * @see QG_ExitDialog
+ */
+int LC_ApplicationWindowDialogsHelper::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
+    QG_ExitDialog dlg(m_appWindow);
+    dlg.setShowOptionsForAll(showSaveAll);
+    dlg.setTitle(tr("Closing Drawing"));
+    if (w != nullptr && w->getDocument()->isModified()) {
+        QString fileName = w->getFileName();
+        if (fileName.isEmpty()) {
+            fileName = w->windowTitle();
+            fileName.remove("[*]");
+            fileName.remove( " [" + tr("Draft Mode") + "]");
+        }
+        else if (fileName.length() > 50) {
+            fileName = QString("%1...%2").arg(fileName.left(24)).arg(fileName.right(24));
+        }
+
+        dlg.setText(tr("Save changes to the following item?\n%1").arg(fileName));
+        return dlg.exec();
+    }
+    return -1; // should never get here; please send only modified documents
+}
+
+QPair<QString, QString> LC_ApplicationWindowDialogsHelper::showExportFileSelectionDialog(const QString& drawingFileName){
+    // read default settings:
+    LC_GROUP("Export");
+    QString defDir = LC_GET_STR("ExportImage", RS_SYSTEM->getHomeDir());
+    QString defFilter = LC_GET_STR("ExportImageFilter",
+                                   QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
+    LC_GROUP_END();
+
+
+
+    QStringList filters;
+    QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
+    supportedImageFormats.push_back("svg"); // add svg
+
+    for (QString format: supportedImageFormats) {
+        format = format.toLower();
+        QString st;
+        if (format == "jpeg" || format == "tiff") {
+            // Don't add the aliases
+        } else {
+            st = QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat(format), format);
+        }
+        if (st.length() > 0)
+            filters.push_back(st);
+    }
+    // revise list of filters
+    filters.removeDuplicates();
+    filters.sort();
+
+    // set dialog options: filters, mode, accept, directory, filename
+    QFileDialog fileDlg(m_appWindow, tr("Export as"));
+
+    fileDlg.setNameFilters(filters);
+    fileDlg.setFileMode(QFileDialog::AnyFile);
+    fileDlg.selectNameFilter(defFilter);
+    fileDlg.setAcceptMode(QFileDialog::AcceptSave);
+    fileDlg.setDirectory(defDir);
+
+    QString fileName = QFileInfo(drawingFileName).baseName();
+    if (fileName == nullptr) {
+        fileName = "unnamed";
+    }
+    fileDlg.selectFile(fileName);
+
+    if (fileDlg.exec() == QDialog::Accepted) {
+        QStringList files = fileDlg.selectedFiles();
+        if (!files.isEmpty()) {
+            fileName = files[0];
+
+            // store new default settings:
+            LC_GROUP_GUARD("Export");{
+                LC_SET("ExportImage", QFileInfo(fileName).absolutePath());
+                LC_SET("ExportImageFilter",
+                       fileDlg.selectedNameFilter());
+            }
+
+            // find out extension:
+            QString filter = fileDlg.selectedNameFilter();
+            QString format = "";
+            int i = filter.indexOf("(*.");
+            if (i != -1) {
+                int i2 = filter.indexOf(QRegularExpression("[) ]"), i);
+                format = filter.mid(i + 3, i2 - (i + 3));
+                format = format.toUpper();
+            }
+
+            // append extension to file:
+            if (!QFileInfo(fileName).fileName().contains(".")) {
+                fileName.push_back("." + format.toLower());
+            }
+
+            return {fileName, format};
+        }
+    }
+    return {"", ""};
 }
