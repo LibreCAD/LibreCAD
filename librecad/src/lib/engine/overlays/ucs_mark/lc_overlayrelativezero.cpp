@@ -57,7 +57,7 @@ void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    int const zr = options->m_relativeZeroRadius * 2;// todo - why diameter is used there?? Is is correct?
+    double const zr = options->m_relativeZeroRadius;// todo - why diameter is used there?? Is is correct?
 
     RS_Vector vpMin = uiPos - RS_Vector{zr, zr};
     RS_Vector vpMax = uiPos + RS_Vector{zr, zr};
