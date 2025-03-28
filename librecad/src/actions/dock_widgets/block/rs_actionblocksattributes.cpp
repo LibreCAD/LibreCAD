@@ -52,7 +52,6 @@ void RS_ActionBlocksAttributes::trigger() {
 
             if (d.isValid()) {
                 QString newName = d.name;
-
                 // update window title of opened block
                 auto& appWindow = QC_ApplicationWindow::getAppWindow();
                 QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
@@ -63,12 +62,9 @@ void RS_ActionBlocksAttributes::trigger() {
                             "'" + newName + "'");
                     blockWindow->setWindowTitle(title);
                 }
-
                 blockList->rename(block, newName);
-
                 // update the name of all inserts:
                 m_graphic->renameInserts(oldName, newName);
-
                 m_graphic->addBlockNotification();
             }
         }

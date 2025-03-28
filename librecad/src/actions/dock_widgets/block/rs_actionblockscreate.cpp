@@ -36,14 +36,14 @@
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_modification.h"
-#include "rs_coordinateevent.h"
+
 
 /**
  * Constructor.
  */
 RS_ActionBlocksCreate::RS_ActionBlocksCreate(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Blocks Create",actionContext, RS2::ActionBlocksCreate)
-    ,referencePoint(new RS_Vector{}){
+    ,m_referencePoint(new RS_Vector{}){
 }
 
 RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
@@ -62,11 +62,11 @@ void RS_ActionBlocksCreate::trigger() {
 
             if (!d.name.isEmpty()) {
                 RS_Creation creation(m_container, getViewPort());
-                creation.createBlock(&d, *referencePoint, true);
+                creation.createBlock(&d, *m_referencePoint, true);
 
                 RS_InsertData id(
                     d.name,
-                    *referencePoint,
+                    *m_referencePoint,
                     RS_Vector(1.0,1.0),
                     0.0,
                     1, 1, RS_Vector(0.0,0.0)
@@ -115,7 +115,7 @@ void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionBlocksCreate::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetReferencePoint: {
-            *referencePoint = pos;
+            *m_referencePoint = pos;
             trigger();
             break;
         }

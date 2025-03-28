@@ -1576,7 +1576,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         exactColor = true;
     }
     /**
-     * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using unicode file names!!! Due to that, blocks/files may be saved incorrectly
+     * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using unicode file names!!! Due to that, blocks/files may be saved incorrectly if name is localized
      */
     dxfW = new dxfRW(QFile::encodeName(file));
     // fixme - sand - save to binary format enabling/disabling!!

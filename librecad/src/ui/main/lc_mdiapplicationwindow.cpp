@@ -146,6 +146,7 @@ QC_MDIWindow *LC_MDIApplicationWindow::getWindowWithDoc(const RS_Document *doc) 
     return wwd;
 }
 
+
 void LC_MDIApplicationWindow::activateWindowWithFile(QString &fileName) {
     if (!fileName.isEmpty()) {
         foreach(QC_MDIWindow *w, m_windowList) {

@@ -34,10 +34,8 @@ class RS_ActionBlocksSave : public RS_ActionInterface {
 	Q_OBJECT
 public:
     RS_ActionBlocksSave(LC_ActionContext *actionContext);
-
 	void init(int status) override;
 	void trigger() override;
-
 private:
     void addBlock(RS_Insert* in, RS_Graphic* g);
 	RS_Graphic *createGraphicForBlock(RS_Block *activeBlock);

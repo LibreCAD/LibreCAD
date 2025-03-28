@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+
 // fixme - sand - files - refactor action, move the logic outside as it might be reused
 RS_ActionBlocksSave::RS_ActionBlocksSave(LC_ActionContext *actionContext)
         :RS_ActionInterface("Edit Block", actionContext) {}

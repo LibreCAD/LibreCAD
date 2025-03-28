@@ -53,7 +53,7 @@ protected:
         ShowDialog            /**< Showing dialog for name. */
     };
 
-    std::unique_ptr<RS_Vector> referencePoint;
+    std::unique_ptr<RS_Vector> m_referencePoint;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;

@@ -1257,6 +1257,17 @@ bool QC_ApplicationWindow::doFileExport(RS_Graphic* graphic, const QString &name
     return ret;
 }
 
+void QC_ApplicationWindow::closeAllWindowsWithDoc(const RS_Document *doc){
+    if (doc != nullptr) {
+        for (auto*w :m_windowList) {
+            if (w != nullptr && w->getDocument() == doc) {
+                closeWindow(w);
+                break;
+            }
+        }
+    }
+}
+
 /**
  * Called when a sub window is about to close.
  * If modified, show the Save/Close/Cancel dialog, then do the request.

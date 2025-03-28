@@ -299,13 +299,15 @@ public:
     void rebuildMenuIfNecessary();
 
     /** closing the current file */
-    void closeWindow(QC_MDIWindow*); // fixme - sand - files - rework, needed for block
+    void closeAllWindowsWithDoc(const RS_Document* doc);
     void openFile(const QString& fileName); // Assume Unknown type
     /**
  * opens the given file.
  */
     void openFile(const QString& fileName, RS2::FormatType type);
     void changeDrawingOptions(int tabIndex);
+
+    void closeWindow(QC_MDIWindow* w);// fixme - make not public, used for blocks!!
 protected:
 
     void closeEvent(QCloseEvent*) override;

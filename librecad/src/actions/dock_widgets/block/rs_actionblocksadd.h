@@ -23,10 +23,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
 #ifndef RS_ACTIONBLOCKSADD_H
 #define RS_ACTIONBLOCKSADD_H
-
 #include "rs_actioninterface.h"
 
 /**
@@ -34,14 +32,11 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionBlocksAdd : public RS_ActionInterface {
-  Q_OBJECT
+class RS_ActionBlocksAdd:public RS_ActionInterface {
+    Q_OBJECT
 public:
     RS_ActionBlocksAdd(LC_ActionContext *actionContext);
-
-	void init(int status) override;
-	void trigger() override;
-
+    void init(int status) override;
+    void trigger() override;
 };
-
 #endif

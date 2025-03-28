@@ -39,7 +39,6 @@ class RS_ActionBlocksRemove : public RS_ActionInterface {
 	Q_OBJECT
 public:
     RS_ActionBlocksRemove(LC_ActionContext *actionContext);
-
 	void init(int status) override;
 	void trigger() override;
 };

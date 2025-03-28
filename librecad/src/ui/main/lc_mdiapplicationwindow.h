@@ -51,12 +51,12 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+
     // activates window with given filename of drawing, if any
     void activateWindowWithFile(QString &fileName);
 
     void redrawAll();
     void enableWidgetList(bool enable, const std::vector<QWidget *> &widgeList);
-    void enableWidget(const std::vector<QWidget> &widgeList, bool enable);
     void enableWidget(QWidget* win, bool enable);
 
     void doForEachWindow(std::function<void(QC_MDIWindow*)> callback) const;
