@@ -182,6 +182,7 @@ public:
     void onViewportChanged() override;
     void onRelativeZeroChanged(const RS_Vector &pos) override;
     void onUCSChanged(LC_UCS* ucs) override;
+    void notifyNoActiveAction();
 signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);

@@ -160,7 +160,7 @@ void RS_GraphicView::setEventHandlerAction(RS_ActionInterface *action){
         emit currentActionChanged(action);
     }
     else {
-        emit currentActionChanged(nullptr);
+        notifyNoActiveAction();
     }
 }
 
@@ -190,7 +190,6 @@ void RS_GraphicView::killSelectActions() {
 void RS_GraphicView::killAllActions() {
     if (eventHandler != nullptr) {
         if (forcedActionKillAllowed) {
-            emit currentActionChanged(nullptr);
             eventHandler->killAllActions();
         }
     }
@@ -272,6 +271,10 @@ void RS_GraphicView::onUCSChanged(LC_UCS* ucs) {
     redraw();
 }
 
+void RS_GraphicView::notifyNoActiveAction(){
+    emit currentActionChanged(nullptr);
+}
+
 void RS_GraphicView::onRelativeZeroChanged(const RS_Vector &pos) {
     emit relativeZeroChanged(pos);
     redraw(RS2::RedrawOverlay);
@@ -351,11 +354,6 @@ void RS_GraphicView::setTypeToSelect(RS2::EntityType mType) {
     typeToSelect = mType;
 }
 
-/*
-void RS_GraphicView::setHasNoGrid(bool noGrid) {
-    hasNoGrid = noGrid;
-}*/
-
 void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
     forcedActionKillAllowed = enabled;
 }
@@ -367,7 +365,6 @@ QString RS_GraphicView::obtainEntityDescription([[maybe_unused]]RS_Entity *entit
 void RS_GraphicView::setShowEntityDescriptionOnHover(bool show) {
     showEntityDescriptionOnHover = show;
 }
-
 
 bool RS_GraphicView::getPanOnZoom() const{
     return m_panOnZoom;
