@@ -298,19 +298,32 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     m_layerList = layerList;
     m_showByBlock = showByBlock;
-    if (layerList != nullptr) {
-        m_layerList->setLayerWitget(this);
-    }
     update();
+}
+
+void QG_LayerWidget::updateFiltering(){
+    if (! matchLayerName->text().isEmpty()) {
+        slotUpdateLayerList();
+    }
 }
 
 void QG_LayerWidget::layerAdded(RS_Layer* layer){
     update();   // 1st apply the new layer to the view
-    if (! matchLayerName->text().isEmpty()) {
-        slotUpdateLayerList();
-    }
+    updateFiltering();
     activateLayer(layer);
     update();   // update again, if new layer is last row, the height was wrong
+}
+
+void QG_LayerWidget::layerEdited(RS_Layer *rs_layer){
+    update();
+    updateFiltering();
+}
+
+void QG_LayerWidget::layerRemoved(RS_Layer *rs_layer){
+    update();
+    updateFiltering();
+    update();
+    activateLayer(m_layerList->at(0));
 }
 
 /**

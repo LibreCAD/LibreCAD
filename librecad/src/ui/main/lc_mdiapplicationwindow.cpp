@@ -536,6 +536,11 @@ void LC_MDIApplicationWindow::slotWindowActivatedByIndex(int index){
     }
     slotWindowActivated(m_mdiAreaCAD->subWindowList().at(index));
 }
+/*
+void LC_MDIApplicationWindow::slotWindowStateChanged(Qt::WindowStates oldState, Qt::WindowStates newState){
+
+}
+*/
 
 void LC_MDIApplicationWindow::slotWindowActivated(QMdiSubWindow *w){
     doSlotWindowActivated(w, false);

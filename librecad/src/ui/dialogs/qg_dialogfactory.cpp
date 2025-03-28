@@ -130,22 +130,6 @@ void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
 
 
 /**
- * Shows a widget for 'snap to equidistant middle points ' options.
- */
-void QG_DialogFactory::requestSnapMiddleOptions(int* middlePoints, bool on) {
-    // fixme - sand - files - restore
-    // getSnapOptionsHolder()->showSnapMiddleOptions(middlePoints, on);
-}
-
-/**
- * Shows a widget for 'snap to a point with a given distance' options.
- */
-void QG_DialogFactory::requestSnapDistOptions(double* dist, bool on) {
-    // fixme - sand - files - restore
-    // getSnapOptionsHolder()->showSnapDistOptions(dist, on);
-}
-
-/**
  * Shows a message dialog.
  */
 void QG_DialogFactory::requestWarningDialog(const QString& warning) {

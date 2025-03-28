@@ -1215,10 +1215,6 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
     }
 }
 
-void QG_GraphicView::updateGridPoints(){
-    viewport->getGrid()->calculateGrid();
-}
-
 /**
  * Handles paint events by redrawing the graphic in this view.
  * usually that's very fast since we only paint the buffer we

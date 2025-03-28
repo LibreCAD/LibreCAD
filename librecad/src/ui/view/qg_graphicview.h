@@ -67,7 +67,7 @@ public:
     void adjustZoomControls() override;
     void setMouseCursor(RS2::CursorType c) override;
     void updateGridStatusWidget(QString text) override;
-    void updateGridPoints();
+
     void loadSettings() override;
 
     // Methods from RS_LayerListListener Interface:
@@ -79,9 +79,7 @@ public:
     }
 
     void layerToggled(RS_Layer*) override;
-
     void layerActivated(RS_Layer *) override;
-
 
     /**
      * @brief setOffset

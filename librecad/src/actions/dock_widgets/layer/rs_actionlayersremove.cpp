@@ -49,7 +49,7 @@ void RS_ActionLayersRemove::trigger() {
             }
             m_graphic->updateInserts();
             m_container->calculateBorders();
-            m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+            // m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
         }
     }
     finish(false);

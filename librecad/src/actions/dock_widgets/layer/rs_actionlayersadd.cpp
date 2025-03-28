@@ -42,7 +42,7 @@ void RS_ActionLayersAdd::trigger() {
         if (layer != nullptr) {
             m_graphic->addLayer(layer);
         }
-        m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+        // m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);
 }

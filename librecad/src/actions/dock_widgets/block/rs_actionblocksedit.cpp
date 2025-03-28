@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionblocksedit.h"
+
+#include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -46,7 +48,9 @@ void RS_ActionBlocksEdit::trigger() {
     }
 
 //  std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
-    RS_DIALOGFACTORY->requestEditBlockWindow(blockList);
+
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    appWindow->slotEditActiveBlock();
 
     finish(false);
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): OK");

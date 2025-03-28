@@ -118,11 +118,8 @@ public:
 
   void layerActivated(RS_Layer *layer) override { activateLayer(layer);}
   void layerAdded(RS_Layer *layer) override;
-  void layerEdited(RS_Layer *) override { update(); }
-  void layerRemoved(RS_Layer *) override {
-        update();
-        activateLayer(m_layerList->at(0));
-    }
+  void layerEdited(RS_Layer *) override;
+  void layerRemoved(RS_Layer *) override;
     void layerToggled(RS_Layer*) override {
         update();
     }
@@ -160,6 +157,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void setLayerList(RS_LayerList *layerList, bool showByBlock);
+    void updateFiltering();
 private:
     RS_LayerList* m_layerList = nullptr;
     bool m_showByBlock = false;

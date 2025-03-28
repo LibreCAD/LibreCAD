@@ -194,11 +194,7 @@ public:
      */
     virtual RS_BlockData requestBlockAttributesDialog([[maybe_unused]]RS_BlockList* blockList) { return RS_BlockData();};
 
-    /**
-     * This virtual method must be overwritten and should provide
-     * a way to edit a block.
-     */
-    virtual void requestEditBlockWindow([[maybe_unused]]RS_BlockList* blockList) { };
+
     virtual void closeEditBlockWindow([[maybe_unused]]RS_Block* block) {};
 
     /**
@@ -234,18 +230,6 @@ public:
      */
     virtual QString requestImageOpenDialog() { return "";};
 
-
-
-    /**
-     * This virtual method must be overwritten and must present
-     * a widget for snap point with distance options.
-     *
-     * @param dist Distance which can be directly changed
-     *             by the presented widget.
-     * @param on true: switch widget on, false: off
-     */
-    virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) { };
-    virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) { };
     
     /**
      * This virtual method must be overwritten and must present

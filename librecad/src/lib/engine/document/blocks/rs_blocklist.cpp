@@ -331,10 +331,13 @@ void RS_BlockList::toggleBlock(const QString& name) {
  * are notified when the block list changes.
  */
 void RS_BlockList::addListener(RS_BlockListListener* listener) {
+	for (auto const l:  blockListListeners) {
+		if (l == listener) {
+			return;
+		}
+	}
     blockListListeners.append(listener);
 }
-
-
 
 /**
  * removes a BlockListListener from the list of listeners. 
@@ -423,4 +426,3 @@ std::ostream& operator << (std::ostream& os, RS_BlockList& b) {
 
     return os;
 }
-

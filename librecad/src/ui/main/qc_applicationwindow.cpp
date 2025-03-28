@@ -256,6 +256,10 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs) {
     return true;
 }
 
+void QC_ApplicationWindow::activeMDIWindowChanged(QC_MDIWindow *window){
+    m_activeMdiSubWindow = window;
+}
+
 /**
  * Force-Close this sub window.
  * @param activateNext also activate the next window in the window_list, if any
@@ -282,7 +286,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
     }
     openedFiles.removeAll(w->getFileName());
 
-    m_activeMdiSubWindow = nullptr;
+    activeMDIWindowChanged(nullptr);
     m_actionHandler->setDocumentAndView(nullptr, nullptr);
 
     if (activateNext && !m_windowList.empty()) {
@@ -617,7 +621,7 @@ void QC_ApplicationWindow::slotFocus() {
  */
 void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) {
 
-    if (w == nullptr) {
+    if (w == nullptr) { // when it may occur???
         enableWidgets(false);
         enableWidgetList(false, {
             m_layerTreeWidget,
@@ -629,7 +633,7 @@ void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) 
         m_relativeZeroCoordinatesWidget->clearContent();
         // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
-        m_activeMdiSubWindow = w;
+        activeMDIWindowChanged(nullptr);
         return;
     }
 
@@ -669,9 +673,8 @@ void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) 
         }
     });
 
-    m_activeMdiSubWindow = w;
-
-    auto *windowActivated = dynamic_cast<QC_MDIWindow *>(w);
+    auto windowActivated = dynamic_cast<QC_MDIWindow *>(w);
+    activeMDIWindowChanged(windowActivated);
     enableFileActions(windowActivated);
 
     bool hasDocumentInActivatedWindow = false;
@@ -924,7 +927,11 @@ void QC_ApplicationWindow::slotFileNewFromTemplate() {
             doClose(w); //force closing, without asking user for confirmation
         }
         QMdiSubWindow *active = m_mdiAreaCAD->currentSubWindow();
-        m_activeMdiSubWindow = nullptr; //to allow reactivate the previous active
+
+
+        // activeMDIWindowChanged(w);
+        // m_activeMdiSubWindow = nullptr; //to allow reactivate the previous active
+
         if (active) {//restore old geometry
             m_mdiAreaCAD->setActiveSubWindow(active);
             active->raise();
@@ -948,6 +955,49 @@ void QC_ApplicationWindow::slotFileOpen() {
     QString fileName = info.first;
     if (!fileName.isEmpty()) {
         openFile(fileName, info.second);
+    }
+}
+
+void QC_ApplicationWindow::slotEditActiveBlock(){
+    RS_BlockList* blockList = nullptr; // originally was passed from action's graphic view
+    QC_MDIWindow* parent = getCurrentMDIWindow();
+    if (parent == nullptr) {
+        return;
+    }
+
+    // If block is opened from another block the parent must be set
+    // to graphic that contain all these blocks.
+    if (parent->getDocument()->rtti() == RS2::EntityBlock) {
+        parent = parent->getParentWindow();
+    }
+
+    //get blocklist from block widget, bug#3497154
+    if (blockList == nullptr) {
+        blockList = m_blockWidget->getBlockList();
+    }
+
+    RS_Block* activeBlock = blockList->getActive();
+    if (activeBlock == nullptr) {
+        return;
+    }
+
+    QC_MDIWindow* blockWindow = getWindowWithDoc(activeBlock);
+    if (blockWindow != nullptr) {
+       m_mdiAreaCAD ->setActiveSubWindow(blockWindow);
+    } else {
+        QC_MDIWindow* w = createNewDrawingWindow(activeBlock, activeBlock->getName());
+        setupWidgetsByWindow(w);
+        parent->addChildWindow(w);
+        qApp->processEvents(QEventLoop::AllEvents, 1000);
+        // the parent needs a pointer to the block window and vice versa
+        updateCoordinateWidgetFormat();
+        doActivate(w);
+        doArrangeWindows(RS2::CurrentMode);
+
+        QG_GraphicView *graphicView = w->getGraphicView();
+        graphicView->zoomAuto();
+        //update grid settings, bug#3443293
+        // graphicView->updateGridPoints();
     }
 }
 
@@ -1423,7 +1473,7 @@ void QC_ApplicationWindow::openPrintPreview(QC_MDIWindow *parent){
             // only graphics offer block lists, blocks don't
             RS_DEBUG->print("  adding listeners");
             RS_Graphic *graphic = w->getDocument()->getGraphic();
-            if (graphic) {
+            if (graphic == nullptr) {
                 graphic->addLayerListListener(m_penToolBar);
                 graphic->addLayerListListener(m_layerWidget);
                 graphic->addLayerListListener(m_layerTreeWidget);

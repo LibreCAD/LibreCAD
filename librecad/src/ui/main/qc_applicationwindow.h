@@ -156,7 +156,7 @@ public slots:
     void slotFileNewFromTemplate();
     /** opens a document */
     void slotFileOpen();
-
+    void slotEditActiveBlock();
 
     void slotFileOpenRecent(QAction* action);
     /** saves a document */
@@ -290,6 +290,7 @@ public:
 
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
+    void activeMDIWindowChanged(QC_MDIWindow *window);
     void doClose(QC_MDIWindow* w, bool activateNext = true);
     void setupWidgetsByWindow(QC_MDIWindow *w);
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);

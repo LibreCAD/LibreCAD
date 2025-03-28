@@ -60,38 +60,6 @@ protected:
  */
     void setOptionWidget(QToolBar* ow);
 public:
-/**
- * Links this dialog factory to a coordinate widget.
- */
-    // void setCoordinateWidget(QG_CoordinateWidget* cw) override{
-    //     coordinateWidget = cw;
-    // }
-
-    // void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {
-        // relZeroCoordinatesWidget = widget;
-    // }
-
-
-/**
- * Links this dialog factory to a mouse widget.
- */
-    // void setMouseWidget(QG_MouseWidget* mw) override{
-    //     mouseWidget = mw;
-    // }
-
-/**
- * Links this dialog factory to a selection widget.
- */
-    // void setSelectionWidget(QG_SelectionWidget* sw) override{
-        // selectionWidget = sw;
-    // }
-
-/**
- * Links this dialog factory to a command widget.
- */
-    // void setCommandWidget(QG_CommandWidget* cw) override{
-        // commandWidget = cw;
-    // }
 
 /**
  * @return command widget or nullptr.
@@ -99,9 +67,6 @@ public:
     QG_CommandWidget* getCommandWidget() const{
         return commandWidget;
     }
-
-    // void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override;
-
 
 /**
  * Links the dialog factory to a main app window.
@@ -125,8 +90,7 @@ public:
         RS_BlockList* blockList = nullptr) override;
     RS_BlockData requestBlockAttributesDialog(
         RS_BlockList* blockList) override;
-    void requestEditBlockWindow(RS_BlockList* /*blockList*/) override{}
-    void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
+   void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
 //QString requestFileSaveAsDialog() override;
 //QString requestFileOpenDialog() override;
 
@@ -135,9 +99,6 @@ public:
 protected:
 
 public:
-    void requestSnapDistOptions(double* dist, bool on) override;
-    void requestSnapMiddleOptions(int* middlePoints, bool on) override;
-
     bool requestAttributesDialog(RS_AttributesData& data,
                                  RS_LayerList& layerList) override;
     bool requestMoveDialog(RS_MoveData& data) override;
@@ -174,11 +135,6 @@ protected:
 //! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;
 
-
-//! Pointer to the coordinate widget.
-
-//! Pointer to the mouse widget.
-
 //! Pointer to the selection widget.
     QG_SelectionWidget* selectionWidget = nullptr;
 //! Pointer to the command line widget
@@ -186,8 +142,6 @@ protected:
 
     LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
-
-
 
 };
 
