@@ -102,28 +102,6 @@ public:
         // do nothing
     }
 
-    // /**
-    //  * Reimplementation from RS_Document. Saves the parent graphic document.
-    //  */
-    // bool save(bool isAutoSave = false) override;
-
-    /*/**
-     * Reimplementation from RS_Document. Does nothing.
-     #1#
-    bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;*/
-
-    /**
-     * Reimplementation from RS_Document. Does nothing.
-     */
-    bool open(const QString& , RS2::FormatType) override {
-        // do nothing
-        return false;
-    }
-    /*bool loadTemplate(const QString& , RS2::FormatType) override {
-        // do nothing
-        return false;
-    }*/
-
     friend std::ostream& operator << (std::ostream& os, const RS_Block& b);
 
     /** 

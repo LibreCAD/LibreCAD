@@ -1031,28 +1031,20 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert");
 
-    RS_Graphic g;
-    if (!g.open(data.file, RS2::FormatUnknown)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Creation::createLibraryInsert: Cannot open file: %s", data.file.toStdString().c_str());
+    RS_Graphic* insertGraphic = data.graphic;
+    if (insertGraphic == nullptr) {
         return nullptr;
     }
 
     // unit conversion:
     if (graphic) {
-        double uf = RS_Units::convert(1.0, g.getUnit(),
-                                      graphic->getUnit());
-        g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
+        double uf = RS_Units::convert(1.0, insertGraphic->getUnit(),graphic->getUnit());
+        insertGraphic->scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
     }
 
-    //g.scale(RS_Vector(data.factor, data.factor));
-    //g.rotate(data.angle);
-
-    QString s;
-    s = QFileInfo(data.file).completeBaseName();
-
+    QString insertFileName = QFileInfo(data.file).completeBaseName();
     RS_Modification m(*container, viewport);
-    m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,s),&g);
+    m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,insertFileName),insertGraphic);
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
 

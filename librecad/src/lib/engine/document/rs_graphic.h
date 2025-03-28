@@ -63,14 +63,8 @@ public:
     RS_BlockList* getBlockList() override {return &blockList;}
     LC_ViewList* getViewList() override {return &namedViewsList;}
     LC_UCSList* getUCSList() override {return &ucsList;}
-
     void newDoc() override;
-    // bool save(bool isAutoSave = false) override;
-    // bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;
-    bool open(const QString& filename, RS2::FormatType type) override;
-    // bool loadTemplate(const QString &filename, RS2::FormatType type) override;
-
-        // Wrappers for Layer functions:
+    // Wrappers for Layer functions:
     void clearLayers() {layerList.clear();}
     unsigned countLayers() const {return layerList.count();}
     RS_Layer* layerAt(unsigned i) {return layerList.at(i);}

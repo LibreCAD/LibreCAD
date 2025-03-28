@@ -193,13 +193,6 @@ void RS_Graphic::newDoc() {
     setModified(false);
 }
 
-/**
- * Loads the given file into this graphic.
- */
-bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
-    // return graphicIo.open(this, filename, type);
-}
-
 void RS_Graphic::clearVariables() {
     variableDict.clear();
 }

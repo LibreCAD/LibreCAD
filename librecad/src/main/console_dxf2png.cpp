@@ -220,11 +220,11 @@ int console_dxf2png(int argc, char* argv[])
 }
 
 
-static std::unique_ptr<RS_Document> openDocAndSetGraphic(QString dxfFile)
-{
+static std::unique_ptr<RS_Document> openDocAndSetGraphic(QString dxfFile){
     auto doc = std::make_unique<RS_Graphic>();
-
-    if (!doc->open(dxfFile, RS2::FormatUnknown)) {
+    LC_DocumentsStorage storage;
+    if (!storage.loadDocument(doc.get(), dxfFile, RS2::FormatUnknown)) {
+    // if (!doc->open(dxfFile, RS2::FormatUnknown)) {
         qDebug() << "ERROR: Failed to open document" << dxfFile;
         qDebug() << "Check if file exists";
         return {};

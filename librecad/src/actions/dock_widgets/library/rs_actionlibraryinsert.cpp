@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionlibraryinsert.h"
+
+#include "lc_documentsstorage.h"
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -33,6 +35,7 @@
 #include "rs_preview.h"
 #include "rs_units.h"
 #include "qg_libraryinsertoptions.h"
+#include "rs_debug.h"
 
 struct RS_ActionLibraryInsert::Points {
     RS_Graphic prev;
@@ -57,7 +60,9 @@ void RS_ActionLibraryInsert::init(int status) {
 
 void RS_ActionLibraryInsert::setFile(const QString& file) {
     pPoints->data.file = file;
-    if (!pPoints->prev.open(file, RS2::FormatUnknown)) {
+    LC_DocumentsStorage storage;
+    if (!storage.loadDocument(&pPoints->prev, file, RS2::FormatUnknown)) {
+    // if (!pPoints->prev.open(file, RS2::FormatUnknown)) {
         commandMessage(tr("Cannot open file '%1'").arg(file));
     }
 }
@@ -71,8 +76,18 @@ void RS_ActionLibraryInsert::reset() {
 void RS_ActionLibraryInsert::trigger() {
     deletePreview();
     RS_Creation creation(container, graphicView);
-    creation.createLibraryInsert(pPoints->data);
-    redrawDrawing();
+    LC_DocumentsStorage storage;
+    QString fileName = pPoints->data.file;
+    auto g = RS_Graphic();
+    if (storage.loadDocument(&g, fileName, RS2::FormatUnknown)) {
+        pPoints->data.graphic = &g;
+        creation.createLibraryInsert(pPoints->data);
+        redrawDrawing();
+    }
+    else {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Creation::createLibraryInsert: Cannot open file: %s", fileName.toStdString().c_str());
+    }
 }
 
 void RS_ActionLibraryInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {

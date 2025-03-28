@@ -57,7 +57,6 @@ public:
     virtual LC_UCSList* getUCSList() {return nullptr;}
 
     virtual void newDoc() = 0;
-    virtual bool open(const QString &filename, RS2::FormatType type) = 0;
 
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).

@@ -30,6 +30,8 @@
 #include <QFileInfo>
 
 #include "doc_plugin_interface.h"
+
+#include "lc_documentsstorage.h"
 #include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
@@ -1023,7 +1025,9 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
         RS_BlockData d(name, RS_Vector(0,0), false);
         auto *b = new RS_Block(doc, d);
         RS_Graphic g;
-        if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
+        LC_DocumentsStorage storage;
+        if (!storage.loadDocument(&g, fi.absoluteFilePath(), RS2::FormatUnknown)) {
+        // if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s", fullName.toStdString().c_str());
             delete b;
