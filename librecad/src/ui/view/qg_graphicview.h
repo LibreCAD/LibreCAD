@@ -41,6 +41,7 @@ class QGridLayout;
 class QLabel;
 class QMenu;
 class QMouseEvent;
+class LC_ActionContext;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -52,12 +53,11 @@ class QMouseEvent;
 class QG_GraphicView:   public RS_GraphicView,
                         public RS_LayerListListener,
                         public RS_BlockListListener,
-                        public LC_UCSListListener
-{
-Q_OBJECT
-
+                        public LC_UCSListListener{
+    Q_OBJECT
 public:
-    explicit QG_GraphicView(QWidget *parent = nullptr,  RS_Document *doc = nullptr);
+    // fixme - sand - files - restore - what if action context is null?? As for hatch dialog?
+    explicit QG_GraphicView(QWidget *parent,  RS_Document *doc = nullptr, LC_ActionContext* actionContext = nullptr);
     ~QG_GraphicView() override;
 
     int getWidth() const override;
@@ -177,6 +177,12 @@ protected:
     std::unique_ptr<AutoPanData> m_panData;
     struct UCSHighlightData;
     std::unique_ptr<UCSHighlightData> m_ucsHighlightData;
+
+    LC_ActionContext* m_actionContext {nullptr};
+
+    void showEntityPropertiesDialog(RS_Entity *entity);
+    void launchEditProperty(RS_Entity *entity);
+    void editAction(RS_Entity &entity);
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);

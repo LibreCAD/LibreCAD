@@ -31,14 +31,14 @@ namespace Ui {
 }
 class LC_OptionsWidgetsHolder : public QWidget{
     Q_OBJECT
-
 public:
     explicit LC_OptionsWidgetsHolder(QWidget *parent = nullptr);
     ~LC_OptionsWidgetsHolder();
     void addOptionsWidget(QWidget* optionsWidget);
-    void removeOptionsWidget(QWidget* optionsWidget);
+    void removeOptionsWidget(QWidget *optionsWidget);
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
     void clearActionIcon();
+public slots:
     void setCurrentQAction(QAction *a);
 protected:
     int iconSize = 24;

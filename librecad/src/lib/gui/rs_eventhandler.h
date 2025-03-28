@@ -57,7 +57,7 @@ class RS_EventHandler : public QObject
 public:
     explicit RS_EventHandler(RS_GraphicView* parent = 0);
     ~RS_EventHandler() override;
-
+    void uncheckQAction();
     void setQAction(QAction* action);
     QAction* getQAction();
 
@@ -101,12 +101,12 @@ protected:
     double toAbsUCSAngle(double ucsBasisAngle);
     double evalAngleValue(const QString &angleStr, bool &ok2) const;
 private:
-    RS_GraphicView* graphicView;
-    QAction* q_action{nullptr};
-    std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
-    QList<std::shared_ptr<RS_ActionInterface>> currentActions;
-    bool coordinateInputEnabled{true};
-    RS_Vector relative_zero; // FIXME - sand - rework and remove, can pick relzero from view->viewport
+    RS_GraphicView* m_graphicView;
+    QAction* m_QAction{nullptr};
+    std::shared_ptr<RS_ActionInterface> m_defaultAction{nullptr};
+    QList<std::shared_ptr<RS_ActionInterface>> m_currentActions;
+    bool m_coordinateInputEnabled{true};
+    RS_Vector m_relativeZero; // FIXME - sand - rework and remove, can pick relzero from view->viewport
 public slots:
     void setRelativeZero(const RS_Vector&);
     void checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction);

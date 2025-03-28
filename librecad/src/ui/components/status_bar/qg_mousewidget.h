@@ -38,13 +38,13 @@ public:
     ~QG_MouseWidget();
 
     virtual void setHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo = LC_ModifiersInfo::NONE()) const;
-    void setCurrentQAction(QAction *a);
     void setActionIcon(QIcon icon);
     void clearActionIcon();
 public slots:
     virtual void languageChange();
     void setupModifier(QLabel *btn, const QString& helpMsg) const;
     void onIconsRefreshed();
+    void setCurrentQAction(QAction *a);
 protected:
     int iconSize = 24;
 };

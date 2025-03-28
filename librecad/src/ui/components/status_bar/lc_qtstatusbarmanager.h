@@ -34,10 +34,11 @@ public:
     LC_QTStatusbarManager(QStatusBar* statusBar);
 
     void setActionHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo = LC_ModifiersInfo::NONE()) const;
-    void setCurrentQAction(QAction *a);
     void clearAction(){actionToolTip = "";};
     void loadSettings();
     void setup();
+public slots:
+    void setCurrentQAction(QAction *a);
 protected:
     QString  actionToolTip;
     QStatusBar* statusBar {nullptr};

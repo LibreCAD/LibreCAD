@@ -42,6 +42,8 @@
 #include "qg_blockwidget.h"
 #include "qg_dialogfactory.h"
 #include "qg_graphicview.h"
+
+#include "lc_actioncontext.h"
 #include "qg_scrollbar.h"
 
 #include "rs_actionblocksedit.h"
@@ -151,80 +153,88 @@ namespace {
         }
     }
 
-// Start the edit action:
-// Edit Block for an insert
-// Edit entity, otherwise
-    void editAction(QG_GraphicView& view, RS_Entity& entity){
-        RS_EntityContainer* container = view.getContainer();
-        if (container==nullptr)
-            return;
 
-        switch(entity.rtti()) {
-            case RS2::EntityInsert:
-            {
-                auto& appWindow = QC_ApplicationWindow::getAppWindow();
-                RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
-                RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
-                auto* insert = static_cast<RS_Insert*>(&entity);
-                RS_Block* current = insert->getBlockForInsert();
-                if (current == active)
-                    active=nullptr;
-                else if (blockList != nullptr)
-                    blockList->activate(current);
-                std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
-                    if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
-                        blockList->activate(*pointer);
-                }};
-                auto* action = new RS_ActionBlocksEdit(*container, view);
-                view.setCurrentAction(action);
-                break;
-            }
-            default:
-            {
-                auto* action = new RS_ActionModifyEntity(*container, view, false);
-                action->setEntity(&entity);
-                view.setCurrentAction(action);
-                action->trigger();
-                action->finish(false);
-            }
-        }
-    }
 
-    void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
-    {
-        RS_EntityContainer* container = view.getContainer();
-        if (entity == nullptr || container == nullptr)
-            return;
 
-        editAction(view, *entity);
 
-        //container->removeEntity(entity);
-        auto* doc = dynamic_cast<RS_Document*>(container);
-        if (doc != nullptr)
-            doc->startUndoCycle();
-        // delete any temporary highlighting duplicates of the original
-        auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
-        if (defaultAction != nullptr)
-        {
-            defaultAction->clearHighLighting();
-        }
-        doc->endUndoCycle();
-    }
 
-// Show the entity property dialog on the closest entity in range
-    void showEntityPropertiesDialog(QG_GraphicView& view, RS_Entity* entity){
-        if (entity == nullptr) return;
-
-        // snap to the top selected parent
-        while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected()) {
-            entity = entity->getParent();
-        }
-
-        launchEditProperty(view, entity);
-    }
 }
 
 
+// Show the entity property dialog on the closest entity in range
+void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity){
+    if (entity == nullptr) return;
+
+    // snap to the top selected parent
+    while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected()) {
+        entity = entity->getParent();
+    }
+
+    launchEditProperty(entity);
+}
+
+void QG_GraphicView::launchEditProperty(RS_Entity* entity)
+{
+    RS_EntityContainer* container = getContainer();
+    if (entity == nullptr || container == nullptr)
+        return;
+
+    editAction( *entity);
+
+    //container->removeEntity(entity);
+    auto* doc = dynamic_cast<RS_Document*>(container);
+    if (doc != nullptr)
+        doc->startUndoCycle();
+    // delete any temporary highlighting duplicates of the original
+    auto* defaultAction = dynamic_cast<RS_ActionDefault*>(getEventHandler()->getDefaultAction());
+    if (defaultAction != nullptr)
+    {
+        defaultAction->clearHighLighting();
+    }
+    doc->endUndoCycle();
+}
+
+// Start the edit action:
+// Edit Block for an insert
+// Edit entity, otherwise
+void QG_GraphicView::editAction( RS_Entity& entity){
+    RS_EntityContainer* container = getContainer();
+    if (container==nullptr)
+        return;
+
+    switch(entity.rtti()) {
+        case RS2::EntityInsert:
+        {
+            auto& appWindow = QC_ApplicationWindow::getAppWindow();
+            RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
+            RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
+            auto* insert = static_cast<RS_Insert*>(&entity);
+            RS_Block* current = insert->getBlockForInsert();
+            if (current == active)
+                active=nullptr;
+            else if (blockList != nullptr)
+                blockList->activate(current);
+            std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
+                if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
+                    blockList->activate(*pointer);
+            }};
+
+            // fixme - sand - files - explicit action creation
+            auto* action = new RS_ActionBlocksEdit(m_actionContext);
+            setCurrentAction(action);
+            break;
+        }
+        default:
+        {
+            // fixme - sand - files - explicit action creation
+            auto* action = new RS_ActionModifyEntity(m_actionContext, false);
+            action->setEntity(&entity);
+            setCurrentAction(action);
+            action->trigger();
+            action->finish(false);
+        }
+    }
+}
 
 // Support auto-panning when the cursor is close to the view border
 struct QG_GraphicView::AutoPanData{
@@ -292,7 +302,8 @@ void createViewRenderer();
 /**
  * Constructor.
  */
-QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc)
+// fixme - sand - files - init by action context???
+QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext)
     :RS_GraphicView(parent, {})
     ,device("Mouse")
     ,curCad(new QCursor(QPixmap(":cursors/cur_cad_bmp.png"), g_hotspotXY, g_hotspotXY))
@@ -309,8 +320,11 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc)
     if (doc != nullptr){
         setContainer(doc);
         doc->setGraphicView(this);
-        setDefaultAction(new RS_ActionDefault(*doc, *this));
+        actionContext->setDocumentAndView(doc, this);
+        setDefaultAction(new RS_ActionDefault(actionContext));
     }
+
+    m_actionContext = actionContext;
 
     viewport->justSetOffsetAndFactor(0,0,4.0);
     viewport->setBorders(10, 10, 10, 10);
@@ -472,7 +486,7 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     // pan zoom with middle mouse button
     if (event->button()==Qt::MiddleButton){
         // fixme - sand - rework this and ensure there is not delay for pan start!!!
-        auto *action = new RS_ActionZoomPan(*container, *this);
+        auto *action = new RS_ActionZoomPan(m_actionContext);
         setCurrentAction(action);
         action->mousePressEvent(event); // try to avoid delay as possible
     }
@@ -486,7 +500,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
         default:
             break;
         case Qt::MiddleButton:
-            setCurrentAction(new RS_ActionZoomAuto(*container, *this));
+            setCurrentAction(new RS_ActionZoomAuto(m_actionContext));
             break;
         case Qt::LeftButton:
             if (menus.contains("Double-Click")){
@@ -494,7 +508,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
             } else {
                 // double click on an entity to edit entity properties
-                showEntityPropertiesDialog(*this, getDefaultAction()->catchEntity(e));
+                showEntityPropertiesDialog(getDefaultAction()->catchEntity(e));
             }
             break;
     }
@@ -547,7 +561,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         break;
     }
     case Qt::XButton1:
-        enter();
+        processEnterKey();
         emit xbutton1_released();
         break;
 
@@ -581,7 +595,7 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
 
     contextMenu.addAction(action);
     connect(action, &QAction::triggered, this, [this, insert, entity](){
-        launchEditProperty(*this, insert != nullptr ? insert : entity);
+        launchEditProperty(insert != nullptr ? insert : entity);
     });
 
     // Add "Activate Layer" for the current entity
@@ -627,7 +641,8 @@ bool QG_GraphicView::event(QEvent *event){
             QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
             RS_Vector mouse = viewport->toWorldFromUi(g.x(), g.y());
             // todo - sand - ucs - replace by direct zoom call?
-            setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+            // fixme - sand - files - explicit action creation
+            setCurrentAction(new RS_ActionZoomIn(m_actionContext, direction,
                                                  RS2::Both, &mouse, factor));
         }
 
@@ -651,8 +666,8 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         case QPointingDevice::PointerType::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (container) {
-                    RS_ActionSelectSingle* a =
-                        new RS_ActionSelectSingle(*container, *this);
+                    // fixme - sand - files - explicit action creation
+                    RS_ActionSelectSingle* a =new RS_ActionSelectSingle(m_actionContext);
                     setCurrentAction(a);
                     QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
                                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
@@ -660,8 +675,8 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                     a->finish();
 
                     if (container->countSelected()>0) {
-                        setCurrentAction(
-                            new RS_ActionModifyDelete(*container, *this));
+                        // fixme - sand - files - explicit action creation
+                        setCurrentAction(new RS_ActionModifyDelete(m_actionContext));
                     }
                 }
             }
@@ -828,7 +843,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                     direction = RS2::In;  factor = 1+v;
                 }
                 // todo - sand - ucs - replace by direct zoom call??
-                setCurrentAction(new RS_ActionZoomIn(*container, *this, direction, RS2::Both, &mouse, factor));
+                // fixme - sand - files - explicit action creation
+                setCurrentAction(new RS_ActionZoomIn(m_actionContext, direction, RS2::Both, &mouse, factor));
             }
             else{
                 int hDelta = (invertHorizontalScroll) ? -numPixels.x() : numPixels.x();
@@ -841,8 +857,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 }
                 else {
                     // todo - sand - ucs - replace by direct zoom call??
-                    setCurrentAction(new RS_ActionZoomScroll(hDelta, vDelta,
-                                                             *container, *this));
+                    setCurrentAction(new RS_ActionZoomScroll(hDelta, vDelta,m_actionContext));
                 }
             }
             redraw();
@@ -938,8 +953,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
             // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
             // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
-            auto zoomAction = std::make_unique<RS_ActionZoomIn>(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
-                                                scrollZoomFactor);
+            auto zoomAction = std::make_unique<RS_ActionZoomIn>(m_actionContext, zoomDirection, RS2::Both, &zoomCenter,scrollZoomFactor);
             zoomAction->trigger();
         }
     }
@@ -995,7 +1009,7 @@ void QG_GraphicView::keyPressEvent(QKeyEvent * e){
     }
 
     if (scroll) {
-        setCurrentAction(new RS_ActionZoomScroll(direction, *container, *this));
+        setCurrentAction(new RS_ActionZoomScroll(direction, m_actionContext));
     }
     eventHandler->keyPressEvent(e);
 }
@@ -1467,6 +1481,7 @@ void QG_GraphicView::autoPanStep(){
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "%s(): Timer is ticking!", __func__);
     viewport->zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }
+
 
 QString QG_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) {
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
