@@ -174,7 +174,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         RS_DEBUG->print("authors: %s", sa.toLocal8Bit().data());
         if (!sa.isEmpty()) {
             QStringList authors = sa.split(',');
-            RS_DEBUG->print("count: %d", authors.count());
+            LC_LOG<<"count: " << authors.count();
 
             QString a;
             for (int i = 0; i < authors.size(); ++i) {
