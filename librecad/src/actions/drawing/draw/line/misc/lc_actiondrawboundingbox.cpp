@@ -23,7 +23,7 @@ void LC_ActionDrawBoundingBox::updateMouseButtonHintsForSelection() {
 
 void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
     if (document != nullptr) {
-        RS_Graphic* graphic = graphicView->getGraphic();
+        RS_Graphic* graphic = m_graphicView->getGraphic();
         RS_Layer* activeLayer = graphic->getActiveLayer();
         RS_Pen pen = document->getActivePen();
         undoCycleStart();
@@ -61,8 +61,8 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
         undoCycleEnd();
     }
     // todo - sand - ucs - rework later as bounding box for entities will support ucs
-    if (viewport->hasUCS()){
-        if (LC_LineMath::isMeaningfulAngle(viewport->getXAxisAngle())){
+    if (m_viewport->hasUCS()){
+        if (LC_LineMath::isMeaningfulAngle(m_viewport->getXAxisAngle())){
             // ucs is rotated and resulting bounding box will be actually for wcs.
             // warn the user
             commandMessage(tr("Note: Bounding box was created for world coordinate system."));
@@ -73,7 +73,7 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
 }
 
 void LC_ActionDrawBoundingBox::createBoxPolyline(RS_Layer *activeLayer, const RS_Pen &pen, const RS_Vector &selectionMin, const RS_Vector &selectionMax) {
-    auto e = new RS_Polyline(container);
+    auto e = new RS_Polyline(m_container);
     e->setLayer(activeLayer);
     e->setPen(pen);
 
@@ -83,7 +83,7 @@ void LC_ActionDrawBoundingBox::createBoxPolyline(RS_Layer *activeLayer, const RS
     e->addVertex({selectionMax.x, selectionMax.y});
     e->addVertex({selectionMin.x, selectionMax.y});
 
-    container->addEntity(e);
+    m_container->addEntity(e);
     document->addUndoable(e);
 }
 
@@ -102,18 +102,18 @@ void LC_ActionDrawBoundingBox::createCornerPoints(RS_Layer *activeLayer, const R
 }
 
 void LC_ActionDrawBoundingBox::createPoint(RS_Layer *activeLayer, const RS_Pen &pen, double x, double y) {
-    auto e = new RS_Point(container, {{x, y}});
+    auto e = new RS_Point(m_container, {{x, y}});
     e->setLayer(activeLayer);
     e->setPen(pen);
-    container->addEntity(e);
+    m_container->addEntity(e);
     document->addUndoable(e);
 }
 
 void LC_ActionDrawBoundingBox::createLine(RS_Layer *activeLayer, const RS_Pen &pen, double x1, double y1, double x2, double y2) {
-    auto e = new RS_Line(container, {{x1, y1}, {x2, y2}});
+    auto e = new RS_Line(m_container, {{x1, y1}, {x2, y2}});
     e->setLayer(activeLayer);
     e->setPen(pen);
-    container->addEntity(e);
+    m_container->addEntity(e);
     undoableAdd(e);
 }
 

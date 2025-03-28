@@ -102,7 +102,7 @@ void LC_AbstractActionDrawRectangle::doAddPolylineToListOfEntities(RS_Polyline *
                 }
                 // create clone of entity for safe deletion of original polyline
                 RS_Entity *clone = entity->clone();
-                clone->reparent(container);
+                clone->reparent(m_container);
                 list << clone;
             }
         }
@@ -161,11 +161,11 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]LC
     ShapeData data = createPolyline(snap);
     auto polyline = data.resultingPolyline;
     doAddPolylineToListOfEntities(polyline, list, true);
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         createRefPoint(data.centerPoint, list);
     }
 
-    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+    if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
         LC_InfoMessageBuilder msg{};
         msg.add(tr("To be created:"), tr("Rectangle"));
         msg.add(tr("Width:"), formatLinear(data.width));
@@ -461,7 +461,7 @@ void LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints([[maybe_unused]]in
 RS_Polyline *LC_AbstractActionDrawRectangle::createPolylineByVertexes(RS_Vector bottomLeftCorner, RS_Vector bottomRightCorner,
                                                                       RS_Vector topRightCorner, RS_Vector topLeftCorner,
                                                                       bool drawBulge, bool drawComplex, double radiusX, double radiusY) const{
-    auto *polyline = new RS_Polyline(container);
+    auto *polyline = new RS_Polyline(m_container);
 
     if (drawComplex){ // we'll draw complex shape
 

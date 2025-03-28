@@ -80,7 +80,7 @@ void LC_AbstractActionWithPreview::init(int status){
         // collect selected entities
         QList<RS_Entity*> selectedEntities;
         QList<RS_Entity*> entitiesForTrigger;
-        for (RS_Entity *e: *container) {
+        for (RS_Entity *e: *m_container) {
             if (e->isSelected()){
                 selectedEntities << e;
                 // check whether specific entity is suitable for processing
@@ -254,7 +254,7 @@ void LC_AbstractActionWithPreview::setupAndAddTriggerEntities(const QList<RS_Ent
             // do setup
             setPenAndLayerToActive(ent);
         }
-        container->addEntity(ent);
+        m_container->addEntity(ent);
         if (undoableTrigger){
             document->addUndoable(ent);
         }
@@ -631,7 +631,7 @@ void LC_AbstractActionWithPreview::finishAction(){
     init(-1);
     updateMouseButtonHints();
     finish(true);
-    graphicView->repaint();
+    m_graphicView->repaint();
 }
 
 /**
@@ -760,7 +760,7 @@ bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, cons
  * @return created point entity
  */
 RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Point(container, coord);
+    auto *result = new RS_Point(m_container, coord);
     list << result;
     return result;
 }
@@ -772,12 +772,12 @@ RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QLis
  * @return
  */
 void LC_AbstractActionWithPreview::createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-    auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+    auto *result = new LC_RefPoint(m_preview.get(), coord, m_refPointSize, m_refPointMode);
     list << result;
 }
 
 void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-        auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+        auto *result = new LC_RefPoint(m_preview.get(), coord, m_refPointSize, m_refPointMode);
         result->setHighlighted(true);
         list << result;
 }
@@ -790,24 +790,24 @@ void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coo
  * @return created line
  */
 RS_Line* LC_AbstractActionWithPreview::createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Line(container, startPoint, endPoint);
+    auto *result = new RS_Line(m_container, startPoint, endPoint);
     list << result;
     return result;
 }
 
 RS_Line* LC_AbstractActionWithPreview::createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Line(container, lineData);
+    auto *result = new RS_Line(m_container, lineData);
     list << result;
     return result;
 }
 
 void LC_AbstractActionWithPreview::createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
-        auto *result = new LC_RefLine(preview.get(), startPoint, endPoint);
+        auto *result = new LC_RefLine(m_preview.get(), startPoint, endPoint);
         list << result;
 }
 
 void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const{
-        auto *result = new LC_RefArc(preview.get(), data);
+        auto *result = new LC_RefArc(m_preview.get(), data);
         list << result;
 }
 

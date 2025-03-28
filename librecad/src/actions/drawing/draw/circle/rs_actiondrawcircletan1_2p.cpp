@@ -81,7 +81,7 @@ void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
 void RS_ActionDrawCircleTan1_2P::doTrigger() {
     //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
     //    std::cout<<"begin"<<std::endl;
-    auto *c = new RS_Circle(container, pPoints->cData);
+    auto *c = new RS_Circle(m_container, pPoints->cData);
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(c->getCenter());
@@ -120,7 +120,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     pPoints->cData.radius = (baseEntityRadius + rvp) * 0.5;
                     pPoints->cData.center = baseEntityCenter + dvp * (pPoints->cData.radius / rvp);
                     pPoints->cData.radius = fabs(baseEntityRadius - pPoints->cData.radius);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->cData.center);
                         previewRefPoint(getTangentPoint(pPoints->cData.center, true));
                     }
@@ -132,7 +132,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     if (vp.valid){
                         pPoints->cData.center = (vp + pPoints->points[0]) * 0.5;
                         pPoints->cData.radius = vp.distanceTo(pPoints->cData.center);
-                        if (showRefEntitiesOnPreview) {
+                        if (m_showRefEntitiesOnPreview) {
                             previewRefPoint(vp);
                             previewRefPoint(pPoints->cData.center);
                         }
@@ -154,7 +154,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             if (getCenters()){
                 if (preparePreview()){
                     previewToCreateCircle((pPoints->cData));
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->points.at(0));
                         previewRefPoint(pPoints->cData.center);
                         if (isLine(baseEntity)) {
@@ -181,7 +181,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     previewRefSelectablePoint(center);
                 }
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->points.at(0));
                     previewRefPoint(pPoints->points.at(1));
                     if (isLine(baseEntity)) {

@@ -43,7 +43,6 @@ public:
     void requestSnapDistOptions(double *dist, bool on) override;
     void requestSnapMiddleOptions(int *middlePoints, bool on) override;
     void hideSnapOptions() override;
-    void clearMouseWidgetIcon() override;
     void updateSelectionWidget(int countSelected, double selectedLength) override;
 
     void updateMouseWidget(const QString &, const QString &, const LC_ModifiersInfo &modifiers) override;

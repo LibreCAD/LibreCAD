@@ -66,7 +66,7 @@ void LC_ActionDimArc::doTrigger() {
         return;
     }
 
-    auto newEntity= new LC_DimArc(container, *data, dimArcData);
+    auto newEntity= new LC_DimArc(m_container, *data, dimArcData);
     setPenAndLayerToActive(newEntity);
     newEntity->update();
     undoCycleAdd(newEntity);
@@ -92,7 +92,7 @@ void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
             // fixme - determine why DimArc is drawn on preview by preview pen, while other dimension entities - using normal pen...
 
-            LC_DimArc *temp_dimArc_entity{new LC_DimArc(preview.get(), *data, dimArcData)};
+            LC_DimArc *temp_dimArc_entity{new LC_DimArc(m_preview.get(), *data, dimArcData)};
             previewEntity(temp_dimArc_entity);
             break;
         }

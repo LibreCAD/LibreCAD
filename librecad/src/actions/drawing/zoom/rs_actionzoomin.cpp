@@ -75,9 +75,9 @@ void RS_ActionZoomIn::trigger() {
 
         case RS2::Both:
             if (direction==RS2::In) {
-                viewport->zoomIn(zoom_factor, *center);
+                m_viewport->zoomIn(zoom_factor, *center);
             } else {
-                viewport->zoomOut(zoom_factor, *center);
+                m_viewport->zoomOut(zoom_factor, *center);
             }
             break;
     }

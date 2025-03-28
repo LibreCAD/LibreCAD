@@ -43,11 +43,11 @@ void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool 
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     updateSelectionWidget();
-    if (actionType == RS2::ActionOrderBottom || actionType ==  RS2::ActionOrderTop){
+    if (m_actionType == RS2::ActionOrderBottom || m_actionType ==  RS2::ActionOrderTop){
         trigger();
     }
     else {
-        snapMode.restriction = RS2::RestrictNothing;
+        m_snapMode.restriction = RS2::RestrictNothing;
     }
 }
 
@@ -66,7 +66,7 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
         int index = -1;
         targetEntity->setHighlighted(false);
 
-        switch (actionType) {
+        switch (m_actionType) {
             case RS2::ActionOrderLower:
                 index = document->findEntity(targetEntity);
                 document->moveEntity(index, entList);
@@ -80,7 +80,7 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
         }
         targetEntity = nullptr;
     } else {
-        switch (actionType) {
+        switch (m_actionType) {
             case RS2::ActionOrderBottom:
                 document->moveEntity(-1, entList);
                 break;

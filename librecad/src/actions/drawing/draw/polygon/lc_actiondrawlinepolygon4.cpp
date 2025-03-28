@@ -23,7 +23,7 @@
 #include "lc_actiondrawlinepolygon4.h"
 
 LC_ActionDrawLinePolygon4::LC_ActionDrawLinePolygon4(LC_ActionContext *actionContext)
-    :LC_ActionDrawLinePolygonBase("Draw Polygons (V,V)", actionContext, actionType=RS2::ActionDrawLinePolygonSideSide){
+    :LC_ActionDrawLinePolygonBase("Draw Polygons (V,V)", actionContext, m_actionType=RS2::ActionDrawLinePolygonSideSide){
 }
 
 LC_ActionDrawLinePolygon4::~LC_ActionDrawLinePolygon4() = default;

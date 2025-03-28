@@ -53,7 +53,7 @@ RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
 void RS_ActionModifyStretch::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyStretch::trigger()");
 
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     m.stretch(pPoints->firstCorner,
               pPoints->secondCorner,
               pPoints->targetPoint - pPoints->referencePoint, removeOriginals);
@@ -99,10 +99,10 @@ void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
                 // fixme - isn't it more reliable to rely on RS_Modification::stretch there?
-                preview->addStretchablesFrom(*container, viewport, pPoints->firstCorner, pPoints->secondCorner);
+                m_preview->addStretchablesFrom(*m_container, m_viewport, pPoints->firstCorner, pPoints->secondCorner);
                 const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
-                preview->stretch(pPoints->firstCorner, pPoints->secondCorner,offset);
-                if (showRefEntitiesOnPreview) {
+                m_preview->stretch(pPoints->firstCorner, pPoints->secondCorner,offset);
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->referencePoint);
                     previewRefSelectablePoint(pPoints->targetPoint);
                     previewRefLine(pPoints->referencePoint, pPoints->targetPoint);
@@ -125,7 +125,7 @@ void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 }
 
 void RS_ActionModifyStretch::previewStretchRect(bool selected) {
-    if (showRefEntitiesOnPreview){
+    if (m_showRefEntitiesOnPreview){
         RS_Vector v0 = pPoints->firstCorner;
         RS_Vector v1 = pPoints->secondCorner;
         previewRefLine(v0, {v1.x, v0.y});
@@ -141,7 +141,7 @@ void RS_ActionModifyStretch::previewStretchRect(bool selected) {
         }
     }
     else{
-        preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
+        m_preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
     }
 }
 

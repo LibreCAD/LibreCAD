@@ -31,7 +31,6 @@
 #include "rs_graphic.h"
 #include "rs_layerlistlistener.h"
 #include "rs_blocklistlistener.h"
-#include "lc_viewslist.h"
 #include "persistence/lc_documentsstorage.h"
 class QG_GraphicView;
 class RS_Document;
@@ -39,6 +38,7 @@ class RS_Pen;
 class QMdiArea;
 class RS_EventHandler;
 class QCloseEvent;
+class LC_ActionContext;
 /**
  * MDI document window. Contains a document and a view (window).
  *
@@ -49,13 +49,9 @@ class QC_MDIWindow:public QMdiSubWindow,
     Q_OBJECT
 
 public:
-    QC_MDIWindow(
-        RS_Document *doc,
-        QWidget *parent,
-        bool printPreview);
+    QC_MDIWindow(RS_Document *doc,QWidget *parent,bool printPreview, LC_ActionContext* actionContext);
     void removeWidgetsListeners();
     ~QC_MDIWindow() override;
-
 public slots:
     void slotPenChanged(const RS_Pen &p);
     void slotFileNew();
@@ -65,9 +61,12 @@ public slots:
     bool autoSaveDocument(QString &autosaveFileName);
     bool saveDocumentAs(bool &cancelled);
     void slotFilePrint();
-    void slotZoomAuto();
-
 public:
+    enum SaveOnClosePolicy {
+        ASK,
+        SAVE,
+        DONT_SAVE
+    };
     /** @return Pointer to graphic view */
     QG_GraphicView *getGraphicView() const;
     /** @return Pointer to document */
@@ -98,6 +97,17 @@ public:
 
     void graphicModified(const RS_Graphic *g, bool modified) override;
     void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) override;
+    void zoomAuto();
+    bool isModified();
+
+    SaveOnClosePolicy getSaveOnClosePolicy() const{
+        return saveOnClosePolicy;
+    }
+
+    void setSaveOnClosePolicy(SaveOnClosePolicy val){
+        saveOnClosePolicy = val;
+    }
+
 protected:
     LC_DocumentsStorage *storage;
     // window ID
@@ -113,9 +123,11 @@ protected:
     //  Pointer to parent window which needs to know if this window is closed or NULL.
     QC_MDIWindow *parentWindow{nullptr};
     QMdiArea *cadMdiArea = nullptr;
+
+    SaveOnClosePolicy saveOnClosePolicy = ASK;
     void drawChars();
     void closeEvent(QCloseEvent *) override;
     void addWidgetsListeners();
-    void setupGraphicView(QWidget *parent, bool printPreview);
+    void setupGraphicView(QWidget *parent, bool printPreview, LC_ActionContext* actionContext);
 };
 #endif

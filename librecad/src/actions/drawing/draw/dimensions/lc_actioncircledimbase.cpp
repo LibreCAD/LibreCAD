@@ -39,7 +39,7 @@ LC_ActionCircleDimBase::~LC_ActionCircleDimBase() = default;
 void LC_ActionCircleDimBase::doTrigger() {
     if (entity != nullptr) {
         preparePreview(entity, *pos, alternateAngle);
-        auto *newEntity = createDim(container);
+        auto *newEntity = createDim(m_container);
 
         setPenAndLayerToActive(newEntity);
         newEntity->update();
@@ -62,7 +62,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     moveRelativeZero(en->getCenter());
                     if (previewShowsFullDimension) {
                         RS_Vector pointOnCircle = preparePreview(en, snap, e->isControl);
-                        auto *d = createDim(preview.get());
+                        auto *d = createDim(m_preview.get());
                         d->update();
                         previewEntity(d);
                         previewRefSelectablePoint(pointOnCircle);
@@ -77,7 +77,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 *pos = getSnapAngleAwarePoint(e, entity->getCenter(), snap, true);
                 RS_Vector pointOnCircle = preparePreview(entity, *pos, false);
 
-                auto *d = createDim(preview.get());
+                auto *d = createDim(m_preview.get());
                 m_currentAngle = entity->getCenter().angleTo(pointOnCircle);
                 ucsBasisAngleDegrees = toUCSBasisAngleDegrees(m_currentAngle);
                 updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);

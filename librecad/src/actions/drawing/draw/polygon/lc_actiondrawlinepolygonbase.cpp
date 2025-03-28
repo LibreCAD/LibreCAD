@@ -50,7 +50,7 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
         RS_Polyline *polyline = createShapePolyline(polygonInfo, false);
         if (polyline != nullptr) {
             undoCycleStart();
-            RS_Graphic* graphic = graphicView->getGraphic();
+            RS_Graphic* graphic = m_graphicView->getGraphic();
             RS_Layer* layer;
             RS_Pen pen = document->getActivePen();
             layer = graphic->getActiveLayer();
@@ -58,8 +58,8 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
             if (createPolyline) {
                 polyline->setLayer(layer);
                 polyline->setPen(pen);
-                polyline->reparent(container);
-                container->addEntity(polyline);
+                polyline->reparent(m_container);
+                m_container->addEntity(polyline);
                 undoableAdd(polyline);
             }
             else{
@@ -69,8 +69,8 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
                         auto *clone = entity->clone(); // use clone for safe deletion of polyline
                         clone->setPen(pen);
                         clone->setLayer(layer);
-                        clone->reparent(container);
-                        container->addEntity(clone);
+                        clone->reparent(m_container);
+                        m_container->addEntity(clone);
                         undoableAdd(clone);
                     }
                 }
@@ -96,7 +96,7 @@ void LC_ActionDrawLinePolygonBase::onMouseMoveEvent(int status, LC_MouseEvent *e
             if (pPoints->point1.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
                 createPolygonPreview(mouse);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->point1);
                     previewRefLine(pPoints->point1,mouse);
                     previewRefSelectablePoint(mouse);
@@ -271,7 +271,7 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
     RS_Polyline* polyline = createShapePolyline(polygonInfo, true);
     if (polyline != nullptr){
         previewEntity(polyline);
-        if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+        if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
             LC_InfoMessageBuilder msg{};
             msg.add(tr("To be created:"), tr("Polygon"));
             msg.add(tr("Center:"), formatVector(polygonInfo.centerPoint));
@@ -429,7 +429,7 @@ RS_Polyline *LC_ActionDrawLinePolygonBase::createShapePolyline(PolygonInfo &poly
                    result->addVertex(start);
                    result->addVertex(end);
                    result->setNextBulge(bulge);
-                   if (preview && DRAW_JOIN_POINTS_ON_PREVIEW && showRefEntitiesOnPreview){
+                   if (preview && DRAW_JOIN_POINTS_ON_PREVIEW && m_showRefEntitiesOnPreview){
                        // potential visualization of rounding point
                        previewRefPoint(end);
                        previewRefPoint(start);

@@ -49,7 +49,7 @@ void RS_ActionSelectBase::keyPressEvent(QKeyEvent *e){
             break;
         }
         case Qt::Key_Enter:{
-            if (container->countSelected() > 0){
+            if (m_container->countSelected() > 0){
                 selectionFinishedByKey(e, false);
             }
             break;
@@ -81,7 +81,7 @@ bool RS_ActionSelectBase::selectEntity(RS_Entity* entityToSelect, bool selectCon
 }
 
 void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unused]]bool selectContour) const {
-    RS_Selection s(*container, viewport);
+    RS_Selection s(*m_container, m_viewport);
     s.selectSingle(entityToSelect);
 }
 
@@ -100,10 +100,10 @@ RS_Entity* RS_ActionSelectBase::selectionMouseMove(LC_MouseEvent *event) {
 }
 
 bool RS_ActionSelectBase::isShowRefPointsOnHighlight() {
-    return highlightEntitiesRefPointsOnHover;
+    return m_highlightEntitiesRefPointsOnHover;
 }
 
 void RS_ActionSelectBase::deselectAll(){
-    RS_Selection s(*container, viewport);
+    RS_Selection s(*m_container, m_viewport);
     s.selectAll(false);
 }

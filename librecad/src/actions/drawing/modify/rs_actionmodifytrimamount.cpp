@@ -54,9 +54,9 @@ RS_ActionModifyTrimAmount::~RS_ActionModifyTrimAmount() = default;
 void RS_ActionModifyTrimAmount::init(int status) {
     RS_PreviewActionInterface::init(status);
 
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
-    snapMode.snapOnEntity = true;
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
+    m_snapMode.snapOnEntity = true;
 }
 
 // fixme - check if negative total length is larger than the overall length of the entity
@@ -65,7 +65,7 @@ void RS_ActionModifyTrimAmount::doTrigger() {
 
     if (trimEntity && trimEntity->isAtomic()){
 
-        RS_Modification m(*container, viewport, true);
+        RS_Modification m(*m_container, m_viewport, true);
         auto* e = dynamic_cast<RS_AtomicEntity *>(trimEntity);
         double dist = determineDistance(e);
 
@@ -99,7 +99,7 @@ void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_
         if (en->isAtomic()){
             highlightHover(en);
             auto* atomic = reinterpret_cast<RS_AtomicEntity *>(en);
-            RS_Modification m(*container, viewport, false);
+            RS_Modification m(*m_container, m_viewport, false);
             double dist = determineDistance(atomic);
             bool trimBoth = symmetricDistance && !distanceIsTotalLength;
             bool trimStart;
@@ -113,7 +113,7 @@ void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_
                     previewEntity(trimmed);
                 }
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     RS_Arc *atomicArc = nullptr;
                     RS_Arc *trimmedArc = nullptr;
                     bool entityIsArc = isArc(atomic);

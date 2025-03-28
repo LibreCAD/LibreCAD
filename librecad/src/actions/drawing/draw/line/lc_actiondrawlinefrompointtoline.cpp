@@ -150,7 +150,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
             highlightHover(potentialLine);
             auto intersectionPoint = RS_Vector(false);
             line = createLineFromPointToTarget(potentialLine, intersectionPoint);
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 createRefPoint(line->getEndpoint(), list);
                 if (sizeMode == SIZE_INTERSECTION && LC_LineMath::isMeaningful(endOffset)) {
                     createRefPoint(intersectionPoint, list);
@@ -161,7 +161,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
             line = new RS_Line(startPoint, snap);
         }
         previewEntityToCreate(line, false);
-        if (showRefEntitiesOnPreview) {
+        if (m_showRefEntitiesOnPreview) {
             createRefSelectablePoint(snap, list);
             createRefPoint(startPoint, list);
         }
@@ -311,7 +311,7 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
         }
     }
     // resulting line
-    auto* result = new RS_Line(container,ortLineStart, ortLineEnd);
+    auto* result = new RS_Line(m_container,ortLineStart, ortLineEnd);
     return result;
 }
 

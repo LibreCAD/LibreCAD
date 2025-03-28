@@ -57,7 +57,7 @@ void RS_ActionDrawText::init(int status){
             reset();
             RS_Text tmp(nullptr, *data);
             
-            if (RS_DIALOGFACTORY->requestTextDialog(&tmp, viewport)){
+            if (RS_DIALOGFACTORY->requestTextDialog(&tmp, m_viewport)){
                 const RS_TextData &editedData = tmp.getData();
                 data.reset(new RS_TextData(editedData));
                 setStatus(SetPos);
@@ -72,7 +72,7 @@ void RS_ActionDrawText::init(int status){
         case SetPos:{
             updateOptions();
             deletePreview();
-            preview->setVisible(true);
+            m_preview->setVisible(true);
             preparePreview();
             break;
         }
@@ -102,7 +102,7 @@ void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
     if (pPoints->pos.valid){
         data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
-        auto *text = new RS_Text(container, *data);
+        auto *text = new RS_Text(m_container, *data);
         text->update();
 
         undoCycleAdd(text);
@@ -128,7 +128,7 @@ void RS_ActionDrawText::preparePreview(){
         }
     } else {
         data->insertionPoint = pPoints->pos;
-        auto *text = new RS_Text(preview.get(), *data);
+        auto *text = new RS_Text(m_preview.get(), *data);
         text->update();
         previewEntity(text);
     }

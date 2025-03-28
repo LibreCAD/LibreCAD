@@ -53,7 +53,7 @@ void RS_ActionPolylineDelBetween::drawSnapper() {
 void RS_ActionPolylineDelBetween::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineDelBetween::trigger()");
 
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     RS_Polyline *modifiedPolyline = m.deletePolylineNodesBetween(*polylineToModify, vertexToDelete, vertexToDelete2, false);
     if (modifiedPolyline != nullptr){
         polylineToModify = modifiedPolyline;
@@ -100,7 +100,7 @@ void RS_ActionPolylineDelBetween::onMouseMoveEvent(int status, LC_MouseEvent *e)
                         highlightHover(er);
                     }
                     previewRefSelectablePoint(vertex);
-                    RS_Modification m(*preview, viewport);
+                    RS_Modification m(*m_preview, m_viewport);
                     m.deletePolylineNodesBetween(*polylineToModify, vertexToDelete, vertex  , true);
                 }
             }

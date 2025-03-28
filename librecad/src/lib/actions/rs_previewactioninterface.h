@@ -67,10 +67,7 @@ struct LC_MouseEvent{
  */
 class RS_PreviewActionInterface : public RS_ActionInterface {
 public:
-    RS_PreviewActionInterface(
-        const char *name,
-        LC_ActionContext *actionContext,
-        RS2::ActionType actionType = RS2::ActionNone);
+    RS_PreviewActionInterface(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
     void init(int status) override;
     void finish(bool updateTB = true) override;
@@ -84,17 +81,16 @@ protected:
     /**
      * Preview that holds the entities to be previewed.
      */
-    std::unique_ptr<RS_Preview> preview;
-    bool hasPreview = true;//whether preview is in use
+    std::unique_ptr<RS_Preview> m_preview;
+    bool m_hasPreview = true;//whether preview is in use
 
-    std::unique_ptr<LC_Highlight> highlight;
+    std::unique_ptr<LC_Highlight> m_highlight;
 
-    double refPointSize = 2.0;
-    int refPointMode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
-    bool showRefEntitiesOnPreview = false;
-    bool highlightEntitiesOnHover = false;
-    bool highlightEntitiesRefPointsOnHover = false;
-
+    double m_refPointSize = 2.0;
+    int m_refPointMode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
+    bool m_showRefEntitiesOnPreview = false;
+    bool m_highlightEntitiesOnHover = false;
+    bool m_highlightEntitiesRefPointsOnHover = false;
     bool m_doNotAllowNonDecimalAnglesInput = false;
 
     virtual void doTrigger(){};

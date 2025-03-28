@@ -39,7 +39,7 @@ void LC_ActionPolylineArcsToLines::doTrigger() {
     createdPolyline->setLayer(polyline->getLayer());
     createdPolyline->setPen(polyline->getPen(false));
 
-    container->addEntity(createdPolyline);
+    m_container->addEntity(createdPolyline);
     undoCycleReplace(polyline, createdPolyline);
 
     polyline = nullptr;
@@ -77,7 +77,7 @@ void LC_ActionPolylineArcsToLines::onMouseRightButtonRelease([[maybe_unused]] in
 }
 
 RS_Polyline *LC_ActionPolylineArcsToLines::createPolyline(RS_Polyline *original) {
-    auto* clone = new RS_Polyline(container);
+    auto* clone = new RS_Polyline(m_container);
 
     clone->addVertex(original->getStartpoint());
 

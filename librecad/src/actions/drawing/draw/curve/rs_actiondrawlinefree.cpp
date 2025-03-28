@@ -33,7 +33,7 @@
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(LC_ActionContext *actionContext)
         :RS_PreviewActionInterface("Draw freehand lines", actionContext,RS2::ActionDrawLineFree)
 		,vertex(new RS_Vector{}){
-	preview->setOwner(false);
+	m_preview->setOwner(false);
 }
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
@@ -69,7 +69,7 @@ void RS_ActionDrawLineFree::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         auto ent = static_cast<RS_Polyline*>(polyline->addVertex(v));
 
         if (ent->count()){
-            preview->addCloneOf(polyline.get(), viewport);
+            m_preview->addCloneOf(polyline.get(), m_viewport);
         }
 
         *vertex = v;
@@ -84,7 +84,7 @@ void RS_ActionDrawLineFree::onMouseLeftButtonPress([[maybe_unused]]int status, L
             // fall-through
         case Dragging:
             *vertex = e->snapPoint;
-            polyline.reset(new RS_Polyline(container, RS_PolylineData(*vertex, *vertex, false)));
+            polyline.reset(new RS_Polyline(m_container, RS_PolylineData(*vertex, *vertex, false)));
             setPenAndLayerToActive(polyline.get());
             break;
         default:

@@ -45,21 +45,21 @@ LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
 
 void LC_ActionLayersToggleConstruction::trigger() {
     RS_DEBUG->print("toggle layer construction");
-    if (graphic) {
-        RS_LayerList* ll = graphic->getLayerList();
+    if (m_graphic) {
+        RS_LayerList* ll = m_graphic->getLayerList();
         unsigned cnt = 0;
         // toggle selected layers
         for (auto layer: *ll) {
             if (!layer) continue;
             if (!layer->isVisibleInLayerList()) continue;
             if (!layer->isSelectedInLayerList()) continue;
-            graphic->toggleLayerConstruction(layer);
+            m_graphic->toggleLayerConstruction(layer);
             deselectEntities(layer);
             cnt++;
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            graphic->toggleLayerConstruction(a_layer);
+            m_graphic->toggleLayerConstruction(a_layer);
             deselectEntities(a_layer);
         }
         redrawDrawing();
@@ -74,7 +74,7 @@ void LC_ActionLayersToggleConstruction::init(int status) {
 
 void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer){
     if (!layer) return;
-    for(auto e: *container){ // fixme - sand -  iteration over all entities in container
+    for(auto e: *m_container){ // fixme - sand -  iteration over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
             e->setSelected(false);
         }

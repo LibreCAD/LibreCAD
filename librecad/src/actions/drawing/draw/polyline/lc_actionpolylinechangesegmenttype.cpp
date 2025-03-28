@@ -39,7 +39,7 @@ void LC_ActionPolylineChangeSegmentType::doTrigger() {
         createdPolyline->setLayer(polyline->getLayer());
         createdPolyline->setPen(polyline->getPen(false));
 
-        container->addEntity(createdPolyline);
+        m_container->addEntity(createdPolyline);
 
         undoCycleReplace(polyline, createdPolyline);
         polyline = createdPolyline;
@@ -71,7 +71,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
                         case RS2::EntityArc:{
                             segmentFound = true;
                             highlightHover(entity);
-                            if (showRefEntitiesOnPreview) {
+                            if (m_showRefEntitiesOnPreview) {
                                 previewLine(entity->getStartpoint(), entity->getEndpoint());
                             }
                             break;
@@ -112,7 +112,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
 }
 
 RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
-    auto* result = new RS_Polyline(container);
+    auto* result = new RS_Polyline(m_container);
 
     for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity; entity = polyline->nextEntity(RS2::ResolveAll)) {
         if (polylineSegment == entity){

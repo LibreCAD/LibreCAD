@@ -80,7 +80,7 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
                 pPoints->point2 = mouse;
                 previewLine(pPoints->point1, pPoints->point2);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(pPoints->point1, pPoints->point2);
                     previewRefPoint(pPoints->point1);
                     previewRefSelectablePoint(pPoints->point2);
@@ -96,7 +96,7 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 }
 
 void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
-    if (infoCursorOverlayPrefs->enabled) {
+    if (m_infoCursorOverlayPrefs->enabled) {
         double distance = startPoint.distanceTo(mouse);
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Distance:"), formatLinear(distance));

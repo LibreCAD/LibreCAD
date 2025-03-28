@@ -58,7 +58,7 @@ void RS_ActionModifyBevel::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     //snapMode = RS2::SnapFree;
-    snapMode.restriction = RS2::RestrictNothing;
+    m_snapMode.restriction = RS2::RestrictNothing;
 }
 
 void RS_ActionModifyBevel::doTrigger() {
@@ -67,7 +67,7 @@ void RS_ActionModifyBevel::doTrigger() {
     if (entity1 && entity1->isAtomic() &&
         entity2 && entity2->isAtomic()){
 
-        RS_Modification m(*container, viewport);
+        RS_Modification m(*m_container, m_viewport);
         LC_BevelResult* bevelResult = m.bevel(pPoints->coord1, entity1, pPoints->coord2, entity2, pPoints->data, false);
         if (bevelResult != nullptr){
             switch (bevelResult->error) {
@@ -115,7 +115,7 @@ void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (se != entity1 && areBothEntityAccepted(entity1, se)){
                 auto atomicCandidate2 = dynamic_cast<RS_AtomicEntity *>(se);
 
-                RS_Modification m(*container, viewport);
+                RS_Modification m(*m_container, m_viewport);
                 LC_BevelResult* bevelResult = m.bevel(pPoints->coord1,  entity1, mouse, atomicCandidate2, pPoints->data, true);
 
                 if (bevelResult != nullptr){
@@ -125,7 +125,7 @@ void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         // bevel
                         previewEntity(bevelResult->bevel);
 
-                        if (showRefEntitiesOnPreview) {
+                        if (m_showRefEntitiesOnPreview) {
                             // bevel points
                             previewRefPoint(bevelResult->bevel->getStartpoint());
                             previewRefPoint(bevelResult->bevel->getEndpoint());

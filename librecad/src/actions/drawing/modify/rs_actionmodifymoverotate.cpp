@@ -50,7 +50,7 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
 	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
     finish(false);
@@ -69,9 +69,9 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
             if (originalRefPoint.valid) {
                 mouse = getSnapAngleAwarePoint(e, originalRefPoint, mouse, true);
                 pPoints->data.offset = mouse - originalRefPoint;
-                RS_Modification m(*preview, viewport);
+                RS_Modification m(*m_preview, m_viewport);
                 m.moveRotate(pPoints->data, selectedEntities, true, false);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(originalRefPoint);
                     previewRefSelectablePoint(mouse);
                     previewRefLine(originalRefPoint, mouse);
@@ -98,9 +98,9 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
                 double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
                 double wcsRotationAngle = adjustRelativeAngleSignByBasis(rotationAngle);
                 pPoints->data.angle = wcsRotationAngle;
-                RS_Modification m(*preview, viewport);
+                RS_Modification m(*m_preview, m_viewport);
                 m.moveRotate(pPoints->data, selectedEntities, true);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewSnapAngleMark(targetPoint, mouse);
 
                     previewRefPoint(originalRefPoint);

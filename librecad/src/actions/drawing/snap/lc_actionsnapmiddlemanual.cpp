@@ -92,7 +92,7 @@ void LC_ActionSnapMiddleManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
         auto *line = previewLine(m_pPoints->startPoint, mouse);
         previewRefSelectablePoint(line->getMiddlePoint());
-        if (showRefEntitiesOnPreview){
+        if (m_showRefEntitiesOnPreview){
             previewRefLine(m_pPoints->startPoint, mouse);
             previewRefPoint(m_pPoints->startPoint);
             previewRefPoint(mouse);

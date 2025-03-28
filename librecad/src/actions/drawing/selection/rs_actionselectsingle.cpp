@@ -69,7 +69,7 @@ void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status
 
 void RS_ActionSelectSingle::doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const {
     if (entityToSelect != nullptr){
-        RS_Selection s(*container, viewport);
+        RS_Selection s(*m_container, m_viewport);
         // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
         if (entityToSelect->isAtomic() && selectContour) {
             s.selectContour(entityToSelect);

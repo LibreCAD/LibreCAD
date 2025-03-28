@@ -54,7 +54,7 @@ void RS_ActionDimAngular::reset(){
 
 void RS_ActionDimAngular::doTrigger() {
     if (line1->getStartpoint().valid && line2->getStartpoint().valid) {
-        auto* newEntity = new RS_DimAngular( container,*data,*edata);
+        auto* newEntity = new RS_DimAngular( m_container,*data,*edata);
 
         setPenAndLayerToActive(newEntity);
         newEntity->update();
@@ -88,11 +88,11 @@ void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetPos: {
             snap = getFreeSnapAwarePoint(e, snap);
             if (setData(snap)){
-                auto *d = new RS_DimAngular(preview.get(), *data, *edata);
+                auto *d = new RS_DimAngular(m_preview.get(), *data, *edata);
                 highlightSelected(line1);
                 highlightSelected(line2);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     double radius = snap.distanceTo(center);
 
                     // draw reference points for all quadrants

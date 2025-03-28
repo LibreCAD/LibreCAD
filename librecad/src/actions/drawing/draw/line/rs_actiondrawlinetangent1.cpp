@@ -43,7 +43,7 @@ RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
 void RS_ActionDrawLineTangent1::doTrigger() {
     if (tangent){
-        auto *newEntity = new RS_Line(container, tangent->getData());
+        auto *newEntity = new RS_Line(m_container, tangent->getData());
 
         setPenAndLayerToActive(newEntity);
         undoCycleAdd(newEntity);
@@ -84,7 +84,7 @@ void RS_ActionDrawLineTangent1::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewEntityToCreate(tangent->clone(), false);
                     previewRefSelectablePoint(tangentPoint);
                     previewRefSelectablePoint(altTangentPoint);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(*point);
                     }
                 }

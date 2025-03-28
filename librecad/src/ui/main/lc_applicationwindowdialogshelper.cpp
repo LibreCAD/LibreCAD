@@ -30,6 +30,8 @@
 #include "lc_dlgabout.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_widgetoptionsdialog.h"
+#include "qg_dlgoptionsdrawing.h"
+#include "qg_filedialog.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "textfileviewer.h"
@@ -47,7 +49,7 @@ void LC_ApplicationWindowDialogsHelper::showNewVersionAvailableDialog( LC_Releas
     dlg.exec();
 }
 
-void LC_ApplicationWindowDialogsHelper::invokeLicenseWindow() {
+void LC_ApplicationWindowDialogsHelper::showLicenseWindow() {
     QDialog dlg(m_appWindow);
     dlg.setWindowTitle(QObject::tr("License"));
     auto viewer = new TextFileViewer(&dlg);
@@ -76,16 +78,24 @@ void LC_ApplicationWindowDialogsHelper::showDeviceOptions() {
     dlg.exec();
 }
 
-bool LC_ApplicationWindowDialogsHelper::widgetOptionsDialog(){
+bool LC_ApplicationWindowDialogsHelper::showWidgetOptionsDialog(){
     LC_WidgetOptionsDialog dlg(m_appWindow);
     return dlg.exec() == QDialog::Accepted;
 }
 
-bool LC_ApplicationWindowDialogsHelper::requestOptionsGeneralDialog() {
+bool LC_ApplicationWindowDialogsHelper::showGeneralOptionsDialog() {
     QG_DlgOptionsGeneral dlg(m_appWindow);
     bool  result = dlg.exec() == QDialog::Accepted;
     // fixme - sand - files - restore
     // getSnapOptionsHolder(); // as side effect, should update location of snap options
+    return result;
+}
+
+int LC_ApplicationWindowDialogsHelper::requestOptionsDrawingDialog(RS_Graphic &graphic, int tabIndex){
+    QG_DlgOptionsDrawing dlg(m_appWindow);
+    dlg.setGraphic(&graphic);
+    dlg.showInitialTab(tabIndex);
+    int result = dlg.exec();
     return result;
 }
 
@@ -193,4 +203,11 @@ QPair<QString, QString> LC_ApplicationWindowDialogsHelper::showExportFileSelecti
         }
     }
     return {"", ""};
+}
+
+QPair<QString, RS2::FormatType> LC_ApplicationWindowDialogsHelper::requestDrawingFileName(RS2::FormatType format){
+    QG_FileDialog dlg(m_appWindow);
+    RS2::FormatType type = format;
+    QString dxfPath = dlg.getOpenFile(&type);
+    return {dxfPath, type};
 }

@@ -179,7 +179,7 @@ double RS_ActionDimLinear::getDimAngle(){
 // however, if translate angles using toWorldAngleFromUCSBasis(), dims will be orthogonal to angles basis.
 // not sure whether this is necessary so far, yet still - an option may be added to the options widget.
 
-    switch (actionType){
+    switch (m_actionType){
         case RS2::ActionDimLinearHor:{
             return toWorldAngle(0);
         }

@@ -64,7 +64,7 @@ void RS_ActionDimLeader::init(int status) {
 void RS_ActionDimLeader::doTrigger() {
     if (!pPoints->points.empty()){
 
-        auto *leaderEntity = new RS_Leader(container, RS_LeaderData(true));
+        auto *leaderEntity = new RS_Leader(m_container, RS_LeaderData(true));
         setPenAndLayerToActive(leaderEntity);
 
         for (const auto &vp: pPoints->points) {
@@ -99,7 +99,7 @@ void RS_ActionDimLeader::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 }
 
                 RS_Vector const &p = pPoints->points.back();
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(p);
                     previewRefSelectablePoint(mouse);
                 }

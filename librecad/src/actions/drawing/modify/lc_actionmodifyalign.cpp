@@ -30,7 +30,7 @@ LC_ActionModifyAlign::LC_ActionModifyAlign(LC_ActionContext *actionContext)
 }
 
 void LC_ActionModifyAlign::init(int status) {
-    if (viewport->hasUCS()){
+    if (m_viewport->hasUCS()){
         commandMessage(tr("Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active."));
         finish();
     }
@@ -58,7 +58,7 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
                 // todo - this is a place to think about regarding usability and consistency. Other Modify actions does not clear "selected" status.
                 // todo - however, from the usability point of view - if the user would like to continue aligning operation, not cleared selection is not convenient.
                 e->setSelected(false);
-                container->addEntity(e);
+                m_container->addEntity(e);
                 undoableAdd(e);
             }
 
@@ -102,8 +102,8 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
             break;
         }
         case LC_Align::DRAWING: {
-            min = container->getMin();
-            max = container->getMax();
+            min = m_container->getMin();
+            max = m_container->getMax();
             break;
         }
         default:
@@ -124,12 +124,12 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
         for (auto ent: entitiesList) {
             previewEntity(ent);
         }
-        if (showRefEntitiesOnPreview) {
+        if (m_showRefEntitiesOnPreview) {
             previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
         }
 
         // info cursor
-        if (infoCursorOverlayPrefs->enabled){
+        if (m_infoCursorOverlayPrefs->enabled){
             QString msg = tr("Align to ");
             switch (alignType) {
                 case LC_Align::ENTITY:{
@@ -173,8 +173,8 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
 void LC_ActionModifyAlign::previewRefLines(bool drawVertical, [[maybe_unused]]double verticalRef, bool drawHorizontal, [[maybe_unused]]double horizontalRef) {
     // NOTE:
     // AS Action so far do not support UCS, coordinates below will be in WCS despite used methods.
-    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
-    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
+    RS_Vector wcsLeftBottom = m_viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = m_viewport->getUCSViewRightTop();
     if (drawVertical) {
         previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
@@ -205,8 +205,8 @@ void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]i
             break;
         }
         case LC_Align::DRAWING: {
-            alignMin = container->getMin();
-            alignMax = container->getMax();
+            alignMin = m_container->getMin();
+            alignMax = m_container->getMax();
             break;
         }
         default:

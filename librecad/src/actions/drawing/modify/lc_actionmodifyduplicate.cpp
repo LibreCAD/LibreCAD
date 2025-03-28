@@ -212,7 +212,7 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[mayb
                     snapOffset = snap;
 //                }
                 const RS_Vector &center = getEntityCenterPoint(selectedEntity);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(center, snap);
                     previewRefPoint(center);
                 }
@@ -221,7 +221,7 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[mayb
                     auto clone = selectedEntity->clone();
                     clone->move(offset);
                     list << clone;
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         const RS_Vector newCenter = getEntityCenterPoint(clone);
                         previewRefSelectablePoint(newCenter);
                         auto data = RS_EllipseData();

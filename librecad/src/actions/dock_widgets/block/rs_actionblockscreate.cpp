@@ -54,14 +54,14 @@ void RS_ActionBlocksCreate::init(int status) {
 }
 
 void RS_ActionBlocksCreate::trigger() {
-    if (graphic) {
-        RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList) {
+    if (m_graphic != nullptr) {
+        RS_BlockList* blockList = m_graphic->getBlockList();
+        if (blockList != nullptr) {
             RS_BlockData d =
                 RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
             if (!d.name.isEmpty()) {
-                RS_Creation creation(container, graphicView);
+                RS_Creation creation(m_container, getViewPort());
                 creation.createBlock(&d, *referencePoint, true);
 
                 RS_InsertData id(
@@ -79,7 +79,7 @@ void RS_ActionBlocksCreate::trigger() {
     redrawDrawing();
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-    graphicView->killSelectActions();
+    m_graphicView->killSelectActions();
     finish(false);
 }
 

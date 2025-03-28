@@ -84,17 +84,17 @@ void RS_ActionDrawLineAngle::init(int status) {
 
 void RS_ActionDrawLineAngle::initFromSettings() {
     RS_PreviewActionInterface::initFromSettings();
-    if (actionType == RS2::ActionDrawLineVertical){
+    if (m_actionType == RS2::ActionDrawLineVertical){
         pPoints->ucsBasisAngleRad = M_PI_2;
     }
-    else if (actionType == RS2::ActionDrawLineHorizontal){
+    else if (m_actionType == RS2::ActionDrawLineHorizontal){
         pPoints->ucsBasisAngleRad = 0;
     }
 }
 
 void RS_ActionDrawLineAngle::doTrigger() {
     preparePreview();
-    auto *line = new RS_Line{container, pPoints->data};
+    auto *line = new RS_Line{m_container, pPoints->data};
 
     setPenAndLayerToActive(line);
     if (!persistRelativeZero){

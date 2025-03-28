@@ -92,11 +92,11 @@ void RS_ActionDrawImage::reset() {
 
 void RS_ActionDrawImage::doTrigger() {
     if (!pImg->data.file.isEmpty()){
-        RS_Creation creation(container, graphicView);
+        RS_Creation creation(m_container, m_viewport);
         creation.createImage(&pImg->data);
     }
 
-    viewport->zoomAuto();
+    m_viewport->zoomAuto();
     finish(false);
 }
 
@@ -115,10 +115,10 @@ void RS_ActionDrawImage::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             previewLine({w, h}, {0., h});
             previewLine({0., h}, {0., 0.});
 
-            preview->scale({0., 0.},
+            m_preview->scale({0., 0.},
                            {pImg->data.uVector.magnitude(), pImg->data.uVector.magnitude()});
-            preview->rotate({0., 0.}, pImg->data.uVector.angle());
-            preview->move(pImg->data.insertionPoint);
+            m_preview->rotate({0., 0.}, pImg->data.uVector.angle());
+            m_preview->move(pImg->data.insertionPoint);
         }
     }
 }

@@ -48,7 +48,7 @@ void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
     if(status >= 0 ) {
         // fixme - sand - files direct action creation!
-        graphicView->setCurrentAction(new RS_ActionSelectSingle(m_actionContext, this, entityTypeList));
+        m_graphicView->setCurrentAction(new RS_ActionSelectSingle(m_actionContext, this, entityTypeList));
     }
     deleteSnapper();
 }
@@ -63,7 +63,7 @@ void RS_ActionSelect::onMouseRightButtonRelease(int status, [[maybe_unused]]QMou
 }
 
 int RS_ActionSelect::countSelected(){
-    int ret = container->countSelected();
+    int ret = m_container->countSelected();
     if (ret == 0){
         commandMessage(tr("No entity selected!"));
     }

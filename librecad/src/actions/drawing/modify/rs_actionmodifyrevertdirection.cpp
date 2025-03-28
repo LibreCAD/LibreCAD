@@ -35,7 +35,7 @@ RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(LC_ActionContext 
 
 void RS_ActionModifyRevertDirection::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     m.revertDirection(selectedEntities, keepSelected);
 }
 

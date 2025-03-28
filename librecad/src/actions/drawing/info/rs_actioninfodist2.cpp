@@ -106,7 +106,7 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         RS_Vector nearest = en->getNearestPointOnEntity(point, nearestPointShouldBeOnEntity);
                         previewLine(nearest, point);
                         updateInfoCursor(nearest,point);
-                        if (showRefEntitiesOnPreview) {
+                        if (m_showRefEntitiesOnPreview) {
                             previewRefLine(nearest, point);
                             previewRefPoint(point);
                             previewRefSelectablePoint(nearest);
@@ -119,7 +119,7 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 if (selectionMode == FIRST_IS_POINT){
                     previewLine(snap, point);
                     updateInfoCursor(snap, point);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefLine(snap, point);
                         previewRefPoint(point);
                     }
@@ -131,7 +131,7 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             switch (selectionMode) {
                 case FIRST_IS_POINT: {
                     trySnapToRelZeroCoordinateEvent(e);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(snap);
                     }
                     break;
@@ -143,7 +143,7 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         RS_Vector nearest = obtainNearestPointOnEntity(snap);
                         previewLine(nearest, snap);
                         updateInfoCursor(snap, nearest);
-                        if (showRefEntitiesOnPreview) {
+                        if (m_showRefEntitiesOnPreview) {
                             previewRefLine(nearest, snap);
                             previewLine(nearest, snap);
                             previewRefPoint(nearest);
@@ -296,7 +296,7 @@ RS2::CursorType RS_ActionInfoDist2::doGetMouseCursor([[maybe_unused]] int status
 
 // todo - refactor, this is a copy from RS_ActionInfoDist
 void RS_ActionInfoDist2::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
-    if (infoCursorOverlayPrefs->enabled){
+    if (m_infoCursorOverlayPrefs->enabled){
         double distance = startPoint.distanceTo(mouse);
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Distance:"), formatLinear(distance));

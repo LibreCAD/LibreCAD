@@ -31,7 +31,7 @@ LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle(LC_ActionContext *actionC
 }
 
 void LC_ActionModifyAlignSingle::init(int status) {
-    if (viewport->hasUCS()){
+    if (m_viewport->hasUCS()){
         commandMessage(tr("Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active."));
         finish();
     }
@@ -47,7 +47,7 @@ void LC_ActionModifyAlignSingle::doTrigger() {
             RS_Entity *clone = LC_Align::createCloneMovedToTarget(entityToAlign, target, true, hAlign, vAlign);
             if (clone != nullptr) {
                 clone->setSelected(false);
-                container->addEntity(clone);
+                m_container->addEntity(clone);
 
                 undoCycleReplace(entityToAlign, clone);
             }
@@ -58,7 +58,7 @@ void LC_ActionModifyAlignSingle::doTrigger() {
         setStatus(-1);
     }
     else {
-        if (showRefEntitiesOnPreview) {
+        if (m_showRefEntitiesOnPreview) {
             previewAlignRefPoint(alignMin, alignMax);
         }
     }
@@ -91,8 +91,8 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     break;
                 }
                 case LC_Align::DRAWING: {
-                    min = container->getMin();
-                    max = container->getMax();
+                    min = m_container->getMin();
+                    max = m_container->getMax();
                     break;
                 }
                 default:
@@ -108,7 +108,7 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                 previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
 
                 // info cursor
-                if (infoCursorOverlayPrefs->enabled){
+                if (m_infoCursorOverlayPrefs->enabled){
                     QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
                     appendInfoCursorZoneMessage(msg, 2, false);
                 }
@@ -123,7 +123,7 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             double horizontalRef;
             bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(alignMin, alignMax, vAlign, horizontalRef);
 
-            if (showRefEntitiesOnPreview){
+            if (m_showRefEntitiesOnPreview){
                 previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
             }
             if (baseAlignEntity != nullptr) {
@@ -194,8 +194,8 @@ QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef,
 void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
     // NOTE:
     // AS Action so far do not support UCS, coordinates below will be in WCS despite used methods.
-    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
-    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
+    RS_Vector wcsLeftBottom = m_viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = m_viewport->getUCSViewRightTop();
     if (drawVertical) {
         previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
@@ -207,8 +207,8 @@ void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verti
 void LC_ActionModifyAlignSingle::previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max) {
     double verticalRef;
     bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
-    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
-    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
+    RS_Vector wcsLeftBottom = m_viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = m_viewport->getUCSViewRightTop();
     if (drawVertical) {
         // NOTE:: works properly for WCS only
         previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
@@ -276,8 +276,8 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEv
                     break;
                 }
                 case LC_Align::DRAWING:
-                    alignMin = container->getMin();
-                    alignMax = container->getMax();
+                    alignMin = m_container->getMin();
+                    alignMax = m_container->getMax();
                     setStatus(SelectEntity);
                     break;
                 default:
@@ -338,8 +338,8 @@ void LC_ActionModifyAlignSingle::setAlignType(int a) {
     if (a != alignType) {
         LC_ActionModifyAlignData::setAlignType(a);
         if (a == LC_Align::AlignMode::DRAWING){
-            alignMin = container->getMin();
-            alignMax = container->getMax();
+            alignMin = m_container->getMin();
+            alignMax = m_container->getMax();
             setStatus(SelectEntity);
         }
         else {

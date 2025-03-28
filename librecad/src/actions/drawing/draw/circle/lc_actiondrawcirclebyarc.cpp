@@ -93,7 +93,7 @@ void LC_ActionDrawCircleByArc::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
             auto* arc = dynamic_cast<RS_Arc*>(en);
             RS_CircleData circleData = createCircleData(arc);
             // setup new circle
-            RS_Entity* circle = new RS_Circle(container, circleData);
+            RS_Entity* circle = new RS_Circle(m_container, circleData);
             // apply attributes
             applyPenAndLayerBySourceEntity(arc, circle, penMode, layerMode);
             list << circle;
@@ -104,7 +104,7 @@ void LC_ActionDrawCircleByArc::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
             auto* ellipseArc = dynamic_cast<RS_Ellipse*>(en);
             RS_EllipseData ellipseData = createEllipseData(ellipseArc);
             // setup new circle
-            auto ellipse = new RS_Ellipse(container, ellipseData);
+            auto ellipse = new RS_Ellipse(m_container, ellipseData);
             // apply attributes
             applyPenAndLayerBySourceEntity(ellipseArc, ellipse, penMode, layerMode);
             list << ellipse;
@@ -184,11 +184,11 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
             auto *arc = dynamic_cast<RS_Arc *>(en);
 
             RS_CircleData circleData = createCircleData(arc);
-            RS_Entity *circle = new RS_Circle(container, circleData);
+            RS_Entity *circle = new RS_Circle(m_container, circleData);
             prepareEntityDescription(circle, RS2::EntityDescriptionLevel::DescriptionCreating);
             list << circle;
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 createRefPoint(circleData.center, list);
             }
 
@@ -199,11 +199,11 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
 
                 if (ellipseArc->isEllipticArc()){
                     RS_EllipseData ellipseData = createEllipseData(ellipseArc);
-                    auto ellipse = new RS_Ellipse(container, ellipseData);
+                    auto ellipse = new RS_Ellipse(m_container, ellipseData);
                     prepareEntityDescription(ellipse, RS2::EntityDescriptionLevel::DescriptionCreating);
                     list << ellipse;
 
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         createRefPoint(ellipse->getCenter(), list);
                     }
                     entity = ellipseArc;

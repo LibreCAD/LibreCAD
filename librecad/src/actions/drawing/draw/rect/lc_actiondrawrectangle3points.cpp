@@ -85,7 +85,7 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetRelativeZeroAfterTrigger(){
 
 void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         if (pPoints->corner1Set) {
             createRefPoint(pPoints->corner1, list);
 
@@ -171,7 +171,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
 
         if (drawPrimitiveShape){
             // simple mode - just create a polyline that connects calculated corner vertexes
-            polyline = new RS_Polyline(container);
+            polyline = new RS_Polyline(m_container);
             polyline->addVertex(pPoints->corner1);
             polyline->addVertex(pPoints->corner2);
             polyline->addVertex(pPoints->corner3);

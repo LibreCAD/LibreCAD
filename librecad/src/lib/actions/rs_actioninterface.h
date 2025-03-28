@@ -105,7 +105,7 @@ private:
      * first corner (status 0), and selecting the second
      * corner (status 1).
      */
-    int status = 0;
+    int m_status = 0;
 protected:
     /** Action name. Used internally for debugging */
     QString name;
@@ -114,26 +114,26 @@ protected:
      * This flag is set when the action has terminated and
      * can be deleted.
      */
-    bool finished = false;
+    bool finished = false; // fixme- sand - review!!! Hides one from super?
 
     /**
      * Pointer to the graphic is this container is a graphic.
      * NULL otherwise
      */
-    RS_Graphic *graphic = nullptr;
+    RS_Graphic *m_graphic = nullptr; // // fixme- sand - review!!!
 
     /**
     * Pointer to the document (graphic or block) or NULL.
     */
 
-    RS_Document *document = nullptr;
+    RS_Document *document = nullptr;// fixme- sand - review!!!
     /**
      * Predecessor of this action or NULL.
      */
-    RS_ActionInterface* predecessor = nullptr;
-    RS2::ActionType actionType = RS2::ActionNone;
+    RS_ActionInterface* predecessor = nullptr; // fixme- sand - review!!!
+    RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
-    double snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
+    double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
 
     QString msgAvailableCommands();
     void setActionType(RS2::ActionType actionType);

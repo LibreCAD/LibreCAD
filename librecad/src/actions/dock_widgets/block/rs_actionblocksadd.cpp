@@ -34,21 +34,21 @@
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(LC_ActionContext *actionContext)
 		:RS_ActionInterface("Add Block", actionContext) {
-	actionType = RS2::ActionBlocksAdd;
+	m_actionType = RS2::ActionBlocksAdd;
 }
 
 void RS_ActionBlocksAdd::trigger(){
     RS_DEBUG->print("adding block");
-    if (graphic != nullptr){
-        RS_BlockList *blockList = graphic->getBlockList();
+    if (m_graphic != nullptr){
+        RS_BlockList *blockList = m_graphic->getBlockList();
         if (blockList){
             RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
             if (d.isValid()){
                 // Block cannot contain blocks.
-                if (container->is(RS2::EntityBlock)){
-                    graphic->addBlock(new RS_Block(container->getParent(), d));
+                if (m_container->is(RS2::EntityBlock)){
+                    m_graphic->addBlock(new RS_Block(m_container->getParent(), d));
                 } else {
-                    graphic->addBlock(new RS_Block(container, d));
+                    m_graphic->addBlock(new RS_Block(m_container, d));
                 }
             }
         }

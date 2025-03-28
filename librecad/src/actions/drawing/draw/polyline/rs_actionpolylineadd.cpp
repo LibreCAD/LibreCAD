@@ -50,7 +50,7 @@ void RS_ActionPolylineAdd::doTrigger() {
 
     if (polylineToModify && addSegment->isAtomic() && addCoord->valid &&
         addSegment->isPointOnEntity(*addCoord)) {
-        RS_Modification m(*container, viewport);
+        RS_Modification m(*m_container, m_viewport);
         RS_Polyline *createdPolyline = m.addPolylineNode(
             *polylineToModify,
             (RS_AtomicEntity &) *addSegment,
@@ -73,10 +73,10 @@ void RS_ActionPolylineAdd::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetAddCoord: {
-            bool oldSnapOnEntity = snapMode.snapOnEntity;
-            snapMode.snapOnEntity = true;
+            bool oldSnapOnEntity = m_snapMode.snapOnEntity;
+            m_snapMode.snapOnEntity = true;
             RS_Vector snap = e->snapPoint;
-            snapMode.snapOnEntity = oldSnapOnEntity;
+            m_snapMode.snapOnEntity = oldSnapOnEntity;
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e, RS2::EntityPolyline));
             if (polyline == polylineToModify){
                 RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
@@ -108,10 +108,10 @@ void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
             break;
         }
         case SetAddCoord: {
-            bool oldSnapOnEntity = snapMode.snapOnEntity;
-            snapMode.snapOnEntity = true;
+            bool oldSnapOnEntity = m_snapMode.snapOnEntity;
+            m_snapMode.snapOnEntity = true;
             RS_Vector snap = e->snapPoint;
-            snapMode.snapOnEntity = oldSnapOnEntity;
+            m_snapMode.snapOnEntity = oldSnapOnEntity;
 
             const RS_Vector newCoord = polylineToModify->getNearestPointOnEntity(snap, true);
             *addCoord = newCoord;

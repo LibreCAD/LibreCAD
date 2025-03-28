@@ -155,14 +155,14 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
         case SetEntity2: {
             auto en = catchAndDescribe(event, RS2::ResolveAll);
             highlightSelected(entity1);
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->point1);
             }
             if (isLine(en)){
                 RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, en, false);
                 if (sol.hasValid()){
                     highlightHover(en);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         RS_Vector p2 = en->getNearestPointOnEntity(mouse);
                         previewRefSelectablePoint(p2);
                         RS_Vector intersection = sol.get(0);
@@ -174,7 +174,7 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
                     }
                 }
                 else{
-                    if (infoCursorOverlayPrefs->enabled){
+                    if (m_infoCursorOverlayPrefs->enabled){
                         appendInfoCursorZoneMessage(tr("Lines are parallel"), 2, false);
                     }
                 }
@@ -240,7 +240,7 @@ RS2::CursorType RS_ActionInfoAngle::doGetMouseCursor([[maybe_unused]] int status
 }
 
 void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vector &intersection) {
-    if (infoCursorOverlayPrefs->enabled){
+    if (m_infoCursorOverlayPrefs->enabled){
         double angle1 = intersection.angleTo(pPoints->point1);
         double angle2 = intersection.angleTo(point2);
         double angle = remainder(angle2 - angle1, 2. * M_PI);

@@ -90,7 +90,7 @@ void RS_ActionDrawEllipseAxis::init(int status){
 }
 
 void RS_ActionDrawEllipseAxis::doTrigger() {
-    auto *ellipse = new RS_Ellipse{container,
+    auto *ellipse = new RS_Ellipse{m_container,
                                    {pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
                                     pPoints->angle1, pPoints->angle2, pPoints->reversed}
     };
@@ -124,7 +124,7 @@ void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_M
                 previewToCreateEllipse({pPoints->center, mouse - pPoints->center, 0.5, 0.0,
                                 pPoints->isArc ? 2. * M_PI : 0., false});
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->center);
                     previewRefLine(pPoints->center, mouse);
                     previewRefSelectablePoint(mouse);
@@ -143,7 +143,7 @@ void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_M
                 auto ellipse = previewToCreateEllipse({center, pPoints->m_vMajorP, pPoints->ratio,
                                                0., pPoints->isArc ? 2. * M_PI : 0., false});
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewEllipseReferencePoints(ellipse, true, false, mouse);
                 }
             }
@@ -164,7 +164,7 @@ void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_M
                 auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
                                                pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->center);
                     previewRefSelectablePoint(ellipse->getStartpoint());
                     previewEllipseReferencePoints(ellipse, false, true, mouse);
@@ -185,7 +185,7 @@ void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_M
 
                 auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(pPoints->center, mouse);
                     previewRefPoint(pPoints->center);
                     auto point = pPoints->center + RS_Vector{pPoints->angle1}.scale(

@@ -54,7 +54,7 @@ void LC_ActionDrawParabola4Points::init(int status) {
 
 void LC_ActionDrawParabola4Points::doTrigger() {
     if(pPoints->valid){
-        auto* en = new LC_Parabola{container, pPoints->data};
+        auto* en = new LC_Parabola{m_container, pPoints->data};
         undoCycleAdd(en);
     }
     setStatus(SetPoint1);
@@ -63,7 +63,7 @@ void LC_ActionDrawParabola4Points::doTrigger() {
 void LC_ActionDrawParabola4Points::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     pPoints->points.set(status, mouse);
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         for (int i = 0; i < status;i++) {
             previewRefPoint(pPoints->points.at(i));
         }
@@ -108,7 +108,7 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse, bool r
                 }
             }
         }
-        auto* pl = new LC_Parabola{preview.get(), pPoints->data};
+        auto* pl = new LC_Parabola{m_preview.get(), pPoints->data};
         previewEntity(pl);
     }
     return pPoints->valid;

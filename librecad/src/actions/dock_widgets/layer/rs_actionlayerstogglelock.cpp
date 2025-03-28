@@ -38,21 +38,21 @@ RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(LC_ActionContext *actionCon
 
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (graphic) {
-        RS_LayerList* ll = graphic->getLayerList();
+    if (m_graphic) {
+        RS_LayerList* ll = m_graphic->getLayerList();
         unsigned cnt = 0;
         // toggle selected layers
         for (auto layer: *ll) {
             if (!layer) continue;
             if (!layer->isVisibleInLayerList()) continue;
             if (!layer->isSelectedInLayerList()) continue;
-            graphic->toggleLayerLock(layer);
+            m_graphic->toggleLayerLock(layer);
             deselectEntitiesOnLockedLayer(layer);
             cnt++;
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            graphic->toggleLayerLock(a_layer);
+            m_graphic->toggleLayerLock(a_layer);
             deselectEntitiesOnLockedLayer(a_layer);
         }
     }
@@ -70,7 +70,7 @@ void RS_ActionLayersToggleLock::deselectEntitiesOnLockedLayer(RS_Layer* layer)
     if (!layer) return;
     if (!layer->isLocked()) return;
 
-    for(auto e: *container){ // fixme - sand -  interation over all entities in container
+    for(auto e: *m_container){ // fixme - sand -  interation over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
             e->setSelected(false);
         }

@@ -31,11 +31,11 @@
  * Constructor.
  */
 RS_ActionBlocksExplode::RS_ActionBlocksExplode(LC_ActionContext *actionContext)
-    :LC_ActionPreSelectionAwareBase("Blocks Explode", actionContext,actionType=RS2::ActionBlocksExplode) {
+    :LC_ActionPreSelectionAwareBase("Blocks Explode", actionContext,m_actionType=RS2::ActionBlocksExplode) {
 }
 
 void RS_ActionBlocksExplode::doTrigger(bool keepSelected) {
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     // fixme - add options like "keep originals" and "current attributes"?
     m.explode(selectedEntities, true, false, keepSelected);
 }

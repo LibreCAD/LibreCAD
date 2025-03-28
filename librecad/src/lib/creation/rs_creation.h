@@ -58,6 +58,7 @@ struct RS_LibraryInsertData {
     RS_Vector insertionPoint;
     double factor = 0.;
     double angle = 0.;
+    RS_Graphic * graphic;
 };
 
 
@@ -71,7 +72,7 @@ struct RS_LibraryInsertData {
 class RS_Creation {
 public:
     RS_Creation(RS_EntityContainer* container,
-                RS_GraphicView* graphicView=nullptr,
+                LC_GraphicViewport* viewport = nullptr,
                 bool handleUndo=true);
     ~RS_Creation()=default;
 
@@ -152,11 +153,11 @@ public:
     RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 protected:
-    RS_EntityContainer* container = nullptr;
-    RS_Graphic* graphic = nullptr;
-    RS_Document* document = nullptr;
-    RS_GraphicView* graphicView = nullptr;
-    LC_GraphicViewport*  viewport;
+    RS_EntityContainer* m_container{nullptr};
+    RS_Graphic* m_graphic{nullptr};
+    RS_Document* m_document{nullptr};
+    RS_GraphicView* m_graphicView{nullptr};
+    LC_GraphicViewport*  m_viewport{nullptr};
     bool handleUndo = false;
 private:
     void setupAndAddEntity(RS_Entity* en) const;

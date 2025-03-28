@@ -43,9 +43,9 @@ RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
 
 void RS_ActionZoomScroll::trigger() {
     if (hasOffset) {
-        viewport->zoomPan(offsetX, offsetY);
+        m_viewport->zoomPan(offsetX, offsetY);
     } else {
-        viewport->zoomScroll(direction);
+        m_viewport->zoomScroll(direction);
     }
     finish(false);
 }

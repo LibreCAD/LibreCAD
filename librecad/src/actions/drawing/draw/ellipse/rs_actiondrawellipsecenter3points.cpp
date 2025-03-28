@@ -58,7 +58,7 @@ void RS_ActionDrawEllipseCenter3Points::init(int status){
 }
 
 void RS_ActionDrawEllipseCenter3Points::doTrigger() {
-    auto *ellipse = new RS_Ellipse(container, pPoints->eData);
+    auto *ellipse = new RS_Ellipse(m_container, pPoints->eData);
 
     undoCycleAdd(ellipse);
     moveRelativeZero(ellipse->getCenter());
@@ -76,7 +76,7 @@ void RS_ActionDrawEllipseCenter3Points::onMouseMoveEvent(int status, LC_MouseEve
     pPoints->points.resize(status);
     pPoints->points.push_back(mouse);
 
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         for (int i = SetPoint1; i <= status; i++) {
             previewRefPoint(pPoints->points.at(i - 1));
         }
@@ -110,7 +110,7 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     pPoints->valid = false;
     switch (getStatus()) {
         case SetPoint1: {
-            RS_Circle c(preview.get(), pPoints->cData);
+            RS_Circle c(m_preview.get(), pPoints->cData);
             pPoints->valid = c.createFromCR(pPoints->points.at(0),
                                             pPoints->points.get(0).distanceTo(pPoints->points.get(1)));
 
@@ -121,7 +121,7 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
         }
         case SetPoint2:
         case SetPoint3: {
-            RS_Ellipse e(preview.get(), pPoints->eData);
+            RS_Ellipse e(m_preview.get(), pPoints->eData);
             pPoints->valid = e.createFromCenter3Points(pPoints->points);
             if (pPoints->valid){
                 pPoints->eData = e.getData();

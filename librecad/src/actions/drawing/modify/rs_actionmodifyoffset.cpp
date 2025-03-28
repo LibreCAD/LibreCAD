@@ -56,7 +56,7 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(LC_ActionContext *actionContext)
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 void RS_ActionModifyOffset::doTrigger(bool keepSelected) {
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     m.offset(*data, selectedEntities, false, keepSelected);
     finish(false);
 }
@@ -66,7 +66,7 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
     switch (status){
         case SetReferencePoint:{
             data->coord = getRelZeroAwarePoint(e, mouse);
-            RS_Modification m(*preview, viewport, false);
+            RS_Modification m(*m_preview, m_viewport, false);
             m.offset(*data, selectedEntities, true, false);
             break;
         }
@@ -76,10 +76,10 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
             if (!distanceIsFixed){
                 data->distance = offset.magnitude();
             }
-            RS_Modification m(*preview, viewport, false);
+            RS_Modification m(*m_preview, m_viewport, false);
             m.offset(*data, selectedEntities, true, false);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(referencePoint);
                 previewRefSelectablePoint(mouse);
                 previewRefLine(referencePoint, mouse);

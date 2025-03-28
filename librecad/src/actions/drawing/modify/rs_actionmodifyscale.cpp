@@ -76,7 +76,7 @@ void RS_ActionModifyScale::doTrigger(bool keepSelected) {
     if (pPoints->data.isotropicScaling){
         pPoints->data.factor.y = pPoints->data.factor.x;
     }
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     m.scale(pPoints->data, selectedEntities, false, keepSelected);
 }
 
@@ -99,7 +99,7 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
                 if (previewData.isotropicScaling){
                     previewData.factor.y = previewData.factor.x;
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(selectionCenter);
                 }
                 showPreview(previewData);
@@ -111,7 +111,7 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
             previewRefPoint(pPoints->data.referencePoint);
             pPoints->sourcePoint = mouse;
             RS_ScaleData previewData = pPoints->data;
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 determineScaleFactor(previewData, pPoints->data.referencePoint, mouse, mouse);
                 previewRefLine(mouse, pPoints->data.referencePoint);
                 previewRefSelectablePoint(mouse);
@@ -127,7 +127,7 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
                 mouse = getSnapAngleAwarePoint(e, pPoints->sourcePoint, mouse, true); // todo - review whether it's necessary
             }
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 // control points
                 previewRefSelectablePoint(pPoints->sourcePoint);
                 previewRefSelectablePoint(mouse);
@@ -210,10 +210,10 @@ void RS_ActionModifyScale::showPreview(){
 }
 
 void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
-    RS_Modification m(*preview, viewport, false);
+    RS_Modification m(*m_preview, m_viewport, false);
     m.scale(previewData, selectedEntities, true, false);
 
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         int numberOfCopies = previewData.obtainNumberOfCopies();
 
         if (numberOfCopies > 1) {

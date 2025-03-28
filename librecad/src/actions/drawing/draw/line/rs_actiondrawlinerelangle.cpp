@@ -73,7 +73,7 @@ void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
 }
 
 void RS_ActionDrawLineRelAngle::doTrigger() {
-    RS_Creation creation(container, graphicView);
+    RS_Creation creation(m_container, m_viewport);
     moveRelativeZero(*pos); // fixme - to undoable?
     RS_Line* line = creation.createLineRelAngle(*pos,entity,relativeAngleRad,length);
 
@@ -95,12 +95,12 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetPos: {
             highlightSelected(entity);
             *pos = getRelZeroAwarePoint(e, snap);
-            RS_Creation creation(preview.get(), nullptr, false);
+            RS_Creation creation(m_preview.get(), nullptr, false);
             auto lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
             if (lineToCreate != nullptr){
                 previewEntityToCreate(lineToCreate, false);
             }
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 if (lineToCreate != nullptr) {
                     auto const vp = entity->getNearestPointOnEntity(*pos, false);
                     previewRefPoint(vp);

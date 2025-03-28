@@ -122,7 +122,7 @@ void LC_ActionDrawParabolaFD::init(int status) {
 
 void LC_ActionDrawParabolaFD::doTrigger() {
     if(pPoints->data.valid){
-        auto* en = new LC_Parabola{container, pPoints->data};
+        auto* en = new LC_Parabola{m_container, pPoints->data};
         undoCycleAdd(en);
     }
     init(SetFocus);
@@ -143,18 +143,18 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             else{
                 mouse = getSnapAngleAwarePoint(e, pPoints->focus, mouse, true);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(pPoints->focus, mouse);
                 }
             }
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->focus);
             }
             break;
         }
         case SetStartPoint: {
             pPoints->setStart(mouse);
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->focus);
                 previewRefPoint(pPoints->vertex);
                 previewRefLine(pPoints->focus, pPoints->vertex);
@@ -168,7 +168,7 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 previewRefLine(pPoints->vertex, projection);
             }
             LC_Parabola* parabola = preparePreview();
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 if (parabola != nullptr) {
                     RS_Vector startPoint = parabola->getStartpoint();
                     previewRefSelectablePoint(startPoint);
@@ -177,7 +177,7 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetEndPoint: {
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->focus);
                 previewRefPoint(pPoints->vertex);
                 previewRefLine(pPoints->focus, pPoints->vertex);
@@ -194,7 +194,7 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             pPoints->setEnd(mouse);
             LC_Parabola *parabola = preparePreview();
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 if (parabola != nullptr) {
                     RS_Vector startPoint = parabola->getStartpoint();
                     RS_Vector endPoint = parabola->getEndpoint();
@@ -214,7 +214,7 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
 LC_Parabola* LC_ActionDrawParabolaFD::preparePreview(){
     if (pPoints->data.valid) {
-        auto* pl = new LC_Parabola{preview.get(), pPoints->data};
+        auto* pl = new LC_Parabola{m_preview.get(), pPoints->data};
         previewEntity(pl);
         return pl;
     }

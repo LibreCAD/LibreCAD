@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
+#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(BOOST_DIR "c:\\Local\\boost_1_84_0")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
@@ -201,6 +202,7 @@ include_directories(librecad/src/ui/forms)
 include_directories(librecad/src/ui/generic)
 include_directories(librecad/src/ui/view)
 include_directories(librecad/src/ui/main)
+include_directories(librecad/src/ui/main/init)
 include_directories(librecad/src/ui/main/persistence)
 include_directories(librecad/src/ui/dock_widgets)
 include_directories(librecad/src/ui/dock_widgets/command_line)
@@ -793,6 +795,8 @@ set(SOURCES
         librecad/src/main/qc_dialogfactory.h
 		librecad/src/ui/main/qc_mdiwindow.cpp
 		librecad/src/ui/main/qc_mdiwindow.h
+		librecad/src/ui/main/lc_defaultactioncontext.h
+		librecad/src/ui/main/lc_defaultactioncontext.cpp
         librecad/src/plugins/intern/qc_actiongetent.cpp
         librecad/src/plugins/intern/qc_actiongetent.h
         librecad/src/plugins/intern/qc_actiongetpoint.cpp
@@ -955,24 +959,28 @@ set(SOURCES
 		librecad/src/ui/components/textfileviewer.h
 		librecad/src/ui/components/creators/widgetcreator.cpp
 		librecad/src/ui/components/creators/widgetcreator.h
-        librecad/src/ui/lc_actionfactory.cpp
-        librecad/src/ui/lc_actionfactory.h
+		librecad/src/ui/main/init/lc_actionfactory.cpp
+		librecad/src/ui/main/init/lc_actionfactory.h
 		librecad/src/ui/actions/lc_actiongroupmanager.cpp
 		librecad/src/ui/actions/lc_actiongroupmanager.h
 		librecad/src/ui/view/lc_centralwidget.cpp
 		librecad/src/ui/view/lc_centralwidget.h
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.cpp
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.h
-		librecad/src/ui/dock_widgets/lc_dockwidget.cpp
-		librecad/src/ui/dock_widgets/lc_dockwidget.h
+		librecad/src/ui/dock_widgets/lc_caddockwidget.cpp
+		librecad/src/ui/dock_widgets/lc_caddockwidget.h
 		librecad/src/ui/dialogs/file/lc_filedialogservice.cpp
 		librecad/src/ui/dialogs/file/lc_filedialogservice.h
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.cpp
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.h
-        librecad/src/ui/lc_widgetfactory.cpp
-        librecad/src/ui/lc_widgetfactory.h
-		librecad/src/ui/lc_menufactory.cpp
-		librecad/src/ui/lc_menufactory.h
+		librecad/src/ui/main/init/lc_widgetfactory.cpp
+		librecad/src/ui/main/init/lc_widgetfactory.h
+		librecad/src/ui/main/init/lc_toolbarfactory.h
+		librecad/src/ui/main/init/lc_toolbarfactory.cpp
+		librecad/src/ui/main/init/lc_menufactory.cpp
+		librecad/src/ui/main/init/lc_menufactory.h
+		librecad/src/ui/main/init/lc_applicationwindowinitializer.h
+		librecad/src/ui/main/init/lc_applicationwindowinitializer.cpp
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.h
         librecad/src/ui/qg_actionhandler.cpp
@@ -1067,6 +1075,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp
 		librecad/src/ui/action_options/lc_actionoptionswidget.h
 		librecad/src/ui/action_options/lc_actionoptionswidget.cpp
+		librecad/src/ui/action_options/lc_actionoptionsmanager.h
+		librecad/src/ui/action_options/lc_actionoptionsmanager.cpp
 		librecad/src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.h
 		librecad/src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp
 		librecad/src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.h
@@ -1144,6 +1154,8 @@ set(SOURCES
         librecad/src/lib/actions/lc_modifiersinfo.h
 		librecad/src/lib/actions/lc_actionpreselectionawarebase.h
 		librecad/src/lib/actions/lc_actionpreselectionawarebase.cpp
+		librecad/src/lib/actions/lc_actioncontext.h
+		librecad/src/lib/actions/lc_actioncontext.cpp
 		librecad/src/ui/action_options/modify/lc_modifystretchoptions.cpp
 		librecad/src/ui/action_options/modify/lc_modifystretchoptions.h
 		librecad/src/ui/action_options/modify/lc_moveoptions.cpp
@@ -1399,8 +1411,6 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp
 		librecad/src/ui/dialogs/lc_inputtextdialog.h
 		librecad/src/ui/dialogs/lc_inputtextdialog.cpp
-        librecad/src/lib/engine/document/io/lc_graphicio.h
-        librecad/src/lib/engine/document/io/lc_graphicio.cpp
         librecad/src/ui/main/persistence/lc_documentsstorage.h
         librecad/src/ui/main/persistence/lc_documentsstorage.cpp
 		librecad/src/ui/main/lc_applicationwindowdialogshelper.h

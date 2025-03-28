@@ -896,18 +896,6 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *v
     return false;
 }
 
-/**
- * Shows dialog for general application options.
- */
-int QG_DialogFactory::requestOptionsGeneralDialog() {
-    QG_DlgOptionsGeneral dlg(parent);
-    int result = dlg.exec();
-    // fixme - sand - files - restore
-    // getSnapOptionsHolder(); // as side effect, should update location of snap options
-    return result;
-}
-
-
 
 /**
  * Shows dialog for drawing options.
@@ -931,39 +919,6 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
                                                   QString* selectedFilter /* = 0 */) {
 
     return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
-}
-
-
-
-void QG_DialogFactory::updateMouseWidget(const QString& left,
-                                         const QString& right,
-                                         const LC_ModifiersInfo& modifiers) {
-    // fixme - sand - files - restore
-   /* if (mouseWidget != nullptr) {
-        mouseWidget->setHelp(left, right, modifiers);
-    }
-
-    if (commandWidget != nullptr) {
-       commandWidget->setCommand(left);
-    }
-
-    if (statusBarManager != nullptr){
-        statusBarManager->setActionHelp(left, right, modifiers);
-    }*/
-}
-
-
-
-void QG_DialogFactory::clearMouseWidgetIcon() {
-/*   if (mouseWidget != nullptr){
-       mouseWidget->clearActionIcon();
-   }
-   if (statusBarManager != nullptr){
-       statusBarManager->clearAction();
-   }
-   if (optionWidgetHolder != nullptr){
-       optionWidgetHolder->clearActionIcon();
-   }*/
 }
 
 /**

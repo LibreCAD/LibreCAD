@@ -64,7 +64,7 @@ LC_ActionDrawEllipse1Point::~LC_ActionDrawEllipse1Point() = default;
 
 void LC_ActionDrawEllipse1Point::doTrigger() {
     double ratio = pPoints->getRatio();
-    auto *ellipse = new RS_Ellipse{container,
+    auto *ellipse = new RS_Ellipse{m_container,
                                    {pPoints->center, getMajorP(), ratio,
                                     pPoints->angle1, pPoints->angle2, pPoints->reversed}
     };
@@ -95,7 +95,7 @@ void LC_ActionDrawEllipse1Point::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 auto *ellipse = previewToCreateEllipse({mouse, getMajorP(), pPoints->getRatio(), 0.0,
                                                       pPoints->isArc ? 2. * M_PI : 0., false});
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefSelectablePoint(mouse);
                     previewEllipseReferencePoints(ellipse, true, true, mouse);
                 }
@@ -107,7 +107,7 @@ void LC_ActionDrawEllipse1Point::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             pPoints->ucsBasicMajorRadiusAngle = toUCSBasisAngle(pPoints->center.angleTo(mouse));
             auto ellipse = previewToCreateEllipse({pPoints->center, getMajorP(), pPoints->getRatio(), 0.0,
                             pPoints->isArc ? 2. * M_PI : 0., false});
-            if (showRefEntitiesOnPreview){
+            if (m_showRefEntitiesOnPreview){
                 previewRefSelectablePoint(mouse);
                 previewRefPoint(pPoints->center);
                 previewRefLine(pPoints->center, mouse);
@@ -132,7 +132,7 @@ void LC_ActionDrawEllipse1Point::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             auto ellipse = previewToCreateEllipse({pPoints->center, getMajorP(), pPoints->getRatio(),
                                            pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->center);
                 previewRefSelectablePoint(ellipse->getStartpoint());
                 previewEllipseReferencePoints(ellipse, false, true, mouse);
@@ -153,7 +153,7 @@ void LC_ActionDrawEllipse1Point::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             auto ellipse = previewToCreateEllipse({pPoints->center, getMajorP(), pPoints->getRatio(),
                                            pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefLine(pPoints->center, mouse);
                 previewRefPoint(pPoints->center);
                 auto point = pPoints->center + RS_Vector{pPoints->angle1}.scale(
@@ -348,7 +348,7 @@ bool LC_ActionDrawEllipse1Point::doProcessCommand(int status, const QString &com
 }
 
 QStringList LC_ActionDrawEllipse1Point::getAvailableCommands() {
-    if (actionType == RS2::ActionDrawEllipseArc1Point) {
+    if (m_actionType == RS2::ActionDrawEllipseArc1Point) {
         return {command("angle"), command("angle1"),command("angle2")};
     }
     else{

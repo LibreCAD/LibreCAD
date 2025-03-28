@@ -60,7 +60,7 @@ void RS_ActionDrawCircle3P::reset(){
 void RS_ActionDrawCircle3P::doTrigger() {
     preparePreview();
     if (pPoints->data.isValid()){
-        auto *circle = new RS_Circle{container, pPoints->data};
+        auto *circle = new RS_Circle{m_container, pPoints->data};
 
         setPenAndLayerToActive(circle);
 
@@ -104,7 +104,7 @@ void RS_ActionDrawCircle3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             double radius = pPoints->point1.distanceTo(center);
             previewCircle(RS_CircleData(center, radius));
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->point1);
                 previewRefLine(pPoints->point1, mouse);
                 previewRefSelectablePoint(mouse);
@@ -116,7 +116,7 @@ void RS_ActionDrawCircle3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             preparePreview();
             if (pPoints->data.isValid()) {
                 previewToCreateCircle(pPoints->data);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->data.center);
                     previewRefPoint(pPoints->point1);
                     previewRefPoint(pPoints->point2);

@@ -46,7 +46,7 @@ void RS_ActionEditUndo::init(int status) {
 }
 
 void RS_ActionEditUndo::trigger(){
-    if (!graphic){
+    if (!m_graphic){
         qWarning("undo: graphic is null");
         return;
     }
@@ -59,8 +59,8 @@ void RS_ActionEditUndo::trigger(){
             commandMessage(tr("Nothing to redo!"));
     }
 
-    graphic->addBlockNotification();
-    graphic->setModified(true);
+    m_graphic->addBlockNotification();
+    m_graphic->setModified(true);
     document->updateInserts();
     redrawDrawing();
     finish(false);

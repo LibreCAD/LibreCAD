@@ -104,7 +104,7 @@ void RS_ActionDrawPolyline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                 if (fabs(bulge) < RS_TOLERANCE || m_mode == Line){
                     previewToCreateLine(pPoints->point, mouse);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->point);
                         previewRefSelectablePoint(mouse);
                     }
@@ -114,7 +114,7 @@ void RS_ActionDrawPolyline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         tmpArcData.reversed = !tmpArcData.reversed;
                     }
                     auto arc = previewToCreateArc(tmpArcData);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         const RS_Vector &center = arc->getCenter();
                         const RS_Vector &endpoint = arc->getEndpoint();
                         const RS_Vector &startpoint = arc->getStartpoint();
@@ -384,7 +384,7 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                 pPoints->history.append(mouse);
                 pPoints->bHistory.append(bulge);
                 if (!pPoints->polyline){
-                    pPoints->polyline = new RS_Polyline(container, pPoints->data);
+                    pPoints->polyline = new RS_Polyline(m_container, pPoints->data);
                     pPoints->polyline->addVertex(pPoints->start, 0.0);
                 }
                 if (pPoints->polyline){
@@ -393,7 +393,7 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                     pPoints->polyline->setEndpoint(mouse);
                     if (pPoints->polyline->count() == 1){
                         setPenAndLayerToActive(pPoints->polyline);
-                        container->addEntity(pPoints->polyline);
+                        m_container->addEntity(pPoints->polyline);
                     }
                     deletePreview();
                     deleteSnapper();
@@ -656,7 +656,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
         pPoints->history.append(pPoints->point);
 
         if (pPoints->polyline == nullptr) {
-            pPoints->polyline = new RS_Polyline(container, pPoints->data);
+            pPoints->polyline = new RS_Polyline(m_container, pPoints->data);
             pPoints->polyline->addVertex(pPoints->start, 0.0);
         }
 
@@ -665,7 +665,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
 
         if (pPoints->polyline->count() == 1) {
             setPenAndLayerToActive(pPoints->polyline);
-            container->addEntity(pPoints->polyline);
+            m_container->addEntity(pPoints->polyline);
         }
 
         plottingX += stepSize;
@@ -786,7 +786,7 @@ void RS_ActionDrawPolyline::undo(){
             moveRelativeZero(pPoints->history.front());
             //remove polyline from container,
             //container calls delete over polyline
-            container->removeEntity(pPoints->polyline);
+            m_container->removeEntity(pPoints->polyline);
             pPoints->polyline = nullptr;
         }
         if (pPoints->polyline){

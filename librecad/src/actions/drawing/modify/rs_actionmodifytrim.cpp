@@ -47,8 +47,8 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(LC_ActionContext *actionContext, bool b
 RS_ActionModifyTrim::~RS_ActionModifyTrim() = default;
 
 void RS_ActionModifyTrim::init(int status) {
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
     RS_PreviewActionInterface::init(status);
 }
 
@@ -62,7 +62,7 @@ void RS_ActionModifyTrim::doTrigger() {
     if (trimEntity && trimEntity->isAtomic() &&
         limitEntity /* && limitEntity->isAtomic()*/) {
 
-        RS_Modification m(*container, viewport);
+        RS_Modification m(*m_container, m_viewport);
         [[maybe_unused]] LC_TrimResult trimResult =  m.trim(pPoints->trimCoord,  trimEntity,
                pPoints->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
                both);
@@ -97,14 +97,14 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                     auto *atomicTrimCandidate = dynamic_cast<RS_AtomicEntity *>(se);
 
-                    RS_Modification m(*container, viewport);
+                    RS_Modification m(*m_container, m_viewport);
                     LC_TrimResult trimResult = m.trim(mouse, atomicTrimCandidate,
                                                       pPoints->limitCoord, limitEntity,
                                                       both, true);
                     if (trimResult.result) {
                         trimInvalid = false;
                         highlightHover(se);
-                        if (showRefEntitiesOnPreview) {
+                        if (m_showRefEntitiesOnPreview) {
                             previewRefPoint(trimResult.intersection1);
                             previewRefTrimmedEntity(trimResult.trimmed1, se);
                             if (trimResult.intersection2.valid) {

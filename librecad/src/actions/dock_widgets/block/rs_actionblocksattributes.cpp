@@ -41,10 +41,10 @@ RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext *actionCon
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 
-	if (graphic != nullptr) {
-        RS_Block* block = graphic->getActiveBlock();
-        RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList && block) {
+	if (m_graphic != nullptr) {
+        RS_Block* block = m_graphic->getActiveBlock();
+        RS_BlockList* blockList = m_graphic->getBlockList();
+        if (blockList != nullptr && block != nullptr) {
             QString oldName = block->getName();
 
             RS_BlockData d;
@@ -67,9 +67,9 @@ void RS_ActionBlocksAttributes::trigger() {
                 blockList->rename(block, newName);
 
                 // update the name of all inserts:
-                graphic->renameInserts(oldName, newName);
+                m_graphic->renameInserts(oldName, newName);
 
-                graphic->addBlockNotification();
+                m_graphic->addBlockNotification();
             }
         }
     }

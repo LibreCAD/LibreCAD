@@ -41,7 +41,7 @@
 // fixme - sand - GENERAL: NAVIGATE TO OPTIONS WIDGET BY KEYBOARD (FOCUS from action, TABS) - so it should be possible not to move mouse to change some option
 
 RS_ActionModifyRotate::RS_ActionModifyRotate(LC_ActionContext *actionContext)
-    :LC_ActionModifyBase("Rotate Entities",actionContext, actionType=RS2::ActionModifyRotate)
+    :LC_ActionModifyBase("Rotate Entities",actionContext, m_actionType=RS2::ActionModifyRotate)
     ,data(new RS_RotateData()){
 }
 
@@ -64,7 +64,7 @@ void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit)
 void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
     moveRelativeZero(data->center);
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     m.rotate(*data, selectedEntities, false, keepSelected);
 }
 
@@ -80,7 +80,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 else {
                     mouse = getRelZeroAwarePoint(e, mouse);
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(mouse);
                 }
 
@@ -92,7 +92,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 else {
                     mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(data->center, mouse);
                     previewRefPoint(data->center);
                     previewRefSelectablePoint(mouse);
@@ -100,7 +100,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 if (!freeAngle){
                     RS_RotateData tmpData = *data;
                     tmpData.refPoint = mouse;
-                    RS_Modification m(*preview, viewport, false);
+                    RS_Modification m(*m_preview, m_viewport, false);
                     m.rotate(tmpData, selectedEntities, true, false);
                     previewRotationCircleAndPoints(data->center, mouse, data->angle);
                 }
@@ -117,14 +117,14 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                     mouse = getSnapAngleAwarePoint(e, data->refPoint, mouse, true);
                 }
                 RS_Vector originalReferencePoint = data->refPoint;
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(originalReferencePoint, mouse);
                     previewRefPoint(originalReferencePoint);
                 }
                 if (!freeAngle) {
                     RS_RotateData tmpData = *data;
                     tmpData.center = mouse;
-                    RS_Modification m(*preview, viewport, false);
+                    RS_Modification m(*m_preview, m_viewport, false);
                     m.rotate(tmpData, selectedEntities, true, false);
                     previewRotationCircleAndPoints(mouse, data->refPoint, data->angle);
 
@@ -157,7 +157,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                     if (e->isControl) {
                         mouse = center;
                     }
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefLine(center, mouse);
                     }
                 }
@@ -172,7 +172,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             double wcsAngle = center.angleTo(mouse);
             double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
             RS_Vector newAxisPoint = center.relative(radius, wcsAngle);
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 RS_Vector xAxisPoint = center.relative(radius, toWorldAngleFromUCSBasis(0));
                 previewSnapAngleMark(center, mouse);
                 previewRefSelectablePoint(newAxisPoint);
@@ -190,7 +190,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             double wcsRotationAngle = adjustRelativeAngleSignByBasis(rotationAngle);
             tmpData.angle = wcsRotationAngle;
 
-            RS_Modification m(*preview, viewport, false);
+            RS_Modification m(*m_preview, m_viewport, false);
             m.rotate(tmpData, selectedEntities, true, false);
 
             // todo - sand - we can temporarily add a copy of circle to the document, so intersection snap for target reference point will work.
@@ -216,7 +216,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             newRefPoint.rotate(center, data->angle);
             mouse = getSnapAngleAwarePoint(e, originalRefPoint, mouse, true);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewSnapAngleMark(newRefPoint, mouse);
                 previewRefPoint(newRefPoint);
                 previewRefLine(newRefPoint, mouse);
@@ -233,7 +233,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             RS_RotateData tmpData = *data;
             tmpData.secondAngle = adjustRelativeAngleSignByBasis(rotationAngle);
 
-            RS_Modification m(*preview, viewport, false);
+            RS_Modification m(*m_preview, m_viewport, false);
             m.rotate(tmpData, selectedEntities, true, false);
 
             if (isInfoCursorForModificationEnabled()) {
@@ -257,7 +257,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
 }
 
 void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &center, const RS_Vector &refPoint, double angle) {
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         double radius = center.distanceTo(refPoint);
         previewRefCircle(center, radius);
         int numberOfCopies = data->obtainNumberOfCopies();

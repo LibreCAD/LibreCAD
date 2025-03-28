@@ -39,7 +39,7 @@ void LC_ActionUCSCreate::doTrigger() {
 //   LC_ERR << "SET Origin. UCS: " << formatVector(m_originPoint) << " World: "<< formatVectorWCS(m_originPoint) << " Angle: " << formatAngle(m_angle);
 
    double angle = m_fixedAngle ? toWorldAngle(m_angle) : m_angle;
-   viewport->createUCS(m_originPoint, angle);
+   m_viewport->createUCS(m_originPoint, angle);
    setStatus(-1);
    finish(false);
 }
@@ -51,9 +51,9 @@ void LC_ActionUCSCreate::initFromSettings() {
 
 void LC_ActionUCSCreate::showUCSMark(RS_Vector &point, double angle){
     double uiX, uiY;
-    viewport->toUI(point, uiX, uiY);
+    m_viewport->toUI(point, uiX, uiY);
     auto *ucsMark = new LC_OverlayUCSMark({uiX, uiY}, angle, false, &m_ucsMarkOptions);
-    auto overlayContainer = viewport->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
+    auto overlayContainer = m_viewport->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
     overlayContainer->add(ucsMark);
 }
 
@@ -63,7 +63,7 @@ void LC_ActionUCSCreate::onMouseMoveEvent(int status, LC_MouseEvent *event) {
         case SetOrigin:{
             if (!trySnapToRelZeroCoordinateEvent(event)) {
                 showUCSMark(snap, m_fixedAngle ? -m_angle:0.0);
-                if (showRefEntitiesOnPreview){
+                if (m_showRefEntitiesOnPreview){
                     previewRefSelectablePoint(snap);
                 }
             }
@@ -73,7 +73,7 @@ void LC_ActionUCSCreate::onMouseMoveEvent(int status, LC_MouseEvent *event) {
             RS_Vector pos = getSnapAngleAwarePoint(event, m_originPoint, snap, true);
             m_currentAngle = m_originPoint.angleTo(pos);
             updateOptionsUI(1);
-            if (showRefEntitiesOnPreview){
+            if (m_showRefEntitiesOnPreview){
                 previewRefPoint(m_originPoint);
                 previewRefSelectablePoint(pos);
                 previewRefLine(m_originPoint, pos);

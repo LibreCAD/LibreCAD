@@ -75,8 +75,8 @@ RS_ActionModifyRound::~RS_ActionModifyRound() = default;
 void RS_ActionModifyRound::init(int status){
     RS_PreviewActionInterface::init(status);
 
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
 }
 
 void RS_ActionModifyRound::finish(bool updateTB){
@@ -101,7 +101,7 @@ bool RS_ActionModifyRound::removeOldFillet(RS_Entity *e, const bool &isPolyline)
         return false;
 
     if (!isPolyline)
-        container->removeEntity(e);
+        m_container->removeEntity(e);
 
     return true;
 }
@@ -135,7 +135,7 @@ void RS_ActionModifyRound::doTrigger() {
             }
 
             if (!foundPolyline){
-                for (auto *e: container->getEntityList()) {
+                for (auto *e: m_container->getEntityList()) {
                     if ((e != entity1) && (e != entity2)){
                         if (removeOldFillet(e, foundPolyline))
                             break;
@@ -144,7 +144,7 @@ void RS_ActionModifyRound::doTrigger() {
             }
         }
 
-        RS_Modification m(*container, viewport);
+        RS_Modification m(*m_container, m_viewport);
         m.round(pPoints->coord2,
                 pPoints->coord1,
                 (RS_AtomicEntity *) entity1,
@@ -182,14 +182,14 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     RS_Vector coord2 = se->getNearestPointOnEntity(mouse, true);
                     RS_Entity *tmp1 = entity1->clone();
                     RS_Entity *tmp2 = se->clone();
-                    tmp1->reparent(preview.get());
-                    tmp2->reparent(preview.get());
+                    tmp1->reparent(m_preview.get());
+                    tmp2->reparent(m_preview.get());
                     previewEntity(tmp1);
                     previewEntity(tmp2);
 
                     bool trim = pPoints->data.trim;
 //                    pPoints->data.trim = false;
-                    RS_Modification m(*preview, viewport, false);
+                    RS_Modification m(*m_preview, m_viewport, false);
                     LC_RoundResult *roundResult = m.round(mouse,
                                                           pPoints->coord1,
                                                           (RS_AtomicEntity *) tmp1,
@@ -204,7 +204,7 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                             RS_Vector arcStartPoint = arc->getStartpoint();
                             RS_Vector arcEndPoint = arc->getEndpoint();
-                            if (showRefEntitiesOnPreview) {
+                            if (m_showRefEntitiesOnPreview) {
                                 previewRefPoint(arcStartPoint);
                                 previewRefPoint(arcEndPoint);
                                 previewRefPoint(pPoints->coord1);
@@ -217,8 +217,8 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                                 }
                             }
                             if (trim){
-                                preview->removeEntity(roundResult->trimmed1);
-                                preview->removeEntity(roundResult->trimmed2);
+                                m_preview->removeEntity(roundResult->trimmed1);
+                                m_preview->removeEntity(roundResult->trimmed2);
                             }
 
                             if (isInfoCursorForModificationEnabled()){
@@ -232,8 +232,8 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                     pPoints->data.trim = trim;
 
-                    preview->removeEntity(tmp1);
-                    preview->removeEntity(tmp2);
+                    m_preview->removeEntity(tmp1);
+                    m_preview->removeEntity(tmp2);
 
                 }
             }
@@ -257,7 +257,7 @@ void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
         }
         else{
             if (mode == LC_RoundResult::TRIM_START){
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(original->getStartpoint());
                 }
                 previewLine(original->getStartpoint(), roundPoint);

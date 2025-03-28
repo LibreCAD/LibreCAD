@@ -24,13 +24,11 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-#include <QKeyEvent>
 
+#include <QKeyEvent>
 #include "doc_plugin_interface.h"
 #include "qc_actiongetent.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_snapper.h"
 
@@ -60,7 +58,7 @@ void QC_ActionGetEnt::setMessage(QString msg){
 
 void QC_ActionGetEnt::trigger() {
     if (en) {
-        RS_Selection s(*container, viewport);
+        RS_Selection s(*m_container, m_viewport);
         s.selectSingle(en);
         completed = true;
         updateMouseButtonHints();

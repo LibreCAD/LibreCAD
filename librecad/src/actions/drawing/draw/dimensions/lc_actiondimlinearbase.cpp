@@ -47,7 +47,7 @@ namespace {
 
 void LC_ActionDimLinearBase::doTrigger() {
     preparePreview();
-    auto *dim = createDim(container);
+    auto *dim = createDim(m_container);
     setPenAndLayerToActive(dim);
     dim->update();
     undoCycleAdd(dim);
@@ -70,17 +70,17 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 data->definitionPoint = mouse;
                 setExtensionPoint2(mouse);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(extPoint1, mouse);
                     previewRefSelectablePoint(mouse);
                 }
                 if (previewShowsFullDimension) {
                     preparePreview();
-                    RS_Entity *dim = createDim(preview.get());
+                    RS_Entity *dim = createDim(m_preview.get());
                     dim->update();
                     previewEntity(dim);
                 }
-                else if (showRefEntitiesOnPreview) {
+                else if (m_showRefEntitiesOnPreview) {
                     previewRefLine(extPoint1, mouse);
                 }
                 else{
@@ -98,7 +98,7 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 mouse = adjustByAdjacentDim(mouse, true);
                 data->definitionPoint = mouse;
                 preparePreview();
-                RS_Entity* dim = createDim(preview.get());
+                RS_Entity* dim = createDim(m_preview.get());
                 dim->update();
                 previewEntity(dim);
 #ifdef DEBUG_DIM_SNAP
@@ -214,7 +214,7 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
     RS_Vector endSnapPoint = getAdjacentDimDimSnapPoint(ownDimP2, snapRange);
     if (endSnapPoint.valid){
         result = dimTangentLine.getNearestPointOnEntity(endSnapPoint);
-        if (forPreview && showRefEntitiesOnPreview){
+        if (forPreview && m_showRefEntitiesOnPreview){
             previewRefPoint(endSnapPoint);
         }
     }
@@ -224,7 +224,7 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
         RS_Vector startSnapPoint = getAdjacentDimDimSnapPoint(ownDimP1, snapRange);
         if (startSnapPoint.valid){
             result = dimTangentLine.getNearestPointOnEntity(startSnapPoint);
-            if (forPreview && showRefEntitiesOnPreview){
+            if (forPreview && m_showRefEntitiesOnPreview){
                 previewRefPoint(startSnapPoint);
             }
         }

@@ -66,7 +66,7 @@ void RS_ActionInfoArea::display(bool forPreview){
     }
     switch (m_infoArea->size()) {
         case 1: {
-            if (showRefEntitiesOnPreview && forPreview) {
+            if (m_showRefEntitiesOnPreview && forPreview) {
                 previewRefSelectablePoint(m_infoArea->at(0));
             }
             break;
@@ -74,7 +74,7 @@ void RS_ActionInfoArea::display(bool forPreview){
         case 2: {
             if (forPreview) {
                 previewLine(m_infoArea->at(0), m_infoArea->at(1));
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(m_infoArea->at(0), m_infoArea->at(1));
                     previewRefPoint(m_infoArea->at(0));
                     previewRefSelectablePoint(m_infoArea->at(1));
@@ -88,17 +88,17 @@ void RS_ActionInfoArea::display(bool forPreview){
             if (forPreview) {
                 for (int i = 0; i < m_infoArea->size(); i++) {
                     previewLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
                     }
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     for (const RS_Vector& point: *m_infoArea) {
                         previewRefPoint(point);
                     }
                     previewRefSelectablePoint(m_infoArea->back());
                 }
-                if (infoCursorOverlayPrefs->enabled) {
+                if (m_infoCursorOverlayPrefs->enabled) {
                     QString msg = "\n";
                     msg.append(tr("Circumference: %1").arg(length));
                     msg.append("\n");

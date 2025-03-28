@@ -151,7 +151,7 @@ public:
     bool requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) override;
     bool requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) override;
     bool requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) override;
-    int requestOptionsGeneralDialog() override;
+
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;
     bool requestOptionsMakerCamDialog() override;
 
@@ -161,14 +161,6 @@ public:
                                     QString* selectedFilter = 0) override;
 
 
-/**
- * \brief updateMouseWidget Called when an action has a mouse hint.
- * \param left mouse hint for left button
- * \param right mouse hint for right button
- */
-    void updateMouseWidget(const QString& left=QString(),
-                           const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
-    void clearMouseWidgetIcon() override;
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;

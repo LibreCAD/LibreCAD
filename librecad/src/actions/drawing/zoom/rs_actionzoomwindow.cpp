@@ -66,10 +66,10 @@ void RS_ActionZoomWindow::init(int status){
 void RS_ActionZoomWindow::doTrigger() {
     RS_DEBUG->print("RS_ActionZoomWindow::trigger()");
     if (pPoints->v1.valid && pPoints->v2.valid){
-        if (viewport->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
+        if (m_viewport->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
             RS_Vector point1 = toUCS(pPoints->v1);
             RS_Vector point2 = toUCS(pPoints->v2);
-            viewport->zoomWindow(point1, point2, keepAspectRatio);
+            m_viewport->zoomWindow(point1, point2, keepAspectRatio);
             init(SetFirstCorner);
         }
     }
@@ -88,7 +88,7 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
         RS_Vector worldCorner2,worldCorner4;
         calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
 
-        preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
+        m_preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
     }
     drawPreview();
 }

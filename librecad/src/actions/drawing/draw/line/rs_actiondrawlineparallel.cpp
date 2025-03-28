@@ -64,10 +64,8 @@ void RS_ActionDrawLineParallel::setNumber(int n){
 }
 
 void RS_ActionDrawLineParallel::doTrigger() {
-    RS_Creation creation(container, graphicView);
-    RS_Entity *e = creation.createParallel(*coord,
-                                           distance, number,
-                                           entity);
+    RS_Creation creation(m_container, m_viewport);
+    RS_Entity *e = creation.createParallel(*coord,distance, number,entity);
 
     if (!e){
         RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:No parallels added\n");
@@ -82,10 +80,8 @@ void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_
     switch (getStatus()) {
         case SetEntity: {
             if (entity != nullptr){
-                RS_Creation creation(preview.get(), nullptr, false);
-                RS_Entity* createdParallel = creation.createParallel(*coord,
-                                        distance, number,
-                                        entity);
+                RS_Creation creation(m_preview.get(), nullptr, false);
+                RS_Entity* createdParallel = creation.createParallel(*coord,distance, number,entity);
                 if (createdParallel != nullptr){
                     highlightHover(entity);
                     if (number == 1){
@@ -94,7 +90,7 @@ void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_
                     else{
                        appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
                     }
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
                         previewRefPoint(nearest);
                     }
@@ -138,7 +134,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
                 finish(false);
                 accept = true;
                 // fixme - sand - files - direct action creation
-                graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(m_actionContext));
+                m_graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(m_actionContext));
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);
@@ -198,5 +194,5 @@ RS2::CursorType RS_ActionDrawLineParallel::doGetMouseCursor([[maybe_unused]] int
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawLineParallel::createOptionsWidget(){
-    return new QG_LineParallelOptions(actionType);
+    return new QG_LineParallelOptions(m_actionType);
 }

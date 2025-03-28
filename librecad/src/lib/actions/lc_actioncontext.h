@@ -42,9 +42,6 @@ public:
     virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) { };
     virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) { };
     virtual void hideSnapOptions() {};
-
-    virtual void clearMouseWidgetIcon(){};
-
     virtual void updateSelectionWidget(int countSelected, double selectedLength){}
 
     virtual void updateMouseWidget([[maybe_unused]]const QString& left = QString(),

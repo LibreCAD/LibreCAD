@@ -49,7 +49,7 @@ void LC_ActionDrawMidLine::doTrigger() {
         prepareLine(lineInfo, secondEntity, alternateEndpoints);
         RS_Line *lineToCreate = lineInfo.line;
         if (lineToCreate != nullptr) {
-            lineToCreate->reparent(container);
+            lineToCreate->reparent(m_container);
             setPenAndLayerToActive(lineToCreate);
             undoCycleAdd(lineToCreate);
         }
@@ -75,7 +75,7 @@ void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 LineInfo lineInfo;
                 prepareLine(lineInfo, ent, alternate);
                 if (lineInfo.line != nullptr){
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefLine(lineInfo.start1, lineInfo.start2);
                         previewRefLine(lineInfo.end1, lineInfo.end2);
                         previewRefPoint(lineInfo.start1);

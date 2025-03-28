@@ -47,13 +47,13 @@ void RS_ActionModifyAttributes::doTrigger(bool keepSelected){
     data.changeWidth = false;
     data.changeLayer = false;
 
-    if (graphic) {
-        graphicView->setForcedActionKillAllowed(false);
-        if (RS_DIALOGFACTORY->requestAttributesDialog(data,*graphic->getLayerList())) {
-            RS_Modification m(*container, viewport);
-            m.changeAttributes(data, selectedEntities, container, keepSelected);
+    if (m_graphic) {
+        m_graphicView->setForcedActionKillAllowed(false);
+        if (RS_DIALOGFACTORY->requestAttributesDialog(data,*m_graphic->getLayerList())) {
+            RS_Modification m(*m_container, m_viewport);
+            m.changeAttributes(data, selectedEntities, m_container, keepSelected);
         }
-        graphicView->setForcedActionKillAllowed(true);
+        m_graphicView->setForcedActionKillAllowed(true);
     }
 //    graphicView->killSelectActions();
 }

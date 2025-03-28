@@ -113,7 +113,7 @@ RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,R
 }
 
 void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, bool contourOnRightSide, QList<RS_Polyline*> &createdPolylines){
-    if (!container){
+    if (!m_container){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_ActionPolylineEquidistant::makeContour: no valid container");
     }
@@ -139,7 +139,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
     RS_Arc arcFirst(nullptr, RS_ArcData(origin, 0, 0, 0, false));//previous arc
 
     for (int num = 1; num <= number || (number == 0 && num <= 1); num++) {
-        auto newPolyline = new RS_Polyline(container);
+        auto newPolyline = new RS_Polyline(m_container);
 
 
         bool first = true;
@@ -261,7 +261,7 @@ void RS_ActionPolylineEquidistant::doTrigger() {
 
             for (RS_Polyline *newPolyline: polylines) {
                 newPolyline->setLayerToActive(); // fixme - cache layer to set
-                container->addEntity(newPolyline);
+                m_container->addEntity(newPolyline);
                 undoableAdd(newPolyline);
             }
             undoCycleEnd();
@@ -281,7 +281,7 @@ void RS_ActionPolylineEquidistant::onMouseMoveEvent(int status, LC_MouseEvent *e
             highlightHover(en);
             auto polyline = dynamic_cast<RS_Polyline *>(en);
             RS_Vector coord = e->graphPoint;
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 RS_Vector nearest = polyline->getNearestPointOnEntity(coord, true);
                 previewRefPoint(nearest);
                 previewRefLine(nearest, coord);
@@ -291,7 +291,7 @@ void RS_ActionPolylineEquidistant::onMouseMoveEvent(int status, LC_MouseEvent *e
             makeContour(polyline, pointOnRightSide, polylines);
 
             for (RS_Polyline *newPolyline: polylines) {
-               newPolyline->reparent(preview.get());
+               newPolyline->reparent(m_preview.get());
                previewEntity(newPolyline);
             }
         }

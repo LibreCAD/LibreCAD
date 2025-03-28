@@ -34,7 +34,7 @@
 #include "rs_preview.h"
 
 RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(LC_ActionContext *actionContext)
-    :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, actionType = RS2::ActionDrawLinePolygonCenCor){
+    :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, m_actionType = RS2::ActionDrawLinePolygonCenCor){
 }
 
 RS_ActionDrawLinePolygonCenCor::~RS_ActionDrawLinePolygonCenCor() = default;

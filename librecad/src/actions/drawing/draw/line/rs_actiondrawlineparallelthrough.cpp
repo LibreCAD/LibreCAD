@@ -54,7 +54,7 @@ void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
 
 void RS_ActionDrawLineParallelThrough::doTrigger() {
     if (entity){
-        RS_Creation creation(container, graphicView);
+        RS_Creation creation(m_container, m_viewport);
         RS_Entity *e = creation.createParallelThrough(*coord,number,entity, symmetric);
 
         if (!e){
@@ -70,7 +70,7 @@ void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int stat
             entity = catchAndDescribe(e, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
                     previewRefPoint(nearest);
                 }
@@ -80,7 +80,7 @@ void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int stat
         case SetPos: {
             *coord = getFreeSnapAwarePoint(e, snap);
             highlightSelected(entity);
-            RS_Creation creation(preview.get(), nullptr, false);
+            RS_Creation creation(m_preview.get(), nullptr, false);
             auto en = creation.createParallelThrough(*coord, number, entity, symmetric);
             if (en != nullptr){
                 RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
@@ -92,7 +92,7 @@ void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int stat
                     int creatingNumber = number * (symmetric ? 2 : 1);
                     appendInfoCursorEntityCreationMessage(QString::number(creatingNumber) + tr(" entities will be created"));
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(nearest);
                     previewRefLine(nearest, *coord);
 

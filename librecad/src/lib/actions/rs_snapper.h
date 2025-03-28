@@ -207,16 +207,16 @@ public:
     virtual void drawSnapper();
     void drawInfoCursor();
     bool hasNonDefaultAnglesBasis();
-    LC_GraphicViewport* getViewPort() {return viewport;}
+    LC_GraphicViewport* getViewPort() {return m_viewport;}
 protected:
     void deleteSnapper();
     void deleteInfoCursor();
     double getSnapRange() const;
-    RS_EntityContainer *container = nullptr;
-    RS_GraphicView *graphicView = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
+    RS_EntityContainer *m_container = nullptr;
+    RS_GraphicView *m_graphicView = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
     RS_Entity *keyEntity = nullptr;
-    RS_SnapMode snapMode{};
+    RS_SnapMode m_snapMode{};
     LC_ActionContext* m_actionContext {nullptr};
 
     double m_distanceBeforeSwitchToFreeSnap {5.0}; //< The distance to snap before defaulting to free snapping.
@@ -230,17 +230,15 @@ protected:
      * Snap to equidistant middle points
      * default to 1, i.e., equidistant to start/end points
      */
-    int middlePoints = 1;
+    int m_middlePoints = 1;
     /**
      * Snap range for catching entities. In GUI units
      */
     int m_catchEntityGuiRange = 32;
+    bool m_finished{false};
 
-
-    bool finished{false};
-
-    LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
-    LC_InfoCursorData infoCursorOverlayData = LC_InfoCursorData();
+    LC_InfoCursorOverlayPrefs* m_infoCursorOverlayPrefs = nullptr;
+    LC_InfoCursorData m_infoCursorOverlayData = LC_InfoCursorData();
 
     // values cached for the efficiency
     RS2::LinearFormat m_linearFormat{};
@@ -250,7 +248,6 @@ protected:
     RS2::Unit m_unit{};
     double m_anglesBase = 0.0;
     bool m_anglesCounterClockWise = true;
-
     bool m_ignoreSnapToGridIfNoGrid = false;
 
     RS_Vector toGraph(const QMouseEvent *e) const;
@@ -312,7 +309,7 @@ private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;
     struct Indicator;
-    std::unique_ptr<Indicator> snap_indicator;
+    std::unique_ptr<Indicator> m_snapIndicator;
 };
 
 #endif

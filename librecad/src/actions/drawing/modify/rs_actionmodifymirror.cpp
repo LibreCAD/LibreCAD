@@ -52,7 +52,7 @@ RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
 void RS_ActionModifyMirror::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     m.mirror(pPoints->data, selectedEntities, false, keepSelected);
 }
 
@@ -104,11 +104,11 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     tmpData.axisPoint1 = mirrorLinePoint1;
     tmpData.axisPoint2 = mirrorLinePoint2;
 
-    RS_Modification m(*preview, viewport, false);
+    RS_Modification m(*m_preview, m_viewport, false);
     m.mirror(tmpData, selectedEntities, true, false);
     previewLine(mirrorLinePoint1, mirrorLinePoint2);
 
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         previewRefLine(mirrorLinePoint1, mirrorLinePoint2);
         previewRefPoint(mirrorLinePoint1);
         previewRefSelectablePoint(mirrorLinePoint2);

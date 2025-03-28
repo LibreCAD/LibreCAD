@@ -51,14 +51,14 @@ RS_ActionSelectIntersected::~RS_ActionSelectIntersected() = default;
 void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);
     pPoints = std::make_unique<Points>();
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
 }
 
 void RS_ActionSelectIntersected::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-            RS_Selection s(*container, viewport);
+            RS_Selection s(*m_container, m_viewport);
             s.selectIntersected(pPoints->v1, pPoints->v2, select);
             init(SetPoint1);
         }

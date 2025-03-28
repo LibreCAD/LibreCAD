@@ -43,14 +43,14 @@ void LC_ActionSplineFromPolyline::doTrigger() {
         if (createdEntity != nullptr) {
             RS_Layer *layerToSet;
             if (useCurrentLayer) {
-                layerToSet = graphicView->getGraphic()->getActiveLayer();
+                layerToSet = m_graphicView->getGraphic()->getActiveLayer();
             } else {
                 layerToSet = entityToModify->getLayer();
             }
 
             RS_Pen penToUse;
             if (useCurrentAttributes) {
-                penToUse = graphicView->getGraphic()->getActivePen();
+                penToUse = m_graphicView->getGraphic()->getActivePen();
             } else {
                 penToUse = entityToModify->getPen(false);
             }
@@ -75,11 +75,11 @@ void LC_ActionSplineFromPolyline::finish(bool updateTB) {
 
 void LC_ActionSplineFromPolyline::setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse) {
     // todo - sand - isn't it a candidates for some reusable util?
-    createdEntity->setParent(container);
+    createdEntity->setParent(m_container);
     createdEntity->setPen(penToUse);
     createdEntity->setLayer(layerToSet);
     createdEntity->setSelected(true); // fixme - sand - check whether it should be selected??
-    container->addEntity(createdEntity);
+    m_container->addEntity(createdEntity);
     undoableAdd(createdEntity);
 }
 

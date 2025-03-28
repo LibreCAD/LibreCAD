@@ -63,7 +63,7 @@ void RS_ActionDrawLineHorVert::init(int status){
 }
 
 void RS_ActionDrawLineHorVert::doTrigger() {
-    auto *line = new RS_Line(container, pPoints->data);
+    auto *line = new RS_Line(m_container, pPoints->data);
     setPenAndLayerToActive(line);
     moveRelativeZero(line->getMiddlePoint());
     undoCycleAdd(line);

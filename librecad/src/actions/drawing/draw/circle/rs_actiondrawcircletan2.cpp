@@ -80,7 +80,7 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
 }
 
 void RS_ActionDrawCircleTan2::doTrigger() {
-    auto *circle = new RS_Circle(container, pPoints->cData);
+    auto *circle = new RS_Circle(m_container, pPoints->cData);
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
@@ -129,7 +129,7 @@ void RS_ActionDrawCircleTan2::onMouseMoveEvent([[maybe_unused]]int status, LC_Mo
                 for (const auto &center: pPoints->centers) {
                     previewRefSelectablePoint(center);
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected // fixme - test and review, which cicle center is used
                         RS_Vector candidateCircleCenter = pPoints->cData.center;
                         if (isLine(pc)) {

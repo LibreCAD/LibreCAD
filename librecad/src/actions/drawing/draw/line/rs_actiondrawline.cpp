@@ -115,7 +115,7 @@ void RS_ActionDrawLine::init(int status){
 }
 
 void RS_ActionDrawLine::doTrigger() {
-    auto* line = new RS_Line(container, pPoints->data);
+    auto* line = new RS_Line(m_container, pPoints->data);
     setPenAndLayerToActive(line);
     moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
     undoCycleAdd(line);
@@ -134,7 +134,7 @@ void RS_ActionDrawLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (startPoint.valid){
                 mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
                 previewToCreateLine(startPoint, mouse);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(startPoint);
                     previewRefSelectablePoint(mouse);
                 }
@@ -355,7 +355,7 @@ void RS_ActionDrawLine::undo(){
             }
             case HA_SetEndpoint:
             case HA_Close: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(true, m_actionContext));
+                m_graphicView->setCurrentAction( new RS_ActionEditUndo(true, m_actionContext));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetEndpoint);
                 break;
@@ -390,12 +390,12 @@ void RS_ActionDrawLine::redo(){
                 break;
             }
             case HA_SetEndpoint: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(false, m_actionContext));
+                m_graphicView->setCurrentAction( new RS_ActionEditUndo(false, m_actionContext));
                 setStatus(SetEndpoint);
                 break;
             }
             case HA_Close: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(false, m_actionContext));
+                m_graphicView->setCurrentAction( new RS_ActionEditUndo(false, m_actionContext));
                 setStatus(SetStartpoint);
                 break;
             }

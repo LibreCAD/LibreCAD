@@ -43,11 +43,11 @@ LC_ActionDrawLineAngleRel:: LC_ActionDrawLineAngleRel(LC_ActionContext *actionCo
     // the same action may be used for drawing orthogonal lines and lines with specified angles
     if( fixedAngle &&
         RS_Math::getAngleDifference(RS_Math::deg2rad(angle), M_PI_2) < RS_TOLERANCE_ANGLE){
-        actionType = RS2::ActionDrawLineOrthogonalRel;
+        m_actionType = RS2::ActionDrawLineOrthogonalRel;
         relativeAngle = true;
     }
     else
-        actionType =  RS2::ActionDrawLineAngleRel;
+        m_actionType =  RS2::ActionDrawLineAngleRel;
 }
 
 LC_ActionDrawLineAngleRel::~LC_ActionDrawLineAngleRel() = default;
@@ -66,7 +66,7 @@ bool LC_ActionDrawLineAngleRel::isSetActivePenAndLayerOnTrigger(){
  * @param list
  */
 void LC_ActionDrawLineAngleRel::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    auto* en = new RS_Line{container, tickData->tickLineData};
+    auto* en = new RS_Line{m_container, tickData->tickLineData};
     setPenAndLayerToActive(en);
     list<<en;
 
@@ -231,7 +231,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(LC_MouseEvent *e, RS_Ve
                 auto * previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
                 previewEntityToCreate(previewLine, false);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     // add reference points
                     if (lineSnapMode == LINE_SNAP_FREE) {
                         createRefSelectablePoint(data->tickSnapPosition, list);
@@ -257,7 +257,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(LC_MouseEvent *e, RS_Ve
             auto * previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
             previewEntityToCreate(previewLine, false);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 // add reference points
                 createRefPoint(data->tickSnapPosition, list);
                 createRefPoint(data->tickLineData.endpoint, list);
@@ -430,7 +430,7 @@ RS2::CursorType LC_ActionDrawLineAngleRel::doGetMouseCursor(int status){
 }
 
 void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
-    bool hasModifiers = (actionType == RS2::ActionDrawLineAngleRel);
+    bool hasModifiers = (m_actionType == RS2::ActionDrawLineAngleRel);
     switch (getStatus()) {
         case SetLine:
             // fixme - sand - support mirrorring of snap by CTRL? 

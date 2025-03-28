@@ -53,8 +53,8 @@
  *   document shall be created for this window.
  * @param parent An instance of QMdiArea.
  */
-QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, bool printPreview)
-    : QMdiSubWindow(parent, {})
+QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, bool printPreview, LC_ActionContext* actionContext)
+    : QMdiSubWindow(parent, {Qt::WA_DeleteOnClose})
     , m_owner{doc == nullptr}{
     setAttribute(Qt::WA_DeleteOnClose);
     cadMdiArea=qobject_cast<QMdiArea*>(parent);
@@ -66,7 +66,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, bool printPreview)
         document = doc;
     }
 
-    setupGraphicView(parent, printPreview);
+    setupGraphicView(parent, printPreview, actionContext);
 
     static unsigned idCounter = 0;
     id = idCounter++;
@@ -95,13 +95,13 @@ QC_MDIWindow::~QC_MDIWindow(){
     }
 }
 
-void QC_MDIWindow::setupGraphicView(QWidget *parent, bool printPreview){
+void QC_MDIWindow::setupGraphicView(QWidget *parent, bool printPreview, LC_ActionContext* actionContext){
     if (printPreview){
-        graphicView = new LC_PrintPreviewView(this, document);
+        graphicView = new LC_PrintPreviewView(this, document, actionContext);
         graphicView->initView();
     }
     else{
-        graphicView = new QG_GraphicView(this, document);
+        graphicView = new QG_GraphicView(this, document, actionContext);
         graphicView->initView();
     }
     graphicView->setPrintPreview(printPreview);
@@ -170,7 +170,6 @@ void QC_MDIWindow::removeWidgetsListeners(){
         }
     }
 }
-
 
 
 QG_GraphicView* QC_MDIWindow::getGraphicView() const{
@@ -257,32 +256,50 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 /**
  * Called by Qt when the user closes this MDI window.
  */
+// fixme - sand - files - remove, fully delegate to main window
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     bool cancel = false;
     bool hasParent = getParentWindow() != nullptr;
     const auto& appWin = QC_ApplicationWindow::getAppWindow();
+
     if (getDocument()->isModified() && !hasParent) {
-        auto value=appWin->showCloseDialog(this);
-        switch (value) {
-        case QG_ExitDialog::Save:
-            cancel = !appWin->doSave(this);
-            break;
-        case QG_ExitDialog::Accepted:
-            break;
-        case QG_ExitDialog::Cancel:
-        default:
-            cancel = true;
-            break;
+        int exitChoice = QG_ExitDialog::Save;
+
+        switch (saveOnClosePolicy) {
+            case ASK: {
+                exitChoice = appWin->showCloseDialog(this);
+                break;
+            }
+            case SAVE: {
+                exitChoice = QG_ExitDialog::Save;
+                break;
+            }
+            case DONT_SAVE: {
+                exitChoice = QG_ExitDialog::DontSave;
+                break;
+            }
+        }
+        switch (exitChoice) {
+            case QG_ExitDialog::Save:
+                cancel = !appWin->doSave(this);
+                break;
+            case QG_ExitDialog::DontSave:
+                break;
+            case QG_ExitDialog::Cancel:
+            default:
+                cancel = true;
+                break;
         }
     }
-    if (!cancel)
-    {
+
+
+    if (cancel){
+        appWin->autoSaveCurrentDrawing();
+        ce->ignore();
+    } else {
         appWin->doClose(this);
         appWin->doArrangeWindows(RS2::CurrentMode);
         ce->accept(); // handling delegated to QApplication
-    } else {
-        appWin->autoSaveCurrentDrawing();
-        ce->ignore();
     }
 }
 
@@ -383,7 +400,7 @@ bool QC_MDIWindow::saveDocumentAs(bool &cancelled) {
     return result;
 }
 
-void QC_MDIWindow::slotZoomAuto() {
+void QC_MDIWindow::zoomAuto() {
 	if(graphicView){
         if(graphicView->isPrintPreview()){
             graphicView->getViewPort()->zoomPage();
@@ -391,6 +408,10 @@ void QC_MDIWindow::slotZoomAuto() {
             graphicView->zoomAuto();
         }
     }
+}
+
+bool QC_MDIWindow::isModified(){
+    return getDocument()->isModified();
 }
 
 void QC_MDIWindow::drawChars() {

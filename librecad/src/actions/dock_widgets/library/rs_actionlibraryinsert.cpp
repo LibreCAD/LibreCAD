@@ -38,9 +38,11 @@
 #include "rs_debug.h"
 
 struct RS_ActionLibraryInsert::Points {
-    RS_Graphic prev;
+    RS_Graphic* prev;
     RS_LibraryInsertData data;
 };
+
+// fixme - sand - UCS - support of UCS for inserting blocks (angle)!!!
 
 /**
  * Constructor.
@@ -61,8 +63,9 @@ void RS_ActionLibraryInsert::init(int status) {
 void RS_ActionLibraryInsert::setFile(const QString& file) {
     pPoints->data.file = file;
     LC_DocumentsStorage storage;
-    if (!storage.loadDocument(&pPoints->prev, file, RS2::FormatUnknown)) {
-    // if (!pPoints->prev.open(file, RS2::FormatUnknown)) {
+    delete pPoints->prev;
+    pPoints->prev = new RS_Graphic();
+    if (!storage.loadDocument(pPoints->prev, file, RS2::FormatUnknown)) {
         commandMessage(tr("Cannot open file '%1'").arg(file));
     }
 }
@@ -71,49 +74,43 @@ void RS_ActionLibraryInsert::reset() {
     pPoints->data.insertionPoint = {};
     pPoints->data.factor = 1.0;
     pPoints->data.angle = 0.0;
+    delete pPoints->prev;
 }
 
 void RS_ActionLibraryInsert::trigger() {
     deletePreview();
-    RS_Creation creation(container, graphicView);
-    LC_DocumentsStorage storage;
-    QString fileName = pPoints->data.file;
-    auto g = RS_Graphic();
-    if (storage.loadDocument(&g, fileName, RS2::FormatUnknown)) {
-        pPoints->data.graphic = &g;
-        creation.createLibraryInsert(pPoints->data);
-        redrawDrawing();
-    }
-    else {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Creation::createLibraryInsert: Cannot open file: %s", fileName.toStdString().c_str());
-    }
+    RS_Creation creation(m_container, m_viewport);
+    auto insertData    = pPoints->data;
+    insertData.graphic = pPoints->prev;
+    insertData.angle = toWorldAngleFromUCSBasis(pPoints->data.angle);
+    creation.createLibraryInsert(insertData);
+    redrawDrawing();
 }
 
 void RS_ActionLibraryInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
-        case SetTargetPoint:
+        case SetTargetPoint: {
             pPoints->data.insertionPoint = e->snapPoint;
             //if (block) {
-            preview->addAllFrom(pPoints->prev, viewport);
-            preview->move(pPoints->data.insertionPoint);
-            preview->scale(pPoints->data.insertionPoint,
+            m_preview->addAllFrom(*pPoints->prev, m_viewport);
+            m_preview->move(pPoints->data.insertionPoint);
+            m_preview->scale(pPoints->data.insertionPoint,
                            RS_Vector(pPoints->data.factor, pPoints->data.factor));
             // unit conversion:
-            if (graphic) {
-                double const uf = RS_Units::convert(1.0, pPoints->prev.getUnit(),
-                                                    graphic->getUnit());
-                preview->scale(pPoints->data.insertionPoint,
+            if (m_graphic) {
+                double const uf = RS_Units::convert(1.0, pPoints->prev->getUnit(),
+                                                    m_graphic->getUnit());
+                m_preview->scale(pPoints->data.insertionPoint,
                                {uf, uf});
             }
-            preview->rotate(pPoints->data.insertionPoint, pPoints->data.angle);
+            m_preview->rotate(pPoints->data.insertionPoint, toWorldAngleFromUCSBasis(pPoints->data.angle));
             // too slow:
             //RS_Creation creation(preview, NULL, false);
             //creation.createInsert(data);
 
             //}
             break;
-
+        }
         default:
             break;
     }

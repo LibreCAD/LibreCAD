@@ -35,8 +35,8 @@ RS_ActionZoomPan::RS_ActionZoomPan(LC_ActionContext *actionContext)
 
 void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
     x1 = y1 = x2 = y2 = -1;
     setStatus(SetPanStart);
 //    updateMouseButtonHints();
@@ -48,7 +48,7 @@ void RS_ActionZoomPan::trigger() {
         v1 = v2;
 }*/
     if (getStatus()==SetPanning && (std::abs(x2-x1)>7 || std::abs(y2-y1)>7)) {
-        viewport->zoomPan(x2-x1, y2-y1);
+        m_viewport->zoomPan(x2-x1, y2-y1);
         x1 = x2;
         y1 = y2;
     }
@@ -59,7 +59,7 @@ void RS_ActionZoomPan::trigger() {
 
 void RS_ActionZoomPan::finish(bool updateTB) {
     RS_ActionInterface::finish(updateTB);
-    viewport->setPanning(false);
+    m_viewport->setPanning(false);
     redraw();
 }
 
@@ -80,7 +80,7 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
         x1 = e->position().x();
         y1 = e->position().y();
         setStatus(SetPanning);
-        viewport->setPanning(true);
+        m_viewport->setPanning(true);
     }
 }
 

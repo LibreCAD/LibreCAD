@@ -80,7 +80,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe
                         list << polyline;
                     }
 
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         if (!lineJoinData->parallelLines) {
                             RS_Vector &intersectionPoint = lineJoinData->intersectPoint;
                             createRefPoint(intersectionPoint, list);
@@ -130,7 +130,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe
                 RS_Polyline *polyline = linesJoinData->polyline;
                 if (polyline != nullptr){
                     list << polyline->clone();
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         if (!linesJoinData->parallelLines) {
                             RS_Vector &intersectionPoint = linesJoinData->intersectPoint;
                             createRefPoint(intersectionPoint, list);
@@ -298,7 +298,7 @@ void LC_ActionModifyLineJoin::doPrepareTriggerEntities(QList<RS_Entity *> &list)
         RS_Line *l2;
 
         if (createPolyline && major1.valid && major2.valid){ // handle polyline mode
-            auto *poly = new RS_Polyline(container);
+            auto *poly = new RS_Polyline(m_container);
             poly->addVertex(major1);
             poly->addVertex(intersectionPoint);
             poly->addVertex(major2);
@@ -410,7 +410,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedNonPar
     result->parallelLines = false;
 
     // resulting polyline
-    auto *polyline = new RS_Polyline(container);
+    auto *polyline = new RS_Polyline(m_container);
 
     // processing of line 1
     // determining how intersection and snap points are located relating to line endpoints
@@ -464,7 +464,7 @@ void LC_ActionModifyLineJoin::updateLine1TrimData(RS_Vector snap){
     if (polyline != nullptr){ // we'll rebuild polyline, so delete original one
         delete polyline;
     }
-    polyline = new RS_Polyline(container);
+    polyline = new RS_Polyline(m_container);
     linesJoinData->polyline = polyline;
 
     RS_Vector &intersection = linesJoinData->intersectPoint;
@@ -667,7 +667,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedParall
         // merge to lines into single line. Here we don't care whether lines are overlapping
         // or not - just use external endpoints for the new line
         if (line1EdgeMode == EDGE_EXTEND_TRIM || line2EdgeMode == EDGE_EXTEND_TRIM){
-            auto *polyline = new RS_Polyline(container);
+            auto *polyline = new RS_Polyline(m_container);
 
             // we just use most left and most right point as vertexes
             polyline->addVertex(leftPoint);
@@ -687,7 +687,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedParall
             // fills a gap between lines if there is no intersection
             if (!hasIntersection){
                 // we can do this only if lines are not overlapped
-                auto *polyline = new RS_Polyline(container);
+                auto *polyline = new RS_Polyline(m_container);
 
                 // add gap points
                 polyline->addVertex(middleLeftPoint);

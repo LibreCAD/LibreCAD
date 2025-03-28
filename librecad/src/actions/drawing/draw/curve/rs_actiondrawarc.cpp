@@ -71,7 +71,7 @@ void RS_ActionDrawArc::doTrigger() {
     if (alternateArcDirection){
         data->reversed = !data->reversed;
     }
-    auto arc = new RS_Arc(container,*data);
+    auto arc = new RS_Arc(m_container,*data);
     setPenAndLayerToActive(arc);
     moveRelativeZero(arc->getCenter());
     undoCycleAdd(arc);
@@ -90,14 +90,14 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetRadius: {
             if (data->center.valid){
-                if (actionType == RS2::ActionDrawArc) {
+                if (m_actionType == RS2::ActionDrawArc) {
                     mouse = getFreeSnapAwarePoint(e, mouse);
                 }
                 else{
                     mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
                 }
                 data->radius = data->center.distanceTo(mouse);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefPoint(mouse);
                     previewRefLine(data->center, mouse);
@@ -118,7 +118,7 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             previewArc(*data);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(data->center);
                 RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
                 previewRefSelectablePoint(startArcPoint);
@@ -136,7 +136,7 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             auto arc = previewToCreateArc(tmpData);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoints({data->center, arc->getStartpoint()});
                 previewRefSelectablePoint(arc->getEndpoint());
                 previewRefLine(data->center, mouse);
@@ -158,7 +158,7 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             auto arc = previewToCreateArc(tmpData);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(data->center);
                 previewRefPoint(arc->getStartpoint());
                 previewRefPoint(arc->getEndpoint());
@@ -202,7 +202,7 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             if (LC_LineMath::isMeaningfulDistance(mouse, arcStart)) {
                 auto arc = previewToCreateArc(dataCopy);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(arc->getEndpoint());
                     previewRefLine(arcStart, mouse);
                     previewRefLine(arc->getStartpoint(), arc->getEndpoint());
@@ -221,7 +221,7 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     }
                 }
             }
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(arcStart);
                 previewRefPoint(data->center);
                 previewRefSelectablePoint(mouse);
@@ -249,7 +249,7 @@ void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     bool shouldFireCoordinateEvent = true;
     switch (status) {
         case SetRadius: {
-            if (actionType == RS2::ActionDrawArc) {
+            if (m_actionType == RS2::ActionDrawArc) {
                 mouse = getFreeSnapAwarePoint(e, mouse);
             }
             else{
@@ -291,7 +291,7 @@ void RS_ActionDrawArc::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_
     switch (status) {
         case SetChordLength:{
             moveRelativeZero(data->center);
-            if (actionType == RS2::ActionDrawArc) {
+            if (m_actionType == RS2::ActionDrawArc) {
                 setStatus(SetAngle2);
             }
             else{
@@ -300,7 +300,7 @@ void RS_ActionDrawArc::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_
             break;
         }
         case SetIncAngle:{
-            if (actionType == RS2::ActionDrawArc) {
+            if (m_actionType == RS2::ActionDrawArc) {
                 setStatus(SetAngle2);
             }
             else{
@@ -326,7 +326,7 @@ void RS_ActionDrawArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZer
             if (data->center.valid){
                 data->radius = data->center.distanceTo(mouse);
             }
-            switch (actionType){
+            switch (m_actionType){
                 case RS2::ActionDrawArc:  {
                     setStatus(SetAngle1);
                     break;
@@ -491,7 +491,7 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
 }
 
 QStringList RS_ActionDrawArc::getAvailableCommands() {
-    if (actionType == RS2::ActionDrawArc) {
+    if (m_actionType == RS2::ActionDrawArc) {
         return {command("angle"), command("chordlen"),command("reversed")};
     }
     else{
@@ -505,7 +505,7 @@ void RS_ActionDrawArc::updateMouseButtonHints(){
             updateMouseWidgetTRCancel(tr("Specify center"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetRadius:
-            if (actionType == RS2::ActionDrawArc) {
+            if (m_actionType == RS2::ActionDrawArc) {
                 updateMouseWidgetTRBack(tr("Specify radius"), MOD_SHIFT_FREE_SNAP);
             }
             else{

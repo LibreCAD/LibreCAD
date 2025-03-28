@@ -57,9 +57,9 @@ void RS_ActionDrawEllipse4Points::init(int status) {
 void RS_ActionDrawEllipse4Points::doTrigger() {
     RS_Entity *en;
     if (getStatus() == SetPoint4 && pPoints->evalid){
-        en = new RS_Ellipse(container, pPoints->eData);
+        en = new RS_Ellipse(m_container, pPoints->eData);
     } else {
-        en = new RS_Circle(container, pPoints->cData);
+        en = new RS_Circle(m_container, pPoints->cData);
     }
 
     if (moveRelPointAtCenterAfterTrigger){
@@ -78,7 +78,7 @@ void RS_ActionDrawEllipse4Points::onMouseMoveEvent(int status, LC_MouseEvent *e)
         trySnapToRelZeroCoordinateEvent(e);
     }
 
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         for (int i = SetPoint2; i <= status; i++) {
             previewRefPoint(pPoints->points.at(i - 1));
         }
@@ -98,7 +98,7 @@ void RS_ActionDrawEllipse4Points::onMouseMoveEvent(int status, LC_MouseEvent *e)
                 if (pPoints->valid){
                     previewToCreateCircle(pPoints->cData);
 
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->cData.center);
                     }
                 }
@@ -107,7 +107,7 @@ void RS_ActionDrawEllipse4Points::onMouseMoveEvent(int status, LC_MouseEvent *e)
             case SetPoint4: {
                 if (pPoints->evalid) {
                     auto ellipse = previewToCreateEllipse(pPoints->eData);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewEllipseReferencePoints(ellipse, true);
                         previewRefSelectablePoint(mouse);
                     }
@@ -138,7 +138,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     switch (getStatus()) {
         case SetPoint2:
         case SetPoint3: {
-            RS_Circle c(preview.get(), pPoints->cData);
+            RS_Circle c(m_preview.get(), pPoints->cData);
             pPoints->valid = c.createFrom3P(pPoints->points);
             if (pPoints->valid){
                 pPoints->cData = c.getData();
@@ -149,13 +149,13 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
             int j = SetPoint4;
             pPoints->evalid = false;
             if ((pPoints->points.get(j) - pPoints->points.get(j - 1)).squared() < RS_TOLERANCE15){
-                RS_Circle c(preview.get(), pPoints->cData);
+                RS_Circle c(m_preview.get(), pPoints->cData);
                 pPoints->valid = c.createFrom3P(pPoints->points);
                 if (pPoints->valid){
                     pPoints->cData = c.getData();
                 }
             } else {
-                RS_Ellipse e{preview.get(), pPoints->eData};
+                RS_Ellipse e{m_preview.get(), pPoints->eData};
                 pPoints->valid = e.createFrom4P(pPoints->points);
                 if (pPoints->valid){
                     pPoints->evalid = pPoints->valid;

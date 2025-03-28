@@ -30,15 +30,14 @@
 #include "rs_graphicview.h"
 
 RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,LC_ActionContext *actionContext)
-    :RS_ActionInterface("Freeze all Blocks", actionContext) {
-
-    this->freeze = freeze;
+    :RS_ActionInterface("Freeze all Blocks", actionContext),
+     m_freeze(freeze){
 }
 
 void RS_ActionBlocksFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionBlocksFreezeAll::trigger");
-    if (graphic) {
-        graphic->freezeAllBlocks(freeze);
+    if (m_graphic != nullptr) {
+        m_graphic->freezeAllBlocks(m_freeze);
     }
     redrawDrawing();
     finish(false);

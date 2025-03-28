@@ -182,7 +182,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle2Points::createP
 
 void LC_ActionDrawRectangle2Points::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         if (corner1Set) {
             createRefPoint(corner1, list);
         }

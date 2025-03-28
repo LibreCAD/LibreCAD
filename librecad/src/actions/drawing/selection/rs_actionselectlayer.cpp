@@ -45,7 +45,7 @@ void RS_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]]int status, LC_Mouse
 
 void RS_ActionSelectLayer::doTrigger() {
     if (en){
-        RS_Selection s(*container, viewport);
+        RS_Selection s(*m_container, m_viewport);
         s.selectLayer(en);
     } else {
         RS_DEBUG->print("RS_ActionSelectLayer::trigger: Entity is NULL\n");

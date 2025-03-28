@@ -83,14 +83,14 @@ void RS_ActionSelectWindow::doTrigger() {
             RS_Vector ucsP2 = toUCS(pPoints->v2);
 
             bool cross = (ucsP1.x > ucsP2.x) || selectIntersecting;
-            RS_Selection s(*container, viewport);
+            RS_Selection s(*m_container, m_viewport);
             bool doSelect = select;
             if (invertSelectionOperation){
                 doSelect = !doSelect;
             }
             // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
             RS_Vector wcsP1, wcsP2;
-            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+            m_viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
 
             if (selectAllEntityTypes) {
                 s.selectWindow(RS2::EntityType::EntityUnknown, wcsP1, wcsP2, doSelect, cross);
@@ -118,7 +118,7 @@ void RS_ActionSelectWindow::onMouseMoveEvent([[maybe_unused]]int status, LC_Mous
             QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
             msg.append(tr(" entities "));
             msg.append(cross? tr("that intersect with box") : tr("that are within box"));
-            infoCursorOverlayData.setZone2(msg);
+            m_infoCursorOverlayData.setZone2(msg);
             const RS_Vector pos = e->graphPoint;
             forceUpdateInfoCursor(pos);
         }

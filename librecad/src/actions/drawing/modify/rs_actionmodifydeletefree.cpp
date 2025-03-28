@@ -63,7 +63,7 @@ void RS_ActionModifyDeleteFree::trigger(){
                     // splits up the polyline in the container:
                     RS_Polyline *pl1 = nullptr;
                     RS_Polyline *pl2 = nullptr;
-                    RS_Modification m(*container,viewport);
+                    RS_Modification m(*m_container,m_viewport);
                     m.splitPolyline(*polyline,
                                     *e1, pPoints->v1,
                                     *e2, pPoints->v2,

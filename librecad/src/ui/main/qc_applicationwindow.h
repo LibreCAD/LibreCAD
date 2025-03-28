@@ -31,13 +31,9 @@
 
 #include <memory>
 
-#include <QMap>
-#include <QSettings>
-
 #include "rs.h"
 #include "rs_pen.h"
 #include "rs_snapper.h"
-#include "mainwindowx.h"
 #include "lc_penpalettewidget.h"
 #include "lc_quickinfowidget.h"
 #include "lc_mdiapplicationwindow.h"
@@ -48,6 +44,7 @@
 #include "lc_ucsstatewidget.h"
 #include "lc_anglesbasiswidget.h"
 #include "lc_workspacesmanager.h"
+class LC_ActionOptionsManager;
 class LC_ApplicationWindowDialogsHelper;
 class LC_PluginInvoker;
 class LC_CreatorInvoker;
@@ -97,13 +94,10 @@ struct DockAreas
  *
  * @author Andrew Mustun
  */
-class QC_ApplicationWindow: public LC_MDIApplicationWindow
-{
+class QC_ApplicationWindow: public LC_MDIApplicationWindow{
     Q_OBJECT
 public:
-
-    enum
-    {
+    enum{
         DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT = 2000
     };
 
@@ -112,7 +106,7 @@ public:
     void initSettings();
     void storeSettings();
 
-    bool queryMayExit();
+    bool tryCloseAllBeforeExist();
 
     /** Catch hotkey for giving focus to command line. */
      void keyPressEvent(QKeyEvent* e) override;
@@ -120,9 +114,10 @@ public:
 
     void setUndoEnable(bool enable);
     void setSaveEnable(bool enable);
-    static bool loadStyleSheet(QString path);
+    static bool loadStyleSheet(const QString &path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
+    void onViewCurrentActionChanged(RS_ActionInterface *action);
     QAction* getAction(const QString& name) const;
 
     void activateWindow(QMdiSubWindow* w){
@@ -134,14 +129,15 @@ public:
     void fireIconsRefresh();
     void fireWidgetSettingsChanged();
     void fireWorkspacesChanged();
+    void fireCurrentActionIconChanged(QAction* actionIcon);
     void showStatusMessage(const QString& msg, int timeout = 0);
-
+    void notificationMessage(const QString &msg, int timeout);
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
     void slotBack();
     void slotKillAllActions();
-    void slotEnter();
+    void onEnterKey();
     void slotFocusCommandLine();
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
@@ -153,19 +149,15 @@ public slots:
     //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
     /** generates a new document for a graphic. */
-    QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
+    QC_MDIWindow* createNewDrawingWindow(RS_Document* doc, const QString& expectedFileName);
     /** generates a new document based in predefined template */
-    void slotFileNewNew();
+    void slotFileNewFromDefaultTemplate();
     /** generates a new document based in selected template */
-    void slotFileNewTemplate();
+    void slotFileNewFromTemplate();
     /** opens a document */
     void slotFileOpen();
 
-    /**
-     * opens the given file.
-     */
-    void openFile(const QString& fileName, RS2::FormatType type);
-    void slotFileOpen(const QString& fileName); // Assume Unknown type
+
     void slotFileOpenRecent(QAction* action);
     /** saves a document */
     void slotFileSave();
@@ -178,19 +170,14 @@ public slots:
     void autoSaveCurrentDrawing();
     /** exports the document as bitmap */
     void slotFileExport();
-    bool slotFileExport(const QString& name,
-                        const QString& format,
-                        QSize size,
-                        QSize borders,
-                        bool black,
-                        bool bw=true);
-    /** closing the current file */
-    void slotFileClosing(QC_MDIWindow*);
+
     bool doCloseAllFiles();
     /** close all files; return false == operation cancelled */
 	void slotFileCloseAll();
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
+    bool closePrintPreview(QC_MDIWindow *parent);
+    void openPrintPreview(QC_MDIWindow *parent);
     void slotFilePrintPDF();
     /** shows print preview of the current file */
     void slotFilePrintPreview(bool on);
@@ -210,12 +197,9 @@ public slots:
     void slotViewGridIsoLeft(bool toggle);
     void slotViewGridIsoRight(bool toggle);
     void slotViewGridIsoTop(bool toggle);
-
     void slotOptionsGeneral();
     void slotOptionsShortcuts();
-
     void slotImportBlock();
-
     /** shows an about dlg*/
     void showAboutWindow();
 
@@ -224,27 +208,14 @@ public slots:
      * update layer name when active layer changed
      */
     void slotUpdateActiveLayer();
-
-
-    //void invokeLinkList();
-
     void toggleFullscreen(bool checked);
-
     void setPreviousZoomEnable(bool enable);
-
-    void hideOptions(QC_MDIWindow*);
-
     void widgetOptionsDialog();
-
     void modifyCommandTitleBar(Qt::DockWidgetArea area);
     void reloadStyleSheet();
-
     void updateGridStatus(const QString&);
-
     void showDeviceOptions();
-
     void updateDevice(QString);
-
     void invokeMenuCreator();
     void invokeToolbarCreator();
     void saveNamedView();
@@ -278,17 +249,13 @@ signals:
     void iconsRefreshed();
     void widgetSettingsChanged();
     void workspacesChanged(bool hasWorkspaces);
+    void currentActionIconChanged(QAction* actionIcon);
+    void currentGraphicViewChanged(RS_GraphicView* graphicView);
 public:
     /**
      * @return Pointer to application window.
      */
     static std::unique_ptr<QC_ApplicationWindow>&  getAppWindow();
-    void setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleString, bool draftMode);
-    void setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode);
-    /**
-     * Creates a new document. Implementation from RS_MainWindowInterface.
-     */
-    void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
 
     QG_PenToolBar* getPenToolBar() {return m_penToolBar;};
 
@@ -326,12 +293,21 @@ public:
     void doClose(QC_MDIWindow* w, bool activateNext = true);
     void setupWidgetsByWindow(QC_MDIWindow *w);
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
-    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
-
+    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const;
     void fillWorkspacesList(QList<QPair<int, QString>> &list);
     void applyWorkspaceById(int id);
     void rebuildMenuIfNecessary();
+
+    /** closing the current file */
+    void closeWindow(QC_MDIWindow*); // fixme - sand - files - rework, needed for block
+    void openFile(const QString& fileName); // Assume Unknown type
+    /**
+ * opens the given file.
+ */
+    void openFile(const QString& fileName, RS2::FormatType type);
+    void changeDrawingOptions(int tabIndex);
 protected:
+
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
     void dropEvent(QDropEvent* e) override;
@@ -344,18 +320,22 @@ protected:
     QAction* checkAction(const QString& name, bool enable) const;
     void checkActions(const std::vector<QString> &actionList, bool enable) const;
     QC_ApplicationWindow();
-
     QMenu* createPopupMenu() override;
-
     QString getFileNameFromFullPath(const QString &path);
     void updateCoordinateWidgetFormat();
-	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
+    void updateWidgetsAsDocumentLoaded(QC_MDIWindow *w);
+    void autoZoomAfterLoad(QG_GraphicView *graphicView);
+    bool newDrawingFromTemplate(const QString &fileName, QC_MDIWindow* w = nullptr);
 	void doActivate(QMdiSubWindow* w) override;
     void enableFileActions(QC_MDIWindow* w);
-    void updateWindowTitle(QWidget* w);
-    void loadPlugins();
     void doSlotWindowActivated(QMdiSubWindow *w, bool forced) override;
-    void setCurrentQAction(QAction * action);
+    bool doFileExport(RS_Graphic* graphic, const QString& name,const QString& format,
+                            QSize size, QSize borders, bool black, bool bw=true);
+
+    void setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleString, bool draftMode);
+    void setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode, bool forPreview);
+
+
 #ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
@@ -366,7 +346,9 @@ protected:
     LC_ApplicationWindowDialogsHelper* m_dlgHelpr{nullptr};
     LC_WorkspacesManager m_workspacesManager;
     LC_MenuFactory* m_menuFactory {nullptr};
-    LC_ReleaseChecker* m_releaseChecker;
+    LC_ReleaseChecker* m_releaseChecker {nullptr};
+    LC_DefaultActionContext* m_actionContext{nullptr};
+    LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
@@ -402,7 +384,7 @@ protected:
     LC_RelZeroCoordinatesWidget* m_relativeZeroCoordinatesWidget {nullptr};
     QG_MouseWidget* m_mouseWidget {nullptr};
     QG_SelectionWidget* m_selectionWidget {nullptr};
-    QG_ActiveLayerName* m_activeLayerName {nullptr};
+    QG_ActiveLayerName* m_activeLayerNameWidget {nullptr};
     TwoStackedLabels* m_gridStatusWidget {nullptr};
     LC_UCSStateWidget* m_ucsStateWidget {nullptr};
     LC_AnglesBasisWidget* m_anglesBasisWidget{nullptr};
@@ -411,7 +393,7 @@ protected:
     // --- Toolbars ---
     QG_SnapToolBar* m_snapToolBar {nullptr};
     QG_PenToolBar* m_penToolBar {nullptr}; //!< for selecting the current pen
-    QToolBar* m_optionWidget {nullptr}; //!< for individual tool options
+    QToolBar* m_toolOptionsToolbar {nullptr}; //!< for individual tool options
 
     // --- Actions ---
     QAction* scriptOpenIDE {nullptr};
@@ -429,20 +411,18 @@ protected:
     QList<QAction*> m_recentFilesActionList;
 
     QStringList openedFiles;
-
-
     QString m_styleSheetPath;
-
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
 
-
-
     void enableWidgets(bool enable);
-    friend class LC_WidgetFactory;
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
     void doRestoreNamedView(int i) const;
 
-    void doForEachWindowGraphicView(std::function<void(QG_GraphicView*)> callback) const;
+
+    friend class LC_WidgetFactory;
+    friend class LC_ActionFactory;
+    friend class LC_ToolbarFactory;
+    friend class LC_ApplicationWindowInitializer;
 };
 
 #ifdef _WINDOWS

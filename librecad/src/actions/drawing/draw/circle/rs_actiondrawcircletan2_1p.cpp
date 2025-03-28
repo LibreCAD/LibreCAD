@@ -82,7 +82,7 @@ void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
 }
 
 void RS_ActionDrawCircleTan2_1P::doTrigger() {
-    auto *circle = new RS_Circle(container, pPoints->cData);
+    auto *circle = new RS_Circle(m_container, pPoints->cData);
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
@@ -162,7 +162,7 @@ void RS_ActionDrawCircleTan2_1P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             previewRefSelectablePoint(vp);
         }
 
-        if (showRefEntitiesOnPreview) {
+        if (m_showRefEntitiesOnPreview) {
             if (status == SetPoint || status == SetCenter) {
                 RS_Vector center = pPoints->cData.center;
                 previewRefPoint(pPoints->circles.at(0)->getNearestPointOnEntity(center, false));

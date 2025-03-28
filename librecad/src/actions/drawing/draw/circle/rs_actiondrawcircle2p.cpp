@@ -62,7 +62,7 @@ void RS_ActionDrawCircle2P::reset() {
 void RS_ActionDrawCircle2P::doTrigger() {
     preparePreview();
     if (data->isValid()){
-        auto *circle = new RS_Circle(container,*data);
+        auto *circle = new RS_Circle(m_container,*data);
 
         setPenAndLayerToActive(circle);
 
@@ -102,7 +102,7 @@ void RS_ActionDrawCircle2P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             preparePreview();
             if (data->isValid()){
                 previewToCreateCircle(*data);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefPoint(pPoints->point1);
                     previewRefSelectablePoint(pPoints->point2);

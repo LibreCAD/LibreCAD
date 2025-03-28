@@ -48,7 +48,7 @@ void RS_ActionPolylineTrim::doTrigger() {
 
     polylineToModify->setSelected(false);
 
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     auto newPolyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *Segment2, false);
     if (newPolyline != nullptr){
         polylineToModify = newPolyline;
@@ -90,7 +90,7 @@ void RS_ActionPolylineTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                             previewRefPoint(Segment1->getStartpoint());
                             previewRefPoint(Segment1->getEndpoint());
 
-                            RS_Modification m(*preview, viewport);
+                            RS_Modification m(*m_preview, m_viewport);
                             auto polyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *candidate, true);
                             if (polyline != nullptr){
                                 highlightHover(en);

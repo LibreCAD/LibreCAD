@@ -70,7 +70,7 @@ void LC_ActionInfo3PointsAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 mouse = getSnapAngleAwarePoint(e, point1, mouse, true, e->isControl);
                 previewRefPoint(point1);
                 updateInfoCursor(mouse, point1);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefSelectablePoint(mouse);
                     previewRefLine(point1, mouse);
                 }
@@ -84,7 +84,7 @@ void LC_ActionInfo3PointsAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 previewRefPoint(point2);
                 previewRefSelectablePoint(mouse);
                 updateInfoCursor(mouse, point2, point1);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(point1, point2);
                     previewRefLine(point2, mouse);
 
@@ -175,7 +175,7 @@ RS2::CursorType LC_ActionInfo3PointsAngle::doGetMouseCursor([[maybe_unused]] int
 }
 
 void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
-    if (infoCursorOverlayPrefs->enabled){
+    if (m_infoCursorOverlayPrefs->enabled){
         double distance = startPoint.distanceTo(mouse);
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Distance:"),formatLinear(distance));
@@ -187,7 +187,7 @@ void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const R
 }
 
 void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &point2, const RS_Vector &startPoint) {
-    if (infoCursorOverlayPrefs->enabled) {
+    if (m_infoCursorOverlayPrefs->enabled) {
         double wcsAngle1 = point2.angleTo(point1);
         double wcsAngle2 = point2.angleTo(mouse);
 

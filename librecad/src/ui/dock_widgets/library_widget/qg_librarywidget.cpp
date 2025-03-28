@@ -42,6 +42,7 @@
 
 #include <QToolButton>
 
+#include "lc_documentsstorage.h"
 #include "qg_actionhandler.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
@@ -120,14 +121,12 @@ void QG_LibraryWidget::setActionHandler(QG_ActionHandler* ah) {
  */
 void QG_LibraryWidget::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
-
-    case Qt::Key_Escape:
-        emit escape();
-        break;
-
-    default:
-        QWidget::keyPressEvent(e);
-        break;
+        case Qt::Key_Escape:
+            emit escape();
+            break;
+        default:
+            QWidget::keyPressEvent(e);
+            break;
     }
 }
 
@@ -139,8 +138,9 @@ void QG_LibraryWidget::insert() {
     QItemSelectionModel* selIconView = ivPreview->selectionModel();
     QModelIndex idx = selIconView->currentIndex();
     QStandardItem * item = iconModel->itemFromIndex ( idx );
-    if (item == nullptr)
+    if (item == nullptr) {
         return;
+    }
 
     QString dxfPath = getItemPath(item);
 
@@ -148,8 +148,8 @@ void QG_LibraryWidget::insert() {
         if (actionHandler) {
             RS_ActionInterface* a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
-            if (a) {
-                RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
+            if (a != nullptr) {
+                auto* action = (RS_ActionLibraryInsert*)a;
                 action->setFile(std::move(dxfPath));
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -379,7 +379,7 @@ QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile,
     }
 }
 
-
+// fixme - sand - files - generation of thumbnails should be extracted!!!
 
 /**
  * @return Path to the thumbnail of the given DXF file. If no thumbnail exists, one is
@@ -440,7 +440,10 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     viewport.setSize(128,128);
 
     RS_Graphic graphic;
-    if (!graphic.open(dxfPath, RS2::FormatUnknown)) {
+
+    LC_DocumentsStorage storage;
+
+    if (!storage.loadDocument(&graphic, dxfPath, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'",
                         dxfPath.toLatin1().data());

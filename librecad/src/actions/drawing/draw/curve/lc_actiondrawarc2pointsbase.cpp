@@ -38,7 +38,7 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
     if (createdEntity != nullptr){
 
         createdEntity->setSelected(true);
-        createdEntity->setParent(container);
+        createdEntity->setParent(m_container);
         setPenAndLayerToActive(createdEntity);
         undoCycleAdd(createdEntity);
 
@@ -56,7 +56,7 @@ void LC_ActionDrawArc2PointsBase::onMouseMoveEvent(int status, LC_MouseEvent *e)
     switch (status){
         case SetPoint1:{
             mouse = getRelZeroAwarePoint(e, mouse);
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefSelectablePoint(mouse);
             }
             break;
@@ -68,7 +68,7 @@ void LC_ActionDrawArc2PointsBase::onMouseMoveEvent(int status, LC_MouseEvent *e)
             if (arc != nullptr){
                 previewEntityToCreate(arc);
                 RS_Vector center = arc->getCenter();
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(startPoint);
                     previewRefSelectablePoint(arc->getEndpoint());
                     previewRefPoint(center);
@@ -216,7 +216,7 @@ void LC_ActionDrawArc2PointsBase::setParameter(double pL) {
 }
 
 LC_ActionOptionsWidget *LC_ActionDrawArc2PointsBase::createOptionsWidget() {
-    return new LC_ActionDrawArc2POptions(actionType);
+    return new LC_ActionDrawArc2POptions(m_actionType);
 }
 
 RS_Arc *LC_ActionDrawArc2PointsBase::createArc(int status, RS_Vector pos, bool reverse, bool reportErrors) {

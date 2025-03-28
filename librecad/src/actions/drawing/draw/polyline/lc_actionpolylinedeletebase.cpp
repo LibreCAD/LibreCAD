@@ -29,10 +29,10 @@ LC_ActionPolylineDeleteBase::LC_ActionPolylineDeleteBase(const char *name, LC_Ac
 }
 
 void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(LC_MouseEvent *e, RS_Vector &vertex, RS_Entity *&segment){
-    bool oldSnapOnEntity = snapMode.snapOnEntity;
-    snapMode.snapOnEntity = true;
+    bool oldSnapOnEntity = m_snapMode.snapOnEntity;
+    m_snapMode.snapOnEntity = true;
     RS_Vector snap = e->snapPoint;
-    snapMode.snapOnEntity = oldSnapOnEntity;
+    m_snapMode.snapOnEntity = oldSnapOnEntity;
     deletePreview();
     auto polyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e, RS2::EntityPolyline));
     if (polyline == polylineToModify){

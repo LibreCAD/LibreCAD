@@ -48,7 +48,7 @@ void RS_ActionDrawMText::init(int status){
         case ShowDialog: {
             reset();
             RS_MText tmp(nullptr, *data);
-            if (RS_DIALOGFACTORY->requestMTextDialog(&tmp, viewport)){
+            if (RS_DIALOGFACTORY->requestMTextDialog(&tmp, m_viewport)){
                 const RS_MTextData &editedData = tmp.getData();
                 data.reset(new RS_MTextData(editedData));
                 setStatus(SetPos);
@@ -62,7 +62,7 @@ void RS_ActionDrawMText::init(int status){
         case SetPos: {
             updateOptions();
             deletePreview();
-            preview->setVisible(true);
+            m_preview->setVisible(true);
             preparePreview();
             break;
         }
@@ -89,7 +89,7 @@ void RS_ActionDrawMText::reset() {
 void RS_ActionDrawMText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
     if (pos->valid){
-        auto text = std::make_unique<RS_MText>(container, *data);
+        auto text = std::make_unique<RS_MText>(m_container, *data);
         text->update();
         undoCycleAdd(text.get());
         text.release();
@@ -100,12 +100,12 @@ void RS_ActionDrawMText::doTrigger() {
 
 void RS_ActionDrawMText::preparePreview() {
     data->insertionPoint = *pos;
-    auto text = std::make_unique<RS_MText>(preview.get(), *data);
+    auto text = std::make_unique<RS_MText>(m_preview.get(), *data);
     text->update();
     previewEntity(text.get());
     text.release();
     textChanged = false;
-    preview->setVisible(true);
+    m_preview->setVisible(true);
 }
 
 void RS_ActionDrawMText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -114,11 +114,11 @@ void RS_ActionDrawMText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         mouse = getRelZeroAwarePoint(e, mouse);
         RS_Vector mov = mouse - *pos;
         *pos = mouse;
-        if (textChanged || pos->valid == false || preview->isEmpty()){
+        if (textChanged || pos->valid == false || m_preview->isEmpty()){
             preparePreview();
         } else {
-            preview->move(mov);
-            preview->setVisible(true);
+            m_preview->move(mov);
+            m_preview->setVisible(true);
         }
     }
 }

@@ -72,7 +72,7 @@ void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
 }
 
 void RS_ActionDrawEllipseInscribe::doTrigger() {
-    auto *ellipse = new RS_Ellipse(container, pPoints->eData);
+    auto *ellipse = new RS_Ellipse(m_container, pPoints->eData);
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(ellipse->getCenter());
@@ -137,7 +137,7 @@ void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e
                         if (preparePreview(line, tangent)){
                             highlightHover(line);
                             auto ellipse = previewToCreateEllipse(pPoints->eData);
-                            if (showRefEntitiesOnPreview) {
+                            if (m_showRefEntitiesOnPreview) {
                                 RS_Vector ellipseCenter = ellipse->getCenter();
 
                                 for (const auto &i: tangent) {
@@ -162,7 +162,7 @@ void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e
 bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent){
     pPoints->valid = false;
     pPoints->lines.push_back(fourthLineCandidate);
-    RS_Ellipse e{preview.get(), RS_EllipseData()};
+    RS_Ellipse e{m_preview.get(), RS_EllipseData()};
     pPoints->valid = e.createInscribeQuadrilateral(pPoints->lines, tangent);
     if (pPoints->valid){
         pPoints->eData = e.getData();

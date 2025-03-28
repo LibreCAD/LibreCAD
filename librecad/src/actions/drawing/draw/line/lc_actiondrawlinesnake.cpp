@@ -67,7 +67,7 @@ void LC_ActionDrawLineSnake::resetPoints(){
  * @param list  list of entities to add created line
  */
 void LC_ActionDrawLineSnake::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    auto *line = new RS_Line(container, pPoints->data);
+    auto *line = new RS_Line(m_container, pPoints->data);
     list << line;
 }
 
@@ -145,7 +145,7 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]LC_MouseEv
     if (!directionName.isEmpty()){
         appendInfoCursorEntityCreationMessage(tr("Direction:") + directionName);
     }
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         createRefPoint(pPoints->data.startpoint, list);
         createRefSelectablePoint(possibleEndPoint, list);
     }
@@ -544,7 +544,7 @@ void LC_ActionDrawLineSnake::undo(){
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
-                graphicView->setCurrentAction(new RS_ActionEditUndo(true, m_actionContext));
+                m_graphicView->setCurrentAction(new RS_ActionEditUndo(true, m_actionContext));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetDirection);
                 break;
@@ -582,12 +582,12 @@ void LC_ActionDrawLineSnake::redo(){
 
             case HA_Polyline:
             case HA_SetEndpoint:
-                graphicView->setCurrentAction(new RS_ActionEditUndo(false, m_actionContext));
+                m_graphicView->setCurrentAction(new RS_ActionEditUndo(false, m_actionContext));
                 setStatus(SetDirection);
                 break;
 
             case HA_Close:
-                graphicView->setCurrentAction(new RS_ActionEditUndo(false, m_actionContext));
+                m_graphicView->setCurrentAction(new RS_ActionEditUndo(false, m_actionContext));
                 setStatus(SetDirection);
                 break;
 
@@ -632,7 +632,7 @@ void LC_ActionDrawLineSnake::polyline(){
         addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
         // fixme - sand - files - direct action creation
         auto *polylineSegmentAction = new RS_ActionPolylineSegment(m_actionContext, en);
-        graphicView->setCurrentAction(polylineSegmentAction);
+        m_graphicView->setCurrentAction(polylineSegmentAction);
     }
 }
 

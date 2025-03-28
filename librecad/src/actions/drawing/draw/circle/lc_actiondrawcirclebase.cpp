@@ -55,7 +55,7 @@ void LC_ActionDrawCircleBase::reset(){
 }
 
 void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises, bool allPointsNotSelectable, RS_Vector mouse){
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         RS_Vector center = ellipse->getCenter();
         RS_Vector majorP = ellipse->getMajorP();
         const RS_Vector &major1 = center - majorP;

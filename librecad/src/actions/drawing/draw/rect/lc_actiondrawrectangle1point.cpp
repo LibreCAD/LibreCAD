@@ -248,7 +248,7 @@ void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]LC_MouseEvent *e, int 
 void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
     createRefSelectablePoint(snap, list);
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         if (status == SetAngleFree) {
             createRefPoint(insertionPoint, list);
             createRefLine(insertionPoint, snap, list);

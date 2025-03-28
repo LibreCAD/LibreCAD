@@ -54,7 +54,7 @@ struct LC_ActionDrawSplinePoints::Points {
 
 LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(LC_ActionContext *actionContext)
     :RS_ActionDrawSpline(actionContext), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionDrawSplinePoints;
+    m_actionType = RS2::ActionDrawSplinePoints;
     setName("DrawSplinePoints");
 }
 
@@ -91,7 +91,7 @@ void LC_ActionDrawSplinePoints::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetNextPoint: {
             auto *sp = dynamic_cast<LC_SplinePoints *>(pPoints->spline->clone());
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 for (auto const &v: sp->getPoints()) {
                     previewRefPoint(v);
                 }
@@ -124,10 +124,10 @@ void LC_ActionDrawSplinePoints::onCoordinateEvent(int status, [[maybe_unused]] b
         case SetStartPoint: {
             pPoints->undoBuffer.clear();
             if (pPoints->spline.get() == nullptr){
-                pPoints->spline.reset(new LC_SplinePoints(container, pPoints->data));
+                pPoints->spline.reset(new LC_SplinePoints(m_container, pPoints->data));
                 pPoints->spline->addPoint(mouse);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(mouse);
                 }
             }

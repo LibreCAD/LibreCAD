@@ -106,7 +106,7 @@ void RS_ActionDrawSpline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 tmpSpline->update();
                 previewEntity(tmpSpline);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     auto cpts = tmpSpline->getControlPoints();
                     for (size_t i = 0; i < cpts.size() - 1; i++) {
                         const RS_Vector &vp = cpts[i];
@@ -144,7 +144,7 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool is
             pPoints->history.clear();
             pPoints->history.append(mouse);
             if (!pPoints->spline){
-                pPoints->spline = new RS_Spline(container, pPoints->data);
+                pPoints->spline = new RS_Spline(m_container, pPoints->data);
                 pPoints->spline->addControlPoint(mouse);
             }
             setStatus(SetNextPoint);

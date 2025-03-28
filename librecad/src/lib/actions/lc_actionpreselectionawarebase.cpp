@@ -103,12 +103,12 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
 
             bool cross = (ucsP1.x > ucsP2.x);
 
-            RS_Selection s(*container, viewport);
+            RS_Selection s(*m_container, m_viewport);
             bool select = !e->isShift;
 
             // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
             RS_Vector wcsP1, wcsP2;
-            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+            m_viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
 
             if (catchForSelectionEntityTypes.isEmpty()){
                 s.selectWindow(RS2::EntityUnknown, wcsP1, wcsP2, select, cross);
@@ -149,12 +149,12 @@ void LC_ActionPreSelectionAwareBase::onMouseMoveEvent(int status, LC_MouseEvent 
     }
     else{
         RS_Vector mouse = e->graphPoint;
-        if (selectionCorner1.valid && (viewport->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
+        if (selectionCorner1.valid && (m_viewport->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
             inBoxSelectionMode = true;
         }
         if (inBoxSelectionMode){
             drawOverlayBox(selectionCorner1, mouse);
-            if (infoCursorOverlayPrefs->enabled) {
+            if (m_infoCursorOverlayPrefs->enabled) {
                 // restore selection box to ucs
                 RS_Vector ucsP1 = toUCS(selectionCorner1);
                 RS_Vector ucsP2 = toUCS(mouse);
@@ -163,7 +163,7 @@ void LC_ActionPreSelectionAwareBase::onMouseMoveEvent(int status, LC_MouseEvent 
                 QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                 msg.append(tr(" entities "));
                 msg.append(cross? tr("that intersect with box") : tr("that are within box"));
-                infoCursorOverlayData.setZone2(msg);
+                m_infoCursorOverlayData.setZone2(msg);
                 RS_Snapper::forceUpdateInfoCursor(mouse);
             }
         }
@@ -256,7 +256,7 @@ void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection([[maybe_unused]]
 
 void LC_ActionPreSelectionAwareBase::doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const {
     if (entityToSelect != nullptr){
-        RS_Selection s(*container, viewport);
+        RS_Selection s(*m_container, m_viewport);
         // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
         if (entityToSelect->isAtomic() && selectContour) {
             s.selectContour(entityToSelect);

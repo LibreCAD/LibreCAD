@@ -122,14 +122,14 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]LC_MouseE
     // draw preview if this is non-zero line
     if (isNonZeroLine(possibleEndPoint)){
         createPoints(possibleEndPoint, list);
-        if (actionType == RS2::ActionDrawPointsMiddle && list.size() == 1){
+        if (m_actionType == RS2::ActionDrawPointsMiddle && list.size() == 1){
             RS_Entity* ep = list.at(0);
             auto* point = dynamic_cast<RS_Point *>(ep);
             if (point != nullptr){
                 previewEntityToCreate(point, false);
             }
         }
-        if (showRefEntitiesOnPreview) {
+        if (m_showRefEntitiesOnPreview) {
             createRefSelectablePoint(possibleEndPoint, list);
             createRefPoint(startpoint, list);
 //            if (actionType == RS2::ActionDrawPointsMiddle){
@@ -323,7 +323,7 @@ bool LC_ActionDrawLinePoints::isNonZeroLine(const RS_Vector &possiblePoint) cons
 bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]int status, const QString &c){
     bool result = true;
     bool shouldProcess = false;
-    if (actionType == RS2::ActionDrawLinePoints) {
+    if (m_actionType == RS2::ActionDrawLinePoints) {
         bool edgeStatus = status == SetEdge;
         if (checkCommand("edge_none", c)) {        //specifies no points in line edges
             updateEdgePointsMode(DRAW_EDGE_NONE);
@@ -469,7 +469,7 @@ QStringList LC_ActionDrawLinePoints::getAvailableCommands(){
         case SetPointsCount:
         case SetPoint:
         case SetAngle:
-            if (actionType == RS2::ActionDrawLinePoints) {
+            if (m_actionType == RS2::ActionDrawLinePoints) {
                 cmd += command("x");
                 cmd += command("y");
                 cmd += command("p");
@@ -505,7 +505,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             updateMouseWidgetTRCancel(tr("Specify First Point"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint:
-            if (actionType == RS2::ActionDrawLinePoints) {
+            if (m_actionType == RS2::ActionDrawLinePoints) {
                 updateMouseWidgetTRBack(tr("Specify Second Point\nor [number|x|y|angle|p|edges|distance]"), MOD_SHIFT_ANGLE_SNAP);
             }
             else{
@@ -597,7 +597,7 @@ void LC_ActionDrawLinePoints::setMajorStatus(){
 }
 
 bool LC_ActionDrawLinePoints::isAllowDirectionCommands() {
-    return actionType == RS2::ActionDrawLinePoints;
+    return m_actionType == RS2::ActionDrawLinePoints;
 }
 
 /**

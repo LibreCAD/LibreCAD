@@ -36,14 +36,14 @@ RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock, LC_ActionContext *acti
 
 void RS_ActionLayersLockAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersLockAll::trigger");
-    if (graphic) {
+    if (m_graphic) {
 
         // Deselect entities before locking all layers
-        if (lock && container) {
-            container->setSelected(false);
+        if (lock && m_container) {
+            m_container->setSelected(false);
         }
 
-        graphic->lockAllLayers(lock);
+        m_graphic->lockAllLayers(lock);
     }
     finish(false);
 }

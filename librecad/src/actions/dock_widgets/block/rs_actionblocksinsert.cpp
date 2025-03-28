@@ -41,6 +41,8 @@
 /**
  * Constructor.
  */
+
+// fixme - sand - ucs - SUPPORT UCS, ANGLES FOR INSERTION!
 RS_ActionBlocksInsert::RS_ActionBlocksInsert(LC_ActionContext *actionContext)
 	:RS_PreviewActionInterface("Blocks Insert",actionContext, RS2::ActionBlocksInsert)
 	,block(nullptr)
@@ -52,12 +54,11 @@ RS_ActionBlocksInsert::~RS_ActionBlocksInsert()  = default;
 
 void RS_ActionBlocksInsert::init(int status) {
     RS_PreviewActionInterface::init(status);
-
     reset();
 
-    if (graphic) {
-        block = graphic->getActiveBlock();
-        if (block) {
+    if (m_graphic != nullptr) {
+        block = m_graphic->getActiveBlock();
+        if (block != nullptr) {
             QString blockName = block->getName();
             data->name = blockName;
             if (document->is(RS2::EntityBlock)) {
@@ -83,43 +84,31 @@ void RS_ActionBlocksInsert::init(int status) {
 }
 
 void RS_ActionBlocksInsert::reset() {
-	data.reset(new RS_InsertData("",
-                         RS_Vector(0.0,0.0),
-                         RS_Vector(1.0,1.0),
-                         0.0,
-                         1, 1,
-                         RS_Vector(1.0,1.0),
-                         nullptr,
-						 RS2::Update));
+	data.reset(new RS_InsertData("",RS_Vector(0.0,0.0),RS_Vector(1.0,1.0),0.0,
+                         1, 1,RS_Vector(1.0,1.0),nullptr,RS2::Update));
 }
 
 void RS_ActionBlocksInsert::trigger() {
     deletePreview();
 
-    //RS_Modification m(*container, graphicView);
-//m.paste(img->insertionPoint);
-    //std::cout << *RS_Clipboard::instance();
-
-    if (block) {
-        RS_Creation creation(container, graphicView);
+    if (block != nullptr) {
+        RS_Creation creation(m_container, m_viewport);
         data->updateMode = RS2::Update;
         creation.createInsert(data.get());
     }
 
     redrawDrawing();
-
-    //finish();
 }
 
 void RS_ActionBlocksInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetTargetPoint: {
             data->insertionPoint = e->snapPoint;
-            if (block) {
+            if (block != nullptr) {
 
                 //preview->addAllFrom(*block);
 //preview->move(data->insertionPoint);
-                RS_Creation creation(preview.get(), nullptr, false);
+                RS_Creation creation(m_preview.get(), nullptr, false);
 // Create insert as preview only
                 data->updateMode = RS2::PreviewUpdate;
                 creation.createInsert(data.get());

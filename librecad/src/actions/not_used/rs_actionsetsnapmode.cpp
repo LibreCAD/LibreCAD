@@ -38,7 +38,7 @@ RS_ActionSetSnapMode::RS_ActionSetSnapMode(LC_ActionContext *actionContext,RS2::
 }
 
 void RS_ActionSetSnapMode::trigger() {
-    RS_SnapMode s = graphicView->getDefaultSnapMode();
+    RS_SnapMode s = m_graphicView->getDefaultSnapMode();
 
     switch (snapMode) {
 
@@ -78,7 +78,7 @@ void RS_ActionSetSnapMode::trigger() {
             break;
     }
 
-    graphicView->setDefaultSnapMode(s);
+    m_graphicView->setDefaultSnapMode(s);
 
     finish(false);
 }

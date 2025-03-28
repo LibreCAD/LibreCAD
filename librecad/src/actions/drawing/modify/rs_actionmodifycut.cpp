@@ -50,7 +50,7 @@ void RS_ActionModifyCut::doTrigger() {
 
         cutEntity->setHighlighted(false);
 
-        RS_Modification m(*container, viewport);
+        RS_Modification m(*m_container, m_viewport);
         m.cut(*cutCoord, (RS_AtomicEntity *) cutEntity);
 
         cutEntity = nullptr;

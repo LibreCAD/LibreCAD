@@ -230,7 +230,7 @@ void LC_ActionDrawStar::addPolylineToEntitiesList(RS_Polyline *polyline, QList<R
                      entity = polyline->nextEntity(RS2::ResolveAll)) {
                     if (entity != nullptr){
                         RS_Entity *clone = entity->clone(); // use clone for safe deletion of polyline
-                        clone->reparent(container);
+                        clone->reparent(m_container);
                         list << clone;
                     }
                 }
@@ -553,7 +553,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
     }
 
     // now all preparations completed, and we'll create shape
-    auto* polyline = new RS_Polyline(container);
+    auto* polyline = new RS_Polyline(m_container);
 
     // the very first vertex from which shape creation begins.
     RS_Vector startingVertex;
@@ -580,7 +580,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             polyline->setNextBulge(innerBulge);
             polyline->addVertex(inner2);
         }
-        if (preview && DRAW_JOIN_POINTS_ON_PREVIEW && showRefEntitiesOnPreview){
+        if (preview && DRAW_JOIN_POINTS_ON_PREVIEW && m_showRefEntitiesOnPreview){
             // potential visualization of rounding point
             createRefPoint(inner1, list);
             createRefPoint(inner2, list);

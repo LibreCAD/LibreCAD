@@ -49,7 +49,7 @@ void LC_ActionDrawDimBaseline::reset(){
 
 void LC_ActionDrawDimBaseline::doTrigger() {
     preparePreview();
-    auto *dim = createDim(container);
+    auto *dim = createDim(m_container);
     setPenAndLayerToActive(dim);
     dim->update();
 
@@ -85,7 +85,7 @@ RS_Entity *LC_ActionDrawDimBaseline::createDim(RS_EntityContainer* parent){
 }
 
 bool LC_ActionDrawDimBaseline::isBaseline(){
-    return actionType == RS2::ActionDimBaseline;
+    return m_actionType == RS2::ActionDimBaseline;
 }
 
 void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -179,12 +179,12 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 data->definitionPoint = newDefPoint;
 
                 if (previewShowsFullDimension) {
-                    auto dim = dynamic_cast<RS_DimLinear *>(createDim(preview.get()));
+                    auto dim = dynamic_cast<RS_DimLinear *>(createDim(m_preview.get()));
                     dim->update();
                     previewEntity(dim);
                 }
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(extPoint1);
                     previewRefSelectablePoint(newDefPoint);
                     previewRefLine(extPoint1, mouse);
@@ -222,7 +222,7 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 previewRefSelectablePoint(data->definitionPoint);
                 previewRefPoint(extPoint1);
                 previewRefPoint(extPoint2);
-                RS_Entity* dim = createDim(preview.get());
+                RS_Entity* dim = createDim(m_preview.get());
                 previewEntity(dim);
                 dim->update();
                 break;

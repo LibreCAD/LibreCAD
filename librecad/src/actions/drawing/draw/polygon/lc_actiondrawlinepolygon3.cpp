@@ -39,7 +39,7 @@
 #include "lc_actiondrawlinepolygonbase.h"
 
 LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(LC_ActionContext *actionContext)
-        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, actionType=RS2::ActionDrawLinePolygonCenTan){
+        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, m_actionType=RS2::ActionDrawLinePolygonCenTan){
 }
 
 LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;

@@ -36,7 +36,7 @@ struct LC_ActionDrawCircle2PR::Points{
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(LC_ActionContext *actionContext)
     :RS_ActionDrawCircleCR(actionContext)
     , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionDrawCircle2PR;
+    m_actionType=RS2::ActionDrawCircle2PR;
     reset();
 }
 
@@ -59,7 +59,7 @@ void LC_ActionDrawCircle2PR::init(int status){
 }
 
 void LC_ActionDrawCircle2PR::doTrigger() {
-    auto *circle = new RS_Circle(container, *data);
+    auto *circle = new RS_Circle(m_container, *data);
     setPenAndLayerToActive(circle);
 
     if (moveRelPointAtCenterAfterTrigger){
@@ -116,7 +116,7 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 pPoints->point2 = mouse;
             }
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->point1);
                 previewRefSelectablePoint(pPoints->point2);
                 previewRefLine(pPoints->point1, pPoints->point2);
@@ -138,7 +138,7 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (preparePreview(mouse, altCenter)){
                 // todo - review, what for we're checking for circle there?
                 bool existing = false;
-                for (auto p: *preview) {
+                for (auto p: *m_preview) {
                     if (isCircle(p)){
                         if (dynamic_cast<RS_Circle *>(p)->getData() == *data)
                             existing = true;
@@ -148,7 +148,7 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewToCreateCircle(*data);
                     previewRefSelectablePoint(data->center);
                     previewRefSelectablePoint(altCenter);
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->point1);
                         previewRefPoint(pPoints->point2);
                         previewRefLine(pPoints->point1, pPoints->point2);

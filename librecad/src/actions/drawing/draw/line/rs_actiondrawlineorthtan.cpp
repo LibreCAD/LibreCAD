@@ -52,7 +52,7 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
 
 void RS_ActionDrawLineOrthTan::doTrigger() {
     if (!tangent) return;
-    RS_Entity *newEntity = new RS_Line(container, tangent->getData());
+    RS_Entity *newEntity = new RS_Line(m_container, tangent->getData());
 
     setPenAndLayerToActive(newEntity);
     undoCycleAdd(newEntity);
@@ -79,7 +79,7 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 circle = en;
                 highlightHover(en);
                 RS_Vector alternativeTangentPoint;
-                RS_Creation creation(preview.get(), graphicView, false);
+                RS_Creation creation(m_preview.get(), m_viewport, false);
                 tangent = creation.createLineOrthTan(mouse,
                                                      normal,
                                                      circle, alternativeTangentPoint);
@@ -87,7 +87,7 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewEntityToCreate(tangent, false);
                     previewRefSelectablePoint(alternativeTangentPoint);
                     previewRefSelectablePoint(tangent->getEndpoint());
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(tangent->getStartpoint());
                     }
                 }

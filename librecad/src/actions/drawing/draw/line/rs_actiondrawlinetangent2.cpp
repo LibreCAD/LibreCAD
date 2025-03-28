@@ -87,7 +87,7 @@ void RS_ActionDrawLineTangent2::doTrigger() {
     if (m_pPoints->tangents.empty() || m_pPoints->tangents.front() == nullptr)
         return;
 
-    auto *newEntity = new RS_Line{container, m_pPoints->tangents.front()->getData()};
+    auto *newEntity = new RS_Line{m_container, m_pPoints->tangents.front()->getData()};
 
     setPenAndLayerToActive(newEntity);
     undoCycleAdd(newEntity);
@@ -118,7 +118,7 @@ void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 highlightHover(en);
                 m_pPoints->circle2 = en;
 
-                m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
+                m_pPoints->tangents = RS_Creation{m_preview.get(), nullptr, false}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
                 if (m_pPoints->tangents.empty()){
                 } else {
                     preparePreview(status, e);
@@ -146,7 +146,7 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
             break;
         }
         case SetCircle2: {
-            m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
+            m_pPoints->tangents = RS_Creation{m_preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
             if (!m_pPoints->tangents.empty()){
                 if (m_pPoints->tangents.size() == 1){
                     trigger();
@@ -190,7 +190,7 @@ void RS_ActionDrawLineTangent2::preparePreview(int status, LC_MouseEvent *e){
                 return linePointDist(*lhs, mouse) < linePointDist(*rhs, mouse);
             });
             for (const auto &line: m_pPoints->tangents) {
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(line->getData().startpoint);
                 }
                 previewRefSelectablePoint(line->getData().endpoint);

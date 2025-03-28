@@ -106,13 +106,13 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
 
-    const double hoverTolerance { hoverToleranceFactor / viewport->getFactor().magnitude() };
+    const double hoverTolerance { hoverToleranceFactor / m_viewport->getFactor().magnitude() };
 
     double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
-    double screenTolerance = toGraphDX( (int)(0.01*std::min(viewport->getWidth(), viewport->getHeight())));
+    double screenTolerance = toGraphDX( (int)(0.01*std::min(m_viewport->getWidth(), m_viewport->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
 
     bool isPointOnEntity = false;

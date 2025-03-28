@@ -67,7 +67,7 @@ double RS_ActionDrawEllipseFociPoint::findRatio() const{
 }
 
 void RS_ActionDrawEllipseFociPoint::doTrigger() {
-    auto* ellipse = new RS_Ellipse{container,
+    auto* ellipse = new RS_Ellipse{m_container,
                                    {pPoints->center,
                                     pPoints->major*pPoints->d,
                                     findRatio(),
@@ -92,7 +92,7 @@ void RS_ActionDrawEllipseFociPoint::onMouseMoveEvent(int status, LC_MouseEvent *
         case SetFocus2: {
             mouse = getSnapAngleAwarePoint(e, pPoints->focus1, mouse, true);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->focus1);
                 previewRefSelectablePoint(mouse);
                 previewLine(pPoints->focus1, mouse);
@@ -109,7 +109,7 @@ void RS_ActionDrawEllipseFociPoint::onMouseMoveEvent(int status, LC_MouseEvent *
                 previewEllipseReferencePoints(ellipse, true, false, mouse);
             }
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->focus1);
                 previewRefPoint(pPoints->focus2);
             }

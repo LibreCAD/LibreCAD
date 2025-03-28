@@ -72,7 +72,7 @@ void RS_ActionDrawArc3P::init(int status) {
 void RS_ActionDrawArc3P::doTrigger() {
     preparePreview(alternatedPoints);
     if (m_pPoints->data.isValid()){
-        auto *arc = new RS_Arc{container, m_pPoints->data};
+        auto *arc = new RS_Arc{m_container, m_pPoints->data};
 
         setPenAndLayerToActive(arc);
 
@@ -126,7 +126,7 @@ void RS_ActionDrawArc3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             m_pPoints->point2 = mouse;
             if (m_pPoints->point1.valid) { // todo - redundant check
                 previewLine(m_pPoints->point1, m_pPoints->point2);
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(m_pPoints->point1);
                     previewRefSelectablePoint(m_pPoints->point2);
                 }
@@ -142,7 +142,7 @@ void RS_ActionDrawArc3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (m_pPoints->data.isValid()){
                 previewToCreateArc(m_pPoints->data);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(m_pPoints->data.center);
                     previewRefPoint(m_pPoints->point1);
                     previewRefPoint(m_pPoints->point2);
@@ -215,7 +215,7 @@ bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QStr
         accept = true;
         finish(false);
         // fixme - review why this action is called there
-        graphicView->setCurrentAction(new RS_ActionDrawArc(m_actionContext, RS2::ActionDrawArc));
+        m_graphicView->setCurrentAction(new RS_ActionDrawArc(m_actionContext, RS2::ActionDrawArc));
     }
     // fixme - sand - add these to commands
     else if (checkCommand("altpoint", c, rtti())){

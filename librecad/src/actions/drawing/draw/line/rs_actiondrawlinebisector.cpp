@@ -88,13 +88,8 @@ void RS_ActionDrawLineBisector::setStatus(int status) {
 }
 
 void RS_ActionDrawLineBisector::doTrigger() {
-    RS_Creation creation(container, graphicView);
-    creation.createBisector(pPoints->coord1,
-                            pPoints->coord2,
-                            length,
-                            number,
-                            line1,
-                            line2);
+    RS_Creation creation(m_container, m_viewport);
+    creation.createBisector(pPoints->coord1, pPoints->coord2, length, number, line1, line2);
 }
 
 void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -117,13 +112,8 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             } else if (en != nullptr){
                 line2 = dynamic_cast<RS_Line *>(en);
 
-                RS_Creation creation(preview.get(), nullptr, false);
-                auto ent = creation.createBisector(pPoints->coord1,
-                                                   pPoints->coord2,
-                                                   length,
-                                                   number,
-                                                   line1,
-                                                   line2);
+                RS_Creation creation(m_preview.get(), nullptr, false);
+                auto ent = creation.createBisector(pPoints->coord1, pPoints->coord2, length, number, line1, line2);
                 if (ent != nullptr){
                     highlightHover(line2);
                     if (number == 1){
@@ -132,7 +122,7 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     else{
                         appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
                     }
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
                         previewRefPoint(ent->getStartpoint());
                         RS_Vector nearest = line2->getNearestPointOnEntity(mouse, false);

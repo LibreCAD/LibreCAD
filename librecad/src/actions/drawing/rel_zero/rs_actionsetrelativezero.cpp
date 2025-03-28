@@ -40,17 +40,17 @@ RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionConte
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
 
 void RS_ActionSetRelativeZero::trigger(){
-    bool wasLocked = viewport->isRelativeZeroLocked();
+    bool wasLocked = m_viewport->isRelativeZeroLocked();
     if (pt->valid) {
-        viewport->lockRelativeZero(false);
+        m_viewport->lockRelativeZero(false);
         moveRelativeZero(*pt);
         undoCycleStart();
-        RS_Undoable *relativeZeroUndoable = viewport->getRelativeZeroUndoable();
+        RS_Undoable *relativeZeroUndoable = m_viewport->getRelativeZeroUndoable();
         if (relativeZeroUndoable != nullptr) {
             document->addUndoable(relativeZeroUndoable);
         }
         undoCycleEnd();
-        viewport->lockRelativeZero(wasLocked);
+        m_viewport->lockRelativeZero(wasLocked);
     }
     finish(false);
 }

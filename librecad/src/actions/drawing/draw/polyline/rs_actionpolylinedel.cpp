@@ -51,7 +51,7 @@ void RS_ActionPolylineDel::drawSnapper() {
 
 void RS_ActionPolylineDel::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
-    RS_Modification m(*container, viewport);
+    RS_Modification m(*m_container, m_viewport);
     auto createdPolyline = m.deletePolylineNode(*polylineToModify, vertexToDelete, false);
     if (createdPolyline != nullptr){
         polylineToModify = createdPolyline;
@@ -78,7 +78,7 @@ void RS_ActionPolylineDel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (vertex.valid){
                 highlightHover(segment);
                 previewRefSelectablePoint(vertex);
-                RS_Modification m(*preview, viewport);
+                RS_Modification m(*m_preview, m_viewport);
                 m.deletePolylineNode(*polylineToModify, vertex, true);
             }
             break;

@@ -31,6 +31,8 @@
 #include "rs_preview.h"
 #include "rs_units.h"
 
+// fixme - sand - ucs - Check for support of UCS!
+
 LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("PasteTransform", actionContext,  RS2::ActionEditPasteTransform),
     referencePoint{new RS_Vector(false)},
@@ -46,7 +48,7 @@ void LC_ActionEditPasteTransform::init(int status) {
 }
 
 void LC_ActionEditPasteTransform::doTrigger() {
-    RS_Modification m(*container, viewport, false);
+    RS_Modification m(*m_container, m_viewport, false);
 
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
@@ -86,17 +88,17 @@ void LC_ActionEditPasteTransform::doTrigger() {
 void LC_ActionEditPasteTransform::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (status==SetReferencePoint) {
         *referencePoint = e->snapPoint;
-        preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),viewport);
-        preview->move(*referencePoint);
+        m_preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),m_viewport);
+        m_preview->move(*referencePoint);
 
-        if (graphic) {
+        if (m_graphic) {
             RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
-            RS2::Unit targetUnit = graphic->getUnit();
+            RS2::Unit targetUnit = m_graphic->getUnit();
             double const f = RS_Units::convert(data->factor, sourceUnit, targetUnit);
-            preview->scale(*referencePoint, {f, f});
-            preview->rotate(*referencePoint, data->angle);
+            m_preview->scale(*referencePoint, {f, f});
+            m_preview->rotate(*referencePoint, data->angle);
 
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 previewMultipleReferencePoints();
             }
         }

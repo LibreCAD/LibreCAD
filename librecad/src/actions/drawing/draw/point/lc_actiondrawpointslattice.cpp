@@ -41,15 +41,15 @@ void LC_ActionDrawPointsLattice::doTrigger() {
 
     qsizetype pointsCount = pointsToCreate.size();
     if (pointsCount > 0) {
-        RS_Layer *layerToSet  = graphicView->getGraphic()->getActiveLayer();
-        RS_Pen penToUse = graphicView->getGraphic()->getActivePen();
+        RS_Layer *layerToSet  = m_graphicView->getGraphic()->getActiveLayer();
+        RS_Pen penToUse = m_graphicView->getGraphic()->getActivePen();
         undoCycleStart();
         for (unsigned i = 0; i < pointsCount; i++) {
-            auto *point = new RS_Point(container, pointsToCreate.at(i));
+            auto *point = new RS_Point(m_container, pointsToCreate.at(i));
             point->setLayer(layerToSet);
             point->setPen(penToUse);
-            point->setParent(container);
-            container->addEntity(point);
+            point->setParent(m_container);
+            m_container->addEntity(point);
             undoableAdd(point);
         }
         undoCycleEnd();
@@ -69,7 +69,7 @@ void LC_ActionDrawPointsLattice::onMouseMoveEvent(int status, LC_MouseEvent *e) 
         case SetPoint2:{
             RS_Vector pos = getSnapAngleAwarePoint(e, point1, mouse, true);
             createPointsLine(point1, pos, pointsByX, pointsToCreate);
-            if (showRefEntitiesOnPreview){
+            if (m_showRefEntitiesOnPreview){
                 previewRefPoint(point1);
                 previewRefSelectablePoint(pos);
             }
@@ -79,7 +79,7 @@ void LC_ActionDrawPointsLattice::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             RS_Vector pos = getSnapAngleAwarePoint(e, point2, mouse, true);
             createPointsLine(point1, point2, pointsByX, pointsToCreate);
             createPointsLine(point2, pos, pointsByY, pointsToCreate);
-            if (showRefEntitiesOnPreview){
+            if (m_showRefEntitiesOnPreview){
                 previewRefPoint(point1);
                 previewRefPoint(point2);
                 previewRefSelectablePoint(pos);
@@ -91,7 +91,7 @@ void LC_ActionDrawPointsLattice::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             bool alternateLastPointAdjustment = e->isControl;
             pos = getLastPointPosition(pos, alternateLastPointAdjustment);
             createPointsLattice(pos, pointsToCreate);
-            if (showRefEntitiesOnPreview){
+            if (m_showRefEntitiesOnPreview){
                 previewRefPoint(point1);
                 previewRefPoint(point2);
                 previewRefPoint(point3);

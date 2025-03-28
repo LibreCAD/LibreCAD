@@ -34,8 +34,8 @@ void LC_ActionPenSyncActiveByLayer::init(int status){
     if (status >=0){
         QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
         if (penToolBar != nullptr){
-            if (graphic != nullptr){
-                RS_Layer *layer = graphic->getActiveLayer();
+            if (m_graphic != nullptr){
+                RS_Layer *layer = m_graphic->getActiveLayer();
                 if (layer != nullptr){
                     RS_Pen layerPen = layer->getPen();
                     penToolBar->setLayerLineType(layerPen.getLineType(), true);

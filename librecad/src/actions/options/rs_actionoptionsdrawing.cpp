@@ -43,30 +43,11 @@ void RS_ActionOptionsDrawing::init(int status) {
     trigger();
 }
 
-void RS_ActionOptionsDrawing::trigger() {
-        if (graphic != nullptr) {
-        graphicView->setForcedActionKillAllowed(false);
-        int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic,tabToShow);
-        if (dialogResult == QDialog::Accepted){
-            updateCoordinateWidgetFormat();
-            // fixme sand - create better way for accessing widgets
-            LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
-            if (entityInfoWidget != nullptr){
-                entityInfoWidget->updateFormats();
-            }
-            LC_AnglesBasisWidget *anglesBasisWidget = QC_ApplicationWindow::getAppWindow()->getAnglesBasisWidget();
-            if (anglesBasisWidget != nullptr){
-                anglesBasisWidget->update(graphic);
-            }
-            if (graphicView != nullptr) {
-                graphicView->loadSettings();
-                redraw();
-                graphicView->repaint();
-            }
-            else{
-            }
-        }
-        graphicView->setForcedActionKillAllowed(true);
+void RS_ActionOptionsDrawing::trigger(){
+    if (m_graphic != nullptr) {
+        m_graphicView->setForcedActionKillAllowed(false);
+        QC_ApplicationWindow::getAppWindow()->changeDrawingOptions(tabToShow);
+        m_graphicView->setForcedActionKillAllowed(true);
     }
     finish(false);
 }

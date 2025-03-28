@@ -57,7 +57,7 @@ void RS_ActionPolylineSegment::init(int status){
     RS_PreviewActionInterface::init(status);
     if (initWithTarget){
         initWithTarget = false;
-        convertPolyline(container, targetEntity, false);
+        convertPolyline(m_container, targetEntity, false);
         commandMessage(tr("Polyline created"));
         redraw();
         updateSelectionWidget();
@@ -67,10 +67,10 @@ void RS_ActionPolylineSegment::init(int status){
     else {
         targetEntity = nullptr;
 //Experimental feature: trigger action, if already has selected entities
-        if (container->countSelected(true, entityType)){
+        if (m_container->countSelected(true, entityType)){
 //find a selected entity
 //TODO, find a better starting point
-            for (RS_Entity *e: *container) {
+            for (RS_Entity *e: *m_container) {
                 if (e->isSelected() &&
                     std::count(entityType.begin(), entityType.end(), e->rtti())){
                     targetEntity = e;
@@ -78,7 +78,7 @@ void RS_ActionPolylineSegment::init(int status){
                 }
             }
             if (targetEntity){
-                convertPolyline(container, targetEntity, true);
+                convertPolyline(m_container, targetEntity, true);
                 commandMessage(tr("Polyline created"));
                 redraw();
                 updateSelectionWidget();
@@ -168,7 +168,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
 
 //get list with useful entities
 
-    for (RS_Entity *e1: *container) {
+    for (RS_Entity *e1: *m_container) {
         if (useSelected && !e1->isSelected()) continue;
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
         if (isLine(e1) || isArc(e1)
@@ -284,7 +284,7 @@ void RS_ActionPolylineSegment::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineSegment::trigger()");
 
     if (targetEntity != nullptr /*&& selectedSegment && targetPoint.valid */){
-        convertPolyline(container, targetEntity);
+        convertPolyline(m_container, targetEntity);
 
         targetEntity = nullptr;
         setStatus(ChooseEntity);
@@ -296,7 +296,7 @@ void RS_ActionPolylineSegment::onMouseMoveEvent([[maybe_unused]]int status, LC_M
     if (en != nullptr){
         highlightHover(en);
         if (!(en->rtti() == RS2::EntityPolyline && ((RS_Polyline *) en)->isClosed())){
-            convertPolyline(preview.get(), en, false, true);
+            convertPolyline(m_preview.get(), en, false, true);
         }
     }
 }

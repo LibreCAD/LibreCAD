@@ -42,8 +42,7 @@ class LC_GraphicViewport;
  * This way the balance is guaranteed.
  * It simplifies undo handling specially in RS_Creation and RS_Modification classes
 */
-class LC_UndoSection
-{
+class LC_UndoSection {
 public:
     LC_UndoSection(RS_Document * doc, LC_GraphicViewport *view,const bool handleUndo = true);
     ~LC_UndoSection();
@@ -52,7 +51,7 @@ public:
 
 private:
     RS_Document *document {nullptr};
-    LC_GraphicViewport* viewport = nullptr;
+    LC_GraphicViewport* viewport {nullptr};
     bool valid {true};
 };
 

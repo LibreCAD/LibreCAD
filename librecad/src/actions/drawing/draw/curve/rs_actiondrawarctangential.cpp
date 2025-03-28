@@ -68,7 +68,7 @@ void RS_ActionDrawArcTangential::doTrigger() {
     if (alternateArc){
         data->reversed = !data->reversed;
     }
-    auto* arc = new RS_Arc(container, *data);
+    auto* arc = new RS_Arc(m_container, *data);
 
     setPenAndLayerToActive(arc);
     moveRelativeZero(arc->getCenter());
@@ -143,7 +143,7 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                 else{
                     arc = previewToCreateArc(*data);
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     auto &center = data->center;
                     const auto &startPoint = arc->getStartpoint();
                     previewRefPoint(center);

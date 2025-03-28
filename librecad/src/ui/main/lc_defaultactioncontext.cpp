@@ -58,18 +58,6 @@ void LC_DefaultActionContext::updateSelectionWidget(int countSelected, double se
     }
 }
 
-void LC_DefaultActionContext::clearMouseWidgetIcon(){
-    // if (m_mouseWidget != nullptr){
-    //     m_mouseWidget->clearActionIcon();
-    // }
-    // if (m_statusBarManager != nullptr){
-    //     m_statusBarManager->clearAction();
-    // }
-    // if (m_actionOptionsManager != nullptr){
-    //     m_actionOptionsManager->clearActionIcon();
-    // }
-}
-
 void LC_DefaultActionContext::updateMouseWidget(const QString &left, const QString &right, const LC_ModifiersInfo &modifiers){
     if (m_mouseWidget != nullptr) {
         m_mouseWidget->setHelp(left, right, modifiers);

@@ -34,7 +34,7 @@
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(LC_ActionContext *actionContext)
     :RS_ActionDrawPolyline(actionContext){
-    actionType = RS2::ActionPolylineAppend;
+    m_actionType = RS2::ActionPolylineAppend;
 }
 
 void RS_ActionPolylineAppend::doTrigger() {
@@ -61,7 +61,7 @@ void RS_ActionPolylineAppend::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (polyline != nullptr){
                 highlightHover(polyline);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     auto entFirst = polyline->firstEntity();
                     auto entLast = polyline->lastEntity();
 
@@ -136,13 +136,13 @@ void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, LC_MouseEvent
                 auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
                 pPoints->polyline = clone;
                 pPoints->data = clone->getData();
-                container->addEntity(clone);
+                m_container->addEntity(clone);
             } else {
                 auto nearestSegment = originalPolyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
                 auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
                 pPoints->polyline = clone;
                 pPoints->data = clone->getData();
-                container->addEntity(clone);
+                m_container->addEntity(clone);
                 prepend = false;
                 if (nearestSegment == entFirst) {
                     prepend = true;

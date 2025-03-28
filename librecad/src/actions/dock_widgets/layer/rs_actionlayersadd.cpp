@@ -37,12 +37,12 @@ RS_ActionLayersAdd::RS_ActionLayersAdd(LC_ActionContext *actionContext)
 void RS_ActionLayersAdd::trigger() {
     RS_DEBUG->print("add layer");
 
-    if (graphic) {
-        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(graphic->getLayerList());
+    if (m_graphic) {
+        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(m_graphic->getLayerList());
         if (layer != nullptr) {
-            graphic->addLayer(layer);
+            m_graphic->addLayer(layer);
         }
-        graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+        m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);
 }

@@ -51,7 +51,7 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(LC_ActionContext *actionC
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 
 void RS_ActionDrawLineRectangle::doTrigger() {
-    auto *polyline = new RS_Polyline(container);
+    auto *polyline = new RS_Polyline(m_container);
 
     // create and add rectangle:
     RS_Vector worldCorner1 = pPoints->corner1;
@@ -89,13 +89,13 @@ void RS_ActionDrawLineRectangle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                 RS_Vector worldCorner2,worldCorner4;
                 calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
 
-                preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
-                if (showRefEntitiesOnPreview) {
+                m_preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
+                if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->corner1);
                     previewRefPoint(pPoints->corner2);
                     previewRefPoint((pPoints->corner1 + pPoints->corner2) * 0.5); // center of rect
                 }
-                if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+                if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
                     LC_InfoMessageBuilder msg{};
                     msg.add(tr("To be created:"), tr("Rectangle"));
                     msg.add(tr("Width:"), formatLinear(abs(pPoints->corner1.x - pPoints->corner2.x)));

@@ -25,7 +25,6 @@
 **********************************************************************/
 #include "qc_actiongetselect.h"
 
-#include <QMouseEvent>
 #include <QKeyEvent>
 #include "doc_plugin_interface.h"
 #include "rs_actionselectsingle.h"
@@ -36,7 +35,7 @@ QC_ActionGetSelect::QC_ActionGetSelect(LC_ActionContext* actionContext)
     :RS_ActionInterface("Get Select", actionContext)
     , completed(false)
     , message(std::make_unique<QString>(tr("Select objects:"))){
-    actionType = RS2::ActionGetSelect;
+    m_actionType = RS2::ActionGetSelect;
 }
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, LC_ActionContext* actionContext)
@@ -44,7 +43,7 @@ QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, LC_ActionCo
     , completed(false)
     , message(std::make_unique<QString>(tr("Select objects:"))),
      typeToSelect(typeToSelect){
-    actionType = RS2::ActionGetSelect;
+    m_actionType = RS2::ActionGetSelect;
 }
 
 QC_ActionGetSelect::~QC_ActionGetSelect() = default;
@@ -70,7 +69,7 @@ void QC_ActionGetSelect::setMessage(QString msg){
 
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
-        graphicView->setCurrentAction(
+        m_graphicView->setCurrentAction(
                 new RS_ActionSelectSingle(typeToSelect, m_actionContext, this));
 }
 
@@ -94,7 +93,7 @@ void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
  * Adds all selected entities from 'container' to the selection.
  */
 void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface *d) const{
-    for (auto e: *container) {
+    for (auto e: *m_container) {
         if (e->isSelected()) {
             Plugin_Entity *pe = new Plugin_Entity(e, d);
             se->append(reinterpret_cast<Plug_Entity *>(pe));
@@ -103,7 +102,7 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
 }
 
 void QC_ActionGetSelect::unselectEntities(){
-    for(auto e: *container){ // fixme - iterating all entities for selection
+    for(auto e: *m_container){ // fixme - iterating all entities for selection
         if (e->isSelected()) {
             e->setSelected(false);
         }

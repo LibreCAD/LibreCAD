@@ -79,22 +79,22 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
     RS_DEBUG->print("RS_ActionDrawHatch::trigger()");
 
-    RS_Hatch tmp(container, *data);
+    RS_Hatch tmp(m_container, *data);
     setPenAndLayerToActive(&tmp);
 
-    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp, viewport)) {
+    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp, m_viewport)) {
         *data = tmp.getData();
 
         // fixme - sand - optimize that mess with cycles!!!
         // deselect unhatchable entities:
         // fixme - sand -  iteration over all entities in container
-        for(auto e: *container) {
+        for(auto e: *m_container) {
             if (e->isSelected() && !hatchAble(e))
                 e->setSelected(false);
         }
         // fixme - sand -  iteration over all entities in container
-        for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
-             e=container->nextEntity(RS2::ResolveAll)) {
+        for (auto e=m_container->firstEntity(RS2::ResolveAll); e != nullptr;
+             e=m_container->nextEntity(RS2::ResolveAll)) {
             if (e->isSelected() && !hatchAble(e))
                 e->setSelected(false);
         }
@@ -102,8 +102,8 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
         // fixme - sand -  iteration over all entities in container
         // look for selected contours:
         bool haveContour = false;
-        for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
-             e=container->nextEntity(RS2::ResolveAll)) {
+        for (auto e=m_container->firstEntity(RS2::ResolveAll); e != nullptr;
+             e=m_container->nextEntity(RS2::ResolveAll)) {
             if (e->isSelected()) {
                 haveContour = true;
             }
@@ -114,15 +114,15 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
             return;
         }
 
-        std::unique_ptr<RS_Hatch> hatch = std::make_unique<RS_Hatch>(container, *data);
+        std::unique_ptr<RS_Hatch> hatch = std::make_unique<RS_Hatch>(m_container, *data);
         hatch->setLayerToActive();
         hatch->setPenToActive();
         auto *loop = new RS_EntityContainer(hatch.get());
         loop->setPen(RS_Pen(RS2::FlagInvalid));
 
         // add selected contour:
-        for (auto e=container->firstEntity(RS2::ResolveAll); e;
-             e=container->nextEntity(RS2::ResolveAll)) {
+        for (auto e=m_container->firstEntity(RS2::ResolveAll); e;
+             e=m_container->nextEntity(RS2::ResolveAll)) {
 
             if (e->isSelected()){
                 e->setSelected(false);

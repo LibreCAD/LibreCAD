@@ -258,7 +258,7 @@ void LC_ActionLayersExport::trigger(){
         }
 
         /* Saving. */
-        documentDeepCopy->setGraphicView(graphicView);
+        documentDeepCopy->setGraphicView(m_graphicView);
 
         // fixme - sand - files - restore!!
         // bool saveWasSuccessful = documentDeepCopy->saveAs(modifiedFilePath, result.fileType, true);

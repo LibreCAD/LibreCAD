@@ -26,18 +26,21 @@
 #include <QObject>
 class LC_ReleaseChecker;
 class QC_ApplicationWindow;
+
 class LC_ApplicationWindowDialogsHelper : public QObject{
     Q_OBJECT
 public:
     LC_ApplicationWindowDialogsHelper(QC_ApplicationWindow *appWin);
     void showAboutWindow();
-    void showNewVersionAvailableDialog( LC_ReleaseChecker* releaseChecker);
-    void invokeLicenseWindow();
+    void showNewVersionAvailableDialog(LC_ReleaseChecker* releaseChecker);
+    void showLicenseWindow();
     void showDeviceOptions();
-    bool widgetOptionsDialog();
-    bool requestOptionsGeneralDialog();
+    bool showWidgetOptionsDialog();
+    bool showGeneralOptionsDialog();
+    int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex);
     int showCloseDialog(QC_MDIWindow *w, bool showSaveAll);
     QPair<QString, QString> showExportFileSelectionDialog(const QString& drawingFileName);
+    QPair<QString, RS2::FormatType> requestDrawingFileName(RS2::FormatType type = RS2::FormatDXFRW);
 signals:
 private:
     QC_ApplicationWindow* m_appWindow;

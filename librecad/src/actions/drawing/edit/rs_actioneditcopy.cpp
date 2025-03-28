@@ -62,7 +62,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
         case CUT_QUICK:
         case COPY:
         case COPY_QUICK:{
-            RS_Modification m(*container, viewport);
+            RS_Modification m(*m_container, m_viewport);
             m.copy(*referencePoint, mode == CUT || mode == CUT_QUICK);
 
             if (invokedWithControl){
@@ -71,13 +71,13 @@ void RS_ActionEditCopyPaste::doTrigger() {
             }
             else{
                 //graphicView->redraw();
-                graphicView->killSelectActions();
+                m_graphicView->killSelectActions();
                 finish(false);
             }
             break;
         }
         case PASTE: {
-            RS_Modification m(*container, viewport);
+            RS_Modification m(*m_container, m_viewport);
             m.paste(RS_PasteData(*referencePoint, 1.0, 0.0, false, ""));
 
             if (!invokedWithControl) {
@@ -98,14 +98,14 @@ void RS_ActionEditCopyPaste::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             case PASTE:{
                 *referencePoint = e->snapPoint;
-                preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), viewport);
-                preview->move(*referencePoint);
+                m_preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), m_viewport);
+                m_preview->move(*referencePoint);
 
-                if (graphic) {
+                if (m_graphic) {
                     RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
-                    RS2::Unit targetUnit = graphic->getUnit();
+                    RS2::Unit targetUnit = m_graphic->getUnit();
                     double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
-                    preview->scale(*referencePoint, {f, f});
+                    m_preview->scale(*referencePoint, {f, f});
                 }
                 break;
             }

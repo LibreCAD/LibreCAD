@@ -45,7 +45,7 @@ RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
 
 void RS_ActionSnapIntersectionManual::init(int status){
     RS_ActionInterface::init(status);
-    snapMode.clear();
+    m_snapMode.clear();
 }
 
 void RS_ActionSnapIntersectionManual::trigger(){
@@ -97,7 +97,7 @@ void RS_ActionSnapIntersectionManual::onMouseMoveEvent(int status, LC_MouseEvent
 
             if (ip.valid){
                 deletePreview();
-                preview->addEntity(new RS_Circle(preview.get(),{ip, toGraphDX(4)}));
+                m_preview->addEntity(new RS_Circle(m_preview.get(),{ip, toGraphDX(4)}));
                 drawPreview();
 
                 updateCoordinateWidgetByRelZero(ip);

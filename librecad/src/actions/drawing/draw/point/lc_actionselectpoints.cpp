@@ -24,7 +24,7 @@
 
 LC_ActionSelectPoints::LC_ActionSelectPoints(LC_ActionContext *actionContext)
     :RS_ActionSelectWindow(RS2::EntityPoint, actionContext, true) {
-    actionType = RS2::ActionSelectPoints;
+    m_actionType = RS2::ActionSelectPoints;
 }
 
 LC_ActionOptionsWidget *LC_ActionSelectPoints::createOptionsWidget() {

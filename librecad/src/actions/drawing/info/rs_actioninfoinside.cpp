@@ -34,7 +34,7 @@
 #include "rs_entitycontainer.h"
 
 RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
-	:RS_ActionInterface("Info Inside", actionContext, actionType=RS2::ActionInfoInside)
+	:RS_ActionInterface("Info Inside", actionContext, m_actionType=RS2::ActionInfoInside)
     , pt(std::make_unique<RS_Vector>())
     ,contour(std::make_unique<RS_EntityContainer>()){
     auto container = actionContext->getEntityContainer();

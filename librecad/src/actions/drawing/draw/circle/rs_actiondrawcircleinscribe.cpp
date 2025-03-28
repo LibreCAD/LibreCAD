@@ -73,7 +73,7 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
 }
 
 void RS_ActionDrawCircleInscribe::doTrigger() {
-    auto *circle = new RS_Circle(container, pPoints->cData);
+    auto *circle = new RS_Circle(m_container, pPoints->cData);
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
@@ -110,7 +110,7 @@ void RS_ActionDrawCircleInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e)
                     if (preparePreview(line)){
                         highlightHover(en);
                         previewToCreateCircle(pPoints->cData);
-                        if (showRefEntitiesOnPreview) {
+                        if (m_showRefEntitiesOnPreview) {
                             RS_Vector &center = pPoints->cData.center;
                             previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
                             previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
@@ -172,7 +172,7 @@ bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
         if (en != nullptr){
           pPoints->lines.push_back(en);
         }
-        RS_Circle c(preview.get(), pPoints->cData);
+        RS_Circle c(m_preview.get(), pPoints->cData);
         valid = c.createInscribe(pPoints->coord, pPoints->lines);
         if (valid){
             pPoints->cData = c.getData();

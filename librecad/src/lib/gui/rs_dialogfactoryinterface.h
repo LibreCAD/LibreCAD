@@ -343,11 +343,6 @@ public:
      */
     virtual bool requestHatchDialog([[maybe_unused]]RS_Hatch *hatch, [[maybe_unused]]LC_GraphicViewport *viewport) { return false;};
 
-    /**
-     * This virtual method must be overwritten and must present
-     * a dialog for general application options.
-     */
-    virtual int requestOptionsGeneralDialog()  {return 0;};
 
     /**
      * This virtual method must be overwritten and must present
@@ -374,18 +369,8 @@ public:
 
 
 
-    /**
-     * This virtual method must be overwritten if the graphic view has
-     * a component that is interested in the current mouse button hints.
-     * The implementation will be called typically by actions to inform
-     * the user about the current functionality of the mouse buttons.
-     *
-     * @param left Help text for the left mouse button.
-     * @param right Help text for the right mouse button.
-	 */
-    virtual void updateMouseWidget([[maybe_unused]]const QString& = QString(),
-                                   [[maybe_unused]]const QString& = QString(),
-                                   [[maybe_unused]]const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()){};
+
+
 //    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**
@@ -414,14 +399,6 @@ public:
     virtual void command([[maybe_unused]]const QString& message) {};
     virtual void commandPrompt([[maybe_unused]]const QString& message) {};
 
-    // virtual void setMouseWidget([[maybe_unused]]QG_MouseWidget*) {};
-    // virtual void setCoordinateWidget([[maybe_unused]]QG_CoordinateWidget* ){};
-    // virtual void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget* ){};
-    // virtual void setSelectionWidget([[maybe_unused]]QG_SelectionWidget* ) {};
-    // virtual void setCommandWidget([[maybe_unused]]QG_CommandWidget* ) {};
-    virtual void clearMouseWidgetIcon() {};
-    // virtual void setStatusBarManager([[maybe_unused]]LC_QTStatusbarManager *statusBarManager){};
-    // virtual void setCurrentQAction([[maybe_unused]]QAction *action){};
 };
 
 

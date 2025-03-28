@@ -45,10 +45,10 @@ namespace {
 LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(LC_ActionContext *actionContext,bool forCircle)
     :LC_AbstractActionWithPreview("Draw slice divide", actionContext){
     if (forCircle){
-        actionType = RS2::ActionDrawSliceDivideCircle;
+        m_actionType = RS2::ActionDrawSliceDivideCircle;
     }
     else {
-        actionType = RS2::ActionDrawSliceDivideLine;
+        m_actionType = RS2::ActionDrawSliceDivideLine;
     }
 }
 
@@ -60,7 +60,7 @@ bool LC_ActionDrawSliceDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEve
  * @return
  */
 EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
-    if (actionType == RS2::ActionDrawSliceDivideLine){
+    if (m_actionType == RS2::ActionDrawSliceDivideLine){
         return sliceDivideLineEntityTypeList;
     }
     else{
@@ -126,7 +126,7 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
                         if (doDivideEntity) { // if tick length is zero - it is just divide mode, without ticks
                             // so on preview, we just indicate that we may have divide points
                             // even if tick is present - we'd better highlight division points
-                            if (showRefEntitiesOnPreview) {
+                            if (m_showRefEntitiesOnPreview) {
                                 createRefPoint(tick.snapPoint, list);
                             }
                         }
@@ -135,7 +135,7 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
             }
         }
     }
-    if (actionType == RS2::ActionDrawSliceDivideCircle){
+    if (m_actionType == RS2::ActionDrawSliceDivideCircle){
         // update options widget for
         updateOptionsUI(optionsMode);
     }
@@ -152,11 +152,11 @@ bool LC_ActionDrawSliceDivide::doCheckMayTrigger(){
             int entityRtti = entity->rtti();
             switch (entityRtti) {
                 case RS2::EntityLine:
-                    result = actionType == RS2::ActionDrawSliceDivideLine;
+                    result = m_actionType == RS2::ActionDrawSliceDivideLine;
                     break;
                 case RS2::EntityArc:
                 case RS2::EntityCircle: {
-                    result = actionType == RS2::ActionDrawSliceDivideCircle;
+                    result = m_actionType == RS2::ActionDrawSliceDivideCircle;
                     break;
                 }
                 default:
@@ -223,7 +223,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
         for (uint i = 0; i < count; i++) {
             TickData tick = ticksData.at(i);
             if (tick.isVisible){
-                auto *line = new RS_Line(container, tick.tickLine);
+                auto *line = new RS_Line(m_container, tick.tickLine);
                 // for ticks, we'll always use current pen and layer
                 setPenAndLayerToActive(line);
                 list<<line;
@@ -344,7 +344,7 @@ void LC_ActionDrawSliceDivide::doCreateArcSegments(RS_Entity *pArc, const RS_Vec
             if (reversed){
                 std::swap(startAngle, endAngle);
             }
-            auto *newArc = new RS_Arc(container, RS_ArcData(center, radius, startAngle, endAngle, reversed));
+            auto *newArc = new RS_Arc(m_container, RS_ArcData(center, radius, startAngle, endAngle, reversed));
             newArc->setLayer(originalLayer);
             newArc->setPen(originalPen);
             list << newArc;
@@ -563,7 +563,7 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
 void LC_ActionDrawSliceDivide::updateMouseButtonHints(){
     // todo - actually , if tick angle is 90 degrees, alternative mode is not meaningful, so it's better to adjust more
     // fine grained shift status there
-    if (actionType == RS2::ActionDrawSliceDivideLine){
+    if (m_actionType == RS2::ActionDrawSliceDivideLine){
         updateMouseWidgetTRCancel(tr("Select line"), MOD_SHIFT_MIRROR_ANGLE);
     }
     else{
