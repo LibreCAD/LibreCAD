@@ -15,11 +15,11 @@ class LC_CentralWidget : public QFrame
 public:
 
     LC_CentralWidget(QWidget* parent);
-    QMdiArea* getMdiArea();
+    QMdiArea* getMdiArea() const;
 
 protected:
 
-    QMdiArea* mdi_area = nullptr;
+    QMdiArea* m_mdiArea = nullptr;
 };
 
 #endif // LC_CENTRALWIDGET_H
