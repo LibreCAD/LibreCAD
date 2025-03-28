@@ -40,6 +40,7 @@ public:
 
 private:
     void addBlock(RS_Insert* in, RS_Graphic* g);
+	RS_Graphic *createGraphicForBlock(RS_Block *activeBlock);
 };
 
 #endif

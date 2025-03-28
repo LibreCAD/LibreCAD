@@ -36,12 +36,12 @@ class LC_DocumentsStorage: public QObject{
 public:
     LC_DocumentsStorage();
     bool saveDocument(RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
+    bool saveBlockAs(RS_Graphic* block, const QString& fileName);
     bool autoSaveDocument(RS_Document *document,RS_GraphicView * graphicView, QString& autosaveFileName);
     bool saveDocumentAs(RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
     bool loadDocument(RS_Document *document, const QString &fileName, RS2::FormatType type);
     bool loadDocument(RS_Document *document, const QString &fileName);
     bool loadDocumentFromTemplate(RS_Document *document, RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type);
-
 protected:
     bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, QString currentFileName = "");
     bool autoSaveGraphic(RS_Graphic *graphic, QString& fileName);

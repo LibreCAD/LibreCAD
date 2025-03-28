@@ -56,11 +56,9 @@ class RS_Grid{
 public:
 
 	RS_Grid(LC_GraphicViewport* graphicView);
-
 	void calculateGrid();
- void calculateSnapSettings();
-
- void invalidate(bool gridOn);
+	void calculateSnapSettings();
+	void invalidate(bool gridOn);
 
 //	/**
 //		 * @return Array of all visible grid points.
@@ -95,13 +93,12 @@ public:
 //		 * @return a vector of Meta grid positions in Y.
 //		 */
 //	std::vector<double> const& getMetaY() const;
-
 	bool isIsometric() const;
 	void setIsometric(bool b);
 	RS_Vector getMetaGridWidth() const;
-	RS_Vector const& getCellVector() const;
- void loadSettings();
- void drawGrid(RS_Painter* painter);
+	RS_Vector const &getCellVector() const;
+	void loadSettings();
+	void drawGrid(RS_Painter *painter);
 protected:
 
 private:
@@ -128,11 +125,8 @@ private:
     bool scaleGrid = true;
     RS_Vector userGrid;
     int minGridSpacing;
-
-    LC_GridSystem* gridSystem = nullptr;
-
+	LC_GridSystem *gridSystem {nullptr};
     RS_Vector prepareGridWidth();
-
 };
 
 #endif

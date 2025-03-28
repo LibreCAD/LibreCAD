@@ -70,7 +70,7 @@ bool LC_DocumentsStorage::doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *g
     } else {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor));
         graphic->setGraphicView(graphicView);
-        result = saveGraphicAs(graphic->getGraphic(), fileName, saveFormat, true);
+        result = saveGraphicAs(graphic, fileName, saveFormat, true);
         QApplication::restoreOverrideCursor();
     }
     return result;
@@ -81,6 +81,14 @@ bool LC_DocumentsStorage::autoSaveDocument(RS_Document* document, RS_GraphicView
     if (document != nullptr) {
         document->setGraphicView(graphicView);
         result = autoSaveGraphic(document->getGraphic(), autosaveFileName);
+    }
+    return result;
+}
+
+bool LC_DocumentsStorage::saveBlockAs(RS_Graphic *block, const QString &fileName){
+    bool result = false;
+    if (!fileName.isEmpty()) {
+        result = RS_FileIO::instance()->fileExport(*block, fileName, RS2::FormatDXFRW);
     }
     return result;
 }

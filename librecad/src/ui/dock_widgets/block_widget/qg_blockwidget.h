@@ -91,7 +91,7 @@ public:
     void setDocument(RS_Document* doc);
 
     RS_BlockList* getBlockList() {
-        return blockList;
+        return m_blockList;
     }
 
     void update();
@@ -120,12 +120,12 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void setBlockList(RS_BlockList* blockList);
 private:
-    RS_BlockList* blockList = nullptr;
-    QLineEdit* matchBlockName = nullptr;
-    QTableView* blockView = nullptr;
-    QG_BlockModel *blockModel = nullptr;
-    RS_Block* lastBlock = nullptr;
-    QG_ActionHandler* actionHandler = nullptr;
+    RS_BlockList* m_blockList = nullptr;
+    QLineEdit* m_matchBlockName = nullptr;
+    QTableView* m_blockView = nullptr;
+    QG_BlockModel *m_blockModel = nullptr;
+    RS_Block* m_lastBlock = nullptr;
+    QG_ActionHandler* m_actionHandler = nullptr;
     void restoreSelections();
 };
 
