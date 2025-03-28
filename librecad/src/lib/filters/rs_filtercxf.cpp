@@ -172,7 +172,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         if (!sa.isEmpty()) {
             QStringList authors = sa.split(',');
             RS_DEBUG->print("006");
-            RS_DEBUG->print("count: %d", authors.count());
+            LC_LOG<<"count: " << authors.count();
 
             QString a;
             for (QStringList::Iterator it2 = authors.begin();
