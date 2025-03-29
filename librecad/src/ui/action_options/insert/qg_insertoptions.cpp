@@ -131,7 +131,10 @@ void QG_InsertOptions::setFactorToActionAndView(QString val) {
 
 void QG_InsertOptions::setAngleToActionAndView(QString val) {
     ui->leAngle->setText(val);
-    action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
+    double angle;
+    if (toDoubleAngleDegrees(val, angle, 0, false)) {
+        action->setAngle(angle);
+    }
 }
 
 void QG_InsertOptions::onAngleEditingFinished(){
@@ -139,7 +142,7 @@ void QG_InsertOptions::onAngleEditingFinished(){
 }
 
 void QG_InsertOptions::onFactorEditingFinished(){
-    setAngleToActionAndView(ui->leFactor->text());
+    setFactorToActionAndView(ui->leFactor->text());
 }
 
 void QG_InsertOptions::onColumnSpacingEditingFinished() {
