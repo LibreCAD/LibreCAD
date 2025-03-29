@@ -45,12 +45,10 @@
 
 namespace {
 
-namespace {
 const RS_Color colorBlack = RS_Color(Qt::black);
 const RS_Color colorWhite = RS_Color(Qt::white);
 const QColor qcolorBlack = colorBlack.toQColor();
 const QColor qcolorWhite = colorWhite.toQColor();
-}
 
 // Convert from LibreCAD line style pattern to QPen Dash Pattern.
 // QPen dash pattern by default is in the unit of pixel
@@ -750,45 +748,53 @@ QPainterPath RS_Painter::createSolidFillPath(const QList<RS_Entity *>& entities)
         auto* loop = static_cast<RS_EntityContainer*>(l);
         // edges:
         //                LC_ERR << "loop------------------------------- " << loop->count();
-        auto toUiPoint = [this](const RS_Vector& vp) {
+        auto toUiPointF = [this](const RS_Vector& vp) {
             RS_Vector uiPos = toGui(vp);
-            return QPointF{uiPos.x, uiPos.y}.toPoint();
+            return QPointF{uiPos.x, uiPos.y};
         };
+        auto toUcsDegrees = [this](double angleRadian) {
+            return toUCSAngleDegrees(RS_Math::rad2deg(angleRadian));
+        };
+        LC_ERR<<"Start:";
         for(auto e: *loop){
+            if (e==nullptr)
+                continue;
+            LC_ERR<<e->getStartpoint().x<<","<<e->getStartpoint().y<<" => "<<e->getEndpoint().x<<","<<e->getEndpoint().y;
             switch (e->rtti()) {
             case RS2::EntityLine: {
-                QPoint pt1 = toUiPoint(toGui(e->getStartpoint()));
-                QPoint pt2 = toUiPoint(toGui(e->getEndpoint()));
+                QPointF pt1 = toUiPointF(e->getStartpoint());
+                QPointF pt2 = toUiPointF(e->getEndpoint());
 
-                path.moveTo(pt1);
+                if (!path.isEmpty())
+                    path.lineTo(pt1);
+                else
+                    path.moveTo(pt1);
                 path.lineTo(pt2);
                 //                            LC_ERR << "Pt1 " << pt1.x() << "  " << pt1.y();
                 //                            LC_ERR << "Added " << pt2.x() << "  " << pt2.y();
-                break;
             }
+                break;
             case RS2::EntityArc: {
                 const RS_ArcData &arcData = static_cast<RS_Arc*>(e)->getData();
                 double radius = toGuiDX(arcData.radius);
                 // can't skip due to minimal radius, it will lead to filling errors
                 //                        if (radius > view->getMinArcDrawingRadius()) {
-                double startAngleDegrees = arcData.reversed ? arcData.otherAngleDegrees - 360. : arcData.otherAngleDegrees;
-                double angularLength = arcData.reversed ? -arcData.angularLength : arcData.angularLength;
+                double startAngleDegrees = toUcsDegrees(arcData.reversed ? arcData.angle2: arcData.angle1);
+                double angularLength = RS_Math::rad2deg(static_cast<RS_Arc*>(e)->getAngleLength());
                 RS_Vector uiCenter = toGui(arcData.center);
                 QPointF uiMin{uiCenter.x - radius, uiCenter.y - radius};
                 double size = radius + radius;
-                startAngleDegrees = toUCSAngleDegrees(startAngleDegrees);
                 path.arcMoveTo(uiMin.x(), uiMin.y(), size, size, startAngleDegrees);
                 path.arcTo(uiMin.x(), uiMin.y(), size, size, startAngleDegrees, angularLength);
-                //                        }
-                break;
             }
+                break;
             case RS2::EntityCircle: {
                 auto* circle = static_cast<RS_Circle*>(e);
                 RS_Vector uiCenter = toGui(circle->getCenter());
                 double radius=toGuiDX(circle->getRadius());
                 path.addEllipse({uiCenter.x, uiCenter.y}, radius, radius);
-                break;
             }
+                break;
             case RS2::EntityEllipse: {
                 auto ellipse = static_cast<RS_Ellipse *>(e);
                 const RS_EllipseData &ellipseData = ellipse->getData();
@@ -800,7 +806,6 @@ QPainterPath RS_Painter::createSolidFillPath(const QList<RS_Entity *>& entities)
                 QTransform t1;
                 t1.translate(uiCenter.x, uiCenter.y);
                 const double ellipseAngle = toUCSAngleDegrees(ellipseData.angleDegrees);
-
                 t1.rotate(-ellipseAngle);
 
                 QPainterPath ellipsePath;
@@ -809,17 +814,9 @@ QPainterPath RS_Painter::createSolidFillPath(const QList<RS_Entity *>& entities)
                 double size1 = radius1 + radius1;
                 double size2 = radius2 + radius2;
                 if (ellipse->isEllipticArc()) {
-                    double angle1 = ellipseData.startAngleDegrees;
-                    double angle2 = ellipseData.otherAngleDegrees;
-                    double angularLength = ellipseData.angularLength;
-                    if (ellipseData.reversed){
-                        angle1 = angle2 - 360;
-                        angularLength = -angularLength;
-                    }
-
-                    angle1 = toUCSAngleDegrees(angle1);
+                    double angle1 = toUcsDegrees(ellipseData.reversed ? ellipseData.angle2 : ellipseData.angle1);
                     ellipsePath.arcMoveTo(rx, ry, size1, size2, angle1);
-                    ellipsePath.arcTo(rx, ry, size1, size2, angle1, angularLength);
+                    ellipsePath.arcTo(rx, ry, size1, size2, angle1, ellipseData.angularLength);
                     /*
 
                                 if (pa.size() && pa2.size() && (pa.last() - pa2.first()).manhattanLength() < 1)
