@@ -145,9 +145,8 @@ void QG_LibraryWidget::insert() {
     QString dxfPath = getItemPath(item);
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler) {
-            RS_ActionInterface* a =
-                actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
+        if (actionHandler != nullptr) {
+            RS_ActionInterface* a = actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a != nullptr) {
                 auto* action = (RS_ActionLibraryInsert*)a;
                 action->setFile(std::move(dxfPath));
@@ -214,7 +213,9 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 //    QStringList::Iterator it;
     QDir dir(directory);
 
-	if (!dir.exists()) return;
+	if (!dir.exists()) {
+	    return;
+	}
 
     // read subdirectories of this directory:
     QStringList lDirectoryList = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name);
@@ -235,9 +236,9 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
         }
 
         // Create new item if no existing was found:
-		if (!newItem) {
-                newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
-                item->setChild(item->rowCount(), newItem);
+        if (!newItem) {
+            newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
+            item->setChild(item->rowCount(), newItem);
         }
         appendTree(newItem, directory+QDir::separator()+lDirectory);
     }
@@ -251,8 +252,9 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
  */
 void QG_LibraryWidget::expandView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item != nullptr)
+    if (item != nullptr) {
         item->setIcon(QIcon(":/icons/fileopen.lci"));
+    }
 }
 
 /**
@@ -262,8 +264,9 @@ void QG_LibraryWidget::expandView( QModelIndex idx ){
  */
 void QG_LibraryWidget::collapseView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item != nullptr)
+    if (item != nullptr) {
         item->setIcon(QIcon(":/icons/folderclosed.lci"));
+    }
 }
 
 /**
@@ -273,8 +276,9 @@ void QG_LibraryWidget::collapseView( QModelIndex idx ){
  */
 void QG_LibraryWidget::updatePreview(QModelIndex idx) {
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item == nullptr)
+    if (item == nullptr) {
         return;
+    }
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
@@ -318,7 +322,6 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
  * @return Directory (in terms of the List view) to the given item (e.g. /mechanical/screws)
  */
 QString QG_LibraryWidget::getItemDir(QStandardItem* item) {
-
     if (item == nullptr)
         return {};
 

@@ -67,7 +67,9 @@ public:
     void adjustZoomControls() override;
     void setMouseCursor(RS2::CursorType c) override;
     void updateGridStatusWidget(QString text) override;
-
+protected:
+    void dragEnterEvent(QDragEnterEvent* event) override;
+public:
     void loadSettings() override;
 
     // Methods from RS_LayerListListener Interface:

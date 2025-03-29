@@ -400,6 +400,7 @@ HEADERS += \
     ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
     ui/dock_widgets/lc_widgets_common.h \
+    ui/dock_widgets/library_widget/lc_librarywidget.h \
     ui/main/init/lc_applicationwindowinitializer.h \
     ui/main/init/lc_toolbarfactory.h \
     ui/main/lc_applicationwindowdialogshelper.h \
@@ -528,6 +529,7 @@ SOURCES += \
     ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
+    ui/dock_widgets/library_widget/lc_librarywidget.cpp \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/init/lc_toolbarfactory.cpp \
     ui/main/lc_applicationwindowdialogshelper.cpp \
@@ -1553,6 +1555,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui \
        ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui \
        ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui \
+       ui/dock_widgets/library_widget/lc_librarywidget.ui \
        ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui \
        ui/dock_widgets/pen_palette/lc_penpalettewidget.ui \
        ui/dock_widgets/pen_wizard/colorwizard.ui \

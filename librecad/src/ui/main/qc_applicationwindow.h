@@ -307,8 +307,9 @@ public:
  */
     void openFile(const QString& fileName, RS2::FormatType type);
     void changeDrawingOptions(int tabIndex);
-
     void closeWindow(QC_MDIWindow* w);// fixme - make not public, used for blocks!!
+    QG_LibraryWidget* getLibraryWidget(){return m_libraryWidget;}
+
 protected:
 
     void closeEvent(QCloseEvent*) override;

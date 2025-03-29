@@ -41,6 +41,8 @@ public:
     ~LC_WidgetFactory() override = default;
     void initWidgets();
     QList<QAction *> actionsToDisableInPrintPreview;
+    static void updateDockWidgetsTitleBarType(QC_ApplicationWindow* mainWin, bool verticalTitle);
+    static void updateDockOptions(QC_ApplicationWindow* mainWin, bool allowDockNesting, bool verticalTabs);
 private:
     QC_ApplicationWindow *m_mainWin {nullptr};
     LC_ActionGroupManager *m_agm {nullptr};
@@ -55,6 +57,7 @@ private:
     QDockWidget *createBlockListWidget(QG_ActionHandler *action_handler);
     QDockWidget *createLibraryWidget(QG_ActionHandler *action_handler);
     QDockWidget *createCmdWidget(QG_ActionHandler *action_handler);
+
     void createPenWizardWidget();
     void fillActionLists();
     void initLeftCADSidebar();
@@ -67,6 +70,6 @@ private:
     void addAction(QToolBar *toolbar, const char *actionName);
     void makeActionsInvisible(const std::vector<QString> &actionNames);
 
-    void setVerticalTitle(QDockWidget *result);
+    static void setDockWidgetTitleType(QDockWidget *result, bool verticalTitleBar);
 };
 #endif // LC_WIDGETFACTORY_H

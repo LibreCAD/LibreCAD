@@ -43,6 +43,9 @@
 #include "qg_dialogfactory.h"
 #include "qg_graphicview.h"
 
+#include <qdrag.h>
+#include <qmimedata.h>
+
 #include "lc_actioncontext.h"
 #include "qg_scrollbar.h"
 
@@ -70,6 +73,7 @@
 #include "lc_graphicviewrenderer.h"
 #include "lc_overlayentitiescontainer.h"
 #include "lc_widgetviewportrenderer.h"
+#include "qg_librarywidget.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -460,6 +464,24 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
  */
 void QG_GraphicView::updateGridStatusWidget(QString text){
     emit gridStatusChanged(std::move(text));
+}
+
+void QG_GraphicView::dragEnterEvent(QDragEnterEvent* event) {
+     RS_GraphicView::dragEnterEvent(event);
+
+    /*
+     *   fixme - sand - remove later, experiments with d&d
+     */
+  /*  if (event->mimeData()->formats().contains("application/x-qabstractitemmodeldatalist")) {
+        // QStandardItemModel model;
+        // model.dropMimeData(event->mimeData(), Qt::CopyAction, 0,0, QModelIndex());
+        // auto item = model.item(0.0);
+        // LC_ERR <<  item->text();
+
+         QDrag::cancel();
+         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+         QC_ApplicationWindow::getAppWindow()->getLibraryWidget()->insert();
+    }*/
 }
 
 /**

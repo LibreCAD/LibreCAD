@@ -61,6 +61,18 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win)
    fillActionLists();
 }
 
+void LC_WidgetFactory::updateDockOptions(QC_ApplicationWindow * mainWin, bool allowDockNesting, bool verticalTabs) {
+    auto dockOptions = QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks;
+    if (allowDockNesting) {
+        dockOptions |=  QMainWindow::AllowNestedDocks;
+    }
+    if (verticalTabs) {
+        dockOptions |=  QMainWindow::VerticalTabs;
+    }
+
+    mainWin->setDockOptions(dockOptions);
+}
+
 void LC_WidgetFactory::fillActionLists(){
      m_agm->fillActionsList(actionsToDisableInPrintPreview, {
         "EditCut",
@@ -87,7 +99,6 @@ void LC_WidgetFactory::fillActionLists(){
         "ViewGridIsoTop",
         "ViewGridIsoRight",
         "UCSSetWCS",
-        "UCSCreate"
         "UCSCreate"
     });
 
@@ -167,8 +178,7 @@ QDockWidget* LC_WidgetFactory::newDockWidget(const QString& title, const char *n
     result->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     result->setWindowTitle(title);
     result->setObjectName(name);
-    // fixme - sand - and support of the option in Widgets settings for the orientation of the title
-    // setVerticalTitle(result);
+    result->setProperty("_lc_doc_widget", true);
     return result;
 }
 
@@ -308,8 +318,18 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler
     return dock;
 }
 
+void LC_WidgetFactory::updateDockWidgetsTitleBarType(QC_ApplicationWindow* mainWin, bool verticalTitle) {
+    QList<QDockWidget*> dockwidgetsList = mainWin->findChildren<QDockWidget*>();
+    for (QDockWidget* dw: dockwidgetsList) {
+        if (dw->property("_lc_doc_widget").isValid()) {
+            setDockWidgetTitleType(dw, verticalTitle);
+        }
+    }
+}
+
 void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     createPenWizardWidget();
+    bool verticalTitle = LC_GET_ONE_BOOL("Widgets", "DockTitleBarVertical", false);
     QDockWidget *dock_pen_palette = createPenPalletteWidget();
     QDockWidget *dock_layer = createLayerWidget(action_handler);
     QDockWidget *dock_views = createNamedViewsWidget();
@@ -330,6 +350,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     m_mainWin->addDockWidget(Qt::RightDockWidgetArea, dock_views);
     m_mainWin->tabifyDockWidget(dock_views, dock_ucss);
     m_mainWin->addDockWidget(Qt::RightDockWidgetArea, dock_command);
+
+    updateDockWidgetsTitleBarType(m_mainWin, verticalTitle);
 }
 
 
@@ -358,14 +380,16 @@ void LC_WidgetFactory::createPenWizardWidget(){
     m_mainWin->m_penWizard = penWizard;
 }
 
-void LC_WidgetFactory::setVerticalTitle(QDockWidget *result){
+void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *result, bool verticalTitleBar){
     QDockWidget::DockWidgetFeatures features =
             QDockWidget::DockWidgetClosable
             | QDockWidget::DockWidgetMovable
             | QDockWidget::DockWidgetFloatable;
 
 
-    features |= QDockWidget::DockWidgetVerticalTitleBar;
+    if (verticalTitleBar) {
+        features |= QDockWidget::DockWidgetVerticalTitleBar;
+    }
     result->setFeatures(features);
 }
 

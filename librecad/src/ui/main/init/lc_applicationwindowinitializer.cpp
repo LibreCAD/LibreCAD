@@ -101,6 +101,14 @@ void LC_ApplicationWindowInitializer::initActionFactory(){
 }
 
 void LC_ApplicationWindowInitializer::initDockCorners(){
+    LC_GROUP("Widgets");
+    {
+        bool allowDockNesting = LC_GET_BOOL("DockAllowNested", true);
+        bool verticalTabs = LC_GET_BOOL("DockVerticalTabs", false);
+        LC_WidgetFactory::updateDockOptions(m_appWin, allowDockNesting, verticalTabs);
+    }
+    LC_GROUP_END();
+
     // make the left and right dock areas dominant
     m_appWin->setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
     m_appWin->setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);

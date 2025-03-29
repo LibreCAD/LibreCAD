@@ -402,7 +402,7 @@ void QC_ApplicationWindow::dropEvent(QDropEvent *event) {
     unsigned counts = 0;
     for (QUrl const &url: event->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
-        if (QFileInfo(fileName).exists() && fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive)) {
+        if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo(fileName).exists()) {
             openFile(fileName);
             if (++counts > 32) return;
         }
@@ -413,7 +413,7 @@ void QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls()) {
         for (QUrl const &url: event->mimeData()->urls()) {
             const QString &fileName = url.toLocalFile();
-            if (QFileInfo(fileName).exists() && fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive)) {
+            if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo(fileName).exists()) {
                 event->acceptProposedAction();
                 return;
             }

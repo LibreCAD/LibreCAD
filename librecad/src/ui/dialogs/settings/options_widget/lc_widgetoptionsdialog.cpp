@@ -37,6 +37,7 @@
 
 #include "lc_dlgiconssetup.h"
 #include "lc_inputtextdialog.h"
+#include "lc_widgetfactory.h"
 
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     : LC_Dialog(parent, "WidgetOptions"){
@@ -100,6 +101,15 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
 
         int docWidgetsIconSize = LC_GET_INT("DockWidgetsIconSize", 16);
         sbDocWidgtetIconSize->setValue(docWidgetsIconSize);
+
+        bool allowDockNesting = LC_GET_BOOL("DockAllowNested", true);
+        cbDockingAllowNested->setChecked(allowDockNesting);
+
+        bool titleBarVertical = LC_GET_BOOL("DockTitleBarVertical", false);
+        cbDockingVerticalTitleBar->setChecked(titleBarVertical);
+
+        bool verticalTabs = LC_GET_BOOL("DockVerticalTabs", false);
+        cbDockingVerticalTabs->setChecked(verticalTabs);
     }
     LC_GROUP_END();
 
@@ -357,6 +367,19 @@ void LC_WidgetOptionsDialog::accept() {
 
         LC_SET("DockWidgetsFlatIcons", cbDockWidgetsFlatButtons->isChecked());
         LC_SET("DockWidgetsIconSize", sbDocWidgtetIconSize->value());
+
+
+        bool allowDockNesting =cbDockingAllowNested->isChecked();
+        LC_SET("DockAllowNested", allowDockNesting);
+
+        bool titleBarVertical = cbDockingVerticalTitleBar->isChecked();
+        LC_SET("DockTitleBarVertical", titleBarVertical);
+
+        bool verticalTabs = cbDockingVerticalTabs->isChecked();
+        LC_SET("DockVerticalTabs", verticalTabs);
+
+        LC_WidgetFactory::updateDockOptions(appWindow.get(), allowDockNesting, verticalTabs);
+        LC_WidgetFactory::updateDockWidgetsTitleBarType(appWindow.get(), titleBarVertical);
     }
 
     iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, cbIconColorMain->currentText());
