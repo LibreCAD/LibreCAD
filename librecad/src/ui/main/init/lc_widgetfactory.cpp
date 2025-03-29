@@ -320,8 +320,6 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     QDockWidget *dock_library = createLibraryWidget(action_handler);
     QDockWidget *dock_command = createCmdWidget(action_handler);
 
-    m_mainWin->setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks );
-
     m_mainWin->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     m_mainWin->tabifyDockWidget(dock_library, dock_block);
     m_mainWin->tabifyDockWidget(dock_block, dock_layer);
@@ -373,6 +371,8 @@ void LC_WidgetFactory::setVerticalTitle(QDockWidget *result){
 
 LC_CADDockWidget* LC_WidgetFactory::cadDockWidget(const QString& title, const char* name, const QList<QAction*> &actions, int columns, int iconSize, bool flatButtons){
     auto* result = new LC_CADDockWidget(m_mainWin);
+    result->setAllowedAreas(Qt::LeftDockWidgetArea |
+                              Qt::RightDockWidgetArea);
     result->setObjectName("dock_" + QString(name).toLower());
     result->setWindowTitle(title);
     result->add_actions(actions, columns, iconSize, flatButtons);

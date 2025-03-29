@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_settings.h"
 #include "ui_lc_quickinfowidget.h"
 #include "lc_graphicviewport.h"
+#include "lc_widgets_common.h"
 
 // todo - discover generic way for reliable refresh of entity info widget if entity editing properties/attributes is performed outside of outside of widget
 // (via normal editing actions, mouse operations or custom actions)
@@ -79,7 +80,13 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     ui->pteInfo->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->cbPointsCoordinatesMode, &QComboBox::currentIndexChanged, this, &LC_QuickInfoWidget::onCoordinateModeIndexChanged);
     ui->pteInfo->setOpenLinks(false);
+
+#ifndef DONT_FORCE_WIDGETS_CSS
     ui->pteInfo->document()->setDefaultStyleSheet("a {text-decoration: none;} body {background-color: white;}");
+#else
+    ui->pteInfo->document()->setDefaultStyleSheet("a {text-decoration: none;}");
+
+#endif
 
     // raw content control useful for debugging, but not needed in live mode
 #ifdef DEBUG_QUICK_INFO_RAW

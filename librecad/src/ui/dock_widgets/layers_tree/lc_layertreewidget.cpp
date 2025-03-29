@@ -172,15 +172,11 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
  * Lets eave it for now as it is in order to minify affecting codebase, probably will refactor later
  */
 QLayout *LC_LayerTreeWidget::initButtonsBar(){
-//    auto *layButtons = new QHBoxLayout;
     auto *layButtons = new LC_FlexLayout(0,5,5);
     QToolButton *but;
-//    const QSize minButSize(28, 28);
-
     // show all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showAllLayers);
     layButtons->addWidget(but);
@@ -189,7 +185,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but = new QToolButton(this);
 //    but->setIcon(QIcon(":/icons/invisible.lci"));
     but->setIcon(QIcon(":/icons/not_visible.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
     layButtons->addWidget(but);
@@ -197,7 +192,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // toggle secondary layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/dim_vertical.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show Secondary Layers"));
     but->setCheckable(true);
     but->setChecked(true); // visible by default
@@ -208,7 +202,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // Visible only active
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/select_all.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show Active Layer Only"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showActiveLayerOnly);
     layButtons->addWidget(but);
@@ -227,7 +220,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // collapse all layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/upmost.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Collapse All"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseAllLayers);
     layButtons->addWidget(but/*, 10*/);
@@ -236,7 +228,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // expand all layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/dim_aligned.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Collapse Secondary"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseSecondaryLayers);
     layButtons->addWidget(but);
@@ -247,7 +238,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // unlock all layers:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/unlocked.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Unlock all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::unlockAllLayers);
     layButtons->addWidget(but);
