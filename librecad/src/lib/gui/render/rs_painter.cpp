@@ -663,7 +663,6 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
         } else {
             QPainter::drawEllipse(QRectF{- radii, radii});
         }
-        restore();
     }
 }
 
