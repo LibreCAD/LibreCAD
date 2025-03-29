@@ -41,6 +41,8 @@ struct RS_InsertData {
      */
     RS_InsertData() = default;
 
+    RS_InsertData(const RS_InsertData &other);
+
 	/**
 	 * @param name The name of the block used as an identifier.
 	 * @param insertionPoint Insertion point of the block.

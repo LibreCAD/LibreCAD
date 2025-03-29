@@ -92,7 +92,10 @@ void RS_ActionBlocksInsert::trigger(){
     if (m_block != nullptr) {
         RS_Creation creation(m_container, m_viewport);
         m_data->updateMode = RS2::Update;
-        creation.createInsert(m_data.get());
+        auto insertData = m_data.get();
+        auto insertDataCopy = new RS_InsertData(*insertData);
+        insertDataCopy->angle = toWorldAngleFromUCSBasis(insertData->angle);
+        creation.createInsert(insertDataCopy);
     }
 
     redrawDrawing();
@@ -108,7 +111,11 @@ void RS_ActionBlocksInsert::onMouseMoveEvent(int status, LC_MouseEvent *e){
                 RS_Creation creation(m_preview.get(), nullptr, false);
                 // Create insert as preview only
                 m_data->updateMode = RS2::PreviewUpdate;
-                creation.createInsert(m_data.get());
+                auto insertData = m_data.get();
+                auto insertDataCopy = new RS_InsertData(*insertData);
+                insertDataCopy->angle = toWorldAngleFromUCSBasis(insertData->angle);
+                insertDataCopy->updateMode = RS2::Update;
+                creation.createInsert(insertDataCopy);
             }
             break;
         }
