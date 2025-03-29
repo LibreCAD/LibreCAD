@@ -312,7 +312,10 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler
     widget->getDockingAction()->setText(dock->isFloating() ? tr("Dock") : tr("Float"));
 
     connect(widget->leCommand, &QG_CommandEdit::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
-    connect(dock, &QDockWidget::dockLocationChanged,m_mainWin, &QC_ApplicationWindow::modifyCommandTitleBar);
+    // fixme - sand - disable setting vertical caption so far as this is now controlled in uniform way by widget
+    // setttings.
+    // fixme - sand - remove this call and the slot later, if there will no request from the users to recover this
+    // connect(dock, &QDockWidget::dockLocationChanged,m_mainWin, &QC_ApplicationWindow::modifyCommandTitleBar);
 
     m_mainWin->m_commandWidget = widget;
     return dock;
