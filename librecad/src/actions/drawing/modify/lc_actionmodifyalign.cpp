@@ -130,22 +130,21 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
 
         // info cursor
         if (m_infoCursorOverlayPrefs->enabled){
-            QString msg = tr("Align to ");
+            QString message = tr("Align to ");
             switch (alignType) {
                 case LC_Align::ENTITY:{
-                    msg.append(tr("Entity"));
+                    message.append(tr("Entity"));
                     break;
                 }
                 case LC_Align::POSITION:{
-                    msg.append(tr("Position"));
+                    message.append(tr("Position"));
                     break;
                 }
                 case LC_Align::DRAWING:{
-                    msg.append(tr("Drawing"));
+                    message.append(tr("Drawing"));
                     break;
                 }
             }
-            LC_InfoMessageBuilder builder(msg);
 
             QString ref = tr("Reference: ");
             if (drawVertical){
@@ -159,13 +158,14 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
                 ref.append(formatLinear(horizontalRef));
             }
 
-            builder.add(ref);
+            auto builder = msg(message).
+                string(ref);
             if (groupOffset.valid) {
-                builder.add(tr("Offset:"));
-                builder.add(formatRelative(groupOffset));
-                builder.add(formatRelativePolar(groupOffset));
+                builder.string(tr("Offset:"))
+                       .relative(groupOffset)
+                       .relativePolar(groupOffset);
             }
-            appendInfoCursorZoneMessage(builder.toString(), 2, false);
+            builder.toInfoCursorZone2(false);
         }
     }
 }

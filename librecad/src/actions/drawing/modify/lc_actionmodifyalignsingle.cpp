@@ -146,14 +146,15 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             }
 
             if (isInfoCursorForModificationEnabled()){
-                QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
-                LC_InfoMessageBuilder builder = LC_InfoMessageBuilder(msg);
+                QString message = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
+
+                auto builder = msg(message);
                 if (entity != nullptr){
-                    builder.add(tr("Offset:"));
-                    builder.add(formatRelative(offset));
-                    builder.add(formatRelativePolar(offset));
+                    builder.string(tr("Offset:"))
+                           .relative(offset)
+                           .relativePolar(offset);
                 }
-                appendInfoCursorZoneMessage(builder.toString(), 2, false);
+                builder.toInfoCursorZone2(false);
             }
             break;
         }

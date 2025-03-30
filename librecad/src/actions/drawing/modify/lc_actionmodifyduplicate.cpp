@@ -195,10 +195,10 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[mayb
                     clone->move(offset);
                     list << clone;
                     if (isInfoCursorForModificationEnabled()){
-                        LC_InfoMessageBuilder msg(tr("Duplicate Offset"));
-                        msg.add(formatRelative(offset));
-                        msg.add(formatRelativePolar(offset));
-                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                        msg(tr("Duplicate Offset"))
+                            .relative(offset)
+                            .relativePolar(offset)
+                            .toInfoCursorZone2(false);
                     }
                 }
             }
@@ -231,10 +231,10 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[mayb
                         previewRefEllipse(data);
                     }
                     if (isInfoCursorForModificationEnabled()){
-                        LC_InfoMessageBuilder msg(tr("Duplicate Offset"));
-                        msg.add(formatRelative(offset));
-                        msg.add(formatRelativePolar(offset));
-                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                        msg(tr("Duplicate Offset"))
+                          .relative(offset)
+                          .relativePolar(offset)
+                          .toInfoCursorZone2(false);
                     }
                 }
             }

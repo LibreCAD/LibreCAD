@@ -98,12 +98,12 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
     if (m_infoCursorOverlayPrefs->enabled) {
         double distance = startPoint.distanceTo(mouse);
-        LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Distance:"), formatLinear(distance));
-        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
-        msg.add(tr("From:"), formatVector(startPoint));
-        msg.add(tr("To:"), formatVector(mouse));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        msg(tr("Info"))
+            .linear(tr("Distance:"), distance)
+            .wcsAngle(tr("Angle:"), startPoint.angleTo(mouse))
+            .vector(tr("From:"), startPoint)
+            .vector(tr("To:"), mouse)
+            .toInfoCursorZone2(false);
     }
 }
 

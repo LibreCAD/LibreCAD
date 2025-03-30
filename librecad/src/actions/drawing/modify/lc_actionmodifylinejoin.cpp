@@ -98,14 +98,14 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe
                     }
 
                     if (isInfoCursorForModificationEnabled()){
-                        LC_InfoMessageBuilder msg(tr("Lines Join"));
+                        auto builder = msg(tr("Lines Join"));
                         if (lineJoinData->parallelLines) {
-                            msg.add(tr("Lines are parallel"));
+                            builder.add(tr("Lines are parallel"));
                         }
                         else{
-                          msg.add(tr("Intersection:"), formatVector(lineJoinData->intersectPoint));
+                            builder.vector(tr("Intersection:"), lineJoinData->intersectPoint);
                         }
-                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                        builder.toInfoCursorZone2(false);
                     }
 
                     // we don't need line joint data so far

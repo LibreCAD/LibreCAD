@@ -76,10 +76,10 @@ void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 pPoints->secondCorner = e->snapPoint;
                 previewStretchRect(false);                
                 if (isInfoCursorForModificationEnabled()){
-                    LC_InfoMessageBuilder msg(tr("Stretch"));
-                    msg.add(tr("Start Corner:"), formatVector(pPoints->firstCorner));
-                    msg.add(tr("End Corner:"), formatVector(pPoints->secondCorner));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("Stretch"))
+                        .vector(tr("Start Corner:"), pPoints->firstCorner)
+                        .vector(tr("End Corner:"), pPoints->secondCorner)
+                        .toInfoCursorZone2(false);
                 }
             }
             break;
@@ -88,9 +88,9 @@ void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             previewStretchRect(true);
             trySnapToRelZeroCoordinateEvent(e);            
             if (isInfoCursorForModificationEnabled()) {
-                LC_InfoMessageBuilder msg(tr("Stretch"));
-                msg.add(tr("Reference Point:"), formatVector(mouse));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Stretch"))
+                    .vector(tr("Reference Point:"), mouse)
+                    .toInfoCursorZone2(false);
             }    
             break;
         }
@@ -108,13 +108,13 @@ void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewRefLine(pPoints->referencePoint, pPoints->targetPoint);
                 }
                 if (isInfoCursorForModificationEnabled()) {
-                    LC_InfoMessageBuilder msg(tr("Stretch"));
-                    msg.add(tr("Reference Point:"), formatVector(pPoints->referencePoint));
-                    msg.add(tr("Target Point:"), formatVector(mouse));
-                    msg.add(tr("Offset:"));
-                    msg.add(formatRelative(mouse));
-                    msg.add(formatRelativePolar(mouse));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("Stretch"))
+                        .vector(tr("Reference Point:"), pPoints->referencePoint)
+                        .vector(tr("Target Point:"), mouse)
+                        .string(tr("Offset:"))
+                        .relative(mouse)
+                        .relativePolar(mouse)
+                        .toInfoCursorZone2(false);
                 }                
             }
             break;

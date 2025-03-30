@@ -222,10 +222,10 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                             }
 
                             if (isInfoCursorForModificationEnabled()){
-                                LC_InfoMessageBuilder msg(tr("Round"));
-                                msg.add(tr("Point 1:"), formatVector(arcStartPoint));
-                                msg.add(tr("Point 2:"), formatVector(arcEndPoint));
-                                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                                msg(tr("Round"))
+                                    .vector(tr("Point 1:"), arcStartPoint)
+                                    .vector(tr("Point 2:"), arcEndPoint)
+                                    .toInfoCursorZone2(false);
                             }
                         }
                     }
@@ -234,7 +234,6 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                     m_preview->removeEntity(tmp1);
                     m_preview->removeEntity(tmp2);
-
                 }
             }
             break;

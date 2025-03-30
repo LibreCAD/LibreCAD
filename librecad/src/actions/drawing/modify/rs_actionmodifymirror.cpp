@@ -115,12 +115,12 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     }
 
     if (isInfoCursorForModificationEnabled()){
-        LC_InfoMessageBuilder msg(tr("Mirror"));
-        msg.add(tr("Angle:"), formatWCSAngle(mirrorLinePoint1.angleTo(mirrorLinePoint2)));
-        msg.add(tr("Angle (alt):"), formatWCSAngle(mirrorLinePoint2.angleTo(mirrorLinePoint1)));
-        msg.add(tr("Line From:"), formatVector(mirrorLinePoint1));
-        msg.add(tr("Line To:"),formatVector(mirrorLinePoint2));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        msg(tr("Mirror"))
+            .wcsAngle(tr("Angle:"), mirrorLinePoint1.angleTo(mirrorLinePoint2))
+            .wcsAngle(tr("Angle (alt):"), mirrorLinePoint2.angleTo(mirrorLinePoint1))
+            .vector(tr("Line From:"), mirrorLinePoint1)
+            .vector(tr("Line To:"), mirrorLinePoint2)
+            .toInfoCursorZone2(false);
     }
 }
 

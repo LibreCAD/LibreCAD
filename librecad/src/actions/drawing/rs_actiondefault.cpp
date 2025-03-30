@@ -482,11 +482,11 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
                 m_preview->addEntity(clone);
 
                 if (isInfoCursorForModificationEnabled()) {
-                    LC_InfoMessageBuilder msg(tr("Offset"));
-                    msg.add(formatRelative(offset));
-                    msg.add(formatRelativePolar(offset));
-                    msg.add(tr("New Position"), formatVector(offset));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("Offset"))
+                        .relative(offset)
+                        .relativePolar(offset)
+                        .vector(tr("New Position"), offset)
+                        .toInfoCursorZone2(false);
                 }
             }
 
@@ -531,10 +531,10 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
                 } else {
                     type = tr("Move Offset");
                 }
-                LC_InfoMessageBuilder msg(type);
-                msg.add(formatRelative(offset));
-                msg.add(formatRelativePolar(offset));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(type)
+                    .relative(offset)
+                    .relativePolar(offset)
+                    .toInfoCursorZone2(false);
             }
             break;
         }
@@ -594,10 +594,10 @@ RS_Entity* RS_ActionDefault::getClone(RS_Entity* e){
 }
 
 void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
-    LC_InfoMessageBuilder msg(tr("Line"));
-    msg.add(tr("Length: "), formatLinear(pPoints->v1.distanceTo(pPoints->v2)));
-    msg.add(tr("Angle: "), formatWCSAngle(pPoints->v1.angleTo(pPoints->v2)));
-    appendInfoCursorZoneMessage(msg.toString(), 2, true);
+    msg(tr("Line"))
+        .linear(tr("Length: "), pPoints->v1.distanceTo(pPoints->v2))
+        .wcsAngle(tr("Angle: "), pPoints->v1.angleTo(pPoints->v2))
+        .toInfoCursorZone2(true);
 }
 
 void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone,  [[maybe_unused]]bool ctrlPressed, [[maybe_unused]] bool shiftPressed) {
@@ -605,21 +605,21 @@ void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone,  [[maybe_unused
     RS_Line tmpLine = RS_Line(clone->getStartpoint(), clone->getEndpoint());
     double height = tmpLine.getDistanceToPoint(clone->getMiddlePoint());
 
-    LC_InfoMessageBuilder msg(tr("Arc"));
-    msg.add(tr("Radius:"),formatLinear(clone->getRadius()));
-    msg.add(tr("Center:"),formatVector(center));
-    msg.add(tr("Angle Length:"), formatAngleRaw(clone->getAngleLength()));
-    msg.add(tr("Chord Length:"), formatLinear(clone->getStartpoint().distanceTo(clone->getEndpoint())));
-    msg.add(tr("Height:"), formatLinear(height));
-    appendInfoCursorZoneMessage(msg.toString(), 2, true);
+    msg(tr("Arc"))
+        .linear(tr("Radius:"), clone->getRadius())
+        .vector(tr("Center:"), center)
+        .rawAngle(tr("Angle Length:"), clone->getAngleLength())
+        .linear(tr("Chord Length:"), clone->getStartpoint().distanceTo(clone->getEndpoint()))
+        .linear(tr("Height:"), height)
+        .toInfoCursorZone2(true);
 }
 
 void RS_ActionDefault::createEditedCircleDescription(RS_Circle* clone,  [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
     RS_Vector center = clone->getCenter();
-    LC_InfoMessageBuilder msg(tr("Circle"));
-    msg.add(tr("Radius:"),formatLinear(clone->getRadius()));
-    msg.add(tr("Center:"),formatVector(center));
-    appendInfoCursorZoneMessage(msg.toString(), 2, true);
+    msg(tr("Circle"))
+        .linear(tr("Radius:"), clone->getRadius())
+        .vector(tr("Center:"), center)
+        .toInfoCursorZone2(true);
 }
 
 void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
@@ -916,13 +916,13 @@ void RS_ActionDefault::updateMouseButtonHints(){
             RS2::EntityType rtti = pPoints->refMovingEntity->rtti();
             switch (rtti){
                 case RS2::EntityLine:
-                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Line"));
+                    modifiers = MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Line"));
                     break;
                 case RS2::EntityArc:
-                    modifiers =  MOD_SHIFT_AND_CTRL(tr("Lengthen/Scale"),tr("Lengthen Chord"));
+                    modifiers = MOD_SHIFT_AND_CTRL(tr("Lengthen/Scale"), tr("Lengthen Chord"));
                     break;
                 case RS2::EntityPolyline:
-                    modifiers =  MOD_SHIFT_AND_CTRL(tr("Move in Previous segment direction"),tr("Move in Next segment direction"));
+                    modifiers = MOD_SHIFT_AND_CTRL(tr("Move in Previous segment direction"), tr("Move in Next segment direction"));
                     break;
                 default:
                     modifiers = MOD_SHIFT_ANGLE_SNAP;
@@ -985,6 +985,7 @@ RS2::EntityType RS_ActionDefault::getTypeToSelect(){
     return typeToSelect;
 }
 
+// fixme - sand - avoid direct call to appWindow??
 void RS_ActionDefault::clearQuickInfoWidget(){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){

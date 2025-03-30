@@ -83,9 +83,9 @@ void RS_ActionModifyCut::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             previewRefSelectablePoint(nearest);
             // todo - is description for selected entity necessary there?
             if (isInfoCursorForModificationEnabled()){
-                LC_InfoMessageBuilder msg(tr("Divide"));
-                msg.add(tr("At:"), formatVector(nearest));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Divide"))
+                    .vector(tr("At:"), nearest)
+                    .toInfoCursorZone2(false);
             }
             break;
         }

@@ -229,11 +229,11 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(RS_Line *line, RS_Vector 
                         createRefSelectablePoint(data->snapSegmentEnd, list);
                     }
 
-                    if (isInfoCursorForModificationEnabled()){
-                        LC_InfoMessageBuilder msg(tr("Break/Divide Line"));
-                        msg.add(tr("Point 1:"), formatVector(data->snapSegmentStart));
-                        msg.add(tr("Point 2:"), formatVector(data->snapSegmentEnd));
-                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    if (isInfoCursorForModificationEnabled()) {
+                        msg(tr("Break/Divide Line"))
+                            .vector(tr("Point 1:"), data->snapSegmentStart)
+                            .vector(tr("Point 2:"), data->snapSegmentEnd)
+                            .toInfoCursorZone2(false);
                     }
                 }
 
@@ -349,12 +349,12 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
                  createRefSelectablePoint(dividePoint2, list);
 
                 if (isInfoCursorForModificationEnabled()){
-                    LC_InfoMessageBuilder msg(tr("Break/Divide Circle"));
-                    msg.add(tr("Angle 1:"), formatWCSAngle(data->snapSegmentStartAngle));
-                    msg.add(tr("Point 1:"), formatVector(dividePoint1));
-                    msg.add(tr("Angle 2:"), formatWCSAngle(data->snapSegmentEndAngle));
-                    msg.add(tr("Point 2:"), formatVector(dividePoint2));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("Break/Divide Circle"))
+                        .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
+                        .vector(tr("Point 1:"), dividePoint1)
+                        .wcsAngle(tr("Angle 2:"), data->snapSegmentEndAngle)
+                        .vector(tr("Point 2:"), dividePoint2)
+                        .toInfoCursorZone2(false);
                 }
             }
         }
@@ -446,12 +446,12 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                     }
 
                     if (isInfoCursorForModificationEnabled()){
-                        LC_InfoMessageBuilder msg(tr("Break/Divide Arc"));
-                        msg.add(tr("Angle 1:"), formatWCSAngle(data->snapSegmentStartAngle));
-                        msg.add(tr("Point 1:"), formatVector(segmentStart));
-                        msg.add(tr("Angle 2:"), formatWCSAngle(data->snapSegmentEndAngle));
-                        msg.add(tr("Point 2:"), formatVector(segmentEnd));
-                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                        msg(tr("Break/Divide Arc"))
+                            .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
+                            .vector(tr("Point 1:"), segmentStart)
+                            .wcsAngle(tr("Angle 2:"), data->snapSegmentEndAngle)
+                            .vector(tr("Point 2:"), segmentEnd)
+                            .toInfoCursorZone2(false);
                     }
                 }
             }

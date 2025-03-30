@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_units.h"
 
 LC_ActionInfo3PointsAngle::LC_ActionInfo3PointsAngle(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("InfoAngle3Points", actionContext, RS2::ActionInfoDistEntity2Point) {
+    :RS_PreviewActionInterface("InfoAngle3Points", actionContext, RS2::ActionInfoAngle3Points) {
 }
 
 LC_ActionInfo3PointsAngle::~LC_ActionInfo3PointsAngle() = default;
@@ -176,13 +176,12 @@ RS2::CursorType LC_ActionInfo3PointsAngle::doGetMouseCursor([[maybe_unused]] int
 
 void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
     if (m_infoCursorOverlayPrefs->enabled){
-        double distance = startPoint.distanceTo(mouse);
-        LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Distance:"),formatLinear(distance));
-        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
-        msg.add(tr("From:"),formatVector(startPoint));
-        msg.add(tr("To:"),formatVector(mouse));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        msg(tr("Info"))
+            .linear(tr("Distance:"), startPoint.distanceTo(mouse))
+            .wcsAngle(tr("Angle:"), startPoint.angleTo(mouse))
+            .vector(tr("From:"), startPoint)
+            .vector(tr("To:"), mouse)
+            .toInfoCursorZone2(false);
     }
 }
 
@@ -192,21 +191,17 @@ void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const R
         double wcsAngle2 = point2.angleTo(mouse);
 
         double angle = RS_Math::correctAngle(wcsAngle1 - wcsAngle2);
-        double distance = point2.distanceTo(startPoint);
-        double distance2 = point2.distanceTo(mouse);
 
-        LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Angle:"), formatAngleRaw(angle));
-        msg.add(tr("Angle (Alt):"), formatAngleRaw(RS_Math::correctAngle(2 * M_PI - angle)));
-        msg.add(tr("From:"), formatVector(startPoint));
-        msg.add(tr("Intersection:"), formatVector(point2));
-        msg.add(tr("To:"), formatVector(mouse));
-        msg.add(tr("Distance1:"), formatLinear(distance));
-        msg.add(tr("Distance2:"), formatLinear(distance2));
-        double wcsAngleLine1 = point2.angleTo(startPoint);
-        double wcsAngleLine2 = point2.angleTo(mouse);
-        msg.add(tr("Angle 1:"), formatWCSAngle(wcsAngleLine1));
-        msg.add(tr("Angle 2:"), formatWCSAngle(wcsAngleLine2));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        msg(tr("Info"))
+            .rawAngle(tr("Angle:"), angle)
+            .rawAngle(tr("Angle (Alt):"), RS_Math::correctAngle(2 * M_PI - angle))
+            .vector(tr("From:"), startPoint)
+            .vector(tr("Intersection:"), point2)
+            .vector(tr("To:"), mouse)
+            .linear(tr("Distance1:"), point2.distanceTo(startPoint))
+            .linear(tr("Distance2:"), point2.distanceTo(mouse))
+            .wcsAngle(tr("Angle 1:"), point2.angleTo(startPoint))
+            .wcsAngle(tr("Angle 2:"), point2.angleTo(mouse))
+            .toInfoCursorZone2(false);
     }
 }

@@ -146,11 +146,11 @@ void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         }
 
                         if (isInfoCursorForModificationEnabled()){
-                            LC_InfoMessageBuilder msg(tr("Trim"));
-                            msg.add(tr("Intersection:"), formatVector(bevelResult->intersectionPoint));
-                            msg.add(tr("Point 1:"), formatVector(bevelResult->bevel->getStartpoint()));
-                            msg.add(tr("Point 2:"), formatVector(bevelResult->bevel->getEndpoint()));
-                            appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                            msg(tr("Trim"))
+                                .vector(tr("Intersection:"), bevelResult->intersectionPoint)
+                                .vector(tr("Point 1:"), bevelResult->bevel->getStartpoint())
+                                .vector(tr("Point 2:"), bevelResult->bevel->getEndpoint())
+                                .toInfoCursorZone2(false);
                         }
                     }
                     delete bevelResult;

@@ -86,9 +86,9 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
             }
 
             if (isInfoCursorForModificationEnabled()){
-                LC_InfoMessageBuilder msg(tr("Offset"));
-                msg.add(tr("Distance:"), formatLinear(data->distance));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Offset"))
+                    .linear(tr("Distance:"), data->distance)
+                    .toInfoCursorZone2(false);
             }
             break;
         }

@@ -80,13 +80,12 @@ void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent
             m.alignRef(pPoints.data, selectedEntities, true, true);
 
             if (isInfoCursorForModificationEnabled()) {
-                LC_InfoMessageBuilder msg(tr("Align References"));
-                msg.add(tr("Offset:"),formatRelative(pPoints.data.offset));
-                msg.add(tr("Angle:"), formatAngleRaw(pPoints.data.rotationAngle));
-                msg.add(tr("Scale:"),formatLinear(pPoints.data.scaleFactor));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Align References"))
+                .relative(tr("Offset:"),pPoints.data.offset)
+                .rawAngle(tr("Angle:"), pPoints.data.rotationAngle)
+                .linear(tr("Scale:"),pPoints.data.scaleFactor)
+                .toInfoCursorZone2(false);
             }
-
             break;
         }
         default:

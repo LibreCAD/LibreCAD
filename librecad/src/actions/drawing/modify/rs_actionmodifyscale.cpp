@@ -168,16 +168,16 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
             if (isInfoCursorForModificationEnabled()) {
                 RS_Vector centerPoint =  pPoints->data.referencePoint;
                 RS_Vector offset = pPoints->sourcePoint - mouse;
-                LC_InfoMessageBuilder msg(tr("Scale"));
-                msg.add(tr("Center:"),formatVector(centerPoint));
-                msg.add(tr("Source Point:"), formatVector(pPoints->sourcePoint));
-                msg.add(tr("Target Point:"), formatVector(mouse));
-                msg.add(tr("Offset:"));
-                msg.add(formatRelative(offset));
-                msg.add(formatRelativePolar(offset));
-                msg.add(tr("Scale by X:"),formatLinear(pPoints->data.factor.x));
-                msg.add(tr("Scale by Y:"),formatLinear(pPoints->data.factor.y));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Scale"))
+                    .vector(tr("Center:"), centerPoint)
+                    .vector(tr("Source Point:"), pPoints->sourcePoint)
+                    .vector(tr("Target Point:"), mouse)
+                    .string(tr("Offset:"))
+                    .relative(offset)
+                    .relativePolar(offset)
+                    .linear(tr("Scale by X:"), pPoints->data.factor.x)
+                    .linear(tr("Scale by Y:"), pPoints->data.factor.y)
+                    .toInfoCursorZone2(false);
             }
             break;
         }

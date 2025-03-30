@@ -54,7 +54,6 @@ struct  LC_InfoCursorOptions{
 };
 
 class LC_InfoMessageBuilder{
-    QString msg;
 
 public:
     LC_InfoMessageBuilder() {}
@@ -75,6 +74,12 @@ public:
         }
         msg.append("\n");
     }
+
+  protected:
+    void clear() {
+        msg.clear();
+    }
+    QString msg;
 };
 
 

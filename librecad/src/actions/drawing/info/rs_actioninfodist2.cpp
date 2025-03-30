@@ -34,7 +34,7 @@
 #include "lc_infodist2options.h"
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(LC_ActionContext *actionContext, bool fromPoint)
-    :RS_PreviewActionInterface("Info Dist2", actionContext, RS2::ActionInfoDistEntity2Point)
+    :RS_PreviewActionInterface("Info Dist2", actionContext, fromPoint? RS2::ActionInfoDistPoint2Entity : RS2::ActionInfoDistEntity2Point)
     ,entity(nullptr){
     selectionMode = fromPoint ? FIRST_IS_POINT : FIRST_IS_ENTITY;
 }
@@ -297,13 +297,12 @@ RS2::CursorType RS_ActionInfoDist2::doGetMouseCursor([[maybe_unused]] int status
 // todo - refactor, this is a copy from RS_ActionInfoDist
 void RS_ActionInfoDist2::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
     if (m_infoCursorOverlayPrefs->enabled){
-        double distance = startPoint.distanceTo(mouse);
-        LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Distance:"), formatLinear(distance));
-        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
-        msg.add(tr("From:"), formatVector(startPoint));
-        msg.add(tr("To:"), formatVector(mouse));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        msg(tr("Info"))
+            .linear(tr("Distance:"), startPoint.distanceTo(mouse))
+            .wcsAngle(tr("Angle:"), startPoint.angleTo(mouse))
+            .vector(tr("From:"), startPoint)
+            .vector(tr("To:"), mouse)
+            .toInfoCursorZone2(false);
     }
 }
 

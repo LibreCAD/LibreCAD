@@ -116,12 +116,12 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                                 }
                             }
                             if (isInfoCursorForModificationEnabled()){
-                                LC_InfoMessageBuilder msg(tr("Trim"));
-                                msg.add(tr("Intersection:"), formatVector(trimResult.intersection1));
+                                auto builder = msg(tr("Trim"))
+                                    .vector(tr("Intersection:"), trimResult.intersection1);
                                 if (trimResult.intersection2.valid) {
-                                    msg.add(tr("Intersection 2:"), formatVector(trimResult.intersection2));
+                                    builder.vector(tr("Intersection 2:"), trimResult.intersection2);
                                 }
-                                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                                builder.toInfoCursorZone2(false);
                             }
                         }
                     }

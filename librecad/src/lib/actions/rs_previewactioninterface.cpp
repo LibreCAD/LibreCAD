@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QApplication>
+
 #include <QMouseEvent>
 
 #include "lc_highlight.h"
@@ -42,10 +42,8 @@
 #include "rs_circle.h"
 #include "rs_commands.h"
 #include "rs_constructionline.h"
-#include "rs_coordinateevent.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_math.h"
@@ -79,6 +77,7 @@ RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name, LC_Action
 
     m_preview->setLayer(nullptr);
     initRefEntitiesMetrics();
+    m_msgBuilder = new MessageBuilder(this);
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\": OK", name);
 }
@@ -88,6 +87,7 @@ RS_PreviewActionInterface::~RS_PreviewActionInterface() {
     deletePreview();
     deleteInfoCursor();
     deleteHighlights();
+    delete m_msgBuilder;
 }
 
 void RS_PreviewActionInterface::init(int status) {
@@ -535,6 +535,15 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableAndDescribe(LC_MouseEvent *
         prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCatched);
     }
     return en;
+}
+
+RS_PreviewActionInterface::MessageBuilder& RS_PreviewActionInterface::msg(const QString& name, const QString& value) {
+   return m_msgBuilder->string(name, value);
+}
+
+RS_PreviewActionInterface::MessageBuilder& RS_PreviewActionInterface::msg(const QString& name) {
+    m_msgBuilder->add(name);
+    return *m_msgBuilder;
 }
 
 RS_Entity* RS_PreviewActionInterface::catchAndDescribe( const RS_Vector &pos,RS2::ResolveLevel level){

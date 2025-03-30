@@ -96,12 +96,11 @@ void RS_ActionDrawLineRectangle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     previewRefPoint((pPoints->corner1 + pPoints->corner2) * 0.5); // center of rect
                 }
                 if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
-                    LC_InfoMessageBuilder msg{};
-                    msg.add(tr("To be created:"), tr("Rectangle"));
-                    msg.add(tr("Width:"), formatLinear(abs(pPoints->corner1.x - pPoints->corner2.x)));
-                    msg.add(tr("Height:"), formatLinear(abs(pPoints->corner1.y - pPoints->corner2.y)));
-                    msg.add(tr("Center:"), formatVector((pPoints->corner1 + pPoints->corner2)*0.5));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("To be created:"), tr("Rectangle"))
+                        .linear(tr("Width:"), abs(pPoints->corner1.x - pPoints->corner2.x))
+                        .linear(tr("Height:"), abs(pPoints->corner1.y - pPoints->corner2.y))
+                        .vector(tr("Center:"), (pPoints->corner1 + pPoints->corner2) * 0.5)
+                        .toInfoCursorZone2(false);
                 }
             }
             break;

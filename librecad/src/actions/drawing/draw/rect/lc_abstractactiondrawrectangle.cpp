@@ -166,12 +166,11 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]LC
     }
 
     if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
-        LC_InfoMessageBuilder msg{};
-        msg.add(tr("To be created:"), tr("Rectangle"));
-        msg.add(tr("Width:"), formatLinear(data.width));
-        msg.add(tr("Height:"), formatLinear(data.height));
-        msg.add(tr("Center:"), formatVector(data.centerPoint));
-        appendInfoCursorZoneMessage(msg.toString(), 2, true);
+        msg(tr("To be created:"), tr("Rectangle"))
+            .linear(tr("Width:"), data.width)
+            .linear(tr("Height:"), data.height)
+            .vector(tr("Center:"), data.centerPoint)
+            .toInfoCursorZone2(true);
     }
 }
 

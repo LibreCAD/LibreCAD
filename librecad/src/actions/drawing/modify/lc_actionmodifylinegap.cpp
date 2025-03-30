@@ -58,10 +58,10 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vecto
                     createPreviewEntities(data, list, false);
 
                     if (isInfoCursorForModificationEnabled()){
-                        LC_InfoMessageBuilder msg(tr("Line Gap"));
-                        msg.add(tr("Start:"), formatVector(data->startPoint));
-                        msg.add(tr("End:"), formatVector(data->endPoint));
-                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                        msg(tr("Line Gap"))
+                            .vector(tr("Start:"), data->startPoint)
+                            .vector(tr("End:"), data->endPoint)
+                            .toInfoCursorZone2(false);
                     }
 
                     // don't need temporary data, so delete it
@@ -83,10 +83,10 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vecto
             createPreviewEntities(gapData, list, true);
 
             if (isInfoCursorForModificationEnabled()){
-                LC_InfoMessageBuilder msg(tr("Line Gap"));
-                msg.add(tr("Start:"), formatVector(gapData->startPoint));
-                msg.add(tr("End:"), formatVector(gapData->endPoint));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Line Gap"))
+                    .vector(tr("Start:"), gapData->startPoint)
+                    .vector(tr("End:"), gapData->endPoint)
+                    .toInfoCursorZone2(false);
             }
 
             break;

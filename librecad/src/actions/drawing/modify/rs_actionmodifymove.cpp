@@ -93,10 +93,10 @@ void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e)
                     }
                 }
                 if (isInfoCursorForModificationEnabled()){
-                    LC_InfoMessageBuilder msg(tr("Moving Offset"));
-                    msg.add(formatRelative(offset));
-                    msg.add(formatRelativePolar(offset));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("Moving Offset"))
+                        .relative(offset)
+                        .relativePolar(offset)
+                        .toInfoCursorZone2(false);
                 }
             }
             break;
