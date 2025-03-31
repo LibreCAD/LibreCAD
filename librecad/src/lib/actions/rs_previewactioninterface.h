@@ -98,7 +98,7 @@ protected:
 
     bool m_doNotAllowNonDecimalAnglesInput = false;
 
-    virtual void doTrigger(){};
+    virtual void doTrigger(){}
 
     void deletePreview();
     void deleteHighlights();
@@ -188,7 +188,6 @@ protected:
     void previewEntityToCreate(RS_Entity *en, bool addToPreview = true);
 
     void fireCoordinateEventForSnap(LC_MouseEvent *e);
-    LC_MouseEvent *toLCMouseMoveEvent(QMouseEvent *e);
 
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
@@ -206,5 +205,8 @@ protected:
     bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad);
     double evalAngleValue(const QString &c, bool *ok) const;
     void initFromSettings() override;
+
+private:
+    LC_MouseEvent toLCMouseMoveEvent(QMouseEvent *e);
 };
 #endif

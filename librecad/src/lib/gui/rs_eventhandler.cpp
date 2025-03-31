@@ -171,8 +171,7 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
         //    if (actionIndex>=0 && currentActions[actionIndex] &&
         //            !currentActions[actionIndex]->isFinished()) {
         std::shared_ptr<RS_ActionInterface> &lastAction = currentActions.last();
-        RS_DEBUG->print("call action %s",
-                        lastAction->getName().toLatin1().data());
+        LC_ERR<< "call action "<< lastAction->getName();
 
         lastAction->mouseReleaseEvent(e);
 
