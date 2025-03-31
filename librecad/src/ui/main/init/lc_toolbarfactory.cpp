@@ -22,6 +22,7 @@
 #include "lc_toolbarfactory.h"
 
 #include <QMenu>
+#include <QSettings>
 #include <QSizePolicy>
 #include <QToolBar>
 

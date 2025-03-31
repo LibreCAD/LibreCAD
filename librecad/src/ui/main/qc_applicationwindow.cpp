@@ -277,6 +277,10 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
     }
     w->getChildWindows().clear();
     // m_mdiAreaCAD->removeSubWindow(w);
+    if (w->getSaveOnClosePolicy() == QC_MDIWindow::SaveOnClosePolicy::CANCEL) {
+        // support for cancelling of saving untitled new document (via close all and close event)
+        return;
+    }
     w->close();
     m_windowList.removeOne(w);
 
@@ -1384,6 +1388,13 @@ bool QC_ApplicationWindow::doCloseAllFiles(){
                 w->setSaveOnClosePolicy(policy);
             }
             doClose(w);
+            if (w->getSaveOnClosePolicy() == QC_MDIWindow::SaveOnClosePolicy::CANCEL) {
+                // this may occur if window contains new untitled document. In such case, the user will be
+                // prompted to enter the name of the document via save dialog - and here it is possible to cancel
+                // save - so cancelling save for new doc affects the process of all windows save.
+                showStatusMessage(tr("Close All cancelled"), 2000);
+                return true;
+            }
             doArrangeWindows(RS2::CurrentMode);
         }
         qApp->processEvents(QEventLoop::AllEvents, 1000);

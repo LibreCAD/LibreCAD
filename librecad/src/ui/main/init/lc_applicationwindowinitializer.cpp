@@ -94,9 +94,8 @@ void LC_ApplicationWindowInitializer::initActionOptionsManager(){
 }
 
 void LC_ApplicationWindowInitializer::initActionFactory(){
-    QSettings settings;
     LC_ActionFactory a_factory(m_appWin, m_appWin->m_actionHandler);
-    bool using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
+    bool using_theme = LC_GET_ONE_BOOL("Widgets","AllowTheme", false);
     a_factory.fillActionContainer(m_appWin->m_actionGroupManager, using_theme);
 }
 
@@ -161,8 +160,7 @@ void LC_ApplicationWindowInitializer::initIconSize(){
 }
 
 void LC_ApplicationWindowInitializer::loadCmdWidgetVariablesFile(){
-    QSettings settings;
-    auto command_file = settings.value("Paths/VariableFile", "").toString();
+    auto command_file = LC_GET_ONE_STR("Paths","VariableFile", "");
     if (!command_file.isEmpty()) {
         m_appWin->m_commandWidget->leCommand->readCommandFile(command_file);
     }

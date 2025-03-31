@@ -26,10 +26,13 @@
 **********************************************************************/
 
 #include<iostream>
-#include <list>
 
 #include "rs_undocycle.h"
 #include "rs_undo.h"
+
+#include <list>
+#include <algorithm>
+
 #include "rs_debug.h"
 
 /**

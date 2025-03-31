@@ -64,14 +64,13 @@ void LC_ApplicationWindowDialogsHelper::showLicenseWindow() {
 }
 
 void LC_ApplicationWindowDialogsHelper::showDeviceOptions() {
-    QSettings settings;
     QDialog dlg (m_appWindow);
     dlg.setWindowTitle(tr("Device Options"));
     auto layout = new QVBoxLayout;
     auto device_combo = new ComboBoxOption(&dlg);
     device_combo->setTitle(tr("Device"));
     device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
-    device_combo->setCurrentOption(settings.value("Hardware/Device", "Mouse").toString());
+    device_combo->setCurrentOption(LC_GET_ONE_STR("Hardware","Device", "Mouse"));
     layout->addWidget(device_combo);
     dlg.setLayout(layout);
     connect(device_combo, &ComboBoxOption::optionToSave,m_appWindow, &QC_ApplicationWindow::updateDevice);

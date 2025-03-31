@@ -79,8 +79,6 @@
 #include "emu_c99.h"
 #endif
 
-
-
 namespace {
 // Issue #1765: set default cursor size: 32x32
 constexpr int g_cursorSize=32;
@@ -107,6 +105,28 @@ constexpr int g_hotspotXY=-1;
     constexpr double zoomWheelDivisor = 200.; // fixme - to settings
 
 
+    // Helper function to test validity of a rect
+    bool withinValidRange(double x)
+    {
+        return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
+    }
+
+    bool withinValidRange(const RS_Vector& vp)
+    {
+        return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
+    }
+
+    bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax)
+    {
+        return
+            withinValidRange(vpMin)
+            && withinValidRange(vpMax)
+            && vpMin.x < vpMax.x
+            && vpMin.y < vpMax.y
+            && vpMin.x + 1e6 >= vpMax.x
+            && vpMin.y + 1e6 >= vpMax.y;
+    }
+}
 
 
 /**
@@ -116,58 +136,52 @@ constexpr int g_hotspotXY=-1;
  * @return RS_Entity* - the closest entity within the range of g_cursorSize
  *                      returns nullptr, if no entity is found in range
  */
-    RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event){
-        if (event == nullptr)
-            return nullptr;
-        RS_EntityContainer* container = view.getContainer();
-        if (container==nullptr)
-            return nullptr;
-        const QPointF mapped = event->pos();
-        double distance = RS_MAXDOUBLE;
-        const LC_GraphicViewport* viewPort = view.getViewPort();
+RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event) {
+    if (event == nullptr)
+        return nullptr;
+    RS_EntityContainer* container = view.getContainer();
+    if (container == nullptr)
+        return nullptr;
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    const LC_GraphicViewport* viewPort = view.getViewPort();
 
-        RS_Entity* entity = container->getNearestEntity(viewPort->toWorldFromUi(mapped.x(), mapped.y()), &distance);
+    RS_Entity* entity = container->getNearestEntity(viewPort->toWorldFromUi(mapped.x(), mapped.y()), &distance);
 
-        return (viewPort->toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
-    }
+    return (viewPort->toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
+}
 
 // Find an ancestor of the RS_Insert type.
 // Return nullptr, if none is found
-    RS_Insert* getAncestorInsert(RS_Entity* entity){
-        while(entity != nullptr) {
-            if (entity->rtti() == RS2::EntityInsert) {
-                RS_Insert* parent = getAncestorInsert(entity->getParent());
-                return parent != nullptr ? parent : static_cast<RS_Insert*>(entity);
-            }
-            entity = entity->getParent();
+RS_Insert* getAncestorInsert(RS_Entity* entity) {
+    while (entity != nullptr) {
+        if (entity->rtti() == RS2::EntityInsert) {
+            RS_Insert* parent = getAncestorInsert(entity->getParent());
+            return parent != nullptr ? parent : static_cast<RS_Insert*>(entity);
         }
-        return nullptr;
+        entity = entity->getParent();
     }
-
-// whether the current insert is part of Text
-    RS_Entity* getParentText(RS_Insert* insert)    {
-        if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr)
-            return nullptr;
-        switch(insert->getParent()->rtti()) {
-            case RS2::EntityText:
-            case RS2::EntityMText:
-                return insert->getParent();
-            default:
-                return nullptr;
-        }
-    }
-
-
-
-
-
-
+    return nullptr;
 }
 
+// whether the current insert is part of Text
+RS_Entity* getParentText(RS_Insert* insert) {
+    if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr)
+        return nullptr;
+    switch (insert->getParent()->rtti()) {
+        case RS2::EntityText:
+        case RS2::EntityMText:
+            return insert->getParent();
+        default:
+            return nullptr;
+    }
+}
 
 // Show the entity property dialog on the closest entity in range
 void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity){
-    if (entity == nullptr) return;
+    if (entity == nullptr) {
+        return;
+    }
 
     // snap to the top selected parent
     while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected()) {
@@ -180,19 +194,19 @@ void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity){
 void QG_GraphicView::launchEditProperty(RS_Entity* entity)
 {
     RS_EntityContainer* container = getContainer();
-    if (entity == nullptr || container == nullptr)
+    if (entity == nullptr || container == nullptr) {
         return;
-
+    }
     editAction( *entity);
 
     //container->removeEntity(entity);
     auto* doc = dynamic_cast<RS_Document*>(container);
-    if (doc != nullptr)
+    if (doc != nullptr) {
         doc->startUndoCycle();
+    }
     // delete any temporary highlighting duplicates of the original
     auto* defaultAction = dynamic_cast<RS_ActionDefault*>(getEventHandler()->getDefaultAction());
-    if (defaultAction != nullptr)
-    {
+    if (defaultAction != nullptr){
         defaultAction->clearHighLighting();
     }
     doc->endUndoCycle();
@@ -203,12 +217,11 @@ void QG_GraphicView::launchEditProperty(RS_Entity* entity)
 // Edit entity, otherwise
 void QG_GraphicView::editAction( RS_Entity& entity){
     RS_EntityContainer* container = getContainer();
-    if (container==nullptr)
+    if (container==nullptr) {
         return;
-
+    }
     switch(entity.rtti()) {
-        case RS2::EntityInsert:
-        {
+        case RS2::EntityInsert: {
             auto& appWindow = QC_ApplicationWindow::getAppWindow();
             RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
             RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
@@ -228,8 +241,7 @@ void QG_GraphicView::editAction( RS_Entity& entity){
             setCurrentAction(action);
             break;
         }
-        default:
-        {
+        default:{
             // fixme - sand - files - explicit action creation
             auto* action = new RS_ActionModifyEntity(m_actionContext, false);
             action->setEntity(&entity);
@@ -239,62 +251,6 @@ void QG_GraphicView::editAction( RS_Entity& entity){
         }
     }
 }
-
-    void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
-    {
-        RS_EntityContainer* container = view.getContainer();
-        if (entity == nullptr || container == nullptr)
-            return;
-
-        editAction(view, *entity);
-
-        //container->removeEntity(entity);
-        auto* doc = dynamic_cast<RS_Document*>(container);
-        if (doc != nullptr)
-            doc->startUndoCycle();
-        // delete any temporary highlighting duplicates of the original
-        auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
-        if (defaultAction != nullptr)
-        {
-            defaultAction->clearHighLighting();
-        }
-        doc->endUndoCycle();
-    }
-
-// Show the entity property dialog on the closest entity in range
-    void showEntityPropertiesDialog(QG_GraphicView& view, RS_Entity* entity){
-        if (entity == nullptr) return;
-
-        // snap to the top selected parent
-        while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected()) {
-            entity = entity->getParent();
-        }
-
-        launchEditProperty(view, entity);
-    }
-
-    // Helper function to test validity of a rect
-    bool withinValidRange(double x)
-    {
-        return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
-    }
-    bool withinValidRange(const RS_Vector& vp)
-    {
-        return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
-    }
-    bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax)
-    {
-        return
-            withinValidRange(vpMin)
-            && withinValidRange(vpMax)
-            && vpMin.x < vpMax.x
-            && vpMin.y < vpMax.y
-            && vpMin.x + 1e6 >= vpMax.x
-            && vpMin.y + 1e6 >= vpMax.y;
-    }
-}
-
-
 
 // Support auto-panning when the cursor is close to the view border
 struct QG_GraphicView::AutoPanData{
@@ -1494,11 +1450,8 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const{
         return false;
 
     const RS_Vector cadArea_minCoord(0., 0.);
-
     const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
-
     const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
-
     const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
                                    cadArea_maxCoord - m_panData->probedAreaOffset);
     if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.)

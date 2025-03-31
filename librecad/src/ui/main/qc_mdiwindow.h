@@ -65,7 +65,8 @@ public:
     enum SaveOnClosePolicy {
         ASK,
         SAVE,
-        DONT_SAVE
+        DONT_SAVE,
+        CANCEL
     };
     /** @return Pointer to graphic view */
     QG_GraphicView *getGraphicView() const;
@@ -101,31 +102,31 @@ public:
     bool isModified();
 
     SaveOnClosePolicy getSaveOnClosePolicy() const{
-        return saveOnClosePolicy;
+        return m_saveOnClosePolicy;
     }
 
     void setSaveOnClosePolicy(SaveOnClosePolicy val){
-        saveOnClosePolicy = val;
+        m_saveOnClosePolicy = val;
     }
 
 protected:
-    LC_DocumentsStorage *storage;
+    LC_DocumentsStorage *m_documentsStorage;
     // window ID
     unsigned id = 0;
     // Graphic view
-    QG_GraphicView *graphicView = nullptr;
+    QG_GraphicView *m_graphicView = nullptr;
     // Document
-    RS_Document *document = nullptr;
+    RS_Document *m_document = nullptr;
     // Does the window own the document?
     bool m_owner = false;
     // List of known child windows that show blocks of the same drawing.
-    QList<QC_MDIWindow *> childWindows;
+    QList<QC_MDIWindow *> m_childWindows;
     //  Pointer to parent window which needs to know if this window is closed or NULL.
-    QC_MDIWindow *parentWindow{nullptr};
-    QMdiArea *cadMdiArea = nullptr;
+    QC_MDIWindow *m_parentWindow{nullptr};
+    QMdiArea *m_cadMdiArea = nullptr;
 
-    SaveOnClosePolicy saveOnClosePolicy = ASK;
-    void drawChars();
+    SaveOnClosePolicy m_saveOnClosePolicy = ASK;
+    void drawChars(); // fime - sand - files - refactor and remove from there!
     void closeEvent(QCloseEvent *) override;
     void addWidgetsListeners();
     void setupGraphicView(QWidget *parent, bool printPreview, LC_ActionContext* actionContext);
