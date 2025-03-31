@@ -75,14 +75,6 @@ protected:
         Panning /**< view panning triggered by Ctl- mouse dragging */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    RS2::SnapRestriction snapRestriction;
-    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
-
-    bool allowEntityQuickInfoForCTRL = false;
-    bool allowEntityQuickInfoAuto = false;
-    bool m_selectWithPressedMouseOnly = true; // fixme - sand - retrieve from setting (for backward compatibility or rather historic bug support)
 
     void checkSupportOfQuickEntityInfo();
     void clearQuickInfoWidget();
@@ -105,5 +97,16 @@ protected:
     bool isShowEntityDescriptionOnHighlight();
     void forceUpdateInfoCursor(const LC_MouseEvent *event);
     RS_Entity* getClone(RS_Entity* e);
+
+private:
+
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    RS2::SnapRestriction snapRestriction;
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+
+    bool allowEntityQuickInfoForCTRL = false;
+    bool allowEntityQuickInfoAuto = false;
+    bool m_selectWithPressedMouseOnly = true; // fixme - sand - retrieve from setting (for backward compatibility or rather historic bug support)
 };
 #endif

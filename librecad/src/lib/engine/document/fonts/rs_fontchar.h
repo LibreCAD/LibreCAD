@@ -49,8 +49,6 @@ public:
                 RS_Vector basePoint)
             : RS_Block(parent, RS_BlockData(name, basePoint, false)) {}
 
-    virtual ~RS_FontChar() {}
-
     /** @return RS2::EntityFontChar */
     RS2::EntityType rtti() const override {
         return RS2::EntityFontChar;

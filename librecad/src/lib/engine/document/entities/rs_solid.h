@@ -128,7 +128,7 @@ public:
                               double solidDist = RS_MAXDOUBLE) const override;
 
     void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
@@ -151,7 +151,7 @@ protected:
 private:
     //helper method for getNearestPointOnEntity
     bool sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const;
-    void setDistPtr(double *dist, const double value) const;
+    void setDistPtr(double *dist, double value) const;
 };
 
 #endif

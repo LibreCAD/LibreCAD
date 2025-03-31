@@ -1254,7 +1254,7 @@ void RS_Ellipse::move(const RS_Vector& offset) {
     moveBorders(offset);
 }
 
-void RS_Ellipse::rotate(const RS_Vector& center, const double& angle) {
+void RS_Ellipse::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     data.center.rotate(center, angleVector);
     data.majorP.rotate(angleVector);
@@ -1277,13 +1277,13 @@ void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     calculateBorders();
 }
 
-void RS_Ellipse::rotate( const double& angle) {//rotate around origin
+void RS_Ellipse::rotate(double angle) {//rotate around origin
     RS_Vector aV(angle);
     data.center.rotate(aV);
     data.majorP.rotate(aV);
     calculateBorders();
 }
-void RS_Ellipse::rotate( const RS_Vector& angleVector) {//rotate around origin
+void RS_Ellipse::rotate(const RS_Vector& angleVector) {//rotate around origin
     data.center.rotate(angleVector);
     data.majorP.rotate(angleVector);
     //calculateEndpoints();

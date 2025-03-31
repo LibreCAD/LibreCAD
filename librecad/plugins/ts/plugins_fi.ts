@@ -312,7 +312,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Suljettu</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
@@ -749,7 +749,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Suljettu</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
@@ -797,7 +797,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
@@ -975,7 +975,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peruuta</translation>
     </message>
 </context>
 <context>
@@ -1021,7 +1021,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="91"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
@@ -1069,7 +1069,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
@@ -1175,7 +1175,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
@@ -1193,7 +1193,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Splini-pisteet</translation>
     </message>
 </context>
 <context>
@@ -1201,7 +1201,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taso:</translation>
     </message>
 </context>
 <context>
@@ -1214,7 +1214,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Korkeus:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>

@@ -23,10 +23,10 @@
 #ifndef LC_UCS_H
 #define LC_UCS_H
 
-#include <QObject>
 #include <QString>
-#include "rs_vector.h"
+
 #include "rs.h"
+#include "rs_vector.h"
 
 /**
  * So far this is temporary data holder for UCS (if one is defined, say, in AutoCAD). The main idea - try to dont lose data in dxf on open/save cycle.
@@ -41,31 +41,31 @@ public:
     virtual ~LC_UCS();
 
     void setOrigin(RS_Vector o);
-    RS_Vector getOrigin() {return ucsOrigin;};
+    RS_Vector getOrigin() const {return ucsOrigin;}
     void setElevation(double d);
-    double getElevation(){return ucsElevation;};
+    double getElevation() const {return ucsElevation;}
     void setXAxis(RS_Vector pos);
     RS_Vector getXAxis(){return ucsXAxis;}
     void setYAxis(RS_Vector axis);
     RS_Vector getYAxis(){return ucsYAxis;}
     void setOrthoType(int type);
-    int getOrthoType(){return ucsOrthoType;};
+    int getOrthoType(){return ucsOrthoType;}
     void setName(const QString &name);
     const QString getName() const;
     long getNamedUcsId() const;
     long getBaseUcsId() const;
-    static bool isValidName(QString &nameCandidate);
     bool isSameTo(LC_UCS* other);
     const RS_Vector getOrthoOrigin() const;
     void setOrthoOrigin(const RS_Vector &orthoOrigin);
-    virtual bool isUCS(){return true;};
-    bool isTemporary(){return temporary;};
+    virtual bool isUCS() const {return true;}
+    bool isTemporary() const {return temporary;}
     void setTemporary(bool temp){temporary = temp;}
     double getXAxisDirection(){
         return ucsXAxis.angle();
     }
     RS2::IsoGridViewType getIsoGridViewType();
     bool isIsometric();
+    static bool isValidName(const QString &nameCandidate);
 
     enum UCSOrthoType{
         NON_ORTHO,
@@ -76,7 +76,7 @@ public:
         LEFT,
         RIGHT
     };
-protected:
+private:
     bool temporary = false;
     QString name = "";
     RS_Vector ucsOrigin = RS_Vector(0,0,0); // UCS origin, 110, 120, 130
@@ -91,8 +91,8 @@ protected:
 
 class LC_WCS: public LC_UCS{
 public:
-    explicit LC_WCS():LC_UCS(QObject::tr("WCS")) {}
-    bool isUCS() override {return false;}
+    LC_WCS();
+    bool isUCS() const override {return false;}
 
     static LC_UCS instance;
 };

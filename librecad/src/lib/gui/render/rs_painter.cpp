@@ -23,9 +23,11 @@
 
 #include<QPainterPath>
 #include<QPolygon>
+#include<QPointF>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
+#include "lc_graphicviewportrenderer.h"
 #include "lc_linemath.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
@@ -43,12 +45,10 @@
 
 namespace {
 
-namespace {
 const RS_Color colorBlack = RS_Color(Qt::black);
 const RS_Color colorWhite = RS_Color(Qt::white);
 const QColor qcolorBlack = colorBlack.toQColor();
 const QColor qcolorWhite = colorWhite.toQColor();
-}
 
 // Convert from LibreCAD line style pattern to QPen Dash Pattern.
 // QPen dash pattern by default is in the unit of pixel
@@ -104,6 +104,56 @@ const QColor qcolorWhite = colorWhite.toQColor();
         }
         }
     };
+
+    // draw a plus sign by given halfSize
+    void drawPlus(QPainter& painter, QPointF uiPos, int halfSize)
+    {
+        QPointF left{uiPos.x() - halfSize, uiPos.y()};
+        QPointF right{uiPos.x() + halfSize, uiPos.y()};
+        painter.drawLine(left, right);
+        QPointF bottom{uiPos.x(), uiPos.y() - halfSize};
+        QPointF top{uiPos.x(), uiPos.y() + halfSize};
+        painter.drawLine(bottom, top);
+    }
+    // draw a plus sign by given halfSize
+    void drawCross(QPainter& painter, QPointF uiPos, int halfSize)
+    {
+        auto half = QPoint(halfSize, halfSize).toPointF();
+        QPointF left = uiPos - half;
+        QPointF right = uiPos + half;
+        painter.drawLine(left, right);
+        left.setY(left.y() + 2 * halfSize);
+        right.setY(right.y() - 2 * halfSize);
+        painter.drawLine(left, right);
+    }
+
+    void drawOctagon(QPainter& painter, const QPointF& uiPos, int halfSize)
+    {
+        QPointF dr0(double(halfSize), std::sin(M_PI/8.) * halfSize);
+        std::vector<QPointF> vertices{{dr0, dr0.transposed()}};
+        // mirroring by y-axis
+        for(int i = 1; i >= 0; --i)
+            vertices.emplace_back( - vertices[i].x(), vertices[i].y());
+        // mirroring by x-axis
+        for(int i = 3; i >= 0; --i)
+            vertices.emplace_back( vertices[i].x(), - vertices[i].y());
+
+        QPolygonF octagon;
+        std::transform(vertices.cbegin(), vertices.cend(), std::back_inserter(octagon), [&uiPos](const QPointF& vertex) { return vertex + uiPos;});
+        PainterGuard guard(painter);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPolygon(octagon);
+    }
+
+    void drawSquare(QPainter& painter, const QPointF& uiPos, int halfSize)
+    {
+        auto dr0 = QPoint(halfSize, halfSize).toPointF();
+        auto dr1 = QPoint(- halfSize, halfSize).toPointF();
+        QPolygonF square{{uiPos + dr0, uiPos + dr1, uiPos - dr0, uiPos - dr1}};
+        PainterGuard guard(painter);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPolygon(square);
+    }
 }
 /**
  * Constructor.
@@ -128,7 +178,7 @@ void RS_Painter::drawGridPoint(const double &x, const double &y) {
 
 void RS_Painter::drawPointEntityWCS(const RS_Vector& wcsPos) {
     RS_Vector uiPos = toGui(wcsPos);
-    drawPointEntityUI(uiPos.x, uiPos.y, pointsMode, screenPointsSize);
+    drawPointEntityUI(uiPos, pointsMode, screenPointsSize);
 }
 
 void RS_Painter::drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, double pdSize){
@@ -136,13 +186,13 @@ void RS_Painter::drawRefPointEntityWCS(const RS_Vector &wcsPos, int pdMode, doub
     int screenPDSize = determinePointScreenSize(pdSize);
     double uiX, uiY;
     toGui(wcsPos, uiX, uiY);
-    drawPointEntityUI(uiX, uiY,  pdMode, screenPDSize);
+    drawPointEntityUI({uiX, uiY},  pdMode, screenPDSize);
 }
 
 /**
  * Draws a point at (x1, y1).
  */
-void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsize) {
+void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsize) {
     int halfPDSize = pdsize/2;
 
 /*	PDMODE values =>
@@ -154,12 +204,12 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
  bit 5 = 1 => added surrounding circle
  bit 6 = 1 => added surrounding square
 */
+    QPointF uiCoords {uiPos.x, uiPos.y};
     switch (DXF_FORMAT_PDMode_getCentre(pdmode)) {
         case DXF_FORMAT_PDMode_CentreDot:
         default: {
             /*	Centre dot - use a tiny + to make it visible  */
-            QPainter::drawLine(uiX - 1, uiY, uiX + 1, uiY);
-            QPainter::drawLine(uiX, uiY - 1, uiX, uiY + 1);
+            drawPlus(*this, uiCoords, 1);
             break;
         }
         case DXF_FORMAT_PDMode_CentreBlank: {
@@ -168,19 +218,17 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
         }
         case DXF_FORMAT_PDMode_CentrePlus: {
             /*	Centre +  */
-            QPainter::drawLine(uiX - pdsize, uiY, uiX + pdsize, uiY);
-            QPainter::drawLine(uiX, uiY - pdsize, uiX, uiY + pdsize);
+            drawPlus(*this, uiCoords, pdsize);
             break;
         }
         case DXF_FORMAT_PDMode_CentreCross: {
             /*	Centre X  */
-            QPainter::drawLine(uiX - pdsize, uiY - pdsize, uiX + pdsize, uiY + pdsize);
-            QPainter::drawLine(uiX + pdsize, uiY - pdsize, uiX - pdsize, uiY + pdsize);
+            drawCross(*this, uiCoords, pdsize);
             break;
         }
         case DXF_FORMAT_PDMode_CentreTick: {
             /*	Centre vertical tick  */
-            QPainter::drawLine(uiX, uiY - halfPDSize, uiX, uiY);
+            QPainter::drawLine(QPointF{uiPos.x, uiPos.y - halfPDSize}, uiCoords);
             break;
         }
     }
@@ -188,54 +236,36 @@ void RS_Painter::drawPointEntityUI(double uiX, double uiY, int pdmode, int pdsiz
 /*	Surrounding circle if required  */
     if (DXF_FORMAT_PDMode_hasEncloseCircle(pdmode)) {
         /*	Approximate circle by an octagon  */
-        int xMin = uiX - halfPDSize;
-        int xMax = uiX + halfPDSize;
-        int yMin = uiY - halfPDSize;
-        int yMax = uiY + halfPDSize;
-        int octOffset = halfPDSize * 0.71;
-        int xOctMin = uiX - octOffset;
-        int xOctMax = uiX + octOffset;
-        int yOctMin = uiY - octOffset;
-        int yOctMax = uiY + octOffset;
-
-        QPainter::drawLine(uiX, yMin, xOctMax, yOctMin);
-        QPainter::drawLine(uiX, yMin, xOctMin, yOctMin);
-        QPainter::drawLine(uiX, yMax, xOctMax, yOctMax);
-        QPainter::drawLine(uiX, yMax, xOctMin, yOctMax);
-
-        QPainter::drawLine(xMin, uiY, xOctMin, yOctMin);
-        QPainter::drawLine(xMin, uiY, xOctMin, yOctMax);
-        QPainter::drawLine(xMax, uiY, xOctMax, yOctMin);
-        QPainter::drawLine(xMax, uiY, xOctMax, yOctMax);
+        drawOctagon(*this, uiCoords, halfPDSize);
     }
 
 /*	Surrounding square if required  */
     if (DXF_FORMAT_PDMode_hasEncloseSquare(pdmode)) {
-        int xMin = uiX - halfPDSize;
-        int xMax = uiX + halfPDSize;
-        int yMin = uiY - halfPDSize;
-        int yMax = uiY + halfPDSize;
-
-        QPainter::drawLine(xMin, yMin, xMax, yMin);
-        QPainter::drawLine(xMin, yMax, xMax, yMax);
-        QPainter::drawLine(xMin, yMin, xMin, yMax);
-        QPainter::drawLine(xMax, yMin, xMax, yMax);
+        drawSquare(*this, uiCoords, halfPDSize);
     }
 }
 
-void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3) {
+void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices)
+{
+    QPolygonF uiPolygon;
+    for(const RS_Vector& wcsVertex: wcsVertices) {
+        if (wcsVertex.valid) {
+            const RS_Vector& uiVertex = toGui(wcsVertex);
+            uiPolygon.push_back({uiVertex.x, uiVertex.y});
+        }
+    }
 
-    double uiX0, uiX1, uiX2, uiY0, uiY1, uiY2;
+    // For quadrilaterals from RS_Solid, the point order is switched for corner3 and corner4.
+    if (uiPolygon.size() == 4)
+        std::swap(uiPolygon[2], uiPolygon.back());
+    fillPolygonUI(uiPolygon);
+}
 
-    toGui(wcsP0, uiX0, uiY0);
-    toGui(wcsP1, uiX1, uiY1);
-    toGui(wcsP2, uiX2, uiY2);
-
-    fillTriangleUI(uiX0, uiY0,uiX1, uiY1, uiX2, uiY2);
+void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3)
+{
+    drawSolidWCS({wcsP0, wcsP1, wcsP2});
     if (wcsP3.valid) {
-        double uiX3, uiY3;
-        toGui(wcsP3, uiX3, uiY3);
-        fillTriangleUI(uiX0,uiY0, uiX1, uiY1, uiX3, uiY3);
+        drawSolidWCS({wcsP1, wcsP3, wcsP2});
     }
 }
 
@@ -616,12 +646,12 @@ void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, double uiRadius){
     }
 }
 
-void RS_Painter::drawCircleUIDirect(double uiCenterX, double uiCenterY, double uiRadius){
+void RS_Painter::drawCircleUIDirect(const RS_Vector& uiPos, double uiRadius) {
     if (uiRadius < minCircleDrawingRadius){
-        QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
+        QPainter::drawPoint(QPointF(uiPos.x, uiPos.y));
     }
     else {
-       QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+       QPainter::drawEllipse(QPointF(uiPos.x, uiPos.y), uiRadius, uiRadius);
     }
 }
 
@@ -681,154 +711,128 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
     // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (uiRadii.x < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
+        return;
     }
-    else if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
-        QTransform t1;
-        t1.translate(uiCenter.x, uiCenter.y);
-        t1.rotate(-uiMajorAngleDegrees);
-        t1.translate(-uiCenter.x, -uiCenter.y);
-        save();
-        setTransform(t1, false);
-        QPainter::drawLine(QPointF(uiCenter.x - uiRadii.x, uiCenter.y), QPointF(uiCenter.x + uiRadii.x, uiCenter.y));
-        restore();
+
+    PainterGuard guard(*this);
+    QTransform t1;
+    t1.translate(uiCenter.x, uiCenter.y);
+    t1.rotate(-uiMajorAngleDegrees);
+    setTransform(t1, true);
+
+    if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
+        QPainter::drawLine(QPointF(- uiRadii.x, 0.), QPointF(uiRadii.x, 0.));
     }
     else {
-        QTransform t1;
-        t1.translate(uiCenter.x, uiCenter.y);
-        t1.rotate(-uiMajorAngleDegrees);
-        t1.translate(-uiCenter.x, -uiCenter.y);
-        save();
-        setTransform(t1, false);
-        RS_Vector minPosition = uiCenter - uiRadii;
+        RS_Vector minPosition = - uiRadii;
         RS_Vector uiSize = uiRadii + uiRadii;
         if (reversed){
-            angle1Degrees = angle2Degrees - 360;
+            angle1Degrees = angle2Degrees - 360.;
             angularLength = -angularLength;
         }
         QPainterPath path;
         path.arcMoveTo(minPosition.x, minPosition.y, uiSize.x, uiSize.y, angle1Degrees);
         path.arcTo(minPosition.x, minPosition.y, uiSize.x, uiSize.y, angle1Degrees, angularLength);
         QPainter::drawPath(path);
-        restore();
     }
 }
 
 
-void RS_Painter::createSolidFillPath(QPainterPath &path,   QList<RS_Entity *> entities)  {
-        double centerX, centerY, startX, startY, endX, endY;
-        foreach (auto l, entities) {
-            if (l->rtti()==RS2::EntityContainer) {
-                auto* loop = (RS_EntityContainer*)l;
-                QPainterPath loopPath;
-                // edges:
-//                LC_ERR << "loop------------------------------- " << loop->count();
-                for(auto e: *loop){
-                    switch (e->rtti()) {
-                        case RS2::EntityLine: {
-                            toGui(e->getStartpoint(), startX,startY);
-                            QPoint pt1(RS_Math::round(startX),RS_Math::round(startY));
-                            toGui(e->getEndpoint(), endX,endY);
-                            QPoint pt2(RS_Math::round(endX),RS_Math::round(endY));
+QPainterPath RS_Painter::createSolidFillPath(const QList<RS_Entity *>& entities)  {
+    QPainterPath path;
+    for(auto l: entities) {
+        if (l == nullptr || l->rtti()!=RS2::EntityContainer)
+            continue;
 
-                            const QPointF &currentPosition = loopPath.currentPosition();
-//                            LC_ERR << "CP " << currentPosition.x() << " " << currentPosition.y();
-                            if (loopPath.isEmpty() || (currentPosition - pt1).manhattanLength() >= 1){
-                                loopPath.moveTo(pt1);
-                            }
-                            loopPath.lineTo(pt2);
-//                            LC_ERR << "Pt1 " << pt1.x() << "  " << pt1.y();
-//                            LC_ERR << "Added " << pt2.x() << "  " << pt2.y();
-                            break;
-                        }
-                        case RS2::EntityArc: {
-                            auto* arc=static_cast<RS_Arc*>(e);
-                            const RS_ArcData &arcData = arc->getData();
-                            double radius = toGuiDX(arcData.radius);
-                            // can't skip due to minimal radius, it will lead to filling errors
-//                        if (radius > view->getMinArcDrawingRadius()) {
-                            const RS_Vector &cp = arcData.center;
-                            double cpx, cpy;
-                            toGui(cp, cpx, cpy);
-                            double rx = cpx - radius;
-                            double ry = cpy - radius;
-                            double size = radius + radius;
-                            double startAngleDegrees, angularLength;
-                            if (arcData.reversed) {
-                                startAngleDegrees = arcData.otherAngleDegrees;
-                                startAngleDegrees = startAngleDegrees - 360;
-                                angularLength = -arcData.angularLength;
-                            } else {
-                                startAngleDegrees = arcData.startAngleDegrees;
-                                angularLength = arcData.angularLength;
-                            }
-                            startAngleDegrees = toUCSAngleDegrees(startAngleDegrees);
-                            if (loopPath.isEmpty()) {
-                                loopPath.arcMoveTo(rx, ry, size, size, startAngleDegrees);
-                            }
-                            loopPath.arcTo(rx, ry, size, size, startAngleDegrees, angularLength);
-//                        }
-                            break;
-                        }
-                        case RS2::EntityCircle: {
-                            auto* circle = static_cast<RS_Circle*>(e);
-                            toGui(circle->getCenter(),centerX, centerY);
-                            double r=toGuiDX(circle->getRadius());
-                            path.addEllipse(QPointF(centerX,centerY),r,r);
-                            break;
-                        }
-                        case RS2::EntityEllipse: {
-                            auto ellipse = static_cast<RS_Ellipse *>(e);
-                            const RS_EllipseData &ellipseData = ellipse->getData();
+        auto* loop = static_cast<RS_EntityContainer*>(l);
+        // edges:
+        //                LC_ERR << "loop------------------------------- " << loop->count();
+        auto toUiPointF = [this](const RS_Vector& vp) {
+            RS_Vector uiPos = toGui(vp);
+            return QPointF{uiPos.x, uiPos.y};
+        };
+        auto toUcsDegrees = [this](double angleRadian) {
+            return toUCSAngleDegrees(RS_Math::rad2deg(angleRadian));
+        };
+        LC_ERR<<"Start:";
+        for(auto e: *loop){
+            if (e==nullptr)
+                continue;
+            LC_ERR<<e->getStartpoint().x<<","<<e->getStartpoint().y<<" => "<<e->getEndpoint().x<<","<<e->getEndpoint().y;
+            switch (e->rtti()) {
+            case RS2::EntityLine: {
+                QPointF pt1 = toUiPointF(e->getStartpoint());
+                QPointF pt2 = toUiPointF(e->getEndpoint());
 
-                            toGui(ellipseData.center, centerX, centerY);
-                            double angle = toUCSAngleDegrees(ellipseData.angleDegrees);
-                            double radius1 = toGuiDX(ellipse->getMajorRadius());
-                            double radius2 = ellipseData.ratio*radius1;
+                if (!path.isEmpty())
+                    path.lineTo(pt1);
+                else
+                    path.moveTo(pt1);
+                path.lineTo(pt2);
+                //                            LC_ERR << "Pt1 " << pt1.x() << "  " << pt1.y();
+                //                            LC_ERR << "Added " << pt2.x() << "  " << pt2.y();
+            }
+                break;
+            case RS2::EntityArc: {
+                const RS_ArcData &arcData = static_cast<RS_Arc*>(e)->getData();
+                double radius = toGuiDX(arcData.radius);
+                // can't skip due to minimal radius, it will lead to filling errors
+                //                        if (radius > view->getMinArcDrawingRadius()) {
+                double startAngleDegrees = toUcsDegrees(arcData.reversed ? arcData.angle2: arcData.angle1);
+                double angularLength = RS_Math::rad2deg(static_cast<RS_Arc*>(e)->getAngleLength());
+                RS_Vector uiCenter = toGui(arcData.center);
+                QPointF uiMin{uiCenter.x - radius, uiCenter.y - radius};
+                double size = radius + radius;
+                path.arcMoveTo(uiMin.x(), uiMin.y(), size, size, startAngleDegrees);
+                path.arcTo(uiMin.x(), uiMin.y(), size, size, startAngleDegrees, angularLength);
+            }
+                break;
+            case RS2::EntityCircle: {
+                auto* circle = static_cast<RS_Circle*>(e);
+                RS_Vector uiCenter = toGui(circle->getCenter());
+                double radius=toGuiDX(circle->getRadius());
+                path.addEllipse({uiCenter.x, uiCenter.y}, radius, radius);
+            }
+                break;
+            case RS2::EntityEllipse: {
+                auto ellipse = static_cast<RS_Ellipse *>(e);
+                const RS_EllipseData &ellipseData = ellipse->getData();
 
-                            QTransform t1;
-                            t1.translate(centerX, centerY);
-                            t1.rotate(-angle);
-                            t1.translate(-centerX, -centerY);
+                RS_Vector uiCenter = toGui(ellipseData.center);
+                double radius1 = toGuiDX(ellipse->getMajorRadius());
+                double radius2 = ellipseData.ratio*radius1;
 
-                            double rx = centerX - radius1;
-                            double ry = centerY - radius2;
-                            double size1 = radius1 + radius1;
-                            double size2 = radius2 + radius2;
-                            if (ellipse->isEllipticArc()) {
-                                double angle1 = ellipseData.startAngleDegrees;
-                                double angle2 = ellipseData.otherAngleDegrees;
-                                double angularLength = ellipseData.angularLength;
-                                if (ellipseData.reversed){
-                                    angle1 = angle2 - 360;
-                                    angularLength = -angularLength;
-                                }
+                QTransform t1;
+                t1.translate(uiCenter.x, uiCenter.y);
+                const double ellipseAngle = toUCSAngleDegrees(ellipseData.angleDegrees);
+                t1.rotate(-ellipseAngle);
 
-                                QPainterPath arcPath;
-                                angle1 = toUCSAngleDegrees(angle1);
-                                arcPath.arcMoveTo(rx, ry, size1, size2, angle1);
-                                arcPath.arcTo(rx, ry, size1, size2, angle1, angularLength);
-                                arcPath = t1.map(arcPath);
-                                loopPath.addPath(arcPath);
-                                /*
+                QPainterPath ellipsePath;
+                double rx = - radius1;
+                double ry = - radius2;
+                double size1 = radius1 + radius1;
+                double size2 = radius2 + radius2;
+                if (ellipse->isEllipticArc()) {
+                    double angle1 = toUcsDegrees(ellipseData.reversed ? ellipseData.angle2 : ellipseData.angle1);
+                    ellipsePath.arcMoveTo(rx, ry, size1, size2, angle1);
+                    ellipsePath.arcTo(rx, ry, size1, size2, angle1, ellipseData.angularLength);
+                    /*
 
                                 if (pa.size() && pa2.size() && (pa.last() - pa2.first()).manhattanLength() < 1)
                                     pa2.remove(0, 1);
                                 pa << pa2;*/
-                            } else {
-                                QPainterPath ellipsePath;
-                                ellipsePath.addEllipse(QRectF(rx, ry, size1, size2));
-                                ellipsePath = t1.map(ellipsePath);
-                                loopPath.addPath(ellipsePath);
-                            }
-                            break;
-                        }
-                        default:
-                            break;
-                    }
+                } else {
+                    ellipsePath.addEllipse(QRectF(rx, ry, size1, size2));
                 }
-                path.addPath(loopPath);
+                path.addPath(t1.map(ellipsePath));
+                break;
+            }
+            default:
+                break;
             }
         }
+    }
+    return path;
 }
 
 void RS_Painter::debugOutPath(const QPainterPath &tmpPath) const {
@@ -1066,6 +1070,17 @@ void RS_Painter::drawTextV(int x1, int y1,
 void RS_Painter::fillRect(int x1, int y1, int w, int h,
                             const RS_Color& col) {
     QPainter::fillRect(x1, y1, w, h, col);
+}
+
+void RS_Painter::fillPolygonUI( const QPolygonF& uiPolygon)
+{
+    if (uiPolygon.size() <= 2)
+        return;
+
+    const QBrush brushSaved = brush();
+    setBrushColor(RS_Color(pen().color()));
+    QPainter::drawPolygon(uiPolygon, Qt::OddEvenFill);
+    QPainter::setBrush(brushSaved);
 }
 
 void RS_Painter::fillTriangleUI(
@@ -1429,7 +1444,17 @@ void RS_Painter::drawInfiniteWCS(RS_Vector startpoint, RS_Vector endpoint) {
     }
 }
 
-bool RS_Painter::isTextLineNotRenderable(double wcsLineHeight) {
+void RS_Painter::drawEntity(RS_Entity* entity)
+{
+    renderer->renderEntity(this, entity);
+}
+
+void RS_Painter::drawAsChild(RS_Entity* entity)
+{
+    renderer->renderEntityAsChild(this, entity);
+}
+
+bool RS_Painter::isTextLineNotRenderable(double wcsLineHeight) const {
     double uiHeight = toGuiDY(wcsLineHeight);
     return renderer->isTextLineNotRenderable(uiHeight);
 }
@@ -1458,33 +1483,34 @@ void RS_Painter::setViewPort(LC_GraphicViewport *v) {
 void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) const {
 //    viewport->toUI(pos, x,y);
 
-    if (m_hasUcs){
+    if (hasUCS()){
 //   ucsToUCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
 // the code below is equivalent to
 
 /*
         RS_Vector wcs = RS_Vector(wcsCoordinate.x, wcsCoordinate.y);
-        RS_Vector newPos = wcs-ucsOrigin;
+        RS_Vector newPos = wcs-m_ucsOrigin;
         newPos.rotate(xAxisAngle);
         uiY = newPos.x;
         uiX = newPos.y;
 */
-        double ucsPositionX = wcsCoordinate.x - ucsOrigin.x;
-        double ucsPositionY = wcsCoordinate.y - ucsOrigin.y;
+        double ucsPositionX = wcsCoordinate.x - getUcsOrigin().x;
+        double ucsPositionY = wcsCoordinate.y - getUcsOrigin().y;
 
-        double ucsX = ucsPositionX * cosXAngle - ucsPositionY * sinXAngle;
-        double ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
+        const RS_Vector& ucsRotation = getUcsRotation();
+        double ucsX = ucsPositionX * ucsRotation.x - ucsPositionY * ucsRotation.y;
+        double ucsY = ucsPositionX * ucsRotation.y + ucsPositionY * ucsRotation.x;
 
 //        uiX = toGuiX(uiX);
         uiX = ucsX * viewPortFactorX + viewPortOffsetX;
 //        uiY = toGuiY(uiY);
-        uiY = -ucsY * viewPortFactorY + viewPortHeight - viewPortOffsetY;
+        uiY = -ucsY * viewPortFactorY - viewPortOffsetY + viewPortHeight;
     }
     else{
 //        uiX = toGuiX(wcsCoordinate.x);
         uiX = wcsCoordinate.x * viewPortFactorX + viewPortOffsetX;
 //        uiY = toGuiY(wcsCoordinate.y);
-        uiY = -wcsCoordinate.y * viewPortFactorY + viewPortHeight - viewPortOffsetY;
+        uiY = -wcsCoordinate.y * viewPortFactorY - viewPortOffsetY + viewPortHeight;
     }
 }
 /*
@@ -1510,41 +1536,29 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
 
 RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
     RS_Vector uiPosition = worldCoordinates;
-    if (m_hasUcs) {
-        uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
+    if (hasUCS()) {
+        uiPosition.move(-getUcsOrigin()).rotate(getUcsRotation());
     }
     uiPosition.scale(m_viewPortFactor).move(m_viewPortOffset);
     uiPosition.y = viewPortHeight - uiPosition.y;
 
     // TODO: remove this
     {
+        using namespace RS_Math;
         double uiX=0., uiY=0.;
         const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
-// TODO uncomment
-// can't test the merge with this assert, got it at the application's start. sorry, had to restore the original code for PR
-//        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
-        if (!(RS_Math::equal(uiX, uiPosition.x, 1E-12) && RS_Math::equal(uiY, uiPosition.y, 1E-12))) {
+        if (!(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y))) {
             LC_ERR<<QString{" : (%1, %2) vs (%3, %4)"}
                           .arg(uiPosition.x, 10, 'g', 10)
                           .arg(uiPosition.y, 10, 'g', 10)
                           .arg(uiX, 10, 'g', 10)
                           .arg(uiY, 10, 'g', 10);
-            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<RS_Math::ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<RS_Math::ulp(uiY);
+            LC_ERR<<"delta: "<<uiPosition.x - uiX<<"(ulp "<<ulp(uiX)<<", "<<uiPosition.y - uiY<<"(ulp: "<<ulp(uiY);
             assert(!"toGui() failure");
         }
     }
 
-//    return uiPosition;
-
-    /*
-     //    double x, y;
-     //    viewport->toUI(worldCoordinates, x, y);
-     //    return RS_Vector(x,y);
-     */
-     double x, y;
-     toGui(worldCoordinates, x, y);
-     return RS_Vector(x, y);
-
+   return uiPosition;
 }
 
 
@@ -1559,7 +1573,7 @@ double RS_Painter::toGuiDY(double ucsDY) const {
 }
 
 void RS_Painter::disableUCS(){
-    m_hasUcs = false;
+    useUCS(false);
 }
 
 bool RS_Painter::isFullyWithinBoundingRect(RS_Entity* e){

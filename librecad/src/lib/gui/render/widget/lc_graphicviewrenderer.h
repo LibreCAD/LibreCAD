@@ -43,9 +43,12 @@ public:
   * @retval true Draft mode is on for this view (all lines with 1 pixel / no style scaling).
   * @retval false Otherwise.
   */
-    bool isDraftMode() const {return m_draftMode;};
-    void setDraftMode(bool dm) { m_draftMode = dm;};
-    bool isTextLineNotRenderable(double uiLineHeight) override { return uiLineHeight < m_render_minRenderableTextHeightInPx;};
+    bool isDraftMode() const {return m_draftMode;}
+    void setDraftMode(bool dm) { m_draftMode = dm;}
+    bool isTextLineNotRenderable(double uiLineHeight) const override
+    {
+        return uiLineHeight <getMinRenderableTextHeightInPx();
+    }
 protected:
     bool inOverlayDrawing = false;
     bool isHiDpi = false;

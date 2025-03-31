@@ -494,7 +494,7 @@ void LC_Parabola::move(const RS_Vector& offset)
         point.move(offset);
     update();
 }
-void LC_Parabola::rotate(const RS_Vector& center, const double& angle)
+void LC_Parabola::rotate(const RS_Vector& center, double angle)
 {
     for(auto& point: data.controlPoints)
         point.rotate(center, angle);

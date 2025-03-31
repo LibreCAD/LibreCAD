@@ -19,10 +19,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include <QObject>
 
+#include "lc_linemath.h"
 #include "lc_ucs.h"
 #include "rs_math.h"
-#include "lc_linemath.h"
 
 LC_UCS LC_WCS::instance = LC_WCS();
 
@@ -77,7 +78,7 @@ long LC_UCS::getBaseUcsId() const {
     return baseUCS_ID;
 }
 
-bool LC_UCS::isValidName([[maybe_unused]]QString &nameCandidate) {
+bool LC_UCS::isValidName([[maybe_unused]]const QString &nameCandidate) {
     // fixme - implement UCS name validation rule here
     return true;
 }
@@ -100,7 +101,7 @@ bool LC_UCS::isSameTo(LC_UCS *other) {
 
 
 RS2::IsoGridViewType LC_UCS::getIsoGridViewType() {
-    RS2::IsoGridViewType isoType;
+    RS2::IsoGridViewType isoType = RS2::Ortho;
     switch (ucsOrthoType){
         case LC_UCS::FRONT:
         case LC_UCS::BACK:
@@ -128,5 +129,9 @@ RS2::IsoGridViewType LC_UCS::getIsoGridViewType() {
 bool LC_UCS::isIsometric() {
     return ucsOrthoType != LC_UCS::NON_ORTHO;
 }
+
+LC_WCS::LC_WCS():
+    LC_UCS(QObject::tr("WCS"))
+{}
 
 LC_UCS::~LC_UCS() = default;

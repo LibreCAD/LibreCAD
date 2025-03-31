@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer puntos ascii</translation>
     </message>
 </context>
 <context>
@@ -16,33 +16,34 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de alineado...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener objetos originales</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Especificar primero los puntos base</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de Alineado</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Haz click en opciones para activar/desactivar,
+Ok para aceptar y empezar alineamiento.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,28 +53,33 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si la opción &apos;Mantener objetos originales&apos; está marcada,
+Alinear copiará los objetos seleccionados en lugar de moverlos.
+
+Si está marcada la opción &apos;Especificar primero los puntos base&apos;,
+Alinear pedirá los puntos de alineación en el orden
+primera base, segunda base, primer objetivo, segundo objetivo.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>punto de primera base:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>punto de primer objetivo:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
         <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>punto de segunda base:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>punto de segundo objetivo:</translation>
     </message>
 </context>
 <context>
@@ -81,12 +87,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de creación de engranajes</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de Engranajes</translation>
     </message>
 </context>
 <context>
@@ -95,149 +101,149 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Listar entidades</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Entidad Vacía</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de Línea</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Grosor de Línea</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation type="unfinished"></translation>
+        <translation>PUNTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>en el punto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>LÍNEA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>from point</source>
-        <translation type="unfinished"></translation>
+        <translation>desde el punto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>hasta el punto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
         <location filename="../list/list.cpp" line="131"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>longitud</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="112"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo en el plano XY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inc.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>ARCO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
         <location filename="../list/list.cpp" line="135"/>
         <location filename="../list/list.cpp" line="145"/>
         <source>center point</source>
-        <translation type="unfinished"></translation>
+        <translation>punto central</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="125"/>
         <location filename="../list/list.cpp" line="139"/>
         <location filename="../list/list.cpp" line="226"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>radio</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="126"/>
         <source>initial angle</source>
-        <translation type="unfinished"></translation>
+        <translation>ángulo inicial</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="127"/>
         <source>final angle</source>
-        <translation type="unfinished"></translation>
+        <translation>ángulo final</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>CÍRCULO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>circunferencia</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation type="unfinished"></translation>
+        <translation>ELIPSE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="148"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>eje mayor</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
@@ -252,102 +258,102 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>SÓLIDO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>TEXTOM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>TEXTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>CONTENIDODETEXTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <translation>INSERTAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto de inserción</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotación</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Columnas/Filas</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaciado en Columna/Fila</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>POLILÍNEA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrado</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Si</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>IMAGEN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>PUNTOSDESPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation type="unfinished"></translation>
+        <translation>SOMBREADO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>

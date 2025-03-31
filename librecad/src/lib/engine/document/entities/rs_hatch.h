@@ -148,7 +148,7 @@ public:
 
 
     void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
@@ -173,7 +173,7 @@ private:
 
     void debugOutPath(const QPainterPath &tmpPath) const;
 
-    void createSolidFillPath( RS_Painter *painter, QPainterPath &path);
+    QPainterPath createSolidFillPath( RS_Painter *painter) const;
 };
 
 #endif

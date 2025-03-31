@@ -1,0 +1,30 @@
+1	VERSIONINFO
+FILEVERSION	1,0,0,001
+PRODUCTVERSION	1,0,0,0
+FILEFLAGSMASK	0x3F
+FILEFLAGS	0x0
+FILEOS		0x40004
+FILETYPE	0x2
+FILESUBTYPE	0x0
+{
+BLOCK "StringFileInfo"
+{
+	BLOCK "040904E4"
+	{
+		VALUE "Comments", "Custom icon engine to render SVG icons depending on palette"
+		VALUE "CompanyName", "LibreCAD"
+		VALUE "FileDescription", "Palette Icon Engine"
+		VALUE "FileVersion", "1.0.0.001"
+		VALUE "InternalName", "lc_svgicons.dll"
+		VALUE "LegalCopyright", "(c) 2025 LibreCAD.org, sand1024"
+		VALUE "OriginalFilename", "paletteicon.dll"
+		VALUE "ProductName", "Palette Icon Engine"
+		VALUE "ProductVersion", "1.0.0"
+	}
+}
+
+BLOCK "VarFileInfo"
+{
+	VALUE "Translation", 0x0409, 0x04E4
+}
+}

@@ -789,7 +789,7 @@ QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, con
 
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
-    view->device = LC_GET_ONE_STR("Hardware","Device", "Mouse");
+    view->setDeviceName(LC_GET_ONE_STR("Hardware","Device", "Mouse"));
     if (showScrollbars) {
         view->addScrollbars();
     }
@@ -1464,7 +1464,7 @@ void QC_ApplicationWindow::openPrintPreview(QC_MDIWindow *parent){
 
             w->setWindowIcon(QIcon(":/icons/document.lci"));
             QG_GraphicView *view = w->getGraphicView();
-            view->device         = LC_GET_ONE_STR("Hardware","Device", "Mouse");
+            view->setDeviceName(LC_GET_ONE_STR("Hardware","Device", "Mouse"));
             //                gv->setBackground(RS_Color(255, 255, 255));
             view->setDefaultAction(new RS_ActionPrintPreview(m_actionContext)); // fixme - sand - is it correct for preview?
 
@@ -1663,7 +1663,7 @@ void QC_ApplicationWindow::updateGrids() {
  */
 void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     statusBar()->setVisible(toggle);
-    LC_SET_ONE("Appearance", "StatusBarVisible", toggle);   
+    LC_SET_ONE("Appearance", "StatusBarVisible", toggle);
 }
 
 void QC_ApplicationWindow::slotViewGridOrtho(bool toggle) {
@@ -2029,7 +2029,7 @@ void QC_ApplicationWindow::showDeviceOptions() {
 void QC_ApplicationWindow::updateDevice(QString device) {
     LC_SET_ONE("Hardware", "Device", device);
     for (const auto &win: m_windowList) {
-        win->getGraphicView()->device = device;
+        win->getGraphicView()->setDeviceName(device);
     }
 }
 

@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QMouseEvent>
 #include <QTextBrowser>
-#include "rs_debug.h"
 
 class LC_PlainTextEdit:public QTextBrowser {
 Q_OBJECT
@@ -33,7 +32,7 @@ private:
     QString clickedAnchor;
 
 public:
-    explicit LC_PlainTextEdit(QWidget *parent = 0):QTextBrowser(parent){
+    explicit LC_PlainTextEdit(QWidget *parent = nullptr):QTextBrowser(parent){
     }
 
 public:

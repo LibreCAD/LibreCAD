@@ -33,7 +33,7 @@ class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget
 {
     Q_OBJECT
 public:
-    QG_MouseWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = {});
+    QG_MouseWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     void updatePixmap(QString iconName, QLabel *label);
     ~QG_MouseWidget();
 

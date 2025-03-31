@@ -46,7 +46,7 @@ public:
 
     /** @return the fileName of this font. */
     QString getFileName() const {
-        return fileName;
+        return m_fileName;
     }
 
     /** @return the fileLicense of this font. */
@@ -113,8 +113,8 @@ public:
     friend class RS_FontList;
 
 private:
-    void readCXF(QString path);
-    void readLFF(QString path);
+    void readCXF(const QString& path);
+    void readLFF(const QString& path);
     RS_Block* generateLffFont(const QString& key);
 
 private:
@@ -125,7 +125,7 @@ private:
     RS_BlockList letterList;
 
     //! Font file name
-    QString fileName;
+    QString m_fileName;
 
     //! Font file license
     QString fileLicense;

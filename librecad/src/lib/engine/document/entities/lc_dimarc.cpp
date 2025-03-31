@@ -368,7 +368,7 @@ void LC_DimArc::move(const RS_Vector& offset)
 }
 
 
-void LC_DimArc::rotate(const RS_Vector& center, const double& angle)
+void LC_DimArc::rotate(const RS_Vector& center, double angle)
 {
     rotate (center, RS_Vector (angle));
 

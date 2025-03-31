@@ -22,58 +22,51 @@
 **********************************************************************************
 */
 
-#include "mainwindowx.h"
-#include "rs_debug.h"
-
 #include <QDockWidget>
 #include <QToolBar>
 
+#include "mainwindowx.h"
+#include "rs_debug.h"
+
+namespace {
 namespace Sorting
 {
-    bool byWindowTitle(QWidget* left, QWidget* right)
-    {
-        return left->windowTitle() < right->windowTitle();
-    }
+bool byWindowTitle(QWidget* left, QWidget* right)
+{
+    return left->windowTitle() < right->windowTitle();
+}
 
-    bool byGroupAndWindowTitle(QWidget* left, QWidget* right) {
+/**
+     * @brief getGroup find the integer widget property ("_group"), the default value is -100
+     * @param widget - a widget
+     * @return the "_group" property
+     */
+int getGroup(const QWidget* widget) {
+    const int defaultGroup = -100;
+    if (widget == nullptr)
+        return defaultGroup;
+    const QVariant groupProperty = widget->property("_group");
+    bool okay = false;
+    const int ret = groupProperty.toInt(&okay);
+    return okay ? ret : defaultGroup;
+}
 
-        const QVariant &leftGroup = left->property("_group");
-        const QVariant &rightGroup = right->property("_group");
+bool byGroupAndWindowTitle(QWidget* left, QWidget* right) {
+    const int iLeftGroup = getGroup(left);
+    const int iRightGroup = getGroup(right);
 
-        int iLeftGroup = -100;
-        if (leftGroup.isValid()) {
-            bool ok = false;
-            iLeftGroup = leftGroup.toInt(&ok);
-            if (!ok) {
-                iLeftGroup = -100;
-            }
-        }
+    //        LC_ERR << iLeftGroup << " " << iRightGroup << " " << result;
 
-        int iRightGroup = -100;
-        if (rightGroup.isValid()) {
-            bool ok = false;
-            iRightGroup = rightGroup.toInt(&ok);
-            if (!ok) {
-                iRightGroup = -100;
-            }
-        }
-
-        bool result;
-
-        if (iLeftGroup < iRightGroup) {
-            result =  true;
-        } else if (iLeftGroup == iRightGroup) {
-            result = QString::compare(left->windowTitle(),right->windowTitle()) < 0;
-        } else if (iLeftGroup > iRightGroup) {
-            result = false;
-        }
-//        LC_ERR << iLeftGroup << " " << iRightGroup << " " << result;
-        return result;
-    }
+    return (iLeftGroup < iRightGroup)
+           || (iLeftGroup == iRightGroup
+               && QString::compare(left->windowTitle(), right->windowTitle()) < 0);
+}
+}
 }
 
 MainWindowX::MainWindowX(QWidget* parent)
-    : QMainWindow(parent) {}
+    : QMainWindow(parent)
+{}
 
 void MainWindowX::sortWidgetsByTitle(QList<QDockWidget*>& list){
     std::sort(list.begin(), list.end(), Sorting::byWindowTitle);

@@ -303,7 +303,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
                         m_lastActivatedId = obj.value("lastActivatedId").toInt(0);
                         QJsonArray jsonArray = obj.value("workspaces").toArray();
                         m_workspacesList.clear();
-                            foreach (const QJsonValue & value, jsonArray) {
+                            for(const QJsonValue & value: jsonArray) {
                                 QJsonObject wsObj = value.toObject();
 
                                 auto* p = new LC_Workspace;

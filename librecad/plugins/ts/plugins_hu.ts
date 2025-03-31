@@ -158,7 +158,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>pontban</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
@@ -343,7 +343,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>HAJLÍTHATÓ VONAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
@@ -368,27 +368,27 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalas méret</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <translation>Sugár méret</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <translation>Átmérős méret</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Szögletes méret</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>ISMERETLEN</translation>
     </message>
 </context>
 <context>
@@ -397,7 +397,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyanazok a tulajdonságok</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
@@ -437,7 +437,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation type="unfinished">ascii pontok olvasása</translation>
+        <translation>ascii pontok olvasása</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -447,7 +447,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formátum:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
@@ -472,7 +472,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation type="unfinished"></translation>
+        <translation>*.odb a Psion 2 hez</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
@@ -507,7 +507,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzolt pont szám</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -522,12 +522,12 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontkód</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontkód rajzolása</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -750,7 +750,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>VONALLÁNC</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -770,7 +770,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished">Tetőpontok</translation>
+        <translation>Tetőpontok</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -798,7 +798,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
@@ -813,7 +813,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -1203,7 +1203,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>Réteg:</translation>
+        <translation>Fólia:</translation>
     </message>
 </context>
 <context>

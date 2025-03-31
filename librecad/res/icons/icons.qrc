@@ -176,7 +176,6 @@
         <file alias="move_rotate.lci">move_rotate.svg</file>
         <file alias="mtext.lci">mtext.svg</file>
         <file alias="mtext_align_bottomcenter.lci">mtext_align_bottomcenter.svg</file>
-        <file alias="mtext_align_bottomcenter.lci">mtext_align_bottomcenter.svg</file>
         <file alias="mtext_align_bottomright.lci">mtext_align_bottomright.svg</file>
         <file alias="mtext_align_middlecenter.lci">mtext_align_middlecenter.svg</file>
         <file alias="mtext_align_middleleft.lci">mtext_align_middleleft.svg</file>

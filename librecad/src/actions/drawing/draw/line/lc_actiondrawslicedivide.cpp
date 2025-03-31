@@ -24,15 +24,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <cmath>
 
-#include "rs_line.h"
+#include "lc_abstractactionwithpreview.h"
+#include "lc_actiondrawslicedivide.h"
+#include "lc_linemath.h"
+#include "lc_slicedivideoptions.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_point.h"
+#include "rs_line.h"
 #include "rs_math.h"
-#include "lc_linemath.h"
-#include "lc_actiondrawslicedivide.h"
-#include "lc_slicedivideoptions.h"
-#include "lc_abstractactionwithpreview.h"
+#include "rs_pen.h"
+#include "rs_point.h"
 
 namespace {
     //list of entity types supported by current action

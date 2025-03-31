@@ -795,7 +795,7 @@ void RS_Arc::move(const RS_Vector& offset) {
     calculateBorders();
 }
 
-void RS_Arc::rotate(const RS_Vector& center, const double& angle) {
+void RS_Arc::rotate(const RS_Vector& center, double angle) {
     RS_DEBUG->print("RS_Arc::rotate");
     data.center.rotate(center, angle);
     data.angle1 = RS_Math::correctAngle(data.angle1+angle);

@@ -116,7 +116,7 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Insert::clone() const{
-	auto* i = new RS_Insert(*this);
+	auto i = new RS_Insert(*this);
 	i->setOwner(isOwner());
 	i->initId();
 	i->detach();
@@ -179,7 +179,7 @@ void RS_Insert::update() {
                     RS_Entity* ne = nullptr;
                     if ( (data.scaleFactor.x - data.scaleFactor.y)>MIN_Scale_Factor) {
                         if (e->rtti()== RS2::EntityArc) {
-                            auto* a= static_cast<RS_Arc*>(e);
+                            auto a= static_cast<RS_Arc*>(e);
                             ne = new RS_Ellipse{this,
                             {a->getCenter(), {a->getRadius(), 0.},
                                     1, a->getAngle1(), a->getAngle2(),
@@ -187,7 +187,7 @@ void RS_Insert::update() {
                             ne->setLayer(e->getLayer());
                             ne->setPen(e->getPen(false));
                         } else if (e->rtti()== RS2::EntityCircle) {
-                            auto* a= static_cast<RS_Circle*>(e);
+                            auto a= static_cast<RS_Circle*>(e);
                             ne = new RS_Ellipse{this,
                             { a->getCenter(), {a->getRadius(), 0.}, 1, 0., 2.*M_PI, false}};
                             ne->setLayer(e->getLayer());

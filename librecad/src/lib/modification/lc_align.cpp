@@ -22,6 +22,7 @@
 
 #include "lc_align.h"
 #include "rs_entity.h"
+#include "rs_pen.h"
 
 RS_Entity* LC_Align::createCloneMovedToOffset(const RS_Entity *e, const RS_Vector &offset, bool updateAttributes) {
     RS_Entity *clone = e->clone();

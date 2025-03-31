@@ -25,6 +25,8 @@
 **********************************************************************/
 #pragma once
 
+#include <memory>
+
 #include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
 class LC_Quadratic;
@@ -33,7 +35,7 @@ class LC_Quadratic;
  * Holds the data that defines a line.
  */
 struct RS_LineData {
-    RS_LineData() :startpoint( false),endpoint( false) {}
+    RS_LineData() = default;
     RS_LineData(const RS_Vector& point1,const RS_Vector& point2) :startpoint( point1),endpoint( point2){}
     void reverse() {
         std::swap(startpoint, endpoint);
@@ -176,8 +178,8 @@ public:
      */
     bool offset(const RS_Vector& coord, const double& distance) override;
     void move(const RS_Vector& offset) override;
-    void rotate(const double& angle);
-    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(double angle);
+    void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& factor) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;

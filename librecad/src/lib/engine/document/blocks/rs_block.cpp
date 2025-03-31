@@ -29,6 +29,7 @@
 
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_pen.h"
 
 RS_BlockData::RS_BlockData(const QString& _name,
                            const RS_Vector& _basePoint,
@@ -49,12 +50,12 @@ bool RS_BlockData::isValid() const{
  */
 RS_Block::RS_Block(RS_EntityContainer* parent,
                    const RS_BlockData& d)
-        : RS_Document(parent), data(d) {
-    pen = RS_Pen(RS_Color(128,128,128), RS2::Width01, RS2::SolidLine);
+    : RS_Document(parent), data(d){
+    setPen({RS_Color(128,128,128), RS2::Width01, RS2::SolidLine});
 }
 
 RS_Entity* RS_Block::clone() const {
-    auto* blk = new RS_Block(*this);
+    auto blk = new RS_Block(*this);
     blk->setOwner(isOwner());
     blk->detach();
     blk->initId();

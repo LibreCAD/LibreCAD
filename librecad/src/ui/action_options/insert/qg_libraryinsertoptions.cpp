@@ -27,10 +27,10 @@
 
 #include "rs_actioninterface.h"
 #include "rs_actionlibraryinsert.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "ui_qg_libraryinsertoptions.h"
 #include "rs_debug.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "ui_qg_libraryinsertoptions.h"
 
 /*
  *  Constructs a QG_LibraryInsertOptions as a child of 'parent', with the
@@ -38,7 +38,8 @@
  */
 QG_LibraryInsertOptions::QG_LibraryInsertOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionLibraryInsert, "LibraryInsert", "LibraryInsert")
-	, ui(new Ui::Ui_LibraryInsertOptions{}){
+    , ui(std::make_unique<Ui::Ui_LibraryInsertOptions>())
+{
     ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onAngleEditingFinished);
     connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onFactorEditingFinished);

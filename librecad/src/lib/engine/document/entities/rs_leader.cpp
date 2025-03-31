@@ -25,10 +25,11 @@
 **********************************************************************/
 
 #include<iostream>
-#include "rs_leader.h"
 
 #include "rs_debug.h"
+#include "rs_leader.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 #include "rs_solid.h"
 
 // fixme - sand - RS_LEADER should be reworked, add support of moving ref points, properties, probably various rendering types
@@ -37,7 +38,7 @@
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent)
 		:RS_EntityContainer(parent)
-		,empty(true){
+{
 }
 
 
@@ -48,7 +49,6 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent)
 RS_Leader::RS_Leader(RS_EntityContainer* parent,
                      const RS_LeaderData& d)
     :RS_EntityContainer(parent), data(d) {
-    empty = true;
 }
 
 RS_Entity* RS_Leader::clone() const{
@@ -56,6 +56,7 @@ RS_Entity* RS_Leader::clone() const{
     p->setOwner(isOwner());
     p->initId();
     p->detach();
+    p->empty = empty;
     return p;
 }
 
@@ -166,7 +167,7 @@ void RS_Leader::move(const RS_Vector& offset) {
     update();
 }
 
-void RS_Leader::rotate(const RS_Vector& center, const double& angle) {
+void RS_Leader::rotate(const RS_Vector& center, double angle) {
     RS_EntityContainer::rotate(center, angle);
     update();
 }

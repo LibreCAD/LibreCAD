@@ -24,8 +24,10 @@
 #define LC_UCS_MARK_H
 
 #include <QFont>
-#include "rs_point.h"
+
 #include "lc_overlayentity.h"
+#include "rs_color.h"
+#include "rs_point.h"
 
 struct LC_UCSMarkOptions{
     /** coordinate origin marker */

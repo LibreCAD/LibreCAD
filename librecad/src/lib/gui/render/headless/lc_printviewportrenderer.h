@@ -38,7 +38,10 @@ public:
         drawingMode = mode;
     }
     void setupPainter(RS_Painter *painter) override;
-    bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) override { return false;};
+    bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) const override
+    {
+        return false;
+    }
     void setPaperScale(double p){paperScale = p;}
     void loadSettings() override;
 protected:

@@ -23,34 +23,24 @@
 #ifndef LC_CURSOROVERLAYINFO_H
 #define LC_CURSOROVERLAYINFO_H
 
+#include <memory>
+
 #include "rs_point.h"
 #include "lc_overlayentity.h"
 
 struct  LC_InfoCursorOptions{
+    struct ZoneSetup;
+    LC_InfoCursorOptions();
+    ~LC_InfoCursorOptions();
+    void setFontSize(int size);
+    const ZoneSetup& zone(int index) const;
+    ZoneSetup& zone(int index);
     int offset = 10;
     int fontSize = 10;
     QString fontName = "Verdana";
 
-    struct ZoneSetup{
-        QColor color;
-        int fontSize = 10;
-        ZoneSetup(const QColor &color, int fontSize):color(color), fontSize(fontSize) {};
-    };
-
-    void setFontSize(int size){
-        fontSize = size;
-        // todo - potentally, later we may use different font sizes for different zones?
-
-        zone1Settings.fontSize = size;
-        zone2Settings.fontSize = size;
-        zone3Settings.fontSize = size;
-        zone4Settings.fontSize = size;
-    }
-
-    ZoneSetup zone1Settings = ZoneSetup(Qt::green, 10);
-    ZoneSetup zone2Settings = ZoneSetup(Qt::cyan, 10);
-    ZoneSetup zone3Settings = ZoneSetup(Qt::magenta, 10);
-    ZoneSetup zone4Settings  = ZoneSetup(Qt::gray, 10);
+    struct Impl;
+    const std::unique_ptr<Impl> m_pImpl;
 };
 
 class LC_InfoMessageBuilder{

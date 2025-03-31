@@ -37,19 +37,16 @@
 #include <QStandardPaths>
 #include <QTreeView>
 #include <QVBoxLayout>
-
-#include "qg_librarywidget.h"
-
 #include <QToolButton>
-
 #include "lc_documentsstorage.h"
+#include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
+#include "qg_librarywidget.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_system.h"
-#include "lc_printviewportrenderer.h"
 
 namespace {
     void writePng(const QString& pngPath, QPixmap pixmap)
@@ -78,7 +75,7 @@ QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* pa
     : QWidget(parent, fl), actionHandler{action_handler}{
     setObjectName(name);
 
-    QVBoxLayout *vboxLayout = new QVBoxLayout(this);
+    auto vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
     vboxLayout->setContentsMargins(2, 2, 2, 2);
     dirView = new QTreeView(this);
@@ -91,7 +88,7 @@ QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* pa
     bInsert = new QPushButton(tr("Insert"), this);
     vboxLayout->addWidget(bInsert);
 
-    QHBoxLayout *refreshButtonsLayout = new QHBoxLayout(this);
+    QHBoxLayout *refreshButtonsLayout = new QHBoxLayout();
     bRefresh = new QPushButton(tr("Refresh"), this);
     refreshButtonsLayout->addWidget(bRefresh);
     bRebuild = new QPushButton(tr("Rebuild"), this);
@@ -148,7 +145,7 @@ void QG_LibraryWidget::insert() {
         if (actionHandler != nullptr) {
             RS_ActionInterface* a = actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a != nullptr) {
-                auto* action = (RS_ActionLibraryInsert*)a;
+                auto action = (RS_ActionLibraryInsert*)a;
                 action->setFile(std::move(dxfPath));
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,

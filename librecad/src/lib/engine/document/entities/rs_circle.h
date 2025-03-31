@@ -29,7 +29,9 @@
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
+#include <iosfwd>
 #include <vector>
+
 #include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
 
@@ -150,7 +152,7 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
     RS_Vector getTangentDirection(const RS_Vector& point)const override;
     void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;

@@ -43,16 +43,17 @@ class QPaintDevice;
 
 class LC_GraphicViewportRenderer{
   public:
-    explicit LC_GraphicViewportRenderer(LC_GraphicViewport* viewport);
+    explicit LC_GraphicViewportRenderer(LC_GraphicViewport* viewport, QPaintDevice* painterDevice);
+    virtual ~LC_GraphicViewportRenderer() = default;
     virtual void loadSettings();
     void render();
     virtual void renderEntity(RS_Painter* painter, RS_Entity* entity)  = 0;
     void renderEntityAsChild(RS_Painter *painter, RS_Entity *e) ;
     void justDrawEntity(RS_Painter *painter, RS_Entity *e);
     void setBackground(const RS_Color &bg);
-    const LC_Rect &getBoundingClipRect(){return renderBoundingClipRect;};
+    const LC_Rect &getBoundingClipRect() const {return renderBoundingClipRect;}
 
-    virtual bool isTextLineNotRenderable(double uiLineHeight) = 0;
+    virtual bool isTextLineNotRenderable(double uiLineHeight) const = 0;
 
     void setLineWidthScaling(bool state){
         m_scaleLineWidth = state;

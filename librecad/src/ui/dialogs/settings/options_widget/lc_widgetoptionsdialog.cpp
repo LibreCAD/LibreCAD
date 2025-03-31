@@ -173,7 +173,7 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     connect(pbRemoveStyle, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::onRemoveStylePressed);
 }
 
-void LC_WidgetOptionsDialog::onStyleChanged(const QString &val){
+void LC_WidgetOptionsDialog::onStyleChanged(const QString & /*val*/){
     QString style = cbIconsStyle->currentText();
     if (!style.isEmpty()) {
         if (iconColorsOptions.loadFromFile(style)) {

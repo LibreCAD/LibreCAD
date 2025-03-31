@@ -53,29 +53,15 @@ public:
     void apply(LC_CoordinatesMapper* other);
 
     const RS_Vector &getUcsOrigin() const;
+    void setUcsOrigin(const RS_Vector& origin);
     double getXAxisAngle() const{return xAxisAngle;}
+    const RS_Vector& getUcsRotation() const
+    {
+        return m_ucsRotation;
+    }
 
 protected:
-    /**
-     * Flag that defines whether ucs should be applied.
-     * Potentially, it is possible to have 2 implementations of mapper - one for UCS and for WCS and
-     * rely on virtual functions.
-     * That will lead to cleaner code, of course, however - since mapping used extensively in rendering,
-     * it's critical to have fast processing. That's the reason of such approach, as checking the flag
-     * will be faster than virtual method call.
-     */
-    bool m_hasUcs = false;
-    RS_Vector ucsOrigin{0., 0., 0.};
-    double xAxisAngle = 0.0;
-    double xAxisAngleDegrees = 0.0;
-    RS_Vector m_ucsRotation;
-    double& sinXAngle = m_ucsRotation.y;
-    double& cosXAngle = m_ucsRotation.x;
-    RS_Vector m_AxisNegRotation;
-    double& sinNegativeXAngle = m_AxisNegRotation.y;
-    double& cosNegativeXAngle = m_AxisNegRotation.x;
     void setXAxisAngle(double angle);
-
     double toUCSAngleDegree(double angle) const;
     void doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
     RS_Vector doWCS2UCS(const RS_Vector &worldCoordinate) const;
@@ -86,6 +72,30 @@ protected:
     RS_Vector doUCS2WCS(const RS_Vector &ucsCoordinate) const;
     void doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const;
     void update(const RS_Vector& origin, double angle);
+    void useUCS(bool isUcs)
+    {
+        m_hasUcs = isUcs;
+    }
+
+private:
+    /**
+     * Flag that defines whether ucs should be applied.
+     * Potentially, it is possible to have 2 implementations of mapper - one for UCS and for WCS and
+     * rely on virtual functions.
+     * That will lead to cleaner code, of course, however - since mapping used extensively in rendering,
+     * it's critical to have fast processing. That's the reason of such approach, as checking the flag
+     * will be faster than virtual method call.
+     */
+    bool m_hasUcs = false;
+    RS_Vector m_ucsOrigin{0., 0., 0.};
+    double xAxisAngle = 0.0;
+    double xAxisAngleDegrees = 0.0;
+    RS_Vector m_ucsRotation;
+    double& sinXAngle = m_ucsRotation.y;
+    double& cosXAngle = m_ucsRotation.x;
+    RS_Vector m_AxisNegRotation;
+    double& sinNegativeXAngle = m_AxisNegRotation.y;
+    double& cosNegativeXAngle = m_AxisNegRotation.x;
 };
 
 

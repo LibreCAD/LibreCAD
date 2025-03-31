@@ -36,6 +36,7 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
 #include "rs_solid.h"
 #include "rs_units.h"
 
@@ -404,7 +405,7 @@ void RS_DimAngular::move(const RS_Vector& offset)
     update();
 }
 
-void RS_DimAngular::rotate(const RS_Vector& center, const double& angle)
+void RS_DimAngular::rotate(const RS_Vector& center, double angle)
 {
     rotate( center, RS_Vector( angle));
 }

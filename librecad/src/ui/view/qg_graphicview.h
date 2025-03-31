@@ -27,13 +27,16 @@
 #ifndef QG_GRAPHICVIEW_H
 #define QG_GRAPHICVIEW_H
 
+#include <mutex>
+
+#include <QString>
 #include <QWidget>
 
+#include "lc_ucs_mark.h"
 #include "rs_blocklistlistener.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
-#include "lc_ucs_mark.h"
 
 class QEnterEvent;
 class QG_ScrollBar;
@@ -105,11 +108,17 @@ public:
     void addScrollbars();
     bool hasScrollbars();
     void setCurrentQAction(QAction* q_action);
-    QString device;
     void destroyMenu(const QString& activator);
     void setMenu(const QString& activator, QMenu* menu);
     QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
     virtual void initView();
+    const QString& getDeviceName() const {
+        return m_device;
+    }
+    void setDeviceName(QString deviceName) {
+        m_device = std::move(deviceName);
+    }
+
 protected slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -129,8 +138,21 @@ protected:
     bool event(QEvent * e) override;
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
-    QList<QAction*> recent_actions;
     void autoPanStep();
+    void highlightUCSLocation(LC_UCS *ucs) override;
+    void ucsHighlightStep();
+
+    virtual void createViewRenderer();
+    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
+    // For auto panning by the cursor close to the view border
+    void startAutoPanTimer(QMouseEvent *e);
+    bool isAutoPan(QMouseEvent* e) const;
+signals:
+    void xbutton1_released();
+    void gridStatusChanged(QString);
+private:
+    QString m_device;
+    QList<QAction*> recent_actions;
 
     //! Horizontal scrollbar.
     QG_ScrollBar* hScrollBar = nullptr;
@@ -157,11 +179,6 @@ protected:
     LC_UCSMarkOptions m_ucsMarkOptions;
 
     QMap<QString, QMenu*> menus;
-    void highlightUCSLocation(LC_UCS *ucs) override;
-    void ucsHighlightStep();
-
-    virtual void createViewRenderer();
-    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
 
     bool scrollbars{false};
     bool cursor_hiding{false};
@@ -170,9 +187,6 @@ protected:
     bool invertHorizontalScroll {false};
     bool invertVerticalScroll {false};
 
-    // For auto panning by the cursor close to the view border
-    void startAutoPanTimer(QMouseEvent *e);
-    bool isAutoPan(QMouseEvent* e) const;
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
     struct UCSHighlightData;
@@ -183,9 +197,9 @@ protected:
     void showEntityPropertiesDialog(RS_Entity *entity);
     void launchEditProperty(RS_Entity *entity);
     void editAction(RS_Entity &entity);
-signals:
-    void xbutton1_released();
-    void gridStatusChanged(QString);
+    // for scroll bar adjustment
+    std::mutex m_scrollbarMutex;
+
 };
 
 #endif

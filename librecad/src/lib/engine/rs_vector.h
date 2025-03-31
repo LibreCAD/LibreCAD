@@ -174,7 +174,7 @@ public:
 class RS_VectorSolutions {
 public:
     typedef RS_Vector value_type;
-    RS_VectorSolutions();
+    RS_VectorSolutions() = default;
     RS_VectorSolutions(std::vector<RS_Vector> vectors);
     RS_VectorSolutions(std::initializer_list<RS_Vector> list);
     RS_VectorSolutions(int num);

@@ -104,7 +104,7 @@ public:
     void appendVertexs(const std::vector<std::pair<RS_Vector, double> > &vl);
 
     void setNextBulge(double bulge){
-        nextBulge = bulge;
+        m_nextBulge = bulge;
     }
 
     void addEntity(RS_Entity *entity) override;
@@ -116,7 +116,7 @@ public:
 
     bool offset(const RS_Vector &coord, const double &distance) override;
     void move(const RS_Vector &offset) override;
-    void rotate(const RS_Vector &center, const double &angle) override;
+    void rotate(const RS_Vector &center, double angle) override;
     void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
     void scale(const RS_Vector &center, const RS_Vector &factor) override;
     void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
@@ -140,9 +140,10 @@ protected:
     std::unique_ptr<RS_Entity> createVertex(
         const RS_Vector &v,
         double bulge = 0.0, bool prepend = false);
-protected:
+private:
+    // whether the polyline is used in fonts(RS2::EntityFontChar
+    bool isFont() const;
     RS_PolylineData data;
-    RS_Entity *closingEntity = nullptr;
-    double nextBulge = 0.;
-    bool createEllipticArcs = false;
+    RS_Entity *m_closingEntity = nullptr;
+    double m_nextBulge = 0.;
 };

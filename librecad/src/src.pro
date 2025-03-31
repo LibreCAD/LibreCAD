@@ -86,6 +86,7 @@ win32 {
     }
 
     RC_FILE = ../res/images/librecad.rc
+    RC_ICONS = ../res/images/librecad.ico
     contains(DISABLE_POSTSCRIPT, false) {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
@@ -615,7 +616,6 @@ SOURCES += \
     lib/engine/document/entities/rs_spline.cpp \
     lib/engine/document/entities/lc_splinepoints.cpp \
     lib/engine/rs_system.cpp \
-    lib/engine/lc_drawable.cpp \
     lib/engine/document/entities/rs_text.cpp \
     lib/engine/undo/rs_undo.cpp \
     lib/engine/undo/rs_undoable.cpp \
@@ -812,7 +812,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/info/rs_actioninfoarea.h \
     actions/drawing/info/rs_actioninfodist.h \
     actions/drawing/info/rs_actioninfodist2.h \
-    actions/drawing/info/rs_actioninfototallength.h \    
+    actions/drawing/info/rs_actioninfototallength.h \
     actions/drawing/info/rs_actioninfoinside.h \
     actions/drawing/lc_abstractactionwithpreview.h \
     actions/drawing/modify/lc_actionmodifybase.h \
@@ -1575,14 +1575,14 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
 # ################################################################################
 # Main
 HEADERS += \
-    main/qc_dialogfactory.h \    
+    main/qc_dialogfactory.h \
     main/doc_plugin_interface.h \
     plugins/document_interface.h \
     plugins/qc_plugininterface.h \
     plugins/intern/qc_actiongetpoint.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
-    main/main.h \    
+    main/main.h \
     main/console_dxf2pdf/console_dxf2pdf.h \
     main/console_dxf2pdf/pdf_print_loop.h
 
@@ -1592,7 +1592,7 @@ SOURCES += \
     plugins/intern/qc_actiongetpoint.cpp \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
-    main/main.cpp \    
+    main/main.cpp \
     main/console_dxf2pdf/console_dxf2pdf.cpp \
     main/console_dxf2pdf/pdf_print_loop.cpp
 

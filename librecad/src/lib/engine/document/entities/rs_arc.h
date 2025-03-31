@@ -28,6 +28,7 @@
 #define RS_ARC_H
 
 #include <iosfwd>
+#include <vector>
 
 #include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
@@ -89,7 +90,10 @@ public:
     }
 
     /** @return Copy of data that defines the arc. **/
-    RS_ArcData getData() const {
+    const RS_ArcData& getData() const {
+        return data;
+    }
+    RS_ArcData& getData() {
         return data;
     }
 
@@ -235,7 +239,7 @@ public:
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
     RS_Vector getTangentDirection(const RS_Vector& point) const override;
     void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     /**
@@ -281,6 +285,7 @@ m0 x + m1 y + m2 =0
     void updateMiddlePoint();
 protected:
     RS_ArcData data{};
+private:
     // cached values for performance
     RS_Vector middlePoint;
     RS_Vector startPoint;

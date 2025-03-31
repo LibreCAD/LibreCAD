@@ -254,7 +254,7 @@ void RS_DimLinear::move(const RS_Vector& offset) {
     edata.extensionPoint2.move(offset);
     update();
 }
-void RS_DimLinear::rotate(const RS_Vector& center, const double& angle) {
+void RS_DimLinear::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     RS_Dimension::rotate(center, angleVector);
 

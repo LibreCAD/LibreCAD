@@ -1852,7 +1852,7 @@ void RS_EntityContainer::move(const RS_Vector &offset) {
         calculateBorders();
 }
 
-void RS_EntityContainer::rotate(const RS_Vector &center, const double &angle) {
+void RS_EntityContainer::rotate(const RS_Vector &center, double angle) {
     RS_EntityContainer::rotate(center, RS_Vector{angle});
 }
 

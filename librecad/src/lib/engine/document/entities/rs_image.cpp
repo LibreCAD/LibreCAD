@@ -339,7 +339,7 @@ void RS_Image::move(const RS_Vector& offset) {
     calculateBorders();
 }
 
-void RS_Image::rotate(const RS_Vector& center, const double& angle) {
+void RS_Image::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     data.insertionPoint.rotate(center, angleVector);
     data.uVector.rotate(angleVector);

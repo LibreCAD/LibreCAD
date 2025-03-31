@@ -87,12 +87,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>齒輪插件</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>齒輪插件</translation>
     </message>
 </context>
 <context>
@@ -293,22 +293,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>縮放</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>旋轉</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>列/行</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>列/行間隔</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
@@ -348,7 +348,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>樣本條點</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -424,12 +424,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>讀取PIC文件數據</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>導入 PIC 文件</translation>
     </message>
 </context>
 <context>
@@ -472,7 +472,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation> *.odb Psion 2 格式</translation>
+        <translation>*.odb Psion 2 格式</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
@@ -621,22 +621,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇一條線、圓或圓弧，然後按返回</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="104"/>
         <source>n</source>
-        <translation type="unfinished">n</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation type="unfinished">空實體</translation>
+        <translation>空實體</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -651,106 +651,106 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation type="unfinished">圖層</translation>
+        <translation>圖層</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation type="unfinished">顏色</translation>
+        <translation>顏色</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation type="unfinished">線條類型</translation>
+        <translation>線類型</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation type="unfinished">線條粗細</translation>
+        <translation>線條粗細</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation type="unfinished">線段</translation>
+        <translation>線段</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation type="unfinished">從點</translation>
+        <translation>從點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation type="unfinished">至點</translation>
+        <translation>至點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation type="unfinished">長度</translation>
+        <translation>長度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished">平面角度</translation>
+        <translation>XY 平面內的角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation type="unfinished">偏移量</translation>
+        <translation>偏移量</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation type="unfinished">弧</translation>
+        <translation>弧</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation type="unfinished">中心點</translation>
+        <translation>中心點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
         <location filename="../divide/divide.cpp" line="523"/>
         <location filename="../divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation type="unfinished">半徑</translation>
+        <translation>半徑</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation type="unfinished">初始角</translation>
+        <translation>初始角</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation type="unfinished">終止角度</translation>
+        <translation>終止角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation type="unfinished">圓</translation>
+        <translation>圓</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation type="unfinished">圓周</translation>
+        <translation>圓周</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation type="unfinished">面積</translation>
+        <translation>面積</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation type="unfinished">折線</translation>
+        <translation>折線</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -760,27 +760,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation type="unfinished">不</translation>
+        <translation>不</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation type="unfinished">是</translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished">節點</translation>
+        <translation>節點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation type="unfinished">於點</translation>
+        <translation>在點</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>必須為線、圓或弧</translation>
     </message>
 </context>
 <context>
@@ -788,17 +788,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>分割- </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>確定</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
@@ -808,22 +808,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>在分割</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>位置</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>勾選 - 關閉</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -853,7 +853,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>勾選</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -976,7 +976,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
-        <translation type="unfinished">接受</translation>
+        <translation>接受</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
@@ -1060,7 +1060,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation type="unfinished">文檔...</translation>
+        <translation>檔案...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
@@ -1070,7 +1070,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation type="unfinished">接受</translation>
+        <translation>接受</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
@@ -1080,7 +1080,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation type="unfinished">選擇文檔</translation>
+        <translation>選擇檔案</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
@@ -1095,7 +1095,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">無法打開文檔 %1</translation>
+        <translation>無法開啟檔案 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
@@ -1195,7 +1195,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>樣條點</translation>
     </message>
 </context>
 <context>

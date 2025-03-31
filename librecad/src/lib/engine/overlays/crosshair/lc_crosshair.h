@@ -23,8 +23,9 @@
 #ifndef LC_CROSSHAIR_H
 #define LC_CROSSHAIR_H
 
-#include "rs_point.h"
 #include "lc_overlayentity.h"
+#include "rs_pen.h"
+#include "rs_point.h"
 
 class LC_Crosshair:public LC_OverlayDrawable{
 public:
@@ -59,7 +60,7 @@ protected:
     int pointSize;
     RS_Vector wcsPos;
 
-    double drawIndicator(RS_Painter *painter, double uiPosX, double uiPosY);
+    double drawIndicator(RS_Painter *painter, const RS_Vector& uiPos);
 
     void drawCrosshairLines(
         RS_Painter *painter, const RS_Vector &guiCoord, double offset, const RS_Vector &p1, const RS_Vector &p2, const RS_Vector &p3,

@@ -103,7 +103,7 @@ int main(int argc, char** argv)
     iconColorsOptions.loadSettings();
     iconColorsOptions.applyOptions();
 
-    QGuiApplication::setDesktopFileName("librecad.desktop");
+    QGuiApplication::setDesktopFileName("librecad");
 
     QSettings settings; // fixme - direct invocation of settings
 

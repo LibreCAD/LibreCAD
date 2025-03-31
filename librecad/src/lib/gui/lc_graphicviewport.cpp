@@ -541,11 +541,11 @@ void LC_GraphicViewport::zoomAuto(bool axis, bool keepAspectRatio) {
 }
 
 void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, bool axis, bool keepAspectRatio) {
-    double sx, sy;
+    double sx = 0., sy = 0.;
     RS_Vector containerSize;
     RS_Vector containerMin;
 
-    if (m_hasUcs){
+    if (hasUCS()){
         RS_Vector ucsMin;
         RS_Vector ucsMax;
 
@@ -728,7 +728,7 @@ double LC_GraphicViewport::toBasisUCSAngle(double ucsAbsAngle) {
 }
 
 void LC_GraphicViewport::toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const{
-    if (m_hasUcs){
+    if (hasUCS()){
         doWCS2UCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
         uiX = toGuiX(uiX);
         uiY = toGuiY(uiY);
@@ -785,7 +785,7 @@ void LC_GraphicViewport::applyUCS(LC_UCS *ucsToSet) {
 }
 
 void LC_GraphicViewport::extractUCS(){
-    if (m_hasUcs){
+    if (hasUCS()){
         if (graphic != nullptr) {
             LC_UCSList *ucsList = graphic->getUCSList();
             LC_UCS *candidate = createUCSEntity(getUcsOrigin(), -getXAxisAngle(), isGridIsometric(), getIsoViewType());
@@ -800,15 +800,10 @@ void LC_GraphicViewport::extractUCS(){
 
 RS_Vector LC_GraphicViewport::doSetUCS(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType &isoType) {
     bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
-    RS_Vector ucsOrigin;
-    if (customUCS) {
+    RS_Vector ucsOrigin = customUCS ? toUCS(origin) : RS_Vector{0., 0.};
+    if (customUCS)
         update(origin, -angle);
-        m_hasUcs = true;
-        ucsOrigin = toUCS(origin);
-    } else {
-        m_hasUcs = false;
-        ucsOrigin = RS_Vector(0, 0);
-    }
+    useUCS(customUCS);
     auto g = getGraphic();
     if (g != nullptr){
         bool oldIsometricGrid = g->isIsometricGrid();
@@ -898,14 +893,14 @@ void LC_GraphicViewport::applyUCSAfterLoad(){
 
 LC_UCS* LC_GraphicViewport::getCurrentUCS() const{
     LC_UCS* result = nullptr;
-    if (m_hasUcs){
+    if (hasUCS()){
         result = createUCSEntity(getUcsOrigin(), -getXAxisAngle(),isGridIsometric(), getIsoViewType());
     }
     return result;
 }
 
 RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector &coord) const {
-    if (m_hasUcs) {
+    if (hasUCS()) {
         // basically, wcs coordinate still should be returned there.
         // however, it will be rotated according to the grid (which is not rotated in ucs).
         RS_Vector snap = getGrid()->snapGrid(toUCS(coord));

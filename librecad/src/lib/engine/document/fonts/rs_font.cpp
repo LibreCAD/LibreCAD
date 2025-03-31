@@ -81,7 +81,7 @@ std::pair<QString, bool> extractFontChar(const QString& line)
  *              the letters will be deleted when the font is deleted.
  */
 RS_Font::RS_Font(const QString& fileName, bool owner)
-    :	letterList(owner), fileName(fileName), fileLicense("unknown") {
+    :	letterList(owner), m_fileName(fileName), fileLicense("unknown") {
     loaded = false;
     letterSpacing = 3.0;
     wordSpacing = 6.75;
@@ -107,13 +107,13 @@ bool RS_Font::loadFont() {
     QString path;
 
     // Search for the appropriate font if we have only the name of the font:
-    if (!fileName.contains(".cxf", Qt::CaseInsensitive) &&
-        !fileName.contains(".lff", Qt::CaseInsensitive)) {
+    if (!m_fileName.contains(".cxf", Qt::CaseInsensitive) &&
+        !m_fileName.contains(".lff", Qt::CaseInsensitive)) {
         QStringList fonts = RS_SYSTEM->getNewFontList();
         fonts.append(RS_SYSTEM->getFontList());
 
         for (const QString& font: fonts) {
-            if (QFileInfo(font).baseName().toLower()==fileName.toLower()) {
+            if (QFileInfo(font).baseName().toLower()==m_fileName.toLower()) {
                 path = font;
                 break;
             }
@@ -122,7 +122,7 @@ bool RS_Font::loadFont() {
 
     // We have the full path of the font:
     else {
-        path = fileName;
+        path = m_fileName;
     }
 
     // No font paths found:
@@ -135,14 +135,10 @@ bool RS_Font::loadFont() {
     // Open cxf file:
     QFile f(path);
     if (!f.open(QIODevice::ReadOnly)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Font::loadFont: Cannot open font file: %s",
-                        path.toLatin1().data());
+        LC_LOG(RS_Debug::D_WARNING)<<"RS_Font::loadFont: Cannot open font file: "<<path;
         return false;
     } else {
-        RS_DEBUG->print("RS_Font::loadFont: "
-                        "Successfully opened font file: %s",
-                        path.toLatin1().data());
+        LC_LOG(RS_Debug::D_WARNING)<<"RS_Font::loadFont: Successfully opened font file: "<<path;
     }
     f.close();
 
@@ -176,15 +172,14 @@ bool RS_Font::loadFont() {
 }
 
 
-void RS_Font::readCXF(QString path) {
-    QString line;
+void RS_Font::readCXF(const QString& path) {
     QFile f(path);
     f.open(QIODevice::ReadOnly);
     QTextStream ts(&f);
 
     // Read line by line until we find a new letter:
     while (!ts.atEnd()) {
-        line = ts.readLine();
+        QString line = ts.readLine();
 
         if (line.isEmpty())
             continue;
@@ -310,11 +305,9 @@ void RS_Font::readCXF(QString path) {
             }
         }
     }
-    f.close();
 }
 
-void RS_Font::readLFF(QString path) {
-    QString line;
+void RS_Font::readLFF(const QString& path) {
     QFile f(path);
     encoding = "UTF-8";
     f.open(QIODevice::ReadOnly);
@@ -322,7 +315,7 @@ void RS_Font::readLFF(QString path) {
 
     // Read line by line until we find a new letter:
     while (!ts.atEnd()) {
-        line = ts.readLine();
+        QString line = ts.readLine();
 
         if (line.isEmpty())
             continue;
@@ -367,7 +360,7 @@ void RS_Font::readLFF(QString path) {
             // uniode character:
             const auto [ch, okay] = extractFontChar(line);
             if (!okay) {
-                RS_DEBUG->print(RS_Debug::D_WARNING,"Ignoring code from LFF font file: %s",qPrintable(line));
+                LC_LOG(RS_Debug::D_WARNING)<<"Ignoring code from LFF font file: "<<line;
                 continue;
             }
 
@@ -383,7 +376,6 @@ void RS_Font::readLFF(QString path) {
             }
         }
     }
-    f.close();
 }
 
 void RS_Font::generateAllFonts()
@@ -392,24 +384,25 @@ void RS_Font::generateAllFonts()
         generateLffFont(key);
 }
 
-RS_Block* RS_Font::generateLffFont(const QString& key){
+RS_Block* RS_Font::generateLffFont(const QString& key)
+{
+    if (key.isEmpty()) {
+        LC_ERR<<__LINE__<<" "<<__func__<<"("<<key<<"): empty key";
+    }
 
     if (!rawLffFontList.contains( key)) {
-        RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : can not find the letter in LFF file %s", QChar(key.at(0)), qPrintable(fileName));
+        LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : can not find the letter in LFF file %2"}.arg(key.at(0)).arg(m_fileName);
         return nullptr;
     }
 
     // create new letter:
-    RS_FontChar* letter = new RS_FontChar(nullptr, key, RS_Vector(0.0, 0.0));
+    auto letter = std::make_unique<RS_FontChar>(nullptr, key, RS_Vector(0.0, 0.0));
 
     // Read entities of this letter:
-    QStringList vertex;
-    QStringList coords;
     QStringList fontData = rawLffFontList[key];
-    QString line;
 
     while(!fontData.isEmpty()) {
-        line = fontData.takeFirst();
+        QString line = fontData.takeFirst();
 
         if (line.isEmpty()) {
             continue;
@@ -421,16 +414,14 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
             auto uCode = line.toUInt(nullptr, 16);
             auto ch = charFromHex(line);
             if (ch == key) {   // recursion, a character can't include itself
-                RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : recursion, ignore this character from %s", uCode, qPrintable(fileName));
-                delete letter;
+                LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : recursion, ignore this character from %2"}.arg(uCode, 4, 16).arg(m_fileName);
                 return nullptr;
             }
 
             RS_Block* bk = letterList.find(ch);
             if (nullptr == bk) {
                 if (!rawLffFontList.contains(ch)) {
-                    RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : can not find the letter C%04X in LFF file %s", QChar(key.at(0)), uCode, qPrintable(fileName));
-                    delete letter;
+                    LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : can not find the letter C%04X in LFF file %2"}.arg(QChar(key.at(0))).arg(m_fileName);
                     return nullptr;
                 }
                 generateLffFont(ch);
@@ -446,32 +437,29 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
         //sequence:
         else {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-            vertex = line.split(';', Qt::SkipEmptyParts);
+            QStringList vertex = line.split(';', Qt::SkipEmptyParts);
 #else
-            vertex = line.split(';', QString::SkipEmptyParts);
+            QStringList vertex = line.split(';', QString::SkipEmptyParts);
 #endif \
     //at least is required two vertex
             if (vertex.size()<2)
                 continue;
-            RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
+            RS_Polyline* pline = new RS_Polyline(letter.get(), RS_PolylineData());
             pline->setPen(RS_Pen(RS2::FlagInvalid));
             pline->setLayer(nullptr);
             foreach(const QString& point, vertex) {
-                double x1, y1;
-                double bulge = 0;
-
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-                coords = point.split(',', Qt::SkipEmptyParts);
+                QStringList coords = point.split(',', Qt::SkipEmptyParts);
 #else
-                coords = point.split(',', QString::SkipEmptyParts);
+                QStringList coords = point.split(',', QString::SkipEmptyParts);
 #endif \
     //at least X,Y is required
-                if (coords.size()<2)
-                    continue;
-                x1 = coords.at(0).toDouble();
-                y1 = coords.at(1).toDouble();
+                double x1 = coords.at(0).toDouble();
+                // Issue #2045, if y-coordinate is missing, default to 0
+                double y1 = coords.size() >= 2 ? coords.at(1).toDouble() : 0.;
                 //check presence of bulge
-                if (coords.size() == 3 && coords.at(2).at(0) == QChar('A')){
+                double bulge = 0;
+                if (coords.size() >= 3 && coords.at(2).at(0) == QChar('A')){
                     QString bulgeStr = coords.at(2);
                     bulge = bulgeStr.remove(0,1).toDouble();
                 }
@@ -483,22 +471,22 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
 
     }
 
-    if (letter->isEmpty()) {
-        delete letter;
-        return nullptr;
-    } else {
+    if (!letter->isEmpty()) {
         letter->calculateBorders();
-        letterList.add(letter);
-        return letter;
+        letterList.add(letter.get());
+        auto ret = letter.get();
+        letter.release();
+        return ret;
     }
+    return nullptr;
 }
 
 RS_Block* RS_Font::findLetter(const QString& name) {
     RS_Block* ret= letterList.find(name);
-    if (ret) return ret;
-    return generateLffFont(name);
+    return (ret != nullptr) ? ret : generateLffFont(name);
 
 }
+
 /**
  * Dumps the fonts data to stdout.
  */

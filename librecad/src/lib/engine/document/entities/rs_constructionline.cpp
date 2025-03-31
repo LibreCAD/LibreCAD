@@ -239,7 +239,7 @@ void RS_ConstructionLine::move(const RS_Vector& offset) {
     //calculateBorders();
 }
 
-void RS_ConstructionLine::rotate(const RS_Vector& center, const double& angle) {
+void RS_ConstructionLine::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     data.point1.rotate(center, angleVector);
     data.point2.rotate(center, angleVector);

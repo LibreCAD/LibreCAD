@@ -68,7 +68,9 @@ namespace{
             {
                 pr(static_cast<RS_EntityContainer*>(e));
             } else if (e) {
-                LC_ERR<<", "<<e->getId();
+                auto vp0 = static_cast<RS_AtomicEntity*>(e)->getStartpoint();
+                auto vp1 = static_cast<RS_AtomicEntity*>(e)->getEndpoint();
+                LC_ERR<<", "<<e->getId()<<": "<<vp0.x<<", "<<vp0.y <<" :: "<<vp1.x<<", "<<vp1.y;
             }
         }
         LC_ERR<<" |"<<loop->getId()<<" )";
@@ -583,7 +585,7 @@ void RS_Hatch::draw(RS_Painter* painter) {
 void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use polygon approximation, except trivial cases
 
     if (needOptimization == true) {
-        foreach (auto l, entities){
+        for(auto* l: entities){
                 if (l->rtti()==RS2::EntityContainer) {
                     auto* loop = (RS_EntityContainer*)l;
                     loop->optimizeContours();
@@ -591,17 +593,13 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use pol
             }
         needOptimization = false;
     }
-    QPainterPath path;
-    QList<QPolygon> paClosed;
-    QPolygon pa;
-
 
     const QBrush brush(painter->brush());
     const RS_Pen pen=painter->getPen();
     painter->setBrushColor(pen.getColor());
 //    painter->disablePen();
 
-    createSolidFillPath(painter, path);
+    QPainterPath path = createSolidFillPath(painter);
 
 
     //bug#474, restore brush after solid fill
@@ -622,8 +620,9 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use pol
     painter->setPen(pen);
 }
 
-void RS_Hatch::createSolidFillPath(RS_Painter *painter, QPainterPath &path) {
-    painter->createSolidFillPath(path, entities);
+QPainterPath RS_Hatch::createSolidFillPath(RS_Painter *painter) const
+{
+    return painter->createSolidFillPath(entities);
 }
 
 void RS_Hatch::debugOutPath(const QPainterPath &tmpPath) const {
@@ -649,14 +648,15 @@ double RS_Hatch::getTotalArea() {
 #define DEBUG_TOTAL_AREA_
 double RS_Hatch::getTotalAreaImpl() {
     auto loops = getLoops();
-#ifdef DEBUG_TOTAL_AREA
-    LC_LOG<<__func__<<"(): loops.size()="<<loops.size();
+//#ifdef DEBUG_TOTAL_AREA
+    LC_ERR<<__func__<<"(): loops.size()="<<loops.size();
+    int i=0;
     for (auto& l: loops) {
-        LC_LOG<<l->getId()<<": "<<l->rtti();
+        LC_ERR<<i++<<": "<<l->getId()<<": "<<l->rtti();
         pr(l.get());
     }
-    LC_LOG<<"loops: done";
-#endif
+    LC_ERR<<"loops: done";
+//#endif
     LC_LoopUtils::LoopSorter loopSorter(std::move(loops));
     auto sorted = loopSorter.getResults();
 
@@ -704,7 +704,7 @@ void RS_Hatch::move(const RS_Vector& offset) {
     update();
 }
 
-void RS_Hatch::rotate(const RS_Vector& center, const double& angle) {
+void RS_Hatch::rotate(const RS_Vector& center, double angle) {
     RS_EntityContainer::rotate(center, angle);
     data.angle = RS_Math::correctAngle(data.angle+angle);
     update();

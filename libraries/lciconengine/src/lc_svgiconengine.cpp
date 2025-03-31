@@ -19,21 +19,21 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include "lc_svgiconengine.h"
 
-#include <QPixmap>
-#include <QPainter>
-#include <QSvgRenderer>
-#include <QCoreApplication>
-#include <QGuiApplication>
 #include <QApplication>
+#include <QAtomicInt>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QGuiApplication>
+#include <QPainter>
+#include <QPixmap>
 #include <QPixmapCache>
 #include <QStyleOption>
-#include <QAtomicInt>
-#include <QDir>
+#include <QSvgRenderer>
 
+#include "lc_svgiconengine.h"
 
-#include "qdebug.h"
 
 enum FileType {PlainSVG, TemplateSVG};
 

@@ -58,7 +58,7 @@ bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& va
     if (key == cmd)
         return false;
 
-    if(!lookUp.count(key) || lookUp.at(key) == value)
+    if(lookUp.count(key) == 0 || lookUp.at(key) == value)
         return true;
 
     //report command string collision
@@ -153,57 +153,62 @@ RS_Commands* RS_Commands::instance() {
 
 RS_Commands::RS_Commands() {
 
-    for(auto const& c0: g_commandList){
-        const RS2::ActionType act=c0.actionType;
+    for(auto const& [fullCmdList, aliasList, action]: g_commandList){
         //add full commands
-        for(auto const& p0: c0.fullCmdList){
-            if (isCollisionFree(m_cmdTranslation, p0.first, p0.second))
-                m_cmdTranslation[p0.first] = p0.second;
-            if (isCollisionFree(m_mainCommands, p0.second, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
-                m_mainCommands[p0.second] = act;
-                m_actionToCommand.emplace(act, p0.second);
+        for(auto const& [fullCmd, cmdTranslation]: fullCmdList){
+            if (fullCmd == cmdTranslation)
+                continue;
+            // use translated commands first
+            if (isCollisionFree(m_cmdTranslation, fullCmd, cmdTranslation))
+                m_cmdTranslation.emplace(fullCmd, cmdTranslation);
+            if (isCollisionFree(m_mainCommands, cmdTranslation, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
+                m_mainCommands.emplace(cmdTranslation, action);
+                m_actionToCommand.emplace(action, cmdTranslation);
             }
         }
-        for(auto const& p0: c0.fullCmdList){
-            if(isCollisionFree(m_mainCommands, p0.first, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
+        for(auto const& [fullCmd, cmdTranslation]: fullCmdList){
+            if(isCollisionFree(m_mainCommands, fullCmd, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
                 // enable english commands, if no conflict is found
-                m_mainCommands[p0.first]=act;
-                m_actionToCommand.emplace(act, p0.first);
+                m_mainCommands.emplace(fullCmd, action);
+                m_actionToCommand.emplace(action, fullCmd);
             }
         }
         //add short commands
-        for(auto const& p1: c0.shortCmdList){
-            if(isCollisionFree(m_cmdTranslation, p1.first, p1.second))
-                m_cmdTranslation[p1.first]=p1.second;
-            if(isCollisionFree(m_shortCommands, p1.second, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
-                m_shortCommands[p1.second]=act;
-                if (m_actionToCommand.count(act) == 0)
-                    m_actionToCommand.emplace(act, p1.second);
+        for(auto const& [alias, aliasTranslation]: aliasList){
+            if (alias == aliasTranslation)
+                continue;
+            // use translated alias first
+            if(isCollisionFree(m_cmdTranslation, alias, aliasTranslation))
+                m_cmdTranslation.emplace(alias, aliasTranslation);
+            if(isCollisionFree(m_shortCommands, aliasTranslation, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
+                m_shortCommands.emplace(aliasTranslation, action);
+                if (m_actionToCommand.count(action) == 0)
+                    m_actionToCommand.emplace(action, aliasTranslation);
             }
         }
-        for(auto const& p1: c0.shortCmdList){
-            if(isCollisionFree(m_shortCommands, p1.first, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
+        for(auto const& [alias, aliasTranslation]: aliasList){
+            if(isCollisionFree(m_shortCommands, alias, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
                 // enable english short commands, if no conflict is found
-                m_shortCommands[p1.first]=act;
-                if (m_actionToCommand.count(act) == 0)
-                    m_actionToCommand.emplace(act, p1.second);
+                m_shortCommands.emplace(alias, action);
+                if (m_actionToCommand.count(action) == 0)
+                    m_actionToCommand.emplace(action, aliasTranslation);
             }
         }
     }
 
-    // translations
+    // translations, overriding existing translation
     for(auto const& [command, translation]: g_transList) {
         m_cmdTranslation[command] = translation;
     }
 
+    // prefer to use translated commands and aliases
     for (const auto& [command, translation]: m_cmdTranslation) {
         m_revTranslation[translation] = command;
-        if (m_mainCommands.count(translation) == 1)
-            m_mainCommands[command] = m_mainCommands[translation];
-        else if (m_shortCommands.count(translation) == 1)
+        if (m_shortCommands.count(translation) == 1)
             m_shortCommands[command] = m_shortCommands[translation];
     }
 
+    // ensure action to command mapping is consistent
     for(const auto& [command, action]: m_mainCommands) {
         m_actionToCommand[action] = command;
     }

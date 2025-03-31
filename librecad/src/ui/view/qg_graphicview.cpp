@@ -81,12 +81,12 @@
 
 
 
+namespace {
 // Issue #1765: set default cursor size: 32x32
 constexpr int g_cursorSize=32;
 // Issue #1787: cursor hot spot at center by using hotX=hotY=-1
 constexpr int g_hotspotXY=-1;
 
-namespace {
 // maximum length for displayed block name in context menu
     constexpr int g_MaxBlockNameLength = 40;
 
@@ -240,6 +240,62 @@ void QG_GraphicView::editAction( RS_Entity& entity){
     }
 }
 
+    void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
+    {
+        RS_EntityContainer* container = view.getContainer();
+        if (entity == nullptr || container == nullptr)
+            return;
+
+        editAction(view, *entity);
+
+        //container->removeEntity(entity);
+        auto* doc = dynamic_cast<RS_Document*>(container);
+        if (doc != nullptr)
+            doc->startUndoCycle();
+        // delete any temporary highlighting duplicates of the original
+        auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
+        if (defaultAction != nullptr)
+        {
+            defaultAction->clearHighLighting();
+        }
+        doc->endUndoCycle();
+    }
+
+// Show the entity property dialog on the closest entity in range
+    void showEntityPropertiesDialog(QG_GraphicView& view, RS_Entity* entity){
+        if (entity == nullptr) return;
+
+        // snap to the top selected parent
+        while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected()) {
+            entity = entity->getParent();
+        }
+
+        launchEditProperty(view, entity);
+    }
+
+    // Helper function to test validity of a rect
+    bool withinValidRange(double x)
+    {
+        return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
+    }
+    bool withinValidRange(const RS_Vector& vp)
+    {
+        return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
+    }
+    bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax)
+    {
+        return
+            withinValidRange(vpMin)
+            && withinValidRange(vpMax)
+            && vpMin.x < vpMax.x
+            && vpMin.y < vpMax.y
+            && vpMin.x + 1e6 >= vpMax.x
+            && vpMin.y + 1e6 >= vpMax.y;
+    }
+}
+
+
+
 // Support auto-panning when the cursor is close to the view border
 struct QG_GraphicView::AutoPanData{
     void start(double interval, QG_GraphicView &view){
@@ -309,7 +365,7 @@ void createViewRenderer();
 // fixme - sand - files - init by action context???
 QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext)
     :RS_GraphicView(parent, {})
-    ,device("Mouse")
+    ,m_device("Mouse")
     ,curCad(new QCursor(QPixmap(":cursors/cur_cad_bmp.png"), g_hotspotXY, g_hotspotXY))
     ,curDel(new QCursor(QPixmap(":cursors/cur_del_bmp.png"), g_hotspotXY, g_hotspotXY))
     ,curSelect(new QCursor(QPixmap(":cursors/cur_select_bmp.png"), g_hotspotXY, g_hotspotXY))
@@ -595,10 +651,10 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
 }
 
 void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
+    if (container==nullptr)
+        return;
     RS_Entity* entity = snapEntity(*this, event);
     if (entity == nullptr)
-    return;
-    if (container==nullptr)
         return;
     RS_Insert* insert = getAncestorInsert(entity);
     // MText/Text should not be edited as blocks
@@ -608,12 +664,12 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
         entity = toEdit;
     }
     QAction* action = (insert != nullptr) ?
-                // For an insert, show the menu entry to edit the block instead
-                new QAction(QIcon(":/icons/properties.lci"),
-                            QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
-                            &contextMenu) :
-                new QAction(QIcon(":/icons/properties.lci"),
-                            tr("Edit Properties"), &contextMenu);
+                          // For an insert, show the menu entry to edit the block instead
+                          new QAction(QIcon(":/icons/properties.lci"),
+                                      QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
+                                      &contextMenu) :
+                          new QAction(QIcon(":/icons/properties.lci"),
+                                      tr("Edit Properties"), &contextMenu);
 
     contextMenu.addAction(action);
     connect(action, &QAction::triggered, this, [this, insert, entity](){
@@ -621,7 +677,7 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
     });
 
     // Add "Activate Layer" for the current entity
-    if (getGraphic()->getActiveLayer() == entity->getLayer() || entity->getLayer() == nullptr)
+    if (getGraphic() == nullptr || getGraphic()->getActiveLayer() == entity->getLayer() || entity->getLayer() == nullptr)
         return;
     action = new QAction(tr("Activate Layer"), &contextMenu);
     contextMenu.addAction(action);
@@ -648,16 +704,8 @@ bool QG_GraphicView::event(QEvent *event){
 
         if (nge->gestureType() == Qt::ZoomNativeGesture) {
             double v = nge->value();
-            RS2::ZoomDirection direction;
-            double factor;
-
-            if (v < 0) {
-                direction = RS2::Out;
-                factor = 1-v;
-            } else {
-                direction = RS2::In;
-                factor = 1+v;
-            }
+            RS2::ZoomDirection direction = std::signbit(v) ? RS2::Out : RS2::In;
+            double factor = 1. + std::abs(v);
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
@@ -837,7 +885,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     RS_Vector mouse = toGraph(e->position());
 #endif
 
-    if (device == "Trackpad") {
+    if (m_device == "Trackpad") {
         QPoint numPixels = e->pixelDelta();
 
         // high-resolution scrolling triggers Pan instead of Zoom logic
@@ -1045,82 +1093,66 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent * e){
 * Adjusts the scrollbar ranges / steps.
 */
 void QG_GraphicView::adjustOffsetControls(){
-    if (scrollbars) {
-        static bool running = false;
+    if (!scrollbars)
+        return;
 
-        if (running) {
-            return;
-        }
+    std::unique_lock<std::mutex> lock(m_scrollbarMutex, std::defer_lock);
+    if (!lock.try_lock())
+        return;
 
-        running = true;
-
-        if (container==nullptr || hScrollBar==nullptr || vScrollBar==nullptr) {
-            return;
-        }
-
-        int ox = viewport->getOffsetX();
-        int oy = viewport->getOffsetY();
-
-        RS_Vector min = container->getMin();
-        RS_Vector max = container->getMax();
-
-        // no drawing yet - still allow to scroll
-        if (max.x < min.x+1.0e-6 ||
-            max.y < min.y+1.0e-6 ||
-            max.x > RS_MAXDOUBLE ||
-            max.x < RS_MINDOUBLE ||
-            min.x > RS_MAXDOUBLE ||
-            min.x < RS_MINDOUBLE ||
-            max.y > RS_MAXDOUBLE ||
-            max.y < RS_MINDOUBLE ||
-            min.y > RS_MAXDOUBLE ||
-            min.y < RS_MINDOUBLE ) {
-            min = RS_Vector(-10,-10);
-            max = RS_Vector(100,100);
-        }
-
-        auto factor = viewport->getFactor();
-
-        int minVal = (int)(-getWidth()*0.75
-                           + std::min(min.x, 0.)*factor.x);
-        int maxVal = (int)(-getWidth()*0.25
-                           + std::max(max.x, 0.)*factor.x);
-
-        if (minVal<=maxVal) {
-            hScrollBar->setRange(minVal, maxVal);
-        }
-
-        minVal = (int)(+getHeight()*0.25
-                       - std::max(max.y, 0.)*factor.y);
-        maxVal = (int)(+getHeight()*0.75
-                       - std::min(min.y, 0.)*factor.y);
-
-        if (minVal<=maxVal) {
-            vScrollBar->setRange(minVal, maxVal);
-        }
-
-        hScrollBar->setPageStep(getWidth());
-        vScrollBar->setPageStep(getHeight());
-
-        hScrollBar->setValue(-ox);
-        vScrollBar->setValue(oy);
-
-
-        slotHScrolled(-ox);
-        slotVScrolled(oy);
-
-
-//        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
-//                        hScrollBar->minimum(), hScrollBar->maximum(),
-//                        hScrollBar->pageStep(), ox);
-
-//        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
-//                        vScrollBar->minimum(), vScrollBar->maximum(),
-//                        vScrollBar->pageStep(), oy);
-
-
-        running = false;
+    if (container==nullptr || hScrollBar==nullptr || vScrollBar==nullptr) {
+        return;
     }
+
+    RS_Vector vpMin = container->getMin();
+    RS_Vector vpMax = container->getMax();
+
+    // no drawing yet - still allow to scroll
+    if (!isRectValid(vpMin, vpMax)) {
+        vpMin = RS_Vector(-10,-10);
+        vpMax = RS_Vector(100,100);
+    }
+
+    RS_Vector factor = viewport->getFactor();
+
+    int minVal = (int)(-getWidth()*0.75
+                        + std::min(vpMin.x, 0.)*factor.x);
+    int maxVal = (int)(-getWidth()*0.25
+                        + std::max(vpMax.x, 0.)*factor.x);
+
+    if (minVal<=maxVal) {
+        hScrollBar->setRange(minVal, maxVal);
+    }
+
+    minVal = (int)(+getHeight()*0.25
+                    - std::max(vpMax.y, 0.)*factor.y);
+    maxVal = (int)(+getHeight()*0.75
+                    - std::min(vpMin.y, 0.)*factor.y);
+
+    if (minVal<=maxVal) {
+        vScrollBar->setRange(minVal, maxVal);
+    }
+
+    hScrollBar->setPageStep(getWidth());
+    vScrollBar->setPageStep(getHeight());
+
+    int ox = viewport->getOffsetX();
+    int oy = viewport->getOffsetY();
+    hScrollBar->setValue(-ox);
+    vScrollBar->setValue(oy);
+
+    slotHScrolled(-ox);
+    slotVScrolled(oy);
+
+
+    //        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
+    //                        hScrollBar->minimum(), hScrollBar->maximum(),
+    //                        hScrollBar->pageStep(), ox);
+
+    //        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
+    //                        vScrollBar->minimum(), vScrollBar->maximum(),
+    //                        vScrollBar->pageStep(), oy);
+
 }
 
 
