@@ -514,10 +514,10 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
 /**
  * Sets the current action.
  */
-void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
+bool RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction");
     if (action==nullptr) {
-        return;
+        return false;
     }
     // Do not initialize action if it's already the last one.
     // This is attempt to fix crashes of dialogs (like properties) which are called from actions
@@ -541,11 +541,13 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
     actionHolder->init(0);
     // ## new:
+    bool passedActionIsNotFinished = false;
     if (!actionHolder->isFinished()) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
         actionHolder->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
         actionHolder->setPredecessor(predecessor.get());
+        passedActionIsNotFinished = true;
     }
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: cleaning up..");
@@ -563,6 +565,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
             m_graphicView->notifyNoActiveAction();
         }
     }
+    return passedActionIsNotFinished;
 }
 
 /**

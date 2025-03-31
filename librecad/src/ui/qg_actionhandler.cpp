@@ -1100,7 +1100,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
     }
 
-	if (a) {
+	if (a != nullptr) {
         view->setCurrentAction(a);
     }
 

@@ -155,12 +155,14 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
 }
 
 void RS_GraphicView::setEventHandlerAction(RS_ActionInterface *action){
-    eventHandler->setCurrentAction(action);
-    if (eventHandler->hasAction()) {
-        emit currentActionChanged(action);
-    }
-    else {
-        notifyNoActiveAction();
+    bool actionActive = eventHandler->setCurrentAction(action);
+    if (actionActive) {
+        if (eventHandler->hasAction()) {
+            emit currentActionChanged(action);
+        }
+        else {
+            notifyNoActiveAction();
+        }
     }
 }
 

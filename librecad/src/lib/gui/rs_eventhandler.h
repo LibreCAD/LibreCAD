@@ -80,7 +80,7 @@ public:
     void setDefaultAction(RS_ActionInterface* action);
     RS_ActionInterface* getDefaultAction() const;
 
-    void setCurrentAction(RS_ActionInterface* action);
+    bool setCurrentAction(RS_ActionInterface* action);
     RS_ActionInterface* getCurrentAction();
     bool isValid(RS_ActionInterface* action) const;
 
