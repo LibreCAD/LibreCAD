@@ -1822,9 +1822,9 @@ void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, 
 
           // handle rename
           QString layerName = dlg.getLayerName();
-          if (originalName != layerName){ // layer is also renamed
-              int editedLayerType = dlg.getEditedLayerType();
-              layerTreeModel -> renamePrimaryLayer(pItem, layerName, editedLayerType);
+          int editedLayerType = dlg.getEditedLayerType();
+          if (originalName != layerName || editedLayerType != pItem->getLayerType()){ // layer is also renamed
+              layerTreeModel -> renamePrimaryLayer(pItem, layerName, edited LayerType);
           }
           layerList->fireEdit(nullptr);
       }
