@@ -1041,6 +1041,14 @@ namespace RS2 {
             DescriptionCreating,
             DescriptionModifying
         };
+
+        /**
+         * Curve end point type
+         */
+        enum class EndPointType: short {
+            Start = 0,
+            End = 1
+        };
 };
 
 #endif
