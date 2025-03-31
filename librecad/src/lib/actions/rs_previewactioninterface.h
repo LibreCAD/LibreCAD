@@ -53,9 +53,9 @@ struct LC_MouseEvent{
     RS_Vector snapPoint;
     RS_Vector graphPoint;
     QPoint uiPosition;
-    bool isControl;
-    bool isShift;
-    QMouseEvent* originalEvent;
+    bool isControl = false;
+    bool isShift = false;
+    QMouseEvent* originalEvent = nullptr;
 };
 
 
@@ -147,11 +147,11 @@ protected:
     void markRelativeZero();
 
     bool is(RS_Entity* e, RS2::EntityType type) const;
-    bool isLine(RS_Entity*  e) const{return is(e, RS2::EntityLine);};
-    bool isPolyline(RS_Entity*  e) const{return is(e, RS2::EntityPolyline);};
-    bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);};
-    bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);};
-    bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);};
+    bool isLine(RS_Entity*  e) const{return is(e, RS2::EntityLine);}
+    bool isPolyline(RS_Entity*  e) const{return is(e, RS2::EntityPolyline);}
+    bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);}
+    bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);}
+    bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);}
 
     void previewSnapAngleMark(const RS_Vector &center, double angle);
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);
