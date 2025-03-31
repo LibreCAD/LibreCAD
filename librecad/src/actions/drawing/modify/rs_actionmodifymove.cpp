@@ -39,6 +39,7 @@ struct RS_ActionModifyMove::Points {
 	RS_MoveData data;
 	RS_Vector referencePoint;
 	RS_Vector targetPoint;
+    bool createCopy {false};
 };
 
 RS_ActionModifyMove::RS_ActionModifyMove(LC_ActionContext *actionContext)
@@ -51,8 +52,18 @@ RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 void RS_ActionModifyMove::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
     RS_Modification m(*m_container, m_viewport);
-    m.move(pPoints->data, selectedEntities, false, keepSelected);
-    finish(false);
+
+    if (pPoints->createCopy) {
+        bool oldKeepOriginals = pPoints->data.keepOriginals;
+        pPoints->data.keepOriginals = true;
+        m.move(pPoints->data, selectedEntities, false, keepSelected);
+        pPoints->data.keepOriginals = oldKeepOriginals;
+    }
+    else {
+        m.move(pPoints->data, selectedEntities, false, keepSelected);
+        finish(false);
+        moveRelativeZero(pPoints->targetPoint);
+    }
 }
 
 void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
@@ -93,7 +104,7 @@ void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e)
                     }
                 }
                 if (isInfoCursorForModificationEnabled()){
-                    msg(tr("Moving Offset"))
+                    msg(e->isControl ? tr("Copy Offset") : tr("Moving Offset"))
                         .relative(offset)
                         .relativePolar(offset)
                         .toInfoCursorZone2(false);
@@ -112,6 +123,7 @@ void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, LC_Mou
     RS_Vector snapped = e->snapPoint;
     if (status == SetTargetPoint){
         snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
+        pPoints->createCopy = e->isControl;
     }
     fireCoordinateEvent(snapped);
 }
@@ -159,7 +171,6 @@ void RS_ActionModifyMove::onCoordinateEvent(int status, [[maybe_unused]] bool is
             else{
                 pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
                 trigger();
-                moveRelativeZero(pPoints->targetPoint);
             }
             break;
         }
@@ -174,7 +185,7 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
             updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack(tr("Specify target point"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify target point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
             break;
         default:
             updateMouseWidget();
