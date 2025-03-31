@@ -24,22 +24,23 @@
 **
 **********************************************************************/
 
-#include <QRegularExpression>
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_eventhandler.h"
+#include <QRegularExpression>
+
+#include "lc_convert.h"
 #include "rs_actioninterface.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
-#include "rs_math.h"
-#include "rs_snapper.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_eventhandler.h"
 #include "rs_graphicview.h"
+#include "rs_math.h"
 #include "rs_settings.h"
+#include "rs_snapper.h"
 #include "rs_units.h"
-#include "lc_convert.h"
 
 namespace {
     bool isActive(const std::shared_ptr<RS_ActionInterface>& action) {

@@ -45,6 +45,7 @@ class RS_Circle;
 class RS_Color;
 class RS_Ellipse;
 class RS_Entity;
+class RS_EntityContainer;
 class RS_Pen;
 class RS_Polyline;
 class RS_Spline;
@@ -197,7 +198,7 @@ public:
     double getDpmm() const;
     void setClipRect(int x, int y, int w, int h);
     void resetClipping();
-    QPainterPath createSolidFillPath(const QList<RS_Entity *>& entities);
+    QPainterPath createSolidFillPath(const RS_EntityContainer& entities);
     void noCapStyle();
     RS_Pen& getRsPen();
     void setPenJoinStyle(Qt::PenJoinStyle penJoinStyle);

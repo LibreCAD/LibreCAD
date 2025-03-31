@@ -1283,6 +1283,7 @@ void RS_Ellipse::rotate(double angle) {//rotate around origin
     data.majorP.rotate(aV);
     calculateBorders();
 }
+
 void RS_Ellipse::rotate(const RS_Vector& angleVector) {//rotate around origin
     data.center.rotate(angleVector);
     data.majorP.rotate(angleVector);
@@ -1797,13 +1798,10 @@ void RS_Ellipse::setRatio(double r) {
 }
 
 double RS_Ellipse::getAngleLength() const {
-    double ret;
-    if (isReversed()) {
-        ret= RS_Math::correctAngle(data.angle1-data.angle2);
-    } else {
-        ret= RS_Math::correctAngle(data.angle2-data.angle1);
-    }
-    if(ret<RS_TOLERANCE_ANGLE) ret=2.*M_PI;
+    double ret = data.angle2-data.angle1;
+    ret = RS_Math::correctAngle(isReversed() ? - ret : ret);
+    if (ret < RS_TOLERANCE_ANGLE)
+        ret=2.*M_PI;
     return ret;
 }
 

@@ -556,7 +556,9 @@ struct LoopOptimizer::Data: public bgi::rtree< TreeValue, bgi::quadratic<16> >
 
     void RemoveAll(const BBox& box)
     {
-        remove(qbegin(bgi::intersects(box)), qend());
+        auto it = qbegin(bgi::intersects(box));
+        if (it != qend())
+            remove(*it);
     }
 
     /**
@@ -638,11 +640,11 @@ struct LoopOptimizer::Data: public bgi::rtree< TreeValue, bgi::quadratic<16> >
             ContourPoint& node = startResults.front().second;
             if (node.pointType == RS2::EndPointType::Start) {
                 // prepend the new edge
+                entity->revertDirection();
                 node.loop->push_front(entity);
                 insert({endBox, {node.loop, RS2::EndPointType::Start}});
             } else {
                 // append the new edge
-                entity->revertDirection();
                 node.loop->push_back(entity);
                 insert({endBox, {node.loop, RS2::EndPointType::End}});
             }

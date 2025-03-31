@@ -184,6 +184,7 @@ private:
  *                                  All edges are clones.
  */
 class LoopOptimizer {
+public:
     LoopOptimizer(const RS_EntityContainer& contour);
     ~LoopOptimizer();
 
