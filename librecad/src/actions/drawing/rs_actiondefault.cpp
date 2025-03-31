@@ -645,8 +645,15 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
             data.useCurrentAttributes = false;
             data.keepOriginals = e->isControl;
             data.offset = pPoints->v2 - pPoints->v1;
+
             m.move(data);
-            goToNeutralStatus();
+            if (e->isControl) { // allow creation of several copies
+                pPoints->v1 = pPoints->v2;
+            }
+            else {
+                goToNeutralStatus();
+            }
+            moveRelativeZero(pPoints->v2);
             updateSelectionWidget();
             deleteSnapper();
             break;
@@ -795,7 +802,6 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
         default:
             break;
     }
-
 }
 
 void RS_ActionDefault::onMouseRightButtonPress([[maybe_unused]]int status, LC_MouseEvent *e) {

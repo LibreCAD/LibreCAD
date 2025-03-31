@@ -2096,6 +2096,7 @@ void RS_Modification::deleteOriginalAndAddNewEntities(const std::vector<RS_Entit
         for (RS_Entity *e: addList) {
             if (e != nullptr) {
                 container->addEntity(e);
+                undo.addUndoable(e);
             }
         }
     } else {
