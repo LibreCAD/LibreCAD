@@ -28,14 +28,14 @@
 #include "rs_graphicview.h"
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction, LC_ActionContext *actionContext)
-	:RS_ActionInterface("Zoom scroll", actionContext)
+	:RS_ActionInterface("Zoom scroll", actionContext, RS2::ActionZoomScroll)
 	,direction(direction)
 	,hasOffset(false){
 }
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
 										 LC_ActionContext *actionContext)
-	:RS_ActionInterface("Zoom scroll", actionContext)
+	:RS_ActionInterface("Zoom scroll", actionContext,RS2::ActionZoomScroll)
 	,hasOffset(true)
 	,offsetX(offsetX)
 	,offsetY(offsetY){

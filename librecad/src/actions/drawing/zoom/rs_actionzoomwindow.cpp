@@ -47,7 +47,7 @@ struct RS_ActionZoomWindow::Points {
  *          area will be fit to the viewport.
  */
 RS_ActionZoomWindow::RS_ActionZoomWindow(LC_ActionContext *actionContext, bool keepAspectRatio)
-    :RS_PreviewActionInterface("Zoom Window",actionContext)
+    :RS_PreviewActionInterface("Zoom Window",actionContext, RS2::ActionZoomWindow)
     , pPoints(std::make_unique<Points>()), keepAspectRatio(keepAspectRatio){
 }
 

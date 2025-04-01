@@ -31,7 +31,7 @@
  * Constructor.
  */
 RS_ActionZoomPrevious::RS_ActionZoomPrevious(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Previous zoom", actionContext) {
+        :RS_ActionInterface("Previous zoom", actionContext, RS2::ActionZoomPrevious) {
 }
 
 void RS_ActionZoomPrevious::init(int status) {

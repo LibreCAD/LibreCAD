@@ -278,6 +278,8 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
                 exitChoice = QG_ExitDialog::DontSave;
                 break;
             }
+            default:
+                break;
         }
         switch (exitChoice) {
             case QG_ExitDialog::Save:

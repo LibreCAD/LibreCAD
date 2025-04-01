@@ -34,7 +34,7 @@
  *                        false: adjust both x and y individually
  */
 RS_ActionZoomAuto::RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio)
-        :RS_ActionInterface("Auto zoom", actionContext) {
+        :RS_ActionInterface("Auto zoom", actionContext, RS2::ActionZoomAuto) {
     this->keepAspectRatio = keepAspectRatio;
 }
 

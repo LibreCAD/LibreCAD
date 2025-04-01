@@ -67,7 +67,7 @@ Q_OBJECT
 public:
     RS_ActionInterface(const char* name,
                        LC_ActionContext *actionContext,
-                       RS2::ActionType actionType = RS2::ActionNone);
+                       RS2::ActionType actionType /*= RS2::ActionNone*/);
 	   ~RS_ActionInterface() override;
 
     virtual RS2::ActionType rtti() const;

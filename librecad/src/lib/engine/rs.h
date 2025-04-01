@@ -235,6 +235,7 @@ namespace RS2 {
         ActionZoomPan,
         ActionZoomRedraw,
         ActionZoomPrevious,
+        ActionZoomScroll, // fixme - sand - or probably it's better to incorporate into view?
 
         ActionSelect,
         ActionSelectSingle,

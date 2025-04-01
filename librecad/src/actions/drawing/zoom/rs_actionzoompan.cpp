@@ -31,7 +31,7 @@
 #include "rs_debug.h"
 
 RS_ActionZoomPan::RS_ActionZoomPan(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Zoom Panning", actionContext) {}
+        :RS_ActionInterface("Zoom Panning", actionContext, RS2::ActionZoomPan) {}
 
 void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);

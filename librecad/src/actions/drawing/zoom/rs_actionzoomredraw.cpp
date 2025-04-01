@@ -34,7 +34,7 @@
  *                        false: adjust both x and y individually
  */
 RS_ActionZoomRedraw::RS_ActionZoomRedraw(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Redraw", actionContext) {
+        :RS_ActionInterface("Redraw", actionContext, RS2::ActionZoomRedraw) {
 }
 
 void RS_ActionZoomRedraw::init(int status) {
