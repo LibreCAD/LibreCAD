@@ -595,26 +595,16 @@ void RS_Hatch::drawSolidFill(RS_Painter *painter) {//area of solid fill. Use pol
 
     const QBrush brush(painter->brush());
     const RS_Pen pen=painter->getPen();
-    painter->setBrushColor(pen.getColor());
-//    painter->disablePen();
+    try {
+        QPainterPath path = createSolidFillPath(painter);
+        QBrush fillBrush = brush;
+        fillBrush.setColor(pen.getColor());
+        fillBrush.setStyle(Qt::SolidPattern);
+        painter->setBrush(fillBrush);
+        painter->drawPath(path);
+    } catch(...) {
+    }
 
-    QPainterPath path = createSolidFillPath(painter);
-
-
-    //bug#474, restore brush after solid fill
-/*    const QBrush brush(painter->brush());
-    const RS_Pen pen=painter->getPen();
-    painter->setBrush(pen.getColor());
-    painter->disablePen();*/
-    painter->drawPath(path);
-    QBrush fillBrush = brush;
-    fillBrush.setColor(pen.getColor());
-    fillBrush.setStyle(Qt::SolidPattern);
-//    path.closeSubpath();
-//    painter->fillPath(path, fillBrush);
-
-//    debugOutPath(path);
-//    painter->drawPath(path);
     painter->setBrush(brush);
     painter->setPen(pen);
 }

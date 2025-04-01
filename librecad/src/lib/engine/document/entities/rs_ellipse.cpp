@@ -1798,10 +1798,17 @@ void RS_Ellipse::setRatio(double r) {
 }
 
 double RS_Ellipse::getAngleLength() const {
-    double ret = data.angle2-data.angle1;
-    ret = RS_Math::correctAngle(isReversed() ? - ret : ret);
-    if (ret < RS_TOLERANCE_ANGLE)
-        ret=2.*M_PI;
+    double a = getAngle1();
+    double b = getAngle2();
+
+    if (isReversed())
+        std::swap(a, b);
+    double ret = RS_Math::correctAngle(b - a);
+    // full ellipse:
+    if (std::abs(std::remainder(ret, 2. * M_PI)) < RS_TOLERANCE_ANGLE) {
+        ret = 2 * M_PI;
+    }
+
     return ret;
 }
 

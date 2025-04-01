@@ -754,22 +754,21 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
         auto toUcsDegrees = [this](double angleRadian) {
             return toUCSAngleDegrees(RS_Math::rad2deg(angleRadian));
         };
-        LC_ERR<<"Start:";
         QPainterPath loopPath;
 
+        QPointF uiStart;
         for(auto e: *loop){
             if (e==nullptr)
                 continue;
 
-            if (loopPath.isEmpty())
-                loopPath.moveTo(toUiPointF(e->getStartpoint()));
+            if (loopPath.isEmpty()) {
+                uiStart = toUiPointF(e->getStartpoint());
+                loopPath.moveTo(uiStart);
+            }
 
-            LC_ERR<<e->getStartpoint().x<<","<<e->getStartpoint().y<<" => "<<e->getEndpoint().x<<","<<e->getEndpoint().y;
             switch (e->rtti()) {
             case RS2::EntityLine: {
                 loopPath.lineTo(toUiPointF(e->getEndpoint()));
-                //                            LC_ERR << "Pt1 " << pt1.x() << "  " << pt1.y();
-                //                            LC_ERR << "Added " << pt2.x() << "  " << pt2.y();
             }
                 break;
             case RS2::EntityArc: {
@@ -777,12 +776,15 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
                 double radius = toGuiDX(arcData.radius);
                 // can't skip due to minimal radius, it will lead to filling errors
                 //                        if (radius > view->getMinArcDrawingRadius()) {
-                double startAngleDegrees = toUcsDegrees(arcData.reversed ? arcData.angle2: arcData.angle1);
+                double startAngleDegrees = toUcsDegrees(arcData.angle1);
                 double angularLength = RS_Math::rad2deg(static_cast<RS_Arc*>(e)->getAngleLength());
+                if (arcData.reversed)
+                    angularLength = - angularLength;
                 RS_Vector uiCenter = toGui(arcData.center);
                 QPointF uiMin{uiCenter.x - radius, uiCenter.y - radius};
-                double size = radius + radius;
-                loopPath.arcTo(uiMin.x(), uiMin.y(), size, size, startAngleDegrees, angularLength);
+                QRectF arcRect{uiMin, QSizeF{radius * 2, radius * 2}};
+                loopPath.arcMoveTo(arcRect, startAngleDegrees);
+                loopPath.arcTo(arcRect, startAngleDegrees, angularLength);
             }
                 break;
             case RS2::EntityCircle: {
@@ -806,16 +808,14 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
                 t1.rotate(-ellipseAngle);
 
                 QPainterPath ellipsePath;
-                double rx = - radius1;
-                double ry = - radius2;
-                double size1 = radius1 + radius1;
-                double size2 = radius2 + radius2;
+                QRectF ellipseRect{QPointF{-radius1, -radius2}, QSizeF{radius1*2, radius2*2}};
                 if (ellipse->isEllipticArc()) {
-                    double angle1 = toUcsDegrees(ellipseData.angle1);
-                    double angleLength = ellipseData.reversed ? - ellipse->getAngleLength() : ellipse->getAngleLength();
-                    ellipsePath.arcTo(rx, ry, size1, size2, angle1, RS_Math::rad2deg(angleLength));
+                    double startAngle = toUcsDegrees(ellipseData.angle1);
+                    double angleLength = RS_Math::rad2deg(ellipseData.reversed ? - ellipse->getAngleLength() : ellipse->getAngleLength());
+                    ellipsePath.arcMoveTo(ellipseRect, startAngle);
+                    ellipsePath.arcTo(ellipseRect, startAngle, angleLength);
                 } else {
-                    ellipsePath.addEllipse(QRectF(rx, ry, size1, size2));
+                    ellipsePath.addEllipse(ellipseRect);
                 }
                 loopPath.addPath(t1.map(ellipsePath));
                 break;
@@ -824,7 +824,7 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
                 break;
             }
         }
-        loopPath.closeSubpath();
+        loopPath.lineTo(uiStart);
         path.addPath(loopPath);
     }
     return path;
