@@ -168,6 +168,7 @@ private:
     bool updateRunning = false;
     bool needOptimization = false;
     bool m_updated=false;
+    std::shared_ptr<RS_EntityContainer> m_orderedLoops;
 
     void drawSolidFill(RS_Painter *painter);
 

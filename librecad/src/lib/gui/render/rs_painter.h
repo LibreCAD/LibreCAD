@@ -45,6 +45,7 @@ class RS_Circle;
 class RS_Color;
 class RS_Ellipse;
 class RS_Entity;
+class RS_EntityContainer;
 class RS_Pen;
 class RS_Polyline;
 class RS_Spline;
@@ -197,7 +198,17 @@ public:
     double getDpmm() const;
     void setClipRect(int x, int y, int w, int h);
     void resetClipping();
-    QPainterPath createSolidFillPath(const QList<RS_Entity *>& entities);
+    /**
+     * @brief createSolidFillPath create QPainterPath for solid fill. The contour is expected to contain
+     *          RS_EntityContainer only, with each container contains a closed edges, ordered by contour order:
+     *          i.e., each edge's end point is coincident with the start point of its next neighbor. The end point
+     *          of the last edge is coincident of the start point of the first edge.
+     *          For closed edges (circles/ellipses), each loop container contains a single edge.
+     *          TODO: self-intersection support.
+     * @param entities
+     * @return
+     */
+    QPainterPath createSolidFillPath(const RS_EntityContainer& contour);
     void noCapStyle();
     RS_Pen& getRsPen();
     void setPenJoinStyle(Qt::PenJoinStyle penJoinStyle);

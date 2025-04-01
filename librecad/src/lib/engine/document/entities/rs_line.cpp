@@ -435,7 +435,7 @@ std::vector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
   * revert the direction of line
   */
 void RS_Line::revertDirection(){
-    std::swap(data.startpoint,data.endpoint);
+    std::swap(data.startpoint, data.endpoint);
 }
 
 void RS_Line::move(const RS_Vector& offset) {

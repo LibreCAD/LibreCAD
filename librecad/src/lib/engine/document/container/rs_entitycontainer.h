@@ -40,9 +40,9 @@
  * @author Andrew Mustun
  */
 class RS_EntityContainer : public RS_Entity {
-	typedef RS_Entity * value_type;
 
 public:
+    typedef RS_Entity * value_type;
 
     struct RefInfo{
         RS_Vector ref;
@@ -237,6 +237,10 @@ public:
      * @return, true, indicate this entity container should be ignored
      */
     bool ignoredOnModification() const;
+
+    void push_back(RS_Entity* entity) {
+        entities.push_back(entity);
+    }
 
 /**
  * @brief begin/end to support range based loop

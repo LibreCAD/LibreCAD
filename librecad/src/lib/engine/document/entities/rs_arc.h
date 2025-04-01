@@ -288,12 +288,12 @@ protected:
 private:
     // cached values for performance
     RS_Vector middlePoint;
-    RS_Vector startPoint;
-    RS_Vector endPoint;
+    RS_Vector m_startPoint;
+    RS_Vector m_endPoint;
 
     void updateLength() override;
     void updatePaintingInfo();
-    void moveMiddlePoint(RS_Vector vector);
+    void moveMiddlePoint(const RS_Vector& vector);
 };
 
 #endif

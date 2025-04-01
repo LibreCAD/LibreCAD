@@ -242,9 +242,9 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
 }
 
 void RS_Arc::calculateBorders() {
-    startPoint = data.center.relative(data.radius, data.angle1);
-    endPoint = data.center.relative(data.radius, data.angle2);
-    LC_Rect const rect{startPoint, endPoint};
+    m_startPoint = data.center.relative(data.radius, data.angle1);
+    m_endPoint = data.center.relative(data.radius, data.angle2);
+    LC_Rect const rect{m_startPoint, m_endPoint};
 
     double minX = rect.lowerLeftCorner().x;
     double minY = rect.lowerLeftCorner().y;
@@ -295,12 +295,12 @@ void RS_Arc::updatePaintingInfo() {
 }
 
 RS_Vector RS_Arc::getStartpoint() const{
-    return startPoint;
+    return m_startPoint;
 }
 
 /** @return End point of the entity. */
 RS_Vector RS_Arc::getEndpoint() const{
-    return endPoint;
+    return m_endPoint;
     return data.center + RS_Vector::polar(data.radius, data.angle2);
 }
 
@@ -646,6 +646,7 @@ std::vector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
 void RS_Arc::revertDirection(){
     std::swap(data.angle1,data.angle2);
     data.reversed = ! data.reversed;
+    std::swap(m_startPoint, m_endPoint);
 }
 
 /**
@@ -1018,9 +1019,9 @@ void RS_Arc::updateMiddlePoint() {
     middlePoint =  getCenter() + ret * getRadius();
 }
 
-void RS_Arc::moveMiddlePoint(RS_Vector vector) {
+void RS_Arc::moveMiddlePoint(const RS_Vector& vector) {
     auto arc = RS_Arc(nullptr, RS_ArcData());
-    bool suc = arc.createFrom3P(startPoint, vector,endPoint);
+    bool suc = arc.createFrom3P(m_startPoint, vector,m_endPoint);
     if (suc) {
         RS_ArcData &arcData = arc.data;
         data.center = arcData.center;

@@ -171,6 +171,32 @@ private:
     std::unique_ptr<Data> m_data;
 };
 
+/**
+ * @brief The LoopOptimizer class - separate a collection of contours into loops
+ *                                  The results are a two level entityContainer, with each child container
+ *                                  as a loop;
+ *                                  each closed edge (circles/ellipses) in its own child entityContainer;
+ *                                  each other child container contains edge entities ordered following the contour,
+ *                                  i.e. the end point of the current edge coincident with the start point of
+ *                                  its next edge, and the end point of the last entity is coincident with the
+ *                                  start point of the first edge in the loop.
+ *                                  All containers have ownership of its contents;
+ *                                  All edges are clones.
+ */
+class LoopOptimizer {
+public:
+    LoopOptimizer(const RS_EntityContainer& contour);
+    ~LoopOptimizer();
+
+    std::shared_ptr<RS_EntityContainer> GetResults() const;
+
+private:
+    void AddContainer(const RS_EntityContainer& contour);
+    struct Data;
+    std::shared_ptr<Data> m_data;
+
+};
+
 }
 
 #endif // LC_LOOPUTILS_H
