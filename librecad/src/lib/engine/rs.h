@@ -250,6 +250,7 @@ namespace RS2 {
         ActionSelectLayer,
         ActionSelectDouble,
         ActionGetSelect,
+        ActionGetEntity,
 
         ActionEntityInfoSelectSingle,
 

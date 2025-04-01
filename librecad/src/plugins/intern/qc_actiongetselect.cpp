@@ -32,18 +32,16 @@
 #include "rs_snapper.h"
 
 QC_ActionGetSelect::QC_ActionGetSelect(LC_ActionContext* actionContext)
-    :RS_ActionInterface("Get Select", actionContext)
+    :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect)
     , completed(false)
     , message(std::make_unique<QString>(tr("Select objects:"))){
-    m_actionType = RS2::ActionGetSelect;
 }
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, LC_ActionContext* actionContext)
-    :RS_ActionInterface("Get Select", actionContext)
+    :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect)
     , completed(false)
     , message(std::make_unique<QString>(tr("Select objects:"))),
      typeToSelect(typeToSelect){
-    m_actionType = RS2::ActionGetSelect;
 }
 
 QC_ActionGetSelect::~QC_ActionGetSelect() = default;

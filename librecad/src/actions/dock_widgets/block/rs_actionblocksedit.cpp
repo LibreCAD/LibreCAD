@@ -33,7 +33,7 @@
 #include "rs_graphic.h"
 
 RS_ActionBlocksEdit::RS_ActionBlocksEdit(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Edit Block",actionContext) {}
+        :RS_ActionInterface("Edit Block",actionContext, RS2::ActionBlocksEdit) {}
 
 void RS_ActionBlocksEdit::trigger() {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): edit block");

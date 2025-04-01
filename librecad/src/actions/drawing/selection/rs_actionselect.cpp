@@ -37,11 +37,10 @@
 RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,LC_ActionContext *actionContext,
                                  RS2::ActionType nextAction,
                                  QList<RS2::EntityType> allowedEntityTypes)
-	:RS_ActionInterface("Select Entities", actionContext)
+	:RS_ActionInterface("Select Entities", actionContext, RS2::ActionSelect)
     ,action_handler(a_handler)
     ,nextAction(nextAction)
     , entityTypeList(std::move(allowedEntityTypes)){
-    setActionType(RS2::ActionSelect);
 }
 
 void RS_ActionSelect::init(int status) {

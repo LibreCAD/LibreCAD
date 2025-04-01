@@ -32,7 +32,7 @@
 
 // fixme - review
 RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Tool Regen Dim", actionContext) {}
+        :RS_ActionInterface("Tool Regen Dim", actionContext, RS2::ActionToolRegenerateDimensions) {}
 
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);

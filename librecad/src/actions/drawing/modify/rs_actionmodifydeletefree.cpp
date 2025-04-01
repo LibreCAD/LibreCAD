@@ -37,7 +37,7 @@ struct RS_ActionModifyDeleteFree::Points {
 };
 
 RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Delete Entities Freehand", actionContext)
+        :RS_ActionInterface("Delete Entities Freehand", actionContext, RS2::ActionModifyDeleteFree)
 		, pPoints(std::make_unique<Points>()){
 	init(0);
 }

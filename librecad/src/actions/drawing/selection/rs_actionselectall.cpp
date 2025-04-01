@@ -29,7 +29,7 @@
 #include "rs_selection.h"
 
 RS_ActionSelectAll::RS_ActionSelectAll(LC_ActionContext *actionContext, bool select)
-        :RS_ActionInterface("Select All Entities",actionContext)
+        :RS_ActionInterface("Select All Entities",actionContext, RS2::ActionSelectAll)
 		,select(select)
 {
 	m_actionType=RS2::ActionSelectAll;

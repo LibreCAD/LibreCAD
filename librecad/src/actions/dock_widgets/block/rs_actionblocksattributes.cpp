@@ -36,7 +36,7 @@
 
 
 RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Edit Block Attributes",actionContext) {}
+        :RS_ActionInterface("Edit Block Attributes",actionContext, RS2::ActionBlocksAttributes) {}
 
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");

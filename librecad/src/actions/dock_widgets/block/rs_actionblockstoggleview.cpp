@@ -31,7 +31,7 @@
 #include "rs_graphicview.h"
 
 RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Toggle Block Visibility",actionContext) {}
+        :RS_ActionInterface("Toggle Block Visibility",actionContext, RS2::ActionBlocksToggleView) {}
 
 
 void RS_ActionBlocksToggleView::trigger() {

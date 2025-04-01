@@ -101,9 +101,6 @@
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditundo.h"
 #include "lc_actionfileexportmakercam.h"
-#include "rs_actionfilenewtemplate.h"
-#include "rs_actionfileopen.h"
-#include "librecad/src/actions/not_used/rs_actionfilesaveas.h"
 #include "rs_actioninfoangle.h"
 #include "rs_actioninfoarea.h"
 #include "rs_actioninfodist.h"
@@ -285,12 +282,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
 
     switch (id) {
-        case RS2::ActionFileNewTemplate:
+        /*case RS2::ActionFileNewTemplate:
             a = new RS_ActionFileNewTemplate(m_actionContext);
             break;
         case RS2::ActionFileOpen:
             a = new RS_ActionFileOpen(m_actionContext);
-            break;
+            break;*/
      /*   case RS2::ActionFileSaveAs:
             a = new RS_ActionFileSaveAs(m_actionContext);
             break;*/

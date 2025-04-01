@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actionpensyncactivebylayer.h"
 
 LC_ActionPenSyncActiveByLayer::LC_ActionPenSyncActiveByLayer(LC_ActionContext *actionContext)
-   :RS_ActionInterface("PenSyncByLayer", actionContext){
+   :RS_ActionInterface("PenSyncByLayer", actionContext, RS2::ActionPenSyncFromLayer){
 }
 
 void LC_ActionPenSyncActiveByLayer::init(int status){

@@ -36,7 +36,7 @@
  * @param undo true for undo and false for redo.
  */
 RS_ActionEditUndo::RS_ActionEditUndo(bool undo,LC_ActionContext *actionContext)
-        :RS_ActionInterface("Edit Undo", actionContext)
+        :RS_ActionInterface("Edit Undo", actionContext,RS2::ActionEditUndo)
 		, undo(undo){
 }
 

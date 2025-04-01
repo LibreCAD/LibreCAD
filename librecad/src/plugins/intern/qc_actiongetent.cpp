@@ -34,7 +34,7 @@
 
 
 QC_ActionGetEnt::QC_ActionGetEnt(LC_ActionContext* actionContext)
-        :RS_ActionInterface("Get Entity", actionContext) {
+        :RS_ActionInterface("Get Entity", actionContext,RS2::ActionGetEntity) {
     completed = false;
     message = tr("Select object:");
     en = nullptr;

@@ -30,7 +30,7 @@
 #include "rs_selection.h"
 
 RS_ActionSelectInvert::RS_ActionSelectInvert(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Invert Selection",actionContext) {
+        :RS_ActionInterface("Invert Selection",actionContext, RS2::ActionSelectInvert) {
 	m_actionType=RS2::ActionSelectInvert;
 }
 

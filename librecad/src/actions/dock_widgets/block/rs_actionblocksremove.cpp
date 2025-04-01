@@ -34,7 +34,7 @@
 
 
 RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
-    :RS_ActionInterface("Remove Block", actionContext) {}
+    :RS_ActionInterface("Remove Block", actionContext, RS2::ActionBlocksRemove) {}
 
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");

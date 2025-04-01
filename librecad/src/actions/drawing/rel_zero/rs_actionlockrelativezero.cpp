@@ -28,7 +28,7 @@
 #include "rs_graphicview.h"
 
 RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(LC_ActionContext *actionContext, bool on)
-    :RS_ActionInterface("(Un-)lock the relative Zero", actionContext)
+    :RS_ActionInterface("(Un-)lock the relative Zero", actionContext, RS2::ActionLockRelativeZero)
         ,on(on){
 }
 

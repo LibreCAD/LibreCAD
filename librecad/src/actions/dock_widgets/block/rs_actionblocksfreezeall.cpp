@@ -30,7 +30,7 @@
 #include "rs_graphicview.h"
 
 RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,LC_ActionContext *actionContext)
-    :RS_ActionInterface("Freeze all Blocks", actionContext),
+    :RS_ActionInterface("Freeze all Blocks", actionContext, RS2::ActionBlocksFreezeAll),
      m_freeze(freeze){
 }
 

@@ -33,7 +33,7 @@
 #include "rs_debug.h"
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(LC_ActionContext *actionContext)
-		:RS_ActionInterface("Add Block", actionContext) {
+		:RS_ActionInterface("Add Block", actionContext, RS2::ActionBlocksAdd) {
 	m_actionType = RS2::ActionBlocksAdd;
 }
 

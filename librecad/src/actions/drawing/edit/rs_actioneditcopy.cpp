@@ -41,7 +41,7 @@
  */
 // fixme - sand - no action type set!!!
 RS_ActionEditCopyPaste::RS_ActionEditCopyPaste(ActionMode actionMode, LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Edit Copy", actionContext)
+    :RS_PreviewActionInterface("Edit Copy", actionContext, RS2::ActionEditCopy)
     , mode{actionMode}
     , referencePoint{new RS_Vector{}}{
 }
