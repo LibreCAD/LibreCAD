@@ -267,7 +267,7 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.9.*'
+          version: '6.8.*'
           host: 'windows'
           arch: 'win64_mingw'
           target: 'desktop'
@@ -306,7 +306,7 @@ jobs:
           dir ..
           echo.
           dir ..\boost
-          dir ..\Qt\6.6.3\mingw_64\bin
+          dir ..\Qt\6.8.*\mingw_64\bin
           echo.
           dir /b /s ..\Qt
           where qmake6.exe

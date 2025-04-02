@@ -5,7 +5,7 @@ if "%NSIS_DIR%"=="" goto SetEnv
 goto Exit
 
 :SetEnv
-set Qt6_Dir=D:\a\LibreCAD\Qt\6.9.0
+set Qt6_Dir=D:\a\LibreCAD\Qt\6.8.3
 set NSIS_DIR=C:\Program Files (x86)\NSIS
 set MINGW_VER=mingw_64
 

@@ -101,7 +101,7 @@ FunctionEnd
     !define Qt6_Dir 	"d:\a\LibreCAD\Qt"
 !endif
 !ifndef Qt_Version
-    !define Qt_Version 	"6.9.0"
+    !define Qt_Version 	"6.8.3"
 !endif
 !ifndef Mingw_Ver
     !define Mingw_Ver 	"mingw_64"
