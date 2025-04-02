@@ -62,7 +62,7 @@ void QG_DlgArc::setEntity(RS_Arc* a) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, tr("Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
 
     toUI(entity->getCenter(), leCenterX, leCenterY);
     toUIValue(entity->getRadius(), leRadius);
