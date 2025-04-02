@@ -272,7 +272,7 @@ jobs:
           arch: 'win64_mingw'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt5compat qtimageformats'
+          modules: 'qt3d qt5compat qtimageformats qtshadertools'
           tools: 'tools_mingw1310'
 
       - name: list folders
