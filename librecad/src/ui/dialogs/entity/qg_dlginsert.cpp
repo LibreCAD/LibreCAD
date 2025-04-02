@@ -68,7 +68,7 @@ void QG_DlgInsert::setEntity(RS_Insert* i) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
 
     toUI(entity->getInsertionPoint(), leInsertionPointX, leInsertionPointY);
     toUIRaw(entity->getScale(), leScaleX, leScaleY);

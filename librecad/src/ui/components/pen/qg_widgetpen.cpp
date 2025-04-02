@@ -92,8 +92,7 @@ void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const
         cbColor->setLayerColor(layerColor);
     }
 }
-void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, const QString &title)
-{
+void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, const QString &title){
     setPen(pen, layer, false, title);
 }
 

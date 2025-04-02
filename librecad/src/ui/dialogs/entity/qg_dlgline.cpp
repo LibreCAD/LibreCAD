@@ -64,7 +64,7 @@ void QG_DlgLine::setEntity(RS_Line* l) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
     toUI(entity->getStartpoint(), leStartX, leStartY);
     toUI(entity->getEndpoint(), leEndX, leEndY);
 

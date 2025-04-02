@@ -72,7 +72,7 @@ void QG_DlgPolyline::setEntity(RS_Polyline* e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
     toUIBool(entity->isClosed(), cbClosed);
 }
 
@@ -81,4 +81,5 @@ void QG_DlgPolyline::updateEntity() {
     entity->setPen(wPen->getPen());
     entity->setLayer(cbLayer->getLayer());
     entity->update();
+    entity->calculateBorders();
 }

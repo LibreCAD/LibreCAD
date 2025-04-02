@@ -62,7 +62,7 @@ void QG_DlgPoint::initAttributes(RS_Layer* layer, RS_LayerList& layerList){
         cbLayer->setLayer(*layer);
     }
     cbLayer->init(layerList, false, false);
-    wPen->setPen(entity, layer, "Pen");
+    wPen->setPen(entity, layer, tr("Pen"));
 }
 
 void QG_DlgPoint::setEntity(RS_Point* p) {

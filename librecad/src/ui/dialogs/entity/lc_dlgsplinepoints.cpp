@@ -32,7 +32,7 @@ void LC_DlgSplinePoints::setEntity(LC_SplinePoints* b){
         ui->cbLayer->setLayer(*lay);
     }
 
-    ui->wPen->setPen(b,lay, "Pen");
+    ui->wPen->setPen(b,lay, tr("Pen"));
 
     ui->cbClosed->setChecked(b->isClosed());
 

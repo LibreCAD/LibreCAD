@@ -244,7 +244,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
             cbLayer->setLayer(*lay);
         }
 
-        wPen->setPen(m_entity, lay, "Pen");
+        wPen->setPen(m_entity, lay, tr("Pen"));
         leftToRight = m_entity->getDrawingDirection() == RS_MTextData::LeftToRight;
     }
 

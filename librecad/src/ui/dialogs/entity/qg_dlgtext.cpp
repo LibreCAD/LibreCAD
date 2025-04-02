@@ -217,7 +217,7 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
             cbLayer->setLayer(*lay);
         }
 
-        wPen->setPen(entity, lay, "Pen");
+        wPen->setPen(entity, lay, tr("Pen"));
     }
 
     setFont(fon);

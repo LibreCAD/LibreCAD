@@ -71,7 +71,7 @@ void QG_DlgCircle::setEntity(RS_Circle* c) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
 
     toUI(entity->getCenter(), leCenterX, leCenterY);
     toUIValue(entity->getRadius(), leRadius);

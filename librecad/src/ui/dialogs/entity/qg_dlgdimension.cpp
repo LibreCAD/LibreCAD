@@ -66,7 +66,7 @@ void QG_DlgDimension::setEntity(RS_Dimension* d) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
 
     wLabel->setRadialType(*d);
     wLabel->setLabel(entity->getLabel(false));

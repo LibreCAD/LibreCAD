@@ -65,7 +65,7 @@ void QG_DlgImage::setEntity(RS_Image* e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
 
     toUI(entity->getInsertionPoint(), leInsertX, leInsertY);
 

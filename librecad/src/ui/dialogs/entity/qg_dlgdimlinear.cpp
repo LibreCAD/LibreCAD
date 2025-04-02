@@ -69,7 +69,7 @@ void QG_DlgDimLinear::setEntity(RS_DimLinear* d) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
     wLabel->setLabel(entity->getLabel(false));
     toUIAngleDeg(entity->getAngle(), leAngle);
 }

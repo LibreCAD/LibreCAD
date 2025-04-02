@@ -63,7 +63,7 @@ void QG_DlgEllipse::setEntity(RS_Ellipse* e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(entity, lay, tr("Pen"));
 
     toUI(entity->getCenter(), leCenterX, leCenterY);
 

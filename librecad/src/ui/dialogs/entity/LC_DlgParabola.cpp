@@ -48,7 +48,7 @@ void LC_DlgParabola::languageChange(){
 void LC_DlgParabola::setEntity(LC_Parabola* b){
     entity = b;
 
-    ui->wPen->setPen(entity->getPen(false), true, false, "Pen");
+    ui->wPen->setPen(entity->getPen(false), true, false, tr("Pen"));
     RS_Graphic* graphic =entity->getGraphic();
     if (graphic) {
         ui->cbLayer->init(*(graphic->getLayerList()), false, false);
