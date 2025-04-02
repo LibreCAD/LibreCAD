@@ -1225,7 +1225,6 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
         }
     }
     auto *e = reinterpret_cast<Plug_Entity*>(a->getSelected(this));
-    a->finish();
     gView->killAllActions();
     return e;
 }
