@@ -35,7 +35,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
+class   RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
     RS_ActionModifyAttributes(LC_ActionContext *actionContext);

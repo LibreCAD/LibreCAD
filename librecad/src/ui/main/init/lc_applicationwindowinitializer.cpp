@@ -42,6 +42,7 @@
 #include "qg_snaptoolbar.h"
 #include "rs_commands.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
 #include "rs_settings.h"
 
 LC_ApplicationWindowInitializer::LC_ApplicationWindowInitializer(QC_ApplicationWindow *appWindow)

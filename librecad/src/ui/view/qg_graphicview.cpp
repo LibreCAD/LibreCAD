@@ -74,6 +74,7 @@
 #include "lc_overlayentitiescontainer.h"
 #include "lc_widgetviewportrenderer.h"
 #include "qg_librarywidget.h"
+#include "rs_dialogfactory.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -521,8 +522,9 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     if (event->button()==Qt::MiddleButton){
         // fixme - sand - rework this and ensure there is not delay for pan start!!!
         auto *action = new RS_ActionZoomPan(m_actionContext);
-        setCurrentAction(action);
-        action->mousePressEvent(event); // try to avoid delay as possible
+        if (setCurrentAction(action)){
+            action->mousePressEvent(event); // try to avoid delay as possible
+        }
     }
     else {
         eventHandler->mousePressEvent(event);

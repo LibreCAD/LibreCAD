@@ -115,7 +115,7 @@ public:
     void setDefaultAction(RS_ActionInterface *action);
     RS_ActionInterface *getDefaultAction();
     void hideOptions();
-    void setCurrentAction(RS_ActionInterface *action);
+bool setCurrentAction(RS_ActionInterface* action);
     RS_ActionInterface *getCurrentAction();
     QString getCurrentActionName();
     QIcon getCurrentActionIcon();
@@ -219,6 +219,6 @@ protected:
     bool m_skipFirstZoom = false;
     const RS_LineTypePattern *getPattern(RS2::LineType t);
 
-    void setEventHandlerAction(RS_ActionInterface *action);
+bool setEventHandlerAction(RS_ActionInterface* action);
 };
 #endif

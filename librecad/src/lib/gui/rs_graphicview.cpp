@@ -154,7 +154,7 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
     return QIcon();
 }
 
-void RS_GraphicView::setEventHandlerAction(RS_ActionInterface *action){
+bool RS_GraphicView::setEventHandlerAction(RS_ActionInterface* action){
     bool actionActive = eventHandler->setCurrentAction(action);
     if (actionActive) {
         if (eventHandler->hasAction()) {
@@ -164,16 +164,18 @@ void RS_GraphicView::setEventHandlerAction(RS_ActionInterface *action){
             notifyNoActiveAction();
         }
     }
+    return actionActive;
 }
 
 /**
  * Sets the current action of the event handler.
  */
-void RS_GraphicView::setCurrentAction(RS_ActionInterface *action) {
+bool RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
     if (eventHandler != nullptr) {
         viewport->markRelativeZero();
-        setEventHandlerAction(action);
+        return setEventHandlerAction(action);
     }
+    return false;
 }
 
 /**
