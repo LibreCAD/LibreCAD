@@ -740,13 +740,10 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
 
 QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
     QPainterPath path;
-    for(auto l: loops) {
-        if (l == nullptr || l->rtti()!=RS2::EntityContainer)
+    for(auto* loop: loops) {
+        if (loop == nullptr || loop->rtti()!=RS2::EntityContainer)
             continue;
 
-        auto* loop = static_cast<RS_EntityContainer*>(l);
-        // edges:
-        //                LC_ERR << "loop------------------------------- " << loop->count();
         auto toUiPointF = [this](const RS_Vector& vp) {
             RS_Vector uiPos = toGui(vp);
             return QPointF{uiPos.x, uiPos.y};
@@ -754,10 +751,10 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
         auto toUcsDegrees = [this](double angleRadian) {
             return toUCSAngleDegrees(RS_Math::rad2deg(angleRadian));
         };
-        QPainterPath loopPath;
 
+        QPainterPath loopPath;
         QPointF uiStart;
-        for(auto e: *loop){
+        for(auto* e: *static_cast<RS_EntityContainer*>(loop)){
             if (e==nullptr)
                 continue;
 
@@ -772,52 +769,45 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
             }
                 break;
             case RS2::EntityArc: {
-                const RS_ArcData &arcData = static_cast<RS_Arc*>(e)->getData();
-                double radius = toGuiDX(arcData.radius);
-                // can't skip due to minimal radius, it will lead to filling errors
-                //                        if (radius > view->getMinArcDrawingRadius()) {
-                double startAngleDegrees = toUcsDegrees(arcData.angle1);
-                double angularLength = RS_Math::rad2deg(static_cast<RS_Arc*>(e)->getAngleLength());
-                if (arcData.reversed)
-                    angularLength = - angularLength;
-                RS_Vector uiCenter = toGui(arcData.center);
-                QPointF uiMin{uiCenter.x - radius, uiCenter.y - radius};
-                QRectF arcRect{uiMin, QSizeF{radius * 2, radius * 2}};
+                auto* arc = static_cast<RS_Arc*>(e);
+                double radius = toGuiDX(arc->getRadius());
+                double startAngleDegrees = toUcsDegrees(arc->getAngle1());
+                double angularLength = RS_Math::rad2deg(arc->isReversed() ? - arc->getAngleLength() : arc->getAngleLength());
+                QPointF uiCenter = toUiPointF(arc->getCenter());
+                QRectF arcRect{uiCenter - QPointF{radius, radius}, QSizeF{radius, radius}* 2};
                 loopPath.arcMoveTo(arcRect, startAngleDegrees);
                 loopPath.arcTo(arcRect, startAngleDegrees, angularLength);
             }
                 break;
             case RS2::EntityCircle: {
                 auto* circle = static_cast<RS_Circle*>(e);
-                RS_Vector uiCenter = toGui(circle->getCenter());
+                QPointF uiCenter = toUiPointF(circle->getCenter());
                 double radius=toGuiDX(circle->getRadius());
-                loopPath.addEllipse({uiCenter.x, uiCenter.y}, radius, radius);
+                loopPath.addEllipse(uiCenter, radius, radius);
             }
                 break;
             case RS2::EntityEllipse: {
-                auto ellipse = static_cast<RS_Ellipse *>(e);
-                const RS_EllipseData &ellipseData = ellipse->getData();
+                auto* ellipse = static_cast<RS_Ellipse *>(e);
 
-                RS_Vector uiCenter = toGui(ellipseData.center);
-                double radius1 = toGuiDX(ellipse->getMajorRadius());
-                double radius2 = ellipseData.ratio*radius1;
-
-                QTransform t1;
-                t1.translate(uiCenter.x, uiCenter.y);
-                const double ellipseAngle = toUcsDegrees(ellipseData.majorP.angle());
-                t1.rotate(-ellipseAngle);
-
+                double majorRadius = toGuiDX(ellipse->getMajorRadius());
+                double minorRadius = ellipse->getRatio() * majorRadius;
+                QRectF ellipseRect{- QPointF{majorRadius, minorRadius}, QSizeF{majorRadius, minorRadius} * 2};
                 QPainterPath ellipsePath;
-                QRectF ellipseRect{QPointF{-radius1, -radius2}, QSizeF{radius1*2, radius2*2}};
                 if (ellipse->isEllipticArc()) {
-                    double startAngle = toUcsDegrees(ellipseData.angle1);
-                    double angleLength = RS_Math::rad2deg(ellipseData.reversed ? - ellipse->getAngleLength() : ellipse->getAngleLength());
+                    double startAngle = toUcsDegrees(ellipse->getAngle1());
+                    double angularLength = RS_Math::rad2deg(ellipse->isReversed() ? - ellipse->getAngleLength() : ellipse->getAngleLength());
                     ellipsePath.arcMoveTo(ellipseRect, startAngle);
-                    ellipsePath.arcTo(ellipseRect, startAngle, angleLength);
+                    ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
                 } else {
                     ellipsePath.addEllipse(ellipseRect);
                 }
-                loopPath.addPath(t1.map(ellipsePath));
+
+                QTransform ellipseTransform;
+                QPointF uiCenter = toUiPointF(ellipse->getCenter());
+                ellipseTransform.translate(uiCenter.x(), uiCenter.y());
+                const double ellipseAngle = toUcsDegrees(ellipse->getAngle());
+                ellipseTransform.rotate(-ellipseAngle);
+                loopPath.addPath(ellipseTransform.map(ellipsePath));
                 break;
             }
             default:

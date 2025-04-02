@@ -532,6 +532,15 @@ struct LoopOptimizer::Data: public bgi::rtree< TreeValue, bgi::quadratic<16> >
         m_halfBox{0.5 * m_tolerance, 0.5 * m_tolerance}
     {}
 
+    ~Data()
+    {
+        std::set<RS_Entity*> edges;
+        for(const auto& [box, contourPoint]: *this) {
+            std::copy(contourPoint.loop->begin(), contourPoint.loop->end(), std::inserter(edges, edges.begin()));
+        }
+        qDeleteAll(edges);
+    }
+
     static BPoint ToPoint(const RS_Vector& point)
     {
         return {point.x, point.y};
@@ -572,86 +581,7 @@ struct LoopOptimizer::Data: public bgi::rtree< TreeValue, bgi::quadratic<16> >
  *
  * @author Dongxu Li
  */
-    void AddEdge(RS_AtomicEntity* entity)
-    {
-        switch(entity->rtti()) {
-        case RS2::EntityEllipse:
-            if (static_cast<RS_Ellipse*>(entity)->isEllipticArc())
-                break;
-            [[fallthrough]];
-        case RS2::EntityCircle: {
-            auto loopContainer = std::make_unique<RS_EntityContainer>(m_result.get(), true);
-            loopContainer->push_back(entity);
-            m_result->addEntity(loopContainer.get());
-            loopContainer.release();
-            return;
-        }
-        default:
-            break;
-        }
-
-        BBox startBox = ToBox(entity->getStartpoint());
-        BBox endBox = ToBox(entity->getEndpoint());
-        std::vector<TreeValue> startResults = Intersects(startBox);
-        std::vector<TreeValue> endResults = Intersects(endBox);
-        if (startResults.empty() && endResults.empty()) {
-            // insert new loop
-            auto newLoop = std::make_shared<std::deque<RS_Entity*>>();
-            newLoop->push_back(entity);
-            insert(TreeValue{startBox, {newLoop, RS2::EndPointType::Start}});
-            insert(TreeValue{endBox, {newLoop, RS2::EndPointType::End}});
-            return;
-        } else if (!startResults.empty() && !endResults.empty()) {
-            // loop complete
-            ContourPoint& node = endResults.front().second;
-            if (node.pointType == RS2::EndPointType::End) {
-                // append the new edge
-                entity->revertDirection();
-                node.loop->push_back(entity);
-            } else {
-                // prepend the new edge
-                node.loop->push_front(entity);
-            }
-            RemoveAll(startBox);
-            RemoveAll(endBox);
-            auto loopContainer = std::make_unique<RS_EntityContainer>(m_result.get(), true);
-            std::copy(node.loop->cbegin(), node.loop->cend(), std::back_inserter(*loopContainer));
-            m_result->addEntity(loopContainer.get());
-            loopContainer.release();
-        } else if (startResults.empty()) {
-            // connect by end point of the new edge
-            ContourPoint& node = endResults.front().second;
-            if (node.pointType == RS2::EndPointType::End) {
-                // append the new edge
-                entity->revertDirection();
-                node.loop->push_back(entity);
-                // update the end point in tree
-                insert({startBox, {node.loop, RS2::EndPointType::End}});
-            } else {
-                // prepend the new edge
-                node.loop->push_front(entity);
-                // update the start point in tree
-                insert({startBox, {node.loop, RS2::EndPointType::Start}});
-            }
-            // remove the merged point
-            RemoveAll(endBox);
-        } else {
-            // connected by the start point of the new edge
-            ContourPoint& node = startResults.front().second;
-            if (node.pointType == RS2::EndPointType::Start) {
-                // prepend the new edge
-                entity->revertDirection();
-                node.loop->push_front(entity);
-                insert({endBox, {node.loop, RS2::EndPointType::Start}});
-            } else {
-                // append the new edge
-                node.loop->push_back(entity);
-                insert({endBox, {node.loop, RS2::EndPointType::End}});
-            }
-            // remove the merged point
-            RemoveAll(startBox);
-        }
-    }
+    void AddEdge(RS_AtomicEntity* entity);
 
     // total ownership of edges
     std::shared_ptr<RS_EntityContainer> m_result = std::make_shared<RS_EntityContainer>(nullptr, true);
@@ -660,13 +590,91 @@ struct LoopOptimizer::Data: public bgi::rtree< TreeValue, bgi::quadratic<16> >
     RS_Vector m_halfBox{false};
 };
 
+void LoopOptimizer::Data::AddEdge(RS_AtomicEntity* entity)
+{
+    switch(entity->rtti()) {
+    case RS2::EntityEllipse:
+        if (static_cast<RS_Ellipse*>(entity)->isEllipticArc())
+            break;
+        [[fallthrough]];
+    case RS2::EntityCircle: {
+        auto loopContainer = std::make_unique<RS_EntityContainer>(m_result.get(), true);
+        loopContainer->push_back(entity);
+        m_result->addEntity(loopContainer.get());
+        loopContainer.release();
+        return;
+    }
+    default:
+        break;
+    }
+
+    BBox startBox = ToBox(entity->getStartpoint());
+    BBox endBox = ToBox(entity->getEndpoint());
+    std::vector<TreeValue> startResults = Intersects(startBox);
+    std::vector<TreeValue> endResults = Intersects(endBox);
+    if (startResults.empty() && endResults.empty()) {
+        // insert new loop
+        auto newLoop = std::make_shared<std::deque<RS_Entity*>>();
+        newLoop->push_back(entity);
+        insert(TreeValue{startBox, {newLoop, RS2::EndPointType::Start}});
+        insert(TreeValue{endBox, {newLoop, RS2::EndPointType::End}});
+    } else if (!startResults.empty() && !endResults.empty()) {
+        // loop complete
+        ContourPoint& node = endResults.front().second;
+        if (node.pointType == RS2::EndPointType::End) {
+            // append the new edge
+            entity->revertDirection();
+            node.loop->push_back(entity);
+        } else {
+            // prepend the new edge
+            node.loop->push_front(entity);
+        }
+        auto loopContainer = std::make_unique<RS_EntityContainer>(m_result.get(), true);
+        std::copy(node.loop->cbegin(), node.loop->cend(), std::back_inserter(*loopContainer));
+        m_result->addEntity(loopContainer.get());
+        loopContainer.release();
+        RemoveAll(startBox);
+        RemoveAll(endBox);
+    } else if (startResults.empty()) {
+        // connect by end point of the new edge
+        ContourPoint& node = endResults.front().second;
+        if (node.pointType == RS2::EndPointType::End) {
+            // append the new edge
+            entity->revertDirection();
+            node.loop->push_back(entity);
+            // update the end point in tree
+            insert({startBox, {node.loop, RS2::EndPointType::End}});
+        } else {
+            // prepend the new edge
+            node.loop->push_front(entity);
+            // update the start point in tree
+            insert({startBox, {node.loop, RS2::EndPointType::Start}});
+        }
+        // remove the merged point
+        RemoveAll(endBox);
+    } else {
+        // connected by the start point of the new edge
+        ContourPoint& node = startResults.front().second;
+        if (node.pointType == RS2::EndPointType::Start) {
+            // prepend the new edge
+            entity->revertDirection();
+            node.loop->push_front(entity);
+            insert({endBox, {node.loop, RS2::EndPointType::Start}});
+        } else {
+            // append the new edge
+            node.loop->push_back(entity);
+            insert({endBox, {node.loop, RS2::EndPointType::End}});
+        }
+        // remove the merged point
+        RemoveAll(startBox);
+    }
+}
 
 LoopOptimizer::LoopOptimizer(const RS_EntityContainer &contour):
     m_data{std::make_shared<LoopOptimizer::Data>(g_contourGapTolerance)}
 {
     AddContainer(contour);
 }
-
 
 LoopOptimizer::~LoopOptimizer() = default;
 
@@ -685,6 +693,9 @@ void LoopOptimizer::AddContainer(const RS_EntityContainer& contour)
             AddContainer(*container);
         } else if (entity->isEdge()){
             auto edge = static_cast<RS_AtomicEntity*>(entity->clone());
+            edge->initId();
+            edge->reparent(nullptr);
+            edge->calculateBorders();
             m_data->AddEdge(edge);
         }
     }
