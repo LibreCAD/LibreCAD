@@ -191,8 +191,14 @@ void LC_ApplicationWindowInitializer::initRecentFilesList(){
 
 void LC_ApplicationWindowInitializer::initDialogFactory(){
     LC_SnapOptionsWidgetsHolder *snapOptionsHolder = m_appWin->m_snapToolBar->getSnapOptionsHolder();
-    m_appWin->m_dialogFactory = new QC_DialogFactory(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
-    RS_DialogFactory::instance()->setFactoryObject(m_appWin->m_dialogFactory);
+    auto factory = new QC_DialogFactory(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
+    RS_DialogFactory::instance()->setFactoryObject(factory);
+    m_appWin->m_dialogFactory = factory;
+
+    // fixme - sand - temporary setters, remove later
+    factory->set_command_widget(m_appWin->m_commandWidget);
+    factory->set_rel_zero_coordinates_widget(m_appWin->m_relativeZeroCoordinatesWidget);
+    factory->set_selection_widget(m_appWin->m_selectionWidget);
 }
 
 void LC_ApplicationWindowInitializer::initWidgets(){

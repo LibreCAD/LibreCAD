@@ -131,6 +131,22 @@ public:
     void displayBlockName(const QString& blockName, const bool& display) override;
     // void setCurrentQAction(QAction *action) override;
 
+    /// fixme - sand - temporary, remove accessort later with further refactorings
+    void set_selection_widget(QG_SelectionWidget* selection_widget) {
+        selectionWidget = selection_widget;
+    }
+
+    void set_command_widget(QG_CommandWidget* command_widget) {
+        commandWidget = command_widget;
+    }
+
+    void set_rel_zero_coordinates_widget(LC_RelZeroCoordinatesWidget* rel_zero_coordinates_widget) {
+        relZeroCoordinatesWidget = rel_zero_coordinates_widget;
+    }
+
+    void set_snap_toolbar(QG_SnapToolBar* snap_toolbar) {
+        snapToolbar = snap_toolbar;
+    }
 protected:
 //! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;

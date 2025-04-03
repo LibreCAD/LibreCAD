@@ -53,14 +53,14 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* pa
 {
     setObjectName(name);
     setupUi(this);
-    connect(leCommand, SIGNAL(command(QString)), this, SLOT(handleCommand(QString)));
-    connect(leCommand, SIGNAL(escape()), this, SLOT(escape()));
-    connect(leCommand, SIGNAL(focusOut()), this, SLOT(setNormalMode()));
-    connect(leCommand, SIGNAL(focusIn()), this, SLOT(setCommandMode()));
+    connect(leCommand, &QG_CommandEdit::command, this, &QG_CommandWidget::handleCommand);
+    connect(leCommand, &QG_CommandEdit::escape, this, &QG_CommandWidget::escape);
+    connect(leCommand, &QG_CommandEdit::focusOut, this, &QG_CommandWidget::setNormalMode);
+    connect(leCommand, &QG_CommandEdit::focusIn, this, &QG_CommandWidget::setCommandMode);
     connect(leCommand, &QG_CommandEdit::spacePressed, this, &QG_CommandWidget::spacePressed);
-    connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
-    connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
-    connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
+    connect(leCommand, &QG_CommandEdit::tabPressed, this, &QG_CommandWidget::tabPressed);
+    connect(leCommand, &QG_CommandEdit::clearCommandsHistory, teHistory, &QG_CommandHistory::clear);
+    connect(leCommand, &QG_CommandEdit::message, this, &QG_CommandWidget::appendHistory);
     connect(leCommand, &QG_CommandEdit::keycode, this, &QG_CommandWidget::handleKeycode);
 
     auto a1 = new QAction(QObject::tr("Keycode mode"), this);
@@ -69,9 +69,7 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* pa
     connect(a1, &QAction::toggled, this, &QG_CommandWidget::setKeycodeMode);
     options_button->addAction(a1);
 
-    QSettings settings;
-    if (settings.value("Widgets/KeycodeMode", false).toBool())
-    {
+    if (LC_GET_ONE_BOOL("Widgets","KeycodeMode", false)){
         leCommand->keycode_mode = true;
         a1->setChecked(true);
     }
@@ -99,8 +97,7 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* pa
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CommandWidget::~QG_CommandWidget()
-{
+QG_CommandWidget::~QG_CommandWidget(){
     QSettings settings;
     auto action = findChild<QAction*>("keycode_action");
     settings.setValue("Widgets/KeycodeMode", action->isChecked());
@@ -110,15 +107,13 @@ QG_CommandWidget::~QG_CommandWidget()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_CommandWidget::languageChange()
-{
+void QG_CommandWidget::languageChange(){
     retranslateUi(this);
 }
 
-bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
-{
+bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event){
     if (event != nullptr && event->type() == QEvent::KeyPress) {
-        QKeyEvent* e=static_cast<QKeyEvent*>(event);
+        auto e=static_cast<QKeyEvent*>(event);
 
         int key {e->key()};
         switch(key) {
@@ -161,8 +156,7 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
     return false;
 }
 
-void QG_CommandWidget::setFocus()
-{
+void QG_CommandWidget::setFocus(){
     if (!isActiveWindow())
         activateWindow();
 
@@ -194,8 +188,7 @@ void QG_CommandWidget::appendHistory(const QString& msg) {
     teHistory->append(msg);
 }
 
-void QG_CommandWidget::handleCommand(QString cmd)
-{
+void QG_CommandWidget::handleCommand(QString cmd){
     cmd = cmd.simplified();
     bool isAction=false;
     if (!cmd.isEmpty()) {
@@ -315,25 +308,20 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QSt
 
 }
 
-void QG_CommandWidget::chooseCommandFile()
-{
+void QG_CommandWidget::chooseCommandFile(){
     QString path = QFileDialog::getOpenFileName(this);
-    if (!path.isEmpty())
-    {
+    if (!path.isEmpty()){
         leCommand->readCommandFile(path);
     }
 }
 
-void QG_CommandWidget::handleKeycode(QString code)
-{
-    if (actionHandler->keycode(code))
-    {
+void QG_CommandWidget::handleKeycode(QString code){
+    if (actionHandler->keycode(code)){
         leCommand->clear();
     }
 }
 
-void QG_CommandWidget::setKeycodeMode(bool state)
-{
+void QG_CommandWidget::setKeycodeMode(bool state){
     leCommand->keycode_mode = state;
 }
 
