@@ -41,6 +41,8 @@
 #include "rs_painter.h"
 #include "rs_polyline.h"
 
+#include "rs_dialogfactory.h"
+
 RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
                                  const RS_Vector& _endpoint,
                                  bool _closed):

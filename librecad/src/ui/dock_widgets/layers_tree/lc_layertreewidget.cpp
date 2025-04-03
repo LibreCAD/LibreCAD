@@ -45,28 +45,28 @@ LC_LayerTreeWidget::LC_LayerTreeWidget(
     QG_ActionHandler *ah, QWidget *parent, const char *name, Qt::WindowFlags f):QWidget(parent, f){
 
     setObjectName(name);
-    actionHandler = ah;
-    layerList = nullptr;
+    m_actionHandler = ah;
+    m_layerList = nullptr;
 
     // TODO - should this flag be persistent? Let's keep it transient so far, let's see
 
-    flatListMode = false;
+    m_flatListMode = false;
 
     QLayout *layFiltering = initFilterAndSettingsSection();
 
     initTreeModel();
 
-    layerTreeView = initTreeView();
+    m_layerTreeView = initTreeView();
 
     QLayout *layButtons = initButtonsBar();
     auto *lay = new QVBoxLayout(this);
     lay->setContentsMargins(2, 2, 2, 2);
     lay->addLayout(layFiltering);
     lay->addLayout(layButtons);
-    QSizePolicy policy = layerTreeView->sizePolicy();
+    QSizePolicy policy = m_layerTreeView->sizePolicy();
     policy.setVerticalStretch(1);
-    layerTreeView->setSizePolicy(policy);
-    lay->addWidget(layerTreeView);
+    m_layerTreeView->setSizePolicy(policy);
+    lay->addWidget(m_layerTreeView);
     this->setLayout(lay);
 
     updateWidgetSettings();
@@ -75,8 +75,8 @@ LC_LayerTreeWidget::LC_LayerTreeWidget(
 void LC_LayerTreeWidget::initTreeModel(){
     auto *options = new LC_LayerTreeModelOptions();
     options->load();
-    layerTreeModel = new LC_LayerTreeModel(this, options);
-    layerTreeModel->setFlatMode(flatListMode);
+    m_layerTreeModel = new LC_LayerTreeModel(this, options);
+    m_layerTreeModel->setFlatMode(m_flatListMode);
 }
 
 /**
@@ -86,7 +86,7 @@ void LC_LayerTreeWidget::initTreeModel(){
 LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
 
     auto *treeView = new LC_LayerTreeView(this);
-    treeView->setup(layerTreeModel);
+    treeView->setup(m_layerTreeModel);
 
     QHeaderView *pTreeHeader{treeView->header()};
     pTreeHeader->setMinimumSectionSize(LC_LayerTreeModel::ICONWIDTH + 4);
@@ -107,8 +107,6 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     treeView->setFocusPolicy(Qt::NoFocus);
     treeView->setMinimumHeight(65);
-    //treeView->setMinimumHeight(140);
-
 
     treeView->setDragDropMode(QAbstractItemView::InternalMove);
     treeView->setDragEnabled(true);
@@ -138,27 +136,25 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
     auto *layFiltering = new QHBoxLayout;
 
     // lineEdit to filter layer list with RegEx
-    matchLayerName = new QLineEdit(this);
-    matchLayerName->setReadOnly(false);
-    matchLayerName->setPlaceholderText(tr("Filter"));
-    matchLayerName->setClearButtonEnabled(true);
-    matchLayerName->setToolTip(tr("Looking for matching layer names"));
-    connect(matchLayerName, &QLineEdit::textChanged, this, &LC_LayerTreeWidget::slotFilteringMaskChanged);
+    m_matchLayerName = new QLineEdit(this);
+    m_matchLayerName->setReadOnly(false);
+    m_matchLayerName->setPlaceholderText(tr("Filter"));
+    m_matchLayerName->setClearButtonEnabled(true);
+    m_matchLayerName->setToolTip(tr("Looking for matching layer names"));
+    connect(m_matchLayerName, &QLineEdit::textChanged, this, &LC_LayerTreeWidget::slotFilteringMaskChanged);
 
     // TODO - in general, it is possible to use persistent settings for the state, yet not sure it is reasonable
-    matchModeCheckBox = new QCheckBox(this);
-    matchModeCheckBox->setText(tr("Highlight Mode"));
-    matchModeCheckBox->setChecked(true);
-    connect(matchModeCheckBox, &QCheckBox::clicked, this, &LC_LayerTreeWidget::slotFilteringMaskChanged);
+    m_matchModeCheckBox = new QCheckBox(this);
+    m_matchModeCheckBox->setText(tr("Highlight Mode"));
+    m_matchModeCheckBox->setChecked(true);
+    connect(m_matchModeCheckBox, &QCheckBox::clicked, this, &LC_LayerTreeWidget::slotFilteringMaskChanged);
 
-    layFiltering->addWidget(matchLayerName);
-    layFiltering->addWidget(matchModeCheckBox);
+    layFiltering->addWidget(m_matchLayerName);
+    layFiltering->addWidget(m_matchModeCheckBox);
 
     // settings button
-    // const QSize minButSize(28, 28);
     auto* but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/settings.lci"));
-    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Settings"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::invokeSettingsDialog);
     layFiltering->addWidget(but);
@@ -183,7 +179,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
 
     // hide all layer:
     but = new QToolButton(this);
-//    but->setIcon(QIcon(":/icons/invisible.lci"));
     but->setIcon(QIcon(":/icons/not_visible.lci"));
     but->setToolTip(tr("Hide all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
@@ -197,7 +192,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but->setChecked(true); // visible by default
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::toggleSecondaryLayersVisibility);
     layButtons->addWidget(but);
-    btnShowSecondaryLayers = but;
+    m_btnShowSecondaryLayers = but;
 
     // Visible only active
     but = new QToolButton(this);
@@ -206,16 +201,14 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showActiveLayerOnly);
     layButtons->addWidget(but);
 
-//    layButtons->addStretch(1);
-
     // expand all layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/order.lci"));
-//    but->setMinimumSize(minButSize);
+
     but->setToolTip(tr("Expand All"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::expandAllLayers);
     layButtons->addWidget(but);
-    btnExpandAll = but;
+    m_btnExpandAll = but;
 
     // collapse all layers
     but = new QToolButton(this);
@@ -223,7 +216,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but->setToolTip(tr("Collapse All"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseAllLayers);
     layButtons->addWidget(but/*, 10*/);
-    btnCollapseAll = but;
+    m_btnCollapseAll = but;
 
     // expand all layers
     but = new QToolButton(this);
@@ -231,9 +224,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but->setToolTip(tr("Collapse Secondary"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseSecondaryLayers);
     layButtons->addWidget(but);
-    btnCollapseSecondary = but;
-
-//    layButtons->addStretch(1);
+    m_btnCollapseSecondary = but;
 
     // unlock all layers:
     but = new QToolButton(this);
@@ -245,7 +236,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // lock all layers:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/locked.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Lock all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::lockAllLayers);
     layButtons->addWidget(but);
@@ -253,7 +243,6 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // add layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::addLayer);
     layButtons->addWidget(but);
@@ -261,17 +250,15 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // add dimensional layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/dim_horizontal.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add dimensions Layer"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::addDimensionalLayerForActiveLayer);
 
-    btnAddDimensional = but;
+    m_btnAddDimensional = but;
     layButtons->addWidget(but);
 
     // remove layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove layer"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::removeActiveLayers);
     layButtons->addWidget(but);
@@ -279,12 +266,9 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/rename_active_block.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::editActiveLayer);
     layButtons->addWidget(but);
-
-//    layButtons->addStretch(10);
 
     // add separator line
     // auto *vFrame = new QFrame;
@@ -300,7 +284,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::toggleFlatView);
 
     layButtons->addWidget(but);
-    btnListMode = but;
+    m_btnListMode = but;
     updateToolBarButtons();
     return layButtons;
 }
@@ -311,12 +295,12 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
  */
 void LC_LayerTreeWidget::setLayerList(RS_LayerList *ll){
     if (ll == nullptr){
-        layerList = nullptr;
+        m_layerList = nullptr;
         update();
     }
     else{
-        if (ll != this->layerList){
-          layerList = ll;
+        if (ll != this->m_layerList){
+          m_layerList = ll;
           update();
         }
     }
@@ -331,35 +315,35 @@ void LC_LayerTreeWidget::update(){
 
     RS_DEBUG->print("QG_LayerWidget::update() begin");
 
-    if (!layerTreeView){
+    if (m_layerTreeView == nullptr){
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerView");
         return;
     }
 
-    if (!layerList){
+    if (m_layerList == nullptr){
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
         return;
     }
 
-    if (withinSelfActivation){
+    if (m_withinSelfActivation){
         // layer is activated by our widget, not externally via listener, so we need just modify active
         // path for currently active layer and do not rebuild existing model
-        layerTreeModel->proceedActiveLayerChanged(layerList);
+        m_layerTreeModel->proceedActiveLayerChanged(m_layerList);
     } else {
         // complete rebuild of the model and update of UI
-        int yPos = layerTreeView->verticalScrollBar()->value();
-        layerTreeView->verticalScrollBar()->setValue(yPos);
+        int yPos = m_layerTreeView->verticalScrollBar()->value();
+        m_layerTreeView->verticalScrollBar()->setValue(yPos);
 
-        QStringList treeExpansionState = layerTreeView->saveTreeExpansionState();
+        QStringList treeExpansionState = m_layerTreeView->saveTreeExpansionState();
 
         // model will be rebuilt as result of setting layer list
-        layerTreeModel->setLayerList(layerList);
+        m_layerTreeModel->setLayerList(m_layerList);
 
         if (!treeExpansionState.isEmpty()){
-            layerTreeView->restoreTreeExpansionState(treeExpansionState);
+            m_layerTreeView->restoreTreeExpansionState(treeExpansionState);
         }
 
-        layerTreeView->viewport()->update();
+        m_layerTreeView->viewport()->update();
     }
 
     RS_DEBUG->print("QG_LayerWidget::update(): OK");
@@ -371,14 +355,14 @@ void LC_LayerTreeWidget::update(){
 void LC_LayerTreeWidget::activateLayer(RS_Layer *layer){
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (!layer || !layerList){
+    if (!layer || !m_layerList){
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
 
-    layerList->activate(layer, false);
+    m_layerList->activate(layer, false);
     update();
-    layerTreeView->viewport()->update();
+    m_layerTreeView->viewport()->update();
 
     //update active layer name in main window status bar
     QC_ApplicationWindow::getAppWindow()->slotUpdateActiveLayer();
@@ -389,36 +373,36 @@ void LC_LayerTreeWidget::activateLayer(RS_Layer *layer){
 //---------------- three expanded state control ----------------------
 
 void LC_LayerTreeWidget::collapseAllLayers(){
-    layerTreeView->collapseAll();
+    m_layerTreeView->collapseAll();
 }
 
 void LC_LayerTreeWidget::expandAllLayers(){
-    layerTreeView->expandAll();
+    m_layerTreeView->expandAll();
 }
 
 void LC_LayerTreeWidget::expandItems(int depth){
     if (depth == -1){
-        layerTreeView->expandAll();
+        m_layerTreeView->expandAll();
     } else {
-        layerTreeView->expandToDepth(depth);
+        m_layerTreeView->expandToDepth(depth);
     }
 }
 /**
  * Collapsing all secondary items  - all that are not normal or virtual
  */
 void LC_LayerTreeWidget::collapseSecondaryLayers(){
-    layerTreeView->setUpdatesEnabled(false);
-        foreach (QModelIndex index, layerTreeModel->getPersistentIndexList()) {
-            if (layerTreeView->isExpanded(index)){
-                LC_LayerTreeItem *childItem = layerTreeModel->getItemForIndex(index);
+    m_layerTreeView->setUpdatesEnabled(false);
+        foreach (QModelIndex index, m_layerTreeModel->getPersistentIndexList()) {
+            if (m_layerTreeView->isExpanded(index)){
+                LC_LayerTreeItem *childItem = m_layerTreeModel->getItemForIndex(index);
                 int type = childItem->getLayerType();
                 if (type == LC_LayerTreeItem::NORMAL){
-                    layerTreeView->collapse(index);
+                    m_layerTreeView->collapse(index);
                 }
             }
-        }    
-    layerTreeView->setUpdatesEnabled(true);
-    layerTreeView->viewport()->update();
+        }
+    m_layerTreeView->setUpdatesEnabled(true);
+    m_layerTreeView->viewport()->update();
 //    QStringList expansion = layerTreeView->saveTreeExpansionState();
 //    layerTreeModel->reset();
 //    layerTreeView->restoreTreeExpansionState(expansion);
@@ -432,17 +416,17 @@ void LC_LayerTreeWidget::collapseSecondaryLayers(){
  * @brief LC_LayerTreeWidget::onTreeDoubleClicked
  * @param index
  */
-void LC_LayerTreeWidget::slotTreeDoubleClicked(QModelIndex index /*const QString& layerName*/){
+void LC_LayerTreeWidget::slotTreeDoubleClicked(const QModelIndex &index /*const QString& layerName*/){
     if (index.isValid()){
-        LC_LayerTreeItem *layerItem = layerTreeModel->getItemForIndex(index);
+        LC_LayerTreeItem *layerItem = m_layerTreeModel->getItemForIndex(index);
         if (layerItem->isVirtual()){ // for virtual layer, we expand children
             // From Qt 5.13, another method might be used
             //  layerTreeView -> expandRecursively(index,1);
 
             // TODO - think about expansion/collapsing on double click
-             layerTreeView->setUpdatesEnabled(false);
-            layerTreeView->expandChildren(index);
-            layerTreeView->setUpdatesEnabled(true);
+             m_layerTreeView->setUpdatesEnabled(false);
+            m_layerTreeView->expandChildren(index);
+            m_layerTreeView->setUpdatesEnabled(true);
         } else {
             // for normal layer - we'll invoke editing
             editSelectedLayer();
@@ -456,16 +440,16 @@ void LC_LayerTreeWidget::slotTreeDoubleClicked(QModelIndex index /*const QString
  * Clicks on virtual layer items will affect descendent items flags and click on Name expands children of that virtual layer.
  * Clicks on real layer items works in the way similar to original layer list.
  */
-void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& layerName*/){
+void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QString& layerName*/){
 
-    if (!layerIdx.isValid() || layerList == nullptr){
+    if (!layerIdx.isValid() || m_layerList == nullptr){
         return;
     }
 
     auto *layerItem = static_cast<LC_LayerTreeItem *>(layerIdx.internalPointer());
 
     // use translated column index to ensure proper column detection
-    int column = layerTreeModel->translateColumn(layerIdx.column());
+    int column = m_layerTreeModel->translateColumn(layerIdx.column());
 
     QList<RS_Layer *> layers;
     QList<RS_Layer *> layersToDisable = layers;
@@ -523,7 +507,7 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
             }
             case LC_LayerTreeModel::NAME: {
                 // just convenient way to expand children of this layer
-                layerTreeView->expand(layerIdx);
+                m_layerTreeView->expand(layerIdx);
                 break;
             }
             default:
@@ -542,9 +526,9 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
             // corresponding listener will be invoked, so only the active path
             // to selected layer will be updated.
 
-            withinSelfActivation = true;
-            layerList->activate(lay, true);
-            withinSelfActivation = false;
+            m_withinSelfActivation = true;
+            m_layerList->activate(lay, true);
+            m_withinSelfActivation = false;
 
             return;
         }
@@ -564,10 +548,10 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
                         manageLayersVisibilityFlag(layersToEnable, layersToDisable, false);
                     } else {
                         // we enable ony the layer itself, without touching it secondary children
-                        actionHandler->toggleVisibility(lay);
+                        m_actionHandler->toggleVisibility(lay);
                     }
                 } else {
-                    actionHandler->toggleVisibility(lay);
+                    m_actionHandler->toggleVisibility(lay);
                 }
                 break;
             }
@@ -582,7 +566,7 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
                     manageLayersLockFlag(layersToEnable, layersToDisable, false);
                 }
                 else{
-                    actionHandler->toggleLock(lay);
+                    m_actionHandler->toggleLock(lay);
                 }
                 break;
             case LC_LayerTreeModel::PRINT:
@@ -596,7 +580,7 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
                     manageLayersPrintFlag(layersToEnable, layersToDisable, false);
                 }
                 else{
-                    actionHandler->togglePrint(lay);
+                    m_actionHandler->togglePrint(lay);
                 }
                 break;
             case LC_LayerTreeModel::CONSTRUCTION:
@@ -610,7 +594,7 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
                     manageLayersConstructionFlag(layersToEnable, layersToDisable, false);
                 }
                 else {
-                    actionHandler->toggleConstruction(lay);
+                    m_actionHandler->toggleConstruction(lay);
                 }
                 break;
             default:
@@ -625,9 +609,9 @@ void LC_LayerTreeWidget::slotTreeClicked(QModelIndex layerIdx /*const QString& l
  * Simply notifies model about filtering change and updates model and ui
  */
 void LC_LayerTreeWidget::slotFilteringMaskChanged(){
-    QString mask = matchLayerName->text();
-    bool highlightMode = matchModeCheckBox->isChecked();
-    layerTreeModel->setFilteringRegexp(mask, highlightMode);
+    QString mask = m_matchLayerName->text();
+    bool highlightMode = m_matchModeCheckBox->isChecked();
+    m_layerTreeModel->setFilteringRegexp(mask, highlightMode);
     update();
 }
 
@@ -637,7 +621,7 @@ void LC_LayerTreeWidget::slotFilteringMaskChanged(){
  */
 void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
 
-    if (actionHandler){
+    if (m_actionHandler){
         auto *contextMenu = new QMenu(this);
         auto *caption = new QLabel(tr("Layer Menu"), this);
         QPalette palette;
@@ -649,10 +633,10 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
 
         // Actions for all layers:
 
-        QModelIndex index = layerTreeView->indexAt(point);
+        QModelIndex index = m_layerTreeView->indexAt(point);
 
         if (index.isValid()){
-            LC_LayerTreeItem *layerItem = layerTreeModel->getItemForIndex(index);
+            LC_LayerTreeItem *layerItem = m_layerTreeModel->getItemForIndex(index);
             int layerType = layerItem->getLayerType();
             bool isVirtual = layerItem->isVirtual();
             QString title = "Layer: " + layerItem->getName();
@@ -694,7 +678,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                                                    &LC_LayerTreeWidget::addAddAlternativePositionLayerForSelectedItem);
                             hasItems = true;
                         }
-                        if (!flatListMode){
+                        if (!m_flatListMode){
                             if (layerItem->childCount() > 0){
                                 contextMenu->addAction(tr("&Remove Sub-layers"), this, &LC_LayerTreeWidget::removeChildLayersForSelected);
                                 hasItems = true;
@@ -774,9 +758,9 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
  * Makes all layers visible
  */
 void LC_LayerTreeWidget::showAllLayers(){
-    btnShowSecondaryLayers->setChecked(true);
+    m_btnShowSecondaryLayers->setChecked(true);
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
-    QList<RS_Layer *> layersToShow = layerTreeModel->collectLayers(&ACCEPT_ALL);
+    QList<RS_Layer *> layersToShow = m_layerTreeModel->collectLayers(&ACCEPT_ALL);
     QList<RS_Layer *> layersToHide;
     manageLayersVisibilityFlag(layersToShow, layersToHide, false);
 }
@@ -785,11 +769,11 @@ void LC_LayerTreeWidget::showAllLayers(){
  * Hides all layers except actual one
  */
 void LC_LayerTreeWidget::showActiveLayerOnly(){
-    if (nullptr != layerList){
-        RS_Layer *activeLayer = layerList->getActive();
-        if (activeLayer){
+    if (nullptr != m_layerList){
+        RS_Layer *activeLayer = m_layerList->getActive();
+        if (activeLayer != nullptr){
             QG_LayerTreeItemAcceptorSameLayerAs ACCEPT_ALL_EXCEPT(activeLayer, true);
-            QList<RS_Layer *> layersToHide = layerTreeModel->collectLayers(&ACCEPT_ALL_EXCEPT);
+            QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(&ACCEPT_ALL_EXCEPT);
             QList<RS_Layer *> layersToShow;
             layersToShow << activeLayer;
 
@@ -801,10 +785,10 @@ void LC_LayerTreeWidget::showActiveLayerOnly(){
  * Makes all layers invisible
  */
 void LC_LayerTreeWidget::hideAllLayers(){
-    btnShowSecondaryLayers->setChecked(false);
+    m_btnShowSecondaryLayers->setChecked(false);
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
     QList<RS_Layer *> layersToShow;
-    QList<RS_Layer *> layersToHide = layerTreeModel->collectLayers(&ACCEPT_ALL);
+    QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(&ACCEPT_ALL);
     manageLayersVisibilityFlag(layersToShow, layersToHide, false);
 }
 
@@ -814,9 +798,9 @@ void LC_LayerTreeWidget::hideAllLayers(){
 void LC_LayerTreeWidget::hideOtherThanSelectedLayers(){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         LC_LayerTreeItemAcceptor ACCEPT_ALL;
-        QList<RS_Layer *> layersToHide = layerTreeModel->collectLayers(&ACCEPT_ALL);
+        QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(&ACCEPT_ALL);
 
         QList<RS_Layer *> layersToShow;
         currentItem->collectLayers(layersToShow, &ACCEPT_ALL, true);
@@ -826,7 +810,7 @@ void LC_LayerTreeWidget::hideOtherThanSelectedLayers(){
             layersToHide.removeAll(layer);
         }
         if (count > 0){
-            layerList->activate(layersToShow.at(0), false);
+            m_layerList->activate(layersToShow.at(0), false);
         }
         manageLayersVisibilityFlag(layersToShow, layersToHide, false);
     }
@@ -835,12 +819,12 @@ void LC_LayerTreeWidget::hideOtherThanSelectedLayers(){
  * Toggles visibility for secondary layers (dimensions, info and alternative position)
  */
 void LC_LayerTreeWidget::toggleSecondaryLayersVisibility(){
-    LC_LayerTreeItem *root = layerTreeModel->getRoot();
+    LC_LayerTreeItem *root = m_layerTreeModel->getRoot();
     QList<LC_LayerTreeItem *> secondaryItems;
     QG_LayerTreeItemAcceptorSecondary acceptor;
     root->collectDescendantChildren(secondaryItems, &acceptor, false);
 
-    bool showSecondary = btnShowSecondaryLayers->isChecked();
+    bool showSecondary = m_btnShowSecondaryLayers->isChecked();
     int count = secondaryItems.count();
 
     if (count > 0){
@@ -881,7 +865,7 @@ void LC_LayerTreeWidget::toggleSecondaryLayersVisibility(){
 void LC_LayerTreeWidget::unlockAllLayers(){
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
     QList<RS_Layer *> layersToLock;
-    QList<RS_Layer *> layersToUnlock = layerTreeModel->collectLayers(&ACCEPT_ALL);
+    QList<RS_Layer *> layersToUnlock = m_layerTreeModel->collectLayers(&ACCEPT_ALL);
     manageLayersLockFlag(layersToLock, layersToUnlock, false);
 }
 /**
@@ -889,7 +873,7 @@ void LC_LayerTreeWidget::unlockAllLayers(){
  */
 void LC_LayerTreeWidget::lockAllLayers(){
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
-    QList<RS_Layer *> layersToLock = layerTreeModel->collectLayers(&ACCEPT_ALL);
+    QList<RS_Layer *> layersToLock = m_layerTreeModel->collectLayers(&ACCEPT_ALL);
     QList<RS_Layer *> layersToUnlock;
     manageLayersLockFlag(layersToLock, layersToUnlock, false);
 }
@@ -898,7 +882,7 @@ void LC_LayerTreeWidget::lockAllLayers(){
  */
 void LC_LayerTreeWidget::printAllLayers(){
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
-    QList<RS_Layer *> layersToPrint = layerTreeModel->collectLayers(&ACCEPT_ALL);
+    QList<RS_Layer *> layersToPrint = m_layerTreeModel->collectLayers(&ACCEPT_ALL);
     QList<RS_Layer *> layersToNoPrint;
     manageLayersPrintFlag(layersToPrint, layersToNoPrint, false);
 }
@@ -909,7 +893,7 @@ void LC_LayerTreeWidget::printAllLayers(){
 void LC_LayerTreeWidget::noPrintAllLayers(){
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
     QList<RS_Layer *> layersToPrint;
-    QList<RS_Layer *> layersToNoPrint= layerTreeModel->collectLayers(&ACCEPT_ALL);
+    QList<RS_Layer *> layersToNoPrint= m_layerTreeModel->collectLayers(&ACCEPT_ALL);
     manageLayersPrintFlag(layersToPrint, layersToNoPrint, false);
 }
 
@@ -920,7 +904,7 @@ void LC_LayerTreeWidget::removeEmptyLayers(){
 
     // first we inspect all entities ao collect found layers in set
     QSet<RS_Layer*> foundLayers;
-    for (auto en: *document) {
+    for (auto en: *m_document) {
         RS_Layer *l = en->getLayer(true);
         if (l != nullptr){
             foundLayers.insert(l);
@@ -929,9 +913,9 @@ void LC_LayerTreeWidget::removeEmptyLayers(){
 
     // compare layers provided by layers list with set of found layers
     QList<RS_Layer*> layersWithNoEntities;
-    unsigned int layersCount = layerList->count();
+    unsigned int layersCount = m_layerList->count();
     for (unsigned int i = 0; i< layersCount; i++){
-        RS_Layer* l = layerList->at(i);
+        RS_Layer* l = m_layerList->at(i);
         if (foundLayers.contains(l)){
             // do nothing, some entities are found on this layer
         }
@@ -950,9 +934,9 @@ void LC_LayerTreeWidget::removeEmptyLayers(){
         QList<LC_LayerTreeItem*> itemsToRemove;
         for (int i = 0; i < layersWithNoEntitiesCount; i++){
             RS_Layer* l = layersWithNoEntities.at(i);
-            LC_LayerTreeItem* item = layerTreeModel->getItemForLayer(l);
+            LC_LayerTreeItem* item = m_layerTreeModel->getItemForLayer(l);
             if (item == nullptr){
-                if (layerTreeModel->isRegexpApplied()){
+                if (m_layerTreeModel->isRegexpApplied()){
                     // this means that there is regexp and layer is filtered...
                     emptyLayerIsFiltered = true;
                 }
@@ -1010,13 +994,13 @@ void LC_LayerTreeWidget::layerAdded([[maybe_unused]] RS_Layer *layer){
 void LC_LayerTreeWidget::layerEdited(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerEdited()");
     update();
-    layerTreeView->viewport()->update();
+    m_layerTreeView->viewport()->update();
 }
 
 void LC_LayerTreeWidget::layerRemoved(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerRemoved()");
     update();
-    activateLayer(layerList->at(0));
+    activateLayer(m_layerList->at(0));
 }
 
 void LC_LayerTreeWidget::layerToggled(RS_Layer *){
@@ -1040,38 +1024,40 @@ void LC_LayerTreeWidget::layerToggledConstruction(RS_Layer *){
  * Drag start event = just saving the item which starts dragging
  * @param dropIndex
  */
-void LC_LayerTreeWidget::onDragEnterEvent(QModelIndex dropIndex){
+void LC_LayerTreeWidget::onDragEnterEvent(const QModelIndex &dropIndex){
     // save source item for which drag is invoked
-    LC_LayerTreeItem *currentlyDraggingItem = layerTreeModel->getItemForIndex(dropIndex);
-    layerTreeModel->setCurrentlyDraggingItem(currentlyDraggingItem);
+    LC_LayerTreeItem *currentlyDraggingItem = m_layerTreeModel->getItemForIndex(dropIndex);
+    // LC_ERR << "Drag Enter for " << currentlyDraggingItem->getName() << "  " << currentlyDraggingItem->getFullName();
+
+    m_layerTreeModel->setCurrentlyDraggingItem(currentlyDraggingItem);
 }
 /**
  * On Drop event.
  * @param dropIndex
  * @param position
  */
-void LC_LayerTreeWidget::onDropEvent(QModelIndex dropIndex, DropIndicatorPosition position){
+void LC_LayerTreeWidget::onDropEvent(const QModelIndex &dropIndex, DropIndicatorPosition position){
     RS_DEBUG->print(RS_Debug::D_WARNING, "onDropEvent");
-    LC_LayerTreeItem *currentlyDraggingItem = layerTreeModel->getCurrentlyDraggingItem();
+    LC_LayerTreeItem *currentlyDraggingItem = m_layerTreeModel->getCurrentlyDraggingItem();
     if (currentlyDraggingItem){
         LC_LayerTreeItem *destinationItem = nullptr;
         if (dropIndex.isValid()){ // going to drop on other item
-            destinationItem = layerTreeModel->getItemForIndex(dropIndex);
+            destinationItem = m_layerTreeModel->getItemForIndex(dropIndex);
 
         } else if (position == LC_LayerTreeWidget::OnViewport){
             // drop is on viewport, so we'll add source to root item
-            destinationItem = layerTreeModel->getRoot();
+            destinationItem = m_layerTreeModel->getRoot();
         }
 
         if (destinationItem != nullptr){
             // do actual rename
-            bool layersRenamed = layerTreeModel->performReStructure(currentlyDraggingItem, destinationItem);
+            bool layersRenamed = m_layerTreeModel->performReStructure(currentlyDraggingItem, destinationItem);
             if (layersRenamed){
-                layerTreeView->expand(dropIndex);
-                layerList->fireEdit(nullptr);
+                m_layerTreeView->expand(dropIndex);
+                m_layerList->fireEdit(nullptr);
             }
         }
-        layerTreeModel->setCurrentlyDraggingItem(nullptr);
+        m_layerTreeModel->setCurrentlyDraggingItem(nullptr);
     }
 }
 
@@ -1107,7 +1093,7 @@ void LC_LayerTreeWidget::addDimensionalLayerForSelectedItem(){
 void LC_LayerTreeWidget::doAddSecondaryLevelForSelectedItem(int layerType){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         if (!currentItem->isVirtual()){
             // check for duplicate first
             if (!currentItem->hasChildOfType(layerType)){
@@ -1132,7 +1118,7 @@ void LC_LayerTreeWidget::doAddSecondaryLevelForSelectedItem(int layerType){
 void LC_LayerTreeWidget::addChildLayerForSelectedItem(){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         invokeLayerAddDialog(currentItem, LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE);
     }
 }
@@ -1148,10 +1134,10 @@ void LC_LayerTreeWidget::addLayer(){
  * If dimensional layer already exists - just shows a dialog, otherwise - invokes normal layer creation flow
  */
 void LC_LayerTreeWidget::addDimensionalLayerForActiveLayer(){
-    if (nullptr != layerList){
-        RS_Layer *activeLayer = layerList->getActive();
-        if (activeLayer){
-            LC_LayerTreeItem *currentItem = layerTreeModel->getItemForLayer(activeLayer);
+    if (nullptr != m_layerList){
+        RS_Layer *activeLayer = m_layerList->getActive();
+        if (activeLayer != nullptr){
+            LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForLayer(activeLayer);
             if (currentItem != nullptr){
                 if (currentItem->getLayerType() == LC_LayerTreeItem::NORMAL){
                     int newLayerType = LC_LayerTreeItem::DIMENSIONAL;
@@ -1184,10 +1170,10 @@ void LC_LayerTreeWidget::addDimensionalLayerForActiveLayer(){
  * Invokes editing dialog for active layer
  */
 void LC_LayerTreeWidget::editActiveLayer(){
-    if (nullptr != layerList){
-        RS_Layer *activeLayer = layerList->getActive();
-        if (activeLayer){
-            LC_LayerTreeItem *currentItem = layerTreeModel->getItemForLayer(activeLayer);
+    if (nullptr != m_layerList){
+        RS_Layer *activeLayer = m_layerList->getActive();
+        if (activeLayer != nullptr){
+            LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForLayer(activeLayer);
             if (currentItem != nullptr){
                 invokeLayerEditOrRenameDialog(currentItem, true);
             }
@@ -1201,7 +1187,7 @@ void LC_LayerTreeWidget::editActiveLayer(){
 void LC_LayerTreeWidget::editSelectedLayer(){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         invokeLayerEditOrRenameDialog(currentItem, true);
     }
 }
@@ -1211,7 +1197,7 @@ void LC_LayerTreeWidget::editSelectedLayer(){
 void LC_LayerTreeWidget::renameVirtualLayer(){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         if (currentItem->isVirtual()){
             invokeLayerEditOrRenameDialog(currentItem, false);
         }
@@ -1252,7 +1238,7 @@ void LC_LayerTreeWidget::duplicateSelectionToLayer(){
 void LC_LayerTreeWidget::moveOrDuplicateSelectionToSelectedItemLayer(bool duplicate, const QString &title){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *layerItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *layerItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         if (!layerItem->isLocked()){
             if (!layerItem->isVirtual()){
                 bool resolvePens = QMessageBox::question(this, title,
@@ -1303,9 +1289,9 @@ void LC_LayerTreeWidget::convertLayerTypeToNormal(){
  */
 void LC_LayerTreeWidget::doConvertSelectedItemLayerToNewType(int newType){
     QModelIndex selectedItem = getSelectedItemIndex();
-    bool converted = layerTreeModel->convertToType(selectedItem, newType);
+    bool converted = m_layerTreeModel->convertToType(selectedItem, newType);
     if (converted){
-        layerList->fireEdit(nullptr);
+        m_layerList->fireEdit(nullptr);
     }
 }
 
@@ -1316,7 +1302,7 @@ void LC_LayerTreeWidget::doConvertSelectedItemLayerToNewType(int newType){
 void LC_LayerTreeWidget::removeLayersForSelectedItem(){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         doRemoveLayersFromSource(currentItem, false);
     }
 }
@@ -1327,7 +1313,7 @@ void LC_LayerTreeWidget::removeLayersForSelectedItem(){
 void LC_LayerTreeWidget::removeChildLayersForSelected(){
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        LC_LayerTreeItem *currentItem = layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
         doRemoveLayersFromSource(currentItem, true);
     }
 }
@@ -1336,10 +1322,10 @@ void LC_LayerTreeWidget::removeChildLayersForSelected(){
  * Removes active layer (as well as it descendants)
  */
 void LC_LayerTreeWidget::removeActiveLayers(){
-    if (nullptr != layerList){
-        RS_Layer *activeLayer = layerList->getActive();
+    if (nullptr != m_layerList){
+        RS_Layer *activeLayer = m_layerList->getActive();
         if (activeLayer){
-            LC_LayerTreeItem *currentItem = layerTreeModel->getItemForLayer(activeLayer);
+            LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForLayer(activeLayer);
             if (currentItem != nullptr){
                 doRemoveLayersFromSource(currentItem, false);
             }
@@ -1373,8 +1359,8 @@ void LC_LayerTreeWidget::createLayerDuplicate(){
  * Switches between hierarchical tree and flat view for layers list
  */
 void LC_LayerTreeWidget::toggleFlatView(){
-    flatListMode = !flatListMode;
-    layerTreeModel->setFlatMode(flatListMode);
+    m_flatListMode = !m_flatListMode;
+    m_layerTreeModel->setFlatMode(m_flatListMode);
     update();
     updateToolBarButtons();
     // TODO - add settings for expansion depth?
@@ -1385,11 +1371,11 @@ void LC_LayerTreeWidget::toggleFlatView(){
  * Utility method that updates visibility/state for buttons in toolbar according to current view mode
  */
 void LC_LayerTreeWidget::updateToolBarButtons(){
-    btnCollapseSecondary->setVisible(!flatListMode);
-    btnCollapseAll->setVisible(!flatListMode);
-    btnExpandAll->setVisible(!flatListMode);
-    btnListMode->setChecked(flatListMode);
-    btnAddDimensional-> setVisible(!flatListMode);
+    m_btnCollapseSecondary->setVisible(!m_flatListMode);
+    m_btnCollapseAll->setVisible(!m_flatListMode);
+    m_btnExpandAll->setVisible(!m_flatListMode);
+    m_btnListMode->setChecked(m_flatListMode);
+    m_btnAddDimensional-> setVisible(!m_flatListMode);
 }
 
 /**
@@ -1398,7 +1384,7 @@ void LC_LayerTreeWidget::updateToolBarButtons(){
  */
 QModelIndex LC_LayerTreeWidget::getSelectedItemIndex(){
     QModelIndex result;
-    QModelIndexList selectedIndexes = layerTreeView->selectionModel()->selectedIndexes();
+    QModelIndexList selectedIndexes = m_layerTreeView->selectionModel()->selectedIndexes();
     if (selectedIndexes.size() == 1){ // only one selected item is expected
         result = selectedIndexes.at(0);
     }
@@ -1413,7 +1399,7 @@ QList<RS_Layer *> LC_LayerTreeWidget::collectLayersForSelectedItem(){
     QList<RS_Layer *> layersList;
     QModelIndex selectedIndex = getSelectedItemIndex();
     if (selectedIndex.isValid()){
-        LC_LayerTreeItem *layerItem = layerTreeModel->getItemForIndex(selectedIndex);
+        LC_LayerTreeItem *layerItem = m_layerTreeModel->getItemForIndex(selectedIndex);
         QG_LayerTreeItemAcceptorVisible ACCEPT_VISIBLE;
         layerItem->collectLayers(layersList, &ACCEPT_VISIBLE, true);
     }
@@ -1430,8 +1416,8 @@ void LC_LayerTreeWidget::deselectEntitiesOnLockedLayer(RS_Layer *layer){
     if (layer == nullptr) return;
     if (!layer->isLocked()) return;
 
-    for (auto e: *document) {
-        if (e && e->isVisible() && e->getLayer() == layer){
+    for (auto e: *m_document) {
+        if (e != nullptr && e->isVisible() && e->getLayer() == layer){
             e->setSelected(false);
         }
     }
@@ -1445,9 +1431,9 @@ void LC_LayerTreeWidget::deselectEntitiesOnLockedLayer(RS_Layer *layer){
 void LC_LayerTreeWidget::deselectEntities(RS_Layer *layer){
     if (layer == nullptr) return;
 
-    for (auto e: *document) {
-        if (e && e->isVisible() && e->getLayer() == layer){
-            e->setSelected(false);
+    for (auto entity: *m_document) {
+        if (entity != nullptr && entity->isVisible() && entity->getLayer() == layer){
+            entity->setSelected(false);
         }
     }
     redrawView();
@@ -1460,14 +1446,14 @@ void LC_LayerTreeWidget::deselectEntities(RS_Layer *layer){
  * @param toggleMode - flag whether toggle mode should be called internally. if true, list in layersToDisable is ignored
  */
 void LC_LayerTreeWidget::manageLayersVisibilityFlag(QList<RS_Layer *> &layersToEnable, QList<RS_Layer *> &layersToDisable, bool toggleMode){
-    if (view != nullptr){
+    if (m_graphicView != nullptr){
         if (toggleMode){
-            layerList->toggleFreezeMulti(layersToEnable);
+            m_layerList->toggleFreezeMulti(layersToEnable);
         } else {
-            layerList->setFreezeMulti(layersToEnable, layersToDisable);
+            m_layerList->setFreezeMulti(layersToEnable, layersToDisable);
         }
-        document->updateInserts();
-        document->calculateBorders();
+        m_document->updateInserts();
+        m_document->calculateBorders();
     }
 }
 /**
@@ -1481,18 +1467,18 @@ void LC_LayerTreeWidget::manageLayersLockFlag(QList<RS_Layer *> &layersToLockOrT
     int count;
     QList<RS_Layer *> layersForEntitiesUpdate;
     if (toggleMode){
-        layerList->toggleLockMulti(layersToLockOrToggle);
+        m_layerList->toggleLockMulti(layersToLockOrToggle);
         count = layersToLockOrToggle.count();
         layersForEntitiesUpdate = layersToLockOrToggle;
     } else {
-        layerList->setLockMulti(layersToUnlock, layersToLockOrToggle);
+        m_layerList->setLockMulti(layersToUnlock, layersToLockOrToggle);
         count = layersToUnlock.count();
         layersForEntitiesUpdate = layersToUnlock;
     }
 
     for (int i = 0; i < count; i++) {
         RS_Layer *layer = layersForEntitiesUpdate.at(i);
-        if (layer){
+        if (layer != nullptr){
             deselectEntitiesOnLockedLayer(layer);
         }
     }
@@ -1507,10 +1493,10 @@ void LC_LayerTreeWidget::manageLayersLockFlag(QList<RS_Layer *> &layersToLockOrT
 void LC_LayerTreeWidget::manageLayersConstructionFlag(QList<RS_Layer *> &layersToBeConstruction, QList<RS_Layer *> &layersNonConstruction, bool toggleMode){
     QList<RS_Layer *> layersForEntitiesUpdate;
      if (toggleMode){
-        layerList->toggleConstructionMulti(layersToBeConstruction);
+        m_layerList->toggleConstructionMulti(layersToBeConstruction);
         layersForEntitiesUpdate = layersToBeConstruction;
     } else {
-         layerList->setConstructionMulti(layersNonConstruction, layersToBeConstruction);
+         m_layerList->setConstructionMulti(layersNonConstruction, layersToBeConstruction);
          layersForEntitiesUpdate = layersNonConstruction;
     }
     int count = layersForEntitiesUpdate.count();
@@ -1530,11 +1516,11 @@ void LC_LayerTreeWidget::manageLayersConstructionFlag(QList<RS_Layer *> &layersT
 void LC_LayerTreeWidget::manageLayersPrintFlag(QList<RS_Layer *> &layersToPrint, QList<RS_Layer *> &layersNoPrint, bool toggleMode){
     QList<RS_Layer *> layersForEntitiesUpdate;
     if (toggleMode){
-       layerList->togglePrintMulti(layersToPrint);
+       m_layerList->togglePrintMulti(layersToPrint);
         layersForEntitiesUpdate = layersToPrint;
     }
     else{
-        layerList->setPrintMulti(layersNoPrint, layersToPrint);
+        m_layerList->setPrintMulti(layersNoPrint, layersToPrint);
         layersForEntitiesUpdate = layersNoPrint;
     }
     int count = layersForEntitiesUpdate.count();
@@ -1554,8 +1540,8 @@ void LC_LayerTreeWidget::doSelectLayersEntities(QList<RS_Layer *> &layers){
     // NOTE:  actually, the more correct location for this logic is RS_Selection class or something like that...
     // yet leave it for now here to reduce amount of codebase modifications.
 
-    for (auto en: *document) {
-        if (en && en->isVisible() && !en->isSelected() && (!(en->getLayer() && en->getLayer()->isLocked()))){
+    for (auto en: *m_document) {
+        if (en != nullptr && en->isVisible() && !en->isSelected() && (!(en->getLayer() && en->getLayer()->isLocked()))){
             RS_Layer *l = en->getLayer(true);
             if (l != nullptr && layers.contains(l)){
                 en->setSelected(true);
@@ -1565,7 +1551,7 @@ void LC_LayerTreeWidget::doSelectLayersEntities(QList<RS_Layer *> &layers){
 
     redrawView();
 
-    RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
+    RS_DIALOGFACTORY->updateSelectionWidget(m_document->countSelected(), m_document->totalSelectedLength());
 }
 
 /**
@@ -1573,8 +1559,8 @@ void LC_LayerTreeWidget::doSelectLayersEntities(QList<RS_Layer *> &layers){
  * @param sourceIndex model index for topmost item to copy
  * @param duplicateEntities if true, entities on copied layers will be also duplicated
  */
-void LC_LayerTreeWidget::doCreateLayersCopy(QModelIndex sourceIndex, bool duplicateEntities){
-    QHash<RS_Layer *, RS_Layer *> layersMap = layerTreeModel->createLayersCopy(sourceIndex);
+void LC_LayerTreeWidget::doCreateLayersCopy(const QModelIndex &sourceIndex, bool duplicateEntities){
+    QHash<RS_Layer *, RS_Layer *> layersMap = m_layerTreeModel->createLayersCopy(sourceIndex);
     if (layersMap.count() > 0){
         QHashIterator<RS_Layer *, RS_Layer *> iter{layersMap};
         while (iter.hasNext()) {
@@ -1587,10 +1573,10 @@ void LC_LayerTreeWidget::doCreateLayersCopy(QModelIndex sourceIndex, bool duplic
             }
             // that's pretty ugly that there are no batch operations in LayerList....
             // it may lead to exceeding invocation of listeners
-            layerList->add(copyLayer);
+            m_layerList->add(copyLayer);
         }
         // just additional invocation of listeners on layer list...
-        layerList->fireEdit(nullptr);
+        m_layerList->fireEdit(nullptr);
     }
 }
 
@@ -1601,12 +1587,12 @@ void LC_LayerTreeWidget::doCreateLayersCopy(QModelIndex sourceIndex, bool duplic
  */
 void LC_LayerTreeWidget::duplicateLayerEntities(RS_Layer *sourceLayer, RS_Layer *copyLayer){
     // TODO - what about UNDO?
-    for (auto en: *document) {
-        RS_Layer *l = en->getLayer(true);
-        if (l != nullptr && l == sourceLayer){
-            RS_Entity *duplicateEntity = en->clone();
+    for (auto entity: *m_document) {
+        RS_Layer *layer = entity->getLayer(true);
+        if (layer != nullptr && layer == sourceLayer){
+            RS_Entity *duplicateEntity = entity->clone();
             duplicateEntity->setLayer(copyLayer);
-            document->addEntity(duplicateEntity);
+            m_document->addEntity(duplicateEntity);
         }
     }
 }
@@ -1638,8 +1624,8 @@ void LC_LayerTreeWidget::copyLayerAttributes(RS_Layer *copyLayer, RS_Layer *sour
 }
 
 void LC_LayerTreeWidget::redrawView(){
-    if (view != nullptr){
-        view->redraw();
+    if (m_graphicView != nullptr){
+        m_graphicView->redraw();
     }
 }
 
@@ -1659,7 +1645,7 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(LC_LayerTreeItem* layerItem, boo
 
     // using if there is just for a bit better performance
     if (duplicate){
-        for (auto en: *document) { // iterate over all entities
+        for (auto en: *m_document) { // iterate over all entities
             if (en != nullptr){
                 if (en->isVisible() && en->isSelected() && !en->isParentSelected()){
                     RS_Layer *l = en->getLayer(true);
@@ -1675,13 +1661,13 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(LC_LayerTreeItem* layerItem, boo
                         // switch selection to newly duplicated entity
                         duplicateEntity->setSelected(true);
                         duplicateEntity->setLayer(targetLayer);
-                        document->addEntity(duplicateEntity);
+                        m_document->addEntity(duplicateEntity);
                     }
                 }
             }
         }
     } else {
-        for (auto en: *document) {
+        for (auto en: *m_document) {
             if (en != nullptr){
                 if (en->isVisible() && en->isSelected() && !en->isParentSelected()){
                     RS_Layer *l = en->getLayer(true);
@@ -1700,6 +1686,7 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(LC_LayerTreeItem* layerItem, boo
     }
     redrawView();
 }
+
 // TBD - Undo support?
 /**
  * Removes layers starting from provide source
@@ -1753,14 +1740,14 @@ void LC_LayerTreeWidget::doRemoveLayerItems(QList<LC_LayerTreeItem *> &itemsToRe
  */
 void LC_LayerTreeWidget::doRemoveLayers(QList<RS_Layer *> &layersToRemove){
     for (auto layer: layersToRemove) {
-        RS_Graphic *graphic = document->getGraphic();
-        if (graphic){
+        RS_Graphic *graphic = m_document->getGraphic();
+        if (graphic != nullptr){
             graphic->removeLayer(layer);
         }
     }
-    document->updateInserts();
-    document->calculateBorders();
-    layerList->setModified(true);
+    m_document->updateInserts();
+    m_document->calculateBorders();
+    m_layerList->setModified(true);
 }
 // ------------ Dialogs -------------
 /**
@@ -1792,7 +1779,7 @@ int LC_LayerTreeWidget::invokeLayersRemovalDialog(QStringList &layerNames){
  * @param edit true - editing mode, false - virtual layer rename mode
  */
 void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, bool edit){
-    LC_LayerDialogEx dlg = LC_LayerDialogEx(this, QMessageBox::tr("Layer DialogEx"), layerTreeModel, pItem, layerList);
+    LC_LayerDialogEx dlg = LC_LayerDialogEx(this, QMessageBox::tr("Layer DialogEx"), m_layerTreeModel, pItem, m_layerList);
 
     RS_Layer* layer = nullptr;
     if (edit){
@@ -1805,7 +1792,7 @@ void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, 
         dlg.setMode(LC_LayerDialogEx::MODE_RENAME_VIRTUAL);
     }
     QString originalName = QString(pItem->getName());
-    QString path = layerTreeModel->generateLayersDisplayPathString(pItem);
+    QString path = m_layerTreeModel->generateLayersDisplayPathString(pItem);
 
     dlg.setLayerName(originalName);
     dlg.setParentPath(path);
@@ -1824,14 +1811,14 @@ void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, 
           QString layerName = dlg.getLayerName();
           int editedLayerType = dlg.getEditedLayerType();
           if (originalName != layerName || editedLayerType != pItem->getLayerType()){ // layer is also renamed
-              layerTreeModel -> renamePrimaryLayer(pItem, layerName, editedLayerType);
+              m_layerTreeModel -> renamePrimaryLayer(pItem, layerName, editedLayerType);
           }
-          layerList->fireEdit(nullptr);
+          m_layerList->fireEdit(nullptr);
       }
       else{ // just rename virtual layer
-          bool renamed = layerTreeModel -> renameVirtualLayer(pItem, newName);
+          bool renamed = m_layerTreeModel -> renameVirtualLayer(pItem, newName);
           if (renamed){
-              layerList->fireEdit(nullptr);
+              m_layerList->fireEdit(nullptr);
           }
       }
     }
@@ -1843,7 +1830,7 @@ void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, 
  * @param layerType - type of layer should be created. If LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE - allows to select type
  */
 void LC_LayerTreeWidget::invokeLayerAddDialog(LC_LayerTreeItem *parentItem, int layerType){
-    LC_LayerDialogEx dlg = LC_LayerDialogEx(this, QMessageBox::tr("Layer DialogEx"), layerTreeModel, parentItem, layerList);
+    LC_LayerDialogEx dlg = LC_LayerDialogEx(this, QMessageBox::tr("Layer DialogEx"), m_layerTreeModel, parentItem, m_layerList);
 
     // setup dialog first
     int dialogMode = LC_LayerDialogEx::MODE_ADD_CHILD_LAYER;
@@ -1874,7 +1861,7 @@ void LC_LayerTreeWidget::invokeLayerAddDialog(LC_LayerTreeItem *parentItem, int 
     QString path = "";
     if (parentItem != nullptr){
         name = QString(parentItem->getName());
-        path = layerTreeModel->generateLayersDisplayPathString(parentItem);
+        path = m_layerTreeModel->generateLayersDisplayPathString(parentItem);
     }
 
     dlg.setLayerName(name);
@@ -1885,7 +1872,7 @@ void LC_LayerTreeWidget::invokeLayerAddDialog(LC_LayerTreeItem *parentItem, int 
     auto* tmpLayer = new RS_Layer("");
 
     // if layer type is provided - we'll use default pen for it
-    RS_Pen defaultPen = layerTreeModel->getOptions() ->getDefaultPen(layerType == LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE ? LC_LayerTreeItem::NORMAL : layerType);
+    RS_Pen defaultPen = m_layerTreeModel->getOptions() ->getDefaultPen(layerType == LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE ? LC_LayerTreeItem::NORMAL : layerType);
     RS_Pen penCopy = RS_Pen(defaultPen);
 
     tmpLayer->setPen(penCopy);
@@ -1897,13 +1884,13 @@ void LC_LayerTreeWidget::invokeLayerAddDialog(LC_LayerTreeItem *parentItem, int 
       int editedLayerType = dlg.getEditedLayerType();
 
       // check for duplicate name is performed by the dialog on validate, so here we'll simply create a layer
-      QString newLayerName = layerTreeModel->createFullLayerName(parentItem, layerName, editedLayerType, true);
+      QString newLayerName = m_layerTreeModel->createFullLayerName(parentItem, layerName, editedLayerType, true);
 
       RS_Pen pen = dlg.getPen();
       tmpLayer->setConstruction(dlg.isConstruction());
       tmpLayer->setName(newLayerName);
       tmpLayer->setPen(pen);
-      layerList->add(tmpLayer); // listeners will be invoked there
+      m_layerList->add(tmpLayer); // listeners will be invoked there
     }
     else{
         // dialog cancelled, so remove temporary layer
@@ -1915,7 +1902,7 @@ void LC_LayerTreeWidget::invokeLayerAddDialog(LC_LayerTreeItem *parentItem, int 
  *  Displays settings dialog and if needed, saves setting and updates widget
  */
 void LC_LayerTreeWidget::invokeSettingsDialog(){
-    LC_LayerTreeModelOptions* options = layerTreeModel->getOptions();
+    LC_LayerTreeModelOptions* options = m_layerTreeModel->getOptions();
     LC_LayerTreeOptionsDialog dlg = LC_LayerTreeOptionsDialog(this, options);
     int dialogResult = dlg.exec();
     if (dialogResult == QDialog::Accepted){
@@ -1941,8 +1928,8 @@ void LC_LayerTreeWidget::updateWidgetSettings(){
 }
 
 void LC_LayerTreeWidget::setDocumentAndView(RS_Document *doc, RS_GraphicView *gview){
-    view = gview;
-    document = doc;
+    m_graphicView = gview;
+    m_document = doc;
     if (doc == nullptr) {
         setLayerList(nullptr);
     }

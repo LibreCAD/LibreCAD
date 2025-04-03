@@ -41,11 +41,9 @@ void LC_LayerTreeView::dragLeaveEvent(QDragLeaveEvent *event) {
      QModelIndex dropIndex = QModelIndex();
      auto* widget = (LC_LayerTreeWidget*)parentWidget();
      widget->onDropEvent(dropIndex , LC_LayerTreeWidget::InvalidDrop);
-
 }
 
 void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
-
      RS_DEBUG->print(RS_Debug::D_WARNING, "dragEnterEvent");
 
     // we disable drag&drop here rather than on model and flags() level
@@ -56,49 +54,48 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
     }
 
     QModelIndex dropIndex = indexAt(event->position().toPoint());
-    auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
-    if( !dropIndex.isValid() )
+    auto* layerTree = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
+    if( !dropIndex.isValid()) {
         return;
-    widget->onDragEnterEvent(dropIndex);
+    }
+    layerTree->onDragEnterEvent(dropIndex);
 
     event->setDropAction( Qt::MoveAction );
     event->accept();
 }
 
-    void LC_LayerTreeView::dropEvent(QDropEvent *event){
-        RS_DEBUG->print(RS_Debug::D_WARNING, "dropEvent");
-        if (!event){
-            return;
-        }
-        event->accept();
+void LC_LayerTreeView::dropEvent(QDropEvent* event) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "dropEvent");
+    if (event == nullptr) {
+        return;
+    }
+    event->accept();
 
-        QModelIndex dropIndex = indexAt(event->position().toPoint());
-        auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
-        if (!widget){
-            return;
-        }
+    QModelIndex dropIndex = indexAt(event->position().toPoint());
+    auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
+    if (widget == nullptr) {
+        return;
+    }
 
-        int dropIndicator = dropIndicatorPosition();
+    int dropIndicator = dropIndicatorPosition();
 
-        if( !dropIndex.isValid() ){
-            // drop to empty space on viewpoint? Need to verify this case more
-            switch (dropIndicator){
-               case QAbstractItemView::OnViewport:
+    if (!dropIndex.isValid()) {
+        // drop to empty space on viewpoint? Need to verify this case more
+        switch (dropIndicator) {
+            case QAbstractItemView::OnViewport:
                 widget->onDropEvent(dropIndex, LC_LayerTreeWidget::OnViewport);
                 break;
             default:
                 widget->onDropEvent(dropIndex, LC_LayerTreeWidget::InvalidDrop);
-            }
-            return;
         }
+        return;
+    }
 
-        //bool bAbove = false; // boolean for the case when you are above an item
+    //bool bAbove = false; // boolean for the case when you are above an item
 
-        LC_LayerTreeWidget::DropIndicatorPosition position{};
-        if (!dropIndex.parent().isValid() && dropIndex.row() != -1)
-        {
-            switch (dropIndicator)
-            {
+    LC_LayerTreeWidget::DropIndicatorPosition position{};
+    if (!dropIndex.parent().isValid() && dropIndex.row() != -1) {
+        switch (dropIndicator) {
             case QAbstractItemView::AboveItem:
                 // manage a boolean for the case when you are above an item
                 //bAbove = true;
@@ -106,11 +103,11 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
                 break;
             case QAbstractItemView::BelowItem:
                 position = LC_LayerTreeWidget::BelowItem;
-                // something when being below an item
+            // something when being below an item
                 break;
             case QAbstractItemView::OnItem:
                 position = LC_LayerTreeWidget::OnItem;
-                // you're on an item, maybe add the current one as a child
+            // you're on an item, maybe add the current one as a child
                 break;
             case QAbstractItemView::OnViewport:
                 // you are not on your tree
@@ -118,10 +115,10 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
                 break;
             default:
                 break;
-            }
         }
-        widget->onDropEvent(dropIndex, position);
     }
+    widget->onDropEvent(dropIndex, position);
+}
 
 QStringList LC_LayerTreeView::saveTreeExpansionState(){
     QStringList treeExpansionState;
@@ -131,7 +128,6 @@ QStringList LC_LayerTreeView::saveTreeExpansionState(){
             treeExpansionState << index.data(Qt::UserRole).toString();
         }
     }
-
     return treeExpansionState;
 }
 

@@ -76,8 +76,7 @@ void LC_LayerTreeOptionsDialog::init(){
    tabWidget-> setCurrentIndex(0);
 }
 
-void LC_LayerTreeOptionsDialog::languageChange()
-{
+void LC_LayerTreeOptionsDialog::languageChange(){
     retranslateUi(this);
 }
 

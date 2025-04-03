@@ -209,15 +209,13 @@ void LC_LayerDialogEx::layerTypeChanged()
 
 void LC_LayerDialogEx::validate() {
     QString layerName = leName->text();
-    if (layerName.trimmed().isEmpty())
-    {
+    if (layerName.trimmed().isEmpty()){
         QMessageBox::information(parentWidget(),
                                  QMessageBox::tr("Layer Properties"),
                                  QMessageBox::tr("Layer empty name is not allowed."),
                                  QMessageBox::Ok);
     }
     else{
-
         int newLayerType = getEditedLayerType();
         QStringList newLayerNamesList;
 
@@ -267,7 +265,6 @@ void LC_LayerDialogEx::validate() {
 }
 
 bool LC_LayerDialogEx::checkForDuplicatedNames(const QStringList &newLayerNamesList){
-
     int count = newLayerNamesList.size();
     bool duplicateNameFound = false;
     for (int i = 0; i < count; i++) {

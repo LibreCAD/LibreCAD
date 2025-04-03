@@ -60,7 +60,7 @@ public:
     void proceedActiveLayerChanged(RS_LayerList *ll);
     QList<RS_Layer *> collectLayers(LC_LayerTreeItemAcceptor *acceptor);
     QModelIndexList getPersistentIndexList();
-    LC_LayerTreeItem *getRoot(){return rootItem;};
+    LC_LayerTreeItem *getRoot(){return m_rootItem;};
     void setFilteringRegexp(QString &reqgexp, bool highlightMode);
     Qt::DropActions supportedDropActions() const override{return Qt::CopyAction | Qt::MoveAction;}
     void setCurrentlyDraggingItem(LC_LayerTreeItem *item);
@@ -68,7 +68,7 @@ public:
     void setFlatMode(bool mode);
     bool performReStructure(LC_LayerTreeItem *source, LC_LayerTreeItem *destination);
     bool convertToType(QModelIndex &index, int toLayerType);
-    QHash<RS_Layer *, RS_Layer *> createLayersCopy(QModelIndex &selectedIndex);
+    QHash<RS_Layer *, RS_Layer *> createLayersCopy(const QModelIndex &selectedIndex);
     LC_LayerTreeItem *getItemForIndex(const QModelIndex &index) const;
     LC_LayerTreeItem *getItemForLayer(RS_Layer *layer) const;
     bool renameVirtualLayer(LC_LayerTreeItem *pItem, QString &qString);
@@ -78,9 +78,9 @@ public:
     QStringList getLayersListForRenamedPrimary(LC_LayerTreeItem* source, QString &newSourceName, int newLayerType);
     QString createFullLayerName(LC_LayerTreeItem *treeItem, QString &layerName, int layerType, bool newLayer);
     int translateColumn(int column) const;
-    LC_LayerTreeModelOptions* getOptions() {return options;};
+    LC_LayerTreeModelOptions* getOptions() {return m_options;};
     void reset();
-    bool isRegexpApplied() const{return hasRegexp;};
+    bool isRegexpApplied() const{return m_hasRegexp;};
 private:
     void rebuildModel(QList<RS_Layer *> &layersList, RS_Layer *activeLayer);
     bool isValidRestructure(LC_LayerTreeItem *source, LC_LayerTreeItem *destination) const;
@@ -99,46 +99,45 @@ private:
     QString cleanupLayerName(QString &layerName) const;
     QString doGenerateLayersPathString(QList<LC_LayerTreeItem *> &itemsPathAsList, bool alternateSourceName, QString &alternativeName,
                                        QString &usingLayerLayerSeparator);
-
     QHash<RS_Layer *, QString> doGetVirtualLayerRenameLayersMap(LC_LayerTreeItem *source, QString &newSourceName);
     QHash<RS_Layer *, QString> prepareLayerRename(QList<LC_LayerTreeItem *> &layersList, QString &fromNamePrefix, QString &toNamePrefix);
     bool renameLayersMap(const QHash<RS_Layer *, QString> &layersMap) const;
     QHash<RS_Layer *, QString> doGetPrimaryLayerRenameLayersMap(LC_LayerTreeItem *source, QString &newSourceName, int newLayerType);
 
-    QIcon layerVisible;
-    QIcon layerHidden;
-    QIcon layerDefreeze;
-    QIcon layerFreeze;
-    QIcon layerPrint;
-    QIcon layerNoPrint;
-    QIcon layerConstruction;
-    QIcon layerNoConstruction;
-    QIcon iconLayerVirtual;
-    QIcon iconLayerDimensional;
-    QIcon iconLayerAlternatePosition;
-    QIcon iconLayerInformationalNotes;
-    QIcon iconLayerActual;
+    QIcon m_iconLayerVisible;
+    QIcon m_iconLayerHidden;
+    QIcon m_iconLayerDefreeze;
+    QIcon m_iconLayerFreeze;
+    QIcon m_iconLayerPrint;
+    QIcon m_iconLayerNoPrint;
+    QIcon m_iconLayerConstruction;
+    QIcon m_iconLayerNoConstruction;
+    QIcon m_iconLayerVirtual;
+    QIcon m_iconLayerDimensional;
+    QIcon m_iconLayerAlternatePosition;
+    QIcon m_iconLayerInformationalNotes;
+    QIcon m_iconLayerActual;
 
     int maxIndent{0};
 
     // filtering/highlight regexp value
-    QRegularExpression filteringRegexp{""};
+    QRegularExpression m_filteringRegexp{""};
 
     // flat that controls whether regexp should be applied
-    bool hasRegexp{false};
+    bool m_hasRegexp{false};
 
     //  controls whether items matched to regexp are just highlighted or filtered
-    bool regexpHighlightMode{true};
+    bool m_regexpHighlightMode{true};
 
     // current item during drag&drop operation
-    LC_LayerTreeItem *currentlyDraggingItem{nullptr};
+    LC_LayerTreeItem *m_currentlyDraggingItem{nullptr};
 
     // root item for layers hierarchy
-    LC_LayerTreeItem *rootItem = nullptr;
+    LC_LayerTreeItem *m_rootItem = nullptr;
 
-    bool flatMode{false};
+    bool m_flatMode{false};
 
-    LC_LayerTreeModelOptions* options = nullptr;
+    LC_LayerTreeModelOptions* m_options = nullptr;
     void copyChildrenLayers(LC_LayerTreeItem *parent, int newParentLayerType, QHash<RS_Layer *, RS_Layer *> &result);
 };
 

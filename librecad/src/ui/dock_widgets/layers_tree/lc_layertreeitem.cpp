@@ -146,6 +146,7 @@ void LC_LayerTreeItem::collectLayers(QList<RS_Layer *> &result, LC_LayerTreeItem
         }
     }
 }
+
 /**
  * Collects list of descendent children (recursively) for given conditions
  * @param result result of children
@@ -168,6 +169,7 @@ void LC_LayerTreeItem::collectDescendantChildren(QList<LC_LayerTreeItem *> &resu
         }
     }
 }
+
 /**
  * Finds LayerTreeItem that holds provided layer
  * @param source layer
@@ -221,6 +223,7 @@ bool LC_LayerTreeItem::isDescendantOf(LC_LayerTreeItem *item){
     }
     return result;
 }
+
 /**
  * Checks whether one of direct children has given name and layer type
  * @param nameToFind name to check
@@ -263,6 +266,7 @@ bool LC_LayerTreeItem::hasChildOfType(int type){
 void LC_LayerTreeItem::setLayerType(int value){
     layerType = value;
 }
+
 /**
  * If layer is secondary, this is the reference to the normal layer (if any) that corresponds to this item
  * @return primary layer item
@@ -274,6 +278,7 @@ LC_LayerTreeItem *LC_LayerTreeItem::getPrimaryItem(){
 void LC_LayerTreeItem::setPrimaryItem(LC_LayerTreeItem *item){
     primaryItem = item;
 }
+
 /**
  * Marks all parent items from this item to the root as part of active path
  */
@@ -326,6 +331,7 @@ void LC_LayerTreeItem::rebuildActivePath(RS_Layer *layerToBeActive){
         itemForActiveLayer->markAsActivePath();
     }
 }
+
 /**
  * Creates child item with given name and layer
  * @param childName name of child item
@@ -359,6 +365,7 @@ LC_LayerTreeItem *LC_LayerTreeItem::findPrimaryLayerChild(QString &childNameToFi
     }
     return result;
 }
+
 /**
  * Inspects children and returns child which is virtual had has given name. If no such child present, new child is
  * is created and returned
@@ -424,7 +431,7 @@ RS_Layer *LC_LayerTreeItem::getLayer(){return this->layer;}
  *  utility method that is used to mark item as invalid
  */
 void LC_LayerTreeItem::invalidate(){
-        layerType = -1;
+    layerType = -1;
     int count = childItems.length();
     for (int i = 0; i < count; i++) {
         LC_LayerTreeItem *child = childItems.at(i);
@@ -435,4 +442,3 @@ void LC_LayerTreeItem::invalidate(){
 bool LC_LayerTreeItem::isInValid() const{
     return layerType < 0;
 }
-
