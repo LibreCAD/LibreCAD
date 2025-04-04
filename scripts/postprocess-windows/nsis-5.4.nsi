@@ -7,7 +7,7 @@
 
 ;--------------------------------
 ;Include version information
-  !include /NONFATAL "generated_scmrev.nsh"
+;  !include /NONFATAL "generated_scmrev.nsh"
 !ifndef SCMREVISION
     !define SCMREVISION "2.2.2.x"
 !endif
@@ -32,7 +32,7 @@
 
   ;Name and file
   Name "${APPNAME}"
-  OutFile "../../generated/${InstallerName}.exe"
+  OutFile "../../${InstallerName}.exe"
 
   ;Default installation folder
   InstallDir "${ProgramsFolder}\LibreCAD"
@@ -101,7 +101,7 @@ FunctionEnd
     !define Qt6_Dir 	"d:\a\LibreCAD\Qt"
 !endif
 !ifndef Qt_Version
-    !define Qt_Version 	"6.8.3"
+    !define Qt_Version 	"6.9.0"
 !endif
 !ifndef Mingw_Ver
     !define Mingw_Ver 	"mingw_64"
@@ -120,9 +120,9 @@ FunctionEnd
 
 Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
-  File /r "..\..\windows\*.*"
+  File /r "..\..\generated\Release\*.*"
   SetOutPath "$INSTDIR\resources\qm"
-  File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
+  File /NONFATAL "..\..\generated\*.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder

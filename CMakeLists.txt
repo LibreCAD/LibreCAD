@@ -1,4 +1,3 @@
-#cmake_minimum_required(VERSION 3.28)
 cmake_minimum_required(VERSION 3.30)
 project(LibreCAD VERSION 2.2.2)
 
@@ -8,8 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
-set(BOOST_DIR "c:\\Local\\boost_1_84_0")
-set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
 #set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 
@@ -50,7 +47,7 @@ find_package(Boost REQUIRED COMPONENTS)
 
 include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
 
-include_directories(${Boost_INCLUDE_DIRS})
+#include_directories(${Boost_INCLUDE_DIRS})
 
 #include_directories(desktop/res_old/actions)
 #include_directories(desktop/res_old/extui)
@@ -1605,6 +1602,11 @@ qt_add_executable(librecad
 # add constants like M_PI to cmath
 if(WIN32)
     target_compile_definitions(librecad PRIVATE _USE_MATH_DEFINES)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS}) 
+    target_link_libraries(librecad ${Boost_LIBRARIES})
+endif(Boost_FOUND)
+
 endif(WIN32)
 
 
