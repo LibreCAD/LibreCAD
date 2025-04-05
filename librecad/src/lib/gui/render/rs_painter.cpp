@@ -915,30 +915,26 @@ void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoint
 
 void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline){
     QPainterPath path;
-    double startX, startY, endX, endY;
-    toGui(polyline->getStartpoint(), startX, startY);
-    path.moveTo(startX, startY);
+    path.moveTo(toGuiPointF(polyline->getStartpoint()));
 
     for(RS_Entity* entity: *polyline) {
         switch(entity->rtti()) {
             case RS2::EntityLine: {
-                toGui(entity->getStartpoint(), startX, startY);
-                path.moveTo(startX, startY);
-                toGui(entity->getEndpoint(), endX, endY);
-                path.lineTo(endX, endY);
+                path.moveTo(toGuiPointF(entity->getStartpoint()));
+                path.lineTo(toGuiPointF(entity->getEndpoint()));
                 break;
             }
             case RS2::EntityArc: {
-                auto arc = *static_cast<RS_Arc *>(entity);
-                drawArcEntity(&arc, path);
+                auto* arc = static_cast<RS_Arc *>(entity);
+                drawArcEntity(arc, path);
                 break;
             }
             // well, actually this is just for fonts.. better to have separate entity for this. fixme - change latter
             case RS2::EntityEllipse: { // fixme - coordinates translation
 
                 // !! FIXME - sand - why not the same path of the polyline is used??
-                auto arc = *static_cast<RS_Ellipse *>(entity);
-                const RS_EllipseData& data = arc.getData();
+                const auto* arc = static_cast<RS_Ellipse *>(entity);
+                const RS_EllipseData& data = arc->getData();
                 const RS_Vector uiCenter = toGui(data.center);
 
                 const double uiMajorRadius = toGuiDX(data.majorP.magnitude()); // fixme - sand - render - cache?
@@ -1525,6 +1521,12 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
     }
 
    return uiPosition;
+}
+
+QPointF RS_Painter::toGuiPointF(const RS_Vector& worldCoordinates) const
+{
+    RS_Vector uiPos = toGui(worldCoordinates);
+    return {uiPos.x, uiPos.y};
 }
 
 double RS_Painter::toGuiDX(double ucsDX) const {
