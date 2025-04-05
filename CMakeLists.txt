@@ -38,7 +38,7 @@ find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 find_package(Boost REQUIRED COMPONENTS)
 
-find_package(Freetype REQUIRED)
+find_package(Freetype)
 
 #set(CMAKE_AUTOMOC ON)
 #set(CMAKE_AUTOUIC OFF)
