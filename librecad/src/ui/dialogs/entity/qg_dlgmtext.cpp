@@ -89,8 +89,10 @@ void QG_DlgMText::init() {
                           cbUniChar,     bUnicode,  buttonBox,
                           bClear,        bLoad,     bSave,
                           bCut,          bCopy,     bPaste}};
-    for (size_t i = 0; i < buttons.size(); ++i)
-        QWidget::setTabOrder(buttons[i], buttons[(i+1)%buttons.size()]);
+    // the order is cyclic
+    buttons.push_back(buttons.front());
+    for (auto it = std::next(buttons.cbegin()); it != buttons.cend(); ++it)
+        QWidget::setTabOrder(*std::prev(it), *it);
 
     /*
      * We are using the frame colour of the teText QTextEdit widget to indicate when
@@ -117,9 +119,7 @@ void QG_DlgMText::updateUniCharComboBox(int) {
 
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
-        char buf[5];
-        snprintf(buf,5, "%04X", c);
-        cbUniChar->addItem(QString("[%1] %2").arg(buf).arg(QChar(c)));
+        cbUniChar->addItem(QString("[%1] %2").arg(c, 4, 16, '0').arg(QChar(c)));
     }
 }
 
@@ -204,7 +204,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
     } else {
         fon = m_entity->getStyle();
         setFont(fon);
-        height = QString("%1").arg(m_entity->getHeight());
+        height = QString::number(m_entity->getHeight());
         if (font) {
             if (font->getLineSpacingFactor() == m_entity->getLineSpacingFactor()) {
                 def = "1";
@@ -212,10 +212,10 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
                 def = "0";
             }
         }
-        alignment = QString("%1").arg(m_entity->getAlignment());
+        alignment = QString::number(m_entity->getAlignment());
         //QString letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
         //QString wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
-        lineSpacingFactor = QString("%1").arg(m_entity->getLineSpacingFactor());
+        lineSpacingFactor = QString::number(m_entity->getLineSpacingFactor());
 
 /* // Doesn't make sense. We don't want to show native DXF strings in the Dialog.
 #if defined(OOPL_VERSION) && defined(Q_WS_WIN)
@@ -251,7 +251,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
     cbDefault->setChecked(def=="1");
     setFont(fon);
     leHeight->setText(height);
-    size_t index = alignment.toInt() - 1;
+    unsigned index = alignment.toUInt() - 1;
     setAlignment(m_alignmentButtons[index%m_alignmentButtons.size()]);
     if (def!="1" || font==nullptr) {
         //leLetterSpacing->setText(letterSpacing);
@@ -261,7 +261,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
         //leLetterSpacing->setText(font->getLetterSpacing());
         //leWordSpacing->setText(font->getWordSpacing());
         leLineSpacingFactor->setText(
-            QString("%1").arg(font->getLineSpacingFactor()));
+            QString::number(font->getLineSpacingFactor()));
     }
     teText->setText(str);
     //setShape(shape.toInt());
@@ -386,14 +386,14 @@ void QG_DlgMText::setFont(const QString& f) {
 }
 
 void QG_DlgMText::defaultChanged(bool) {
-    if (cbDefault->isChecked() && font) {
+    if (cbDefault->isChecked() && font != nullptr) {
         leLineSpacingFactor->setText(
-                        QString("%1").arg(font->getLineSpacingFactor()));
+                        QString::number(font->getLineSpacingFactor()));
     }
 }
 
 void QG_DlgMText::loadText() {
-    QString fn = QFileDialog::getOpenFileName( this, QString(), QString());
+    QString fn = QFileDialog::getOpenFileName(this);
     if (!fn.isEmpty()) {
         load(fn);
     }
@@ -410,7 +410,7 @@ void QG_DlgMText::load(const QString& fn) {
 }
 
 void QG_DlgMText::saveText() {
-    QString fn = QFileDialog::getSaveFileName(this, QString(), QString());
+    QString fn = QFileDialog::getSaveFileName(this);
     if (!fn.isEmpty()) {
         save(fn);
     }
@@ -430,7 +430,7 @@ void QG_DlgMText::insertSymbol(int) {
     QString str = cbSymbol->currentText();
     int i=str.indexOf('(');
     if (i!=-1) {
-        teText->textCursor().insertText(QString("%1").arg(str.at(i+1)));
+        teText->textCursor().insertText(str.mid(i+1, 1));
     }
 }
 
@@ -438,14 +438,14 @@ void QG_DlgMText::updateUniCharButton(int) {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(nullptr, 16);
-    bUnicode->setText(QString("%1").arg(QChar(c)));
+    bUnicode->setText(QString{QChar(c)});
 }
 
 void QG_DlgMText::insertChar() {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(nullptr, 16);
-    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
+    teText->textCursor().insertText( QString{QChar(c)} );
 }
 
 /*

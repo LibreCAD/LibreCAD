@@ -26,9 +26,9 @@
 #ifndef QG_DLGMTEXT_H
 #define QG_DLGMTEXT_H
 
-#include "ui_qg_dlgmtext.h"
-#include "rs_mtext.h"
 #include "lc_entitypropertiesdlg.h"
+#include "rs_mtext.h"
+#include "ui_qg_dlgmtext.h"
 
 class QG_DlgMText : public LC_EntityPropertiesDlg, public Ui::QG_DlgMText{
     Q_OBJECT
