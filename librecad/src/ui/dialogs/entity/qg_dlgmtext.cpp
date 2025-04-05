@@ -119,7 +119,7 @@ void QG_DlgMText::updateUniCharComboBox(int) {
 
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
-        cbUniChar->addItem(QString("[%1] %2").arg(c, 4, 16, '0').arg(QChar(c)));
+        cbUniChar->addItem(QString{"[%1] %2"}.arg(c, 4, 16, QChar{'0'}).arg(QChar{c}));
     }
 }
 
@@ -438,14 +438,14 @@ void QG_DlgMText::updateUniCharButton(int) {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(nullptr, 16);
-    bUnicode->setText(QString{QChar(c)});
+    bUnicode->setText(QString{QChar{c}});
 }
 
 void QG_DlgMText::insertChar() {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(nullptr, 16);
-    teText->textCursor().insertText( QString{QChar(c)} );
+    teText->textCursor().insertText( QString{QChar{c}} );
 }
 
 /*
