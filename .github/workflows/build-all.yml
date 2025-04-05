@@ -226,7 +226,7 @@ jobs:
 
       - name: Install boost dependencies
         run: |
-          brew install boost
+          brew install boost freetype
 
       # XProtect can cause random failures if it decides that the DMG we create
       # during the packaging phase is malware.

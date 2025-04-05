@@ -38,12 +38,13 @@ find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 find_package(Boost REQUIRED COMPONENTS)
 
+find_package(Freetype REQUIRED)
+
 #set(CMAKE_AUTOMOC ON)
 #set(CMAKE_AUTOUIC OFF)
 #set(CMAKE_AUTORCC ON)
 
 #qt5_wrap_cpp(plugins/asciifile.cpp)
-
 
 include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
 
@@ -1696,6 +1697,14 @@ set(PLUGIN_SOURCES
 	../libraries/lciconendine/lc_svgiconengine.h
 	../libraries/lciconendine/lc_svgiconengine.h
 )
+
+if(NOT win32)
+add_executable(ttf2lff
+	tools/ttf2lff/main.cpp)
+target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
+target_include_directories(ttf2lff PRIVATE
+	${FREETYPE_INCLUDE_DIRS})
+endif(NOT win32)
 
 #qt_internal_add_plugin(QSvgIconPlugin
 #		OUTPUT_NAME lc_svgicon
