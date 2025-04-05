@@ -1698,13 +1698,13 @@ set(PLUGIN_SOURCES
 	../libraries/lciconendine/lc_svgiconengine.h
 )
 
-if(NOT win32)
+if(NOT WIN32)
 add_executable(ttf2lff
 	tools/ttf2lff/main.cpp)
 target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
 target_include_directories(ttf2lff PRIVATE
 	${FREETYPE_INCLUDE_DIRS})
-endif(NOT win32)
+endif(NOT WIN32)
 
 #qt_internal_add_plugin(QSvgIconPlugin
 #		OUTPUT_NAME lc_svgicon
