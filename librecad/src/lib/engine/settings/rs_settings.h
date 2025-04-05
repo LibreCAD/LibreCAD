@@ -164,7 +164,10 @@ public:
     static void writePen(QString name, RS_Pen const &pen);
     static RS_Pen readPen(QString name, RS_Pen &defaultPen);
 
-    QSettings* getSettings() {return settings;};
+    QSettings* getSettings() const
+    {
+        return settings;
+    }
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);
@@ -177,7 +180,7 @@ private:
 protected:
     std::map<QString, QVariant> cache;
     QString m_group;
-    QSettings *settings;
+    QSettings *settings = nullptr;
     static inline RS_Settings* INSTANCE;
 
     bool writeEntrySingle(const QString &group, const QString &key, const QVariant &value);

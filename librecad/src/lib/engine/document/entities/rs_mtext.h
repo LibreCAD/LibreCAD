@@ -222,7 +222,7 @@ public:
 protected:
     class LC_TextLine:public RS_EntityContainer{
     public:
-        LC_TextLine(RS_EntityContainer* parent=nullptr, bool owner=true):RS_EntityContainer(parent, owner){};
+        LC_TextLine(RS_EntityContainer* parent=nullptr, bool owner=true):RS_EntityContainer(parent, owner){}
         ~LC_TextLine() override = default;
 
         LC_TextLine* clone() const override;

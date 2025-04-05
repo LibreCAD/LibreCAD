@@ -54,6 +54,15 @@ QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MTex
     setEntity(text, forNew);
 }
 
+QG_DlgMText::~QG_DlgMText()
+{
+    try {
+    destroy();
+    } catch(...) {
+
+    }
+}
+
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
@@ -64,7 +73,7 @@ void QG_DlgMText::languageChange(){
 
 void QG_DlgMText::init() {
     cbFont->init();
-    font = nullptr;
+    m_font = nullptr;
     m_entity = nullptr;
     m_isNew = false;
     updateUniCharComboBox(0);
@@ -129,8 +138,9 @@ void QG_DlgMText::reject() {
     QDialog::reject();
 }
 
+#include "rs_debug.h"
 void QG_DlgMText::destroy() {
-    if (m_isNew && saveSettings) {
+    if (saveSettings) {
         LC_GROUP_GUARD("Draw");
         {
             LC_SET("TextHeight", leHeight->text());
@@ -156,7 +166,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
     m_entity = t;
     m_isNew = isNew;
 
-    QString fon;
+    QString font;
     QString height;
     QString def;
     QString alignment;
@@ -179,15 +189,15 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
             QByteArray iso = RS_System::localeToISO(QLocale::system().name().toLocal8Bit());
 //        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
             if (iso == "ISO8859-1") {
-                fon = LC_GET_STR("TextFont", "normallatin1");
+                font = LC_GET_STR("TextFont", "normallatin1");
             } else if (iso == "ISO8859-2") {
-                fon = LC_GET_STR("TextFont", "normallatin2");
+                font = LC_GET_STR("TextFont", "normallatin2");
             } else if (iso == "ISO8859-7") {
-                fon = LC_GET_STR("TextFont", "greekc");
+                font = LC_GET_STR("TextFont", "greekc");
             } else if (iso == "KOI8-U" || iso == "KOI8-R") {
-                fon = LC_GET_STR("TextFont", "cyrillic_ii");
+                font = LC_GET_STR("TextFont", "cyrillic_ii");
             } else {
-                fon = LC_GET_STR("TextFont", "standard");
+                font = LC_GET_STR("TextFont", "standard");
             }
             height = LC_GET_STR("TextHeight", "1.0");
             def = LC_GET_STR("TextDefault", "1");
@@ -202,11 +212,11 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
             // leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
         }
     } else {
-        fon = m_entity->getStyle();
-        setFont(fon);
+        font = m_entity->getStyle();
+        setFont(font);
         height = QString::number(m_entity->getHeight());
-        if (font) {
-            if (font->getLineSpacingFactor() == m_entity->getLineSpacingFactor()) {
+        if (m_font) {
+            if (m_font->getLineSpacingFactor() == m_entity->getLineSpacingFactor()) {
                 def = "1";
             } else {
                 def = "0";
@@ -239,21 +249,21 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
         }
 
-        RS_Layer* lay = m_entity->getLayer(false);
-        if (lay) {
-            cbLayer->setLayer(*lay);
+        RS_Layer* layer = m_entity->getLayer(false);
+        if (layer) {
+            cbLayer->setLayer(*layer);
         }
 
-        wPen->setPen(m_entity, lay, "Pen");
+        wPen->setPen(m_entity, layer, "Pen");
         leftToRight = m_entity->getDrawingDirection() == RS_MTextData::LeftToRight;
     }
 
     cbDefault->setChecked(def=="1");
-    setFont(fon);
+    setFont(font);
     leHeight->setText(height);
     unsigned index = alignment.toUInt() - 1;
-    setAlignment(m_alignmentButtons[index%m_alignmentButtons.size()]);
-    if (def!="1" || font==nullptr) {
+    setAlignment(*m_alignmentButtons[index%m_alignmentButtons.size()]);
+    if (def!="1" || m_font==nullptr) {
         //leLetterSpacing->setText(letterSpacing);
         //leWordSpacing->setText(wordSpacing);
         leLineSpacingFactor->setText(lineSpacingFactor);
@@ -261,7 +271,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
         //leLetterSpacing->setText(font->getLetterSpacing());
         //leWordSpacing->setText(font->getWordSpacing());
         leLineSpacingFactor->setText(
-            QString::number(font->getLineSpacingFactor()));
+            QString::number(m_font->getLineSpacingFactor()));
     }
     teText->setText(str);
     //setShape(shape.toInt());
@@ -332,43 +342,43 @@ size_t QG_DlgMText::alignmentButtonIdex(QToolButton* button) const
 }
 
 void QG_DlgMText::setAlignmentTL() {
-    setAlignment(bTL);
+    setAlignment(*bTL);
 }
 
 void QG_DlgMText::setAlignmentTC() {
-    setAlignment(bTC);
+    setAlignment(*bTC);
 }
 
 void QG_DlgMText::setAlignmentTR() {
-    setAlignment(bTR);
+    setAlignment(*bTR);
 }
 
 void QG_DlgMText::setAlignmentML() {
-    setAlignment(bML);
+    setAlignment(*bML);
 }
 
 void QG_DlgMText::setAlignmentMC() {
-    setAlignment(bMC);
+    setAlignment(*bMC);
 }
 
 void QG_DlgMText::setAlignmentMR() {
-    setAlignment(bMR);
+    setAlignment(*bMR);
 }
 
 void QG_DlgMText::setAlignmentBL() {
-    setAlignment(bBL);
+    setAlignment(*bBL);
 }
 
 void QG_DlgMText::setAlignmentBC() {
-    setAlignment(bBC);
+    setAlignment(*bBC);
 }
 
 void QG_DlgMText::setAlignmentBR() {
-    setAlignment(bBR);
+    setAlignment(*bBR);
 }
 
-void QG_DlgMText::setAlignment(QToolButton* button) {
-    button->setChecked(true);
+void QG_DlgMText::setAlignment(QToolButton& button) {
+    button.setChecked(true);
 }
 
 int QG_DlgMText::getAlignment() {
@@ -381,14 +391,14 @@ int QG_DlgMText::getAlignment() {
 
 void QG_DlgMText::setFont(const QString& f) {
     cbFont->setCurrentIndex( cbFont->findText(f) );
-    font = cbFont->getFont();
+    m_font = cbFont->getFont();
     defaultChanged(false);
 }
 
 void QG_DlgMText::defaultChanged(bool) {
-    if (cbDefault->isChecked() && font != nullptr) {
+    if (cbDefault->isChecked() && m_font != nullptr) {
         leLineSpacingFactor->setText(
-                        QString::number(font->getLineSpacingFactor()));
+                        QString::number(m_font->getLineSpacingFactor()));
     }
 }
 
