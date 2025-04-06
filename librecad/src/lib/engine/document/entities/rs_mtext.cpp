@@ -131,6 +131,7 @@ RS_Entity *RS_MText::clone() const {
     t->detach();
     return t;
 }
+
 // fixme - test concept for using UI proxies for heavy entities on modification operation (rotate, scale etc).
 // potentially, it might be either expanded further or removed.
 class RS_MTextProxy:public RS_EntityContainer{

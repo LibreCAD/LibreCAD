@@ -72,16 +72,17 @@ bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& va
 }
 
 // write alias file
-void writeAliasFile(QFile& aliasFile,
+void writeAliasFile(const QString& aliasName,
                     const std::map<QString, RS2::ActionType>& m_shortCommands,
                     const std::map<QString, RS2::ActionType>& m_mainCommands
                     )
 {
     LC_LOG<<__func__<<"(): begin";
-    LC_LOG<<"Creating "<<QFileInfo(aliasFile.fileName()).absoluteFilePath();
+    LC_LOG<<"Creating "<<QFileInfo(aliasName).absoluteFilePath();
 
+    QFile aliasFile{aliasName};
     if (!aliasFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        LC_ERR<<__func__<<"(): line "<<__LINE__<<": failed to create "<<QFileInfo(aliasFile.fileName()).absoluteFilePath();
+        LC_ERR<<__func__<<"(): line "<<__LINE__<<": failed to create "<<QFileInfo(aliasName).absoluteFilePath();
         return;
     }
     QTextStream ts(&aliasFile);
@@ -240,12 +241,11 @@ void RS_Commands::updateAlias()
         return;
     }
 
-    QFile aliasFile{aliasName};
-    std::map<QString, QString> aliasList = readAliasFile(aliasFile);
+    std::map<QString, QString> aliasList = readAliasFile(aliasName);
     if (aliasList.empty()) {
         //alias file does no exist, create one with translated m_shortCommands
         LC_ERR<<"Writing alias file";
-        writeAliasFile(aliasFile, m_shortCommands, m_mainCommands);
+        writeAliasFile(aliasName, m_shortCommands, m_mainCommands);
     }
 
     //update alias file with non present commands
@@ -269,11 +269,12 @@ void RS_Commands::updateAlias()
     LC_LOG << __func__ << "(): done";
 }
 
-std::map<QString, QString> RS_Commands::readAliasFile(QFile& aliasFile)
+std::map<QString, QString> RS_Commands::readAliasFile(const QString& aliasName)
 {
-    LC_ERR<<__func__<<"(): Command alias file: "<<aliasFile.fileName();
+    LC_ERR<<__func__<<"(): Command alias file: "<<aliasName;
     std::map<QString, QString> aliasList;
 
+    QFile aliasFile{aliasName};
     if (!aliasFile.exists() || !aliasFile.open(QIODevice::ReadOnly))
         return aliasList;
 

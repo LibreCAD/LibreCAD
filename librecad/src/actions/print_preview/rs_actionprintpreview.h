@@ -87,7 +87,6 @@ protected:
     };
     struct Points;
     std::unique_ptr<Points> pPoints;
-    std::unique_ptr<QG_PrintPreviewOptions> m_option;
     bool hasOptions = false;
     bool m_bPaperOffset = false;
 

@@ -739,13 +739,10 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
 
 QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
     QPainterPath path;
-    for(auto l: loops) {
-        if (l == nullptr || l->rtti()!=RS2::EntityContainer)
+    for(auto* loop: loops) {
+        if (loop == nullptr || loop->rtti()!=RS2::EntityContainer)
             continue;
 
-        auto* loop = static_cast<RS_EntityContainer*>(l);
-        // edges:
-        //                LC_ERR << "loop------------------------------- " << loop->count();
         auto toUiPointF = [this](const RS_Vector& vp) {
             RS_Vector uiPos = toGui(vp);
             return QPointF{uiPos.x, uiPos.y};
@@ -753,10 +750,10 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
         auto toUcsDegrees = [this](double angleRadian) {
             return toUCSAngleDegrees(RS_Math::rad2deg(angleRadian));
         };
-        QPainterPath loopPath;
 
+        QPainterPath loopPath;
         QPointF uiStart;
-        for(auto e: *loop){
+        for(auto* e: *static_cast<RS_EntityContainer*>(loop)){
             if (e==nullptr)
                 continue;
 
@@ -771,52 +768,45 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
             }
                 break;
             case RS2::EntityArc: {
-                const RS_ArcData &arcData = static_cast<RS_Arc*>(e)->getData();
-                double radius = toGuiDX(arcData.radius);
-                // can't skip due to minimal radius, it will lead to filling errors
-                //                        if (radius > view->getMinArcDrawingRadius()) {
-                double startAngleDegrees = toUcsDegrees(arcData.angle1);
-                double angularLength = RS_Math::rad2deg(static_cast<RS_Arc*>(e)->getAngleLength());
-                if (arcData.reversed)
-                    angularLength = - angularLength;
-                RS_Vector uiCenter = toGui(arcData.center);
-                QPointF uiMin{uiCenter.x - radius, uiCenter.y - radius};
-                QRectF arcRect{uiMin, QSizeF{radius * 2, radius * 2}};
+                auto* arc = static_cast<RS_Arc*>(e);
+                double radius = toGuiDX(arc->getRadius());
+                double startAngleDegrees = toUcsDegrees(arc->getAngle1());
+                double angularLength = RS_Math::rad2deg(arc->isReversed() ? - arc->getAngleLength() : arc->getAngleLength());
+                QPointF uiCenter = toUiPointF(arc->getCenter());
+                QRectF arcRect{uiCenter - QPointF{radius, radius}, QSizeF{radius, radius}* 2};
                 loopPath.arcMoveTo(arcRect, startAngleDegrees);
                 loopPath.arcTo(arcRect, startAngleDegrees, angularLength);
             }
                 break;
             case RS2::EntityCircle: {
                 auto* circle = static_cast<RS_Circle*>(e);
-                RS_Vector uiCenter = toGui(circle->getCenter());
+                QPointF uiCenter = toUiPointF(circle->getCenter());
                 double radius=toGuiDX(circle->getRadius());
-                loopPath.addEllipse({uiCenter.x, uiCenter.y}, radius, radius);
+                loopPath.addEllipse(uiCenter, radius, radius);
             }
                 break;
             case RS2::EntityEllipse: {
-                auto ellipse = static_cast<RS_Ellipse *>(e);
-                const RS_EllipseData &ellipseData = ellipse->getData();
+                auto* ellipse = static_cast<RS_Ellipse *>(e);
 
-                RS_Vector uiCenter = toGui(ellipseData.center);
-                double radius1 = toGuiDX(ellipse->getMajorRadius());
-                double radius2 = ellipseData.ratio*radius1;
-
-                QTransform t1;
-                t1.translate(uiCenter.x, uiCenter.y);
-                const double ellipseAngle = toUcsDegrees(ellipseData.majorP.angle());
-                t1.rotate(-ellipseAngle);
-
+                double majorRadius = toGuiDX(ellipse->getMajorRadius());
+                double minorRadius = ellipse->getRatio() * majorRadius;
+                QRectF ellipseRect{- QPointF{majorRadius, minorRadius}, QSizeF{majorRadius, minorRadius} * 2};
                 QPainterPath ellipsePath;
-                QRectF ellipseRect{QPointF{-radius1, -radius2}, QSizeF{radius1*2, radius2*2}};
                 if (ellipse->isEllipticArc()) {
-                    double startAngle = toUcsDegrees(ellipseData.angle1);
-                    double angleLength = RS_Math::rad2deg(ellipseData.reversed ? - ellipse->getAngleLength() : ellipse->getAngleLength());
+                    double startAngle = toUcsDegrees(ellipse->getAngle1());
+                    double angularLength = RS_Math::rad2deg(ellipse->isReversed() ? - ellipse->getAngleLength() : ellipse->getAngleLength());
                     ellipsePath.arcMoveTo(ellipseRect, startAngle);
-                    ellipsePath.arcTo(ellipseRect, startAngle, angleLength);
+                    ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
                 } else {
                     ellipsePath.addEllipse(ellipseRect);
                 }
-                loopPath.addPath(t1.map(ellipsePath));
+
+                QTransform ellipseTransform;
+                QPointF uiCenter = toUiPointF(ellipse->getCenter());
+                ellipseTransform.translate(uiCenter.x(), uiCenter.y());
+                const double ellipseAngle = toUcsDegrees(ellipse->getAngle());
+                ellipseTransform.rotate(-ellipseAngle);
+                loopPath.addPath(ellipseTransform.map(ellipsePath));
                 break;
             }
             default:
@@ -924,30 +914,26 @@ void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoint
 
 void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline){
     QPainterPath path;
-    double startX, startY, endX, endY;
-    toGui(polyline->getStartpoint(), startX, startY);
-    path.moveTo(startX, startY);
+    path.moveTo(toGuiPointF(polyline->getStartpoint()));
 
     for(RS_Entity* entity: *polyline) {
         switch(entity->rtti()) {
             case RS2::EntityLine: {
-                toGui(entity->getStartpoint(), startX, startY);
-                path.moveTo(startX, startY);
-                toGui(entity->getEndpoint(), endX, endY);
-                path.lineTo(endX, endY);
+                path.moveTo(toGuiPointF(entity->getStartpoint()));
+                path.lineTo(toGuiPointF(entity->getEndpoint()));
                 break;
             }
             case RS2::EntityArc: {
-                auto arc = *static_cast<RS_Arc *>(entity);
-                drawArcEntity(&arc, path);
+                auto* arc = static_cast<RS_Arc *>(entity);
+                drawArcEntity(arc, path);
                 break;
             }
             // well, actually this is just for fonts.. better to have separate entity for this. fixme - change latter
             case RS2::EntityEllipse: { // fixme - coordinates translation
 
                 // !! FIXME - sand - why not the same path of the polyline is used??
-                auto arc = *static_cast<RS_Ellipse *>(entity);
-                const RS_EllipseData& data = arc.getData();
+                const auto* arc = static_cast<RS_Ellipse *>(entity);
+                const RS_EllipseData& data = arc->getData();
                 const RS_Vector uiCenter = toGui(data.center);
 
                 const double uiMajorRadius = toGuiDX(data.majorP.magnitude()); // fixme - sand - render - cache?
@@ -1507,28 +1493,9 @@ void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY)
         uiY = -wcsCoordinate.y * viewPortFactorY - viewPortOffsetY + viewPortHeight;
     }
 }
-/*
+
 RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
 {
-//    RS_Vector uiPosition = worldCoordinates;
-//    if (m_hasUcs){
-//        uiPosition.move(-ucsOrigin).rotate(m_ucsRotation);
-//    }
-//    uiPosition.scale(m_viewPortFactor).move(m_viewPortOffset);
-//    uiPosition.y = viewPortHeight - uiPosition.y;
-
-    // TODO: remove this
-//    {
-        double uiX=0., uiY=0.;
-        const_cast<RS_Painter*>(this)->toGui(worldCoordinates, uiX, uiY);
-//        using namespace RS_Math;
-//        assert(equal(uiX, uiPosition.x) && equal(uiY, uiPosition.y));
-//    }
-    return {uiX, uiY};
-//    return uiPosition;
-}*/
-
-RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
     RS_Vector uiPosition = worldCoordinates;
     if (hasUCS()) {
         uiPosition.move(-getUcsOrigin()).rotate(getUcsRotation());
@@ -1555,6 +1522,10 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const{
    return uiPosition;
 }
 
+QPointF RS_Painter::toGuiPointF(const RS_Vector& worldCoordinates) const{
+    RS_Vector uiPos = toGui(worldCoordinates);
+    return {uiPos.x, uiPos.y};
+}
 
 double RS_Painter::toGuiDX(double ucsDX) const {
 //    return viewport->toGuiDX(d);

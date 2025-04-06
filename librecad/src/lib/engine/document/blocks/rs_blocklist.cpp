@@ -380,7 +380,8 @@ QList<RS_Block*>::const_iterator RS_BlockList::end()const
 }
 
 //! @return The active block of nullptr if no block is activated.
-RS_Block* RS_BlockList::getActive() {
+RS_Block* RS_BlockList::getActive() const
+{
 	return activeBlock;
 }
 

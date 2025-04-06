@@ -42,7 +42,7 @@ class RS_LayerListListener;
 class RS_LayerList {
 public:
     RS_LayerList();
-	   virtual ~RS_LayerList() = default;
+    virtual ~RS_LayerList() = default;
 
     void clear();
 
@@ -68,7 +68,7 @@ public:
     void fireLayerActivated();
     void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
-    RS_Layer* getActive() {
+    RS_Layer* getActive() const {
         return m_activeLayer;
     }
     virtual void add(RS_Layer* layerToAdd);

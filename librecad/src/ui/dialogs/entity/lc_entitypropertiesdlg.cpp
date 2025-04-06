@@ -31,8 +31,6 @@
 LC_EntityPropertiesDlg::LC_EntityPropertiesDlg(QWidget *parent, const QString& dlgName, LC_GraphicViewport *vp):
     LC_Dialog(parent, dlgName), viewport{vp}{}
 
-LC_EntityPropertiesDlg::~LC_EntityPropertiesDlg() {}
-
 RS_Vector LC_EntityPropertiesDlg::toUCSVector(const RS_Vector &vect) const{
     RS_Vector result = viewport->toUCS(vect);
     return result;

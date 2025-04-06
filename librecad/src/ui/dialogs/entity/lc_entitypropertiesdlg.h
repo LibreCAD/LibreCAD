@@ -35,7 +35,6 @@ class LC_EntityPropertiesDlg:public LC_Dialog{
     Q_OBJECT
 public:
     explicit LC_EntityPropertiesDlg(QWidget* parent, const QString& dlgName, LC_GraphicViewport* viewport);
-    ~LC_EntityPropertiesDlg() override;
     virtual void updateEntity() = 0;
 protected:
     LC_GraphicViewport* viewport;

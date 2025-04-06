@@ -26,14 +26,15 @@
 #ifndef QG_DLGMTEXT_H
 #define QG_DLGMTEXT_H
 
-#include "ui_qg_dlgmtext.h"
-#include "rs_mtext.h"
 #include "lc_entitypropertiesdlg.h"
+#include "rs_mtext.h"
+#include "ui_qg_dlgmtext.h"
 
 class QG_DlgMText : public LC_EntityPropertiesDlg, public Ui::QG_DlgMText{
     Q_OBJECT
 public:
     QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MText* mtext, bool forNew);
+    ~QG_DlgMText() override;
     int getAlignment();
 public slots:
      void updateUniCharComboBox( int );
@@ -47,7 +48,6 @@ public slots:
      void setAlignmentBL();
      void setAlignmentBC();
      void setAlignmentBR();
-     void setAlignment(QToolButton* button);
      void setFont( const QString & f );
      void defaultChanged( bool );
      void loadText();
@@ -61,11 +61,12 @@ public slots:
 protected slots:
     virtual void languageChange();
 protected:
+    void setAlignment(QToolButton& button);
     void layoutDirectionChanged();
     bool m_isNew = false;
     bool saveSettings = true;
     RS_MText* m_entity = nullptr;
-    RS_Font* font = nullptr;
+    RS_Font* m_font = nullptr;
     std::vector<QToolButton*> m_alignmentButtons;
 
     void init();

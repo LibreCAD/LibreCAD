@@ -25,14 +25,17 @@
 #define RS_GRAPHIC_H
 
 #include <QDateTime>
+
+#include "lc_ucslist.h"
+#include "lc_viewslist.h"
 #include "rs_blocklist.h"
+#include "rs_document.h"
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
-#include "rs_document.h"
-#include "lc_view.h"
-#include "lc_viewslist.h"
-#include "lc_ucslist.h"
 
+class QString;
+
+class LC_View;
 class QG_LayerWidget;
 
 class LC_GraphicModificationListener {
@@ -57,7 +60,7 @@ public:
     /** @return RS2::EntityGraphic */
     RS2::EntityType rtti() const override {return RS2::EntityGraphic;}
 
-    virtual unsigned long int countLayerEntities(RS_Layer* layer);
+    virtual unsigned countLayerEntities(RS_Layer* layer) const;
 
     RS_LayerList* getLayerList() override {return &layerList;}
     RS_BlockList* getBlockList() override {return &blockList;}
@@ -70,8 +73,8 @@ public:
     RS_Layer* layerAt(unsigned i) {return layerList.at(i);}
     void activateLayer(const QString& name, bool notify = false) {layerList.activate(name, notify);}
     void activateLayer(RS_Layer* layer, bool notify = false) {layerList.activate(layer, notify);}
-    RS_Layer* getActiveLayer() {return layerList.getActive();}
-    void addLayer(RS_Layer* layer) {layerList.add(layer);}
+    RS_Layer* getActiveLayer() const {return layerList.getActive();}
+    virtual void addLayer(RS_Layer* layer) {layerList.add(layer);}
     void addEntity(RS_Entity* entity) override;
     void removeLayer(RS_Layer* layer);
     void editLayer(RS_Layer* layer, const RS_Layer& source) {layerList.edit(layer, source);}
@@ -95,7 +98,7 @@ public:
     RS_Block* blockAt(unsigned i) {return blockList.at(i);}
     void activateBlock(const QString& name) {blockList.activate(name);}
     void activateBlock(RS_Block* block) {blockList.activate(block);}
-    RS_Block* getActiveBlock() {return blockList.getActive();}
+    RS_Block* getActiveBlock() const {return blockList.getActive();}
     bool addBlock(RS_Block* block, bool notify=true) {return blockList.add(block, notify);}
     void addBlockNotification() {blockList.addNotification();}
     void removeBlock(RS_Block* block) {blockList.remove(block);}
@@ -109,7 +112,7 @@ public:
 
         // Wrappers for variable functions:
     void clearVariables();
-    int countVariables();
+    int countVariables() const;
 
     void addVariable(const QString& key, const RS_Vector& value, int code);
     void addVariable(const QString& key, const QString& value, int code);
@@ -125,19 +128,21 @@ public:
     bool getVariableBool(const QString& key, bool def) const;
     double getVariableDouble(const QString& key, double def) const;
 
-    RS_VariableDict getVariableDictObject() {return variableDict;}
+    RS_VariableDict getVariableDictObject() const{
+        return variableDict;
+    }
 
     void setVariableDictObject(RS_VariableDict inputVariableDict) {variableDict = inputVariableDict;}
 
-    RS2::LinearFormat getLinearFormat();
-    RS2::LinearFormat getLinearFormat(int f);
-    int getLinearPrecision();
-    RS2::AngleFormat getAngleFormat();
-    int getAnglePrecision();
+    RS2::LinearFormat getLinearFormat() const;
+    RS2::LinearFormat getLinearFormat(int f) const;
+    int getLinearPrecision() const;
+    RS2::AngleFormat getAngleFormat() const;
+    int getAnglePrecision() const;
 
-    RS_Vector getPaperSize();
+    RS_Vector getPaperSize() const;
     void setPaperSize(const RS_Vector& s);
-    RS_Vector getPrintAreaSize(bool total=true);
+    RS_Vector getPrintAreaSize(bool total=true) const;
 
     RS_Vector getPaperInsertionBase();
     void setPaperInsertionBase(const RS_Vector& p);
@@ -156,7 +161,7 @@ public:
     bool isIsometricGrid() const;
     void setIsometricGrid(bool on);
     void setCurrentUCS(LC_UCS* ucs);
-    LC_UCS* getCurrentUCS();
+    LC_UCS* getCurrentUCS() const;
     RS2::IsoGridViewType getIsoView() const;
     void setIsoView(RS2::IsoGridViewType viewType);
     void centerToPage();
@@ -218,10 +223,12 @@ public:
     void addNamedView(LC_View *view) {namedViewsList.add(view);};
     void addUCS(LC_UCS *ucs) {ucsList.add(ucs);};
 
-    double getAnglesBase();
+    double getAnglesBase() const;
     void setAnglesBase(double baseAngle);
-    bool areAnglesCounterClockWise();
+    bool areAnglesCounterClockWise() const;
     void setAnglesCounterClockwise(bool on);
+    QString formatAngle(double angle) const;
+    QString formatLinear(double linear) const;
     QString formatAngle(double angle);
     QString formatLinear(double linear);
 
@@ -257,8 +264,8 @@ private:
     QDateTime lastSaveTime;
     QString currentFileName; //keep a copy of filename for the modifiedTime
 
-    RS_LayerList layerList;
-    RS_BlockList blockList;
+    RS_LayerList layerList{};
+    RS_BlockList blockList{true};
     RS_VariableDict variableDict;
     LC_ViewList namedViewsList;
     LC_UCSList ucsList;

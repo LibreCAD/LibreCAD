@@ -634,10 +634,11 @@ double RS_Hatch::getTotalArea() {
 
     return m_area;
 }
-#define DEBUG_TOTAL_AREA_
+
+// #define DEBUG_TOTAL_AREA_
 double RS_Hatch::getTotalAreaImpl() {
     auto loops = getLoops();
-//#ifdef DEBUG_TOTAL_AREA
+#ifdef DEBUG_TOTAL_AREA
     LC_ERR<<__func__<<"(): loops.size()="<<loops.size();
     int i=0;
     for (auto& l: loops) {
@@ -645,7 +646,7 @@ double RS_Hatch::getTotalAreaImpl() {
         pr(l.get());
     }
     LC_ERR<<"loops: done";
-//#endif
+#endif
     LC_LoopUtils::LoopSorter loopSorter(std::move(loops));
     auto sorted = loopSorter.getResults();
 

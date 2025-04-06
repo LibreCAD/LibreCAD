@@ -68,7 +68,7 @@ public:
     void activate(const QString& name);
     void activate(RS_Block* block);
     //! @return The active block of NULL if no block is activated.
-	RS_Block* getActive();
+    RS_Block* getActive() const;
 
     virtual bool add(RS_Block* block, bool notify=true);
     virtual void addNotification();

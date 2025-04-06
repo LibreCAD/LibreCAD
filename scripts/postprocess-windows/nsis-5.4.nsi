@@ -7,7 +7,7 @@
 
 ;--------------------------------
 ;Include version information
-  !include /NONFATAL "generated_scmrev.nsh"
+;  !include /NONFATAL "generated_scmrev.nsh"
 !ifndef SCMREVISION
     !define SCMREVISION "2.2.2.x"
 !endif
@@ -32,7 +32,7 @@
 
   ;Name and file
   Name "${APPNAME}"
-  OutFile "../../generated/${InstallerName}.exe"
+  OutFile "../../${InstallerName}.exe"
 
   ;Default installation folder
   InstallDir "${ProgramsFolder}\LibreCAD"
@@ -120,9 +120,9 @@ FunctionEnd
 
 Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
-  File /r "..\..\windows\*.*"
+  File /r "..\..\generated\Release\*.*"
   SetOutPath "$INSTDIR\resources\qm"
-  File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
+  File /NONFATAL "..\..\generated\*.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder

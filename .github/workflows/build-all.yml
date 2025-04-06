@@ -20,7 +20,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.6.*'
-          modules: 'qt5compat'
+          modules: 'qt5compat qtwaylandcompositor'
 
       - name: Qt6 path
         run: |
@@ -110,7 +110,8 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -qq install qmake6 qt6-5compat-dev qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
-          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
+          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev
+          sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
           sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
           #sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
@@ -226,7 +227,7 @@ jobs:
 
       - name: Install boost dependencies
         run: |
-          brew install boost
+          brew install boost freetype
 
       # XProtect can cause random failures if it decides that the DMG we create
       # during the packaging phase is malware.
@@ -259,81 +260,79 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Uninstall incorrect mingw
-        run: |
-          choco uninstall mingw --force
-          choco uninstall strawberryperl --force
-
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.9.*'
           host: 'windows'
-          arch: 'win64_mingw'
+          arch: 'win64_msvc2022_64'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt5compat qtimageformats'
-          tools: 'tools_mingw1310'
-
-      - name: list folders
-        run: |
-          where qmake6.exe
-          where g++.exe
-          where mingw32-make.exe
+          modules: 'qt3d qt5compat qtimageformats qtshadertools'
+          tools: 'tools_cmake'
+          
+      - name: (3) Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
 
       - name: Install boost
-        shell: bash
-        run: |
-          curl -# -L -o boost.7z https://archives.boost.io/release/1.87.0/source/boost_1_87_0.7z
-          7z x -o. -y boost.7z
-          mv boost_1_87_0 ../boost
-          rm boost.7z
+        uses: MarkusJx/install-boost@v2
+        id: installBoost
+        with:
+          # REQUIRED: Specify the required boost version
+          # A list of supported versions can be found here:
+          # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+          boost_version: 1.87.0
+          # OPTIONAL: Specify a custon install location
+          boost_install_dir: ${{ github.workspace }}/../
+          # OPTIONAL: Specify a platform version
+          platform_version: 2022
+          # OPTIONAL: Specify a toolset
+          toolset: msvc
 
-      - name: Debugging
-        if: ${{ always() }}
-        shell: cmd
+      - name: Configure CMake
         run: |
-          set
-          echo.
-          dir c:\
-          echo.
-          dir d:\
-          echo.
-          dir d:\a
-          echo.
-          dir
-          echo.
-          dir ..
-          echo.
-          dir ..\boost
-          dir ..\Qt\6.6.3\mingw_64\bin
-          echo.
-          dir /b /s ..\Qt
-          where qmake6.exe
-          where mingw32-make.exe
-          where make.exe
-          where g++
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
+        shell: cmd
+        env:
+          BUILD_TYPE: release
+          MSVC_VER_NUMBER: "Visual Studio 17 2022"
+          BOOST_ROOT: ${{ steps.installBoost.outputs.BOOST_ROOT }}
+          CMAKE_CXX_FLAGS: " /MP8"
 
       - name: Build
         run: |
-          copy CI\custom-win.pri custom.pri
-          copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
-          echo SET:
-          set
-          pushd "${{ github.workspace }}\scripts"
-          build-windows.bat
+          cmake --build generated --config Release
         shell: cmd
 
-      - name: Rename installer
+      - name: listFile
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
-        shell: bash
+          cd generated
+          dir *.*
+          dir Release\*.*
+          dir x64\*.*
+        shell: cmd
 
       - name: List files
         run: |
             echo "${{ github.workspace }}"
             dir "${{ github.workspace }}"
         shell: cmd
+
+      - name: winDeployment
+        run: |
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
+          cd generated
+          windeployqt6.exe --release --compiler-runtime Release\LibreCAD.exe
+          dir *.*
+          pushd "${{ github.workspace }}\scripts"
+          call build-win-setup.bat
+        shell: cmd
+        
+      - name: Rename installer
+        run: |
+          mv LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
+        shell: bash
 
       - name: Upload artifact
         id: artifact-upload-step
