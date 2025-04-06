@@ -20,7 +20,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.6.*'
-          modules: 'qt5compat'
+          modules: 'qt5compat qtwaylandcompositor'
 
       - name: Qt6 path
         run: |
@@ -110,7 +110,8 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -qq install qmake6 qt6-5compat-dev qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
-          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
+          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev
+          sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
           sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
           #sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
