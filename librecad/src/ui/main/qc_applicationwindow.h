@@ -132,6 +132,7 @@ public:
     void fireCurrentActionIconChanged(QAction* actionIcon);
     void showStatusMessage(const QString& msg, int timeout = 0);
     void notificationMessage(const QString &msg, int timeout);
+    void initCompleted();
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
@@ -332,6 +333,7 @@ protected:
     bool newDrawingFromTemplate(const QString &fileName, QC_MDIWindow* w = nullptr);
 	void doActivate(QMdiSubWindow* w) override;
     void enableFileActions(QC_MDIWindow* w);
+    void enableFileActions();
     void doSlotWindowActivated(QMdiSubWindow *w, bool forced) override;
     bool doFileExport(RS_Graphic* graphic, const QString& name,const QString& format,
                             QSize size, QSize borders, bool black, bool bw=true);
