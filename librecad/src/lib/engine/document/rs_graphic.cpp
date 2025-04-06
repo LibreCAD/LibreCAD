@@ -24,43 +24,60 @@
 **
 **********************************************************************/
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
+#include <QObject>
 #include <QDir>
-
-#include "rs_graphic.h"
 
 #include "dxf_format.h"
 #include "lc_defaults.h"
+#include "lc_graphicviewport.h"
+#include "rs_actioninterface.h"
 #include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_actioninterface.h"
 #include "rs_fileio.h"
-#include "rs_layer.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "lc_graphicviewport.h"
+
+namespace {
+// default paper size A4: 210x297 mm
+const RS_Vector g_paperSizeA4{210., 297.};
+
+// validate coordinates
+bool validCoordinate(double x)
+{
+    return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
+}
+
+// validate vector
+bool validRange(const RS_Vector& vp)
+{
+    return vp.valid && validCoordinate(vp.x) && validCoordinate(vp.y);
+}
+
+// validate vpMin and vpMax forms a valid bounding box
+bool validRange(const RS_Vector& vpMin, const RS_Vector& vpMax)
+{
+    return validRange(vpMin)
+           && validRange(vpMax)
+           && vpMin.x < vpMax.x
+           && vpMin.y < vpMax.y;
+}
+}
 
 /**
  * Default constructor.
  */
 RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
-        : RS_Document(parent),
-        layerList(),
-        blockList(true),
-        paperScaleFixed(false),
-        marginLeft(0.0),
-        marginTop(0.0),
-        marginRight(0.0),
-        marginBottom(0.0),
-        pagesNumH(1),
-        pagesNumV(1) {
-
+        : RS_Document(parent)
+{
     LC_GROUP_GUARD("Defaults");
     {
         setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
@@ -119,8 +136,9 @@ RS_Graphic::~RS_Graphic() = default;
 /**
  * Counts the entities on the given layer.
  */
-unsigned long int RS_Graphic::countLayerEntities(RS_Layer *layer) {
-    int c = 0;
+unsigned RS_Graphic::countLayerEntities(RS_Layer *layer) const
+{
+    unsigned c = 0;
     if (layer) {
         for (RS_Entity *t: entities) {
             if (t->getLayer() &&
@@ -548,7 +566,8 @@ void RS_Graphic::clearVariables() {
     variableDict.clear();
 }
 
-int RS_Graphic::countVariables() {
+int RS_Graphic::countVariables() const
+{
     return variableDict.count();
 }
 
@@ -645,7 +664,8 @@ void RS_Graphic::setIsometricGrid(bool on) {
     addVariable("$SNAPSTYLE", (int)on, 70);
 }
 
-double RS_Graphic::getAnglesBase(){
+double RS_Graphic::getAnglesBase() const
+{
     double result = getVariableDouble("$ANGBASE",0.0);
     return result;
 }
@@ -654,9 +674,10 @@ void RS_Graphic::setAnglesBase(double baseAngle){
     addVariable("$ANGBASE", baseAngle, 50);
 }
 
-bool RS_Graphic::areAnglesCounterClockWise(){
-    int on = getVariableInt("$ANGDIR", 0);
-    return on == 0;
+bool RS_Graphic::areAnglesCounterClockWise() const
+{
+    int angDir = getVariableInt("$ANGDIR", 0);
+    return angDir == 0;
 }
 
 void RS_Graphic::setAnglesCounterClockwise(bool on){
@@ -692,7 +713,7 @@ void RS_Graphic::setCurrentUCS(LC_UCS* ucs){
     addVariable("$UCSYDIR", ucs->getYAxis(), 10);
 }
 
-LC_UCS* RS_Graphic::getCurrentUCS(){
+LC_UCS* RS_Graphic::getCurrentUCS() const {
     QString name = getVariableString("$UCSNAME", "");
     RS_Vector origin = getVariableVector("$UCSORG", RS_Vector(0.0, 0.0));
     int orthoType = getVariableInt("$UCSORTHOVIEW", 0);
@@ -745,7 +766,8 @@ RS2::Unit RS_Graphic::getUnit() const {
  * @return The linear format type for this document.
  * This is determined by the variable "$LUNITS".
  */
-RS2::LinearFormat RS_Graphic::getLinearFormat() {
+RS2::LinearFormat RS_Graphic::getLinearFormat() const
+{
     // fixme - sand - add caching
     int lunits = getVariableInt("$LUNITS", 2);
     return getLinearFormat(lunits);
@@ -754,7 +776,8 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() {
 /**
  * @return The linear format type used by the variable "$LUNITS" & "$DIMLUNIT".
  */
-RS2::LinearFormat RS_Graphic::getLinearFormat(int f){
+RS2::LinearFormat RS_Graphic::getLinearFormat(int f) const
+{
     switch (f) {
         case 1:
             return RS2::Scientific;
@@ -777,7 +800,8 @@ RS2::LinearFormat RS_Graphic::getLinearFormat(int f){
  * @return The linear precision for this document.
  * This is determined by the variable "$LUPREC".
  */
-int RS_Graphic::getLinearPrecision() {
+int RS_Graphic::getLinearPrecision() const
+{
     // fixme - sand - add caching
     return getVariableInt("$LUPREC", 4);
 }
@@ -786,7 +810,8 @@ int RS_Graphic::getLinearPrecision() {
  * @return The angle format type for this document.
  * This is determined by the variable "$AUNITS".
  */
-RS2::AngleFormat RS_Graphic::getAngleFormat() {
+RS2::AngleFormat RS_Graphic::getAngleFormat() const
+{
     // fixme - sand - add caching
     int aunits = getVariableInt("$AUNITS", 0);
 
@@ -810,7 +835,8 @@ RS2::AngleFormat RS_Graphic::getAngleFormat() {
  * @return The linear precision for this document.
  * This is determined by the variable "$LUPREC".
  */
-int RS_Graphic::getAnglePrecision() {
+int RS_Graphic::getAnglePrecision() const
+{
     // fixme - sand - add caching
     return getVariableInt("$AUPREC", 4);
 }
@@ -834,9 +860,10 @@ void RS_Graphic::setPaperInsertionBase(const RS_Vector& p) {
 /**
  * @return Paper size in graphic units.
  */
-RS_Vector RS_Graphic::getPaperSize() {
-    bool okX,okY;
-    double sX, sY;
+RS_Vector RS_Graphic::getPaperSize() const
+{
+    bool okX = false,okY = false;
+    double sX = 0., sY = 0.;
     LC_GROUP_GUARD("Print");
     {
         sX = LC_GET_STR("PaperSizeX", "0.0").toDouble(&okX);
@@ -847,7 +874,7 @@ RS_Vector RS_Graphic::getPaperSize() {
         def=RS_Units::convert(RS_Vector(sX,sY),
                               RS2::Millimeter, getUnit());
     }else{
-        def= RS_Units::convert(RS_Vector(210.0,297.0),
+        def= RS_Units::convert(g_paperSizeA4,
                                RS2::Millimeter, getUnit());
     }
 
@@ -876,7 +903,7 @@ void RS_Graphic::setPaperSize(const RS_Vector& s) {
 /**
  * @return Print Area size in graphic units.
  */
-RS_Vector RS_Graphic::getPrintAreaSize(bool total) {
+RS_Vector RS_Graphic::getPrintAreaSize(bool total) const {
     RS_Vector printArea = getPaperSize();
     RS2::Unit dest = getUnit();
     printArea.x -= RS_Units::convert(marginLeft + marginRight, RS2::Millimeter, dest);
@@ -937,24 +964,32 @@ void RS_Graphic::setPaperScale(double s) {
  * Centers drawing on page. Affects DXF variable $PINSBASE.
  */
 void RS_Graphic::centerToPage() {
-    RS_Vector size = getPrintAreaSize();
-    double scale = getPaperScale();
-    auto s=getSize();
-    auto sMin=getMin();
+    RS_Vector paperSize = getPrintAreaSize();
+    auto graphicSize=getSize();
+    auto graphicMin=getMin();
     /** avoid zero size, bug#3573158 */
-    if(std::abs(s.x)<RS_TOLERANCE) {
-        s.x=10.;
-        sMin.x=-5.;
+    if(std::abs(graphicSize.x)<RS_TOLERANCE) {
+        graphicSize.x=10.;
+        graphicMin.x=-5.;
     }
-    if(std::abs(s.y)<RS_TOLERANCE) {
-        s.y=10.;
-        sMin.y=-5.;
+    if(std::abs(graphicSize.y)<RS_TOLERANCE) {
+        graphicSize.y=10.;
+        graphicMin.y=-5.;
     }
 
-    RS_Vector pinsbase = (size-s*scale)/2.0 - sMin*scale;
-    RS2::Unit unit = getUnit();
-    pinsbase.x += RS_Units::convert(marginLeft, RS2::Millimeter, unit);
-    pinsbase.y += RS_Units::convert(marginBottom, RS2::Millimeter, unit);
+    const RS2::Unit unit = getUnit();
+    RS_Vector paperMin{
+        RS_Units::convert(marginLeft, RS2::Millimeter, unit),
+        RS_Units::convert(marginBottom, RS2::Millimeter, unit)
+    };
+    // paper printable area center
+    RS_Vector paperCenter = paperMin + paperSize * 0.5;
+    const double scale = getPaperScale();
+    // graphic center
+    RS_Vector scaledCenter = (graphicMin + graphicSize * 0.5) * scale;
+
+    // align graphic center to the paper center
+    RS_Vector pinsbase = paperCenter - scaledCenter;
 
     setPaperInsertionBase(pinsbase);
 }
@@ -963,35 +998,37 @@ void RS_Graphic::centerToPage() {
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
   // fixme - check margins support in single and tiled modes - looks like they are shown differently
-bool RS_Graphic::fitToPage() {
-    bool ret = true;
-    RS_Vector ps = getPrintAreaSize(false);
-    RS_Vector s = getSize();
+bool RS_Graphic::fitToPage()
+{
+    RS_Vector printSize = getPrintAreaSize(false);
+    RS_Vector graphicSize = getSize();
+    LC_ERR<<"graphic size: "<<graphicSize.x<<", "<<graphicSize.y;
+    LC_ERR<<"printSize size: "<<printSize.x<<", "<<printSize.y;
     /** avoid zero size, bug#3573158 */
-    if(std::abs(s.x)<RS_TOLERANCE) s.x=10.;
-    if(std::abs(s.y)<RS_TOLERANCE) s.y=10.;
-    double fx = RS_MAXDOUBLE;
-    double fy = RS_MAXDOUBLE;
-    //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
+    if(std::abs(graphicSize.x)<RS_TOLERANCE)
+        graphicSize.x=10.;
+    if(std::abs(graphicSize.y)<RS_TOLERANCE)
+        graphicSize.y=10.;
+    double scaleX = RS_MAXDOUBLE;
+    double scaleY = RS_MAXDOUBLE;
 
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
-    if (std::abs(s.x) > RS_TOLERANCE) {
-        fx = ps.x / s.x;
-        // ret=false;
+    if (std::abs(graphicSize.x) > RS_TOLERANCE) {
+        scaleX = printSize.x / graphicSize.x;
     }
-    if (std::abs(s.y) > RS_TOLERANCE) {
-        fy = ps.y / s.y;
-        // ret=false;
+    if (std::abs(graphicSize.y) > RS_TOLERANCE) {
+        scaleY = printSize.y / graphicSize.y;
     }
 
-    double fxy = std::min(fx, fy);
-    if (fxy >= RS_MAXDOUBLE || fxy <= 1.0e-10) {
-        setPaperSize(RS_Units::convert(RS_Vector(210.,297.), RS2::Millimeter, getUnit()));
-        ret=false;
+    double scale = std::min(scaleX, scaleY);
+    if (scale >= RS_MAXDOUBLE || scale <= 1.0e-10) {
+        setPaperSize(RS_Units::convert(g_paperSizeA4, RS2::Millimeter, getUnit()));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Invalid printing scale %1. Cannot fit print preview to page").arg(scale));
+        return false;
     }
-    setPaperScale(fxy);
+    setPaperScale(scale);
     centerToPage();
-    return ret;
+    return true;
 }
 
 bool RS_Graphic::isBiggerThanPaper() {
@@ -1032,23 +1069,12 @@ int RS_Graphic::clean() {
 
     int how_many = 0;
 
-        foreach (RS_Entity *e, entities) {
-            const RS_Vector &min = e->getMin();
-            const RS_Vector &max = e->getMax();
-            if (min.x > max.x
-                || min.y > max.y
-                || min.x > RS_MAXDOUBLE
-                || max.x > RS_MAXDOUBLE
-                || min.x < RS_MINDOUBLE
-                || max.x < RS_MINDOUBLE
-                || min.y > RS_MAXDOUBLE
-                || max.y > RS_MAXDOUBLE
-                || min.y < RS_MINDOUBLE
-                || max.y < RS_MINDOUBLE) {
-                removeEntity(e);
-                how_many += 1;
-            }
+    for(RS_Entity *e: std::as_const(entities)) {
+        if (e == nullptr || !validRange(e->getMin(), e->getMax())) {
+            removeEntity(e);
+            how_many += 1;
         }
+    }
     return how_many;
 }
 
@@ -1098,10 +1124,12 @@ void RS_Graphic::setPagesNum(const QString &horizXvert) {
     }
 }
 
-QString RS_Graphic::formatAngle(double angle) {
+QString RS_Graphic::formatAngle(double angle) const
+{
     return RS_Units::formatAngle(angle, getAngleFormat(), getAnglePrecision());
 }
 
-QString RS_Graphic::formatLinear(double linear) {
+QString RS_Graphic::formatLinear(double linear) const
+{
     return RS_Units::formatLinear(linear, getUnit(), getLinearFormat(), getLinearPrecision(), false);
 }

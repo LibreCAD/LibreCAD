@@ -46,7 +46,7 @@
  *  true to construct a modal dialog.
  */
 QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MText* text, bool forNew)
-    :LC_EntityPropertiesDlg(parent,"MTextProperties", pViewport)
+    :LC_EntityPropertiesDlg(parent, "MTextProperties", pViewport)
 {
     setupUi(this);
     m_alignmentButtons = {{bTL, bTC, bTR, bML, bMC, bMR, bBL, bBC, bBR}};
@@ -57,10 +57,9 @@ QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MTex
 QG_DlgMText::~QG_DlgMText()
 {
     try {
-    destroy();
-    } catch(...) {
-
-    }
+        destroy();
+    } catch(...)
+    {}
 }
 
 /*

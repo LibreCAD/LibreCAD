@@ -43,7 +43,7 @@ class QG_LayerWidget;
 class RS_LayerList {
 public:
     RS_LayerList();
-	   virtual ~RS_LayerList() = default;
+    virtual ~RS_LayerList() = default;
 
     void clear();
 
@@ -68,7 +68,8 @@ public:
     void activate(const QString& name, bool notify = false);
     void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
-    RS_Layer* getActive() {
+    RS_Layer* getActive() const
+    {
         return activeLayer;
     }
     virtual void add(RS_Layer* layer);

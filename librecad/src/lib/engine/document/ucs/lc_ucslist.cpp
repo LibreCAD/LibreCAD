@@ -23,13 +23,13 @@
 #include "lc_ucslist.h"
 
 LC_UCSList::LC_UCSList() {
-    ucsList.append(wcs);
+    ucsList.append(wcs.get());
     setModified(false);
 }
 
 void LC_UCSList::clear() {
     ucsList.clear();
-    ucsList.append(wcs);
+    ucsList.append(wcs.get());
     setModified(true);
 }
 
@@ -102,7 +102,7 @@ void LC_UCSList::edited([[maybe_unused]]LC_UCS *ucs) {
     setModified(true);
 }
 
-LC_UCS *LC_UCSList::find(const QString &name) {
+LC_UCS *LC_UCSList::find(const QString &name) const {
     for (auto v: ucsList){
         if (v->getName() == name){
             return v;
@@ -111,7 +111,8 @@ LC_UCS *LC_UCSList::find(const QString &name) {
     return nullptr;
 }
 
-int LC_UCSList::getIndex(const QString &name) {
+int LC_UCSList::getIndex(const QString &name) const
+{
     int result = -1;
 
     for (int i = 0; i < ucsList.size(); i++) {
@@ -124,7 +125,8 @@ int LC_UCSList::getIndex(const QString &name) {
     return result;
 }
 
-int LC_UCSList::getIndex(LC_UCS *ucs) {
+int LC_UCSList::getIndex(LC_UCS *ucs) const
+{
     return ucsList.indexOf(ucs);
 }
 
@@ -170,8 +172,9 @@ LC_UCS *LC_UCSList::findExisting(LC_UCS *candidate) {// check if layer already e
     return existingUCS;
 }
 
-LC_UCS *LC_UCSList::getWCS() {
-    return wcs;
+LC_UCS *LC_UCSList::getWCS() const
+{
+    return wcs.get();
 }
 
 void LC_UCSList::tryToSetActive(LC_UCS *ucs) {

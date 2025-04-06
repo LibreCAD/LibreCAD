@@ -95,7 +95,8 @@ void LC_ViewList::edited([[maybe_unused]]LC_View *view) {
     setModified(true);
 }
 
-LC_View *LC_ViewList::find(const QString &name) {
+LC_View *LC_ViewList::find(const QString &name) const
+{
     for (auto v: namedViews){
         if (v->getName() == name){
             return v;
@@ -104,7 +105,8 @@ LC_View *LC_ViewList::find(const QString &name) {
     return nullptr;
 }
 
-int LC_ViewList::getIndex(const QString &name) {
+int LC_ViewList::getIndex(const QString &name) const
+{
     int result = -1;
 
     for (int i = 0; i < namedViews.size(); i++) {
@@ -117,7 +119,8 @@ int LC_ViewList::getIndex(const QString &name) {
     return result;
 }
 
-int LC_ViewList::getIndex(LC_View *view) {
+int LC_ViewList::getIndex(LC_View *view) const
+{
     return namedViews.indexOf(view);
 }
 

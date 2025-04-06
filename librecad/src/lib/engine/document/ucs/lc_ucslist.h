@@ -23,12 +23,14 @@
 #ifndef LC_UCSLIST_H
 #define LC_UCSLIST_H
 
+#include <memory>
+
 #include <QList>
 #include "lc_ucs.h"
 
 class LC_UCSListListener {
 public:
-    virtual void ucsListModified([[maybe_unused]]bool changed) {};
+    virtual void ucsListModified([[maybe_unused]]bool changed) {}
 };
 
 
@@ -62,9 +64,9 @@ public:
     void remove(const QString &name);
     void edited(LC_UCS *ucs);
     void rename(LC_UCS* ucs, const QString& newName);
-    LC_UCS *find(const QString &name);
-    int getIndex(const QString &name);
-    int getIndex(LC_UCS *ucs);
+    LC_UCS *find(const QString &name) const;
+    int getIndex(const QString &name) const;
+    int getIndex(LC_UCS *ucs) const;
     /**
     * Sets the ucss lists modified status to 'm'.
     */
@@ -98,8 +100,8 @@ public:
 
     LC_UCS *tryAddUCS(LC_UCS *candidate);
     LC_UCS *findExisting(LC_UCS *candidate);
-    LC_UCS *getWCS();
-    LC_UCS* getActive(){return activeUCS;}
+    LC_UCS *getWCS() const;
+    LC_UCS* getActive() const{return activeUCS;}
 
     void tryToSetActive(LC_UCS *ucs);
 
@@ -108,7 +110,7 @@ protected:
     QList<LC_UCSListListener *> ucsListListeners;
     LC_UCS* activeUCS = nullptr;
     bool modified = false;
-    LC_WCS* wcs = new LC_WCS();
+    std::unique_ptr<LC_WCS> wcs = std::make_unique<LC_WCS>();
 };
 
 #endif // LC_UCSLIST_H

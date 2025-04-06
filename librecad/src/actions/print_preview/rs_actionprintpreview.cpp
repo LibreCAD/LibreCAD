@@ -195,7 +195,7 @@ bool RS_ActionPrintPreview::doProcessCommand( [[maybe_unused]]int status, const 
             //        qDebug()<<"offset by absolute coordinate: ";
 
             const int commaPos = coord.indexOf(',');
-            bool ok1, ok2;
+            bool ok1 = false, ok2 = false;
             double x = RS_Math::eval(coord.left(commaPos), &ok1);
             double y = RS_Math::eval(coord.mid(commaPos+1), &ok2);
             if (ok1 && ok2) {
@@ -269,7 +269,7 @@ void RS_ActionPrintPreview::fit() {
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Options->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
-        if ( graphic->fitToPage()==false) {
+        if (!graphic->fitToPage()) {
             commandMessage(tr("RS_ActionPrintPreview::fit(): Invalid paper size"));
         }
         else{

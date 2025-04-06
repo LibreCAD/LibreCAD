@@ -62,9 +62,9 @@ public:
     void remove(const QString &name);
     void edited(LC_View *view);
     void rename(LC_View* view, const QString& newName);
-    LC_View *find(const QString &name);
-    int getIndex(const QString &name);
-    int getIndex(LC_View *view);
+    LC_View *find(const QString &name) const;
+    int getIndex(const QString &name) const;
+    int getIndex(LC_View *view) const;
     /**
     * Sets the views lists modified status to 'm'.
     */
