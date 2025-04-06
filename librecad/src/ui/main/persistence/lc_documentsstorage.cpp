@@ -104,6 +104,8 @@ bool LC_DocumentsStorage::saveDocumentAs(RS_Document* document, RS_GraphicView *
     return result;
 }
 
+
+
 bool LC_DocumentsStorage::loadDocument(RS_Document *document, const QString &fileName){
     return loadDocument(document, fileName, RS2::FormatUnknown);
 }
@@ -241,6 +243,20 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
         ret = true;
     }
     return ret;
+}
+
+bool LC_DocumentsStorage::exportGraphics(RS_Graphic* graphic, const QString& fileName, RS2::FormatType formatType) {
+    graphic->setFilename(fileName);
+    graphic->setFormatType(formatType);
+    if (!fileName.isEmpty()) {
+        bool result = RS_FileIO::instance()->fileExport(*graphic, fileName, formatType);
+        if (result) {
+            QFileInfo finfo(fileName);
+            graphic->markSaved(finfo.lastModified());
+        }
+        return result;
+    }
+    return false;
 }
 
 bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &filename, RS2::FormatType type, bool forceSave) {

@@ -135,6 +135,8 @@ include_directories(librecad/src/lib/engine/document/ucs)
 include_directories(librecad/src/lib/fileio)
 include_directories(librecad/src/lib/filters)
 include_directories(librecad/src/lib/generators)
+include_directories(librecad/src/lib/generators/layers)
+include_directories(librecad/src/lib/generators/makercamsvg)
 include_directories(librecad/src/lib/gui)
 include_directories(librecad/src/lib/gui/grid)
 include_directories(librecad/src/lib/gui/render)
@@ -164,6 +166,7 @@ include_directories(librecad/src/ui/dialogs/settings)
 include_directories(librecad/src/ui/dialogs/entity)
 include_directories(librecad/src/ui/dialogs/file)
 include_directories(librecad/src/ui/dialogs/file/export)
+include_directories(librecad/src/ui/dialogs/file/export_layers)
 include_directories(librecad/src/ui/dialogs/main)
 include_directories(librecad/src/ui/action_options)
 include_directories(librecad/src/ui/action_options/draw)
@@ -449,10 +452,10 @@ set(SOURCES
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.h
 		librecad/src/actions/drawing/edit/rs_actioneditundo.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditundo.h
-		librecad/src/actions/file/rs_actionfilenewtemplate.cpp
-		librecad/src/actions/file/rs_actionfilenewtemplate.h
-		librecad/src/actions/file/rs_actionfileopen.cpp
-		librecad/src/actions/file/rs_actionfileopen.h
+		librecad/src/actions/not_used/rs_actionfilenewtemplate.cpp
+		librecad/src/actions/not_used/rs_actionfilenewtemplate.h
+        librecad/src/actions/not_used/rs_actionfileopen.cpp
+        librecad/src/actions/not_used/rs_actionfileopen.h
 		librecad/src/actions/drawing/info/rs_actioninfoangle.cpp
 		librecad/src/actions/drawing/info/rs_actioninfoangle.h
 		librecad/src/actions/drawing/info/rs_actioninfoarea.cpp
@@ -728,11 +731,13 @@ set(SOURCES
         librecad/src/lib/filters/rs_filterjww.h
         librecad/src/lib/filters/rs_filterlff.cpp
         librecad/src/lib/filters/rs_filterlff.h
-        librecad/src/lib/generators/lc_makercamsvg.cpp
-        librecad/src/lib/generators/lc_makercamsvg.h
-        librecad/src/lib/generators/lc_xmlwriterinterface.h
-        librecad/src/lib/generators/lc_xmlwriterqxmlstreamwriter.cpp
-        librecad/src/lib/generators/lc_xmlwriterqxmlstreamwriter.h
+		librecad/src/lib/generators/makercamsvg/lc_makercamsvg.cpp
+		librecad/src/lib/generators/makercamsvg/lc_makercamsvg.h
+		librecad/src/lib/generators/makercamsvg/lc_xmlwriterinterface.h
+		librecad/src/lib/generators/makercamsvg/lc_xmlwriterqxmlstreamwriter.cpp
+		librecad/src/lib/generators/makercamsvg/lc_xmlwriterqxmlstreamwriter.h
+		librecad/src/lib/generators/layers/lc_layersexporter.h
+		librecad/src/lib/generators/layers/lc_layersexporter.cpp
         librecad/src/lib/gui/rs_commandevent.h
         librecad/src/lib/gui/rs_coordinateevent.h
         librecad/src/lib/gui/rs_dialogfactory.cpp
@@ -893,6 +898,12 @@ set(SOURCES
 		librecad/src/ui/dialogs/actions/qg_layerdialog.h
 		librecad/src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp
 		librecad/src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.h
+		librecad/src/ui/dialogs/file/export_layers/lc_layerexportoptions.h
+		librecad/src/ui/dialogs/file/export_layers/lc_layerexportoptions.cpp
+		librecad/src/ui/dialogs/file/export_layers/lc_filedialogservice.cpp
+		librecad/src/ui/dialogs/file/export_layers/lc_filedialogservice.h
+		librecad/src/ui/dialogs/file/export_layers/lc_exportlayersdialogservice.h
+		librecad/src/ui/dialogs/file/export_layers/lc_exportlayersdialogservice.cpp
 		librecad/src/ui/action_options/insert/qg_libraryinsertoptions.cpp
 		librecad/src/ui/action_options/insert/qg_libraryinsertoptions.h
 		librecad/src/ui/action_options/line/qg_lineangleoptions.cpp
@@ -969,8 +980,6 @@ set(SOURCES
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.h
 		librecad/src/ui/dock_widgets/lc_caddockwidget.cpp
 		librecad/src/ui/dock_widgets/lc_caddockwidget.h
-		librecad/src/ui/dialogs/file/lc_filedialogservice.cpp
-		librecad/src/ui/dialogs/file/lc_filedialogservice.h
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.cpp
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.h
 		librecad/src/ui/main/init/lc_widgetfactory.cpp

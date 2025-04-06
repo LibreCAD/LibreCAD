@@ -36,6 +36,7 @@ class QString;
 class RS_EntityContainer;
 class RS_GraphicView;
 class RS_LayerList;
+class LC_LayersExportOptions;
 
 /*
     This action class exports the current selected layers as a drawing file, 
@@ -54,6 +55,9 @@ public:
                            RS_LayerList* inputLayersList,
                            Mode inputExportMode);
     void init(int status) override;
+    bool collectLayersToExport(LC_LayersExportOptions* exportOptions);
+    void exportLayers(LC_LayersExportOptions& exportOptions, RS_Graphic* sourceGraphic);
+    void performExport();
     void trigger() override;
 private:
     RS_LayerList* layersList = nullptr;

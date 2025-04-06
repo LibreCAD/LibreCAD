@@ -390,6 +390,7 @@ HEADERS += \
     lib/filters/rs_filterinterface.h \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
+    lib/generators/layers/lc_layersexporter.h \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
@@ -398,8 +399,10 @@ HEADERS += \
     ui/actions/lc_actioncontext.h \
     ui/components/creators/lc_creatorinvoker.h \
     ui/components/toolbars/lc_snapoptionsholdermanager.h \
+    ui/dialogs/file/export_layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
+    ui/dock_widgets/layers_tree/lc_layerexportoptions.h \
     ui/dock_widgets/lc_widgets_common.h \
     ui/dock_widgets/library_widget/lc_librarywidget.h \
     ui/main/init/lc_applicationwindowinitializer.h \
@@ -521,6 +524,7 @@ SOURCES += \
     lib/engine/settings/lc_settingsexporter.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
+    lib/generators/layers/lc_layersexporter.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
@@ -528,8 +532,10 @@ SOURCES += \
     ui/actions/lc_actioncontext.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
+    ui/dialogs/file/export_layers/lc_exportlayersdialogservice.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
+    ui/dock_widgets/layers_tree/lc_layerexportoptions.cpp \
     ui/dock_widgets/library_widget/lc_librarywidget.cpp \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/init/lc_toolbarfactory.cpp \
@@ -1554,6 +1560,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidget.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui \
        ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui \
+       ui/dock_widgets/layers_tree/lc_layerexportoptions.ui \
        ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui \
        ui/dock_widgets/library_widget/lc_librarywidget.ui \
        ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui \

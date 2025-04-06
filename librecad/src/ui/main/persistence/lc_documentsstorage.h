@@ -39,6 +39,7 @@ public:
     bool saveBlockAs(RS_Graphic* block, const QString& fileName);
     bool autoSaveDocument(RS_Document *document,RS_GraphicView * graphicView, QString& autosaveFileName);
     bool saveDocumentAs(RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
+    bool exportGraphics(RS_Graphic *document,const QString &fileName, RS2::FormatType formatType);
     bool loadDocument(RS_Document *document, const QString &fileName, RS2::FormatType type);
     bool loadDocument(RS_Document *document, const QString &fileName);
     bool loadDocumentFromTemplate(RS_Document *document, RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type);
