@@ -54,6 +54,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 
     if (!fixed) {
         fit();
+        updateOptions();
     }
     setPaperScaleFixed(fixed);
 }
