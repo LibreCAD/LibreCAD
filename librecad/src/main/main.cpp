@@ -379,6 +379,8 @@ int main(int argc, char** argv)
             appWin.slotFileNewFromDefaultTemplate();
         }
 
+        appWin.initCompleted();
+
         if (show_splash) {
             splash->finish(&appWin);
             splash.release();

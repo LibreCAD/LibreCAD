@@ -300,6 +300,14 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
             doActivate(m_windowList.back());
         }
     }
+
+    enableFileActions();
+}
+
+void QC_ApplicationWindow::enableFileActions() {
+    if (m_windowList.isEmpty()) {
+        enableFileActions(nullptr);
+    }
 }
 
 // fixme - sand - files - change to signals?
@@ -1206,6 +1214,10 @@ void QC_ApplicationWindow::notificationMessage(const QString& msg, int timeout){
     if (duplicateMessageInCmdWidget){
         m_commandWidget->appendHistory(msg);
     }
+}
+
+void QC_ApplicationWindow::initCompleted() {
+    enableFileActions();
 }
 
 /**
