@@ -27,26 +27,9 @@ LC_ViewList::LC_ViewList() {
 }
 
 void LC_ViewList::clear() {
-    namedViews.clear();
+    m_namedViews.clear();
     setModified(false);
 }
-
-QList<LC_View *>::iterator LC_ViewList::begin() {
-    return namedViews.begin();
-}
-
-QList<LC_View *>::iterator LC_ViewList::end() {
-    return namedViews.end();
-}
-
-QList<LC_View *>::const_iterator LC_ViewList::begin() const {
-    return namedViews.begin();
-}
-
-QList<LC_View *>::const_iterator LC_ViewList::end() const {
-    return namedViews.end();
-}
-
 
 void LC_ViewList::add(LC_View *view) {
     if (view == nullptr) {
@@ -56,7 +39,7 @@ void LC_ViewList::add(LC_View *view) {
     // check if layer already exists:
     LC_View *v = find(view->getName());
     if (v == nullptr) {
-        namedViews.append(view);
+        m_namedViews.append(view);
     }
 }
 
@@ -68,13 +51,13 @@ void LC_ViewList::addNew(LC_View *view) {
     // check if layer already exists:
     LC_View *v = find(view->getName());
     if (v == nullptr) {
-        namedViews.append(view);
+        m_namedViews.append(view);
         setModified(true);
     }
 }
 
 void LC_ViewList::remove(LC_View *view) {
-    namedViews.removeOne(view);
+    m_namedViews.removeOne(view);
     setModified(true);
     delete view;
 }
@@ -96,7 +79,7 @@ void LC_ViewList::edited([[maybe_unused]]LC_View *view) {
 }
 
 LC_View *LC_ViewList::find(const QString &name) {
-    for (auto v: namedViews){
+    for (auto v: m_namedViews){
         if (v->getName() == name){
             return v;
         }
@@ -107,8 +90,8 @@ LC_View *LC_ViewList::find(const QString &name) {
 int LC_ViewList::getIndex(const QString &name) {
     int result = -1;
 
-    for (int i = 0; i < namedViews.size(); i++) {
-        LC_View *v = namedViews.at(i);
+    for (int i = 0; i < m_namedViews.size(); i++) {
+        LC_View *v = m_namedViews.at(i);
         if (v->getName() == name) {
             result = i;
             break;
@@ -118,10 +101,10 @@ int LC_ViewList::getIndex(const QString &name) {
 }
 
 int LC_ViewList::getIndex(LC_View *view) {
-    return namedViews.indexOf(view);
+    return m_namedViews.indexOf(view);
 }
 
 void LC_ViewList::setModified(bool m) {
-    modified = m;
+    m_modified = m;
     fireModified(m);
 }

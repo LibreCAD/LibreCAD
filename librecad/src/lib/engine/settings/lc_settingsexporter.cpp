@@ -54,6 +54,10 @@ bool LC_SettingsExporter::obtainFileName(QWidget *parent, QString &fileName, boo
         QStringList files = fileDlg.selectedFiles();
         if (!files.isEmpty()) {
             fileName = files[0];
+
+            if (!fileName.endsWith(".lcs")) {
+                fileName = fileName + ".lcs";
+            }
             proceed = true;
         }
     }

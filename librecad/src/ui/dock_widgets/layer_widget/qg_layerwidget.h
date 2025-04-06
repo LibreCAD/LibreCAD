@@ -81,24 +81,24 @@ public:
 
     RS_Layer* getActiveLayer() const
     {
-        return activeLayer;
+        return m_activeLayer;
     }
     void setActiveLayer(RS_Layer* l)
     {
-        activeLayer = l;
+        m_activeLayer = l;
     }
 
 private:
-    QList<RS_Layer*> listLayer;
-    QIcon layerVisible;
-    QIcon layerHidden;
-    QIcon layerDefreeze;
-    QIcon layerFreeze;
-    QIcon layerPrint;
-    QIcon layerNoPrint;
-    QIcon layerConstruction;
-    QIcon layerNoConstruction;
-    RS_Layer* activeLayer {nullptr};
+    QList<RS_Layer*> m_listLayer;
+    QIcon m_iconLayerVisible;
+    QIcon m_iconLayerHidden;
+    QIcon m_iconLayerDefreeze;
+    QIcon m_iconLayerFreeze;
+    QIcon m_iconLayerPrint;
+    QIcon m_iconLayerNoPrint;
+    QIcon m_iconLayerConstruction;
+    QIcon m_iconLayerNoConstruction;
+    RS_Layer* m_activeLayer {nullptr};
 };
 
 /**
@@ -134,7 +134,7 @@ public:
     }
 
     QLineEdit* getMatchLayerName() {
-        return matchLayerName;
+        return m_matchLayerName;
     }
     /**
      * @brief getActiveName
@@ -161,11 +161,11 @@ protected:
 private:
     RS_LayerList* m_layerList = nullptr;
     bool m_showByBlock = false;
-    QLineEdit* matchLayerName = nullptr;
-    QTableView* layerView = nullptr;
-    QG_LayerModel *layerModel = nullptr;
-    RS_Layer* lastLayer = nullptr;
-    QG_ActionHandler* actionHandler = nullptr;
+    QLineEdit* m_matchLayerName = nullptr;
+    QTableView* m_layerView = nullptr;
+    QG_LayerModel *m_layerModel = nullptr;
+    RS_Layer* m_lastLayer = nullptr;
+    QG_ActionHandler* m_actionHandler = nullptr;
     void restoreSelections();
 };
 

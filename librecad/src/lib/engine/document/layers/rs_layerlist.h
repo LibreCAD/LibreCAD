@@ -65,13 +65,15 @@ public:
     QList<RS_Layer*>::const_iterator end()const;
 
     void activate(const QString& name, bool notify = false);
+    void fireLayerActivated();
     void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
     RS_Layer* getActive() {
         return m_activeLayer;
     }
-    virtual void add(RS_Layer* layer);
-    virtual void remove(RS_Layer* layer);
+    virtual void add(RS_Layer* layerToAdd);
+    void fireLayerRemoved(RS_Layer* layer);
+    virtual void remove(RS_Layer* layerToRemove);
     virtual void edit(RS_Layer* layer, const RS_Layer& source);
     RS_Layer* find(const QString& name);
     int getIndex(const QString& name);
@@ -111,6 +113,7 @@ public:
      * @brief sort by layer names
      */
     void sort();
+    void fireLayerAdded(RS_Layer* layer);
     void slotUpdateLayerList();
     friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
 

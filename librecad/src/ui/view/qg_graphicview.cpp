@@ -523,6 +523,7 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
         // fixme - sand - rework this and ensure there is not delay for pan start!!!
         auto *action = new RS_ActionZoomPan(m_actionContext);
         if (setCurrentAction(action)){
+            // FIXME - SAND - Crash is here due to already deleted action???
             action->mousePressEvent(event); // try to avoid delay as possible
         }
     }

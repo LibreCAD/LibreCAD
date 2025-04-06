@@ -42,20 +42,16 @@ public:
  * @return Number of views in the list.
  */
     unsigned int count() const {
-        return namedViews.count();
+        return m_namedViews.count();
     }
 
 /**
  * @return View at given position or NULL if i is out of range.
  */
     LC_View *at(unsigned int i) {
-        return namedViews.at(i);
+        return m_namedViews.at(i);
     }
 
-    QList<LC_View *>::iterator begin();
-    QList<LC_View *>::iterator end();
-    QList<LC_View *>::const_iterator begin() const;
-    QList<LC_View *>::const_iterator end() const;
     void add(LC_View *view);
     void addNew(LC_View *view);
     void remove(LC_View *view);
@@ -75,31 +71,31 @@ public:
      * @retval false The views list has not been modified.
      */
     virtual bool isModified() const {
-        return modified;
+        return m_modified;
     }
 
     void addListener(LC_ViewListListener *listener) {
         if (listener != nullptr) {
-            viewListListeners.push_back(listener);
+            m_viewListListeners.push_back(listener);
         }
     }
 
     void removeListener(LC_ViewListListener *listener) {
         if (listener != nullptr) {
-            viewListListeners.removeOne(listener);
+            m_viewListListeners.removeOne(listener);
         }
     }
 
     void fireModified(bool value) {
-        for (auto l: viewListListeners) {
+        for (auto l: m_viewListListeners) {
             l->viewsListModified(value);
         }
     }
 
 protected:
-    QList<LC_View *> namedViews;
-    QList<LC_ViewListListener *> viewListListeners;
-    bool modified = false;
+    QList<LC_View *> m_namedViews;
+    QList<LC_ViewListListener *> m_viewListListeners;
+    bool m_modified = false;
 };
 
 #endif // LC_VIEWSLIST_H

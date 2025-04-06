@@ -27,7 +27,6 @@
 
 #include<vector>
 
-#include <QObject>
 #include <QRegularExpression>
 #include <QTextStream>
 
@@ -408,6 +407,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
     if (action != RS2::ActionNone) {
         //found
         const QString& cmd = (m_actionToCommand.count(action) == 1) ? m_actionToCommand.at(action) : QString{};
+        // fixme - sand - make better command context indication - #2084
         RS_DIALOGFACTORY->commandMessage(QObject::tr("keycode: %1 (%2)").arg(code).arg(cmd));
     } else {
         RS_DIALOGFACTORY->commandMessage(QObject::tr("invalid keycode: %1").arg(code));

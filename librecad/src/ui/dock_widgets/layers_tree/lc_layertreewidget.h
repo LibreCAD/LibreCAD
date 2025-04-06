@@ -25,14 +25,11 @@
 #ifndef LC_LAYERTREEWIDGET_H
 #define LC_LAYERTREEWIDGET_H
 
-#include <QAbstractItemView>
+
 #include <QAbstractTableModel>
 #include <QCheckBox>
-#include <QIcon>
-#include <QItemSelection>
 #include <QWidget>
 
-#include "rs_debug.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_layerlist.h"
@@ -121,21 +118,21 @@ protected:
     void duplicateSelectionToLayer();
 
 private:
-    RS_LayerList *m_layerList = nullptr;
-    QLineEdit *m_matchLayerName = nullptr;
-    QCheckBox *m_matchModeCheckBox = nullptr;
-    LC_LayerTreeView *m_layerTreeView = nullptr;
-    LC_LayerTreeModel *m_layerTreeModel = nullptr;
-    RS_GraphicView *m_graphicView = nullptr;
-    RS_Document *m_document = nullptr;
-    QG_ActionHandler *m_actionHandler = nullptr;
+    RS_LayerList *m_layerList {nullptr};
+    QLineEdit *m_matchLayerName {nullptr};
+    QCheckBox *m_matchModeCheckBox {nullptr};
+    LC_LayerTreeView *m_layerTreeView {nullptr};
+    LC_LayerTreeModel *m_layerTreeModel {nullptr};
+    RS_GraphicView *m_graphicView {nullptr};
+    RS_Document *m_document {nullptr};
+    QG_ActionHandler *m_actionHandler {nullptr};
     bool m_flatListMode{false};
-    QToolButton *m_btnCollapseSecondary = nullptr;
-    QToolButton *m_btnCollapseAll = nullptr;
-    QToolButton *m_btnExpandAll = nullptr;
-    QToolButton *m_btnListMode = nullptr;
-    QToolButton *m_btnShowSecondaryLayers = nullptr;
-    QToolButton *m_btnAddDimensional = nullptr;
+    QToolButton *m_btnCollapseSecondary {nullptr};
+    QToolButton *m_btnCollapseAll {nullptr};
+    QToolButton *m_btnExpandAll {nullptr};
+    QToolButton *m_btnListMode {nullptr};
+    QToolButton *m_btnShowSecondaryLayers {nullptr};
+    QToolButton *m_btnAddDimensional {nullptr};
 
     /*
     * layer activation is invoked from the widget, by click on item.

@@ -28,7 +28,8 @@
 
 class LC_UCSListListener {
 public:
-    virtual void ucsListModified([[maybe_unused]]bool changed) {};
+    virtual void ucsListModified([[maybe_unused]]bool changed) {}
+    virtual ~LC_UCSListListener() = default;
 };
 
 
@@ -42,20 +43,16 @@ public:
  * @return Number of ucss in the list.
  */
     unsigned int count() const {
-        return ucsList.count();
+        return m_ucsList.count();
     }
 
 /**
  * @return ucs at given position or NULL if it is out of range.
  */
     LC_UCS *at(unsigned int i) {
-        return ucsList.at(i);
+        return m_ucsList.at(i);
     }
 
-    QList<LC_UCS *>::iterator begin();
-    QList<LC_UCS *>::iterator end();
-    QList<LC_UCS *>::const_iterator begin() const;
-    QList<LC_UCS *>::const_iterator end() const;
     void add(LC_UCS *ucs);
     void addNew(LC_UCS *ucs);
     void remove(LC_UCS *ucs);
@@ -75,23 +72,23 @@ public:
      * @retval false The ucss list has not been modified.
      */
     virtual bool isModified() const {
-        return modified;
+        return m_modified;
     }
 
     void addListener(LC_UCSListListener *listener) {
         if (listener != nullptr) {
-            ucsListListeners.push_back(listener);
+            m_ucsListListeners.push_back(listener);
         }
     }
 
     void removeListener(LC_UCSListListener *listener) {
         if (listener != nullptr) {
-            ucsListListeners.removeOne(listener);
+            m_ucsListListeners.removeOne(listener);
         }
     }
 
     void fireModified(bool value) {
-        for (auto l: ucsListListeners) {
+        for (auto l: m_ucsListListeners) {
             l->ucsListModified(value);
         }
     }
@@ -99,16 +96,16 @@ public:
     LC_UCS *tryAddUCS(LC_UCS *candidate);
     LC_UCS *findExisting(LC_UCS *candidate);
     LC_UCS *getWCS();
-    LC_UCS* getActive(){return activeUCS;}
+    LC_UCS* getActive(){return m_activeUCS;}
 
     void tryToSetActive(LC_UCS *ucs);
 
 protected:
-    QList<LC_UCS *> ucsList;
-    QList<LC_UCSListListener *> ucsListListeners;
-    LC_UCS* activeUCS = nullptr;
-    bool modified = false;
-    LC_WCS* wcs = new LC_WCS();
+    QList<LC_UCS *> m_ucsList;
+    QList<LC_UCSListListener *> m_ucsListListeners;
+    LC_UCS* m_activeUCS = nullptr;
+    bool m_modified = false;
+    LC_WCS* m_wcs = new LC_WCS();
 };
 
 #endif // LC_UCSLIST_H
