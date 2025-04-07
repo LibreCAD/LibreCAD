@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.28)
 project(LibreCAD VERSION 2.2.2)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -31,7 +31,7 @@ add_compile_definitions(LC_VERSION=2.2.2.3-alpha)
 add_compile_definitions(LC_PRERELEASE=true)
 
 
-find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Core5Compat Network REQUIRED)
+find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 #qt_standard_project_setup()
@@ -1625,68 +1625,68 @@ set(CMAKE_AUTOUIC_OPTIONS --connections string)
 
 set(TS_DIR ../librecad/ts)
 set(TS_FILES
-../librecad/ts/librecad_ar.ts
-../librecad/ts/librecad_ca.ts
-../librecad/ts/librecad_cs.ts
-../librecad/ts/librecad_da.ts
-../librecad/ts/librecad_de.ts
-../librecad/ts/librecad_el.ts
-../librecad/ts/librecad_en_au.ts
-../librecad/ts/librecad_en.ts
-../librecad/ts/librecad_es_ar.ts
-../librecad/ts/librecad_es_bo.ts
-../librecad/ts/librecad_es_cl.ts
-../librecad/ts/librecad_es_co.ts
-../librecad/ts/librecad_es_cr.ts
-../librecad/ts/librecad_es_do.ts
-../librecad/ts/librecad_es_ec.ts
-../librecad/ts/librecad_es_gt.ts
-../librecad/ts/librecad_es_hn.ts
-../librecad/ts/librecad_es_mx.ts
-../librecad/ts/librecad_es_ni.ts
-../librecad/ts/librecad_es_pa.ts
-../librecad/ts/librecad_es_pe.ts
-../librecad/ts/librecad_es_pr.ts
-../librecad/ts/librecad_es_py.ts
-../librecad/ts/librecad_es_sv.ts
-../librecad/ts/librecad_es.ts
-../librecad/ts/librecad_es_us.ts
-../librecad/ts/librecad_es_uy.ts
-../librecad/ts/librecad_es_ve.ts
-../librecad/ts/librecad_et.ts
-../librecad/ts/librecad_eu.ts
-../librecad/ts/librecad_fi.ts
-../librecad/ts/librecad_fr.ts
-../librecad/ts/librecad_gl.ts
-../librecad/ts/librecad_he.ts
-../librecad/ts/librecad_hi.ts
-../librecad/ts/librecad_hu.ts
-../librecad/ts/librecad_id_ID.ts
-../librecad/ts/librecad_it.ts
-../librecad/ts/librecad_ja.ts
-../librecad/ts/librecad_ka.ts
-../librecad/ts/librecad_ko.ts
-../librecad/ts/librecad_lv.ts
-../librecad/ts/librecad_mk.ts
-../librecad/ts/librecad_nl.ts
-../librecad/ts/librecad_no.ts
-../librecad/ts/librecad_pa.ts
-../librecad/ts/librecad_pl.ts
-../librecad/ts/librecad_pt_br.ts
-../librecad/ts/librecad_pt_pt.ts
-../librecad/ts/librecad_ro_ro.ts
-../librecad/ts/librecad_ru.ts
-../librecad/ts/librecad_sk.ts
-../librecad/ts/librecad_sl.ts
-../librecad/ts/librecad_sq_al.ts
-../librecad/ts/librecad_sr.ts
-../librecad/ts/librecad_sv.ts
-../librecad/ts/librecad_ta.ts
-../librecad/ts/librecad_th.ts
-../librecad/ts/librecad_tr.ts
-../librecad/ts/librecad_uk.ts
-../librecad/ts/librecad_zh_cn.ts
-../librecad/ts/librecad_zh_tw.ts
+librecad/ts/librecad_ar.ts
+librecad/ts/librecad_ca.ts
+librecad/ts/librecad_cs.ts
+librecad/ts/librecad_da.ts
+librecad/ts/librecad_de.ts
+librecad/ts/librecad_el.ts
+librecad/ts/librecad_en_au.ts
+librecad/ts/librecad_en.ts
+librecad/ts/librecad_es_ar.ts
+librecad/ts/librecad_es_bo.ts
+librecad/ts/librecad_es_cl.ts
+librecad/ts/librecad_es_co.ts
+librecad/ts/librecad_es_cr.ts
+librecad/ts/librecad_es_do.ts
+librecad/ts/librecad_es_ec.ts
+librecad/ts/librecad_es_gt.ts
+librecad/ts/librecad_es_hn.ts
+librecad/ts/librecad_es_mx.ts
+librecad/ts/librecad_es_ni.ts
+librecad/ts/librecad_es_pa.ts
+librecad/ts/librecad_es_pe.ts
+librecad/ts/librecad_es_pr.ts
+librecad/ts/librecad_es_py.ts
+librecad/ts/librecad_es_sv.ts
+librecad/ts/librecad_es.ts
+librecad/ts/librecad_es_us.ts
+librecad/ts/librecad_es_uy.ts
+librecad/ts/librecad_es_ve.ts
+librecad/ts/librecad_et.ts
+librecad/ts/librecad_eu.ts
+librecad/ts/librecad_fi.ts
+librecad/ts/librecad_fr.ts
+librecad/ts/librecad_gl.ts
+librecad/ts/librecad_he.ts
+librecad/ts/librecad_hi.ts
+librecad/ts/librecad_hu.ts
+librecad/ts/librecad_id_ID.ts
+librecad/ts/librecad_it.ts
+librecad/ts/librecad_ja.ts
+librecad/ts/librecad_ka.ts
+librecad/ts/librecad_ko.ts
+librecad/ts/librecad_lv.ts
+librecad/ts/librecad_mk.ts
+librecad/ts/librecad_nl.ts
+librecad/ts/librecad_no.ts
+librecad/ts/librecad_pa.ts
+librecad/ts/librecad_pl.ts
+librecad/ts/librecad_pt_br.ts
+librecad/ts/librecad_pt_pt.ts
+librecad/ts/librecad_ro_ro.ts
+librecad/ts/librecad_ru.ts
+librecad/ts/librecad_sk.ts
+librecad/ts/librecad_sl.ts
+librecad/ts/librecad_sq_al.ts
+librecad/ts/librecad_sr.ts
+librecad/ts/librecad_sv.ts
+librecad/ts/librecad_ta.ts
+librecad/ts/librecad_th.ts
+librecad/ts/librecad_tr.ts
+librecad/ts/librecad_uk.ts
+librecad/ts/librecad_zh_cn.ts
+librecad/ts/librecad_zh_tw.ts
 )
 
 qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
