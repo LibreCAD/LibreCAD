@@ -1002,8 +1002,6 @@ bool RS_Graphic::fitToPage()
 {
     RS_Vector printSize = getPrintAreaSize(false);
     RS_Vector graphicSize = getSize();
-    LC_ERR<<"graphic size: "<<graphicSize.x<<", "<<graphicSize.y;
-    LC_ERR<<"printSize size: "<<printSize.x<<", "<<printSize.y;
     /** avoid zero size, bug#3573158 */
     if(std::abs(graphicSize.x)<RS_TOLERANCE)
         graphicSize.x=10.;
