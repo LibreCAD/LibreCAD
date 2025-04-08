@@ -85,6 +85,7 @@ public:
     void completeInit();
     QAction* getActionByType(RS2::ActionType actionType);
     static void associateQActionWithActionType(QAction* action, RS2::ActionType actionType);
+    void persist();
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);

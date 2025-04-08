@@ -233,6 +233,11 @@ void LC_ActionGroupManager::associateQActionWithActionType(QAction *action, RS2:
     action->setProperty("RS2:actionType", actionType);
 }
 
+void LC_ActionGroupManager::persist() {
+    // intentionally do nothing so far. This method will be expanded later, as if will be clear
+    // whether it's necessary to save shortcuts on program's exit or not.
+}
+
 void LC_ActionGroupManager::completeInit(){
    for (const auto action: m_actionsMap) {
        auto property = action->property("RS2:actionType");
