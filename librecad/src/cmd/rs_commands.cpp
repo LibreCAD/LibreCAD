@@ -35,6 +35,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_settings.h"
 
 #include "rs_system.h"
 
@@ -216,12 +217,12 @@ RS_Commands::RS_Commands() {
 
 QString RS_Commands::getAliasFile()
 {
-    QString aliasName = RS_SYSTEM->getAppDataDir();
-    if (aliasName.isEmpty()) {
+    QString settingsDir = LC_GET_ONE_STR("Paths","OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    if (settingsDir.isEmpty()) {
         LC_ERR << __func__ << "(): line "<<__LINE__<<": empty alias folder name: aborting";
         return {};
     }
-    aliasName += "/librecad.alias";
+    QString aliasName = settingsDir + "/librecad.alias";
     return aliasName;
 }
 
