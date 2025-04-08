@@ -30,19 +30,19 @@
 static const char *const PEN_DATA_FIELDS_SEPARATOR = ",";
 
 LC_PenPaletteData::LC_PenPaletteData(LC_PenPaletteOptions *opts){
-    options = opts;
+    m_options = opts;
 }
 
 LC_PenPaletteData::~LC_PenPaletteData(){
-    qDeleteAll(persistentItems);
-    persistentItems.clear();
+    qDeleteAll(m_persistentItems);
+    m_persistentItems.clear();
 }
 /**
  * Saves list of pens in the underlying file.
  * The file format is CSV, each line represents one pen
  */
 bool LC_PenPaletteData::saveItems(){
-    QString fileName = options->pensFileName;
+    QString fileName = m_options->pensFileName;
     QFile file(fileName);
     bool result = false;
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
@@ -54,9 +54,9 @@ bool LC_PenPaletteData::saveItems(){
 #endif
 
         // just convert each pen to string and store in file
-        int count = persistentItems.count();
+        int count = m_persistentItems.count();
         for (int i= 0; i < count; i++){
-            LC_PenItem* item = persistentItems.at(i);
+            LC_PenItem* item = m_persistentItems.at(i);
             out << toStringRepresentation(item);
         }
         file.close();
@@ -69,7 +69,7 @@ bool LC_PenPaletteData::saveItems(){
 }
 
 bool LC_PenPaletteData::loadItems(){
-    QString fileName = options->pensFileName;
+    QString fileName = m_options->pensFileName;
     bool result = false;
     QFile file(fileName);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -85,7 +85,7 @@ bool LC_PenPaletteData::loadItems(){
             QString line = in.readLine();
             LC_PenItem* item = fromStringRepresentation(line);
             if (item != nullptr){ // if null - some parsing issue occurred
-                persistentItems << item;
+                m_persistentItems << item;
             }
         }
         file.close();
@@ -111,7 +111,7 @@ QString LC_PenPaletteData::toStringRepresentation(LC_PenItem *item){
 
     QString lineTypeName = QString().setNum((short)lineType);
     QString lineWidthName =  QString().setNum(lineWidth);
-    QString colorName = registry->getInternalColorString(color);
+    QString colorName = m_registry->getInternalColorString(color);
 
     QString result = lineTypeName.append(PEN_DATA_FIELDS_SEPARATOR).append(lineWidthName).append(PEN_DATA_FIELDS_SEPARATOR).append(colorName).append(
         PEN_DATA_FIELDS_SEPARATOR).append(name).append("\n");
@@ -140,7 +140,7 @@ LC_PenItem* LC_PenPaletteData::fromStringRepresentation(QString &str){
         int type = lineTypeStr.toInt(&conversionOk, 10);
         if (conversionOk){
             // we've converted to int, now we'll check that int value is one of valid line types
-            if (registry->hasLineType(type)){
+            if (m_registry->hasLineType(type)){
                 lineType = static_cast<RS2::LineType>(type);
 
                 // now we'll parse lien width
@@ -149,12 +149,12 @@ LC_PenItem* LC_PenPaletteData::fromStringRepresentation(QString &str){
                 int width = widthStr.toInt(&conversionOk, 10);
                 if (conversionOk){
                     // if converted to it fine, check whether int is valid width
-                    if (registry->hasLineWidth(width)){ // allow valid line width only
+                    if (m_registry->hasLineWidth(width)){ // allow valid line width only
                         RS2::LineWidth lineWidth = static_cast<RS2::LineWidth>(width);
 
                         // here we'll parse color
                         QString colorStr = stringParts.at(2), trimmed;
-                        RS_Color color = registry->getColorFromInternalString(colorStr);
+                        RS_Color color = m_registry->getColorFromInternalString(colorStr);
                         bool colorValid = color.isValid();
                         if (!colorValid){
                             // the color itself may be invalid, yet it might include important flags, so check for them
@@ -198,7 +198,7 @@ void LC_PenPaletteData::emitDataChange(){
  * @param item item to remove
  */
 void LC_PenPaletteData::removeItem(LC_PenItem *item){
-    persistentItems.removeAll(item);
+    m_persistentItems.removeAll(item);
     delete item;
     emitDataChange();
 
@@ -208,7 +208,7 @@ void LC_PenPaletteData::removeItem(LC_PenItem *item){
  * @param item
  */
 void LC_PenPaletteData::addItem(LC_PenItem *item){
-    persistentItems << item;
+    m_persistentItems << item;
     emitDataChange();
 }
 
@@ -221,11 +221,11 @@ void LC_PenPaletteData::itemEdited([[maybe_unused]] LC_PenItem *item){
 }
 
 int LC_PenPaletteData::getItemsCount(){
-    return persistentItems.count();
+    return m_persistentItems.count();
 }
 
 LC_PenItem *LC_PenPaletteData::getItemAt(int index){
-    return persistentItems.at(index);
+    return m_persistentItems.at(index);
 }
 
 /**
@@ -235,9 +235,9 @@ LC_PenItem *LC_PenPaletteData::getItemAt(int index){
  */
 LC_PenItem *LC_PenPaletteData::findItemWithName(QString &name){
 
-    int count = persistentItems.count();
+    int count = m_persistentItems.count();
     for (int i = 0; i < count; i++){
-        LC_PenItem* item = persistentItems.at(i);
+        LC_PenItem* item = m_persistentItems.at(i);
         QString itemName = item->getName();
         if (itemName == name){
             return item;
@@ -278,17 +278,14 @@ LC_PenItem *LC_PenPaletteData::doCreateNewDefaultPenItem(QString penName, RS2::L
 void LC_PenPaletteData::createDefaultPens(){
     LC_PenItem *unchangedItem = doCreateNewDefaultPenItem("Unchanged", RS2::LineType::LineTypeUnchanged, RS2::LineWidth::WidthUnchanged,
                                                           LC_PenInfoRegistry::createUnchangedColor());
-    persistentItems << unchangedItem;
+    m_persistentItems << unchangedItem;
 
     LC_PenItem *byLayerItem = doCreateNewDefaultPenItem("By Layer", RS2::LineType::LineByLayer, RS2::LineWidth::WidthByLayer,
                                                         RS_Color(RS2::FlagByLayer));
-    persistentItems << byLayerItem;
+    m_persistentItems << byLayerItem;
 
     LC_PenItem *byBlockItem = doCreateNewDefaultPenItem("By Block", RS2::LineType::LineByBlock, RS2::LineWidth::WidthByBlock,
                                                         RS_Color(RS2::FlagByBlock));
 
-    persistentItems << byBlockItem;
+    m_persistentItems << byBlockItem;
 }
-
-
-

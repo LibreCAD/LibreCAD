@@ -28,8 +28,10 @@
 #ifndef QG_ACTIONHANDLER_H
 #define QG_ACTIONHANDLER_H
 
+#include "lc_graphicviewaware.h"
 #include "rs_actioninterface.h"
 #include "rs_graphicview.h"
+
 class LC_DefaultActionContext;
 class QG_SnapToolBar;
 class RS_Layer;
@@ -37,11 +39,10 @@ class RS_Layer;
  * This class can trigger actions (from menus, buttons, ...).
  */
 class QG_ActionHandler:public QObject {
-Q_OBJECT
-
+    Q_OBJECT
 public:
     QG_ActionHandler(QObject *parent);
-    virtual ~QG_ActionHandler() = default;
+    ~QG_ActionHandler() override = default;
     RS_ActionInterface *getCurrentAction();
     RS_ActionInterface *setCurrentAction(RS2::ActionType id);
     /**

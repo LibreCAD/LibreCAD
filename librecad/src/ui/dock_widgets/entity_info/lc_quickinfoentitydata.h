@@ -95,7 +95,7 @@ public:
     QString generateView();
     RS_Vector getVectorForIndex(int index) const override;
     QString getValue(int index);
-    unsigned long getEntityId() const{return entityId;};
+    unsigned long getEntityId() const{return m_entityId;};
     bool updateForCoordinateViewMode(int mode) override;
     bool processEntity(RS_Entity *en);
     QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);
@@ -106,28 +106,28 @@ protected:
     /**
      * ID of entity for which properties are shown, 0 if no entity
      */
-    unsigned long entityId = 0;
-    unsigned long entityIdForDescription = 0;
-    QString cachedEntityDescription = "";
+    unsigned long m_entityId = 0;
+    unsigned long m_entityIdForDescription = 0;
+    QString m_cachedEntityDescription = "";
 
     /**
      * Name of entity
      */
-    QString entityName = "";
+    QString m_entityName = "";
     /**
      * list of entity's properties
      */
-    QVector<PropertyInfo*> properties;
+    QVector<PropertyInfo*> m_properties;
 
     /**
      * Options
      */
-    LC_QuickInfoOptions *options = nullptr;
+    LC_QuickInfoOptions *m_options = nullptr;
 
     /**
      * Registry used for resolving names of visual attributes
      */
-    LC_PenInfoRegistry* penRegistry = LC_PenInfoRegistry::instance();
+    LC_PenInfoRegistry* m_penRegistry = LC_PenInfoRegistry::instance();
 
     void addProperty(QString name, const QString &valueStr, PropertyType type);
     void collectLineProperties(RS_Line* line);

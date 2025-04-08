@@ -482,8 +482,7 @@ QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
 }
 
-int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
-{
+int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const{
     return (m_graphic != nullptr) ? m_graphic->getGraphicVariableInt(key, def) : def;
 }
 

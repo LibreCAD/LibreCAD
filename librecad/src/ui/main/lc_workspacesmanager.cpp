@@ -256,16 +256,16 @@ void LC_WorkspacesManager::restore(LC_Workspace& perspective){
 }
 
 void LC_WorkspacesManager::init(QC_ApplicationWindow* win){
-    LC_Workspace perspective;
-    fillBySettings(perspective);
-    restoreGeometryAndState(perspective, *win);
+    LC_Workspace workspace;
+    fillBySettings(workspace);
+    restoreGeometryAndState(workspace, *win);
     loadWorkspaces();
 }
 
 void LC_WorkspacesManager::persist(){
-    LC_Workspace perspective;
-    fillByState(perspective);
-    applyToSettings(perspective);
+    LC_Workspace workspace;
+    fillByState(workspace);
+    applyToSettings(workspace);
     saveWorkspaces();
 }
 

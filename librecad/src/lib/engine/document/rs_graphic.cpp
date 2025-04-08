@@ -52,20 +52,17 @@ namespace {
 const RS_Vector g_paperSizeA4{210., 297.};
 
 // validate coordinates
-bool validCoordinate(double x)
-{
+bool validCoordinate(double x){
     return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
 }
 
 // validate vector
-bool validRange(const RS_Vector& vp)
-{
+bool validRange(const RS_Vector& vp){
     return vp.valid && validCoordinate(vp.x) && validCoordinate(vp.y);
 }
 
 // validate vpMin and vpMax forms a valid bounding box
-bool validRange(const RS_Vector& vpMin, const RS_Vector& vpMax)
-{
+bool validRange(const RS_Vector& vpMin, const RS_Vector& vpMax){
     return validRange(vpMin)
            && validRange(vpMax)
            && vpMin.x < vpMax.x
@@ -134,7 +131,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 
     addVariable("$JOINSTYLE", 1, DXF_FORMAT_GC_JoinStyle);
     addVariable("$ENDCAPS", 1, DXF_FORMAT_GC_Endcaps);
-    setModified(false);
+    modified = false;
 }
 
 /**
@@ -723,7 +720,7 @@ int RS_Graphic::clean() {
 
     for(RS_Entity *e: std::as_const(entities)) {
         if (e == nullptr || !validRange(e->getMin(), e->getMax())) {
-            removeEntity(e);
+            // removeEntity(e);
             how_many += 1;
         }
     }
@@ -776,13 +773,11 @@ void RS_Graphic::setPagesNum(const QString &horizXvert) {
     }
 }
 
-QString RS_Graphic::formatAngle(double angle) const
-{
+QString RS_Graphic::formatAngle(double angle) const{
     return RS_Units::formatAngle(angle, getAngleFormat(), getAnglePrecision());
 }
 
-QString RS_Graphic::formatLinear(double linear) const
-{
+QString RS_Graphic::formatLinear(double linear) const{
     return RS_Units::formatLinear(linear, getUnit(), getLinearFormat(), getLinearPrecision(), false);
 }
 

@@ -312,42 +312,25 @@ void QC_ApplicationWindow::enableFileActions() {
 
 // fixme - sand - files - change to signals?
 void QC_ApplicationWindow::setupWidgetsByWindow(QC_MDIWindow *w){
-    RS_Document* doc = nullptr;
-    RS_GraphicView* gv = nullptr;
+    RS_GraphicView* gv = (w == nullptr) ? nullptr : w->getGraphicView();
 
-    if (w != nullptr) {
-        doc = w->getDocument();
-        gv = w->getGraphicView();
-    }
-    m_layerWidget->setDocumentAndView(doc, gv);
-
-    if (m_layerTreeWidget != nullptr) {
-        m_layerTreeWidget->setDocumentAndView(doc, gv);
-    }
-    if (m_namedViewsWidget != nullptr){
-        m_namedViewsWidget->setGraphicView(gv, w);
-    }
-    if (m_ucsListWidget != nullptr){
-        m_ucsListWidget->setGraphicView(gv, w);
-    }
-    if (m_quickInfoWidget != nullptr) {
-        m_quickInfoWidget->setDocumentAndView(doc, gv);
-    }
-    if (m_anglesBasisWidget != nullptr) {
-        if (gv != nullptr) {
-            RS_Graphic *graphic = gv->getGraphic();
-            if (graphic != nullptr) {
-                m_anglesBasisWidget->update(graphic);
-            }
-        }
-    }
-    if (m_penPaletteWidget != nullptr) {
-        m_penPaletteWidget->setDocumentAndView(doc, gv);
-        m_penPaletteWidget->setMdiWindow(w);
-    }
-    m_blockWidget->setDocument(doc);
+    // fixme - sand - files - replace by updating list of instances, to simplify introduction of new widgets
+    m_layerWidget->setGraphicView(gv);
+    m_layerTreeWidget->setGraphicView(gv);
+    m_namedViewsWidget->setGraphicView(gv);
+    m_ucsListWidget->setGraphicView(gv);
+    m_quickInfoWidget->setGraphicView(gv);
+    m_anglesBasisWidget->setGraphicView(gv);
+    m_penPaletteWidget->setGraphicView(gv);
+    m_blockWidget->setGraphicView(gv);
     m_coordinateWidget->setGraphicView(gv);
     m_relativeZeroCoordinatesWidget->setGraphicView(gv);
+    m_penToolBar->setGraphicView(gv);
+    m_activeLayerNameWidget->setGraphicView(gv);
+    m_selectionWidget->setGraphicView(gv);
+
+    /// fixme - setup too in setupWidgetsByWindow???
+    m_penWizard->setMdiWindow(w);
 }
 
 /**
@@ -544,6 +527,11 @@ void QC_ApplicationWindow::initSettings() {
 void QC_ApplicationWindow::storeSettings() {
     if (RS_Settings::save_is_allowed) {
        m_workspacesManager.persist();
+       m_penPaletteWidget->persist();
+       // fixme - sand - decided whether shortcuts should be also saved... This may be necessary if
+       // the path for settins was changed.
+       // m_actionGroupManager->persist();
+
        m_snapToolBar->saveSnapMode();
     }
 }
@@ -631,7 +619,7 @@ void QC_ApplicationWindow::slotFocus() {
 /**
  * Called when a document window was activated.
  */
-void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) {
+void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
 
     if (w == nullptr) { // when it may occur???
         enableWidgets(false);
@@ -698,7 +686,6 @@ void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) 
         activatedGraphicView->loadSettings();
 
         RS_Graphic *activatedGraphic = windowActivated->getGraphic();
-
         RS_Units::setCurrentDrawingUnits(activatedDocument->getGraphic()->getUnit());
 
         setupWidgetsByWindow(windowActivated);
@@ -718,9 +705,6 @@ void QC_ApplicationWindow::doSlotWindowActivated(QMdiSubWindow *w, bool forced) 
 
         // set pen from pen toolbar
         slotPenChanged(m_penToolBar->getPen());
-
-        /// fixme - setup too in setupWidgetsByWindow???
-        m_penWizard->setMdiWindow(windowActivated);
 
         if (!forced) {
             // update toggle button status:
@@ -785,27 +769,7 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
  *  document if 'doc' is nullptr.
  */
 
-QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, const QString& expectedFileName) {
-    static int id = 0;
-    id++;
-
-    auto *w = new QC_MDIWindow(doc, m_mdiAreaCAD, false, m_actionContext);
-
-    LC_GROUP("Appearance");
-    bool aa = LC_GET_BOOL("Antialiasing");
-    bool showScrollbars = LC_GET_BOOL("ScrollBars", true);
-    bool cursor_hiding = LC_GET_BOOL("cursor_hiding");
-    LC_GROUP_END();
-
-    QG_GraphicView *view = w->getGraphicView();
-
-    view->setAntialiasing(aa);
-    view->setCursorHiding(cursor_hiding);
-    view->setDeviceName(LC_GET_ONE_STR("Hardware","Device", "Mouse"));
-    if (showScrollbars) {
-        view->addScrollbars();
-    }
-
+void QC_ApplicationWindow::setupActivators(QG_GraphicView* view) {
     QSettings settings;
     settings.beginGroup("Activators");
     auto activators = settings.childKeys();
@@ -818,13 +782,18 @@ QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, con
         auto menu      = new QMenu(activator, view);
         menu->setObjectName(menu_name);
         foreach(auto key, a_list) {
-            menu->addAction(getAction(key));
+            menu->QWidget::addAction(getAction(key));
         }
         view->setMenu(activator, menu);
     }
+}
 
-    connect(view, &QG_GraphicView::gridStatusChanged, this, &QC_ApplicationWindow::updateGridStatus);
-    connect(view, &RS_GraphicView::currentActionChanged, this, &QC_ApplicationWindow::onViewCurrentActionChanged);
+QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, const QString& expectedFileName) {
+    static int id = 0;
+    id++;
+
+    auto *w = new QC_MDIWindow(doc, m_mdiAreaCAD, false, m_actionContext);
+    QG_GraphicView* view = setupNewGraphicView(w);
 
     m_actionHandler->setDocumentAndView(w->getDocument(), view);
 
@@ -846,16 +815,11 @@ QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, con
     setupMDIWindowTitleByName(w, baseTitleString, draftMode);
     w->setWindowIcon(QIcon(":/icons/document.lci"));
 
-    setupWidgetsByWindow(w);
+    // setupWidgetsByWindow(w); // fixme - sand - DO WE NEED IT HERE? OR rely on Activation?
 
-    // fixme - sand - review and complete initialization. check why we check for graphic, when it might be null, and how that affects init
     // fixme - sand- where that listeners are removed?
     RS_Graphic *graphic = w->getDocument()->getGraphic();
     if (graphic != nullptr) {
-        graphic->addLayerListListener(m_penToolBar);
-        graphic->addLayerListListener(m_layerWidget);
-        graphic->addLayerListListener(m_layerTreeWidget);
-        graphic->addBlockListListener(m_blockWidget);
         graphic->addLayerListListener(view);
     }
 
@@ -864,6 +828,29 @@ QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, con
     return w;
 }
 
+QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(QC_MDIWindow* w) {
+    QG_GraphicView* view = w->getGraphicView();
+    LC_GROUP("Appearance");
+    bool aa = LC_GET_BOOL("Antialiasing");
+    bool showScrollbars = LC_GET_BOOL("ScrollBars", true);
+    bool cursor_hiding = LC_GET_BOOL("cursor_hiding");
+    LC_GROUP_END();
+
+    view->setAntialiasing(aa);
+    view->setCursorHiding(cursor_hiding);
+    view->setDeviceName(LC_GET_ONE_STR("Hardware","Device", "Mouse"));
+    if (showScrollbars) {
+        view->addScrollbars();
+    }
+
+    connect(view, &QG_GraphicView::gridStatusChanged, this, &QC_ApplicationWindow::updateGridStatus);
+    connect(view, &RS_GraphicView::currentActionChanged, this, &QC_ApplicationWindow::onViewCurrentActionChanged);
+
+    setupActivators(view);
+    return view;
+}
+
+
 bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MDIWindow *w) {
     bool ret = false;
     RS2::FormatType type = RS2::FormatDXFRW;
@@ -871,7 +858,6 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     showStatusMessage(tr("Creating new file..."));
     w = createNewDrawingWindow(nullptr, "");
-    setupWidgetsByWindow(w);
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
     if (fileName.isEmpty()) {
@@ -1094,7 +1080,7 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
     m_recentFilesList->add(fileName);
     openedFiles.push_back(fileName);
 
-    updateWidgetsAsDocumentLoaded(w);
+
 
     if (m_mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
         QList<QTabBar *> tabBarList = m_mdiAreaCAD->findChildren<QTabBar *>();
@@ -1108,6 +1094,8 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
     }
 
     doActivate(w);
+
+    updateWidgetsAsDocumentLoaded(w);
 
     auto graphicView = w->getGraphicView();
     autoZoomAfterLoad(graphicView);
@@ -1223,6 +1211,7 @@ void QC_ApplicationWindow::initCompleted() {
 /**
  * Menu file -> export.
  */
+ // fixme - sand - move to separate utility outside of this
 void QC_ApplicationWindow::slotFileExport() {
     auto *w = getCurrentMDIWindow();
     if (w != nullptr) {
@@ -1494,20 +1483,13 @@ void QC_ApplicationWindow::openPrintPreview(QC_MDIWindow *parent){
             connect(view, &RS_GraphicView::currentActionChanged, this, &QC_ApplicationWindow::onViewCurrentActionChanged);
 
             // only graphics offer block lists, blocks don't
-            RS_DEBUG->print("  adding listeners");
-            RS_Graphic *graphic = w->getDocument()->getGraphic();
-            if (graphic == nullptr) {
-                graphic->addLayerListListener(m_penToolBar);
-                graphic->addLayerListListener(m_layerWidget);
-                graphic->addLayerListListener(m_layerTreeWidget);
-                graphic->addBlockListListener(m_blockWidget);
-                // fixme - sand - check whether we should setup ViewListener for NamedViewsList widget?
-            }
+            /*RS_DEBUG->print("  adding listeners");*/
+
             doActivate(w);
             doArrangeWindows(RS2::CurrentMode);
 
             view->zoomAuto(false);
-
+            RS_Graphic *graphic = w->getDocument()->getGraphic();
             if (graphic != nullptr) {
                 bool bigger = graphic->isBiggerThanPaper();
                 bool fixed  = graphic->getPaperScaleFixed();
@@ -1811,8 +1793,6 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         rebuildMenuIfNecessary();
     }
 }
-
-
 
 void QC_ApplicationWindow::slotImportBlock() {
     if (getCurrentMDIWindow() == nullptr) {

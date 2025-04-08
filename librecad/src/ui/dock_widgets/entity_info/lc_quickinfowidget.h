@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QWidget>
 
+#include "lc_graphicviewaware.h"
 #include "lc_quickinfoentitydata.h"
 #include "lc_quickinfopointsdata.h"
 #include "lc_quickinfowidgetoptions.h"
@@ -35,7 +36,7 @@ namespace Ui {
 class LC_QuickInfoWidget;
 }
 
-class LC_QuickInfoWidget : public QWidget
+class LC_QuickInfoWidget : public QWidget,public LC_GraphicViewAware
 {
     Q_OBJECT
 
@@ -49,9 +50,9 @@ public:
     };
 
     LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map);
-
     ~LC_QuickInfoWidget() override;
-    void setDocumentAndView(RS_Document *document, RS_GraphicView* view);
+
+    void setGraphicView(RS_GraphicView* view) override;
 
     void processEntity(RS_Entity *en);
     QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);
@@ -61,10 +62,10 @@ public:
     void updateCollectedPointsView(bool forceUpdate = false);
 
     RS_Vector getCollectedCoordinate(int index) const {
-        return pointsData.getCollectedCoordinate(index);
+        return m_pointsData.getCollectedCoordinate(index);
     }
     int getCollectedCoordinatesCount() const {
-        return pointsData.getCollectedCoordinatesCount();
+        return m_pointsData.getCollectedCoordinatesCount();
     }
 
     void setCollectedPointsCoordinateViewMode(int mode);
@@ -73,13 +74,13 @@ public:
     void setWidgetMode(int mode);
 
     bool isDisplayPointsPathOnPreview() const {
-        return options->displayPointsPath;
+        return m_options->displayPointsPath;
     }
     bool isSelectEntitiesInDefaultActionWithCTRL() const {
-        return options->selectEntitiesInDefaultActionByCTRL;
+        return m_options->selectEntitiesInDefaultActionByCTRL;
     }
     bool isAutoSelectEntitiesInDefaultAction() const {
-        return options->autoSelectEntitiesInDefaultAction;
+        return m_options->autoSelectEntitiesInDefaultAction;
     }
 
     void onEntityPropertiesEdited(unsigned long originalId, unsigned long editedCloneId);
@@ -107,33 +108,33 @@ protected slots:
     void onRelativeZeroChanged(const RS_Vector& relZero);
 private:
     Ui::LC_QuickInfoWidget *ui = nullptr;
-    RS_GraphicView* graphicView = nullptr; // fixme - sand - review dependency
-    RS_Document* document = nullptr;
+    RS_GraphicView* m_graphicView = nullptr; // fixme - sand - review dependency
+    RS_Document* m_document = nullptr;
 
     /**
      * options for widget related functions
      */
-    LC_QuickInfoOptions* options = new LC_QuickInfoOptions();
+    LC_QuickInfoOptions* m_options = new LC_QuickInfoOptions();
 
     /**
      * Information for collected points data
      */
-    LC_QuickInfoPointsData pointsData = LC_QuickInfoPointsData();
+    LC_QuickInfoPointsData m_pointsData = LC_QuickInfoPointsData();
 
     /*
      * Information for selected entity properties
      */
-    LC_QuickInfoEntityData entityData = LC_QuickInfoEntityData();
+    LC_QuickInfoEntityData m_entityData = LC_QuickInfoEntityData();
 
     /**
      * current widget mode
      */
-    int widgetMode = MODE_ENTITY_INFO;
+    int m_widgetMode = MODE_ENTITY_INFO;
 
     /**
      * utility flag for that indicates that points is highlighted in preview
      */
-    bool hasOwnPreview = false;
+    bool m_hasOwnPreview = false;
 
     void clearEntityInfo();
     void updateEntityInfoView(bool forceUpdate=false, bool updateView = true);

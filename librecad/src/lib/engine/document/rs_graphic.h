@@ -229,8 +229,6 @@ public:
     void setAnglesCounterClockwise(bool on);
     QString formatAngle(double angle) const;
     QString formatLinear(double linear) const;
-    QString formatAngle(double angle);
-    QString formatLinear(double linear);
 
     RS2::FormatType getFormatType() const;
 

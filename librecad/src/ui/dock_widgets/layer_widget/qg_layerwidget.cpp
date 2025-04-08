@@ -296,8 +296,16 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
  *                    false: don't show special layer "ByBlock"
  */
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
+    if (m_layerList != nullptr) {
+        m_layerList->removeListener(this);
+    }
+
     m_layerList = layerList;
     m_showByBlock = showByBlock;
+
+    if (layerList != nullptr) {
+        m_layerList->addListener(this);
+    }
     update();
 }
 
@@ -611,12 +619,19 @@ void QG_LayerWidget::updateWidgetSettings(){
     LC_GROUP_END();
 }
 
-void QG_LayerWidget::setDocumentAndView(RS_Document *doc, [[maybe_unused]]RS_GraphicView *gview){
-    if (doc == nullptr) {
+void QG_LayerWidget::setGraphicView(RS_GraphicView *gview){
+    if (gview == nullptr) {
         setLayerList(nullptr, false);
     }
     else {
+        auto doc = gview->getContainer();
         bool showByBlock = doc->rtti() == RS2::EntityBlock;
-        setLayerList(doc->getLayerList(), showByBlock);
+        if (showByBlock) {
+            // fixme - sand - files - RESTORE!
+        }
+        else {
+            auto layerList = doc->getGraphic()->getLayerList();
+            setLayerList(layerList, showByBlock);
+        }
     }
 }

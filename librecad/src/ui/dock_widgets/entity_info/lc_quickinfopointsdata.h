@@ -57,26 +57,17 @@ public:
     void clear() override;
     QString generateView(bool showDistanceAndAngle, bool forceUpdate = false);
     bool removeCoordinate(int index);
-    void setPointInsertionIndex(int index)
-    {collectedPointsInsertionIndex = index;
-    }
+    void setPointInsertionIndex(int index){m_collectedPointsInsertionIndex = index;}
     RS_Vector getVectorForIndex(int index) const override;
-    RS_Vector getCollectedCoordinate(int index) const {
-        return collectedPoints.at(index)->data;
-    }
-    int getCollectedCoordinatesCount() const {
-        return collectedPoints.size();
-    }
-
+    RS_Vector getCollectedCoordinate(int index) const {return m_collectedPoints.at(index)->data;}
+    int getCollectedCoordinatesCount() const {return m_collectedPoints.size();}
     bool hasData() const override;
-
 private:
     // index used for insertion of collected coordinates
-    int collectedPointsInsertionIndex = -1;
+    int m_collectedPointsInsertionIndex = -1;
     // list of collected coordinates
-    QVector<PointInfo*> collectedPoints;
+    QVector<PointInfo*> m_collectedPoints;
     void doUpdatePointsAttributes();
-
     PointInfo *createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative);
 };
 

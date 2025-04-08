@@ -33,7 +33,7 @@
 #include <QAbstractTableModel>
 #include <QItemSelection>
 
-
+#include "lc_graphicviewaware.h"
 #include "rs_layerlistlistener.h"
 #include "rs_layerlist.h"
 
@@ -105,7 +105,7 @@ private:
  * This is the Qt implementation of a widget which can view a
  * layer list and provides a user interface for basic layer actions.
  */
-class QG_LayerWidget: public QWidget, public RS_LayerListListener {
+class QG_LayerWidget: public QWidget, public LC_GraphicViewAware,  public RS_LayerListListener {
     Q_OBJECT
 
 public:
@@ -141,7 +141,7 @@ public:
      * @return the name of the active layer
      */
     QString getActiveName() const;
-    void setDocumentAndView(RS_Document *doc, RS_GraphicView* gview);
+    void setGraphicView(RS_GraphicView* gview) override;
 signals:
     void escape();
 

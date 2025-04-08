@@ -81,19 +81,17 @@ private:
  * This is the Qt implementation of a widget which can view a 
  * block list.
  */
-class QG_BlockWidget: public QWidget, public RS_BlockListListener {
+class QG_BlockWidget: public QWidget, public RS_BlockListListener, LC_GraphicViewAware {
     Q_OBJECT
 
 public:
     QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
 
-    void setDocument(RS_Document* doc);
-
+    void setGraphicView(RS_GraphicView* doc);
     RS_BlockList* getBlockList() {
         return m_blockList;
     }
-
     void update();
     void activateBlock(RS_Block* block);
     void blockAdded(RS_Block*) override;
@@ -110,9 +108,7 @@ signals:
     void escape();
 public slots:
     void slotActivated(QModelIndex blockIdx);
-    void slotSelectionChanged(
-        const QItemSelection &selected,
-        const QItemSelection &deselected);
+    void slotSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected);
     void slotUpdateBlockList();
     void updateWidgetSettings();
 protected:

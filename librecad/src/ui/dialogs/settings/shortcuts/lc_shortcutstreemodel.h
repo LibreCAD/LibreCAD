@@ -45,7 +45,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QModelIndex parent(const QModelIndex &index) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
-    bool isRegexpApplied() const{return hasRegexp;};
+    bool isRegexpApplied() const{return m_hasRegexp;};
     void setFilteringRegexp(QString &reqgexp, bool highlightMode);
     LC_ShortcutTreeItem *getItemForIndex(const QModelIndex &index) const;
     void rebuildModel(LC_ActionGroupManager *pManager);
@@ -60,21 +60,21 @@ public:
     bool isModified();
 protected:
     // filtering/highlight regexp value
-    QRegularExpression filteringRegexp{""};
+    QRegularExpression m_filteringRegexp{""};
 
     // flat that controls whether regexp should be applied
-    bool hasRegexp{false};
+    bool m_hasRegexp{false};
 
     //  controls whether items matched to regexp are just highlighted or filtered
-    bool regexpHighlightMode{true};
+    bool m_regexpHighlightMode{true};
 
-    QMap<QString, LC_ShortcutInfo*> shortcuts;
+    QMap<QString, LC_ShortcutInfo*> m_shortcuts;
 
     // root item for layers hierarchy
-    LC_ShortcutTreeItem *rootItem = nullptr;
+    LC_ShortcutTreeItem *m_rootItem = nullptr;
 
     // filter content and show conflicts only
-    bool filterForConflicts = false;
+    bool m_filterForConflicts = false;
 
     void setRootItem(LC_ShortcutTreeItem *rootItem);
 };

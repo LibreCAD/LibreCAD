@@ -725,7 +725,6 @@ void RS_EntityContainer::calculateBorders() {
     // needed for correcting corrupt data (PLANS.dxf)
     if (minV.x > maxV.x || minV.x > RS_MAXDOUBLE || maxV.x > RS_MAXDOUBLE
         || minV.x < RS_MINDOUBLE || maxV.x < RS_MINDOUBLE) {
-
         minV.x = 0.0;
         maxV.x = 0.0;
     }

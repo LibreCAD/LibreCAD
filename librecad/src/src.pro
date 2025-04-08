@@ -405,6 +405,8 @@ HEADERS += \
     ui/dock_widgets/layers_tree/lc_layerexportoptions.h \
     ui/dock_widgets/lc_widgets_common.h \
     ui/dock_widgets/library_widget/lc_librarywidget.h \
+    ui/lc_documentandviewaware.h \
+    ui/lc_uiutils.h \
     ui/main/init/lc_applicationwindowinitializer.h \
     ui/main/init/lc_toolbarfactory.h \
     ui/main/lc_applicationwindowdialogshelper.h \
@@ -537,6 +539,7 @@ SOURCES += \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
     ui/dock_widgets/layers_tree/lc_layerexportoptions.cpp \
     ui/dock_widgets/library_widget/lc_librarywidget.cpp \
+    ui/lc_uiutils.cpp \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/init/lc_toolbarfactory.cpp \
     ui/main/lc_applicationwindowdialogshelper.cpp \

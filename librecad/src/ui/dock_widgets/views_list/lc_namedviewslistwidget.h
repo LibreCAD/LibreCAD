@@ -27,6 +27,7 @@
 #include <QList>
 #include <QItemSelection>
 
+#include "lc_graphicviewaware.h"
 #include "lc_viewslist.h"
 #include "lc_namedviewsmodel.h"
 #include "rs_graphicview.h"
@@ -38,13 +39,13 @@ namespace Ui {
     class LC_NamedViewsListWidget;
 }
 
-class LC_NamedViewsListWidget : public QWidget{
+class LC_NamedViewsListWidget : public QWidget, public LC_GraphicViewAware{
  Q_OBJECT
 public:
     explicit LC_NamedViewsListWidget(const QString& title, QWidget* parent);
     virtual ~LC_NamedViewsListWidget();
     void setViewsList(LC_ViewList* viewsList);
-    void setGraphicView(RS_GraphicView* gv, QMdiSubWindow* window);
+    void setGraphicView(RS_GraphicView* gv);
     void reload();
     void restoreView(int index);
     void restoreView(const QString &name);
@@ -75,18 +76,18 @@ protected:
     void refresh();
 private:
     Ui::LC_NamedViewsListWidget *ui;
-    LC_ViewList* currentViewList{nullptr};
-    LC_NamedViewsModel* viewsModel{nullptr};
-    LC_NamedViewsListOptions *options {nullptr};
-    LC_NamedViewsButton *namedViewsButton {nullptr};
-    QAction* saveViewAction {nullptr};
-    QMdiSubWindow* window;
-
-    RS2::LinearFormat linearFormat;
-    RS2::AngleFormat angleFormat;
-    int precision;
-    int anglePrecision;
+    LC_ViewList* m_currentViewList{nullptr};
+    LC_NamedViewsModel* m_viewsModel{nullptr};
+    LC_NamedViewsListOptions *m_options {nullptr};
+    LC_NamedViewsButton *m_namedViewsButton {nullptr};
+    QAction* m_saveViewAction {nullptr};
+    RS2::LinearFormat m_linearFormat;
+    RS2::AngleFormat m_angleFormat;
+    int m_precision;
+    int m_anglePrecision;
     RS2::Unit drawingUnit;
+    RS_GraphicView *m_graphicView {nullptr};
+    LC_GraphicViewport *m_viewport {nullptr};
 
     void initToolbar() const;
     void updateData(bool restoreSelectionIfPossible);
@@ -98,8 +99,7 @@ private:
     void removeExistingView(LC_View *view);
     QModelIndex getSelectedItemIndex();
     void renameExistingView(const QString &newName, LC_View *view);
-    RS_GraphicView *graphicView {nullptr};
-    LC_GraphicViewport *viewport {nullptr};
+
     void doUpdateView(LC_View *view);
     void renameExistingView(LC_View *selectedView);
     void updateButtonsState() const;

@@ -518,7 +518,7 @@ void LC_MDIApplicationWindow::enableWidget(QWidget *win, bool enable) {
 void LC_MDIApplicationWindow::doActivate(QMdiSubWindow *win) {
     bool maximized = LC_GET_ONE_BOOL("WindowOptions","Maximized");
     if (win != nullptr) {
-        doSlotWindowActivated(win, true);
+        doWindowActivated(win, true);
         win->activateWindow();
         win->raise();
         win->setFocus();
@@ -546,11 +546,11 @@ void LC_MDIApplicationWindow::slotWindowStateChanged(Qt::WindowStates oldState, 
 */
 
 void LC_MDIApplicationWindow::slotWindowActivated(QMdiSubWindow *w){
-    doSlotWindowActivated(w, false);
+    doWindowActivated(w, false);
 }
 
 void LC_MDIApplicationWindow::slotWindowActivatedForced(QMdiSubWindow *w){
-    doSlotWindowActivated(w, true);
+    doWindowActivated(w, true);
 }
 
 void LC_MDIApplicationWindow::doForEachWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const{

@@ -28,6 +28,8 @@
 #include <QTimer>
 #include <QSettings>
 
+#include "rs_entitycontainer.h"
+#include "rs_graphicview.h"
 #include "rs_settings.h"
 
 /*
@@ -35,8 +37,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
+    : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
 
@@ -52,8 +53,7 @@ QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::Wi
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_SelectionWidget::~QG_SelectionWidget()
-{
+QG_SelectionWidget::~QG_SelectionWidget(){
     // no need to delete child widgets, Qt does it all for us
     delete timer;
 }
@@ -62,20 +62,16 @@ QG_SelectionWidget::~QG_SelectionWidget()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_SelectionWidget::languageChange()
-{
+void QG_SelectionWidget::languageChange(){
     retranslateUi(this);
 }
 
-void QG_SelectionWidget::setNumber(int n)
-{
-    if (auxDataMode)
-    {
+void QG_SelectionWidget::setNumber(int n){
+    if (auxDataMode)    {
         QSettings settings("QGDialogFactory", "QGSelectionWidget");
         settings.setValue("lEntities_text", n);
     }
-    else /* if (!auxDataMode) */
-    {
+    else /* if (!auxDataMode) */{
         QString str;
         str.setNum(n);
         lEntities->setText(str);
@@ -92,10 +88,8 @@ void QG_SelectionWidget::setTotalLength(double l) {
 void QG_SelectionWidget::flashAuxData( const QString& header, 
                                        const QString& data, 
                                        const unsigned int& timeout, 
-                                       const bool& flash)
-{
-    if (flash)
-    {
+                                       const bool& flash){
+    if (flash){
         QSettings settings("QGDialogFactory", "QGSelectionWidget");
 
         if (!auxDataMode)
@@ -131,10 +125,8 @@ void QG_SelectionWidget::flashAuxData( const QString& header,
         timer->setInterval(timeout);
         timer->start();
     }
-    else
-    {
-        if (auxDataMode)
-        {
+    else {
+        if (auxDataMode) {
             timer->stop();
             removeAuxData();
         }
@@ -142,8 +134,7 @@ void QG_SelectionWidget::flashAuxData( const QString& header,
 }
 
 
-void QG_SelectionWidget::removeAuxData()
-{
+void QG_SelectionWidget::removeAuxData(){
     auxDataMode = false;
 
     QSettings settings("QGDialogFactory", "QGSelectionWidget");
@@ -165,4 +156,18 @@ void QG_SelectionWidget::removeAuxData()
 
     lEntities->setMinimumWidth(settings.value("lEntities_w").toInt());
     lEntities->setText(settings.value("lEntities_text").toString());
+}
+
+void QG_SelectionWidget::setGraphicView(RS_GraphicView* gview) {
+    if (gview == nullptr) {
+        removeAuxData();
+        setNumber(0);
+        setTotalLength(0);
+    }
+    else {
+        RS_EntityContainer* container = gview->getContainer();
+        const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
+        setNumber(info.count);
+        setTotalLength(info.length);
+    }
 }

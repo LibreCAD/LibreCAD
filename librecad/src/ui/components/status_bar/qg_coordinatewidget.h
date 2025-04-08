@@ -26,6 +26,7 @@
 #ifndef QG_COORDINATEWIDGET_H
 #define QG_COORDINATEWIDGET_H
 
+#include "lc_graphicviewaware.h"
 #include "ui_qg_coordinatewidget.h"
 #include "rs_vector.h"
 #include "rs.h"
@@ -33,7 +34,7 @@
 
 class RS_Graphic;
 
-class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget{
+class QG_CoordinateWidget : public QWidget, public LC_GraphicViewAware,  public Ui::QG_CoordinateWidget{
     Q_OBJECT
 public:
     QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
@@ -46,17 +47,15 @@ protected slots:
     virtual void languageChange();
     virtual void setCoordinates(double ucsX, double ucsY, double ucsDeltaX, double ucsDeltaY, bool updateFormat );
 private:
-    RS_Graphic* graphic = nullptr;
-    RS_GraphicView *graphicView = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
-    int prec = 0;
-    RS2::LinearFormat format = RS2::Decimal;
-    int aprec = 0;
-    RS2::AngleFormat aformat = RS2::DegreesDecimal;
-
-
-    RS_Vector absoluteCoordinates;
-    RS_Vector relativeCoordinates;
+    RS_Graphic* m_graphic = nullptr;
+    RS_GraphicView *m_graphicView = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
+    int m_linearPrecision = 0;
+    RS2::LinearFormat m_linearFormat = RS2::Decimal;
+    int m_anglePrecision = 0;
+    RS2::AngleFormat m_angleFormat = RS2::DegreesDecimal;
+    RS_Vector m_absoluteCoordinates;
+    RS_Vector m_relativeCoordinates;
 };
 
 #endif // QG_COORDINATEWIDGET_H

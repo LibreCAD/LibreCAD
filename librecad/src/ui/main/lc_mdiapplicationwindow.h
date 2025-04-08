@@ -96,7 +96,7 @@ protected:
     virtual void doActivate(QMdiSubWindow* win);
     void setupCADAreaTabbar();
     void slotWindowActivatedForced(QMdiSubWindow *w);
-    virtual void doSlotWindowActivated(QMdiSubWindow *w, bool forced) = 0;
+    virtual void doWindowActivated(QMdiSubWindow *w, bool forced) = 0;
     void doForEachWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
     void doForEachSubWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
 };

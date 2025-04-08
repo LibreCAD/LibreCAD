@@ -90,7 +90,7 @@ private:
     /**
      * List of named pens. Ordering of items is not important there.
      */
-    QList<LC_PenItem*> persistentItems;
+    QList<LC_PenItem*> m_persistentItems;
     /**
      * Parses given string and returns pen
      * @param str
@@ -106,11 +106,11 @@ private:
     /**
      * pens info registry
      */
-    LC_PenInfoRegistry* registry = LC_PenInfoRegistry::instance();
+    LC_PenInfoRegistry* m_registry = LC_PenInfoRegistry::instance();
     /**
      *reference to options
      */
-    LC_PenPaletteOptions *options = nullptr;
+    LC_PenPaletteOptions *m_options = nullptr;
     void createDefaultPens();
     LC_PenItem *doCreateNewDefaultPenItem(QString penName, RS2::LineType lineType, RS2::LineWidth lineWidth, RS_Color color);
     void emitDataChange();

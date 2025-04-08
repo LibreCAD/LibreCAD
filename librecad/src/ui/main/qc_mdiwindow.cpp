@@ -116,27 +116,6 @@ void QC_MDIWindow::setupGraphicView(QWidget *parent, bool printPreview, LC_Actio
 }
 
 void QC_MDIWindow::addWidgetsListeners(){
-    /*RS_LayerList *layerList = document->getLayerList();
-    if (layerList) {
-        // Link the graphic view to the layer widget
-        layerList->addListener(graphicView);
-        // Link this window to the layer widget
-        layerList->addListener(this);
-    }
-    RS_BlockList *blockList = document->getBlockList();
-    if (blockList) {
-        // Link the graphic view to the block widget
-        blockList->addListener(graphicView);
-        // Link this window to the block widget
-        blockList->addListener(this);
-    }
-
-    LC_ViewList* viewList = document->getViewList();
-    if (viewList != nullptr){
-        //            viewList->addListener(graphicView);  // todo - sand - decide later wither GraphicView should listen to ViewList
-        viewList->addListener(this);
-    }*/
-
     if (m_document != nullptr) {
         RS_Graphic* graphic = m_document -> getGraphic();
         if (graphic != nullptr) {
@@ -146,23 +125,6 @@ void QC_MDIWindow::addWidgetsListeners(){
 }
 
 void QC_MDIWindow::removeWidgetsListeners(){
-    /*RS_LayerList *layerList = document->getLayerList();
-    if (layerList != nullptr) {
-        layerList->removeListener(graphicView);
-        layerList->removeListener(this);
-    }
-
-    RS_BlockList *blockList = document->getBlockList();
-    if (blockList != nullptr) {
-        blockList->removeListener(graphicView);
-        blockList->removeListener(this);
-    }
-
-    LC_ViewList * viewList = document->getViewList();
-    if (viewList != nullptr){
-        // viewList->removeListener(graphicView); // tmp-sand - decide later wither graphic view should listen to view list
-        viewList->removeListener(this);
-    }*/
     if (m_document != nullptr) {
         RS_Graphic* graphic = m_document -> getGraphic();
         if (graphic != nullptr) {

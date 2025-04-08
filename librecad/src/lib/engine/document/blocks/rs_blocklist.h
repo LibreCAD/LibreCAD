@@ -84,8 +84,8 @@ public:
     void addListener(RS_BlockListListener* listener);
     void removeListener(RS_BlockListListener* listener);
 
-    bool isOwner() const {return owner;}
-    void setOwner(bool ow) {owner = ow;}
+    bool isOwner() const {return m_owner;}
+    void setOwner(bool ow) {m_owner = ow;}
 
     /**
      * Sets the block list modified status to 'm'.
@@ -102,15 +102,15 @@ public:
 
 private:
     //! Is the list owning the blocks?
-    bool owner = false;
+    bool m_owner = false;
     //! Blocks in the graphic
-    QList<RS_Block*> blocks;
+    QList<RS_Block*> m_blocks;
     //! List of registered BlockListListeners
-    QList<RS_BlockListListener*> blockListListeners;
+    QList<RS_BlockListListener*> m_blockListListeners;
     //! Currently active block
-    RS_Block* activeBlock = nullptr;
+    RS_Block* m_activeBlock = nullptr;
     /** Flag set if the block list was modified and not yet saved. */
-    bool modified = false;
+    bool m_modified = false;
 };
 
 #endif

@@ -91,12 +91,6 @@ public:
      * @param oy, offset Y
      */
     void setOffset(int ox, int oy);
-/*    *//**
-     * @brief getMousePosition() mouse position in widget coordinates
-     * @return the cursor position in widget coordinates
-     * returns the widget center, if cursor is not on the widget
-     *//*
-    RS_Vector getMousePosition() const override;*/
 
     void setAntialiasing(bool state);
     bool isDraftMode() const;

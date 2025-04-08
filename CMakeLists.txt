@@ -8,10 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
-#set(BOOST_DIR "c:\\Local\\boost_1_84_0")
-#set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
-
+set(BOOST_DIR "c:\\Local\\boost_1_84_0")
+set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 #set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+
 
 set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
@@ -452,10 +452,6 @@ set(SOURCES
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.h
 		librecad/src/actions/drawing/edit/rs_actioneditundo.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditundo.h
-		librecad/src/actions/not_used/rs_actionfilenewtemplate.cpp
-		librecad/src/actions/not_used/rs_actionfilenewtemplate.h
-        librecad/src/actions/not_used/rs_actionfileopen.cpp
-        librecad/src/actions/not_used/rs_actionfileopen.h
 		librecad/src/actions/drawing/info/rs_actioninfoangle.cpp
 		librecad/src/actions/drawing/info/rs_actioninfoangle.h
 		librecad/src/actions/drawing/info/rs_actioninfoarea.cpp
@@ -994,6 +990,8 @@ set(SOURCES
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.h
         librecad/src/ui/qg_actionhandler.cpp
         librecad/src/ui/qg_actionhandler.h
+		librecad/src/ui/lc_uiutils.h
+		librecad/src/ui/lc_uiutils.cpp
 		librecad/src/ui/dock_widgets/block_widget/qg_blockwidget.cpp
 		librecad/src/ui/dock_widgets/block_widget/qg_blockwidget.h
 		librecad/src/ui/components/comboboxes/qg_colorbox.cpp
@@ -1511,7 +1509,10 @@ set(SOURCES
 		#		librecad/src/actions/not_used/rs_actionmodifydeletequick.h
 		#		librecad/src/actions/not_used/rs_actioneditpaste.cpp
 		#		librecad/src/actions/not_used/rs_actioneditpaste.h
-
+		#		librecad/src/actions/not_used/rs_actionfilenewtemplate.cpp
+		#		librecad/src/actions/not_used/rs_actionfilenewtemplate.h
+		#        librecad/src/actions/not_used/rs_actionfileopen.cpp
+		#        librecad/src/actions/not_used/rs_actionfileopen.h
 )
 
 

@@ -147,6 +147,8 @@ public slots:
     void slotWorkspacesMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
     void slotPenChanged(RS_Pen p);
+    void setupActivators(QG_GraphicView* view);
+
     //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
     /** generates a new document for a graphic. */
@@ -320,6 +322,7 @@ protected:
     void changeEvent(QEvent* event) override;
     //! \}
 
+    QG_GraphicView* setupNewGraphicView(QC_MDIWindow* w);
     QAction* enableAction(const QString& name, bool enable) const;
     void enableActions(const std::vector<QString> &actionList, bool enable) const;
     QAction* checkAction(const QString& name, bool enable) const;
@@ -334,7 +337,7 @@ protected:
 	void doActivate(QMdiSubWindow* w) override;
     void enableFileActions(QC_MDIWindow* w);
     void enableFileActions();
-    void doSlotWindowActivated(QMdiSubWindow *w, bool forced) override;
+    void doWindowActivated(QMdiSubWindow *w, bool forced) override;
     bool doFileExport(RS_Graphic* graphic, const QString& name,const QString& format,
                             QSize size, QSize borders, bool black, bool bw=true);
 

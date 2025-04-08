@@ -30,6 +30,7 @@
 #include <QCheckBox>
 #include <QWidget>
 
+#include "lc_graphicviewaware.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_layerlist.h"
@@ -47,7 +48,7 @@ class QToolButton;
  * This is the Qt implementation of a widget which can view layers in tree mode
  * and provides interface for various layer-related operations
  */
-class LC_LayerTreeWidget:public QWidget, public RS_LayerListListener {
+class LC_LayerTreeWidget:public QWidget, public LC_GraphicViewAware, public RS_LayerListListener {
 Q_OBJECT
 
 public:
@@ -67,7 +68,7 @@ public:
     void layerToggledConstruction(RS_Layer *) override;
     void onDragEnterEvent(const QModelIndex &dropIndex);
     void onDropEvent(const QModelIndex &dropIndex, DropIndicatorPosition position);
-    void setDocumentAndView(RS_Document *doc, RS_GraphicView* gview);
+    void setGraphicView(RS_GraphicView* gview) override;
 signals:
     void escape();
 public slots:

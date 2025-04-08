@@ -36,11 +36,11 @@ LC_RelZeroCoordinatesWidget::LC_RelZeroCoordinatesWidget(QWidget *parent, const 
     ui->lCartesianCoordinates->setText("");
     ui->lCartesianCoordinates->setText("");
 
-    graphic = nullptr;
-    prec = 4;
-    format = RS2::Decimal;
-    aprec = 2;
-    aformat = RS2::DegreesDecimal;
+    m_graphic = nullptr;
+    m_linearPrecision = 4;
+    m_linearFormat = RS2::Decimal;
+    m_anglePrecision = 2;
+    m_angleFormat = RS2::DegreesDecimal;
 }
 
 LC_RelZeroCoordinatesWidget::~LC_RelZeroCoordinatesWidget(){
@@ -54,32 +54,32 @@ void LC_RelZeroCoordinatesWidget::clearContent() {
 
 void LC_RelZeroCoordinatesWidget::setGraphicView(RS_GraphicView *gv) {
     if (gv == nullptr){
-        if (graphicView != nullptr){
-            disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
-            if (viewport != nullptr){
-                viewport->removeViewportListener(this);
+        if (m_graphicView != nullptr){
+            disconnect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+            if (m_viewport != nullptr){
+                m_viewport->removeViewportListener(this);
             }
         }
         setRelativeZero(RS_Vector(0.0,0.0), true); // in which system? ucs? wcs?
-        viewport = nullptr;
-        graphicView  = nullptr;
-        graphic = nullptr;
+        m_viewport = nullptr;
+        m_graphicView  = nullptr;
+        m_graphic = nullptr;
     }
     else {
-        if (graphicView != nullptr) {
-            disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+        if (m_graphicView != nullptr) {
+            disconnect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
         }
-        if (viewport != nullptr){
-            viewport->removeViewportListener(this);
+        if (m_viewport != nullptr){
+            m_viewport->removeViewportListener(this);
         }
-        graphicView = gv;
-        graphic = graphicView->getGraphic();
-        viewport = gv->getViewPort();
+        m_graphicView = gv;
+        m_graphic = m_graphicView->getGraphic();
+        m_viewport = gv->getViewPort();
 
-        viewport->addViewportListener(this);
+        m_viewport->addViewportListener(this);
 
-        connect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
-        setRelativeZero(viewport->getRelativeZero(), true);
+        connect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+        setRelativeZero(m_viewport->getRelativeZero(), true);
     }
 }
 
@@ -89,15 +89,15 @@ void LC_RelZeroCoordinatesWidget::relativeZeroChanged(const RS_Vector &pos) {
 
 void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool updateFormat) {
 
-    if (graphic) {
+    if (m_graphic) {
         if (updateFormat) {
-            format = graphic->getLinearFormat();
-            prec = graphic->getLinearPrecision();
-            aformat = graphic->getAngleFormat();
-            aprec = graphic->getAnglePrecision();
+            m_linearFormat = m_graphic->getLinearFormat();
+            m_linearPrecision = m_graphic->getLinearPrecision();
+            m_angleFormat = m_graphic->getAngleFormat();
+            m_anglePrecision = m_graphic->getAnglePrecision();
         }
 
-        RS_Vector ucsRelZero = viewport->toUCS(rel);
+        RS_Vector ucsRelZero = m_viewport->toUCS(rel);
 
         double x = ucsRelZero.x;
         double y = ucsRelZero.y;
@@ -110,8 +110,8 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
             angle = 0;
         }
 
-        if (viewport != nullptr){
-            angle = viewport->toBasisUCSAngle(angle);
+        if (m_viewport != nullptr){
+            angle = m_viewport->toBasisUCSAngle(angle);
         }
 
         if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
@@ -122,22 +122,22 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
 
         // cartesian coordinates
 
-        RS2::Unit unit = graphic->getUnit();
-        QString relX = RS_Units::formatLinear(x,unit,format, prec);
-        QString relY = RS_Units::formatLinear(y,unit,format, prec);
+        RS2::Unit unit = m_graphic->getUnit();
+        QString relX = RS_Units::formatLinear(x,unit,m_linearFormat, m_linearPrecision);
+        QString relY = RS_Units::formatLinear(y,unit,m_linearFormat, m_linearPrecision);
 
         ui->lCartesianCoordinates->setText(relX + " , " + relY);
 
         // polar coordinates:
         QString str;
 
-        QString rStr = RS_Units::formatLinear(len, unit, format, prec);
-        QString aStr = RS_Units::formatAngle(angle, aformat, aprec);
+        QString rStr = RS_Units::formatLinear(len, unit, m_linearFormat, m_linearPrecision);
+        QString aStr = RS_Units::formatAngle(angle, m_angleFormat, m_anglePrecision);
         str = rStr + " < " + aStr;
         ui->lPolarCoordinates->setText(str);
     }
 }
 
 void LC_RelZeroCoordinatesWidget::onUCSChanged([[maybe_unused]]LC_UCS *ucs) {
-    setRelativeZero(viewport->getRelativeZero(), true);
+    setRelativeZero(m_viewport->getRelativeZero(), true);
 }

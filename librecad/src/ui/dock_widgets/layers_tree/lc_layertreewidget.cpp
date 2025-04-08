@@ -294,16 +294,16 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
  * set one, that leads to complete rebuild of underlying model
  */
 void LC_LayerTreeWidget::setLayerList(RS_LayerList *ll){
-    if (ll == nullptr){
-        m_layerList = nullptr;
-        update();
+    if (m_layerList != nullptr) {
+        m_layerList->removeListener(this);
     }
-    else{
-        if (ll != this->m_layerList){
-          m_layerList = ll;
-          update();
-        }
+    m_layerList = ll;
+
+    if (ll != nullptr){
+        m_layerList->addListener(this);
     }
+
+    update();
 }
 
 /**
@@ -322,6 +322,7 @@ void LC_LayerTreeWidget::update(){
 
     if (m_layerList == nullptr){
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
+        m_layerTreeModel->setLayerList(nullptr);
         return;
     }
 
@@ -1927,13 +1928,17 @@ void LC_LayerTreeWidget::updateWidgetSettings(){
     LC_GROUP_END();
 }
 
-void LC_LayerTreeWidget::setDocumentAndView(RS_Document *doc, RS_GraphicView *gview){
+
+void LC_LayerTreeWidget::setGraphicView(RS_GraphicView *gview){
     m_graphicView = gview;
-    m_document = doc;
-    if (doc == nullptr) {
+
+    if (gview == nullptr) {
         setLayerList(nullptr);
+        m_document = nullptr;
     }
     else {
+        auto doc = gview->getContainer()->getDocument();
         setLayerList(doc->getLayerList());
+        m_document = doc;
     }
 }

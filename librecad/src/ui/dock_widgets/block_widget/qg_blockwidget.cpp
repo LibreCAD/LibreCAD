@@ -44,6 +44,7 @@
 #include "rs_debug.h"
 #include "rs_settings.h"
 #include "lc_widgets_common.h"
+#include "rs_graphic.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     blockVisible = QIcon(":/icons/visible.lci");
@@ -264,6 +265,8 @@ void QG_BlockWidget::update() {
     if (m_blockList==nullptr) {
         RS_DEBUG->print("QG_BlockWidget::update(): blockList is nullptr");
         m_blockModel->setActiveBlock(nullptr);
+        m_blockModel->setBlockList(nullptr);
+        m_lastBlock = nullptr;
         return;
     }
 
@@ -482,17 +485,23 @@ void QG_BlockWidget::updateWidgetSettings(){
     LC_GROUP_END();
 }
 
-void QG_BlockWidget::setDocument(RS_Document* doc){
-    RS_BlockList* list;
-    if (doc == nullptr) {
+void QG_BlockWidget::setGraphicView(RS_GraphicView* gv){
+    if (gv == nullptr) {
         setBlockList(nullptr);
     }
     else {
-        setBlockList(doc->getBlockList());
+        auto graphic = gv->getGraphic();
+        setBlockList(graphic->getBlockList());
     }
 }
 
 void QG_BlockWidget::setBlockList(RS_BlockList* blockList) {
+    if (m_blockList != nullptr) {
+        m_blockList->removeListener(this);
+    }
     m_blockList = blockList;
+    if (blockList != nullptr) {
+        m_blockList->addListener(this);
+    }
     update();
 }
