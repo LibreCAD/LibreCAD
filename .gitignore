@@ -1,9 +1,10 @@
 # LibreCAD root folder
 /*.dxf
 /*.sh
-!/CMakeLists.txt
 /*.txt
 /\.*
+!/CMakeLists.txt
+!/.github
 
 # Apple generated directories
 build/
