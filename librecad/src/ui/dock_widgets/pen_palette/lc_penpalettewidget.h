@@ -27,6 +27,7 @@
 #include <QDockWidget>
 #include <QWidget>
 
+#include "lc_graphicviewaware.h"
 #include "lc_penitem.h"
 #include "lc_penpalettemodel.h"
 #include "qc_mdiwindow.h"
@@ -37,15 +38,14 @@
 /**
  * Central widget for Pens Palette
  */
-class LC_PenPaletteWidget :public QWidget, public Ui::LC_PenPaletteWidget{
+class LC_PenPaletteWidget :public QWidget, public LC_GraphicViewAware, public Ui::LC_PenPaletteWidget{
     Q_OBJECT
 
 public:
     explicit LC_PenPaletteWidget(const QString& title, QWidget* parent);
     virtual ~LC_PenPaletteWidget() = default ;
-
-    void setMdiWindow(QC_MDIWindow* mdiWindow);
-    void setDocumentAndView(RS_Document *doc, RS_GraphicView *gview);
+    void setGraphicView(RS_GraphicView *gview) override;
+    void persist();
 signals:
     void escape();
 
@@ -91,13 +91,13 @@ public slots:
 
 protected:
     // mouse click counter used for handling both single click and double-click on table view
-    int clicksCount {0};
-     QC_MDIWindow* mdi_win = nullptr;
-     LC_PenPaletteModel* penPaletteModel= nullptr;
-    LC_PenPaletteData* penPaletteData = nullptr;
-    RS_LayerList* layerList = nullptr;
-    bool inEditorControlsSetup = false;
-    bool editorChanged = false;
+    int m_clicksCount {0};
+    RS_GraphicView* m_graphicView{nullptr};
+    LC_PenPaletteModel* m_penPaletteModel{nullptr};
+    LC_PenPaletteData* m_penPaletteData{nullptr};
+    RS_LayerList* m_layerList{nullptr};
+    bool m_inEditorControlsSetup = false;
+    bool m_editorChanged = false;
     void initTableView();
     void initFilteringSection();
     void fillPenEditorByPenItem(LC_PenItem *pen);
@@ -130,6 +130,4 @@ protected:
     bool invokeUnableToSavePenDataDialog();
     void setLayerList(RS_LayerList *ll);
 };
-
-
 #endif // LC_PENPALETTEWIDGET_H

@@ -56,7 +56,7 @@ void LC_PenPaletteOptions:: loadFromSettings(){
         colorNameDisplayMode = LC_GET_INT("colorDisplayMode", defaults.colorNameDisplayMode);
         doubleClickOnTableMode = LC_GET_INT("doubleClickOnTableMode", defaults.doubleClickOnTableMode);
 
-        QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+        QString settingsDir = LC_GET_ONE_STR("Paths", "OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
         pensFileName = settingsDir + "/penpalette.lcpp";
     }
 }

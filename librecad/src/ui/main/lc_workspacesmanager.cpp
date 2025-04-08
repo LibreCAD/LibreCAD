@@ -270,7 +270,7 @@ void LC_WorkspacesManager::persist(){
 }
 
 QString LC_WorkspacesManager::getWorkspacesFileName(){
-    QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    QString settingsDir = LC_GET_ONE_STR("Paths","OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
     QString workspacesFile = settingsDir + "/workspaces.lcws";
     return workspacesFile;
 }

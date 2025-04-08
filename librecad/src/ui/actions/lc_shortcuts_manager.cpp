@@ -176,7 +176,7 @@ QString LC_ShortcutsManager::strippedActionText(QString s) const{
 }
 
 QString LC_ShortcutsManager::getShortcutsMappingsFolder() const {
-    QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    QString settingsDir = LC_GET_ONE_STR("Paths", "OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
     return settingsDir;
 }
 

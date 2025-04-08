@@ -24,7 +24,6 @@
 #ifndef LC_PENPALETTEOPTIONS_H
 #define LC_PENPALETTEOPTIONS_H
 
-#include <QColor>
 #include "lc_peninforegistry.h"
 
 class LC_PenPaletteOptions
