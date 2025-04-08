@@ -59,7 +59,7 @@ bool LC_QuickInfoPointsData::removeCoordinate(int index){
 void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
 
     int pointsCount = collectedPoints.size();
-    PointInfo *pointInfo;
+    PointInfo *pointInfo =  nullptr;
     int index = pointsCount + 1;
     QString idxValue;
     idxValue.setNum(index);
