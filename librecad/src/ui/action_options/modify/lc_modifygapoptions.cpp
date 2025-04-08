@@ -29,11 +29,11 @@ LC_ModifyGapOptions::LC_ModifyGapOptions() :
 {
     ui->setupUi(this);
 
-    connect(ui->cbFree, SIGNAL(clicked(bool)), this, SLOT(onFreeGapClicked(bool)));
+    connect(ui->cbFree, &QCheckBox::clicked, this, &LC_ModifyGapOptions::onFreeGapClicked);
     connect(ui->leSize, &QLineEdit::editingFinished, this, &LC_ModifyGapOptions::onSizeEditingFinished);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_ModifyGapOptions::onDistanceEditingFinished);
-    connect(ui->cbLineSnap, SIGNAL(currentIndexChanged(int)), SLOT(onLineSnapModeIndexChanged(int)));
-    connect(ui->cbGapSnap, SIGNAL(currentIndexChanged(int)), SLOT(onGapSnapModeIndexChanged(int)));
+    connect(ui->cbLineSnap, &QComboBox::currentIndexChanged,this, &LC_ModifyGapOptions::onLineSnapModeIndexChanged);
+    connect(ui->cbGapSnap, &QComboBox::currentIndexChanged,this, &LC_ModifyGapOptions::onGapSnapModeIndexChanged);
 }
 
 LC_ModifyGapOptions::~LC_ModifyGapOptions(){

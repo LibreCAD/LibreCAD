@@ -29,17 +29,17 @@ LC_SliceDivideOptions::LC_SliceDivideOptions() :
     action(nullptr){
     ui->setupUi(this);
 
-    connect(ui->sbCount, SIGNAL(valueChanged(int)), this, SLOT(onCountChanged(int)));
+    connect(ui->sbCount, &QSpinBox::valueChanged, this, &LC_SliceDivideOptions::onCountChanged);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_SliceDivideOptions::onDistanceEditingFinished);
     connect(ui->leTickLengh, &QLineEdit::editingFinished, this, &LC_SliceDivideOptions::onTickLengthEditingFinished);
     connect(ui->leTickOffset, &QLineEdit::editingFinished, this, &LC_SliceDivideOptions::onTickOffsetEditingFinished);
     connect(ui->leTickAngle, &QLineEdit::editingFinished, this, &LC_SliceDivideOptions::onTickAngleEditingFinished);
     connect(ui->leCircleStartAngle, &QLineEdit::editingFinished, this, &LC_SliceDivideOptions::onCircleStartAngleEditingFinished);
-    connect(ui->cbEdgeTick, SIGNAL(currentIndexChanged(int)),this, SLOT(onDrawTickOnEdgesIndexChanged(int)));
-    connect(ui->cbTickSnap, SIGNAL(currentIndexChanged(int)), this, SLOT(onTickSnapIndexChanged(int)));
-    connect(ui->cbRelAngle, SIGNAL(clicked(bool)), this, SLOT(onRelAngleClicked(bool)));
-    connect(ui->cbDivide, SIGNAL(clicked(bool)), this, SLOT(onDivideClicked(bool)));
-    connect(ui->cbMode, SIGNAL(clicked(bool)), this, SLOT(onModeClicked(bool)));
+    connect(ui->cbEdgeTick, &QComboBox::currentIndexChanged,this, &LC_SliceDivideOptions::onDrawTickOnEdgesIndexChanged);
+    connect(ui->cbTickSnap, &QComboBox::currentIndexChanged, this, &LC_SliceDivideOptions::onTickSnapIndexChanged);
+    connect(ui->cbRelAngle, &QCheckBox::clicked, this, &LC_SliceDivideOptions::onRelAngleClicked);
+    connect(ui->cbDivide, &QCheckBox::clicked, this, &LC_SliceDivideOptions::onDivideClicked);
+    connect(ui->cbMode, &QCheckBox::clicked, this, &LC_SliceDivideOptions::onModeClicked);
 }
 
 LC_SliceDivideOptions::~LC_SliceDivideOptions(){

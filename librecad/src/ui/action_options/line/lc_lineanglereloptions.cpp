@@ -33,11 +33,11 @@ LC_LineAngleRelOptions::LC_LineAngleRelOptions() :
     connect(ui->leLength, &QLineEdit::editingFinished, this, &LC_LineAngleRelOptions::onLengthEditingFinished);
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_LineAngleRelOptions::onOffsetEditingFinished);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineAngleRelOptions::onAngleEditingFinished);
-    connect(ui->cbRelativeAngle, SIGNAL(clicked(bool)), this, SLOT(onAngleRelatedClicked(bool)));
-    connect(ui->cbDivide, SIGNAL(clicked(bool)), this, SLOT(onDivideClicked(bool)));
-    connect(ui->cbFree, SIGNAL(clicked(bool)), this, SLOT(onFreeLengthClicked(bool)));
-    connect(ui->cbTickSnapMode, SIGNAL(currentIndexChanged(int)), SLOT(onTickSnapModeIndexChanged(int)));
-    connect(ui->cbLineSnapMode, SIGNAL(currentIndexChanged(int)), SLOT(onLineSnapModeIndexChanged(int)));
+    connect(ui->cbRelativeAngle, &QCheckBox::clicked, this, &LC_LineAngleRelOptions::onAngleRelatedClicked);
+    connect(ui->cbDivide, &QCheckBox::clicked, this, &LC_LineAngleRelOptions::onDivideClicked);
+    connect(ui->cbFree, &QCheckBox::clicked, this, &LC_LineAngleRelOptions::onFreeLengthClicked);
+    connect(ui->cbTickSnapMode, &QComboBox::currentIndexChanged,this,  &LC_LineAngleRelOptions::onTickSnapModeIndexChanged);
+    connect(ui->cbLineSnapMode, &QComboBox::currentIndexChanged,this, &LC_LineAngleRelOptions::onLineSnapModeIndexChanged);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_LineAngleRelOptions::onDistanceEditingFinished);
 }
 

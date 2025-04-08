@@ -96,9 +96,9 @@ std::tuple<QString, QString, RS2::LineWidth> g_boxItems[] = {
  */
 QG_WidthBox::QG_WidthBox(QWidget* parent, const char* name)
 	: QComboBox(parent)
-	,showByLayer(false)
-	,showUnchanged(false)
-	,unchanged(false)
+	,m_showByLayer(false)
+	,m_showUnchanged(false)
+	,m_unchanged(false)
 {
 	setObjectName(name);
 }
@@ -117,11 +117,11 @@ QG_WidthBox::QG_WidthBox(bool showByLayer, bool showUnchanged,
 }
 
 RS2::LineWidth QG_WidthBox::getWidth() const{
-    return currentWidth;
+    return m_currentWidth;
 }
 
 bool QG_WidthBox::isUnchanged() const{
-    return unchanged;
+    return m_unchanged;
 }
 
 /**
@@ -131,30 +131,29 @@ bool QG_WidthBox::isUnchanged() const{
  * @param showByLayer true: Show attributes ByLayer, ByBlock
  */
 void QG_WidthBox::init(bool showByLayer, bool showUnchanged) {
-    this->showByLayer = showByLayer;
-	this->showUnchanged = showUnchanged;
-
+    m_showByLayer = showByLayer;
+	m_showUnchanged = showUnchanged;
     for(const auto& [icon, text, lineWidth]: g_boxItems) {
         switch (lineWidth) {
-        case RS2::WidthUnchanged:
-            if (!showUnchanged)
-                continue;
-            break;
-        case RS2::WidthByLayer:
-        case RS2::WidthByBlock:
-            if (!showByLayer)
-                continue;
-            break;
-        default:
-            break;
+            case RS2::WidthUnchanged:
+                if (!showUnchanged) {
+                    continue;
+                }
+                break;
+            case RS2::WidthByLayer:
+            case RS2::WidthByBlock:
+                if (!showByLayer) {
+                    continue;
+                }
+                break;
+            default:
+                break;
         }
         addItem(QIcon(icon), text, lineWidth);
         m_width2Index.emplace(lineWidth, count() - 1);
     }
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotWidthChanged(int)));
-
+    connect(this, &QG_WidthBox::activated, this, &QG_WidthBox::slotWidthChanged);
     setCurrentIndex(0);
     slotWidthChanged(currentIndex());
 }
@@ -163,30 +162,25 @@ void QG_WidthBox::init(bool showByLayer, bool showUnchanged) {
  * Sets the currently selected width item to the given width.
  */
 void QG_WidthBox::setWidth(RS2::LineWidth w) {
-
     RS_DEBUG->print("QG_WidthBox::setWidth %d\n", (int)w);
-
     auto it = m_width2Index.find(w);
     if (it == m_width2Index.end()) {
         LC_ERR<<"QG_WidthBox::"<<__func__<<"(): error: unknown LineWidth="<<w<<" : ignored";
         return;
     }
 
-    if (it->second == currentIndex())
+    if (it->second == currentIndex()) {
         return;
-
+    }
     setCurrentIndex(it->second);
-
     slotWidthChanged(currentIndex());
 }
-
-
 
 /**
  * Sets the pixmap showing the width of the "By Layer" item.
  */
 void QG_WidthBox::setLayerWidth(RS2::LineWidth w) {
-    if (showByLayer) {
+    if (m_showByLayer) {
         QIcon pixmap;
         switch(w) {
         default:
@@ -258,19 +252,16 @@ void QG_WidthBox::setLayerWidth(RS2::LineWidth w) {
  * choose an individual width.
  */
 void QG_WidthBox::slotWidthChanged(int index) {
-
     RS_DEBUG->print("QG_WidthBox::slotWidthChanged %d\n", index);
-
-
-    if (showUnchanged && index == 0) {
-        unchanged = true;
+    if (m_showUnchanged && index == 0) {
+        m_unchanged = true;
     } else {
-        unchanged = false;
-        currentWidth = static_cast<RS2::LineWidth>(itemData(index).toInt());
+        m_unchanged = false;
+        m_currentWidth = static_cast<RS2::LineWidth>(itemData(index).toInt());
     }
 
     RS_DEBUG->print("Current width is (%d): %d\n",
-                    index, ((int)currentWidth));
+                    index, ((int)m_currentWidth));
 
-    emit widthChanged(currentWidth);
+    emit widthChanged(m_currentWidth);
 }

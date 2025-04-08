@@ -30,11 +30,11 @@ LC_LinePointsOptions::LC_LinePointsOptions() :
     ui(new Ui::LC_LinePointsOptions),
     action(nullptr){
     ui->setupUi(this);
-    connect(ui->sbPointsCount, SIGNAL(valueChanged(int)), this, SLOT(onPointsCountValueChanged(int)));
-    connect(ui->cbEdgePoints, SIGNAL(currentIndexChanged(int)), SLOT(onEdgePointsModeIndexChanged(int)));
+    connect(ui->sbPointsCount, &QSpinBox::valueChanged, this, &LC_LinePointsOptions::onPointsCountValueChanged);
+    connect(ui->cbEdgePoints, &QComboBox::currentIndexChanged, this,&LC_LinePointsOptions::onEdgePointsModeIndexChanged);
 
-    connect(ui->cbFixedDistance, SIGNAL(clicked(bool)), this, SLOT(onFixedDistanceClicked(bool)));
-    connect(ui->cbWithinLine, SIGNAL(clicked(bool)), this, SLOT(onWithinLineClicked(bool)));
+    connect(ui->cbFixedDistance, &QCheckBox::clicked, this, &LC_LinePointsOptions::onFixedDistanceClicked);
+    connect(ui->cbWithinLine, &QCheckBox::clicked, this, &LC_LinePointsOptions::onWithinLineClicked);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_LinePointsOptions::onDistanceEditingFinished);
 
     connect(ui->cbAngle, &QCheckBox::clicked, this, &LC_LinePointsOptions::onAngleClicked);

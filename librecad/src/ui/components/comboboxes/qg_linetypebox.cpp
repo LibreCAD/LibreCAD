@@ -107,8 +107,7 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) 
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"),RS2::BorderLine2);
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (large)"),RS2::BorderLineX2);
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotLineTypeChanged(int)));
+    connect(this, &QG_LineTypeBox::activated, this, &QG_LineTypeBox::slotLineTypeChanged);
 
     setCurrentIndex(0);
     slotLineTypeChanged(currentIndex());
@@ -118,9 +117,7 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) 
  * Sets the currently selected linetype item to the given linetype.
  */
 void QG_LineTypeBox::setLineType(RS2::LineType t) {
-
     RS_DEBUG->print("QG_LineTypeBox::setLineType %d\n", (int)t);
-
     switch (t) {
         case RS2::LineByLayer: {
             if (showByLayer) {
@@ -152,9 +149,7 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
                                 "Combobox doesn't support linetype %d",(int) t);
             }
         }
-
     }
-
     slotLineTypeChanged(currentIndex());
 }
 
@@ -203,11 +198,8 @@ void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
  * choose an individual linetype.
  */
 void QG_LineTypeBox::slotLineTypeChanged(int index) {
-
     RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d\n", index);
-
     unchanged = false;
-
     if (showByLayer) {
         switch (index) {
             case 0:
@@ -234,8 +226,6 @@ void QG_LineTypeBox::slotLineTypeChanged(int index) {
     } else {
         currentLineType = (RS2::LineType) itemData(index).toInt();
     }
-
 //    RS_DEBUG->print(RS_Debug::D_ERROR, "Current linetype is (%d): %d\n", index, currentLineType);
-
     emit lineTypeChanged(currentLineType);
 }

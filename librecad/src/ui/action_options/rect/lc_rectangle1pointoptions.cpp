@@ -38,14 +38,14 @@ LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_Rectangle1PointOptions::onLenXEditingFinished);
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_Rectangle1PointOptions::onAngleEditingFinished);
-    connect(ui->cbCorners, SIGNAL(currentIndexChanged(int)), SLOT(onCornersIndexChanged(int)));
-    connect(ui->cbSnapPoint, SIGNAL(currentIndexChanged(int)), SLOT(onSnapPointIndexChanged(int)));
+    connect(ui->cbCorners, &QComboBox::currentIndexChanged, this, &LC_Rectangle1PointOptions::onCornersIndexChanged);
+    connect(ui->cbSnapPoint, &QComboBox::currentIndexChanged, this,&LC_Rectangle1PointOptions::onSnapPointIndexChanged);
 
-    connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
-    connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
-    connect(ui->cbInnerSize, SIGNAL(clicked(bool)), this, SLOT(onInnerSizeClicked(bool)));
-    connect(ui->cbEdges, SIGNAL(currentIndexChanged(int)), SLOT(onEdgesIndexChanged(int)));
-    connect(ui->chkFixedBaseAngle, SIGNAL(clicked(bool)), this, SLOT(onBaseAngleFixedClicked(bool)));
+    connect(ui->cbPolyline, &QCheckBox::clicked ,this, &LC_Rectangle1PointOptions::onUsePolylineClicked);
+    connect(ui->cbSnapRadiusCenter, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onSnapToCornerArcCenterClicked);
+    connect(ui->cbInnerSize, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onInnerSizeClicked);
+    connect(ui->cbEdges, &QComboBox::currentIndexChanged, this, &LC_Rectangle1PointOptions::onEdgesIndexChanged);
+    connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onBaseAngleFixedClicked);
     connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onFreeAngleClicked);
 }
 

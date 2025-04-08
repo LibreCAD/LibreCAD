@@ -29,9 +29,9 @@ LC_CircleByArcOptions::LC_CircleByArcOptions() :
     action(nullptr)
 {
     ui->setupUi(this);
-    connect(ui->cbReplace, SIGNAL(clicked(bool)), this, SLOT(onReplaceClicked(bool)));
-    connect(ui->cbPen, SIGNAL(currentIndexChanged(int)), SLOT(onPenModeIndexChanged(int)));
-    connect(ui->cbLayer, SIGNAL(currentIndexChanged(int)), SLOT(onLayerModeIndexChanged(int)));
+    connect(ui->cbReplace, &QCheckBox::clicked, this, &LC_CircleByArcOptions::onReplaceClicked);
+    connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onPenModeIndexChanged);
+    connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onLayerModeIndexChanged);
     connect(ui->leRadiusShift, &QLineEdit::editingFinished, this, &LC_CircleByArcOptions::onRadiusShiftEditingFinished);
 }
 

@@ -610,7 +610,8 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
                      title.remove(idx, 3);
                  }
              }
-             QAction *id = m_menuWorkspace->addAction(title, m_appWindow, SLOT(slotWindowsMenuActivated(bool)));
+             // QAction *id = m_menuWorkspace->addAction(title, m_appWindow, SLOT(slotWindowsMenuActivated(bool)));
+             QAction *id = m_menuWorkspace->addAction(title, m_appWindow, &QC_ApplicationWindow::slotWindowsMenuActivated);
              id->setCheckable(true);
              id->setData(i);
              id->setChecked(window_list.at(i) == active);

@@ -29,12 +29,12 @@ LC_LineJoinOptions::LC_LineJoinOptions() :
     action(nullptr){
     ui->setupUi(this);
 
-    connect(ui->cbLine1EdgeMode, SIGNAL(currentIndexChanged(int)), SLOT(onEdgeModelLine1IndexChanged(int)));
-    connect(ui->cbLine2EdgeMode, SIGNAL(currentIndexChanged(int)), SLOT(onEdgeModelLine2IndexChanged(int)));
-    connect(ui->cbAttributesSource, SIGNAL(currentIndexChanged(int)), SLOT(onAttributesSourceIndexChanged(int)));
+    connect(ui->cbLine1EdgeMode, &QComboBox::currentIndexChanged,this, &LC_LineJoinOptions::onEdgeModelLine1IndexChanged);
+    connect(ui->cbLine2EdgeMode, &QComboBox::currentIndexChanged,this, &LC_LineJoinOptions::onEdgeModelLine2IndexChanged);
+    connect(ui->cbAttributesSource, &QComboBox::currentIndexChanged, this, &LC_LineJoinOptions::onAttributesSourceIndexChanged);
 
-    connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
-    connect(ui->cbRemoveOriginals, SIGNAL(clicked(bool)), this, SLOT(onRemoveOriginalsClicked(bool)));
+    connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_LineJoinOptions::onUsePolylineClicked);
+    connect(ui->cbRemoveOriginals, &QCheckBox::clicked, this, &LC_LineJoinOptions::onRemoveOriginalsClicked);
 }
 
 LC_LineJoinOptions::~LC_LineJoinOptions(){    

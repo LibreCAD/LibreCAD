@@ -31,12 +31,12 @@ LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
     ui(new Ui::LC_LineFromPointToLineOptions){
     ui->setupUi(this);
 
-    connect(ui->cbOrthogonal, SIGNAL(clicked(bool)), this, SLOT(onOrthogonalClicked(bool)));
+    connect(ui->cbOrthogonal, &QCheckBox::clicked, this, &LC_LineFromPointToLineOptions::onOrthogonalClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onAngleEditingFinished);
-    connect(ui->cbSizeMode, SIGNAL(currentIndexChanged(int)), SLOT(onSizeModeIndexChanged(int)));
+    connect(ui->cbSizeMode, &QComboBox::currentIndexChanged, this, &LC_LineFromPointToLineOptions::onSizeModeIndexChanged);
     connect(ui->leLength, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onLengthEditingFinished);
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onEndOffsetEditingFinished);
-    connect(ui->cbSnap, SIGNAL(currentIndexChanged(int)), SLOT(onSnapModeIndexChanged(int)));
+    connect(ui->cbSnap, &QComboBox::currentIndexChanged,this, &LC_LineFromPointToLineOptions::onSnapModeIndexChanged);
 }
 
 LC_LineFromPointToLineOptions::~LC_LineFromPointToLineOptions(){
@@ -47,7 +47,6 @@ LC_LineFromPointToLineOptions::~LC_LineFromPointToLineOptions(){
 void LC_LineFromPointToLineOptions::languageChange(){
     ui->retranslateUi(this);
 }
-
 
 void LC_LineFromPointToLineOptions::doSaveSettings(){
     save("Orthogonal", ui->cbOrthogonal->isChecked());

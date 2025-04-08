@@ -30,9 +30,9 @@ LC_DuplicateOptions::LC_DuplicateOptions():
     ui->setupUi(this);
     connect(ui->leOffsetX, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetXEditingFinished);
     connect(ui->leOffsetY, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetYEditingFinished);
-    connect(ui->cbInPlace, SIGNAL(clicked(bool)), this, SLOT(onInPlaceClicked(bool)));
-    connect(ui->cbPen, SIGNAL(currentIndexChanged(int)), SLOT(onPenModeIndexChanged(int)));
-    connect(ui->cbLayer, SIGNAL(currentIndexChanged(int)), SLOT(onLayerModeIndexChanged(int)));
+    connect(ui->cbInPlace, &QCheckBox::clicked, this, &LC_DuplicateOptions::onInPlaceClicked);
+    connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onPenModeIndexChanged);
+    connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onLayerModeIndexChanged);
 }
 
 LC_DuplicateOptions::~LC_DuplicateOptions(){

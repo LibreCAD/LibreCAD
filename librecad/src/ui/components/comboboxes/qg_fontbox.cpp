@@ -32,7 +32,6 @@
 
 #include "rs_debug.h"
 
-
 /**
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
@@ -58,27 +57,20 @@ void QG_FontBox::init() {
 	}
     addItems(fonts);
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotFontChanged(int)));
+    connect(this, &QG_FontBox::activated,this, &QG_FontBox::slotFontChanged);
 
     setCurrentIndex(0);
     slotFontChanged(currentIndex());
 }
 
-
-
 /**
  * Sets the currently selected width item to the given width.
  */
 void QG_FontBox::setFont(const QString& fName) {
-
     RS_DEBUG->print("QG_FontBox::setFont %s\n", fName.toLatin1().data());
-
     setItemText(currentIndex(),fName);
-
     slotFontChanged(currentIndex());
 }
-
 
 RS_Font* QG_FontBox::getFont() const{
 	return currentFont;
@@ -89,17 +81,11 @@ RS_Font* QG_FontBox::getFont() const{
  * sets the current font to the value chosen.
  */
 void QG_FontBox::slotFontChanged(int index) {
-
     RS_DEBUG->print("QG_FontBox::slotFontChanged %d\n", index);
-
     currentFont = RS_FONTLIST->requestFont(currentText());
-
 	if (currentFont) {
         RS_DEBUG->print("Current font is (%d): %s\n",
                         index, currentFont->getFileName().toLatin1().data());
     }
-
     emit fontChanged(currentFont);
 }
-
-

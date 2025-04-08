@@ -39,7 +39,7 @@ QG_SplineOptions::QG_SplineOptions()
     action(nullptr), ui(new Ui::Ui_SplineOptions{}){
     ui->setupUi(this);
 
-    connect(ui->cbDegree, SIGNAL(currentIndexChanged(int)), SLOT(onDegreeIndexChanged(int)));
+    connect(ui->cbDegree, &QComboBox::currentIndexChanged, this, &QG_SplineOptions::onDegreeIndexChanged);
     connect(ui->cbClosed, &QCheckBox::clicked,  this, &QG_SplineOptions::onClosedClicked);
     connect(ui->bUndo, &QToolButton::clicked,  this, &QG_SplineOptions::undo);
 }

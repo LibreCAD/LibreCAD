@@ -34,7 +34,7 @@ LC_CrossOptions::LC_CrossOptions() :
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_CrossOptions::onXEditingFinished);
     connect(ui->leY, &QLineEdit::editingFinished, this, &LC_CrossOptions::onYEditingFinished);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_CrossOptions::onAngleEditingFinished);
-    connect(ui->cbMode, SIGNAL(currentIndexChanged(int)), SLOT(onModeIndexChanged(int)));
+    connect(ui->cbMode, &QComboBox::currentIndexChanged, this, &LC_CrossOptions::onModeIndexChanged);
 }
 
 LC_CrossOptions::~LC_CrossOptions(){

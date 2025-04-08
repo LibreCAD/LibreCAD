@@ -335,8 +335,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     bool verticalTitle = LC_GET_ONE_BOOL("Widgets", "DockTitleBarVertical", false);
     QDockWidget *dock_pen_palette = createPenPalletteWidget();
     QDockWidget *dock_layer = createLayerWidget(action_handler);
-    QDockWidget *dock_views = createNamedViewsWidget();
     QDockWidget *dock_ucss = createUCSListWidget();
+    QDockWidget *dock_views = createNamedViewsWidget();
     QDockWidget *dock_layer_tree = createLayerTreeWidget(action_handler);
     QDockWidget *dock_quick_info = createEntityInfoWidget();
     QDockWidget *dock_block = createBlockListWidget(action_handler);
@@ -356,7 +356,6 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 
     updateDockWidgetsTitleBarType(m_mainWin, verticalTitle);
 }
-
 
 // fixme - sand - remove this method
 void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames){

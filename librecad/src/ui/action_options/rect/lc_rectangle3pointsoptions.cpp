@@ -35,13 +35,13 @@ LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
     connect(ui->leLenY, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onLenYEditingFinished);
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onLenXEditingFinished);
     connect(ui->leInnerAngle, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onInnerAngleEditingFinished);
-    connect(ui->cbCorners, SIGNAL(currentIndexChanged(int)), SLOT(onCornersIndexChanged(int)));
-    connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
-    connect(ui->cbQuadrangle, SIGNAL(clicked(bool)), this, SLOT(onQuadrangleClicked(bool)));
-    connect(ui->cbFixedInnerAngle, SIGNAL(clicked(bool)), this, SLOT(onInnerAngleFixedClicked(bool)));
-    connect(ui->chkFixedBaseAngle, SIGNAL(clicked(bool)), this, SLOT(onBaseAngleFixedClicked(bool)));
-    connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
-    connect(ui->cbEdges, SIGNAL(currentIndexChanged(int)), SLOT(onEdgesIndexChanged(int)));
+    connect(ui->cbCorners, &QComboBox::currentIndexChanged, this, &LC_Rectangle3PointsOptions::onCornersIndexChanged);
+    connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onUsePolylineClicked);
+    connect(ui->cbQuadrangle,&QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onQuadrangleClicked);
+    connect(ui->cbFixedInnerAngle, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onInnerAngleFixedClicked);
+    connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onBaseAngleFixedClicked);
+    connect(ui->cbSnapRadiusCenter, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onSnapToCornerArcCenterClicked);
+    connect(ui->cbEdges,&QComboBox::currentIndexChanged, this, &LC_Rectangle3PointsOptions::onEdgesIndexChanged);
 }
 
 LC_Rectangle3PointsOptions::~LC_Rectangle3PointsOptions(){

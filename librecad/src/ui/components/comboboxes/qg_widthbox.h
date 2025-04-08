@@ -38,34 +38,26 @@
  */
 class QG_WidthBox: public QComboBox {
     Q_OBJECT
-
 public:
 	QG_WidthBox(QWidget* parent=nullptr, const char* name=0);
     QG_WidthBox(bool showByLayer, bool showUnchanged,
 				QWidget* parent=nullptr, const char* name=0);
     virtual ~QG_WidthBox()=default;
-
     RS2::LineWidth getWidth() const;
     void setWidth(RS2::LineWidth w);
     void setLayerWidth(RS2::LineWidth w);
-
     void init(bool showByLayer, bool showUnchanged);
-
     bool isUnchanged() const;
-
 private slots:
     void slotWidthChanged(int index);
-
 signals:
     void widthChanged(RS2::LineWidth);
-
 private:
-    RS2::LineWidth currentWidth = RS2::Width00;
+    RS2::LineWidth m_currentWidth = RS2::Width00;
     std::map<RS2::LineWidth, int> m_width2Index;
-    bool showByLayer = false;
-    bool showUnchanged = false;
-    bool unchanged = false;
+    bool m_showByLayer = false;
+    bool m_showUnchanged = false;
+    bool m_unchanged = false;
 };
 
 #endif
-

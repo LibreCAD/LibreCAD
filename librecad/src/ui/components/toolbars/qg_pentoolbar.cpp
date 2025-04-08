@@ -40,16 +40,13 @@ QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
 		, m_lineTypeBox(new QG_LineTypeBox{true, false, this, "lineTypebox"})
 {
     m_colorBox->setToolTip(tr("Line color"));
-    connect(m_colorBox.get(), SIGNAL(colorChanged(const RS_Color&)),
-            this, SLOT(slotColorChanged(const RS_Color&)));
+    connect(m_colorBox.get(), &QG_ColorBox::colorChanged, this, &QG_PenToolBar::slotColorChanged);
 
     m_widthBox->setToolTip(tr("Line width"));
-    connect(m_widthBox.get(), SIGNAL(widthChanged(RS2::LineWidth)),
-            this, SLOT(slotWidthChanged(RS2::LineWidth)));
+    connect(m_widthBox.get(), &QG_WidthBox::widthChanged,this, &QG_PenToolBar::slotWidthChanged);
 
     m_lineTypeBox->setToolTip(tr("Line type"));
-    connect(m_lineTypeBox.get(), SIGNAL(lineTypeChanged(RS2::LineType)),
-            this, SLOT(slotLineTypeChanged(RS2::LineType)));
+    connect(m_lineTypeBox.get(), &QG_LineTypeBox::lineTypeChanged,this,&QG_PenToolBar::slotLineTypeChanged);
 
     m_currentPen->setColor(m_colorBox->getColor());
     m_currentPen->setWidth(m_widthBox->getWidth());
@@ -59,7 +56,6 @@ QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
     addWidget(m_widthBox.get());
     addWidget(m_lineTypeBox.get());
 }
-
 
 /**
  * Destructor
@@ -71,7 +67,6 @@ void QG_PenToolBar::updateByLayer(RS_Layer* l) {
     m_colorBox->setLayerColor(l->getPen().getColor());
     m_widthBox->setLayerWidth(l->getPen().getWidth());
     m_lineTypeBox->setLayerLineType(l->getPen().getLineType());
-
 }
 
 /**

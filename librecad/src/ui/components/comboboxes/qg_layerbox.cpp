@@ -75,7 +75,7 @@ void QG_LayerBox::init(RS_LayerList& ll,
         }
     }
 
-    connect(this, SIGNAL(activated(int)),this, SLOT(slotLayerChanged(int)));
+    connect(this, &QG_LayerBox::activated ,this, &QG_LayerBox::slotLayerChanged);
     setCurrentIndex(0);
     slotLayerChanged(currentIndex());
 }

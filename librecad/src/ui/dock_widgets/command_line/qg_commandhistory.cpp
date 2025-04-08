@@ -36,19 +36,19 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
     setContextMenuPolicy(Qt::ActionsContextMenu);
 
     m_pCopy = new QAction(tr("&Copy"), this);
-    connect(m_pCopy, SIGNAL(triggered()), this, SLOT(copy()));
+    connect(m_pCopy, &QAction::triggered, this, &QG_CommandHistory::copy);
     addAction(m_pCopy);
     m_pCopy->setVisible(false);
-//only show "copy" menu item when there's available selection to copy
-    connect(this, SIGNAL(copyAvailable(bool)), m_pCopy, SLOT(setVisible(bool)));
+    //only show "copy" menu item when there's available selection to copy
+    connect(this, &QG_CommandHistory::copyAvailable, m_pCopy, &QAction::setVisible);
 
     m_pSelectAll = new QAction(tr("Select &All"), this);
-    connect(m_pSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
+    connect(m_pSelectAll, &QAction::triggered, this, &QG_CommandHistory::selectAll);
     addAction(m_pSelectAll);
-    connect(this, SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
+    connect(this, &QG_CommandHistory::textChanged, this, &QG_CommandHistory::slotTextChanged);
 
     QAction* clear = new QAction(tr("Clear"), this);
-    connect(clear, SIGNAL(triggered(bool)), this, SLOT(clear()));
+    connect(clear, &QAction::triggered, this, &QG_CommandHistory::clear);
     addAction(clear);
 
 #ifndef DONT_FORCE_WIDGETS_CSS

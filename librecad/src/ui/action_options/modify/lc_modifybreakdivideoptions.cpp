@@ -29,8 +29,8 @@ LC_ModifyBreakDivideOptions::LC_ModifyBreakDivideOptions() :
     ui(new Ui::LC_ModifyBreakDivideOptions)
 {
     ui->setupUi(this);
-    connect(ui->cbRemoveSegments, SIGNAL(clicked(bool)), this, SLOT(onRemoveSegmentsClicked(bool)));
-    connect(ui->cbRemoveSelected, SIGNAL(clicked(bool)), this, SLOT(onRemoveSelectedClicked(bool)));
+    connect(ui->cbRemoveSegments, &QCheckBox::clicked, this, &LC_ModifyBreakDivideOptions::onRemoveSegmentsClicked);
+    connect(ui->cbRemoveSelected, &QCheckBox::clicked, this, &LC_ModifyBreakDivideOptions::onRemoveSelectedClicked);
 }
 
 void LC_ModifyBreakDivideOptions::doSetAction(RS_ActionInterface *a, bool update){

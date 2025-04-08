@@ -32,13 +32,13 @@ LC_StarOptions::LC_StarOptions() :
     ui->sbNumber->setMaximum(STAR_MIN_RAYS);
     ui->sbNumber->setMaximum(STAR_MAX_RAYS);
 
-    connect(ui->cbSymmertix, SIGNAL(clicked(bool)), this, SLOT(onSymmetricClicked(bool)));
-    connect(ui->cbRadiusInner, SIGNAL(clicked(bool)), this, SLOT(onRadiusInnerClicked(bool)));
+    connect(ui->cbSymmertix, &QCheckBox::clicked, this, &LC_StarOptions::onSymmetricClicked);
+    connect(ui->cbRadiusInner, &QCheckBox::clicked, this, &LC_StarOptions::onRadiusInnerClicked);
     connect(ui->leRadiusInner, &QLineEdit::editingFinished, this, &LC_StarOptions::onRadiusInnerEditingFinished);
-    connect(ui->cbRadiusOuter, SIGNAL(clicked(bool)), this, SLOT(onRadiusOuterClicked(bool)));
+    connect(ui->cbRadiusOuter, &QCheckBox::clicked, this, &LC_StarOptions::onRadiusOuterClicked);
     connect(ui->leRadusOuter, &QLineEdit::editingFinished, this, &LC_StarOptions::onRadiusOuterEditingFinished);
-    connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onPolylineClicked(bool)));
-    connect(ui->sbNumber, SIGNAL(valueChanged(int)), this, SLOT(onNumberChanged(int)));
+    connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_StarOptions::onPolylineClicked);
+    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &LC_StarOptions::onNumberChanged);
 }
 
 LC_StarOptions::~LC_StarOptions(){

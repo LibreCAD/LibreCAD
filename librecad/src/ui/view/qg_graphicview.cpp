@@ -1331,14 +1331,12 @@ void QG_GraphicView::addScrollbars(){
     hScrollBar->setSingleStep(50);
     hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
-    connect(hScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(slotHScrolled(int)));
+    connect(hScrollBar, &QG_ScrollBar::valueChanged, this, &QG_GraphicView::slotHScrolled);
 
     vScrollBar->setSingleStep(50);
     vScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(vScrollBar, 0, 1);
-    connect(vScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(slotVScrolled(int)));
+    connect(vScrollBar, &QG_ScrollBar::valueChanged, this, &QG_GraphicView::slotVScrolled);
 }
 
 bool QG_GraphicView::hasScrollbars(){
