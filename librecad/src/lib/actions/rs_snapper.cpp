@@ -217,9 +217,9 @@ struct RS_Snapper::ImpData {
 RS_Snapper::RS_Snapper(LC_ActionContext *actionContext)
     :m_container(actionContext->getEntityContainer())
     ,m_graphicView(actionContext->getGraphicView())
-    ,pImpData(new ImpData)
-    ,m_snapIndicator(new Indicator),
-    m_actionContext(actionContext){
+    ,m_actionContext(actionContext)
+    ,pImpData(new ImpData),
+    m_snapIndicator(new Indicator){
     m_viewport = m_graphicView->getViewPort();
     m_infoCursorOverlayPrefs = m_graphicView->getInfoCursorOverlayPreferences();
 }

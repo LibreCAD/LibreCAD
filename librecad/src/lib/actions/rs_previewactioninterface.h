@@ -129,7 +129,7 @@ protected:
 
         void toInfoCursorZone2(bool replace) {
             QString message = toString();
-            snapper->appendInfoCursorZoneMessage(message, 2, false);
+            snapper->appendInfoCursorZoneMessage(message, 2, replace);
             clear();
         }
 

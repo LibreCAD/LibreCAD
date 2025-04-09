@@ -38,7 +38,6 @@
 #include "qc_mdiwindow.h"
 
 #include "qg_exitdialog.h"
-#include "qg_filedialog.h"
 #include "qg_graphicview.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -340,7 +339,7 @@ bool QC_MDIWindow::loadDocument(const QString& fileName, RS2::FormatType type) {
  *         false if the file could not be saved or the document
  *         is invalid.
  */
-bool QC_MDIWindow::saveDocument(bool &cancelled, bool isAutoSave) {
+bool QC_MDIWindow::saveDocument(bool &cancelled, [[maybe_unused]]bool isAutoSave) {
     bool result = m_documentsStorage->saveDocument(m_document, m_graphicView, cancelled);
     setWindowModified(m_document->isModified());
     return result;
@@ -447,7 +446,7 @@ bool QC_MDIWindow::has_children() const{
     return !m_childWindows.isEmpty();
 }
 
-void QC_MDIWindow::graphicModified(const RS_Graphic* g, bool modified){
+void QC_MDIWindow::graphicModified([[maybe_unused]]const RS_Graphic* g, bool modified){
     setWindowModified(modified);
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     if (appWin !=nullptr) {
@@ -455,7 +454,7 @@ void QC_MDIWindow::graphicModified(const RS_Graphic* g, bool modified){
     }
 }
 
-void QC_MDIWindow::undoStateChanged(const RS_Graphic *g, bool undoAvailable, bool redoAvailable){
+void QC_MDIWindow::undoStateChanged([[maybe_unused]]const RS_Graphic *g, bool undoAvailable, bool redoAvailable){
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     if (appWin !=nullptr) {
         appWin->setRedoEnable(redoAvailable);

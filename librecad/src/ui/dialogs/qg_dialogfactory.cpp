@@ -84,11 +84,7 @@
 #include "rs_system.h"
 #include "rs_vector.h"
 #include "rs_insert.h"
-#include "lc_crossoptions.h"
-#include "lc_lineanglereloptions.h"
-#include "lc_rectangle1pointoptions.h"
 #include "lc_optionswidgetsholder.h"
-#include "lc_actionsshortcutsdialog.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
@@ -98,7 +94,7 @@
  * @param parent Pointer to parent widget which can host dialogs.
  * @param ow Pointer to widget that can host option widgets.
  */
-QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* optionsToolbar, LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
+QG_DialogFactory::QG_DialogFactory(QWidget* parent, [[maybe_unused]]QToolBar* optionsToolbar, [[maybe_unused]] LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
     : parent(parent)
 {
     // fixme - sand - files - restore

@@ -45,7 +45,7 @@ void LC_CreatorInvoker::createCustomToolbars() {
         const QVariant &variant = settings.value(key);
         if (variant.isValid()) {
             const QStringList &qList = variant.toStringList();
-            for (const auto actionName: qList) {
+            for (const auto &actionName: qList) {
                 toolbar->addAction(getAction(actionName));
             }
             appWindow->addToolBar(toolbar);

@@ -322,12 +322,12 @@ void QG_LayerWidget::layerAdded(RS_Layer* layer){
     update();   // update again, if new layer is last row, the height was wrong
 }
 
-void QG_LayerWidget::layerEdited(RS_Layer *rs_layer){
+void QG_LayerWidget::layerEdited([[maybe_unused]]RS_Layer *rs_layer){
     update();
     updateFiltering();
 }
 
-void QG_LayerWidget::layerRemoved(RS_Layer *rs_layer){
+void QG_LayerWidget::layerRemoved([[maybe_unused]]RS_Layer *rs_layer){
     update();
     updateFiltering();
     update();

@@ -67,7 +67,7 @@ void LC_InfoCursorSettingsManager::slotInfoCursorSetting(bool toggle) {
                 }
 
                 if (doUpdate) {
-                   m_appWin->doForEachWindowGraphicView([](QG_GraphicView* gv, QC_MDIWindow* w)
+                   m_appWin->doForEachWindowGraphicView([](QG_GraphicView* gv, [[maybe_unused]]QC_MDIWindow* w)
                     {
                         // fixme - sand - files - probably just rely on signal??
                         gv->loadSettings();

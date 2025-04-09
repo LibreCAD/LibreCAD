@@ -600,7 +600,7 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
 
     // kill active actions in previous windows.that will prevent the situation described by issue #1762 with
     // non-finished action started on previous window and action that is active with UI still checked  after window switch
-    doForEachSubWindowGraphicView([this](QG_GraphicView *graphicView, QC_MDIWindow *sw){
+    doForEachSubWindowGraphicView([this](QG_GraphicView *graphicView,[[maybe_unused]] QC_MDIWindow *sw){
         RS_ActionInterface *ai = graphicView->getCurrentAction();
         if (ai != nullptr) {
             ai->hideOptions();
@@ -1482,7 +1482,7 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
 }
 
 void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
-    doForEachWindowGraphicView([toggle](QG_GraphicView *gv, QC_MDIWindow* w){ // fixme - sand - files - probably just rely on signal??
+    doForEachWindowGraphicView([toggle](QG_GraphicView *gv, [[maybe_unused]] QC_MDIWindow* w){ // fixme - sand - files - probably just rely on signal??
         gv->setShowEntityDescriptionOnHover(toggle);
     });
     emit showEntityDescriptionOnHoverChanged(toggle);
@@ -1491,7 +1491,7 @@ void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
 
 void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     LC_SET_ONE("Appearance","DraftLinesMode", toggle);
-    doForEachWindowGraphicView([toggle](QG_GraphicView *gv,QC_MDIWindow* w){ // fixme - sand - files - probably just rely on signal??
+    doForEachWindowGraphicView([toggle](QG_GraphicView *gv, [[maybe_unused]]QC_MDIWindow* w){ // fixme - sand - files - probably just rely on signal??
         gv->setDraftLinesMode(toggle);
     });
     emit draftLinesChanged(toggle);
@@ -1501,7 +1501,7 @@ void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
 void QC_ApplicationWindow::slotViewAntialiasing(bool toggle) {
     LC_SET_ONE("Appearance","Antialiasing", toggle);
 
-    doForEachSubWindowGraphicView([toggle](QG_GraphicView *gv, QC_MDIWindow *w){ // fixme - sand - files - probably just rely on signal??
+    doForEachSubWindowGraphicView([toggle](QG_GraphicView *gv, [[maybe_unused]] QC_MDIWindow *w){ // fixme - sand - files - probably just rely on signal??
         gv->setAntialiasing(toggle);
     });
     emit antialiasingChanged(toggle);
@@ -1512,7 +1512,7 @@ void QC_ApplicationWindow::slotViewAntialiasing(bool toggle) {
  * Updates all grids of all graphic views.
  */
 void QC_ApplicationWindow::updateGrids() {
-    doForEachSubWindowGraphicView([this](QG_GraphicView *gv, QC_MDIWindow *w){
+    doForEachSubWindowGraphicView([this](QG_GraphicView *gv, [[maybe_unused]] QC_MDIWindow *w){
             gv->loadSettings();
             gv->redraw(RS2::RedrawGrid);
     });
@@ -1752,30 +1752,6 @@ void QC_ApplicationWindow::widgetOptionsDialog() {
     if (m_dlgHelpr->showWidgetOptionsDialog()) {
         fireWidgetSettingsChanged();
     }
-}
-
-/**
- * This slot modifies the commandline's title bar
- * depending on the dock area it is moved to.
- */
-// fixme - sand - files - move to settings
-void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area) {
-    auto *cmdDockWidget = findChild<QDockWidget *>("command_dockwidget");
-
-    auto *commandWidget = static_cast<QG_CommandWidget *>(cmdDockWidget->widget());
-    QAction *dockingAction = commandWidget->getDockingAction();
-    bool docked = area & Qt::AllDockWidgetAreas;
-    cmdDockWidget->setWindowTitle(docked ? tr("Cmd") : tr("Command line"));
-    dockingAction->setText(docked ? tr("Float") : tr("Dock", "Dock the command widget to the main window"));
-    QDockWidget::DockWidgetFeatures features =
-        QDockWidget::DockWidgetClosable
-        | QDockWidget::DockWidgetMovable
-        | QDockWidget::DockWidgetFloatable;
-
-    if (docked) {
-        features |= QDockWidget::DockWidgetVerticalTitleBar;
-    }
-    cmdDockWidget->setFeatures(features);
 }
 
 bool QC_ApplicationWindow::loadStyleSheet(const QString &path) {

@@ -387,7 +387,7 @@ void LC_MDIApplicationWindow::slotTile() {
 
 //auto zoom the graphicView of sub-windows
 void LC_MDIApplicationWindow::slotZoomAuto() {
-    doForEachSubWindowGraphicView([this](QG_GraphicView *gv, QC_MDIWindow* win){
+    doForEachSubWindowGraphicView([]([[maybe_unused]]QG_GraphicView *gv, QC_MDIWindow* win){
         win->zoomAuto();
     });
 }
@@ -428,7 +428,7 @@ void LC_MDIApplicationWindow::slotToggleTab() {
         LC_SET_ONE("Startup", "TabMode", 1);
         setupCADAreaTabbar();
         QMdiSubWindow *active = m_mdiAreaCAD->activeSubWindow();
-        doForEachSubWindowGraphicView([active, this](QG_GraphicView *gv, QC_MDIWindow* win){
+        doForEachSubWindowGraphicView([active, this]([[maybe_unused]]QG_GraphicView *gv, QC_MDIWindow* win){
             win->hide();
             if (win != active) {
                 win->lower();

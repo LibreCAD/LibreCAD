@@ -225,7 +225,7 @@ void  LC_ActionGroupManager::fillActionsList(QList<QAction *> &list, const std::
     }
 }
 
-bool LC_ActionGroupManager::isActionTypeSetsTheIcon(RS2::ActionType actionType){
+bool LC_ActionGroupManager::isActionTypeSetsTheIcon([[maybe_unused]]RS2::ActionType actionType){
     // return actionType != RS2::ActionSetRelativeZero;
     return true;
 }

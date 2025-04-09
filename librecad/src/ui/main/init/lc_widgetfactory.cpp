@@ -25,14 +25,18 @@
 #include <QFile>
 #include <QMenuBar>
 
-
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+
 #include "lc_caddockwidget.h"
+#include "lc_dockwidget.h"
 #include "lc_layertreewidget.h"
 #include "lc_widgetfactory.h"
+#include "lc_namedviewslistwidget.h"
+#include "lc_penwizard.h"
+#include "lc_ucslistwidget.h"
+#include "lc_relzerocoordinateswidget.h"
 #include "qc_applicationwindow.h"
-
 #include "qg_actionhandler.h"
 #include "qg_blockwidget.h"
 #include "qg_commandwidget.h"
@@ -43,16 +47,9 @@
 #include "qg_mousewidget.h"
 #include "qg_activelayername.h"
 #include "qg_selectionwidget.h"
-#include "lc_relzerocoordinateswidget.h"
-#include "twostackedlabels.h"
-
 #include "rs_debug.h"
 #include "rs_settings.h"
-#include "lc_namedviewslistwidget.h"
-#include "lc_namedviewsbutton.h"
-#include "lc_penwizard.h"
-#include "lc_ucslistwidget.h"
-
+#include "twostackedlabels.h"
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win)
     : QObject(nullptr)
@@ -173,17 +170,18 @@ void LC_WidgetFactory::createCADSidebar(int columns, int icon_size, bool flatBut
     m_appWin->tabifyDockWidget(modify, order);
 }
 
-QDockWidget* LC_WidgetFactory::newDockWidget(const QString& title, const char *name){
-    auto result = new QDockWidget(m_appWin);
+QDockWidget* LC_WidgetFactory::createDockWidget(const QString& horizontalTitle, const char *name, const QString& verticalTitle){
+    auto result = new LC_DockWidget(m_appWin, horizontalTitle, verticalTitle);
+    // auto result = new QDockWidget(horizontalTitle, m_appWin);
     result->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    result->setWindowTitle(title);
+    result->setWindowTitle(horizontalTitle);
     result->setObjectName(name);
     result->setProperty("_lc_doc_widget", true);
     return result;
 }
 
 QDockWidget* LC_WidgetFactory::createPenPalletteWidget(){
-    auto dock = newDockWidget(tr("Pen Palette"), "pen_palette_dockwidget");
+    auto dock = createDockWidget(tr("Pens Palette"), "pen_palette_dockwidget", tr("Pens"));
     auto widget = new LC_PenPaletteWidget("PenPalette", dock);
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
@@ -196,7 +194,7 @@ QDockWidget* LC_WidgetFactory::createPenPalletteWidget(){
 }
 
 QDockWidget* LC_WidgetFactory::createLayerWidget(QG_ActionHandler *action_handler){
-    auto dock = newDockWidget(tr("Layer List"), "layer_dockwidget");
+    auto dock = createDockWidget(tr("Layers"), "layer_dockwidget", tr("Layers"));
     auto widget = new QG_LayerWidget(action_handler, dock, "Layer");
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
@@ -209,7 +207,7 @@ QDockWidget* LC_WidgetFactory::createLayerWidget(QG_ActionHandler *action_handle
 }
 
 QDockWidget* LC_WidgetFactory::createNamedViewsWidget(){
-    auto dock   = newDockWidget(tr("Named Views"), "view_dockwidget");
+    auto dock   = createDockWidget(tr("Named Views"), "view_dockwidget", tr("Views"));
     auto widget = new LC_NamedViewsListWidget("View", dock);
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
@@ -232,7 +230,7 @@ QDockWidget* LC_WidgetFactory::createNamedViewsWidget(){
 }
 
 QDockWidget*  LC_WidgetFactory::createUCSListWidget(){
-    auto dock = newDockWidget(tr("UCSs"), "ucs_dockwidget");
+    auto dock = createDockWidget(tr("User Coordinate Systems"), "ucs_dockwidget", "UCSs");
     auto widget = new LC_UCSListWidget("UCS", dock);
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
@@ -244,12 +242,10 @@ QDockWidget*  LC_WidgetFactory::createUCSListWidget(){
 }
 
 QDockWidget* LC_WidgetFactory::createLayerTreeWidget(QG_ActionHandler *action_handler){
-    QDockWidget* dock = newDockWidget(tr("Layer Tree"), "layer_tree_dockwidget");
+    QDockWidget* dock = createDockWidget(tr("Layers Tree"), "layer_tree_dockwidget", "Layers Tree");
     auto widget = new LC_LayerTreeWidget(action_handler, dock, "Layer Tree");
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
-
-    // layer_tree_widget->setVisible(false);
 
     connect(widget, &LC_LayerTreeWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
     connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_LayerTreeWidget::updateWidgetSettings);
@@ -259,12 +255,10 @@ QDockWidget* LC_WidgetFactory::createLayerTreeWidget(QG_ActionHandler *action_ha
 }
 
 QDockWidget* LC_WidgetFactory::createEntityInfoWidget(){
-    QDockWidget* dock = newDockWidget(tr("Entity Info"), "quick_entity_info");
+    QDockWidget* dock = createDockWidget(tr("Entity Info"), "quick_entity_info", tr("Info"));
     auto widget = new LC_QuickInfoWidget(dock, m_agm->getActionsMap());
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
-
-    // quick_info_widget->setVisible(false);
 
     connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_QuickInfoWidget::updateWidgetSettings);
 
@@ -273,7 +267,7 @@ QDockWidget* LC_WidgetFactory::createEntityInfoWidget(){
 }
 
 QDockWidget*  LC_WidgetFactory::createBlockListWidget(QG_ActionHandler *action_handler){
-    auto dock =  newDockWidget(tr("Block List"), "block_dockwidget");
+    auto dock =  createDockWidget(tr("Blocks"), "block_dockwidget", tr("Blocks"));
 
     auto widget = new QG_BlockWidget(action_handler, dock, "Block");
     widget->setFocusPolicy(Qt::NoFocus);
@@ -287,7 +281,7 @@ QDockWidget*  LC_WidgetFactory::createBlockListWidget(QG_ActionHandler *action_h
 }
 
 QDockWidget*  LC_WidgetFactory::createLibraryWidget(QG_ActionHandler *action_handler){
-    auto dock = newDockWidget(tr("Library Browser"), "library_dockwidget");
+    auto dock = createDockWidget(tr("Library Browser"), "library_dockwidget", tr("Library"));
 
     auto widget = new QG_LibraryWidget(action_handler, dock, "Library");
     widget->setFocusPolicy(Qt::NoFocus);
@@ -303,7 +297,7 @@ QDockWidget*  LC_WidgetFactory::createLibraryWidget(QG_ActionHandler *action_han
 }
 
 QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler){
-    auto dock = newDockWidget(tr("Command line"), "command_dockwidget");
+    auto dock = createDockWidget(tr("Command line"), "command_dockwidget", tr("Cmd"));
 
     auto widget = new QG_CommandWidget(action_handler, dock, "Command");
     widget->setActionHandler(action_handler);
@@ -319,6 +313,30 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler
 
     m_appWin->m_commandWidget = widget;
     return dock;
+}
+
+/**
+ * This slot modifies the commandline's title bar
+ * depending on the dock area it is moved to.
+ */
+// fixme - sand - files - remove, just port from ApppWindow - use uniform way
+void LC_WidgetFactory::modifyCommandTitleBar(Qt::DockWidgetArea area) {
+    auto *cmdDockWidget = findChild<QDockWidget *>("command_dockwidget");
+
+    auto *commandWidget = static_cast<QG_CommandWidget *>(cmdDockWidget->widget());
+    QAction *dockingAction = commandWidget->getDockingAction();
+    bool docked = area & Qt::AllDockWidgetAreas;
+    cmdDockWidget->setWindowTitle(docked ? tr("Cmd") : tr("Command line"));
+    dockingAction->setText(docked ? tr("Float") : tr("Dock", "Dock the command widget to the main window"));
+    QDockWidget::DockWidgetFeatures features =
+        QDockWidget::DockWidgetClosable
+        | QDockWidget::DockWidgetMovable
+        | QDockWidget::DockWidgetFloatable;
+
+    if (docked) {
+        features |= QDockWidget::DockWidgetVerticalTitleBar;
+    }
+    cmdDockWidget->setFeatures(features);
 }
 
 void LC_WidgetFactory::updateDockWidgetsTitleBarType(QC_ApplicationWindow* mainWin, bool verticalTitle) {
@@ -382,7 +400,7 @@ void LC_WidgetFactory::createPenWizardWidget(){
     m_appWin->m_penWizard = penWizard;
 }
 
-void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *result, bool verticalTitleBar){
+void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *widget, bool verticalTitleBar){
     QDockWidget::DockWidgetFeatures features =
             QDockWidget::DockWidgetClosable
             | QDockWidget::DockWidgetMovable
@@ -392,7 +410,12 @@ void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *result, bool vertical
     if (verticalTitleBar) {
         features |= QDockWidget::DockWidgetVerticalTitleBar;
     }
-    result->setFeatures(features);
+    widget->setFeatures(features);
+    auto lcDocWidget = dynamic_cast<LC_DockWidget*>(widget);
+    if (lcDocWidget != nullptr) {
+        lcDocWidget->updateTitle();
+    }
+
 }
 
 LC_CADDockWidget* LC_WidgetFactory::cadDockWidget(const QString& title, const char* name, const QList<QAction*> &actions, int columns, int iconSize, bool flatButtons){

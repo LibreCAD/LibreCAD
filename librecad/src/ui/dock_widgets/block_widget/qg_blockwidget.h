@@ -31,6 +31,7 @@
 #include <QIcon>
 #include <QItemSelection>
 #include <QWidget>
+#include "lc_graphicviewaware.h"
 
 #include "rs_blocklistlistener.h"
 
@@ -81,14 +82,14 @@ private:
  * This is the Qt implementation of a widget which can view a 
  * block list.
  */
-class QG_BlockWidget: public QWidget, public RS_BlockListListener, LC_GraphicViewAware {
+class QG_BlockWidget: public QWidget, public RS_BlockListListener, public LC_GraphicViewAware {
     Q_OBJECT
 
 public:
     QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
 
-    void setGraphicView(RS_GraphicView* doc);
+    void setGraphicView(RS_GraphicView* doc) override;
     RS_BlockList* getBlockList() {
         return m_blockList;
     }

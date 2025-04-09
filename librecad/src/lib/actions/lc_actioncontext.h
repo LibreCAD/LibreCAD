@@ -37,12 +37,12 @@ protected:
     ~LC_ActionContext() = default;
 
 public:
-    virtual void addOptionsWidget(LC_ActionOptionsWidget * widet){}
-    virtual void removeOptionsWidget(LC_ActionOptionsWidget * widet){}
+    virtual void addOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widet){}
+    virtual void removeOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widet){}
     virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) { };
     virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) { };
     virtual void hideSnapOptions() {};
-    virtual void updateSelectionWidget(int countSelected, double selectedLength){}
+    virtual void updateSelectionWidget([[maybe_unused]]int countSelected, [[maybe_unused]]double selectedLength){}
 
     virtual void updateMouseWidget([[maybe_unused]]const QString& left = QString(),
                                   [[maybe_unused]]const QString& right = QString(),

@@ -110,8 +110,6 @@ public:
     void initSettings();
     void storeSettings();
 
-
-
     /** Catch hotkey for giving focus to command line. */
     void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
@@ -216,7 +214,6 @@ public slots:
     void toggleFullscreen(bool checked);
     void setPreviousZoomEnable(bool enable);
     void widgetOptionsDialog();
-    void modifyCommandTitleBar(Qt::DockWidgetArea area);
     void reloadStyleSheet();
     void updateGridStatus(const QString&);
     void showDeviceOptions();
@@ -261,6 +258,9 @@ public:
 
     QG_PenToolBar* getPenToolBar() {return m_penToolBar;};
 
+    /**
+     * Updates all grids of all graphic views.
+     */
     void updateGrids();
 
     QG_BlockWidget* getBlockWidget(void){

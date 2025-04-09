@@ -74,7 +74,7 @@ public:
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
     static bool test();
 protected:
-    virtual void fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const {};
+    virtual void fireUndoStateChanged([[maybe_unused]]bool undoAvailable, [[maybe_unused]] bool redoAvailable) const {};
 private:
 	void addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i);
     //! List of undo list items. every item is something that can be undone.

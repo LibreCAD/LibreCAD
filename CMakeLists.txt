@@ -101,6 +101,7 @@ include_directories(librecad/src/actions/dock_widgets/layer)
 include_directories(librecad/src/actions/dock_widgets/entity_info)
 include_directories(librecad/src/actions/dock_widgets/ucs_list)
 include_directories(librecad/src/actions/dock_widgets/workspaces)
+include_directories(librecad/src/actions/dock_widgets/cad)
 include_directories(librecad/src/actions/file)
 include_directories(librecad/src/actions/options)
 include_directories(librecad/src/actions/print_preview)
@@ -212,6 +213,7 @@ include_directories(librecad/src/ui/main/release_check)
 include_directories(librecad/src/ui/main/support)
 include_directories(librecad/src/ui/dock_widgets)
 include_directories(librecad/src/ui/dock_widgets/command_line)
+include_directories(librecad/src/ui/dock_widgets/cad)
 include_directories(librecad/src/ui/dock_widgets/pen_wizard)
 include_directories(librecad/src/ui/dock_widgets/layers_tree)
 include_directories(librecad/src/ui/dock_widgets/entity_info)
@@ -979,8 +981,10 @@ set(SOURCES
 		librecad/src/ui/view/lc_centralwidget.h
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.cpp
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.h
-		librecad/src/ui/dock_widgets/lc_caddockwidget.cpp
-		librecad/src/ui/dock_widgets/lc_caddockwidget.h
+        librecad/src/ui/dock_widgets/lc_dockwidget.h
+        librecad/src/ui/dock_widgets/lc_dockwidget.cpp
+        librecad/src/ui/dock_widgets/cad/lc_caddockwidget.h
+        librecad/src/ui/dock_widgets/cad/lc_caddockwidget.cpp
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.cpp
 		librecad/src/ui/dock_widgets/pen_wizard/lc_penwizard.h
 		librecad/src/ui/main/init/lc_widgetfactory.cpp

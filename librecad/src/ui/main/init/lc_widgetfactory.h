@@ -23,6 +23,7 @@
 #ifndef LC_WIDGETFACTORY_H
 #define LC_WIDGETFACTORY_H
 #include <QObject>
+#include <QDockWidget>
 #include <lc_appwindowaware.h>
 
 class QAction;
@@ -46,7 +47,7 @@ public:
     static void updateDockOptions(QC_ApplicationWindow* mainWin, bool allowDockNesting, bool verticalTabs);
 private:
     LC_ActionGroupManager *m_agm {nullptr};
-    QDockWidget *newDockWidget(const QString &title, const char *name);
+    QDockWidget *createDockWidget(const QString &title, const char *name, const QString& verticalTitle = "");
     QDockWidget *createPenPalletteWidget();
     QDockWidget *createLayerWidget(QG_ActionHandler *action_handler);
     QDockWidget *createNamedViewsWidget();
@@ -56,6 +57,7 @@ private:
     QDockWidget *createBlockListWidget(QG_ActionHandler *action_handler);
     QDockWidget *createLibraryWidget(QG_ActionHandler *action_handler);
     QDockWidget *createCmdWidget(QG_ActionHandler *action_handler);
+    void modifyCommandTitleBar(Qt::DockWidgetArea area);
     void createPenWizardWidget();
     void fillActionLists();
     void initLeftCADSidebar();
@@ -67,6 +69,7 @@ private:
     QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, QString title, const char *name);
     void addAction(QToolBar *toolbar, const char *actionName);
     void makeActionsInvisible(const std::vector<QString> &actionNames);
-    static void setDockWidgetTitleType(QDockWidget *result, bool verticalTitleBar);
+    static void updateWidgetTitles(bool vertical_title_bar);
+    static void setDockWidgetTitleType(QDockWidget *widget, bool verticalTitleBar);
 };
 #endif // LC_WIDGETFACTORY_H

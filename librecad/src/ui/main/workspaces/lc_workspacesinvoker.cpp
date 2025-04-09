@@ -41,7 +41,7 @@ bool LC_WorkspacesInvoker::hasWorkspaces() {
     return m_workspacesManager.hasWorkspaces();
 }
 
-void LC_WorkspacesInvoker::saveWorkspace(bool on) {
+void LC_WorkspacesInvoker::saveWorkspace([[maybe_unused]]bool on) {
     QStringList options;
     m_workspacesManager.getWorkspaceNames(options);
     bool ok;
@@ -60,7 +60,7 @@ void LC_WorkspacesInvoker::applyWorkspaceById(int id){
     m_workspacesManager.activateWorkspace(id);
 }
 
-void LC_WorkspacesInvoker::removeWorkspace(bool on){
+void LC_WorkspacesInvoker::removeWorkspace([[maybe_unused]]bool on){
     QList<QPair<int, QString>> options;
     m_workspacesManager.getWorkspaces(options);
     bool ok;
@@ -71,7 +71,7 @@ void LC_WorkspacesInvoker::removeWorkspace(bool on){
     }
 }
 
-void LC_WorkspacesInvoker::restoreWorkspace(bool on){
+void LC_WorkspacesInvoker::restoreWorkspace([[maybe_unused]]bool on){
     auto *action = qobject_cast<QAction*>(sender());
     if (action != nullptr) {
         QVariant variant = action->property("_WSPS_IDX");

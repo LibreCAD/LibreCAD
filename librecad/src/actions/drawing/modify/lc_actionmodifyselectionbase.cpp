@@ -27,7 +27,7 @@
 
 
 LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
-                                                           :RS_PreviewActionInterface(name, m_actionContext,actionType){}
+                                                           :RS_PreviewActionInterface(name, actionContext,actionType){}
 
 void LC_ActionModifySelectionBase::onMouseMoveEvent(int status, LC_MouseEvent *event) {
     RS_PreviewActionInterface::onMouseMoveEvent(status, event);
