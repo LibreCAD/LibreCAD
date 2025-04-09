@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Qt6
-        uses: jurplel/install-qt-action@v5
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.6.*'
           modules: 'qtwaylandcompositor'
@@ -184,7 +184,7 @@ jobs:
           brew uninstall p7zip
 
       - name: Install Qt6
-        uses: jurplel/install-qt-action@v5
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.6.*'
           modules: 'qt5compat'
@@ -225,7 +225,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Qt6
-        uses: jurplel/install-qt-action@v5
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.9.*'
           host: 'windows'
