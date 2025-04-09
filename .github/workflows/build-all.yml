@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -19,7 +19,7 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.6.*'
+          version: '6.9.*'
           modules: 'qtwaylandcompositor'
 
       - name: Qt6 path
@@ -31,7 +31,7 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -qq install qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config
-          sudo apt-get -qq install cmake rsync libfuse2 clang clang-tools
+          sudo apt-get -qq install cmake rsync libfuse2 clang-15 clang-tools-15 qt6-svg-dev
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
           find /home/runner/work/LibreCAD/Qt/6.6.3 -iname "libqt*svg*"
@@ -51,7 +51,7 @@ jobs:
         run: |
           export CC=clang
           export CXX=clang++
-          export ANALYZE="scan-build-10 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build-15 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
           # ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           echo "cmake"
           cmake -S . -B unix
