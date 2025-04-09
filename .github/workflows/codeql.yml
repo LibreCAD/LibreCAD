@@ -91,9 +91,8 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
 
-      - name: Install Qt5
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
           aqtversion: '==3.1.*'
