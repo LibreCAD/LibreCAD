@@ -38,8 +38,12 @@ jobs:
     - name: Install Qt6
       uses: jurplel/install-qt-action@v4
       with:
+        aqtversion: '==3.1.*'
         version: '6.9.*'
-        modules: 'qt5compat'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'linux_gcc_64'
+        modules: 'qtwaylandcompositor'
 
     - name: Install Qt and dependencies
       run: |
@@ -92,7 +96,12 @@ jobs:
       - name: Install Qt5
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.9.*'
+          aqtversion: '==3.1.*'
+          version: '6.9.0'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          modules: 'qtwaylandcompositor'
 
       - name: Install dependencies
         run: |
