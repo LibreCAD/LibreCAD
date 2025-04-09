@@ -16,29 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Qt6
-        uses: jurplel/install-qt-action@v4
-        with:
-          aqtversion: '==3.1.*'
-          version: '6.9.0'
-          host: 'linux'
-          target: 'desktop'
-          arch: 'linux_gcc_64'
-          modules: 'qtwaylandcompositor'
-
-      - name: Qt6 path
-        run: |
-          find ${{github.workspace}}/../Qt -type f -iname "*.so"
-          ls -l ${{github.workspace}}/../Qt
-
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config
-          sudo apt-get -qq install cmake rsync libfuse2 clang-15 clang-tools-15 qt6-svg-dev
-          sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
-          sudo rm -rf /usr/local/lib/android
-          find /home/runner/work/LibreCAD/Qt/6.6.3 -iname "libqt*svg*"
+          sudo apt-get -qq install qmake6 qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
+          sudo apt-get -qq install qt6-svg libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev qt6-tools-dev
+          sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
+          sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
+          sudo apt-get -qq install cmake
 
 
       - name: Set Dark splash
