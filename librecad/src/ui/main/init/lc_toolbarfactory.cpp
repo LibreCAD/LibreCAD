@@ -34,7 +34,9 @@
 #include "qg_snaptoolbar.h"
 #include "rs_settings.h"
 
-LC_ToolbarFactory::LC_ToolbarFactory(QC_ApplicationWindow *main_win): m_mainWin(main_win), m_agm(main_win->m_actionGroupManager) {}
+LC_ToolbarFactory::LC_ToolbarFactory(QC_ApplicationWindow *main_win)
+ : LC_AppWindowAware(main_win), m_agm(main_win->m_actionGroupManager) {
+}
 
 void LC_ToolbarFactory::initToolBars(){
     initCADToolbars();
@@ -44,27 +46,27 @@ void LC_ToolbarFactory::initToolBars(){
 }
 
 QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
-    auto result = new QG_PenToolBar(tr("Pen"), m_mainWin);
+    auto result = new QG_PenToolBar(tr("Pen"), m_appWin);
     result->setSizePolicy(tbPolicy);
     result->setObjectName("pen_toolbar");
     result->addActions(m_agm->pen_actions);
     result->setProperty("_group", 1);
 
-    m_mainWin->m_penToolBar = result;
+    m_appWin->m_penToolBar = result;
 
-    connect(m_mainWin->m_penToolBar, &QG_PenToolBar::penChanged, m_mainWin, &QC_ApplicationWindow::slotPenChanged);
+    connect(m_appWin->m_penToolBar, &QG_PenToolBar::penChanged, m_appWin, &QC_ApplicationWindow::slotPenChanged);
     return result;
 }
 
 QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy){
-    auto ag_manager = m_mainWin->m_actionGroupManager;
-    auto result = new QG_SnapToolBar(m_mainWin, m_mainWin->m_actionHandler, ag_manager,ag_manager->getActionsMap());
+    auto ag_manager = m_appWin->m_actionGroupManager;
+    auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler, ag_manager,ag_manager->getActionsMap());
     result->setWindowTitle(tr("Snap Selection"));
     result->setSizePolicy(tbPolicy);
     result->setObjectName("snap_toolbar" );
     result->setProperty("_group", 3);
 
-    m_mainWin->m_snapToolBar = result;
+    m_appWin->m_snapToolBar = result;
     return result;
 }
 
@@ -160,10 +162,9 @@ void LC_ToolbarFactory::createStandardToolbars(){
     auto snap = createSnapToolbar(tbPolicy);
 
     auto pen = createPenToolbar(tbPolicy);
-    m_mainWin->m_toolOptionsToolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {},1);
+    m_appWin->m_toolOptionsToolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {},1);
 
     auto infoCursor = createInfoCursorToolbar(tbPolicy);
-
     auto *dockareas = createDockAreasToolbar(tbPolicy);
     auto *creators = createCreatorsToolbar(tbPolicy);
     auto *preferences = createPreferencesToolbar(tbPolicy);
@@ -176,9 +177,9 @@ void LC_ToolbarFactory::createStandardToolbars(){
     addToTop(viewsList);
     addToTop(ucsList);
     addToTop(preferences);
-    m_mainWin->addToolBarBreak();
+    m_appWin->addToolBarBreak();
     addToTop(pen);
-    addToTop(m_mainWin->m_toolOptionsToolbar);
+    addToTop(m_appWin->m_toolOptionsToolbar);
     addToLeft(order);
 
     addToBottom(snap);
@@ -194,7 +195,7 @@ QToolBar* LC_ToolbarFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
     QAction* action = m_agm->getActionByName("InfoCursorEnable");
     if (action != nullptr){
         action->setProperty("InfoCursorActionTag", 0);
-        connect(action, &QAction::triggered, m_mainWin, &QC_ApplicationWindow::slotInfoCursorSetting);
+        connect(action, &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
         QWidget* w = result->widgetForAction(action);
         if (w != nullptr){
             auto* btn = dynamic_cast<QToolButton *>(w);
@@ -220,7 +221,6 @@ void LC_ToolbarFactory::addInfoCursorOptionAction(QMenu *menu, const char *name,
     QAction* action = m_agm->getActionByName(name);
     action->setProperty("InfoCursorActionTag", tag);
     menu->addAction(action);
-    connect(action, &QAction::triggered, m_mainWin, &QC_ApplicationWindow::slotInfoCursorSetting);
 }
 
 void LC_ToolbarFactory::initCADToolbars(){
@@ -293,7 +293,7 @@ QToolBar* LC_ToolbarFactory::createNamedViewsToolbar(QSizePolicy &toolBarPolicy)
 
     QAction *restoreCurrentViewAction = m_agm->getActionByName("ZoomViewRestore");
 
-    auto namedViewsSelectionWidget = m_mainWin->m_namedViewsWidget->createSelectionWidget(saveViewAction, restoreCurrentViewAction);
+    auto namedViewsSelectionWidget = m_appWin->m_namedViewsWidget->createSelectionWidget(saveViewAction, restoreCurrentViewAction);
     namedViewsSelectionWidget->setParent(result);
     result->addWidget(namedViewsSelectionWidget);
 
@@ -308,7 +308,7 @@ QToolBar* LC_ToolbarFactory::createUCSToolbar(QSizePolicy &toolBarPolicy){
 
     QAction *setWCSAction = m_agm->getActionByName("UCSSetWCS");
 
-    auto ucsWidget = m_mainWin->m_ucsListWidget;
+    auto ucsWidget = m_appWin->m_ucsListWidget;
     auto ucsSelectionWidget = ucsWidget->createSelectionWidget(ucsCreateAction, setWCSAction);
     ucsSelectionWidget->setParent(result);
     result->addWidget(ucsSelectionWidget);
@@ -316,7 +316,7 @@ QToolBar* LC_ToolbarFactory::createUCSToolbar(QSizePolicy &toolBarPolicy){
     setWCSAction->setCheckable(false);
     connect(setWCSAction, &QAction::triggered, ucsWidget, &LC_UCSListWidget::setWCS);
 
-    ucsWidget->setStateWidget(m_mainWin->m_ucsStateWidget);
+    ucsWidget->setStateWidget(m_appWin->m_ucsStateWidget);
 
     return result;
 }
@@ -334,13 +334,13 @@ QToolBar* LC_ToolbarFactory::createWorkspacesToolbar(QSizePolicy &toolBarPolicy)
 
     result->addWidget(toolButton);
 
-    auto* workspacesListButton = new LC_WorkspaceListButton(m_mainWin);
+    auto* workspacesListButton = new LC_WorkspaceListButton(m_appWin);
     auto restoreAction = m_agm->getActionByName("WorkspaceRestore");
     workspacesListButton->setDefaultAction(restoreAction);
     result->addWidget(workspacesListButton);
 
-    connect(m_mainWin, &QC_ApplicationWindow::workspacesChanged, workspacesListButton, &LC_WorkspaceListButton::enableSubActions);
-    connect(m_mainWin, &QC_ApplicationWindow::workspacesChanged, restoreAction, &QAction::setEnabled);
+    connect(m_appWin, &QC_ApplicationWindow::workspacesChanged, workspacesListButton, &LC_WorkspaceListButton::enableSubActions);
+    connect(m_appWin, &QC_ApplicationWindow::workspacesChanged, restoreAction, &QAction::setEnabled);
     return result;
 }
 
@@ -357,7 +357,7 @@ QToolBar* LC_ToolbarFactory::createGenericToolbar(const QString& title, const QS
 }
 
 QToolBar *LC_ToolbarFactory::doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy, int group) const {
-    auto* result = new QToolBar(title, m_mainWin);
+    auto* result = new QToolBar(title, m_appWin);
     result->setSizePolicy(toolBarPolicy);
     QString nameCleared(name);
     nameCleared.remove(' ');
@@ -373,13 +373,11 @@ QToolBar* LC_ToolbarFactory::createCADToolbar(const QString& title, const QStrin
 
 QToolBar* LC_ToolbarFactory::genericToolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions, int toolbarGroup){
     QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, toolbarGroup);
-
     result->addActions(actions);
     result->hide();
     result->setProperty("_group", toolbarGroup);
     return result;
 }
-
 
 QToolButton* LC_ToolbarFactory::toolButton(QToolBar* toolbar, const QString &tooltip, const char* icon, const QList<QAction*>& actions){
     auto * result = new QToolButton(toolbar); // ignore memory warning leak, toolbar will delete button
@@ -391,13 +389,13 @@ QToolButton* LC_ToolbarFactory::toolButton(QToolBar* toolbar, const QString &too
     return result;
 }
 
-void LC_ToolbarFactory::addToTop(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::TopToolBarArea, toolbar); }
-void LC_ToolbarFactory::addToBottom(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
-void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::LeftToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToTop(QToolBar *toolbar) { m_appWin->addToolBar(Qt::TopToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToBottom(QToolBar *toolbar) { m_appWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) { m_appWin->addToolBar(Qt::LeftToolBarArea, toolbar); }
 
 void LC_ToolbarFactory::createCustomToolbars(){
-    m_mainWin->m_creatorInvoker = new LC_CreatorInvoker(m_mainWin, m_agm);
-    m_mainWin->m_creatorInvoker->createCustomToolbars();
+    m_appWin->m_creatorInvoker = new LC_CreatorInvoker(m_appWin, m_agm);
+    m_appWin->m_creatorInvoker->createCustomToolbars();
 
     // fixme - sand - files - check whether we actually need default custom toolbar???? It's quite confusing, actually...
     bool firstLoad = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
@@ -409,12 +407,12 @@ void LC_ToolbarFactory::createCustomToolbars(){
              << "BlocksCreate"
              << "DrawPoint";
 
-        auto toolbar = new QToolBar("DefaultCustom", m_mainWin);
+        auto toolbar = new QToolBar("DefaultCustom", m_appWin);
         toolbar->setObjectName("DefaultCustom");
         foreach (auto& actionName, list){
-            toolbar->addAction(m_mainWin->getAction(actionName));
+            toolbar->addAction(m_appWin->getAction(actionName));
         }
-        m_mainWin->addToolBar(Qt::LeftToolBarArea, toolbar);
+        m_appWin->addToolBar(Qt::LeftToolBarArea, toolbar);
 
         QSettings settings;
         settings.setValue("CustomToolbars/DefaultCustom", list);

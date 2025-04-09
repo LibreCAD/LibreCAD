@@ -19,39 +19,18 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#ifndef LC_APPLICATIONWINDOWINITIALIZER_H
-#define LC_APPLICATIONWINDOWINITIALIZER_H
-
-#include <QObject>
-
+#ifndef LC_GRIDVIEWINVOKER_H
+#define LC_GRIDVIEWINVOKER_H
 #include "lc_appwindowaware.h"
+#include "rs.h"
+
 class QC_ApplicationWindow;
 
-class LC_ApplicationWindowInitializer : public QObject, public LC_AppWindowAware{
-    Q_OBJECT
-public:
-    explicit LC_ApplicationWindowInitializer(QC_ApplicationWindow* appWindow);
-    ~LC_ApplicationWindowInitializer() override = default;
-    void initApplication();
-private:
-    void initReleaseChecker();
-    void initActionGroupManager();
-    void initActionOptionsManager();
-    void initActionFactory();
-    void initDockCorners();
-    void initCentralWidget();
-    void initIconSize();
-    void loadCmdWidgetVariablesFile();
-    void initDockAreasActions();
-    void initMainMenu();
-    void updateCommandsAlias();
-    void initRecentFilesList();
-    void initDialogFactory();
-    void initWidgets();
-    void initToolbars();
-    void initPlugins();
-    void initAutoSaveTimer();
-    void initActionContext();
+class LC_GridViewInvoker: public LC_AppWindowAware {
+    public:
+        LC_GridViewInvoker(QC_ApplicationWindow* mainWin);
+        void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
+        void updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const;
 };
 
-#endif // LC_APPLICATIONWINDOWINITIALIZER_H
+#endif // LC_GRIDVIEWINVOKER_H

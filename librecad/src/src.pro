@@ -410,6 +410,7 @@ HEADERS += \
     ui/main/init/lc_applicationwindowinitializer.h \
     ui/main/init/lc_toolbarfactory.h \
     ui/main/lc_applicationwindowdialogshelper.h \
+    ui/main/lc_appwindowaware.h \
     ui/main/lc_defaultactioncontext.h \
     ui/main/persistence/lc_documentsstorage.h \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
@@ -464,6 +465,10 @@ HEADERS += \
     lib/gui/rs_mainwindowinterface.h \
     lib/gui/render/rs_painter.h \
     lib/gui/lc_coordinates_mapper.h \
+    ui/main/support/lc_customstylehelper.h \
+    ui/main/support/lc_gridviewinvoker.h \
+    ui/main/support/lc_infocursorsettingsmanager.h \
+    ui/main/workspaces/lc_workspaceshelper.h \
     ui/view/lc_printpreviewview.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
@@ -543,6 +548,7 @@ SOURCES += \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/init/lc_toolbarfactory.cpp \
     ui/main/lc_applicationwindowdialogshelper.cpp \
+    ui/main/lc_appwindowaware.cpp \
     ui/main/lc_defaultactioncontext.cpp \
     ui/main/persistence/lc_documentsstorage.cpp \
     lib/gui/render/lc_graphicviewportrenderer.cpp \
@@ -676,6 +682,10 @@ SOURCES += \
     lib/gui/rs_linetypepattern.cpp \
     lib/gui/render/rs_painter.cpp \
     lib/gui/lc_coordinates_mapper.cpp \
+    ui/main/support/lc_customstylehelper.cpp \
+    ui/main/support/lc_gridviewinvoker.cpp \
+    ui/main/support/lc_infocursorsettingsmanager.cpp \
+    ui/main/workspaces/lc_workspaceshelper.cpp \
     ui/view/lc_printpreviewview.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \

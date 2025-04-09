@@ -55,15 +55,20 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
-
     // activates window with given filename of drawing, if any
     void activateWindowWithFile(QString &fileName);
-
+    void closeAllWindowsWithDoc(const RS_Document* doc);
+    virtual void closeWindow(QC_MDIWindow* w) = 0;
     void redrawAll();
     void enableWidgetList(bool enable, const std::vector<QWidget *> &widgeList);
     void enableWidget(QWidget* win, bool enable);
-
     void doForEachWindow(std::function<void(QC_MDIWindow*)> callback) const;
+    void doForEachWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
+    QAction* enableAction(const QString& name, bool enable) const;
+    void enableActions(const std::vector<QString> &actionList, bool enable) const;
+    QAction* checkAction(const QString& name, bool enable) const;
+    void checkActions(const std::vector<QString> &actionList, bool enable) const;
+    virtual QAction* getAction(const QString& name) const = 0;
 public slots:
     void slotCascade();
     void slotTileHorizontal();
@@ -81,8 +86,11 @@ public slots:
     void slotZoomAuto();
     void slotWindowActivated(QMdiSubWindow *w);
     void slotWindowActivatedByIndex(int);
+    void slotRedockWidgets();
     friend class QC_MDIWindow;
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+    void slotBack();
+    void onEnterKey();
 protected slots:
     void onCADTabBarIndexChanged(int index);
 protected:
@@ -97,7 +105,6 @@ protected:
     void setupCADAreaTabbar();
     void slotWindowActivatedForced(QMdiSubWindow *w);
     virtual void doWindowActivated(QMdiSubWindow *w, bool forced) = 0;
-    void doForEachWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
     void doForEachSubWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
 };
 

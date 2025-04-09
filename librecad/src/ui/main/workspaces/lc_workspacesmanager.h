@@ -74,6 +74,7 @@ protected:
 
     QList<LC_Workspace*> m_workspacesList;
     QString getWorkspacesFileName();
+    void createWorkspacesFileBackupCopy(const QString& workspacesFile);
     void restoreGeometryAndState(LC_Workspace &workspace);
     void restore(LC_Workspace& perspective);
     void applyToSettings(LC_Workspace &workspace);

@@ -1,24 +1,25 @@
-/*******************************************************************************
- *
- This file is part of the LibreCAD project, a 2D CAD program
-
- Copyright (C) 2024 LibreCAD.org
- Copyright (C) 2024 sand1024
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- ******************************************************************************/
+// /****************************************************************************
+//
+// Utility base class for widgets that represents options for actions
+//
+// Copyright (C) 2025 LibreCAD.org
+// Copyright (C) 2025 sand1024
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+// **********************************************************************
+//
 
 #include <QFile>
 #include <QJsonArray>
@@ -84,7 +85,7 @@ LC_ReleaseChecker::LC_ReleaseChecker(QString ownTagName, bool ownPreRelease):
     connect(&m_WebCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
 }
 
-LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(QString tagName, bool preRelease) const{
+LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(const QString& tagName, bool preRelease) const{
     bool draft = false;
     const LC_TagInfo ownTagInfo = parseTagInfo(tagName);
     LC_ReleaseInfo result = LC_ReleaseInfo("", draft, preRelease, "", "");
@@ -113,7 +114,7 @@ void LC_ReleaseChecker::checkForNewVersion(bool forceCheck) {
 void LC_ReleaseChecker::infoReceived(QNetworkReply *reply) {
     if(reply->error() == QNetworkReply::NoError) {
         QByteArray responseContent = reply->readAll();
-        QString resultStr = QString(responseContent);
+        // auto resultStr = QString(responseContent);
         processReleasesJSON(responseContent);
     }
     else{

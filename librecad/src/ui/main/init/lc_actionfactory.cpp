@@ -32,6 +32,7 @@
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_infocursorsettingsmanager.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_settings.h"
@@ -103,7 +104,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     fillActionLists(agm);
     addActionsToMainWindow(a_map);
 
-    prepareActionsToDisableInPrintPreview(agm, m_mainWin->m_actionsToDisableInPrintPreviewList);
+    prepareActionsToDisableInPrintPreview(agm, m_appWin->m_actionsToDisableInPrintPreviewList);
 
     // fixme - review why this action is not used, is it really necessary or may be removed?
     //    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
@@ -389,8 +390,10 @@ void LC_ActionFactory::createWorkspacesActionsUncheckable(QMap<QString, QAction 
 }
 
 void LC_ActionFactory::createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"SetRelativeZero",    RS2::ActionSetRelativeZero, tr("Set relative zero position"),  ":/icons/set_rel_zero.lci"},
+    });
     createActions(map, group, {
-        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.lci"},
         {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.lci"}
         // todo - add action for hiding/showing related zero
        //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.lci"}
@@ -598,39 +601,34 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     map["ViewStatusBar"]->setChecked(statusBarVisible);
     map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
 
-    connect(m_mainWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
-    connect(m_mainWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
-    connect(m_mainWin, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
-    connect(m_mainWin, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
-    connect(m_mainWin, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
-    connect(m_mainWin, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
-    connect(m_mainWin, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
+    connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
+    connect(m_appWin, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
+    connect(m_appWin, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
+    connect(m_appWin, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
+    connect(m_appWin, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
+    connect(m_appWin, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
+    connect(m_appWin, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 
     QAction *&entityInfoAction = map["EntityDescriptionInfo"];
-    connect(m_mainWin, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
-    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
+    connect(m_appWin, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
 
-    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
-    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
-    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
-    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
-    connect(m_mainWin, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
+    auto infoCursorSettingsManager = m_appWin->m_infoCursorSettingsManager;
+    connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
 
-    LC_GROUP("InfoOverlayCursor");
-    {
-        bool cursorEnabled = LC_GET_BOOL("Enabled", true);
-        map["InfoCursorEnable"]->setChecked(cursorEnabled);
-        map["InfoCursorAbs"]->setChecked(LC_GET_BOOL("ShowAbsolute", true));
-        map["InfoCursorSnap"]->setChecked(LC_GET_BOOL("ShowSnapInfo", true));
-        map["InfoCursorRel"]->setChecked(LC_GET_BOOL("ShowRelativeDA", true));
-        map["InfoCursorPrompt"]->setChecked(LC_GET_BOOL("ShowPrompt", true));
-        map["InfoCursorCatchedEntity"]->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
+    connect(map["InfoCursorAbs"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
 
-        map["EntityDescriptionInfo"]->setChecked(false);
+    connect(map["InfoCursorSnap"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
 
-        entityInfoAction->setVisible(cursorEnabled);
-    }
-    LC_GROUP_END();
+    connect(map["InfoCursorRel"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
+
+    connect(map["InfoCursorPrompt"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
+
+    connect(map["InfoCursorCatchedEntity"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {

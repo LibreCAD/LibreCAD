@@ -54,7 +54,6 @@
 
 namespace
 {
-    void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
 // update splash for alpha/beta names)
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }
@@ -458,26 +457,6 @@ QString LCReleaseLabel()
 }
 
 namespace {
-    void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
-    {
-        settings.beginGroup("Geometry");
-        auto geometryB64 = settings.value("/WindowGeometry").toString().toUtf8();
-        auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
-        if (!geometry.isEmpty()) {
-            appWin.restoreGeometry(geometry);
-        } else {
-            // fallback
-            int windowWidth = settings.value("WindowWidth", 1024).toInt();
-            int windowHeight = settings.value("WindowHeight", 1024).toInt();
-            int windowX = settings.value("WindowX", 32).toInt();
-            int windowY = settings.value("WindowY", 32).toInt();
-            appWin.resize(windowWidth, windowHeight);
-            appWin.move(windowX, windowY);
-        }
-
-        settings.endGroup();
-    }
-
 
 // Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
 QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label);

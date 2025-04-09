@@ -73,10 +73,7 @@ public:
     void setStatusBarManager(LC_QTStatusbarManager *status_bar_manager){
         m_statusBarManager = status_bar_manager;
     }
-
     void setDocumentAndView(RS_Document *document, RS_GraphicView *view) override;
-
-
 private:
     LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
     QG_CoordinateWidget* m_coordinateWidget{nullptr};

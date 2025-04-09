@@ -167,7 +167,7 @@ void LC_ActionGroupManager::assignShortcutsToActions(QMap<QString, QAction *> &m
 }
 
 int LC_ActionGroupManager::loadShortcuts([[maybe_unused]] const QMap<QString, QAction *> &map) {
-//    a_map = map;
+    m_shortcutsManager.init();
     int loadResult = m_shortcutsManager.loadShortcuts(m_actionsMap);
     return loadResult;
 }
@@ -226,7 +226,8 @@ void  LC_ActionGroupManager::fillActionsList(QList<QAction *> &list, const std::
 }
 
 bool LC_ActionGroupManager::isActionTypeSetsTheIcon(RS2::ActionType actionType){
-    return actionType != RS2::ActionSetRelativeZero;
+    // return actionType != RS2::ActionSetRelativeZero;
+    return true;
 }
 
 void LC_ActionGroupManager::associateQActionWithActionType(QAction *action, RS2::ActionType actionType){

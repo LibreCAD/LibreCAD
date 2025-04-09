@@ -26,15 +26,18 @@
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_actionoptionsmanager.h"
-#include "lc_applicationwindowdialogshelper.h"
+#include "lc_appwindowdialogsinvoker.h"
 #include "lc_centralwidget.h"
+#include "lc_customstylehelper.h"
 #include "lc_defaultactioncontext.h"
+#include "lc_gridviewinvoker.h"
 #include "lc_menufactory.h"
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"
 #include "lc_releasechecker.h"
 #include "lc_toolbarfactory.h"
 #include "lc_widgetfactory.h"
+#include "lc_workspacesinvoker.h"
 #include "main.h"
 #include "qc_dialogfactory.h"
 #include "qg_commandwidget.h"
@@ -46,12 +49,16 @@
 #include "rs_settings.h"
 
 LC_ApplicationWindowInitializer::LC_ApplicationWindowInitializer(QC_ApplicationWindow *appWindow)
-    : m_appWin{appWindow}
+    : LC_AppWindowAware{appWindow}
 {}
 
 void LC_ApplicationWindowInitializer::initApplication(){
     m_appWin->m_actionHandler = new QG_ActionHandler(m_appWin);
-    m_appWin->m_dlgHelpr = new LC_ApplicationWindowDialogsHelper(m_appWin);
+    m_appWin->m_dlgHelpr = new LC_AppWindowDialogsInvoker(m_appWin);
+    m_appWin->m_workspacesInvoker = new LC_WorkspacesInvoker(m_appWin);
+    m_appWin->m_gridViewInvoker = new LC_GridViewInvoker(m_appWin);
+    m_appWin->m_infoCursorSettingsManager = new LC_InfoCursorSettingsManager(m_appWin);
+    m_appWin->m_styleHelper = new LC_CustomStyleHelper(m_appWin);
     initActionGroupManager();
     //accept drop events to open files
     m_appWin->setAcceptDrops(true);

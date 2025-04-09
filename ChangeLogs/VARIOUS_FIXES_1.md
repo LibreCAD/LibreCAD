@@ -28,6 +28,7 @@ Command widget may be activated by focus action even if the widget is not visibl
 Generic refactoring, more export options in the save dialog, ability to save also UCSs and Named Views as part of export. 
 
 ### Fixed Issues
+* LibreCAD#2103
 * LibreCAD#2090
 * LibreCAD#2086 (?)
 * LibreCAD#2082

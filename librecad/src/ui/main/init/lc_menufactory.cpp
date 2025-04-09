@@ -34,11 +34,10 @@ class QToolBar;
 
 LC_MenuFactory::LC_MenuFactory(QC_ApplicationWindow *main_win, LC_ActionGroupManager *agm)
     : QObject(nullptr)
-    , m_appWindow(main_win)
+    , LC_AppWindowAware(main_win)
     , m_actionGroupManager(agm){
-     allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
+     m_allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
 }
-
 
 void LC_MenuFactory::recreateMainMenuIfNeeded(QMenuBar* menuBar){
     MenuOptions options;
@@ -119,11 +118,11 @@ void LC_MenuFactory::createHelpMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
                        });
 
 
-    auto help_about = new QAction(QIcon(":/images/librecad.png"), tr("About"), m_appWindow);
-    connect(help_about, &QAction::triggered, m_appWindow, &QC_ApplicationWindow::showAboutWindow);
+    auto help_about = new QAction(QIcon(":/images/librecad.png"), tr("About"), m_appWin);
+    connect(help_about, &QAction::triggered, m_appWin, &QC_ApplicationWindow::showAboutWindow);
 
-    auto license = new QAction(QObject::tr("License"), m_appWindow);
-    connect(license,  &QAction::triggered, m_appWindow, &QC_ApplicationWindow::invokeLicenseWindow);
+    auto license = new QAction(QObject::tr("License"), m_appWin);
+    connect(license,  &QAction::triggered, m_appWin, &QC_ApplicationWindow::invokeLicenseWindow);
 
     m_menuHelp->addSeparator();
     m_menuHelp->QWidget::addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
@@ -249,9 +248,9 @@ void LC_MenuFactory::createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
                          ""
                      });
 
-    recentFilesMenu = new QMenu(tr("Recent Files"), m_menuFile);
+    m_menuRecentFiles = new QMenu(tr("Recent Files"), m_menuFile);
 
-    m_menuFile->addMenu(recentFilesMenu);
+    m_menuFile->addMenu(m_menuRecentFiles);
 
     subMenu(m_menuFile, tr("Import"), "import", ":/icons/import.lci", {
              "DrawImage",
@@ -274,7 +273,6 @@ void LC_MenuFactory::createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuM
         "FileQuit",
         ""
     });
-
 
     topMenuMenus << m_menuFile;
 }
@@ -364,14 +362,13 @@ void LC_MenuFactory::createWorkspaceMenu(QMenuBar *menu_bar, QList<QMenu *> &top
                              "Fullscreen" // temp way to show this menu on OS X
                          });
 
-    connect(m_menuWorkspace, &QMenu::aboutToShow, m_appWindow, &QC_ApplicationWindow::slotWorkspacesMenuAboutToShow);
+    connect(m_menuWorkspace, &QMenu::aboutToShow, m_appWin, &QC_ApplicationWindow::slotWorkspacesMenuAboutToShow);
     topMenuMenus << m_menuWorkspace;
 }
 
-
 void LC_MenuFactory::prepareWorkspaceMenuComponents(){
 
-    dockareas = subMenu(m_menuWorkspace, tr("Dock Areas"), "dockareas", nullptr, {
+    m_menuDockareas = subMenu(m_menuWorkspace, tr("Dock Areas"), "dockareas", nullptr, {
                             "LeftDockAreaToggle",
                             "RightDockAreaToggle",
                             "TopDockAreaToggle",
@@ -383,14 +380,14 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
 
     m_menuDockWidgets->addSeparator();
 
-    QList<QDockWidget*> dockwidgetsList = m_appWindow->findChildren<QDockWidget*>();
-    m_appWindow->sortWidgetsByTitle(dockwidgetsList);
+    QList<QDockWidget*> dockwidgetsList = m_appWin->findChildren<QDockWidget*>();
+    m_appWin->sortWidgetsByTitle(dockwidgetsList);
 
     QAction* namedViewsToggleViewAction = nullptr;
     QAction* ucsToggleViewAction = nullptr;
 
     for (QDockWidget* dw: dockwidgetsList){
-        if (m_appWindow->dockWidgetArea(dw) == Qt::RightDockWidgetArea) {
+        if (m_appWin->dockWidgetArea(dw) == Qt::RightDockWidgetArea) {
             QAction *action = dw->toggleViewAction();
             m_menuDockWidgets->QWidget::addAction(action);
             QString objectName = dw->objectName();
@@ -415,7 +412,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
     if (cadDocWidgetsAreEnabled) {
         m_menuCADDockWidgets = doCreateSubMenu(m_menuWorkspace, tr("CAD Wid&gets"), "caddockwidgets", nullptr);
         for (QDockWidget* dw : dockwidgetsList){
-            if (m_appWindow->dockWidgetArea(dw) == Qt::LeftDockWidgetArea) {
+            if (m_appWin->dockWidgetArea(dw) == Qt::LeftDockWidgetArea) {
                 m_menuCADDockWidgets->QWidget::addAction(dw->toggleViewAction());
             }
         }
@@ -423,7 +420,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
 
     m_menuToolbars = doCreateSubMenu(m_menuWorkspace, tr("&Toolbars"), "toolbars", nullptr);
 
-    QList<QToolBar*> toolbarsList = m_appWindow->findChildren<QToolBar*>();
+    QList<QToolBar*> toolbarsList = m_appWin->findChildren<QToolBar*>();
 
     bool cadToolbarsAreEnabled = LC_GET_ONE_BOOL("Startup","EnableLeftSidebar", true);
 
@@ -440,7 +437,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
                 otherToolbarsList << tb;
             }
         }
-        m_appWindow->sortWidgetsByGroupAndTitle(cadToolbarsList);
+        m_appWin->sortWidgetsByGroupAndTitle(cadToolbarsList);
 
         m_menuCADToolbars = doCreateSubMenu(m_menuWorkspace, tr("&CAD Toolbars"), "cadtoolbars", nullptr);
         for (QToolBar* tb: cadToolbarsList) {
@@ -450,7 +447,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
         toolbarsList = otherToolbarsList;
     }
 
-    m_appWindow->sortWidgetsByGroupAndTitle(toolbarsList);
+    m_appWin->sortWidgetsByGroupAndTitle(toolbarsList);
 
     int previousGroup = -100;
 
@@ -472,7 +469,7 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
     {
         QIcon wsIcon = QIcon(":/icons/workspace.lci");
         m_menuWorkspace->clear(); // this is a temporary menu; constructed on-demand
-        allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
+        m_allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
         QMenu *menu;
 
         m_menuWorkspace->addAction(m_actionGroupManager->getActionByName("Fullscreen"));
@@ -499,23 +496,23 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
             m_menuWorkspace->addSeparator();
         }
 
-        m_menuWorkspace->addMenu(dockareas);
+        m_menuWorkspace->addMenu(m_menuDockareas);
         addAction(m_menuWorkspace, "RedockWidgets");
         m_menuWorkspace->addSeparator();
         m_menuWorkspace->addAction(m_actionGroupManager->getActionByName("WorkspaceCreate"));
 
          QList<QPair<int, QString>> workspacesList;
-         m_appWindow->fillWorkspacesList(workspacesList);
+         m_appWin->fillWorkspacesList(workspacesList);
          if (!workspacesList.isEmpty()){
              auto workspaces = new QMenu(tr("&Workspaces"), m_menuWorkspace);
-             workspaces->setTearOffEnabled(allowTearOffMenus);
+             workspaces->setTearOffEnabled(m_allowTearOffMenus);
              workspaces->setIcon(wsIcon);
              int workspacesCount = workspacesList.size();
              for (int i = 0; i < workspacesCount; i++){
                  auto w = workspacesList.at(i);
                  auto name = w.second;
                  auto* a = workspaces->addAction(wsIcon, name);
-                 connect(a, &QAction::triggered, m_appWindow, &QC_ApplicationWindow::restoreWorkspace);
+                 connect(a, &QAction::triggered, m_appWin, &QC_ApplicationWindow::restoreWorkspace);
                  a->setEnabled(true);
                  a->setCheckable(false);
                  a->setVisible(true);
@@ -531,71 +528,71 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
          m_menuWorkspace->addSeparator();
 
          auto drawings = new QMenu(tr("&Drawings"), m_menuWorkspace);
-         drawings->setTearOffEnabled(allowTearOffMenus);
+         drawings->setTearOffEnabled(m_allowTearOffMenus);
          m_menuWorkspace->addMenu(drawings);
          QAction *menuItem;
 
-         auto mdi_area = m_appWindow->getMdiArea();
+         auto mdi_area = m_appWin->getMdiArea();
          auto mdiViewMode = mdi_area->viewMode();
          bool tabbed = mdiViewMode == QMdiArea::TabbedView;
 
-         menuItem = drawings->addAction(tr("Ta&b mode"), m_appWindow, &LC_MDIApplicationWindow::slotToggleTab);
+         menuItem = drawings->addAction(tr("Ta&b mode"), m_appWin, &LC_MDIApplicationWindow::slotToggleTab);
          menuItem->setCheckable(true);
          menuItem->setChecked(tabbed);
 
-         menuItem = drawings->addAction(tr("&Window mode"), m_appWindow, &LC_MDIApplicationWindow::slotToggleTab);
+         menuItem = drawings->addAction(tr("&Window mode"), m_appWin, &LC_MDIApplicationWindow::slotToggleTab);
          menuItem->setCheckable(true);
          menuItem->setChecked(!tabbed);
 
 
          if (tabbed) {
              menu = new QMenu(tr("&Layout"), m_menuWorkspace);
-             menu->setTearOffEnabled(allowTearOffMenus);
+             menu->setTearOffEnabled(m_allowTearOffMenus);
              drawings->addMenu(menu);
 
-             menuItem = menu->addAction(tr("Rounded"), m_appWindow, &LC_MDIApplicationWindow::slotTabShapeRounded);
+             menuItem = menu->addAction(tr("Rounded"), m_appWin, &LC_MDIApplicationWindow::slotTabShapeRounded);
              menuItem->setCheckable(true);
 
              int tabShape = LC_GET_INT("TabShape");
              menuItem->setChecked(tabShape == RS2::Rounded);
 
-             menuItem = menu->addAction(tr("Triangular"), m_appWindow, &LC_MDIApplicationWindow::slotTabShapeTriangular);
+             menuItem = menu->addAction(tr("Triangular"), m_appWin, &LC_MDIApplicationWindow::slotTabShapeTriangular);
              menuItem->setCheckable(true);
              menuItem->setChecked(tabShape == RS2::Triangular);
 
              menu->addSeparator();
              int tabPosition = LC_GET_INT("TabPosition");
 
-             menuItem = menu->addAction(tr("North"), m_appWindow, &LC_MDIApplicationWindow::slotTabPositionNorth);
+             menuItem = menu->addAction(tr("North"), m_appWin, &LC_MDIApplicationWindow::slotTabPositionNorth);
              menuItem->setCheckable(true);
              menuItem->setChecked(tabPosition == RS2::North);
 
-             menuItem = menu->addAction(tr("South"), m_appWindow, &LC_MDIApplicationWindow::slotTabPositionSouth);
+             menuItem = menu->addAction(tr("South"), m_appWin, &LC_MDIApplicationWindow::slotTabPositionSouth);
              menuItem->setCheckable(true);
              menuItem->setChecked(tabPosition == RS2::South);
 
-             menuItem = menu->addAction(tr("East"), m_appWindow, &LC_MDIApplicationWindow::slotTabPositionEast);
+             menuItem = menu->addAction(tr("East"), m_appWin, &LC_MDIApplicationWindow::slotTabPositionEast);
              menuItem->setCheckable(true);
              menuItem->setChecked(tabPosition == RS2::East);
 
-             menuItem = menu->addAction(tr("West"), m_appWindow, &LC_MDIApplicationWindow::slotTabPositionWest);
+             menuItem = menu->addAction(tr("West"), m_appWin, &LC_MDIApplicationWindow::slotTabPositionWest);
              menuItem->setCheckable(true);
              menuItem->setChecked(tabPosition == RS2::West);
 
          } else {
 
              menu = new QMenu(tr("&Arrange"), m_menuWorkspace);
-             menu->setTearOffEnabled(allowTearOffMenus);
+             menu->setTearOffEnabled(m_allowTearOffMenus);
              m_menuWorkspace->addMenu(menu);
 
-             menuItem = menu->addAction(tr("&Maximized"), m_appWindow, &LC_MDIApplicationWindow::slotSetMaximized);
+             menuItem = menu->addAction(tr("&Maximized"), m_appWin, &LC_MDIApplicationWindow::slotSetMaximized);
              menuItem->setCheckable(true);
              menuItem->setChecked(LC_GET_INT("SubWindowMode") == RS2::Maximized);
 
-             menu->addAction(tr("&Cascade"), m_appWindow, &LC_MDIApplicationWindow::slotCascade);
-             menu->addAction(tr("&Tile"), m_appWindow, &LC_MDIApplicationWindow::slotTile);
-             menu->addAction(tr("Tile &Vertically"), m_appWindow, &LC_MDIApplicationWindow::slotTileVertical);
-             menu->addAction(tr("Tile &Horizontally"), m_appWindow, &LC_MDIApplicationWindow::slotTileHorizontal);
+             menu->addAction(tr("&Cascade"), m_appWin, &LC_MDIApplicationWindow::slotCascade);
+             menu->addAction(tr("&Tile"), m_appWin, &LC_MDIApplicationWindow::slotTile);
+             menu->addAction(tr("Tile &Vertically"), m_appWin, &LC_MDIApplicationWindow::slotTileVertical);
+             menu->addAction(tr("Tile &Horizontally"), m_appWin, &LC_MDIApplicationWindow::slotTileHorizontal);
          }
 
          m_menuWorkspace->addSeparator();
@@ -610,8 +607,8 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
                      title.remove(idx, 3);
                  }
              }
-             // QAction *id = m_menuWorkspace->addAction(title, m_appWindow, SLOT(slotWindowsMenuActivated(bool)));
-             QAction *id = m_menuWorkspace->addAction(title, m_appWindow, &QC_ApplicationWindow::slotWindowsMenuActivated);
+             // QAction *id = m_menuWorkspace->addAction(title, m_appWin, SLOT(slotWindowsMenuActivated(bool)));
+             QAction *id = m_menuWorkspace->addAction(title, m_appWin, &QC_ApplicationWindow::slotWindowsMenuActivated);
              id->setCheckable(true);
              id->setData(i);
              id->setChecked(window_list.at(i) == active);
@@ -620,8 +617,8 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
 }
 
 QAction* LC_MenuFactory::urlActionTR(const QString& title, const char* url ){
-    auto* result    = new QAction(  title, m_appWindow);
-    connect(result, &QAction::triggered, m_appWindow, [=](){
+    auto* result    = new QAction(  title, m_appWin);
+    connect(result, &QAction::triggered, m_appWin, [=](){
         QDesktopServices::openUrl( QUrl( url));
     });
     return result;
@@ -644,7 +641,7 @@ QMenu *LC_MenuFactory::doCreateSubMenu(QMenu *parent, const QString& title, cons
     if (icon != nullptr) {
         sub_menu->setIcon(QIcon(icon));
     }
-    sub_menu->setTearOffEnabled(allowTearOffMenus);
+    sub_menu->setTearOffEnabled(m_allowTearOffMenus);
     QString nameCleared(name);
     nameCleared.remove(' ');
     nameCleared.remove('&');
@@ -659,7 +656,7 @@ QMenu*  LC_MenuFactory::menu(const QString& title, const QString& name, QMenuBar
     nameCleared.remove(' ');
     nameCleared.remove('&');
     result->setObjectName(nameCleared.toLower() + "_menu");
-    result->setTearOffEnabled(allowTearOffMenus);
+    result->setTearOffEnabled(m_allowTearOffMenus);
     return result;
 }
 
@@ -727,5 +724,4 @@ QMenu* LC_MenuFactory::createMainWindowPopupMenu(){
     }
 
     return result;
-
 }

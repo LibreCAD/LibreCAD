@@ -19,31 +19,23 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-
-#ifndef LC_APPLICATIONWINDOWDIALOGSHELPER_H
-#define LC_APPLICATIONWINDOWDIALOGSHELPER_H
+#ifndef LC_INFOCURSORSETTINGSMANAGER_H
+#define LC_INFOCURSORSETTINGSMANAGER_H
 
 #include <QObject>
-class LC_ReleaseChecker;
-class QC_ApplicationWindow;
+#include "lc_appwindowaware.h"
 
-class LC_ApplicationWindowDialogsHelper : public QObject{
+class LC_InfoCursorSettingsManager: public QObject, public LC_AppWindowAware{
     Q_OBJECT
 public:
-    LC_ApplicationWindowDialogsHelper(QC_ApplicationWindow *appWin);
-    void showAboutWindow();
-    void showNewVersionAvailableDialog(LC_ReleaseChecker* releaseChecker);
-    void showLicenseWindow();
-    void showDeviceOptions();
-    bool showWidgetOptionsDialog();
-    bool showGeneralOptionsDialog();
-    int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex);
-    int showCloseDialog(QC_MDIWindow *w, bool showSaveAll);
-    QPair<QString, QString> showExportFileSelectionDialog(const QString& drawingFileName);
-    QPair<QString, RS2::FormatType> requestDrawingFileName(RS2::FormatType type = RS2::FormatDXFRW);
+    explicit LC_InfoCursorSettingsManager(QC_ApplicationWindow* mainWin)
+        : LC_AppWindowAware{mainWin} {
+    }
+    void slotInfoCursorSetting(bool toggle);
+    void loadFromSettings();
+
 signals:
-private:
-    QC_ApplicationWindow* m_appWindow;
+     void showInfoCursorSettingChanged(bool enabled);
 };
 
-#endif // LC_APPLICATIONWINDOWDIALOGSHELPER_H
+#endif // LC_INFOCURSORSETTINGSMANAGER_H

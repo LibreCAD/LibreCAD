@@ -23,7 +23,7 @@
 #ifndef LC_DLGNEWVERSIONAVAILABLE_H
 #define LC_DLGNEWVERSIONAVAILABLE_H
 
-#include "lc_releasechecker.h"
+#include "../../main/release_check/lc_releasechecker.h"
 #include "lc_dialog.h"
 
 namespace Ui {

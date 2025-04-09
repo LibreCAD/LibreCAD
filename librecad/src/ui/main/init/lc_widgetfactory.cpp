@@ -56,7 +56,7 @@
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win)
     : QObject(nullptr)
-    , m_mainWin(main_win)
+    , LC_AppWindowAware(main_win)
     , m_agm(main_win->m_actionGroupManager){
    fillActionLists();
 }
@@ -122,7 +122,7 @@ void LC_WidgetFactory::fillActionLists(){
 void LC_WidgetFactory::initWidgets(){
     initStatusBar();
     initLeftCADSidebar();
-    createRightSidebar(m_mainWin->m_actionHandler);
+    createRightSidebar(m_appWin->m_actionHandler);
 }
 
 void LC_WidgetFactory::initLeftCADSidebar(){
@@ -154,27 +154,27 @@ void LC_WidgetFactory::createCADSidebar(int columns, int icon_size, bool flatBut
     auto* info = cadDockWidget(tr("Info"), "Info", m_agm->info_actions, columns, icon_size, flatButtons);
     auto* order = cadDockWidget(tr("Order"), "Order", m_agm->order_actions, columns, icon_size, flatButtons);
 
-    m_mainWin->addDockWidget(Qt::LeftDockWidgetArea, line);
-    m_mainWin->tabifyDockWidget(line, polyline);
-    m_mainWin->tabifyDockWidget(polyline, point);
-    m_mainWin->tabifyDockWidget(polyline, shape);
+    m_appWin->addDockWidget(Qt::LeftDockWidgetArea, line);
+    m_appWin->tabifyDockWidget(line, polyline);
+    m_appWin->tabifyDockWidget(polyline, point);
+    m_appWin->tabifyDockWidget(polyline, shape);
     line->raise();
-    m_mainWin->addDockWidget(Qt::LeftDockWidgetArea, circle);
-    m_mainWin->tabifyDockWidget(circle, curve);
-    m_mainWin->tabifyDockWidget(curve, spline);
-    m_mainWin->tabifyDockWidget(spline, ellipse);
+    m_appWin->addDockWidget(Qt::LeftDockWidgetArea, circle);
+    m_appWin->tabifyDockWidget(circle, curve);
+    m_appWin->tabifyDockWidget(curve, spline);
+    m_appWin->tabifyDockWidget(spline, ellipse);
     circle->raise();
-    m_mainWin->addDockWidget(Qt::LeftDockWidgetArea, dimension);
-    m_mainWin->tabifyDockWidget(dimension, other);
-    m_mainWin->tabifyDockWidget(other, info);
-    m_mainWin->tabifyDockWidget(info, select);
+    m_appWin->addDockWidget(Qt::LeftDockWidgetArea, dimension);
+    m_appWin->tabifyDockWidget(dimension, other);
+    m_appWin->tabifyDockWidget(other, info);
+    m_appWin->tabifyDockWidget(info, select);
     dimension->raise();
-    m_mainWin->addDockWidget(Qt::LeftDockWidgetArea, modify);
-    m_mainWin->tabifyDockWidget(modify, order);
+    m_appWin->addDockWidget(Qt::LeftDockWidgetArea, modify);
+    m_appWin->tabifyDockWidget(modify, order);
 }
 
 QDockWidget* LC_WidgetFactory::newDockWidget(const QString& title, const char *name){
-    auto result = new QDockWidget(m_mainWin);
+    auto result = new QDockWidget(m_appWin);
     result->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     result->setWindowTitle(title);
     result->setObjectName(name);
@@ -188,10 +188,10 @@ QDockWidget* LC_WidgetFactory::createPenPalletteWidget(){
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
-    connect(widget, &LC_PenPaletteWidget::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_PenPaletteWidget::updateWidgetSettings);
+    connect(widget, &LC_PenPaletteWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_PenPaletteWidget::updateWidgetSettings);
 
-    m_mainWin->m_penPaletteWidget = widget;
+    m_appWin->m_penPaletteWidget = widget;
     return dock;
 }
 
@@ -201,10 +201,10 @@ QDockWidget* LC_WidgetFactory::createLayerWidget(QG_ActionHandler *action_handle
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
-    connect(widget, &QG_LayerWidget::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_LayerWidget::updateWidgetSettings);
+    connect(widget, &QG_LayerWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_LayerWidget::updateWidgetSettings);
 
-    m_mainWin->m_layerWidget  = widget;
+    m_appWin->m_layerWidget  = widget;
     return dock;
 }
 
@@ -214,12 +214,12 @@ QDockWidget* LC_WidgetFactory::createNamedViewsWidget(){
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_NamedViewsListWidget::updateWidgetSettings);
-    connect(m_mainWin->m_ucsListWidget, &LC_UCSListWidget::ucsListChanged, widget, &LC_NamedViewsListWidget::onUcsListChanged);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_NamedViewsListWidget::updateWidgetSettings);
+    connect(m_appWin->m_ucsListWidget, &LC_UCSListWidget::ucsListChanged, widget, &LC_NamedViewsListWidget::onUcsListChanged);
 
-    m_mainWin->m_namedViewsWidget = widget;
+    m_appWin->m_namedViewsWidget = widget;
 
-    QC_ApplicationWindow *win = m_mainWin;
+    QC_ApplicationWindow *win = m_appWin;
 
     connect(widget, &LC_NamedViewsListWidget::viewListChanged, [win](int itemsCount){
         win->enableAction("ZoomViewRestore1", itemsCount > 0);
@@ -237,9 +237,9 @@ QDockWidget*  LC_WidgetFactory::createUCSListWidget(){
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_UCSListWidget::updateWidgetSettings);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_UCSListWidget::updateWidgetSettings);
 
-    m_mainWin->m_ucsListWidget = widget;
+    m_appWin->m_ucsListWidget = widget;
     return dock;
 }
 
@@ -251,10 +251,10 @@ QDockWidget* LC_WidgetFactory::createLayerTreeWidget(QG_ActionHandler *action_ha
 
     // layer_tree_widget->setVisible(false);
 
-    connect(widget, &LC_LayerTreeWidget::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_LayerTreeWidget::updateWidgetSettings);
+    connect(widget, &LC_LayerTreeWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_LayerTreeWidget::updateWidgetSettings);
 
-    m_mainWin->m_layerTreeWidget = widget;
+    m_appWin->m_layerTreeWidget = widget;
     return dock;
 }
 
@@ -266,9 +266,9 @@ QDockWidget* LC_WidgetFactory::createEntityInfoWidget(){
 
     // quick_info_widget->setVisible(false);
 
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_QuickInfoWidget::updateWidgetSettings);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_QuickInfoWidget::updateWidgetSettings);
 
-    m_mainWin->m_quickInfoWidget = widget;
+    m_appWin->m_quickInfoWidget = widget;
     return dock;
 }
 
@@ -279,10 +279,10 @@ QDockWidget*  LC_WidgetFactory::createBlockListWidget(QG_ActionHandler *action_h
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
-    connect(widget, &QG_BlockWidget::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_BlockWidget::updateWidgetSettings);
+    connect(widget, &QG_BlockWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_BlockWidget::updateWidgetSettings);
 
-    m_mainWin->m_blockWidget = widget;
+    m_appWin->m_blockWidget = widget;
     return dock;
 }
 
@@ -295,10 +295,10 @@ QDockWidget*  LC_WidgetFactory::createLibraryWidget(QG_ActionHandler *action_han
 
     // result->resize(240, 400);
 
-    connect(widget, QG_LibraryWidget::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_LibraryWidget::updateWidgetSettings);
+    connect(widget, QG_LibraryWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_LibraryWidget::updateWidgetSettings);
 
-    m_mainWin->m_libraryWidget = widget;
+    m_appWin->m_libraryWidget = widget;
     return dock;
 }
 
@@ -311,13 +311,13 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler
     dock->setWidget(widget);
     widget->getDockingAction()->setText(dock->isFloating() ? tr("Dock") : tr("Float"));
 
-    connect(widget->leCommand, &QG_CommandEdit::escape, m_mainWin, &QC_ApplicationWindow::slotFocus);
+    connect(widget->leCommand, &QG_CommandEdit::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
     // fixme - sand - disable setting vertical caption so far as this is now controlled in uniform way by widget
     // setttings.
     // fixme - sand - remove this call and the slot later, if there will no request from the users to recover this
-    // connect(dock, &QDockWidget::dockLocationChanged,m_mainWin, &QC_ApplicationWindow::modifyCommandTitleBar);
+    // connect(dock, &QDockWidget::dockLocationChanged,m_appWin, &QC_ApplicationWindow::modifyCommandTitleBar);
 
-    m_mainWin->m_commandWidget = widget;
+    m_appWin->m_commandWidget = widget;
     return dock;
 }
 
@@ -343,18 +343,18 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     QDockWidget *dock_library = createLibraryWidget(action_handler);
     QDockWidget *dock_command = createCmdWidget(action_handler);
 
-    m_mainWin->addDockWidget(Qt::RightDockWidgetArea, dock_library);
-    m_mainWin->tabifyDockWidget(dock_library, dock_block);
-    m_mainWin->tabifyDockWidget(dock_block, dock_layer);
-    m_mainWin->tabifyDockWidget(dock_block, dock_quick_info);
-    m_mainWin->tabifyDockWidget(dock_layer, dock_pen_palette);
-    m_mainWin->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
+    m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_library);
+    m_appWin->tabifyDockWidget(dock_library, dock_block);
+    m_appWin->tabifyDockWidget(dock_block, dock_layer);
+    m_appWin->tabifyDockWidget(dock_block, dock_quick_info);
+    m_appWin->tabifyDockWidget(dock_layer, dock_pen_palette);
+    m_appWin->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
 
-    m_mainWin->addDockWidget(Qt::RightDockWidgetArea, dock_views);
-    m_mainWin->tabifyDockWidget(dock_views, dock_ucss);
-    m_mainWin->addDockWidget(Qt::RightDockWidgetArea, dock_command);
+    m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_views);
+    m_appWin->tabifyDockWidget(dock_views, dock_ucss);
+    m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_command);
 
-    updateDockWidgetsTitleBarType(m_mainWin, verticalTitle);
+    updateDockWidgetsTitleBarType(m_appWin, verticalTitle);
 }
 
 // fixme - sand - remove this method
@@ -375,11 +375,11 @@ void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName){
 }
 
 void LC_WidgetFactory::createPenWizardWidget(){
-    auto penWizard = new LC_PenWizard(QObject::tr("Pen Wizard"), m_mainWin);
+    auto penWizard = new LC_PenWizard(QObject::tr("Pen Wizard"), m_appWin);
     penWizard->setObjectName("pen_wiz");
-    connect(m_mainWin, &QC_ApplicationWindow::windowsChanged,penWizard, &LC_PenWizard::setEnabled);
-    m_mainWin->addDockWidget(Qt::RightDockWidgetArea, penWizard);
-    m_mainWin->m_penWizard = penWizard;
+    connect(m_appWin, &QC_ApplicationWindow::windowsChanged,penWizard, &LC_PenWizard::setEnabled);
+    m_appWin->addDockWidget(Qt::RightDockWidgetArea, penWizard);
+    m_appWin->m_penWizard = penWizard;
 }
 
 void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *result, bool verticalTitleBar){
@@ -396,19 +396,19 @@ void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *result, bool vertical
 }
 
 LC_CADDockWidget* LC_WidgetFactory::cadDockWidget(const QString& title, const char* name, const QList<QAction*> &actions, int columns, int iconSize, bool flatButtons){
-    auto* result = new LC_CADDockWidget(m_mainWin);
+    auto* result = new LC_CADDockWidget(m_appWin);
     result->setAllowedAreas(Qt::LeftDockWidgetArea |
                               Qt::RightDockWidgetArea);
     result->setObjectName("dock_" + QString(name).toLower());
     result->setWindowTitle(title);
     result->add_actions(actions, columns, iconSize, flatButtons);
     result->hide();
-    connect(m_mainWin, &QC_ApplicationWindow::widgetSettingsChanged, result, &LC_CADDockWidget::updateWidgetSettings);
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, result, &LC_CADDockWidget::updateWidgetSettings);
     return result;
 }
 
  QToolBar* LC_WidgetFactory::createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, QString title, const char *name){
-    auto tb = new QToolBar(title, m_mainWin);
+    auto tb = new QToolBar(title, m_appWin);
     tb->setSizePolicy(tbPolicy);
     tb->addWidget(widget);
     tb->setObjectName(name);
@@ -419,36 +419,36 @@ LC_CADDockWidget* LC_WidgetFactory::cadDockWidget(const QString& title, const ch
 
 void LC_WidgetFactory::initStatusBar() {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-    QStatusBar* status_bar = m_mainWin->statusBar();
+    QStatusBar* status_bar = m_appWin->statusBar();
 
-    m_mainWin->m_coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
-    m_mainWin->m_relativeZeroCoordinatesWidget = new LC_RelZeroCoordinatesWidget(status_bar, "relZeroCordinates");
-    m_mainWin->m_mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
-    m_mainWin->m_selectionWidget = new QG_SelectionWidget(status_bar, "selections");
-    m_mainWin->m_activeLayerNameWidget = new QG_ActiveLayerName(status_bar);
+    m_appWin->m_coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
+    m_appWin->m_relativeZeroCoordinatesWidget = new LC_RelZeroCoordinatesWidget(status_bar, "relZeroCordinates");
+    m_appWin->m_mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
+    m_appWin->m_selectionWidget = new QG_SelectionWidget(status_bar, "selections");
+    m_appWin->m_activeLayerNameWidget = new QG_ActiveLayerName(status_bar);
 
-    m_mainWin->m_gridStatusWidget = new TwoStackedLabels(status_bar);
-    m_mainWin->m_gridStatusWidget->setTopLabel(tr("Grid Status"));
+    m_appWin->m_gridStatusWidget = new TwoStackedLabels(status_bar);
+    m_appWin->m_gridStatusWidget->setTopLabel(tr("Grid Status"));
 
     auto* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
-    m_mainWin->m_ucsStateWidget = ucsStateWidget;
+    m_appWin->m_ucsStateWidget = ucsStateWidget;
 
     auto* anglesBasisWidget = new LC_AnglesBasisWidget(status_bar, "anglesBase");
-    m_mainWin->m_anglesBasisWidget = anglesBasisWidget;
+    m_appWin->m_anglesBasisWidget = anglesBasisWidget;
 
-    m_mainWin->m_statusbarManager = new LC_QTStatusbarManager(status_bar);
-    m_mainWin->m_statusbarManager->loadSettings();
+    m_appWin->m_statusbarManager = new LC_QTStatusbarManager(status_bar);
+    m_appWin->m_statusbarManager->loadSettings();
 
     bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
     if (useClassicalStatusBar) {
-        status_bar->addWidget(m_mainWin->m_coordinateWidget);
-        status_bar->addWidget(m_mainWin->m_mouseWidget);
-        status_bar->addWidget(m_mainWin->m_selectionWidget);
-        status_bar->addWidget(m_mainWin->m_activeLayerNameWidget);
-        status_bar->addWidget(m_mainWin->m_gridStatusWidget);
-        status_bar->addWidget(m_mainWin->m_relativeZeroCoordinatesWidget);
-        status_bar->addWidget(m_mainWin->m_ucsStateWidget);
-        status_bar->addWidget(m_mainWin->m_anglesBasisWidget);
+        status_bar->addWidget(m_appWin->m_coordinateWidget);
+        status_bar->addWidget(m_appWin->m_mouseWidget);
+        status_bar->addWidget(m_appWin->m_selectionWidget);
+        status_bar->addWidget(m_appWin->m_activeLayerNameWidget);
+        status_bar->addWidget(m_appWin->m_gridStatusWidget);
+        status_bar->addWidget(m_appWin->m_relativeZeroCoordinatesWidget);
+        status_bar->addWidget(m_appWin->m_ucsStateWidget);
+        status_bar->addWidget(m_appWin->m_anglesBasisWidget);
 
         LC_GROUP_GUARD("Widgets");{
             bool allow_statusbar_fontsize = LC_GET_BOOL("AllowStatusbarFontSize", false);
@@ -471,32 +471,32 @@ void LC_WidgetFactory::initStatusBar() {
     else {
         QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_coordinateWidget, tr("Coordinates"), "TBCoordinates");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_relativeZeroCoordinatesWidget, tr("Relative Zero"), "TBRelZero");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_mouseWidget, tr("Mouse"), "TBMouse");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_selectionWidget, tr("Selection Info"), "TBSelection");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_activeLayerNameWidget, tr("Active Layer"), "TBActiveLayer");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_gridStatusWidget, tr("Grid Status"), "TBGridStatus");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_ucsStateWidget, tr("UCS Status"), "TBUCSStatus");
-        createStatusBarToolbar(tbPolicy, m_mainWin->m_anglesBasisWidget, tr("Angles Basis"), "TBAnglesBasis");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_coordinateWidget, tr("Coordinates"), "TBCoordinates");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_relativeZeroCoordinatesWidget, tr("Relative Zero"), "TBRelZero");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_mouseWidget, tr("Mouse"), "TBMouse");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_selectionWidget, tr("Selection Info"), "TBSelection");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_activeLayerNameWidget, tr("Active Layer"), "TBActiveLayer");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_gridStatusWidget, tr("Grid Status"), "TBGridStatus");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_ucsStateWidget, tr("UCS Status"), "TBUCSStatus");
+        createStatusBarToolbar(tbPolicy, m_appWin->m_anglesBasisWidget, tr("Angles Basis"), "TBAnglesBasis");
 
-        m_mainWin->m_statusbarManager->setup();
+        m_appWin->m_statusbarManager->setup();
 
-        m_mainWin->m_gridStatusWidget->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
-        connect(m_mainWin->m_gridStatusWidget, &TwoStackedLabels::clicked, m_mainWin, &QC_ApplicationWindow::slotShowDrawingOptions);
+        m_appWin->m_gridStatusWidget->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
+        connect(m_appWin->m_gridStatusWidget, &TwoStackedLabels::clicked, m_appWin, &QC_ApplicationWindow::slotShowDrawingOptions);
 
     }
-    connect(m_mainWin->m_anglesBasisWidget, &LC_AnglesBasisWidget::clicked, m_mainWin, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
+    connect(m_appWin->m_anglesBasisWidget, &LC_AnglesBasisWidget::clicked, m_appWin, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
 
-    connect(m_mainWin, &QC_ApplicationWindow::iconsRefreshed, m_mainWin->m_ucsStateWidget, &LC_UCSStateWidget::onIconsRefreshed);
-    connect(m_mainWin, &QC_ApplicationWindow::iconsRefreshed, m_mainWin->m_anglesBasisWidget, &LC_AnglesBasisWidget::onIconsRefreshed);
-    connect(m_mainWin, &QC_ApplicationWindow::iconsRefreshed, m_mainWin->m_mouseWidget, &QG_MouseWidget::onIconsRefreshed);
+    connect(m_appWin, &QC_ApplicationWindow::iconsRefreshed, m_appWin->m_ucsStateWidget, &LC_UCSStateWidget::onIconsRefreshed);
+    connect(m_appWin, &QC_ApplicationWindow::iconsRefreshed, m_appWin->m_anglesBasisWidget, &LC_AnglesBasisWidget::onIconsRefreshed);
+    connect(m_appWin, &QC_ApplicationWindow::iconsRefreshed, m_appWin->m_mouseWidget, &QG_MouseWidget::onIconsRefreshed);
 
-    connect(m_mainWin, &QC_ApplicationWindow::currentActionIconChanged, m_mainWin->m_mouseWidget, &QG_MouseWidget::setCurrentQAction);
-    connect(m_mainWin, &QC_ApplicationWindow::currentActionIconChanged, m_mainWin->m_statusbarManager, &LC_QTStatusbarManager::setCurrentQAction);
+    connect(m_appWin, &QC_ApplicationWindow::currentActionIconChanged, m_appWin->m_mouseWidget, &QG_MouseWidget::setCurrentQAction);
+    connect(m_appWin, &QC_ApplicationWindow::currentActionIconChanged, m_appWin->m_statusbarManager, &LC_QTStatusbarManager::setCurrentQAction);
 
     bool statusBarVisible = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", true);
     status_bar->setVisible(statusBarVisible);
 }
 
-void LC_WidgetFactory::addToBottom(QToolBar *toolbar) { m_mainWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
+void LC_WidgetFactory::addToBottom(QToolBar *toolbar) { m_appWin->addToolBar(Qt::BottomToolBarArea, toolbar); }

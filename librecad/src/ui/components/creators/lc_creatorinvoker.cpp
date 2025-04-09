@@ -222,7 +222,10 @@ void LC_CreatorInvoker::assignMenu(const QString &activator, const QString &menu
         auto menu = new QMenu(activator, graphicView);
         menu->setObjectName(menu_name);
         for (const auto& key: a_list) {
-            menu->addAction(getAction(key));
+            auto action = getAction(key);
+            if (action != nullptr) {
+                menu->addAction(action);
+            }
         }
         graphicView->setMenu(activator, menu);
     });
@@ -267,6 +270,39 @@ void LC_CreatorInvoker::destroyMenu(const QString &menu_name) {
         }
     }
     settings.endGroup();
+}
+
+void LC_CreatorInvoker::setupCustomMenuForNewGraphicsView(QG_GraphicView* view) {
+    QSettings settings;
+    settings.beginGroup("Activators");
+    auto activators = settings.childKeys();
+    settings.endGroup();
+    // fixme - settings
+    for (auto activator: activators) {
+        auto menu_name = settings.value("Activators/" + activator).toString();
+        auto path      = QString("CustomMenus/%1").arg(menu_name);
+        auto a_list    = settings.value(path).toStringList();
+        if (!a_list.isEmpty()) {
+            auto menu      = new QMenu(activator, view);
+            menu->setObjectName(menu_name);
+            bool hasAction = false;
+            foreach(auto key, a_list) {
+                if (!key.isEmpty()) {
+                    auto action = getAction(key);
+                    if (action != nullptr) {
+                        menu->QWidget::addAction(action);
+                        hasAction = true;
+                    }
+                }
+            }
+            if (hasAction) {
+                view->setMenu(activator, menu);
+            }
+            else {
+                delete menu;
+            }
+        }
+    }
 }
 
 QAction *LC_CreatorInvoker::getAction(const QString &key) {

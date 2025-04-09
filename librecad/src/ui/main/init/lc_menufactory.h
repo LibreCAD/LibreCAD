@@ -26,6 +26,7 @@
 #include <QList>
 #include <QObject>
 
+#include "lc_appwindowaware.h"
 #include "qc_applicationwindow.h"
 
 class QMenuBar;
@@ -33,7 +34,7 @@ class QAction;
 class QMenu;
 class LC_ActionGroupManager;
 
-class LC_MenuFactory: public QObject{
+class LC_MenuFactory: public QObject, public LC_AppWindowAware{
     Q_OBJECT
 public:
     LC_MenuFactory(QC_ApplicationWindow* main_win,
@@ -43,10 +44,9 @@ public:
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
     QMenu* createMainWindowPopupMenu();
     QMenu * getRecentFilesMenu() const{
-        return recentFilesMenu;
+        return m_menuRecentFiles;
     }
 protected:
-    QC_ApplicationWindow* m_appWindow = nullptr;
     LC_ActionGroupManager* m_actionGroupManager = nullptr;
 
     struct MenuOptions {
@@ -76,15 +76,14 @@ protected:
     QMenu* m_menuHelp {nullptr};
     QMenu* m_menuToolsCombined {nullptr};
 
-    QMenu* recentFilesMenu{nullptr};
-    QMenu* dockareas {nullptr};
+    QMenu* m_menuRecentFiles{nullptr};
+    QMenu* m_menuDockareas {nullptr};
     QMenu* m_menuDockWidgets {nullptr};
     QMenu* m_menuCADDockWidgets {nullptr};
     QMenu* m_menuToolbars {nullptr};
     QMenu* m_menuCADToolbars {nullptr};
 
-    bool allowTearOffMenus = true;
-
+    bool m_allowTearOffMenus = true;
 
     void prepareWorkspaceMenuComponents();
     void createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);

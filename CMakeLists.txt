@@ -207,6 +207,9 @@ include_directories(librecad/src/ui/view)
 include_directories(librecad/src/ui/main)
 include_directories(librecad/src/ui/main/init)
 include_directories(librecad/src/ui/main/persistence)
+include_directories(librecad/src/ui/main/workspaces)
+include_directories(librecad/src/ui/main/release_check)
+include_directories(librecad/src/ui/main/support)
 include_directories(librecad/src/ui/dock_widgets)
 include_directories(librecad/src/ui/dock_widgets/command_line)
 include_directories(librecad/src/ui/dock_widgets/pen_wizard)
@@ -790,8 +793,10 @@ set(SOURCES
         librecad/src/main/main.h
 		librecad/src/ui/main/mainwindowx.cpp
 		librecad/src/ui/main/mainwindowx.h
-		librecad/src/ui/main/qc_applicationwindow.cpp
 		librecad/src/ui/main/qc_applicationwindow.h
+		librecad/src/ui/main/qc_applicationwindow.cpp
+		librecad/src/ui/main/lc_appwindowaware.h
+		librecad/src/ui/main/lc_appwindowaware.cpp
         librecad/src/main/qc_dialogfactory.cpp
         librecad/src/main/qc_dialogfactory.h
 		librecad/src/ui/main/qc_mdiwindow.cpp
@@ -1028,8 +1033,8 @@ set(SOURCES
 		librecad/src/ui/components/comboboxes/qg_patternbox.h
 		librecad/src/ui/components/toolbars/qg_pentoolbar.cpp
 		librecad/src/ui/components/toolbars/qg_pentoolbar.h
-		librecad/src/ui/main/qg_recentfiles.cpp
-		librecad/src/ui/main/qg_recentfiles.h
+		librecad/src/ui/main/support/qg_recentfiles.cpp
+		librecad/src/ui/main/support/qg_recentfiles.h
 		librecad/src/ui/components/qg_scrollbar.h
 		librecad/src/ui/components/comboboxes/qg_widthbox.cpp
 		librecad/src/ui/components/comboboxes/qg_widthbox.h
@@ -1232,8 +1237,8 @@ set(SOURCES
 		librecad/src/lib/gui/grid/lc_gridsystem.h
 		librecad/src/lib/gui/grid/lc_gridsystem.cpp
 		librecad/src/lib/gui/grid/lc_isometricgrid.cpp
-		librecad/src/ui/main/lc_releasechecker.h
-		librecad/src/ui/main/lc_releasechecker.cpp
+		librecad/src/ui/main/release_check/lc_releasechecker.h
+		librecad/src/ui/main/release_check/lc_releasechecker.cpp
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.h
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.cpp
 		librecad/src/ui/dialogs/main/lc_dlgabout.cpp
@@ -1403,7 +1408,6 @@ set(SOURCES
 		librecad/src/lib/engine/utils/lc_rectregion.h
 		librecad/src/lib/engine/utils/lc_rectregion.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_iconengineshared.cpp
-		librecad/src/ui/dialogs/settings/options_widget/lc_iconengineshared.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.h
 		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.h
@@ -1411,16 +1415,24 @@ set(SOURCES
 		librecad/src/lib/engine/settings/lc_settingsexporter.h
 		librecad/src/lib/engine/settings/lc_settingsexporter.cpp
 		librecad/src/lib/engine/settings/lc_settingsexporter.cpp
-		librecad/src/ui/main/lc_workspacesmanager.h
-		librecad/src/ui/main/lc_workspacesmanager.cpp
+		librecad/src/ui/main/workspaces/lc_workspacesmanager.h
+		librecad/src/ui/main/workspaces/lc_workspacesmanager.cpp
+		librecad/src/ui/main/workspaces/lc_workspacesinvoker.h
+		librecad/src/ui/main/workspaces/lc_workspacesinvoker.cpp
 		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.h
 		librecad/src/ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp
 		librecad/src/ui/dialogs/lc_inputtextdialog.h
 		librecad/src/ui/dialogs/lc_inputtextdialog.cpp
         librecad/src/ui/main/persistence/lc_documentsstorage.h
         librecad/src/ui/main/persistence/lc_documentsstorage.cpp
-		librecad/src/ui/main/lc_applicationwindowdialogshelper.h
-		librecad/src/ui/main/lc_applicationwindowdialogshelper.cpp
+		librecad/src/ui/main/support/lc_appwindowdialogsinvoker.h
+		librecad/src/ui/main/support/lc_appwindowdialogsinvoker.cpp
+		librecad/src/ui/main/support/lc_gridviewinvoker.h
+		librecad/src/ui/main/support/lc_gridviewinvoker.cpp
+		librecad/src/ui/main/support/lc_infocursorsettingsmanager.h
+		librecad/src/ui/main/support/lc_infocursorsettingsmanager.cpp
+		librecad/src/ui/main/support/lc_customstylehelper.h
+		librecad/src/ui/main/support/lc_customstylehelper.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

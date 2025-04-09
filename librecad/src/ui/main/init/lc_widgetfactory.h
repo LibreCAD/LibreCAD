@@ -23,6 +23,7 @@
 #ifndef LC_WIDGETFACTORY_H
 #define LC_WIDGETFACTORY_H
 #include <QObject>
+#include <lc_appwindowaware.h>
 
 class QAction;
 class QToolBar;
@@ -34,7 +35,7 @@ class LC_ActionGroupManager;
  * creates the widgets and adds them to the main window;
  * it also "tags" a few widgets that the main window uses
  */
-class LC_WidgetFactory:public QObject {
+class LC_WidgetFactory:public QObject, public LC_AppWindowAware {
     Q_OBJECT
 public:
     LC_WidgetFactory(QC_ApplicationWindow *main_win);
@@ -44,9 +45,7 @@ public:
     static void updateDockWidgetsTitleBarType(QC_ApplicationWindow* mainWin, bool verticalTitle);
     static void updateDockOptions(QC_ApplicationWindow* mainWin, bool allowDockNesting, bool verticalTabs);
 private:
-    QC_ApplicationWindow *m_mainWin {nullptr};
     LC_ActionGroupManager *m_agm {nullptr};
-
     QDockWidget *newDockWidget(const QString &title, const char *name);
     QDockWidget *createPenPalletteWidget();
     QDockWidget *createLayerWidget(QG_ActionHandler *action_handler);
@@ -57,7 +56,6 @@ private:
     QDockWidget *createBlockListWidget(QG_ActionHandler *action_handler);
     QDockWidget *createLibraryWidget(QG_ActionHandler *action_handler);
     QDockWidget *createCmdWidget(QG_ActionHandler *action_handler);
-
     void createPenWizardWidget();
     void fillActionLists();
     void initLeftCADSidebar();
@@ -69,7 +67,6 @@ private:
     QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, QString title, const char *name);
     void addAction(QToolBar *toolbar, const char *actionName);
     void makeActionsInvisible(const std::vector<QString> &actionNames);
-
     static void setDockWidgetTitleType(QDockWidget *result, bool verticalTitleBar);
 };
 #endif // LC_WIDGETFACTORY_H

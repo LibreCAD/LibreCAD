@@ -27,7 +27,7 @@
 #include "qg_actionhandler.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
-    QObject(parent), m_mainWin(parent),m_actionHandler(a_handler){
+    QObject(parent), LC_AppWindowAware(parent),m_actionHandler(a_handler){
 }
 
 QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_ApplicationWindow::*slotPtr)(), void (QC_ApplicationWindow::*slotBoolPtr)(bool),const QString& text,
@@ -36,15 +36,15 @@ QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_Applic
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
     if (slotPtr != nullptr) {
         if (useToggled) {
-            connect(action, &QAction::toggled, m_mainWin, slotPtr);
+            connect(action, &QAction::toggled, m_appWin, slotPtr);
         } else {
-            connect(action, &QAction::triggered, m_mainWin, slotPtr);
+            connect(action, &QAction::triggered, m_appWin, slotPtr);
         }
     }else if (slotBoolPtr != nullptr) {
             if (useToggled) {
-                connect(action, &QAction::toggled, m_mainWin, slotBoolPtr);
+                connect(action, &QAction::toggled, m_appWin, slotBoolPtr);
             } else {
-                connect(action, &QAction::triggered, m_mainWin, slotBoolPtr);
+                connect(action, &QAction::triggered, m_appWin, slotBoolPtr);
             }
     }
     return action;
@@ -116,6 +116,6 @@ void LC_ActionFactoryBase::addActionsToMainWindow(const QMap<QString, QAction *>
    // add actions to the main window to ensure that shortcuts for them will be invoked - even if the action is not visible.
    // without this, pressing shortcut for the action that is not visible does not activate the action
    for (const auto &a: map) {
-       m_mainWin->addAction(a);
+       m_appWin->addAction(a);
    }
 }

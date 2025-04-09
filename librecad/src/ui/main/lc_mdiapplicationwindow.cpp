@@ -26,7 +26,7 @@
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
-#include "qg_recentfiles.h"
+#include "support/qg_recentfiles.h"
 #include "rs_commands.h"
 #include "rs_debug.h"
 #include "rs_document.h"
@@ -39,7 +39,25 @@
 LC_MDIApplicationWindow::LC_MDIApplicationWindow():
     m_currentSubWindow(nullptr){}
 
+/**
+ * Goes back to the previous menu or one step in the current action.
+ */
+void LC_MDIApplicationWindow::slotBack() {
+    RS_GraphicView* graphicView = getCurrentGraphicView();
+    if (graphicView != nullptr) {
+        graphicView->back();
+    }
+}
 
+/**
+ * Goes one step further in the current action.
+ */
+void LC_MDIApplicationWindow::onEnterKey() {
+    RS_GraphicView *graphicView = getCurrentGraphicView();
+    if (graphicView) {
+        graphicView->processEnterKey();
+    }
+}
 
 RS_GraphicView const *LC_MDIApplicationWindow::getCurrentGraphicView() const {
     QC_MDIWindow const *win = getCurrentMDIWindow();
@@ -149,6 +167,16 @@ QC_MDIWindow *LC_MDIApplicationWindow::getWindowWithDoc(const RS_Document *doc) 
     return wwd;
 }
 
+void LC_MDIApplicationWindow::closeAllWindowsWithDoc(const RS_Document *doc){
+    if (doc != nullptr) {
+        for (auto*w :m_windowList) {
+            if (w != nullptr && w->getDocument() == doc) {
+                closeWindow(w);
+                break;
+            }
+        }
+    }
+}
 
 void LC_MDIApplicationWindow::activateWindowWithFile(QString &fileName) {
     if (!fileName.isEmpty()) {
@@ -224,8 +252,6 @@ void LC_MDIApplicationWindow::setTabLayout(RS2::TabShape s, RS2::TabPosition p) 
  * Cascade MDI windows
  */
 void LC_MDIApplicationWindow::slotCascade() {
-//    mdiAreaCAD->cascadeSubWindows();
-//return;
     doArrangeWindows(RS2::Cascade, true);
     QList<QMdiSubWindow *> windows = m_mdiAreaCAD->subWindowList();
     switch (windows.size()) {
@@ -273,22 +299,13 @@ void LC_MDIApplicationWindow::slotCascade() {
                 window = windows.at(i);
 //            std::cout<<"window:("<<i<<"): pos()="<<(window->pos().x())<<" "<<(window->pos().y())<<std::endl;
                 geo = window->geometry();
-//            if(i==active) {
-//                    window->setWindowState(Qt::WindowActive);
-//            }else{
-//                    window->setWindowState(Qt::WindowNoState);
-//            }
                 window->setGeometry(geo.x(), geo.y(), width, height);
                 qobject_cast<QC_MDIWindow *>(window)->zoomAuto();
             }
             m_mdiAreaCAD->setActiveSubWindow(active);
-//        windows.at(active)->activateWindow();
-//        windows.at(active)->raise();
-//        windows.at(active)->setFocus();
         }
     }
 }
-
 
 /**
  * Tiles MDI windows horizontally.
@@ -539,6 +556,14 @@ void LC_MDIApplicationWindow::slotWindowActivatedByIndex(int index){
     }
     slotWindowActivated(m_mdiAreaCAD->subWindowList().at(index));
 }
+
+void LC_MDIApplicationWindow::slotRedockWidgets(){
+    const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
+    for (auto *dockwidget: dockwidgets) {
+        dockwidget->setFloating(false);
+    }
+}
+
 /*
 void LC_MDIApplicationWindow::slotWindowStateChanged(Qt::WindowStates oldState, Qt::WindowStates newState){
 
@@ -572,5 +597,33 @@ void LC_MDIApplicationWindow::doForEachSubWindowGraphicView(std::function<void(Q
                 callback(gv, win);
             }
         }
+    }
+}
+
+QAction* LC_MDIApplicationWindow::enableAction(const QString& name, bool enable) const{
+    QAction* action = getAction(name);
+    if (action != nullptr) {
+        action->setEnabled(enable);
+    }
+    return action;
+}
+
+QAction* LC_MDIApplicationWindow::checkAction(const QString& name, bool enable) const{
+    QAction* action = getAction(name);
+    if (action != nullptr) {
+        action->setChecked(enable);
+    }
+    return action;
+}
+
+void LC_MDIApplicationWindow::checkActions(const std::vector<QString> &actionList, bool enable) const {
+    for (const QString &a: actionList){
+        checkAction(a, enable);
+    }
+}
+
+void LC_MDIApplicationWindow::enableActions(const std::vector<QString> &actionList, bool enable) const {
+    for (const QString &a: actionList){
+        enableAction(a, enable);
     }
 }

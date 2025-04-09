@@ -19,39 +19,16 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#ifndef LC_APPLICATIONWINDOWINITIALIZER_H
-#define LC_APPLICATIONWINDOWINITIALIZER_H
+#ifndef LC_APPWINDOWAWARE_H
+#define LC_APPWINDOWAWARE_H
 
-#include <QObject>
-
-#include "lc_appwindowaware.h"
 class QC_ApplicationWindow;
 
-class LC_ApplicationWindowInitializer : public QObject, public LC_AppWindowAware{
-    Q_OBJECT
-public:
-    explicit LC_ApplicationWindowInitializer(QC_ApplicationWindow* appWindow);
-    ~LC_ApplicationWindowInitializer() override = default;
-    void initApplication();
-private:
-    void initReleaseChecker();
-    void initActionGroupManager();
-    void initActionOptionsManager();
-    void initActionFactory();
-    void initDockCorners();
-    void initCentralWidget();
-    void initIconSize();
-    void loadCmdWidgetVariablesFile();
-    void initDockAreasActions();
-    void initMainMenu();
-    void updateCommandsAlias();
-    void initRecentFilesList();
-    void initDialogFactory();
-    void initWidgets();
-    void initToolbars();
-    void initPlugins();
-    void initAutoSaveTimer();
-    void initActionContext();
+class LC_AppWindowAware {
+    public:
+        LC_AppWindowAware(QC_ApplicationWindow* mainWin);
+    protected:
+        QC_ApplicationWindow* m_appWin{nullptr};
 };
 
-#endif // LC_APPLICATIONWINDOWINITIALIZER_H
+#endif // LC_APPWINDOWAWARE_H

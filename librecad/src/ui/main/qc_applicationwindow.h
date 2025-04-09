@@ -37,15 +37,19 @@
 #include "lc_penpalettewidget.h"
 #include "lc_quickinfowidget.h"
 #include "lc_mdiapplicationwindow.h"
-#include "lc_releasechecker.h"
+#include "release_check/lc_releasechecker.h"
 #include "lc_qtstatusbarmanager.h"
 #include "lc_namedviewslistwidget.h"
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_anglesbasiswidget.h"
-#include "lc_workspacesmanager.h"
+#include "lc_infocursorsettingsmanager.h"
+#include "workspaces/lc_workspacesmanager.h"
+class LC_CustomStyleHelper;
+class LC_GridViewInvoker;
+class LC_WorkspacesInvoker;
 class LC_ActionOptionsManager;
-class LC_ApplicationWindowDialogsHelper;
+class LC_AppWindowDialogsInvoker;
 class LC_PluginInvoker;
 class LC_CreatorInvoker;
 class LC_MenuFactory;
@@ -106,19 +110,19 @@ public:
     void initSettings();
     void storeSettings();
 
-    bool tryCloseAllBeforeExist();
+
 
     /** Catch hotkey for giving focus to command line. */
-     void keyPressEvent(QKeyEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
 
     void setUndoEnable(bool enable);
     void setSaveEnable(bool enable);
-    static bool loadStyleSheet(const QString &path);
+    bool loadStyleSheet(const QString &path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
     void onViewCurrentActionChanged(RS_ActionInterface *action);
-    QAction* getAction(const QString& name) const;
+    QAction* getAction(const QString& name) const override;
 
     void activateWindow(QMdiSubWindow* w){
         if (w != nullptr) {
@@ -136,9 +140,7 @@ public:
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
-    void slotBack();
     void slotKillAllActions();
-    void onEnterKey();
     void slotFocusCommandLine();
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
@@ -147,7 +149,7 @@ public slots:
     void slotWorkspacesMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
     void slotPenChanged(RS_Pen p);
-    void setupActivators(QG_GraphicView* view);
+    void setupCustomMenu(QG_GraphicView* view);
 
     //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
@@ -236,9 +238,7 @@ public slots:
     void onNewVersionAvailable();
     void checkForNewVersion();
     void forceCheckForNewVersion();
-    void slotRedockWidgets();
     void slotShowEntityDescriptionOnHover(bool toggle);
-    void slotInfoCursorSetting(bool toggle);
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
@@ -248,7 +248,6 @@ signals:
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
     void showEntityDescriptionOnHoverChanged(bool show);
-    void showInfoCursorSettingChanged(bool enabled);
     void iconsRefreshed();
     void widgetSettingsChanged();
     void workspacesChanged(bool hasWorkspaces);
@@ -301,20 +300,15 @@ public:
     void fillWorkspacesList(QList<QPair<int, QString>> &list);
     void applyWorkspaceById(int id);
     void rebuildMenuIfNecessary();
-
-    /** closing the current file */
-    void closeAllWindowsWithDoc(const RS_Document* doc);
     void openFile(const QString& fileName); // Assume Unknown type
     /**
  * opens the given file.
  */
     void openFile(const QString& fileName, RS2::FormatType type);
     void changeDrawingOptions(int tabIndex);
-    void closeWindow(QC_MDIWindow* w);// fixme - make not public, used for blocks!!
+    void closeWindow(QC_MDIWindow* w) override;
     QG_LibraryWidget* getLibraryWidget(){return m_libraryWidget;}
-
 protected:
-
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
     void dropEvent(QDropEvent* e) override;
@@ -323,10 +317,6 @@ protected:
     //! \}
 
     QG_GraphicView* setupNewGraphicView(QC_MDIWindow* w);
-    QAction* enableAction(const QString& name, bool enable) const;
-    void enableActions(const std::vector<QString> &actionList, bool enable) const;
-    QAction* checkAction(const QString& name, bool enable) const;
-    void checkActions(const std::vector<QString> &actionList, bool enable) const;
     QC_ApplicationWindow();
     QMenu* createPopupMenu() override;
     QString getFileNameFromFullPath(const QString &path);
@@ -344,7 +334,7 @@ protected:
     void setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleString, bool draftMode);
     void setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode, bool forPreview);
 
-
+    bool tryCloseAllBeforeExist();
 #ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
@@ -352,12 +342,15 @@ protected:
     LC_ActionGroupManager* m_actionGroupManager {nullptr};
     LC_CreatorInvoker* m_creatorInvoker {nullptr};
     LC_PluginInvoker* m_pluginInvoker{nullptr};
-    LC_ApplicationWindowDialogsHelper* m_dlgHelpr{nullptr};
-    LC_WorkspacesManager m_workspacesManager;
+    LC_AppWindowDialogsInvoker* m_dlgHelpr{nullptr};
+    LC_WorkspacesInvoker* m_workspacesInvoker {nullptr};
     LC_MenuFactory* m_menuFactory {nullptr};
     LC_ReleaseChecker* m_releaseChecker {nullptr};
     LC_DefaultActionContext* m_actionContext{nullptr};
     LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
+    LC_GridViewInvoker* m_gridViewInvoker{nullptr};
+    LC_InfoCursorSettingsManager* m_infoCursorSettingsManager {nullptr};
+    LC_CustomStyleHelper* m_styleHelper {nullptr};
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
@@ -420,11 +413,9 @@ protected:
     QList<QAction*> m_recentFilesActionList;
 
     QStringList openedFiles;
-    QString m_styleSheetPath;
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
 
     void enableWidgets(bool enable);
-    void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
     void doRestoreNamedView(int i) const;
 
 

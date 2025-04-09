@@ -41,6 +41,7 @@ public:
     void assignMenu(const QString &activator, const QString &menu_name);
     void updateMenu(const QString &menu_name);
     void destroyMenu(const QString &menu_name);
+    void setupCustomMenuForNewGraphicsView(QG_GraphicView* view);
 protected slots:
     void createToolbar(const QString &toolbar_name);
     void destroyToolbar(const QString &toolbar_name);

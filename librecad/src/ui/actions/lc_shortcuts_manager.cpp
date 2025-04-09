@@ -69,6 +69,17 @@ void LC_ShortcutsManager::updateActionTooltips(const QMap<QString, QAction *> &a
     updateActionShortcutTooltips(actionsMap, showShortcutsInActionsTooltips);
 }
 
+void LC_ShortcutsManager::init() {
+    QString defaultFileName = getDefaultShortcutsFileName();
+    if (!defaultFileName.isEmpty()) {
+        QFile defaultFile(defaultFileName);
+        if (defaultFile.exists()) {
+            QString backupFileName = defaultFileName + ".bak";
+            QFile::copy(defaultFileName, backupFileName);
+        }
+    }
+}
+
 void LC_ShortcutsManager::applyShortcutsMapToActionsMap(QMap<QString, LC_ShortcutInfo*> &shortcuts, QMap<QString, QAction *> &actionsMap) const{
     for (auto [key, shortcut] : shortcuts.asKeyValueRange()){
         QAction* action = actionsMap[key];

@@ -321,18 +321,19 @@ void LC_WidgetOptionsDialog::accept() {
         if (allow_style) {
             QString style = style_combobox->currentText();
             LC_SET("Style", style);
-            QApplication::setStyle(QStyleFactory::create(style));
+            QApplication::setStyle(QStyleFactory::create(style)); // fixme - sand - move to style helper?
         }
+
+        auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - avoid static?
 
         QString sheet_path = stylesheet_field->text();
         LC_SET("StyleSheet", sheet_path);
-        if (QC_ApplicationWindow::loadStyleSheet(sheet_path)) {
+        if (appWindow->loadStyleSheet(sheet_path)) {
            // nothing to do
         }
 
         bool allow_theme = theme_checkbox->isChecked();
         LC_SET("AllowTheme", allow_theme);
-        auto& appWindow = QC_ApplicationWindow::getAppWindow();
         int allow_toolbar_icon_size = toolbar_icon_size_checkbox->isChecked();
         LC_SET("AllowToolbarIconSize", allow_toolbar_icon_size);
         if (allow_toolbar_icon_size) {
