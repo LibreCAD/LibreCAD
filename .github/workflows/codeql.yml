@@ -36,7 +36,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install Qt6
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v5
       with:
         version: '6.6.*'
         modules: 'qt5compat'
