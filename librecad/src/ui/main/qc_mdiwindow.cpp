@@ -141,14 +141,6 @@ RS_Document* QC_MDIWindow::getDocument() const{
 	return m_document;
 }
 
-QString QC_MDIWindow::getDocumentFileName() const{
-    auto graphic = m_document->getGraphic();
-    if (graphic == nullptr) {
-        return "";
-    }
-    return graphic->getFilename();
-}
-
 unsigned QC_MDIWindow::getId() const{
 	return id;
 }
@@ -378,6 +370,7 @@ bool QC_MDIWindow::isModified(){
     return getDocument()->isModified();
 }
 
+// fixme - sand - files - REFACTOR!!!
 void QC_MDIWindow::drawChars() {
     RS_BlockList* bl = m_document->getBlockList();
     double sep = m_document->getGraphic()->getVariableDouble("LetterSpacing", 3.0);

@@ -27,7 +27,7 @@
 
 #include <QFileDialog>
 #include "lc_actionlayersexport.h"
-#include "lc_exportlayersdialogservice.h"
+#include "../../../ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h"
 #include "lc_layersexporter.h"
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"

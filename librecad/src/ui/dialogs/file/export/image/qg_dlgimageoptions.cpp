@@ -1,28 +1,26 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-** 
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!  
-**
-**********************************************************************/
+/*
+ * **************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * *********************************************************************
+ *
+ */
 #include "qg_dlgimageoptions.h"
 
 #include "rs_math.h"
@@ -51,9 +49,9 @@ void QG_ImageOptionsDialog::languageChange()
 }
 
 void QG_ImageOptionsDialog::init() {
-    graphicSize = RS_Vector(0.0,0.0);
-    updateEnabled = false;
-    useResolution = true;
+    m_graphicSize = RS_Vector(0.0,0.0);
+    m_updateEnabled = false;
+    m_useResolution = true;
 
     LC_GROUP_GUARD("Export");
     {
@@ -85,12 +83,12 @@ void QG_ImageOptionsDialog::init() {
         }
     }
 
-    updateEnabled = true;
+    m_updateEnabled = true;
 }
 
 void QG_ImageOptionsDialog::setGraphicSize(const RS_Vector& s) {
-    graphicSize = s;
-    if(!useResolution){
+    m_graphicSize = s;
+    if(!m_useResolution){
         sizeChanged();
     }
     else {
@@ -101,7 +99,7 @@ void QG_ImageOptionsDialog::setGraphicSize(const RS_Vector& s) {
 void QG_ImageOptionsDialog::ok() {
     LC_GROUP_GUARD("Export");
     {
-        LC_SET("UseResolution", useResolution);
+        LC_SET("UseResolution", m_useResolution);
         LC_SET("Resolution", cbResolution->currentText());
         LC_SET("Width", leWidth->text());
         LC_SET("Height", leHeight->text());
@@ -131,28 +129,28 @@ void QG_ImageOptionsDialog::borderChanged() {
 }
 
 void QG_ImageOptionsDialog::sizeChanged() {
-    if (updateEnabled) {
-        updateEnabled = false;
-        useResolution = false;
+    if (m_updateEnabled) {
+        m_updateEnabled = false;
+        m_useResolution = false;
         cbResolution->setCurrentIndex(cbResolution->findText("auto"));
-        updateEnabled = true;
+        m_updateEnabled = true;
     }
 }
 
 void  QG_ImageOptionsDialog::resolutionChanged() {
-    if (updateEnabled) {
-        updateEnabled = false;
+    if (m_updateEnabled) {
+        m_updateEnabled = false;
         bool ok = false;
         double res = RS_Math::eval(cbResolution->currentText(), &ok);
         if (!ok) {
             res = 1.0;
         }
-        int w = RS_Math::round(res * graphicSize.x);
-        int h = RS_Math::round(res * graphicSize.y);
-        useResolution = true;
+        int w = RS_Math::round(res * m_graphicSize.x);
+        int h = RS_Math::round(res * m_graphicSize.y);
+        m_useResolution = true;
         leWidth->setText(QString("%1").arg(w));
         leHeight->setText(QString("%1").arg(h));
-        updateEnabled = true;
+        m_updateEnabled = true;
     }
 }
 

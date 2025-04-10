@@ -505,7 +505,6 @@ RS_ActionInterface* RS_EventHandler::getDefaultAction() const{
 void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
     if (m_defaultAction) {
         m_defaultAction->finish();
-        //        defaultAction = NULL;
     }
 
     m_defaultAction.reset(action);
@@ -519,12 +518,6 @@ bool RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     if (action==nullptr) {
         return false;
     }
-    // Do not initialize action if it's already the last one.
-    // This is attempt to fix crashes of dialogs (like properties) which are called from actions
-    // todo - check again, either remove or uncomment
-//    if (hasAction() && currentActions.last().get() == action){
-//        return;
-//    }
     std::shared_ptr<RS_ActionInterface> actionHolder{action};
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", actionHolder->getName().toLatin1().data());

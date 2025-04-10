@@ -32,10 +32,12 @@
 #include "qc_applicationwindow.h"
 #include <QByteArray>
 #include <QDockWidget>
+#include <QDragEnterEvent>
 #include <QMdiArea>
 #include <QMessageBox>
-#include <QStatusBar>
-#include <QtSvg>
+#include <QTimer>
+#include <QMimeData>
+
 #include "doc_plugin_interface.h"
 #include "twostackedlabels.h"
 #include "widgetcreator.h"
@@ -43,7 +45,6 @@
 #include "rs_actionprintpreview.h"
 #include "rs_commands.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_document.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
@@ -54,12 +55,15 @@
 #include "lc_actiongroupmanager.h"
 #include "lc_actionoptionsmanager.h"
 #include "lc_actionsshortcutsdialog.h"
+#include "lc_anglesbasiswidget.h"
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_applicationwindowinitializer.h"
 #include "lc_creatorinvoker.h"
 #include "lc_customstylehelper.h"
 #include "lc_defaultactioncontext.h"
+#include "lc_exporttoimageservice.h"
 #include "lc_gridviewinvoker.h"
+#include "lc_imageexporter.h"
 #include "lc_penwizard.h"
 #include "lc_infocursorsettingsmanager.h"
 #include "lc_layertreewidget.h"
@@ -68,8 +72,9 @@
 #include "lc_mdiapplicationwindow.h"
 #include "lc_releasechecker.h"
 #include "lc_menufactory.h"
+#include "lc_namedviewslistwidget.h"
 #include "lc_plugininvoker.h"
-#include "lc_printviewportrenderer.h"
+#include "lc_ucslistwidget.h"
 #include "lc_workspacesinvoker.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
@@ -79,7 +84,6 @@
 #include "qg_blockwidget.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
-#include "qg_dlgimageoptions.h"
 #include "qg_exitdialog.h"
 #include "qg_graphicview.h"
 #include "qg_layerwidget.h"
@@ -284,7 +288,6 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
     w->close();
     m_windowList.removeOne(w);
 
-
     if (m_activeMdiSubWindow == nullptr || m_activeMdiSubWindow == w) {
         setupWidgetsByWindow(nullptr);
     }
@@ -300,7 +303,6 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
             doActivate(m_windowList.back());
         }
     }
-
     enableFileActions();
 }
 
@@ -341,7 +343,6 @@ void QC_ApplicationWindow::doActivate(QMdiSubWindow *w) {
     enableFileActions(qobject_cast<QC_MDIWindow *>(w));
     // fixme - sand - potentially, there we may just fire signal to widgets...
 }
-
 
 int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
     return m_dlgHelpr->showCloseDialog(w, showSaveAll);
@@ -392,7 +393,6 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent *ce) {
 
 void QC_ApplicationWindow::dropEvent(QDropEvent *event) {
     event->acceptProposedAction();
-
     //limit maximum number of dropped files to be opened
     unsigned counts = 0;
     for (QUrl const &url: event->mimeData()->urls()) {
@@ -454,16 +454,13 @@ void QC_ApplicationWindow::slotUpdateActiveLayer() {
  */
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
-    QSettings settings;
 
     bool first_load = LC_GET_ONE_BOOL("Startup","FirstLoad", true);
     if (!first_load) {
         m_workspacesInvoker->init();
     }
     fireWorkspacesChanged();
-
     m_styleHelper->loadFromSettings();
-
     LC_GROUP("Appearance");
     {
         QAction *viewLinesDraftAction = getAction("ViewLinesDraft");
@@ -479,7 +476,6 @@ void QC_ApplicationWindow::initSettings() {
         viewAntialiasing->setChecked(antialiasing);
     }
     LC_GROUP_END();
-
     m_infoCursorSettingsManager->loadFromSettings();
 }
 
@@ -499,12 +495,12 @@ void QC_ApplicationWindow::storeSettings() {
 }
 
 void QC_ApplicationWindow::slotKillAllActions() {
-    QC_MDIWindow* w  = getCurrentMDIWindow();
-    if (w != nullptr) {
-        RS_GraphicView* gv = w->getGraphicView();
+    QC_MDIWindow* win  = getCurrentMDIWindow();
+    if (win != nullptr) {
+        RS_GraphicView* gv = win->getGraphicView();
         if (gv != nullptr) {
             gv->killAllActions();
-            RS_Document* doc = w->getDocument();
+            RS_Document* doc = win->getDocument();
             RS_Selection s(*doc, gv->getViewPort());
             s.selectAll(false);
             const RS_EntityContainer::LC_SelectionInfo &selectionInfo = doc->getSelectionInfo();
@@ -1117,7 +1113,7 @@ void QC_ApplicationWindow::showStatusMessage(const QString& msg, int timeout){
 
 void QC_ApplicationWindow::notificationMessage(const QString& msg, int timeout){
     statusBar()->showMessage(msg, timeout);
-    bool duplicateMessageInCmdWidget = true; // fixme - sand - complete - setting?
+    bool duplicateMessageInCmdWidget = true; // fixme - sand - complete - setting? Rework later with cmd
     if (duplicateMessageInCmdWidget){
         m_commandWidget->appendHistory(msg);
     }
@@ -1127,108 +1123,16 @@ void QC_ApplicationWindow::initCompleted() {
     enableFileActions();
 }
 
-/**
- * Menu file -> export.
- */
- // fixme - sand - move to separate utility outside of this
 void QC_ApplicationWindow::slotFileExport() {
     auto *w = getCurrentMDIWindow();
     if (w != nullptr) {
         auto graphic = w->getGraphic();
         if (graphic != nullptr) {
-            // show options dialog:
-            QG_ImageOptionsDialog dlg(this);
-            graphic->calculateBorders();
-            dlg.setGraphicSize(graphic->getSize() * 2.);
-            if (dlg.exec()) {
-                QPair<QString, QString> fileFormat = m_dlgHelpr->showExportFileSelectionDialog(w->getFileName());
-                QString fileName = fileFormat.first;
-                if (!fileName.isEmpty()) {
-                    QString format = fileFormat.second;
-                    showStatusMessage(tr("Exporting drawing..."), 2000);
-                    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-                    bool ret = doFileExport(graphic, fileName, format, dlg.getSize(), dlg.getBorders(),
-                                            dlg.isBackgroundBlack(), dlg.isBlackWhite());
-                    if (ret) {
-                        QString message = tr("Exported: %1").arg(fileName);
-                        notificationMessage(message, 20000);
-                    } else {
-                        showStatusMessage(tr("Export failed!"), 2000);
-                    }
-                    QApplication::restoreOverrideCursor();
-                }
-            }
+            QString currentDocumentFileName = w->getFileName();
+            LC_ExportToImageService exportService(this, m_dlgHelpr);
+            exportService.exportGraphicsToImage(graphic, currentDocumentFileName);
         }
     }
-}
-
-/**
- * Exports the drawing as a bitmap or another picture format.
- *
- * @param name File name.
- * @param format File format (e.g. "png")
- * @param size Size of the bitmap in pixel
- * @param black true: Black background, false: white
- * @param bw true: black/white export, false: color
- */
-bool QC_ApplicationWindow::doFileExport(RS_Graphic* graphic, const QString &name, const QString &format, QSize size, QSize borders, bool black, bool bw) {
-// fixme - sand - files = export improvement
-// improve:
-// 1) generic refactor
-// 2) support of ucs?
-// 3) export of the entire drawing/visible area?
-
-
-    // set vars for normal pictures and vectors (svg)
-    auto pixMap = std::make_shared<QPixmap>(size);
-    auto svgGenerator = std::make_shared<QSvgGenerator>();
-
-    // set buffer var
-    std::shared_ptr<QPaintDevice> buffer;
-
-    if (format.toLower() == "svg") {
-        svgGenerator->setSize(size);
-        svgGenerator->setViewBox(QRectF(QPointF(0, 0), size));
-        svgGenerator->setFileName(name);
-        buffer = svgGenerator;
-    } else {
-        buffer = pixMap;
-    }
-
-    // set painter with buffer
-    RS_Painter painter(buffer.get());
-    painter.setBackground(black ? Qt::black : Qt::white);
-    if (bw) {
-        painter.setDrawingMode(black ? RS2::ModeWB : RS2::ModeBW);
-    }
-
-    painter.eraseRect(0, 0, size.width(), size.height());
-    // fixme - sand - rework to more generic printing (add progress or confirmation ?)
-    LC_GraphicViewport viewport = LC_GraphicViewport();
-    viewport.setSize(size.width(), size.height());
-    viewport.setBorders(borders.width(), borders.height(), borders.width(), borders.height());
-    viewport.setContainer(graphic);
-    viewport.zoomAuto(false);
-    viewport.loadSettings();
-
-    LC_PrintViewportRenderer renderer = LC_PrintViewportRenderer(&viewport, &painter);
-    renderer.setBackground(black ? Qt::black : Qt::white);
-    renderer.loadSettings();
-    renderer.render();
-
-    // end the picture output
-    bool ret = false;
-    if (format.toLower() != "svg") {
-        QImageWriter iio;
-        QImage img = pixMap->toImage();
-        iio.setFileName(name);
-        iio.setFormat(format.toLatin1());
-        if (iio.write(img)) {
-            ret = true;
-        }
-//        QString error=iio.errorString();
-    }
-    return ret;
 }
 
 /**
@@ -1380,7 +1284,7 @@ void QC_ApplicationWindow::openPrintPreview(QC_MDIWindow *parent){
             parent->addChildWindow(w);
 
             bool draftMode = LC_GET_ONE_BOOL("Appearance","DraftMode");
-            setupMDIWindowTitleByFile(w, parent->getDocumentFileName(), draftMode, true);
+            setupMDIWindowTitleByFile(w, parent->getFileName(), draftMode, true);
 
             w->setWindowIcon(QIcon(":/icons/document.lci"));
             QG_GraphicView *view = w->getGraphicView();
@@ -1474,7 +1378,7 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
 
     doForEachWindowGraphicView([toggle, this](QG_GraphicView *gv, QC_MDIWindow* w){ // fixme - sand - files - probably just rely on signal??
         gv->setDraftMode(toggle);
-        QString fileName = w->getDocumentFileName();
+        QString fileName = w->getFileName();
         setupMDIWindowTitleByFile(w, fileName, toggle, gv->isPrintPreview());
    });
     emit draftChanged(toggle);

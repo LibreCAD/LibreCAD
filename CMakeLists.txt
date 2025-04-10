@@ -140,6 +140,7 @@ include_directories(librecad/src/lib/filters)
 include_directories(librecad/src/lib/generators)
 include_directories(librecad/src/lib/generators/layers)
 include_directories(librecad/src/lib/generators/makercamsvg)
+include_directories(librecad/src/lib/generators/image)
 include_directories(librecad/src/lib/gui)
 include_directories(librecad/src/lib/gui/grid)
 include_directories(librecad/src/lib/gui/render)
@@ -169,6 +170,9 @@ include_directories(librecad/src/ui/dialogs/settings)
 include_directories(librecad/src/ui/dialogs/entity)
 include_directories(librecad/src/ui/dialogs/file)
 include_directories(librecad/src/ui/dialogs/file/export)
+include_directories(librecad/src/ui/dialogs/file/export/layers)
+include_directories(librecad/src/ui/dialogs/file/export/image)
+include_directories(librecad/src/ui/dialogs/file/export/makercam)
 include_directories(librecad/src/ui/dialogs/file/export_layers)
 include_directories(librecad/src/ui/dialogs/main)
 include_directories(librecad/src/ui/action_options)
@@ -741,6 +745,8 @@ set(SOURCES
 		librecad/src/lib/generators/makercamsvg/lc_xmlwriterqxmlstreamwriter.h
 		librecad/src/lib/generators/layers/lc_layersexporter.h
 		librecad/src/lib/generators/layers/lc_layersexporter.cpp
+        librecad/src/lib/generators/image/lc_imageexporter.h
+        librecad/src/lib/generators/image/lc_imageexporter.cpp
         librecad/src/lib/gui/rs_commandevent.h
         librecad/src/lib/gui/rs_coordinateevent.h
         librecad/src/lib/gui/rs_dialogfactory.cpp
@@ -857,8 +863,10 @@ set(SOURCES
 		librecad/src/ui/dialogs/entity/qg_dlghatch.h
 		librecad/src/ui/dialogs/entity/qg_dlgimage.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgimage.h
-		librecad/src/ui/dialogs/entity/qg_dlgimageoptions.cpp
-		librecad/src/ui/dialogs/entity/qg_dlgimageoptions.h
+        librecad/src/ui/dialogs/file/export/image/qg_dlgimageoptions.cpp
+        librecad/src/ui/dialogs/file/export/image/qg_dlgimageoptions.h
+        librecad/src/ui/dialogs/file/export/image/lc_exporttoimageservice.h
+        librecad/src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp
 		librecad/src/ui/dialogs/main/qg_dlginitial.cpp
 		librecad/src/ui/dialogs/main/qg_dlginitial.h
 		librecad/src/ui/dialogs/entity/qg_dlginsert.cpp
@@ -877,8 +885,8 @@ set(SOURCES
 		librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.h
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.h
-		librecad/src/ui/dialogs/file/export/qg_dlgoptionsmakercam.cpp
-		librecad/src/ui/dialogs/file/export/qg_dlgoptionsmakercam.h
+        librecad/src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp
+        librecad/src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.h
 		librecad/src/ui/dialogs/entity/qg_dlgpoint.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgpoint.h
 		librecad/src/ui/dialogs/entity/qg_dlgpolyline.cpp
@@ -903,12 +911,12 @@ set(SOURCES
 		librecad/src/ui/dialogs/actions/qg_layerdialog.h
 		librecad/src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp
 		librecad/src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.h
-		librecad/src/ui/dialogs/file/export_layers/lc_layerexportoptions.h
-		librecad/src/ui/dialogs/file/export_layers/lc_layerexportoptions.cpp
-		librecad/src/ui/dialogs/file/export_layers/lc_filedialogservice.cpp
-		librecad/src/ui/dialogs/file/export_layers/lc_filedialogservice.h
-		librecad/src/ui/dialogs/file/export_layers/lc_exportlayersdialogservice.h
-		librecad/src/ui/dialogs/file/export_layers/lc_exportlayersdialogservice.cpp
+        librecad/src/ui/dialogs/file/export/layers/lc_layerexportoptions.h
+        librecad/src/ui/dialogs/file/export/layers/lc_layerexportoptions.cpp
+        librecad/src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp
+        librecad/src/ui/dialogs/file/export/layers/lc_filedialogservice.h
+        librecad/src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h
+        librecad/src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp
 		librecad/src/ui/action_options/insert/qg_libraryinsertoptions.cpp
 		librecad/src/ui/action_options/insert/qg_libraryinsertoptions.h
 		librecad/src/ui/action_options/line/qg_lineangleoptions.cpp

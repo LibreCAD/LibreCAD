@@ -31,6 +31,7 @@
 #include "lc_customstylehelper.h"
 #include "lc_defaultactioncontext.h"
 #include "lc_gridviewinvoker.h"
+#include "lc_infocursorsettingsmanager.h"
 #include "lc_menufactory.h"
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"

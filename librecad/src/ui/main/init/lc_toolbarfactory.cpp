@@ -28,6 +28,9 @@
 
 #include "lc_actiongroupmanager.h"
 #include "lc_creatorinvoker.h"
+#include "lc_infocursorsettingsmanager.h"
+#include "lc_namedviewslistwidget.h"
+#include "lc_ucslistwidget.h"
 #include "lc_workspacelistbutton.h"
 #include "qc_applicationwindow.h"
 #include "qg_pentoolbar.h"

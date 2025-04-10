@@ -22,12 +22,13 @@
 //
 #ifndef LC_WIDGETFACTORY_H
 #define LC_WIDGETFACTORY_H
+
 #include <QObject>
-#include <QDockWidget>
 #include <lc_appwindowaware.h>
 
 class QAction;
 class QToolBar;
+class QDockWidget;
 class QG_ActionHandler;
 class LC_CADDockWidget;
 class QC_ApplicationWindow;

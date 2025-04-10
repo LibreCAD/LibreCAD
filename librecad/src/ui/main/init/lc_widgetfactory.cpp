@@ -32,8 +32,13 @@
 #include "lc_dockwidget.h"
 #include "lc_layertreewidget.h"
 #include "lc_widgetfactory.h"
+
+#include <QStatusBar>
+
+#include "lc_anglesbasiswidget.h"
 #include "lc_namedviewslistwidget.h"
 #include "lc_penwizard.h"
+#include "lc_qtstatusbarmanager.h"
 #include "lc_ucslistwidget.h"
 #include "lc_relzerocoordinateswidget.h"
 #include "qc_applicationwindow.h"

@@ -31,20 +31,17 @@
 
 #include <memory>
 
-#include "rs.h"
-#include "rs_pen.h"
-#include "rs_snapper.h"
-#include "lc_penpalettewidget.h"
-#include "lc_quickinfowidget.h"
 #include "lc_mdiapplicationwindow.h"
-#include "release_check/lc_releasechecker.h"
-#include "lc_qtstatusbarmanager.h"
-#include "lc_namedviewslistwidget.h"
-#include "lc_ucslistwidget.h"
-#include "lc_ucsstatewidget.h"
-#include "lc_anglesbasiswidget.h"
-#include "lc_infocursorsettingsmanager.h"
-#include "workspaces/lc_workspacesmanager.h"
+
+class LC_QTStatusbarManager;
+class LC_UCSStateWidget;
+class LC_UCSListWidget;
+class LC_NamedViewsListWidget;
+class LC_InfoCursorSettingsManager;
+class LC_DefaultActionContext;
+class LC_ReleaseChecker;
+class LC_AnglesBasisWidget;
+class QAction;
 class LC_CustomStyleHelper;
 class LC_GridViewInvoker;
 class LC_WorkspacesInvoker;
@@ -328,9 +325,6 @@ protected:
     void enableFileActions(QC_MDIWindow* w);
     void enableFileActions();
     void doWindowActivated(QMdiSubWindow *w, bool forced) override;
-    bool doFileExport(RS_Graphic* graphic, const QString& name,const QString& format,
-                            QSize size, QSize borders, bool black, bool bw=true);
-
     void setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleString, bool draftMode);
     void setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode, bool forPreview);
 

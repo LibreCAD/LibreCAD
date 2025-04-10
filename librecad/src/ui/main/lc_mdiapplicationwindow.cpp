@@ -182,7 +182,7 @@ void LC_MDIApplicationWindow::activateWindowWithFile(QString &fileName) {
     if (!fileName.isEmpty()) {
         foreach(QC_MDIWindow *w, m_windowList) {
             if (w != nullptr) {
-                const QString &docFileName = w->getDocumentFileName();
+                const QString &docFileName = w->getFileName();
                 if (fileName == docFileName) {
                     doActivate(w);
                     break;
@@ -503,7 +503,7 @@ void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index)
  * Redraws all mdi windows.
  */
 void LC_MDIApplicationWindow::redrawAll(){
-    if (m_mdiAreaCAD) {
+    if (m_mdiAreaCAD) { // fixme - sand - redraw only if the window is visible, for tabbed view - redraw only current view
         for (const QC_MDIWindow *win: m_windowList) {
             if (win != nullptr) {
                 QG_GraphicView *gv = win->getGraphicView();

@@ -712,12 +712,11 @@ std::ostream& operator << (std::ostream& os, RS_Graphic& g) {
  * @return how many objects were removed
  */
 int RS_Graphic::clean() {
-    // author: ravas
-
     int how_many = 0;
 
     for(RS_Entity *e: std::as_const(entities)) {
         if (e == nullptr || !validRange(e->getMin(), e->getMax())) {
+            // fixme - sand - files restore, the issue with
             // removeEntity(e);
             how_many += 1;
         }

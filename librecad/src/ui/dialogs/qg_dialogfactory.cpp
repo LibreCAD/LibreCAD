@@ -61,7 +61,7 @@
 #include "qg_dlgmtext.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsgeneral.h"
-#include "qg_dlgoptionsmakercam.h"
+#include "file/export/makercam/qg_dlgoptionsmakercam.h"
 #include "qg_dlgpoint.h"
 #include "qg_dlgpolyline.h"
 #include "qg_dlgrotate.h"

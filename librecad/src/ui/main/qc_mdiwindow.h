@@ -72,7 +72,6 @@ public:
     QG_GraphicView *getGraphicView() const;
     /** @return Pointer to document */
     RS_Document *getDocument() const;
-    QString getDocumentFileName() const;
     /** @return Pointer to graphic or NULL */
     RS_Graphic *getGraphic() const;
     /** @return Pointer to current event handler */

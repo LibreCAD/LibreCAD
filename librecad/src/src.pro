@@ -225,6 +225,9 @@ INCLUDEPATH += \
     ui/dialogs/entity \
     ui/dialogs/file \
     ui/dialogs/file/export \
+    ui/dialogs/file/export/layers \
+    ui/dialogs/file/export/image \
+    ui/dialogs/file/export/makercam \
     ui/dialogs/file/export_layers \
     ui/dialogs/main \
     ui/dialogs/settings \
@@ -396,7 +399,7 @@ HEADERS += \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
-    lib/filters/rs_filterinterface.h \    
+    lib/filters/rs_filterinterface.h \
     lib/generators/layers/lc_layersexporter.h \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
@@ -406,6 +409,7 @@ HEADERS += \
     lib/actions/lc_actioncontext.h \
     ui/components/creators/lc_creatorinvoker.h \
     # ui/components/toolbars/lc_snapoptionsholdermanager.h \
+    ui/dialogs/file/export/image/lc_exporttoimageservice.h \
     ui/dialogs/file/export_layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
@@ -523,7 +527,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
-    lib/actions/lc_overlayboxaction.cpp \    
+    lib/actions/lc_overlayboxaction.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
@@ -545,6 +549,7 @@ SOURCES += \
     lib/actions/lc_actioncontext.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
+    ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
     ui/dialogs/file/export_layers/lc_exportlayersdialogservice.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
@@ -553,7 +558,7 @@ SOURCES += \
     ui/dock_widgets/cad/lc_caddockwidget.cpp \
     ui/dock_widgets/lc_dockwidget.cpp \
     ui/lc_uiutils.cpp \
-    ui/main/init/lc_applicationwindowinitializer.cpp \    
+    ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/support/lc_appwindowdialogsinvoker.cpp \
     ui/main/lc_appwindowaware.cpp \
     ui/main/lc_defaultactioncontext.cpp \
@@ -674,7 +679,7 @@ SOURCES += \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp \
     ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \
-    ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp \    
+    ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp \
     ui/main/release_check/lc_releasechecker.cpp \
     ui/main/workspaces/lc_workspacesmanager.cpp\
     lib/gui/grid/lc_gridsystem.cpp \
@@ -1062,7 +1067,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/zoom/rs_actionzoomredraw.cpp \
     actions/drawing/zoom/rs_actionzoomscroll.cpp \
     actions/drawing/zoom/rs_actionzoomwindow.cpp \
-    actions/file/lc_actionfileexportmakercam.cpp \    
+    actions/file/lc_actionfileexportmakercam.cpp \
     actions/options/rs_actionoptionsdrawing.cpp \
     actions/print_preview/rs_actionprintpreview.cpp
 
@@ -1213,7 +1218,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dock_widgets/layers_tree/lc_layertreemodel_options.h \
     ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.h \
     ui/dock_widgets/layers_tree/lc_layertreeview.h \
-    ui/dock_widgets/layers_tree/lc_layertreewidget.h \    
+    ui/dock_widgets/layers_tree/lc_layertreewidget.h \
     ui/dock_widgets/library_widget/qg_librarywidget.h \
     ui/dock_widgets/pen_palette/lc_peninforegistry.h \
     ui/dock_widgets/pen_palette/lc_penitem.h \
@@ -1260,7 +1265,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/view/lc_centralwidget.h \
     ui/view/qg_graphicview.h
 
-SOURCES += ui/action_options/lc_actionoptionsmanager.cpp \
+SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/action_options/circle/qg_circleoptions.cpp \
     ui/action_options/circle/qg_circletan2options.cpp \
@@ -1402,7 +1407,7 @@ SOURCES += ui/action_options/lc_actionoptionsmanager.cpp \
     ui/dock_widgets/layers_tree/lc_layertreemodel_options.cpp \
     ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp \
     ui/dock_widgets/layers_tree/lc_layertreeview.cpp \
-    ui/dock_widgets/layers_tree/lc_layertreewidget.cpp \    
+    ui/dock_widgets/layers_tree/lc_layertreewidget.cpp \
     ui/dock_widgets/library_widget/qg_librarywidget.cpp \
     ui/dock_widgets/pen_palette/lc_peninforegistry.cpp \
     ui/dock_widgets/pen_palette/lc_penitem.cpp \

@@ -1514,7 +1514,6 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer){
     view->setCurrentAction(a);
 }
 
-
 void QG_ActionHandler::slotLayersDefreezeAll() {
     setCurrentAction(RS2::ActionLayersDefreezeAll);
 }
