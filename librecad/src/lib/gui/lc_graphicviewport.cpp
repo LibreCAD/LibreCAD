@@ -40,8 +40,7 @@ LC_GraphicViewport::LC_GraphicViewport():
     previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())} {
 }
 
-LC_GraphicViewport::~LC_GraphicViewport() {
-}
+LC_GraphicViewport::~LC_GraphicViewport() = default;
 
 void LC_GraphicViewport::setContainer(RS_EntityContainer *c) {
     container = c;
@@ -1071,7 +1070,7 @@ void LC_GraphicViewport::zoomPage() {
 
     RS_Vector s = graphic->getPrintAreaSize() / graphic->getPaperScale();
 
-    double fx, fy;
+    double fx = 0., fy = 0.;
 
     if (s.x > RS_TOLERANCE) {
         fx = (getWidth() - borderLeft - borderRight) / s.x;
@@ -1134,9 +1133,11 @@ void LC_GraphicViewport::zoomPageEx() {
 
     const RS_Vector &printAreaSize = graphic->getPrintAreaSize(true);
     double paperScale = graphic->getPaperScale();
-    RS_Vector printAreaSizeInViewCoordinates = (printAreaSize + RS_Vector(marginsWidth, marginsHeight, 0)) / paperScale;
+    RS_Vector printAreaSizeInViewCoordinates = (printAreaSize + RS_Vector(marginsWidth, marginsHeight)) / paperScale;
 
-    double fx, fy;
+    LC_ERR<<"margin: "<<marginsWidth<<", "<<marginsHeight;
+    LC_ERR<<__LINE__<<" printAreaSizeInViewCoordinates "<< printAreaSizeInViewCoordinates.x<<", "<<printAreaSizeInViewCoordinates.y;
+    double fx=1., fy=1.;
 
     int widthToFit = getWidth() - borderLeft - borderRight;
 
@@ -1180,6 +1181,7 @@ void LC_GraphicViewport::zoomPageEx() {
     offsetY = (int) ((getHeight() - borderTop - borderBottom - (printAreaSizeInViewCoordinates.y) * fy) / 2.0 +
                      paperInsertionBase.y * fy / paperScale) + borderBottom;
 
+    LC_LOG<<"LC_GraphicViewport::"<<__func__<<"(): end normally";
     fireViewportChanged();
 }
 

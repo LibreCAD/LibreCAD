@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -16,29 +16,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Qt6
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '6.6.*'
-          modules: 'qt5compat qtwaylandcompositor'
-
-      - name: Qt6 path
-        run: |
-          find ${{github.workspace}}/../Qt -type f -iname "*.so"
-          ls -l ${{github.workspace}}/../Qt
-
-      - name: Install Qt and dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
+          sudo apt-get -qq install qmake6 qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
+          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev qt6-tools-dev
+          sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
+          sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
+          sudo apt-get -qq install cmake
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
-          find /home/runner/work/LibreCAD/Qt/6.6.3 -iname "libqt*svg*"
-
-      - name: Install Clang
-        run: |
-          sudo apt-get -qq install clang-10 clang-tools-10
-
+          
       - name: Set Dark splash
         # Test setting dark splash screen for `2.2.2_alpha`,
         # then switch "Loading..." label text color to white.
@@ -48,41 +36,18 @@ jobs:
           mkdir -p ${{github.workspace}}/librecad/res/main
           rsync ${{github.workspace}}/desktop/media/splash/librecad01_dark.png ${{github.workspace}}/librecad/res/main/splash_librecad.png
           sed -i 's/Qt::black/Qt::white/g' ${{github.workspace}}/librecad/src/main/main.cpp
-
       - name: Build and analyze
         run: |
-          export CC=g++
-          export ANALYZE="scan-build-10 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
-          ${ANALYZE}make release -j$(nproc)
-
-      - name: Create report repository
-        run: |
-          cd out
-          find . -mindepth 2 -type f -print -exec mv {} . \;
-          git config --global user.email "github@librecad.org"
-          git config --global user.name "GHA CI [bot]"
-          git config --global init.defaultBranch gh-pages
-          git init
-          git add .
-          git commit -m "latest analyzer report"
-
-      - name: Push changes
-        if: github.repository_owner == 'LibreCAD'
-        uses: ad-m/github-push-action@master
-        with:
-          repository: ${{ github.repository_owner }}/static-analyzer-reports
-          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
-          branch: gh-pages
-          force: true
-          directory: out
-
+          echo "cmake"
+          cmake -S . -B unix
+          echo "cmake build"
+          cmake --build unix -j$(nproc)
+          
       - name: Create AppImage
         run: |
-          #find unix/
+          find unix/
           QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
           mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
-
       - name: List files
         run: |
           echo ${{ github.workspace }} && ls ${{ github.workspace }}
@@ -109,10 +74,11 @@ jobs:
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qmake6 qt6-5compat-dev qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
-          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev
+          sudo apt-get -qq install qmake6 qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
+          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev qt6-tools-dev
           sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
           sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
+          sudo apt-get -qq install cmake
           #sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
 
@@ -133,31 +99,13 @@ jobs:
 
       - name: Build and analyze
         run: |
-          export CC=g++
+          export CC=clang
+          export CXX=clang++
           export ANALYZE="scan-build-18 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
-          ${ANALYZE}make release -j$(nproc)
-
-      - name: Create report repository
-        run: |
-          cd out
-          find . -mindepth 2 -type f -print -exec mv {} . \;
-          git config --global user.email "github@librecad.org"
-          git config --global user.name "GHA CI [bot]"
-          git config --global init.defaultBranch gh-pages
-          git init
-          git add .
-          git commit -m "latest analyzer report"
-
-      - name: Push changes
-        if: github.repository_owner == 'LibreCAD'
-        uses: ad-m/github-push-action@master
-        with:
-          repository: ${{ github.repository_owner }}/static-analyzer-reports
-          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
-          branch: gh-pages
-          force: true
-          directory: out
+          #${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          #${ANALYZE}make release -j$(nproc)
+          cmake -S . -B unix
+          cmake --build unix -j$(nproc)
 
       - name: Create AppImage
         run: |
@@ -220,14 +168,14 @@ jobs:
           brew uninstall p7zip
 
       - name: Install Qt6
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.6.*'
           modules: 'qt5compat'
 
       - name: Install boost dependencies
         run: |
-          brew install boost freetype
+          brew install boost
 
       # XProtect can cause random failures if it decides that the DMG we create
       # during the packaging phase is malware.
@@ -261,7 +209,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Qt6
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.9.*'
           host: 'windows'

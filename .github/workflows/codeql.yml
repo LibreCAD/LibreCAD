@@ -36,10 +36,14 @@ jobs:
         fetch-depth: 0
 
     - name: Install Qt6
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
-        version: '6.6.*'
-        modules: 'qt5compat'
+        aqtversion: '==3.1.*'
+        version: '6.9.*'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'linux_gcc_64'
+        modules: 'qtwaylandcompositor'
 
     - name: Install Qt and dependencies
       run: |
@@ -77,3 +81,62 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+
+    
+  ClangScan:
+    name: Security scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          aqtversion: '==3.1.*'
+          version: '6.9.0'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          modules: 'qtwaylandcompositor'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -qq install \
+          libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo rm -rf /usr/local/lib/android
+
+      - name: Install Clang
+        run: |
+          sudo apt-get -qq install clang-15 clang-tools-15
+
+      - name: Build and analyze
+        run: |
+          export CC=g++
+          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          ${ANALYZE}make release -j$(nproc)
+
+      - name: Create report repository
+        run: |
+          cd out
+          find . -mindepth 2 -type f -print -exec mv {} . \;
+          git config --global user.email "github@librecad.org"
+          git config --global user.name "GHA CI [bot]"
+          git config --global init.defaultBranch gh-pages
+          git init
+          git add .
+          git commit -m "latest analyzer report"
+
+      - name: Push changes
+        if: github.repository_owner == 'LibreCAD'
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{github.repository_owner}}/static-analyzer-reports
+          github_token: ${{secrets.LC_PUSH_ANALYZER_REPORT}}
+          branch: gh-pages
+          force: true
+          directory: out

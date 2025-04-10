@@ -81,7 +81,10 @@ public:
  * NULL otherwise.
  */
     RS_Graphic *getGraphic() const;
-    LC_GraphicViewport* getViewPort() const {return viewport;};
+    LC_GraphicViewport* getViewPort() const
+    {
+        return m_viewport.get();
+    }
     void setContainer(RS_EntityContainer *c);
 
     virtual void loadSettings();
@@ -115,7 +118,7 @@ public:
     void setDefaultAction(RS_ActionInterface *action);
     RS_ActionInterface *getDefaultAction();
     void hideOptions();
-bool setCurrentAction(RS_ActionInterface* action);
+    bool setCurrentAction(RS_ActionInterface* action);
     RS_ActionInterface *getCurrentAction();
     QString getCurrentActionName();
     QIcon getCurrentActionIcon();
@@ -178,7 +181,7 @@ bool setCurrentAction(RS_ActionInterface* action);
     bool isShowEntityDescriptionOnHover(){
         return showEntityDescriptionOnHover;
     }
-   virtual void highlightUCSLocation([[maybe_unused]]LC_UCS *ucs) {};
+    virtual void highlightUCSLocation([[maybe_unused]]LC_UCS *ucs) {}
     void onViewportChanged() override;
     void onRelativeZeroChanged(const RS_Vector &pos) override;
     void onUCSChanged(LC_UCS* ucs) override;
@@ -187,14 +190,19 @@ signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);
     void previous_zoom_state(bool);
+
     void currentActionChanged(RS_ActionInterface* action);
 protected:
-    RS_EventHandler *eventHandler = nullptr;
-    RS_EntityContainer *container = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
-    LC_WidgetViewPortRenderer* renderer = nullptr;
-
+    void setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer);
+    LC_WidgetViewPortRenderer* getRenderer() const;
     void resizeEvent(QResizeEvent *event) override;
+
+private:
+    std::unique_ptr<RS_EventHandler> m_eventHandler;
+    RS_EntityContainer *container = nullptr;
+    std::unique_ptr<LC_GraphicViewport> m_viewport;
+    std::unique_ptr<LC_WidgetViewPortRenderer> m_renderer;
+
     /**
      * Current default snap mode for this graphic view. Used for new
      * actions.

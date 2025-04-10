@@ -111,12 +111,10 @@ constexpr int g_hotspotXY=-1;
     {
         return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
     }
-
     bool withinValidRange(const RS_Vector& vp)
     {
         return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
     }
-
     bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax)
     {
         return
@@ -128,7 +126,6 @@ constexpr int g_hotspotXY=-1;
             && vpMin.y + 1e6 >= vpMax.y;
     }
 }
-
 
 /**
  * @brief snapEntity find the closest entity
@@ -343,8 +340,8 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
 
     m_actionContext = actionContext;
 
-    viewport->justSetOffsetAndFactor(0,0,4.0);
-    viewport->setBorders(10, 10, 10, 10);
+    getViewPort()->justSetOffsetAndFactor(0,0,4.0);
+    getViewPort()->setBorders(10, 10, 10, 10);
 
     setMouseTracking(true);
     setFocusPolicy(Qt::NoFocus);
@@ -358,11 +355,14 @@ void QG_GraphicView::initView() {
 }
 
 void QG_GraphicView::createViewRenderer() {
-    renderer =  new LC_GraphicViewRenderer(viewport, this);
+    if (getViewPort()) {
+        getViewPort()->setSize(width(), height()); // fixme - sand - merge - CHECK THIS
+        setRenderer(std::make_unique<LC_GraphicViewRenderer>(getViewPort(), this));
+    }
 }
 
 void QG_GraphicView::layerToggled(RS_Layer *) {
-    const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
+    const RS_EntityContainer::LC_SelectionInfo &info = getContainer()->getSelectionInfo();
     RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
     redraw(RS2::RedrawDrawing);
 }
@@ -501,7 +501,7 @@ void QG_GraphicView::dragEnterEvent(QDragEnterEvent* event) {
  * Redraws the widget.
  */
 void QG_GraphicView::redraw(RS2::RedrawMethod method) {
-    renderer->invalidate(method);
+    getRenderer()->invalidate(method);
     update(); // Paint when reeady to pain
 }
 
@@ -512,7 +512,7 @@ void QG_GraphicView::resizeEvent(QResizeEvent* e) {
     adjustZoomControls();
 //     updateGrid();
     // Small hack, delete the snapper during resizes
-    viewport->clearOverlayDrawablesContainer(RS2::Snapper);
+    getViewPort()->clearOverlayDrawablesContainer(RS2::Snapper);
     redraw();
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
@@ -528,7 +528,7 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
         }
     }
     else {
-        eventHandler->mousePressEvent(event);
+        getEventHandler()->mousePressEvent(event);
     }
 }
 
@@ -572,7 +572,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
             }
         }
 
-        if (!eventHandler->hasAction()) {
+        if (!getEventHandler()->hasAction()) {
             if (menus.contains("Right-Click")) {
                 menus["Right-Click"]->popup(mapToGlobal(event->pos()));
             } else {
@@ -603,14 +603,14 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         break;
 
     default:
-        eventHandler->mouseReleaseEvent(event);
+        getEventHandler()->mouseReleaseEvent(event);
         break;
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
 void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
-    if (container==nullptr)
+    if (getContainer()==nullptr)
         return;
     RS_Entity* entity = snapEntity(*this, event);
     if (entity == nullptr)
@@ -654,7 +654,7 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
     m_panData->panTimer.reset();
     // handle auto-panning
     event->accept();
-    eventHandler->mouseMoveEvent(event);
+    getEventHandler()->mouseMoveEvent(event);
 }
 
 bool QG_GraphicView::event(QEvent *event){
@@ -668,7 +668,7 @@ bool QG_GraphicView::event(QEvent *event){
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
-            RS_Vector mouse = viewport->toWorldFromUi(g.x(), g.y());
+            RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
             // todo - sand - ucs - replace by direct zoom call?
             // fixme - sand - files - explicit action creation
             setCurrentAction(new RS_ActionZoomIn(m_actionContext, direction,
@@ -694,7 +694,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         switch(e->pointerType()) {
         case QPointingDevice::PointerType::Eraser:
             if (e->type()==QEvent::TabletRelease) {
-                if (container) {
+                if (getContainer() != nullptr) {
                     // fixme - sand - files - explicit action creation
                     RS_ActionSelectSingle* a =new RS_ActionSelectSingle(m_actionContext);
                     setCurrentAction(a);
@@ -703,7 +703,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                     mouseReleaseEvent(&ev);
                     a->finish();
 
-                    if (container->countSelected()>0) {
+                    if (getContainer()->countSelected()>0) {
                         // fixme - sand - files - explicit action creation
                         setCurrentAction(new RS_ActionModifyDelete(m_actionContext));
                     }
@@ -739,19 +739,19 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 #endif
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
-                if (container) {
+                if (getContainer() != nullptr) {
 
                     RS_ActionSelectSingle* a =
-                        new RS_ActionSelectSingle(*container, *this);
+                        new RS_ActionSelectSingle(*getContainer(), *this);
                     setCurrentAction(a);
                     QMouseEvent ev(QEvent::MouseButtonRelease, e->position(),
                                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
                     mouseReleaseEvent(&ev);
                     a->finish();
 
-                    if (container->countSelected()>0) {
+                    if (getContainer()->countSelected()>0) {
                         setCurrentAction(
-                            new RS_ActionModifyDelete(*container, *this));
+                            new RS_ActionModifyDelete(*getContainer(), *this));
                     }
                 }
             }
@@ -804,12 +804,12 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 void QG_GraphicView::leaveEvent(QEvent* e) {
     // stop auto-panning
     m_panData->panTimer.reset();
-    eventHandler->mouseLeaveEvent();
+    getEventHandler()->mouseLeaveEvent();
     QWidget::leaveEvent(e);
 }
 
 void QG_GraphicView::enterEvent(QEnterEvent* e) {
-    eventHandler->mouseEnterEvent();
+    getEventHandler()->mouseEnterEvent();
     QWidget::enterEvent(e);
 }
 
@@ -818,7 +818,7 @@ void QG_GraphicView::focusOutEvent(QFocusEvent* e) {
 }
 
 void QG_GraphicView::focusInEvent(QFocusEvent* e) {
-    eventHandler->mouseEnterEvent();
+    getEventHandler()->mouseEnterEvent();
     QWidget::focusInEvent(e);
 }
 
@@ -832,14 +832,14 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-    if (container==nullptr) {
+    if (getContainer()==nullptr) {
         return;
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 //    RS_Vector mouse = toGraph(e->position());
     const QPointF &uiEventPosition = e->position();
-    RS_Vector mouse = viewport->toUCSFromGui(uiEventPosition.x(), uiEventPosition.y());
+    RS_Vector mouse = getViewPort()->toUCSFromGui(uiEventPosition.x(), uiEventPosition.y());
 #else
     RS_Vector mouse = toGraph(e->position());
 #endif
@@ -974,7 +974,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         if (getPanOnZoom()) {
             QCursor::setPos(mapToGlobal(viewCenter));
-            viewport->zoomPan(delta.x(), delta.y());
+            getViewPort()->zoomPan(delta.x(), delta.y());
         }
         if (!getPanOnZoom() || !getSkipFirstZoom() || (abs(delta.x())<32 && abs(delta.y())<32)) {
             RS_Vector& zoomCenter = mouse;
@@ -1008,7 +1008,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
 // fixme - sand -  move by keyboard support!!!
 void QG_GraphicView::keyPressEvent(QKeyEvent * e){
-    if (container == nullptr) {
+    if (getContainer() == nullptr) {
         return;
     }
 
@@ -1040,11 +1040,11 @@ void QG_GraphicView::keyPressEvent(QKeyEvent * e){
     if (scroll) {
         setCurrentAction(new RS_ActionZoomScroll(direction, m_actionContext));
     }
-    eventHandler->keyPressEvent(e);
+    getEventHandler()->keyPressEvent(e);
 }
 
 void QG_GraphicView::keyReleaseEvent(QKeyEvent * e){
-    eventHandler->keyReleaseEvent(e);
+    getEventHandler()->keyReleaseEvent(e);
 }
 
 /**
@@ -1059,12 +1059,12 @@ void QG_GraphicView::adjustOffsetControls(){
     if (!lock.try_lock())
         return;
 
-    if (container==nullptr || hScrollBar==nullptr || vScrollBar==nullptr) {
+    if (getContainer()==nullptr || hScrollBar==nullptr || vScrollBar==nullptr) {
         return;
     }
 
-    RS_Vector vpMin = container->getMin();
-    RS_Vector vpMax = container->getMax();
+    RS_Vector vpMin = getContainer()->getMin();
+    RS_Vector vpMax = getContainer()->getMax();
 
     // no drawing yet - still allow to scroll
     if (!isRectValid(vpMin, vpMax)) {
@@ -1072,7 +1072,7 @@ void QG_GraphicView::adjustOffsetControls(){
         vpMax = RS_Vector(100,100);
     }
 
-    RS_Vector factor = viewport->getFactor();
+    RS_Vector factor = getViewPort()->getFactor();
 
     int minVal = (int)(-getWidth()*0.75
                         + std::min(vpMin.x, 0.)*factor.x);
@@ -1095,8 +1095,8 @@ void QG_GraphicView::adjustOffsetControls(){
     hScrollBar->setPageStep(getWidth());
     vScrollBar->setPageStep(getHeight());
 
-    int ox = viewport->getOffsetX();
-    int oy = viewport->getOffsetY();
+    int ox = getViewPort()->getOffsetX();
+    int oy = getViewPort()->getOffsetY();
     hScrollBar->setValue(-ox);
     vScrollBar->setValue(oy);
 
@@ -1119,7 +1119,9 @@ void QG_GraphicView::adjustOffsetControls(){
  * override this to adjust controls and widgets that
  * control the zoom factor of the graphic.
  */
-void QG_GraphicView::adjustZoomControls() {}
+void QG_GraphicView::adjustZoomControls()
+{
+}
 
 
 /**
@@ -1134,16 +1136,16 @@ void QG_GraphicView::slotHScrolled(int value) {
     //running = true;
     ////RS_DEBUG->print("value x: %d\n", value);
     if (hScrollBar->maximum()==hScrollBar->minimum()) {
-        container->calculateBorders();
-        RS_Vector min = container->getMin();
-        RS_Vector max = container->getMax();
+        getContainer()->calculateBorders();
+        RS_Vector min = getContainer()->getMin();
+        RS_Vector max = getContainer()->getMax();
         RS_Vector ucsMin;
         RS_Vector ucsMax;
-        viewport->ucsBoundingBox(min, max, ucsMin, ucsMax);
+        getViewPort()->ucsBoundingBox(min, max, ucsMin, ucsMax);
         RS_Vector containerSize = ucsMax - ucsMin;
-        viewport->centerOffsetX(ucsMin, containerSize);
+        getViewPort()->centerOffsetX(ucsMin, containerSize);
     } else {
-        viewport->setOffsetX(-value);
+        getViewPort()->setOffsetX(-value);
     }
     //if (isUpdateEnabled()) {
 //         updateGrid();
@@ -1160,16 +1162,16 @@ void QG_GraphicView::slotVScrolled(int value) {
 
 
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
-        container->calculateBorders();
-        RS_Vector min = container->getMin();
-        RS_Vector max = container->getMax();
+        getContainer()->calculateBorders();
+        RS_Vector min = getContainer()->getMin();
+        RS_Vector max = getContainer()->getMax();
         RS_Vector ucsMin;
         RS_Vector ucsMax;
-        viewport->ucsBoundingBox(min, max, ucsMin, ucsMax);
+        getViewPort()->ucsBoundingBox(min, max, ucsMin, ucsMax);
         RS_Vector containerSize = ucsMax - ucsMin;
-        viewport->centerOffsetY(ucsMin, containerSize);
+        getViewPort()->centerOffsetY(ucsMin, containerSize);
     } else {
-        viewport->setOffsetY(value);
+        getViewPort()->setOffsetY(value);
     }
     //if (isUpdateEnabled()) {
   //  updateGrid();
@@ -1181,8 +1183,8 @@ void QG_GraphicView::slotVScrolled(int value) {
  * @param oy, offset Y
  */
 void QG_GraphicView::setOffset([[maybe_unused]]int ox, [[maybe_unused]]int oy) {
-    viewport->setOffsetX(ox);
-    viewport->setOffsetY(oy);
+    getViewPort()->setOffsetX(ox);
+    getViewPort()->setOffsetY(oy);
     // need to adjust offset control for scrollbars when setting graphicview offset
     adjustOffsetControls();
 }
@@ -1228,13 +1230,17 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
     }
 }
 
+void QG_GraphicView::updateGridPoints(){
+    getViewPort()->getGrid()->calculateGrid();
+}
+
 /**
  * Handles paint events by redrawing the graphic in this view.
  * usually that's very fast since we only paint the buffer we
  * have from the last call..
  */
 void QG_GraphicView::paintEvent(QPaintEvent *){
-    renderer->render();
+    getRenderer()->render();
 }
 
 
@@ -1281,19 +1287,16 @@ void QG_GraphicView::loadSettings() {
 }
 
 void QG_GraphicView::setAntialiasing(bool state){
-    renderer->setAntialiasing(state);
+    getRenderer()->setAntialiasing(state);
 }
 
 bool QG_GraphicView::isDraftMode() const {
-    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(renderer);
-    if (viewRenderer != nullptr) {
-        return viewRenderer->isDraftMode();
-    }
-    return false;
+    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
+    return (viewRenderer != nullptr) ?  viewRenderer->isDraftMode() : false;
 }
 
 void QG_GraphicView::setDraftMode(bool dm) {
-    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(renderer);
+    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
     if (viewRenderer != nullptr) {
         viewRenderer->setDraftMode(dm);
         redraw();
@@ -1301,7 +1304,7 @@ void QG_GraphicView::setDraftMode(bool dm) {
 }
 
 void QG_GraphicView::setDraftLinesMode(bool mode) {
-    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(renderer);
+    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
     if (viewRenderer != nullptr) {
         viewRenderer->setLineWidthScaling(!mode);
     }
@@ -1348,7 +1351,7 @@ void QG_GraphicView::setCursorHiding(bool state){
 }
 
 void QG_GraphicView::setCurrentQAction(QAction* q_action){
-    eventHandler->setQAction(q_action);
+    getEventHandler()->setQAction(q_action);
 
     if (recent_actions.contains(q_action)){
         recent_actions.removeOne(q_action);
@@ -1483,7 +1486,7 @@ void QG_GraphicView::autoPanStep(){
         return;
 
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "%s(): Timer is ticking!", __func__);
-    viewport->zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
+    getViewPort()->zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }
 
 
@@ -1497,7 +1500,7 @@ QString QG_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDe
 }
 
 void QG_GraphicView::ucsHighlightStep(){
-    auto overlayContainer = viewport->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
+    auto overlayContainer = getViewPort()->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
     overlayContainer->clear();
     if (m_ucsHighlightData->mayTick()){
         if (m_ucsHighlightData->m_inVisiblePhase) {
@@ -1511,7 +1514,7 @@ void QG_GraphicView::ucsHighlightStep(){
     else{
         m_ucsHighlightData->stop();
         // restore current view position
-        viewport->justSetOffsetAndFactor(m_ucsHighlightData->m_savedViewOffset.x,
+        getViewPort()->justSetOffsetAndFactor(m_ucsHighlightData->m_savedViewOffset.x,
                                          m_ucsHighlightData->m_savedViewOffset.y,
                                          m_ucsHighlightData->m_savedViewFactor);
     }
@@ -1525,21 +1528,21 @@ void QG_GraphicView::highlightUCSLocation(LC_UCS *ucs){
     }
 
     // save current view position
-    m_ucsHighlightData->m_savedViewOffset.x = viewport->getOffsetX();
-    m_ucsHighlightData->m_savedViewOffset.y = viewport->getOffsetY();
-    m_ucsHighlightData->m_savedViewFactor = viewport->getFactor().x;
+    m_ucsHighlightData->m_savedViewOffset.x = getViewPort()->getOffsetX();
+    m_ucsHighlightData->m_savedViewOffset.y = getViewPort()->getOffsetY();
+    m_ucsHighlightData->m_savedViewFactor = getViewPort()->getFactor().x;
 
     RS_Vector origin = ucs->getOrigin();
     double angle = ucs->getXAxisDirection();
 
     // try to ensure that origin of UCS is visible if it's outside of visible part of drawing
-    double AXIS_SIZE = viewport->toUcsDX(20); // fixme - ucs - or toUcsX?
-    viewport->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
+    double AXIS_SIZE = getViewPort()->toUcsDX(20); // fixme - ucs - or toUcsX?
+    getViewPort()->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
 
     double uiOriginPointX, uiOriginPointY;
-    viewport->toUI(origin, uiOriginPointX, uiOriginPointY);
+    getViewPort()->toUI(origin, uiOriginPointX, uiOriginPointY);
 
-    double ucsXAxisAngleInUCS = viewport->toUCSAngle(angle);
+    double ucsXAxisAngleInUCS = getViewPort()->toUCSAngle(angle);
 
     m_ucsHighlightData->origin = RS_Vector(uiOriginPointX, uiOriginPointY);
     m_ucsHighlightData->angle = -ucsXAxisAngleInUCS;
