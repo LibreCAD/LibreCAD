@@ -177,8 +177,8 @@ bool RS_GraphicView::setEventHandlerAction(RS_ActionInterface* action){
  * Sets the current action of the event handler.
  */
 bool RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
-    if (eventHandler != nullptr) {
-        viewport->markRelativeZero();
+    if (m_eventHandler != nullptr) {
+        m_viewport->markRelativeZero();
         return setEventHandlerAction(action);
     }
 
@@ -404,12 +404,10 @@ bool RS_GraphicView::getLineWidthScaling() const{
     return m_renderer->getLineWidthScaling();
 }
 
-LC_WidgetViewPortRenderer* RS_GraphicView::getRenderer() const
-{
+LC_WidgetViewPortRenderer* RS_GraphicView::getRenderer() const{
     return m_renderer.get();
 }
 
-void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer)
-{
+void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer){
     m_renderer = std::move(renderer);
 }

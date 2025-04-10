@@ -1123,7 +1123,6 @@ void QG_GraphicView::adjustZoomControls()
 {
 }
 
-
 /**
  * Slot for horizontal scroll events.
  */
@@ -1131,6 +1130,7 @@ void QG_GraphicView::slotHScrolled(int value) {
     // Scrollbar behaviour tends to change with every Qt version..
     // so let's keep old code in here for now
 
+    auto viewport = getViewPort();
     //static int running = false;
     //if (!running) {
     //running = true;
@@ -1141,17 +1141,16 @@ void QG_GraphicView::slotHScrolled(int value) {
         RS_Vector max = getContainer()->getMax();
         RS_Vector ucsMin;
         RS_Vector ucsMax;
-        getViewPort()->ucsBoundingBox(min, max, ucsMin, ucsMax);
+        viewport->ucsBoundingBox(min, max, ucsMin, ucsMax);
         RS_Vector containerSize = ucsMax - ucsMin;
-        getViewPort()->centerOffsetX(ucsMin, containerSize);
+        viewport->centerOffsetX(ucsMin, containerSize);
     } else {
-        getViewPort()->setOffsetX(-value);
+        viewport->setOffsetX(-value);
     }
     //if (isUpdateEnabled()) {
 //         updateGrid();
     redraw();
 }
-
 
 /**
  * Slot for vertical scroll events.
@@ -1159,7 +1158,6 @@ void QG_GraphicView::slotHScrolled(int value) {
 void QG_GraphicView::slotVScrolled(int value) {
     // Scrollbar behaviour tends to change with every Qt version..
     // so let's keep old code in here for now
-
 
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
         getContainer()->calculateBorders();
@@ -1177,6 +1175,7 @@ void QG_GraphicView::slotVScrolled(int value) {
   //  updateGrid();
     redraw();
 }
+
 /**
  * @brief setOffset
  * @param ox, offset X
@@ -1228,10 +1227,6 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
             redraw(RS2::RedrawDrawing);
         }
     }
-}
-
-void QG_GraphicView::updateGridPoints(){
-    getViewPort()->getGrid()->calculateGrid();
 }
 
 /**
@@ -1527,22 +1522,23 @@ void QG_GraphicView::highlightUCSLocation(LC_UCS *ucs){
         return;
     }
 
+    auto viewport = getViewPort();
     // save current view position
-    m_ucsHighlightData->m_savedViewOffset.x = getViewPort()->getOffsetX();
-    m_ucsHighlightData->m_savedViewOffset.y = getViewPort()->getOffsetY();
-    m_ucsHighlightData->m_savedViewFactor = getViewPort()->getFactor().x;
+    m_ucsHighlightData->m_savedViewOffset.x = viewport->getOffsetX();
+    m_ucsHighlightData->m_savedViewOffset.y = viewport->getOffsetY();
+    m_ucsHighlightData->m_savedViewFactor = viewport->getFactor().x;
 
     RS_Vector origin = ucs->getOrigin();
     double angle = ucs->getXAxisDirection();
 
     // try to ensure that origin of UCS is visible if it's outside of visible part of drawing
-    double AXIS_SIZE = getViewPort()->toUcsDX(20); // fixme - ucs - or toUcsX?
-    getViewPort()->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
+    double AXIS_SIZE = viewport->toUcsDX(20); // fixme - ucs - or toUcsX?
+    viewport->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
 
     double uiOriginPointX, uiOriginPointY;
-    getViewPort()->toUI(origin, uiOriginPointX, uiOriginPointY);
+    viewport->toUI(origin, uiOriginPointX, uiOriginPointY);
 
-    double ucsXAxisAngleInUCS = getViewPort()->toUCSAngle(angle);
+    double ucsXAxisAngleInUCS = viewport->toUCSAngle(angle);
 
     m_ucsHighlightData->origin = RS_Vector(uiOriginPointX, uiOriginPointY);
     m_ucsHighlightData->angle = -ucsXAxisAngleInUCS;
