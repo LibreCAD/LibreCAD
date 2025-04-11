@@ -266,9 +266,9 @@ RS_ActionInterface *QG_ActionHandler::getCurrentAction() {
  *
  * @return Pointer to the created action or nullptr.
  */
-RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
+std::shared_ptr<RS_ActionInterface> QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    RS_ActionInterface* a = nullptr;
+    std::shared_ptr<RS_ActionInterface> a;
 //    view->killAllActions();
 
     RS_DEBUG->print("QC_ActionHandler::setCurrentAction: "
@@ -286,28 +286,28 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
     switch (id) {
         //case RS2::ActionFileNew:
-        //    a = new RS_ActionFileNew(*document, *view);
+        //    a = std::make_shared<RS_ActionFileNew>(*document, *view);
         //	break;
         case RS2::ActionFileNewTemplate:
-            a = new RS_ActionFileNewTemplate(*document, *view);
+            a = std::make_shared<RS_ActionFileNewTemplate>(*document, *view);
             break;
             //case RS2::ActionFileSave:
-            //    a = new RS_ActionFileSave(*document, *view);
+            //   a = std::make_shared<RS_ActionFileSave>(*document, *view);
             //	break;
             //case RS2::ActionFileClose:
-            //    //a = new RS_ActionFileClose(*document, *view);
+            //    //a = ActionFileClose(*document, *view);
             //	break;
             //case RS2::ActionFileQuit:
-            //    //a = new RS_ActionFileQuit(*document, *view);
+            //    //a = ActionFileQuit(*document, *view);
             //	break;
         case RS2::ActionFileOpen:
-            a = new RS_ActionFileOpen(*document, *view);
+            a = std::make_shared<RS_ActionFileOpen>(*document, *view);
             break;
         case RS2::ActionFileSaveAs:
-            a = new RS_ActionFileSaveAs(*document, *view);
+            a = std::make_shared<RS_ActionFileSaveAs>(*document, *view);
             break;
         case RS2::ActionFileExportMakerCam:
-            a = new LC_ActionFileExportMakerCam(*document, *view);
+            a = std::make_shared<LC_ActionFileExportMakerCam>(*document, *view);
             break;
 
             // Editing actions:
@@ -326,784 +326,784 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             //to avoid operation on deleted entities, Undo action invalid all suspended
             //actions
             killAllActions();
-            a = new RS_ActionEditUndo(true, *document, *view);
+            a = std::make_shared<RS_ActionEditUndo>(true, *document, *view);
             break;
         case RS2::ActionEditRedo:
-            a = new RS_ActionEditUndo(false, *document, *view);
+            a = std::make_shared<RS_ActionEditUndo>(false, *document, *view);
             break;
         case RS2::ActionEditCut:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCutNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionEditCutNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCutNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT, *document, *view);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::CUT, *document, *view);
             break;
         case RS2::ActionEditCutQuick:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCutQuickNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionEditCutQuickNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCutQuickNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT_QUICK, *document, *view);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::CUT_QUICK, *document, *view);
             break;
         case RS2::ActionEditCopy:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCopyNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionEditCopyNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCopyNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY, *document, *view);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::COPY, *document, *view);
             break;
         case RS2::ActionEditCopyQuick:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCopyQuickNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionEditCopyQuickNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCopyQuickNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY_QUICK, *document, *view);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::COPY_QUICK, *document, *view);
             break;
         case RS2::ActionEditPaste:
-              a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::PASTE, *document, *view);
-//            a = new RS_ActionEditPaste(*document, *view);
+              a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::PASTE, *document, *view);
+//           a = std::make_shared<RS_ActionEditPaste>(*document, *view);
             break;
         case RS2::ActionEditPasteTransform:
-            a = new LC_ActionEditPasteTransform(*document, *view);
+            a = std::make_shared<LC_ActionEditPasteTransform>(*document, *view);
             break;
         case RS2::ActionPasteToPoints:
-            a = new LC_ActionPasteToPoints(*document, *view);
+            a = std::make_shared<LC_ActionPasteToPoints>(*document, *view);
             break;
         case RS2::ActionOrderBottom:
-            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderBottom);
+            a = std::make_shared<RS_ActionOrder>(*document, *view, RS2::ActionOrderBottom);
             break;
         case RS2::ActionOrderLower:
             orderType = RS2::ActionOrderLower;
-            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderLower);
+            a = std::make_shared<RS_ActionOrder>(*document, *view, RS2::ActionOrderLower);
             break;
         case RS2::ActionOrderRaise:
-            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderRaise);
+            a = std::make_shared<RS_ActionOrder>(*document, *view, RS2::ActionOrderRaise);
             break;
         case RS2::ActionOrderTop:
             orderType = RS2::ActionOrderTop;
-            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderTop);
+            a = std::make_shared<RS_ActionOrder>(*document, *view, RS2::ActionOrderTop);
             break;
             // Selecting actions:
             //
         case RS2::ActionSelectSingle:
 //        view->killSelectActions();
             if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
-                a = new RS_ActionSelectSingle(*document, *view,getCurrentAction());
+                a = std::make_shared<RS_ActionSelectSingle>(*document, *view, getCurrentAction());
             }else{
-                a=nullptr;
+                a.reset();
             }
             break;
         case RS2::ActionSelectContour:
             view->killSelectActions();
-            a = new RS_ActionSelectContour(*document, *view);
+            a = std::make_shared<RS_ActionSelectContour>(*document, *view);
             break;
         case RS2::ActionSelectAll:
-            a = new RS_ActionSelectAll(*document, *view, true);
+            a = std::make_shared<RS_ActionSelectAll>(*document, *view, true);
             break;
         case RS2::ActionDeselectAll:
-            a = new RS_ActionSelectAll(*document, *view, false);
+            a = std::make_shared<RS_ActionSelectAll>(*document, *view, false);
             break;
         case RS2::ActionSelectWindow:
             view->killSelectActions();
-            a = new RS_ActionSelectWindow(view->getTypeToSelect(),*document, *view, true);
+            a = std::make_shared<RS_ActionSelectWindow>(view->getTypeToSelect(),*document, *view, true);
             break;
         case RS2::ActionSelectPoints:
             view->killSelectActions();
-            a = new LC_ActionSelectPoints(*document, *view);
+            a = std::make_shared<LC_ActionSelectPoints>(*document, *view);
             break;
         case RS2::ActionDeselectWindow:
             view->killSelectActions();
-            a = new RS_ActionSelectWindow(*document, *view, false);
+            a = std::make_shared<RS_ActionSelectWindow>(*document, *view, false);
             break;
         case RS2::ActionSelectInvert:
-            a = new RS_ActionSelectInvert(*document, *view);
+            a = std::make_shared<RS_ActionSelectInvert>(*document, *view);
             break;
         case RS2::ActionSelectIntersected:
             view->killSelectActions();
-            a = new RS_ActionSelectIntersected(*document, *view, true);
+            a = std::make_shared<RS_ActionSelectIntersected>(*document, *view, true);
             break;
         case RS2::ActionDeselectIntersected:
             view->killSelectActions();
-            a = new RS_ActionSelectIntersected(*document, *view, false);
+            a = std::make_shared<RS_ActionSelectIntersected>(*document, *view, false);
             break;
         case RS2::ActionSelectLayer:
             view->killSelectActions();
-            a = new RS_ActionSelectLayer(*document, *view);
+            a = std::make_shared<RS_ActionSelectLayer>(*document, *view);
             break;
             // Tool actions:
             //
         case RS2::ActionToolRegenerateDimensions:
-            a = new RS_ActionToolRegenerateDimensions(*document, *view);
+            a = std::make_shared<RS_ActionToolRegenerateDimensions>(*document, *view);
             break;
             // Zooming actions:
             //
         case RS2::ActionZoomIn:
-            a = new RS_ActionZoomIn(*document, *view, RS2::In, RS2::Both);
+            a = std::make_shared<RS_ActionZoomIn>(*document, *view, RS2::In, RS2::Both);
             break;
         case RS2::ActionZoomOut:
-            a = new RS_ActionZoomIn(*document, *view, RS2::Out, RS2::Both);
+            a = std::make_shared<RS_ActionZoomIn>(*document, *view, RS2::Out, RS2::Both);
             break;
         case RS2::ActionZoomAuto:
-            a = new RS_ActionZoomAuto(*document, *view);
+            a = std::make_shared<RS_ActionZoomAuto>(*document, *view);
             break;
         case RS2::ActionZoomWindow:
-            a = new RS_ActionZoomWindow(*document, *view);
+            a = std::make_shared<RS_ActionZoomWindow>(*document, *view);
             break;
         case RS2::ActionZoomPan:
-            a = new RS_ActionZoomPan(*document, *view);
+            a = std::make_shared<RS_ActionZoomPan>(*document, *view);
             break;
         case RS2::ActionZoomPrevious:
-            a = new RS_ActionZoomPrevious(*document, *view);
+            a = std::make_shared<RS_ActionZoomPrevious>(*document, *view);
             break;
         case RS2::ActionZoomRedraw:
-            a = new RS_ActionZoomRedraw(*document, *view);
+            a = std::make_shared<RS_ActionZoomRedraw>(*document, *view);
             break;
             // Drawing actions:
             //
         case RS2::ActionDrawPoint:
-            a = new RS_ActionDrawPoint(*document, *view);
+            a = std::make_shared<RS_ActionDrawPoint>(*document, *view);
             break;
         case RS2::ActionDrawLine:
-            a = new RS_ActionDrawLine(*document, *view);
+            a = std::make_shared<RS_ActionDrawLine>(*document, *view);
             break;
         case RS2::ActionDrawLineAngle:
-            a = new RS_ActionDrawLineAngle(*document, *view,false);
+            a = std::make_shared<RS_ActionDrawLineAngle>(*document, *view,false);
             break;
         case RS2::ActionDrawLineHorizontal:
-            a = new RS_ActionDrawLineAngle(*document, *view, true,
+            a = std::make_shared<RS_ActionDrawLineAngle>(*document, *view, true,
                                            RS2::ActionDrawLineHorizontal);
             break;
         case RS2::ActionDrawLineHorVert:
-            a = new RS_ActionDrawLineHorVert(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineHorVert>(*document, *view);
             break;
         case RS2::ActionDrawLineVertical:
-            a = new RS_ActionDrawLineAngle(*document, *view, true,
+            a = std::make_shared<RS_ActionDrawLineAngle>(*document, *view, true,
                                            RS2::ActionDrawLineVertical);
             break;
         case RS2::ActionDrawLineFree:
-            a = new RS_ActionDrawLineFree(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineFree>(*document, *view);
             break;
         case RS2::ActionDrawLineParallel:
         case RS2::ActionDrawCircleParallel:
         case RS2::ActionDrawArcParallel:
-            a= new RS_ActionDrawLineParallel(*document, *view, id);
+            a= std::make_shared<RS_ActionDrawLineParallel>(*document, *view, id);
             break;
         case RS2::ActionDrawLineParallelThrough:
-            a = new RS_ActionDrawLineParallelThrough(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineParallelThrough>(*document, *view);
             break;
         case RS2::ActionDrawLineRectangle:
-            a = new RS_ActionDrawLineRectangle(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineRectangle>(*document, *view);
             break;
         case RS2::ActionDrawRectangle3Points:
-            a = new LC_ActionDrawRectangle3Points(*document, *view);
+            a = std::make_shared<LC_ActionDrawRectangle3Points>(*document, *view);
             break;
         case RS2::ActionDrawRectangle2Points:
-            a = new LC_ActionDrawRectangle2Points(*document, *view);
+            a = std::make_shared<LC_ActionDrawRectangle2Points>(*document, *view);
             break;
         case RS2::ActionDrawRectangle1Point:
-            a = new LC_ActionDrawRectangle1Point(*document, *view);
+            a = std::make_shared<LC_ActionDrawRectangle1Point>(*document, *view);
             break;
         case RS2::ActionDrawCross:
-            a = new LC_ActionDrawCross(*document, *view);
+            a = std::make_shared<LC_ActionDrawCross>(*document, *view);
             break;
         case RS2::ActionDrawBoundingBox:
-            a = new LC_ActionDrawBoundingBox(*document, *view);
+            a = std::make_shared<LC_ActionDrawBoundingBox>(*document, *view);
             break;
         case RS2::ActionDrawSnakeLine:
-            a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_POINT);
+            a = std::make_shared<LC_ActionDrawLineSnake>(*document, *view, LC_ActionDrawLineSnake::DIRECTION_POINT);
             break;
         case RS2::ActionDrawSnakeLineX:
-            a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_X);
+            a = std::make_shared<LC_ActionDrawLineSnake>(*document, *view, LC_ActionDrawLineSnake::DIRECTION_X);
             break;
         case RS2::ActionDrawSnakeLineY:
-            a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_Y);
+            a = std::make_shared<LC_ActionDrawLineSnake>(*document, *view, LC_ActionDrawLineSnake::DIRECTION_Y);
             break;
         case RS2::ActionDrawSliceDivideLine:
-            a = new LC_ActionDrawSliceDivide(*document, *view, false);
+            a = std::make_shared<LC_ActionDrawSliceDivide>(*document, *view, false);
             break;
         case RS2::ActionDrawSliceDivideCircle:
-            a = new LC_ActionDrawSliceDivide(*document, *view, true);
+            a = std::make_shared<LC_ActionDrawSliceDivide>(*document, *view, true);
             break;
         case RS2::ActionDrawLinePoints:
-            a = new LC_ActionDrawLinePoints(*document, *view,  false);
+            a = std::make_shared<LC_ActionDrawLinePoints>(*document, *view,  false);
             break;
         case RS2::ActionDrawPointsMiddle:
-            a = new LC_ActionDrawLinePoints(*document, *view, true);
+            a = std::make_shared<LC_ActionDrawLinePoints>(*document, *view, true);
             break;
         case RS2::ActionDrawPointsLattice:
-            a = new LC_ActionDrawPointsLattice(*document, *view);
+            a = std::make_shared<LC_ActionDrawPointsLattice>(*document, *view);
             break;
         case RS2::ActionDrawLineBisector:
-            a = new RS_ActionDrawLineBisector(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineBisector>(*document, *view);
             break;
         case RS2::ActionDrawLineOrthTan:
-            a = new RS_ActionDrawLineOrthTan(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineOrthTan>(*document, *view);
             break;
         case RS2::ActionDrawLineTangent1:
-            a = new RS_ActionDrawLineTangent1(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineTangent1>(*document, *view);
             break;
         case RS2::ActionDrawLineTangent2:
-            a = new RS_ActionDrawLineTangent2(*document, *view);
+            a = std::make_shared<RS_ActionDrawLineTangent2>(*document, *view);
             break;
         case RS2::ActionDrawLineOrthogonal:
-            a = new RS_ActionDrawLineRelAngle(*document, *view, M_PI_2, true);
+            a = std::make_shared<RS_ActionDrawLineRelAngle>(*document, *view, M_PI_2, true);
             break;
         case RS2::ActionDrawLineRelAngle:
-            a = new RS_ActionDrawLineRelAngle(*document, *view, M_PI_2, false);
+            a = std::make_shared<RS_ActionDrawLineRelAngle>(*document, *view, M_PI_2, false);
             break;
         case RS2::ActionDrawPolyline:
-            a = new RS_ActionDrawPolyline(*document, *view);
+            a = std::make_shared<RS_ActionDrawPolyline>(*document, *view);
             break;
         case RS2::ActionDrawLineOrthogonalRel:
-            a = new LC_ActionDrawLineAngleRel(*document, *view, 90.0, true);
+            a = std::make_shared<LC_ActionDrawLineAngleRel>(*document, *view, 90.0, true);
             break;
         case RS2::ActionDrawLineAngleRel:
-            a = new LC_ActionDrawLineAngleRel(*document, *view, 0.0, false);
+            a = std::make_shared<LC_ActionDrawLineAngleRel>(*document, *view, 0.0, false);
             break;
         case RS2::ActionDrawLineFromPointToLine:{
-            a = new LC_ActionDrawLineFromPointToLine(this, *document, *view);
+            a = std::make_shared<LC_ActionDrawLineFromPointToLine>(this, *document, *view);
             break;
         }
         case RS2::ActionDrawLineMiddle:{
-            a = new LC_ActionDrawMidLine(*document, *view);
+            a = std::make_shared<LC_ActionDrawMidLine>(*document, *view);
             break;
         }
         case RS2::ActionDrawStar:{
-            a = new LC_ActionDrawStar(*document, *view);
+            a = std::make_shared<LC_ActionDrawStar>(*document, *view);
             break;
         }
         case RS2::ActionPolylineAdd:
-            a = new RS_ActionPolylineAdd(*document, *view);
+            a = std::make_shared<RS_ActionPolylineAdd>(*document, *view);
             break;
         case RS2::ActionPolylineAppend:
-            a = new RS_ActionPolylineAppend(*document, *view);
+            a = std::make_shared<RS_ActionPolylineAppend>(*document, *view);
             break;
         case RS2::ActionPolylineDel:
-            a = new RS_ActionPolylineDel(*document, *view);
+            a = std::make_shared<RS_ActionPolylineDel>(*document, *view);
             break;
         case RS2::ActionPolylineDelBetween:
-            a = new RS_ActionPolylineDelBetween(*document, *view);
+            a = std::make_shared<RS_ActionPolylineDelBetween>(*document, *view);
             break;
         case RS2::ActionPolylineTrim:
-            a = new RS_ActionPolylineTrim(*document, *view);
+            a = std::make_shared<RS_ActionPolylineTrim>(*document, *view);
             break;
         case RS2::ActionPolylineEquidistant:
-            a = new RS_ActionPolylineEquidistant(*document, *view);
+            a = std::make_shared<RS_ActionPolylineEquidistant>(*document, *view);
             break;
         case RS2::ActionPolylineSegment:
-            a = new RS_ActionPolylineSegment(*document, *view);
+            a = std::make_shared<RS_ActionPolylineSegment>(*document, *view);
             break;
         case RS2::ActionPolylineArcsToLines:
-            a = new LC_ActionPolylineArcsToLines(*document, *view);
+            a = std::make_shared<LC_ActionPolylineArcsToLines>(*document, *view);
             break;
         case RS2::ActionPolylineChangeSegmentType:
-            a = new LC_ActionPolylineChangeSegmentType(*document, *view);
+            a = std::make_shared<LC_ActionPolylineChangeSegmentType>(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonCenCor:
-            a = new RS_ActionDrawLinePolygonCenCor(*document, *view);
+            a = std::make_shared<RS_ActionDrawLinePolygonCenCor>(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonCenTan:                      //20161223 added by txmy
-            a = new LC_ActionDrawLinePolygonCenTan(*document, *view);
+            a = std::make_shared<LC_ActionDrawLinePolygonCenTan>(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonSideSide:
-            a = new LC_ActionDrawLinePolygon4(*document, *view);
+            a = std::make_shared<LC_ActionDrawLinePolygon4>(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonCorCor:
-            a = new RS_ActionDrawLinePolygonCorCor(*document, *view);
+            a = std::make_shared<RS_ActionDrawLinePolygonCorCor>(*document, *view);
             break;
         case RS2::ActionDrawCircle:
-            a = new RS_ActionDrawCircle(*document, *view);
+            a = std::make_shared<RS_ActionDrawCircle>(*document, *view);
             break;
         case RS2::ActionDrawCircleCR:
-            a = new RS_ActionDrawCircleCR(*document, *view);
+            a = std::make_shared<RS_ActionDrawCircleCR>(*document, *view);
             break;
         case RS2::ActionDrawCircleByArc:
-            a = new LC_ActionDrawCircleByArc(*document, *view);
+            a = std::make_shared<LC_ActionDrawCircleByArc>(*document, *view);
             break;
         case RS2::ActionDrawCircle2P:
-            a = new RS_ActionDrawCircle2P(*document, *view);
+            a = std::make_shared<RS_ActionDrawCircle2P>(*document, *view);
             break;
         case RS2::ActionDrawCircle2PR:
-            a = new LC_ActionDrawCircle2PR(*document, *view);
+            a = std::make_shared<LC_ActionDrawCircle2PR>(*document, *view);
             break;
         case RS2::ActionDrawCircle3P:
-            a = new RS_ActionDrawCircle3P(*document, *view);
+            a = std::make_shared<RS_ActionDrawCircle3P>(*document, *view);
             break;
         case RS2::ActionDrawCircleTan1_2P:
-            a = new RS_ActionDrawCircleTan1_2P(*document, *view);
+            a = std::make_shared<RS_ActionDrawCircleTan1_2P>(*document, *view);
             break;
         case RS2::ActionDrawCircleTan2_1P:
-            a = new RS_ActionDrawCircleTan2_1P(*document, *view);
+            a = std::make_shared<RS_ActionDrawCircleTan2_1P>(*document, *view);
             break;
         case RS2::ActionDrawCircleInscribe:
-            a = new RS_ActionDrawCircleInscribe(*document, *view);
+           a = std::make_shared<RS_ActionDrawCircleInscribe>(*document, *view);
             break;
         case RS2::ActionDrawCircleTan2:
-            a = new RS_ActionDrawCircleTan2(*document, *view);
+           a = std::make_shared<RS_ActionDrawCircleTan2>(*document, *view);
             break;
         case RS2::ActionDrawCircleTan3:
-            a = new RS_ActionDrawCircleTan3(*document, *view);
+           a = std::make_shared<RS_ActionDrawCircleTan3>(*document, *view);
             break;
         case RS2::ActionDrawArc:
-            a = new RS_ActionDrawArc(*document, *view, RS2::ActionDrawArc);
+           a = std::make_shared<RS_ActionDrawArc>(*document, *view, RS2::ActionDrawArc);
             break;
         case RS2::ActionDrawArcChord:
-            a = new RS_ActionDrawArc(*document, *view, RS2::ActionDrawArcChord);
+           a = std::make_shared<RS_ActionDrawArc>(*document, *view, RS2::ActionDrawArcChord);
             break;
         case RS2::ActionDrawArcAngleLen:
-            a = new RS_ActionDrawArc(*document, *view,RS2::ActionDrawArcAngleLen);
+           a = std::make_shared<RS_ActionDrawArc>(*document, *view,RS2::ActionDrawArcAngleLen);
             break;
         case RS2::ActionDrawArc3P:
-            a = new RS_ActionDrawArc3P(*document, *view);
+           a = std::make_shared<RS_ActionDrawArc3P>(*document, *view);
             break;
         case RS2::ActionDrawArcTangential:
-            a = new RS_ActionDrawArcTangential(*document, *view);
+           a = std::make_shared<RS_ActionDrawArcTangential>(*document, *view);
             break;
         case RS2::ActionDrawArc2PRadius:
-            a = new LC_ActionDrawArc2PointsRadius(*document, *view);
+            a = std::make_shared<LC_ActionDrawArc2PointsRadius>(*document, *view);
             break;
         case RS2::ActionDrawArc2PAngle:
-            a = new LC_ActionDrawArc2PointsAngle(*document, *view);
+            a = std::make_shared<LC_ActionDrawArc2PointsAngle>(*document, *view);
             break;
         case RS2::ActionDrawArc2PHeight:
-            a = new LC_ActionDrawArc2PointsHeight(*document, *view);
+            a = std::make_shared<LC_ActionDrawArc2PointsHeight>(*document, *view);
             break;
         case RS2::ActionDrawArc2PLength:
-            a = new LC_ActionDrawArc2PointsLength(*document, *view);
+            a = std::make_shared<LC_ActionDrawArc2PointsLength>(*document, *view);
             break;
         case RS2::ActionDrawEllipseAxis:
-            a = new RS_ActionDrawEllipseAxis(*document, *view, false);
+           a = std::make_shared<RS_ActionDrawEllipseAxis>(*document, *view, false);
             break;
         case RS2::ActionDrawEllipseArcAxis:
-            a = new RS_ActionDrawEllipseAxis(*document, *view, true);
+           a = std::make_shared<RS_ActionDrawEllipseAxis>(*document, *view, true);
             break;
         case RS2::ActionDrawEllipse1Point:
-            a = new LC_ActionDrawEllipse1Point(*document, *view, false);
+            a = std::make_shared<LC_ActionDrawEllipse1Point>(*document, *view, false);
             break;
         case RS2::ActionDrawEllipseArc1Point:
-            a = new LC_ActionDrawEllipse1Point(*document, *view, true);
+            a = std::make_shared<LC_ActionDrawEllipse1Point>(*document, *view, true);
             break;
         case RS2::ActionDrawParabola4Points:
-            a = new LC_ActionDrawParabola4Points(*document, *view);
+            a = std::make_shared<LC_ActionDrawParabola4Points>(*document, *view);
             break;
         case RS2::ActionDrawParabolaFD:
-            a = new LC_ActionDrawParabolaFD(*document, *view);
+            a = std::make_shared<LC_ActionDrawParabolaFD>(*document, *view);
             break;
         case RS2::ActionDrawEllipseFociPoint:
-            a = new RS_ActionDrawEllipseFociPoint(*document, *view);
+           a = std::make_shared<RS_ActionDrawEllipseFociPoint>(*document, *view);
             break;
         case RS2::ActionDrawEllipse4Points:
-            a = new RS_ActionDrawEllipse4Points(*document, *view);
+           a = std::make_shared<RS_ActionDrawEllipse4Points>(*document, *view);
             break;
         case RS2::ActionDrawEllipseCenter3Points:
-            a = new RS_ActionDrawEllipseCenter3Points(*document, *view);
+           a = std::make_shared<RS_ActionDrawEllipseCenter3Points>(*document, *view);
             break;
         case RS2::ActionDrawEllipseInscribe:
-            a = new RS_ActionDrawEllipseInscribe(*document, *view);
+           a = std::make_shared<RS_ActionDrawEllipseInscribe>(*document, *view);
             break;
         case RS2::ActionDrawSpline:
-            a = new RS_ActionDrawSpline(*document, *view);
+           a = std::make_shared<RS_ActionDrawSpline>(*document, *view);
             break;
         case RS2::ActionDrawSplinePoints:
-            a = new LC_ActionDrawSplinePoints(*document, *view);
+            a = std::make_shared<LC_ActionDrawSplinePoints>(*document, *view);
             break;
         case RS2::ActionDrawSplinePointRemove:
-            a = new LC_ActionRemoveSplinePoints(*document, *view);
+            a = std::make_shared<LC_ActionRemoveSplinePoints>(*document, *view);
             break;
         case RS2::ActionDrawSplinePointDelTwo:
-            a = new LC_ActionSplineRemoveBetween(*document, *view);
+            a = std::make_shared<LC_ActionSplineRemoveBetween>(*document, *view);
             break;
         case RS2::ActionDrawSplinePointAppend:
-            a = new LC_ActionSplineAppendPoint(*document, *view);
+            a = std::make_shared<LC_ActionSplineAppendPoint>(*document, *view);
             break;
         case RS2::ActionDrawSplinePointAdd:
-            a = new LC_ActionSplineAddPoint(*document, *view);
+            a = std::make_shared<LC_ActionSplineAddPoint>(*document, *view);
             break;
         case RS2::ActionDrawSplineExplode:
-            a = new LC_ActionSplineExplode(*document, *view);
+            a = std::make_shared<LC_ActionSplineExplode>(*document, *view);
             break;
         case RS2::ActionDrawSplineFromPolyline:
-            a = new LC_ActionSplineFromPolyline(*document, *view);
+            a = std::make_shared<LC_ActionSplineFromPolyline>(*document, *view);
             break;
         case RS2::ActionDrawMText:
-            a = new RS_ActionDrawMText(*document, *view);
+           a = std::make_shared<RS_ActionDrawMText>(*document, *view);
             break;
         case RS2::ActionDrawText:
-            a = new RS_ActionDrawText(*document, *view);
+           a = std::make_shared<RS_ActionDrawText>(*document, *view);
             break;
         case RS2::ActionDrawHatch:
-            a = new RS_ActionDrawHatch(*document, *view);
+           a = std::make_shared<RS_ActionDrawHatch>(*document, *view);
             break;
         case RS2::ActionDrawImage:
-            a = new RS_ActionDrawImage(*document, *view);
+           a = std::make_shared<RS_ActionDrawImage>(*document, *view);
             break;
             // Dimensioning actions:
             //
         case RS2::ActionDimAligned:
-            a = new RS_ActionDimAligned(*document, *view);
+           a = std::make_shared<RS_ActionDimAligned>(*document, *view);
             break;
         case RS2::ActionDimLinear:
-            a = new RS_ActionDimLinear(*document, *view);
+           a = std::make_shared<RS_ActionDimLinear>(*document, *view);
             break;
         case RS2::ActionDimLinearHor:
-            a = new RS_ActionDimLinear(*document, *view, 0.0, true, RS2::ActionDimLinearHor);
+           a = std::make_shared<RS_ActionDimLinear>(*document, *view, 0.0, true, RS2::ActionDimLinearHor);
             break;
         case RS2::ActionDimLinearVer:
-            a = new RS_ActionDimLinear(*document, *view, M_PI_2, true, RS2::ActionDimLinearVer);
+           a = std::make_shared<RS_ActionDimLinear>(*document, *view, M_PI_2, true, RS2::ActionDimLinearVer);
             break;
         case RS2::ActionDimRadial:
-            a = new RS_ActionDimRadial(*document, *view);
+           a = std::make_shared<RS_ActionDimRadial>(*document, *view);
             break;
         case RS2::ActionDimDiametric:
-            a = new RS_ActionDimDiametric(*document, *view);
+           a = std::make_shared<RS_ActionDimDiametric>(*document, *view);
             break;
         case RS2::ActionDimAngular:
-            a = new RS_ActionDimAngular(*document, *view);
+           a = std::make_shared<RS_ActionDimAngular>(*document, *view);
             break;
         case RS2::ActionDimArc:
-            a = new LC_ActionDimArc(*document, *view);
+            a = std::make_shared<LC_ActionDimArc>(*document, *view);
             break;
         case RS2::ActionDimLeader:
-            a = new RS_ActionDimLeader(*document, *view);
+           a = std::make_shared<RS_ActionDimLeader>(*document, *view);
             break;
         case RS2::ActionDimBaseline:
-            a = new LC_ActionDrawDimBaseline(*document, *view, RS2::ActionDimBaseline);
+            a = std::make_shared<LC_ActionDrawDimBaseline>(*document, *view, RS2::ActionDimBaseline);
             break;
         case RS2::ActionDimContinue:
-            a = new LC_ActionDrawDimBaseline(*document, *view, RS2::ActionDimContinue);
+            a = std::make_shared<LC_ActionDrawDimBaseline>(*document, *view, RS2::ActionDimContinue);
             break;
 
             // Modifying actions:
             //
         case RS2::ActionModifyLineJoin: {
-            a = new LC_ActionModifyLineJoin(*document, *view);
+            a = std::make_shared<LC_ActionModifyLineJoin>(*document, *view);
             break;
         }
         case RS2::ActionModifyDuplicate: {
-            a = new LC_ActionModifyDuplicate(*document, *view);
+            a = std::make_shared<LC_ActionModifyDuplicate>(*document, *view);
             break;
         }
         case RS2::ActionModifyBreakDivide: {
-            a = new LC_ActionModifyBreakDivide(*document, *view);
+            a = std::make_shared<LC_ActionModifyBreakDivide>(*document, *view);
             break;
         }
         case RS2::ActionModifyLineGap: {
-            a = new LC_ActionModifyLineGap(*document, *view);
+            a = std::make_shared<LC_ActionModifyLineGap>(*document, *view);
             break;
         }
         case RS2::ActionModifyAttributes:
-            a = new RS_ActionModifyAttributes(*document, *view);
+           a = std::make_shared<RS_ActionModifyAttributes>(*document, *view);
             break;
         case RS2::ActionModifyDelete:
-            a = new RS_ActionModifyDelete(*document, *view);
+           a = std::make_shared<RS_ActionModifyDelete>(*document, *view);
             break;
         case RS2::ActionModifyDeleteQuick:
-            a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyDeleteQuick);
+           a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionModifyDeleteQuick);
             break;
         case RS2::ActionModifyDeleteFree:
-            a = new RS_ActionModifyDeleteFree(*document, *view);
+           a = std::make_shared<RS_ActionModifyDeleteFree>(*document, *view);
             break;
         case RS2::ActionModifyMove:
-            a = new RS_ActionModifyMove(*document, *view);
+           a = std::make_shared<RS_ActionModifyMove>(*document, *view);
             break;
         case RS2::ActionModifyRevertDirection:
-            a = new RS_ActionModifyRevertDirection(*document, *view);
+           a = std::make_shared<RS_ActionModifyRevertDirection>(*document, *view);
             break;
         case RS2::ActionModifyRotate:
-            a = new RS_ActionModifyRotate(*document, *view);
+           a = std::make_shared<RS_ActionModifyRotate>(*document, *view);
             break;
         case RS2::ActionModifyScale:
-            a = new RS_ActionModifyScale(*document, *view);
+           a = std::make_shared<RS_ActionModifyScale>(*document, *view);
             break;
         case RS2::ActionModifyMirror:
-            a = new RS_ActionModifyMirror(*document, *view);
+           a = std::make_shared<RS_ActionModifyMirror>(*document, *view);
             break;
         case RS2::ActionModifyMoveRotate:
-            a = new RS_ActionModifyMoveRotate(*document, *view);
+           a = std::make_shared<RS_ActionModifyMoveRotate>(*document, *view);
             break;
         case RS2::ActionModifyRotate2:
-            a = new RS_ActionModifyRotate2(*document, *view);
+           a = std::make_shared<RS_ActionModifyRotate2>(*document, *view);
             break;
         case RS2::ActionModifyEntity:
-            a = new RS_ActionModifyEntity(*document, *view, true);
+           a = std::make_shared<RS_ActionModifyEntity>(*document, *view, true);
             break;
         case RS2::ActionModifyTrim:
-            a = new RS_ActionModifyTrim(*document, *view, false);
+           a = std::make_shared<RS_ActionModifyTrim>(*document, *view, false);
             break;
         case RS2::ActionModifyTrim2:
-            a = new RS_ActionModifyTrim(*document, *view, true);
+           a = std::make_shared<RS_ActionModifyTrim>(*document, *view, true);
             break;
         case RS2::ActionModifyTrimAmount:
-            a = new RS_ActionModifyTrimAmount(*document, *view);
+           a = std::make_shared<RS_ActionModifyTrimAmount>(*document, *view);
             break;
         case RS2::ActionModifyCut:
-            a = new RS_ActionModifyCut(*document, *view);
+           a = std::make_shared<RS_ActionModifyCut>(*document, *view);
             break;
         case RS2::ActionModifyStretch:
-            a = new RS_ActionModifyStretch(*document, *view);
+           a = std::make_shared<RS_ActionModifyStretch>(*document, *view);
             break;
         case RS2::ActionModifyBevel:
-            a = new RS_ActionModifyBevel(*document, *view);
+           a = std::make_shared<RS_ActionModifyBevel>(*document, *view);
             break;
         case RS2::ActionModifyRound:
-            a = new RS_ActionModifyRound(*document, *view);
+           a = std::make_shared<RS_ActionModifyRound>(*document, *view);
             break;
         case RS2::ActionModifyOffset:
-            a = new RS_ActionModifyOffset(*document, *view);
+           a = std::make_shared<RS_ActionModifyOffset>(*document, *view);
             break;
         case RS2::ActionModifyExplodeText:
           /*  if(!document->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyExplodeTextNoSelect);
+               a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionModifyExplodeTextNoSelect);
                 break;
             }
             // fall-through
 */
-            a = new RS_ActionModifyExplodeText(*document, *view);
+           a = std::make_shared<RS_ActionModifyExplodeText>(*document, *view);
             break;
         case RS2::ActionModifyAlign:
-            a = new LC_ActionModifyAlign(*document, *view);
+            a = std::make_shared<LC_ActionModifyAlign>(*document, *view);
             break;
         case RS2::ActionModifyAlignOne:
-            a = new LC_ActionModifyAlignSingle(*document, *view);
+            a = std::make_shared<LC_ActionModifyAlignSingle>(*document, *view);
             break;
         case RS2::ActionModifyAlignRef:
-            a = new LC_ActionModifyAlignRef(*document, *view);
+            a = std::make_shared<LC_ActionModifyAlignRef>(*document, *view);
             break;
             // Snapping actions:
             //
         case RS2::ActionSnapFree:
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapFree);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapFree);
             slotSnapFree();
             break;
         case RS2::ActionSnapCenter:
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapCenter);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapCenter);
             slotSnapCenter();
             break;
         case RS2::ActionSnapDist:
             slotSnapDist();
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapDist);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapDist);
             break;
         case RS2::ActionSnapEndpoint:
             slotSnapEndpoint();
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapEndpoint);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapEndpoint);
             break;
         case RS2::ActionSnapGrid:
             slotSnapGrid();
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapGrid);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapGrid);
             break;
         case RS2::ActionSnapIntersection:
             slotSnapIntersection();
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapIntersection);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapIntersection);
             break;
         case RS2::ActionSnapMiddle:
             slotSnapMiddle();
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapMiddle);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapMiddle);
             break;
         case RS2::ActionSnapOnEntity:
             slotSnapOnEntity();
-//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapOnEntity);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapOnEntity);
             break;
 //    case RS2::ActionSnapIntersectionManual:
-//        a = new RS_ActionSnapIntersectionManual(*document, *view);
+//       a = std::make_shared<RS_ActionSnapIntersectionManual>(*document, *view);
 //        break;
 
             // Snap restriction actions:
             //
         case RS2::ActionRestrictNothing:
             slotRestrictNothing();
-//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictNothing);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(*document, *view, RS2::RestrictNothing);
             break;
         case RS2::ActionRestrictOrthogonal:
             slotRestrictOrthogonal();
-//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictOrthogonal);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(*document, *view, RS2::RestrictOrthogonal);
             break;
         case RS2::ActionRestrictHorizontal:
             slotRestrictHorizontal();
-//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictHorizontal);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(*document, *view, RS2::RestrictHorizontal);
             break;
         case RS2::ActionRestrictVertical:
             slotRestrictVertical();
-//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictVertical);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(*document, *view, RS2::RestrictVertical);
             break;
 
             // Relative zero:
             //
         case RS2::ActionSetRelativeZero:
-            a = new RS_ActionSetRelativeZero(*document, *view);
+           a = std::make_shared<RS_ActionSetRelativeZero>(*document, *view);
             break;
         case RS2::ActionLockRelativeZero:
-            a = new RS_ActionLockRelativeZero(*document, *view, true);
+           a = std::make_shared<RS_ActionLockRelativeZero>(*document, *view, true);
             break;
         case RS2::ActionUnlockRelativeZero:
-            a = new RS_ActionLockRelativeZero(*document, *view, false);
+           a = std::make_shared<RS_ActionLockRelativeZero>(*document, *view, false);
             break;
             // pen actions
         case RS2::ActionPenPick:
-            a = new LC_ActionPenPick(*document, *view,  false);
+            a = std::make_shared<LC_ActionPenPick>(*document, *view,  false);
             break;
         case RS2::ActionPenPickResolved:
-            a = new LC_ActionPenPick(*document, *view, true);
+            a = std::make_shared<LC_ActionPenPick>(*document, *view, true);
             break;
         case RS2::ActionPenApply:
-            a = new LC_ActionPenApply(*document, *view, false);
+            a = std::make_shared<LC_ActionPenApply>(*document, *view, false);
             break;
         case RS2::ActionPenCopy:
-            a = new LC_ActionPenApply(*document, *view, true);
+            a = std::make_shared<LC_ActionPenApply>(*document, *view, true);
             break;
 
         case RS2::ActionPenSyncFromLayer:
-            a = new LC_ActionPenSyncActiveByLayer(*document, *view);
+            a = std::make_shared<LC_ActionPenSyncActiveByLayer>(*document, *view);
             break;
             // Info actions:
             //
         case RS2::ActionInfoInside:
-            a = new RS_ActionInfoInside(*document, *view);
+           a = std::make_shared<RS_ActionInfoInside>(*document, *view);
             break;
         case RS2::ActionInfoDistPoint2Point:
-            a = new RS_ActionInfoDist(*document, *view);
+           a = std::make_shared<RS_ActionInfoDist>(*document, *view);
             break;
         case RS2::ActionInfoDistEntity2Point:
-            a = new RS_ActionInfoDist2(*document, *view);
+           a = std::make_shared<RS_ActionInfoDist2>(*document, *view);
             break;
         case RS2::ActionInfoDistPoint2Entity:
-            a = new RS_ActionInfoDist2(*document, *view, true);
+           a = std::make_shared<RS_ActionInfoDist2>(*document, *view, true);
             break;
         case RS2::ActionInfoAngle:
-            a = new RS_ActionInfoAngle(*document, *view);
+           a = std::make_shared<RS_ActionInfoAngle>(*document, *view);
             break;
          case RS2::ActionInfoAngle3Points:
-            a = new LC_ActionInfo3PointsAngle(*document, *view);
+            a = std::make_shared<LC_ActionInfo3PointsAngle>(*document, *view);
             break;
         case RS2::ActionInfoTotalLength:
-            a = new RS_ActionInfoTotalLength(*document, *view);
+           a = std::make_shared<RS_ActionInfoTotalLength>(*document, *view);
             break;
         case RS2::ActionInfoArea:
-            a = new RS_ActionInfoArea(*document, *view);
+           a = std::make_shared<RS_ActionInfoArea>(*document, *view);
             break;
         case RS2::ActionInfoProperties:
-            a = new LC_ActionInfoProperties(*document, *view);
+            a = std::make_shared<LC_ActionInfoProperties>(*document, *view);
             break;
         case RS2::ActionInfoPickCoordinates:
-            a = new LC_ActionInfoPickCoordinates(*document, *view);
+            a = std::make_shared<LC_ActionInfoPickCoordinates>(*document, *view);
             break;
             // Layer actions:
             //
         case RS2::ActionLayersDefreezeAll:
-            a = new RS_ActionLayersFreezeAll(false, *document, *view);
+           a = std::make_shared<RS_ActionLayersFreezeAll>(false, *document, *view);
             break;
         case RS2::ActionLayersFreezeAll:
-            a = new RS_ActionLayersFreezeAll(true, *document, *view);
+           a = std::make_shared<RS_ActionLayersFreezeAll>(true, *document, *view);
             break;
         case RS2::ActionLayersUnlockAll:
-            a = new RS_ActionLayersLockAll(false, *document, *view);
+           a = std::make_shared<RS_ActionLayersLockAll>(false, *document, *view);
             break;
         case RS2::ActionLayersLockAll:
-            a = new RS_ActionLayersLockAll(true, *document, *view);
+           a = std::make_shared<RS_ActionLayersLockAll>(true, *document, *view);
             break;
         case RS2::ActionLayersAdd:
-            a = new RS_ActionLayersAdd(*document, *view);
+           a = std::make_shared<RS_ActionLayersAdd>(*document, *view);
             break;
         case RS2::ActionLayersRemove:
-            a = new RS_ActionLayersRemove(*document, *view);
+           a = std::make_shared<RS_ActionLayersRemove>(*document, *view);
             break;
         case RS2::ActionLayersEdit:
-            a = new RS_ActionLayersEdit(*document, *view);
+           a = std::make_shared<RS_ActionLayersEdit>(*document, *view);
             break;
         case RS2::ActionLayersToggleView:
             if (a_layer != nullptr)
-                a = new RS_ActionLayersToggleView(*document, *view, a_layer);
+               a = std::make_shared<RS_ActionLayersToggleView>(*document, *view, a_layer);
             break;
         case RS2::ActionLayersToggleLock:
             if (a_layer != nullptr)
-                a = new RS_ActionLayersToggleLock(*document, *view, a_layer);
+               a = std::make_shared<RS_ActionLayersToggleLock>(*document, *view, a_layer);
             break;
         case RS2::ActionLayersTogglePrint:
             if (a_layer != nullptr)
-                a = new RS_ActionLayersTogglePrint(*document, *view, a_layer);
+               a = std::make_shared<RS_ActionLayersTogglePrint>(*document, *view, a_layer);
             break;
         case RS2::ActionLayersToggleConstruction:
             if (a_layer != nullptr)
-                a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+                a = std::make_shared<LC_ActionLayersToggleConstruction>(*document, *view, a_layer);
             break;
         case RS2::ActionLayersExportSelected:
-            a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+            a = std::make_shared<LC_ActionLayersExport>(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
             break;
         case RS2::ActionLayersExportVisible:
-            a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
+            a = std::make_shared<LC_ActionLayersExport>(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
             break;
 
             // Block actions:
             //
         case RS2::ActionBlocksDefreezeAll:
-            a = new RS_ActionBlocksFreezeAll(false, *document, *view);
+           a = std::make_shared<RS_ActionBlocksFreezeAll>(false, *document, *view);
             break;
         case RS2::ActionBlocksFreezeAll:
-            a = new RS_ActionBlocksFreezeAll(true, *document, *view);
+           a = std::make_shared<RS_ActionBlocksFreezeAll>(true, *document, *view);
             break;
         case RS2::ActionBlocksAdd:
-            a = new RS_ActionBlocksAdd(*document, *view);
+           a = std::make_shared<RS_ActionBlocksAdd>(*document, *view);
             break;
         case RS2::ActionBlocksRemove:
-            a = new RS_ActionBlocksRemove(*document, *view);
+           a = std::make_shared<RS_ActionBlocksRemove>(*document, *view);
             break;
         case RS2::ActionBlocksAttributes:
-            a = new RS_ActionBlocksAttributes(*document, *view);
+           a = std::make_shared<RS_ActionBlocksAttributes>(*document, *view);
             break;
         case RS2::ActionBlocksEdit:
-            a = new RS_ActionBlocksEdit(*document, *view);
+           a = std::make_shared<RS_ActionBlocksEdit>(*document, *view);
             break;
         case RS2::ActionBlocksSave:
-            a = new RS_ActionBlocksSave(*document, *view);
+           a = std::make_shared<RS_ActionBlocksSave>(*document, *view);
             break;
         case RS2::ActionBlocksInsert:
-            a = new RS_ActionBlocksInsert(*document, *view);
+           a = std::make_shared<RS_ActionBlocksInsert>(*document, *view);
             break;
         case RS2::ActionBlocksToggleView:
-            a = new RS_ActionBlocksToggleView(*document, *view);
+           a = std::make_shared<RS_ActionBlocksToggleView>(*document, *view);
             break;
         case RS2::ActionBlocksCreate:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksCreateNoSelect);
+               a = std::make_shared<RS_ActionSelect>(this, *document, *view, RS2::ActionBlocksCreateNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionBlocksCreateNoSelect:
-            a = new RS_ActionBlocksCreate(*document, *view);
+           a = std::make_shared<RS_ActionBlocksCreate>(*document, *view);
             break;
         case RS2::ActionBlocksExplode:
-            a = new RS_ActionBlocksExplode(*document, *view);
+           a = std::make_shared<RS_ActionBlocksExplode>(*document, *view);
             break;
             // library browser:
             //
         case RS2::ActionLibraryInsert:
-            a = new RS_ActionLibraryInsert(*document, *view);
+           a = std::make_shared<RS_ActionLibraryInsert>(*document, *view);
             break;
 
             // options:
             //
             //case RS2::ActionOptionsGeneral:
-            //    a = new RS_ActionOptionsGeneral(*document, *view);
+            //   a = std::make_shared<RS_ActionOptionsGeneral>(*document, *view);
             //	break;
 
         case RS2::ActionOptionsDrawing:
-            a = new RS_ActionOptionsDrawing(*document, *view);
+           a = std::make_shared<RS_ActionOptionsDrawing>(*document, *view);
             break;
         case RS2::ActionOptionsDrawingGrid:
-            a = new RS_ActionOptionsDrawing(*document, *view, 2);
+           a = std::make_shared<RS_ActionOptionsDrawing>(*document, *view, 2);
             break;
         case RS2::ActionOptionsDrawingUnits:
-            a = new RS_ActionOptionsDrawing(*document, *view, 1);
+           a = std::make_shared<RS_ActionOptionsDrawing>(*document, *view, 1);
             break;
         case RS2::ActionUCSCreate:
-            a = new LC_ActionUCSCreate(*document, *view);
+            a = std::make_shared<LC_ActionUCSCreate>(*document, *view);
             break;
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -1972,8 +1972,8 @@ void QG_ActionHandler::slotSnapMiddleManual(){
     const RS_Pen currentAppPen { document->getActivePen() };
     const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
     document->setActivePen(snapMiddleManual_pen);
-    auto a = new LC_ActionSnapMiddleManual(*document, *view, currentAppPen);
-    connect(a, &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
+    auto a = std::make_shared<LC_ActionSnapMiddleManual>(*document, *view, currentAppPen);
+    connect(a.get(), &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
     view->setCurrentAction(a);
 }
 
@@ -2219,21 +2219,21 @@ void QG_ActionHandler::set_snap_toolbar(QG_SnapToolBar* snap_tb){
 }
 
 void QG_ActionHandler::toggleVisibility(RS_Layer* layer){
-    auto a = new RS_ActionLayersToggleView(*document, *view, layer);
+    auto a = std::make_shared<RS_ActionLayersToggleView>(*document, *view, layer);
     view->setCurrentAction(a);
 }
 
 void QG_ActionHandler::toggleLock(RS_Layer* layer){
-    auto a = new RS_ActionLayersToggleLock(*document, *view, layer);
+    auto a = std::make_shared<RS_ActionLayersToggleLock>(*document, *view, layer);
     view->setCurrentAction(a);
 }
 
 void QG_ActionHandler::togglePrint(RS_Layer* layer){
-    auto a = new RS_ActionLayersTogglePrint(*document, *view, layer);
+    auto a = std::make_shared<RS_ActionLayersTogglePrint>(*document, *view, layer);
     view->setCurrentAction(a);
 }
 void QG_ActionHandler::toggleConstruction(RS_Layer* layer){
-    auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
+    auto a = std::make_shared<LC_ActionLayersToggleConstruction>(*document, *view, layer);
     view->setCurrentAction(a);
 }
 

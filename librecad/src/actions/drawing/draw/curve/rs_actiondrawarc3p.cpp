@@ -218,7 +218,7 @@ bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QStr
         accept = true;
         finish(false);
         // fixme - review why this action is called there
-        graphicView->setCurrentAction(new RS_ActionDrawArc(*container, *graphicView, RS2::ActionDrawArc));
+        graphicView->setCurrentAction(std::make_shared<RS_ActionDrawArc>(*container, *graphicView, RS2::ActionDrawArc));
     }
     // fixme - sand - add these to commands
     else if (checkCommand("altpoint", c, rtti())){

@@ -30,7 +30,6 @@
 
 #include <memory>
 
-#include <QMap>
 #include <QWidget>
 
 #include "lc_cursoroverlayinfo.h"
@@ -40,6 +39,7 @@
 
 
 class QDateTime;
+class QIcon;
 class QMouseEvent;
 class QKeyEvent;
 
@@ -117,7 +117,7 @@ public:
 
     void setDefaultAction(RS_ActionInterface *action);
     RS_ActionInterface *getDefaultAction();
-    void setCurrentAction(RS_ActionInterface *action);
+    void setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
     RS_ActionInterface *getCurrentAction();
     QString getCurrentActionName();
     QIcon getCurrentActionIcon();

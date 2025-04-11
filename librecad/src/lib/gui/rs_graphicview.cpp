@@ -151,7 +151,7 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
 /**
  * Sets the current action of the event handler.
  */
-void RS_GraphicView::setCurrentAction(RS_ActionInterface *action) {
+void RS_GraphicView::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
     if (m_eventHandler) {
         m_viewport->markRelativeZero();
         m_eventHandler->setCurrentAction(action);

@@ -147,10 +147,10 @@ void QG_LibraryWidget::insert() {
 
     if (QFileInfo(dxfPath).isReadable()) {
         if (actionHandler) {
-            RS_ActionInterface* a =
+		std::shared_ptr<RS_ActionInterface> a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
+                auto* action = static_cast<RS_ActionLibraryInsert*>(a.get());
                 action->setFile(std::move(dxfPath));
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,
