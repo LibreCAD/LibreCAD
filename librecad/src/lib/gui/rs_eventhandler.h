@@ -31,9 +31,11 @@
 #include <memory>
 #include <QObject>
 
+#include "lc_coordinates_parser.h"
 #include "rs.h"
 #include "rs_vector.h"
 
+class LC_CoordinatesParser;
 class RS_ActionInterface;
 class QAction;
 class QMouseEvent;
@@ -94,24 +96,14 @@ public:
     void setSnapRestriction(RS2::SnapRestriction sr);
     //! return true if the current action is for selecting
     bool inSelectionMode();
-protected:
-    RS_Vector toWCS(const RS_Vector& ucs);
-    RS_Vector toUCS(const RS_Vector& wcs);
-    double toWCSAngle(double ucsAngle);
-    double toAbsUCSAngle(double ucsBasisAngle);
-    double evalAngleValue(const QString &angleStr, bool &ok2) const;
 private:
+    std::unique_ptr<LC_CoordinatesParser> m_coordinatesParser;
     RS_GraphicView* m_graphicView;
     QAction* m_QAction{nullptr};
     std::shared_ptr<RS_ActionInterface> m_defaultAction{nullptr};
     QList<std::shared_ptr<RS_ActionInterface>> m_currentActions;
     bool m_coordinateInputEnabled{true};
-    RS_Vector m_relativeZero; // FIXME - sand - rework and remove, can pick relzero from view->viewport
-public slots:
-    void setRelativeZero(const RS_Vector&);
     void checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction);
-
-
 };
 
 #endif

@@ -334,23 +334,24 @@ protected:
     #endif
 
     LC_ActionGroupManager* m_actionGroupManager {nullptr};
-    LC_CreatorInvoker* m_creatorInvoker {nullptr};
-    LC_PluginInvoker* m_pluginInvoker{nullptr};
-    LC_AppWindowDialogsInvoker* m_dlgHelpr{nullptr};
-    LC_WorkspacesInvoker* m_workspacesInvoker {nullptr};
+    std::unique_ptr<LC_CreatorInvoker> m_creatorInvoker;
+    std::unique_ptr<LC_PluginInvoker> m_pluginInvoker;
+    std::unique_ptr<LC_AppWindowDialogsInvoker> m_dlgHelpr;
+    std::unique_ptr<LC_WorkspacesInvoker> m_workspacesInvoker;
     LC_MenuFactory* m_menuFactory {nullptr};
-    LC_ReleaseChecker* m_releaseChecker {nullptr};
+    std::unique_ptr<LC_ReleaseChecker> m_releaseChecker;
     LC_DefaultActionContext* m_actionContext{nullptr};
-    LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
-    LC_GridViewInvoker* m_gridViewInvoker{nullptr};
-    LC_InfoCursorSettingsManager* m_infoCursorSettingsManager {nullptr};
-    LC_CustomStyleHelper* m_styleHelper {nullptr};
+    LC_ActionOptionsManager* m_actionOptionsManager;
+
+    std::unique_ptr<LC_GridViewInvoker> m_gridViewInvoker;
+    std::unique_ptr<LC_InfoCursorSettingsManager> m_infoCursorSettingsManager;
+    std::unique_ptr<LC_CustomStyleHelper> m_styleHelper;
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     std::unique_ptr<QTimer> m_autosaveTimer;
 
-    QG_ActionHandler* m_actionHandler {nullptr};
+    std::unique_ptr<QG_ActionHandler> m_actionHandler;
 
     /** Dialog factory */
     // fixme - sand - files rework, merge to one factory

@@ -124,7 +124,7 @@ void LC_WidgetFactory::fillActionLists(){
 void LC_WidgetFactory::initWidgets(){
     initStatusBar();
     initLeftCADSidebar();
-    createRightSidebar(m_appWin->m_actionHandler);
+    createRightSidebar(m_appWin->m_actionHandler.get());
 }
 
 void LC_WidgetFactory::initLeftCADSidebar(){
@@ -389,6 +389,7 @@ void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNa
         }
     }
 }
+
 // fixme - sand - remove this method
 void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName){
     QAction *action = m_agm->getActionByName(actionName);
@@ -435,7 +436,7 @@ LC_CADDockWidget* LC_WidgetFactory::cadDockWidget(const QString& title, const ch
     return result;
 }
 
- QToolBar* LC_WidgetFactory::createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, QString title, const char *name){
+ QToolBar* LC_WidgetFactory::createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, const QString& title, const char *name){
     auto tb = new QToolBar(title, m_appWin);
     tb->setSizePolicy(tbPolicy);
     tb->addWidget(widget);

@@ -1378,7 +1378,8 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp
 		librecad/src/lib/gui/lc_coordinates_mapper.cpp
 		librecad/src/lib/gui/lc_coordinates_mapper.h
-		librecad/src/lib/gui/lc_coordinates_mapper.h
+        librecad/src/lib/gui/lc_coordinates_parser.h
+        librecad/src/lib/gui/lc_coordinates_parser.cpp
 		librecad/src/lib/gui/render/widget/lc_printpreviewviewrenderer.h
 		librecad/src/lib/gui/render/widget/lc_printpreviewviewrenderer.cpp
 		librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.h
@@ -1745,9 +1746,9 @@ qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 install(TARGETS librecad RUNTIME DESTINATION bin)
 
 set(PLUGIN_SOURCES
-	../libraries/lciconendine/src/lc_svgiconengineplugin.cpp
-	../libraries/lciconendine/lc_svgiconengine.h
-	../libraries/lciconendine/lc_svgiconengine.h
+	libraries/lciconengine/src/lc_svgiconengineplugin.cpp
+    libraries/lciconengine/src/lc_svgiconengine.h
+	libraries/lciconengine/src/lc_svgiconengine.cpp
 )
 
 if(NOT WIN32)
@@ -1758,27 +1759,4 @@ target_include_directories(ttf2lff PRIVATE
 	${FREETYPE_INCLUDE_DIRS})
 endif(NOT WIN32)
 
-#qt_internal_add_plugin(QSvgIconPlugin
-#		OUTPUT_NAME lc_svgicon
-#		PLUGIN_TYPE iconengines
-#		SOURCES
-#		../libraries/lciconendine/src/lc_svgiconengineplugin.cpp
-#		../libraries/lciconendine/lc_svgiconengine.h
-#		../libraries/lciconendine/lc_svgiconengine.h
-#		LIBRARIES
-#		Qt::Core
-#		Qt::CorePrivate
-#		Qt::Gui
-#		Qt::GuiPrivate
-#		Qt::Svg
-#)
-
-#set(autouic_options
-#		--connections string
-#)
-
-#set_property(TARGET LibreCAD APPEND PROPERTY
-#  INTERFACE_AUTOUIC_OPTIONS ${autouic_options}
-#)
-#target_link_libraries(LibreCAD Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg)
-#target_link_libraries(LibreCAD Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)
+add_library(lc_svgiconplugin SHARED ${PLUGIN_SOURCES})

@@ -54,12 +54,13 @@ LC_ApplicationWindowInitializer::LC_ApplicationWindowInitializer(QC_ApplicationW
 {}
 
 void LC_ApplicationWindowInitializer::initApplication(){
-    m_appWin->m_actionHandler = new QG_ActionHandler(m_appWin);
-    m_appWin->m_dlgHelpr = new LC_AppWindowDialogsInvoker(m_appWin);
-    m_appWin->m_workspacesInvoker = new LC_WorkspacesInvoker(m_appWin);
-    m_appWin->m_gridViewInvoker = new LC_GridViewInvoker(m_appWin);
-    m_appWin->m_infoCursorSettingsManager = new LC_InfoCursorSettingsManager(m_appWin);
-    m_appWin->m_styleHelper = new LC_CustomStyleHelper(m_appWin);
+    m_appWin->m_actionHandler = std::make_unique<QG_ActionHandler>(m_appWin);
+    m_appWin->m_dlgHelpr = std::make_unique<LC_AppWindowDialogsInvoker>(m_appWin);
+    m_appWin->m_workspacesInvoker = std::make_unique<LC_WorkspacesInvoker>(m_appWin);
+    m_appWin->m_gridViewInvoker = std::make_unique<LC_GridViewInvoker>(m_appWin);
+    m_appWin->m_infoCursorSettingsManager = std::make_unique<LC_InfoCursorSettingsManager>(m_appWin);
+    m_appWin->m_styleHelper = std::make_unique<LC_CustomStyleHelper>(m_appWin);
+
     initActionGroupManager();
     //accept drop events to open files
     m_appWin->setAcceptDrops(true);
@@ -86,8 +87,8 @@ void LC_ApplicationWindowInitializer::initApplication(){
 
 void LC_ApplicationWindowInitializer::initReleaseChecker(){
     const char *ownBuildVersion = XSTR(LC_VERSION);
-    m_appWin->m_releaseChecker = new LC_ReleaseChecker( ownBuildVersion,XSTR(LC_PRERELEASE));
-    connect(m_appWin->m_releaseChecker, &LC_ReleaseChecker::updatesAvailable, m_appWin, &QC_ApplicationWindow::onNewVersionAvailable);
+    m_appWin->m_releaseChecker = std::make_unique<LC_ReleaseChecker>( ownBuildVersion,XSTR(LC_PRERELEASE));
+    connect(m_appWin->m_releaseChecker.get(), &LC_ReleaseChecker::updatesAvailable, m_appWin, &QC_ApplicationWindow::onNewVersionAvailable);
 }
 
 void LC_ApplicationWindowInitializer::initActionGroupManager(){
@@ -103,7 +104,7 @@ void LC_ApplicationWindowInitializer::initActionOptionsManager(){
 }
 
 void LC_ApplicationWindowInitializer::initActionFactory(){
-    LC_ActionFactory a_factory(m_appWin, m_appWin->m_actionHandler);
+    LC_ActionFactory a_factory(m_appWin, m_appWin->m_actionHandler.get());
     bool using_theme = LC_GET_ONE_BOOL("Widgets","AllowTheme", false);
     a_factory.fillActionContainer(m_appWin->m_actionGroupManager, using_theme);
 }
@@ -220,7 +221,7 @@ void LC_ApplicationWindowInitializer::initToolbars(){
 }
 
 void LC_ApplicationWindowInitializer::initPlugins(){
-    m_appWin->m_pluginInvoker = new LC_PluginInvoker(m_appWin);
+    m_appWin->m_pluginInvoker = std::make_unique<LC_PluginInvoker>(m_appWin);
     m_appWin->m_pluginInvoker->loadPlugins();
 }
 

@@ -612,22 +612,22 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     QAction *&entityInfoAction = map["EntityDescriptionInfo"];
     connect(m_appWin, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
 
-    auto infoCursorSettingsManager = m_appWin->m_infoCursorSettingsManager;
+    auto infoCursorSettingsManager = m_appWin->m_infoCursorSettingsManager.get();
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
 
-    connect(map["InfoCursorAbs"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(map["InfoCursorAbs"], &QAction::triggered, infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
 
-    connect(map["InfoCursorSnap"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(map["InfoCursorSnap"], &QAction::triggered, infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
 
-    connect(map["InfoCursorRel"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(map["InfoCursorRel"], &QAction::triggered,infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
 
-    connect(map["InfoCursorPrompt"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(map["InfoCursorPrompt"], &QAction::triggered, infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
 
-    connect(map["InfoCursorCatchedEntity"], &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+    connect(map["InfoCursorCatchedEntity"], &QAction::triggered, infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
 }
 

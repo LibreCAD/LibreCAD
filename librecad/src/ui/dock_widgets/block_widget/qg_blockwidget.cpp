@@ -491,7 +491,12 @@ void QG_BlockWidget::setGraphicView(RS_GraphicView* gv){
     }
     else {
         auto graphic = gv->getGraphic();
-        setBlockList(graphic->getBlockList());
+        if (graphic == nullptr) {
+            setBlockList(nullptr);
+        }
+        else {
+            setBlockList(graphic->getBlockList());
+        }
     }
 }
 

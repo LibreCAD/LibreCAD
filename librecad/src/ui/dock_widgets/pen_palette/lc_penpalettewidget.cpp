@@ -1282,7 +1282,12 @@ void LC_PenPaletteWidget::setGraphicView(RS_GraphicView *gv){
     else {
         m_graphicView = gv;
         RS_Graphic* graphic = gv->getGraphic();
-        setLayerList(graphic->getLayerList());
+        if (graphic != nullptr) {
+            setLayerList(graphic->getLayerList());
+        }
+        else {
+            setLayerList(nullptr);
+        }
     }
 }
 

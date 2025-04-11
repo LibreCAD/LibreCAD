@@ -1287,7 +1287,7 @@ bool QG_ActionHandler::command(const QString& cmd)
     }
 
     RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
-    QString c = cmd.toLower();
+    QString c = cmd.toLower().trimmed();
 
     if (c==tr("escape", "escape, go back from action steps"))
     {

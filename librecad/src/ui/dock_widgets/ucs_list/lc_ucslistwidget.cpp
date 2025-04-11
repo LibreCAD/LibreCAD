@@ -396,7 +396,14 @@ void LC_UCSListWidget::editUCS() {
 }
 
 void LC_UCSListWidget::setWCS() {
-    m_viewport->applyUCS(m_currentUCSList->getWCS());
+    if (m_viewport != nullptr) {
+        if (m_currentUCSList == nullptr) { // block is edited
+            m_viewport->applyUCS(new LC_WCS());
+        }
+        else {
+            m_viewport->applyUCS(m_currentUCSList->getWCS());
+        }
+    }
 }
 
 

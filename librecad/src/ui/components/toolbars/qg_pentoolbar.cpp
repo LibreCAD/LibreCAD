@@ -139,8 +139,14 @@ void QG_PenToolBar::setGraphicView(RS_GraphicView* gv) {
         setLayerList(nullptr);
     }
     else {
-        auto layerList = gv->getGraphic()->getLayerList();
-        setLayerList(layerList);
+        auto graphic = gv->getGraphic();
+        if (graphic == nullptr) {
+            setLayerList(nullptr);
+        }
+        else {
+            auto layerList = graphic->getLayerList();
+            setLayerList(layerList);
+        }
     }
 }
 

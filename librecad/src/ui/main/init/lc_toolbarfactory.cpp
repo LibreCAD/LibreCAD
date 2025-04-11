@@ -63,7 +63,7 @@ QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
 
 QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy){
     auto ag_manager = m_appWin->m_actionGroupManager;
-    auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler, ag_manager,ag_manager->getActionsMap());
+    auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler.get(), ag_manager,ag_manager->getActionsMap());
     result->setWindowTitle(tr("Snap Selection"));
     result->setSizePolicy(tbPolicy);
     result->setObjectName("snap_toolbar" );
@@ -198,7 +198,7 @@ QToolBar* LC_ToolbarFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
     QAction* action = m_agm->getActionByName("InfoCursorEnable");
     if (action != nullptr){
         action->setProperty("InfoCursorActionTag", 0);
-        connect(action, &QAction::triggered, m_appWin->m_infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
+        connect(action, &QAction::triggered, m_appWin->m_infoCursorSettingsManager.get(), &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
         QWidget* w = result->widgetForAction(action);
         if (w != nullptr){
             auto* btn = dynamic_cast<QToolButton *>(w);
@@ -397,7 +397,7 @@ void LC_ToolbarFactory::addToBottom(QToolBar *toolbar) { m_appWin->addToolBar(Qt
 void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) { m_appWin->addToolBar(Qt::LeftToolBarArea, toolbar); }
 
 void LC_ToolbarFactory::createCustomToolbars(){
-    m_appWin->m_creatorInvoker = new LC_CreatorInvoker(m_appWin, m_agm);
+    m_appWin->m_creatorInvoker = std::make_unique<LC_CreatorInvoker>(m_appWin, m_agm);
     m_appWin->m_creatorInvoker->createCustomToolbars();
 
     // fixme - sand - files - check whether we actually need default custom toolbar???? It's quite confusing, actually...

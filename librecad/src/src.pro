@@ -138,6 +138,7 @@ INCLUDEPATH += \
     lib/generators \
     lib/generators/makercamsvg \
     lib/generators/layers \
+    lib/generators/image \
     lib/gui \
     lib/gui/grid \
     lib/gui/render \
@@ -227,8 +228,7 @@ INCLUDEPATH += \
     ui/dialogs/file/export \
     ui/dialogs/file/export/layers \
     ui/dialogs/file/export/image \
-    ui/dialogs/file/export/makercam \
-    ui/dialogs/file/export_layers \
+    ui/dialogs/file/export/makercam \        
     ui/dialogs/main \
     ui/dialogs/settings \
     ui/dialogs/settings/options_device \
@@ -401,6 +401,8 @@ HEADERS += \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
     lib/generators/layers/lc_layersexporter.h \
+    lib/generators/image/lc_imageexporter.h \
+    lib/gui/lc_coordinates_parser.h \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
@@ -410,10 +412,10 @@ HEADERS += \
     ui/components/creators/lc_creatorinvoker.h \
     # ui/components/toolbars/lc_snapoptionsholdermanager.h \
     ui/dialogs/file/export/image/lc_exporttoimageservice.h \
-    ui/dialogs/file/export_layers/lc_exportlayersdialogservice.h \
+    ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
-    ui/dialogs/file/export_layers/lc_layerexportoptions.h \
+    ui/dialogs/file/export/layers/lc_layerexportoptions.h \
     ui/dock_widgets/lc_dockwidget.h \
     ui/dock_widgets/lc_widgets_common.h \
     #ui/dock_widgets/library_widget/lc_librarywidget.h \
@@ -542,6 +544,8 @@ SOURCES += \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
     lib/generators/layers/lc_layersexporter.cpp \
+    lib/generators/image/lc_imageexporter.cpp \
+    lib/gui/lc_coordinates_parser.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
@@ -550,10 +554,10 @@ SOURCES += \
     ui/components/creators/lc_creatorinvoker.cpp \
     #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
-    ui/dialogs/file/export_layers/lc_exportlayersdialogservice.cpp \
+    ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
-    ui/dialogs/file/export_layers/lc_layerexportoptions.cpp \
+    ui/dialogs/file/export/layers/lc_layerexportoptions.cpp \
     #ui/dock_widgets/library_widget/lc_librarywidget.cpp \
     ui/dock_widgets/cad/lc_caddockwidget.cpp \
     ui/dock_widgets/lc_dockwidget.cpp \
@@ -1176,7 +1180,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dialogs/entity/qg_dlgellipse.h \
     ui/dialogs/entity/qg_dlghatch.h \
     ui/dialogs/entity/qg_dlgimage.h \
-    ui/dialogs/entity/qg_dlgimageoptions.h \
+    ui/dialogs/file/export/image/qg_dlgimageoptions.h \
     ui/dialogs/entity/qg_dlginsert.h \
     ui/dialogs/entity/qg_dlgline.h \
     ui/dialogs/entity/qg_dlgmtext.h \
@@ -1184,8 +1188,8 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dialogs/entity/qg_dlgpolyline.h \
     ui/dialogs/entity/qg_dlgspline.h \
     ui/dialogs/entity/qg_dlgtext.h \
-    ui/dialogs/file/export/qg_dlgoptionsmakercam.h \
-    ui/dialogs/file/export_layers/lc_filedialogservice.h \
+    ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.h \
+    ui/dialogs/file/export/layers/lc_filedialogservice.h \
     ui/dialogs/file/qg_filedialog.h \
     ui/dialogs/main/qg_dlginitial.h \
     ui/dialogs/main/qg_exitdialog.h \
@@ -1365,7 +1369,7 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/dialogs/entity/qg_dlgellipse.cpp \
     ui/dialogs/entity/qg_dlghatch.cpp \
     ui/dialogs/entity/qg_dlgimage.cpp \
-    ui/dialogs/entity/qg_dlgimageoptions.cpp \
+    ui/dialogs/file/export/image/qg_dlgimageoptions.cpp \
     ui/dialogs/entity/qg_dlginsert.cpp \
     ui/dialogs/entity/qg_dlgline.cpp \
     ui/dialogs/entity/qg_dlgmtext.cpp \
@@ -1373,8 +1377,8 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/dialogs/entity/qg_dlgpolyline.cpp \
     ui/dialogs/entity/qg_dlgspline.cpp \
     ui/dialogs/entity/qg_dlgtext.cpp \
-    ui/dialogs/file/export/qg_dlgoptionsmakercam.cpp \
-    ui/dialogs/file/export_layers/lc_filedialogservice.cpp \
+    ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp \
+    ui/dialogs/file/export/layers/lc_filedialogservice.cpp \
     ui/dialogs/file/qg_filedialog.cpp \
     ui/dialogs/main/qg_dlginitial.cpp \
     ui/dialogs/main/qg_exitdialog.cpp \
@@ -1549,7 +1553,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgellipse.ui \
        ui/dialogs/entity/qg_dlghatch.ui \
        ui/dialogs/entity/qg_dlgimage.ui \
-       ui/dialogs/entity/qg_dlgimageoptions.ui \
+       ui/dialogs/file/export/image/qg_dlgimageoptions.ui \
        ui/dialogs/entity/qg_dlginsert.ui \
        ui/dialogs/entity/qg_dlgline.ui \
        ui/dialogs/entity/qg_dlgmtext.ui \
@@ -1557,7 +1561,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgpolyline.ui \
        ui/dialogs/entity/qg_dlgspline.ui \
        ui/dialogs/entity/qg_dlgtext.ui \
-       ui/dialogs/file/export/qg_dlgoptionsmakercam.ui \
+       ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui \
        ui/dialogs/lc_inputtextdialog.ui \
        ui/dialogs/main/lc_dlgabout.ui \
        ui/dialogs/main/lc_dlgnewversionavailable.ui \
@@ -1573,7 +1577,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidget.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui \
        ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui \
-       ui/dialogs/file/export_layers/lc_layerexportoptions.ui \
+       ui/dialogs/file/export/layers/lc_layerexportoptions.ui \
        ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui \
        # ui/dock_widgets/library_widget/lc_librarywidget.ui \
        ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui \

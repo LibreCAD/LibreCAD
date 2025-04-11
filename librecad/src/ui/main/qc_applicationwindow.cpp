@@ -136,15 +136,8 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 #endif
 
     delete m_dialogFactory;
-    delete m_pluginInvoker;
-    delete m_creatorInvoker;
     delete m_actionContext;
-    delete m_workspacesInvoker;
-    delete m_styleHelper;
     // delete m_actionOptionsManager;
-    delete m_dlgHelpr;
-    delete m_gridViewInvoker;
-    delete m_infoCursorSettingsManager;
 }
 
 void QC_ApplicationWindow::checkForNewVersion() {
@@ -156,7 +149,7 @@ void QC_ApplicationWindow::forceCheckForNewVersion() {
 }
 
 void QC_ApplicationWindow::onNewVersionAvailable() {
-   m_dlgHelpr->showNewVersionAvailableDialog(m_releaseChecker);
+   m_dlgHelpr->showNewVersionAvailableDialog(m_releaseChecker.get());
 }
 
 // fixme - should it be there or in persistence?
@@ -1129,7 +1122,7 @@ void QC_ApplicationWindow::slotFileExport() {
         auto graphic = w->getGraphic();
         if (graphic != nullptr) {
             QString currentDocumentFileName = w->getFileName();
-            LC_ExportToImageService exportService(this, m_dlgHelpr);
+            LC_ExportToImageService exportService(this, m_dlgHelpr.get());
             exportService.exportGraphicsToImage(graphic, currentDocumentFileName);
         }
     }
