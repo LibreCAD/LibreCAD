@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 
 ## script to build LibreCAD AppImage
@@ -36,6 +36,12 @@ mkdir -p appdir/usr/share/doc/librecad
 mkdir -p appdir/usr/share/icons/hicolor/256x256/apps
 mkdir -p appdir/usr/share/icons/hicolor/scalable/apps
 mkdir -p appdir/usr/share/librecad
+mkdir -p appdir/usr/lib/x86_64-linux-gnu/qt6
+#export QPA_PLUGIN_FOLDER="$(find ../Qt -type d -name plugins -print)"
+echo "copying plugins"
+export QPA_PLUGIN_FOLDER="$(find /usr/lib/x86_64-linux-gnu/qt6/ -type d -name plugins -print)"
+rsync -Par ${QPA_PLUGIN_FOLDER} appdir/usr/lib/x86_64-linux-gnu/qt6/
+rsync -Par ${QPA_PLUGIN_FOLDER}/platforms appdir/usr/bin/
 
 # strip binaries
 strip unix/librecad
@@ -63,6 +69,17 @@ wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/lin
 wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
 chmod +x *.AppImage
 #ARCH=x86_64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
-ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop
-ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir
+export QT_QPA_PLATFORM_PLUGIN_PATH=app/usr/lib/plugins/platforms
+export EXTRA_PLATFORM_PLUGINS="xcb;wayland"
+export EXTRA_QT_PLUGINS="waylandcompositor"
+export EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so"
+ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --list-plugins
+export QT_QPA_PLATFORM_PLUGIN_PATH=app/usr/lib/plugins
+ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --list-plugins
+echo "done"
+ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop -oxcb,wayland
+ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --help
+echo "done2"
+ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir -extra-plugins=platforms/
+#ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir -extra-plugins=appdir/usr/lib/plugins/platforms/
 VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage appdir/
