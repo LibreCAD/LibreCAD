@@ -29,7 +29,7 @@ class QC_ApplicationWindow;
 class LC_GridViewInvoker: public LC_AppWindowAware {
     public:
         LC_GridViewInvoker(QC_ApplicationWindow* mainWin);
-        void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
+        void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) const;
         void updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const;
 };
 

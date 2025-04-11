@@ -32,7 +32,7 @@ public:
         : LC_AppWindowAware{mainWin} {
     }
     void slotInfoCursorSetting(bool toggle);
-    void loadFromSettings();
+    void loadFromSettings() const;
 
 signals:
      void showInfoCursorSettingChanged(bool enabled);

@@ -41,17 +41,17 @@ LC_AppWindowDialogsInvoker::LC_AppWindowDialogsInvoker(QC_ApplicationWindow *app
   :LC_AppWindowAware(appWin) {
 }
 
-void LC_AppWindowDialogsInvoker::showAboutWindow() {
+void LC_AppWindowDialogsInvoker::showAboutWindow() const {
     LC_DlgAbout dlg(m_appWin);
     dlg.exec();
 }
 
-void LC_AppWindowDialogsInvoker::showNewVersionAvailableDialog( LC_ReleaseChecker* releaseChecker){
+void LC_AppWindowDialogsInvoker::showNewVersionAvailableDialog( LC_ReleaseChecker* releaseChecker) const {
     LC_DlgNewVersionAvailable dlg(m_appWin, releaseChecker);
     dlg.exec();
 }
 
-void LC_AppWindowDialogsInvoker::showLicenseWindow() {
+void LC_AppWindowDialogsInvoker::showLicenseWindow() const {
     QDialog dlg(m_appWin);
     dlg.setWindowTitle(QObject::tr("License"));
     auto viewer = new TextFileViewer(&dlg);
@@ -79,12 +79,12 @@ void LC_AppWindowDialogsInvoker::showDeviceOptions() {
     dlg.exec();
 }
 
-bool LC_AppWindowDialogsInvoker::showWidgetOptionsDialog(){
+bool LC_AppWindowDialogsInvoker::showWidgetOptionsDialog() const {
     LC_WidgetOptionsDialog dlg(m_appWin);
     return dlg.exec() == QDialog::Accepted;
 }
 
-bool LC_AppWindowDialogsInvoker::showGeneralOptionsDialog() {
+bool LC_AppWindowDialogsInvoker::showGeneralOptionsDialog() const {
     QG_DlgOptionsGeneral dlg(m_appWin);
     bool  result = dlg.exec() == QDialog::Accepted;
     // fixme - sand - files - restore
@@ -92,7 +92,7 @@ bool LC_AppWindowDialogsInvoker::showGeneralOptionsDialog() {
     return result;
 }
 
-int LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog(RS_Graphic &graphic, int tabIndex){
+int LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog(RS_Graphic &graphic, int tabIndex) const {
     QG_DlgOptionsDrawing dlg(m_appWin);
     dlg.setGraphic(&graphic);
     dlg.showInitialTab(tabIndex);
@@ -104,11 +104,12 @@ int LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog(RS_Graphic &graphic,
  * Show a Save/Close/Cancel(All) dialog for the content of this sub-window.
  * The window handle must not be null, and the document must actually have been modified.
  *
+ * @param w
  * @param showSaveAll show a Save All button and rename Close -> Close All
  * @return QG_ExitDialog::ExitDialogResult the button that was pressed, or -1 if invoked in error
  * @see QG_ExitDialog
  */
-int LC_AppWindowDialogsInvoker::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
+int LC_AppWindowDialogsInvoker::showCloseDialog(const QC_MDIWindow *w, bool showSaveAll) const {
     QG_ExitDialog dlg(m_appWin);
     dlg.setShowOptionsForAll(showSaveAll);
     dlg.setTitle(tr("Closing Drawing"));
@@ -129,7 +130,7 @@ int LC_AppWindowDialogsInvoker::showCloseDialog(QC_MDIWindow *w, bool showSaveAl
     return -1; // should never get here; please send only modified documents
 }
 
-QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialog(const QString& drawingFileName){
+QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialog(const QString& drawingFileName) const {
     // read default settings:
     LC_GROUP("Export");
     QString defDir = LC_GET_STR("ExportImage", RS_SYSTEM->getHomeDir());
@@ -204,7 +205,7 @@ QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialo
     return {"", ""};
 }
 
-QPair<QString, RS2::FormatType> LC_AppWindowDialogsInvoker::requestDrawingFileName(RS2::FormatType format){
+QPair<QString, RS2::FormatType> LC_AppWindowDialogsInvoker::requestDrawingFileName(RS2::FormatType format) const {
     QG_FileDialog dlg(m_appWin);
     RS2::FormatType type = format;
     QString dxfPath = dlg.getOpenFile(&type);

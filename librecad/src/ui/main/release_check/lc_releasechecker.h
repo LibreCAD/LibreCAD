@@ -24,8 +24,6 @@
 #ifndef LC_RELEASECHECKER_H
 #define LC_RELEASECHECKER_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
 #include <QNetworkReply>
 
 class LC_ReleaseChecker;
@@ -100,7 +98,7 @@ protected:
 class LC_ReleaseChecker: public QObject{
     Q_OBJECT
 public:
-    LC_ReleaseChecker(QString ownTagName, bool ownPreRelease);
+    LC_ReleaseChecker(const QString& ownTagName, bool ownPreRelease);
     void checkForNewVersion(bool forceCheck = false);
     const LC_ReleaseInfo &getLatestRelease() const;
     const LC_ReleaseInfo &getLatestPreRelease() const;

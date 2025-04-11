@@ -23,8 +23,7 @@
 #ifndef LC_MENUFACTORY_H
 #define LC_MENUFACTORY_H
 
-#include <QList>
-#include <QObject>
+
 
 #include "lc_appwindowaware.h"
 #include "qc_applicationwindow.h"
@@ -42,7 +41,7 @@ public:
     void recreateMainMenuIfNeeded(QMenuBar *menuBar);
     void createMainMenu(QMenuBar* menu_bar);
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
-    QMenu* createMainWindowPopupMenu();
+    QMenu* createMainWindowPopupMenu() const;
     QMenu * getRecentFilesMenu() const{
         return m_menuRecentFiles;
     }
@@ -97,15 +96,15 @@ protected:
     void doCreateMenus(QMenuBar *menu_bar, bool firstCreation);
 
     QAction* urlActionTR(const QString& title, const char *url);
-    void addAction(QMenu *menu, const char *actionName);
-    void addActions(QMenu *result, const std::vector<QString> &actionNames);
-    QMenu* subMenuWithActions(QMenu *parent, const QString& title, const QString& name, const char *icon, const QList<QAction *> &actions);
-    QMenu* menu(const QString& title, const QString& name, QMenuBar* parent);
-    QMenu *menu(const QString& title, const QString& name,  QMenuBar *parent, const std::vector<QString> &actionNames);
+    void addAction(QMenu *menu, const char *actionName) const;
+    void addActions(QMenu *result, const std::vector<QString> &actionNames) const;
+    QMenu* subMenuWithActions(QMenu *parent, const QString& title, const QString& name, const char *icon, const QList<QAction *> &actions) const;
+    QMenu* menu(const QString& title, const QString& name, QMenuBar* parent) const;
+    QMenu *menu(const QString& title, const QString& name,  QMenuBar *parent, const std::vector<QString> &actionNames) const;
     QMenu *doCreateSubMenu(QMenu *parent, const QString& title, const QString& name, const char *icon) const;
-    QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames);
+    QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames) const;
     void createToolsMenuCombined(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
+    void createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) const;
 };
 
 #endif // LC_MENUFACTORY_H

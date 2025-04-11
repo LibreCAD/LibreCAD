@@ -118,7 +118,6 @@
 #include "lc_actionlayerstoggleconstruction.h"
 #include "lc_actionlayersexport.h"
 #include "rs_actionlibraryinsert.h"
-#include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
 #include "rs_actionmodifybevel.h"
@@ -170,8 +169,6 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 #include "rs_actionorder.h"
-#include "rs_modification.h"
-
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
@@ -235,13 +232,13 @@ QG_ActionHandler::QG_ActionHandler(QObject *parent)
  * Kills all running selection actions. Called when a selection action
   * is launched to reduce confusion.
    */
-void QG_ActionHandler::killSelectActions() {
+void QG_ActionHandler::killSelectActions() const {
     if (view != nullptr) {
         view->killSelectActions();
     }
 }
 
-void QG_ActionHandler::killAllActions() {
+void QG_ActionHandler::killAllActions() const {
     if (view != nullptr) {
         view->killAllActions();
     }
@@ -250,7 +247,7 @@ void QG_ActionHandler::killAllActions() {
 /**
  * @return Current action or nullptr.
  */
-RS_ActionInterface *QG_ActionHandler::getCurrentAction() {
+RS_ActionInterface *QG_ActionHandler::getCurrentAction() const {
     if (view != nullptr) {
         return view->getCurrentAction();
     } else {
@@ -302,7 +299,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
                 // DO we need to call some form of a 'clean' function?
                 view->killAllActions();
 
-                RS_Selection s((RS_EntityContainer&)*document, view->getViewPort());
+                RS_Selection s(static_cast<RS_EntityContainer&>(*document), view->getViewPort());
                 s.selectAll(false);
                 RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(),document->totalSelectedLength());
             }
@@ -1108,10 +1105,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 /**
  * @return Available commands of the application or the current action.
  */
-QStringList QG_ActionHandler::getAvailableCommands() {
+QStringList QG_ActionHandler::getAvailableCommands() const {
     RS_ActionInterface* currentAction = getCurrentAction();
 
-	if (currentAction) {
+	if (currentAction != nullptr) {
         return currentAction->getAvailableCommands();
     } else {
         QStringList cmd;
@@ -1122,9 +1119,7 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 }
 
 //get snap mode from snap toolbar
-RS_SnapMode QG_ActionHandler::getSnaps()
-{
-
+RS_SnapMode QG_ActionHandler::getSnaps() const {
     if (snap_toolbar) {
         return snap_toolbar->getSnaps();
     }
@@ -1211,7 +1206,7 @@ bool QG_ActionHandler::keycode(const QString& code) {
 /**
   * toggle snap modes when calling from command line
   **/
-bool QG_ActionHandler::commandLineActions(RS2::ActionType type){
+bool QG_ActionHandler::commandLineActions(RS2::ActionType type) const {
     RS_DEBUG->print("QG_ActionHandler::commandLineSnap()");
 
         // snap actions require special handling (GUI update)
@@ -1337,8 +1332,7 @@ void QG_ActionHandler::slotZoomOut() {
     setCurrentAction(RS2::ActionZoomOut);
 }
 
-
-void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
+void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) const {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
 
     if(snap_toolbar) {
@@ -1353,7 +1347,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): ok");
 }
 
-void QG_ActionHandler::slotSnapFree() {
+void QG_ActionHandler::slotSnapFree() const {
 //    if ( snapFree == nullptr) return;
 //    disableSnaps();
     RS_SnapMode s=getSnaps();
@@ -1361,28 +1355,28 @@ void QG_ActionHandler::slotSnapFree() {
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapGrid() {
+void QG_ActionHandler::slotSnapGrid() const {
 //    if(snapGrid==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapGrid = !s.snapGrid;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapEndpoint() {
+void QG_ActionHandler::slotSnapEndpoint() const {
 //    if(snapEndpoint==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapEndpoint = !s.snapEndpoint;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapOnEntity() {
+void QG_ActionHandler::slotSnapOnEntity() const {
 //    if(snapOnEntity==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapOnEntity = !s.snapOnEntity;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapCenter() {
+void QG_ActionHandler::slotSnapCenter() const {
 //    std::cout<<" QG_ActionHandler::slotSnapCenter(): start"<<std::endl;
 //    if(snapCenter==nullptr) return;
     RS_SnapMode s=getSnaps();
@@ -1390,19 +1384,19 @@ void QG_ActionHandler::slotSnapCenter() {
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapMiddle() {
+void QG_ActionHandler::slotSnapMiddle() const {
     RS_SnapMode s=getSnaps();
     s.snapMiddle = !s.snapMiddle;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapDist() {
+void QG_ActionHandler::slotSnapDist() const {
     RS_SnapMode s=getSnaps();
     s.snapDistance = !s.snapDistance;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotSnapIntersection() {
+void QG_ActionHandler::slotSnapIntersection() const {
     RS_SnapMode s=getSnaps();
     s.snapIntersection = !s.snapIntersection;
     slotSetSnaps(s);
@@ -1433,40 +1427,40 @@ void QG_ActionHandler::slotSnapMiddleManual(){
     view->setCurrentAction(a);
 }
 
-void QG_ActionHandler::disableSnaps() {
+void QG_ActionHandler::disableSnaps() const {
     slotSetSnaps(RS_SnapMode());
 }
 
-void QG_ActionHandler::slotRestrictNothing() {
+void QG_ActionHandler::slotRestrictNothing() const {
     RS_SnapMode s = getSnaps();
     s.restriction = RS2::RestrictNothing;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotRestrictOrthogonal() {
+void QG_ActionHandler::slotRestrictOrthogonal() const {
     RS_SnapMode s = getSnaps();
     s.restriction = RS2::RestrictOrthogonal;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotRestrictHorizontal() {
+void QG_ActionHandler::slotRestrictHorizontal() const {
     RS_SnapMode s = getSnaps();
     s.restriction = RS2::RestrictHorizontal;
     slotSetSnaps(s);
 }
 
-void QG_ActionHandler::slotRestrictVertical() {
+void QG_ActionHandler::slotRestrictVertical() const {
     RS_SnapMode s = getSnaps();
     s.restriction = RS2::RestrictVertical;
     slotSetSnaps(s);
 }
 
 // find snap restriction from menu
-RS2::SnapRestriction QG_ActionHandler::getSnapRestriction(){
+RS2::SnapRestriction QG_ActionHandler::getSnapRestriction() const {
     return getSnaps().restriction;
 }
 
-void QG_ActionHandler::disableRestrictions() {
+void QG_ActionHandler::disableRestrictions() const {
     RS_SnapMode s=getSnaps();
     s.restriction= RS2::RestrictNothing;
     slotSetSnaps(s);

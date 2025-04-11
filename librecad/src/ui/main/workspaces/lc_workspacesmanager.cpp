@@ -1,25 +1,25 @@
-// /****************************************************************************
-//
-// Utility base class for widgets that represents options for actions
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// **********************************************************************
-//
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_workspacesmanager.h"
 
@@ -33,7 +33,7 @@
 #include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_system.h"
-LC_WorkspacesManager::LC_WorkspacesManager() {}
+LC_WorkspacesManager::LC_WorkspacesManager() = default;
 
 LC_WorkspacesManager::~LC_WorkspacesManager() {
     qDeleteAll(m_workspacesList);
@@ -146,7 +146,7 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
         workspace.dockAreaRightActive = LC_GET_BOOL("RightDockArea", true);
         workspace.dockAreaToptActive = LC_GET_BOOL("TopDockArea", false);
         workspace.dockAreaBottomActive = LC_GET_BOOL("BottomDockArea", false);
-        workspace.docAreaFloatingtActive = LC_GET_BOOL("FloatingDockwidgets", false);
+        workspace.docAreaFloatingActive = LC_GET_BOOL("FloatingDockwidgets", false);
     }
     LC_GROUP_END();
 
@@ -171,12 +171,12 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     workspace.dockAreaRightActive = appWin.getDockAreas().right->isChecked();
     workspace.dockAreaBottomActive = appWin.getDockAreas().bottom->isChecked();
     workspace.dockAreaToptActive = appWin.getDockAreas().top->isChecked();
-    workspace.docAreaFloatingtActive = appWin.getDockAreas().floating->isChecked();
+    workspace.docAreaFloatingActive = appWin.getDockAreas().floating->isChecked();
 
     fillIconsAndMenuState(workspace);
 }
 
-void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
+void LC_WorkspacesManager::applyToSettings(const LC_Workspace &workspace){
     LC_GROUP("Geometry");
     {
         LC_SET("WindowGeometry",workspace.geometry);
@@ -189,7 +189,7 @@ void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
         LC_SET("RightDockArea", workspace.dockAreaRightActive);
         LC_SET("TopDockArea", workspace.dockAreaToptActive);
         LC_SET("BottomDockArea", workspace.dockAreaBottomActive);
-        LC_SET("FloatingDockwidgets", workspace.docAreaFloatingtActive);
+        LC_SET("FloatingDockwidgets", workspace.docAreaFloatingActive);
     }
     LC_GROUP_END();
     LC_GROUP("Widgets");
@@ -213,7 +213,7 @@ void LC_WorkspacesManager::applyToSettings(LC_Workspace &workspace){
     }
 }
 
-void LC_WorkspacesManager::restoreGeometryAndState(LC_Workspace &workspace){
+void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace) const {
     QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
     restoreGeometryAndState(workspace, appWin);
 }
@@ -228,7 +228,7 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::L
     appWin.getDockAreas().right->setChecked(workspace.dockAreaRightActive);
     appWin.getDockAreas().bottom->setChecked(workspace.dockAreaBottomActive);
     appWin.getDockAreas().top->setChecked(workspace.dockAreaToptActive);
-    appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingtActive);
+    appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingActive);
 
     appWin.rebuildMenuIfNecessary();
     appWin.setIconSize(QSize(workspace.iconsSizeToolbar, workspace.iconsSizeToolbar));
@@ -251,7 +251,7 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::L
     appWin.fireWidgetSettingsChanged();
 }
 
-void LC_WorkspacesManager::restore(LC_Workspace& perspective){
+void LC_WorkspacesManager::restore(const LC_Workspace& perspective){
     applyToSettings(perspective);
     restoreGeometryAndState(perspective);
 }
@@ -287,8 +287,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
     if (!workspacesFile.isEmpty()) {
         QFile jsonFile(workspacesFile);
         if (jsonFile.exists()) {
-            bool canRead = jsonFile.open(QFile::ReadOnly);
-            if (canRead) {
+            if (jsonFile.open(QFile::ReadOnly)) {
                 createWorkspacesFileBackupCopy(workspacesFile);
                 QJsonParseError parseError;
                 auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
@@ -311,7 +310,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
                         m_lastActivatedId = obj.value("lastActivatedId").toInt(0);
                         QJsonArray jsonArray = obj.value("workspaces").toArray();
                         m_workspacesList.clear();
-                            for(const QJsonValue & value: jsonArray) {
+                            for(const auto& value: jsonArray) {
                                 QJsonObject wsObj = value.toObject();
 
                                 auto* p = new LC_Workspace;
@@ -329,7 +328,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
                                 p->dockAreaRightActive = wsObj["dockRight"].toBool();
                                 p->dockAreaToptActive = wsObj["dockTop"].toBool();
                                 p->dockAreaBottomActive = wsObj["dockBottom"].toBool();
-                                p->docAreaFloatingtActive = wsObj["dockFloat"].toBool();
+                                p->docAreaFloatingActive = wsObj["dockFloat"].toBool();
 
                                 p->columnCountLeftDoc = wsObj["columnCountLeftDock"].toInt(6);
                                 p->iconsSizeToolbar = wsObj["iconSizeToolbar"].toInt(24);
@@ -373,8 +372,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
     QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
         QFile file(workspacesFile);
-        bool canWrite = file.open(QFile::WriteOnly);
-        if (canWrite) {
+        if (file.open(QFile::WriteOnly)) {
             QJsonObject objSettings;
             objSettings.insert("type", QJsonValue::fromVariant("LibreCAD Workspaces file"));
             objSettings.insert("maxId", QJsonValue::fromVariant(m_workspaceID));

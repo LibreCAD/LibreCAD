@@ -1,32 +1,31 @@
-// /****************************************************************************
-//
-// Utility base class for widgets that represents options for actions
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// **********************************************************************
-//
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "lc_releasechecker.h"
-#include "main.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -43,7 +42,6 @@
 LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):major(majorVer), minor(minorVer), revision(
     revisionNum), bugfix(bugfixVer), label(labelVer), tagName(tagNameVer) {
 }
-
 
 QString LC_TagInfo::getLabel() const {
     return label;
@@ -80,7 +78,7 @@ bool LC_TagInfo::isBefore(const LC_TagInfo& other) const{
     return false;
 }
 
-LC_ReleaseChecker::LC_ReleaseChecker(QString ownTagName, bool ownPreRelease):
+LC_ReleaseChecker::LC_ReleaseChecker(const QString& ownTagName, bool ownPreRelease):
     ownReleaseInfo(getOwnReleaseInfo(ownTagName, ownPreRelease)){
     connect(&m_WebCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
 }

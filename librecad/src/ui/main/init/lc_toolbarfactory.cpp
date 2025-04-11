@@ -24,7 +24,6 @@
 #include <QMenu>
 #include <QSettings>
 #include <QSizePolicy>
-#include <QToolBar>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_creatorinvoker.h"
@@ -61,7 +60,7 @@ QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
     return result;
 }
 
-QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy){
+QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy) const {
     auto ag_manager = m_appWin->m_actionGroupManager;
     auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler.get(), ag_manager,ag_manager->getActionsMap());
     result->setWindowTitle(tr("Snap Selection"));
@@ -73,7 +72,7 @@ QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy){
     return result;
 }
 
-QToolBar* LC_ToolbarFactory::createFileToolbar(QSizePolicy &tbPolicy){
+QToolBar* LC_ToolbarFactory::createFileToolbar(const QSizePolicy &tbPolicy) const {
     auto *result = createGenericToolbar(tr("File"), "file", tbPolicy, {},1);
     result->addActions(m_agm->file_actions);
     result->QWidget::addAction(m_agm->getActionByName("FilePrint"));
@@ -81,7 +80,7 @@ QToolBar* LC_ToolbarFactory::createFileToolbar(QSizePolicy &tbPolicy){
     return result;
 }
 
-QToolBar *LC_ToolbarFactory::createEditToolbar(QSizePolicy &tbPolicy){
+QToolBar *LC_ToolbarFactory::createEditToolbar(const QSizePolicy &tbPolicy) const {
     auto *result = createGenericToolbar(tr("Edit"), "Edit", tbPolicy,
                                         {
                                             "EditKillAllActions",
@@ -98,7 +97,7 @@ QToolBar *LC_ToolbarFactory::createEditToolbar(QSizePolicy &tbPolicy){
     return result;
 }
 
-QToolBar *LC_ToolbarFactory::createOrderToolbar(QSizePolicy &tbPolicy){
+QToolBar *LC_ToolbarFactory::createOrderToolbar(const QSizePolicy &tbPolicy) const {
     auto result = createGenericToolbar(tr("Order"), "Order", tbPolicy, {
                                            "OrderTop",
                                            "OrderBottom",
@@ -109,7 +108,7 @@ QToolBar *LC_ToolbarFactory::createOrderToolbar(QSizePolicy &tbPolicy){
     return result;
 }
 
-QToolBar *LC_ToolbarFactory::createViewToolbar(QSizePolicy &tbPolicy){
+QToolBar *LC_ToolbarFactory::createViewToolbar(const QSizePolicy &tbPolicy) const {
     auto result = createGenericToolbar(tr("View"), "View", tbPolicy, {
                                            "ViewGrid",
                                            "ViewDraft",
@@ -127,7 +126,7 @@ QToolBar *LC_ToolbarFactory::createViewToolbar(QSizePolicy &tbPolicy){
     return result;
 }
 
-QToolBar *LC_ToolbarFactory::createDockAreasToolbar(QSizePolicy &tbPolicy){
+QToolBar *LC_ToolbarFactory::createDockAreasToolbar(const QSizePolicy &tbPolicy) const{
     return createGenericToolbar(tr("Dock Areas"), "Dock Areas", tbPolicy, {
                                     "LeftDockAreaToggle",
                                     "RightDockAreaToggle",
@@ -137,14 +136,14 @@ QToolBar *LC_ToolbarFactory::createDockAreasToolbar(QSizePolicy &tbPolicy){
                                 }, 1);
 }
 
-QToolBar *LC_ToolbarFactory::createCreatorsToolbar(QSizePolicy &tbPolicy){
+QToolBar *LC_ToolbarFactory::createCreatorsToolbar(const QSizePolicy &tbPolicy) const {
     return createGenericToolbar(tr("Creators"), "Creators", tbPolicy, {
                                     "InvokeMenuCreator",
                                     "InvokeToolbarCreator"
                                 }, 1);
 }
 
-QToolBar *LC_ToolbarFactory::createPreferencesToolbar(QSizePolicy &tbPolicy){
+QToolBar *LC_ToolbarFactory::createPreferencesToolbar(const QSizePolicy &tbPolicy) const {
     return createGenericToolbar(tr("Preferences"), "Preferences", tbPolicy, {
                                     "OptionsGeneral",
                                     "OptionsDrawing"
@@ -190,7 +189,7 @@ void LC_ToolbarFactory::createStandardToolbars(){
     addToBottom(creators);
 }
 
-QToolBar* LC_ToolbarFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
+QToolBar* LC_ToolbarFactory::createInfoCursorToolbar(const QSizePolicy &tbPolicy) {
     auto result = createGenericToolbar(tr("Info Cursor"), "Info Cursor", tbPolicy, {
         "InfoCursorEnable"
     },1);
@@ -220,20 +219,20 @@ QToolBar* LC_ToolbarFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
     return result;
 }
 
-void LC_ToolbarFactory::addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) {
+void LC_ToolbarFactory::addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) const {
     QAction* action = m_agm->getActionByName(name);
     action->setProperty("InfoCursorActionTag", tag);
     menu->addAction(action);
 }
 
-void LC_ToolbarFactory::initCADToolbars(){
+void LC_ToolbarFactory::initCADToolbars() const {
     bool enable_cad_toolbars = LC_GET_ONE_BOOL("Startup", "EnableCADToolbars", true);
     if (enable_cad_toolbars) {
         createCADToolbars();
     }
 }
 
-void LC_ToolbarFactory::createCADToolbars(){
+void LC_ToolbarFactory::createCADToolbars() const {
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto *line      = createCADToolbar(tr("Line"), "Line", tbPolicy, m_agm->line_actions);
@@ -288,7 +287,7 @@ QToolBar *LC_ToolbarFactory::createCategoriesToolbar() {
     return toolbar;
 }
 
-QToolBar* LC_ToolbarFactory::createNamedViewsToolbar(QSizePolicy &toolBarPolicy){
+QToolBar* LC_ToolbarFactory::createNamedViewsToolbar(const QSizePolicy &toolBarPolicy) const{
     QToolBar * result = doCreateToolBar(tr("Named Views"), "Views", toolBarPolicy, 1);
 
     QAction *saveViewAction = m_agm->getActionByName("ZoomViewSave");
@@ -303,7 +302,7 @@ QToolBar* LC_ToolbarFactory::createNamedViewsToolbar(QSizePolicy &toolBarPolicy)
     return result;
 }
 
-QToolBar* LC_ToolbarFactory::createUCSToolbar(QSizePolicy &toolBarPolicy){
+QToolBar* LC_ToolbarFactory::createUCSToolbar(const QSizePolicy &toolBarPolicy){
     QToolBar * result = doCreateToolBar(tr("UCS"), "UCS", toolBarPolicy, 1);
 
     QAction *ucsCreateAction = m_agm->getActionByName("UCSCreate");
@@ -324,7 +323,7 @@ QToolBar* LC_ToolbarFactory::createUCSToolbar(QSizePolicy &toolBarPolicy){
     return result;
 }
 
-QToolBar* LC_ToolbarFactory::createWorkspacesToolbar(QSizePolicy &toolBarPolicy){
+QToolBar* LC_ToolbarFactory::createWorkspacesToolbar(const QSizePolicy &toolBarPolicy){
     auto * result = doCreateToolBar( tr("Workspaces"), "Workspaces", toolBarPolicy, 1);
 
     auto* toolButton = new QToolButton(result);
@@ -347,7 +346,7 @@ QToolBar* LC_ToolbarFactory::createWorkspacesToolbar(QSizePolicy &toolBarPolicy)
     return result;
 }
 
-QToolBar* LC_ToolbarFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group){
+QToolBar* LC_ToolbarFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group) const {
     QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, group);    for (const QString& actionName: actionNames){
         if (actionName.isEmpty()){
             result->addSeparator();
@@ -370,11 +369,11 @@ QToolBar *LC_ToolbarFactory::doCreateToolBar(const QString &title, const QString
     return result;
 }
 
-QToolBar* LC_ToolbarFactory::createCADToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
+QToolBar* LC_ToolbarFactory::createCADToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions) const {
     return genericToolbarWithActions(title, name, toolBarPolicy, actions, 2);
 }
 
-QToolBar* LC_ToolbarFactory::genericToolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions, int toolbarGroup){
+QToolBar* LC_ToolbarFactory::genericToolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions, int toolbarGroup) const {
     QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, toolbarGroup);
     result->addActions(actions);
     result->hide();
@@ -392,9 +391,9 @@ QToolButton* LC_ToolbarFactory::toolButton(QToolBar* toolbar, const QString &too
     return result;
 }
 
-void LC_ToolbarFactory::addToTop(QToolBar *toolbar) { m_appWin->addToolBar(Qt::TopToolBarArea, toolbar); }
-void LC_ToolbarFactory::addToBottom(QToolBar *toolbar) { m_appWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
-void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) { m_appWin->addToolBar(Qt::LeftToolBarArea, toolbar); }
+auto LC_ToolbarFactory::addToTop(QToolBar* toolbar) const -> void { m_appWin->addToolBar(Qt::TopToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToBottom(QToolBar *toolbar) const { m_appWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
+void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) const { m_appWin->addToolBar(Qt::LeftToolBarArea, toolbar); }
 
 void LC_ToolbarFactory::createCustomToolbars(){
     m_appWin->m_creatorInvoker = std::make_unique<LC_CreatorInvoker>(m_appWin, m_agm);

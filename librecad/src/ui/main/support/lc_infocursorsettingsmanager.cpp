@@ -79,7 +79,7 @@ void LC_InfoCursorSettingsManager::slotInfoCursorSetting(bool toggle) {
     }
 }
 
-void LC_InfoCursorSettingsManager::loadFromSettings() {
+void LC_InfoCursorSettingsManager::loadFromSettings() const {
     LC_GROUP("InfoOverlayCursor");
     {
         bool infoCursorEnabled = LC_GET_BOOL("Enabled", true);

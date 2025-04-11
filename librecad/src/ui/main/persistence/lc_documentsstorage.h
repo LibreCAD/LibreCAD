@@ -22,7 +22,6 @@
 
 #ifndef LC_DOCUMENTSSTORAGE_H
 #define LC_DOCUMENTSSTORAGE_H
-#include <QMainWindow>
 
 #include "rs.h"
 
@@ -38,16 +37,16 @@ public:
     bool saveDocument(RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
     bool saveBlockAs(RS_Graphic* block, const QString& fileName);
     bool autoSaveDocument(RS_Document *document,RS_GraphicView * graphicView, QString& autosaveFileName);
-    bool saveDocumentAs(RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
+    bool saveDocumentAs(const RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
     bool exportGraphics(RS_Graphic *document,const QString &fileName, RS2::FormatType formatType);
-    bool loadDocument(RS_Document *document, const QString &fileName, RS2::FormatType type);
-    bool loadDocument(RS_Document *document, const QString &fileName);
-    bool loadDocumentFromTemplate(RS_Document *document, RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type);
+    bool loadDocument(const RS_Document *document, const QString &fileName, RS2::FormatType type) const;
+    bool loadDocument(const RS_Document *document, const QString &fileName) const;
+    bool loadDocumentFromTemplate(const RS_Document *document, RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type) const;
 protected:
-    bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, QString currentFileName = "");
+    bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName = "");
     bool autoSaveGraphic(RS_Graphic *graphic, QString& fileName);
-    bool loadGraphicFromTemplate(RS_Graphic *graphic, const QString &templateFileName, RS2::FormatType type);
-    bool loadGraphic(RS_Graphic *graphic, const QString &filename, RS2::FormatType type);
+    bool loadGraphicFromTemplate(RS_Graphic *graphic, const QString &templateFileName, RS2::FormatType type) const;
+    bool loadGraphic(RS_Graphic *graphic, const QString &filename, RS2::FormatType type) const;
     bool doSave(RS_Graphic *graphic, bool sameFile);
     bool saveGraphicAs(RS_Graphic *graphic, const QString &filename, RS2::FormatType type, bool forceSave);
     bool backupDrawingFile(const QString &drawingFileName);

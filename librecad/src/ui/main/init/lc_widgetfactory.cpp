@@ -1,25 +1,24 @@
-// /****************************************************************************
-//
-// Utility base class for widgets that represents options for actions
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// **********************************************************************
-//
+/* ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include <QMenu>
 #include <QFile>
@@ -32,8 +31,6 @@
 #include "lc_dockwidget.h"
 #include "lc_layertreewidget.h"
 #include "lc_widgetfactory.h"
-
-#include <QStatusBar>
 
 #include "lc_anglesbasiswidget.h"
 #include "lc_namedviewslistwidget.h"
@@ -175,7 +172,7 @@ void LC_WidgetFactory::createCADSidebar(int columns, int icon_size, bool flatBut
     m_appWin->tabifyDockWidget(modify, order);
 }
 
-QDockWidget* LC_WidgetFactory::createDockWidget(const QString& horizontalTitle, const char *name, const QString& verticalTitle){
+QDockWidget* LC_WidgetFactory::createDockWidget(const QString& horizontalTitle, const char *name, const QString& verticalTitle) const {
     auto result = new LC_DockWidget(m_appWin, horizontalTitle, verticalTitle);
     // auto result = new QDockWidget(horizontalTitle, m_appWin);
     result->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -325,7 +322,7 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler
  * depending on the dock area it is moved to.
  */
 // fixme - sand - files - remove, just port from ApppWindow - use uniform way
-void LC_WidgetFactory::modifyCommandTitleBar(Qt::DockWidgetArea area) {
+void LC_WidgetFactory::modifyCommandTitleBar(Qt::DockWidgetArea area) const {
     auto *cmdDockWidget = findChild<QDockWidget *>("command_dockwidget");
 
     auto *commandWidget = static_cast<QG_CommandWidget *>(cmdDockWidget->widget());
@@ -344,7 +341,7 @@ void LC_WidgetFactory::modifyCommandTitleBar(Qt::DockWidgetArea area) {
     cmdDockWidget->setFeatures(features);
 }
 
-void LC_WidgetFactory::updateDockWidgetsTitleBarType(QC_ApplicationWindow* mainWin, bool verticalTitle) {
+void LC_WidgetFactory::updateDockWidgetsTitleBarType(const QC_ApplicationWindow* mainWin, bool verticalTitle) {
     QList<QDockWidget*> dockwidgetsList = mainWin->findChildren<QDockWidget*>();
     for (QDockWidget* dw: dockwidgetsList) {
         if (dw->property("_lc_doc_widget").isValid()) {
@@ -381,7 +378,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 }
 
 // fixme - sand - remove this method
-void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames){
+void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames) const {
     for (const QString& actionName: actionNames) {
         QAction *action = m_agm->getActionByName(actionName);
         if (action != nullptr) {
@@ -391,7 +388,7 @@ void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNa
 }
 
 // fixme - sand - remove this method
-void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName){
+void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName) const {
     QAction *action = m_agm->getActionByName(actionName);
     if (action != nullptr) {
         toolbar->addAction(action);
@@ -436,7 +433,7 @@ LC_CADDockWidget* LC_WidgetFactory::cadDockWidget(const QString& title, const ch
     return result;
 }
 
- QToolBar* LC_WidgetFactory::createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, const QString& title, const char *name){
+ QToolBar* LC_WidgetFactory::createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, const QString& title, const char *name) const {
     auto tb = new QToolBar(title, m_appWin);
     tb->setSizePolicy(tbPolicy);
     tb->addWidget(widget);
@@ -528,4 +525,4 @@ void LC_WidgetFactory::initStatusBar() {
     status_bar->setVisible(statusBarVisible);
 }
 
-void LC_WidgetFactory::addToBottom(QToolBar *toolbar) { m_appWin->addToolBar(Qt::BottomToolBarArea, toolbar); }
+void LC_WidgetFactory::addToBottom(QToolBar *toolbar) const { m_appWin->addToolBar(Qt::BottomToolBarArea, toolbar); }

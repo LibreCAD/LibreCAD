@@ -23,7 +23,6 @@
 #include "lc_defaultactioncontext.h"
 
 #include "lc_actionoptionsmanager.h"
-#include "lc_optionswidgetsholder.h"
 #include "lc_qtstatusbarmanager.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
@@ -31,12 +30,12 @@
 #include "qg_selectionwidget.h"
 LC_DefaultActionContext::LC_DefaultActionContext() {}
 
-void LC_DefaultActionContext::addOptionsWidget(LC_ActionOptionsWidget *widet){
-    m_actionOptionsManager->addOptionsWidget(widet);
+void LC_DefaultActionContext::addOptionsWidget(LC_ActionOptionsWidget *widget){
+    m_actionOptionsManager->addOptionsWidget(widget);
 }
 
-void LC_DefaultActionContext::removeOptionsWidget(LC_ActionOptionsWidget *widet){
-    m_actionOptionsManager->removeOptionsWidget(widet);
+void LC_DefaultActionContext::removeOptionsWidget(LC_ActionOptionsWidget *widget){
+    m_actionOptionsManager->removeOptionsWidget(widget);
 }
 
 void LC_DefaultActionContext::requestSnapDistOptions(double *dist, bool on){
@@ -73,13 +72,13 @@ void LC_DefaultActionContext::updateMouseWidget(const QString &left, const QStri
 }
 
 void LC_DefaultActionContext::commandMessage(const QString &message){
-    if (m_commandWidget) {
+    if (m_commandWidget != nullptr) {
         m_commandWidget->appendHistory(message);
     }
 }
 
 void LC_DefaultActionContext::commandPrompt(const QString &message){
-    if (m_commandWidget) {
+    if (m_commandWidget != nullptr) {
         m_commandWidget->setCommand(message);
     }
 }

@@ -44,11 +44,11 @@ public:
     ~LC_WidgetFactory() override = default;
     void initWidgets();
     QList<QAction *> actionsToDisableInPrintPreview;
-    static void updateDockWidgetsTitleBarType(QC_ApplicationWindow* mainWin, bool verticalTitle);
+    static void updateDockWidgetsTitleBarType(const QC_ApplicationWindow* mainWin, bool verticalTitle);
     static void updateDockOptions(QC_ApplicationWindow* mainWin, bool allowDockNesting, bool verticalTabs);
 private:
     LC_ActionGroupManager *m_agm {nullptr};
-    QDockWidget *createDockWidget(const QString &title, const char *name, const QString& verticalTitle = "");
+    QDockWidget *createDockWidget(const QString &title, const char *name, const QString& verticalTitle = "") const;
     QDockWidget *createPenPalletteWidget();
     QDockWidget *createLayerWidget(QG_ActionHandler *action_handler);
     QDockWidget *createNamedViewsWidget();
@@ -58,7 +58,7 @@ private:
     QDockWidget *createBlockListWidget(QG_ActionHandler *action_handler);
     QDockWidget *createLibraryWidget(QG_ActionHandler *action_handler);
     QDockWidget *createCmdWidget(QG_ActionHandler *action_handler);
-    void modifyCommandTitleBar(Qt::DockWidgetArea area);
+    void modifyCommandTitleBar(Qt::DockWidgetArea area) const;
     void createPenWizardWidget();
     void fillActionLists();
     void initLeftCADSidebar();
@@ -66,10 +66,10 @@ private:
     void initStatusBar();
     void createCADSidebar(int columns, int icon_size, bool flatButtons);
     LC_CADDockWidget *cadDockWidget(const QString &title, const char *name, const QList<QAction *> &actions, int columns, int iconSize, bool flatButtons);
-    void addToBottom(QToolBar *toolbar);
-    QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, const QString& title, const char *name);
-    void addAction(QToolBar *toolbar, const char *actionName);
-    void makeActionsInvisible(const std::vector<QString> &actionNames);
+    void addToBottom(QToolBar *toolbar) const;
+    QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, const QString& title, const char *name) const;
+    void addAction(QToolBar *toolbar, const char *actionName) const;
+    void makeActionsInvisible(const std::vector<QString> &actionNames) const;
     static void updateWidgetTitles(bool vertical_title_bar);
     static void setDockWidgetTitleType(QDockWidget *widget, bool verticalTitleBar);
 };

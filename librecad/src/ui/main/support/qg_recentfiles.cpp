@@ -1,4 +1,4 @@
-    // /****************************************************************************
+// /****************************************************************************
 //
 // Utility base class for widgets that represents options for actions
 //
@@ -30,30 +30,28 @@
 #include "rs_settings.h"
 #include "../qc_applicationwindow.h"
 
-    /**
- * Constructor
- * @param m_maxEntries Number of files that can be stored in the list at maximum
- */
-QG_RecentFiles::QG_RecentFiles(QObject *parent, int number)
+/**
+* Constructor
+* @param number Number of files that can be stored in the list at maximum
+*/
+QG_RecentFiles::QG_RecentFiles(QObject* parent, int number)
     : QObject(parent)
-    , m_maxEntries(number)
-{
+      , m_maxEntries(number) {
     if (number <= 0)
         assert(!"maximum number of RecentFiles must be larger than zero");
 }
 
-QG_RecentFiles::~QG_RecentFiles()
-{
+QG_RecentFiles::~QG_RecentFiles() {
     try {
         saveToSettings();
-    } catch (...) {
+    }
+    catch (...) {
         RS_DEBUG->print(
             "QG_RecentFiles::~QG_RecentFiles(): saving to settings caused an exception.");
     }
 }
 
-void QG_RecentFiles::saveToSettings() const
-{
+void QG_RecentFiles::saveToSettings() const {
     RS_SETTINGS->beginGroup("/RecentFiles");
     for (int i = 0; i < count(); ++i) {
         RS_SETTINGS->writeEntry(QString("/File") + QString::number(i + 1), get(i));
@@ -65,8 +63,7 @@ void QG_RecentFiles::saveToSettings() const
  * Adds a file to the list of recently loaded m_files if
  * it's not already in the list.
  */
-void QG_RecentFiles::add(const QString &filename)
-{
+void QG_RecentFiles::add(const QString& filename) {
     RS_DEBUG->print("QG_RecentFiles::add");
     if (filename.size() > 2048) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -91,39 +88,35 @@ void QG_RecentFiles::add(const QString &filename)
     RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
-    void QG_RecentFiles::addIfAbsent(const QString &filename){
-        if (!contains(filename)) {
-            add(filename);
-        }
+void QG_RecentFiles::addIfAbsent(const QString& filename) {
+    if (!contains(filename)) {
+        add(filename);
     }
+}
 
-    QString QG_RecentFiles::get(int i) const
-{
+QString QG_RecentFiles::get(int i) const {
     if (i >= 0 && i < m_files.size()) {
         return m_files[i];
-    } else {
+    }
+    else {
         return QString("");
     }
 }
 
-int QG_RecentFiles::count() const
-{
+int QG_RecentFiles::count() const {
     return m_files.count();
 }
 
 /** @return m_maxEntries of files that can be stored in the list at maximum */
-int QG_RecentFiles::getNumber() const
-{
+int QG_RecentFiles::getNumber() const{
     return m_maxEntries;
 }
 
-int QG_RecentFiles::indexOf(const QString &filename) const
-{
+int QG_RecentFiles::indexOf(const QString &filename) const{
     return m_files.indexOf(filename);
 }
 
-void QG_RecentFiles::addFiles(QMenu *file_menu)
-{
+void QG_RecentFiles::addFiles(QMenu *file_menu){
     RS_DEBUG->print("QG_RecentFiles::addFiles()");
 
     LC_GROUP("RecentFiles");
@@ -150,8 +143,7 @@ void QG_RecentFiles::addFiles(QMenu *file_menu)
     RS_DEBUG->print("QG_RecentFiles::addFiles(): OK");
 }
 
-void QG_RecentFiles::updateRecentFilesMenu()
-{
+void QG_RecentFiles::updateRecentFilesMenu(){
     RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): begin\n");
 
     RS_DEBUG->print("Updating recent file menu...");

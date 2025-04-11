@@ -37,6 +37,7 @@
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 
+#include "lc_documentsstorage.h"
 #include "qg_exitdialog.h"
 #include "qg_graphicview.h"
 #include "rs_debug.h"
@@ -123,7 +124,7 @@ void QC_MDIWindow::addWidgetsListeners(){
     }
 }
 
-void QC_MDIWindow::removeWidgetsListeners(){
+void QC_MDIWindow::removeWidgetsListeners() const {
     if (m_document != nullptr) {
         RS_Graphic* graphic = m_document -> getGraphic();
         if (graphic != nullptr) {

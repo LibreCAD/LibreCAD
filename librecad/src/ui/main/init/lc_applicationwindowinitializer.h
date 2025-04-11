@@ -37,21 +37,21 @@ private:
     void initReleaseChecker();
     void initActionGroupManager();
     void initActionOptionsManager();
-    void initActionFactory();
-    void initDockCorners();
+    void initActionFactory() const;
+    void initDockCorners() const;
     void initCentralWidget();
-    void initIconSize();
-    void loadCmdWidgetVariablesFile();
-    void initDockAreasActions();
-    void initMainMenu();
-    void updateCommandsAlias();
-    void initRecentFilesList();
-    void initDialogFactory();
-    void initWidgets();
-    void initToolbars();
+    void initIconSize() const;
+    void loadCmdWidgetVariablesFile() const;
+    void initDockAreasActions() const;
+    void initMainMenu() const;
+    static void updateCommandsAlias();
+    void initRecentFilesList() const;
+    void initDialogFactory() const;
+    void initWidgets() const;
+    void initToolbars() const;
     void initPlugins();
-    void initAutoSaveTimer();
-    void initActionContext();
+    void initAutoSaveTimer() const;
+    void initActionContext() const;
 };
 
 #endif // LC_APPLICATIONWINDOWINITIALIZER_H

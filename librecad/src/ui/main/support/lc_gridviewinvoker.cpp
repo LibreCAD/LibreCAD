@@ -29,7 +29,7 @@
 LC_GridViewInvoker::LC_GridViewInvoker(QC_ApplicationWindow* mainWin):LC_AppWindowAware{mainWin} {
 }
 
-void LC_GridViewInvoker::setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) {
+void LC_GridViewInvoker::setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) const {
     if (toggle) {
         RS_GraphicView *view = m_appWin->getCurrentGraphicView();
         if (view != nullptr) {

@@ -38,16 +38,16 @@ class LC_AppWindowDialogsInvoker : public QObject, public LC_AppWindowAware{
     Q_OBJECT
 public:
     explicit LC_AppWindowDialogsInvoker(QC_ApplicationWindow *appWin);
-    void showAboutWindow();
-    void showNewVersionAvailableDialog(LC_ReleaseChecker* releaseChecker);
-    void showLicenseWindow();
+    void showAboutWindow() const;
+    void showNewVersionAvailableDialog(LC_ReleaseChecker* releaseChecker) const;
+    void showLicenseWindow() const;
     void showDeviceOptions();
-    bool showWidgetOptionsDialog();
-    bool showGeneralOptionsDialog();
-    int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex);
-    int showCloseDialog(QC_MDIWindow *w, bool showSaveAll);
-    QPair<QString, QString> showExportFileSelectionDialog(const QString& drawingFileName);
-    QPair<QString, RS2::FormatType> requestDrawingFileName(RS2::FormatType type = RS2::FormatDXFRW);
+    bool showWidgetOptionsDialog() const;
+    bool showGeneralOptionsDialog() const;
+    int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) const;
+    int showCloseDialog(const QC_MDIWindow *w, bool showSaveAll) const;
+    QPair<QString, QString> showExportFileSelectionDialog(const QString& drawingFileName) const;
+    QPair<QString, RS2::FormatType> requestDrawingFileName(RS2::FormatType type = RS2::FormatDXFRW) const;
 };
 
 #endif // LC_APPLICATIONWINDOWDIALOGSHELPER_H

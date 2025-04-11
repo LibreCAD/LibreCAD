@@ -116,7 +116,7 @@ public:
     bool loadStyleSheet(const QString &path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
-    void onViewCurrentActionChanged(RS_ActionInterface *action);
+    void onViewCurrentActionChanged(const RS_ActionInterface *action);
     QAction* getAction(const QString& name) const override;
 
     void activateWindow(QMdiSubWindow* w){
@@ -129,8 +129,8 @@ public:
     void fireWidgetSettingsChanged();
     void fireWorkspacesChanged();
     void fireCurrentActionIconChanged(QAction* actionIcon);
-    void showStatusMessage(const QString& msg, int timeout = 0);
-    void notificationMessage(const QString &msg, int timeout);
+    void showStatusMessage(const QString& msg, int timeout = 0) const;
+    void notificationMessage(const QString &msg, int timeout) const;
     void initCompleted();
 public slots:
     void relayAction(QAction* q_action);
@@ -143,7 +143,7 @@ public slots:
     void slotShowDrawingOptionsUnits();
     void slotWorkspacesMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
-    void slotPenChanged(RS_Pen p);
+    void slotPenChanged(const RS_Pen& p);
     void setupCustomMenu(QG_GraphicView* view);
 
     //void slotSnapsChanged(RS_SnapMode s);
@@ -158,7 +158,7 @@ public slots:
     void slotFileOpen();
     void slotEditActiveBlock();
 
-    void slotFileOpenRecent(QAction* action);
+    void slotFileOpenRecent(const QAction* action);
     /** saves a document */
     void slotFileSave();
     /** saves a document under a different filename*/
@@ -214,7 +214,7 @@ public slots:
     void reloadStyleSheet();
     void updateGridStatus(const QString&);
     void showDeviceOptions();
-    void updateDevice(QString);
+    void updateDevice(const QString&);
     void invokeMenuCreator();
     void invokeToolbarCreator();
     void saveNamedView();
@@ -228,7 +228,7 @@ public slots:
     void restoreNamedView5();
     void restoreNamedViewCurrent();
     void restoreNamedView(const QString& viewName);
-    void invokeLicenseWindow();
+    void invokeLicenseWindow() const;
     void onNewVersionAvailable();
     void checkForNewVersion();
     void forceCheckForNewVersion();
@@ -282,7 +282,7 @@ public:
     LC_AnglesBasisWidget* getAnglesBasisWidget() const {return m_anglesBasisWidget;};
 
     // Highlight the active block in the block widget
-    void showBlockActivated(const RS_Block* block);
+    void showBlockActivated(const RS_Block* block) const;
 
     // Auto-save
     void startAutoSaveTimer(bool enabled);
@@ -291,7 +291,7 @@ public:
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
     void activeMDIWindowChanged(QC_MDIWindow *window);
     void doClose(QC_MDIWindow* w, bool activateNext = true);
-    void setupWidgetsByWindow(QC_MDIWindow *w);
+    void setupWidgetsByWindow(QC_MDIWindow *w) const;
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
     void updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const;
     void fillWorkspacesList(QList<QPair<int, QString>> &list);
@@ -313,20 +313,20 @@ protected:
     void changeEvent(QEvent* event) override;
     //! \}
 
-    QG_GraphicView* setupNewGraphicView(QC_MDIWindow* w);
+    QG_GraphicView* setupNewGraphicView(const QC_MDIWindow* w);
     QC_ApplicationWindow();
     QMenu* createPopupMenu() override;
     QString getFileNameFromFullPath(const QString &path);
     void updateCoordinateWidgetFormat();
-    void updateWidgetsAsDocumentLoaded(QC_MDIWindow *w);
+    void updateWidgetsAsDocumentLoaded(const QC_MDIWindow *w);
     void autoZoomAfterLoad(QG_GraphicView *graphicView);
     bool newDrawingFromTemplate(const QString &fileName, QC_MDIWindow* w = nullptr);
 	void doActivate(QMdiSubWindow* w) override;
-    void enableFileActions(QC_MDIWindow* w);
+    void enableFileActions(const QC_MDIWindow* w);
     void enableFileActions();
     void doWindowActivated(QMdiSubWindow *w, bool forced) override;
-    void setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleString, bool draftMode);
-    void setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode, bool forPreview);
+    void setupMDIWindowTitleByName(QC_MDIWindow *w, const QString& baseTitleString, bool draftMode);
+    void setupMDIWindowTitleByFile(QC_MDIWindow *w, const QString& drawingFileFullPath, bool draftMode, bool forPreview);
 
     bool tryCloseAllBeforeExist();
 #ifdef LC_DEBUGGING

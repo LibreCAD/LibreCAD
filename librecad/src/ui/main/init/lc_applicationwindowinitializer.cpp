@@ -103,13 +103,13 @@ void LC_ApplicationWindowInitializer::initActionOptionsManager(){
     connect(m_appWin, &QC_ApplicationWindow::currentActionIconChanged, optionsWidgetsHolder, &LC_OptionsWidgetsHolder::setCurrentQAction);
 }
 
-void LC_ApplicationWindowInitializer::initActionFactory(){
+void LC_ApplicationWindowInitializer::initActionFactory() const {
     LC_ActionFactory a_factory(m_appWin, m_appWin->m_actionHandler.get());
     bool using_theme = LC_GET_ONE_BOOL("Widgets","AllowTheme", false);
     a_factory.fillActionContainer(m_appWin->m_actionGroupManager, using_theme);
 }
 
-void LC_ApplicationWindowInitializer::initDockCorners(){
+void LC_ApplicationWindowInitializer::initDockCorners() const {
     LC_GROUP("Widgets");
     {
         bool allowDockNesting = LC_GET_BOOL("DockAllowNested", true);
@@ -156,7 +156,7 @@ void LC_ApplicationWindowInitializer::initCentralWidget(){
     connect(m_appWin->getAction("FileClose"), &QAction::triggered, m_appWin->m_mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
 }
 
-void LC_ApplicationWindowInitializer::initIconSize(){
+void LC_ApplicationWindowInitializer::initIconSize() const {
     LC_GROUP("Widgets");
     {
         bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
@@ -169,14 +169,14 @@ void LC_ApplicationWindowInitializer::initIconSize(){
     LC_GROUP_END();
 }
 
-void LC_ApplicationWindowInitializer::loadCmdWidgetVariablesFile(){
+void LC_ApplicationWindowInitializer::loadCmdWidgetVariablesFile() const {
     auto command_file = LC_GET_ONE_STR("Paths","VariableFile", "");
     if (!command_file.isEmpty()) {
         m_appWin->m_commandWidget->leCommand->readCommandFile(command_file);
     }
 }
 
-void LC_ApplicationWindowInitializer::initDockAreasActions(){
+void LC_ApplicationWindowInitializer::initDockAreasActions() const {
     m_appWin->m_dockAreas.left = m_appWin->getAction("LeftDockAreaToggle");
     m_appWin->m_dockAreas.right = m_appWin->getAction("RightDockAreaToggle");
     m_appWin->m_dockAreas.top = m_appWin->getAction("TopDockAreaToggle");
@@ -184,7 +184,7 @@ void LC_ApplicationWindowInitializer::initDockAreasActions(){
     m_appWin->m_dockAreas.floating = m_appWin->getAction("FloatingDockwidgetsToggle");
 }
 
-void LC_ApplicationWindowInitializer::initMainMenu(){
+void LC_ApplicationWindowInitializer::initMainMenu() const {
     m_appWin->m_menuFactory = new LC_MenuFactory(m_appWin, m_appWin->m_actionGroupManager);
     m_appWin->m_menuFactory->createMainMenu(m_appWin->menuBar());
 }
@@ -193,12 +193,12 @@ void LC_ApplicationWindowInitializer::updateCommandsAlias(){
     RS_COMMANDS->updateAlias();
 }
 
-void LC_ApplicationWindowInitializer::initRecentFilesList(){
+void LC_ApplicationWindowInitializer::initRecentFilesList() const {
     m_appWin->m_recentFilesList = new QG_RecentFiles(m_appWin, 9);
     m_appWin->m_recentFilesList->addFiles(m_appWin->m_menuFactory->getRecentFilesMenu());
 }
 
-void LC_ApplicationWindowInitializer::initDialogFactory(){
+void LC_ApplicationWindowInitializer::initDialogFactory() const {
     LC_SnapOptionsWidgetsHolder *snapOptionsHolder = m_appWin->m_snapToolBar->getSnapOptionsHolder();
     auto factory = new QC_DialogFactory(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
     RS_DialogFactory::instance()->setFactoryObject(factory);
@@ -210,12 +210,12 @@ void LC_ApplicationWindowInitializer::initDialogFactory(){
     factory->set_selection_widget(m_appWin->m_selectionWidget);
 }
 
-void LC_ApplicationWindowInitializer::initWidgets(){
+void LC_ApplicationWindowInitializer::initWidgets() const {
     LC_WidgetFactory widgetFactory(m_appWin);
     widgetFactory.initWidgets();
 }
 
-void LC_ApplicationWindowInitializer::initToolbars(){
+void LC_ApplicationWindowInitializer::initToolbars() const {
     LC_ToolbarFactory toolbarFactory(m_appWin);
     toolbarFactory.initToolBars();
 }
@@ -225,7 +225,7 @@ void LC_ApplicationWindowInitializer::initPlugins(){
     m_appWin->m_pluginInvoker->loadPlugins();
 }
 
-void LC_ApplicationWindowInitializer::initAutoSaveTimer(){
+void LC_ApplicationWindowInitializer::initAutoSaveTimer() const {
     bool allowAutoSave = LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true);
     m_appWin->startAutoSaveTimer(allowAutoSave);
 }
@@ -234,7 +234,7 @@ void LC_ApplicationWindowInitializer::initAutoSaveTimer(){
  * NOTE: potentially, the main application window may represent implementation of ActionContext instead of
  * LC_DefaultActionContext. Thinks whether this is practical..
  */
-void LC_ApplicationWindowInitializer::initActionContext(){
+void LC_ApplicationWindowInitializer::initActionContext() const {
     m_appWin->m_actionContext = new LC_DefaultActionContext();
     m_appWin->m_actionContext->setActionOptionsManager(m_appWin->m_actionOptionsManager);
     m_appWin->m_actionContext->setCommandWidget(m_appWin->m_commandWidget);

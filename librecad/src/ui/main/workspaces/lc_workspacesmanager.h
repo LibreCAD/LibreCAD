@@ -22,8 +22,9 @@
 
 #ifndef LC_WORKSPACESMANAGER_H
 #define LC_WORKSPACESMANAGER_H
+
 #include <QObject>
-#include <QStringList>
+#include <QList>
 
 class QC_ApplicationWindow;
 
@@ -56,7 +57,7 @@ protected:
         bool dockAreaRightActive = false;
         bool dockAreaToptActive = false;
         bool dockAreaBottomActive = false;
-        bool docAreaFloatingtActive = false;
+        bool docAreaFloatingActive = false;
 
         int iconsSizeToolbar = 24;
         int iconsSizeLeftDock = 24;
@@ -75,9 +76,9 @@ protected:
     QList<LC_Workspace*> m_workspacesList;
     QString getWorkspacesFileName();
     void createWorkspacesFileBackupCopy(const QString& workspacesFile);
-    void restoreGeometryAndState(LC_Workspace &workspace);
-    void restore(LC_Workspace& perspective);
-    void applyToSettings(LC_Workspace &workspace);
+    void restoreGeometryAndState(const LC_Workspace &workspace) const;
+    void restore(const LC_Workspace& perspective);
+    void applyToSettings(const LC_Workspace &workspace);
     void fillBySettings(LC_Workspace &workspace);
     void fillByState(LC_Workspace &workspace);
     void loadWorkspaces();

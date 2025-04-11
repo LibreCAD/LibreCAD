@@ -43,25 +43,25 @@ class QG_ActionHandler:public QObject {
 public:
     QG_ActionHandler(QObject *parent);
     ~QG_ActionHandler() override = default;
-    RS_ActionInterface *getCurrentAction();
+    RS_ActionInterface *getCurrentAction() const;
     RS_ActionInterface *setCurrentAction(RS2::ActionType id);
     /**
     * Kills all running selection actions. Called when a selection action
     * is launched to reduce confusion.
    */
-    void killSelectActions();
+    void killSelectActions() const;
     /**
     * @brief killAllActions kill all actions
     */
-    void killAllActions();
+    void killAllActions() const;
     bool keycode(const QString &code);
     //special handling of actions issued from command line, currently used for snap actions
     //return true if handled
-    bool commandLineActions(RS2::ActionType id);
+    bool commandLineActions(RS2::ActionType id) const;
     bool command(const QString &cmd);
-    QStringList getAvailableCommands();
-    RS_SnapMode getSnaps();
-    RS2::SnapRestriction getSnapRestriction();
+    QStringList getAvailableCommands() const;
+    RS_SnapMode getSnaps() const;
+    RS2::SnapRestriction getSnapRestriction() const;
     void set_snap_toolbar(QG_SnapToolBar *snap_toolbar);
     void setDocumentAndView(RS_Document* document, RS_GraphicView* graphicView);
     void setActionContext(LC_DefaultActionContext* actionContext) {m_actionContext = actionContext;};
@@ -69,23 +69,23 @@ public slots:
     void slotZoomIn(); // fixme - remove
     void slotZoomOut();// fixme - remove
 
-    void slotSetSnaps(RS_SnapMode const &s);
-    void slotSnapFree();
-    void slotSnapGrid();
-    void slotSnapEndpoint();
-    void slotSnapOnEntity();
-    void slotSnapCenter();
-    void slotSnapMiddle();
-    void slotSnapDist();
+    void slotSetSnaps(RS_SnapMode const &s) const;
+    void slotSnapFree() const;
+    void slotSnapGrid() const;
+    void slotSnapEndpoint() const;
+    void slotSnapOnEntity() const;
+    void slotSnapCenter() const;
+    void slotSnapMiddle() const;
+    void slotSnapDist() const;
     void slotSnapMiddleManual();
-    void slotSnapIntersection();
+    void slotSnapIntersection() const;
     void slotSnapIntersectionManual();
-    void slotRestrictNothing();
-    void slotRestrictOrthogonal();
-    void slotRestrictHorizontal();
-    void slotRestrictVertical();
-    void disableSnaps();
-    void disableRestrictions();
+    void slotRestrictNothing() const;
+    void slotRestrictOrthogonal() const;
+    void slotRestrictHorizontal() const;
+    void slotRestrictVertical() const;
+    void disableSnaps() const;
+    void disableRestrictions() const;
     void slotSetRelativeZero();
     void slotLockRelativeZero(bool on);
     void toggleVisibility(RS_Layer *layer);

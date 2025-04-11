@@ -47,15 +47,13 @@ void RS_ActionBlocksAttributes::trigger() {
         if (blockList != nullptr && block != nullptr) {
             QString oldName = block->getName();
 
-            RS_BlockData d;
-            d = RS_DIALOGFACTORY->requestBlockAttributesDialog(blockList);
+            RS_BlockData d = RS_DIALOGFACTORY->requestBlockAttributesDialog(blockList);
 
             if (d.isValid()) {
                 QString newName = d.name;
                 // update window title of opened block
                 auto& appWindow = QC_ApplicationWindow::getAppWindow();
-                QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
-                if (blockWindow) {
+                if (QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block)) {
                     QString title = blockWindow->windowTitle();
                     title = title.replace(
                             "'" + oldName + "'",

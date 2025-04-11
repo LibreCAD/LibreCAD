@@ -26,6 +26,7 @@
 
 #ifndef QG_RECENTFILES_H
 #define QG_RECENTFILES_H
+
 #include <QObject>
 #include <QtContainerFwd>
 

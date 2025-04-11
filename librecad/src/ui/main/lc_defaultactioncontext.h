@@ -23,8 +23,7 @@
 #ifndef LC_DEFAULTACTIONCONTEXT_H
 #define LC_DEFAULTACTIONCONTEXT_H
 #include "lc_actioncontext.h"
-#include "qg_actionhandler.h"
-#include "rs_document.h"
+
 class LC_OptionsWidgetsHolder;
 class LC_QTStatusbarManager;
 class QG_MouseWidget;
@@ -38,8 +37,8 @@ class LC_DefaultActionContext: public LC_ActionContext{
 public:
     LC_DefaultActionContext();
     virtual ~LC_DefaultActionContext() = default;
-    void addOptionsWidget(LC_ActionOptionsWidget *widet) override;
-    void removeOptionsWidget(LC_ActionOptionsWidget *widet) override;
+    void addOptionsWidget(LC_ActionOptionsWidget *widget) override;
+    void removeOptionsWidget(LC_ActionOptionsWidget *widget) override;
     void requestSnapDistOptions(double *dist, bool on) override;
     void requestSnapMiddleOptions(int *middlePoints, bool on) override;
     void hideSnapOptions() override;

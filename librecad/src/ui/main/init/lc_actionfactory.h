@@ -24,11 +24,7 @@
 #ifndef LC_ACTIONFACTORY_H
 #define LC_ACTIONFACTORY_H
 
-#include <QObject>
-#include <QMap>
-#include "rs.h"
 #include "lc_actionfactorybase.h"
-#include "lc_shortcuts_manager.h"
 
 class QActionGroup;
 class QAction;
@@ -42,45 +38,45 @@ public:
     LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
     void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
 private:
-    void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createViewActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawCircleActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createSelectActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawCurveActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawSplineActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawPolylineActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createDrawDimensionsActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createModifyActions(QMap<QString, QAction *> &map, QActionGroup *pGroup);
-    void createPenActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createDrawCircleActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createSelectActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawCurveActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawSplineActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawPolylineActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawDimensionsActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createModifyActions(QMap<QString, QAction *> &map, QActionGroup *pGroup) const;
+    void createPenActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createFileActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createPenActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createBlockActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createPenActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createBlockActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createFileActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createWidgetActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group);
 
-    void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void setDefaultShortcuts(QMap<QString, QAction *> &map, LC_ActionGroupManager* agm);
     void setupCreatedActions(QMap<QString, QAction *> &map);
-    void markNotEditableActionsShortcuts(QMap<QString, QAction *> &map);
+    void markNotEditableActionsShortcuts(const QMap<QString, QAction *> &map);
     void fillActionLists(LC_ActionGroupManager *agm);
     void prepareActionsToDisableInPrintPreview(LC_ActionGroupManager *agm, QList<QAction *> &actionsList);
-    void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 };

@@ -1,25 +1,24 @@
-// /****************************************************************************
-//
-// Utility base class for widgets that represents options for actions
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// **********************************************************************
-//
+/* ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_menufactory.h"
 
@@ -148,7 +147,7 @@ void LC_MenuFactory::createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenu
     }
 }
 
-void LC_MenuFactory::createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) {
+void LC_MenuFactory::createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) const {
     if (m_menuOptions.expandToolsTillEntity) {
         auto line = menu(tr("&Line"), "line", menu_bar);
         line->addActions(m_actionGroupManager->line_actions);
@@ -423,7 +422,6 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
     QList<QToolBar*> toolbarsList = m_appWin->findChildren<QToolBar*>();
 
     bool cadToolbarsAreEnabled = LC_GET_ONE_BOOL("Startup","EnableLeftSidebar", true);
-
     if (cadToolbarsAreEnabled) {
         QList<QToolBar*> cadToolbarsList;
         QList<QToolBar*> otherToolbarsList;
@@ -443,12 +441,10 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
         for (QToolBar* tb: cadToolbarsList) {
             m_menuCADToolbars->QWidget::addAction(tb->toggleViewAction());
         }
-
         toolbarsList = otherToolbarsList;
     }
 
     m_appWin->sortWidgetsByGroupAndTitle(toolbarsList);
-
     int previousGroup = -100;
 
     for (QToolBar* tb: toolbarsList){
@@ -507,9 +503,9 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
              auto workspaces = new QMenu(tr("&Workspaces"), m_menuWorkspace);
              workspaces->setTearOffEnabled(m_allowTearOffMenus);
              workspaces->setIcon(wsIcon);
-             int workspacesCount = workspacesList.size();
+             qsizetype workspacesCount = workspacesList.size();
              for (int i = 0; i < workspacesCount; i++){
-                 auto w = workspacesList.at(i);
+                 const auto w = workspacesList.at(i);
                  auto name = w.second;
                  auto* a = workspaces->addAction(wsIcon, name);
                  connect(a, &QAction::triggered, m_appWin, &QC_ApplicationWindow::restoreWorkspace);
@@ -530,13 +526,12 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
          auto drawings = new QMenu(tr("&Drawings"), m_menuWorkspace);
          drawings->setTearOffEnabled(m_allowTearOffMenus);
          m_menuWorkspace->addMenu(drawings);
-         QAction *menuItem;
 
          auto mdi_area = m_appWin->getMdiArea();
          auto mdiViewMode = mdi_area->viewMode();
          bool tabbed = mdiViewMode == QMdiArea::TabbedView;
 
-         menuItem = drawings->addAction(tr("Ta&b mode"), m_appWin, &LC_MDIApplicationWindow::slotToggleTab);
+         QAction* menuItem = drawings->addAction(tr("Ta&b mode"), m_appWin, &LC_MDIApplicationWindow::slotToggleTab);
          menuItem->setCheckable(true);
          menuItem->setChecked(tabbed);
 
@@ -600,7 +595,7 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
          for (int i = 0; i < window_list.size(); ++i) {
              QString title = window_list.at(i)->windowTitle();
              if (title.contains("[*]")) { // modification mark placeholder
-                 int idx = title.lastIndexOf("[*]");
+                 qsizetype idx = title.lastIndexOf("[*]");
                  if (window_list.at(i)->isWindowModified()) {
                      title.replace(idx, 3, "*");
                  } else {
@@ -624,13 +619,13 @@ QAction* LC_MenuFactory::urlActionTR(const QString& title, const char* url ){
     return result;
 }
 
-QMenu*  LC_MenuFactory::subMenu(QMenu* parent, const QString& title, const QString& name, const char* icon, const std::vector<QString> &actionNames){
+QMenu*  LC_MenuFactory::subMenu(QMenu* parent, const QString& title, const QString& name, const char* icon, const std::vector<QString> &actionNames) const {
     QMenu *result = doCreateSubMenu(parent, title, name, icon);
     addActions(result, actionNames);
     return result;
 }
 
-QMenu*  LC_MenuFactory::subMenuWithActions(QMenu* parent, const QString& title, const QString& name, const char* icon, const QList<QAction*> &actions){
+QMenu*  LC_MenuFactory::subMenuWithActions(QMenu* parent, const QString& title, const QString& name, const char* icon, const QList<QAction*> &actions) const {
     QMenu *sub_menu = doCreateSubMenu(parent, title, name, icon);
     sub_menu->addActions(actions);
     return sub_menu;
@@ -650,7 +645,7 @@ QMenu *LC_MenuFactory::doCreateSubMenu(QMenu *parent, const QString& title, cons
     return sub_menu;
 }
 
-QMenu*  LC_MenuFactory::menu(const QString& title, const QString& name, QMenuBar* parent){
+QMenu*  LC_MenuFactory::menu(const QString& title, const QString& name, QMenuBar* parent) const {
     auto result =  new QMenu(title, parent);
     QString nameCleared(name);
     nameCleared.remove(' ');
@@ -660,20 +655,20 @@ QMenu*  LC_MenuFactory::menu(const QString& title, const QString& name, QMenuBar
     return result;
 }
 
-QMenu*  LC_MenuFactory::menu(const QString& title, const QString& name,  QMenuBar* parent, const std::vector<QString> &actionNames){
+QMenu*  LC_MenuFactory::menu(const QString& title, const QString& name,  QMenuBar* parent, const std::vector<QString> &actionNames) const {
     QMenu* result = menu(title, name, parent);
     addActions(result, actionNames);
     return result;
 }
 
-void LC_MenuFactory::addAction(QMenu* menu, const char* actionName){
+void LC_MenuFactory::addAction(QMenu* menu, const char* actionName) const {
     QAction *action = m_actionGroupManager->getActionByName(actionName);
     if (action != nullptr) {
         menu->addAction(action);
     }
 }
 
-void LC_MenuFactory::addActions(QMenu *result, const std::vector<QString> &actionNames) {
+void LC_MenuFactory::addActions(QMenu *result, const std::vector<QString> &actionNames) const {
     for (const QString& actionName : actionNames){
         if (actionName.isEmpty()){
             result->addSeparator();
@@ -687,7 +682,7 @@ void LC_MenuFactory::addActions(QMenu *result, const std::vector<QString> &actio
     }
 }
 
-QMenu* LC_MenuFactory::createMainWindowPopupMenu(){
+QMenu* LC_MenuFactory::createMainWindowPopupMenu() const {
     auto *result = new QMenu(tr("Context"));
     result->setAttribute(Qt::WA_DeleteOnClose);
 

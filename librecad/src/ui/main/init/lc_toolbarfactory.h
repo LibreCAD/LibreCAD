@@ -35,40 +35,40 @@ class LC_ActionGroupManager;
 class LC_ToolbarFactory:public QObject, public LC_AppWindowAware {
     Q_OBJECT
 public:
-    LC_ToolbarFactory(QC_ApplicationWindow *main_win);
+    explicit LC_ToolbarFactory(QC_ApplicationWindow *main_win);
     ~LC_ToolbarFactory() override = default;
     void initToolBars();
 private:
     LC_ActionGroupManager *m_agm {nullptr};
     void createStandardToolbars();
-    void addInfoCursorOptionAction(QMenu *menu, const char *name, int tag);
-    void initCADToolbars();
-    void createCADToolbars();
+    void addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) const;
+    void initCADToolbars() const;
+    void createCADToolbars() const;
     void createCustomToolbars();
 
     QToolBar *createPenToolbar(QSizePolicy tbPolicy);
-    QToolBar *createSnapToolbar(QSizePolicy tbPolicy);
-    QToolBar *createFileToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createEditToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createOrderToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createViewToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createDockAreasToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createCreatorsToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createPreferencesToolbar(QSizePolicy &tbPolicy);
-    QToolBar *createInfoCursorToolbar(QSizePolicy &tbPolicy);
+    QToolBar *createSnapToolbar(QSizePolicy tbPolicy) const;
+    QToolBar *createFileToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createEditToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createOrderToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createViewToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createDockAreasToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createCreatorsToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createPreferencesToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createInfoCursorToolbar(const QSizePolicy &tbPolicy);
 
     QToolBar *createCategoriesToolbar();
-    QToolBar *createNamedViewsToolbar(QSizePolicy &toolBarPolicy);
-    QToolBar *createUCSToolbar(QSizePolicy &toolBarPolicy);
-    QToolBar *createWorkspacesToolbar(QSizePolicy &toolBarPolicy);
-    QToolBar *createGenericToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group);
+    QToolBar *createNamedViewsToolbar(const QSizePolicy &toolBarPolicy) const;
+    QToolBar *createUCSToolbar(const QSizePolicy &toolBarPolicy);
+    QToolBar *createWorkspacesToolbar(const QSizePolicy &toolBarPolicy);
+    QToolBar *createGenericToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group) const;
     QToolBar *doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy, int group) const;
-    QToolBar *createCADToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions);
+    QToolBar *createCADToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions) const;
     QToolBar *genericToolbarWithActions(
-        const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions, int toolbarGroup);
+        const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions, int toolbarGroup) const;
     QToolButton *toolButton(QToolBar *toolbar, const QString &tooltip, const char *icon, const QList<QAction *> &actions);
-    void addToTop(QToolBar *toolbar);
-    void addToBottom(QToolBar *toolbar);
-    void addToLeft(QToolBar *toolbar);
+    void addToTop(QToolBar *toolbar) const;
+    void addToBottom(QToolBar *toolbar) const;
+    void addToLeft(QToolBar *toolbar) const;
 };
 #endif // LC_TOOLBARFACTORY_H

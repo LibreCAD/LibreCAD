@@ -27,11 +27,7 @@
 #define QC_MDIWINDOW_H
 #include <QMdiSubWindow>
 #include <QList>
-#include "rs.h"
 #include "rs_graphic.h"
-#include "rs_layerlistlistener.h"
-#include "rs_blocklistlistener.h"
-#include "persistence/lc_documentsstorage.h"
 class QG_GraphicView;
 class RS_Document;
 class RS_Pen;
@@ -39,6 +35,8 @@ class QMdiArea;
 class RS_EventHandler;
 class QCloseEvent;
 class LC_ActionContext;
+class LC_DocumentsStorage;
+
 /**
  * MDI document window. Contains a document and a view (window).
  *
@@ -50,7 +48,7 @@ class QC_MDIWindow:public QMdiSubWindow,
 
 public:
     QC_MDIWindow(RS_Document *doc,QWidget *parent,bool printPreview, LC_ActionContext* actionContext);
-    void removeWidgetsListeners();
+    void removeWidgetsListeners() const;
     ~QC_MDIWindow() override;
 public slots:
     void slotPenChanged(const RS_Pen &p);

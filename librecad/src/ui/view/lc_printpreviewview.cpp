@@ -31,7 +31,7 @@ void LC_PrintPreviewView::createViewRenderer() {
     setRenderer(std::make_unique<LC_PrintPreviewViewRenderer>(getViewPort(), this));
 }
 
-void LC_PrintPreviewView::setDrawingMode(RS2::DrawingMode m) {
+void LC_PrintPreviewView::setDrawingMode(RS2::DrawingMode m) const {
     auto previewRenderer = dynamic_cast<LC_PrintPreviewViewRenderer *>(getRenderer());
     if (previewRenderer != nullptr) {
         previewRenderer->setDrawingMode(m);

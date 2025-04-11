@@ -56,14 +56,14 @@ public:
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
     // activates window with given filename of drawing, if any
-    void activateWindowWithFile(QString &fileName);
+    void activateWindowWithFile(const QString &fileName);
     void closeAllWindowsWithDoc(const RS_Document* doc);
     virtual void closeWindow(QC_MDIWindow* w) = 0;
     void redrawAll();
     void enableWidgetList(bool enable, const std::vector<QWidget *> &widgeList);
     void enableWidget(QWidget* win, bool enable);
-    void doForEachWindow(std::function<void(QC_MDIWindow*)> callback) const;
-    void doForEachWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
+    void doForEachWindow(const std::function<void(QC_MDIWindow*)>& callback) const;
+    void doForEachWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const;
     QAction* enableAction(const QString& name, bool enable) const;
     void enableActions(const std::vector<QString> &actionList, bool enable) const;
     QAction* checkAction(const QString& name, bool enable) const;
@@ -83,16 +83,16 @@ public slots:
     void slotTabPositionWest();
     void slotToggleTab();
     void slotTile();
-    void slotZoomAuto();
+    void slotZoomAuto() const;
     void slotWindowActivated(QMdiSubWindow *w);
     void slotWindowActivatedByIndex(int);
     void slotRedockWidgets();
     friend class QC_MDIWindow;
-    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+    QMenu *findMenu(const QString &searchMenu, const QObjectList& thisMenuList, const QString& currentEntry);
     void slotBack();
     void onEnterKey();
 protected slots:
-    void onCADTabBarIndexChanged(int index);
+    void onCADTabBarIndexChanged(int index) const;
 protected:
     /** MdiArea for MDI */
     QMdiArea* m_mdiAreaCAD {nullptr};
@@ -105,7 +105,7 @@ protected:
     void setupCADAreaTabbar();
     void slotWindowActivatedForced(QMdiSubWindow *w);
     virtual void doWindowActivated(QMdiSubWindow *w, bool forced) = 0;
-    void doForEachSubWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const;
+    void doForEachSubWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const;
 };
 
 #endif // LC_MDIAPPLICATIONWINDOW_H

@@ -1,29 +1,13 @@
 
 #include <QtSvg>
 #include <QTimer>
-#include <QSysInfo>
-#include <QStyleFactory>
-#include <QStatusBar>
-#include <QRegularExpression>
-#include <QPluginLoader>
-#include <QPagedPaintDevice>
-#include <QMessageBox>
 #include <QMenuBar>
 #include <QMdiArea>
-#include <QImageWriter>
 #include <QFileDialog>
-#include <QDockWidget>
 #include <QByteArray>
 
-#include <boost/version.hpp>
-
-#include "lc_centralwidget.h"
 #include "lc_mdiapplicationwindow.h"
 #include "lc_penwizard.h"
-#include "lc_printing.h"
-#include "lc_undosection.h"
-#include "lc_widgetfactory.h"
-#include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
 #include "support/qg_recentfiles.h"
@@ -31,10 +15,8 @@
 #include "rs_debug.h"
 #include "rs_document.h"
 #include "rs_painter.h"
-#include "rs_selection.h"
 #include "rs_settings.h"
-#include "rs_units.h"
-#include "textfileviewer.h"
+
 
 LC_MDIApplicationWindow::LC_MDIApplicationWindow():
     m_currentSubWindow(nullptr){}
@@ -54,7 +36,7 @@ void LC_MDIApplicationWindow::slotBack() {
  */
 void LC_MDIApplicationWindow::onEnterKey() {
     RS_GraphicView *graphicView = getCurrentGraphicView();
-    if (graphicView) {
+    if (graphicView != nullptr) {
         graphicView->processEnterKey();
     }
 }
@@ -85,7 +67,7 @@ RS_Document const *LC_MDIApplicationWindow::getCurrentDocument() const {
 
 RS_Document *LC_MDIApplicationWindow::getCurrentDocument() {
     QC_MDIWindow *win = getCurrentMDIWindow();
-    if (win) {
+    if (win != nullptr) {
         return win->getDocument();
     }
     return nullptr;
@@ -136,22 +118,22 @@ QMdiArea *LC_MDIApplicationWindow::getMdiArea() {
   * currentEntry only used internally during recursion
   * returns 0 when no menu was found
   */
-QMenu *LC_MDIApplicationWindow::findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry) {
+QMenu *LC_MDIApplicationWindow::findMenu(const QString &searchMenu, const QObjectList& thisMenuList, const QString& currentEntry) {
     if (searchMenu==currentEntry) {
-        return (QMenu *) thisMenuList.at(0)->parent();
+        return static_cast<QMenu*>(thisMenuList.at(0)->parent());
     }
 
     QList<QObject*>::const_iterator i=thisMenuList.begin();
     while (i != thisMenuList.end()) {
         if ((*i)->inherits ("QMenu")) {
-            auto *ii=(QMenu*)*i;
+            auto *ii=static_cast<QMenu*>(*i);
             if (QMenu *foundMenu=findMenu(searchMenu, ii->children(), currentEntry+"/"+ii->objectName().replace("&", ""))) {
                 return foundMenu;
             }
         }
         ++i;
     }
-    return 0;
+    return nullptr;
 }
 
 QC_MDIWindow *LC_MDIApplicationWindow::getWindowWithDoc(const RS_Document *doc) {
@@ -178,7 +160,7 @@ void LC_MDIApplicationWindow::closeAllWindowsWithDoc(const RS_Document *doc){
     }
 }
 
-void LC_MDIApplicationWindow::activateWindowWithFile(QString &fileName) {
+void LC_MDIApplicationWindow::activateWindowWithFile(const QString &fileName) {
     if (!fileName.isEmpty()) {
         foreach(QC_MDIWindow *w, m_windowList) {
             if (w != nullptr) {
@@ -386,7 +368,7 @@ void LC_MDIApplicationWindow::slotTile() {
 }
 
 //auto zoom the graphicView of sub-windows
-void LC_MDIApplicationWindow::slotZoomAuto() {
+void LC_MDIApplicationWindow::slotZoomAuto() const {
     doForEachSubWindowGraphicView([]([[maybe_unused]]QG_GraphicView *gv, QC_MDIWindow* win){
         win->zoomAuto();
     });
@@ -445,7 +427,7 @@ void LC_MDIApplicationWindow::slotToggleTab() {
     }
 }
 
-void LC_MDIApplicationWindow::doForEachWindow(std::function<void(QC_MDIWindow*)> callback) const{
+void LC_MDIApplicationWindow::doForEachWindow(const std::function<void(QC_MDIWindow*)>& callback) const{
     for (QC_MDIWindow* value : m_windowList) {
         callback(value);
     }
@@ -460,7 +442,7 @@ void LC_MDIApplicationWindow::setupCADAreaTabbar() {
     }
 }
 
-void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index) {
+void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index) const {
     LC_GROUP("Appearance");
     {
         QList<QTabBar *> tabBarList = m_mdiAreaCAD->findChildren<QTabBar *>();
@@ -472,7 +454,7 @@ void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index)
         // setup close button in window tab for tabbed mode
         QTabBar *tabBar = tabBarList.at(0);
         if (tabBar != nullptr) {
-            auto closeSide = (QTabBar::ButtonPosition) style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition, 0, this);
+            auto closeSide = static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition, nullptr, this));
 
             for (int i = 0; i < tabBar->count(); ++i) {
                 QWidget *closeButtonWidget = tabBar->tabButton(i, closeSide);
@@ -557,7 +539,7 @@ void LC_MDIApplicationWindow::slotWindowActivatedByIndex(int index){
     slotWindowActivated(m_mdiAreaCAD->subWindowList().at(index));
 }
 
-void LC_MDIApplicationWindow::slotRedockWidgets(){
+void LC_MDIApplicationWindow::slotRedockWidgets()  {
     const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
     for (auto *dockwidget: dockwidgets) {
         dockwidget->setFloating(false);
@@ -578,7 +560,7 @@ void LC_MDIApplicationWindow::slotWindowActivatedForced(QMdiSubWindow *w){
     doWindowActivated(w, true);
 }
 
-void LC_MDIApplicationWindow::doForEachWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const{
+void LC_MDIApplicationWindow::doForEachWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const{
     for (QC_MDIWindow *win: m_windowList) {
         QG_GraphicView *graphicView = win->getGraphicView();
         if (graphicView != nullptr) {
@@ -587,7 +569,7 @@ void LC_MDIApplicationWindow::doForEachWindowGraphicView(std::function<void(QG_G
     }
 }
 
-void LC_MDIApplicationWindow::doForEachSubWindowGraphicView(std::function<void(QG_GraphicView *, QC_MDIWindow *)> callback) const{
+void LC_MDIApplicationWindow::doForEachSubWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const{
     QList<QMdiSubWindow *> windows = m_mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
         auto *win = qobject_cast<QC_MDIWindow *>(windows.at(i));

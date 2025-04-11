@@ -68,12 +68,12 @@
 #include "lc_infocursorsettingsmanager.h"
 #include "lc_layertreewidget.h"
 #include "lc_printing.h"
+#include "lc_plugininvoker.h"
 #include "lc_widgetoptionsdialog.h"
 #include "lc_mdiapplicationwindow.h"
 #include "lc_releasechecker.h"
 #include "lc_menufactory.h"
 #include "lc_namedviewslistwidget.h"
-#include "lc_plugininvoker.h"
 #include "lc_ucslistwidget.h"
 #include "lc_workspacesinvoker.h"
 #include "qc_dialogfactory.h"
@@ -188,7 +188,7 @@ std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow(){
     return instance;
 }
 
-void QC_ApplicationWindow::setupMDIWindowTitleByFile(QC_MDIWindow *w, QString drawingFileFullPath, bool draftMode, bool forPreview){
+void QC_ApplicationWindow::setupMDIWindowTitleByFile(QC_MDIWindow *w, const QString& drawingFileFullPath, bool draftMode, bool forPreview){
     QString fileName = getFileNameFromFullPath(drawingFileFullPath);
     QString baseName;
     if (forPreview) {
@@ -200,7 +200,7 @@ void QC_ApplicationWindow::setupMDIWindowTitleByFile(QC_MDIWindow *w, QString dr
     setupMDIWindowTitleByName(w, baseName , draftMode);
 }
 
-void QC_ApplicationWindow::setupMDIWindowTitleByName(QC_MDIWindow *w, QString baseTitleStr, bool draftMode){
+void QC_ApplicationWindow::setupMDIWindowTitleByName(QC_MDIWindow *w, const QString& baseTitleStr, bool draftMode){
     auto title = baseTitleStr + "[*]";
     if (draftMode) {
         title = title + " [" + tr("Draft Mode") + "]";
@@ -259,6 +259,7 @@ void QC_ApplicationWindow::activeMDIWindowChanged(QC_MDIWindow *window){
 
 /**
  * Force-Close this sub window.
+ * @param w
  * @param activateNext also activate the next window in the window_list, if any
  */
 void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
@@ -306,7 +307,7 @@ void QC_ApplicationWindow::enableFileActions() {
 }
 
 // fixme - sand - files - change to signals?
-void QC_ApplicationWindow::setupWidgetsByWindow(QC_MDIWindow *w){
+void QC_ApplicationWindow::setupWidgetsByWindow(QC_MDIWindow *w) const {
     RS_GraphicView* gv = (w == nullptr) ? nullptr : w->getGraphicView();
 
     // fixme - sand - files - replace by updating list of instances, to simplify introduction of new widgets
@@ -344,7 +345,7 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
 /**
  * Enable the available file actions for this sub-window.
  */
-void QC_ApplicationWindow::enableFileActions(QC_MDIWindow *w) {
+void QC_ApplicationWindow::enableFileActions(const QC_MDIWindow *w) {
     bool hasWindow = w != nullptr;
     QString fileName;
     if (hasWindow) {
@@ -390,7 +391,7 @@ void QC_ApplicationWindow::dropEvent(QDropEvent *event) {
     unsigned counts = 0;
     for (QUrl const &url: event->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
-        if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo(fileName).exists()) {
+        if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo::exists(fileName)) {
             openFile(fileName);
             if (++counts > 32) return;
         }
@@ -401,7 +402,7 @@ void QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls()) {
         for (QUrl const &url: event->mimeData()->urls()) {
             const QString &fileName = url.toLocalFile();
-            if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo(fileName).exists()) {
+            if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo::exists(fileName)) {
                 event->acceptProposedAction();
                 return;
             }
@@ -688,7 +689,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
  * Called when something changed in the pen toolbar
  * (e.g. color, width, style).
  */
-void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
+void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
     QC_MDIWindow *w = getCurrentMDIWindow();
     if (w != nullptr) {
         w->slotPenChanged(pen);
@@ -742,7 +743,7 @@ QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, con
     return w;
 }
 
-QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(QC_MDIWindow* w) {
+QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(const QC_MDIWindow* w) {
     QG_GraphicView* view = w->getGraphicView();
     LC_GROUP("Appearance");
     bool antialiasing = LC_GET_BOOL("Antialiasing"); // fixme - sand - check whether its not loaded in loadSettings() later
@@ -794,7 +795,7 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
             showStatusMessage(tr("New Drawing created."), 2000);
         }
         auto graphic = w->getGraphic();
-        if (graphic) {
+        if (graphic != nullptr) {
             emit(gridChanged(graphic->isGridOn()));
         }
     }
@@ -838,20 +839,19 @@ void QC_ApplicationWindow::slotFileNewFromTemplate() {
             slotFilePrintPreview(false); // fixme - sand  why it's there?
             doClose(w); //force closing, without asking user for confirmation
         }
-        QMdiSubWindow *active = m_mdiAreaCAD->currentSubWindow();
-
+        QMdiSubWindow *activeWindow = m_mdiAreaCAD->currentSubWindow();
 
         // activeMDIWindowChanged(w);
         // m_activeMdiSubWindow = nullptr; //to allow reactivate the previous active
 
-        if (active) {//restore old geometry
-            m_mdiAreaCAD->setActiveSubWindow(active);
-            active->raise();
-            active->setFocus();
+        if (activeWindow != nullptr) {//restore old geometry
+            m_mdiAreaCAD->setActiveSubWindow(activeWindow);
+            activeWindow->raise();
+            activeWindow->setFocus();
             if (old == nullptr || maximized) {
-                active->showMaximized();
+                activeWindow->showMaximized();
             } else {
-                active->setGeometry(geo);
+                activeWindow->setGeometry(geo);
             }
         }
         RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: load Template failed");
@@ -920,7 +920,7 @@ void QC_ApplicationWindow::updateCoordinateWidgetFormat(){
     m_coordinateWidget->setCoordinates({0.0, 0.0}, {0.0, 0.0}, true);
 }
 
-void QC_ApplicationWindow::updateWidgetsAsDocumentLoaded(QC_MDIWindow *w){
+void QC_ApplicationWindow::updateWidgetsAsDocumentLoaded(const QC_MDIWindow *w){
     m_layerWidget->slotUpdateLayerList();
     m_layerWidget->activateLayer(0);
     m_layerTreeWidget->slotFilteringMaskChanged();
@@ -950,7 +950,7 @@ void QC_ApplicationWindow::autoZoomAfterLoad(QG_GraphicView *graphicView){
 }
 
 void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType type) {
-    if (!QFileInfo(fileName).exists()) {
+    if (!QFileInfo::exists(fileName)) {
         m_commandWidget->appendHistory(tr("File '%1' does not exist. Opening aborted").arg(fileName));
         showStatusMessage(tr("Opening aborted"), 2000);
         return;
@@ -969,7 +969,7 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
 
     // open the file in the new view:
     bool success = false;
-    if (QFileInfo(fileName).exists()) {
+    if (QFileInfo::exists(fileName)) {
         success = w->loadDocument(fileName, type);
     } else {
         QString msg = tr("Cannot open the file\n%1\nPlease check its existence and permissions.").arg(fileName);
@@ -992,7 +992,7 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
 
     if (m_mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
         QList<QTabBar *> tabBarList = m_mdiAreaCAD->findChildren<QTabBar *>();
-        QTabBar *tabBar             = tabBarList.at(0);
+        QTabBar *tabBar = tabBarList.at(0);
         if (tabBar) {
             tabBar->setExpanding(false);
             tabBar->setTabToolTip(tabBar->currentIndex(), fileName);
@@ -1100,11 +1100,11 @@ void QC_ApplicationWindow::autoSaveCurrentDrawing() {
     }
 }
 
-void QC_ApplicationWindow::showStatusMessage(const QString& msg, int timeout){
+void QC_ApplicationWindow::showStatusMessage(const QString& msg, int timeout) const {
     statusBar()->showMessage(msg, timeout);
 }
 
-void QC_ApplicationWindow::notificationMessage(const QString& msg, int timeout){
+void QC_ApplicationWindow::notificationMessage(const QString& msg, int timeout) const {
     statusBar()->showMessage(msg, timeout);
     bool duplicateMessageInCmdWidget = true; // fixme - sand - complete - setting? Rework later with cmd
     if (duplicateMessageInCmdWidget){
@@ -1176,8 +1176,7 @@ bool QC_ApplicationWindow::doCloseAllFiles(){
                         break;
                     case QG_ExitDialog::Save: {
                         w->setSaveOnClosePolicy(QC_MDIWindow::SaveOnClosePolicy::SAVE);
-                        bool cancel = !doSave(w);
-                        if (cancel) {
+                        if (!doSave(w)) {
                             showStatusMessage(tr("Close All cancelled"), 2000);
                             return true;
                         }
@@ -1470,7 +1469,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         m_statusbarManager->loadSettings();
         onCADTabBarIndexChanged(0); // force update if settings changed
 
-        doForEachSubWindowGraphicView([this](QG_GraphicView *gv, QC_MDIWindow* w){
+        doForEachSubWindowGraphicView([this](QG_GraphicView *gv, const QC_MDIWindow* w){
             gv->loadSettings();
             if (w == m_activeMdiSubWindow) {
                 gv->redraw();
@@ -1498,7 +1497,7 @@ void QC_ApplicationWindow::slotImportBlock() {
         if (m_actionHandler != nullptr) {
             RS_ActionInterface *a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a != nullptr) {
-                auto *action = (RS_ActionLibraryInsert *) a;
+                auto *action = static_cast<RS_ActionLibraryInsert*>(a);
                 action->setFile(dxfPath);
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,"QC_ApplicationWindow::slotImportBlock:"
@@ -1632,7 +1631,7 @@ void QC_ApplicationWindow::toggleFullscreen(bool checked) {
     checked ? showFullScreen() : showMaximized();
 }
 
-void QC_ApplicationWindow::slotFileOpenRecent(QAction *action){
+void QC_ApplicationWindow::slotFileOpenRecent(const QAction *action){
     auto variant = action->data();
     if (variant.isValid()) {
         showStatusMessage(tr("Opening recent file..."));
@@ -1668,7 +1667,7 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
     return QObject::eventFilter(obj, event);
 }
 
-void QC_ApplicationWindow::onViewCurrentActionChanged(RS_ActionInterface* action){
+void QC_ApplicationWindow::onViewCurrentActionChanged(const RS_ActionInterface* action){
     if (action != nullptr) {
         RS2::ActionType actionType = action->rtti();
         auto qAction = m_actionGroupManager->getActionByType(actionType);
@@ -1687,7 +1686,7 @@ void QC_ApplicationWindow::showDeviceOptions() {
    m_dlgHelpr->showDeviceOptions();
 }
 
-void QC_ApplicationWindow::updateDevice(QString device) {
+void QC_ApplicationWindow::updateDevice(const QString& device) {
     LC_SET_ONE("Hardware", "Device", device);
     for (const auto &win: m_windowList) {
         win->getGraphicView()->setDeviceName(device);
@@ -1754,7 +1753,7 @@ void QC_ApplicationWindow::invokeToolbarCreator() {
     m_creatorInvoker->invokeToolbarCreator();
 }
 
-void QC_ApplicationWindow::invokeMenuCreator() {
+void QC_ApplicationWindow::invokeMenuCreator()  {
     m_creatorInvoker->invokeMenuCreator();
 }
 
@@ -1777,11 +1776,11 @@ void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent *event) {
 #endif
 }
 
-void QC_ApplicationWindow::invokeLicenseWindow() {
+void QC_ApplicationWindow::invokeLicenseWindow() const {
     m_dlgHelpr-> showLicenseWindow();
 }
 
-void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) {
+void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) const {
     if (block != nullptr) {
         m_blockWidget->activateBlock(const_cast<RS_Block *>(block));
     }

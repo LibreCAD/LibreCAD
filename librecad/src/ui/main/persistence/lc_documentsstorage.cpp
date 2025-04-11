@@ -21,19 +21,18 @@
  ******************************************************************************/
 
 #include <QFileInfo>
-#include "lc_documentsstorage.h"
-
 #include <QApplication>
 
+#include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
 #include "qg_filedialog.h"
-#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_document.h"
 #include "rs_fileio.h"
 #include "rs_settings.h"
-LC_DocumentsStorage::LC_DocumentsStorage() {}
+
+LC_DocumentsStorage::LC_DocumentsStorage() = default;
 
 bool LC_DocumentsStorage::saveDocument(RS_Document* document, RS_GraphicView * graphicView,  bool &cancelled) {
     bool result = false;
@@ -58,7 +57,7 @@ bool LC_DocumentsStorage::saveDocument(RS_Document* document, RS_GraphicView * g
     return result;
 }
 
-bool LC_DocumentsStorage::doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, QString currentFileName){
+bool LC_DocumentsStorage::doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName){
     RS2::FormatType saveFormat = RS2::FormatDXFRW;
     QG_FileDialog dlg(graphicView);
     QString fileName = dlg.getSaveFile(&saveFormat, currentFileName);
@@ -93,7 +92,7 @@ bool LC_DocumentsStorage::saveBlockAs(RS_Graphic *block, const QString &fileName
     return result;
 }
 
-bool LC_DocumentsStorage::saveDocumentAs(RS_Document* document, RS_GraphicView * graphicView, bool &cancelled) {
+bool LC_DocumentsStorage::saveDocumentAs(const RS_Document* document, RS_GraphicView * graphicView, bool &cancelled) {
     cancelled = false;
     bool result = false;
     if (document != nullptr) {
@@ -106,11 +105,11 @@ bool LC_DocumentsStorage::saveDocumentAs(RS_Document* document, RS_GraphicView *
 
 
 
-bool LC_DocumentsStorage::loadDocument(RS_Document *document, const QString &fileName){
+bool LC_DocumentsStorage::loadDocument(const RS_Document *document, const QString &fileName) const {
     return loadDocument(document, fileName, RS2::FormatUnknown);
 }
 
-bool LC_DocumentsStorage::loadDocument(RS_Document* document, const QString& fileName, RS2::FormatType type) {
+bool LC_DocumentsStorage::loadDocument(const RS_Document* document, const QString& fileName, RS2::FormatType type) const {
     bool result = false;
     if (document != nullptr && !fileName.isEmpty()) {
         // cosmetics..
@@ -122,7 +121,7 @@ bool LC_DocumentsStorage::loadDocument(RS_Document* document, const QString& fil
     return result;
 }
 
-bool LC_DocumentsStorage::loadDocumentFromTemplate(RS_Document* document,RS_GraphicView * graphicView, const QString& fileName, RS2::FormatType type) {
+bool LC_DocumentsStorage::loadDocumentFromTemplate(const RS_Document* document,RS_GraphicView * graphicView, const QString& fileName, RS2::FormatType type) const {
     bool result = false;
 
     if (document==nullptr || fileName.isEmpty()) {
@@ -140,7 +139,7 @@ bool LC_DocumentsStorage::loadDocumentFromTemplate(RS_Document* document,RS_Grap
 /**
  * Loads the given file into this graphic.
  */
-bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QString &templateFileName, RS2::FormatType type) {
+bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QString &templateFileName, RS2::FormatType type) const {
     QString autosaveFilePrefix = LC_GET_ONE_STR("Path", "AutosaveFilePrefix", "#");
     QString autosaveFilename = createAutoSaveFileName(QDir::tempPath (), autosaveFilePrefix, tr("Unnamed")+".dxf");
 
@@ -156,7 +155,7 @@ bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QSt
     return ret;
 }
 
-bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic,  const QString &filename, RS2::FormatType type) {
+bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic,  const QString &filename, RS2::FormatType type) const {
     graphic->newDoc();
 
     bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type);
@@ -173,7 +172,6 @@ bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic,  const QString &filen
 
 bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
     bool result = false;
-    QString actualName;
     RS2::FormatType actualType = graphic->getFormatType();
 
 //	- This is not an AutoSave operation.  This is a manual
@@ -196,7 +194,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
         return false;
     }
 
-    actualName = filename;
+    const QString& actualName = filename;
     if (LC_GET_ONE_BOOL("Defaults","AutoBackupDocument", true)) {
         backupDrawingFile(filename);
     }
@@ -204,8 +202,8 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
     /*	Save drawing file if able to created associated object. */
     if (!actualName.isEmpty()) {
         result = RS_FileIO::instance()->fileExport(*graphic, actualName, actualType);
-        QFileInfo finfo(actualName);
-        graphic->markSaved(finfo.lastModified());
+        QFileInfo actualFileInfo(actualName);
+        graphic->markSaved(actualFileInfo.lastModified());
     }
 
     /*	Remove AutoSave file after user has successfully saved file.*/
