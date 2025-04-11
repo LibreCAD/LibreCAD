@@ -48,7 +48,7 @@ namespace {
     }
 
     bool isInactive(const std::shared_ptr<RS_ActionInterface>& action) {
-        return action == nullptr || action->isFinished();
+        return ! isActive(action);
     }
 
     QString evaluateFraction(QString input, QRegularExpression rx, int index, int tailI) {
@@ -513,7 +513,7 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
 /**
  * Sets the current action.
  */
-void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
+void RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction");
     if (action==nullptr) {
         return;
@@ -524,9 +524,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
 //    if (hasAction() && currentActions.last().get() == action){
 //        return;
 //    }
-    std::shared_ptr<RS_ActionInterface> actionHolder{action};
 
-    RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", actionHolder->getName().toLatin1().data());
+    LC_LOG<<"RS_EventHandler::setCurrentAction " << action->getName();
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? currentActions.last() : defaultAction;
     // Suspend current action:
@@ -550,20 +549,20 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //    }
 
     // Set current action:
-    currentActions.push_back(actionHolder);
+    currentActions.push_back(action);
     //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
     //                    predecessor->getName().toLatin1().data(),
     //                    currentActions.last()->getName().toLatin1().data());
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
-    actionHolder->init(0);
+    action->init(0);
     // ## new:
-    if (!actionHolder->isFinished()) {
+    if (!action->isFinished()) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
-        actionHolder->showOptions();
+        action->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
-        actionHolder->setPredecessor(predecessor.get());
+        action->setPredecessor(predecessor.get());
     }
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: cleaning up..");

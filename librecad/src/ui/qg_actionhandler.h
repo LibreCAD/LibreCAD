@@ -42,7 +42,7 @@ public:
     QG_ActionHandler(QObject *parent);
     virtual ~QG_ActionHandler() = default;
     RS_ActionInterface *getCurrentAction();
-    RS_ActionInterface *setCurrentAction(RS2::ActionType id);
+    std::shared_ptr<RS_ActionInterface> setCurrentAction(RS2::ActionType id);
 /**
  * Kills all running selection actions. Called when a selection action
   * is launched to reduce confusion.

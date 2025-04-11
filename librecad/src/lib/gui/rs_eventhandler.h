@@ -80,7 +80,7 @@ public:
     void setDefaultAction(RS_ActionInterface* action);
     RS_ActionInterface* getDefaultAction() const;
 
-    void setCurrentAction(RS_ActionInterface* action);
+    void setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
     RS_ActionInterface* getCurrentAction();
     bool isValid(RS_ActionInterface* action) const;
 

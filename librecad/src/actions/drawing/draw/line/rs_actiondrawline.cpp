@@ -357,7 +357,7 @@ void RS_ActionDrawLine::undo(){
             }
             case HA_SetEndpoint:
             case HA_Close: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(true, *container, *graphicView));
+                graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(true, *container, *graphicView));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetEndpoint);
                 break;
@@ -392,12 +392,12 @@ void RS_ActionDrawLine::redo(){
                 break;
             }
             case HA_SetEndpoint: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
+                graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, *container, *graphicView));
                 setStatus(SetEndpoint);
                 break;
             }
             case HA_Close: {
-                graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
+                graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, *container, *graphicView));
                 setStatus(SetStartpoint);
                 break;
             }

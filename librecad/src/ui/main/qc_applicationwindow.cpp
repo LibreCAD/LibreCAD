@@ -2584,10 +2584,10 @@ void QC_ApplicationWindow::slotImportBlock() {
 
     if (QFileInfo(dxfPath).isReadable()) {
         if (actionHandler) {
-            RS_ActionInterface *a =
+		std::shared_ptr<RS_ActionInterface> a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                auto *action = (RS_ActionLibraryInsert *) a;
+                auto action = static_cast<RS_ActionLibraryInsert*>(a.get());
                 action->setFile(dxfPath);
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,

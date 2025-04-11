@@ -50,7 +50,7 @@ void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
     if(status >= 0 ) {
         graphicView->setCurrentAction(
-                    new RS_ActionSelectSingle(*container, *graphicView, this, entityTypeList));
+                    std::make_shared<RS_ActionSelectSingle>(*container, *graphicView, this, entityTypeList));
     }
     deleteSnapper();
 }
