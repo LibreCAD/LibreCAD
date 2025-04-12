@@ -3,33 +3,27 @@
 
 #include <memory>
 #include <QFrame>
-#include <QColor>
 
 class QListWidgetItem;
 
-namespace Ui {
-class ColorWizard;
+namespace Ui
+{
+    class ColorWizard;
 }
 
-class ColorWizard : public QFrame
-{
+class ColorWizard : public QFrame{
     Q_OBJECT
-
 public:
-    explicit ColorWizard(QWidget* parent = 0);
+    explicit ColorWizard(QWidget* parent = nullptr);
     ~ColorWizard();
-
     QStringList getFavList();
     void addFavorite(QString color);
-
 private:
     std::unique_ptr<Ui::ColorWizard> ui;
-
 signals:
     void requestingColorChange(QColor);
     void requestingSelection(QColor);
     void colorDoubleClicked(QColor);
-
 protected slots:
     void requestColorChange();
     void requestSelection();

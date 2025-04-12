@@ -20,7 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QCheckBox>
+#include "lc_penpalettewidget.h"
+
 #include <QKeyEvent>
 #include <QMenu>
 #include <QMessageBox>
@@ -30,20 +31,23 @@
 #include <QStyledItemDelegate>
 #include <QTimer>
 
-#include "lc_peninforegistry.h"
-#include "lc_penitem.h"
-#include "lc_penpalettemodel.h"
-#include "lc_penpaletteoptionsdialog.h"
-#include "lc_penpalettewidget.h"
-#include "qc_applicationwindow.h"
-#include "qg_graphicview.h"
-#include "qg_pentoolbar.h"
-#include "rs_graphic.h"
-#include "rs_modification.h"
-#include "ui_lc_penpalettewidget.h"
 #include "lc_flexlayout.h"
+#include "lc_penitem.h"
+#include "lc_penpalettedata.h"
+#include "lc_penpalettemodel.h"
+#include "lc_penpaletteoptions.h"
+#include "lc_penpaletteoptionsdialog.h"
+#include "qc_applicationwindow.h"
+#include "qg_pentoolbar.h"
+#include "rs_entity.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
+#include "rs_modification.h"
 #include "rs_settings.h"
-#include "lc_widgets_common.h"
+
+class QTableView;
+
 /**
  * Delegate used to paint underline lines for table grid
  */

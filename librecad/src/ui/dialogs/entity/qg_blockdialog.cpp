@@ -25,8 +25,9 @@
 **********************************************************************/
 #include <QMessageBox>
 #include "qg_blockdialog.h"
-#include "rs_blocklist.h"
+
 #include "rs_block.h"
+#include "rs_blocklist.h"
 #include "rs_debug.h"
 
 /*
@@ -52,9 +53,9 @@ void QG_BlockDialog::languageChange(){
 void QG_BlockDialog::setBlockList(RS_BlockList* l) {
     RS_DEBUG->print("QG_BlockDialog::setBlockList");
 
-    blockList = l;
-    if (blockList) {
-        RS_Block* block = blockList->getActive();
+    m_blockList = l;
+    if (m_blockList) {
+        RS_Block* block = m_blockList->getActive();
         if (block) {
             leName->setText(block->getName());
         }
@@ -69,7 +70,7 @@ void QG_BlockDialog::validate() {
     QString name = leName->text();
 
     if (!name.isEmpty()) {
-        if (blockList && !blockList->find(name)) {
+        if (m_blockList && !m_blockList->find(name)) {
             accept();
         } else {
             QMessageBox::warning( this, tr("Renaming Block"),

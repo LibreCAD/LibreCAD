@@ -24,11 +24,8 @@
 **
 **********************************************************************/
 #include "qg_lineparallelthroughoptions.h"
-
 #include "rs_actiondrawlineparallelthrough.h"
-#include "rs_settings.h"
 #include "ui_qg_lineparallelthroughoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LineParallelThroughOptions as a child of 'parent', with the
@@ -54,42 +51,42 @@ void QG_LineParallelThroughOptions::languageChange()
 	ui->retranslateUi(this);
 }
 
-void QG_LineParallelThroughOptions::doSaveSettings(){
-	    save("Number", ui->sbNumber->text());
-     save("Symmetric", ui->cbSymmetric->isChecked());
+void QG_LineParallelThroughOptions::doSaveSettings() {
+    save("Number", ui->sbNumber->text());
+    save("Symmetric", ui->cbSymmetric->isChecked());
 }
 
-void QG_LineParallelThroughOptions::doSetAction(RS_ActionInterface *a, bool update){
-        action = (RS_ActionDrawLineParallelThrough*)a;
+void QG_LineParallelThroughOptions::doSetAction(RS_ActionInterface* a, bool update) {
+    m_action = (RS_ActionDrawLineParallelThrough*)a;
 
-        int copyNumber;
-        bool symmetric;
-        if (update) {
-            copyNumber = action->getNumber();
-            symmetric = action->isSymmetric();
-        } else {
-            copyNumber = loadInt("Number", 1);
-            symmetric = loadBool("Symmetric", false);
-            LC_GROUP_END();
-        }
-        setSymmetricToActionAndView(symmetric);
-        setCopyNumberToActionAndView(copyNumber);
+    int copyNumber;
+    bool symmetric;
+    if (update) {
+        copyNumber = m_action->getNumber();
+        symmetric = m_action->isSymmetric();
+    }
+    else {
+        copyNumber = loadInt("Number", 1);
+        symmetric = loadBool("Symmetric", false);
+    }
+    setSymmetricToActionAndView(symmetric);
+    setCopyNumberToActionAndView(copyNumber);
 }
 
-void QG_LineParallelThroughOptions::on_cbSymmetric_toggled(bool checked){
+void QG_LineParallelThroughOptions::on_cbSymmetric_toggled(bool checked) {
     setSymmetricToActionAndView(checked);
 }
 
-void QG_LineParallelThroughOptions::on_sbNumber_valueChanged(int number){
+void QG_LineParallelThroughOptions::on_sbNumber_valueChanged(int number) {
     setCopyNumberToActionAndView(number);
 }
 
-void QG_LineParallelThroughOptions::setCopyNumberToActionAndView(int number){
-    action->setNumber(number);
+void QG_LineParallelThroughOptions::setCopyNumberToActionAndView(int number) {
+    m_action->setNumber(number);
     ui->sbNumber->setValue(number);
 }
 
-void QG_LineParallelThroughOptions::setSymmetricToActionAndView(bool symmetric){
-    action->setSymmetric(symmetric);
+void QG_LineParallelThroughOptions::setSymmetricToActionAndView(bool symmetric) {
+    m_action->setSymmetric(symmetric);
     ui->cbSymmetric->setChecked(symmetric);
 }

@@ -31,13 +31,14 @@ class QGridLayout;
 
 class LC_CADDockWidget : public QDockWidget{
     Q_OBJECT
-public slots:
-    void updateWidgetSettings();
 public:
     LC_CADDockWidget(QWidget* parent);
-    QFrame* frame = nullptr;
-    QGridLayout* grid = nullptr;
     void add_actions(const QList<QAction*>& list, int columns, int icon_size, bool flatButton);
+private:
+    QFrame* m_frame = nullptr;
+    QGridLayout* m_gridLayout = nullptr;
+public slots:
+    void updateWidgetSettings();
 };
 
 #endif // LC_CADDOCKWIDGET_H

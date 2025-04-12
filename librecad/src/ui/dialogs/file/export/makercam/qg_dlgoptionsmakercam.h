@@ -25,8 +25,7 @@
 
 #include "ui_qg_dlgoptionsmakercam.h"
 // fixme - sand - MakerCam is dead now - is it still relevant?
-class QG_DlgOptionsMakerCam : public QDialog, public Ui::QG_DlgOptionsMakerCam
-{
+class QG_DlgOptionsMakerCam : public QDialog, public Ui::QG_DlgOptionsMakerCam{
     Q_OBJECT
 
 public:
@@ -34,12 +33,10 @@ public:
 	~QG_DlgOptionsMakerCam() = default;
 
 public slots:
-    virtual void validate();
-    virtual void cancel();
-
+    void validate();
+    void cancel();
 protected slots:
-    virtual void languageChange();
-
+    void languageChange();
 private:
     void loadSettings();
     void updateCheckbox(QCheckBox* checkbox, QString name, int defaultValue);

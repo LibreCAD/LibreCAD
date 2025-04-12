@@ -27,18 +27,16 @@
 #define QG_DIMOPTIONS_H
 
 #include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDimension;
 namespace Ui {
-class Ui_DimOptions;
+    class Ui_DimOptions;
 }
 
 class QG_DimOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_DimOptions();
     ~QG_DimOptions() override;
@@ -60,14 +58,13 @@ public slots:
     void onBaselineDistanceTextChanged();
     void onAngleCircleTextChanged();
     void updateUI(int mode) override;
-
 protected:
     void updateAngle( const QString& a );
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
-    RS_ActionDimension* action = nullptr;
+    RS_ActionDimension* m_action = nullptr;
     std::unique_ptr<Ui::Ui_DimOptions> ui;
 };
 

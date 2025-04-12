@@ -30,7 +30,6 @@
 #endif // _MSC_VER > 1000
 
 #include <QString>
-
 #include "rs.h"
 
 struct LC_LayersExportOptions;

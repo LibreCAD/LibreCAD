@@ -26,8 +26,6 @@
 #ifndef QG_TRIMAMOUNTOPTIONS_H
 #define QG_TRIMAMOUNTOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionModifyTrimAmount;
@@ -50,7 +48,7 @@ public slots:
     void onSymmetricToggled(bool checked);
     void onDistEditingFinished();
 private:
-    RS_ActionModifyTrimAmount *action = nullptr;
+    RS_ActionModifyTrimAmount *m_action = nullptr;
     std::unique_ptr<Ui::Ui_TrimAmountOptions> ui;
     void setDistanceToActionAndView(const QString &strValue);
     void setByTotalToActionAndView(bool val);

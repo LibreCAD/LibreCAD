@@ -20,29 +20,28 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <map>
+#include "lc_printing.h"
 
 #include <QApplication>
 #include <QFileDialog>
-#include <QMdiSubWindow>
+#include <QFileInfo>
 #include <QMessageBox>
-#include <QPrinter>
 #include <QPrintDialog>
+#include <QPrinter>
 
-#include "lc_printing.h"
-
+#include "lc_graphicviewport.h"
+#include "lc_printpreviewview.h"
+#include "lc_printviewportrenderer.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
+#include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "rs_vector.h"
-#include "rs_painter.h"
-#include "lc_graphicviewport.h"
-#include "lc_printviewportrenderer.h"
-#include "lc_printpreviewview.h"
 
+
+// fixme - sand - files - this class should not be in /lib, it has outer dependencies. Reivew!!!!
 namespace {
 
 // supported paper formats should be added here

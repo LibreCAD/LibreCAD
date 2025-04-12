@@ -106,18 +106,17 @@ public:
 signals:
     void updatesAvailable() const;
 protected:
-    bool emitSignalIfNoNewVersion;
+    bool m_emitSignalIfNoNewVersion;
     QNetworkAccessManager m_WebCtrl;
     LC_ReleaseInfo getOwnReleaseInfo(const QString& tagName, bool preRelease) const;
     LC_TagInfo parseTagInfo(const QString &tagName) const;
 
-    LC_ReleaseInfo ownReleaseInfo;
-    LC_ReleaseInfo latestRelease;
-    LC_ReleaseInfo latestPreRelease;
+    LC_ReleaseInfo m_ownReleaseInfo;
+    LC_ReleaseInfo m_latestRelease;
+    LC_ReleaseInfo m_latestPreRelease;
 protected slots:
     void infoReceived(QNetworkReply* pReply);
     void processReleasesJSON(const QByteArray &responseContent);
-
     void sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const;
 };
 

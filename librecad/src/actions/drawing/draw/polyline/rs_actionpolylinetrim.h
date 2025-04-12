@@ -29,7 +29,7 @@
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
-class RS_Entity;
+class RS_Polyline;
 
 /**
  * This action class can handle user events to move entities.

@@ -25,12 +25,13 @@
 
 #include <QAbstractItemModel>
 #include <QRegularExpression>
-#include "lc_shortcuttreeitem.h"
-#include "lc_actiongroupmanager.h"
+
+class LC_ShortcutInfo;
+class LC_ActionGroupManager;
+class LC_ShortcutTreeItem;
 
 class LC_ShortcutsTreeModel :public QAbstractItemModel {
     Q_OBJECT
-
 public:
     enum {
         ICON, NAME,/* DESCRIPTION, */SHORTCUT, LAST

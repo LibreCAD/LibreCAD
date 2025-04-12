@@ -28,6 +28,7 @@
 #define RS_ACTIONPOLYLINEEQUIDISTANT_H
 
 #include "rs_previewactioninterface.h"
+class RS_Polyline;
 
 /**
  * This action class can handle user events to move entities.

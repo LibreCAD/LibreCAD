@@ -27,27 +27,24 @@
 #define QG_DLGATTRIBUTES_H
 
 #include "ui_qg_dlgattributes.h"
-#include "rs_modification.h"
 #include "lc_dialog.h"
 
-class QG_DlgAttributes : public LC_Dialog, public Ui::QG_DlgAttributes
-{
-    Q_OBJECT
+struct RS_AttributesData;
+class RS_LayerList;
 
+class QG_DlgAttributes : public LC_Dialog, public Ui::QG_DlgAttributes{
+    Q_OBJECT
 public:
     QG_DlgAttributes(QWidget* parent = nullptr);
     ~QG_DlgAttributes() override;
-
 public slots:
-    virtual void setData( RS_AttributesData * data, RS_LayerList & layerList );
-    virtual void updateData();
-
+    void setData( RS_AttributesData * data, RS_LayerList & layerList );
+    void updateData();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
-    RS_Pen pen;
-    RS_AttributesData* data = nullptr;
-
+    RS_Pen m_pen;
+    RS_AttributesData* m_attributesData = nullptr;
 };
 
 #endif // QG_DLGATTRIBUTES_H

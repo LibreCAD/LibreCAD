@@ -50,7 +50,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:
-    LC_ActionDrawLineFromPointToLine* action = nullptr;
+    LC_ActionDrawLineFromPointToLine* m_action = nullptr;
     Ui::LC_LineFromPointToLineOptions *ui;
     void setOrthogonalToActionAndView(bool value);
     void setSizeModelIndexToActionAndView(int index);

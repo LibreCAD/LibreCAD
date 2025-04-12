@@ -65,13 +65,13 @@ public slots:
     void onVerticalPagesValueChanges(int value);
     void onHorizontalPagesValueChanges(int value);
 protected:
-    RS_ActionPrintPreview* action = nullptr;
+    RS_ActionPrintPreview* m_action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 protected slots:
     void languageChange() override;
 private:
-    int defaultScalesStartIndex = 1;
+    int m_defaultScalesStartIndex = 1;
     std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
     bool isUseImperialScales();
     void initializeScaleBoxItems();

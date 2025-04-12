@@ -21,30 +21,24 @@
 **
 **********************************************************************************
 */
-
-// -- https://github.com/LibreCAD/LibreCAD --
-
 #ifndef QG_COMMANDHISTORY_H
 #define QG_COMMANDHISTORY_H
+
 #include <QTextEdit>
+class QAction;
 
 /**
  * @brief The QG_CommandHistory class holds commands and messages.
  * It's a read only textedit widget.
  * \author ravas
  */
-class QG_CommandHistory : public QTextEdit
-{
+class QG_CommandHistory : public QTextEdit{
     Q_OBJECT
-
 public:
     explicit QG_CommandHistory(QWidget* parent);
-
 private slots:
-
     void mouseReleaseEvent(QMouseEvent* event) override;
 	void slotTextChanged();
-
 private:
 	/*menu item for Copy*/
     QAction* m_pCopy = nullptr;

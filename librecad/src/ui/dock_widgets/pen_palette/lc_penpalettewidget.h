@@ -24,17 +24,14 @@
 #ifndef LC_PENPALETTEWIDGET_H
 #define LC_PENPALETTEWIDGET_H
 
-#include <QDockWidget>
-#include <QWidget>
-
 #include "lc_graphicviewaware.h"
-#include "lc_penitem.h"
-#include "lc_penpalettemodel.h"
-#include "qc_mdiwindow.h"
-#include "rs_layerlist.h"
 #include "rs_pen.h"
 #include "ui_lc_penpalettewidget.h"
 
+class LC_PenPaletteData;
+class LC_PenPaletteModel;
+class LC_PenItem;
+class RS_LayerList;
 /**
  * Central widget for Pens Palette
  */

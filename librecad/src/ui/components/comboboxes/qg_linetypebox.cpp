@@ -34,9 +34,9 @@
  */
 QG_LineTypeBox::QG_LineTypeBox(QWidget* parent)
         : QComboBox(parent) {
-    showByLayer = false;
-    showUnchanged = false;
-    unchanged = false;
+    m_showByLayer = false;
+    m_showUnchanged = false;
+    m_unchanged = false;
 }
 
 /**
@@ -49,7 +49,7 @@ QG_LineTypeBox::QG_LineTypeBox(bool showByLayer, bool showUnchanged,
 		QWidget* parent, const char* name)
         : QComboBox(parent) {
     setObjectName(name);
-    unchanged = false;
+    m_unchanged = false;
     init(showByLayer, showUnchanged);
 }
 
@@ -67,8 +67,8 @@ QG_LineTypeBox::~QG_LineTypeBox() {}
  * @param showByLayer true: Show attribute ByLayer, ByBlock.
  */
 void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) {
-    this->showByLayer = showByLayer;
-    this->showUnchanged = showUnchanged;
+    this->m_showByLayer = showByLayer;
+    this->m_showUnchanged = showUnchanged;
 
     if (showUnchanged) {
         addItem(QIcon(":linetypes/linetype00.lci"), tr("- Unchanged -"), RS2::LineTypeUnchanged);
@@ -120,8 +120,8 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
     RS_DEBUG->print("QG_LineTypeBox::setLineType %d\n", (int)t);
     switch (t) {
         case RS2::LineByLayer: {
-            if (showByLayer) {
-                setCurrentIndex(0 + (int)showUnchanged);
+            if (m_showByLayer) {
+                setCurrentIndex(0 + (int)m_showUnchanged);
             } else {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                                 "QG_LineTypeBox::setLineType: "
@@ -130,8 +130,8 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
             break;
         }
         case RS2::LineByBlock: {
-            if (showByLayer) {
-                setCurrentIndex(1 + (int)showUnchanged);
+            if (m_showByLayer) {
+                setCurrentIndex(1 + (int)m_showUnchanged);
             } else {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                                 "QG_LineTypeBox::setLineType: "
@@ -159,7 +159,7 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
  * @todo needs an update, but not used currently
  */
 void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
-    if (showByLayer) {
+    if (m_showByLayer) {
         QPixmap pixmap;
         switch(t) {
             case RS2::NoPen:
@@ -199,33 +199,33 @@ void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
  */
 void QG_LineTypeBox::slotLineTypeChanged(int index) {
     RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d\n", index);
-    unchanged = false;
-    if (showByLayer) {
+    m_unchanged = false;
+    if (m_showByLayer) {
         switch (index) {
             case 0:
-                if (showUnchanged) {
-                    unchanged = true;
+                if (m_showUnchanged) {
+                    m_unchanged = true;
                 }
                 else {
-                    currentLineType = RS2::LineByLayer;
+                    m_currentLineType = RS2::LineByLayer;
                 }
                 break;
 
             case 1:
-                if (showUnchanged) {
-                    currentLineType = RS2::LineByLayer;
+                if (m_showUnchanged) {
+                    m_currentLineType = RS2::LineByLayer;
                 }
                 else {
-                    currentLineType = RS2::LineByBlock;
+                    m_currentLineType = RS2::LineByBlock;
                 }
                 break;
 
             default:
-                currentLineType = (RS2::LineType) itemData(index).toInt();
+                m_currentLineType = (RS2::LineType) itemData(index).toInt();
         }
     } else {
-        currentLineType = (RS2::LineType) itemData(index).toInt();
+        m_currentLineType = (RS2::LineType) itemData(index).toInt();
     }
 //    RS_DEBUG->print(RS_Debug::D_ERROR, "Current linetype is (%d): %d\n", index, currentLineType);
-    emit lineTypeChanged(currentLineType);
+    emit lineTypeChanged(m_currentLineType);
 }

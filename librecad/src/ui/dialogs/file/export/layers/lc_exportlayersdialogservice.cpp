@@ -19,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * *********************************************************************
- *
  */
 #include "lc_exportlayersdialogservice.h"
 
@@ -30,6 +29,7 @@
 
 #include "lc_documentsstorage.h"
 #include "lc_layerexportoptions.h"
+#include "lc_layersexporter.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 

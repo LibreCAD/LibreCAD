@@ -26,11 +26,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_actionoptionswidget.h"
 #include "lc_optionswidgetsholder.h"
-#include "lc_snapoptionswidgetsholder.h"
 #include "rs_settings.h"
 
 LC_ActionOptionsManager::LC_ActionOptionsManager(QWidget* parent, QToolBar* optionsToolbar,
-    LC_SnapOptionsWidgetsHolder* snapOptionsHolder){
+                                                 LC_SnapOptionsWidgetsHolder* snapOptionsHolder){
     m_snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
     setOptionWidget(optionsToolbar);
 }

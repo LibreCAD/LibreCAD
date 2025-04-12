@@ -23,7 +23,6 @@
 
 #include <QMenu>
 #include <QSettings>
-#include <QSizePolicy>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_creatorinvoker.h"

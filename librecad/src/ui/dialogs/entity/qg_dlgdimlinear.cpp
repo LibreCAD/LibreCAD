@@ -24,11 +24,8 @@
 **
 **********************************************************************/
 #include "qg_dlgdimlinear.h"
-
 #include "rs_dimlinear.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
-
 /*
  *  Constructs a QG_DlgDimLinear as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -58,28 +55,28 @@ void QG_DlgDimLinear::languageChange(){
 }
 
 void QG_DlgDimLinear::setEntity(RS_DimLinear* d) {
-    entity = d;
+    m_entity = d;
 
-    RS_Graphic* graphic = entity->getGraphic();
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, tr("Pen"));
-    wLabel->setLabel(entity->getLabel(false));
-    toUIAngleDeg(entity->getAngle(), leAngle);
+    wPen->setPen(m_entity, lay, tr("Pen"));
+    wLabel->setLabel(m_entity->getLabel(false));
+    toUIAngleDeg(m_entity->getAngle(), leAngle);
 }
 
 void QG_DlgDimLinear::updateEntity() {
-    entity->setLabel(wLabel->getLabel());
-    entity->setAngle(toWCSAngle(leAngle, entity->getAngle()));
+    m_entity->setLabel(wLabel->getLabel());
+    m_entity->setAngle(toWCSAngle(leAngle, m_entity->getAngle()));
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
 
-    entity->updateDim(true);
+    m_entity->updateDim(true);
 }

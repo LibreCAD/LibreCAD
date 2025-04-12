@@ -21,6 +21,7 @@
  ******************************************************************************/
 #ifndef LC_GRIDVIEWINVOKER_H
 #define LC_GRIDVIEWINVOKER_H
+
 #include "lc_appwindowaware.h"
 #include "rs.h"
 

@@ -26,16 +26,16 @@
 #include "lc_appwindowaware.h"
 
 class LC_CustomStyleHelper : public LC_AppWindowAware {
- public:
-  explicit LC_CustomStyleHelper(QC_ApplicationWindow* mainWin)
-   : LC_AppWindowAware{mainWin} {
-  }
+public:
+    explicit LC_CustomStyleHelper(QC_ApplicationWindow* mainWin)
+        : LC_AppWindowAware{mainWin} {
+    }
 
-  void loadFromSettings();
-  bool loadStyleSheet(const QString& path);
-  void reloadStyleSheet();
- private:
-  QString m_styleSheetPath;
+    void loadFromSettings();
+    bool loadStyleSheet(const QString& path);
+    void reloadStyleSheet();
+private:
+    QString m_styleSheetPath;
 };
 
 #endif // LC_CUSTOMSTYLEHELPER_H

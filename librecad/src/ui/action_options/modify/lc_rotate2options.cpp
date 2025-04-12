@@ -23,7 +23,6 @@
 #include "lc_rotate2options.h"
 #include "ui_lc_rotate2options.h"
 #include "rs_actionmodifyrotate2.h"
-#include "rs_math.h"
 
 // todo - potentially, instead of specifying secondary angle it is possible to let the user enter the sum of angles
 // todo - and calculate secondary angle based on angle1 and that sum.
@@ -68,7 +67,7 @@ void LC_Rotate2Options::doSaveSettings() {
 }
 
 void LC_Rotate2Options::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionModifyRotate2 *>(a);
+    m_action = dynamic_cast<RS_ActionModifyRotate2 *>(a);
     QString angle1;    
     QString angle2;
 
@@ -81,15 +80,15 @@ void LC_Rotate2Options::doSetAction(RS_ActionInterface *a, bool update){
     bool mirrorAngles;
 
     if (update){
-        useCurrentLayer = action->isUseCurrentLayer();
-        useCurrentAttributes = action->isUseCurrentAttributes();
-        keepOriginals = action->isKeepOriginals();
-        useMultipleCopies = action->isUseMultipleCopies();
-        copiesNumber = action->getCopiesNumber();
-        sameAngle = action->isUseSameAngle2ForCopies();
-        mirrorAngles = action->isMirrorAngles();
-        angle1 = fromDouble(RS_Math::rad2deg(action->getAngle1()));
-        angle2 = fromDouble(RS_Math::rad2deg(action->getAngle2()));
+        useCurrentLayer = m_action->isUseCurrentLayer();
+        useCurrentAttributes = m_action->isUseCurrentAttributes();
+        keepOriginals = m_action->isKeepOriginals();
+        useMultipleCopies = m_action->isUseMultipleCopies();
+        copiesNumber = m_action->getCopiesNumber();
+        sameAngle = m_action->isUseSameAngle2ForCopies();
+        mirrorAngles = m_action->isMirrorAngles();
+        angle1 = fromDouble(RS_Math::rad2deg(m_action->getAngle1()));
+        angle2 = fromDouble(RS_Math::rad2deg(m_action->getAngle2()));
     }
     else{
         useCurrentLayer = loadBool("UseCurrentLayer", false);
@@ -114,24 +113,24 @@ void LC_Rotate2Options::doSetAction(RS_ActionInterface *a, bool update){
 }
 
 void LC_Rotate2Options::setUseMultipleCopiesToActionAndView(bool copies) {
-    action->setUseMultipleCopies(copies);
+    m_action->setUseMultipleCopies(copies);
     ui->cbMultipleCopies->setChecked(copies);
     ui->sbNumberOfCopies->setEnabled(copies);
     ui->cbSameAngleForCopies->setEnabled(copies);
 }
 
 void LC_Rotate2Options::setUseCurrentLayerToActionAndView(bool val) {
-    action->setUseCurrentLayer(val);
+    m_action->setUseCurrentLayer(val);
     ui->cbCurrentLayer->setChecked(val);
 }
 
 void LC_Rotate2Options::setUseCurrentAttributesToActionAndView(bool val) {
-    action->setUseCurrentAttributes(val);
+    m_action->setUseCurrentAttributes(val);
     ui->cbCurrentAttr->setChecked(val);
 }
 
 void LC_Rotate2Options::setKeepOriginalsToActionAndView(bool val) {
-    action->setKeepOriginals(val);
+    m_action->setKeepOriginals(val);
     ui->cbKeepOriginals->setChecked(val);
 }
 
@@ -139,19 +138,19 @@ void LC_Rotate2Options::setCopiesNumberToActionAndView(int number) {
     if (number < 1){
         number = 1;
     }
-    action->setCopiesNumber(number);
+    m_action->setCopiesNumber(number);
     ui->sbNumberOfCopies->setValue(number);
 }
 
 void LC_Rotate2Options::setAnglesMirroredToModelAndView(bool checked) {
     ui->cbAnglesMirrored->setChecked(checked);
     ui->leAngle2->setEnabled(!checked);
-    action->setMirrorAngles(checked);
+    m_action->setMirrorAngles(checked);
     setAngle1ToActionAndView(ui->leAngle1->text()); // just force update both edits
 }
 
 void LC_Rotate2Options::setSameAngleForCopiesToActionAndView(bool val) {
-    action->setUseSameAngle2ForCopies(val);
+    m_action->setUseSameAngle2ForCopies(val);
     ui->cbSameAngleForCopies->setChecked(val);
 }
 
@@ -159,11 +158,11 @@ void LC_Rotate2Options::setAngle1ToActionAndView(QString val) {
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         ui->leAngle1->setText(fromDouble(angle));
-        action->setAngle1(RS_Math::deg2rad(angle));
+        m_action->setAngle1(RS_Math::deg2rad(angle));
         bool anglesMirrored = ui->cbAnglesMirrored->isChecked();
         if (anglesMirrored){
             ui->leAngle2->setText(fromDouble(-angle));
-            action->setAngle2(RS_Math::deg2rad(-angle));
+            m_action->setAngle2(RS_Math::deg2rad(-angle));
         }
     }
 }
@@ -173,7 +172,7 @@ void LC_Rotate2Options::setAngle2ToActionAndView(QString val) {
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &angleStr = fromDouble(angle);
         ui->leAngle2->setText(angleStr);
-        action->setAngle2(RS_Math::deg2rad(angle));
+        m_action->setAngle2(RS_Math::deg2rad(angle));
     }        
 }
 

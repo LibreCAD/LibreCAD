@@ -26,26 +26,22 @@
 **********************************************************************/
 #include<iostream>
 
-#include <QtPrintSupport/QPrinter>
-#include <QtPrintSupport/QPrintDialog>
-
-#include <QCloseEvent>
-#include <QMessageBox>
-#include <QMdiArea>
-#include <QPainter>
-
-#include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 
+#include <QCloseEvent>
+#include <QPainter>
+#include <QPrintDialog>
+#include <QPrinter>
+
 #include "lc_documentsstorage.h"
+#include "lc_graphicviewport.h"
+#include "lc_printpreviewview.h"
+#include "qc_applicationwindow.h"
 #include "qg_exitdialog.h"
-#include "qg_graphicview.h"
 #include "rs_debug.h"
-#include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
-#include "rs_pen.h"
-#include "lc_printpreviewview.h"
+
 /**
  * Constructor.
  *

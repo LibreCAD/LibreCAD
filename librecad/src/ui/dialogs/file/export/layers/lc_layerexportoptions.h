@@ -24,7 +24,8 @@
 #define LC_LAYEREXPORTOPTIONS_H
 
 #include <QWidget>
-#include "lc_layersexporter.h"
+
+struct LC_LayersExportOptions;
 
 namespace Ui {
 class LC_LayerExportOptionsWidget;

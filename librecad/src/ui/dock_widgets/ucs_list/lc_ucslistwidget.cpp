@@ -20,20 +20,24 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QMessageBox>
+#include "lc_ucslistwidget.h"
+
 #include <QInputDialog>
 #include <QMenu>
+#include <QMessageBox>
+
+#include "lc_dlgucslistoptions.h"
+#include "lc_graphicviewport.h"
+#include "lc_ucs.h"
+#include "lc_ucslistbutton.h"
+#include "lc_ucslistmodel.h"
+#include "lc_ucslistoptions.h"
+#include "lc_ucsstatewidget.h"
+#include "qc_applicationwindow.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
-#include "lc_ucslistwidget.h"
-#include "ui_lc_ucslistwidget.h"
-#include "qc_mdiwindow.h"
-#include "qc_applicationwindow.h"
-#include "lc_dlgucslistoptions.h"
-#include "lc_ucslistbutton.h"
-#include "lc_graphicviewport.h"
 #include "rs_settings.h"
-#include "lc_widgets_common.h"
+#include "ui_lc_ucslistwidget.h"
 
 LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
     : QWidget(parent)

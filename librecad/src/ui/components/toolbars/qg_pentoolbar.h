@@ -26,12 +26,11 @@
 
 #ifndef QG_PENTOOLBAR_H
 #define QG_PENTOOLBAR_H
-
-#include <memory>
 #include <QToolBar>
 
 #include "lc_graphicviewaware.h"
 #include "rs_layerlistlistener.h"
+#include "rs_pen.h"
 
 class RS_LayerList;
 class QG_ColorBox;

@@ -1,5 +1,3 @@
-
-
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -30,12 +28,12 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
-#include <memory>
 #include <QObject>
-#include <QList>
-#include "rs.h"
+
 #include "lc_cursoroverlayinfo.h"
-#include "lc_graphicviewport.h"
+
+class LC_OverlayInfoCursor;
+struct LC_InfoCursorOverlayPrefs;
 class LC_ActionContext;
 class RS_Entity;
 class RS_GraphicView;

@@ -25,30 +25,29 @@
 #ifndef QG_DLGIMAGE_H
 #define QG_DLGIMAGE_H
 
-#include <memory>
 #include "ui_qg_dlgimage.h"
 #include "lc_entitypropertiesdlg.h"
 
 class RS_Image;
 
-class QG_DlgImage : public LC_EntityPropertiesDlg, public Ui::QG_DlgImage{
+class QG_DlgImage : public LC_EntityPropertiesDlg, public Ui::QG_DlgImage {
     Q_OBJECT
 public:
-    QG_DlgImage(QWidget *parent, LC_GraphicViewport *pViewport, RS_Image* image);
+    QG_DlgImage(QWidget* parent, LC_GraphicViewport* pViewport, RS_Image* image);
 public slots:
-     void changeWidth();
-     void changeHeight();
-     void changeScale();
-     void changeDPI();
-     void updateEntity() override;
-     void setImageFile();
+    void changeWidth();
+    void changeHeight();
+    void changeScale();
+    void changeDPI();
+    void updateEntity() override;
+    void setImageFile();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
-    void setEntity(RS_Image *e);
+    void setEntity(RS_Image* e);
 private:
-    RS_Image* entity = nullptr;
-    double scale = 1.;
+    RS_Image* m_entity = nullptr;
+    double m_scale = 1.;
 };
 
 #endif // QG_DLGIMAGE_H

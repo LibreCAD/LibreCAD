@@ -31,11 +31,10 @@ namespace Ui {
 }
 
 class LC_SplineFromPolylineOptions : public LC_ActionOptionsWidgetBase{
-Q_OBJECT
-
+    Q_OBJECT
 public:
     explicit LC_SplineFromPolylineOptions();
-    ~LC_SplineFromPolylineOptions();
+    ~LC_SplineFromPolylineOptions() override;
 public slots:
     void languageChange() override;
     void cbKeepOriginalsClicked(bool val);
@@ -46,8 +45,7 @@ public slots:
     void sbMidPointsValueChanged(int value);
 protected:
     Ui::LC_SplineFromPolylineOptions *ui;
-    LC_ActionSplineFromPolyline* action = nullptr;
-
+    LC_ActionSplineFromPolyline* m_action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void setKeepOriginalsToActionAndView(bool val);

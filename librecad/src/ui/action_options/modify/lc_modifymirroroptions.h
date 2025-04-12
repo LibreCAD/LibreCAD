@@ -47,7 +47,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_ModifyMirrorOptions *ui = nullptr;
-    RS_ActionModifyMirror* action = nullptr;
+    RS_ActionModifyMirror* m_action = nullptr;
     void setMirrorToLineLineToActionAndView(bool line);
     void setUseCurrentLayerToActionAndView(bool val);
     void setUseCurrentAttributesToActionAndView(bool val);

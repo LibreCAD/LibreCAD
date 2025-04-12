@@ -36,6 +36,7 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "lc_flexlayout.h"
+#include "lc_layertreemodel.h"
 #include "rs_settings.h"
 #include "lc_widgets_common.h"
 /**

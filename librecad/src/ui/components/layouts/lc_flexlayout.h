@@ -53,8 +53,8 @@ public:
     QSize sizeHint() const override;
     QLayoutItem *takeAt(int index) override;
     void fillFromLayout(QLayout *source);
-    void setSoftBreakItems(const std::set<int> &itemPositions){softBreakItems = itemPositions;};
-    void setFullWidthItems(const std::set<int> &itemPositions){fullWidthItems = itemPositions;};
+    void setSoftBreakItems(const std::set<int> &itemPositions){m_softBreakItems = itemPositions;};
+    void setFullWidthItems(const std::set<int> &itemPositions){m_fullWidthItems = itemPositions;};
 private:
     int performLayout(const QRect &rect, bool geometryCheck) const;
     int defaultSpacing(QStyle::PixelMetric pm) const;
@@ -62,30 +62,30 @@ private:
     /**
      *  layout items
      */
-    QVector<QLayoutItem *> items;
+    QVector<QLayoutItem *> m_items;
 
     /**
      * indexes of widgets that should be moved to the next line if next widget does not fit width (used mostly for labels of controls to
      * avoid putting label and control on different lines
      */
-    std::set<int> softBreakItems {};
+    std::set<int> m_softBreakItems {};
     /**
      *  indexes of items that should occupy whole line if they does not fit into previous line
      */
-    std::set<int> fullWidthItems {};
+    std::set<int> m_fullWidthItems {};
     /**
      * horizontal spacing
      */
-    int hSpacing {-1};
+    int m_hSpacing {-1};
     /**
      * vertical spacing
      */
-    int vSpacing {-1};
+    int m_vSpacing {-1};
 
     /**
      * fixed width of first column, if any
      */
-    int firstColumnWidth {-1};
+    int m_firstColumnWidth {-1};
     int getSpaceX(const QWidget *wid) const;
     int getSpaceY(const QWidget *wid) const;
 };

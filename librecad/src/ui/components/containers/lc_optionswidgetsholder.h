@@ -23,12 +23,13 @@
 #ifndef LC_OPTIONSWIDGETSHOLDER_H
 #define LC_OPTIONSWIDGETSHOLDER_H
 
-#include <QWidget>
+
 #include "lc_snapoptionswidgetsholder.h"
 
 namespace Ui {
     class LC_OptionsWidgetsHolder;
 }
+
 class LC_OptionsWidgetsHolder : public QWidget{
     Q_OBJECT
 public:
@@ -42,7 +43,7 @@ public slots:
     void setCurrentQAction(QAction *a);
 protected:
     int iconSize = 24;
-    bool hasActionIcon = false;
+    bool m_hasActionIcon = false;
 private:
     Ui::LC_OptionsWidgetsHolder *ui;
     void doSetIcon(const QIcon &icon, const QString& text);

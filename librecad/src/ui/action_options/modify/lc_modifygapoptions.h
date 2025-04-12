@@ -45,7 +45,7 @@ protected slots:
     void onLineSnapModeIndexChanged(int index);
     void onGapSnapModeIndexChanged(int index);
 private:
-    LC_ActionModifyLineGap* action = nullptr;
+    LC_ActionModifyLineGap* m_action = nullptr;
     Ui::LC_ModifyGapOptions *ui;
     void setGapSizeToActionAndView(const QString &val);
     void setGapIsFreeToActionAndView(bool val);

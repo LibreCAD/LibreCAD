@@ -1,14 +1,37 @@
-#include <QMessageBox>
+/* ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************/
+
 #include "lc_dlgucsproperties.h"
-#include "ui_lc_dlgucsproperties.h"
-#include "lc_ucslistmodel.h"
+
+#include <QMessageBox>
+
+#include "lc_ucs.h"
+#include "lc_ucslist.h"
 #include "rs_math.h"
 #include "rs_units.h"
+#include "ui_lc_dlgucsproperties.h"
 
 LC_DlgUCSProperties::LC_DlgUCSProperties(QWidget *parent)
     : LC_Dialog(parent, "UCSEdit")
-    , ui(new Ui::LC_DlgUCSProperties)
-{
+    , ui(new Ui::LC_DlgUCSProperties){
     ui->setupUi(this);
 }
 
@@ -35,17 +58,17 @@ void LC_DlgUCSProperties::updateUCS() {
                              QMessageBox::Close);
     }
     else{
-        LC_UCS* existingUCS = ucsList->find(name);
+        LC_UCS* existingUCS = m_ucsList->find(name);
         if (existingUCS == nullptr){
-            ucs->setName(name);
-            ucsList->setModified(true);
+            m_ucs->setName(name);
+            m_ucsList->setModified(true);
         }
         else{
-            if (existingUCS == ucs){
+            if (existingUCS == m_ucs){
                 // actually, do nothing... no name change
             }
             else{
-                if (applyDuplicateSilently){
+                if (m_applyDuplicateSilently){
 
                 }
             }
@@ -55,9 +78,9 @@ void LC_DlgUCSProperties::updateUCS() {
 
 void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, [[maybe_unused]]LC_UCS* u, RS2::Unit unit, RS2::LinearFormat linearFormat, int linearPrec, RS2::AngleFormat angleFormat, int anglePrec) {
 
-    double angleValue = RS_Math::correctAnglePlusMinusPi(ucs->getXAxis().angle());
-    QString originX = RS_Units::formatLinear(ucs->getOrigin().x, unit, linearFormat, linearPrec);
-    QString originY = RS_Units::formatLinear(ucs->getOrigin().y, unit, linearFormat, linearPrec);
+    double angleValue = RS_Math::correctAnglePlusMinusPi(m_ucs->getXAxis().angle());
+    QString originX = RS_Units::formatLinear(m_ucs->getOrigin().x, unit, linearFormat, linearPrec);
+    QString originY = RS_Units::formatLinear(m_ucs->getOrigin().y, unit, linearFormat, linearPrec);
     QString angle = RS_Units::formatAngle(angleValue, angleFormat, anglePrec);
 
     QString origin;
@@ -66,15 +89,15 @@ void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, [[mayb
     ui->lblOrigin->setText(origin);
     ui->lblAxis->setText(angle);
 
-    QString xEnd = RS_Units::formatLinear(ucs->getXAxis().x, unit, linearFormat, linearPrec);
-    QString yxEnd = RS_Units::formatLinear(ucs->getXAxis().y, unit, linearFormat, linearPrec);
+    QString xEnd = RS_Units::formatLinear(m_ucs->getXAxis().x, unit, linearFormat, linearPrec);
+    QString yxEnd = RS_Units::formatLinear(m_ucs->getXAxis().y, unit, linearFormat, linearPrec);
     QString xAxis;
     xAxis.append(originX).append(" , "). append(originY);
 
     ui->lblAxisEndtpoint->setText(xAxis);
 
     QString gridType;
-    switch (ucs->getOrthoType()) {
+    switch (m_ucs->getOrthoType()) {
         case LC_UCS::FRONT:
         case LC_UCS::BACK:
             gridType = tr("Ortho");
@@ -98,7 +121,7 @@ void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, [[mayb
 
     ui->lblGridType->setText(gridType);
 
-    ucsList = ulist;
-    applyDuplicateSilently = applyDuplicates;
+    m_ucsList = ulist;
+    m_applyDuplicateSilently = applyDuplicates;
 
 }

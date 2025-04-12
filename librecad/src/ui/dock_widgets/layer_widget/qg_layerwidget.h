@@ -28,15 +28,16 @@
 #ifndef QG_LAYERWIDGET_H
 #define QG_LAYERWIDGET_H
 
-#include <QWidget>
-#include <QIcon>
 #include <QAbstractTableModel>
-#include <QItemSelection>
+#include <QList>
+#include <QWidget>
 
 #include "lc_graphicviewaware.h"
 #include "rs_layerlistlistener.h"
-#include "rs_layerlist.h"
 
+class QItemSelection;
+class RS_LayerList;
+class RS_Layer;
 class QG_ActionHandler;
 class QTableView;
 class QLineEdit;

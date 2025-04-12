@@ -28,122 +28,94 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
 #include "rs_dimension.h"
 
+class RS_Arc;
 
-struct LC_DimArcData
-{
+struct LC_DimArcData {
     LC_DimArcData() = default;
-
     LC_DimArcData(const LC_DimArcData& input_dimArcData);
-
-    LC_DimArcData( double input_radius,
-                   double input_arcLength,
-                   const RS_Vector& input_centre, 
-                   const RS_Vector& input_endAngle, 
-                   const RS_Vector& input_startAngle);
+    LC_DimArcData(double input_radius,
+                  double input_arcLength,
+                  const RS_Vector& input_centre,
+                  const RS_Vector& input_endAngle,
+                  const RS_Vector& input_startAngle);
 
     double radius = 0.;
     double arcLength = 0.;
-
     RS_Vector centre;
     RS_Vector endAngle;
     RS_Vector startAngle;
 };
 
+std::ostream& operator <<(std::ostream& os, const LC_DimArcData& input_dimArcData);
 
-std::ostream& operator << (std::ostream& os, const LC_DimArcData& input_dimArcData);
+class LC_DimArc : public RS_Dimension {
+    friend std::ostream& operator <<(std::ostream& os, const LC_DimArc& input_dimArc);
+public:
+    LC_DimArc(RS_EntityContainer* parent,
+              const RS_DimensionData& input_commonDimData,
+              const LC_DimArcData& input_dimArcData);
 
+    RS_Entity* clone() const override;
 
-class LC_DimArc : public RS_Dimension
-{
-    friend std::ostream& operator << (std::ostream& os, const LC_DimArc& input_dimArc);
+    RS2::EntityType rtti() const override {
+        return RS2::EntityDimArc;
+    }
 
+    LC_DimArcData getData() const {
+        return dimArcData;
+    }
 
-    public:
+    double getRadius() const override {
+        return dimArcData.radius;
+    }
 
-        LC_DimArc( RS_EntityContainer* parent, 
-                   const RS_DimensionData& input_commonDimData, 
-                   const LC_DimArcData& input_dimArcData);
+    double getArcLength() const {
+        return dimArcData.arcLength;
+    }
 
-        RS_Entity* clone() const override;
+    double getStartAngle() const {
+        return dimArcData.startAngle.angle();
+    }
 
-        RS2::EntityType rtti() const override
-        {
-            return RS2::EntityDimArc;
-        }
+    double getEndAngle() const {
+        return dimArcData.endAngle.angle();
+    }
 
-        LC_DimArcData getData() const
-        {
-            return dimArcData;
-        }
+    RS_Vector getCenter() const override {
+        return dimArcData.centre;
+    }
 
-        double getRadius() const override
-        {
-            return dimArcData.radius;
-        }
+    QString getMeasuredLabel() override;
 
-        double getArcLength() const
-        {
-            return dimArcData.arcLength;
-        }
+    void updateDim(bool autoText = false) override;
 
-        double getStartAngle() const
-        {
-            return dimArcData.startAngle.angle();
-        }
+    void update() override;
 
-        double getEndAngle() const
-        {
-            return dimArcData.endAngle.angle();
-        }
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, double angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+protected:
+    LC_DimArcData dimArcData;
+private:
+    RS_Vector arrowStartPoint;
+    RS_Vector arrowEndPoint;
+    RS_Vector dimStartPoint;
+    RS_Vector dimEndPoint;
+    RS_Line* extLine1 = nullptr;
+    RS_Line* extLine2 = nullptr;
+    RS_Arc* dimArc1 = nullptr;
+    RS_Arc* dimArc2 = nullptr;
 
-        RS_Vector getCenter() const override
-        {
-            return dimArcData.centre;
-        }
-
-        QString getMeasuredLabel() override;
-
-        void updateDim(bool autoText = false) override;
-
-        void update() override;
-
-        void move   (const RS_Vector& offset)                                   override;
-        void rotate (const RS_Vector& center,     double angle)          override;
-        void rotate (const RS_Vector& center,     const RS_Vector& angleVector) override;
-        void scale  (const RS_Vector& center,     const RS_Vector& factor)      override;
-        void mirror (const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)  override;
-
-
-    protected:
-
-        LC_DimArcData dimArcData;
-
-
-    private:
-
-        RS_Vector arrowStartPoint;
-        RS_Vector arrowEndPoint;
-
-        RS_Vector dimStartPoint;
-        RS_Vector dimEndPoint;
-
-        RS_Line* extLine1 = nullptr;
-        RS_Line* extLine2 = nullptr;
-        RS_Arc*  dimArc1 = nullptr;
-        RS_Arc*  dimArc2 = nullptr;
-
-        void calcDimension();
-
-        RS_Vector truncateVector(const RS_Vector input_vector);
-
-        void arrow( const RS_Vector& point, 
-                    const double angle, 
-                    const double direction, 
-                    const RS_Pen& pen);
+    void calcDimension();
+    RS_Vector truncateVector(const RS_Vector input_vector);
+    void arrow(const RS_Vector& point,
+               const double angle,
+               const double direction,
+               const RS_Pen& pen);
 };
 
 #endif // LC_DIMARC_H
-

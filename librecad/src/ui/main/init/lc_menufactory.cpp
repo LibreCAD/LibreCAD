@@ -23,12 +23,17 @@
 #include "lc_menufactory.h"
 
 #include <QDesktopServices>
+#include <QDockWidget>
 #include <QMdiArea>
 #include <QMenuBar>
 #include <QToolBar>
+#include <QUrl>
 
 #include "lc_actiongroupmanager.h"
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 #include "rs_settings.h"
+
 class QToolBar;
 
 LC_MenuFactory::LC_MenuFactory(QC_ApplicationWindow *main_win, LC_ActionGroupManager *agm)

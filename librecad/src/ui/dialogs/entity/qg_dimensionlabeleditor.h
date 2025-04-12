@@ -25,25 +25,19 @@
 #include "ui_qg_dimensionlabeleditor.h"
 class RS_Dimension;
 
-class QG_DimensionLabelEditor : public QWidget, public Ui::QG_DimensionLabelEditor
-{
+class QG_DimensionLabelEditor : public QWidget, public Ui::QG_DimensionLabelEditor{
     Q_OBJECT
-
 public:
     QG_DimensionLabelEditor(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    ~QG_DimensionLabelEditor();
-
+    ~QG_DimensionLabelEditor() override;
     void setRadialType(const RS_Dimension&);
-    virtual QString getLabel();
-
+    QString getLabel();
 public slots:
-    virtual void setLabel( const QString & l );
-    virtual void insertSign( const QString & s );
-    virtual void updatePrefix(bool isChecked);
-
+    void setLabel( const QString & l );
+    void insertSign( const QString & s );
+    void updatePrefix(bool isChecked);
 protected slots:
-    virtual void languageChange();
-
+    void languageChange();
 private:
     bool m_hasDiameter = false;
 };

@@ -25,10 +25,12 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Polyline;
+
 class LC_ActionPolylineArcsToLines:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionPolylineArcsToLines(LC_ActionContext *actionContext);
+    explicit LC_ActionPolylineArcsToLines(LC_ActionContext *actionContext);
     ~LC_ActionPolylineArcsToLines() override;
     void init(int status) override;
 protected:

@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_SNAPOPTIONSHOLDERMANAGER_H
 #define LC_SNAPOPTIONSHOLDERMANAGER_H
 #include <qwidget.h>
+
 class LC_ActionOptionsWidget;
 class LC_OptionsWidgetsHolder;
 class QToolBar;

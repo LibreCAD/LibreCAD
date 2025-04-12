@@ -24,17 +24,13 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
-
-#include <QtCore/QtContainerFwd>
-
-#include "rs.h"
-#include "rs_snapper.h"
 #include "lc_modifiersinfo.h"
 #include "rs_math.h"
+#include "rs_snapper.h"
 
+class LC_ModifiersInfo;
 class QInputEvent;
 class QKeyEvent;
 class QMouseEvent;

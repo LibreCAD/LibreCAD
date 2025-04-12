@@ -23,11 +23,11 @@
 
 #include "lc_exporttoimageservice.h"
 
+#include "lc_appwindowdialogsinvoker.h"
 #include "lc_imageexporter.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlgimageoptions.h"
 #include "rs_graphic.h"
-
 
 bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const QString& documentFileName) {
     QG_ImageOptionsDialog imageOptionsDialog = new QG_ImageOptionsDialog(m_appWin);

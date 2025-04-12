@@ -24,11 +24,7 @@
 **
 **********************************************************************/
 #include "qg_linebisectoroptions.h"
-
 #include "rs_actiondrawlinebisector.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_debug.h"
 #include "ui_qg_linebisectoroptions.h"
 
 /*
@@ -63,13 +59,13 @@ void QG_LineBisectorOptions::doSaveSettings(){
 
 void QG_LineBisectorOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-    action = dynamic_cast<RS_ActionDrawLineBisector *>(a);
+    m_action = dynamic_cast<RS_ActionDrawLineBisector *>(a);
 
     QString length;
     int number;
     if (update){
-        length = fromDouble(action->getLength());
-        number = action->getNumber();
+        length = fromDouble(m_action->getLength());
+        number = m_action->getNumber();
     } else {
         length = load("Length", "1.0");
         number = loadInt("Number", 1);
@@ -89,12 +85,12 @@ void QG_LineBisectorOptions::onLengthEditingFinished(){
 void QG_LineBisectorOptions::setLengthToActionAndView(QString val){
     double len;
     if (toDouble(val, len, 1.0, false)){
-        action->setLength(len);
+        m_action->setLength(len);
         ui->leLength->setText(fromDouble(len));
     }
 }
 
 void QG_LineBisectorOptions::setNumberToActionAndView(int number){
-    action->setNumber(number);
+    m_action->setNumber(number);
     ui->sbNumber->setValue(number);
 }

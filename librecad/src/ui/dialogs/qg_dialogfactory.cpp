@@ -33,18 +33,14 @@
 #include <QFileDialog>
 #include <QImageReader>
 #include <QMessageBox>
-#include <QString>
 #include <QRegularExpression>
-#include <QToolBar>
 
 #include "LC_DlgParabola.h"
 #include "lc_dlgsplinepoints.h"
 #include "lc_parabola.h"
-#include "lc_splinepoints.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockdialog.h"
 #include "qg_commandwidget.h"
-#include "qg_coordinatewidget.h"
 #include "qg_dlgarc.h"
 #include "qg_dlgattributes.h"
 #include "qg_dlgcircle.h"
@@ -60,8 +56,7 @@
 #include "qg_dlgmoverotate.h"
 #include "qg_dlgmtext.h"
 #include "qg_dlgoptionsdrawing.h"
-#include "qg_dlgoptionsgeneral.h"
-#include "file/export/makercam/qg_dlgoptionsmakercam.h"
+#include "qg_dlgoptionsmakercam.h"
 #include "qg_dlgpoint.h"
 #include "qg_dlgpolyline.h"
 #include "qg_dlgrotate.h"
@@ -70,24 +65,32 @@
 #include "qg_dlgspline.h"
 #include "qg_dlgtext.h"
 #include "qg_layerdialog.h"
-#include "qg_layerwidget.h"
-#include "qg_mousewidget.h"
 #include "qg_selectionwidget.h"
-#include "qg_snapmiddleoptions.h"
-#include "rs_actioninterface.h"
+#include "rs_arc.h"
 #include "rs_blocklist.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
+#include "rs_dimension.h"
 #include "rs_dimlinear.h"
+#include "rs_ellipse.h"
 #include "rs_hatch.h"
-#include "rs_patternlist.h"
-#include "rs_settings.h"
-#include "rs_system.h"
-#include "rs_vector.h"
+#include "rs_image.h"
 #include "rs_insert.h"
-#include "lc_optionswidgetsholder.h"
+#include "rs_layer.h"
+#include "rs_layerlist.h"
+#include "rs_line.h"
+#include "rs_patternlist.h"
+#include "rs_point.h"
+#include "rs_polyline.h"
+#include "rs_settings.h"
+#include "rs_spline.h"
+#include "rs_system.h"
+#include "rs_text.h"
+
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
+class LC_EntityPropertiesDlg;
 /**
  * Constructor.
  *
@@ -103,6 +106,7 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, [[maybe_unused]]QToolBar* op
     setOptionWidget(optionsToolbar);
     RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
     */
+
 }
 
 
@@ -159,7 +163,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList)
         int nlen {1};
         int i {0};
         QRegularExpression re("^(.*\\D+|)(\\d*)$");
-        QRegularExpressionMatch match( re.match(layer_name));
+        auto match( re.match(layer_name));
         if (match.hasMatch()) {
             sBaseLayerName = match.captured(1);
             if( 1 < match.lastCapturedIndex()) {
@@ -737,6 +741,8 @@ bool QG_DialogFactory::requestRotate2Dialog(RS_Rotate2Data& data) {
 /**
  * Shows a dialog to edit the given entity.
  */
+
+// fixme - sand - files - remove from there, move to action or so (introduces additional dependencies)
 bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) {
     if (!entity) return false;
 
@@ -790,7 +796,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
         break;
     }
     case RS2::EntityDimLinear: {
-        editDialog = new QG_DlgDimLinear(parent, viewport,dynamic_cast<RS_DimLinear *>(entity));
+        editDialog = new QG_DlgDimLinear(parent, viewport, dynamic_cast<RS_DimLinear *>(entity));
         break;
     }
     case RS2::EntityMText: {
@@ -905,15 +911,15 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
  * Called whenever the selection changed.
  */
 void QG_DialogFactory::updateSelectionWidget(int num, double length) {
-    if (selectionWidget != nullptr) {
-        selectionWidget->setNumber(num);
-        selectionWidget->setTotalLength(length);
+    if (m_selectionWidget != nullptr) {
+        m_selectionWidget->setNumber(num);
+        m_selectionWidget->setTotalLength(length);
     }
 }
 
 void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display){
-    if (selectionWidget != nullptr)    {
-        selectionWidget->flashAuxData( QString("Block Name"),
+    if (m_selectionWidget != nullptr)    {
+        m_selectionWidget->flashAuxData( QString("Block Name"),
                                        blockName,
                                        QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT,
                                        display);
@@ -925,24 +931,24 @@ void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& di
  */
 void QG_DialogFactory::commandMessage(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::commandMessage");
-    if (commandWidget) {
-        commandWidget->appendHistory(message);
+    if (m_commandWidget) {
+        m_commandWidget->appendHistory(message);
     }
     RS_DEBUG->print("QG_DialogFactory::commandMessage: OK");
 
 }
 void QG_DialogFactory::command(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::command");
-    if (commandWidget) {
-        commandWidget->setInput(message);
+    if (m_commandWidget) {
+        m_commandWidget->setInput(message);
     }
     RS_DEBUG->print("QG_DialogFactory::command: OK");
 }
 
 void QG_DialogFactory::commandPrompt(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::command");
-    if (commandWidget) {
-        commandWidget->setCommand(message);
+    if (m_commandWidget) {
+        m_commandWidget->setCommand(message);
     }
     RS_DEBUG->print("QG_DialogFactory::command: OK");
 }

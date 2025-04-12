@@ -24,10 +24,8 @@
 **
 **********************************************************************/
 #include "qg_lineoptions.h"
-
 #include "rs_actiondrawline.h"
 #include "ui_qg_lineoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LineOptions as a child of 'parent', with the
@@ -57,24 +55,24 @@ void QG_LineOptions::doSaveSettings(){
 }
 
 void QG_LineOptions::doSetAction(RS_ActionInterface *a, [[maybe_unused]]bool update){
-		action = dynamic_cast<RS_ActionDrawLine*>(a);
+		m_action = dynamic_cast<RS_ActionDrawLine*>(a);
 }
 
 void QG_LineOptions::close() {
-    if (action) {
-        action->close();
+    if (m_action) {
+        m_action->close();
     }
 }
 
 void QG_LineOptions::undo() {
-    if (action) {
-        action->undo();
+    if (m_action) {
+        m_action->undo();
     }
 }
 
 
 void QG_LineOptions::redo() {
-    if (action) {
-        action->redo();
+    if (m_action) {
+        m_action->redo();
     }
 }

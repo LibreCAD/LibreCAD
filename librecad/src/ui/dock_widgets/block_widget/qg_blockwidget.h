@@ -68,13 +68,13 @@ public:
     RS_Block *getBlock( int row) const;
     QModelIndex getIndex (RS_Block * blk) const;
 
-    RS_Block* getActiveBlock() const { return activeBlock; }
-    void setActiveBlock(RS_Block* b) { activeBlock = b; }
+    RS_Block* getActiveBlock() const { return m_activeBlock; }
+    void setActiveBlock(RS_Block* b) { m_activeBlock = b; }
 private:
-    QList<RS_Block*> listBlock;
-    QIcon blockVisible;
-    QIcon blockHidden;
-    RS_Block* activeBlock {nullptr};
+    QList<RS_Block*> m_listBlock;
+    QIcon m_iconBlockVisible;
+    QIcon m_iconBlockHidden;
+    RS_Block* m_activeBlock {nullptr};
 };
 
 
@@ -108,10 +108,10 @@ public:
 signals:
     void escape();
 public slots:
-    void slotActivated(QModelIndex blockIdx);
-    void slotSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected);
-    void slotUpdateBlockList();
-    void updateWidgetSettings();
+    void slotActivated(const QModelIndex &blockIdx);
+    void slotSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected) const;
+    void slotUpdateBlockList() const;
+    void updateWidgetSettings() const;
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
     void keyPressEvent(QKeyEvent* e) override;
@@ -123,7 +123,7 @@ private:
     QG_BlockModel *m_blockModel = nullptr;
     RS_Block* m_lastBlock = nullptr;
     QG_ActionHandler* m_actionHandler = nullptr;
-    void restoreSelections();
+    void restoreSelections() const;
 };
 
 #endif

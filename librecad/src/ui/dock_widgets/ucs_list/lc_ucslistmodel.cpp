@@ -22,6 +22,9 @@
 
 #include <QFont>
 #include "lc_ucslistmodel.h"
+
+#include "lc_ucslist.h"
+#include "lc_ucslistoptions.h"
 #include "rs_units.h"
 #include "rs_math.h"
 
@@ -279,6 +282,17 @@ void LC_UCSListModel::markActive(LC_UCS *ucs) {
 
 LC_UCS *LC_UCSListModel::getWCS() {
     return m_ucsList->getWCS();
+}
+
+LC_UCS* LC_UCSListModel::getActiveUCS(){
+    LC_UCS* result = nullptr;
+    if (m_ucsList != nullptr) {
+        result = m_ucsList->getActive();
+    }
+    return result;
+}
+int LC_UCSListModel::count(){
+    return m_ucss.count();
 }
 
 QString LC_UCSListModel::getUCSInfo(LC_UCS *ucs) {

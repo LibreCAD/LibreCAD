@@ -26,10 +26,7 @@
 
 #ifndef QG_COMMANDEDIT_H
 #define QG_COMMANDEDIT_H
-
 #include <QLineEdit>
-#include <QMap>
-#include <QString>
 
 /**
  * A command line edit with some typical console features
@@ -37,29 +34,22 @@
  */
 class QG_CommandEdit: public QLineEdit {
     Q_OBJECT
-
 public:
     QG_CommandEdit(QWidget* parent=nullptr);
     virtual ~QG_CommandEdit() = default;
-
     void readCommandFile(const QString& path);
-
-    bool keycode_mode = false;
-
+    bool m_keycode_mode = false;
 protected:
     bool event(QEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void focusInEvent(QFocusEvent *e) override;
     void focusOutEvent(QFocusEvent *e) override;
     void evaluateExpression(QString input);
-
-    QString relative_ray;
-    QMap<QString, QString> variables;
-
+    QString m_relative_ray;
+    QMap<QString, QString> m_variables;
     void processInput(QString input);
     bool isForeignCommand(QString input);
     void processVariable(QString input);
-
 signals:
     void spacePressed();
     void tabPressed();
@@ -78,14 +68,12 @@ private:
       * @return an empty string, if calculation is performed; the input string, otherwise
       */
     QString filterCliCal(const QString& cmd);
-    QStringList historyList;
-    QStringList::const_iterator it = historyList.cbegin();
-    bool acceptCoordinates = false;
-    bool calculator_mode = false;
-
+    QStringList m_historyList;
+    QStringList::const_iterator it = m_historyList.cbegin();
+    bool m_acceptCoordinates = false;
+    bool m_calculator_mode = false;
 public slots:
     void modifiedPaste();
 };
 
 #endif
-

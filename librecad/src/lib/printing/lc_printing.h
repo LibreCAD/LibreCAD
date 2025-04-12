@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class RS_Graphic;
 class QC_MDIWindow;
-
+// fixme - sand - files - move to proper place outside of /lib !!!
 namespace LC_Printing
 {
     enum class PrinterType { Printer, PDF };

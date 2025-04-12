@@ -23,11 +23,7 @@
 **********************************************************************************
 */
 
-
 #include <QFile>
-#include <QTextStream>
-#include <QPlainTextEdit>
-#include <QListWidget>
 
 #include "textfileviewer.h"
 #include "ui_textfileviewer.h"

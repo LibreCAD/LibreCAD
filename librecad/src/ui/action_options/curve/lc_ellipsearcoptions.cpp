@@ -21,8 +21,8 @@
  ******************************************************************************/
 
 #include "lc_ellipsearcoptions.h"
-#include "ui_lc_ellipsearcoptions.h"
 #include "rs_actiondrawellipseaxis.h"
+#include "ui_lc_ellipsearcoptions.h"
 
 /*
  *  Constructs a QG_ArcOptions as a child of 'parent', with the
@@ -54,22 +54,20 @@ void LC_EllipseArcOptions::doSaveSettings(){
 }
 
 void LC_EllipseArcOptions::doSetAction(RS_ActionInterface *a, bool update){
-
-    action = dynamic_cast<RS_ActionDrawEllipseAxis *>(a);
-
+    m_action = dynamic_cast<RS_ActionDrawEllipseAxis *>(a);
     bool reversed;
     if (update){
-        reversed = action->isReversed();
+        reversed = m_action->isReversed();
     } else {
         reversed = loadBool("Reversed", false);
-        action->setReversed(reversed);
+        m_action->setReversed(reversed);
     }
     setReversedToActionAndView(reversed);
 }
 
 void LC_EllipseArcOptions::setReversedToActionAndView(bool reversed){
     ui->rbNeg->setChecked(reversed);
-    action->setReversed(reversed);
+    m_action->setReversed(reversed);
 }
 
 /*void QG_ArcOptions::setData(RS_ArcData* d) {

@@ -23,8 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_POLYLINEEQUIDISTANTOPTIONS_H
 #define QG_POLYLINEEQUIDISTANTOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionDrawLineRelAngle;
@@ -43,7 +42,7 @@ class QG_PolylineEquidistantOptions:public LC_ActionOptionsWidgetBase {
     Q_OBJECT
 public:
     QG_PolylineEquidistantOptions();
-    ~QG_PolylineEquidistantOptions();
+    ~QG_PolylineEquidistantOptions() override;
 public slots:
     void languageChange() override;
     void onDistEditingFinished();
@@ -52,7 +51,7 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
-    RS_ActionPolylineEquidistant *action = nullptr;
+    RS_ActionPolylineEquidistant *m_action = nullptr;
     std::unique_ptr<Ui::PolylineEquidistantOptions> ui;
     void setNumberToActionAndView(int number);
     void setDistanceToActionAndView(QString strVal);

@@ -22,17 +22,22 @@
  ******************************************************************************/
 
 #include "lc_creatorinvoker.h"
+
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QMenu>
 #include <QSettings>
 #include <QToolBar>
 #include <QVBoxLayout>
+
 #include "lc_dialog.h"
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
 #include "widgetcreator.h"
 
 LC_CreatorInvoker::LC_CreatorInvoker(QC_ApplicationWindow *appWin, LC_ActionGroupManager *actionGroupManager)
-    :appWindow{appWin}, m_actionGroupManager(actionGroupManager) {
+    :m_appWindow{appWin}, m_actionGroupManager(actionGroupManager) {
 }
 
 void LC_CreatorInvoker::createCustomToolbars() {
@@ -40,7 +45,7 @@ void LC_CreatorInvoker::createCustomToolbars() {
     settings.beginGroup("CustomToolbars");
     const QStringList &list = settings.childKeys();
     for (const auto& key: list) {
-        auto toolbar = new QToolBar(key, appWindow);
+        auto toolbar = new QToolBar(key, m_appWindow);
         toolbar->setObjectName(key);
         const QVariant &variant = settings.value(key);
         if (variant.isValid()) {
@@ -48,21 +53,21 @@ void LC_CreatorInvoker::createCustomToolbars() {
             for (const auto &actionName: qList) {
                 toolbar->addAction(getAction(actionName));
             }
-            appWindow->addToolBar(toolbar);
+            m_appWindow->addToolBar(toolbar);
         }
     }
     settings.endGroup();
 }
 
 void LC_CreatorInvoker::invokeToolbarCreator() {
-    auto tb_creator = appWindow->findChild<QDialog *>("Toolbar Creator");
+    auto tb_creator = m_appWindow->findChild<QDialog *>("Toolbar Creator");
     if (tb_creator) {
         tb_creator->raise();
         tb_creator->activateWindow();
         return;
     }
 
-    auto dlg = new LC_Dialog(appWindow, "ToolbarCreator");
+    auto dlg = new LC_Dialog(m_appWindow, "ToolbarCreator");
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Toolbar Creator"));
     dlg->setObjectName("Toolbar Creator");
@@ -85,15 +90,15 @@ void LC_CreatorInvoker::createToolbar(const QString &toolbar_name) {
     auto tb = QString("CustomToolbars/%1").arg(toolbar_name);
     auto a_list = settings.value(tb).toStringList();
 
-    auto toolbar = appWindow->findChild<QToolBar *>(toolbar_name);
+    auto toolbar = m_appWindow->findChild<QToolBar *>(toolbar_name);
 
     if (toolbar) {
         toolbar->clear();
     }
     else {
-        toolbar = new QToolBar(toolbar_name, appWindow);
+        toolbar = new QToolBar(toolbar_name, m_appWindow);
         toolbar->setObjectName(toolbar_name);
-        appWindow->addToolBar(Qt::BottomToolBarArea, toolbar);
+        m_appWindow->addToolBar(Qt::BottomToolBarArea, toolbar);
     }
 
     QStringList &list = a_list;
@@ -103,19 +108,19 @@ void LC_CreatorInvoker::createToolbar(const QString &toolbar_name) {
 }
 
 void LC_CreatorInvoker::destroyToolbar(const QString &toolbar_name) {
-    auto toolbar = appWindow->findChild<QToolBar *>(toolbar_name);
+    auto toolbar = m_appWindow->findChild<QToolBar *>(toolbar_name);
     delete toolbar;
 }
 
 void LC_CreatorInvoker::invokeMenuCreator() {
-    auto menu_creator = appWindow->findChild<QDialog *>("Menu Creator");
+    auto menu_creator = m_appWindow->findChild<QDialog *>("Menu Creator");
     if (menu_creator) {
         menu_creator->raise();
         menu_creator->activateWindow();
         return;
     }
 
-    auto dlg = new LC_Dialog(appWindow, "MenuCreator");
+    auto dlg = new LC_Dialog(m_appWindow, "MenuCreator");
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Menu Creator"));
     auto layout = new QVBoxLayout;
@@ -201,7 +206,7 @@ void LC_CreatorInvoker::unassignMenu(const QString &activator, const QString &me
     }
     settings.endGroup();
 
-    appWindow->doForEachWindow([activator](QC_MDIWindow *win) {
+    m_appWindow->doForEachWindow([activator](QC_MDIWindow *win) {
         auto view = win->getGraphicView();
         view->destroyMenu(activator);
     });
@@ -217,7 +222,7 @@ void LC_CreatorInvoker::assignMenu(const QString &activator, const QString &menu
     auto menu_key = QString("CustomMenus/%1").arg(menu_name);
     auto a_list = settings.value(menu_key).toStringList();
 
-    appWindow->doForEachWindow([a_list, activator, menu_name, this](QC_MDIWindow *win) {
+    m_appWindow->doForEachWindow([a_list, activator, menu_name, this](QC_MDIWindow *win) {
         auto graphicView = win->getGraphicView();
         auto menu = new QMenu(activator, graphicView);
         menu->setObjectName(menu_name);
@@ -242,7 +247,7 @@ void LC_CreatorInvoker::updateMenu(const QString &menu_name) {
 
     for(const auto &activator: activators) {
         if (settings.value(activator).toString() == menu_name) {
-            appWindow->doForEachWindow([activator, menu_name, a_list, this](QC_MDIWindow *win) {
+            m_appWindow->doForEachWindow([activator, menu_name, a_list, this](QC_MDIWindow *win) {
                 auto view = win->getGraphicView();
                 auto menu = new QMenu(activator, view);
                 menu->setObjectName(menu_name);
@@ -263,7 +268,7 @@ void LC_CreatorInvoker::destroyMenu(const QString &menu_name) {
     for(const auto &activator: activators) {
         if (settings.value(activator).toString() == menu_name) {
             settings.remove(activator);
-            appWindow->doForEachWindow([activator](QC_MDIWindow *win) {
+            m_appWindow->doForEachWindow([activator](QC_MDIWindow *win) {
                 auto view = win->getGraphicView();
                 view->destroyMenu(activator);
             });

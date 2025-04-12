@@ -23,13 +23,14 @@
 **********************************************************************/
 #ifndef LC_PENINFOREGISTRY_H
 #define LC_PENINFOREGISTRY_H
-
 #include <QIcon>
 #include <QMap>
-#include <QCoreApplication>
-#include "rs.h"
-#include "rs_color.h"
+#include <qcoreapplication.h>
 
+#include "rs.h"
+
+class QRgba64;
+class RS_Color;
 /**
  * Registry that is used for resolving attributes of pens (line width, color, line type) and show them in
  * UI.
@@ -67,16 +68,16 @@ public:
     bool hasLineWidth(int widthCandidate);
 private:
 
-    QMap<RS2::LineType, QIcon> lineTypesIconMap;
-    QMap<RS2::LineType, QString> lineTypesNamesMap;
-    QMap<RS2::LineWidth, QIcon>lineWidthIconMap;
-    QMap<RS2::LineWidth, QString> lineWidthNamesMap;
-    QMap<QRgba64, QString> colorNamesMap;
-    QMap<QRgba64, QString> standardLCColorNamesMap;
+    QMap<RS2::LineType, QIcon> m_lineTypesIconMap;
+    QMap<RS2::LineType, QString> m_lineTypesNamesMap;
+    QMap<RS2::LineWidth, QIcon>m_lineWidthIconMap;
+    QMap<RS2::LineWidth, QString> m_lineWidthNamesMap;
+    QMap<QRgba64, QString> m_colorNamesMap;
+    QMap<QRgba64, QString> m_standardLCColorNamesMap;
 
-    QIcon iconByLayer = QIcon(":/icons/point_blank_square.lci");
-    QIcon iconByBlock = QIcon(":/icons/point_plus_square.lci");
-    QIcon iconUnchanged = QIcon(":/icons/point_cross.lci");
+    QIcon m_iconByLayer = QIcon(":/icons/point_blank_square.lci");
+    QIcon m_iconByBlock = QIcon(":/icons/point_plus_square.lci");
+    QIcon m_iconUnchanged = QIcon(":/icons/point_cross.lci");
 
     void registerLineTypes();
     void registerLineWidths();

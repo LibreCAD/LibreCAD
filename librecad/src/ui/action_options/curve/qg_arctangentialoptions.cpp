@@ -27,8 +27,6 @@
 
 #include "qg_arctangentialoptions.h"
 #include "rs_actiondrawarctangential.h"
-#include "rs_settings.h"
-#include "rs_math.h"
 #include "ui_qg_arctangentialoptions.h"
 
 #ifdef EMU_C99
@@ -71,15 +69,15 @@ void QG_ArcTangentialOptions::doSaveSettings(){
 }
 
 void QG_ArcTangentialOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionDrawArcTangential *>(a);
+    m_action = dynamic_cast<RS_ActionDrawArcTangential *>(a);
 
     QString radius;
     QString angle;
     bool byRadius;
     if (update){
-        radius = fromDouble(action->getRadius());
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
-        byRadius = action->getByRadius();
+        radius = fromDouble(m_action->getRadius());
+        angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
+        byRadius = m_action->getByRadius();
     } else {
         radius = load("Radius", "1.0");
         angle = load("Angle", "90.0");
@@ -93,7 +91,7 @@ void QG_ArcTangentialOptions::doSetAction(RS_ActionInterface *a, bool update){
 void QG_ArcTangentialOptions::setRadiusToActionAndView(const QString& s) {
     double radius;
     if (toDouble(s, radius, 1.0, true)){
-        action->setRadius(radius);
+        m_action->setRadius(radius);
         ui->leRadius->setText(fromDouble(radius));
     }
 }
@@ -105,14 +103,14 @@ void QG_ArcTangentialOptions::setAngleToActionAndView(const QString& s) {
         double angleRad = RS_Math::correctAngle(RS_Math::deg2rad(angleDegree));
         if(angleRad <RS_TOLERANCE_ANGLE || angleRad  + RS_TOLERANCE_ANGLE > 2. * M_PI)
             angleRad =M_PI; // can not do full circle
-        action->setAngle(angleRad);
+        m_action->setAngle(angleRad);
         angleDegree = RS_Math::rad2deg(angleRad);
         ui->leAngle->setText(fromDouble(angleDegree));
     }
 }
 
 void QG_ArcTangentialOptions::setByRadiusToActionAndView(bool byRadius) {
-    action->setByRadius(byRadius);
+    m_action->setByRadius(byRadius);
     ui->rbRadius->setChecked(byRadius);
     ui->rbAngle->setChecked(!byRadius);
     ui->leRadius->setEnabled(byRadius);

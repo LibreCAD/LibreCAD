@@ -27,6 +27,7 @@
 #define QG_COMMANDWIDGET_H
 
 #include "ui_qg_commandwidget.h"
+
 class QG_ActionHandler;
 class QAction;
 
@@ -43,25 +44,25 @@ public:
     void setInput(const QString &cmd);
 public slots:
     virtual void setFocus();
-    virtual void setCommand( const QString & cmd );
-    virtual void appendHistory( const QString & msg );
-    virtual void handleCommand(QString cmd);
-    virtual void handleKeycode(QString code);
-    virtual void spacePressed();
-    virtual void tabPressed();
-    virtual void escape();
-    virtual void setActionHandler( QG_ActionHandler * ah );
-    virtual void setCommandMode();
-    virtual void setNormalMode();
+    void setCommand( const QString & cmd );
+    void appendHistory( const QString & msg );
+    void handleCommand(QString cmd);
+    void handleKeycode(QString code);
+    void spacePressed();
+    void tabPressed();
+    void escape();
+    void setActionHandler( QG_ActionHandler * ah );
+    void setCommandMode();
+    void setNormalMode();
     static QString getRootCommand( const QStringList & cmdList, const QString & typed );
     void setKeycodeMode(bool state);
 protected slots:
-    virtual void languageChange();
-    virtual void chooseCommandFile();
+    void languageChange();
+    void chooseCommandFile();
 private slots:
-    virtual void dockingButtonTriggered(bool);
+    void dockingButtonTriggered(bool);
 private:
-    QG_ActionHandler* actionHandler = nullptr;
+    QG_ActionHandler* m_actionHandler = nullptr;
     QAction* m_docking = nullptr;
 };
 

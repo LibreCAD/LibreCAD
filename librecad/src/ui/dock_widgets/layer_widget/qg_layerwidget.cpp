@@ -25,23 +25,26 @@
 **
 **********************************************************************/
 
-#include <QBitmap>
-#include <QBoxLayout>
-#include <QContextMenuEvent>
-#include <QKeyEvent>
-#include <QMenu>
-#include <QScrollBar>
-
-#include "qc_applicationwindow.h"
-#include "qg_actionhandler.h"
 #include "qg_layerwidget.h"
 
-#include "lc_flexlayout.h"
-#include "rs_debug.h"
-#include "rs_settings.h"
-#include "lc_widgets_common.h"
+#include <QAbstractTableModel>
+#include <QContextMenuEvent>
+#include <QIcon>
+#include <QMenu>
+#include <QObject>
+#include <QScrollBar>
 
-QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
+#include "lc_flexlayout.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+#include "rs_debug.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
+#include "rs_layerlist.h"
+#include "rs_settings.h"
+
+QG_LayerModel::QG_LayerModel(QObject * parent) : ::QAbstractTableModel(parent) {
     m_iconLayerVisible = QIcon(":/icons/visible.lci");
     //layerHidden = QIcon(":/icons/invisible.lci");
     m_iconLayerHidden = QIcon(":/icons/not_visible.lci");
@@ -207,7 +210,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
     m_layerView->verticalHeader()->hide();
 
 #ifndef DONT_FORCE_WIDGETS_CSS
-    layerView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+    m_layerView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
 #endif
 
     auto* lay = new QVBoxLayout(this);

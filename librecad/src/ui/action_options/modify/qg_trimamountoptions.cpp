@@ -24,12 +24,8 @@
 **
 **********************************************************************/
 #include "qg_trimamountoptions.h"
-
 #include "rs_actionmodifytrimamount.h"
-#include "rs_settings.h"
-#include "rs_math.h"
 #include "ui_qg_trimamountoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_TrimAmountOptions as a child of 'parent', with the
@@ -46,45 +42,45 @@ QG_TrimAmountOptions::QG_TrimAmountOptions()
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_TrimAmountOptions::~QG_TrimAmountOptions(){
-    action = nullptr;
+QG_TrimAmountOptions::~QG_TrimAmountOptions() {
+    m_action = nullptr;
 };
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_TrimAmountOptions::languageChange(){
+void QG_TrimAmountOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
-void QG_TrimAmountOptions::doSaveSettings(){
+void QG_TrimAmountOptions::doSaveSettings() {
     save("Amount", ui->leDist->text());
     save("AmountTotal", ui->cbTotalLength->isChecked());
     save("AmountSymmetric", ui->cbSymmetric->isChecked());
 }
 
-void QG_TrimAmountOptions::doSetAction(RS_ActionInterface *a, bool update){
-        action = dynamic_cast<RS_ActionModifyTrimAmount *>(a);
+void QG_TrimAmountOptions::doSetAction(RS_ActionInterface* a, bool update) {
+    m_action = dynamic_cast<RS_ActionModifyTrimAmount*>(a);
 
-        QString distance;
-        bool byTotal;
-        bool symmetric;
-        // settings from action:
-        if (update){
-            distance = QString("%1").arg(action->getDistance());
-            byTotal = action->isDistanceTotalLength();
-            symmetric = action->isSymmetricDistance();
-        }
-            // settings from config file:
-        else {
-            distance = load("Amount", "1.0");
-            byTotal = loadBool("AmountTotal", false);
-            symmetric = loadBool("AmountSymmetric", false);
-        }
-        setDistanceToActionAndView(distance);
-        setByTotalToActionAndView(byTotal);
-        setDistanceSymmetricToActionAndView(symmetric);
+    QString distance;
+    bool byTotal;
+    bool symmetric;
+    // settings from action:
+    if (update) {
+        distance = QString("%1").arg(m_action->getDistance());
+        byTotal = m_action->isDistanceTotalLength();
+        symmetric = m_action->isSymmetricDistance();
+    }
+    // settings from config file:
+    else {
+        distance = load("Amount", "1.0");
+        byTotal = loadBool("AmountTotal", false);
+        symmetric = loadBool("AmountSymmetric", false);
+    }
+    setDistanceToActionAndView(distance);
+    setByTotalToActionAndView(byTotal);
+    setDistanceSymmetricToActionAndView(symmetric);
 }
 
 void QG_TrimAmountOptions::onDistEditingFinished(){
@@ -95,25 +91,25 @@ void QG_TrimAmountOptions::onTotalLengthToggled(bool checked){
     setByTotalToActionAndView(checked);
 }
 
-void QG_TrimAmountOptions::onSymmetricToggled(bool checked){
+void QG_TrimAmountOptions::onSymmetricToggled(bool checked) {
     setDistanceSymmetricToActionAndView(checked);
 }
 
-void QG_TrimAmountOptions::setDistanceToActionAndView(const QString &strValue){
+void QG_TrimAmountOptions::setDistanceToActionAndView(const QString& strValue) {
     double val;
-    if (toDouble(strValue, val, 1.0, false)){
-        action->setDistance(val);
+    if (toDouble(strValue, val, 1.0, false)) {
+        m_action->setDistance(val);
         ui->leDist->setText(strValue);
     }
 }
 
-void QG_TrimAmountOptions::setByTotalToActionAndView(bool val){
-    action->setDistanceIsTotalLength(val);
+void QG_TrimAmountOptions::setByTotalToActionAndView(bool val) {
+    m_action->setDistanceIsTotalLength(val);
     ui->cbTotalLength->setChecked(val);
     ui->cbSymmetric->setEnabled(!val);
 }
 
-void QG_TrimAmountOptions::setDistanceSymmetricToActionAndView(bool val){
-    action->setSymmetricDistance(val);
+void QG_TrimAmountOptions::setDistanceSymmetricToActionAndView(bool val) {
+    m_action->setSymmetricDistance(val);
     ui->cbSymmetric->setChecked(val);
 }

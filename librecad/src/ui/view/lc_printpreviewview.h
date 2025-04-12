@@ -24,6 +24,9 @@
 #define LC_PRINTPREVIEWVIEW_H
 
 #include "qg_graphicview.h"
+#include "rs.h"
+
+class RS_Document;
 
 class LC_PrintPreviewView :public QG_GraphicView{
 public:

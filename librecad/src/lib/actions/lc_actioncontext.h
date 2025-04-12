@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONCONTEXT_H
 #include <QString>
 
-#include "lc_modifiersinfo.h"
 class RS_Document;
 class RS_EntityContainer;
 class RS_GraphicView;
@@ -37,8 +36,8 @@ protected:
     ~LC_ActionContext() = default;
 
 public:
-    virtual void addOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widet){}
-    virtual void removeOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widet){}
+    virtual void addOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widget){}
+    virtual void removeOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widget){}
     virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) { };
     virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) { };
     virtual void hideSnapOptions() {};
@@ -46,7 +45,7 @@ public:
 
     virtual void updateMouseWidget([[maybe_unused]]const QString& left = QString(),
                                   [[maybe_unused]]const QString& right = QString(),
-                                  [[maybe_unused]]const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()){};
+                                  [[maybe_unused]]const LC_ModifiersInfo& modifiers){};
 
     virtual void commandMessage([[maybe_unused]]const QString& message) {};
     virtual void commandPrompt([[maybe_unused]]const QString& message) {};

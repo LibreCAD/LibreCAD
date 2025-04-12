@@ -63,7 +63,7 @@ signals:
     void colorChanged(const RS_Color& color);
 
 protected:
-    std::unique_ptr<RS_Color> currentColor;
+    std::unique_ptr<RS_Color> m_currentColor;
     int findColor(const RS_Color& color);
 private:
     int addCustomColor(const RS_Color& color);
@@ -71,12 +71,11 @@ private:
     void readCustomColorSettings();
     void writeCustomColorSettings();
 
-    int colorIndexStart = 0;
-    bool showByLayer = true;
-    bool showUnchanged = true;
-    bool unchanged = true;
+    int m_colorIndexStart = 0;
+    bool m_showByLayer = true;
+    bool m_showUnchanged = true;
+    bool m_unchanged = true;
     int addTemporaryCustomColor(const RS_Color &color);
 };
 
 #endif
-

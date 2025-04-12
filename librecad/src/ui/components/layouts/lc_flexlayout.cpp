@@ -21,16 +21,18 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QtWidgets>
+
+#include <QWidget>
+
 #include "lc_flexlayout.h"
 
 LC_FlexLayout::LC_FlexLayout(QWidget *parent, int margin, int hSpacing, int vSpacing)
-    :QLayout(parent), hSpacing(hSpacing), vSpacing(vSpacing){
+    :QLayout(parent), m_hSpacing(hSpacing), m_vSpacing(vSpacing){
     setContentsMargins(margin, margin, margin, margin);
 }
 
 LC_FlexLayout::LC_FlexLayout(int margin, int hSpacing, int vSpacing, int widthOfFirstColumn)
-    :hSpacing(hSpacing), vSpacing(vSpacing), firstColumnWidth(widthOfFirstColumn){
+    :m_hSpacing(hSpacing), m_vSpacing(vSpacing), m_firstColumnWidth(widthOfFirstColumn){
     setContentsMargins(margin, margin, margin, margin);
 }
 
@@ -84,7 +86,7 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
     int effectiveRight = effectiveRect.right();
     int lineHeight = 0;
 
-    int size = items.size();
+    int size = m_items.size();
 
      std::vector<int> linesHeight;
 
@@ -93,14 +95,14 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
     // do first pass to determine height for each line and overall height
 
     for (int i = 0; i < size; i++) {
-        QLayoutItem *item = std::as_const(items.at(i));
+        QLayoutItem *item = std::as_const(m_items.at(i));
         const QWidget *wid = item->widget();
         QLayoutItem *itemNext = nullptr;
         bool checkForNextBreak = false;
         int nextIndex = i + 1;
         if (nextIndex < size){
-            if (softBreakItems.find(i) != softBreakItems.end()){
-                itemNext = items.at(nextIndex);
+            if (m_softBreakItems.find(i) != m_softBreakItems.end()){
+                itemNext = m_items.at(nextIndex);
                 checkForNextBreak = true;
             }
         }
@@ -122,14 +124,14 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
             columnX = effectiveRect.x();
             rowY = rowY + lineHeight + spaceY;
             nextY = rowY;
-            if (fullWidthItems.find(i) != fullWidthItems.end()){
+            if (m_fullWidthItems.find(i) != m_fullWidthItems.end()){
                 linesHeight.emplace_back(lineHeight);
                 nextY = rowY + itemHeight + spaceY;
                 nextX = columnX;
             }
             else {
-                if (firstColumnWidth > 0){
-                    itemWidth = firstColumnWidth;
+                if (m_firstColumnWidth > 0){
+                    itemWidth = m_firstColumnWidth;
                 }
                 nextX = columnX + itemWidth + spaceX;
             }
@@ -154,14 +156,14 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
         int currentLineHeight;
         // second pass that takes into consideration lines height
         for (int i = 0; i < size; i++) {
-            QLayoutItem *item = std::as_const(items.at(i));
+            QLayoutItem *item = std::as_const(m_items.at(i));
             const QWidget *wid = item->widget();
             QLayoutItem *itemNext = nullptr;
             bool checkForNextBreak = false;
             int nextIndex = i + 1;
             if (nextIndex < size){
-                if (softBreakItems.find(i) != softBreakItems.end()){
-                    itemNext = items.at(nextIndex);
+                if (m_softBreakItems.find(i) != m_softBreakItems.end()){
+                    itemNext = m_items.at(nextIndex);
                     checkForNextBreak = true;
                 }
             }
@@ -183,13 +185,13 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
                 columnX = effectiveRect.x();
                 rowY = rowY + currentLineHeight + spaceY;
                 nextY = rowY;
-                if (fullWidthItems.find(i) != fullWidthItems.end()){
+                if (m_fullWidthItems.find(i) != m_fullWidthItems.end()){
                     itemWidth = effectiveRect.width();
                     nextY = rowY + currentLineHeight + spaceY;
                     nextX = columnX;
                 } else {
-                    if (firstColumnWidth > 0){
-                        itemWidth = firstColumnWidth;
+                    if (m_firstColumnWidth > 0){
+                        itemWidth = m_firstColumnWidth;
                     }
                     nextX = columnX + itemWidth + spaceX;
                 }
@@ -233,24 +235,24 @@ int LC_FlexLayout::defaultSpacing(QStyle::PixelMetric pm) const{
     }
 }
 int LC_FlexLayout::horizontalSpacing() const{
-    if (hSpacing >= 0) {
-        return hSpacing;
+    if (m_hSpacing >= 0) {
+        return m_hSpacing;
     } else {
         return defaultSpacing(QStyle::PM_LayoutHorizontalSpacing);
     }
 }
 
 int LC_FlexLayout::verticalSpacing() const{
-    if (vSpacing >= 0) {
-        return vSpacing;
+    if (m_vSpacing >= 0) {
+        return m_vSpacing;
     } else {
         return defaultSpacing(QStyle::PM_LayoutVerticalSpacing);
     }
 }
 QLayoutItem*LC_FlexLayout::takeAt(int index){
     QLayoutItem* result = nullptr;
-    if (index >= 0 && index < items.size()){
-        result = items.takeAt(index);
+    if (index >= 0 && index < m_items.size()){
+        result = m_items.takeAt(index);
     }
     return result;
 }
@@ -262,7 +264,7 @@ Qt::Orientations LC_FlexLayout::expandingDirections() const{
 
 QSize LC_FlexLayout::minimumSize() const{
     QSize size;
-    for (const QLayoutItem *item : std::as_const(items))
+    for (const QLayoutItem *item : std::as_const(m_items))
         size = size.expandedTo(item->minimumSize());
 
     const QMargins margins = contentsMargins();
@@ -271,16 +273,14 @@ QSize LC_FlexLayout::minimumSize() const{
 }
 
 void LC_FlexLayout::addItem(QLayoutItem *item){
-    items.append(item);
+    m_items.append(item);
 }
 
 
 int LC_FlexLayout::count() const{
-    return items.size();
+    return m_items.size();
 }
 
 QLayoutItem *LC_FlexLayout::itemAt(int index) const{
-    return items.value(index);
+    return m_items.value(index);
 }
-
-

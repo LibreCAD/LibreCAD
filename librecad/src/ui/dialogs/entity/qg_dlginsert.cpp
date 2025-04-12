@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 #include "qg_dlginsert.h"
-
 #include "rs_insert.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
@@ -58,46 +57,46 @@ void QG_DlgInsert::languageChange(){
 }
 
 void QG_DlgInsert::setEntity(RS_Insert* i) {
-    entity = i;
-    RS_Graphic* graphic = entity->getGraphic();
+    m_entity = i;
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, tr("Pen"));
+    wPen->setPen(m_entity, lay, tr("Pen"));
 
-    toUI(entity->getInsertionPoint(), leInsertionPointX, leInsertionPointY);
-    toUIRaw(entity->getScale(), leScaleX, leScaleY);
-    toUIAngleDeg(entity->getAngle(), leAngle);
+    toUI(m_entity->getInsertionPoint(), leInsertionPointX, leInsertionPointY);
+    toUIRaw(m_entity->getScale(), leScaleX, leScaleY);
+    toUIAngleDeg(m_entity->getAngle(), leAngle);
     QString s;
 
-    s.setNum(entity->getRows());
+    s.setNum(m_entity->getRows());
     leRows->setText(s);
-    s.setNum(entity->getCols());
+    s.setNum(m_entity->getCols());
     leCols->setText(s);
-    s.setNum(entity->getSpacing().y);
+    s.setNum(m_entity->getSpacing().y);
     leRowSpacing->setText(s);
-    s.setNum(entity->getSpacing().x);
+    s.setNum(m_entity->getSpacing().x);
     leColSpacing->setText(s);
 }
 
 void QG_DlgInsert::updateEntity() {
-    entity->setInsertionPoint(toWCS(leInsertionPointX, leInsertionPointY, entity->getInsertionPoint()));
-    entity->setScale(toWCSRaw(leScaleX,leScaleY, entity->getScale()));
-    entity->setAngle(toWCSAngle(leAngle, entity->getAngle()));
+    m_entity->setInsertionPoint(toWCS(leInsertionPointX, leInsertionPointY, m_entity->getInsertionPoint()));
+    m_entity->setScale(toWCSRaw(leScaleX,leScaleY, m_entity->getScale()));
+    m_entity->setAngle(toWCSAngle(leAngle, m_entity->getAngle()));
 
     // fixme - complete
-    entity->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
-    entity->setCols(RS_Math::round(RS_Math::eval(leCols->text())));
-    entity->setSpacing(RS_Vector(RS_Math::eval(leColSpacing->text()),
+    m_entity->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
+    m_entity->setCols(RS_Math::round(RS_Math::eval(leCols->text())));
+    m_entity->setSpacing(RS_Vector(RS_Math::eval(leColSpacing->text()),
                                  RS_Math::eval(leRowSpacing->text())));
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
 
-    entity->update();
+    m_entity->update();
 }

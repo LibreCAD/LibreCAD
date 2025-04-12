@@ -23,64 +23,64 @@
 **********************************************************************/
 #include "lc_penitem.h"
 
+#include "rs_pen.h"
+
 LC_PenItem::LC_PenItem(QString name, const RS_Pen& pen):
-    name{name}
-{
+    m_name{name}{
     setPen(pen);
 }
 
 LC_PenItem::LC_PenItem(QString name):
-    name{name}
-{
+    m_name{name}{
     setPen(RS_Pen());
 }
 
 void LC_PenItem::setPen(const RS_Pen& newPen){
-    lineType = newPen.getLineType();
-    lineWidth = newPen.getWidth();
-    color = newPen.getColor();
+    m_lineType = newPen.getLineType();
+    m_lineWidth = newPen.getWidth();
+    m_color = newPen.getColor();
 }
 
 RS2::LineType LC_PenItem::getLineType(){
-    return lineType;
+    return m_lineType;
 }
 
 RS2::LineWidth LC_PenItem::getLineWidth(){
-    return lineWidth;
+    return m_lineWidth;
 }
 
 RS_Color LC_PenItem::getColor(){
-    return color;
+    return m_color;
 }
 
 void LC_PenItem::setLineTypeIcon(QIcon &icon){
-    iconLineType = icon;
+    m_iconLineType = icon;
 }
 
 void LC_PenItem::setLineTypeName(QString typeName){
-    lineTypeName = typeName;
+    m_lineTypeName = typeName;
 }
 
 void LC_PenItem::setLineWidthIcon(QIcon &icon){
-    iconLineWidth = icon;
+    m_iconLineWidth = icon;
 }
 
 void LC_PenItem::setLineWidthName(QString wName){
-    lineWidthName = wName;
+    m_lineWidthName = wName;
 }
 
 void LC_PenItem::setColorIcon(QIcon &icon){
-    iconColor = icon;
+    m_iconColor = icon;
 }
 
 void LC_PenItem::setLineType(RS2::LineType type){
-   lineType = type;
+   m_lineType = type;
 }
 
 void LC_PenItem::setLineWidth(RS2::LineWidth width){
-    lineWidth = width;
+    m_lineWidth = width;
 }
 
 void LC_PenItem::setColor(const RS_Color& col){
-    color = col;
+    m_color = col;
 }

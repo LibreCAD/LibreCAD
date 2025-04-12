@@ -20,10 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
 #include "lc_actionfactorybase.h"
+
 #include "lc_actiongroupmanager.h"
 #include "lc_shortcutinfo.h"
+#include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
@@ -71,7 +72,7 @@ QAction *LC_ActionFactoryBase::justCreateAction(QMap<QString, QAction *> &a_map,
     auto* action = new QAction(text, parent);
     if (iconName != nullptr) {
         QIcon icon = QIcon(iconName);
-        if (using_theme && themeIconName != nullptr)
+        if (m_usingTheme && themeIconName != nullptr)
             action->setIcon(QIcon::fromTheme(themeIconName, icon));
         else
             action->setIcon(icon);

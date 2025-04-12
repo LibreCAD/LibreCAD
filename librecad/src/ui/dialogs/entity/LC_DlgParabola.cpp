@@ -21,15 +21,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cmath>
-#include <QStandardItemModel>
 
 #include "LC_DlgParabola.h"
+
+#include <QStandardItemModel>
+
 #include "lc_parabola.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
 #include "ui_LC_DlgParabola.h"
 
 LC_DlgParabola::LC_DlgParabola(QWidget* parent, LC_GraphicViewport* vp,LC_Parabola * parabola)
@@ -46,14 +46,14 @@ void LC_DlgParabola::languageChange(){
 }
 
 void LC_DlgParabola::setEntity(LC_Parabola* b){
-    entity = b;
+    m_entity = b;
 
-    ui->wPen->setPen(entity->getPen(false), true, false, tr("Pen"));
-    RS_Graphic* graphic =entity->getGraphic();
+    ui->wPen->setPen(m_entity->getPen(false), true, false, tr("Pen"));
+    RS_Graphic* graphic =m_entity->getGraphic();
     if (graphic) {
         ui->cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         ui->cbLayer->setLayer(*lay);
     }
@@ -63,7 +63,7 @@ void LC_DlgParabola::setEntity(LC_Parabola* b){
 }
 
 void LC_DlgParabola::updatePoints(){
-    auto const& bData = entity->getData();
+    auto const& bData = m_entity->getData();
     auto const& pts = bData.controlPoints;
     auto model = new QStandardItemModel(pts.size(), 2, this);
     model->setHorizontalHeaderLabels({"x", "y"});
@@ -85,13 +85,13 @@ void LC_DlgParabola::updatePoints(){
 }
 
 void LC_DlgParabola::updateEntity(){
-    if (entity == nullptr)
+    if (m_entity == nullptr)
         return;
 
     //update pen
-    entity->setPen(ui->wPen->getPen());
+    m_entity->setPen(ui->wPen->getPen());
     //update layer
-    entity->setLayer(ui->cbLayer->getLayer());
+    m_entity->setLayer(ui->cbLayer->getLayer());
     //update Spline Points
     auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
     model->setRowCount(3);
@@ -113,7 +113,7 @@ void LC_DlgParabola::updateEntity(){
         RS_DIALOGFACTORY->commandMessage(tr("Parabola control points cannot be collinear"));
         return;
     }
-    auto& d = entity->getData();
+    auto& d = m_entity->getData();
     d.controlPoints = vps;
-    entity->update();
+    m_entity->update();
 }

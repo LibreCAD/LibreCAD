@@ -23,12 +23,17 @@
 #ifndef LC_ACTIONFACTORYBASE_H
 #define LC_ACTIONFACTORYBASE_H
 
+#include <QObject>
+
 #include "lc_appwindowaware.h"
-#include "qc_applicationwindow.h"
-#include "lc_shortcutinfo.h"
+#include "rs.h"
+
+class QActionGroup;
+class QAction;
+class QG_ActionHandler;
 
 class LC_ActionFactoryBase : public QObject, public LC_AppWindowAware{
-Q_OBJECT
+    Q_OBJECT
 public:
     LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
 protected:
@@ -57,7 +62,7 @@ protected:
     };
 
     QG_ActionHandler* m_actionHandler = nullptr;
-    bool using_theme = false;
+    bool m_usingTheme = false;
 
     QAction *createAction_AH(const char* name, RS2::ActionType actionType, const QString& text,
                              const char *iconName, const char *themeIconName,

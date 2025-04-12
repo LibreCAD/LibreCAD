@@ -28,12 +28,13 @@
 // Andrew Mustun, Claude Sylvain, R. van Twisk, Dongxu Li, Rallaz, Armin Stebich, ravas, korhadris
 
 #include <QAction>
-
+#include <QKeySequence>
 #include "lc_actionfactory.h"
+
+#include "lc_actiongroup.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_infocursorsettingsmanager.h"
 #include "qc_applicationwindow.h"
-#include "qg_actionhandler.h"
 #include "rs_settings.h"
 #include "lc_shortcutinfo.h"
 
@@ -43,7 +44,7 @@ LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandle
 // todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
 
 void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useTheme){
-    using_theme = useTheme;
+    m_usingTheme = useTheme;
     QMap<QString, QAction *> &a_map = agm->getActionsMap();
     createSelectActions(a_map, agm->select);
     createDrawLineActions(a_map, agm->line);

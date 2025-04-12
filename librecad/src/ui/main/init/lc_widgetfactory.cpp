@@ -20,34 +20,32 @@
  * ********************************************************************************
  */
 
-#include <QMenu>
-#include <QFile>
-#include <QMenuBar>
+#include "lc_widgetfactory.h"
 
-#include "lc_actionfactory.h"
+#include <QStatusBar>
+#include <QToolBar>
+
 #include "lc_actiongroupmanager.h"
-
+#include "lc_anglesbasiswidget.h"
 #include "lc_caddockwidget.h"
 #include "lc_dockwidget.h"
 #include "lc_layertreewidget.h"
-#include "lc_widgetfactory.h"
-
-#include "lc_anglesbasiswidget.h"
 #include "lc_namedviewslistwidget.h"
+#include "lc_penpalettewidget.h"
 #include "lc_penwizard.h"
 #include "lc_qtstatusbarmanager.h"
-#include "lc_ucslistwidget.h"
+#include "lc_quickinfowidget.h"
 #include "lc_relzerocoordinateswidget.h"
+#include "lc_ucslistwidget.h"
+#include "lc_ucsstatewidget.h"
 #include "qc_applicationwindow.h"
-#include "qg_actionhandler.h"
+#include "qg_activelayername.h"
 #include "qg_blockwidget.h"
 #include "qg_commandwidget.h"
+#include "qg_coordinatewidget.h"
 #include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
-#include "qg_snaptoolbar.h"
-#include "qg_coordinatewidget.h"
 #include "qg_mousewidget.h"
-#include "qg_activelayername.h"
 #include "qg_selectionwidget.h"
 #include "rs_debug.h"
 #include "rs_settings.h"

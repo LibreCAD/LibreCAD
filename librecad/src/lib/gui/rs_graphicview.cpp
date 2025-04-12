@@ -59,7 +59,7 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
     , m_eventHandler{std::make_unique<RS_EventHandler>(this)}
     , m_viewport{std::make_unique<LC_GraphicViewport>()}
     , defaultSnapMode{std::make_unique<RS_SnapMode>()}
-{
+    , infoCursorOverlayPreferences{std::make_unique<LC_InfoCursorOverlayPrefs>()}{
     m_viewport->addViewportListener(this);
 }
 
@@ -72,7 +72,7 @@ void RS_GraphicView::loadSettings() {
     }
     LC_GROUP_END();
 
-    infoCursorOverlayPreferences.loadSettings();
+    infoCursorOverlayPreferences->loadSettings();
     m_viewport->loadSettings();
     m_renderer->loadSettings();
 }
@@ -374,6 +374,10 @@ bool RS_GraphicView::getPanOnZoom() const{
 
 bool RS_GraphicView::getSkipFirstZoom() const{
     return m_skipFirstZoom;
+}
+
+LC_InfoCursorOverlayPrefs* RS_GraphicView::getInfoCursorOverlayPreferences(){
+    return infoCursorOverlayPreferences.get();
 }
 
 void RS_GraphicView::resizeEvent(QResizeEvent *event) {

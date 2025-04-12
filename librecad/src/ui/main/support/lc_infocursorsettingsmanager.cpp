@@ -19,11 +19,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+
 #include "lc_infocursorsettingsmanager.h"
 
 #include <QAction>
 
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
 #include "rs_settings.h"
 
 void LC_InfoCursorSettingsManager::slotInfoCursorSetting(bool toggle) {

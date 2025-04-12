@@ -21,15 +21,13 @@
  ******************************************************************************/
 #ifndef LC_EXPORTLAYERSDIALOGSERVICE_H
 #define LC_EXPORTLAYERSDIALOGSERVICE_H
+
 #include <QObject>
-
-#include "lc_layersexporter.h"
 #include "rs.h"
-#include "rs_graphic.h"
 
+class RS_Graphic;
 struct LC_LayersExportOptions;
 struct LC_FileDialogResult;
-
 
 class LC_ExportLayersService: public QObject{
     Q_OBJECT

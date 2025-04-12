@@ -26,13 +26,9 @@
 
 #include "qg_patternbox.h"
 
-#include <QPixmap>
-#include <QStringList>
-
+#include "rs_debug.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
-#include "rs_debug.h"
-
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -76,10 +72,10 @@ void QG_PatternBox::setPattern(const QString& pName) {
 }
 
 std::shared_ptr<RS_Pattern> QG_PatternBox::getPattern() {
-	if (currentPattern == nullptr || currentPattern->countDeep()==0) {
-		currentPattern = RS_PATTERNLIST->requestPattern(currentText());
+	if (m_currentPattern == nullptr || m_currentPattern->countDeep()==0) {
+		m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
 	}
-	return currentPattern;
+	return m_currentPattern;
 }
 
 /**
@@ -88,11 +84,11 @@ std::shared_ptr<RS_Pattern> QG_PatternBox::getPattern() {
  */
 void QG_PatternBox::slotPatternChanged(int index) {
     RS_DEBUG->print("QG_PatternBox::slotPatternChanged %d\n", index);
-    currentPattern = RS_PATTERNLIST->requestPattern(currentText());
+    m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
 
-    if (currentPattern) {
+    if (m_currentPattern) {
         RS_DEBUG->print("Current pattern is (%d): %s\n",
-                        index, currentPattern->getFileName().toLatin1().data());
+                        index, m_currentPattern->getFileName().toLatin1().data());
     }
 	emit patternChanged();
 }

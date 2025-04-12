@@ -27,6 +27,8 @@
 #include "rs_entity.h"
 #include "rs_previewactioninterface.h"
 
+class RS_Polyline;
+
 class LC_ActionSplineFromPolyline :public RS_PreviewActionInterface{
     Q_OBJECT
 public:

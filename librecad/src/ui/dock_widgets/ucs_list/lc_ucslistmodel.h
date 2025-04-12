@@ -25,9 +25,11 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include "lc_ucslistoptions.h"
-#include "lc_ucslist.h"
 #include "rs.h"
+
+class LC_UCS;
+class LC_UCSList;
+class LC_UCSListOptions;
 
 class LC_UCSListModel:public QAbstractTableModel{
     Q_OBJECT
@@ -49,17 +51,8 @@ public:
     QIcon getOrthoTypeIcon(LC_UCS *ucs) const;
     QModelIndex getIndexForUCS(LC_UCS* ucs) const;
     void markActive(LC_UCS *ucs);
-    LC_UCS* getActiveUCS(){
-        LC_UCS* result = nullptr;
-        if (m_ucsList != nullptr) {
-            result = m_ucsList->getActive();
-        }
-        return result;
-    }
-    int count(){
-        return m_ucss.count();
-    }
-
+    LC_UCS* getActiveUCS();
+    int count();
     LC_UCS *getWCS();
 
     /**

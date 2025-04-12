@@ -27,6 +27,9 @@
 
 #include <QFileDialog>
 #include "lc_actionlayersexport.h"
+
+#include <QStatusBar>
+
 #include "../../../ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h"
 #include "lc_layersexporter.h"
 #include "qc_applicationwindow.h"

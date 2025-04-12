@@ -37,6 +37,7 @@
 #include "qg_dialogfactory.h"
 
 #include "lc_actionfileexportmakercam.h"
+#include "lc_documentsstorage.h"
 #include "rs.h"
 #include "rs_debug.h"
 #include "rs_document.h"

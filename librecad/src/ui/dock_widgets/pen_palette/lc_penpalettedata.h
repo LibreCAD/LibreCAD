@@ -23,20 +23,18 @@
 **********************************************************************/
 #ifndef LC_PENPALETTEDATA_H
 #define LC_PENPALETTEDATA_H
+#include "rs.h"
 
-#include <QObject>
-#include <QList>
-
-#include "lc_penitem.h"
-#include "lc_penpaletteoptions.h"
-
-
+class LC_PenInfoRegistry;
+class RS_Color;
+class LC_PenItem;
+class LC_PenPaletteOptions;
 /**
  * Internal holder of all named pens. Stores the list of them and also offers methods for persistence of pens list in file.
  * This class is used by LC_PenPaletteModel as underlying storage.
  */
-class LC_PenPaletteData:public QObject
-{
+
+class LC_PenPaletteData:public QObject{
 Q_OBJECT
 public:
     explicit LC_PenPaletteData(LC_PenPaletteOptions *opts);
@@ -106,7 +104,7 @@ private:
     /**
      * pens info registry
      */
-    LC_PenInfoRegistry* m_registry = LC_PenInfoRegistry::instance();
+    LC_PenInfoRegistry* m_registry;
     /**
      *reference to options
      */

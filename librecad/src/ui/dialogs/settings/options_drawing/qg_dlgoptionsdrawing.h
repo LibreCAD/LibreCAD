@@ -26,11 +26,8 @@
 #ifndef QG_DLGOPTIONSDRAWING_H
 #define QG_DLGOPTIONSDRAWING_H
 
-#include<memory>
-#include <QGraphicsScene>
 #include "ui_qg_dlgoptionsdrawing.h"
 #include "lc_dialog.h"
-
 
 class RS_Graphic;
 class RS_Vector;
@@ -39,13 +36,11 @@ class QG_DlgOptionsDrawing : public LC_Dialog, public Ui::QG_DlgOptionsDrawing{
     Q_OBJECT
 public:
     QG_DlgOptionsDrawing(QWidget* parent = nullptr);
-	~QG_DlgOptionsDrawing();
-
+	~QG_DlgOptionsDrawing() override;
     void showInitialTab(int tabIndex);
     void setGraphic( RS_Graphic * g );
-
 protected slots:
-    virtual void languageChange();
+    void languageChange();
     void validate();
     void updateLengthPrecision();
     void updateAnglePrecision();
@@ -56,7 +51,7 @@ protected slots:
     void updateDimAnglePrecision();
     void updatePaperPreview();
     void on_cbGridOn_toggled(bool checked);
-	   void onLandscapeToggled(bool checked);
+	void onLandscapeToggled(bool checked);
     void onDimFxLonToggled(bool checked);
     void onRelSizeToggled(bool checked);
     void disableXSpacing(bool checked);
@@ -68,10 +63,10 @@ protected:
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
     void updateLPtSzUnits();
 private:
-    std::unique_ptr<QStringList> listPrec1;
-    RS_Graphic* graphic;
-    QGraphicsScene* paperScene;
-    std::unique_ptr<RS_Vector> spacing;
+    std::unique_ptr<QStringList> m_listPrec1;
+    RS_Graphic* m_graphic;
+    QGraphicsScene* m_paperScene;
+    std::unique_ptr<RS_Vector> m_spacing;
     void init();
     void initVariables();
 };

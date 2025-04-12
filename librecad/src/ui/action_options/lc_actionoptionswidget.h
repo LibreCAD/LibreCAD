@@ -37,7 +37,7 @@ class LC_ActionOptionsWidget:public QWidget{
     Q_OBJECT
 public:
     explicit LC_ActionOptionsWidget(QWidget *parent = nullptr, Qt::WindowFlags fl = {});
-    ~LC_ActionOptionsWidget();
+    ~LC_ActionOptionsWidget() override;
     void setAction(RS_ActionInterface * a, bool update = false);
     /**
      * Called externally when the widget should be hidded

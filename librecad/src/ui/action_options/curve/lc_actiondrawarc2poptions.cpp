@@ -1,7 +1,29 @@
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
 #include "lc_actiondrawarc2poptions.h"
-#include "ui_lc_actiondrawarc2poptions.h"
 #include "lc_actiondrawarc2pointsbase.h"
-#include "rs_math.h"
+#include "ui_lc_actiondrawarc2poptions.h"
 
 LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)
     : LC_ActionOptionsWidget()
@@ -10,7 +32,7 @@ LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)
     connect(ui->rbPos, &QRadioButton::toggled, this, &LC_ActionDrawArc2POptions::onDirectionChanged);
     connect(ui->rbNeg,  &QRadioButton::toggled, this, &LC_ActionDrawArc2POptions::onDirectionChanged);
     connect(ui->leValue, &QLineEdit::editingFinished, this, &LC_ActionDrawArc2POptions::onValueChanged);
-    supportedActionType = actionType;
+    m_supportedActionType = actionType;
 
     ui->lRadius->setVisible(false);
     ui->lLength->setVisible(false);
@@ -20,22 +42,22 @@ LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)
     switch (actionType){
         case RS2::ActionDrawArc2PRadius: {
             updateTooltip(ui->lRadius);
-            optionNamePrefix = "Arc2PRadius";
+            m_optionNamePrefix = "Arc2PRadius";
             break;
         }
         case RS2::ActionDrawArc2PHeight:{
             updateTooltip(ui->lHeight);
-            optionNamePrefix = "Arc2PHeight";
+            m_optionNamePrefix = "Arc2PHeight";
             break;
         }
         case RS2::ActionDrawArc2PLength:{
             updateTooltip(ui->lLength);
-            optionNamePrefix = "Arc2PLength";
+            m_optionNamePrefix = "Arc2PLength";
             break;
         }
         case RS2::ActionDrawArc2PAngle:{
             updateTooltip(ui->lAngle);
-            optionNamePrefix = "Arc2PAngle";
+            m_optionNamePrefix = "Arc2PAngle";
             break;
         }
         default:
@@ -66,12 +88,12 @@ void LC_ActionDrawArc2POptions::doSaveSettings(){
 }
 
 bool LC_ActionDrawArc2POptions::checkActionRttiValid(RS2::ActionType actionType) {
-    return actionType == supportedActionType;
+    return actionType == m_supportedActionType;
 }
 
 void LC_ActionDrawArc2POptions::setReversedToActionAndView(bool reversed){
     ui->rbNeg->setChecked(reversed);
-    action->setReversed(reversed);
+    m_action->setReversed(reversed);
 }
 
 /*void QG_ArcOptions::setData(RS_ArcData* d) {
@@ -82,13 +104,13 @@ void LC_ActionDrawArc2POptions::onDirectionChanged(bool /*pos*/){
     setReversedToActionAndView( ui->rbNeg->isChecked());
 }
 void LC_ActionDrawArc2POptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionDrawArc2PointsBase *>(a);
+    m_action = dynamic_cast<LC_ActionDrawArc2PointsBase *>(a);
     bool reversed;
     QString parameter;
     if (update){
-        reversed = action->isReversed();
-        double param = action->getParameter();
-        if (supportedActionType == RS2::ActionDrawArc2PAngle){
+        reversed = m_action->isReversed();
+        double param = m_action->getParameter();
+        if (m_supportedActionType == RS2::ActionDrawArc2PAngle){
             param = RS_Math::rad2deg(param);
         }
         parameter = fromDouble(param);
@@ -102,7 +124,7 @@ void LC_ActionDrawArc2POptions::doSetAction(RS_ActionInterface *a, bool update) 
 }
 
 QString LC_ActionDrawArc2POptions::getSettingsOptionNamePrefix() {
-    return optionNamePrefix;
+    return m_optionNamePrefix;
 }
 
 void LC_ActionDrawArc2POptions::onValueChanged() {
@@ -111,15 +133,15 @@ void LC_ActionDrawArc2POptions::onValueChanged() {
 
 void LC_ActionDrawArc2POptions::setParameterToActionAndView(QString val) {
     double param;
-    if (supportedActionType == RS2::ActionDrawArc2PAngle){
+    if (m_supportedActionType == RS2::ActionDrawArc2PAngle){
         if (toDoubleAngleDegrees(val, param, 1.0, true)){
             ui->leValue->setText(fromDouble(param));
             param = RS_Math::deg2rad(param);
-            action->setParameter(param);
+            m_action->setParameter(param);
         }
     }
     else if (toDouble(val, param, 1.0, true)){
-        action->setParameter(param);
+        m_action->setParameter(param);
         ui->leValue->setText(fromDouble(param));
     }
 }

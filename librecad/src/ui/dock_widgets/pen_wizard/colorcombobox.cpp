@@ -22,14 +22,12 @@
 **********************************************************************************
 */
 
-
 #include <QColor>
 #include <QPixmap>
 #include "colorcombobox.h"
 
 ColorComboBox::ColorComboBox(QWidget* parent)
-    : QComboBox(parent)
-{
+    : QComboBox(parent){
     setEditable(true);
 
     foreach (auto color, QColor::colorNames())

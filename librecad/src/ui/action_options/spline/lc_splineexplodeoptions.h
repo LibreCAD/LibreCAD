@@ -34,7 +34,7 @@ class LC_SplineExplodeOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 public:
     explicit LC_SplineExplodeOptions();
-    ~LC_SplineExplodeOptions();
+    ~LC_SplineExplodeOptions() override;
 public slots:
     void languageChange() override;
     void cbKeepOriginalsClicked(bool val);
@@ -45,9 +45,8 @@ public slots:
     void sbSegmentsCountValueChanged(int value);
 protected:
     Ui::LC_SplineExplodeOptions *ui;
-    LC_ActionSplineExplode* action = nullptr;
-    int segmentsCountFromDrawing;
-
+    LC_ActionSplineExplode* m_action = nullptr;
+    int m_segmentsCountFromDrawing;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
     void setKeepOriginalsToActionAndView(bool val);

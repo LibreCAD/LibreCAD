@@ -20,14 +20,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "qg_circletan2options.h"
-
 #include "rs_actiondrawcircletan2.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_debug.h"
-
 #include "ui_qg_circletan2options.h"
-
 /*
  *  Constructs a QG_CircleTan2Options as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -58,10 +52,10 @@ void QG_CircleTan2Options::doSaveSettings(){
 
 void QG_CircleTan2Options::doSetAction(RS_ActionInterface *a, bool update){
 
-    action = dynamic_cast<RS_ActionDrawCircleTan2 *>(a);
+    m_action = dynamic_cast<RS_ActionDrawCircleTan2 *>(a);
     QString radius;
     if (update){
-        radius = fromDouble(action->getRadius());
+        radius = fromDouble(m_action->getRadius());
     } else {
         radius = load("Radius", "1.0");
     }
@@ -72,7 +66,7 @@ void QG_CircleTan2Options::doSetAction(RS_ActionInterface *a, bool update){
 void QG_CircleTan2Options::setRadiusToActionAndView(QString val){
     double radius;
     if (toDouble(val, radius, 1.0, true)){
-        action->setRadius(radius);
+        m_action->setRadius(radius);
         ui->leRadius->setText(fromDouble(radius));
     }
 }

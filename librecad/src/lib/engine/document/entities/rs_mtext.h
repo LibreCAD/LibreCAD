@@ -30,6 +30,7 @@
 #include "rs_entitycontainer.h"
 #include <iosfwd>
 
+class RS_Text;
 class RS_Font;
 
 /**

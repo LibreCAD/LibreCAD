@@ -26,7 +26,7 @@
 
 LC_SplineFromPolylineOptions::LC_SplineFromPolylineOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawSplineFromPolyline, "Draw", "SplineFromPolyline")
-    , ui(new Ui::LC_SplineFromPolylineOptions),action{nullptr}{
+    , ui(new Ui::LC_SplineFromPolylineOptions),m_action{nullptr}{
     ui->setupUi(this);
 
     connect(ui->cbKeepOriginals, &QCheckBox::toggled, this, &LC_SplineFromPolylineOptions::cbKeepOriginalsClicked);
@@ -51,7 +51,7 @@ void LC_SplineFromPolylineOptions::doSaveSettings() {
 }
 
 void LC_SplineFromPolylineOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionSplineFromPolyline *>(a);
+    m_action = dynamic_cast<LC_ActionSplineFromPolyline *>(a);
     bool useFitPoints;
     bool useCurrentLayer;
     bool useCurrentAttributes;
@@ -59,12 +59,12 @@ void LC_SplineFromPolylineOptions::doSetAction(RS_ActionInterface *a, bool updat
     int midPoints;
     int splineDegree;
     if (update){
-        useFitPoints = action->isUseFitPoints();
-        useCurrentAttributes = action->isUseCurrentAttributes();
-        useCurrentLayer = action->isUseCurrentLayer();
-        keepOriginal = action->isKeepOriginals();
-        midPoints = action->getSegmentPoints();
-        splineDegree = action->getSplineDegree();
+        useFitPoints = m_action->isUseFitPoints();
+        useCurrentAttributes = m_action->isUseCurrentAttributes();
+        useCurrentLayer = m_action->isUseCurrentLayer();
+        keepOriginal = m_action->isKeepOriginals();
+        midPoints = m_action->getSegmentPoints();
+        splineDegree = m_action->getSplineDegree();
     }
     else{
         useFitPoints = loadBool("UseFitPoints", false);
@@ -111,32 +111,32 @@ void LC_SplineFromPolylineOptions::languageChange() {
 }
 
 void LC_SplineFromPolylineOptions::setKeepOriginalsToActionAndView(bool val) {
-    action->setKeepOriginals(val);
+    m_action->setKeepOriginals(val);
     ui->cbKeepOriginals->setChecked(val);
 }
 
 void LC_SplineFromPolylineOptions::setUseCurrentAttributesToActionAndView(bool val) {
-    action->setUseCurrentAttributes(val);
+    m_action->setUseCurrentAttributes(val);
     ui->cbCurrentAttr->setChecked(val);
 }
 
 void LC_SplineFromPolylineOptions::setUseCurrentLayerToActionAndView(bool val) {
-    action->setUseCurrentLayer(val);
+    m_action->setUseCurrentLayer(val);
     ui->cbLayer->setChecked(val);
 }
 
 void LC_SplineFromPolylineOptions::setUseFitPointsToActionAndView(bool val) {
-    action->setUseFitPoints(val);
+    m_action->setUseFitPoints(val);
     ui->cbFitPoints->setChecked(val);
 }
 
 void LC_SplineFromPolylineOptions::setMidPointsToActionAndView(int value) {
-   action->setSegmentPoints(value);
+   m_action->setSegmentPoints(value);
    ui->sbMidPoints->setValue(value);
 }
 
 void LC_SplineFromPolylineOptions::setDegreeToActionAndView(int value) {
-    action->setSplineDegree(value);
+    m_action->setSplineDegree(value);
     ui->sbDegree->setValue(value);
     ui->cbFitPoints->setEnabled(value == 2);
 }

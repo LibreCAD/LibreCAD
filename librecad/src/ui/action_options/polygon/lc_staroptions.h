@@ -48,7 +48,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_StarOptions *ui;
-    LC_ActionDrawStar* action = nullptr;
+    LC_ActionDrawStar* m_action = nullptr;
     void setRadiusOuterToModelAndView(const QString& val);
     void setRadiusInnerToModelAndView(const QString& val);
     void setRadiusInnerEnabledToModelAndView(bool value);

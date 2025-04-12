@@ -24,30 +24,30 @@
 
 // This file was first published at: github.com/r-a-v-a-s/LibreCAD.git
 
-
-#include <QToolButton>
-#include <QGridLayout>
-#include <QFrame>
-
-#include "lc_caddockwidget.h"
-#include "rs_settings.h"
-
 // fixme - sand - add support of flex layout, with it potentially will be possible to support something ribbon-like
 // oh - just have and options (hor/ver orientation)
 
+#include "lc_caddockwidget.h"
+
+#include <QFrame>
+#include <QGridLayout>
+#include <QToolButton>
+
+#include "rs_settings.h"
+
 LC_CADDockWidget::LC_CADDockWidget(QWidget* parent)
     : QDockWidget(parent)
-    , frame(new QFrame(this))
-    , grid(new QGridLayout)
+    , m_frame(new QFrame(this))
+    , m_gridLayout(new QGridLayout)
 {
-    frame->setContentsMargins(0, 0, 0, 0);
-    setWidget(frame);
+    m_frame->setContentsMargins(0, 0, 0, 0);
+    setWidget(m_frame);
 
     // grid->setSpacing(2);
-    grid->setSpacing(0);
+    m_gridLayout->setSpacing(0);
     // grid->setContentsMargins(1, 1, 1, 1);
-    grid->setContentsMargins(0, 0, 0, 0);
-    frame->setLayout(grid);
+    m_gridLayout->setContentsMargins(0, 0, 0, 0);
+    m_frame->setLayout(m_gridLayout);
 }
 
 void LC_CADDockWidget::add_actions(const QList<QAction *> &list, int columns, int icon_size, bool flatButton){
@@ -56,11 +56,11 @@ void LC_CADDockWidget::add_actions(const QList<QAction *> &list, int columns, in
 		toolbutton->setDefaultAction(item);
 		toolbutton->setAutoRaise(flatButton);
 		toolbutton->setIconSize(QSize(icon_size, icon_size));
-		int const count = grid->count();
+		int const count = m_gridLayout->count();
 		if (columns == 0) {
 			columns = 5;
 		}
-		grid->addWidget(toolbutton, count / columns, count % columns);
+		m_gridLayout->addWidget(toolbutton, count / columns, count % columns);
 	}
 }
 
@@ -72,7 +72,7 @@ void LC_CADDockWidget::updateWidgetSettings(){
 
 		QSize size(leftToolbarIconSize, leftToolbarIconSize);
 
-		QList<QToolButton *> widgets = frame->findChildren<QToolButton *>();
+		QList<QToolButton *> widgets = m_frame->findChildren<QToolButton *>();
 
 		auto* newGrid = new QGridLayout();
 		newGrid->setSpacing(0);
@@ -85,13 +85,13 @@ void LC_CADDockWidget::updateWidgetSettings(){
 		foreach(QToolButton *w, widgets) {
 			w->setAutoRaise(leftToolbarFlatIcons);
 			w->setIconSize(size);
-			grid->removeWidget(w);
+			m_gridLayout->removeWidget(w);
 			int const count = newGrid->count();
 			newGrid->addWidget(w, count / leftToolbarColumnsCount, count % leftToolbarColumnsCount);
 		}
-		delete frame->layout();
-		frame->setLayout(newGrid);
-		grid = newGrid;
+		delete m_frame->layout();
+		m_frame->setLayout(newGrid);
+		m_gridLayout = newGrid;
 	}
 	LC_GROUP_END();
 }

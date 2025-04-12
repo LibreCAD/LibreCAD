@@ -25,12 +25,8 @@
 **********************************************************************/
 #include "qg_circleoptions.h"
 
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_debug.h"
 #include "rs_actiondrawcirclecr.h"
 #include "ui_qg_circleoptions.h"
-
 
 /*
  *  Constructs a QG_CircleOptions as a child of 'parent', with the
@@ -67,11 +63,11 @@ void QG_CircleOptions::doSaveSettings(){
 
 void QG_CircleOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-    action = dynamic_cast<RS_ActionDrawCircleCR *>(a);
+    m_action = dynamic_cast<RS_ActionDrawCircleCR *>(a);
 
     QString radius;
     if (update){
-        radius = fromDouble(action->getRadius());
+        radius = fromDouble(m_action->getRadius());
     } else {
         radius = load("Radius", "1.0");
     }
@@ -82,7 +78,7 @@ void QG_CircleOptions::doSetAction(RS_ActionInterface *a, bool update){
 void QG_CircleOptions::setRadiusToActionAndVIew(QString val){
     double radius;
     if (toDouble(val, radius, 1.0, true)){
-        action->setRadius(radius);
+        m_action->setRadius(radius);
         ui->leRadius->setText(fromDouble(radius));
     }
 }

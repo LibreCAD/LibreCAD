@@ -26,17 +26,11 @@
 #ifndef QC_MDIWINDOW_H
 #define QC_MDIWINDOW_H
 #include <QMdiSubWindow>
-#include <QList>
-#include "rs_graphic.h"
-class QG_GraphicView;
-class RS_Document;
-class RS_Pen;
-class QMdiArea;
-class RS_EventHandler;
-class QCloseEvent;
-class LC_ActionContext;
-class LC_DocumentsStorage;
 
+#include "rs_graphic.h"
+
+class LC_DocumentsStorage;
+class LC_ActionContext;
 /**
  * MDI document window. Contains a document and a view (window).
  *

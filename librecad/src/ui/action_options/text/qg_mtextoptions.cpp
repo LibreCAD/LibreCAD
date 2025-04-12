@@ -24,10 +24,7 @@
 **
 **********************************************************************/
 #include "qg_mtextoptions.h"
-
 #include "rs_actiondrawmtext.h"
-#include "rs_debug.h"
-#include "rs_math.h"
 #include "ui_qg_mtextoptions.h"
 
 /*
@@ -36,8 +33,7 @@
  */
 QG_MTextOptions::QG_MTextOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawMText, "", "")
-    , ui{std::make_unique<Ui::Ui_MTextOptions>()}
-{
+    , ui{std::make_unique<Ui::Ui_MTextOptions>()}{
 	ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::textEdited, this, &QG_MTextOptions::updateAngle);
 }
@@ -60,13 +56,13 @@ void QG_MTextOptions::doSaveSettings(){
 
 
 void QG_MTextOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionDrawMText *>(a);
+    m_action = dynamic_cast<RS_ActionDrawMText *>(a);
 
     QString text;
     QString angle;
     if (update){
-        text = action->getText();
-        angle = fromDouble(action->getUcsAngleDegrees());
+        text = m_action->getText();
+        angle = fromDouble(m_action->getUcsAngleDegrees());
     } else {
         text = "";
         angle = "0.0";
@@ -76,17 +72,17 @@ void QG_MTextOptions::doSetAction(RS_ActionInterface *a, bool update){
 }
 
 void QG_MTextOptions::updateText() {
-    if (action) {
-/*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
-        QCString iso = RS_System::localeToISO( QTextCodec::locale() );
-        action->setText(
-            RS_FilterDXF::toNativeString(
-             QString::fromLocal8Bit( QTextCodec::codecForName( iso )->fromUnicode( teText->text() ) )
-            )
-        );
-//#else*/
-	   action->setText(ui->teText->toPlainText());
-//#endif
+    if (m_action) {
+        /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
+                QCString iso = RS_System::localeToISO( QTextCodec::locale() );
+                action->setText(
+                    RS_FilterDXF::toNativeString(
+                     QString::fromLocal8Bit( QTextCodec::codecForName( iso )->fromUnicode( teText->text() ) )
+                    )
+                );
+        //#else*/
+        m_action->setText(ui->teText->toPlainText());
+        //#endif
     }
 }
 
@@ -94,6 +90,6 @@ void QG_MTextOptions::updateAngle() {
     double angle = 0.;
     QString val = ui->leAngle->text();
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
-        action->setUcsAngleDegrees(angle);
+        m_action->setUcsAngleDegrees(angle);
     }
 }

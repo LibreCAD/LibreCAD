@@ -21,16 +21,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
 #include <QFile>
-#include <QTextStream>
+
 #include "lc_penpalettedata.h"
+#include "lc_peninforegistry.h"
+#include "lc_penitem.h"
+#include "lc_penpaletteoptions.h"
 /**
  * Separator for fields of pen in persistent string
  */
 static const char *const PEN_DATA_FIELDS_SEPARATOR = ",";
 
-LC_PenPaletteData::LC_PenPaletteData(LC_PenPaletteOptions *opts){
-    m_options = opts;
+LC_PenPaletteData::LC_PenPaletteData(LC_PenPaletteOptions* opts):
+    m_options{opts}, m_registry{LC_PenInfoRegistry::instance()} {
 }
 
 LC_PenPaletteData::~LC_PenPaletteData(){

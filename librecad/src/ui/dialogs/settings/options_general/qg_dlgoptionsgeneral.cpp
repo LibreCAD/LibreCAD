@@ -23,17 +23,16 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "qg_dlgoptionsgeneral.h"
+
 #include <QColorDialog>
 #include <QMessageBox>
+
+#include "dxf_format.h"
 #include "lc_defaults.h"
+#include "lc_settingsexporter.h"
 #include "main.h"
 #include "qc_applicationwindow.h"
-#include "qg_dlgoptionsgeneral.h"
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-
-#include "lc_settingsexporter.h"
 #include "qg_filedialog.h"
 #include "rs_debug.h"
 #include "rs_math.h"
@@ -47,13 +46,13 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-int QG_DlgOptionsGeneral::current_tab = 0;
+int QG_DlgOptionsGeneral::m_currentTab = 0;
 
 QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
     : LC_Dialog(parent, "OptionsGeneral"){
     setModal(false);
     setupUi(this);
-    tabWidget->setCurrentIndex(current_tab);
+    tabWidget->setCurrentIndex(m_currentTab);
     init();
     connect(variablefile_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setVariableFile);
@@ -238,8 +237,8 @@ void QG_DlgOptionsGeneral::init(){
         int axisSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
         sbAxisSize->setValue(axisSize);
 
-        originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
-        cbAllowMenusDetaching->setChecked(originalAllowsMenusTearOff);
+        m_originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
+        cbAllowMenusDetaching->setChecked(m_originalAllowsMenusTearOff);
 
         checked = LC_GET_BOOL("GridDraw", true);
         cbDrawGrid->setChecked(checked);
@@ -509,8 +508,8 @@ void QG_DlgOptionsGeneral::init(){
         lePathTranslations->setText(LC_GET_STR("Translations", ""));
         lePathHatch->setText(LC_GET_STR("Patterns", ""));
         lePathFonts->setText(LC_GET_STR("Fonts", ""));
-        originalLibraryPath = LC_GET_STR("Library", "").trimmed();
-        lePathLibrary->setText(originalLibraryPath);
+        m_originalLibraryPath = LC_GET_STR("Library", "").trimmed();
+        lePathLibrary->setText(m_originalLibraryPath);
         leTemplate->setText(LC_GET_STR("Template", "").trimmed());
         variablefile_field->setText(LC_GET_STR("VariableFile", "").trimmed());
         leOtherSettingsDirectory->setText(LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed());
@@ -608,22 +607,22 @@ void QG_DlgOptionsGeneral::init(){
         left_sidebar_checkbox->setChecked(LC_GET_BOOL("EnableLeftSidebar", true));
         cad_toolbars_checkbox->setChecked(LC_GET_BOOL("EnableCADToolbars", true));
         cbOpenLastFiles->setChecked(LC_GET_BOOL("OpenLastOpenedFiles", true));
-        originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
-        cbClassicStatusBar->setChecked(originalUseClassicToolbar);
+        m_originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
+        cbClassicStatusBar->setChecked(m_originalUseClassicToolbar);
 
         cbCheckNewVersion->setChecked(LC_GET_BOOL("CheckForNewVersions", true));
         cbCheckNewVersionIgnorePreRelease->setChecked(LC_GET_BOOL("IgnorePreReleaseVersions", true));
 
         bool checked = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
         cbDuplicateActionsPromptsInStatusBar->setChecked(checked);
-        cbDuplicateActionsPromptsInStatusBar->setEnabled(!originalUseClassicToolbar);
+        cbDuplicateActionsPromptsInStatusBar->setEnabled(!m_originalUseClassicToolbar);
 
         bool useExpandedToolsMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
-        originalExpandedToolsMenu = useExpandedToolsMenu;
+        m_originalExpandedToolsMenu = useExpandedToolsMenu;
         cbExpandToolsMenu->setChecked(useExpandedToolsMenu);
 
         bool expandToolsMenuTillEntity = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
-        originalExpandedToolsMenuTillEntity = expandToolsMenuTillEntity;
+        m_originalExpandedToolsMenuTillEntity = expandToolsMenuTillEntity;
         cbExpandToolsMenuTillEntity->setChecked(expandToolsMenuTillEntity);
 
         cbExpandToolsMenuTillEntity->setEnabled(useExpandedToolsMenu);
@@ -639,7 +638,7 @@ void QG_DlgOptionsGeneral::init(){
 
     initReferencePoints();
 
-    restartNeeded = false;
+    m_restartNeeded = false;
 }
 
 void QG_DlgOptionsGeneral::initComboBox(QComboBox *cb, const QString &text){
@@ -652,7 +651,7 @@ void QG_DlgOptionsGeneral::initComboBox(QComboBox *cb, const QString &text){
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded(){
-    restartNeeded = true;
+    m_restartNeeded = true;
 }
 
 void QG_DlgOptionsGeneral::setTemplateFile(){
@@ -912,6 +911,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP_END();
         saveReferencePoints();
     }
+    // fixme - sand - files - RESTORE ! change to main windows emit!
     RS_SETTINGS->emitOptionsChanged();
     if (checkRestartNeeded()) {
         QMessageBox::warning(this, tr("Preferences"),
@@ -921,14 +921,14 @@ void QG_DlgOptionsGeneral::ok(){
 }
 
 bool QG_DlgOptionsGeneral::checkRestartNeeded(){
-    bool result = originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
-                  originalLibraryPath != lePathLibrary->text().trimmed() ||
-                  originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
+    bool result = m_originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
+                  m_originalLibraryPath != lePathLibrary->text().trimmed() ||
+                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
     return result;
 }
 
 void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index){
-    current_tab = index;
+    m_currentTab = index;
 }
 
 void QG_DlgOptionsGeneral::set_color(QComboBox *combo, QColor custom){
@@ -1185,7 +1185,7 @@ void QG_DlgOptionsGeneral::onCheckNewVersionChanged(){
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state){
     bool allowBackup = cbAutoBackup->isChecked();
     cbAutoSaveTime->setEnabled(allowBackup);
-    auto &appWindow = QC_ApplicationWindow::getAppWindow();
+    auto &appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
     appWindow->startAutoSaveTimer(allowBackup);
 }
 
@@ -1375,7 +1375,7 @@ void QG_DlgOptionsGeneral::exportSettings(){
 void QG_DlgOptionsGeneral::importSettings(){
     if (LC_SettingsExporter::importSettings(this)) {
         init();
-        QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
+        QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
         appWin.initSettings();
     }
 }

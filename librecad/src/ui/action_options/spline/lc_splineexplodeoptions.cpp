@@ -26,7 +26,7 @@
 
 LC_SplineExplodeOptions::LC_SplineExplodeOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawSplineExplode, "Draw", "SplineExplode")
-    , ui(new Ui::LC_SplineExplodeOptions), action{nullptr}{
+    , ui(new Ui::LC_SplineExplodeOptions), m_action{nullptr}{
     ui->setupUi(this);
 
     connect(ui->cbKeepOriginals, &QCheckBox::toggled, this, &LC_SplineExplodeOptions::cbKeepOriginalsClicked);
@@ -51,21 +51,21 @@ void LC_SplineExplodeOptions::doSaveSettings() {
 }
 
 void LC_SplineExplodeOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionSplineExplode *>(a);
+    m_action = dynamic_cast<LC_ActionSplineExplode *>(a);
     bool toPolyline;
     bool useCurrentLayer;
     bool useCurrentAttributes;
     bool keepOriginal;
     bool useCustomSegmentsCount;
     int customSegmentsCount;
-    segmentsCountFromDrawing = action->getSegmentsCountFromDrawing();
+    m_segmentsCountFromDrawing = m_action->getSegmentsCountFromDrawing();
     if (update){
-        toPolyline = action->isToPolyline();
-        useCurrentAttributes = action->isUseCurrentAttributes();
-        useCurrentLayer = action->isUseCurrentLayer();
-        keepOriginal = action->isKeepOriginals();
-        useCustomSegmentsCount = action->isUseCustomSegmentsCount();
-        customSegmentsCount = action->getCustomSegmentsCount();
+        toPolyline = m_action->isToPolyline();
+        useCurrentAttributes = m_action->isUseCurrentAttributes();
+        useCurrentLayer = m_action->isUseCurrentLayer();
+        keepOriginal = m_action->isKeepOriginals();
+        useCustomSegmentsCount = m_action->isUseCustomSegmentsCount();
+        customSegmentsCount = m_action->getCustomSegmentsCount();
     }
     else{
         toPolyline = loadBool("ToPolyline", false);
@@ -113,35 +113,35 @@ void LC_SplineExplodeOptions::languageChange() {
 }
 
 void LC_SplineExplodeOptions::setKeepOriginalsToActionAndView(bool val) {
-    action->setKeepOriginals(val);
+    m_action->setKeepOriginals(val);
     ui->cbKeepOriginals->setChecked(val);
 }
 
 void LC_SplineExplodeOptions::setUseCurrentAttributesToActionAndView(bool val) {
-    action->setUseCurrentAttributes(val);
+    m_action->setUseCurrentAttributes(val);
     ui->cbCurrentAttr->setChecked(val);
 }
 
 void LC_SplineExplodeOptions::setUseCurrentLayerToActionAndView(bool val) {
-    action->setUseCurrentLayer(val);
+    m_action->setUseCurrentLayer(val);
     ui->cbLayer->setChecked(val);
 }
 
 void LC_SplineExplodeOptions::setUseCustomSegmentCount(bool val) {
-    action->setUseCustomSegmentsCount(val);
+    m_action->setUseCustomSegmentsCount(val);
     ui->cbCustomSegmentsCount->setChecked(val);
     ui->sbSegmentsCount->setEnabled(val);
     if (!val){
-        ui->sbSegmentsCount->setValue(segmentsCountFromDrawing);
+        ui->sbSegmentsCount->setValue(m_segmentsCountFromDrawing);
     }
 }
 
 void LC_SplineExplodeOptions::setPolylineToActionAndView(bool val) {
-    action->setUsePolyline(val);
+    m_action->setUsePolyline(val);
     ui->cbPolyline->setChecked(val);
 }
 
 void LC_SplineExplodeOptions::setSegmentsCountValueToActionAndView(int value) {
-    action->setSegmentsCountValue(value);
+    m_action->setSegmentsCountValue(value);
     ui->sbSegmentsCount->setValue(value);
 }

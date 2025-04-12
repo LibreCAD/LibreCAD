@@ -24,22 +24,17 @@
 #define LC_SHORTCUTSTREEVIEW_H
 
 #include <QTreeView>
-#include "lc_shortcutstreemodel.h"
+
+class LC_ShortcutsTreeModel;
 
 class LC_ShortcutsTreeView:public QTreeView{
-
 public:
     LC_ShortcutsTreeView(QWidget *parent = nullptr);
     void setup(LC_ShortcutsTreeModel *treeModel);
-
     LC_ShortcutsTreeModel *getTreeModel() const;
-
     QStringList saveTreeExpansionState();
-
     void expandChildren(const QModelIndex &index);
-
     void applyExpandState(QStringList &expandedItems, QModelIndex startIndex);
-
     void restoreTreeExpansionState(QStringList treeExpansionState);
 };
 

@@ -3,16 +3,14 @@
 
 #include <QFrame>
 #include <QList>
-#include <QMap>
-#include "lc_actiongroup.h"
-#include "lc_actiongroupmanager.h"
 
+class LC_ActionGroupManager;
 class QListWidgetItem;
 class QActionGroup;
 class QPushButton;
 
 namespace Ui {
-class WidgetCreator;
+    class WidgetCreator;
 }
 
 /**
@@ -23,7 +21,6 @@ class WidgetCreator;
  */
 class WidgetCreator : public QFrame{
     Q_OBJECT
-
 public:
 
     /**
@@ -36,8 +33,7 @@ public:
     explicit WidgetCreator(QWidget* parent,
                            LC_ActionGroupManager* actionGroupManager,
                            bool assigner = false);
-    ~WidgetCreator();
-
+    ~WidgetCreator() override;
 
     QStringList getChosenActions();
     QString getWidgetName();
@@ -48,29 +44,22 @@ public:
     void addCustomWidgets(const QString& group);
     void addButton(QPushButton* button);
     bool hasBeenCreated(const QString& widget_name);
-
 private:
     Ui::WidgetCreator* ui;
     QString w_group;
     QString w_key;
-    LC_ActionGroupManager* actionGroupManager;
-
+    LC_ActionGroupManager* m_actionGroupManager;
 private slots:
     void addChosenAction();
     void addChosenActionForItem(QListWidgetItem* item);
-
     void removeChosenAction();
     void removeChosenActionForItem(QListWidgetItem* item);
-
     void setLists(int index);
-
     void destroyWidget();
     void createWidget();
     void requestAssignment();
     void requestUpdate();
-
     void setCategory(int index);
-
 signals:
     void widgetToCreate(QString);
     void widgetToDestroy(QString);

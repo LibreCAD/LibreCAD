@@ -23,8 +23,6 @@
 #ifndef LC_MOVEOPTIONS_H
 #define LC_MOVEOPTIONS_H
 
-#include <QWidget>
-
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionModifyMove;
@@ -35,7 +33,6 @@ namespace Ui {
 
 class LC_MoveOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_MoveOptions();
 public slots:
@@ -55,7 +52,7 @@ protected:
     void setKeepOriginalsToActionAndView(bool val);
 private:
     Ui::LC_MoveOptions *ui = nullptr;
-    RS_ActionModifyMove* action = nullptr;
+    RS_ActionModifyMove* m_action = nullptr;
 
 };
 

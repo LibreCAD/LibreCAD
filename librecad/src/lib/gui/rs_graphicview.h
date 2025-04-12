@@ -29,16 +29,11 @@
 #define RS_GRAPHICVIEW_H
 
 #include <memory>
-
-#include <QMap>
 #include <QWidget>
-
-#include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewportlistener.h"
-#include "lc_ucs.h"
 #include "rs.h"
 
-
+struct LC_InfoCursorOverlayPrefs;
 class QDateTime;
 class QMouseEvent;
 class QKeyEvent;
@@ -170,9 +165,7 @@ public:
     void setForcedActionKillAllowed(bool forcedActionKillAllowed);
     virtual QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription);
 
-    LC_InfoCursorOverlayPrefs*getInfoCursorOverlayPreferences(){
-        return &infoCursorOverlayPreferences;
-    }
+    LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPreferences();
 
     bool getPanOnZoom() const;
     bool getSkipFirstZoom() const;
@@ -213,7 +206,7 @@ private:
   * actions.
   */
     RS2::SnapRestriction defaultSnapRes{};
-    LC_InfoCursorOverlayPrefs infoCursorOverlayPreferences = LC_InfoCursorOverlayPrefs();
+    std::unique_ptr<LC_InfoCursorOverlayPrefs> infoCursorOverlayPreferences;
 
     /** if true, graphicView is under cleanup */
     bool m_bIsCleanUp = false;

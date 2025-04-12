@@ -51,8 +51,8 @@ protected slots:
     QString getSettingsOptionNamePrefix() override;
 private:
     Ui::LC_LinePointsOptions *ui = nullptr;
-    LC_ActionDrawLinePoints* action = nullptr;
-    bool inUpdateCycle = false;
+    LC_ActionDrawLinePoints* m_action = nullptr;
+    bool m_inUpdateCycle = false;
     void setPointsCountActionAndView(int value);
     void setEdgePointsModeToActionAndView(int index);
     void setFixedDistanceModeToActionAndView(bool value);

@@ -24,6 +24,7 @@
 #define LC_ACTIONPOLYLINEDELETEBASE_H
 
 #include "rs_previewactioninterface.h"
+class RS_Polyline;
 
 class LC_ActionPolylineDeleteBase:public RS_PreviewActionInterface {
     Q_OBJECT

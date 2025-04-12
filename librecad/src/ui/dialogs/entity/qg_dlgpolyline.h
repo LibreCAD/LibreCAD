@@ -30,18 +30,17 @@ class RS_Polyline;
 #include "ui_qg_dlgpolyline.h"
 #include "lc_entitypropertiesdlg.h"
 
-
 class QG_DlgPolyline : public LC_EntityPropertiesDlg, public Ui::QG_DlgPolyline{
     Q_OBJECT
 public:
     QG_DlgPolyline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Polyline* polyline);
-    ~QG_DlgPolyline();
+    ~QG_DlgPolyline() override;
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
-    RS_Polyline* entity;
+    RS_Polyline* m_entity;
     void setEntity(RS_Polyline *e);
 };
 

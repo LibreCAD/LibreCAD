@@ -21,16 +21,10 @@
 **
 **********************************************************************************
 */
-
-// -- https://github.com/LibreCAD/LibreCAD --
-
 #include "qg_commandhistory.h"
-#include <QAction>
+
 #include <QMouseEvent>
-#include "lc_widgets_common.h"
-
 // -- commandline history (output) widget --
-
 QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
     QTextEdit(parent){
     setContextMenuPolicy(Qt::ActionsContextMenu);

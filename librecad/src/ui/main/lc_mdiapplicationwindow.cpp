@@ -1,22 +1,18 @@
 
-#include <QtSvg>
-#include <QTimer>
-#include <QMenuBar>
-#include <QMdiArea>
-#include <QFileDialog>
-#include <QByteArray>
 
 #include "lc_mdiapplicationwindow.h"
-#include "lc_penwizard.h"
+
+#include <QDockWidget>
+#include <QMdiArea>
+#include <QMenu>
+#include <QStyle>
+#include <qtabbar.h>
+
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
-#include "support/qg_recentfiles.h"
-#include "rs_commands.h"
 #include "rs_debug.h"
-#include "rs_document.h"
-#include "rs_painter.h"
+#include "rs_graphicview.h"
 #include "rs_settings.h"
-
 
 LC_MDIApplicationWindow::LC_MDIApplicationWindow():
     m_currentSubWindow(nullptr){}
@@ -293,7 +289,6 @@ void LC_MDIApplicationWindow::slotCascade() {
  * Tiles MDI windows horizontally.
  */
 void LC_MDIApplicationWindow::slotTileHorizontal() {
-
     RS_DEBUG->print("QC_ApplicationWindow::slotTileHorizontal");
     doArrangeWindows(RS2::TileHorizontal, true);
 

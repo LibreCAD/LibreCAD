@@ -23,9 +23,9 @@
 #define LC_WORKSPACESHELPER_H
 
 #include<QObject>
-
 #include "lc_appwindowaware.h"
-#include "lc_workspacesmanager.h"
+
+class LC_WorkspacesManager;
 
 class LC_WorkspacesInvoker: public QObject, public LC_AppWindowAware{
      Q_OBJECT
@@ -40,7 +40,7 @@ public:
      void persist();
      bool hasWorkspaces();
  private:
-    LC_WorkspacesManager m_workspacesManager;
+    std::unique_ptr<LC_WorkspacesManager> m_workspacesManager;
 };
 
 #endif // LC_WORKSPACESHELPER_H

@@ -28,7 +28,6 @@
 #define QG_RECENTFILES_H
 
 #include <QObject>
-#include <QtContainerFwd>
 
 class QAction;
 class QMenu;
@@ -37,17 +36,13 @@ class QWidget;
 /**
  * This class can store recent files in a list.
  */
-class QG_RecentFiles: public QObject
-{
-Q_OBJECT
-
+class QG_RecentFiles: public QObject{
+    Q_OBJECT
 public:
     QG_RecentFiles(QObject* parent, int number);
     ~QG_RecentFiles() override;
-
     void add(const QString& filename);
     void addIfAbsent(const QString& filename);
-
     /**
      * @return complete path and name of the file stored in the
      * list at index i
@@ -71,7 +66,6 @@ public:
     {
         return !m_recentFilesActions.empty();
     }
-
 private:
     /**
      * @brief saveToSettings() save the current recent file list to the "RecentFiles"

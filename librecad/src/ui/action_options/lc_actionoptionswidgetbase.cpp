@@ -25,21 +25,21 @@
 LC_ActionOptionsWidgetBase::LC_ActionOptionsWidgetBase(
     RS2::ActionType actionType, const QString &optionsGroupName, const QString &optionNamePrefix):
     LC_ActionOptionsWidget(nullptr){
-    supportedActionType  = actionType;
-    settingsGroupName = optionsGroupName;
-    settingsOptionNamePrefix = optionNamePrefix;
+    m_supportedActionType  = actionType;
+    m_settingsGroupName = optionsGroupName;
+    m_settingsOptionNamePrefix = optionNamePrefix;
 }
 
 LC_ActionOptionsWidgetBase::~LC_ActionOptionsWidgetBase()= default;
 
 bool LC_ActionOptionsWidgetBase::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == supportedActionType;
+    return actionType == m_supportedActionType;
 }
 
 QString LC_ActionOptionsWidgetBase::getSettingsGroupName(){
-    return settingsGroupName;
+    return m_settingsGroupName;
 }
 
 QString LC_ActionOptionsWidgetBase::getSettingsOptionNamePrefix(){
-    return settingsOptionNamePrefix;
+    return m_settingsOptionNamePrefix;
 }

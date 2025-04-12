@@ -19,10 +19,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * *********************************************************************
- *
  */
 
 #include "lc_layerexportoptions.h"
+
+#include "lc_layersexporter.h"
 #include "rs_settings.h"
 #include "ui_lc_layerexportoptions.h"
 

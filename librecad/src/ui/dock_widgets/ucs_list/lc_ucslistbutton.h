@@ -24,9 +24,8 @@
 #define LC_UCSLISTBUTTON_H
 
 #include <QToolButton>
-#include <QMenu>
 
-
+class QMenu;
 class LC_UCSListWidget;
 
 class LC_UCSListButton :public QToolButton{
@@ -35,9 +34,9 @@ public:
     explicit LC_UCSListButton(LC_UCSListWidget* widget);
     void enableSubActions(bool value);
 protected:
-    QMenu* menu;
-    QList<QAction*> createdActions;
-    LC_UCSListWidget* widget{nullptr};
+    QMenu* m_menu;
+    QList<QAction*> m_createdActions;
+    LC_UCSListWidget* m_widget{nullptr};
 protected slots:
     void fillMenu();
     void menuTriggered(bool checked = false);

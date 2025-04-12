@@ -21,14 +21,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_actiondrawrectangle1point.h"
 #include "lc_rectangle1pointoptions.h"
-#include "rs_actioninterface.h"
-#include "rs_debug.h"
 #include "ui_lc_rectangle1pointoptions.h"
 
 LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle1Point, "Draw","Rectangle1Point"),
     ui(new Ui::LC_Rectangle1PointOptions),
-    action(nullptr){
+    m_action(nullptr){
     ui->setupUi(this);
 
     connect(ui->leWidth, &QLineEdit::editingFinished, this, &LC_Rectangle1PointOptions::onWidthEditingFinished);
@@ -51,7 +49,7 @@ LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
 
 LC_Rectangle1PointOptions::~LC_Rectangle1PointOptions(){
     delete ui;
-    action = nullptr;
+    m_action = nullptr;
 }
 
 void LC_Rectangle1PointOptions::doSaveSettings(){
@@ -76,7 +74,7 @@ void LC_Rectangle1PointOptions::languageChange(){
 }
 
 void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update){
-        action = dynamic_cast<LC_ActionDrawRectangle1Point *>(a);
+        m_action = dynamic_cast<LC_ActionDrawRectangle1Point *>(a);
 
         QString width;
         QString height;
@@ -95,17 +93,17 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
         bool baseAngleIsFree;
 
         if (update){
-            cornersMode = action->getCornersMode();
-            snapMode = action->getInsertionPointSnapMode();
-            usePolyline = action->isUsePolyline();
-            edges = action->getEdgesDrawMode();
+            cornersMode = m_action->getCornersMode();
+            snapMode = m_action->getInsertionPointSnapMode();
+            usePolyline = m_action->isUsePolyline();
+            edges = m_action->getEdgesDrawMode();
 
-            double w = action->getWidth();
-            double h = action->getHeight();
-            double an = action->getUcsAngleDegrees();
-            double r  = action->getRadius();
-            double lX = action->getLengthX();
-            double lY = action->getLengthY();
+            double w = m_action->getWidth();
+            double h = m_action->getHeight();
+            double an = m_action->getUcsAngleDegrees();
+            double r  = m_action->getRadius();
+            double lX = m_action->getLengthX();
+            double lY = m_action->getLengthY();
 
             width = fromDouble(w);
             height = fromDouble(h);
@@ -113,12 +111,12 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
             radius = fromDouble(r);
             lenX = fromDouble(lX);
             lenY = fromDouble(lY);
-            snapRadiusCenter = action->isSnapToCornerArcCenter();
-            sizeIsInner = action->isSizeInner();
-            hasBaseAngle = action->hasBaseAngle();
-            baseAngleIsFree = action->isBaseAngleFree();
+            snapRadiusCenter = m_action->isSnapToCornerArcCenter();
+            sizeIsInner = m_action->isSizeInner();
+            hasBaseAngle = m_action->hasBaseAngle();
+            baseAngleIsFree = m_action->isBaseAngleFree();
         }
-        else{            
+        else{
             width = load("Width", "10");
             height = load("Height", "10");
             angle = load("Angle", "0");
@@ -152,14 +150,14 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
 }
 
 void LC_Rectangle1PointOptions::onCornersIndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setCornersModeToActionAndView(index);
     }
 }
 
 void LC_Rectangle1PointOptions::updateUI(int mode) {
      if (mode == UPDATE_ANGLE){
-         double angle = action->getUcsAngleDegrees();
+         double angle = m_action->getUcsAngleDegrees();
          ui->leAngle->blockSignals(true);
          ui->leAngle->setText(fromDouble(angle));
          ui->leAngle->blockSignals(false);
@@ -167,7 +165,7 @@ void LC_Rectangle1PointOptions::updateUI(int mode) {
 }
 
 void LC_Rectangle1PointOptions::setCornersModeToActionAndView(int index){
-    action->setCornersMode(index);
+    m_action->setCornersMode(index);
     bool round = index == LC_AbstractActionDrawRectangle::CORNER_RADIUS;
     bool bevel = index == LC_AbstractActionDrawRectangle::CORNER_BEVEL;
 
@@ -190,48 +188,48 @@ void LC_Rectangle1PointOptions::setCornersModeToActionAndView(int index){
 }
 
 void LC_Rectangle1PointOptions::onLenYEditingFinished(){
-     if (action != nullptr){
+     if (m_action != nullptr){
          QString value = ui->leLenY->text();
          setLenYToActionAnView(value);
      }
 }
 
 void LC_Rectangle1PointOptions::onLenXEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leX->text();
         setLenXToActionAnView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onRadiusEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leRadius->text();
         setRadiusToActionAnView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onHeightEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leHeight->text();
         setHeightToActionAnView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onWidthEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leWidth->text();
         setWidthToActionAnView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onSnapPointIndexChanged(int index){
-  if (action != nullptr){
+  if (m_action != nullptr){
       setSnapPointModeToActionAndView(index);
   }
 }
 
 void LC_Rectangle1PointOptions::setSnapPointModeToActionAndView(int index){
-    action->setInsertionPointSnapMode(index);
+    m_action->setInsertionPointSnapMode(index);
     ui->cbSnapPoint->setCurrentIndex(index);
 }
 
@@ -243,7 +241,7 @@ void LC_Rectangle1PointOptions::onAngleEditingFinished(){
 void LC_Rectangle1PointOptions::setAngleToActionAndView(const QString &val){
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
-        action->setUcsAngleDegrees(angle);
+        m_action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -251,7 +249,7 @@ void LC_Rectangle1PointOptions::setAngleToActionAndView(const QString &val){
 void LC_Rectangle1PointOptions::setLenYToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 1.0, true)){
-        action->setLengthY(y);
+        m_action->setLengthY(y);
         ui->leLenY->setText(fromDouble(y));
     }
 }
@@ -259,7 +257,7 @@ void LC_Rectangle1PointOptions::setLenYToActionAnView(const QString& value){
 void LC_Rectangle1PointOptions::setLenXToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 1.0, true)){
-        action->setLengthX(y);
+        m_action->setLengthX(y);
         ui->leX->setText(fromDouble(y));
     }
 }
@@ -267,7 +265,7 @@ void LC_Rectangle1PointOptions::setLenXToActionAnView(const QString& value){
 void LC_Rectangle1PointOptions::setRadiusToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 1.0, true)){
-        action->setRadius(y);
+        m_action->setRadius(y);
         ui->leRadius->setText(fromDouble(y));
     }
 }
@@ -275,7 +273,7 @@ void LC_Rectangle1PointOptions::setRadiusToActionAnView(const QString& value){
 void LC_Rectangle1PointOptions::setHeightToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 0, true)){
-        action->setHeight(y);
+        m_action->setHeight(y);
         ui->leHeight->setText(fromDouble(y));
     }
 }
@@ -283,76 +281,76 @@ void LC_Rectangle1PointOptions::setHeightToActionAnView(const QString& value){
 void LC_Rectangle1PointOptions::setWidthToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 0, true)){
-        action->setWidth(y);
+        m_action->setWidth(y);
         ui->leWidth->setText(fromDouble(y));
     }
 }
 
 void LC_Rectangle1PointOptions::onUsePolylineClicked(bool value){
-   if (action != nullptr){
+   if (m_action != nullptr){
        setUsePolylineToActionAndView(value);
    }
 }
 
 void LC_Rectangle1PointOptions::onSnapToCornerArcCenterClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setSnapToCornerArcCenterToActionAndView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onInnerSizeClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setSizeInnerToActionAndView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onFreeAngleClicked(bool value) {
-    if (action != nullptr){
+    if (m_action != nullptr){
         setFreeAngleToActionAndView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::onBaseAngleFixedClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setBaseAngleFixedToActionAndView(value);
     }
 }
 
 void LC_Rectangle1PointOptions::setBaseAngleFixedToActionAndView(bool value){
     ui->chkFixedBaseAngle->setChecked(value);
-    action->setBaseAngleFixed(value);
+    m_action->setBaseAngleFixed(value);
     ui->leAngle->setEnabled(value && !ui->cbFreeAngle->isChecked());
     ui->cbFreeAngle->setEnabled(value);
 }
 
 void LC_Rectangle1PointOptions::setUsePolylineToActionAndView(bool value){
-   action->setUsePolyline(value);
+   m_action->setUsePolyline(value);
    ui->cbPolyline->setChecked(value);
 }
 
 void LC_Rectangle1PointOptions::setSnapToCornerArcCenterToActionAndView(bool value){
-   action->setSnapToCornerArcCenter(value);
+   m_action->setSnapToCornerArcCenter(value);
    ui->cbSnapRadiusCenter->setChecked(value);
 }
 
 void LC_Rectangle1PointOptions::setSizeInnerToActionAndView(bool value){
-   action->setSizeInner(value);
+   m_action->setSizeInner(value);
    ui->cbInnerSize->setChecked(value);
 }
 
 void LC_Rectangle1PointOptions::setFreeAngleToActionAndView(bool value){
-   action->setBaseAngleFree(value);
+   m_action->setBaseAngleFree(value);
    ui->cbFreeAngle->setChecked(value);
    ui->leAngle->setEnabled(!value);
 }
 
 void LC_Rectangle1PointOptions::onEdgesIndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setEdgesModeToActionAndView(index);
     }
 }
 
 void LC_Rectangle1PointOptions::setEdgesModeToActionAndView(int index){
-    action->setEdgesDrawMode(index);
+    m_action->setEdgesDrawMode(index);
     ui->cbEdges->setCurrentIndex(index);
 }

@@ -47,16 +47,16 @@ void LC_ModifyAlignRefOptions::doSaveSettings() {
 }
 
 void LC_ModifyAlignRefOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionModifyAlignRef *>(a);
+    m_action = dynamic_cast<LC_ActionModifyAlignRef *>(a);
     bool keepOriginals;
     bool useCurrentLayer;
     bool useCurrentAttributes;
     bool scale;
     if (update){
-        scale = action->isScale();
-        useCurrentLayer = action->isUseCurrentLayer();
-        useCurrentAttributes  = action->isUseCurrentAttributes();
-        keepOriginals = action->isKeepOriginals();
+        scale = m_action->isScale();
+        useCurrentLayer = m_action->isUseCurrentLayer();
+        useCurrentAttributes  = m_action->isUseCurrentAttributes();
+        keepOriginals = m_action->isKeepOriginals();
     }
     else{
         useCurrentLayer = loadBool("UseCurrentLayer", false);
@@ -93,21 +93,21 @@ void LC_ModifyAlignRefOptions::cbUseCurrentLayerClicked(bool val) {
 }
 
 void LC_ModifyAlignRefOptions::setScaleToActionAndView(bool val) {
-    action->setScale(val);
+    m_action->setScale(val);
     ui->cbScale->setChecked(val);
 }
 
 void LC_ModifyAlignRefOptions::setUseCurrentLayerToActionAndView(bool val) {
-    action->setUseCurrentLayer(val);
+    m_action->setUseCurrentLayer(val);
     ui->cbLayer->setChecked(val);
 }
 
 void LC_ModifyAlignRefOptions::setUseCurrentAttributesToActionAndView(bool val) {
-    action->setUseCurrentAttributes(val);
+    m_action->setUseCurrentAttributes(val);
     ui->cbCurrentAttr->setChecked(val);
 }
 
 void LC_ModifyAlignRefOptions::setKeepOriginalsToActionAndView(bool val) {
-    action->setKeepOriginals(val);
+    m_action->setKeepOriginals(val);
     ui->cbKeepOriginals->setChecked(val);
 }

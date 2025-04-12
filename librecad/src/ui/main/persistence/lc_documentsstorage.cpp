@@ -20,16 +20,16 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include "lc_documentsstorage.h"
+
 #include <QFileInfo>
 #include <QApplication>
 
-#include "lc_documentsstorage.h"
-#include "lc_graphicviewport.h"
 #include "qg_filedialog.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_document.h"
 #include "rs_fileio.h"
+#include "rs_graphic.h"
 #include "rs_settings.h"
 
 LC_DocumentsStorage::LC_DocumentsStorage() = default;
@@ -102,8 +102,6 @@ bool LC_DocumentsStorage::saveDocumentAs(const RS_Document* document, RS_Graphic
     }
     return result;
 }
-
-
 
 bool LC_DocumentsStorage::loadDocument(const RS_Document *document, const QString &fileName) const {
     return loadDocument(document, fileName, RS2::FormatUnknown);

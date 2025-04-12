@@ -23,12 +23,12 @@
 #ifndef LC_DLGNAMEDVIEWSLISTOPTIONS_H
 #define LC_DLGNAMEDVIEWSLISTOPTIONS_H
 
-#include <QDialog>
 #include "lc_dialog.h"
-#include "lc_namedviewslistoptions.h"
 
-namespace Ui {
-class LC_DlgNamedViewsListOptions;
+class LC_NamedViewsListOptions;
+
+namespace Ui{
+    class LC_DlgNamedViewsListOptions;
 }
 
 class LC_DlgNamedViewsListOptions : public LC_Dialog{
@@ -37,12 +37,12 @@ public:
     explicit LC_DlgNamedViewsListOptions(LC_NamedViewsListOptions* options, QWidget *parent = nullptr);
     ~LC_DlgNamedViewsListOptions();
 public slots:
-    void validate();
+    void validate() const;
 protected slots:
     virtual void languageChange();
 private:
     Ui::LC_DlgNamedViewsListOptions *ui;
-    LC_NamedViewsListOptions* options;
+    LC_NamedViewsListOptions* m_options;
 };
 
 #endif // LC_DLGNAMEDVIEWSLISTOPTIONS_H

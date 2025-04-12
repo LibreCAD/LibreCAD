@@ -23,15 +23,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_QUICKINFOPOINTSDATA_H
 
 #include <QVector>
-#include "rs_vector.h"
 #include "lc_quickinfobasedata.h"
 
-class LC_QuickInfoPointsData : public LC_QuickInfoBaseData
-{
+class LC_QuickInfoPointsData : public LC_QuickInfoBaseData{
   Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoPointsData)
-
 public:
-
     LC_QuickInfoPointsData();
     ~LC_QuickInfoPointsData() override;
 
@@ -67,8 +63,8 @@ private:
     int m_collectedPointsInsertionIndex = -1;
     // list of collected coordinates
     QVector<PointInfo*> m_collectedPoints;
-    void doUpdatePointsAttributes();
-    PointInfo *createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative);
+    void doUpdatePointsAttributes() const;
+    PointInfo *createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative) const;
 };
 
 #endif // LC_QUICKINFOPOINTSDATA_H

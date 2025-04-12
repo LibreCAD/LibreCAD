@@ -23,29 +23,27 @@
 #ifndef LC_DLGUCSLISTOPTIONS_H
 #define LC_DLGUCSLISTOPTIONS_H
 
-#include <QDialog>
-#include "lc_ucslistoptions.h"
 #include "lc_dialog.h"
 
 namespace Ui {
-class LC_DlgUCSListOptions;
+    class LC_DlgUCSListOptions;
 }
 
-// todo - sand - The dialog is not used so far, however, later on may be used for more granual editing of UCS
-class LC_DlgUCSListOptions : public LC_Dialog
-{
-    Q_OBJECT
+class LC_UCSListOptions;
 
+// todo - sand - The dialog is not used so far, however, later on may be used for more granual editing of UCS
+class LC_DlgUCSListOptions : public LC_Dialog{
+    Q_OBJECT
 public:
     explicit LC_DlgUCSListOptions(LC_UCSListOptions* options, QWidget *parent = nullptr);
-    ~LC_DlgUCSListOptions();
+    ~LC_DlgUCSListOptions() override;
 public slots:
     void validate();
 protected slots:
     virtual void languageChange();
 private:
     Ui::LC_DlgUCSListOptions *ui;
-    LC_UCSListOptions* options;
+    LC_UCSListOptions* m_options;
 };
 
 #endif // LC_DLGUCSLISTOPTIONS_H

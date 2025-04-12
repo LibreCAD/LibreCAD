@@ -24,35 +24,29 @@
 **
 **********************************************************************/
 
+#include "rs_previewactioninterface.h"
 
-#include <QMouseEvent>
-
+#include "lc_actioncontext.h"
+#include "lc_defaults.h"
+#include "lc_graphicviewport.h"
 #include "lc_highlight.h"
 #include "lc_linemath.h"
-#include "lc_quickinfowidget.h"
+#include "lc_overlayentitiescontainer.h"
 #include "lc_refarc.h"
 #include "lc_refcircle.h"
 #include "lc_refconstructionline.h"
 #include "lc_refellipse.h"
 #include "lc_refline.h"
 #include "lc_refpoint.h"
-#include "lc_overlayentitiescontainer.h"
-#include "rs_actioninterface.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_commands.h"
-#include "rs_constructionline.h"
-#include "rs_creation.h"
 #include "rs_debug.h"
+#include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_math.h"
-#include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_previewactioninterface.h"
-
-#include "lc_actioncontext.h"
 #include "rs_settings.h"
+#include "rs_units.h"
 
 // fixme - sand - consider more generic support of overlays and containers,
 // with them working with preview etc might be more generic.. currently, preview handles both preview and reference points..
@@ -65,8 +59,7 @@
  * from this interface operates.
  */
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name, LC_ActionContext* actionContext,
-                                                     RS2::ActionType actionType) :
-    RS_ActionInterface(name, actionContext, actionType)
+                                                     RS2::ActionType actionType) : RS_ActionInterface(name, actionContext, actionType)
     , m_preview(std::make_unique<RS_Preview>(actionContext->getEntityContainer(), m_viewport)),
     m_highlight(std::make_unique<LC_Highlight>()) {
 

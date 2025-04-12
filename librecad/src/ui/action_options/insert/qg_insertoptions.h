@@ -51,7 +51,7 @@ protected slots:
     void onRowsValueChanged(int number);
     void onColumnsValueChanged(int number);
 protected:
-    RS_ActionBlocksInsert* action = nullptr;
+    RS_ActionBlocksInsert* m_action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:

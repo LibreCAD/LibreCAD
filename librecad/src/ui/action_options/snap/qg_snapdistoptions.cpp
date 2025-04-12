@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QVariant>
+
 #include "qg_snapdistoptions.h"
 #include "rs_math.h"
 #include "ui_qg_snapdistoptions.h"
@@ -58,19 +58,19 @@ void QG_SnapDistOptions::saveSettings() {
 }
 
 void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
-    dist = d;
+    m_dist = d;
     QString distance = LC_GET_ONE_STR("Snap","Distance", "1.0");
 
-    *dist= RS_Math::eval(distance, 1.0);
-    QString value = QString::number(*dist, 'g', 6);
+    *m_dist= RS_Math::eval(distance, 1.0);
+    QString value = QString::number(*m_dist, 'g', 6);
     ui->leDist->setText(value);
 }
 
 void QG_SnapDistOptions::onDistEditingFinished() {
-    if (dist) {
+    if (m_dist) {
         QString value = ui->leDist->text();
-        *dist = RS_Math::eval(value, 1.0);
-        value = QString::number(*dist, 'g', 6);
+        *m_dist = RS_Math::eval(value, 1.0);
+        value = QString::number(*m_dist, 'g', 6);
         ui->leDist->setText(value);
         saveSettings();
     }
@@ -85,5 +85,5 @@ void QG_SnapDistOptions::doShow() {
 }
 
 double* QG_SnapDistOptions::getDistanceValue() {
-    return dist;
+    return m_dist;
 }

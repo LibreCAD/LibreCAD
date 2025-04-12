@@ -22,6 +22,7 @@
 #include "lc_applicationwindowinitializer.h"
 
 #include <QMdiArea>
+#include <qcoreapplication.h>
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
@@ -36,11 +37,14 @@
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"
 #include "lc_releasechecker.h"
+#include "lc_snapoptionswidgetsholder.h"
 #include "lc_toolbarfactory.h"
 #include "lc_widgetfactory.h"
 #include "lc_workspacesinvoker.h"
 #include "main.h"
+#include "qc_applicationwindow.h"
 #include "qc_dialogfactory.h"
+#include "qg_actionhandler.h"
 #include "qg_commandwidget.h"
 #include "qg_recentfiles.h"
 #include "qg_snaptoolbar.h"

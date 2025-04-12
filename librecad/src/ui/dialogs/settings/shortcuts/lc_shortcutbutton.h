@@ -37,7 +37,6 @@ protected:
 private:
     void updateText();
     void handleToggleChange(bool toggleState);
-
     QString m_checkedText;
     QString m_uncheckedText;
     mutable int m_preferredWidth = -1;

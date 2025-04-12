@@ -25,19 +25,16 @@
 #ifndef LC_LAYERWIDGETTREEVIEW_H
 #define LC_LAYERWIDGETTREEVIEW_H
 
-#include <QPainter>
+#include <QStyledItemDelegate>
 #include <QTreeView>
-#include <qstyleditemdelegate.h>
 
-#include "lc_layertreemodel.h"
-#include "lc_layertreemodel_options.h"
-
+class LC_LayerTreeModel;
 
 class LC_LayerTreeView:public QTreeView{
 public:
     LC_LayerTreeView(QWidget *parent = nullptr);
     void setup(LC_LayerTreeModel *treeModel);
-    QStringList saveTreeExpansionState();
+    QStringList saveTreeExpansionState() const;
     void restoreTreeExpansionState(QStringList treeExpansionState);
     void expandChildren(const QModelIndex &index);
 
@@ -47,47 +44,9 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 private:
-    void applyExpandState(QStringList &expandedItems, QModelIndex startIndex);
+    void applyExpandState(QStringList &expandedItems, const QModelIndex& startIndex);
     LC_LayerTreeModel *getTreeModel() const;
 };
 
-/**
- * Delegate for painting grid lines within tree view - rect around cells for Name column.
- * @brief The GridDelegate class
- */
-class LayerTreeGridDelegate:public QStyledItemDelegate {
-public:
-    explicit LayerTreeGridDelegate(LC_LayerTreeView *parent = nullptr, LC_LayerTreeModel* treeModel = nullptr):QStyledItemDelegate(parent){
-        if (parent){
-            this->treeModel = treeModel;
-        }
-    }
-
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override{
-        QStyledItemDelegate::paint(painter, option, index);
-        int col = index.column();
-
-        if (col > 0){
-            bool draw = true;
-            if (col == LC_LayerTreeModel::NAME){
-                LC_LayerTreeItem *layerItem = treeModel->getItemForIndex(index);
-                if (layerItem && (!layerItem->isVirtual())){
-                    draw = false;
-                }
-            }
-            if (draw){
-                LC_LayerTreeModelOptions* options = treeModel->getOptions();
-                QColor color = options->itemsGridColor;
-                painter->save();
-                painter->setPen(color);
-                painter->drawRect(option.rect);
-                painter->restore();
-            }
-        }
-    }
-
-private:
-    LC_LayerTreeModel* treeModel{nullptr};
-};
 
 #endif // QG_LAYERWIDGETTREEVIEW_H

@@ -21,14 +21,15 @@
 // **********************************************************************
 //
 
+#include "qg_recentfiles.h"
+
 #include <QActionGroup>
 #include <QFileInfo>
 #include <QMenu>
 
+#include "qc_applicationwindow.h"
 #include "rs_debug.h"
-#include "qg_recentfiles.h"
 #include "rs_settings.h"
-#include "../qc_applicationwindow.h"
 
 /**
 * Constructor

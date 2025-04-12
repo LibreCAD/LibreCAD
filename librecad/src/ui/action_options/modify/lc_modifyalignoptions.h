@@ -23,7 +23,6 @@
 #ifndef LC_MODIFYALIGNOPTIONS_H
 #define LC_MODIFYALIGNOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidget.h"
 
 class LC_ActionModifyAlignData;
@@ -54,9 +53,8 @@ protected:
     QString getSettingsOptionNamePrefix() override;
 private:
     Ui::LC_ModifyAlignOptions *ui;
-    LC_ActionModifyAlignData* action = nullptr;
-
-    bool forAlignAction = false;
+    LC_ActionModifyAlignData* m_action = nullptr;
+    bool m_forAlignAction = false;
     void setAlignTypeToActionAndView(int type);
     void setVAlignToActionAndView(int valign);
     void setHAlignToActionAndView(int halign);

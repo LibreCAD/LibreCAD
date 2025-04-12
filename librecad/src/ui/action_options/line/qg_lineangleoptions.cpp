@@ -24,13 +24,8 @@
 **
 **********************************************************************/
 #include "qg_lineangleoptions.h"
-
 #include "rs_actiondrawlineangle.h"
-#include "rs_actioninterface.h"
-#include "rs_debug.h"
-#include "rs_math.h"
 #include "ui_qg_lineangleoptions.h"
-
 
 /*
  *  Constructs a QG_LineAngleOptions as a child of 'parent', with the
@@ -67,8 +62,8 @@ bool QG_LineAngleOptions::checkActionRttiValid(RS2::ActionType actionType){
 }
 
 void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionDrawLineAngle*>(a);
-    bool angleIsFixed = action->hasFixedAngle();
+    m_action = dynamic_cast<RS_ActionDrawLineAngle*>(a);
+    bool angleIsFixed = m_action->hasFixedAngle();
 
     QString angle;
     QString length;
@@ -78,12 +73,12 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
     // settings from action:
     if (update) {
         if (angleIsFixed) {
-            inAngleBasis = action->isInAngleBasis();
+            inAngleBasis = m_action->isInAngleBasis();
         } else {
-            angle = fromDouble(action->getUcsAngleDegrees());
+            angle = fromDouble(m_action->getUcsAngleDegrees());
         }
-        length = fromDouble(action->getLength());
-        snapPoint = action->getSnapPoint();
+        length = fromDouble(m_action->getLength());
+        snapPoint = m_action->getSnapPoint();
     } else {
         if (angleIsFixed) {
             inAngleBasis = loadBool("InAnglesBasis", false);
@@ -97,7 +92,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
     ui->leAngle->setVisible(!angleIsFixed);
     ui->lAngle->setVisible(!angleIsFixed);
 
-    bool hasCustomAnglesBasis = action->hasNonDefaultAnglesBasis();
+    bool hasCustomAnglesBasis = m_action->hasNonDefaultAnglesBasis();
 
     if (angleIsFixed) {
         ui->cbForAnglesBasis->setVisible(hasCustomAnglesBasis);
@@ -114,7 +109,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
 }
 
 void QG_LineAngleOptions::doSaveSettings() {
-    if (action->hasFixedAngle()) {
+    if (m_action->hasFixedAngle()) {
         save("InAnglesBasis", ui->cbForAnglesBasis->isChecked());
     } else {
         save("Angle", ui->leAngle->text());
@@ -142,25 +137,25 @@ void QG_LineAngleOptions::onAnglesBasisToggled(bool val) {
 void QG_LineAngleOptions::setAngleToActionAndView(QString val){
     double angle = 0.;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
-        action->setUcsAngleDegrees(angle);
+        m_action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
 
 void QG_LineAngleOptions::setSnapPointToActionAndView(int val){
-    action->setSnapPoint(val);
+    m_action->setSnapPoint(val);
     ui->cbSnapPoint->setCurrentIndex(val);
 }
 
 void QG_LineAngleOptions::setLengthToActionAndView(QString val){
     double len = 0.;
     if (toDouble(val, len, 1.0, false)){
-        action->setLength(len);
+        m_action->setLength(len);
         ui->leLength->setText(fromDouble(len));
     }
 }
 
 void QG_LineAngleOptions::setToAngleBasis(bool val) {
     ui->cbForAnglesBasis->setChecked(val);
-    action->setInAngleBasis(val);
+    m_action->setInAngleBasis(val);
 }

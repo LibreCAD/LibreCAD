@@ -22,8 +22,8 @@
 **********************************************************************************
 */
 
-#include <QTableView>
-#include <QListWidgetItem>
+#include <QListView>
+#include <QStandardItemModel>
 
 #include "lg_dimzerosbox.h"
 

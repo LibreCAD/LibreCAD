@@ -20,22 +20,25 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include "lc_appwindowdialogsinvoker.h"
+
 #include <QFileDialog>
 #include <QImageWriter>
+
 #include "comboboxoption.h"
-#include "qg_dialogfactory.h"
-#include "qg_dlgoptionsgeneral.h"
-#include "qg_exitdialog.h"
-#include "lc_appwindowdialogsinvoker.h"
 #include "lc_dlgabout.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_widgetoptionsdialog.h"
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "qg_dialogfactory.h"
 #include "qg_dlgoptionsdrawing.h"
+#include "qg_dlgoptionsgeneral.h"
+#include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "textfileviewer.h"
-#include <qc_applicationwindow.h>
 
 LC_AppWindowDialogsInvoker::LC_AppWindowDialogsInvoker(QC_ApplicationWindow *appWin)
   :LC_AppWindowAware(appWin) {

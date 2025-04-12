@@ -22,44 +22,42 @@
 
 #include "lc_shortcutinfo.h"
 
-const char* LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE="actionShortcut.configurable";
+const char* LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE = "actionShortcut.configurable";
 
-QString LC_ShortcutInfo::retrieveKey(bool useDefault)const {
-    return useDefault ? defaultKey.toString() : key.toString();
+QString LC_ShortcutInfo::retrieveKey(bool useDefault) const {
+    return useDefault ? m_defaultKey.toString() : m_key.toString();
 };
 
-
-QString LC_ShortcutInfo::getKeyAsString(){
-    QString text = key.toString(QKeySequence::PortableText);
+QString LC_ShortcutInfo::getKeyAsString() {
+    QString text = m_key.toString(QKeySequence::PortableText);
     return text;
 }
 
-QList<QKeySequence> LC_ShortcutInfo::getKeysList() const {return QList<QKeySequence>();};
+QList<QKeySequence> LC_ShortcutInfo::getKeysList() const { return QList<QKeySequence>(); };
 
-void LC_ShortcutInfo::resetToDefault(){
-    key = defaultKey;
-    modified = false;
+void LC_ShortcutInfo::resetToDefault() {
+    m_key = m_defaultKey;
+    m_modified = false;
 }
 
-void LC_ShortcutInfo::setKey(QKeySequence newKey){
-    key = newKey;
-    modified = key != defaultKey;
+void LC_ShortcutInfo::setKey(QKeySequence newKey) {
+    m_key = newKey;
+    m_modified = m_key != m_defaultKey;
 }
 
-
-void LC_ShortcutInfo::clear(){
+void LC_ShortcutInfo::clear() {
     setKey(QKeySequence());
 }
 
 int LC_ShortcutInfo::translateModifiers(Qt::KeyboardModifiers state,
-                              const QString &text) {
+                                        const QString& text) {
     int result = 0;
     // The shift modifier only counts when it is not used to type a symbol
     // that is only reachable using the shift key anyway
     if ((state & Qt::ShiftModifier) && (text.size() == 0
-                                        || !text.at(0).isPrint()
-                                        || text.at(0).isLetterOrNumber()
-                                        || text.at(0).isSpace()))
+        || !text.at(0).isPrint()
+        || text.at(0).isLetterOrNumber()
+        || text.at(0).isSpace()))
         result |= Qt::SHIFT;
     if (state & Qt::ControlModifier)
         result |= Qt::CTRL;
@@ -70,16 +68,15 @@ int LC_ShortcutInfo::translateModifiers(Qt::KeyboardModifiers state,
     return result;
 }
 
-
 bool LC_ShortcutInfo::hasTheSameKey(QKeySequence sequenceToTest) {
     bool result = false;
-    if (key.isEmpty()){
-        if (!defaultKey.isEmpty()){
-            result = defaultKey == sequenceToTest;
+    if (m_key.isEmpty()) {
+        if (!m_defaultKey.isEmpty()) {
+            result = m_defaultKey == sequenceToTest;
         }
     }
-    else{
-        result = key == sequenceToTest;
+    else {
+        result = m_key == sequenceToTest;
     }
     return result;
 }

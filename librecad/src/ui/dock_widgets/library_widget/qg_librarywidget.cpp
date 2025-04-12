@@ -25,23 +25,25 @@
 **
 **********************************************************************/
 
+#include "qg_librarywidget.h"
+
 #include <QApplication>
-#include <QDateTime>
-#include <QDesktopServices>
+#include <QFileInfo>
 #include <QImageWriter>
+#include <QKeyEvent>
 #include <QListView>
-#include <QModelIndex>
-#include <QMouseEvent>
 #include <QPushButton>
 #include <QStandardItemModel>
 #include <QStandardPaths>
+#include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <QToolButton>
+#include <qabstractitemview.h>
+
 #include "lc_documentsstorage.h"
 #include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
-#include "qg_librarywidget.h"
+#include "rs_actioninterface.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
 #include "rs_painter.h"

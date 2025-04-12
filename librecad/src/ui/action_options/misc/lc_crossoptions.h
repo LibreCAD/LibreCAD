@@ -46,8 +46,7 @@ protected:
     void doSetAction( RS_ActionInterface * a, bool update) override;
 private:
     Ui::LC_CrossOptions *ui;
-    LC_ActionDrawCross* action = nullptr;
-
+    LC_ActionDrawCross* m_action = nullptr;
     void setXToActionAndView(const QString &strValue);
     void setYToActionAndView(const QString &strValue);
     void setAngleToActionAndView(const QString &expr);

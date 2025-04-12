@@ -55,9 +55,8 @@ protected:
     QString getSettingsOptionNamePrefix() override;
 private:
     std::unique_ptr<Ui::LC_LineAngleRelOptions> ui;
-    LC_ActionDrawLineAngleRel* action {nullptr};
-    bool fixedAngle {false};
-
+    LC_ActionDrawLineAngleRel* m_action {nullptr};
+    bool m_fixedAngle {false};
     void setAngleToActionAndView(const QString &expr);
     void setLengthToActionAndView(const QString& val);
     void setDistanceToActionAndView(const QString& val);

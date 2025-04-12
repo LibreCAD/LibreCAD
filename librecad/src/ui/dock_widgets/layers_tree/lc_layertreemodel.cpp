@@ -20,10 +20,14 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QColor>
-
 #include "lc_layertreemodel.h"
+
+#include <QFont>
+
+#include "lc_layertreeitem.h"
 #include "lc_layertreemodel_options.h"
+#include "rs_layer.h"
+#include "rs_layerlist.h"
 
 LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *ops) :QAbstractItemModel(parent) {
     m_iconLayerVisible = QIcon(":/icons/visible.lci");
@@ -42,7 +46,6 @@ LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions 
     m_iconLayerInformationalNotes = QIcon(":/icons/mtext.lci");
 
     m_rootItem = new LC_LayerTreeItem();
-
     m_options = ops;
 }
 /**
@@ -62,6 +65,7 @@ int LC_LayerTreeModel::rowCount ( const QModelIndex & parent ) const {
     int result = parentItem->childCount();
     return result;
 }
+
 /**
  * Count of columns in tree view. Depends on the setting - whether icons for types should be shown or not
  * @param parent
@@ -198,7 +202,7 @@ void LC_LayerTreeModel::reset(){
  * @param activeLayer
  */
 
-void LC_LayerTreeModel::rebuildModel(QList<RS_Layer*> &listLayer, RS_Layer* activeLayer){
+void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS_Layer* activeLayer){
 
     int alternatePositionLayerNameSuffixLen = m_options->alternatePositionLayerNameSuffix.length();
     int informationLayerNameSuffixLen = m_options->informationalLayerNameSuffix.length();
@@ -254,7 +258,7 @@ void LC_LayerTreeModel::rebuildModel(QList<RS_Layer*> &listLayer, RS_Layer* acti
             // however, even such situation is handled correctly by the view...
             // Also, due to sort order of the incoming list, non-virtual parent layer will be inserted earlier
             for (int indent = 0; indent < partsCount-1; ++indent){
-                QString subName = nameParts.at(indent);
+                const QString& subName = nameParts.at(indent);
                 virtualRoot = virtualRoot -> getOrCreateVirtualChild(subName);
                 setupDisplayNames(virtualRoot);
                 // TODO - is it a place for settings-controlled policy - whether highlights root or not...???
@@ -393,7 +397,7 @@ void LC_LayerTreeModel::setupDisplayNames(LC_LayerTreeItem* item){
  * @param toLayerType new layer type
  * @return whether item is converted or not
  */
-bool LC_LayerTreeModel::convertToType(QModelIndex &selectedIndex, int toLayerType){
+bool LC_LayerTreeModel::convertToType(const QModelIndex &selectedIndex, int toLayerType){
     bool result = false;
     if (selectedIndex.isValid()){
         LC_LayerTreeItem *layerItem = getItemForIndex(selectedIndex);//
@@ -437,7 +441,7 @@ bool LC_LayerTreeModel::doConvertToType(LC_LayerTreeItem *layerItem , int toLaye
  * @param layerName inner layer name (with suffix)
  * @return logical name without suffix or provided name if suffix is absent
  */
-QString LC_LayerTreeModel::cleanupLayerName(QString &layerName) const{
+QString LC_LayerTreeModel::cleanupLayerName(const QString &layerName) const{
     QString mainName = layerName;
     if (layerName.endsWith(m_options->alternatePositionLayerNameSuffix)){
         mainName = layerName.left(layerName.length() - m_options->alternatePositionLayerNameSuffix.length());
@@ -493,8 +497,8 @@ QString LC_LayerTreeModel::generateLayersPathString(QList<LC_LayerTreeItem*>  it
  * @param usingLayerLayerSeparator separator that used for path elements
  * @return
  */
-QString LC_LayerTreeModel::doGenerateLayersPathString(QList<LC_LayerTreeItem*>  &itemsPathAsList, bool alternateSourceName, QString &alternativeName,
-                                                      QString &usingLayerLayerSeparator){
+QString LC_LayerTreeModel::doGenerateLayersPathString(const QList<LC_LayerTreeItem*>  &itemsPathAsList, bool alternateSourceName, QString &alternativeName,
+                                                      const QString &usingLayerLayerSeparator){
     int count = itemsPathAsList.size();
     QString result = "";
     // element with list.length() index is model root node, no name there
@@ -544,7 +548,7 @@ QString LC_LayerTreeModel::doGenerateLayersPathString(QList<LC_LayerTreeItem*>  
  * @param layerType layer type used for name creation
  * @return new unique name for the layer
  */
-QString  LC_LayerTreeModel::findNewUniqueName(LC_LayerTreeItem* destination, QString &name, QString &copyPrefix, QString &copySuffix, int layerType){
+QString  LC_LayerTreeModel::findNewUniqueName(const LC_LayerTreeItem* destination, const QString &name, const QString &copyPrefix, const QString &copySuffix, int layerType){
    QString result = name;
    int i = 0;
 
@@ -621,7 +625,7 @@ bool LC_LayerTreeModel::performReStructure(LC_LayerTreeItem*  source, LC_LayerTr
  * @param toNamePrefix new prefix name that will replace old one
  * @return map of where the key is layer and value is new name of the layer
  */
-QHash<RS_Layer*, QString> LC_LayerTreeModel::prepareLayerRename(QList<LC_LayerTreeItem*> &layersList, QString &fromNamePrefix, QString &toNamePrefix){
+QHash<RS_Layer*, QString> LC_LayerTreeModel::prepareLayerRename(QList<LC_LayerTreeItem*> &layersList, const QString &fromNamePrefix, const QString &toNamePrefix){
     QHash<RS_Layer*, QString> result;
     int layersCount = layersList.length();
     int fromNamePrefixLen = fromNamePrefix.size();
@@ -749,7 +753,7 @@ bool LC_LayerTreeModel::isValidRestructure(LC_LayerTreeItem*  source, LC_LayerTr
  * Get active layer from layer list and update the model to mark active layer paths accordingly
  * @param ll
  */
-void LC_LayerTreeModel::proceedActiveLayerChanged(RS_LayerList* ll) {
+void LC_LayerTreeModel::proceedActiveLayerChanged(RS_LayerList* ll) const {
     if (ll == nullptr)
         return;
     RS_Layer* activeLayer = ll->getActive();
@@ -979,7 +983,7 @@ Qt::ItemFlags LC_LayerTreeModel::flags(const QModelIndex & index) const{
  * @param acceptor condition for selecting layers
  * @return list of collected layers
  */
-QList<RS_Layer*> LC_LayerTreeModel::collectLayers(LC_LayerTreeItemAcceptor* acceptor){
+QList<RS_Layer*> LC_LayerTreeModel::collectLayers(LC_LayerTreeItemAcceptor* acceptor) const {
     QList<RS_Layer*> result;
     m_rootItem->collectLayers(result, acceptor);
     return result;
@@ -989,7 +993,7 @@ QList<RS_Layer*> LC_LayerTreeModel::collectLayers(LC_LayerTreeItemAcceptor* acce
  * Utility method that exposed inherited method - used for selection state control
  * @return
  */
-QModelIndexList LC_LayerTreeModel::getPersistentIndexList(){
+QModelIndexList LC_LayerTreeModel::getPersistentIndexList() const {
     return persistentIndexList();
 }
 
@@ -999,7 +1003,7 @@ QModelIndexList LC_LayerTreeModel::getPersistentIndexList(){
  * @param regexp regexp string from filtering box
  * @param highlightMode  mode of filter, if true - items are highlighted, if false - filtered
  */
-void LC_LayerTreeModel::setFilteringRegexp(QString &regexp, bool highlightMode){
+void LC_LayerTreeModel::setFilteringRegexp(const QString &regexp, bool highlightMode){
 //   Actually, this is a bit ugly setter as it does not force model rebuild.However, update will be subsequent
 //   call... ok so far, it should not be called externally other than from widget.
 
@@ -1115,7 +1119,7 @@ void LC_LayerTreeModel::createFirstLayerCopy(QHash<RS_Layer*,RS_Layer*> &result,
  * @param oldPrefix old layers names prefix that should be replaced on copy
  * @param newPrefix new prefix that will be used instead of ald ones in names of copied layers
  */
-void LC_LayerTreeModel::doCreateChildLayersCopy(QHash<RS_Layer*, RS_Layer*>&result, LC_LayerTreeItem* source, QString &oldPrefix, QString &newPrefix){
+void LC_LayerTreeModel::doCreateChildLayersCopy(QHash<RS_Layer*, RS_Layer*>&result, LC_LayerTreeItem* source, const QString &oldPrefix, const QString &newPrefix){
 
     QList<RS_Layer*> childLayers;
     LC_LayerTreeItemAcceptor ACCEPT_ALL;
@@ -1206,7 +1210,7 @@ QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetVirtualLayerRenameLayersMap(
 }
 
 /**
- * Identifies layers that will be affected affected by renaming primary layer operation and returns a map of layers and
+ * Identifies layers that will be affected by renaming primary layer operation and returns a map of layers and
  * new names.
  * If layer type is not changed - secondary layers will be renamed accordingly to the primary layer rename. Otherwise,
  * only the primary layer itself will be renamed.
@@ -1215,7 +1219,7 @@ QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetVirtualLayerRenameLayersMap(
  * @param newLayerType   new type of source layer
  * @return key in the map - layer to be renamed, value - new name of layer
  */
-QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetPrimaryLayerRenameLayersMap(LC_LayerTreeItem *source, QString &newSourceName, int newLayerType){
+QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetPrimaryLayerRenameLayersMap(LC_LayerTreeItem *source, const QString &newSourceName, int newLayerType){
     QString sourceName = source->getName();
     int originalLayerType = source->getLayerType();
 

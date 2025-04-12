@@ -22,8 +22,10 @@
 
 #include <QMouseEvent>
 #include "lc_anglesbasiswidget.h"
-#include "ui_lc_anglesbasiswidget.h"
+
 #include "rs_graphic.h"
+#include "ui_lc_anglesbasiswidget.h"
+
 
 LC_AnglesBasisWidget::LC_AnglesBasisWidget(QWidget *parent,const char* name)
     : QWidget(parent)

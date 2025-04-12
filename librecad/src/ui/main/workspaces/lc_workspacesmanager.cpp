@@ -21,14 +21,12 @@
  * ********************************************************************************
  */
 
-#include "lc_workspacesmanager.h"
-
-
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 
+#include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_settings.h"

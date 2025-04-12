@@ -47,13 +47,13 @@
 #include "rs_graphic.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
-    blockVisible = QIcon(":/icons/visible.lci");
+    m_iconBlockVisible = QIcon(":/icons/visible.lci");
 //    blockHidden = QIcon(":/icons/invisible.svg");
-    blockHidden = QIcon(":/icons/not_visible.lci");
+    m_iconBlockHidden = QIcon(":/icons/not_visible.lci");
 }
 
 int QG_BlockModel::rowCount ( const QModelIndex & /*parent*/ ) const {
-    return listBlock.size();
+    return m_listBlock.size();
 }
 
 QModelIndex QG_BlockModel::parent ( const QModelIndex & /*index*/ ) const {
@@ -61,7 +61,7 @@ QModelIndex QG_BlockModel::parent ( const QModelIndex & /*index*/ ) const {
 }
 
 QModelIndex QG_BlockModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
-    if ( row >= listBlock.size() || row < 0)
+    if ( row >= m_listBlock.size() || row < 0)
         return QModelIndex();
     return createIndex ( row, column);
 }
@@ -75,17 +75,17 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
      * TNick <nicu.tofan@gmail.com>
      */
     beginResetModel();
-    listBlock.clear();
+    m_listBlock.clear();
     if (bl == nullptr){
         endResetModel();
         return;
     }
     for (int i=0; i<bl->count(); ++i) {
         if ( !bl->at(i)->isUndone() )
-            listBlock.append(bl->at(i));
+            m_listBlock.append(bl->at(i));
     }
     setActiveBlock(bl->getActive());
-    std::sort( listBlock.begin(), listBlock.end(), blockLessThan);
+    std::sort( m_listBlock.begin(), m_listBlock.end(), blockLessThan);
 
     //called to force redraw
     endResetModel();
@@ -93,36 +93,36 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 
 
 RS_Block *QG_BlockModel::getBlock( int row) const{
-    if ( row >= listBlock.size() || row < 0)
+    if ( row >= m_listBlock.size() || row < 0)
         return nullptr;
-    return listBlock.at(row);
+    return m_listBlock.at(row);
 }
 
 QModelIndex QG_BlockModel::getIndex (RS_Block * blk) const{
-    int row = listBlock.indexOf(blk);
+    int row = m_listBlock.indexOf(blk);
     if (row<0)
         return QModelIndex();
     return createIndex ( row, NAME);
 }
 
 QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
-    if (!index.isValid() || index.row() >= listBlock.size())
+    if (!index.isValid() || index.row() >= m_listBlock.size())
         return QVariant();
 
-    RS_Block* blk = listBlock.at(index.row());
+    RS_Block* blk = m_listBlock.at(index.row());
 
     if (role ==Qt::DecorationRole && index.column() == VISIBLE) {
         if (!blk->isFrozen()) {
-            return blockVisible;
+            return m_iconBlockVisible;
         } else {
-            return blockHidden;
+            return m_iconBlockHidden;
         }
     }
     if (role ==Qt::DisplayRole && index.column() == NAME) {
         return blk->getName();
     }
     if (role == Qt::FontRole && index.column() == NAME) {
-        if (activeBlock && activeBlock == blk) {
+        if (m_activeBlock && m_activeBlock == blk) {
             QFont font;
             font.setBold(true);
             return font;
@@ -167,9 +167,8 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     // QHBoxLayout* layButtons = new QHBoxLayout();
     // QHBoxLayout* layButtons2 = new QHBoxLayout();
-    QToolButton* but;
     // show all blocks:
-    but = new QToolButton(this);
+    QToolButton* but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Show all blocks"));
@@ -270,7 +269,7 @@ void QG_BlockWidget::update() {
         return;
     }
 
-    RS_Block* activeBlock = (m_blockList != nullptr) ? m_blockList->getActive() : nullptr;
+    RS_Block* activeBlock =m_blockList->getActive();
 
     m_blockModel->setBlockList(m_blockList);
 
@@ -285,8 +284,7 @@ void QG_BlockWidget::update() {
 }
 
 
-void QG_BlockWidget::restoreSelections() {
-
+void QG_BlockWidget::restoreSelections() const {
     QItemSelectionModel* selectionModel = m_blockView->selectionModel();
 
     for (auto block: *m_blockList) {
@@ -333,7 +331,7 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
 /**
  * Called when the user activates (highlights) a block.
  */
-void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
+void QG_BlockWidget::slotActivated(const QModelIndex &blockIdx) {
     if (!blockIdx.isValid() || m_blockList==nullptr)
         return;
 
@@ -361,13 +359,12 @@ void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
  */
 void QG_BlockWidget::slotSelectionChanged(
     const QItemSelection &selected,
-    const QItemSelection &deselected)
-{
+    const QItemSelection &deselected) const {
     QItemSelectionModel *selectionModel {m_blockView->selectionModel()};
 
     foreach (QModelIndex index, selected.indexes()) {
         auto block = m_blockModel->getBlock(index.row());
-        if (block) {
+        if (block != nullptr) {
             block->selectedInBlockList(true);
             selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Select);
         }
@@ -375,7 +372,7 @@ void QG_BlockWidget::slotSelectionChanged(
 
     foreach (QModelIndex index, deselected.indexes()) {
         auto block = m_blockModel->getBlock(index.row());
-        if (block && block->isVisibleInBlockList()) {
+        if (block != nullptr && block->isVisibleInBlockList()) {
             block->selectedInBlockList(false);
             selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
         }
@@ -446,9 +443,8 @@ void QG_BlockWidget::blockAdded(RS_Block*) {
 /**
  * Called when reg-expression matchBlockName->text changed
  */
-void QG_BlockWidget::slotUpdateBlockList() {
-
-    if (!m_blockList) {
+void QG_BlockWidget::slotUpdateBlockList() const {
+    if (m_blockList == nullptr) {
         return;
     }
 
@@ -469,7 +465,7 @@ void QG_BlockWidget::slotUpdateBlockList() {
     restoreSelections();
 }
 
-void QG_BlockWidget::updateWidgetSettings(){
+void QG_BlockWidget::updateWidgetSettings() const {
     LC_GROUP("Widgets"); {
         bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
         int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);

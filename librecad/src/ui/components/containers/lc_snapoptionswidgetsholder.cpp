@@ -50,7 +50,7 @@ void LC_SnapOptionsWidgetsHolder::hideSnapOptions(){
 }
 
 void LC_SnapOptionsWidgetsHolder::hideSeparator() {
-    if (widgetOnLeftWithinContainer){
+    if (m_widgetOnLeftWithinContainer){
         ui->lineRight->hide();
     }
     else{
@@ -59,7 +59,7 @@ void LC_SnapOptionsWidgetsHolder::hideSeparator() {
 }
 
 void LC_SnapOptionsWidgetsHolder::showSeparator() {
-    if (widgetOnLeftWithinContainer){
+    if (m_widgetOnLeftWithinContainer){
         ui->lineRight->show();
     }
     else{

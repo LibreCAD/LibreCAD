@@ -24,13 +24,8 @@
 **
 **********************************************************************/
 #include "qg_dlgcircle.h"
-
-
 #include "rs_circle.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
-//#include "rs_debug.h"
-
 /*
  *  Constructs a QG_DlgCircle as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -60,29 +55,29 @@ void QG_DlgCircle::languageChange(){
 }
 
 void QG_DlgCircle::setEntity(RS_Circle* c) {
-    entity = c;
+    m_entity = c;
 
-    RS_Graphic *graphic = entity->getGraphic();
+    RS_Graphic *graphic = m_entity->getGraphic();
     if (graphic != nullptr) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer *lay = entity->getLayer(false);
+    RS_Layer *lay = m_entity->getLayer(false);
     if (lay != nullptr) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, tr("Pen"));
+    wPen->setPen(m_entity, lay, tr("Pen"));
 
-    toUI(entity->getCenter(), leCenterX, leCenterY);
-    toUIValue(entity->getRadius(), leRadius);
+    toUI(m_entity->getCenter(), leCenterX, leCenterY);
+    toUIValue(m_entity->getRadius(), leRadius);
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::setCircle, leRadius->setText '%s'",qPrintable(s));
 }
 
 void QG_DlgCircle::updateEntity() {
-    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
-    entity->setRadius(toWCSValue(leRadius, entity->getRadius()));
+    m_entity->setCenter(toWCS(leCenterX, leCenterY, m_entity->getCenter()));
+    m_entity->setRadius(toWCSValue(leRadius, m_entity->getRadius()));
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
-    entity->calculateBorders();
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
+    m_entity->calculateBorders();
 }

@@ -21,12 +21,12 @@
  ******************************************************************************/
 
 #include <QApplication>
-#include <QDir>
 #include "lc_shortcuts_manager.h"
-#include "rs_settings.h"
 #include "lc_shortcutsstorage.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 #include "rs_system.h"
+
 const char* LC_ShortcutsManager::PROPERTY_SHORTCUT_BACKUP = "tooltip.original";
 
 LC_ShortcutsManager::LC_ShortcutsManager() {}

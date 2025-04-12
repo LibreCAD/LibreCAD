@@ -24,11 +24,10 @@
 #define LC_ANGLESBASISWIDGET_H
 
 #include <QWidget>
-
 #include "lc_graphicviewaware.h"
 
-namespace Ui {
-class LC_AnglesBasisWidget;
+namespace Ui{
+    class LC_AnglesBasisWidget;
 }
 
 class RS_Graphic;

@@ -25,11 +25,11 @@
 **********************************************************************/
 #include "qg_coordinatewidget.h"
 
-#include "rs_graphic.h"
-#include "rs_settings.h"
-#include "rs_vector.h"
-#include "rs_units.h"
 #include "lc_graphicviewport.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 /*
  *  Constructs a QG_CoordinateWidget as a child of 'parent', with the

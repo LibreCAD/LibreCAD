@@ -22,46 +22,44 @@
 **********************************************************************************
 */
 
-#include <QDockWidget>
-#include <QToolBar>
-
 #include "mainwindowx.h"
-#include "rs_debug.h"
 
-namespace {
-namespace Sorting
+#include <QDockWidget>
+
+namespace
 {
-bool byWindowTitle(QWidget* left, QWidget* right)
-{
-    return left->windowTitle() < right->windowTitle();
-}
+    namespace Sorting
+    {
+        bool byWindowTitle(QWidget* left, QWidget* right) {
+            return left->windowTitle() < right->windowTitle();
+        }
 
-/**
-     * @brief getGroup find the integer widget property ("_group"), the default value is -100
-     * @param widget - a widget
-     * @return the "_group" property
-     */
-int getGroup(const QWidget* widget) {
-    const int defaultGroup = -100;
-    if (widget == nullptr)
-        return defaultGroup;
-    const QVariant groupProperty = widget->property("_group");
-    bool okay = false;
-    const int ret = groupProperty.toInt(&okay);
-    return okay ? ret : defaultGroup;
-}
+        /**
+             * @brief getGroup find the integer widget property ("_group"), the default value is -100
+             * @param widget - a widget
+             * @return the "_group" property
+             */
+        int getGroup(const QWidget* widget) {
+            const int defaultGroup = -100;
+            if (widget == nullptr)
+                return defaultGroup;
+            const QVariant groupProperty = widget->property("_group");
+            bool okay = false;
+            const int ret = groupProperty.toInt(&okay);
+            return okay ? ret : defaultGroup;
+        }
 
-bool byGroupAndWindowTitle(QWidget* left, QWidget* right) {
-    const int iLeftGroup = getGroup(left);
-    const int iRightGroup = getGroup(right);
+        bool byGroupAndWindowTitle(QWidget* left, QWidget* right) {
+            const int iLeftGroup = getGroup(left);
+            const int iRightGroup = getGroup(right);
 
-    //        LC_ERR << iLeftGroup << " " << iRightGroup << " " << result;
+            //        LC_ERR << iLeftGroup << " " << iRightGroup << " " << result;
 
-    return (iLeftGroup < iRightGroup)
-           || (iLeftGroup == iRightGroup
-               && QString::compare(left->windowTitle(), right->windowTitle()) < 0);
-}
-}
+            return (iLeftGroup < iRightGroup)
+                || (iLeftGroup == iRightGroup
+                    && QString::compare(left->windowTitle(), right->windowTitle()) < 0);
+        }
+    }
 }
 
 MainWindowX::MainWindowX(QWidget* parent)

@@ -1,8 +1,10 @@
 #ifndef LC_EXPORTTOIMAGESERVICE_H
 #define LC_EXPORTTOIMAGESERVICE_H
+#include <QObject>
 
-#include "lc_appwindowdialogsinvoker.h"
+#include "lc_appwindowaware.h"
 
+class LC_AppWindowDialogsInvoker;
 class RS_Graphic;
 
 class LC_ExportToImageService:public QObject, public LC_AppWindowAware{

@@ -19,13 +19,17 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+
+#include "lc_relzerocoordinateswidget.h"
+
+#include "lc_graphicviewport.h"
+#include "lc_linemath.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "rs_graphicview.h"
-#include "lc_relzerocoordinateswidget.h"
 #include "ui_lc_relzerocoordinateswidget.h"
-#include "lc_linemath.h"
-#include "lc_graphicviewport.h"
+
 
 LC_RelZeroCoordinatesWidget::LC_RelZeroCoordinatesWidget(QWidget *parent, const char* name)
     : QWidget(parent)

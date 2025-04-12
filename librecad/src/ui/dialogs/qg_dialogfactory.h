@@ -24,14 +24,10 @@
 
 #ifndef QG_DIALOGFACTORY_H
 #define QG_DIALOGFACTORY_H
-
 #include "rs_dialogfactoryinterface.h"
-#include "lc_modifiersinfo.h"
-#include "lc_optionswidgetsholder.h"
-#include "qg_snaptoolbar.h"
-#include "lc_snapoptionswidgetsholder.h"
-#include "lc_qtstatusbarmanager.h"
 
+class QG_SnapToolBar;
+class LC_SnapOptionsWidgetsHolder;
 class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
 class QWidget;
@@ -65,7 +61,7 @@ public:
  * @return command widget or nullptr.
  */
     QG_CommandWidget* getCommandWidget() const{
-        return commandWidget;
+        return m_commandWidget;
     }
 
 /**
@@ -133,31 +129,31 @@ public:
 
     /// fixme - sand - temporary, remove accessort later with further refactorings
     void set_selection_widget(QG_SelectionWidget* selection_widget) {
-        selectionWidget = selection_widget;
+        m_selectionWidget = selection_widget;
     }
 
     void set_command_widget(QG_CommandWidget* command_widget) {
-        commandWidget = command_widget;
+        m_commandWidget = command_widget;
     }
 
     void set_rel_zero_coordinates_widget(LC_RelZeroCoordinatesWidget* rel_zero_coordinates_widget) {
-        relZeroCoordinatesWidget = rel_zero_coordinates_widget;
+        m_relZeroCoordinatesWidget = rel_zero_coordinates_widget;
     }
 
     void set_snap_toolbar(QG_SnapToolBar* snap_toolbar) {
-        snapToolbar = snap_toolbar;
+        m_snapToolbar = snap_toolbar;
     }
 protected:
 //! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;
 
 //! Pointer to the selection widget.
-    QG_SelectionWidget* selectionWidget = nullptr;
+    QG_SelectionWidget* m_selectionWidget = nullptr;
 //! Pointer to the command line widget
-    QG_CommandWidget* commandWidget = nullptr;
+    QG_CommandWidget* m_commandWidget = nullptr;
 
-    LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
-    QG_SnapToolBar* snapToolbar = nullptr;
+    LC_RelZeroCoordinatesWidget *m_relZeroCoordinatesWidget;
+    QG_SnapToolBar* m_snapToolbar = nullptr;
 
 };
 

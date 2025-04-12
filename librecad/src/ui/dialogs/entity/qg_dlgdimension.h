@@ -39,9 +39,9 @@ public:
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
-    RS_Dimension* entity = nullptr;
+    RS_Dimension* m_entity = nullptr;
     void setEntity(RS_Dimension *d);
 };
 

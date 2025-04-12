@@ -59,7 +59,7 @@ protected slots:
     void onNumberOfCopiesValueChanged(int number);
 private:
     std::unique_ptr<Ui::Ui_ModifyOffsetOptions> ui;
-    RS_ActionModifyOffset* action = nullptr;
+    RS_ActionModifyOffset* m_action = nullptr;
     void setCopiesNumberToActionAndView(int number);
     void setUseMultipleCopiesToActionAndView(bool copies);
     void setUseCurrentLayerToActionAndView(bool val);

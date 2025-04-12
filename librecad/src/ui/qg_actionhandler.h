@@ -27,14 +27,13 @@
 
 #ifndef QG_ACTIONHANDLER_H
 #define QG_ACTIONHANDLER_H
+#include "rs_snapper.h"
 
-#include "lc_graphicviewaware.h"
-#include "rs_actioninterface.h"
-#include "rs_graphicview.h"
-
+class RS_ActionInterface;
 class LC_DefaultActionContext;
 class QG_SnapToolBar;
 class RS_Layer;
+
 /**
  * This class can trigger actions (from menus, buttons, ...).
  */

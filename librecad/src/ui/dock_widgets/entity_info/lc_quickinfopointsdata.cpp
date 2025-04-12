@@ -66,7 +66,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
 
     RS_Vector relZero = getRelativeZero();
 
-    switch (coordinatesMode){
+    switch (m_coordinatesMode){
         case COORD_ABSOLUTE:
             // just use the vector itself
             pointInfo = createPointInfo(wcsPoint, wcsPoint, idxValue, false);
@@ -86,7 +86,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
         case COORD_RELATIVE_TO_FIRST:{
             if (pointsCount == 0){
                 // for first item, use zero at view
-                RS_Vector dummyWCSZero = viewport->toWorld(RS_Vector(0, 0, 0));
+                RS_Vector dummyWCSZero = m_viewport->toWorld(RS_Vector(0, 0, 0));
                 pointInfo = createPointInfo(wcsPoint, dummyWCSZero, idxValue, false);
             }
             else{
@@ -100,7 +100,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
         }
         case COORD_RELATIVE_TO_PREVIOUS:{
             if (pointsCount == 0){
-                RS_Vector dummyWCSZero = viewport->toWorld(RS_Vector(0, 0, 0));
+                RS_Vector dummyWCSZero = m_viewport->toWorld(RS_Vector(0, 0, 0));
                 pointInfo = createPointInfo(wcsPoint, dummyWCSZero, idxValue, false);
             }
             else{
@@ -112,6 +112,8 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
             }
             break;
         }
+        default:
+            break;
     }
 
     // check where we should add point
@@ -137,7 +139,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
             QString indexValue;
             indexValue.setNum(pointIndex);
             info->label = indexValue;
-            if (coordinatesMode == COORD_RELATIVE_TO_PREVIOUS){
+            if (m_coordinatesMode == COORD_RELATIVE_TO_PREVIOUS){
                 QString angleValue;
                 QString lengthValue;
                 if (i == 0){
@@ -148,7 +150,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
                 else{
                     RS_Vector prevPoint = m_collectedPoints.at(i - 1)->data;
                     ucsViewCoordinate = wcsPoint - prevPoint;
-                    ucsViewCoordinate = viewport->toUCSDelta(ucsViewCoordinate);
+                    ucsViewCoordinate = m_viewport->toUCSDelta(ucsViewCoordinate);
                     double ucsAngleToPrevious = ucsViewCoordinate.angle();
                     double lenToPrevious = ucsViewCoordinate.magnitude();
 
@@ -163,12 +165,12 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
     }
 }
 
-LC_QuickInfoPointsData::PointInfo* LC_QuickInfoPointsData::createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative) {
+LC_QuickInfoPointsData::PointInfo* LC_QuickInfoPointsData::createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative) const {
     QString value;
     RS_Vector viewCoord;
     QString angleVal;
     if (relative){
-        viewCoord = viewport->toUCSDelta(viewCoordinate);
+        viewCoord = m_viewport->toUCSDelta(viewCoordinate);
         value = formatWCSDeltaVector(viewCoordinate);
         double ucsAngle = viewCoord.angle();
         angleVal = formatUCSAngle(ucsAngle);
@@ -195,6 +197,7 @@ LC_QuickInfoPointsData::PointInfo* LC_QuickInfoPointsData::createPointInfo(const
 /**
  * Create HTML that contains information about collected coordinates.
  * @param showDistanceAndAngle
+ * @param forceUpdate
  * @return
  */
 QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool forceUpdate){
@@ -208,7 +211,7 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
         // first, include information about point that is used as zero
         PointInfo *firstPoint = m_collectedPoints.at(0);
         RS_Vector zero = RS_Vector(0,0,0);
-        switch (coordinatesMode) {
+        switch (m_coordinatesMode) {
             case COORD_ABSOLUTE:{
                 data.append(tr("Zero")).append(": <b>").append(formatUCSVector(zero)).append("</b><hr>");
                 break;
@@ -281,8 +284,8 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
  * @return true if view should be updated
  */
 bool LC_QuickInfoPointsData::updateForCoordinateViewMode(int mode){
-    if (coordinatesMode != mode){
-        coordinatesMode = mode;
+    if (m_coordinatesMode != mode){
+        m_coordinatesMode = mode;
         doUpdatePointsAttributes();
         return true;
     }
@@ -292,7 +295,7 @@ bool LC_QuickInfoPointsData::updateForCoordinateViewMode(int mode){
 /**
  * Recalculates points view labels
  */
-void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
+void LC_QuickInfoPointsData::doUpdatePointsAttributes() const {
     int pointsCount = m_collectedPoints.size();
 
     RS_Vector relZero = getRelativeZero();
@@ -304,16 +307,17 @@ void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
     for (int i = 0; i < pointsCount; i++) {
         PointInfo *pointInfo = m_collectedPoints.at(i);
         RS_Vector &wcsPoint = pointInfo->data;
-        switch (coordinatesMode) {
-            case COORD_ABSOLUTE:
+        switch (m_coordinatesMode) {
+            case COORD_ABSOLUTE:{
                 value = formatWCSVector(wcsPoint);
                 angleVal = formatWCSAngle(wcsPoint.angle());
                 lengthVal = formatLinear(wcsPoint.magnitude());
                 break;
+            }
             case COORD_RELATIVE: {
                 if (relZero.valid){
                     RS_Vector wcsRelative = wcsPoint - relZero;
-                    RS_Vector viewCoord = viewport->toUCSDelta(wcsRelative);
+                    RS_Vector viewCoord = m_viewport->toUCSDelta(wcsRelative);
                     value = formatWCSDeltaVector(viewCoord);
                     double ucsAngle = viewCoord.angle();
                     angleVal = formatUCSAngle(ucsAngle);
@@ -333,7 +337,7 @@ void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
                 } else {
                     RS_Vector firstPoint = m_collectedPoints.at(0)->data;
                     RS_Vector wcsRelative = wcsPoint - firstPoint;
-                    RS_Vector viewCoord = viewport->toUCSDelta(wcsRelative);
+                    RS_Vector viewCoord = m_viewport->toUCSDelta(wcsRelative);
                     value = formatWCSDeltaVector(viewCoord);
                     double ucsAngle = viewCoord.angle();
                     angleVal = formatUCSAngle(ucsAngle);
@@ -349,7 +353,7 @@ void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
                 } else {
                     RS_Vector prevPoint = m_collectedPoints.at(i - 1)->data;
                     RS_Vector wcsRelative = wcsPoint - prevPoint;
-                    RS_Vector viewCoord = viewport->toUCSDelta(wcsRelative);
+                    RS_Vector viewCoord = m_viewport->toUCSDelta(wcsRelative);
                     value = formatWCSDeltaVector(viewCoord);
                     double ucsAngle = viewCoord.angle();
                     angleVal = formatUCSAngle(ucsAngle);
@@ -357,6 +361,8 @@ void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
                 }
                 break;
             }
+            default:
+                break;
         }
 
         pointInfo->value = value;

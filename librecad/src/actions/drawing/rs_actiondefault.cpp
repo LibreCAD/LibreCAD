@@ -42,6 +42,10 @@
 #include "lc_linemath.h"
 #include "rs_snapper.h"
 #include "lc_graphicviewport.h"
+#include "lc_quickinfowidget.h"
+#include "rs_circle.h"
+#include "rs_constructionline.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 
 struct RS_ActionDefault::Points {

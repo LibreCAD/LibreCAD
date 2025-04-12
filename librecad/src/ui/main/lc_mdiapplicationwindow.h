@@ -1,19 +1,14 @@
 #ifndef LC_MDIAPPLICATIONWINDOW_H
 #define LC_MDIAPPLICATIONWINDOW_H
-
-#include <memory>
-
-#include <QList>
-
-#include "lc_penpalettewidget.h"
-#include "lc_quickinfowidget.h"
 #include "mainwindowx.h"
 #include "rs.h"
-#include "rs_pen.h"
-#include "rs_snapper.h"
 
-class QMdiArea;
 class QMdiSubWindow;
+class QG_GraphicView;
+class RS_Document;
+class RS_GraphicView;
+class QC_MDIWindow;
+class QMdiArea;
 
 class LC_MDIApplicationWindow:public MainWindowX{
 public:

@@ -24,6 +24,7 @@
 #define LC_ACTIONDRAWLINEPOLYGONBASE_H
 
 #include "rs_previewactioninterface.h"
+class RS_Polyline;
 
 class LC_ActionDrawLinePolygonBase:public RS_PreviewActionInterface{
     Q_OBJECT

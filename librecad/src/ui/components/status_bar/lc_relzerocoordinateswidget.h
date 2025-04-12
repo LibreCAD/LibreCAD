@@ -24,9 +24,12 @@
 #define LC_RELZEROCOORDINATESWIDGET_H
 
 #include <QWidget>
-
 #include "lc_graphicviewaware.h"
-#include "rs_graphic.h"
+#include "lc_graphicviewportlistener.h"
+#include "rs.h"
+
+class LC_GraphicViewport;
+class RS_Graphic;
 
 namespace Ui {
     class LC_RelZeroCoordinatesWidget;
@@ -34,7 +37,6 @@ namespace Ui {
 
 class LC_RelZeroCoordinatesWidget : public QWidget, public LC_GraphicViewAware, public  LC_GraphicViewPortListener{
     Q_OBJECT
-
 public:
     explicit LC_RelZeroCoordinatesWidget(QWidget *parent = 0, const char *name = 0);
     ~LC_RelZeroCoordinatesWidget();
@@ -54,7 +56,6 @@ protected:
     RS2::AngleFormat m_angleFormat = RS2::DegreesDecimal;
 private:
     void onUCSChanged(LC_UCS *ucs) override;
-
     Ui::LC_RelZeroCoordinatesWidget *ui;
 };
 

@@ -30,6 +30,8 @@
 
 #include "rs_entitycontainer.h"
 
+class LC_GraphicViewport;
+
 /**
  * This class supports previewing. The RS_Snapper class uses
  * an instance of RS_Preview to preview entities, ranges, 

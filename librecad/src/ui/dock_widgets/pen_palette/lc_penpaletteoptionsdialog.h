@@ -24,19 +24,16 @@
 #ifndef LC_PENPALETTEOPTIONSDIALOG_H
 #define LC_PENPALETTEOPTIONSDIALOG_H
 
-#include <QDialog>
-
+#include "lc_dialog.h"
 #include "ui_lc_penpaletteoptionsdialog.h"
-#include "lc_penpaletteoptions.h"
 
-class LC_PenPaletteOptionsDialog : public QDialog, public Ui::LC_PenPaletteOptionsDialog
-{
+class LC_PenPaletteOptions;
+
+class LC_PenPaletteOptionsDialog : public LC_Dialog, public Ui::LC_PenPaletteOptionsDialog{
     Q_OBJECT
-
 public:
-    explicit LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnfile);
+    explicit LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* m_options, bool focusOnfile);
     ~LC_PenPaletteOptionsDialog() override;
-
 public slots:
     void validate();
 protected slots:
@@ -45,7 +42,7 @@ private:
     void selectActivePenBGColor();
     void set_color(QComboBox *combo, QColor &custom);
     void initComboBox(QComboBox *cb, const QColor &color);
-    LC_PenPaletteOptions* options = nullptr;
+    LC_PenPaletteOptions* m_options = nullptr;
     void selectGridColor();
     void selectMatchedItemColor();
     void showInvalidColorMessage(const QString &name);

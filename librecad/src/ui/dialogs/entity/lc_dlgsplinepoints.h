@@ -1,14 +1,12 @@
 #ifndef LC_DLGSPLINEPOINTS_H
 #define LC_DLGSPLINEPOINTS_H
 
-#include<memory>
-#include <QDialog>
 #include "lc_entitypropertiesdlg.h"
 
 class LC_SplinePoints;
 
 namespace Ui {
-class DlgSplinePoints;
+    class DlgSplinePoints;
 }
 
 class LC_DlgSplinePoints : public LC_EntityPropertiesDlg{
@@ -27,8 +25,7 @@ protected:
     LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
     LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;
     LC_DlgSplinePoints& operator = (LC_DlgSplinePoints &&) = delete;
-
-    LC_SplinePoints* bezier;
+    LC_SplinePoints* m_entity;
     std::unique_ptr<Ui::DlgSplinePoints> ui;
 };
 #endif // LC_DLGSPLINEPOINTS_H

@@ -27,9 +27,7 @@
 #define QG_LIBRARYWIDGET_H
 
 #include <memory>
-
 #include <QWidget>
-#include <QModelIndex>
 
 class QG_ActionHandler;
 class QListView;
@@ -66,11 +64,8 @@ public slots:
     void expandView( QModelIndex idx );
     void collapseView( QModelIndex idx );
     void updateWidgetSettings();
-
 signals:
-    void escape();
-
-private:
+    void escape();private:
     QG_ActionHandler* actionHandler = nullptr;
     std::unique_ptr<QStandardItemModel> dirModel;
     std::unique_ptr<QStandardItemModel> iconModel;

@@ -25,10 +25,7 @@
 #ifndef LC_LAYERTREEMODEL_OPTIONS_H
 #define LC_LAYERTREEMODEL_OPTIONS_H
 
-#include <QColor>
-#include <QString>
 #include "rs_pen.h"
-
 
 /**
  * Implementation of customization options used by LC_LayerTreeWidget

@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_shortcutstreemodel.h"
-#include "lc_shortcuttreeitem.h"
+
 #include "lc_actiongroup.h"
-#include "rs_debug.h"
+#include "lc_actiongroupmanager.h"
+#include "lc_shortcuttreeitem.h"
 
 LC_ShortcutsTreeModel::LC_ShortcutsTreeModel(QObject *parent):QAbstractItemModel(parent) {
     m_filteringRegexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);

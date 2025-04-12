@@ -21,13 +21,13 @@
  ******************************************************************************/
 
 #include "lc_shortcutsstorage.h"
-#include "rs_debug.h"
 
-#include <QKeySequence>
-#include <QFile>
-#include <QXmlStreamAttributes>
-#include <QMap>
 #include <QDateTime>
+#include <QFile>
+#include <QMap>
+#include <qxmlstream.h>
+
+#include "lc_shortcutinfo.h"
 
 struct ShortcutsParsingContext {// XML parsing context with strings.
     ShortcutsParsingContext();

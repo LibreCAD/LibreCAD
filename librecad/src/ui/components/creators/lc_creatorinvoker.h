@@ -24,10 +24,11 @@
 #define LC_CREATORINVOKER_H
 #include <QObject>
 
-#include "qc_applicationwindow.h"
+class QAction;
+class QG_GraphicView;
+class QString;
 class LC_ActionGroupManager;
 class QC_ApplicationWindow;
-
 
 class LC_CreatorInvoker : public QObject{
 public:
@@ -46,9 +47,8 @@ protected slots:
     void createToolbar(const QString &toolbar_name);
     void destroyToolbar(const QString &toolbar_name);
 private:
-    QC_ApplicationWindow *appWindow;
+    QC_ApplicationWindow *m_appWindow;
     LC_ActionGroupManager* m_actionGroupManager {nullptr};
-
     QAction*  getAction(const QString & key);
 };
 #endif // LC_CREATORINVOKER_H

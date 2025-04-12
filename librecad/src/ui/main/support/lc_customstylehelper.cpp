@@ -21,8 +21,8 @@
  ******************************************************************************/
 #include "lc_customstylehelper.h"
 
-#include <QFile>
 #include <QApplication>
+#include <QFile>
 #include <QStyleFactory>
 
 #include "rs_settings.h"

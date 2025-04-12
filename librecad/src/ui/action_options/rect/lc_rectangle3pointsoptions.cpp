@@ -22,11 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_rectangle3pointsoptions.h"
 #include "lc_actiondrawrectangle3points.h"
 #include "ui_lc_rectangle3pointsoptions.h"
-#include "rs_math.h"
 
 LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle3Points, "Draw", "Rectangle3Points"),
-    action(nullptr),
+    m_action(nullptr),
     ui(new Ui::LC_Rectangle3PointsOptions){
     ui->setupUi(this);
 
@@ -45,7 +44,7 @@ LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
 }
 
 LC_Rectangle3PointsOptions::~LC_Rectangle3PointsOptions(){
-    action = nullptr;
+    m_action = nullptr;
     delete ui;
 }
 
@@ -54,7 +53,7 @@ void LC_Rectangle3PointsOptions::languageChange(){
 }
 
 void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<LC_ActionDrawRectangle3Points *>(a);
+    m_action = dynamic_cast<LC_ActionDrawRectangle3Points *>(a);
 
     QString angle;
     QString radius;
@@ -71,24 +70,24 @@ void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     bool fixedBaseAngle;
 
     if (update){
-        cornersMode = action->getCornersMode();
-        usePolyline = action->isUsePolyline();
+        cornersMode = m_action->getCornersMode();
+        usePolyline = m_action->isUsePolyline();
 
-        double an = action->getUcsAngleDegrees();
-        double r  = action->getRadius();
-        double lX = action->getLengthX();
-        double lY = action->getLengthY();
+        double an = m_action->getUcsAngleDegrees();
+        double r  = m_action->getRadius();
+        double lX = m_action->getLengthX();
+        double lY = m_action->getLengthY();
 
-        edges = action->getEdgesDrawMode();
+        edges = m_action->getEdgesDrawMode();
         angle = fromDouble(an);
         radius = fromDouble(r);
         lenX = fromDouble(lX);
         lenY = fromDouble(lY);
-        snapRadiusCenter = action->isSnapToCornerArcCenter();
-        innerAngle = fromDouble(action->getFixedInnerAngle());
-        quadrangle = action->isCreateQuadrangle();
-        fixedInnerAngle = action->isInnerAngleFixed();
-        fixedBaseAngle = action->hasBaseAngle();
+        snapRadiusCenter = m_action->isSnapToCornerArcCenter();
+        innerAngle = fromDouble(m_action->getFixedInnerAngle());
+        quadrangle = m_action->isCreateQuadrangle();
+        fixedInnerAngle = m_action->isInnerAngleFixed();
+        fixedBaseAngle = m_action->hasBaseAngle();
     }
     else{
   
@@ -137,13 +136,13 @@ void LC_Rectangle3PointsOptions::doSaveSettings(){
 }
 
 void LC_Rectangle3PointsOptions::onCornersIndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setCornersModeToActionAndView(index);
     }
 }
 
 void LC_Rectangle3PointsOptions::setCornersModeToActionAndView(int index){
-    action->setCornersMode(index);
+    m_action->setCornersMode(index);
     bool round = index == LC_AbstractActionDrawRectangle::CORNER_RADIUS;
     bool bevel = index == LC_AbstractActionDrawRectangle::CORNER_BEVEL;
 
@@ -164,28 +163,28 @@ void LC_Rectangle3PointsOptions::setCornersModeToActionAndView(int index){
 }
 
 void LC_Rectangle3PointsOptions::onLenYEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leLenY->text();
         setLenYToActionAnView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::onLenXEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leX->text();
         setLenXToActionAnView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::onInnerAngleEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leInnerAngle->text();
         setInnerAngleToActionAndView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::onRadiusEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         QString value = ui->leRadius->text();
         setRadiusToActionAnView(value);
     }
@@ -199,7 +198,7 @@ void LC_Rectangle3PointsOptions::onAngleEditingFinished(){
 void LC_Rectangle3PointsOptions::setAngleToActionAndView(const QString &val){
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
-        action->setUcsAngleDegrees(angle);
+        m_action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -207,7 +206,7 @@ void LC_Rectangle3PointsOptions::setAngleToActionAndView(const QString &val){
 void LC_Rectangle3PointsOptions::setLenYToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 1.0, true)){
-        action->setLengthY(y);
+        m_action->setLengthY(y);
         ui->leLenY->setText(fromDouble(y));
     }
 }
@@ -215,7 +214,7 @@ void LC_Rectangle3PointsOptions::setLenYToActionAnView(const QString& value){
 void LC_Rectangle3PointsOptions::setLenXToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 1.0, true)){
-        action->setLengthX(y);
+        m_action->setLengthX(y);
         ui->leX->setText(fromDouble(y));
     }
 }
@@ -223,52 +222,52 @@ void LC_Rectangle3PointsOptions::setLenXToActionAnView(const QString& value){
 void LC_Rectangle3PointsOptions::setRadiusToActionAnView(const QString& value){
     double y;
     if (toDouble(value, y, 1.0, true)){
-        action->setRadius(y);
+        m_action->setRadius(y);
         ui->leRadius->setText(fromDouble(y));
     }
 }
 
 void LC_Rectangle3PointsOptions::onUsePolylineClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setUsePolylineToActionAndView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::onSnapToCornerArcCenterClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setSnapToCornerArcCenter(value);
     }
 }
 void LC_Rectangle3PointsOptions::onQuadrangleClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setQuadrangleToActionAndView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::onInnerAngleFixedClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setInnerAngleFixedToActionAndView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::onBaseAngleFixedClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setBaseAngleFixedToActionAndView(value);
     }
 }
 
 void LC_Rectangle3PointsOptions::setUsePolylineToActionAndView(bool value){
-    action->setUsePolyline(value);
+    m_action->setUsePolyline(value);
     ui->cbPolyline->setChecked(value);
 }
 
 void LC_Rectangle3PointsOptions::setSnapToCornerArcCenter(bool value){
-    action->setSnapToCornerArcCenter(value);
+    m_action->setSnapToCornerArcCenter(value);
     ui->cbSnapRadiusCenter->setChecked(value);
 }
 
 void LC_Rectangle3PointsOptions::setQuadrangleToActionAndView(bool value){
-    action->setCreateQuadrangle(value);
+    m_action->setCreateQuadrangle(value);
     ui->cbQuadrangle->setChecked(value);
     ui->frmQuad->setVisible(value);
     ui->frmRectSettings->setVisible(!value);
@@ -277,31 +276,31 @@ void LC_Rectangle3PointsOptions::setQuadrangleToActionAndView(bool value){
 
 void LC_Rectangle3PointsOptions::setInnerAngleFixedToActionAndView(bool value){
     ui->cbFixedInnerAngle->setChecked(value);
-    action->setInnerAngleFixed(value);
+    m_action->setInnerAngleFixed(value);
     ui->leInnerAngle->setEnabled(value);
 }
 
 void LC_Rectangle3PointsOptions::setBaseAngleFixedToActionAndView(bool value){
     ui->chkFixedBaseAngle->setChecked(value);
-    action->setBaseAngleFixed(value);
+    m_action->setBaseAngleFixed(value);
     ui->leAngle->setEnabled(value);
 }
 
 void LC_Rectangle3PointsOptions::setInnerAngleToActionAndView(const QString& value){
     double y;
     if (toDoubleAngleDegrees(value, y, 1.0, true)){
-        action->setFixedInnerAngle(y);
+        m_action->setFixedInnerAngle(y);
         ui->leInnerAngle->setText(fromDouble(y));
     }
 }
 
 void LC_Rectangle3PointsOptions::onEdgesIndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setEdgesModeToActionAndView(index);
     }
 }
 
 void LC_Rectangle3PointsOptions::setEdgesModeToActionAndView(int index){
-    action->setEdgesDrawMode(index);
+    m_action->setEdgesDrawMode(index);
     ui->cbEdges->setCurrentIndex(index);
 }

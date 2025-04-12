@@ -32,11 +32,12 @@
 #include <QString>
 #include <QWidget>
 
-#include "lc_ucs_mark.h"
+#include "rs.h"
 #include "rs_blocklistlistener.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
 
+struct LC_UCSMarkOptions;
 class QEnterEvent;
 class QG_ScrollBar;
 class QGridLayout;
@@ -145,40 +146,40 @@ signals:
     void gridStatusChanged(QString);
 private:
     QString m_device;
-    QList<QAction*> recent_actions;
+    QList<QAction*> m_recent_actions;
 
     //! Horizontal scrollbar.
-    QG_ScrollBar* hScrollBar = nullptr;
+    QG_ScrollBar* m_hScrollBar = nullptr;
     //! Vertical scrollbar.
-    QG_ScrollBar* vScrollBar = nullptr;
+    QG_ScrollBar* m_vScrollBar = nullptr;
     //! Layout used to fit in the view and the scrollbars.
-    QGridLayout* layout = nullptr;
+    QGridLayout* m_layout = nullptr;
     //! CAD mouse cursor
-    std::unique_ptr<QCursor> curCad;
+    std::unique_ptr<QCursor> m_cursorCad;
     //! Delete mouse cursor
-    std::unique_ptr<QCursor> curDel;
+    std::unique_ptr<QCursor> m_cursorDel;
     //! Select mouse cursor
-    std::unique_ptr<QCursor> curSelect;
+    std::unique_ptr<QCursor> m_cursorSelect;
     //! Magnifying glass mouse cursor
-    std::unique_ptr<QCursor> curMagnifier;
+    std::unique_ptr<QCursor> m_cursorMagnifier;
     //! Hand mouse cursor
-    std::unique_ptr<QCursor> curHand;
+    std::unique_ptr<QCursor> m_cursorHand;
 
-    double scrollZoomFactor = 1.137;
+    double m_scrollZoomFactor = 1.137;
 
     //! Keep tracks of if we are currently doing a high-resolution scrolling
-    bool isSmoothScrolling;
+    bool m_isSmoothScrolling;
 
-    LC_UCSMarkOptions m_ucsMarkOptions;
+    std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
 
-    QMap<QString, QMenu*> menus;
+    QMap<QString, QMenu*> m_menus;
 
-    bool scrollbars{false};
-    bool cursor_hiding{false};
-    bool selectCursor_hiding{false};
-    bool invertZoomDirection{false};
-    bool invertHorizontalScroll {false};
-    bool invertVerticalScroll {false};
+    bool m_scrollbars{false};
+    bool m_cursor_hiding{false};
+    bool m_selectCursor_hiding{false};
+    bool m_invertZoomDirection{false};
+    bool m_invertHorizontalScroll {false};
+    bool m_invertVerticalScroll {false};
 
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;

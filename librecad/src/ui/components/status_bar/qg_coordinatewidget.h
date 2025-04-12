@@ -27,25 +27,25 @@
 #define QG_COORDINATEWIDGET_H
 
 #include "lc_graphicviewaware.h"
-#include "ui_qg_coordinatewidget.h"
-#include "rs_vector.h"
 #include "rs.h"
-#include "rs_graphicview.h"
+#include "rs_vector.h"
+#include "ui_qg_coordinatewidget.h"
 
+class LC_GraphicViewport;
 class RS_Graphic;
 
 class QG_CoordinateWidget : public QWidget, public LC_GraphicViewAware,  public Ui::QG_CoordinateWidget{
     Q_OBJECT
 public:
-    QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
-    ~QG_CoordinateWidget();
+    QG_CoordinateWidget(QWidget *parent = nullptr, const char *name = nullptr, Qt::WindowFlags fl = {});
+    ~QG_CoordinateWidget() override;
     void clearContent();
-    void setGraphicView(RS_GraphicView* gv);
+    void setGraphicView(RS_GraphicView* gv) override;
 public slots:
-    virtual void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
+    void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
 protected slots:
-    virtual void languageChange();
-    virtual void setCoordinates(double ucsX, double ucsY, double ucsDeltaX, double ucsDeltaY, bool updateFormat );
+    void languageChange();
+    void setCoordinates(double ucsX, double ucsY, double ucsDeltaX, double ucsDeltaY, bool updateFormat );
 private:
     RS_Graphic* m_graphic = nullptr;
     RS_GraphicView *m_graphicView = nullptr;

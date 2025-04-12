@@ -25,32 +25,23 @@
 #ifndef LC_LAYERTREEWIDGET_H
 #define LC_LAYERTREEWIDGET_H
 
-
-#include <QAbstractTableModel>
-#include <QCheckBox>
 #include <QWidget>
 
 #include "lc_graphicviewaware.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
-#include "rs_layerlist.h"
 #include "rs_layerlistlistener.h"
-#include "lc_layertreemodel.h"
 
-class QTreeView;
-class QLayout;
-class LC_LayerTreeView;
-class QG_ActionHandler;
-class QTableView;
-class QLineEdit;
+class QCheckBox;
 class QToolButton;
+class QG_ActionHandler;
+class LC_LayerTreeView;
+class LC_LayerTreeModel;
+class LC_LayerTreeItem;
 /**
  * This is the Qt implementation of a widget which can view layers in tree mode
  * and provides interface for various layer-related operations
  */
 class LC_LayerTreeWidget:public QWidget, public LC_GraphicViewAware, public RS_LayerListListener {
-Q_OBJECT
-
+    Q_OBJECT
 public:
     enum DropIndicatorPosition {
         OnItem, AboveItem, BelowItem, OnViewport, InvalidDrop
@@ -163,7 +154,7 @@ private:
     void doMoveSelectionToLayer(LC_LayerTreeItem *layerItem, bool duplicate, bool resolvePens = false);
     void doRemoveLayersFromSource(LC_LayerTreeItem *source, bool removeChildrenOnly);
     void doRemoveLayers(QList<RS_Layer *> &layers);
-				void editActiveLayer();
+	void editActiveLayer();
     void showActiveLayerOnly();
     int invokeLayersRemovalDialog(QStringList &layerNames);
     void invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, bool edit);

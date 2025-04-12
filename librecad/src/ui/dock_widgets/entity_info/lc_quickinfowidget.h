@@ -26,17 +26,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QWidget>
 
 #include "lc_graphicviewaware.h"
-#include "lc_quickinfoentitydata.h"
-#include "lc_quickinfopointsdata.h"
-#include "lc_quickinfowidgetoptions.h"
-#include "qg_graphicview.h"
-#include "rs_units.h"
+#include "rs.h"
+#include "rs_vector.h"
+
+class LC_QuickInfoEntityData;
+class LC_QuickInfoPointsData;
+class LC_QuickInfoOptions;
+class RS_Vector;
+class RS_Entity;
 
 namespace Ui {
 class LC_QuickInfoWidget;
 }
 
-class LC_QuickInfoWidget : public QWidget,public LC_GraphicViewAware
+class LC_QuickInfoWidget : public QWidget, public LC_GraphicViewAware
 {
     Q_OBJECT
 
@@ -51,61 +54,43 @@ public:
 
     LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map);
     ~LC_QuickInfoWidget() override;
-
     void setGraphicView(RS_GraphicView* view) override;
-
     void processEntity(RS_Entity *en);
-    QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);
+    QString getEntityDescription(RS_Entity* en, RS2::EntityDescriptionLevel shortDescription) const ;
     void processCoordinate(const RS_Vector& point);
-    void endAddingCoordinates();
-
-    void updateCollectedPointsView(bool forceUpdate = false);
-
-    RS_Vector getCollectedCoordinate(int index) const {
-        return m_pointsData.getCollectedCoordinate(index);
-    }
-    int getCollectedCoordinatesCount() const {
-        return m_pointsData.getCollectedCoordinatesCount();
-    }
-
-    void setCollectedPointsCoordinateViewMode(int mode);
-    void setEntityPointsCoordinateViewMode(int mode);
-
+    void endAddingCoordinates() const;
+    void updateCollectedPointsView(bool forceUpdate = false) const;
+    RS_Vector getCollectedCoordinate(int index) const;
+    int getCollectedCoordinatesCount() const;
+    void setCollectedPointsCoordinateViewMode(int mode) const;
+    void setEntityPointsCoordinateViewMode(int mode) const;
     void setWidgetMode(int mode);
-
-    bool isDisplayPointsPathOnPreview() const {
-        return m_options->displayPointsPath;
-    }
-    bool isSelectEntitiesInDefaultActionWithCTRL() const {
-        return m_options->selectEntitiesInDefaultActionByCTRL;
-    }
-    bool isAutoSelectEntitiesInDefaultAction() const {
-        return m_options->autoSelectEntitiesInDefaultAction;
-    }
-
+    bool isDisplayPointsPathOnPreview() const;
+    bool isSelectEntitiesInDefaultActionWithCTRL() const;
+    bool isAutoSelectEntitiesInDefaultAction() const;
     void onEntityPropertiesEdited(unsigned long originalId, unsigned long editedCloneId);
-    void updateFormats();
+    void updateFormats() const;
 public slots:
-    void updateWidgetSettings();
+    void updateWidgetSettings() const;
 protected slots:
     void onSettings();
-    void onClearAll();
-    void onCopyAll();
-    void onTextChanged();
-    void onPickEntity();
-    void onPickCoordinates();
-    void onSelectEntity();
+    void onClearAll() const;
+    void onCopyAll() const;
+    void onTextChanged() const;
+    void onPickEntity() const;
+    void onPickCoordinates() const;
+    void onSelectEntity() const;
     void onEditEntityProperties();
-    void onAnchorClicked(const QUrl &link);
+    void onAnchorClicked(const QUrl &link) const;
     void onAnchorHighlighted(const QUrl &link);
     void onAnchorUnHighlighted();
-    void onCoordinateModeIndexChanged(int index);
+    void onCoordinateModeIndexChanged(int index) const;
     void onViewContextMenu(QPoint pos);
-    void onToCmd(int index);
-    void onSetRelZero(int index);
-    void onRemoveCoordinate(int index);
-    void onInsertCoordinates(int index);
-    void onRelativeZeroChanged(const RS_Vector& relZero);
+    void onToCmd(int index) const;
+    void onSetRelZero(int index) const;
+    void onRemoveCoordinate(int index) const;
+    void onInsertCoordinates(int index) const;
+    void onRelativeZeroChanged(const RS_Vector& relZero) const;
 private:
     Ui::LC_QuickInfoWidget *ui = nullptr;
     RS_GraphicView* m_graphicView = nullptr; // fixme - sand - review dependency
@@ -114,17 +99,17 @@ private:
     /**
      * options for widget related functions
      */
-    LC_QuickInfoOptions* m_options = new LC_QuickInfoOptions();
+    std::unique_ptr<LC_QuickInfoOptions> m_options;
 
     /**
      * Information for collected points data
      */
-    LC_QuickInfoPointsData m_pointsData = LC_QuickInfoPointsData();
+    std::unique_ptr<LC_QuickInfoPointsData> m_pointsData;
 
     /*
      * Information for selected entity properties
      */
-    LC_QuickInfoEntityData m_entityData = LC_QuickInfoEntityData();
+    std::unique_ptr<LC_QuickInfoEntityData> m_entityData;
 
     /**
      * current widget mode
@@ -136,15 +121,15 @@ private:
      */
     bool m_hasOwnPreview = false;
 
-    void clearEntityInfo();
-    void updateEntityInfoView(bool forceUpdate=false, bool updateView = true);
+    void clearEntityInfo() const;
+    void updateEntityInfoView(bool forceUpdate=false, bool updateView = true) const;
     RS_Entity* findEntityById(unsigned long entityId) const;
     void drawPreviewPoint(const RS_Vector &vector);
     RS_Vector retrievePositionForModelIndex(int index) const;
-    void processURLCommand(const QString &path, int index);
-    QString getCoordinateMenuName(QString actionName, int idx) const;
+    void processURLCommand(const QString &path, int index) const;
+    static QString getCoordinateMenuName(QString actionName, int idx);
     QString retrievePositionStringForModelIndex(int index) const;
-    void showNoDataMessage();
+    void showNoDataMessage() const;
     void invokeOptionsDialog();
 };
 

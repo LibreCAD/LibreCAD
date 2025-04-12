@@ -27,6 +27,7 @@
 #include "qg_linetypebox.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_layer.h"
 #include "rs_pen.h"
 
 /**

@@ -26,8 +26,6 @@
 #ifndef QG_ROUNDOPTIONS_H
 #define QG_ROUNDOPTIONS_H
 
-#include <memory>
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -48,7 +46,7 @@ public slots:
     void onTrimToggled(bool checked);
     void onRadiusEditingFinished();
 protected:
-    RS_ActionModifyRound* action = nullptr;
+    RS_ActionModifyRound* m_action = nullptr;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:

@@ -28,7 +28,6 @@
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
 #include "rs_settings.h"
 
 /*
@@ -53,39 +52,39 @@ void QG_DlgEllipse::languageChange(){
 }
 
 void QG_DlgEllipse::setEntity(RS_Ellipse* e) {
-    entity = e;
-    RS_Graphic* graphic = entity->getGraphic();
+    m_entity = e;
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, tr("Pen"));
+    wPen->setPen(m_entity, lay, tr("Pen"));
 
-    toUI(entity->getCenter(), leCenterX, leCenterY);
+    toUI(m_entity->getCenter(), leCenterX, leCenterY);
 
-    double majorAxisLen = entity->getMajorRadius();
-    double minorAxisLen = entity->getMinorRadius();
+    double majorAxisLen = m_entity->getMajorRadius();
+    double minorAxisLen = m_entity->getMinorRadius();
 
     toUIValue(majorAxisLen, leMajor);
     toUIValue(minorAxisLen, leMinor);
 
-    double wcsMajorAngle = entity->getMajorP().angle();
+    double wcsMajorAngle = m_entity->getMajorP().angle();
 
     toUIAngleDeg(wcsMajorAngle, leRotation);
 
     // fixme - sand - for ellipse arc, internal angles are used (assuming that major angle = 0). Rework this for the consistency over the entire UI - use ucs angle like RS_ARC!!
-    toUIAngleDegRaw(entity->getAngle1(), leAngle1);
-    toUIAngleDegRaw(entity->getAngle2(), leAngle2);
+    toUIAngleDegRaw(m_entity->getAngle1(), leAngle1);
+    toUIAngleDegRaw(m_entity->getAngle2(), leAngle2);
 
-    toUIBool(entity->isReversed(), cbReversed);
+    toUIBool(m_entity->isReversed(), cbReversed);
 
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
-        lId->setText(QString("ID: %1").arg(entity->getId()));
+        lId->setText(QString("ID: %1").arg(m_entity->getId()));
     }
     else{
         lId->setVisible(false);
@@ -93,30 +92,30 @@ void QG_DlgEllipse::setEntity(RS_Ellipse* e) {
 }
 
 void QG_DlgEllipse::updateEntity() {
-    if (entity == nullptr)
+    if (m_entity == nullptr)
         return;
 
-    double major = toWCSValue(leMajor, entity->getMajorRadius());
+    double major = toWCSValue(leMajor, m_entity->getMajorRadius());
     if (major < RS_TOLERANCE) {
         LC_ERR << __func__<<"(): invalid ellipse major radius: "<< major<<", ellipse not modified";
         return;
     }
-    double minor = toWCSValue(leMinor, entity->getMinorRadius());
+    double minor = toWCSValue(leMinor, m_entity->getMinorRadius());
 
-    double rotation = toWCSAngle(leRotation, entity->getMajorP().angle());
+    double rotation = toWCSAngle(leRotation, m_entity->getMajorP().angle());
 
-    entity->setMajorP(RS_Vector::polar(major, rotation));
-    entity->setRatio(minor/major);
+    m_entity->setMajorP(RS_Vector::polar(major, rotation));
+    m_entity->setRatio(minor/major);
 
-    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
+    m_entity->setCenter(toWCS(leCenterX, leCenterY, m_entity->getCenter()));
 
-    entity->setAngle1(toRawAngleValue(leAngle1, entity->getAngle1()));
-    entity->setAngle2(toRawAngleValue(leAngle2, entity->getAngle2()));
+    m_entity->setAngle1(toRawAngleValue(leAngle1, m_entity->getAngle1()));
+    m_entity->setAngle2(toRawAngleValue(leAngle2, m_entity->getAngle2()));
 
-    entity->setReversed(cbReversed->isChecked());
+    m_entity->setReversed(cbReversed->isChecked());
     // todo - sand - should we call revertDirection() as for arc?
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
-    entity->calculateBorders();
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
+    m_entity->calculateBorders();
 }

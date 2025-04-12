@@ -24,10 +24,7 @@
 
 #ifndef LG_DIMZEROSBOX_H
 #define LG_DIMZEROSBOX_H
-
 #include <QComboBox>
-#include <QStandardItemModel>
-#include <QListView>
 
 /*
  * DimZin value is mixed integer and bit flag value
@@ -45,6 +42,8 @@
  * 2: removes 0's to the right
  * 3: removes all zeros
 */
+
+class QStandardItemModel;
 
 class LG_DimzerosBox : public QComboBox {
     Q_OBJECT

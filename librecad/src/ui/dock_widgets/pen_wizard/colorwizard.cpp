@@ -24,13 +24,11 @@
 **********************************************************************************
 */
 
-
-#include <QAction>
-#include <QColorDialog>
-#include <QLineEdit>
-#include <QListWidget>
-#include <QSettings>
 #include "colorwizard.h"
+
+#include <QColorDialog>
+#include <QSettings>
+
 #include "ui_colorwizard.h"
 
 ColorWizard::ColorWizard(QWidget *parent) :

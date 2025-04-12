@@ -21,15 +21,7 @@
  * ********************************************************************************
  */
 
-#include <QFile>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include "lc_releasechecker.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_settings.h"
+
 
 #ifdef major
 #undef major
@@ -38,9 +30,18 @@
 #ifdef minor
 #undef minor
 #endif
+#include "lc_releasechecker.h"
+
+#include <QJsonArray>
+#include <qjsondocument.h>
+
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_settings.h"
 
 LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):major(majorVer), minor(minorVer), revision(
-    revisionNum), bugfix(bugfixVer), label(labelVer), tagName(tagNameVer) {
+                                                                                                                                           revisionNum), bugfix(bugfixVer), label(labelVer), tagName(tagNameVer) {
 }
 
 QString LC_TagInfo::getLabel() const {
@@ -79,7 +80,7 @@ bool LC_TagInfo::isBefore(const LC_TagInfo& other) const{
 }
 
 LC_ReleaseChecker::LC_ReleaseChecker(const QString& ownTagName, bool ownPreRelease):
-    ownReleaseInfo(getOwnReleaseInfo(ownTagName, ownPreRelease)){
+    m_ownReleaseInfo(getOwnReleaseInfo(ownTagName, ownPreRelease)){
     connect(&m_WebCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
 }
 
@@ -94,7 +95,7 @@ LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(const QString& tagName, bool
 #define TEST_JSON_PARSING_
 void LC_ReleaseChecker::checkForNewVersion(bool forceCheck) {
   #ifndef TEST_JSON_PARSING
-    emitSignalIfNoNewVersion = forceCheck;
+    m_emitSignalIfNoNewVersion = forceCheck;
     QUrl gitHubReleasesUrl("https://api.github.com/repos/LibreCAD/LibreCAD/releases");
     QNetworkRequest request(gitHubReleasesUrl);
     m_WebCtrl.get(request);
@@ -186,7 +187,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
             QJsonArray array = jsonDocument.array();
             QVector<LC_ReleaseInfo> releases;
             QVector<LC_ReleaseInfo> preReleases;
-            LC_TagInfo ownTagInfo = ownReleaseInfo.getTagInfo();
+            LC_TagInfo ownTagInfo = m_ownReleaseInfo.getTagInfo();
             LC_GROUP_GUARD("Startup");
             bool ignorePreReleases = LC_GET_BOOL("IgnorePreReleaseVersions", true);
             QString ignoredReleaseTagStr = LC_GET_STR("IgnoredRelease", "0.0.0.0");
@@ -194,7 +195,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 
             LC_TagInfo ignoredRelease = parseTagInfo(ignoredReleaseTagStr);
             LC_TagInfo ignoredPreRelease = parseTagInfo(ignoredPreReleaseTag);
-            if (ownReleaseInfo.prerelease){
+            if (m_ownReleaseInfo.prerelease){
                 ignorePreReleases = false;
             }
 
@@ -253,10 +254,10 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 //                LC_ERR << availableReleases;
                 LC_ReleaseInfo &info = releases.last();
                 if (!info.getTagInfo().isSameVersion(ignoredRelease) && !info.getTagInfo().isSameVersion(ownTagInfo)) {
-                    latestRelease = info;
+                    m_latestRelease = info;
                 }
                 else{
-                    latestRelease.valid = false;
+                    m_latestRelease.valid = false;
                     availableReleases = 0;
                 }
             }
@@ -266,16 +267,16 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 //                LC_ERR << availablePreReleases;
                 LC_ReleaseInfo &info = preReleases.last();
                 if (!info.getTagInfo().isSameVersion(ignoredPreRelease) && !info.getTagInfo().isSameVersion(ownTagInfo)) {
-                    latestPreRelease = info;
+                    m_latestPreRelease = info;
                 }
                 else {
-                    latestRelease.valid = false;
+                    m_latestRelease.valid = false;
                     availablePreReleases = 0;
                 }
             }
-            if (availableReleases > 0 || availablePreReleases > 0 || emitSignalIfNoNewVersion){
+            if (availableReleases > 0 || availablePreReleases > 0 || m_emitSignalIfNoNewVersion){
                 emit updatesAvailable();
-                emitSignalIfNoNewVersion = false;
+                m_emitSignalIfNoNewVersion = false;
             }
         }
     }
@@ -300,9 +301,9 @@ void LC_ReleaseChecker::sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const {
 }
 
 const LC_ReleaseInfo &LC_ReleaseChecker::getLatestRelease() const {
-    return latestRelease;
+    return m_latestRelease;
 }
 
 const LC_ReleaseInfo &LC_ReleaseChecker::getLatestPreRelease() const {
-    return latestPreRelease;
+    return m_latestPreRelease;
 }

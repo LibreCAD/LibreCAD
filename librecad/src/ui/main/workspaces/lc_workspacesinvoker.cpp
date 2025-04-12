@@ -22,50 +22,52 @@
 
 #include "lc_inputtextdialog.h"
 #include "lc_workspacesinvoker.h"
+
+#include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
 
 LC_WorkspacesInvoker::LC_WorkspacesInvoker(QC_ApplicationWindow* mainWin):
-    LC_AppWindowAware{mainWin} {
+    LC_AppWindowAware{mainWin}, m_workspacesManager{std::make_unique<LC_WorkspacesManager>()} {
 }
 
 void LC_WorkspacesInvoker::init() {
-    m_workspacesManager.init(m_appWin);
+    m_workspacesManager->init(m_appWin);
 }
 
 void LC_WorkspacesInvoker::persist() {
-    m_workspacesManager.persist();
+    m_workspacesManager->persist();
 }
 
 bool LC_WorkspacesInvoker::hasWorkspaces() {
-    return m_workspacesManager.hasWorkspaces();
+    return m_workspacesManager->hasWorkspaces();
 }
 
 void LC_WorkspacesInvoker::saveWorkspace([[maybe_unused]]bool on) {
     QStringList options;
-    m_workspacesManager.getWorkspaceNames(options);
+    m_workspacesManager->getWorkspaceNames(options);
     bool ok;
     auto name = LC_InputTextDialog::getText(m_appWin, tr("New Workspace"), tr("Name of workspace to save:"), options, true, "", &ok);
     if (ok) {
-        m_workspacesManager.saveWorkspace(name, m_appWin);
+        m_workspacesManager->saveWorkspace(name, m_appWin);
         m_appWin->fireWorkspacesChanged();
     }
 }
 
 void  LC_WorkspacesInvoker::fillWorkspacesList(QList<QPair<int, QString>> &list){
-    m_workspacesManager.getWorkspaces(list);
+    m_workspacesManager->getWorkspaces(list);
 }
 
 void LC_WorkspacesInvoker::applyWorkspaceById(int id){
-    m_workspacesManager.activateWorkspace(id);
+    m_workspacesManager->activateWorkspace(id);
 }
 
 void LC_WorkspacesInvoker::removeWorkspace([[maybe_unused]]bool on){
     QList<QPair<int, QString>> options;
-    m_workspacesManager.getWorkspaces(options);
+    m_workspacesManager->getWorkspaces(options);
     bool ok;
     int workspaceId = LC_InputTextDialog::selectId(m_appWin, tr("Remove Workspace"), tr("Select workspace to remove:"), options, &ok);
     if (ok) {
-        m_workspacesManager.deleteWorkspace(workspaceId);
+        m_workspacesManager->deleteWorkspace(workspaceId);
         m_appWin->fireWorkspacesChanged();
     }
 }
@@ -79,7 +81,7 @@ void LC_WorkspacesInvoker::restoreWorkspace([[maybe_unused]]bool on){
             applyWorkspaceById(id);
         }
         else {
-            m_workspacesManager.activateWorkspace(-1);
+            m_workspacesManager->activateWorkspace(-1);
         }
     }
 }

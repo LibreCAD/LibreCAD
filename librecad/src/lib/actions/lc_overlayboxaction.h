@@ -24,14 +24,15 @@
 #define LC_OVERLAYBOXACTION_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_overlaybox.h"
+
+struct LC_OverlayBoxOptions;
 
 class LC_OverlayBoxAction:public RS_PreviewActionInterface{
 public:
     LC_OverlayBoxAction(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~LC_OverlayBoxAction() override = default;
 protected:
-    LC_OverlayBoxOptions overlayBoxOptions;
+    std::unique_ptr<LC_OverlayBoxOptions> m_overlayBoxOptions;
     void drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2);
     void initFromSettings() override;
 };

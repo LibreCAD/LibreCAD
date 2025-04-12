@@ -24,17 +24,12 @@
 **
 **********************************************************************/
 
-#include <vector>
+#include "qg_dlgmtext.h"
 
 #include <QFileDialog>
-#include <QLocale>
-#include <QPalette>
-#include <QTextStream>
 
-#include "qg_dlgmtext.h"
 #include "rs_font.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
@@ -46,8 +41,7 @@
  *  true to construct a modal dialog.
  */
 QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MText* text, bool forNew)
-    :LC_EntityPropertiesDlg(parent, "MTextProperties", pViewport)
-{
+    :LC_EntityPropertiesDlg(parent, "MTextProperties", pViewport){
     setupUi(this);
     m_alignmentButtons = {{bTL, bTC, bTR, bML, bMC, bMR, bBL, bBC, bBR}};
     init();
@@ -133,13 +127,13 @@ void QG_DlgMText::updateUniCharComboBox(int) {
 
 //set saveText to false, so, settings won't be saved during destroy, feature request#3445306
 void QG_DlgMText::reject() {
-    saveSettings=false;
+    m_saveSettings=false;
     QDialog::reject();
 }
 
 #include "rs_debug.h"
 void QG_DlgMText::destroy() {
-    if (saveSettings) {
+    if (m_saveSettings) {
         LC_GROUP_GUARD("Draw");
         {
             LC_SET("TextHeight", leHeight->text());

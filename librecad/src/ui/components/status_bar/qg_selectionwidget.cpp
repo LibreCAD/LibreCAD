@@ -25,12 +25,11 @@
 **********************************************************************/
 #include "qg_selectionwidget.h"
 
-#include <QTimer>
 #include <QSettings>
+#include <QTimer>
 
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
-#include "rs_settings.h"
 
 /*
  *  Constructs a QG_SelectionWidget as a child of 'parent', with the
@@ -43,11 +42,11 @@ QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::Wi
 
     lEntities->setText("0");
 
-    auxDataMode = false;
+    m_auxDataMode = false;
 
-    timer = new QTimer(this);
-    timer->setSingleShot(true);
-    connect( timer, &QTimer::timeout, this, &QG_SelectionWidget::removeAuxData);
+    m_timer = new QTimer(this);
+    m_timer->setSingleShot(true);
+    connect( m_timer, &QTimer::timeout, this, &QG_SelectionWidget::removeAuxData);
 }
 
 /*
@@ -55,7 +54,7 @@ QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::Wi
  */
 QG_SelectionWidget::~QG_SelectionWidget(){
     // no need to delete child widgets, Qt does it all for us
-    delete timer;
+    delete m_timer;
 }
 
 /*
@@ -67,7 +66,7 @@ void QG_SelectionWidget::languageChange(){
 }
 
 void QG_SelectionWidget::setNumber(int n){
-    if (auxDataMode)    {
+    if (m_auxDataMode)    {
         QSettings settings("QGDialogFactory", "QGSelectionWidget");
         settings.setValue("lEntities_text", n);
     }
@@ -92,9 +91,9 @@ void QG_SelectionWidget::flashAuxData( const QString& header,
     if (flash){
         QSettings settings("QGDialogFactory", "QGSelectionWidget");
 
-        if (!auxDataMode)
+        if (!m_auxDataMode)
         {
-            auxDataMode = true;
+            m_auxDataMode = true;
 
             settings.setValue("lLabelLength_minWidth",  lLabelLength->minimumWidth());
             settings.setValue("lLabelLength_minHeight", lLabelLength->minimumHeight());
@@ -122,12 +121,12 @@ void QG_SelectionWidget::flashAuxData( const QString& header,
 
         lEntities->setText(data);
 
-        timer->setInterval(timeout);
-        timer->start();
+        m_timer->setInterval(timeout);
+        m_timer->start();
     }
     else {
-        if (auxDataMode) {
-            timer->stop();
+        if (m_auxDataMode) {
+            m_timer->stop();
             removeAuxData();
         }
     }
@@ -135,7 +134,7 @@ void QG_SelectionWidget::flashAuxData( const QString& header,
 
 
 void QG_SelectionWidget::removeAuxData(){
-    auxDataMode = false;
+    m_auxDataMode = false;
 
     QSettings settings("QGDialogFactory", "QGSelectionWidget");
 

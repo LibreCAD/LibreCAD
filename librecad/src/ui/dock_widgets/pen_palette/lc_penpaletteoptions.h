@@ -26,8 +26,7 @@
 
 #include "lc_peninforegistry.h"
 
-class LC_PenPaletteOptions
-{
+class LC_PenPaletteOptions{
 public:
     enum {
         DOUBLE_CLICK_DOES_NOTHING,
@@ -94,7 +93,7 @@ public:
     /**
      * Saves options in settings
      */
-    void saveToSettings();
+    void saveToSettings() const;
     /**
      * loads options from settings
      */

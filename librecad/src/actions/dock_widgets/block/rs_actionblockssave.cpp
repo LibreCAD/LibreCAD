@@ -22,6 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qg_blockwidget.h"
 #include "qg_filedialog.h"
 #include "rs_actionblockssave.h"
+
+#include <QApplication>
+
+#include "lc_documentsstorage.h"
+#include "qc_mdiwindow.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"

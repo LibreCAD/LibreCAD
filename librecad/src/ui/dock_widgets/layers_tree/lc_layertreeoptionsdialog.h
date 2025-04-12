@@ -25,42 +25,32 @@
 #ifndef LC_LAYERTREEOPTIONSDIALOG_H
 #define LC_LAYERTREEOPTIONSDIALOG_H
 
+#include "lc_dialog.h"
+#include <ui_lc_layertreeoptionsdialog.h>
 
-#include <QDialog>
-#include "lc_layertreemodel.h"
-#include "ui_lc_layertreeoptionsdialog.h"
-#include "lc_layertreemodel_options.h"
-
+struct LC_LayerTreeModelOptions;
 class QComboBox;
 
-class LC_LayerTreeOptionsDialog :public QDialog, public Ui::LC_LayerTreeOptionsDialog
-{
+class LC_LayerTreeOptionsDialog :public LC_Dialog, public Ui::LC_LayerTreeOptionsDialog{
     Q_OBJECT
-
 public:
     explicit LC_LayerTreeOptionsDialog(QWidget *parent, LC_LayerTreeModelOptions *options);
     ~LC_LayerTreeOptionsDialog();
-
 public slots:
    void pb_highlightedColorClicked();
    void pb_gridColorClicked();
    void pb_selectedItemColorClicked();
    void pbSelectedItemsBgColorClicked();
    void pbActiveLayerBgColorClicked();
-   void showIndentedClicked();
+   void showIndentedClicked() const;
    void validate();
-
 protected slots:
     virtual void languageChange();
-
-
 private:    
-    LC_LayerTreeModelOptions* options;
-
+    LC_LayerTreeModelOptions* m_options;
     void init();
     void initComboBox(QComboBox* cb, const QColor color);
     void set_color(QComboBox* combo, QColor custom);
-    void showInvalidColorMessage(QString name);
+    void showInvalidColorMessage(const QString& name);
 };
-
 #endif // LC_LAYERTREEOPTIONSDIALOG_H

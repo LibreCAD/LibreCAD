@@ -36,26 +36,18 @@ class RS_Pattern;
  */
 class QG_PatternBox: public QComboBox {
     Q_OBJECT
-
 public:
     QG_PatternBox(QWidget* parent=nullptr);
-    virtual ~QG_PatternBox();
-
+    ~QG_PatternBox() override;
     std::shared_ptr<RS_Pattern> getPattern();
-
     void setPattern(const QString& pName);
-
     void init();
-
 private slots:
     void slotPatternChanged(int index);
-
 signals:
 	void patternChanged();
-
 private:
-    std::shared_ptr<RS_Pattern> currentPattern;
+    std::shared_ptr<RS_Pattern> m_currentPattern;
 };
 
 #endif
-

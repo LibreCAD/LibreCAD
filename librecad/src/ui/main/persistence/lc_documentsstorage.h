@@ -23,6 +23,7 @@
 #ifndef LC_DOCUMENTSSTORAGE_H
 #define LC_DOCUMENTSSTORAGE_H
 
+#include <QObject>
 #include "rs.h"
 
 class RS_Graphic;

@@ -25,15 +25,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 LC_ModifyGapOptions::LC_ModifyGapOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionModifyLineGap, "Modify", "LineGap"),
-    ui(new Ui::LC_ModifyGapOptions)
-{
+    ui(new Ui::LC_ModifyGapOptions) {
     ui->setupUi(this);
 
     connect(ui->cbFree, &QCheckBox::clicked, this, &LC_ModifyGapOptions::onFreeGapClicked);
     connect(ui->leSize, &QLineEdit::editingFinished, this, &LC_ModifyGapOptions::onSizeEditingFinished);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_ModifyGapOptions::onDistanceEditingFinished);
-    connect(ui->cbLineSnap, &QComboBox::currentIndexChanged,this, &LC_ModifyGapOptions::onLineSnapModeIndexChanged);
-    connect(ui->cbGapSnap, &QComboBox::currentIndexChanged,this, &LC_ModifyGapOptions::onGapSnapModeIndexChanged);
+    connect(ui->cbLineSnap, &QComboBox::currentIndexChanged, this, &LC_ModifyGapOptions::onLineSnapModeIndexChanged);
+    connect(ui->cbGapSnap, &QComboBox::currentIndexChanged, this, &LC_ModifyGapOptions::onGapSnapModeIndexChanged);
 }
 
 LC_ModifyGapOptions::~LC_ModifyGapOptions(){
@@ -41,7 +40,7 @@ LC_ModifyGapOptions::~LC_ModifyGapOptions(){
 }
 
 void LC_ModifyGapOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<LC_ActionModifyLineGap *>(a);
+    m_action = dynamic_cast<LC_ActionModifyLineGap *>(a);
     QString gapSize;
     bool gapFree;
     int lineSnap;
@@ -49,11 +48,11 @@ void LC_ModifyGapOptions::doSetAction(RS_ActionInterface *a, bool update){
     QString snapDistance;
 
     if (update){
-        gapSize = fromDouble(action->getGapSize());
-        gapFree = action->isFreeGapSize();
-        lineSnap = action->getLineSnapMode();
-        snapDistance = fromDouble(action->getSnapDistance());
-        gapSnap = action->getGapSnapMode();
+        gapSize = fromDouble(m_action->getGapSize());
+        gapFree = m_action->isFreeGapSize();
+        lineSnap = m_action->getLineSnapMode();
+        snapDistance = fromDouble(m_action->getSnapDistance());
+        gapSnap = m_action->getGapSnapMode();
     }
     else{
         gapSize = load("GapSize", "1.0");
@@ -83,31 +82,31 @@ void LC_ModifyGapOptions::languageChange(){
 }
 
 void LC_ModifyGapOptions::onFreeGapClicked(bool val){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setGapIsFreeToActionAndView(val);
     }
 }
 
 void LC_ModifyGapOptions::onSizeEditingFinished(){
-  if (action != nullptr){
+  if (m_action != nullptr){
       setGapSizeToActionAndView(ui->leSize->text());
   }
 }
 
 void LC_ModifyGapOptions::onDistanceEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setSnapDistanceToActionAndView(ui->leDistance->text());
     }
 }
 
 void LC_ModifyGapOptions::onLineSnapModeIndexChanged(int index){
-  if (action != nullptr){
+  if (m_action != nullptr){
       setLineSnapToActionAndView(index);
   }
 }
 
 void LC_ModifyGapOptions::onGapSnapModeIndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setGapSnapToActionAndView(index);
     }
 }
@@ -115,13 +114,13 @@ void LC_ModifyGapOptions::onGapSnapModeIndexChanged(int index){
 void LC_ModifyGapOptions::setGapSizeToActionAndView(const QString &val){
     double len;
     if (toDouble(val, len, 1.0, false)){
-        action->setGapSize(len);
+        m_action->setGapSize(len);
         ui->leSize->setText(fromDouble(len));
     }
 }
 
 void LC_ModifyGapOptions::setGapIsFreeToActionAndView(bool val){
-    action->setFreeGapSize(val);
+    m_action->setFreeGapSize(val);
     ui->cbFree->setChecked(val);
 
     ui->leSize->setEnabled(!val);
@@ -129,21 +128,20 @@ void LC_ModifyGapOptions::setGapIsFreeToActionAndView(bool val){
 }
 
 void LC_ModifyGapOptions::setLineSnapToActionAndView(int val){
-    action->setLineSnapMode(val);
+    m_action->setLineSnapMode(val);
     ui->cbLineSnap->setCurrentIndex(val);
-
     ui->leDistance->setEnabled(val > 0);
 }
 
 void LC_ModifyGapOptions::setGapSnapToActionAndView(int val){
-    action->setGapSnapMode(val);
+    m_action->setGapSnapMode(val);
     ui->cbGapSnap->setCurrentIndex(val);
 }
 
 void LC_ModifyGapOptions::setSnapDistanceToActionAndView(const QString &val){
     double len;
     if (toDouble(val, len, 0.0, false)){
-        action->setSnapDistance(len);
+        m_action->setSnapDistance(len);
         ui->leDistance->setText(fromDouble(len));
     }
 }

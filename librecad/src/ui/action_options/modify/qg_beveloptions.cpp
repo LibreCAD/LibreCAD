@@ -25,11 +25,7 @@
 **********************************************************************/
 #include "qg_beveloptions.h"
 #include "rs_actionmodifybevel.h"
-
 #include "ui_qg_beveloptions.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_BevelOptions as a child of 'parent', with the
@@ -53,69 +49,72 @@ QG_BevelOptions::~QG_BevelOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_BevelOptions::languageChange(){
+void QG_BevelOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
-void QG_BevelOptions::doSaveSettings(){
+void QG_BevelOptions::doSaveSettings() {
     save("Length1", ui->leLength1->text());
     save("Length2", ui->leLength2->text());
-    save("Trim", (int) ui->cbTrim->isChecked());
+    save("Trim", (int)ui->cbTrim->isChecked());
 }
 
-void QG_BevelOptions::doSetAction(RS_ActionInterface *a, bool update){
-        action = dynamic_cast<RS_ActionModifyBevel *>(a);
+void QG_BevelOptions::doSetAction(RS_ActionInterface* a, bool update) {
+    m_action = dynamic_cast<RS_ActionModifyBevel*>(a);
 
-        QString len1;
-        QString len2;
-        bool trim;
-        if (update){
-            len1 = fromDouble(action->getLength1());
-            len2 = fromDouble(action->getLength2());
-            trim = action->isTrimOn();
-        } else {
-            len1 = load("Length1", "1.0");
-            len2 = load("Length2", "1.0");
-            trim = loadBool("Trim", "1");
-        }
-        setLength1ToActionAndView(len1);
-        setLength2ToActionAndView(len2);
-        setTrimToActionAndView(trim);
+    QString len1;
+    QString len2;
+    bool trim;
+    if (update) {
+        len1 = fromDouble(m_action->getLength1());
+        len2 = fromDouble(m_action->getLength2());
+        trim = m_action->isTrimOn();
+    }
+    else {
+        len1 = load("Length1", "1.0");
+        len2 = load("Length2", "1.0");
+        trim = loadBool("Trim", "1");
+    }
+    setLength1ToActionAndView(len1);
+    setLength2ToActionAndView(len2);
+    setTrimToActionAndView(trim);
 }
 
-void QG_BevelOptions::onTrimToggled(bool checked){
+void QG_BevelOptions::onTrimToggled(bool checked) {
     setTrimToActionAndView(checked);
 }
 
-void QG_BevelOptions::onLength1EditingFinished(){
+void QG_BevelOptions::onLength1EditingFinished() {
     setLength1ToActionAndView(ui->leLength1->text());
 }
 
-void QG_BevelOptions::onLength2EditingFinished(){
+void QG_BevelOptions::onLength2EditingFinished() {
     setLength2ToActionAndView(ui->leLength2->text());
 }
 
-void QG_BevelOptions::setLength1ToActionAndView(QString val){
-    if (action != nullptr){
+void QG_BevelOptions::setLength1ToActionAndView(QString val) {
+    if (m_action != nullptr) {
         double len;
-        if (toDouble(val, len, 1.0, false)){ // fixme - check whether negative values are allowed
-            action->setLength1(len);
+        if (toDouble(val, len, 1.0, false)) {
+            // fixme - check whether negative values are allowed
+            m_action->setLength1(len);
             ui->leLength1->setText(fromDouble(len));
         }
     }
 }
 
-void QG_BevelOptions::setLength2ToActionAndView(QString val){
-    if (action != nullptr){
+void QG_BevelOptions::setLength2ToActionAndView(QString val) {
+    if (m_action != nullptr) {
         double len;
-        if (toDouble(val, len, 1.0, false)){ // fixme - check whether negative values are allowed
-            action->setLength2(len);
+        if (toDouble(val, len, 1.0, false)) {
+            // fixme - check whether negative values are allowed
+            m_action->setLength2(len);
             ui->leLength2->setText(fromDouble(len));
         }
     }
 }
 
-void QG_BevelOptions::setTrimToActionAndView(bool val){
-    action->setTrim(val);
+void QG_BevelOptions::setTrimToActionAndView(bool val) {
+    m_action->setTrim(val);
     ui->cbTrim->setChecked(val);
 }

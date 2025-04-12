@@ -24,23 +24,22 @@
 #define LC_NAMEDVIEWSBUTTON_H
 
 #include <QToolButton>
-#include <QDebug>
 #include <QList>
-#include <QMenu>
-#include <QAction>
-#include "lc_namedviewslistwidget.h"
+
+class QMenu;
+class LC_NamedViewsListWidget;
 
 class LC_NamedViewsButton : public QToolButton{
 Q_OBJECT
 public:
     LC_NamedViewsButton(LC_NamedViewsListWidget* widget);
 protected:
-    LC_NamedViewsListWidget* widget{nullptr};
-    QMenu* menu;
-    QList<QAction*> createdActions;
+    LC_NamedViewsListWidget* m_widget{nullptr};
+    QMenu* m_menu;
+    QList<QAction*> m_createdActions;
 protected slots:
     void fillMenu();
-    void menuTriggered(bool checked = false);
+    void menuTriggered(bool checked = false) const;
 };
 
 #endif // LC_NAMEDVIEWSBUTTON_H

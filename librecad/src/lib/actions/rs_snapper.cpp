@@ -24,27 +24,24 @@
 **
 **********************************************************************/
 
-#include <algorithm>
-#include<cmath>
+#include "rs_snapper.h"
+
 #include <QMouseEvent>
 
-#include "lc_linemath.h"
-#include "rs_actiondefault.h"
-#include "qc_applicationwindow.h"
-#include "rs_debug.h"
-#include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
-#include "rs_grid.h"
-#include "rs_pen.h"
-#include "rs_settings.h"
-#include "rs_snapper.h"
 #include "lc_actioncontext.h"
 #include "lc_crosshair.h"
 #include "lc_defaults.h"
-#include "rs_units.h"
-#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
+#include "lc_linemath.h"
 #include "lc_overlayentitiescontainer.h"
+#include "rs_debug.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_grid.h"
 #include "rs_math.h"
+#include "rs_pen.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 namespace {
 
@@ -249,15 +246,13 @@ void RS_Snapper::initSettings() {
 }
 
 void RS_Snapper::initFromSettings() {
-    RS2::LineType snapIndicatorLineType;
-    int snapIndicatorLineWidth;
     LC_GROUP("Appearance");
     {
-        snapIndicatorLineWidth = static_cast<RS2::LineType> (LC_GET_INT("indicator_lines_line_width", 1));
+        int snapIndicatorLineWidth = static_cast<RS2::LineType>(LC_GET_INT("indicator_lines_line_width", 1));
         m_snapIndicator->drawLines = LC_GET_BOOL("indicator_lines_state", true);
         if (m_snapIndicator->drawLines){
             m_snapIndicator->lines_type = LC_GET_INT("indicator_lines_type", 0);
-            snapIndicatorLineType = static_cast<RS2::LineType> (LC_GET_INT("indicator_lines_line_type", RS2::DashLine));
+            RS2::LineType snapIndicatorLineType = static_cast<RS2::LineType>(LC_GET_INT("indicator_lines_line_type", RS2::DashLine));
             QString snap_color_lines = LC_GET_ONE_STR("Colors", "snap_indicator_lines", RS_Settings::snap_indicator_lines);
             m_snapIndicator->lines_pen = RS_Pen(RS_Color(snap_color_lines), RS2::Width00, snapIndicatorLineType);
             m_snapIndicator->lines_pen.setScreenWidth(snapIndicatorLineWidth);

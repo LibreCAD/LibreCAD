@@ -21,19 +21,22 @@
  ******************************************************************************/
 
 #include "lc_ucslistbutton.h"
+
+#include <QMenu>
+
 #include "lc_ucs.h"
 #include "lc_ucslistwidget.h"
 
-LC_UCSListButton::LC_UCSListButton(LC_UCSListWidget *w):QToolButton(nullptr), widget{w} {
+LC_UCSListButton::LC_UCSListButton(LC_UCSListWidget *w):QToolButton(nullptr), m_widget{w} {
     setPopupMode(QToolButton::MenuButtonPopup);
-    menu = new QMenu();
-    connect(menu, &QMenu::aboutToShow, this, &LC_UCSListButton::fillMenu);
-    setMenu(menu);
+    m_menu = new QMenu();
+    connect(m_menu, &QMenu::aboutToShow, this, &LC_UCSListButton::fillMenu);
+    setMenu(m_menu);
 }
 
 void LC_UCSListButton::enableSubActions(bool value){
     if (value){
-        setMenu(menu);
+        setMenu(m_menu);
     }
     else{
         setMenu(nullptr);
@@ -44,55 +47,55 @@ void LC_UCSListButton::enableSubActions(bool value){
 // therefore, the list of actions is reused, and not-needed actions are simply invisible.
 void LC_UCSListButton::fillMenu() {
     QList<LC_UCS*> ucsList;
-    widget->fillUCSList(ucsList);
+    m_widget->fillUCSList(ucsList);
 
-    auto activeUCS = widget->getActiveUCS();
+    auto activeUCS = m_widget->getActiveUCS();
 
     int ucsCount = ucsList.count();
-    int actionsCount = createdActions.count();
+    int actionsCount = m_createdActions.count();
     if (ucsCount <= actionsCount){
         int i;
         for (i = 0; i < ucsCount; i++){
-            auto a = createdActions.at(i);
+            auto a = m_createdActions.at(i);
             auto u = ucsList.at(i);
-            auto typeIcon = widget->getUCSTypeIcon(u);
+            auto typeIcon = m_widget->getUCSTypeIcon(u);
             a->setText(u->getName());
             a->setIcon(typeIcon);
             a->setVisible(true);
             a->setChecked(u == activeUCS);
-            auto modelIndex = widget->getIndexForUCS(u);
+            auto modelIndex = m_widget->getIndexForUCS(u);
             a->setProperty("_UCS_IDX", QVariant(modelIndex));
         }
         for (;i < actionsCount; i++){
-            QAction* a = createdActions.at(i);
+            QAction* a = m_createdActions.at(i);
             a->setVisible(false);
         }
     }
     else{
         int i;
         for (i = 0;  i < actionsCount; i++){
-            auto a = createdActions.at(i);
+            auto a = m_createdActions.at(i);
             auto u = ucsList.at(i);
-            auto typeIcon = widget->getUCSTypeIcon(u);
+            auto typeIcon = m_widget->getUCSTypeIcon(u);
             a->setText(u->getName());
             a->setIcon(typeIcon);
             a->setVisible(true);
             a->setChecked(u == activeUCS);
-            auto modelIndex = widget->getIndexForUCS(u);
+            auto modelIndex = m_widget->getIndexForUCS(u);
             a->setProperty("_UCS_IDX", QVariant(modelIndex));
         }
         for (; i < ucsCount; i++){
             auto u = ucsList.at(i);
             auto name = u->getName();
-            auto typeIcon = widget->getUCSTypeIcon(u);
-            auto* a = menu->addAction(typeIcon, name);
+            auto typeIcon = m_widget->getUCSTypeIcon(u);
+            auto* a = m_menu->addAction(typeIcon, name);
             connect(a, &QAction::triggered, this, &LC_UCSListButton::menuTriggered);
-            createdActions << a;
+            m_createdActions << a;
             a->setEnabled(true);
             a->setChecked(u == activeUCS);
             a->setCheckable(true);
             a->setVisible(true);
-            auto modelIndex = widget->getIndexForUCS(u);
+            auto modelIndex = m_widget->getIndexForUCS(u);
             a->setProperty("_UCS_IDX", QVariant(modelIndex));
         }
     }
@@ -104,7 +107,7 @@ void LC_UCSListButton::menuTriggered([[maybe_unused]]bool checked){
         QVariant variant = action->property("_UCS_IDX");
         if (variant.isValid()){
             QModelIndex index = variant.toModelIndex();
-            widget->applyUCSByIndex(index);
+            m_widget->applyUCSByIndex(index);
         }
     }
 }

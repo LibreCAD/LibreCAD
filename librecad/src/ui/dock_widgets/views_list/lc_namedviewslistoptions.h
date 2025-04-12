@@ -23,8 +23,7 @@
 #ifndef LC_NAMEDVIEWSLISTOPTIONS_H
 #define LC_NAMEDVIEWSLISTOPTIONS_H
 
-class LC_NamedViewsListOptions
-{
+class LC_NamedViewsListOptions{
 public:
     LC_NamedViewsListOptions();
     void load();

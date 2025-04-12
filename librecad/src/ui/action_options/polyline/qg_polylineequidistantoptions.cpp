@@ -21,13 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "qg_polylineequidistantoptions.h"
 #include "ui_qg_polylineequidistantoptions.h"
-
 #include "rs_actionpolylineequidistant.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_actionpolylineequidistant.h"
-#include "ui_qg_polylineequidistantoptions.h"
-#include "rs_debug.h"
 
 /*
   * Create option widget used to draw equidistant polylines
@@ -57,15 +51,15 @@ void QG_PolylineEquidistantOptions::languageChange(){
 
 void QG_PolylineEquidistantOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-    action = dynamic_cast<RS_ActionPolylineEquidistant *>(a);
+    m_action = dynamic_cast<RS_ActionPolylineEquidistant *>(a);
 
     QString distance;
     int number;
 
     // settings from action:
     if (update){
-        distance = fromDouble(action->getDist());
-        number = action->getNumber();
+        distance = fromDouble(m_action->getDist());
+        number = m_action->getNumber();
     }
     else {
         distance = load("Dist", "10.0");
@@ -90,14 +84,14 @@ void QG_PolylineEquidistantOptions::onDistEditingFinished(){
 }
 
 void QG_PolylineEquidistantOptions::setNumberToActionAndView(int number){
-    action->setNumber(number);
+    m_action->setNumber(number);
     ui->sbNumber->setValue(number);
 }
 
 void QG_PolylineEquidistantOptions::setDistanceToActionAndView(QString strVal){
     double val;
     if (toDouble(strVal, val, 10.0, false)){
-        action->setDist(val);
+        m_action->setDist(val);
         ui->leDist->setText(fromDouble(val));
     }
 }

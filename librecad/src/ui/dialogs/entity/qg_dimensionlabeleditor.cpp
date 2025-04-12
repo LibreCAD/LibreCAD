@@ -23,28 +23,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QComboBox>
-#include <QRegularExpression>
-
 #include "qg_dimensionlabeleditor.h"
-#include "rs.h"
 #include "rs_dimension.h"
-#include "rs_debug.h"
 
 namespace {
-const QChar g_diametericPrefix{0x2205};
+    const QChar g_diametericPrefix{0x2205};
 }
 /*
  *  Constructs a QG_DimensionLabelEditor as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
 QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
+    : QWidget(parent, fl){
     setupUi(this);
-
     connect(bDiameter, &QAbstractButton::toggled, this, &QG_DimensionLabelEditor::updatePrefix);
-
     // Initialize the symbol selection
     cbSymbol->setCurrentIndex(-1);
     connect(cbSymbol, &QComboBox::currentTextChanged, this, &QG_DimensionLabelEditor::insertSign);

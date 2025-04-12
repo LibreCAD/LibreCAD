@@ -25,9 +25,7 @@
 **********************************************************************/
 
 #include <tuple>
-
 #include "qg_widthbox.h"
-
 #include "rs_debug.h"
 
 namespace {

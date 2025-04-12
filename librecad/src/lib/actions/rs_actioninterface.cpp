@@ -23,24 +23,21 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<QMouseEvent>
-#include <QOpenGLContext>
 
-#include "rs.h"
 #include "rs_actioninterface.h"
 
+#include <QMouseEvent>
+
 #include "lc_actioncontext.h"
-#include "rs_commands.h"
+#include "lc_actionoptionswidget.h"
+#include "lc_graphicviewport.h"
 #include "rs_commandevent.h"
+#include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
+#include "rs_graphic.h"
 #include "rs_settings.h"
-#include "lc_actionoptionswidget.h"
-
 /**
  * Constructor.
  *

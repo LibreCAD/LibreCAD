@@ -26,7 +26,6 @@
 #ifndef QG_DLGOPTIONSGENERAL_H
 #define QG_DLGOPTIONSGENERAL_H
 
-
 #include "ui_qg_dlgoptionsgeneral.h"
 #include "lc_dialog.h"
 
@@ -39,7 +38,7 @@ class QG_DlgOptionsGeneral : public LC_Dialog, public Ui::QG_DlgOptionsGeneral{
 public:
     QG_DlgOptionsGeneral(QWidget* parent = nullptr);
     ~QG_DlgOptionsGeneral() override = default;
-    static int current_tab;
+    static int m_currentTab;
 protected slots:
     void ok();
     void languageChange();
@@ -103,13 +102,13 @@ protected slots:
     void exportSettings();
     void importSettings();
 private:
-    bool restartNeeded=false;
+    bool m_restartNeeded=false;
 
-    QString originalLibraryPath;
-    bool originalUseClassicToolbar;
-    bool originalAllowsMenusTearOff;
-    bool originalExpandedToolsMenu;
-    bool originalExpandedToolsMenuTillEntity;
+    QString m_originalLibraryPath;
+    bool m_originalUseClassicToolbar;
+    bool m_originalAllowsMenusTearOff;
+    bool m_originalExpandedToolsMenu;
+    bool m_originalExpandedToolsMenuTillEntity;
 
     void init();
     void initComboBox(QComboBox* cb, const QString& text);

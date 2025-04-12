@@ -23,86 +23,86 @@
 #include "lc_shortcuttreeitem.h"
 
 LC_ShortcutTreeItem::LC_ShortcutTreeItem(LC_ShortcutTreeItem *parent, QAction *action, LC_ShortcutInfo *shortcutInfo) {
-    parentItem  = parent;
-    text = action->text().remove("&");
-    icon = action->icon();
-    description = action->toolTip();
-    this->shortcutInfo = shortcutInfo;
-    group = false;
+    m_parentItem  = parent;
+    m_text = action->text().remove("&");
+    m_icon = action->icon();
+    m_description = action->toolTip();
+    m_shortcutInfo = shortcutInfo;
+    m_group = false;
 }
 
 LC_ShortcutTreeItem::LC_ShortcutTreeItem(LC_ShortcutTreeItem *parent, QIcon ic, const QString &name, const QString &desc) {
-    group = true;
-    parentItem = parent;
-    text = name;
-    this->description = desc;
-    this->icon = ic;
+    m_group = true;
+    m_parentItem = parent;
+    m_text = name;
+    this->m_description = desc;
+    this->m_icon = ic;
 }
 
 LC_ShortcutTreeItem::~LC_ShortcutTreeItem() {
-    qDeleteAll(childItems);
+    qDeleteAll(m_childItems);
 }
 
 QIcon LC_ShortcutTreeItem::getIcon() {
-    return icon;
+    return m_icon;
 }
 
 QString LC_ShortcutTreeItem::getName() {
-    return text;
+    return m_text;
 }
 
 void LC_ShortcutTreeItem::clearShortcut(){
-    shortcutInfo->clear();
+    m_shortcutInfo->clear();
 }
 
 void LC_ShortcutTreeItem::resetShortcutToDefault(){
-    shortcutInfo->resetToDefault();
+    m_shortcutInfo->resetToDefault();
 }
 
 LC_ShortcutInfo* LC_ShortcutTreeItem::getShortcutInfo() {
-    return shortcutInfo;
+    return m_shortcutInfo;
 }
 
 LC_ShortcutTreeItem *LC_ShortcutTreeItem::parent() const {
-    return parentItem;
+    return m_parentItem;
 }
 
 int LC_ShortcutTreeItem::row() const{
-    if (parentItem != nullptr) {
-        return parentItem->childItems.indexOf(const_cast<LC_ShortcutTreeItem *>(this));
+    if (m_parentItem != nullptr) {
+        return m_parentItem->m_childItems.indexOf(const_cast<LC_ShortcutTreeItem *>(this));
     }
     return 0;
 }
 
 int LC_ShortcutTreeItem::childCount() const{
-    return childItems.count();
+    return m_childItems.count();
 }
 
 bool LC_ShortcutTreeItem::isMatched() const {
-    return matched;
+    return m_matched;
 }
 
 bool LC_ShortcutTreeItem::isGroup() const {
-    return group;
+    return m_group;
 }
 
 const QList<LC_ShortcutTreeItem *> &LC_ShortcutTreeItem::getChildItems() const {
-    return childItems;
+    return m_childItems;
 }
 
 LC_ShortcutTreeItem* LC_ShortcutTreeItem::addChild(QAction *act, LC_ShortcutInfo *scInfo) {
     auto* child = new LC_ShortcutTreeItem(this, act, scInfo);
-    childItems<<child;
+    m_childItems<<child;
     return child;
 }
 
 LC_ShortcutTreeItem *LC_ShortcutTreeItem::child(int row){
-    return childItems.value(row);
+    return m_childItems.value(row);
 }
 
 QString LC_ShortcutTreeItem::getShortcutViewString() {
-    if (group){
+    if (m_group){
         return "";
     }
-    return shortcutInfo->getKeyAsString();
+    return m_shortcutInfo->getKeyAsString();
 }

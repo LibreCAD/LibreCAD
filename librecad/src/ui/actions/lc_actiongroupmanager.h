@@ -2,12 +2,14 @@
 #define LC_ACTIONGROUPMANAGER_H
 
 #include <QObject>
-#include <QList>
 #include <QMap>
-#include "rs.h"
-#include "lc_actiongroup.h"
-#include "lc_shortcuts_manager.h"
+#include <QList>
 
+#include "rs.h"
+
+class LC_ShortcutsManager;
+class LC_ShortcutInfo;
+class LC_ActionGroup;
 class QAction;
 class QC_ApplicationWindow;
 
@@ -65,7 +67,6 @@ public:
     QList<QAction*> block_actions;
     QList<QAction*> pen_actions;
 
-
     QList<LC_ActionGroup*> toolGroups();
     QMap<QString, LC_ActionGroup*> allGroups();
     QList<LC_ActionGroup *> allGroupsList();
@@ -93,7 +94,7 @@ public slots:
 private:
     QMap<QString, QAction*> m_actionsMap; // should be initialized by action factory by call of loadShortcuts()
     QMap<int, QAction*> m_actionsByTypes;
-    LC_ShortcutsManager m_shortcutsManager;
+    std::unique_ptr<LC_ShortcutsManager> m_shortcutsManager;
     QList<bool> snap_memory;
 };
 

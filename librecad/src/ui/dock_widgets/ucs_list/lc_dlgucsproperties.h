@@ -23,19 +23,18 @@
 #ifndef LC_DLGUCSPROPERTIES_H
 #define LC_DLGUCSPROPERTIES_H
 
-#include <QDialog>
 #include "lc_dialog.h"
-#include "lc_ucs.h"
-#include "lc_ucslistmodel.h"
+#include "rs.h"
 
 namespace Ui {
-class LC_DlgUCSProperties;
+    class LC_DlgUCSProperties;
 }
 
-class LC_DlgUCSProperties : public LC_Dialog
-{
-    Q_OBJECT
+class LC_UCSList;
+class LC_UCS;
 
+class LC_DlgUCSProperties : public LC_Dialog{
+    Q_OBJECT
 public:
     explicit LC_DlgUCSProperties(QWidget *parent = nullptr);
     ~LC_DlgUCSProperties();
@@ -45,9 +44,9 @@ public slots:
     void languageChange();
 private:
     Ui::LC_DlgUCSProperties *ui;
-    LC_UCS* ucs;
-    LC_UCSList* ucsList;
-    bool applyDuplicateSilently = true;
+    LC_UCS* m_ucs;
+    LC_UCSList* m_ucsList;
+    bool m_applyDuplicateSilently = true;
 };
 
 #endif // LC_DLGUCSPROPERTIES_H

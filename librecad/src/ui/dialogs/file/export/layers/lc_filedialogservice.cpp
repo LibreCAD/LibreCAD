@@ -22,17 +22,19 @@
  *
  */
 
-#include <QLayout>
+#include "lc_filedialogservice.h"
+
 #include <QCheckBox>
+#include <QDir>
 #include <QFileDialog>
+#include <QGridLayout>
 #include <QMessageBox>
 
-#include "rs.h"
+#include "lc_layerexportoptions.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
 
-#include "lc_filedialogservice.h"
-#include "lc_layerexportoptions.h"
+class QCheckBox;
 
 namespace {
 

@@ -23,13 +23,11 @@
 #ifndef LIBRECAD_LC_SHORTCUTS_MANAGER_H
 #define LIBRECAD_LC_SHORTCUTS_MANAGER_H
 
-#include <QString>
 #include "lc_shortcutinfo.h"
 
 class LC_ShortcutsManager {
 public:
     LC_ShortcutsManager();
-
     int saveShortcuts(QMap<QString, LC_ShortcutInfo*> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
     int saveShortcuts(const QString &fileName, const QList<LC_ShortcutInfo *> &items) const;
     void assignShortcutsToActions(const QMap<QString, QAction *> &map,

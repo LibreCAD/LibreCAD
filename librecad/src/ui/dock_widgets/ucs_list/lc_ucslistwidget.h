@@ -24,14 +24,15 @@
 #define LC_UCSLISTWIDGET_H
 
 #include <QWidget>
-#include <QMdiSubWindow>
-#include <QItemSelection>
-#include "lc_ucslistoptions.h"
-#include "lc_ucslistmodel.h"
+
 #include "lc_ucslist.h"
-#include "rs_graphicview.h"
-#include "qg_actionhandler.h"
-#include "lc_ucsstatewidget.h"
+
+class RS_Graphic;
+class RS_GraphicView;
+class LC_UCSListOptions;
+class LC_UCSListModel;
+class QItemSelection;
+class LC_UCSStateWidget;
 
 namespace Ui {
 class LC_UCSListWidget;

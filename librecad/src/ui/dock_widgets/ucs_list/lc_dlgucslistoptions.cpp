@@ -21,29 +21,30 @@
  ******************************************************************************/
 
 #include "lc_dlgucslistoptions.h"
+
+#include "lc_ucslistoptions.h"
 #include "ui_lc_dlgucslistoptions.h"
 
 LC_DlgUCSListOptions::LC_DlgUCSListOptions(LC_UCSListOptions* opts, QWidget *parent)
     : LC_Dialog(parent, "UCSListOptions")
-    , ui(new Ui::LC_DlgUCSListOptions), options{opts}
-{
+    , ui(new Ui::LC_DlgUCSListOptions), m_options{opts}{
     ui->setupUi(this);
 
 
-    ui->cbShowTypeIcon->setChecked(options->showColumnTypeIcon);
-    ui->cbShowPositionAndAngle->setChecked(options->showColumnPositionAndAngle);
-    ui->cbShowGridType->setChecked(options->showColumnGridType);
-    ui->cbShowTooltip->setChecked(options->showViewInfoToolTip);
+    ui->cbShowTypeIcon->setChecked(m_options->showColumnTypeIcon);
+    ui->cbShowPositionAndAngle->setChecked(m_options->showColumnPositionAndAngle);
+    ui->cbShowGridType->setChecked(m_options->showColumnGridType);
+    ui->cbShowTooltip->setChecked(m_options->showViewInfoToolTip);
 
-    ui->cbSilentUpdate->setChecked(options->duplicatedNameReplacesSilently);
-    ui->cbShowPositionAndAngle->setChecked(options->showColumnPositionAndAngle);
-    ui->cbRemovalConfirmation->setChecked(options->askForDeletionConfirmation);
-    ui->cbSingleClickRestore->setChecked(options->restoreViewBySingleClick);
-    ui->cbDoubleClickPolicy->setCurrentIndex(options->doubleClickPolicy);
-    ui->cbUCSApplyPolicy->setCurrentIndex(options->ucsApplyingPolicy);
+    ui->cbSilentUpdate->setChecked(m_options->duplicatedNameReplacesSilently);
+    ui->cbShowPositionAndAngle->setChecked(m_options->showColumnPositionAndAngle);
+    ui->cbRemovalConfirmation->setChecked(m_options->askForDeletionConfirmation);
+    ui->cbSingleClickRestore->setChecked(m_options->restoreViewBySingleClick);
+    ui->cbDoubleClickPolicy->setCurrentIndex(m_options->doubleClickPolicy);
+    ui->cbUCSApplyPolicy->setCurrentIndex(m_options->ucsApplyingPolicy);
 
-    ui->sbHighlightBlinkCount->setValue(options->highlightBlinksCount);
-    ui->sbHighlightBlinkDelay->setValue(options->highlightBlinksDelay);
+    ui->sbHighlightBlinkCount->setValue(m_options->highlightBlinksCount);
+    ui->sbHighlightBlinkDelay->setValue(m_options->highlightBlinksDelay);
 
     ui->cbSilentUpdate->setVisible(false); // hide for now, reserve for future extension
 
@@ -59,15 +60,15 @@ void LC_DlgUCSListOptions::languageChange() {
 }
 
 void LC_DlgUCSListOptions::validate() {
-    options->showColumnTypeIcon = ui->cbShowTypeIcon->isChecked();
-    options->showColumnPositionAndAngle = ui->cbShowPositionAndAngle->isChecked();
-    options->showColumnGridType= ui->cbShowGridType->isChecked();
-    options->showViewInfoToolTip = ui->cbShowTooltip->isChecked();
-    options->restoreViewBySingleClick = ui->cbSingleClickRestore->isChecked();
-    options->duplicatedNameReplacesSilently = ui->cbSilentUpdate->isChecked();
-    options->askForDeletionConfirmation = ui->cbRemovalConfirmation->isChecked();
-    options->doubleClickPolicy = ui->cbDoubleClickPolicy->currentIndex();
-    options->ucsApplyingPolicy = ui->cbUCSApplyPolicy->currentIndex();
-    options->highlightBlinksCount = ui->sbHighlightBlinkCount->value();
-    options->highlightBlinksDelay = ui->sbHighlightBlinkDelay->value();
+    m_options->showColumnTypeIcon = ui->cbShowTypeIcon->isChecked();
+    m_options->showColumnPositionAndAngle = ui->cbShowPositionAndAngle->isChecked();
+    m_options->showColumnGridType= ui->cbShowGridType->isChecked();
+    m_options->showViewInfoToolTip = ui->cbShowTooltip->isChecked();
+    m_options->restoreViewBySingleClick = ui->cbSingleClickRestore->isChecked();
+    m_options->duplicatedNameReplacesSilently = ui->cbSilentUpdate->isChecked();
+    m_options->askForDeletionConfirmation = ui->cbRemovalConfirmation->isChecked();
+    m_options->doubleClickPolicy = ui->cbDoubleClickPolicy->currentIndex();
+    m_options->ucsApplyingPolicy = ui->cbUCSApplyPolicy->currentIndex();
+    m_options->highlightBlinksCount = ui->sbHighlightBlinkCount->value();
+    m_options->highlightBlinksDelay = ui->sbHighlightBlinkDelay->value();
 }

@@ -23,33 +23,24 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+
 #include "qg_commandwidget.h"
 
-#include <algorithm>
-
-#include <QAction>
 #include <QDockWidget>
-#include <QKeyEvent>
 #include <QFileDialog>
-#include <QSettings>
+#include <QKeyEvent>
 
-#include "lc_application.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
-#include "rs_commandevent.h"
 #include "rs_commands.h"
-#include "rs_debug.h"
 #include "rs_settings.h"
-#include "rs_system.h"
-#include "rs_utility.h"
-
 /*
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* parent, const char* name, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-    , actionHandler(action_handler)
+    , m_actionHandler(action_handler)
 {
     setObjectName(name);
     setupUi(this);
@@ -70,7 +61,7 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* pa
     options_button->addAction(a1);
 
     if (LC_GET_ONE_BOOL("Widgets","KeycodeMode", false)){
-        leCommand->keycode_mode = true;
+        leCommand->m_keycode_mode = true;
         a1->setChecked(true);
     }
 
@@ -98,9 +89,8 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler *action_handler, QWidget* pa
  *  Destroys the object and frees any allocated resources
  */
 QG_CommandWidget::~QG_CommandWidget(){
-    QSettings settings;
     auto action = findChild<QAction*>("keycode_action");
-    settings.setValue("Widgets/KeycodeMode", action->isChecked());
+    LC_SET_ONE("Widgets", "KeycodeMode", action->isChecked());
 }
 
 /*
@@ -195,8 +185,8 @@ void QG_CommandWidget::handleCommand(QString cmd){
         appendHistory(cmd);
     }
 
-    if (actionHandler) {
-        isAction=actionHandler->command(cmd);
+    if (m_actionHandler) {
+        isAction= m_actionHandler->command(cmd);
     }
 
     if (!isAction && !(cmd.contains(',') || cmd.at(0)=='@')) {
@@ -207,18 +197,18 @@ void QG_CommandWidget::handleCommand(QString cmd){
 }
 
 void QG_CommandWidget::spacePressed() {
-    if (actionHandler)
-        actionHandler->command({});
+    if (m_actionHandler)
+        m_actionHandler->command({});
 }
 // fixme - review ouptput to command widget
 //fixme - add generic help command (as TAB for empy)
 
 void QG_CommandWidget::tabPressed() {
-    if (actionHandler) {
+    if (m_actionHandler) {
         QString typed = leCommand->text();
 
         // check current command:
-        QStringList choices = actionHandler->getAvailableCommands();
+        QStringList choices = m_actionHandler->getAvailableCommands();
         if (choices.empty()) {
             choices = RS_COMMANDS->complete(typed);
         }
@@ -245,13 +235,13 @@ void QG_CommandWidget::tabPressed() {
 
 void QG_CommandWidget::escape() {
     //leCommand->clearFocus();
-    if (actionHandler) {
-        actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
+    if (m_actionHandler) {
+        m_actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
     }
 }
 
 void QG_CommandWidget::setActionHandler(QG_ActionHandler* ah) {
-    actionHandler = ah;
+    m_actionHandler = ah;
 }
 
 void QG_CommandWidget::setCommandMode() {
@@ -316,13 +306,13 @@ void QG_CommandWidget::chooseCommandFile(){
 }
 
 void QG_CommandWidget::handleKeycode(QString code){
-    if (actionHandler->keycode(code)){
+    if (m_actionHandler->keycode(code)){
         leCommand->clear();
     }
 }
 
 void QG_CommandWidget::setKeycodeMode(bool state){
-    leCommand->keycode_mode = state;
+    leCommand->m_keycode_mode = state;
 }
 
 void QG_CommandWidget::dockingButtonTriggered(bool /*docked*/){

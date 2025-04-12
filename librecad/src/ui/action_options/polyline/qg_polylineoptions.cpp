@@ -24,11 +24,8 @@
 **
 **********************************************************************/
 #include "qg_polylineoptions.h"
-
 #include "rs_actiondrawpolyline.h"
-#include "rs_math.h"
 #include "ui_qg_polylineoptions.h"
-#include "rs_debug.h"
 
 using wLists = std::initializer_list<QWidget*>;
 /*
@@ -81,26 +78,26 @@ bool QG_PolylineOptions::checkActionRttiValid(RS2::ActionType actionType) {
 }
 
 void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionDrawPolyline *>(a);
+    m_action = dynamic_cast<RS_ActionDrawPolyline *>(a);
     QString radius, angle;
     int mode;
     bool reversed;
 
     if (update){
-        radius = fromDouble(action->getRadius());
-        angle = fromDouble(action->getAngle());
-        mode = action->getMode();
-        reversed = action->isReversed();
+        radius = fromDouble(m_action->getRadius());
+        angle = fromDouble(m_action->getAngle());
+        mode = m_action->getMode();
+        reversed = m_action->isReversed();
     } else {
         radius = load("Radius", "1.0");
         angle = load("Angle", "180.0");
         mode = loadInt("Mode", 0);
         reversed = loadBool("Reversed", false);
 
-        action->setRadius(radius.toDouble());
-        action->setAngle(angle.toDouble());
-        action->setMode((RS_ActionDrawPolyline::SegmentMode) mode);
-        action->setReversed(reversed);
+        m_action->setRadius(radius.toDouble());
+        m_action->setAngle(angle.toDouble());
+        m_action->setMode((RS_ActionDrawPolyline::SegmentMode) mode);
+        m_action->setReversed(reversed);
     }
     ui->leRadius->setText(radius);
     ui->leAngle->setText(angle);
@@ -112,16 +109,16 @@ void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
 }
 
 void QG_PolylineOptions::close(){
-    action->close();
+    m_action->close();
 }
 
 void QG_PolylineOptions::undo(){
-    action->undo();
+    m_action->undo();
 }
 
 void QG_PolylineOptions::setReversedToActionAndView(bool reversed){
     ui->rbNeg->setChecked(reversed);
-    action->setReversed(reversed);
+    m_action->setReversed(reversed);
 }
 
 void QG_PolylineOptions::setAngleToActionAndView(const QString& strVal){
@@ -130,7 +127,7 @@ void QG_PolylineOptions::setAngleToActionAndView(const QString& strVal){
         if (angle > 359.999){
             angle = 359.999;
         }
-        action->setAngle(angle);
+        m_action->setAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -138,7 +135,7 @@ void QG_PolylineOptions::setAngleToActionAndView(const QString& strVal){
 void QG_PolylineOptions::setRadiusToActionAndView(const QString& strVal){
     double val;
     if (toDouble(strVal, val, 1.0, false)){
-        action->setRadius(val);
+        m_action->setRadius(val);
         ui->leRadius->setText(fromDouble(val));
     }
 }
@@ -163,7 +160,7 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
 
     auto segmentMode = (RS_ActionDrawPolyline::SegmentMode) m;
 
-    action->setMode(segmentMode);
+    m_action->setMode(segmentMode);
     ui->cbMode->setCurrentIndex(m);
 
     switch (segmentMode) {

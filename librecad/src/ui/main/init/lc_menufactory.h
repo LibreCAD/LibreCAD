@@ -23,11 +23,11 @@
 #ifndef LC_MENUFACTORY_H
 #define LC_MENUFACTORY_H
 
-
+#include <QObject>
 
 #include "lc_appwindowaware.h"
-#include "qc_applicationwindow.h"
 
+class QC_MDIWindow;
 class QMenuBar;
 class QAction;
 class QMenu;

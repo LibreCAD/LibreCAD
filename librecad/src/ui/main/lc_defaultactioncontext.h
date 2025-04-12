@@ -24,14 +24,12 @@
 #define LC_DEFAULTACTIONCONTEXT_H
 #include "lc_actioncontext.h"
 
-class LC_OptionsWidgetsHolder;
 class LC_QTStatusbarManager;
 class QG_MouseWidget;
 class QG_SelectionWidget;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
 class LC_ActionOptionsManager;
-
 
 class LC_DefaultActionContext: public LC_ActionContext{
 public:

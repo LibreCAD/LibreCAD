@@ -25,10 +25,10 @@
 LC_ActionGroup::LC_ActionGroup(QObject *parent, const QString &name, const QString &description, const char* iconName)
     :QActionGroup(parent) {
     setObjectName(name);
-    this->name = name;
-    this->description = description;
+    m_name = name;
+    this->m_description = description;
     if (iconName != nullptr){
-        icon = QIcon(iconName);
+        m_icon = QIcon(iconName);
     }
 }
 
@@ -36,33 +36,33 @@ LC_ActionGroup::~LC_ActionGroup() {
 }
 
 const QString &LC_ActionGroup::getName() const {
-    return name;
+    return m_name;
 }
 
 void LC_ActionGroup::setName(const QString &name) {
-    LC_ActionGroup::name = name;
+    m_name = name;
 }
 
 const QString &LC_ActionGroup::getDescription() const {
-    return description;
+    return m_description;
 }
 
 void LC_ActionGroup::setDescription(const QString &description) {
-    LC_ActionGroup::description = description;
+    LC_ActionGroup::m_description = description;
 }
 
 const QIcon &LC_ActionGroup::getIcon() const {
-    return icon;
+    return m_icon;
 }
 
 void LC_ActionGroup::setIcon(const QIcon &icon) {
-    LC_ActionGroup::icon = icon;
+    LC_ActionGroup::m_icon = icon;
 }
 
 bool LC_ActionGroup::isActionMappingsMayBeConfigured() const {
-    return actionMappingsMayBeConfigured;
+    return m_actionMappingsMayBeConfigured;
 }
 
 void LC_ActionGroup::setActionMappingsMayBeConfigured(bool actionMappingsMayBeConfigured) {
-    LC_ActionGroup::actionMappingsMayBeConfigured = actionMappingsMayBeConfigured;
+    LC_ActionGroup::m_actionMappingsMayBeConfigured = actionMappingsMayBeConfigured;
 }

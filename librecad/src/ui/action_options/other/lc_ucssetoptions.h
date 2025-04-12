@@ -23,7 +23,6 @@
 #ifndef LC_UCSSETOPTIONS_H
 #define LC_UCSSETOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class LC_ActionUCSCreate;
@@ -48,6 +47,6 @@ protected:
     void setAngleIsFreeToActionAndView(bool val);
 private:
     Ui::LC_UCSSetOptions *ui;
-    LC_ActionUCSCreate* action = nullptr;
+    LC_ActionUCSCreate* m_action = nullptr;
 };
 #endif // LC_UCSSETOPTIONS_H

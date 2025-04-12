@@ -63,6 +63,6 @@ protected slots:
     void onAngleEditingFinished();
 private:
     std::unique_ptr<Ui::Ui_MoveRotateOptions> ui;
-    RS_ActionModifyMoveRotate* action = nullptr;
+    RS_ActionModifyMoveRotate* m_action = nullptr;
 };
 #endif // QG_MOVEROTATEOPTIONS_H

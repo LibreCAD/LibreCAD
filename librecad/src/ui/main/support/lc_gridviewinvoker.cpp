@@ -23,8 +23,8 @@
 
 #include "lc_graphicviewport.h"
 #include "qc_applicationwindow.h"
-#include "rs.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 
 LC_GridViewInvoker::LC_GridViewInvoker(QC_ApplicationWindow* mainWin):LC_AppWindowAware{mainWin} {
 }

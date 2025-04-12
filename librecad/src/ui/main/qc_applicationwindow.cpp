@@ -30,55 +30,39 @@
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
 
 #include "qc_applicationwindow.h"
-#include <QByteArray>
-#include <QDockWidget>
-#include <QDragEnterEvent>
+
+#include <QCloseEvent>
 #include <QMdiArea>
 #include <QMessageBox>
-#include <QTimer>
 #include <QMimeData>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QTimer>
 
-#include "doc_plugin_interface.h"
-#include "twostackedlabels.h"
-#include "widgetcreator.h"
-#include "rs_actionlibraryinsert.h"
-#include "rs_actionprintpreview.h"
-#include "rs_commands.h"
-#include "rs_debug.h"
-#include "rs_document.h"
-#include "rs_painter.h"
-#include "rs_pen.h"
-#include "rs_settings.h"
-#include "rs_system.h"
-#include "rs_selection.h"
-#include "rs_units.h"
-#include "lc_actiongroupmanager.h"
-#include "lc_actionoptionsmanager.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_anglesbasiswidget.h"
-#include "lc_appwindowdialogsinvoker.h"
 #include "lc_applicationwindowinitializer.h"
+#include "lc_appwindowdialogsinvoker.h"
 #include "lc_creatorinvoker.h"
 #include "lc_customstylehelper.h"
 #include "lc_defaultactioncontext.h"
 #include "lc_exporttoimageservice.h"
 #include "lc_gridviewinvoker.h"
-#include "lc_imageexporter.h"
-#include "lc_penwizard.h"
 #include "lc_infocursorsettingsmanager.h"
 #include "lc_layertreewidget.h"
-#include "lc_printing.h"
-#include "lc_plugininvoker.h"
-#include "lc_widgetoptionsdialog.h"
-#include "lc_mdiapplicationwindow.h"
-#include "lc_releasechecker.h"
 #include "lc_menufactory.h"
 #include "lc_namedviewslistwidget.h"
+#include "lc_penpalettewidget.h"
+#include "lc_penwizard.h"
+#include "lc_printing.h"
+#include "lc_quickinfowidget.h"
+#include "lc_releasechecker.h"
+#include "lc_snapoptionswidgetsholder.h"
 #include "lc_ucslistwidget.h"
+#include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
-#include "qc_plugininterface.h"
 #include "qg_actionhandler.h"
 #include "qg_activelayername.h"
 #include "qg_blockwidget.h"
@@ -88,11 +72,19 @@
 #include "qg_graphicview.h"
 #include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
+#include "qg_mousewidget.h"
 #include "qg_pentoolbar.h"
+#include "qg_recentfiles.h"
 #include "qg_selectionwidget.h"
 #include "qg_snaptoolbar.h"
-#include "qg_mousewidget.h"
-#include "qg_recentfiles.h"
+#include "rs_actioninterface.h"
+#include "rs_actionlibraryinsert.h"
+#include "rs_actionprintpreview.h"
+#include "rs_debug.h"
+#include "rs_selection.h"
+#include "rs_settings.h"
+#include "rs_units.h"
+#include "twostackedlabels.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/images/librecad.png"
@@ -137,7 +129,7 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     delete m_dialogFactory;
     delete m_actionContext;
-    // delete m_actionOptionsManager;
+
 }
 
 void QC_ApplicationWindow::checkForNewVersion() {
@@ -495,7 +487,7 @@ void QC_ApplicationWindow::slotKillAllActions() {
         if (gv != nullptr) {
             gv->killAllActions();
             RS_Document* doc = win->getDocument();
-            RS_Selection s(*doc, gv->getViewPort());
+            RS_Selection s(*doc, gv->getViewPort()); // fixme - sand - files - rework this. selection hardly should be there.
             s.selectAll(false);
             const RS_EntityContainer::LC_SelectionInfo &selectionInfo = doc->getSelectionInfo();
             m_selectionWidget->setNumber((int)selectionInfo.count);
@@ -1497,7 +1489,7 @@ void QC_ApplicationWindow::slotImportBlock() {
         if (m_actionHandler != nullptr) {
             RS_ActionInterface *a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a != nullptr) {
-                auto *action = static_cast<RS_ActionLibraryInsert*>(a);
+                auto *action = static_cast<RS_ActionLibraryInsert*>(a);  // fixme - sand - files - direct action? Rework
                 action->setFile(dxfPath);
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,"QC_ApplicationWindow::slotImportBlock:"
@@ -1816,15 +1808,15 @@ void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(bool printPrev
 
 void QC_ApplicationWindow::enableWidgets(bool enable) {
     enableWidgetList(enable, {
-                         m_penPaletteWidget,
-                         m_quickInfoWidget,
-                         m_blockWidget,
-                         m_penToolBar,
-                         m_penWizard,
-                         m_ucsListWidget,
-                         m_ucsStateWidget,
-                         m_anglesBasisWidget,
-                         m_libraryWidget->getInsertButton(),
+                          m_penPaletteWidget,
+                          m_quickInfoWidget,
+                          m_blockWidget,
+                          m_penToolBar,
+                          m_penWizard,
+                          m_ucsListWidget,
+                          m_ucsStateWidget,
+                          m_anglesBasisWidget,
+                          m_libraryWidget->getInsertButton(),
                          m_snapToolBar
                      });
     //  enableWidget(namedViewsWidget,enable);

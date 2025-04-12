@@ -24,25 +24,23 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_PREVIEWACTIONINTERFACE_H
 #define RS_PREVIEWACTIONINTERFACE_H
+#include <QMouseEvent>
+#include <QPointF>
 
-#include <memory>
-#include <QPoint>
-
-#include "lc_defaults.h"
-
+#include "dxf_format.h"
 #include "rs_actioninterface.h"
 
 class LC_Highlight;
 class LC_RefEllipse;
 
 class RS_Arc;
+class RS_Circle;
 class RS_ConstructionLine;
 class RS_Ellipse;
 class RS_Line;
-class RS_Vector;
+
 
 struct RS_ArcData;
 struct RS_CircleData;

@@ -26,8 +26,7 @@
 #ifndef QG_LINEANGLEOPTIONS_H
 #define QG_LINEANGLEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -38,8 +37,7 @@ namespace Ui {
 }
 
 class QG_LineAngleOptions:public LC_ActionOptionsWidgetBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
     QG_LineAngleOptions();
     ~QG_LineAngleOptions() override;
@@ -55,11 +53,10 @@ public slots:
     void languageChange() override;
 private:
     std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
-    RS_ActionDrawLineAngle *action = nullptr;
+    RS_ActionDrawLineAngle *m_action = nullptr;
     void setAngleToActionAndView(QString val);
     void setSnapPointToActionAndView(int val);
     void setLengthToActionAndView(QString val);
-
     void setToAngleBasis(bool val);
 };
 

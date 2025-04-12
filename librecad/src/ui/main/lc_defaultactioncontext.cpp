@@ -28,6 +28,7 @@
 #include "qg_coordinatewidget.h"
 #include "qg_mousewidget.h"
 #include "qg_selectionwidget.h"
+
 LC_DefaultActionContext::LC_DefaultActionContext() {}
 
 void LC_DefaultActionContext::addOptionsWidget(LC_ActionOptionsWidget *widget){

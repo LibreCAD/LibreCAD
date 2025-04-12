@@ -26,8 +26,6 @@
 #ifndef QG_DLGARC_H
 #define QG_DLGARC_H
 
-#include <QDialog>
-
 #include "ui_qg_dlgarc.h"
 #include "lc_entitypropertiesdlg.h"
 
@@ -43,7 +41,7 @@ public slots:
 protected slots:
     virtual void languageChange();
 protected:
-    RS_Arc* entity = nullptr;
+    RS_Arc* m_entity = nullptr;
     void setEntity(RS_Arc* a);
 };
 

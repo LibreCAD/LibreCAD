@@ -26,8 +26,6 @@
 #ifndef QG_LINEOPTIONS_H
 #define QG_LINEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -48,7 +46,7 @@ public slots:
     virtual void redo();
     void languageChange() override;
 protected:
-    RS_ActionDrawLine* action = nullptr;
+    RS_ActionDrawLine* m_action = nullptr;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:

@@ -32,8 +32,8 @@ public:
     void accept() override;
     void reject() override;
 protected:
-    QString dialogName;
-    bool positionLoaded = false;
+    QString m_dialogName;
+    bool m_positionLoaded = false;
     void saveDialogPosition() const;
     void loadDialogPosition();
     QString getPositionSettingsGroupName() const;

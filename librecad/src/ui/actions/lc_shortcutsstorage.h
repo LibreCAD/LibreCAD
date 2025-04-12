@@ -22,8 +22,10 @@
 
 #ifndef COMMANDFILE_H
 #define COMMANDFILE_H
-#include "lc_shortcutinfo.h"
-#include <QWidget>
+#include <QObject>
+
+class LC_ShortcutInfo;
+
 class LC_ShortcutsStorage :public QObject{
 public:
 
