@@ -69,7 +69,8 @@ public:
     /**
      * Return number of undoables in cycle
      */
-    size_t size(void);
+    size_t size() const;
+    bool empty() const;
 
 
     //! change undo state of all undoable in the current cycle

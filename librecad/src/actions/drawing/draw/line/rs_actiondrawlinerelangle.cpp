@@ -101,7 +101,7 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             highlightSelected(entity);
             *pos = getRelZeroAwarePoint(e, snap);
             RS_Creation creation(preview.get(), nullptr, false);
-            auto lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
+            RS_Line* lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
             if (lineToCreate != nullptr){
                 previewEntityToCreate(lineToCreate, false);
             }

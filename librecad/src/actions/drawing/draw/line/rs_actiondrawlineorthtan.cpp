@@ -20,6 +20,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <memory>
+
+#include <QList>
+
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
@@ -29,7 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_preview.h"
 
 namespace{
-    auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
+//this holds a list of entity types which supports tangent
+const auto g_circleList = EntityTypeList{{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}};
 }
 
 /**
@@ -40,11 +45,8 @@ namespace{
 RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView)
-	,normal(nullptr)
-	,tangent(nullptr)
-	,circle(nullptr){
-	actionType=RS2::ActionDrawLineOrthTan;
+    :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView, RS2::ActionDrawLineOrthTan)
+{
 }
 
 
@@ -54,11 +56,13 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
 }
 
 void RS_ActionDrawLineOrthTan::doTrigger() {
-    if (!tangent) return;
-    RS_Entity *newEntity = new RS_Line(container, tangent->getData());
+    if (!tangent)
+        return;
+    auto newEntity = std::make_unique<RS_Line>(container, tangent->getData());
 
-    setPenAndLayerToActive(newEntity);
-    undoCycleAdd(newEntity);
+    setPenAndLayerToActive(newEntity.get());
+    undoCycleAdd(newEntity.get());
+    newEntity.release();
 
     setStatus(SetCircle);
     circle = nullptr;
@@ -77,7 +81,7 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             RS_Vector mouse = e->graphPoint;
             highlightSelected(normal);
             deleteSnapper();
-            RS_Entity *en = catchAndDescribe(e, circleList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, g_circleList, RS2::ResolveAll);
             if (en != nullptr){
                 circle = en;
                 highlightHover(en);
@@ -101,8 +105,9 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionDrawLineOrthTan::clearLines(){
-    if (circle) circle = nullptr;
+void RS_ActionDrawLineOrthTan::clearLines()
+{
+    circle = nullptr;
     deletePreview();
 }
 
