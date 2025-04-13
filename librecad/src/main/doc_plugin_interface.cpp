@@ -1186,7 +1186,7 @@ void Doc_plugin_interface::setCurrentLayerProperties(int c, QString const& w,
 bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 									QPointF *base){
     bool status = false;
-    auto* a = new QC_ActionGetPoint(*doc, *gView);
+    auto a = std::make_shared<QC_ActionGetPoint>(*doc, *gView);
     if (a) {
         if (!(message.isEmpty()) ) a->setMessage(message);
         gView->killAllActions();
@@ -1210,7 +1210,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 }
 
 Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
-    auto* a = new QC_ActionGetEnt(*doc, *gView);
+    auto a = std::make_shared<QC_ActionGetEnt>(*doc, *gView);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1231,7 +1231,7 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
 
 bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
     bool status = false;
-    auto* a = new QC_ActionGetSelect(*doc, *gView);
+    auto a = std::make_shared<QC_ActionGetSelect>(*doc, *gView);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1248,7 +1248,7 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
     }
 //    check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();
-    if (eh && eh->isValid(a) ) {
+    if (eh && eh->isValid(a.get()) ) {
         a->getSelected(sel, this);
         status = true;
     }
@@ -1271,7 +1271,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     
     gView->setTypeToSelect(typeToSelect);
-    auto* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
+    auto a = std::make_shared<QC_ActionGetSelect>(typeToSelect, *doc, *gView);
 
     if (a) {
         if (!(message.isEmpty()) )
@@ -1290,7 +1290,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     //check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();
-    if (eh && eh->isValid(a) ) {
+    if (eh && eh->isValid(a.get()) ) {
         a->getSelected(sel, this);
         status = true;
     }

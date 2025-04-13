@@ -73,7 +73,7 @@ void QC_ActionGetSelect::setMessage(QString msg){
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
         graphicView->setCurrentAction(
-                new RS_ActionSelectSingle(typeToSelect, *container, *graphicView, this));
+                std::make_shared<RS_ActionSelectSingle>(typeToSelect, *container, *graphicView, this));
 }
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
