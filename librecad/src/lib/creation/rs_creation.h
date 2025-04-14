@@ -124,7 +124,7 @@ public:
                             RS_Entity* circle1,
                             RS_Entity* circle2);
 
-    RS_Line* createLineRelAngle(const RS_Vector& coord,
+    std::unique_ptr<RS_Line> createLineRelAngle(const RS_Vector& coord,
                                 RS_Entity* entity,
                                 double angle,
                                 double length);
@@ -151,15 +151,19 @@ public:
 
     RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
-protected:
+private:
+    /**
+     * @brief setupAndAddEntity - returns true, if ownership is taken by undo cycles
+     * @param en
+     * @return
+     */
+    bool setupAndAddEntity(RS_Entity* en) const;
     RS_EntityContainer* container = nullptr;
     RS_Graphic* graphic = nullptr;
     RS_Document* document = nullptr;
     RS_GraphicView* graphicView = nullptr;
-    LC_GraphicViewport*  viewport;
+    LC_GraphicViewport*  m_viewport = nullptr;
     bool handleUndo = false;
-private:
-    void setupAndAddEntity(RS_Entity* en) const;
 };
 
 #endif

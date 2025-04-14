@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace {
 
     //list of entity types supported by current action
-    const EntityTypeList enTypeList = {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
+    const EntityTypeList g_enTypeList = {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
 }
 
 // fixme - cleanup
@@ -351,10 +351,10 @@ RS_Entity *RS_ActionDrawCircleTan3::catchCircle(LC_MouseEvent *e, bool forPrevie
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview){
-        en = catchModifiableAndDescribe(e, enTypeList);
+        en = catchModifiableAndDescribe(e, g_enTypeList);
     }
     else{
-        en = catchModifiableEntity(e, enTypeList);
+        en = catchModifiableEntity(e, g_enTypeList);
     }
 
     if (!en) return ret;

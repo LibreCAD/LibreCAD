@@ -27,10 +27,6 @@ LC_UndoableRelZero::LC_UndoableRelZero(LC_GraphicViewport *view, const RS_Vector
 
 void LC_UndoableRelZero::undoStateChanged(bool undone) {
     if (viewport != nullptr) {
-        if (undone) {
-            viewport->moveRelativeZero(m_From);
-        } else {
-            viewport->moveRelativeZero(m_To);
-        }
+        viewport->moveRelativeZero(undone ? m_From : m_To);
     }
 }

@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace {
 
     //list of entity types supported by current action
-const EntityTypeList enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+const EntityTypeList g_enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 struct RS_ActionDrawCircleTan2::Points {
     RS_CircleData cData;
@@ -187,10 +187,10 @@ RS_Entity *RS_ActionDrawCircleTan2::catchCircle(LC_MouseEvent *e, bool forPrevie
     RS_Entity* en;
     // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
     if (forPreview) {
-        en = catchModifiableAndDescribe(e, enTypeList);
+        en = catchModifiableAndDescribe(e, g_enTypeList);
     }
     else{
-        en = catchModifiableEntity(e, enTypeList);
+        en = catchModifiableEntity(e, g_enTypeList);
     }
     if (!en){
         return nullptr;

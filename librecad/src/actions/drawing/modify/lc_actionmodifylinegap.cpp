@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace {
     //list of entity types supported by current action - line
-    const auto enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::Entity,CircleRS2::EntityEllipse*/};
+    const auto g_enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::Entity,CircleRS2::EntityEllipse*/};
 }
 
 LC_ActionModifyLineGap::LC_ActionModifyLineGap(RS_EntityContainer &container, RS_GraphicView &graphicView)
@@ -44,7 +44,7 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vecto
         case (SetEntity):{ // selecting the line
             // finding line entity
             deleteSnapper();
-            RS_Entity* en = catchModifiableAndDescribe(e, enTypeList);
+            RS_Entity* en = catchModifiableAndDescribe(e, g_enTypeList);
             if (en != nullptr){
                 auto *line = dynamic_cast<RS_Line *>(en);
                 // check that line may be expanded
@@ -129,7 +129,7 @@ void LC_ActionModifyLineGap::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int st
     switch (status){
         case SetEntity:{ // entity selection
             // catching the line
-            RS_Entity* en = catchModifiableEntity(e, enTypeList);
+            RS_Entity* en = catchModifiableEntity(e, g_enTypeList);
             if (en != nullptr) {
                 auto* line = dynamic_cast<RS_Line *>(en);
                 // check whether line is expandable

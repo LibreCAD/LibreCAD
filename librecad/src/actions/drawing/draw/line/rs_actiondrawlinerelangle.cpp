@@ -40,7 +40,7 @@
 namespace {
 
 //list of entity types supported by current action
-const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse};
+const auto g_enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse};
 }
 
 // fixme - sand - add support of options for line snap point
@@ -73,22 +73,22 @@ RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
         return RS2::ActionDrawLineRelAngle;
 }
 
+void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
+    RS_PreviewActionInterface::finish(updateTB);
+}
 
 void RS_ActionDrawLineRelAngle::doTrigger() {
     RS_Creation creation(container, graphicView);
     moveRelativeZero(*pos); // fixme - to undoable?
-    RS_Line* line = creation.createLineRelAngle(*pos,entity,relativeAngleRad,length);
-
-    if (line == nullptr) {
-        LC_LOG(RS_Debug::D_ERROR) << "RS_ActionDrawLineRelAngle::" << __func__ << "(): cannot create line";
-    }
+    // the created line is added to undo and the view automatically by RS_Creation
+    creation.createLineRelAngle(*pos,entity,relativeAngleRad,length);
 }
 
 void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetEntity: {
-            entity = catchAndDescribe(e, enTypeList, RS2::ResolveAll);
+            entity = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
             }
@@ -97,13 +97,11 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetPos: {
             highlightSelected(entity);
             *pos = getRelZeroAwarePoint(e, snap);
-            RS_Creation creation(preview.get(), nullptr, false);
-            RS_Line* lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
+            RS_Creation creation(nullptr, nullptr, false);
+            std::unique_ptr<RS_Line> lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
             if (lineToCreate != nullptr){
-                previewEntityToCreate(lineToCreate, false);
-            }
-            if (showRefEntitiesOnPreview) {
-                if (lineToCreate != nullptr) {
+                previewLine(lineToCreate->getStartpoint(), lineToCreate->getEndpoint());
+                if (showRefEntitiesOnPreview) {
                     auto const vp = entity->getNearestPointOnEntity(*pos, false);
                     previewRefPoint(vp);
                     previewRefPoint(lineToCreate->getEndpoint());
@@ -119,7 +117,7 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            RS_Entity *en = catchEntityByEvent(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, g_enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 entity = en;
                 setStatus(SetPos);

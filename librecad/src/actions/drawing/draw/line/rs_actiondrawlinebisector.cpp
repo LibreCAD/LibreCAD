@@ -39,7 +39,7 @@
 namespace {
 
     //list of entity types supported by current action - only lines so far
-    const auto enTypeList = EntityTypeList{RS2::EntityLine};
+    const auto g_enTypeList = EntityTypeList{RS2::EntityLine};
 }
 
 
@@ -104,7 +104,7 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     deleteSnapper();
     switch (status) {
         case SetLine1: {
-            RS_Entity *en = catchAndDescribe(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -113,7 +113,7 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetLine2: {
             highlightSelected(line1);
             pPoints->coord2 = mouse;
-            RS_Entity *en = catchAndDescribe(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
             if (en == line1){
                 line2 = nullptr;
             } else if (en != nullptr){
@@ -161,7 +161,7 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEve
     switch (status) {
         case SetLine1: {
             pPoints->coord1 = mouse;
-            RS_Entity *en = RS_Snapper::catchEntity(mouse,enTypeList,RS2::ResolveAll);
+            RS_Entity *en = RS_Snapper::catchEntity(mouse,g_enTypeList,RS2::ResolveAll);
             if (isLine(en)){
                 line1 = dynamic_cast<RS_Line *>(en);
                 line2 = nullptr;

@@ -340,7 +340,7 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
             int sepIndex = anchor.indexOf('?');
             if (sepIndex  != -1){
                 QString idx = anchor.mid(sepIndex+1);
-                bool ok;
+                bool ok = false;
                 int pointIndex = idx.toInt(&ok);
                 if (ok){
                     if (widgetMode == MODE_COORDINATE_COLLECTING){

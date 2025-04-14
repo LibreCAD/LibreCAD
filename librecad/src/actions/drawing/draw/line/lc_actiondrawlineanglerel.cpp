@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace {
     //list of entity types supported by current action - only lines so far
-    const auto enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse*/};
+    const auto g_enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse*/};
 }
 
 LC_ActionDrawLineAngleRel:: LC_ActionDrawLineAngleRel(
@@ -162,7 +162,7 @@ void LC_ActionDrawLineAngleRel::doFinish([[maybe_unused]]bool updateTB){
 void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status) {
         case SetLine:{ // line selection state
-            RS_Entity* en = catchModifiableEntity(e, enTypeList);
+            RS_Entity* en = catchModifiableEntity(e, g_enTypeList);
             if (en != nullptr) {
                 auto* line = dynamic_cast<RS_Line *>(en);
                 // determine where tick line should be snapped on original line
@@ -217,7 +217,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(LC_MouseEvent *e, RS_Ve
     switch (status) {
         case SetLine:{ // line select state
             deleteSnapper();
-            RS_Entity* en = catchModifiableAndDescribe(e, enTypeList);
+            RS_Entity* en = catchModifiableAndDescribe(e, g_enTypeList);
             if (en != nullptr){
                 auto* line = dynamic_cast<RS_Line *>(en);
 

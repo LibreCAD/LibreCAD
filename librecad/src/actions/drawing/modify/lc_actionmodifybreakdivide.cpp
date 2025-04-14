@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace {
     //list of entity types supported by current action - line, arc, circle
-    const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle/*,RS2::EntityEllipse*/};
+    const auto g_enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle/*,RS2::EntityEllipse*/};
 }
 
 LC_ActionModifyBreakDivide::LC_ActionModifyBreakDivide(RS_EntityContainer &container, RS_GraphicView &graphicView)
@@ -60,7 +60,7 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseE
 void LC_ActionModifyBreakDivide::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
         deleteSnapper();
-        RS_Entity *en = catchModifiableAndDescribe(e, enTypeList);
+        RS_Entity *en = catchModifiableAndDescribe(e, g_enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {
@@ -88,7 +88,7 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(LC_MouseEvent *e, RS_V
 
 void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     if (status == SetLine){
-        RS_Entity *en = catchModifiableEntity(e, enTypeList);
+        RS_Entity *en = catchModifiableEntity(e, g_enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {

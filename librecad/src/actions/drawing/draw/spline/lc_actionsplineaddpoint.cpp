@@ -27,7 +27,7 @@
 #include "rs_spline.h"
 
 namespace {
-    const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
 }
 
 LC_ActionSplineAddPoint::LC_ActionSplineAddPoint(RS_EntityContainer &container, RS_GraphicView &graphicView)
@@ -48,7 +48,7 @@ void LC_ActionSplineAddPoint::doAfterTrigger() {
 void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -92,7 +92,7 @@ void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseE
 void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);

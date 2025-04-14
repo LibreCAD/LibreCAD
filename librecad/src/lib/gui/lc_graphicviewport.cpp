@@ -1004,7 +1004,8 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
  * without deleting / drawing the point.
  */
 void LC_GraphicViewport::setRelativeZero(const RS_Vector &pos) {
-    if (relativeZeroLocked == false) {
+    if (!relativeZeroLocked) {
+        markedRelativeZero = relativeZero;
         relativeZero = pos;
         fireRelativeZeroChanged(pos);
     }
