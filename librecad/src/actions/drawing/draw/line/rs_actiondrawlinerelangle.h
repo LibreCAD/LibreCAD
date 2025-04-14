@@ -48,7 +48,6 @@ public:
         bool fixedAngle = false);
     ~RS_ActionDrawLineRelAngle() override;
     RS2::ActionType rtti() const override;
-    void finish(bool updateTB) override;
     QStringList getAvailableCommands() override;
     void setAngle(double angleDeg);
     double getAngle() const;

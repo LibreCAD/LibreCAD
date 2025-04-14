@@ -73,9 +73,6 @@ RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
         return RS2::ActionDrawLineRelAngle;
 }
 
-void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
-    RS_PreviewActionInterface::finish(updateTB);
-}
 
 void RS_ActionDrawLineRelAngle::doTrigger() {
     RS_Creation creation(container, graphicView);
