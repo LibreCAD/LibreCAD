@@ -233,9 +233,7 @@ double RS_Vector::distanceTo(const RS_Vector& v) const {
     if (!valid || !v.valid) {
         return RS_MAXDOUBLE;
     }
-    else {
-        return (*this - v).magnitude();
-    }
+    return (*this - v).magnitude();
 }
 
 /**
@@ -243,7 +241,8 @@ double RS_Vector::distanceTo(const RS_Vector& v) const {
  */
 bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
                            const RS_Vector& secondCorner) const {
-    if (!valid) return false;
+    if (!valid)
+        return false;
     return LC_Rect{firstCorner, secondCorner}.inArea(*this);
 }
 

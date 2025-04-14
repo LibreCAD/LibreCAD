@@ -34,28 +34,29 @@
  * more Undoables.
  */
 void RS_UndoCycle::addUndoable(RS_Undoable* u) {
-    if (!u)
-        return;
-
-    undoables.insert(u);
+    if (u != nullptr)
+        undoables.insert(u);
 }
 
 /**
  * Removes an undoable from the list.
  */
 void RS_UndoCycle::removeUndoable(RS_Undoable* u) {
-    if (!u)
-        return;
-
-    undoables.erase(u);
+    if (u != nullptr)
+        undoables.erase(u);
 }
 
 /**
  * Return number of undoables in cycle
  */
-size_t RS_UndoCycle::size()
+size_t RS_UndoCycle::size() const
 {
     return undoables.size();
+}
+
+bool RS_UndoCycle::empty() const
+{
+    return undoables.empty();
 }
 
 void RS_UndoCycle::changeUndoState()

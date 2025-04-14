@@ -155,11 +155,11 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
     return {};
 }
 
-bool RS_GraphicView::setEventHandlerAction(RS_ActionInterface* action){
+bool RS_GraphicView::setEventHandlerAction(std::shared_ptr<RS_ActionInterface> action){
     bool actionActive = m_eventHandler->setCurrentAction(action);
     if (actionActive) {
         if (m_eventHandler->hasAction()) {
-            emit currentActionChanged(action);
+            emit currentActionChanged(action.get());
         }
         else {
             notifyNoActiveAction();
@@ -171,7 +171,7 @@ bool RS_GraphicView::setEventHandlerAction(RS_ActionInterface* action){
 /**
  * Sets the current action of the event handler.
  */
-bool RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
+bool RS_GraphicView::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
     if (m_eventHandler != nullptr) {
         m_viewport->markRelativeZero();
         return setEventHandlerAction(action);

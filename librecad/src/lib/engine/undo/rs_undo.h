@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2025 Dongxu Li (dongxuli2011 at gmail.com)
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -48,8 +49,6 @@ public:
 
     virtual bool undo();
     virtual bool redo();
-    //	virtual std::shared_ptr<RS_UndoCycle> getUndoCycle();
-//	virtual std::shared_ptr<RS_UndoCycle> getRedoCycle();
 
     virtual int countUndoCycles();
     virtual int countRedoCycles();
@@ -76,22 +75,22 @@ public:
 protected:
     virtual void fireUndoStateChanged([[maybe_unused]]bool undoAvailable, [[maybe_unused]] bool redoAvailable) const {};
 private:
-	void addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i);
+
+    void addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle);
+
     //! List of undo list items. every item is something that can be undone.
 	std::vector<std::shared_ptr<RS_UndoCycle>> undoList;
 
     /**
-     * Index that points to the current position in the undo list.
-     * The item it points on will be undone the next time undo is called.
-     * The item after will be redone (if there is an item) when redo
-     * is called.
+     * This is the iterator pointing to the first redoCycle, ready to be called for redo
+     * this iterator could be pointing to undoList.end(), indicating there's no cycle for redo
      */
-	int undoPointer = -1;
+    decltype(undoList.cend()) m_redoPointer = undoList.cend();
 
     /**
      * Current undo cycle.
      */
-    std::shared_ptr<RS_UndoCycle> currentCycle {nullptr};
+    std::shared_ptr<RS_UndoCycle> currentCycle;
 
     int refCount {0}; ///< reference counter for nested start/end calls
 };

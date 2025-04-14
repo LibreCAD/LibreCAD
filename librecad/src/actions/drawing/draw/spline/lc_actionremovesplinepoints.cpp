@@ -28,7 +28,7 @@
 #include "lc_actionsplinemodifybase.h"
 
 namespace {
-    const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
 }
 
 LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(LC_ActionContext *actionContext)
@@ -45,7 +45,7 @@ void LC_ActionRemoveSplinePoints::doAfterTrigger() {
 void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr){
                if (mayModifySplineEntity(entity)) {
                    highlightHoverWithRefPoints(entity, true);
@@ -73,7 +73,7 @@ void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, LC_Mo
 void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);

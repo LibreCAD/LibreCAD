@@ -47,7 +47,7 @@ void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
     if(status >= 0 ) {
         // fixme - sand - files direct action creation!
-        m_graphicView->setCurrentAction(new RS_ActionSelectSingle(m_actionContext, this, entityTypeList));
+        m_graphicView->setCurrentAction(std::make_shared<RS_ActionSelectSingle>(m_actionContext, this, entityTypeList));
     }
     deleteSnapper();
 }

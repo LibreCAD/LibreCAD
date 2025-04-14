@@ -27,20 +27,23 @@
 
 #include<iostream>
 
-#include "rs_undocycle.h"
+#include<unordered_set>
+
+#include "qc_applicationwindow.h"
+#include "rs_debug.h"
 #include "rs_undo.h"
+#include "rs_undocycle.h"
 
 #include <list>
 #include <algorithm>
-
-#include "rs_debug.h"
 
 /**
  * @return Number of Cycles that can be undone.
  */
 int RS_Undo::countUndoCycles() {
     RS_DEBUG->print("RS_Undo::countUndoCycles");
-    return undoPointer+1;
+
+    return std::distance(undoList.cbegin(), m_redoPointer);
 }
 
 /**
@@ -48,18 +51,16 @@ int RS_Undo::countUndoCycles() {
  */
 int RS_Undo::countRedoCycles() {
     RS_DEBUG->print("RS_Undo::countRedoCycles");
-    return undoList.size()-1-undoPointer;
+
+    return std::distance(m_redoPointer, undoList.cend());
 }
 
 /**
  * @return true, when current undo cycle has at least one undoable
  */
-bool RS_Undo::hasUndoable(){
-    if (nullptr != currentCycle
-        && 0 < currentCycle->size()) {
-        return true;
-    }
-    return false;
+bool RS_Undo::hasUndoable()
+{
+    return  nullptr != currentCycle && !currentCycle->empty();
 }
 
 /**
@@ -67,9 +68,15 @@ bool RS_Undo::hasUndoable(){
  * All Cycles after the new one are removed and the Undoabels
  * on them deleted.
  */
-void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i) {
+void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle) {
     RS_DEBUG->print("RS_Undo::addUndoCycle");
-	undoList.insert(undoList.begin() + (++undoPointer), i);
+
+//    undoList.insert(++undoPointer, i);
+    undoList.push_back(std::move(undoCycle));
+    m_redoPointer = undoList.cend();
+
+    updateUndoState();
+
     RS_DEBUG->print("RS_Undo::addUndoCycle: ok");
 }
 
@@ -82,40 +89,36 @@ void RS_Undo::startUndoCycle(){
         // only the first fresh top call starts a new cycle
         return;
     }
-    size_t  removePointer {static_cast<size_t>(undoPointer + 1)};
+
+    // anything after the current existing undoCycle will be removed
     // if there are undo cycles behind undoPointer
     // remove obsolete entities and undoCycles
-    if (undoList.size() > removePointer) {
+    if (undoList.cend() != m_redoPointer) {
         // collect remaining undoables
-        std::list<RS_Undoable*> keep;
-        for (auto it = undoList.begin(); it != undoList.begin() + removePointer; ++it) {
-            for (auto u: (*it)->getUndoables()){
-                keep.push_back( u);
+        std::unordered_set<RS_Undoable*> keep;
+        for (auto it = undoList.begin(); it != m_redoPointer; ++it) {
+            for (RS_Undoable* undoable: (*it)->getUndoables()){
+                keep.insert(undoable);
             }
         }
-        keep.unique();
 
         // collect obsolete undoables
-        std::list<RS_Undoable*> obsolete;
-        for (auto it = undoList.begin() + removePointer; it != undoList.end(); ++it) {
-            for (auto u: (*it)->getUndoables()){
-                obsolete.push_back( u);
+        std::unordered_set<RS_Undoable*> obsolete;
+        for (auto it = m_redoPointer; it != undoList.end(); ++it) {
+            for (RS_Undoable* undoable: (*it)->getUndoables()){
+                obsolete.insert(undoable);
             }
         }
-        // unique() only works correct on sorted list!
-        obsolete.sort();
-        obsolete.unique();
 
         // delete obsolete undoables which are not in keep list
-        for (auto it = obsolete.begin(); it != obsolete.end(); ++it) {
-            if (keep.end() == std::find( keep.begin(), keep.end(), *it)) {
-                removeUndoable( *it);
+        for (RS_Undoable* undoable: obsolete) {
+            if (keep.end() == keep.find(undoable)) {
+                removeUndoable(undoable);
             }
         }
         // clean up obsolete undoCycles
-        while (undoList.size() > removePointer) {
-            undoList.pop_back();
-        }
+        undoList.erase(m_redoPointer, undoList.cend());
+        m_redoPointer = undoList.cend();
     }
 
     // alloc new undoCycle
@@ -148,7 +151,7 @@ void RS_Undo::endUndoCycle(){
         }
     }
     else {
-        RS_DEBUG->print( RS_Debug::D_WARNING, "Warning: RS_Undo::endUndoCycle() called without previous startUndoCycle()  %d", refCount);
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Warning: RS_Undo::endUndoCycle() called without previous startUndoCycle()  %d", refCount);
         return;
     }
 
@@ -158,7 +161,7 @@ void RS_Undo::endUndoCycle(){
     }
 
     updateUndoState();
-    currentCycle = nullptr; // invalidate currentCycle for next startUndoCycle()
+    currentCycle.reset(); // invalidate currentCycle for next startUndoCycle()
 }
 
 /**
@@ -166,10 +169,13 @@ void RS_Undo::endUndoCycle(){
  */
 bool RS_Undo::undo() {
     RS_DEBUG->print("RS_Undo::undo");
-	if (undoPointer < 0) {
-	    return false;
-	}
-	std::shared_ptr<RS_UndoCycle> uc = undoList[undoPointer--];
+
+    if (m_redoPointer == undoList.cbegin())
+        return false;
+
+    m_redoPointer = std::prev(m_redoPointer);
+    std::shared_ptr<RS_UndoCycle> uc = *m_redoPointer;
+
 	updateUndoState();
 	uc->changeUndoState();
 	return true;
@@ -181,8 +187,11 @@ bool RS_Undo::undo() {
 bool RS_Undo::redo() {
     RS_DEBUG->print("RS_Undo::redo");
 
-	if (undoPointer+1 < int(undoList.size())) {
-		std::shared_ptr<RS_UndoCycle> uc = undoList[++undoPointer];
+    if (m_redoPointer != undoList.cend()) {
+
+        std::shared_ptr<RS_UndoCycle> uc = *m_redoPointer;
+        m_redoPointer = std::next(m_redoPointer);
+
 		updateUndoState();
 		uc->changeUndoState();
 		return true;
@@ -190,14 +199,16 @@ bool RS_Undo::redo() {
     return false;
 }
 
+
+
 /**
   * enable/disable redo/undo buttons in main application window
   * Author: Dongxu Li
   **/
 void RS_Undo::updateUndoState() const{
     std::size_t undoListSize = undoList.size();
-    bool redoAvailable = undoListSize > 0 && undoPointer+1 < int(undoListSize);
-    bool undoAvailable = undoListSize > 0 && undoPointer >= 0;
+    bool redoAvailable = m_redoPointer != undoList.end();
+    bool undoAvailable = !undoList.empty() && m_redoPointer != undoList.cbegin();
     fireUndoStateChanged(undoAvailable, redoAvailable);
 }
 
@@ -206,15 +217,12 @@ void RS_Undo::updateUndoState() const{
  */
 std::ostream& operator << (std::ostream& os, RS_Undo& l) {
     os << "Undo List: " <<  "\n";
-    os << " Pointer is at: " << l.undoPointer << "\n";
+    int position = std::distance(l.undoList.cbegin(), l.m_redoPointer);
+    os << " Redo Pointer is at: " << position << "\n";
 
-	for (int i = 0; i < int(l.undoList.size()); ++i) {
-
-		if (i==l.undoPointer)
-            os << " -->";
-		else
-            os << "    ";
-        os << *(l.undoList.at(i)) << "\n";
+    for(auto it = l.undoList.cbegin(); it != l.undoList.cend(); ++it) {
+        os << ((it != l.m_redoPointer) ? "    " : " -->");
+        os << *it << "\n";
     }
     return os;
 }

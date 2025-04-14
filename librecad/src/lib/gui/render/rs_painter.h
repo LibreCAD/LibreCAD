@@ -143,11 +143,11 @@ public:
     // just draws circle without trying to use any interpolations, used by overlays etc...
     void drawCircleUIDirect(const RS_Vector& uiPos, double uiRadius);
     void drawCircleUI(double uiCenterX, double uiCenterY, double uiRadius);
-    void drawLineUISimple(const double &x1, const double &y1, const double &x2, const double &y2);
+    void drawLineUISimple(double x1, double y1, double x2, double y2);
     void drawLineUISimple(const RS_Vector &p1, const RS_Vector &p2);
     void drawText(const QRect &uiRect, int flags, const QString &text, QRect *uiBoundingBox);
     void drawText(const QRect &rect, const QString &text, QRect *boundingBox);
-    void drawRectUI(const double uiX1, const double uiY1, const double uiX2, const double uiY2);
+    void drawRectUI(double uiX1, double uiY1, double uiX2, double uiY2);
     void drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsize);
 
     // methods invoked from entity containers and printing
@@ -172,7 +172,7 @@ public:
     void setPointsMode(int pdMode){pointsMode = pdMode;}
 
     void drawGridPoint(const RS_Vector& p);
-    void drawGridPoint(const double& x, const double& y);
+    void drawGridPoint(double x, double y);
 
 
     void fillRect(int x1, int y1, int w, int h, const RS_Color& col);
@@ -326,7 +326,8 @@ protected:
     void drawArcEntityUI( double uiCenterX,double uiCenterY,double uiRadiusX,double uiRadiusY,double uiStartAngleDegrees,double angularLength);
     void drawArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY,
                  double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
-    void drawLineUI(const double &x1, const double &y1, const double &x2, const double &y2);
+    void drawLineUI(double x1, double y1, double x2, double y2);
+    void drawLineUI(const QPointF& startPoint, const QPointF& endPoint);
     void drawImgUI(QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
     void drawRectUI(const RS_Vector& p1, const RS_Vector& p2);

@@ -457,7 +457,7 @@ void RS_PreviewActionInterface::initRefEntitiesMetrics(){
         m_highlightEntitiesOnHover = LC_GET_BOOL("VisualizeHovering", true);
         m_highlightEntitiesRefPointsOnHover = LC_GET_BOOL("VisualizeHoveringRefPoints", true);
 
-        bool ok;
+        bool ok=false;
         m_refPointSize = RS_Math::eval(pdsizeStr, &ok);
         if (!ok) {
             m_refPointSize = LC_DEFAULTS_PDSize;

@@ -117,7 +117,7 @@ public:
 /**
  * create a tangent line which is orthogonal to the given RS_Line(normal)
  */
-    RS_Line* createLineOrthTan(const RS_Vector& coord,
+    std::unique_ptr<RS_Line> createLineOrthTan(const RS_Vector& coord,
                                RS_Line* normal,
                                RS_Entity* circle,
                                RS_Vector& alternativeTangent);
@@ -125,7 +125,7 @@ public:
                             RS_Entity* circle1,
                             RS_Entity* circle2);
 
-    RS_Line* createLineRelAngle(const RS_Vector& coord,
+    std::unique_ptr<RS_Line> createLineRelAngle(const RS_Vector& coord,
                                 RS_Entity* entity,
                                 double angle,
                                 double length);
@@ -152,14 +152,18 @@ public:
 
     RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
-protected:
+private:
     RS_EntityContainer* m_container{nullptr};
     RS_Graphic* m_graphic{nullptr};
     RS_Document* m_document{nullptr};
     RS_GraphicView* m_graphicView{nullptr};
     LC_GraphicViewport*  m_viewport{nullptr};
     bool handleUndo = false;
-private:
+    /**
+    * @brief setupAndAddEntity - returns true, if ownership is taken by undo cycles
+    * @param en
+    * @return
+    */
     void setupAndAddEntity(RS_Entity* en) const;
 };
 

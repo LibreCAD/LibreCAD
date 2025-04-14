@@ -24,8 +24,6 @@ jobs:
           sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
           sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
           sudo apt-get -qq install cmake
-          sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
-          sudo rm -rf /usr/local/lib/android
           
       - name: Set Dark splash
         # Test setting dark splash screen for `2.2.2_alpha`,
@@ -45,7 +43,6 @@ jobs:
           
       - name: Create AppImage
         run: |
-          find unix/
           QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
           mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
       - name: List files
@@ -79,8 +76,6 @@ jobs:
           sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev
           sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
           sudo apt-get -qq install cmake
-          #sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
-          sudo rm -rf /usr/local/lib/android
 
       - name: Install Clang
         run: |

@@ -172,7 +172,7 @@ void RS_Painter::drawGridPoint(const RS_Vector& p) {
     QPainter::drawPoint(QPointF(p.x, p.y));
 }
 
-void RS_Painter::drawGridPoint(const double &x, const double &y) {
+void RS_Painter::drawGridPoint(double x, double y) {
     QPainter::drawPoint(QPointF(x, y));
 }
 
@@ -250,8 +250,7 @@ void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices)
     QPolygonF uiPolygon;
     for(const RS_Vector& wcsVertex: wcsVertices) {
         if (wcsVertex.valid) {
-            const RS_Vector& uiVertex = toGui(wcsVertex);
-            uiPolygon.push_back({uiVertex.x, uiVertex.y});
+            uiPolygon.push_back(toGuiPointF(wcsVertex));
         }
     }
 
@@ -271,9 +270,7 @@ void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, co
 
 
 void RS_Painter::drawLineWCS(const RS_Vector& wcsP1, const RS_Vector& wcsP2){
-    const RS_Vector uiP1 = toGui(wcsP1);
-    const RS_Vector uiP2 = toGui(wcsP2);
-    drawLineUI(uiP1.x, uiP1.y, uiP2.x, uiP2.y);
+    drawLineUI(toGuiPointF(wcsP1), toGuiPointF(wcsP2));
 }
 
 /**
@@ -283,17 +280,23 @@ void RS_Painter::drawLineUISimple(const RS_Vector& p1, const RS_Vector& p2){
     QPainter::drawLine(QPointF(p1.x, p1.y),QPointF(p2.x, p2.y));
 }
 
-void RS_Painter::drawLineUISimple(const double &x1, const double &y1, const double &x2, const double &y2){
+void RS_Painter::drawLineUISimple(double x1, double y1, double x2, double y2){
     QPainter::drawLine(QPointF(x1, y1),QPointF(x2, y2));
 }
 
-void RS_Painter::drawLineUI(const double &x1, const double &y1, const double &x2, const double &y2){
-    if(QPointF(x2-x1, y2-y1).manhattanLength() > minLineDrawingLen) {
-        QPainter::drawLine(QPointF(x1, y1),QPointF(x2, y2));
+void RS_Painter::drawLineUI(const QPointF& startPoint, const QPointF& endPoint)
+{
+    if((startPoint - endPoint).manhattanLength() > minLineDrawingLen) {
+        QPainter::drawLine(startPoint, endPoint);
     }
     else{
-        QPainter::drawPoint(QPointF(x1, y1));
+        QPainter::drawPoint((startPoint + endPoint) * 0.5);
     }
+}
+
+void RS_Painter::drawLineUI(double x1, double y1, double x2, double y2)
+{
+    drawLineUI({x1, y1}, {x2, y2});
 }
 
 #define DEBUG_ARC_RENDERING_NO
@@ -997,7 +1000,7 @@ void RS_Painter::drawImgWCS(QImage& img, const RS_Vector& wcsInsertionPoint,
 
 void RS_Painter::drawImgUI(QImage& img, const RS_Vector& uiInsert,
                            const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
-    save();
+    PainterGuard painterGuard(*this);
 
 //    LC_ERR << "IMG FACTOR " << factor;
     // Render smooth only at close zooms
@@ -1009,8 +1012,8 @@ void RS_Painter::drawImgUI(QImage& img, const RS_Vector& uiInsert,
         RS_Painter::setRenderHint(SmoothPixmapTransform);
     }
 
-    RS_Vector un = uVector/uVector.magnitude();
-    RS_Vector vn = vVector/vVector.magnitude();
+    RS_Vector un = uVector.normalized();
+    RS_Vector vn = vVector.normalized();
 
     // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
     // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
@@ -1025,26 +1028,23 @@ void RS_Painter::drawImgUI(QImage& img, const RS_Vector& uiInsert,
     setWorldTransform(*wm);
 
     drawImage(0,-img.height(), img);
-
-    restore();
 }
 
 void RS_Painter::drawTextH(int x1, int y1,
-                             int x2, int y2,
-                             const QString& text) {
+                           int x2, int y2,
+                           const QString& text) {
     QPainter::drawText(x1, y1, x2, y2,Qt::AlignRight|Qt::AlignVCenter,text);
 }
 
 void RS_Painter::drawTextV(int x1, int y1,
-                             int x2, int y2,
-                             const QString& text) {
-    save();
+                           int x2, int y2,
+                           const QString& text) {
+    PainterGuard painterGuard{*this};
     QTransform wm = worldTransform();
     wm.rotate(-90.0);
     setWorldTransform(wm);
 
     QPainter::drawText(x1, y1, x2, y2,Qt::AlignRight|Qt::AlignVCenter,text);
-    restore();
 }
 
 void RS_Painter::fillRect(int x1, int y1, int w, int h,
@@ -1248,7 +1248,7 @@ void RS_Painter::setBrushColor(const RS_Color& color) {
             break;
 
         default:
-            QPainter::setBrush( color);
+            QPainter::setBrush(color);
             break;
     }
 }
@@ -1330,7 +1330,7 @@ void RS_Painter::setMinLineDrawingLen(double val) {
     minLineDrawingLen = val;
 }
 
-void RS_Painter::drawRectUI(const double uiX1, const double uiY1, const double uiX2, const double uiY2) {
+void RS_Painter::drawRectUI(double  uiX1, double  uiY1, double  uiX2, double  uiY2) {
     drawPolygon(QRect(int(uiX1 + 0.5), int(uiY1 + 0.5), int(uiX2 - uiX1 + 0.5), int(uiY2 - uiY1 + 0.5)));
 }
 
@@ -1339,8 +1339,8 @@ void RS_Painter::drawRectUI(const RS_Vector& p1, const RS_Vector& p2) {
 }
 
 void RS_Painter::drawHandleWCS(const RS_Vector& wcsPos, const RS_Color& c, int size) {
-    RS_Vector uiPos = toGui(wcsPos);
-    fillRect((int)(uiPos.x - size), (int)(uiPos.y - size), 2 * size, 2 * size, c);
+    QPointF uiPos = toGuiPointF(wcsPos);
+    fillRect(QRectF{uiPos - QPointF(size, size), QSize{size, size}*2}, c);
 }
 
 void RS_Painter::setMinRenderableTextHeightInPx(int i) {
@@ -1358,18 +1358,19 @@ void RS_Painter::updateDashOffset(RS_Entity *e) {
 }
 
 int RS_Painter::determinePointScreenSize(double pdsize) const{
-    int screenPointSize;
     int deviceHeight = getHeight();
-    if (pdsize == 0){
-        screenPointSize = deviceHeight / 20;
+    if (!std::isnormal(pdsize)){
+        int screenPointSize = deviceHeight / 20;
+        return screenPointSize;
     }
     else if (DXF_FORMAT_PDSize_isPercent(pdsize)){
-        screenPointSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
+        int screenPointSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
+        return screenPointSize;
     }
     else {
-        screenPointSize = toGuiDY(pdsize);
+        int screenPointSize = toGuiDY(pdsize);
+        return screenPointSize;
     }
-    return screenPointSize;
 }
 
 void RS_Painter::updatePointsScreenSize(double pdSize) {

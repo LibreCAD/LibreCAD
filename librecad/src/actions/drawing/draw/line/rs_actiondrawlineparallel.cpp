@@ -134,13 +134,13 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
                 finish(false);
                 accept = true;
                 // fixme - sand - files - direct action creation
-                m_graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(m_actionContext));
+                m_graphicView->setCurrentAction(std::make_shared<RS_ActionDrawLineParallelThrough>(m_actionContext));
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);
                 accept = true;
             } else {
-                bool ok;
+                bool ok = false;
                 double d = RS_Math::eval(c, &ok);
                 accept = true;
                 if (ok && d > 1.0e-10){
@@ -155,7 +155,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetNumber: {
-            bool ok;
+            bool ok = false;
             int n = c.toInt(&ok);
             if (ok){
                 accept = true;

@@ -37,6 +37,7 @@ class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
     RS_ActionDrawLineOrthTan(LC_ActionContext *actionContext);
+    ~RS_ActionDrawLineOrthTan() override;
     void finish(bool updateTB) override;
 protected:
     enum Status {
@@ -47,8 +48,8 @@ protected:
     void clearLines();
     /** normal to tangent. */
     RS_Line* normal = nullptr; // the select normal line
-    /** tangent. */
-    RS_Line* tangent = nullptr; //holds the tangent line for preview
+    /** m_tangent. */
+    std::unique_ptr<RS_Line> m_tangent; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;

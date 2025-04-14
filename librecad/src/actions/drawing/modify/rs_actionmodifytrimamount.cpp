@@ -41,7 +41,7 @@ namespace {
 
     //list of entity types supported by current action. In general, entities that has proper implementation of trimStartpoint() and trimEndpoint()
     // might be supported. For now, we'll support Line and Arc
-    const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc/*, RS2::EntityParabola,RS2::EntityEllipse*/};
+    const auto g_enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc/*, RS2::EntityParabola,RS2::EntityEllipse*/};
 }
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(LC_ActionContext *actionContext)
@@ -93,7 +93,7 @@ double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) co
 
 void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector coord =  e->graphPoint;
-    auto en = catchAndDescribe(e, enTypeList, RS2::ResolveNone);
+    auto en = catchAndDescribe(e, g_enTypeList, RS2::ResolveNone);
     deleteSnapper();
     if (en != nullptr){
         if (en->isAtomic()){
@@ -167,7 +167,7 @@ void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, LC_MouseEve
     switch (status) {
         case ChooseTrimEntity: {
             *trimCoord = e->graphPoint;
-            RS_Entity* en = catchEntityByEvent(e, enTypeList, RS2::ResolveNone);
+            RS_Entity* en = catchEntityByEvent(e, g_enTypeList, RS2::ResolveNone);
             if (en == nullptr){
                 commandMessage(tr("No entity found."));
             }

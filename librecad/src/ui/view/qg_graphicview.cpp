@@ -228,13 +228,13 @@ void QG_GraphicView::editAction( RS_Entity& entity){
             }};
 
             // fixme - sand - files - explicit action creation
-            auto* action = new RS_ActionBlocksEdit(m_actionContext);
+            auto action = std::make_shared<RS_ActionBlocksEdit>(m_actionContext);
             setCurrentAction(action);
             break;
         }
         default:{
             // fixme - sand - files - explicit action creation
-            auto* action = new RS_ActionModifyEntity(m_actionContext, false);
+            auto action = std::make_shared<RS_ActionModifyEntity>(m_actionContext, false);
             action->setEntity(&entity);
             setCurrentAction(action);
             action->trigger();
@@ -515,7 +515,7 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     // pan zoom with middle mouse button
     if (event->button()==Qt::MiddleButton){
         // fixme - sand - rework this and ensure there is not delay for pan start!!!
-        auto *action = new RS_ActionZoomPan(m_actionContext);
+        auto action = std::make_shared<RS_ActionZoomPan>(m_actionContext);
         if (setCurrentAction(action)){
             // FIXME - SAND - Crash is here due to already deleted action???
             action->mousePressEvent(event); // try to avoid delay as possible
@@ -531,7 +531,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
         default:
             break;
         case Qt::MiddleButton:
-            setCurrentAction(new RS_ActionZoomAuto(m_actionContext));
+            setCurrentAction(std::make_shared<RS_ActionZoomAuto>(m_actionContext));
             break;
         case Qt::LeftButton:
             if (m_menus.contains("Double-Click")){
@@ -665,7 +665,7 @@ bool QG_GraphicView::event(QEvent *event){
             RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
             // todo - sand - ucs - replace by direct zoom call?
             // fixme - sand - files - explicit action creation
-            setCurrentAction(new RS_ActionZoomIn(m_actionContext, direction,
+            setCurrentAction(std::make_shared<RS_ActionZoomIn>(m_actionContext, direction,
                                                  RS2::Both, &mouse, factor));
         }
 
@@ -689,8 +689,8 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         case QPointingDevice::PointerType::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (getContainer() != nullptr) {
-                    // fixme - sand - files - explicit action creation
-                    auto a =new RS_ActionSelectSingle(m_actionContext);
+			    auto a =
+                        std::make_shared<RS_ActionSelectSingle>(m_actionContext);
                     setCurrentAction(a);
                     QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
                                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
@@ -698,8 +698,8 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                     a->finish();
 
                     if (getContainer()->countSelected()>0) {
-                        // fixme - sand - files - explicit action creation
-                        setCurrentAction(new RS_ActionModifyDelete(m_actionContext));
+                        setCurrentAction(
+                            std::make_shared<RS_ActionModifyDelete>(m_actionContext));
                     }
                 }
             }
@@ -867,7 +867,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 }
                 // todo - sand - ucs - replace by direct zoom call??
                 // fixme - sand - files - explicit action creation
-                setCurrentAction(new RS_ActionZoomIn(m_actionContext, direction, RS2::Both, &mouse, factor));
+                setCurrentAction(std::make_shared<RS_ActionZoomIn>(m_actionContext, direction, RS2::Both, &mouse, factor));
             }
             else{
                 int hDelta = (m_invertHorizontalScroll) ? -numPixels.x() : numPixels.x();
@@ -880,7 +880,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 }
                 else {
                     // todo - sand - ucs - replace by direct zoom call??
-                    setCurrentAction(new RS_ActionZoomScroll(hDelta, vDelta,m_actionContext));
+                    setCurrentAction(std::make_shared<RS_ActionZoomScroll>(hDelta, vDelta,m_actionContext));
                 }
             }
             redraw();
@@ -1032,7 +1032,7 @@ void QG_GraphicView::keyPressEvent(QKeyEvent * e){
     }
 
     if (scroll) {
-        setCurrentAction(new RS_ActionZoomScroll(direction, m_actionContext));
+        setCurrentAction(std::make_shared<RS_ActionZoomScroll>(direction, m_actionContext));
     }
     getEventHandler()->keyPressEvent(e);
 }

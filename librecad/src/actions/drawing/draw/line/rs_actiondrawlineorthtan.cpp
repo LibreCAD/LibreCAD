@@ -22,14 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_creation.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
+
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
 
 namespace{
-    auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
+//this holds a list of entity types which supports tangent
+const auto g_circleList = EntityTypeList{{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}};
 }
 
 /**
@@ -38,24 +38,24 @@ namespace{
  * @author Dongxu Li
  */
 RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Draw Tangent Orthogonal", actionContext,RS2::ActionDrawLineOrthTan)
-	,normal(nullptr)
-	,tangent(nullptr)
-	,circle(nullptr){
+    :RS_PreviewActionInterface("Draw Tangent Orthogonal", actionContext,RS2::ActionDrawLineOrthTan){
 }
 
-
+RS_ActionDrawLineOrthTan::~RS_ActionDrawLineOrthTan() = default;
 void RS_ActionDrawLineOrthTan::finish(bool updateTB){
 	clearLines();
     RS_PreviewActionInterface::finish(updateTB);
 }
 
 void RS_ActionDrawLineOrthTan::doTrigger() {
-    if (!tangent) return;
-    RS_Entity *newEntity = new RS_Line(m_container, tangent->getData());
+    if (!m_tangent)
+        return;
+    // fixme - sand - files - MERGE - what for smart pointer is used there??
+    auto newEntity = std::make_unique<RS_Line>(m_container, m_tangent->getData());
 
-    setPenAndLayerToActive(newEntity);
-    undoCycleAdd(newEntity);
+    setPenAndLayerToActive(newEntity.get());
+    undoCycleAdd(newEntity.get());
+    newEntity.release();
 
     setStatus(SetCircle);
     circle = nullptr;
@@ -74,21 +74,26 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             RS_Vector mouse = e->graphPoint;
             highlightSelected(normal);
             deleteSnapper();
-            RS_Entity *en = catchAndDescribe(e, circleList, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, g_circleList, RS2::ResolveAll);
             if (en != nullptr){
                 circle = en;
                 highlightHover(en);
                 RS_Vector alternativeTangentPoint;
                 RS_Creation creation(m_preview.get(), m_viewport, false);
-                tangent = creation.createLineOrthTan(mouse,
+                m_tangent = creation.createLineOrthTan(mouse,
                                                      normal,
                                                      circle, alternativeTangentPoint);
-                if (tangent != nullptr){
-                    previewEntityToCreate(tangent, false);
+                // fixme - sand - files - MERGE REGRESSION - DIRTY
+
+                if (m_tangent != nullptr){
+                    // merged
+                    previewLine(m_tangent->getStartpoint(), m_tangent->getEndpoint());
+                    // original
+                   // previewEntityToCreate(m_tangent.get(), false);
                     previewRefSelectablePoint(alternativeTangentPoint);
-                    previewRefSelectablePoint(tangent->getEndpoint());
+                    previewRefSelectablePoint(m_tangent->getEndpoint());
                     if (m_showRefEntitiesOnPreview) {
-                        previewRefPoint(tangent->getStartpoint());
+                        previewRefPoint(m_tangent->getStartpoint());
                     }
                 }
             }
@@ -98,8 +103,9 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionDrawLineOrthTan::clearLines(){
-    if (circle) circle = nullptr;
+void RS_ActionDrawLineOrthTan::clearLines()
+{
+    circle = nullptr;
     deletePreview();
 }
 
@@ -119,7 +125,7 @@ void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, LC_MouseEven
             break;
         }
         case SetCircle: {
-            if (tangent != nullptr) {
+            if (m_tangent != nullptr) {
                 trigger();
             }
             break;

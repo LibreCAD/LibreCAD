@@ -1487,10 +1487,11 @@ void QC_ApplicationWindow::slotImportBlock() {
 
     // fixme - sand - files - rework - provide the user with error info?
     if (QFileInfo(dxfPath).isReadable()) {
-        if (m_actionHandler != nullptr) {
-            RS_ActionInterface *a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
-            if (a != nullptr) {
-                auto *action = static_cast<RS_ActionLibraryInsert*>(a);  // fixme - sand - files - direct action? Rework
+        if (m_actionHandler!=nullptr) {
+		std::shared_ptr<RS_ActionInterface> a =
+                m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
+            if (a) {
+                auto action = static_cast<RS_ActionLibraryInsert*>(a.get());
                 action->setFile(dxfPath);
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,"QC_ApplicationWindow::slotImportBlock:"

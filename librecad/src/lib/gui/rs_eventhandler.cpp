@@ -48,7 +48,7 @@ namespace {
     }
 
     bool isInactive(const std::shared_ptr<RS_ActionInterface>& action) {
-        return action == nullptr || action->isFinished();
+        return ! isActive(action);
     }
 }
 
@@ -315,14 +315,19 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
 /**
  * Sets the current action.
  */
-bool RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
+bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction");
     if (action==nullptr) {
         return false;
     }
-    std::shared_ptr<RS_ActionInterface> actionHolder{action};
+    // Do not initialize action if it's already the last one.
+    // This is attempt to fix crashes of dialogs (like properties) which are called from actions
+    // todo - check again, either remove or uncomment
+//    if (hasAction() && currentActions.last().get() == action){
+//        return;
+//    }
 
-    RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", actionHolder->getName().toLatin1().data());
+    LC_LOG<<"RS_EventHandler::setCurrentAction " << action->getName();
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? m_currentActions.last() : m_defaultAction;
     // Suspend current action:
@@ -330,18 +335,21 @@ bool RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     predecessor->hideOptions();
 
     // Set current action:
-    m_currentActions.push_back(actionHolder);
+    m_currentActions.push_back(action);
+    //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
+    //                    predecessor->getName().toLatin1().data(),
+    //                    currentActions.last()->getName().toLatin1().data());
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
-    actionHolder->init(0);
+    action->init(0);
     // ## new:
     bool passedActionIsNotFinished = false;
-    if (!actionHolder->isFinished()) {
+    if (!action->isFinished()) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
-        actionHolder->showOptions();
+        action->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
-        actionHolder->setPredecessor(predecessor.get());
+        action->setPredecessor(predecessor.get());
         passedActionIsNotFinished = true;
     }
 

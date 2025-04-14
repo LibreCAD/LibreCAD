@@ -28,7 +28,7 @@
 
 
 namespace {
-    const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
 }
 
 LC_ActionSplineRemoveBetween::LC_ActionSplineRemoveBetween(LC_ActionContext *actionContext)
@@ -46,7 +46,7 @@ void LC_ActionSplineRemoveBetween::doOnEntityNotCreated() {
 void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -83,7 +83,7 @@ void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, LC_M
 void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);

@@ -32,7 +32,7 @@
 namespace {
     // fixme - sand - think about support parabola as other splines
 
-    const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
 }
 
 // fixme - potentially, the action may be expanded even more - and used to expand circle, arcs, and ellipses to lines.
@@ -105,7 +105,7 @@ void LC_ActionSplineExplode::setupAndAddCreatedEntity(RS_Entity *createdEntity, 
 void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -123,7 +123,7 @@ void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, LC_MouseEv
 }
 
 void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
-    auto entity = catchEntityByEvent(e, enTypeList);
+    auto entity = catchEntityByEvent(e, g_enTypeList);
     if (entity != nullptr) {
         if (mayModifySplineEntity(entity)) {
             entityToModify = entity;

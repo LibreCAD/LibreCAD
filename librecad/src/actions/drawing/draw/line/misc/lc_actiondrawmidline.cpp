@@ -31,7 +31,7 @@
 namespace {
 
     //list of entity types supported by current action - only lines so far
-    const auto enTypeList = EntityTypeList{RS2::EntityLine};
+    const auto g_enTypeList = EntityTypeList{RS2::EntityLine};
 }
 
 LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
@@ -60,7 +60,7 @@ void LC_ActionDrawMidLine::doTrigger() {
 void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity1: {
-            RS_Entity* ent = catchAndDescribe(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchAndDescribe(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
             }
@@ -68,7 +68,7 @@ void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetEntity2:{
             highlightSelected(firstEntity);
-            RS_Entity* ent = catchAndDescribe(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchAndDescribe(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
                 bool alternate = e->isShift;
@@ -165,7 +165,7 @@ void LC_ActionDrawMidLine::prepareLine(LC_ActionDrawMidLine::LineInfo &info, RS_
 void LC_ActionDrawMidLine::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity1: {
-            RS_Entity* ent = catchEntityByEvent(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityByEvent(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 firstEntity = ent;
                 setStatus(SetEntity2);
@@ -175,7 +175,7 @@ void LC_ActionDrawMidLine::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
         }
         case SetEntity2:{
             highlightSelected(firstEntity);
-            RS_Entity* ent = catchEntityByEvent(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityByEvent(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 secondEntity = ent;
             }

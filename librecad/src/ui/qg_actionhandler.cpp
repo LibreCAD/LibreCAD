@@ -257,9 +257,9 @@ RS_ActionInterface *QG_ActionHandler::getCurrentAction() const {
  *
  * @return Pointer to the created action or nullptr.
  */
-RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
+std::shared_ptr<RS_ActionInterface> QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    RS_ActionInterface* a = nullptr;
+    std::shared_ptr<RS_ActionInterface> a;
 //    view->killAllActions();
 
     RS_DEBUG->print("QC_ActionHandler::setCurrentAction: "
@@ -276,17 +276,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
 
     switch (id) {
-        /*case RS2::ActionFileNewTemplate:
-            a = new RS_ActionFileNewTemplate(m_actionContext);
-            break;
-        case RS2::ActionFileOpen:
-            a = new RS_ActionFileOpen(m_actionContext);
-            break;*/
-     /*   case RS2::ActionFileSaveAs:
-            a = new RS_ActionFileSaveAs(m_actionContext);
-            break;*/
+
+
         case RS2::ActionFileExportMakerCam:
-            a = new LC_ActionFileExportMakerCam(m_actionContext);
+            a = std::make_shared<LC_ActionFileExportMakerCam>(m_actionContext);
             break;
 
             // Editing actions:
@@ -305,784 +298,779 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             //to avoid operation on deleted entities, Undo action invalid all suspended
             //actions
             killAllActions();
-            a = new RS_ActionEditUndo(true, m_actionContext);
+            a = std::make_shared<new RS_ActionEditUndo>(true, m_actionContext);
             break;
         case RS2::ActionEditRedo:
-            a = new RS_ActionEditUndo(false, m_actionContext);
+            a = std::make_shared<RS_ActionEditUndo>(false, m_actionContext);
             break;
         case RS2::ActionEditCut:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, m_actionContext, RS2::ActionEditCutNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, m_actionContext, RS2::ActionEditCutNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCutNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT, m_actionContext);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::CUT, m_actionContext);
             break;
         case RS2::ActionEditCutQuick:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, m_actionContext, RS2::ActionEditCutQuickNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, m_actionContext, RS2::ActionEditCutQuickNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCutQuickNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT_QUICK, m_actionContext);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::CUT_QUICK, m_actionContext);
             break;
         case RS2::ActionEditCopy:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, m_actionContext, RS2::ActionEditCopyNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, m_actionContext, RS2::ActionEditCopyNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCopyNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY, m_actionContext);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::COPY, m_actionContext);
             break;
         case RS2::ActionEditCopyQuick:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, m_actionContext, RS2::ActionEditCopyQuickNoSelect);
+                a = std::make_shared<RS_ActionSelect>(this, m_actionContext, RS2::ActionEditCopyQuickNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionEditCopyQuickNoSelect:
-            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY_QUICK, m_actionContext);
+            a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::COPY_QUICK, m_actionContext);
             break;
         case RS2::ActionEditPaste:
-              a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::PASTE, m_actionContext);
+              a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::PASTE, m_actionContext);
 //            a = new RS_ActionEditPaste(m_actionContext);
+//              a = std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::PASTE, *document, *view);
+//           a = std::make_shared<RS_ActionEditPaste>(*document, *view);
             break;
         case RS2::ActionEditPasteTransform:
-            a = new LC_ActionEditPasteTransform(m_actionContext);
+            a = std::make_shared<LC_ActionEditPasteTransform>(m_actionContext);
             break;
         case RS2::ActionPasteToPoints:
-            a = new LC_ActionPasteToPoints(m_actionContext);
+            a = std::make_shared<LC_ActionPasteToPoints>(m_actionContext);
             break;
         case RS2::ActionOrderBottom:
-            a = new RS_ActionOrder(m_actionContext, RS2::ActionOrderBottom);
+            a = std::make_shared<RS_ActionOrder>(m_actionContext, RS2::ActionOrderBottom);
             break;
         case RS2::ActionOrderLower:
             orderType = RS2::ActionOrderLower;
-            a = new RS_ActionOrder(m_actionContext, RS2::ActionOrderLower);
+            a = std::make_shared<RS_ActionOrder>(m_actionContext, RS2::ActionOrderLower);
             break;
         case RS2::ActionOrderRaise:
-            a = new RS_ActionOrder(m_actionContext, RS2::ActionOrderRaise);
+            a = std::make_shared<RS_ActionOrder>(m_actionContext, RS2::ActionOrderRaise);
             break;
         case RS2::ActionOrderTop:
             orderType = RS2::ActionOrderTop;
-            a = new RS_ActionOrder(m_actionContext, RS2::ActionOrderTop);
+            a = std::make_shared<RS_ActionOrder>(m_actionContext, RS2::ActionOrderTop);
             break;
             // Selecting actions:
             //
         case RS2::ActionSelectSingle:
 //        view->killSelectActions();
             if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
-                a = new RS_ActionSelectSingle(m_actionContext,getCurrentAction());
+                a = std::make_shared<RS_ActionSelectSingle>(m_actionContext, getCurrentAction());
             }else{
-                a=nullptr;
+                a.reset();
             }
             break;
         case RS2::ActionSelectContour:
             view->killSelectActions();
-            a = new RS_ActionSelectContour(m_actionContext);
+            a = std::make_shared<RS_ActionSelectContour>(m_actionContext);
             break;
         case RS2::ActionSelectAll:
-            a = new RS_ActionSelectAll(m_actionContext, true);
+            a = std::make_shared<RS_ActionSelectAll>(m_actionContext, true);
             break;
         case RS2::ActionDeselectAll:
-            a = new RS_ActionSelectAll(m_actionContext, false);
+            a = std::make_shared<RS_ActionSelectAll>(m_actionContext, false);
             break;
         case RS2::ActionSelectWindow:
             view->killSelectActions();
-            a = new RS_ActionSelectWindow(view->getTypeToSelect(),m_actionContext, true);
+            a = std::make_shared<RS_ActionSelectWindow>(view->getTypeToSelect(),m_actionContext, true);
             break;
         case RS2::ActionSelectPoints:
             view->killSelectActions();
-            a = new LC_ActionSelectPoints(m_actionContext);
+            a = std::make_shared<LC_ActionSelectPoints>(m_actionContext);
             break;
         case RS2::ActionDeselectWindow:
             view->killSelectActions();
-            a = new RS_ActionSelectWindow(m_actionContext, false);
+            a = std::make_shared<RS_ActionSelectWindow>(m_actionContext, false);
             break;
         case RS2::ActionSelectInvert:
-            a = new RS_ActionSelectInvert(m_actionContext);
+            a = std::make_shared<RS_ActionSelectInvert>(m_actionContext);
             break;
         case RS2::ActionSelectIntersected:
             view->killSelectActions();
-            a = new RS_ActionSelectIntersected(m_actionContext, true);
+            a = std::make_shared<RS_ActionSelectIntersected>(m_actionContext, true);
             break;
         case RS2::ActionDeselectIntersected:
             view->killSelectActions();
-            a = new RS_ActionSelectIntersected(m_actionContext, false);
+            a = std::make_shared<RS_ActionSelectIntersected>(m_actionContext, false);
             break;
         case RS2::ActionSelectLayer:
             view->killSelectActions();
-            a = new RS_ActionSelectLayer(m_actionContext);
+            a = std::make_shared<RS_ActionSelectLayer>(m_actionContext);
             break;
             // Tool actions:
             //
         case RS2::ActionToolRegenerateDimensions:
-            a = new RS_ActionToolRegenerateDimensions(m_actionContext);
+            a = std::make_shared<RS_ActionToolRegenerateDimensions>(m_actionContext);
             break;
             // Zooming actions:
             //
         case RS2::ActionZoomIn:
-            a = new RS_ActionZoomIn(m_actionContext, RS2::In, RS2::Both);
+            a = std::make_shared<RS_ActionZoomIn>(m_actionContext, RS2::In, RS2::Both);
             break;
         case RS2::ActionZoomOut:
-            a = new RS_ActionZoomIn(m_actionContext, RS2::Out, RS2::Both);
+            a = std::make_shared<RS_ActionZoomIn>(m_actionContext, RS2::Out, RS2::Both);
             break;
         case RS2::ActionZoomAuto:
-            a = new RS_ActionZoomAuto(m_actionContext);
+            a = std::make_shared<RS_ActionZoomAuto>(m_actionContext);
             break;
         case RS2::ActionZoomWindow:
-            a = new RS_ActionZoomWindow(m_actionContext);
+            a = std::make_shared<RS_ActionZoomWindow>(m_actionContext);
             break;
         case RS2::ActionZoomPan:
-            a = new RS_ActionZoomPan(m_actionContext);
+            a = std::make_shared<RS_ActionZoomPan>(m_actionContext);
             break;
         case RS2::ActionZoomPrevious:
-            a = new RS_ActionZoomPrevious(m_actionContext);
+            a = std::make_shared<RS_ActionZoomPrevious>(m_actionContext);
             break;
         case RS2::ActionZoomRedraw:
-            a = new RS_ActionZoomRedraw(m_actionContext);
+            a = std::make_shared<RS_ActionZoomRedraw>(m_actionContext);
             break;
             // Drawing actions:
             //
         case RS2::ActionDrawPoint:
-            a = new RS_ActionDrawPoint(m_actionContext);
+            a = std::make_shared<RS_ActionDrawPoint>(m_actionContext);
             break;
         case RS2::ActionDrawLine:
-            a = new RS_ActionDrawLine(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLine>(m_actionContext);
             break;
         case RS2::ActionDrawLineAngle:
-            a = new RS_ActionDrawLineAngle(m_actionContext,false);
+            a = std::make_shared<RS_ActionDrawLineAngle>(m_actionContext,false);
             break;
         case RS2::ActionDrawLineHorizontal:
-            a = new RS_ActionDrawLineAngle(m_actionContext, true,
+            a = std::make_shared<RS_ActionDrawLineAngle>(m_actionContext, true,
                                            RS2::ActionDrawLineHorizontal);
             break;
         case RS2::ActionDrawLineHorVert:
-            a = new RS_ActionDrawLineHorVert(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineHorVert>(m_actionContext);
             break;
         case RS2::ActionDrawLineVertical:
-            a = new RS_ActionDrawLineAngle(m_actionContext, true,
+            a = std::make_shared<RS_ActionDrawLineAngle>(m_actionContext, true,
                                            RS2::ActionDrawLineVertical);
             break;
         case RS2::ActionDrawLineFree:
-            a = new RS_ActionDrawLineFree(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineFree>(m_actionContext);
             break;
         case RS2::ActionDrawLineParallel:
         case RS2::ActionDrawCircleParallel:
         case RS2::ActionDrawArcParallel:
-            a= new RS_ActionDrawLineParallel(m_actionContext, id);
+            a= std::make_shared<RS_ActionDrawLineParallel>(m_actionContext, id);
             break;
         case RS2::ActionDrawLineParallelThrough:
-            a = new RS_ActionDrawLineParallelThrough(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineParallelThrough>(m_actionContext);
             break;
         case RS2::ActionDrawLineRectangle:
-            a = new RS_ActionDrawLineRectangle(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineRectangle>(m_actionContext);
             break;
         case RS2::ActionDrawRectangle3Points:
-            a = new LC_ActionDrawRectangle3Points(m_actionContext);
+            a = std::make_shared<LC_ActionDrawRectangle3Points>(m_actionContext);
             break;
         case RS2::ActionDrawRectangle2Points:
-            a = new LC_ActionDrawRectangle2Points(m_actionContext);
+            a = std::make_shared<LC_ActionDrawRectangle2Points>(m_actionContext);
             break;
         case RS2::ActionDrawRectangle1Point:
-            a = new LC_ActionDrawRectangle1Point(m_actionContext);
+            a = std::make_shared<LC_ActionDrawRectangle1Point>(m_actionContext);
             break;
         case RS2::ActionDrawCross:
-            a = new LC_ActionDrawCross(m_actionContext);
+            a = std::make_shared<LC_ActionDrawCross>(m_actionContext);
             break;
         case RS2::ActionDrawBoundingBox:
-            a = new LC_ActionDrawBoundingBox(m_actionContext);
+            a = std::make_shared<LC_ActionDrawBoundingBox>(m_actionContext);
             break;
         case RS2::ActionDrawSnakeLine:
-            a = new LC_ActionDrawLineSnake(m_actionContext, LC_ActionDrawLineSnake::DIRECTION_POINT);
+            a = std::make_shared<LC_ActionDrawLineSnake>(m_actionContext, LC_ActionDrawLineSnake::DIRECTION_POINT);
             break;
         case RS2::ActionDrawSnakeLineX:
-            a = new LC_ActionDrawLineSnake(m_actionContext, LC_ActionDrawLineSnake::DIRECTION_X);
+            a = std::make_shared<LC_ActionDrawLineSnake>(m_actionContext, LC_ActionDrawLineSnake::DIRECTION_X);
             break;
         case RS2::ActionDrawSnakeLineY:
-            a = new LC_ActionDrawLineSnake(m_actionContext, LC_ActionDrawLineSnake::DIRECTION_Y);
+            a = std::make_shared<LC_ActionDrawLineSnake>(m_actionContext, LC_ActionDrawLineSnake::DIRECTION_Y);
             break;
         case RS2::ActionDrawSliceDivideLine:
-            a = new LC_ActionDrawSliceDivide(m_actionContext, false);
+            a = std::make_shared<LC_ActionDrawSliceDivide>(m_actionContext, false);
             break;
         case RS2::ActionDrawSliceDivideCircle:
-            a = new LC_ActionDrawSliceDivide(m_actionContext, true);
+            a = std::make_shared<LC_ActionDrawSliceDivide>(m_actionContext, true);
             break;
         case RS2::ActionDrawLinePoints:
-            a = new LC_ActionDrawLinePoints(m_actionContext,  false);
+            a = std::make_shared<LC_ActionDrawLinePoints>(m_actionContext,  false);
             break;
         case RS2::ActionDrawPointsMiddle:
-            a = new LC_ActionDrawLinePoints(m_actionContext, true);
+            a = std::make_shared<LC_ActionDrawLinePoints>(m_actionContext, true);
             break;
         case RS2::ActionDrawPointsLattice:
-            a = new LC_ActionDrawPointsLattice(m_actionContext);
+            a = std::make_shared<LC_ActionDrawPointsLattice>(m_actionContext);
             break;
         case RS2::ActionDrawLineBisector:
-            a = new RS_ActionDrawLineBisector(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineBisector>(m_actionContext);
             break;
         case RS2::ActionDrawLineOrthTan:
-            a = new RS_ActionDrawLineOrthTan(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineOrthTan>(m_actionContext);
             break;
         case RS2::ActionDrawLineTangent1:
-            a = new RS_ActionDrawLineTangent1(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineTangent1>(m_actionContext);
             break;
         case RS2::ActionDrawLineTangent2:
-            a = new RS_ActionDrawLineTangent2(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLineTangent2>(m_actionContext);
             break;
         case RS2::ActionDrawLineOrthogonal:
-            a = new RS_ActionDrawLineRelAngle(m_actionContext, M_PI_2, true);
+            a = std::make_shared<RS_ActionDrawLineRelAngle>(m_actionContext, M_PI_2, true);
             break;
         case RS2::ActionDrawLineRelAngle:
-            a = new RS_ActionDrawLineRelAngle(m_actionContext, M_PI_2, false);
+            a = std::make_shared<RS_ActionDrawLineRelAngle>(m_actionContext, M_PI_2, false);
             break;
         case RS2::ActionDrawPolyline:
-            a = new RS_ActionDrawPolyline(m_actionContext);
+            a = std::make_shared<RS_ActionDrawPolyline>(m_actionContext);
             break;
         case RS2::ActionDrawLineOrthogonalRel:
-            a = new LC_ActionDrawLineAngleRel(m_actionContext, 90.0, true);
+            a = std::make_shared<LC_ActionDrawLineAngleRel>(m_actionContext, 90.0, true);
             break;
         case RS2::ActionDrawLineAngleRel:
-            a = new LC_ActionDrawLineAngleRel(m_actionContext, 0.0, false);
+            a = std::make_shared<LC_ActionDrawLineAngleRel>(m_actionContext, 0.0, false);
             break;
         case RS2::ActionDrawLineFromPointToLine:{
-            a = new LC_ActionDrawLineFromPointToLine(this, m_actionContext);
+            a = std::make_shared<LC_ActionDrawLineFromPointToLine>(this, m_actionContext);
             break;
         }
         case RS2::ActionDrawLineMiddle:{
-            a = new LC_ActionDrawMidLine(m_actionContext);
+            a = std::make_shared<LC_ActionDrawMidLine>(m_actionContext);
             break;
         }
         case RS2::ActionDrawStar:{
-            a = new LC_ActionDrawStar(m_actionContext);
+            a = std::make_shared<LC_ActionDrawStar>(m_actionContext);
             break;
         }
         case RS2::ActionPolylineAdd:
-            a = new RS_ActionPolylineAdd(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineAdd>(m_actionContext);
             break;
         case RS2::ActionPolylineAppend:
-            a = new RS_ActionPolylineAppend(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineAppend>(m_actionContext);
             break;
         case RS2::ActionPolylineDel:
-            a = new RS_ActionPolylineDel(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineDel>(m_actionContext);
             break;
         case RS2::ActionPolylineDelBetween:
-            a = new RS_ActionPolylineDelBetween(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineDelBetween>(m_actionContext);
             break;
         case RS2::ActionPolylineTrim:
-            a = new RS_ActionPolylineTrim(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineTrim>(m_actionContext);
             break;
         case RS2::ActionPolylineEquidistant:
-            a = new RS_ActionPolylineEquidistant(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineEquidistant>(m_actionContext);
             break;
         case RS2::ActionPolylineSegment:
-            a = new RS_ActionPolylineSegment(m_actionContext);
+            a = std::make_shared<RS_ActionPolylineSegment>(m_actionContext);
             break;
         case RS2::ActionPolylineArcsToLines:
-            a = new LC_ActionPolylineArcsToLines(m_actionContext);
+            a = std::make_shared<LC_ActionPolylineArcsToLines>(m_actionContext);
             break;
         case RS2::ActionPolylineChangeSegmentType:
-            a = new LC_ActionPolylineChangeSegmentType(m_actionContext);
+            a = std::make_shared<LC_ActionPolylineChangeSegmentType>(m_actionContext);
             break;
         case RS2::ActionDrawLinePolygonCenCor:
-            a = new RS_ActionDrawLinePolygonCenCor(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLinePolygonCenCor>(m_actionContext);
             break;
         case RS2::ActionDrawLinePolygonCenTan:                      //20161223 added by txmy
-            a = new LC_ActionDrawLinePolygonCenTan(m_actionContext);
+            a = std::make_shared<LC_ActionDrawLinePolygonCenTan>(m_actionContext);
             break;
         case RS2::ActionDrawLinePolygonSideSide:
-            a = new LC_ActionDrawLinePolygon4(m_actionContext);
+            a = std::make_shared<LC_ActionDrawLinePolygon4>(m_actionContext);
             break;
         case RS2::ActionDrawLinePolygonCorCor:
-            a = new RS_ActionDrawLinePolygonCorCor(m_actionContext);
+            a = std::make_shared<RS_ActionDrawLinePolygonCorCor>(m_actionContext);
             break;
         case RS2::ActionDrawCircle:
-            a = new RS_ActionDrawCircle(m_actionContext);
+            a = std::make_shared<RS_ActionDrawCircle>(m_actionContext);
             break;
         case RS2::ActionDrawCircleCR:
-            a = new RS_ActionDrawCircleCR(m_actionContext);
+            a = std::make_shared<RS_ActionDrawCircleCR>(m_actionContext);
             break;
         case RS2::ActionDrawCircleByArc:
-            a = new LC_ActionDrawCircleByArc(m_actionContext);
+            a = std::make_shared<LC_ActionDrawCircleByArc>(m_actionContext);
             break;
         case RS2::ActionDrawCircle2P:
-            a = new RS_ActionDrawCircle2P(m_actionContext);
+            a = std::make_shared<RS_ActionDrawCircle2P>(m_actionContext);
             break;
         case RS2::ActionDrawCircle2PR:
-            a = new LC_ActionDrawCircle2PR(m_actionContext);
+            a = std::make_shared<LC_ActionDrawCircle2PR>(m_actionContext);
             break;
         case RS2::ActionDrawCircle3P:
-            a = new RS_ActionDrawCircle3P(m_actionContext);
+            a = std::make_shared<RS_ActionDrawCircle3P>(m_actionContext);
             break;
         case RS2::ActionDrawCircleTan1_2P:
-            a = new RS_ActionDrawCircleTan1_2P(m_actionContext);
+            a = std::make_shared<RS_ActionDrawCircleTan1_2P>(m_actionContext);
             break;
         case RS2::ActionDrawCircleTan2_1P:
-            a = new RS_ActionDrawCircleTan2_1P(m_actionContext);
+            a = std::make_shared<RS_ActionDrawCircleTan2_1P>(m_actionContext);
             break;
         case RS2::ActionDrawCircleInscribe:
-            a = new RS_ActionDrawCircleInscribe(m_actionContext);
+           a = std::make_shared<RS_ActionDrawCircleInscribe>(m_actionContext);
             break;
         case RS2::ActionDrawCircleTan2:
-            a = new RS_ActionDrawCircleTan2(m_actionContext);
+           a = std::make_shared<RS_ActionDrawCircleTan2>(m_actionContext);
             break;
         case RS2::ActionDrawCircleTan3:
-            a = new RS_ActionDrawCircleTan3(m_actionContext);
+           a = std::make_shared<RS_ActionDrawCircleTan3>(m_actionContext);
             break;
         case RS2::ActionDrawArc:
-            a = new RS_ActionDrawArc(m_actionContext, RS2::ActionDrawArc);
+           a = std::make_shared<RS_ActionDrawArc>(m_actionContext, RS2::ActionDrawArc);
             break;
         case RS2::ActionDrawArcChord:
-            a = new RS_ActionDrawArc(m_actionContext, RS2::ActionDrawArcChord);
+           a = std::make_shared<RS_ActionDrawArc>(m_actionContext, RS2::ActionDrawArcChord);
             break;
         case RS2::ActionDrawArcAngleLen:
-            a = new RS_ActionDrawArc(m_actionContext,RS2::ActionDrawArcAngleLen);
+           a = std::make_shared<RS_ActionDrawArc>(m_actionContext,RS2::ActionDrawArcAngleLen);
             break;
         case RS2::ActionDrawArc3P:
-            a = new RS_ActionDrawArc3P(m_actionContext);
+           a = std::make_shared<RS_ActionDrawArc3P>(m_actionContext);
             break;
         case RS2::ActionDrawArcTangential:
-            a = new RS_ActionDrawArcTangential(m_actionContext);
+           a = std::make_shared<RS_ActionDrawArcTangential>(m_actionContext);
             break;
         case RS2::ActionDrawArc2PRadius:
-            a = new LC_ActionDrawArc2PointsRadius(m_actionContext);
+            a = std::make_shared<LC_ActionDrawArc2PointsRadius>(m_actionContext);
             break;
         case RS2::ActionDrawArc2PAngle:
-            a = new LC_ActionDrawArc2PointsAngle(m_actionContext);
+            a = std::make_shared<LC_ActionDrawArc2PointsAngle>(m_actionContext);
             break;
         case RS2::ActionDrawArc2PHeight:
-            a = new LC_ActionDrawArc2PointsHeight(m_actionContext);
+            a = std::make_shared<LC_ActionDrawArc2PointsHeight>(m_actionContext);
             break;
         case RS2::ActionDrawArc2PLength:
-            a = new LC_ActionDrawArc2PointsLength(m_actionContext);
+            a = std::make_shared<LC_ActionDrawArc2PointsLength>(m_actionContext);
             break;
         case RS2::ActionDrawEllipseAxis:
-            a = new RS_ActionDrawEllipseAxis(m_actionContext, false);
+           a = std::make_shared<RS_ActionDrawEllipseAxis>(m_actionContext, false);
             break;
         case RS2::ActionDrawEllipseArcAxis:
-            a = new RS_ActionDrawEllipseAxis(m_actionContext, true);
+           a = std::make_shared<RS_ActionDrawEllipseAxis>(m_actionContext, true);
             break;
         case RS2::ActionDrawEllipse1Point:
-            a = new LC_ActionDrawEllipse1Point(m_actionContext, false);
+            a = std::make_shared<LC_ActionDrawEllipse1Point>(m_actionContext, false);
             break;
         case RS2::ActionDrawEllipseArc1Point:
-            a = new LC_ActionDrawEllipse1Point(m_actionContext, true);
+            a = std::make_shared<LC_ActionDrawEllipse1Point>(m_actionContext, true);
             break;
         case RS2::ActionDrawParabola4Points:
-            a = new LC_ActionDrawParabola4Points(m_actionContext);
+            a = std::make_shared<LC_ActionDrawParabola4Points>(m_actionContext);
             break;
         case RS2::ActionDrawParabolaFD:
-            a = new LC_ActionDrawParabolaFD(m_actionContext);
+            a = std::make_shared<LC_ActionDrawParabolaFD>(m_actionContext);
             break;
         case RS2::ActionDrawEllipseFociPoint:
-            a = new RS_ActionDrawEllipseFociPoint(m_actionContext);
+           a = std::make_shared<RS_ActionDrawEllipseFociPoint>(m_actionContext);
             break;
         case RS2::ActionDrawEllipse4Points:
-            a = new RS_ActionDrawEllipse4Points(m_actionContext);
+           a = std::make_shared<RS_ActionDrawEllipse4Points>(m_actionContext);
             break;
         case RS2::ActionDrawEllipseCenter3Points:
-            a = new RS_ActionDrawEllipseCenter3Points(m_actionContext);
+           a = std::make_shared<RS_ActionDrawEllipseCenter3Points>(m_actionContext);
             break;
         case RS2::ActionDrawEllipseInscribe:
-            a = new RS_ActionDrawEllipseInscribe(m_actionContext);
+           a = std::make_shared<RS_ActionDrawEllipseInscribe>(m_actionContext);
             break;
         case RS2::ActionDrawSpline:
-            a = new RS_ActionDrawSpline(m_actionContext);
+           a = std::make_shared<RS_ActionDrawSpline>(m_actionContext);
             break;
         case RS2::ActionDrawSplinePoints:
-            a = new LC_ActionDrawSplinePoints(m_actionContext);
+            a = std::make_shared<LC_ActionDrawSplinePoints>(m_actionContext);
             break;
         case RS2::ActionDrawSplinePointRemove:
-            a = new LC_ActionRemoveSplinePoints(m_actionContext);
+            a = std::make_shared<LC_ActionRemoveSplinePoints>(m_actionContext);
             break;
         case RS2::ActionDrawSplinePointDelTwo:
-            a = new LC_ActionSplineRemoveBetween(m_actionContext);
+            a = std::make_shared<LC_ActionSplineRemoveBetween>(m_actionContext);
             break;
         case RS2::ActionDrawSplinePointAppend:
-            a = new LC_ActionSplineAppendPoint(m_actionContext);
+            a = std::make_shared<LC_ActionSplineAppendPoint>(m_actionContext);
             break;
         case RS2::ActionDrawSplinePointAdd:
-            a = new LC_ActionSplineAddPoint(m_actionContext);
+            a = std::make_shared<LC_ActionSplineAddPoint>(m_actionContext);
             break;
         case RS2::ActionDrawSplineExplode:
-            a = new LC_ActionSplineExplode(m_actionContext);
+            a = std::make_shared<LC_ActionSplineExplode>(m_actionContext);
             break;
         case RS2::ActionDrawSplineFromPolyline:
-            a = new LC_ActionSplineFromPolyline(m_actionContext);
+            a = std::make_shared<LC_ActionSplineFromPolyline>(m_actionContext);
             break;
         case RS2::ActionDrawMText:
-            a = new RS_ActionDrawMText(m_actionContext);
+           a = std::make_shared<RS_ActionDrawMText>(m_actionContext);
             break;
         case RS2::ActionDrawText:
-            a = new RS_ActionDrawText(m_actionContext);
+           a = std::make_shared<RS_ActionDrawText>(m_actionContext);
             break;
         case RS2::ActionDrawHatch:
-            a = new RS_ActionDrawHatch(m_actionContext);
+           a = std::make_shared<RS_ActionDrawHatch>(m_actionContext);
             break;
         case RS2::ActionDrawImage:
-            a = new RS_ActionDrawImage(m_actionContext);
+           a = std::make_shared<RS_ActionDrawImage>(m_actionContext);
             break;
             // Dimensioning actions:
             //
         case RS2::ActionDimAligned:
-            a = new RS_ActionDimAligned(m_actionContext);
+           a = std::make_shared<RS_ActionDimAligned>(m_actionContext);
             break;
         case RS2::ActionDimLinear:
-            a = new RS_ActionDimLinear(m_actionContext);
+           a = std::make_shared<RS_ActionDimLinear>(m_actionContext);
             break;
         case RS2::ActionDimLinearHor:
-            a = new RS_ActionDimLinear(m_actionContext, 0.0, true, RS2::ActionDimLinearHor);
+           a = std::make_shared<RS_ActionDimLinear>(m_actionContext, 0.0, true, RS2::ActionDimLinearHor);
             break;
         case RS2::ActionDimLinearVer:
-            a = new RS_ActionDimLinear(m_actionContext, M_PI_2, true, RS2::ActionDimLinearVer);
+           a = std::make_shared<RS_ActionDimLinear>(m_actionContext, M_PI_2, true, RS2::ActionDimLinearVer);
             break;
         case RS2::ActionDimRadial:
-            a = new RS_ActionDimRadial(m_actionContext);
+           a = std::make_shared<RS_ActionDimRadial>(m_actionContext);
             break;
         case RS2::ActionDimDiametric:
-            a = new RS_ActionDimDiametric(m_actionContext);
+           a = std::make_shared<RS_ActionDimDiametric>(m_actionContext);
             break;
         case RS2::ActionDimAngular:
-            a = new RS_ActionDimAngular(m_actionContext);
+           a = std::make_shared<RS_ActionDimAngular>(m_actionContext);
             break;
         case RS2::ActionDimArc:
-            a = new LC_ActionDimArc(m_actionContext);
+            a = std::make_shared<LC_ActionDimArc>(m_actionContext);
             break;
         case RS2::ActionDimLeader:
-            a = new RS_ActionDimLeader(m_actionContext);
+           a = std::make_shared<RS_ActionDimLeader>(m_actionContext);
             break;
         case RS2::ActionDimBaseline:
-            a = new LC_ActionDrawDimBaseline(m_actionContext, RS2::ActionDimBaseline);
+            a = std::make_shared<LC_ActionDrawDimBaseline>(m_actionContext, RS2::ActionDimBaseline);
             break;
         case RS2::ActionDimContinue:
-            a = new LC_ActionDrawDimBaseline(m_actionContext, RS2::ActionDimContinue);
+            a = std::make_shared<LC_ActionDrawDimBaseline>(m_actionContext, RS2::ActionDimContinue);
             break;
 
             // Modifying actions:
             //
         case RS2::ActionModifyLineJoin: {
-            a = new LC_ActionModifyLineJoin(m_actionContext);
+            a = std::make_shared<LC_ActionModifyLineJoin>(m_actionContext);
             break;
         }
         case RS2::ActionModifyDuplicate: {
-            a = new LC_ActionModifyDuplicate(m_actionContext);
+            a = std::make_shared<LC_ActionModifyDuplicate>(m_actionContext);
             break;
         }
         case RS2::ActionModifyBreakDivide: {
-            a = new LC_ActionModifyBreakDivide(m_actionContext);
+            a = std::make_shared<LC_ActionModifyBreakDivide>(m_actionContext);
             break;
         }
         case RS2::ActionModifyLineGap: {
-            a = new LC_ActionModifyLineGap(m_actionContext);
+            a = std::make_shared<LC_ActionModifyLineGap>(m_actionContext);
             break;
         }
         case RS2::ActionModifyAttributes:
-            a = new RS_ActionModifyAttributes(m_actionContext);
+           a = std::make_shared<RS_ActionModifyAttributes>(m_actionContext);
             break;
         case RS2::ActionModifyDelete:
-            a = new RS_ActionModifyDelete(m_actionContext);
+           a = std::make_shared<RS_ActionModifyDelete>(m_actionContext);
             break;
         case RS2::ActionModifyDeleteQuick:
-            a = new RS_ActionSelect(this, m_actionContext, RS2::ActionModifyDeleteQuick);
+           a = std::make_shared<RS_ActionSelect>(this, m_actionContext, RS2::ActionModifyDeleteQuick);
             break;
         case RS2::ActionModifyDeleteFree:
-            a = new RS_ActionModifyDeleteFree(m_actionContext);
+           a = std::make_shared<RS_ActionModifyDeleteFree>(m_actionContext);
             break;
         case RS2::ActionModifyMove:
-            a = new RS_ActionModifyMove(m_actionContext);
+           a = std::make_shared<RS_ActionModifyMove>(m_actionContext);
             break;
         case RS2::ActionModifyRevertDirection:
-            a = new RS_ActionModifyRevertDirection(m_actionContext);
+           a = std::make_shared<RS_ActionModifyRevertDirection>(m_actionContext);
             break;
         case RS2::ActionModifyRotate:
-            a = new RS_ActionModifyRotate(m_actionContext);
+           a = std::make_shared<RS_ActionModifyRotate>(m_actionContext);
             break;
         case RS2::ActionModifyScale:
-            a = new RS_ActionModifyScale(m_actionContext);
+           a = std::make_shared<RS_ActionModifyScale>(m_actionContext);
             break;
         case RS2::ActionModifyMirror:
-            a = new RS_ActionModifyMirror(m_actionContext);
+           a = std::make_shared<RS_ActionModifyMirror>(m_actionContext);
             break;
         case RS2::ActionModifyMoveRotate:
-            a = new RS_ActionModifyMoveRotate(m_actionContext);
+           a = std::make_shared<RS_ActionModifyMoveRotate>(m_actionContext);
             break;
         case RS2::ActionModifyRotate2:
-            a = new RS_ActionModifyRotate2(m_actionContext);
+           a = std::make_shared<RS_ActionModifyRotate2>(m_actionContext);
             break;
         case RS2::ActionModifyEntity:
-            a = new RS_ActionModifyEntity(m_actionContext, true);
+           a = std::make_shared<RS_ActionModifyEntity>(m_actionContext, true);
             break;
         case RS2::ActionModifyTrim:
-            a = new RS_ActionModifyTrim(m_actionContext, false);
+           a = std::make_shared<RS_ActionModifyTrim>(m_actionContext, false);
             break;
         case RS2::ActionModifyTrim2:
-            a = new RS_ActionModifyTrim(m_actionContext, true);
+           a = std::make_shared<RS_ActionModifyTrim>(m_actionContext, true);
             break;
         case RS2::ActionModifyTrimAmount:
-            a = new RS_ActionModifyTrimAmount(m_actionContext);
+           a = std::make_shared<RS_ActionModifyTrimAmount>(m_actionContext);
             break;
         case RS2::ActionModifyCut:
-            a = new RS_ActionModifyCut(m_actionContext);
+           a = std::make_shared<RS_ActionModifyCut>(m_actionContext);
             break;
         case RS2::ActionModifyStretch:
-            a = new RS_ActionModifyStretch(m_actionContext);
+           a = std::make_shared<RS_ActionModifyStretch>(m_actionContext);
             break;
         case RS2::ActionModifyBevel:
-            a = new RS_ActionModifyBevel(m_actionContext);
+           a = std::make_shared<RS_ActionModifyBevel>(m_actionContext);
             break;
         case RS2::ActionModifyRound:
-            a = new RS_ActionModifyRound(m_actionContext);
+           a = std::make_shared<RS_ActionModifyRound>(m_actionContext);
             break;
         case RS2::ActionModifyOffset:
-            a = new RS_ActionModifyOffset(m_actionContext);
+           a = std::make_shared<RS_ActionModifyOffset>(m_actionContext);
             break;
         case RS2::ActionModifyExplodeText:
-          /*  if(!document->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
-                a = new RS_ActionSelect(this, m_actionContext, RS2::ActionModifyExplodeTextNoSelect);
-                break;
-            }
-            // fall-through
-*/
-            a = new RS_ActionModifyExplodeText(m_actionContext);
+            a = std::make_shared<RS_ActionModifyExplodeText>(m_actionContext);
             break;
         case RS2::ActionModifyAlign:
-            a = new LC_ActionModifyAlign(m_actionContext);
+            a = std::make_shared<LC_ActionModifyAlign>(m_actionContext);
             break;
         case RS2::ActionModifyAlignOne:
-            a = new LC_ActionModifyAlignSingle(m_actionContext);
+            a = std::make_shared<LC_ActionModifyAlignSingle>(m_actionContext);
             break;
         case RS2::ActionModifyAlignRef:
-            a = new LC_ActionModifyAlignRef(m_actionContext);
+            a = std::make_shared<LC_ActionModifyAlignRef>(m_actionContext);
             break;
             // Snapping actions:
             //
         case RS2::ActionSnapFree:
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapFree);
             slotSnapFree();
             break;
         case RS2::ActionSnapCenter:
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapCenter);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapCenter);
             slotSnapCenter();
             break;
         case RS2::ActionSnapDist:
             slotSnapDist();
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapDist);
+//       a = std::make_shared<RS_ActionSetSnapMode>(*document, *view, RS2::SnapDist);
             break;
         case RS2::ActionSnapEndpoint:
             slotSnapEndpoint();
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapEndpoint);
+//       a = std::make_shared<RS_ActionSetSnapMode>(m_actionContext, RS2::SnapEndpoint);
             break;
         case RS2::ActionSnapGrid:
             slotSnapGrid();
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapGrid);
+//       a = std::make_shared<RS_ActionSetSnapMode>(m_actionContext, RS2::SnapGrid);
             break;
         case RS2::ActionSnapIntersection:
             slotSnapIntersection();
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapIntersection);
+//       a = std::make_shared<RS_ActionSetSnapMode>(m_actionContext, RS2::SnapIntersection);
             break;
         case RS2::ActionSnapMiddle:
             slotSnapMiddle();
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapMiddle);
+//       a = std::make_shared<RS_ActionSetSnapMode>(m_actionContext, RS2::SnapMiddle);
             break;
         case RS2::ActionSnapOnEntity:
             slotSnapOnEntity();
-//        a = new RS_ActionSetSnapMode(m_actionContext, RS2::SnapOnEntity);
+//       a = std::make_shared<RS_ActionSetSnapMode>(m_actionContext, RS2::SnapOnEntity);
             break;
 //    case RS2::ActionSnapIntersectionManual:
-//        a = new RS_ActionSnapIntersectionManual(m_actionContext);
+//       a = std::make_shared<RS_ActionSnapIntersectionManual>(m_actionContext);
 //        break;
 
             // Snap restriction actions:
             //
         case RS2::ActionRestrictNothing:
             slotRestrictNothing();
-//        a = new RS_ActionSetSnapRestriction(m_actionContext, RS2::RestrictNothing);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(m_actionContext, RS2::RestrictNothing);
             break;
         case RS2::ActionRestrictOrthogonal:
             slotRestrictOrthogonal();
-//        a = new RS_ActionSetSnapRestriction(m_actionContext, RS2::RestrictOrthogonal);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(m_actionContext, RS2::RestrictOrthogonal);
             break;
         case RS2::ActionRestrictHorizontal:
             slotRestrictHorizontal();
-//        a = new RS_ActionSetSnapRestriction(m_actionContext, RS2::RestrictHorizontal);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(m_actionContext, RS2::RestrictHorizontal);
             break;
         case RS2::ActionRestrictVertical:
             slotRestrictVertical();
-//        a = new RS_ActionSetSnapRestriction(m_actionContext, RS2::RestrictVertical);
+//       a = std::make_shared<RS_ActionSetSnapRestriction>(m_actionContext, RS2::RestrictVertical);
             break;
 
             // Relative zero:
             //
         case RS2::ActionSetRelativeZero:
-            a = new RS_ActionSetRelativeZero(m_actionContext);
+           a = std::make_shared<RS_ActionSetRelativeZero>(m_actionContext);
             break;
         case RS2::ActionLockRelativeZero:
-            a = new RS_ActionLockRelativeZero(m_actionContext, true);
+           a = std::make_shared<RS_ActionLockRelativeZero>(m_actionContext, true);
             break;
         case RS2::ActionUnlockRelativeZero:
-            a = new RS_ActionLockRelativeZero(m_actionContext, false);
+           a = std::make_shared<RS_ActionLockRelativeZero>(m_actionContext, false);
             break;
             // pen actions
         case RS2::ActionPenPick:
-            a = new LC_ActionPenPick(m_actionContext,  false);
+            a = std::make_shared<LC_ActionPenPick>(m_actionContext,  false);
             break;
         case RS2::ActionPenPickResolved:
-            a = new LC_ActionPenPick(m_actionContext, true);
+            a = std::make_shared<LC_ActionPenPick>(m_actionContext, true);
             break;
         case RS2::ActionPenApply:
-            a = new LC_ActionPenApply(m_actionContext, false);
+            a = std::make_shared<LC_ActionPenApply>(m_actionContext, false);
             break;
         case RS2::ActionPenCopy:
-            a = new LC_ActionPenApply(m_actionContext, true);
+            a = std::make_shared<LC_ActionPenApply>(m_actionContext, true);
             break;
 
         case RS2::ActionPenSyncFromLayer:
-            a = new LC_ActionPenSyncActiveByLayer(m_actionContext);
+            a = std::make_shared<LC_ActionPenSyncActiveByLayer>(m_actionContext);
             break;
             // Info actions:
             //
         case RS2::ActionInfoInside:
-            a = new RS_ActionInfoInside(m_actionContext);
+           a = std::make_shared<RS_ActionInfoInside>(m_actionContext);
             break;
         case RS2::ActionInfoDistPoint2Point:
-            a = new RS_ActionInfoDist(m_actionContext);
+           a = std::make_shared<RS_ActionInfoDist>(m_actionContext);
             break;
         case RS2::ActionInfoDistEntity2Point:
-            a = new RS_ActionInfoDist2(m_actionContext);
+           a = std::make_shared<RS_ActionInfoDist2>(m_actionContext);
             break;
         case RS2::ActionInfoDistPoint2Entity:
-            a = new RS_ActionInfoDist2(m_actionContext, true);
+           a = std::make_shared<RS_ActionInfoDist2>(m_actionContext, true);
             break;
         case RS2::ActionInfoAngle:
-            a = new RS_ActionInfoAngle(m_actionContext);
+           a = std::make_shared<RS_ActionInfoAngle>(m_actionContext);
             break;
          case RS2::ActionInfoAngle3Points:
-            a = new LC_ActionInfo3PointsAngle(m_actionContext);
+            a = std::make_shared<LC_ActionInfo3PointsAngle>(m_actionContext);
             break;
         case RS2::ActionInfoTotalLength:
-            a = new RS_ActionInfoTotalLength(m_actionContext);
+           a = std::make_shared<RS_ActionInfoTotalLength>(m_actionContext);
             break;
         case RS2::ActionInfoArea:
-            a = new RS_ActionInfoArea(m_actionContext);
+           a = std::make_shared<RS_ActionInfoArea>(m_actionContext);
             break;
         case RS2::ActionInfoProperties:
-            a = new LC_ActionInfoProperties(m_actionContext);
+            a = std::make_shared<LC_ActionInfoProperties>(m_actionContext);
             break;
         case RS2::ActionInfoPickCoordinates:
-            a = new LC_ActionInfoPickCoordinates(m_actionContext);
+            a = std::make_shared<LC_ActionInfoPickCoordinates>(m_actionContext);
             break;
             // Layer actions:
             //
         case RS2::ActionLayersDefreezeAll:
-            a = new RS_ActionLayersFreezeAll(false, m_actionContext);
+           a = std::make_shared<RS_ActionLayersFreezeAll>(false, m_actionContext);
             break;
         case RS2::ActionLayersFreezeAll:
-            a = new RS_ActionLayersFreezeAll(true, m_actionContext);
+           a = std::make_shared<RS_ActionLayersFreezeAll>(true, m_actionContext);
             break;
         case RS2::ActionLayersUnlockAll:
-            a = new RS_ActionLayersLockAll(false, m_actionContext);
+           a = std::make_shared<RS_ActionLayersLockAll>(false, m_actionContext);
             break;
         case RS2::ActionLayersLockAll:
-            a = new RS_ActionLayersLockAll(true, m_actionContext);
+           a = std::make_shared<RS_ActionLayersLockAll>(true, m_actionContext);
             break;
         case RS2::ActionLayersAdd:
-            a = new RS_ActionLayersAdd(m_actionContext);
+           a = std::make_shared<RS_ActionLayersAdd>(m_actionContext);
             break;
         case RS2::ActionLayersRemove:
-            a = new RS_ActionLayersRemove(m_actionContext);
+           a = std::make_shared<RS_ActionLayersRemove>(m_actionContext);
             break;
         case RS2::ActionLayersEdit:
-            a = new RS_ActionLayersEdit(m_actionContext);
+           a = std::make_shared<RS_ActionLayersEdit>(m_actionContext);
             break;
         case RS2::ActionLayersToggleView:
             if (a_layer != nullptr)
-                a = new RS_ActionLayersToggleView(m_actionContext, a_layer);
+               a = std::make_shared<RS_ActionLayersToggleView>(m_actionContext, a_layer);
             break;
         case RS2::ActionLayersToggleLock:
             if (a_layer != nullptr)
-                a = new RS_ActionLayersToggleLock(m_actionContext, a_layer);
+               a = std::make_shared<RS_ActionLayersToggleLock>(m_actionContext, a_layer);
             break;
         case RS2::ActionLayersTogglePrint:
             if (a_layer != nullptr)
-                a = new RS_ActionLayersTogglePrint(m_actionContext, a_layer);
+               a = std::make_shared<RS_ActionLayersTogglePrint>(m_actionContext, a_layer);
             break;
         case RS2::ActionLayersToggleConstruction:
             if (a_layer != nullptr)
-                a = new LC_ActionLayersToggleConstruction(m_actionContext, a_layer);
+                a = std::make_shared<LC_ActionLayersToggleConstruction>(m_actionContext, a_layer);
             break;
         case RS2::ActionLayersExportSelected:
-            a = new LC_ActionLayersExport(m_actionContext, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+            a = std::make_shared<LC_ActionLayersExport>(m_actionContext, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
             break;
         case RS2::ActionLayersExportVisible:
-            a = new LC_ActionLayersExport(m_actionContext, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
+            a = std::make_shared<LC_ActionLayersExport>(m_actionContext, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
             break;
 
             // Block actions:
             //
         case RS2::ActionBlocksDefreezeAll:
-            a = new RS_ActionBlocksFreezeAll(false, m_actionContext);
+           a = std::make_shared<RS_ActionBlocksFreezeAll>(false, m_actionContext);
             break;
         case RS2::ActionBlocksFreezeAll:
-            a = new RS_ActionBlocksFreezeAll(true, m_actionContext);
+           a = std::make_shared<RS_ActionBlocksFreezeAll>(true, m_actionContext);
             break;
         case RS2::ActionBlocksAdd:
-            a = new RS_ActionBlocksAdd(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksAdd>(m_actionContext);
             break;
         case RS2::ActionBlocksRemove:
-            a = new RS_ActionBlocksRemove(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksRemove>(m_actionContext);
             break;
         case RS2::ActionBlocksAttributes:
-            a = new RS_ActionBlocksAttributes(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksAttributes>(m_actionContext);
             break;
         case RS2::ActionBlocksEdit:
-            a = new RS_ActionBlocksEdit(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksEdit>(m_actionContext);
             break;
         case RS2::ActionBlocksSave:
-            a = new RS_ActionBlocksSave(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksSave>(m_actionContext);
             break;
         case RS2::ActionBlocksInsert:
-            a = new RS_ActionBlocksInsert(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksInsert>(m_actionContext);
             break;
         case RS2::ActionBlocksToggleView:
-            a = new RS_ActionBlocksToggleView(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksToggleView>(m_actionContext);
             break;
         case RS2::ActionBlocksCreate:
             if(!document->countSelected()){
-                a = new RS_ActionSelect(this, m_actionContext, RS2::ActionBlocksCreateNoSelect);
+               a = std::make_shared<RS_ActionSelect>(this, m_actionContext, RS2::ActionBlocksCreateNoSelect);
                 break;
             }
             // fall-through
         case RS2::ActionBlocksCreateNoSelect:
-            a = new RS_ActionBlocksCreate(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksCreate>(m_actionContext);
             break;
         case RS2::ActionBlocksExplode:
-            a = new RS_ActionBlocksExplode(m_actionContext);
+           a = std::make_shared<RS_ActionBlocksExplode>(m_actionContext);
             break;
             // library browser:
             //
         case RS2::ActionLibraryInsert:
-            a = new RS_ActionLibraryInsert(m_actionContext);
+           a = std::make_shared<RS_ActionLibraryInsert>(m_actionContext);
             break;
 
             // options:
             //
             //case RS2::ActionOptionsGeneral:
-            //    a = new RS_ActionOptionsGeneral(m_actionContext);
+            //   a = std::make_shared<RS_ActionOptionsGeneral>(m_actionContext);
             //	break;
 
         case RS2::ActionOptionsDrawing:
-            a = new RS_ActionOptionsDrawing(m_actionContext);
+           a = std::make_shared<RS_ActionOptionsDrawing>(m_actionContext);
             break;
         case RS2::ActionOptionsDrawingGrid:
-            a = new RS_ActionOptionsDrawing(m_actionContext, 2);
+           a = std::make_shared<RS_ActionOptionsDrawing>(m_actionContext, 2);
             break;
         case RS2::ActionOptionsDrawingUnits:
-            a = new RS_ActionOptionsDrawing(m_actionContext, 1);
+           a = std::make_shared<RS_ActionOptionsDrawing>(m_actionContext, 1);
             break;
         case RS2::ActionUCSCreate:
-            a = new LC_ActionUCSCreate(m_actionContext);
+            a = std::make_shared<LC_ActionUCSCreate>(m_actionContext);
             break;
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -1419,8 +1407,8 @@ void QG_ActionHandler::slotSnapMiddleManual(){
     const RS_Pen currentAppPen { document->getActivePen() };
     const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
     document->setActivePen(snapMiddleManual_pen);
-    auto a = new LC_ActionSnapMiddleManual(m_actionContext, currentAppPen);
-    connect(a, &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
+    auto a = std::make_shared<LC_ActionSnapMiddleManual>(m_actionContext, currentAppPen);
+    connect(a.get(), &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
     view->setCurrentAction(a);
 }
 

@@ -25,7 +25,6 @@
 
 #include "rs_undoable.h"
 #include "rs_vector.h"
-#include "rs_graphicview.h"
 
 class LC_GraphicViewport;
 

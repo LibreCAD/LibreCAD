@@ -27,7 +27,7 @@
 
 namespace {
     // fixme - sand - think about support parabola as other splines
-    const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
 }
 
 LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(LC_ActionContext *actionContext)
@@ -41,7 +41,7 @@ void LC_ActionSplineAppendPoint::doCompleteTrigger() {
 void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -85,7 +85,7 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, LC_Mou
 void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntityByEvent(e, enTypeList);
+            auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);

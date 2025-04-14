@@ -1193,7 +1193,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 
     LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
 
-    auto* a = new QC_ActionGetPoint(ctxt);
+    auto a = std::make_shared<QC_ActionGetPoint>(ctxt);
     if (a) {
         if (!(message.isEmpty()) ) a->setMessage(message);
         gView->killAllActions();
@@ -1218,7 +1218,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 
 Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
     LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
-    auto* a = new QC_ActionGetEnt(ctxt);
+    auto a = std::make_shared<QC_ActionGetEnt>(ctxt);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1240,7 +1240,7 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
 bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
     bool status = false;
     LC_ActionContext* actionContext = nullptr; // fixme - sand - files - restore!
-    auto* a = new QC_ActionGetSelect(actionContext);
+    auto a = std::make_shared<QC_ActionGetSelect>(actionContext);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1257,7 +1257,7 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
     }
 //    check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();
-    if (eh && eh->isValid(a) ) {
+    if (eh && eh->isValid(a.get()) ) {
         a->getSelected(sel, this);
         status = true;
     }
@@ -1281,7 +1281,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     
     gView->setTypeToSelect(typeToSelect);
     LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
-    auto* a = new QC_ActionGetSelect(typeToSelect, ctxt);
+    auto a =std::make_shared<QC_ActionGetSelect> (typeToSelect, ctxt);
 
     if (a) {
         if (!(message.isEmpty()) )
@@ -1300,7 +1300,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     //check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();
-    if (eh && eh->isValid(a) ) {
+    if (eh && eh->isValid(a.get()) ) {
         a->getSelected(sel, this);
         status = true;
     }

@@ -544,7 +544,7 @@ void LC_ActionDrawLineSnake::undo(){
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
-                m_graphicView->setCurrentAction(new RS_ActionEditUndo(true, m_actionContext));
+                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(true, m_actionContext));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetDirection);
                 break;
@@ -582,12 +582,12 @@ void LC_ActionDrawLineSnake::redo(){
 
             case HA_Polyline:
             case HA_SetEndpoint:
-                m_graphicView->setCurrentAction(new RS_ActionEditUndo(false, m_actionContext));
+                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, m_actionContext));
                 setStatus(SetDirection);
                 break;
 
             case HA_Close:
-                m_graphicView->setCurrentAction(new RS_ActionEditUndo(false, m_actionContext));
+                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, m_actionContext));
                 setStatus(SetDirection);
                 break;
 
@@ -631,7 +631,7 @@ void LC_ActionDrawLineSnake::polyline(){
         finishAction();
         addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
         // fixme - sand - files - direct action creation
-        auto *polylineSegmentAction = new RS_ActionPolylineSegment(m_actionContext, en);
+        auto polylineSegmentAction = std::make_shared<RS_ActionPolylineSegment>(m_actionContext, en);
         m_graphicView->setCurrentAction(polylineSegmentAction);
     }
 }

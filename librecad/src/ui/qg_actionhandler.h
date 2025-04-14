@@ -43,6 +43,12 @@ class QG_ActionHandler:public QObject {
 public:
     QG_ActionHandler(QObject *parent);
     ~QG_ActionHandler() override = default;
+    RS_ActionInterface *getCurrentAction();
+    std::shared_ptr<RS_ActionInterface> setCurrentAction(RS2::ActionType id);
+/**
+ * Kills all running selection actions. Called when a selection action
+  * is launched to reduce confusion.
+    ~QG_ActionHandler() override = default;
     RS_ActionInterface *getCurrentAction() const;
     RS_ActionInterface *setCurrentAction(RS2::ActionType id);
     /**

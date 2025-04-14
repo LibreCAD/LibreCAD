@@ -29,6 +29,7 @@
 #define RS_GRAPHICVIEW_H
 
 #include <memory>
+
 #include <QWidget>
 #include "lc_graphicviewportlistener.h"
 #include "rs.h"
@@ -110,7 +111,7 @@ public:
     void setDefaultAction(RS_ActionInterface *action);
     RS_ActionInterface *getDefaultAction();
     void hideOptions();
-    bool setCurrentAction(RS_ActionInterface* action);
+    bool setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
     RS_ActionInterface *getCurrentAction();
     QString getCurrentActionName();
     QIcon getCurrentActionIcon();

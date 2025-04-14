@@ -119,11 +119,11 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
                                               int number,
                                               RS_Entity* e,
                                               bool symmetric) {
-    if (!e) {
+    if (e == nullptr) {
         return nullptr;
     }
 
-    double dist;
+    double dist = 0.;
 
     if (e->rtti()==RS2::EntityLine) {
         auto* l = (RS_Line*)e;
@@ -158,7 +158,7 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
 RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
                                        double distance, int number,
                                        RS_Entity* e, bool symmetric) {
-    if (!e) {
+    if (e == nullptr) {
         return nullptr;
     }
 
@@ -202,7 +202,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                                          RS_Line* e,
                                          bool symmetric) {
 
-    if (!e) {
+    if (e == nullptr) {
         return nullptr;
     }
 
@@ -280,11 +280,11 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
                                        double distance, int number,
                                        RS_Arc* e) {
 
-    if (!e) {
+    if (e == nullptr) {
         return nullptr;
     }
 
-    RS_ArcData parallelData;
+    RS_ArcData parallelData{};
     RS_Arc* ret = nullptr;
 
     bool inside = (e->getCenter().distanceTo(coord) < e->getRadius());
@@ -352,11 +352,11 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
                                              double distance, int number,
                                              RS_Circle* e) {
 
-    if (!e) {
+    if (e == nullptr) {
         return nullptr;
     }
 
-    RS_CircleData parallelData;
+    RS_CircleData parallelData{};
     RS_Circle* ret = nullptr;
 
     bool inside = (e->getCenter().distanceTo(coord) < e->getRadius());
@@ -420,9 +420,10 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
 LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
                                                          double distance, int number, LC_SplinePoints* e)
 {
-    if(!e) return nullptr;
+    if(e == nullptr)
+        return nullptr;
 
-    LC_SplinePoints *psp, *ret = nullptr;
+    LC_SplinePoints *psp = nullptr, *ret = nullptr;
 
     LC_UndoSection undo( m_document, m_viewport,handleUndo);
     for(int i = 1; i <= number; ++i)
@@ -462,7 +463,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
                                      RS_Line* l2) {
 
     // check given entities:
-    if (!(l1 && l2))
+    if (!(l1 != nullptr && l2 != nullptr))
         return nullptr;
     if (!(l1->rtti()==RS2::EntityLine && l2->rtti()==RS2::EntityLine))
         return nullptr;
@@ -492,7 +493,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
         RS_Vector const& v = RS_Vector::polar(length, angle);
 
         auto* newLine = new RS_Line{m_container, inters, inters + v};
-        if (!ret) {
+        if (ret == nullptr) {
             ret = newLine;
         }
         setupAndAddEntity(newLine);
@@ -509,22 +510,22 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
  *
  * Author: Dongxu Li
  */
-RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
+std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
                                         RS_Line* normal,
                                         RS_Entity* circle,
-                                        RS_Vector& alternativeTangent) {
-    RS_Line* ret = nullptr;
+                                        RS_Vector& alternativeTangent)
+{
 
     // check given entities:
-    if (!(circle && normal))
-        return ret;
+    if (!(circle != nullptr && normal != nullptr))
+        return {};
     RS2::EntityType rtti = circle->rtti();
     if (!(circle->isArc() || rtti == RS2::EntityParabola))
-        return ret;
+        return {};
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
     
 //    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
-    RS_Vector  t0;
+    RS_Vector  tangentPoint0;
     RS_Vector  t1;
     // todo - potentially, it's possible to move this fragment to appropriate implementations of  getNearestOrthTan - and expand it for returning all tangent points instead of nearest one
     switch (rtti){
@@ -537,10 +538,10 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             double d = RS_Vector::dotP(vp0, vp1);
             const RS_Vector &ortVector = vp1 * radius;
             if (d >= 0.){
-                t0 = center + ortVector;
+                tangentPoint0 = center + ortVector;
                 t1 = center - ortVector;
             } else {
-                t0 = center - ortVector;
+                tangentPoint0 = center - ortVector;
                 t1 = center + ortVector;
             }
             break;
@@ -564,17 +565,17 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             const RS_Vector &center = cir->getCenter();
             switch(sol.size()) {
             case 0:
-                t0 = RS_Vector(false);
+                tangentPoint0 = RS_Vector(false);
                 [[fallthrough]];
             case 2:
                 if (RS_Vector::dotP(sol[1], coord - center) > 0.){
-                    t0 = center + sol[1];
+                    tangentPoint0 = center + sol[1];
                     t1 = center + sol[0];
                     break;
                 }
                 [[fallthrough]];
             default:
-                t0 = center + sol[0];
+                tangentPoint0 = center + sol[0];
                 t1 = center + sol[1];
                 break;
             }
@@ -604,7 +605,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                 angle = RS_Math::correctAngle(angle + M_PI);
             }
             if (sol.size() < 1) {
-                t0 = RS_Vector(false);
+                tangentPoint0 = RS_Vector(false);
             }
             else {
                 aV.y *= -1.;
@@ -614,17 +615,17 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                 const RS_Vector &center = cir->getCenter();
                 switch (sol.size()) {
                     case 0:
-                        t0 = RS_Vector(false);
+                        tangentPoint0 = RS_Vector(false);
                         [[fallthrough]];
                     case 2:
                         if (RS_Vector::dotP(sol[1], coord - center) > 0.){
-                            t0 = center + sol[1];
+                            tangentPoint0 = center + sol[1];
                             t1 = center + sol[0];
                             break;
                         }
                         [[fallthrough]];
                     default:
-                        t0 = center + sol[0];
+                        tangentPoint0 = center + sol[0];
                         t1 = center + sol[1];
                         break;
                 }
@@ -637,13 +638,18 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 
     alternativeTangent = t1;
 
-    if(!t0.valid) return ret;
+    if(!tangentPoint0.valid)
+        return {};
+    RS_Vector const& vp=normal->getNearestPointOnEntity(tangentPoint0, false);
+    return std::make_unique<RS_Line>(m_container, vp, tangentPoint0);
+    // fixme - sand - files - merge - UNDO??? Previously it was in undo cycle
+    /*if(!t0.valid) return ret;
     RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
     LC_UndoSection undo( m_document,m_viewport, handleUndo);
     ret = new RS_Line{m_container, vp, t0};
     ret->setLayerToActive();
     ret->setPenToActive();
-    return ret;
+    return ret;*/
 }
 
 /**
@@ -665,7 +671,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     //RS_Vector circleCenter;
 
     // check given entities:
-    if (!(circle && point.valid)) return nullptr;
+    if (!(circle != nullptr && point.valid)) return nullptr;
     //    if (!(circle->isArc() || circle->rtti()==RS2::EntitySplinePoints || circle->rtti() == RS2::EntityParabola)){
     // 	return nullptr;
     // }
@@ -676,7 +682,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     if (!sol.getNumber())
         return nullptr;
     RS_Vector const vp2{sol.getClosest(coord)};
-    RS_LineData d;
+    RS_LineData d{};
     if( (vp2-point).squared() > RS_TOLERANCE2 ) {
         d={vp2, point};
     }else{//the given point is a tangential point
@@ -708,7 +714,7 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
                                                      RS_Entity* circle1,
                                                      RS_Entity* circle2) {
     // check given entities:
-    if(! (circle1 && circle2))
+    if(! (circle1 != nullptr && circle2 != nullptr))
         return {};
 
     if( !(isArc(*circle1) && isArc(*circle2)))
@@ -760,18 +766,18 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
      * @param angle Angle of the line relative to the angle of the basis entity.
      * @param length Length of the line we're creating.
      */
-RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
+std::unique_ptr<RS_Line> RS_Creation::createLineRelAngle(const RS_Vector& coord,
                                          RS_Entity* entity,
                                          double angle,
                                          double length) {
 
     // check given entity / coord:
     if (!(entity && coord))
-        return nullptr;
+        return {};
 
     switch(entity->rtti()){
     default:
-        return nullptr;
+        return {};
     case RS2::EntityArc:
     case RS2::EntityCircle:
     case RS2::EntityLine:
@@ -779,15 +785,18 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
         break;
     }
 
-    auto const vp = entity->getNearestPointOnEntity(coord, false);
+    const RS_Vector vp = entity->getNearestPointOnEntity(coord, false);
 
     double const a1 = angle + entity->getTangentDirection(vp).angle();
 
     RS_Vector const v1 = RS_Vector::polar(length, a1);
 
-    auto* ret = new RS_Line{m_container, coord, coord+v1};
-    setupAndAddEntity(ret);
-
+    auto ret = std::make_unique<RS_Line>(m_container, coord, coord+v1);
+    bool addedToUndo = setupAndAddEntity(ret.get());
+    if (addedToUndo) {
+        ret.release();
+        return {};
+    }
     return ret;
 }
 
@@ -856,7 +865,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
     LC_UndoSection undo( m_document,m_viewport, handleUndo);
     double const len = corner1.distanceTo(corner2);
     double const da = 2.*M_PI/number;
-    double const r = 0.5*len/sin(0.5*da);
+    double const r = 0.5*len/std::sin(0.5*da);
     double const angle1 = corner1.angleTo(corner2);
     RS_Vector center = (corner1 + corner2)*0.5;
 
@@ -867,9 +876,9 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 
 
     for (int i=0; i<number; ++i) {
-        RS_Vector const& c0 = center +
+        RS_Vector const c0 = center +
                 RS_Vector::polar(r, angle0 + i*da);
-        RS_Vector const& c1 = center +
+        RS_Vector const c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
         auto* line = new RS_Line{m_container, c0, c1};
@@ -1049,16 +1058,22 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     return nullptr;
 }
 
-void RS_Creation::setupAndAddEntity(RS_Entity* en) const{
+bool RS_Creation::setupAndAddEntity(RS_Entity* en) const{
+    if (en == nullptr)
+        return false;
     en->setLayerToActive();
     en->setPenToActive();
 
     if (m_container) {
         m_container->addEntity(en);
     }
-    LC_UndoSection undo(m_document, m_viewport, handleUndo);
-    undo.addUndoable(en);
     if (m_graphicView) {
         m_graphicView->redraw();
     }
+    if (m_viewport != nullptr) {
+        LC_UndoSection undo(m_document, m_viewport, handleUndo);
+        undo.addUndoable(en);
+        return true;
+    }
+    return false;
 }

@@ -33,7 +33,7 @@
 
 namespace {
     //list of entity types supported by current action
-    const EntityTypeList enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+    const EntityTypeList g_enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 struct RS_ActionDrawCircleTan1_2P::Points {
@@ -286,10 +286,10 @@ RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(LC_MouseEvent *e, bool forPre
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview){
-        en = catchModifiableAndDescribe(e, enTypeList);
+        en = catchModifiableAndDescribe(e, g_enTypeList);
     }
     else{
-        en = catchModifiableEntity(e, enTypeList);
+        en = catchModifiableEntity(e, g_enTypeList);
     }
 
     if (en == nullptr) {
