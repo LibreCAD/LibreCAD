@@ -116,7 +116,7 @@ public:
 /**
  * create a tangent line which is orthogonal to the given RS_Line(normal)
  */
-    RS_Line* createLineOrthTan(const RS_Vector& coord,
+    std::unique_ptr<RS_Line> createLineOrthTan(const RS_Vector& coord,
                                RS_Line* normal,
                                RS_Entity* circle,
                                RS_Vector& alternativeTangent);

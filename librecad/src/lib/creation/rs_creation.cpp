@@ -509,22 +509,22 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
  *
  * Author: Dongxu Li
  */
-RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
+std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
                                         RS_Line* normal,
                                         RS_Entity* circle,
-                                        RS_Vector& alternativeTangent) {
-    RS_Line* ret = nullptr;
+                                        RS_Vector& alternativeTangent)
+{
 
     // check given entities:
     if (!(circle && normal))
-        return ret;
+        return {};
     RS2::EntityType rtti = circle->rtti();
     if (!(circle->isArc() || rtti == RS2::EntityParabola))
-        return ret;
+        return {};
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
     
 //    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
-    RS_Vector  t0;
+    RS_Vector  tangentPoint0;
     RS_Vector  t1;
     // todo - potentially, it's possible to move this fragment to appropriate implementations of  getNearestOrthTan - and expand it for returning all tangent points instead of nearest one
     switch (rtti){
@@ -537,10 +537,10 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             double d = RS_Vector::dotP(vp0, vp1);
             const RS_Vector &ortVector = vp1 * radius;
             if (d >= 0.){
-                t0 = center + ortVector;
+                tangentPoint0 = center + ortVector;
                 t1 = center - ortVector;
             } else {
-                t0 = center - ortVector;
+                tangentPoint0 = center - ortVector;
                 t1 = center + ortVector;
             }
             break;
@@ -564,17 +564,17 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             const RS_Vector &center = cir->getCenter();
             switch(sol.size()) {
             case 0:
-                t0 = RS_Vector(false);
+                tangentPoint0 = RS_Vector(false);
                 [[fallthrough]];
             case 2:
                 if (RS_Vector::dotP(sol[1], coord - center) > 0.){
-                    t0 = center + sol[1];
+                    tangentPoint0 = center + sol[1];
                     t1 = center + sol[0];
                     break;
                 }
                 [[fallthrough]];
             default:
-                t0 = center + sol[0];
+                tangentPoint0 = center + sol[0];
                 t1 = center + sol[1];
                 break;
             }
@@ -604,7 +604,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                 angle = RS_Math::correctAngle(angle + M_PI);
             }
             if (sol.size() < 1) {
-                t0 = RS_Vector(false);
+                tangentPoint0 = RS_Vector(false);
             }
             else {
                 aV.y *= -1.;
@@ -614,17 +614,17 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                 const RS_Vector &center = cir->getCenter();
                 switch (sol.size()) {
                     case 0:
-                        t0 = RS_Vector(false);
+                        tangentPoint0 = RS_Vector(false);
                         [[fallthrough]];
                     case 2:
                         if (RS_Vector::dotP(sol[1], coord - center) > 0.){
-                            t0 = center + sol[1];
+                            tangentPoint0 = center + sol[1];
                             t1 = center + sol[0];
                             break;
                         }
                         [[fallthrough]];
                     default:
-                        t0 = center + sol[0];
+                        tangentPoint0 = center + sol[0];
                         t1 = center + sol[1];
                         break;
                 }
@@ -637,13 +637,10 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 
     alternativeTangent = t1;
 
-    if(!t0.valid) return ret;
-    RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
-    LC_UndoSection undo( document,viewport, handleUndo);
-    ret = new RS_Line{container, vp, t0};
-    ret->setLayerToActive();
-    ret->setPenToActive();
-    return ret;
+    if(!tangentPoint0.valid)
+        return {};
+    RS_Vector const& vp=normal->getNearestPointOnEntity(tangentPoint0, false);
+    return std::make_unique<RS_Line>(container, vp, tangentPoint0);
 }
 
 /**

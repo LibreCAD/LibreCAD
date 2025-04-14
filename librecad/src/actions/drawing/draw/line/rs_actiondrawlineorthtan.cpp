@@ -49,6 +49,7 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
 {
 }
 
+RS_ActionDrawLineOrthTan::~RS_ActionDrawLineOrthTan() = default;
 
 void RS_ActionDrawLineOrthTan::finish(bool updateTB){
 	clearLines();
@@ -56,9 +57,9 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
 }
 
 void RS_ActionDrawLineOrthTan::doTrigger() {
-    if (!tangent)
+    if (!m_tangent)
         return;
-    auto newEntity = std::make_unique<RS_Line>(container, tangent->getData());
+    auto newEntity = std::make_unique<RS_Line>(container, m_tangent->getData());
 
     setPenAndLayerToActive(newEntity.get());
     undoCycleAdd(newEntity.get());
@@ -87,15 +88,16 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 highlightHover(en);
                 RS_Vector alternativeTangentPoint;
                 RS_Creation creation(preview.get(), graphicView, false);
-                tangent = creation.createLineOrthTan(mouse,
+                m_tangent = creation.createLineOrthTan(mouse,
                                                      normal,
                                                      circle, alternativeTangentPoint);
-                if (tangent != nullptr){
-                    previewEntityToCreate(tangent, false);
+                if (m_tangent != nullptr){
+                    previewLine(m_tangent->getStartpoint(), m_tangent->getEndpoint());
+
                     previewRefSelectablePoint(alternativeTangentPoint);
-                    previewRefSelectablePoint(tangent->getEndpoint());
+                    previewRefSelectablePoint(m_tangent->getEndpoint());
                     if (showRefEntitiesOnPreview) {
-                        previewRefPoint(tangent->getStartpoint());
+                        previewRefPoint(m_tangent->getStartpoint());
                     }
                 }
             }
@@ -127,7 +129,7 @@ void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, LC_MouseEven
             break;
         }
         case SetCircle: {
-            if (tangent != nullptr) {
+            if (m_tangent != nullptr) {
                 trigger();
             }
             break;
