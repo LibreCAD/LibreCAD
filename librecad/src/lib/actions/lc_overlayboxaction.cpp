@@ -28,6 +28,8 @@ LC_OverlayBoxAction::LC_OverlayBoxAction(const char *name, LC_ActionContext *act
       m_overlayBoxOptions{std::make_unique<LC_OverlayBoxOptions>()} {
 }
 
+LC_OverlayBoxAction::~LC_OverlayBoxAction() = default;
+
 void LC_OverlayBoxAction::drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2) {
     auto* ob = new RS_OverlayBox(corner1, corner2, m_overlayBoxOptions.get());
     addOverlay(ob, RS2::OverlayGraphics::OverlayEffects);

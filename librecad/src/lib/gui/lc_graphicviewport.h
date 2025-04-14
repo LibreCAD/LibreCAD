@@ -21,15 +21,14 @@
  ******************************************************************************/
 #ifndef LC_GRAPHICVIEWPORT_H
 #define LC_GRAPHICVIEWPORT_H
+#include <QList>
 #include <memory>
 
 #include "lc_coordinates_mapper.h"
 #include "lc_overlaysmanager.h"
 #include "rs.h"
-#include "rs_undoable.h"
 #include "rs_vector.h"
-
-
+class LC_OverlayDrawablesContainer;
 class QString;
 class RS_EntityContainer;
 class RS_Graphic;
@@ -37,6 +36,7 @@ class LC_UCS;
 class RS_Grid;
 class LC_View;
 class QDateTime;
+class RS_Undoable;
 class LC_GraphicViewPortListener;
 
 class LC_GraphicViewport: public LC_CoordinatesMapper{

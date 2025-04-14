@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <cfloat>
 
 #include "lc_actionmodifybreakdivide.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "lc_linemath.h"
 #include "lc_modifybreakdivideoptions.h"
 #include "rs_arc.h"

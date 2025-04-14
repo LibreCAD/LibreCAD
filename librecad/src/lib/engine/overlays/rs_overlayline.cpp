@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include "rs_overlayline.h"
 #include "rs_painter.h"
 // fixme - class is not used, but probably may be used again later, so won't remove it so far

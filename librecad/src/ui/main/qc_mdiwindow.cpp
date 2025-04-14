@@ -26,17 +26,17 @@
 **********************************************************************/
 #include<iostream>
 
-#include "qc_mdiwindow.h"
-
 #include <QCloseEvent>
 #include <QPainter>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QMdiArea>
 
 #include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
 #include "lc_printpreviewview.h"
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 #include "qg_exitdialog.h"
 #include "rs_debug.h"
 #include "rs_insert.h"

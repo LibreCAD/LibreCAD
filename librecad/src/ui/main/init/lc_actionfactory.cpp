@@ -41,35 +41,91 @@
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : LC_ActionFactoryBase(parent, a_handler){
 }
+
+void LC_ActionFactory::initActions(LC_ActionGroupManager* agm, bool useTheme) {
+   initActionGroupManager(agm);
+   fillActionContainer(agm, useTheme);
+}
+
+void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
+    createActionGroups(
+    {
+       {"block", tr("Block"), tr("Block related operations"), ":/icons/create_block.lci"},
+        {"circle", tr("Circle"), tr("Circle drawing commands"), ":/icons/circle.lci"},
+        {"curve", tr("Arc"), tr("Arc drawing commands"), ":/icons/arc_center_point_angle.lci"},
+        {"spline", tr("Spline"), tr("Spline drawing commands"), ":/icons/spline_points.lci"},
+        {"edit", tr("Edit"), tr("Editing operations"), ":/icons/rename_active_block.lci"},
+        {"ellipse", tr("Ellipse"), tr("Ellipse drawing commands"), ":/icons/ellipses.lci"},
+        {"file", tr("File"), tr("File Operations"), ":/icons/save.lci"},
+        {"dimension", tr("Dimension"), tr("Dimensions creation commands"), ":/icons/dim_horizontal.lci"},
+        {"info", tr("Info"), tr("Informational commands"), ":/icons/measure.lci"},
+        {"layer", tr("Layer"), tr("Layers operations"), ":/icons/deselect_layer.lci", false},
+        {"line", tr("Line"), tr("Line drawing commands"), ":/icons/line.lci"},
+        {"point", tr("Point"), tr("Point drawing commands"), ":/icons/points.lci"},
+        {"shape", tr("Polygon"), tr("Polygon drawing commands"), ":/icons/rectangle_2_points.lci"},
+        {"modify", tr("Modify"), tr("Modification operations"), ":/icons/move_rotate.lci"},
+        {"options", tr("Options"), tr("Options management"), ":/icons/settings.lci"},
+        {"other", tr("Other"), tr("Other operations"), ":/icons/text.lci"},
+        {"relZero", tr("Relative Zero"), tr("Relative Zero"), ":/icons/set_rel_zero.lci", false},
+        {"polyline", tr("Polyline"), tr("Polyline drawing commands"), ":/icons/polylines_polyline.lci"},
+        {"pen", tr("PenTB"), tr("Pen related operations"), ":/icons/pen_apply.lci"},
+        {"restriction", tr("Restriction"), tr("Snap restrictions"), ":/icons/restr_ortho.lci", false},
+        {"select", tr("Select"), tr("Entity selection operations"), ":/icons/select.lci"},
+        {"snap", tr("Snap"), tr("Snapping operations"), ":/icons/snap_intersection.lci", false},
+        {"snap_extras", tr("Snap Extras"), tr("Additional Snaps"), ":/icons/snap_free.lci", false},
+        {"view", tr("View"), tr("View related operations"), ":/icons/zoom_in.lci", false},
+        {"namedViews", tr("Named Views"), tr("Persistent Views operations"), ":/icons/visible.lci", false},
+        {"workspaces", tr("Workspaces"), tr("Workspaces operations"), ":/icons/workspace.lci", false},
+        {"ucs", tr("UCS"), tr("UCS operations"), ":/icons/set_ucs.lci"},
+        {"widgets", tr("Widgets"), tr("Widgets management"), ":/icons/dockwidgets_bottom.lci", false},
+        {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false}
+    },agm);
+
+    auto fileGroup = agm->getGroupByName("file");
+    auto optionsGroup = agm->getGroupByName("options");
+
+    for (auto const& actionGroup : agm->findChildren<LC_ActionGroup*>()) {
+        actionGroup->setExclusive(false);
+        if (fileGroup != actionGroup && optionsGroup != actionGroup) {
+            connect(m_appWin, &QC_ApplicationWindow::windowsChanged, actionGroup, &LC_ActionGroup::setEnabled);
+        }
+    }
+
+    auto toolGroups = agm->toolGroups();
+    for (auto actionGroup : toolGroups) {
+        connect(actionGroup, &LC_ActionGroup::triggered, m_appWin, &QC_ApplicationWindow::relayAction);
+    }
+}
+
 // todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
 
 void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useTheme){
     m_usingTheme = useTheme;
     QMap<QString, QAction *> &a_map = agm->getActionsMap();
-    createSelectActions(a_map, agm->select);
-    createDrawLineActions(a_map, agm->line);
-    createDrawPointsActions(a_map, agm->point);
-    createDrawShapeActions(a_map, agm->shape);
-    createDrawCircleActions(a_map, agm->circle);
-    createDrawCurveActions(a_map, agm->curve);
-    createDrawSplineActions(a_map, agm->spline);
-    createDrawEllipseActions(a_map, agm->ellipse);
-    createDrawPolylineActions(a_map, agm->polyline);
-    createDrawOtherActions(a_map, agm->other);
-    createDrawDimensionsActions(a_map, agm->dimension);
-    createModifyActions(a_map, agm->modify);
-    createPenActions(a_map, agm->pen);
-    createInfoActions(a_map, agm->info);
-    createViewActions(a_map, agm->view);
-    createWidgetActions(a_map, agm->widgets);
-    createFileActions(a_map, agm->file);
+    createSelectActions(a_map, agm->getGroupByName("select"));
+    createDrawLineActions(a_map, agm->getGroupByName("line"));
+    createDrawPointsActions(a_map, agm->getGroupByName("point"));
+    createDrawShapeActions(a_map, agm->getGroupByName("shape"));
+    createDrawCircleActions(a_map, agm->getGroupByName("circle"));
+    createDrawCurveActions(a_map, agm->getGroupByName("curve"));
+    createDrawSplineActions(a_map, agm->getGroupByName("spline"));
+    createDrawEllipseActions(a_map, agm->getGroupByName("ellipse"));
+    createDrawPolylineActions(a_map, agm->getGroupByName("polyline"));
+    createDrawOtherActions(a_map, agm->getGroupByName("other"));
+    createDrawDimensionsActions(a_map, agm->getGroupByName("dimension"));
+    createModifyActions(a_map, agm->getGroupByName("modify"));
+    createPenActions(a_map, agm->getGroupByName("pen"));
+    createInfoActions(a_map, agm->getGroupByName("info"));
+    createViewActions(a_map, agm->getGroupByName("view"));
+    createWidgetActions(a_map, agm->getGroupByName("widgets"));
+    createFileActions(a_map, agm->getGroupByName("file"));
 
-    createSnapActions(a_map, agm->snap);
-    createInfoCursorActions(a_map, agm->infoCursor);
-    createSnapExtraActions(a_map, agm->snap_extras);
-    createRestrictActions(a_map, agm->restriction);
-    createRelZeroActions(a_map, agm->other);
-    createUCSActions(a_map, agm->ucs);
+    createSnapActions(a_map, agm->getGroupByName("snap"));
+    createInfoCursorActions(a_map, agm->getGroupByName("infoCursor"));
+    createSnapExtraActions(a_map, agm->getGroupByName("snap_extras"));
+    createRestrictActions(a_map, agm->getGroupByName("restriction"));
+    createRelZeroActions(a_map, agm->getGroupByName("other"));
+    createUCSActions(a_map, agm->getGroupByName("ucs"));
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -78,18 +134,18 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     }
 
     // not checkable actions
-    createPenActionsUncheckable(a_map, agm->pen);
-    createOrderActionsUncheckable(a_map, agm->modify);
-    createLayerActionsUncheckable(a_map, agm->layer);
-    createBlockActionsUncheckable(a_map, agm->block);
-    createOptionsActionsUncheckable(a_map, agm->options);
-    createSelectActionsUncheckable(a_map, agm->select);
-    createFileActionsUncheckable(a_map, agm->file);
-    createViewActionsUncheckable(a_map, agm->view);
-    createNamedViewActionsUncheckable(a_map, agm->namedViews);
-    createWorkspacesActionsUncheckable(a_map, agm->workspaces);
-    createWidgetActionsUncheckable(a_map, agm->widgets);
-    createEditActionsUncheckable(a_map, agm->edit);
+    createPenActionsUncheckable(a_map, agm->getGroupByName("pen"));
+    createOrderActionsUncheckable(a_map, agm->getGroupByName("modify"));
+    createLayerActionsUncheckable(a_map, agm->getGroupByName("layer"));
+    createBlockActionsUncheckable(a_map, agm->getGroupByName("block"));
+    createOptionsActionsUncheckable(a_map, agm->getGroupByName("options"));
+    createSelectActionsUncheckable(a_map, agm->getGroupByName("select"));
+    createFileActionsUncheckable(a_map, agm->getGroupByName("file"));
+    createViewActionsUncheckable(a_map, agm->getGroupByName("view"));
+    createNamedViewActionsUncheckable(a_map, agm->getGroupByName("namedViews"));
+    createWorkspacesActionsUncheckable(a_map, agm->getGroupByName("workspaces"));
+    createWidgetActionsUncheckable(a_map, agm->getGroupByName("widgets"));
+    createEditActionsUncheckable(a_map, agm->getGroupByName("edit"));
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
 
@@ -100,10 +156,10 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
 
     agm->completeInit();
 
-    fillActionLists(agm);
+    fillActionLists(a_map);
     addActionsToMainWindow(a_map);
 
-    prepareActionsToDisableInPrintPreview(agm, m_appWin->m_actionsToDisableInPrintPreviewList);
+    prepareActionsToDisableInPrintPreview(m_appWin->m_actionsToDisableInPrintPreviewList, a_map);
 
     // fixme - review why this action is not used, is it really necessary or may be removed?
     // action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
@@ -700,253 +756,254 @@ void LC_ActionFactory::markNotEditableActionsShortcuts(const QMap<QString, QActi
     });
 }
 
-void LC_ActionFactory::fillActionLists(LC_ActionGroupManager* agm){
-    agm->fillActionsList(agm->file_actions,
-                         {
-                             "FileNew",
-                             "FileNewTemplate",
-                             "FileOpen",
-                             "FileSave",
-                             "FileSaveAs",
-                             "FileSaveAll"
-                         });
+void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
+    fillActionsList(file_actions,
+                    {
+                        "FileNew",
+                        "FileNewTemplate",
+                        "FileOpen",
+                        "FileSave",
+                        "FileSaveAs",
+                        "FileSaveAll"
+                    }, map);
 
-    agm->fillActionsList(agm->shape_actions,
-                         {
-                             "DrawLineRectangle",
-                             "DrawLineRectangle1Point",
-                             "DrawLineRectangle2Points",
-                             "DrawLineRectangle3Points",
-                             "DrawLinePolygonCenCor",
-                             "DrawLinePolygonCenTan",
-                             "DrawLinePolygonCorCor",
-                             "DrawLinePolygonSideSide",
-                             "DrawStar"
-                         });
+    fillActionsList(shape_actions,
+                    {
+                        "DrawLineRectangle",
+                        "DrawLineRectangle1Point",
+                        "DrawLineRectangle2Points",
+                        "DrawLineRectangle3Points",
+                        "DrawLinePolygonCenCor",
+                        "DrawLinePolygonCenTan",
+                        "DrawLinePolygonCorCor",
+                        "DrawLinePolygonSideSide",
+                        "DrawStar"
+                    }, map);
 
-    agm->fillActionsList(agm->line_actions, {
-                             "DrawLine",
-                             "DrawLineAngle",
-                             "DrawLineHorizontal",
-                             "DrawLineVertical",
-                             "DrawLineParallelThrough",
-                             "DrawLineParallel",
-                             "DrawLineBisector",
-                             "DrawLineTangent1",
-                             "DrawLineTangent2",
-                             "DrawLineOrthTan",
-                             "DrawLineOrthogonal",
-                             "DrawLineRelAngle",
-                             "DrawLineRel",
-                             "DrawLineRelX",
-                             "DrawLineRelY",
-                             "DrawLineAngleRel",
-                             "DrawLineOrthogonalRel",
-                             "DrawLineFromPointToLine",
-                             "DrawSliceDivideLine",
-                             "DrawSliceDivideCircle",
-                             "DrawCross",
-                             "DrawLineMiddle"
-                         });
+    fillActionsList(line_actions,
+                    {
+                        "DrawLine",
+                        "DrawLineAngle",
+                        "DrawLineHorizontal",
+                        "DrawLineVertical",
+                        "DrawLineParallelThrough",
+                        "DrawLineParallel",
+                        "DrawLineBisector",
+                        "DrawLineTangent1",
+                        "DrawLineTangent2",
+                        "DrawLineOrthTan",
+                        "DrawLineOrthogonal",
+                        "DrawLineRelAngle",
+                        "DrawLineRel",
+                        "DrawLineRelX",
+                        "DrawLineRelY",
+                        "DrawLineAngleRel",
+                        "DrawLineOrthogonalRel",
+                        "DrawLineFromPointToLine",
+                        "DrawSliceDivideLine",
+                        "DrawSliceDivideCircle",
+                        "DrawCross",
+                        "DrawLineMiddle"
+                    }, map);
 
-    agm->fillActionsList(agm->point_actions, {
-                             "DrawPoint",
-                             "DrawLinePoints",
-                             "DrawPointsMiddle",
-                             "DrawPointLattice",
-                             "SelectPoints",
-                             "PasteToPoints"
-                         });
+    fillActionsList(point_actions, {
+                        "DrawPoint",
+                        "DrawLinePoints",
+                        "DrawPointsMiddle",
+                        "DrawPointLattice",
+                        "SelectPoints",
+                        "PasteToPoints"
+                    }, map);
 
-    agm->fillActionsList(agm->circle_actions, {
-                             "DrawCircle",
-                             "DrawCircle2P",
-                             "DrawCircle2PR",
-                             "DrawCircle3P",
-                             "DrawCircleCR",
-                             "DrawCircleTan2_1P",
-                             "DrawCircleTan1_2P",
-                             "DrawCircleTan2",
-                             "DrawCircleTan3",
-                             "DrawCircleInscribe",
-                             "DrawCircleParallel",
-                             "DrawCircleByArc"
-                         });
+    fillActionsList(circle_actions, {
+                        "DrawCircle",
+                        "DrawCircle2P",
+                        "DrawCircle2PR",
+                        "DrawCircle3P",
+                        "DrawCircleCR",
+                        "DrawCircleTan2_1P",
+                        "DrawCircleTan1_2P",
+                        "DrawCircleTan2",
+                        "DrawCircleTan3",
+                        "DrawCircleInscribe",
+                        "DrawCircleParallel",
+                        "DrawCircleByArc"
+                    }, map);
 
-    agm->fillActionsList(agm->curve_actions, {
-                             "DrawArc",
-                             "DrawArcChord",
-                             "DrawArcAngleLen",
-                             "DrawArc3P",
-                             "DrawArc2PAngle",
-                             "DrawArc2PRadius",
-                             "DrawArc2PLength",
-                             "DrawArc2PHeight",
-                             "DrawArcTangential",
-                             "DrawEllipseArcAxis",
-                             "DrawEllipseArc1Point"
-                         });
+    fillActionsList(curve_actions, {
+                        "DrawArc",
+                        "DrawArcChord",
+                        "DrawArcAngleLen",
+                        "DrawArc3P",
+                        "DrawArc2PAngle",
+                        "DrawArc2PRadius",
+                        "DrawArc2PLength",
+                        "DrawArc2PHeight",
+                        "DrawArcTangential",
+                        "DrawEllipseArcAxis",
+                        "DrawEllipseArc1Point"
+                    }, map);
 
-    agm->fillActionsList(agm->spline_actions, {
-                             "DrawParabola4Points",
-                             "DrawParabolaFD",
-                             "DrawSpline",
-                             "DrawSplinePoints",
-                             "DrawSplineFromPolyline",
-                             "DrawSplinePointsAppend",
-                             "DrawSplinePointsAdd",
-                             "DrawSplinePointsRemove",
-                             "DrawSplinePointsDelTwo",
-                             "DrawSplineExplode",
-                             "DrawLineFree"
-                         });
+    fillActionsList(spline_actions, {
+                        "DrawParabola4Points",
+                        "DrawParabolaFD",
+                        "DrawSpline",
+                        "DrawSplinePoints",
+                        "DrawSplineFromPolyline",
+                        "DrawSplinePointsAppend",
+                        "DrawSplinePointsAdd",
+                        "DrawSplinePointsRemove",
+                        "DrawSplinePointsDelTwo",
+                        "DrawSplineExplode",
+                        "DrawLineFree"
+                    }, map);
 
-    agm->fillActionsList(agm->ellipse_actions, {
-                             "DrawEllipse1Point",
-                             "DrawEllipseAxis",
-                             "DrawEllipseFociPoint",
-                             "DrawEllipse4Points",
-                             "DrawEllipseCenter3Points",
-                             "DrawEllipseInscribe"
-                         });
+    fillActionsList(ellipse_actions, {
+                        "DrawEllipse1Point",
+                        "DrawEllipseAxis",
+                        "DrawEllipseFociPoint",
+                        "DrawEllipse4Points",
+                        "DrawEllipseCenter3Points",
+                        "DrawEllipseInscribe"
+                    }, map);
 
-    agm->fillActionsList(agm->polyline_actions, {
-                             "DrawPolyline",
-                             "PolylineAdd",
-                             "PolylineAppend",
-                             "PolylineDel",
-                             "PolylineDelBetween",
-                             "PolylineTrim",
-                             "PolylineEquidistant",
-                             "PolylineSegment",
-                             "PolylineArcToLines",
-                             "PolylineSegmentType"
-                         });
+    fillActionsList(polyline_actions, {
+                        "DrawPolyline",
+                        "PolylineAdd",
+                        "PolylineAppend",
+                        "PolylineDel",
+                        "PolylineDelBetween",
+                        "PolylineTrim",
+                        "PolylineEquidistant",
+                        "PolylineSegment",
+                        "PolylineArcToLines",
+                        "PolylineSegmentType"
+                    }, map);
 
-    agm->fillActionsList(agm->select_actions, {
-                             "DeselectAll",
-                             "SelectAll",
-                             "SelectSingle",
-                             "SelectContour",
-                             "SelectWindow",
-                             "DeselectWindow",
-                             "SelectIntersected",
-                             "DeselectIntersected",
-                             "SelectLayer",
-                             "SelectInvert"
-                         });
+    fillActionsList(select_actions, {
+                        "DeselectAll",
+                        "SelectAll",
+                        "SelectSingle",
+                        "SelectContour",
+                        "SelectWindow",
+                        "DeselectWindow",
+                        "SelectIntersected",
+                        "DeselectIntersected",
+                        "SelectLayer",
+                        "SelectInvert"
+                    }, map);
 
-    agm->fillActionsList(agm->dimension_actions, {
-                             "DimAligned",
-                             "DimLinear",
-                             "DimLinearHor",
-                             "DimLinearVer",
-                             "DimBaseline",
-                             "DimContinue",
-                             "DimRadial",
-                             "DimDiametric",
-                             "DimAngular",
-                             "DimArc",
-                             "DimLeader"
-                         });
+    fillActionsList(dimension_actions, {
+                        "DimAligned",
+                        "DimLinear",
+                        "DimLinearHor",
+                        "DimLinearVer",
+                        "DimBaseline",
+                        "DimContinue",
+                        "DimRadial",
+                        "DimDiametric",
+                        "DimAngular",
+                        "DimArc",
+                        "DimLeader"
+                    }, map);
 
-    agm->fillActionsList(agm->other_drawing_actions, {
-                             "DrawText",
-                             "DrawMText",
-                             "DrawHatch",
-                             "DrawImage",
-                             "DrawBoundingBox"
-                         });
+    fillActionsList(other_drawing_actions, {
+                        "DrawText",
+                        "DrawMText",
+                        "DrawHatch",
+                        "DrawImage",
+                        "DrawBoundingBox"
+                    }, map);
 
-    agm->fillActionsList(agm->modify_actions, {
-                             "ModifyMove",
-                             "ModifyDuplicate",
-                             "ModifyAlign",
-                             "ModifyAlignOne",
-                             "ModifyAlignRef",
-                             "ModifyRotate",
-                             "ModifyScale",
-                             "ModifyMirror",
-                             "ModifyMoveRotate",
-                             "ModifyRotate2",
-                             "ModifyRevertDirection",
-                             "ModifyTrim",
-                             "ModifyTrim2",
-                             "ModifyTrimAmount",
-                             "ModifyLineJoin",
-                             "ModifyBreakDivide",
-                             "ModifyLineGap",
-                             "ModifyOffset",
-                             "ModifyBevel",
-                             "ModifyRound",
-                             "ModifyCut",
-                             "ModifyStretch",
-                             "ModifyEntity",
-                             "ModifyAttributes",
-                             "ModifyExplodeText",
-                             "BlocksExplode",
-                             "ModifyDelete"
-                         });
+    fillActionsList(modify_actions, {
+                        "ModifyMove",
+                        "ModifyDuplicate",
+                        "ModifyAlign",
+                        "ModifyAlignOne",
+                        "ModifyAlignRef",
+                        "ModifyRotate",
+                        "ModifyScale",
+                        "ModifyMirror",
+                        "ModifyMoveRotate",
+                        "ModifyRotate2",
+                        "ModifyRevertDirection",
+                        "ModifyTrim",
+                        "ModifyTrim2",
+                        "ModifyTrimAmount",
+                        "ModifyLineJoin",
+                        "ModifyBreakDivide",
+                        "ModifyLineGap",
+                        "ModifyOffset",
+                        "ModifyBevel",
+                        "ModifyRound",
+                        "ModifyCut",
+                        "ModifyStretch",
+                        "ModifyEntity",
+                        "ModifyAttributes",
+                        "ModifyExplodeText",
+                        "BlocksExplode",
+                        "ModifyDelete"
+                    }, map);
 
-    agm->fillActionsList(agm->order_actions, {
-                             "OrderTop",
-                             "OrderBottom",
-                             "OrderRaise",
-                             "OrderLower"
-                         });
+    fillActionsList(order_actions, {
+                        "OrderTop",
+                        "OrderBottom",
+                        "OrderRaise",
+                        "OrderLower"
+                    }, map);
 
-    agm->fillActionsList(agm->info_actions, {
-                             "InfoDist",
-                             "InfoDist2",
-                             "InfoDist3",
-                             "InfoAngle",
-                             "InfoAngle3Points",
-                             "InfoTotalLength",
-                             "InfoArea",
-                             "EntityInfo"
-                         });
+    fillActionsList(info_actions, {
+                        "InfoDist",
+                        "InfoDist2",
+                        "InfoDist3",
+                        "InfoAngle",
+                        "InfoAngle3Points",
+                        "InfoTotalLength",
+                        "InfoArea",
+                        "EntityInfo"
+                    }, map);
 
-    agm->fillActionsList(agm->layer_actions, {
-                             "LayersDefreezeAll",
-                             "LayersFreezeAll",
-                             "LayersUnlockAll",
-                             "LayersLockAll",
-                             "LayersAdd",
-                             "LayersRemove",
-                             "LayersEdit",
-                             "LayersToggleLock",
-                             "LayersToggleView",
-                             "LayersTogglePrint",
-                             "LayersToggleConstruction",
-                             "LayersExportSelected",
-                             "LayersExportVisible"
-                         });
+    fillActionsList(layer_actions, {
+                        "LayersDefreezeAll",
+                        "LayersFreezeAll",
+                        "LayersUnlockAll",
+                        "LayersLockAll",
+                        "LayersAdd",
+                        "LayersRemove",
+                        "LayersEdit",
+                        "LayersToggleLock",
+                        "LayersToggleView",
+                        "LayersTogglePrint",
+                        "LayersToggleConstruction",
+                        "LayersExportSelected",
+                        "LayersExportVisible"
+                    }, map);
 
-    agm->fillActionsList(agm->block_actions, {
-                             "BlocksDefreezeAll",
-                             "BlocksFreezeAll",
-                             "BlocksToggleView",
-                             "BlocksAdd",
-                             "BlocksRemove",
-                             "BlocksAttributes",
-                             "BlocksInsert",
-                             "BlocksEdit",
-                             "BlocksSave",
-                             "BlocksCreate",
-                             "BlocksExplode"
-                         });
+    fillActionsList(block_actions, {
+                        "BlocksDefreezeAll",
+                        "BlocksFreezeAll",
+                        "BlocksToggleView",
+                        "BlocksAdd",
+                        "BlocksRemove",
+                        "BlocksAttributes",
+                        "BlocksInsert",
+                        "BlocksEdit",
+                        "BlocksSave",
+                        "BlocksCreate",
+                        "BlocksExplode"
+                    }, map);
 
-    agm->fillActionsList(agm->pen_actions, {
-                             "PenSyncFromLayer",
-                             "PenPick",
-                             "PenPickResolved",
-                             "PenApply",
-                             "PenCopy"
-                         });
+    fillActionsList(pen_actions, {
+                        "PenSyncFromLayer",
+                        "PenPick",
+                        "PenPickResolved",
+                        "PenApply",
+                        "PenCopy"
+                    }, map);
 }
 
-void LC_ActionFactory::prepareActionsToDisableInPrintPreview(LC_ActionGroupManager* agm, QList<QAction*>& actionsList){
-    agm->fillActionsList(actionsList, {
+void LC_ActionFactory::prepareActionsToDisableInPrintPreview(QList<QAction*>& actionsList, QMap<QString, QAction *> &map){
+    fillActionsList(actionsList, {
         "EditCut",
         "EditCutQuick",
         "EditCopy",
@@ -972,22 +1029,22 @@ void LC_ActionFactory::prepareActionsToDisableInPrintPreview(LC_ActionGroupManag
         "ViewGridIsoRight",
         "UCSSetWCS",
         "UCSCreate"
-    });
+    }, map);
 
-    actionsList.append(agm->line_actions);
-    actionsList.append(agm->point_actions);
-    actionsList.append(agm->shape_actions);
-    actionsList.append(agm->circle_actions);
-    actionsList.append(agm->curve_actions);
-    actionsList.append(agm->spline_actions);
-    actionsList.append(agm->ellipse_actions);
-    actionsList.append(agm->polyline_actions);
-    actionsList.append(agm->select_actions);
-    actionsList.append(agm->dimension_actions);
-    actionsList.append(agm->other_drawing_actions);
-    actionsList.append(agm->modify_actions);
-    actionsList.append(agm->order_actions);
-    actionsList.append(agm->info_actions);
-    actionsList.append(agm->block_actions);
-    actionsList.append(agm->pen_actions);
+    actionsList.append(line_actions);
+    actionsList.append(point_actions);
+    actionsList.append(shape_actions);
+    actionsList.append(circle_actions);
+    actionsList.append(curve_actions);
+    actionsList.append(spline_actions);
+    actionsList.append(ellipse_actions);
+    actionsList.append(polyline_actions);
+    actionsList.append(select_actions);
+    actionsList.append(dimension_actions);
+    actionsList.append(other_drawing_actions);
+    actionsList.append(modify_actions);
+    actionsList.append(order_actions);
+    actionsList.append(info_actions);
+    actionsList.append(block_actions);
+    actionsList.append(pen_actions);
 }

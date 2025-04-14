@@ -46,6 +46,8 @@
 #include "rs_modification.h"
 #include "rs_settings.h"
 
+
+
 class QTableView;
 
 /**
@@ -79,7 +81,7 @@ private:
  * @param parent
  */
 LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) :
-    QWidget(parent),
+    LC_GraphicViewAwareWidget(parent),
     Ui::LC_PenPaletteWidget(){
 
     setupUi(this);
@@ -270,11 +272,6 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
         auto addAction = [&contextMenu, this](const std::pair<QString, MemFn>& item) {
             auto* action = contextMenu->addAction(item.first);
             connect(action, &QAction::triggered, this, item.second);
-// #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
-//             connect(action, &QAction::triggered, this, time.second);
-// #else
-//             connect(action, SIGNAL(triggered()), this, time.second);
-// #endif
         };
         auto addActions = [&addAction](std::initializer_list<std::pair<QString, MemFn>> menuEntries){
             for (const auto& menuEntry: menuEntries)

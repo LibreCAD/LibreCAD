@@ -137,9 +137,7 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
  */
 QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WindowFlags f)
-        : QWidget(parent, f) {
-
-    setObjectName(name);
+        : LC_GraphicViewAwareWidget(parent, name, f) {
     m_actionHandler = ah;
     m_blockList = nullptr;
     m_lastBlock = nullptr;
@@ -168,7 +166,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     // QHBoxLayout* layButtons = new QHBoxLayout();
     // QHBoxLayout* layButtons2 = new QHBoxLayout();
     // show all blocks:
-    QToolButton* but = new QToolButton(this);
+    auto* but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.lci"));
     // but->setMinimumSize(button_size);
     but->setToolTip(tr("Show all blocks"));

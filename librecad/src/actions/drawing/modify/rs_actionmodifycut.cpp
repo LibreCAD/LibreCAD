@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionmodifycut.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"

@@ -31,6 +31,7 @@
 #include "rs_settings.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_text.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the

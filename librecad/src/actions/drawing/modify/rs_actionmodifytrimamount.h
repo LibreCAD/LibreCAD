@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_AtomicEntity;
 /**
  * This action class can handle user events to trim entities by a given
  * amount.

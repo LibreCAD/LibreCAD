@@ -1,23 +1,22 @@
 #ifndef LC_PENWIZARD_H
 #define LC_PENWIZARD_H
 
-#include <QDockWidget>
+#include "lc_graphicviewawarewidget.h"
 
 class ColorWizard;
-class QC_MDIWindow;
 
-class LC_PenWizard : public QDockWidget{
+class LC_PenWizard : public LC_GraphicViewAwareWidget{
     Q_OBJECT
 public:
-    LC_PenWizard(const QString& title, QWidget* parent = nullptr);
-    void setMdiWindow(QC_MDIWindow* mdiWindow);
+    explicit LC_PenWizard(QWidget* parent = nullptr);
+    void setGraphicView(RS_GraphicView* gview) override;
 protected slots:
     void setColorForSelected(QColor color);
     void selectByColor(QColor color);
     void setActivePenColor(QColor color);
     void updateWidgetSettings();
 private:
-    QC_MDIWindow* m_window = nullptr;
+    RS_GraphicView* m_graphicView = nullptr;
     ColorWizard* m_colorWizard = nullptr;
 };
 

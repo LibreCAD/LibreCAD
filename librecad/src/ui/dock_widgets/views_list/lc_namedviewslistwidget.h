@@ -23,11 +23,11 @@
 #ifndef LC_NAMEDVIEWSLISTWIDGET_H
 #define LC_NAMEDVIEWSLISTWIDGET_H
 
-#include <QWidget>
 #include <QItemSelection>
 
 #include "rs.h"
 #include "lc_graphicviewaware.h"
+#include "lc_graphicviewawarewidget.h"
 
 class LC_View;
 class LC_ViewList;
@@ -41,7 +41,7 @@ namespace Ui {
     class LC_NamedViewsListWidget;
 }
 
-class LC_NamedViewsListWidget : public QWidget, public LC_GraphicViewAware{
+class LC_NamedViewsListWidget : public LC_GraphicViewAwareWidget{
  Q_OBJECT
 public:
     explicit LC_NamedViewsListWidget(const QString& title, QWidget* parent);

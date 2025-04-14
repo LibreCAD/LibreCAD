@@ -23,7 +23,6 @@
 #include "lc_crosshair.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
-#include "rs_debug.h"
 #include "lc_graphicviewport.h"
 
 LC_Crosshair::LC_Crosshair(const RS_Vector& coord,

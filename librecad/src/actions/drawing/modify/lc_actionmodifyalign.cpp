@@ -20,10 +20,14 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actionmodifyalign.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "lc_modifyalignoptions.h"
 #include "rs_graphicview.h"
 #include "rs_document.h"
 #include "lc_align.h"
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 
 LC_ActionModifyAlign::LC_ActionModifyAlign(LC_ActionContext *actionContext)
     :LC_ActionPreSelectionAwareBase("ModifyAlign", actionContext, RS2::ActionModifyAlign) {

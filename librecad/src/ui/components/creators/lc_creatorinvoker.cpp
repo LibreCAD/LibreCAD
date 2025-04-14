@@ -30,6 +30,7 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 
+#include "lc_actiongroupmanager.h"
 #include "lc_dialog.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"

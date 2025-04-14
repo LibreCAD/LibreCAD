@@ -28,6 +28,7 @@
 class LC_ShortcutsManager {
 public:
     LC_ShortcutsManager();
+    ~LC_ShortcutsManager() = default;
     int saveShortcuts(QMap<QString, LC_ShortcutInfo*> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
     int saveShortcuts(const QString &fileName, const QList<LC_ShortcutInfo *> &items) const;
     void assignShortcutsToActions(const QMap<QString, QAction *> &map,

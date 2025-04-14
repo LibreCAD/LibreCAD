@@ -19,11 +19,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QKeyEvent>
+
 #include "rs_actionselectbase.h"
+
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
 #include "rs_selection.h"
 
 RS_ActionSelectBase::RS_ActionSelectBase(const char* name,LC_ActionContext *actionContext, RS2::ActionType actionType, QList<RS2::EntityType> entityTypeList)

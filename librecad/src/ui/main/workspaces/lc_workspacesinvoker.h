@@ -31,6 +31,7 @@ class LC_WorkspacesInvoker: public QObject, public LC_AppWindowAware{
      Q_OBJECT
 public:
     LC_WorkspacesInvoker(QC_ApplicationWindow* mainWin);
+     ~LC_WorkspacesInvoker() override;
      void saveWorkspace(bool on);
      void fillWorkspacesList(QList<QPair<int, QString>>& list);
      void applyWorkspaceById(int id);

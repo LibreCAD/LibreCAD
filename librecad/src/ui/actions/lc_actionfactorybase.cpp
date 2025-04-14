@@ -20,8 +20,10 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <QActionGroup>
 #include "lc_actionfactorybase.h"
 
+#include "lc_actiongroup.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_shortcutinfo.h"
 #include "qc_applicationwindow.h"
@@ -119,4 +121,20 @@ void LC_ActionFactoryBase::addActionsToMainWindow(const QMap<QString, QAction *>
    for (const auto &a: map) {
        m_appWin->addAction(a);
    }
+}
+
+void LC_ActionFactoryBase::createActionGroups(const std::vector<ActionGroupInfo>& actionGroups,LC_ActionGroupManager* actionGroupManager) const {
+    for (const ActionGroupInfo& groupInfo : actionGroups) {
+        auto group = new LC_ActionGroup(actionGroupManager, groupInfo.name, groupInfo.description, groupInfo.iconName);
+        actionGroupManager->addActionGroup(groupInfo.name, group, groupInfo.isToolGroup);
+    }
+}
+
+void  LC_ActionFactoryBase::fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames, const QMap<QString, QAction*> &map) const {
+    for (const char* actionName: actionNames){
+        if (map.contains(actionName)) {
+            auto action = map.value(actionName);
+            list << action;
+        }
+    }
 }

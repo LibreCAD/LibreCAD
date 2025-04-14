@@ -21,8 +21,9 @@
  ******************************************************************************/
 
 #include "lc_overlayucszero.h"
-#include "rs_painter.h"
+
 #include "lc_graphicviewport.h"
+#include "rs_painter.h"
 #include "rs_settings.h"
 
 void LC_OverlayUCSZeroOptions::loadSettings(){

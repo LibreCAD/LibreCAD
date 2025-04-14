@@ -23,6 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <cmath>
 
 #include "lc_abstractactiondrawrectangle.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
 #include "lc_linemath.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"

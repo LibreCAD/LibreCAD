@@ -30,6 +30,7 @@
 
 #include "lc_actioncontext.h"
 #include "lc_actionoptionswidget.h"
+#include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -543,7 +544,7 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, c
             prompt = prompt + "\n" + modifiersStr;
         }
     }
-    m_infoCursorOverlayData.setZone4(prompt);
+    m_infoCursorOverlayData->setZone4(prompt);
 }
 
 /**
@@ -571,7 +572,7 @@ void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& ri
 }
 
 void RS_ActionInterface::clearMouseWidgetIcon(){
-    m_infoCursorOverlayData.setZone4("");
+    m_infoCursorOverlayData->setZone4("");
 }
 
 /**

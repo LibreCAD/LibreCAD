@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionzoomscroll.h"
-#include "rs_graphicview.h"
+#include "lc_graphicviewport.h"
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction, LC_ActionContext *actionContext)
 	:RS_ActionInterface("Zoom scroll", actionContext, RS2::ActionZoomScroll)

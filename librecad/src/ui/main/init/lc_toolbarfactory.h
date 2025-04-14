@@ -25,6 +25,7 @@
 #include <QObject>
 #include "lc_appwindowaware.h"
 
+class LC_ActionFactory;
 class QC_ApplicationWindow;
 class QToolBar;
 class QToolButton;
@@ -39,7 +40,8 @@ public:
     ~LC_ToolbarFactory() override = default;
     void initToolBars();
 private:
-    LC_ActionGroupManager *m_agm {nullptr};
+    LC_ActionGroupManager *m_agm;
+    LC_ActionFactory *m_actionFactory;
     void createStandardToolbars();
     void addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) const;
     void initCADToolbars() const;

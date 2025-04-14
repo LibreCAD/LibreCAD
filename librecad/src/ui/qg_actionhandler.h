@@ -29,6 +29,7 @@
 #define QG_ACTIONHANDLER_H
 #include "rs_snapper.h"
 
+class RS_Document;
 class RS_ActionInterface;
 class LC_DefaultActionContext;
 class QG_SnapToolBar;

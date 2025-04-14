@@ -27,7 +27,7 @@
 
 #include "lc_overlayentity.h"
 #include "rs_color.h"
-#include "rs_point.h"
+#include "rs_vector.h"
 
 struct LC_UCSMarkOptions{
     /** coordinate origin marker */

@@ -24,6 +24,7 @@
 #include <QMenu>
 #include <QSettings>
 
+#include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_creatorinvoker.h"
 #include "lc_infocursorsettingsmanager.h"
@@ -36,7 +37,7 @@
 #include "rs_settings.h"
 
 LC_ToolbarFactory::LC_ToolbarFactory(QC_ApplicationWindow *main_win)
- : LC_AppWindowAware(main_win), m_agm(main_win->m_actionGroupManager) {
+ : LC_AppWindowAware(main_win), m_agm(main_win->m_actionGroupManager.get()), m_actionFactory{main_win->m_actionFactory.get()} {
 }
 
 void LC_ToolbarFactory::initToolBars(){
@@ -50,7 +51,7 @@ QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
     auto result = new QG_PenToolBar(tr("Pen"), m_appWin);
     result->setSizePolicy(tbPolicy);
     result->setObjectName("pen_toolbar");
-    result->addActions(m_agm->pen_actions);
+    result->addActions(m_actionFactory->pen_actions);
     result->setProperty("_group", 1);
 
     m_appWin->m_penToolBar = result;
@@ -60,7 +61,7 @@ QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
 }
 
 QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy) const {
-    auto ag_manager = m_appWin->m_actionGroupManager;
+    auto ag_manager = m_appWin->m_actionGroupManager.get();
     auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler.get(), ag_manager,ag_manager->getActionsMap());
     result->setWindowTitle(tr("Snap Selection"));
     result->setSizePolicy(tbPolicy);
@@ -73,7 +74,7 @@ QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy) const {
 
 QToolBar* LC_ToolbarFactory::createFileToolbar(const QSizePolicy &tbPolicy) const {
     auto *result = createGenericToolbar(tr("File"), "file", tbPolicy, {},1);
-    result->addActions(m_agm->file_actions);
+    result->addActions(m_appWin->m_actionFactory->file_actions);
     result->QWidget::addAction(m_agm->getActionByName("FilePrint"));
     result->QWidget::addAction(m_agm->getActionByName("FilePrintPreview"));
     return result;
@@ -234,19 +235,19 @@ void LC_ToolbarFactory::initCADToolbars() const {
 void LC_ToolbarFactory::createCADToolbars() const {
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    auto *line      = createCADToolbar(tr("Line"), "Line", tbPolicy, m_agm->line_actions);
-    auto *point     = createCADToolbar(tr("Point"), "Point", tbPolicy, m_agm->point_actions);
-    auto *shape     = createCADToolbar(tr("Polygon"), "Polygon", tbPolicy, m_agm->shape_actions);
-    auto *circle    = createCADToolbar(tr("Circle"), "Circle", tbPolicy, m_agm->circle_actions);
-    auto *curve     = createCADToolbar(tr("Arc"), "Curve", tbPolicy, m_agm->curve_actions);
-    auto *spline    = createCADToolbar(tr("Spline"), "Spline", tbPolicy, m_agm->curve_actions);
-    auto *ellipse   = createCADToolbar(tr("Ellipse"), "Ellipse", tbPolicy, m_agm->ellipse_actions);
-    auto *polyline  = createCADToolbar(tr("Polyline"), "Polyline", tbPolicy, m_agm->polyline_actions);
-    auto *select    = createCADToolbar(tr("Select"), "Select", tbPolicy, m_agm->select_actions);
-    auto *dimension = createCADToolbar(tr("Dimension"), "Dimension", tbPolicy, m_agm->dimension_actions);
-    auto *other     = createCADToolbar(tr("Other"), "other_drawing", tbPolicy, m_agm->other_drawing_actions);
-    auto *modify    = createCADToolbar(tr("Modify"), "Modify", tbPolicy, m_agm->modify_actions);
-    auto *info      = createCADToolbar(tr("Info"), "Info", tbPolicy, m_agm->info_actions);
+    auto *line      = createCADToolbar(tr("Line"), "Line", tbPolicy, m_actionFactory->line_actions);
+    auto *point     = createCADToolbar(tr("Point"), "Point", tbPolicy, m_actionFactory->point_actions);
+    auto *shape     = createCADToolbar(tr("Polygon"), "Polygon", tbPolicy, m_actionFactory->shape_actions);
+    auto *circle    = createCADToolbar(tr("Circle"), "Circle", tbPolicy, m_actionFactory->circle_actions);
+    auto *curve     = createCADToolbar(tr("Arc"), "Curve", tbPolicy, m_actionFactory->curve_actions);
+    auto *spline    = createCADToolbar(tr("Spline"), "Spline", tbPolicy, m_actionFactory->curve_actions);
+    auto *ellipse   = createCADToolbar(tr("Ellipse"), "Ellipse", tbPolicy, m_actionFactory->ellipse_actions);
+    auto *polyline  = createCADToolbar(tr("Polyline"), "Polyline", tbPolicy, m_actionFactory->polyline_actions);
+    auto *select    = createCADToolbar(tr("Select"), "Select", tbPolicy, m_actionFactory->select_actions);
+    auto *dimension = createCADToolbar(tr("Dimension"), "Dimension", tbPolicy, m_actionFactory->dimension_actions);
+    auto *other     = createCADToolbar(tr("Other"), "other_drawing", tbPolicy, m_actionFactory->other_drawing_actions);
+    auto *modify    = createCADToolbar(tr("Modify"), "Modify", tbPolicy, m_actionFactory->modify_actions);
+    auto *info      = createCADToolbar(tr("Info"), "Info", tbPolicy, m_actionFactory->info_actions);
 
     addToBottom(line);
     addToBottom(point);
@@ -267,20 +268,20 @@ QToolBar *LC_ToolbarFactory::createCategoriesToolbar() {
     auto *toolbar = createGenericToolbar(tr("Categories"), "Categories",
                                          QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {},0);
 
-    toolButton(toolbar, tr("Lines"), ":/icons/line.lci", m_agm->line_actions);
-    toolButton(toolbar, tr("Points"), ":/icons/points.lci", m_agm->point_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", m_agm->circle_actions);
-    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", m_agm->curve_actions);
-    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", m_agm->spline_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", m_agm->shape_actions);
-    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.lci", m_agm->ellipse_actions);
-    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.lci", m_agm->polyline_actions);
-    toolButton(toolbar, tr("Select"), ":/icons/select.lci", m_agm->select_actions);
-    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.lci", m_agm->dimension_actions);
-    toolButton(toolbar, tr("Other"), ":/icons/text.lci", m_agm->other_drawing_actions);
-    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.lci", m_agm->modify_actions);
-    toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", m_agm->info_actions);
-    toolButton(toolbar, tr("Order"), ":/icons/order.lci", m_agm->order_actions);
+    toolButton(toolbar, tr("Lines"), ":/icons/line.lci", m_actionFactory->line_actions);
+    toolButton(toolbar, tr("Points"), ":/icons/points.lci", m_actionFactory->point_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", m_actionFactory->circle_actions);
+    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", m_actionFactory->curve_actions);
+    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", m_actionFactory->spline_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", m_actionFactory->shape_actions);
+    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.lci", m_actionFactory->ellipse_actions);
+    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.lci", m_actionFactory->polyline_actions);
+    toolButton(toolbar, tr("Select"), ":/icons/select.lci", m_actionFactory->select_actions);
+    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.lci", m_actionFactory->dimension_actions);
+    toolButton(toolbar, tr("Other"), ":/icons/text.lci", m_actionFactory->other_drawing_actions);
+    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.lci", m_actionFactory->modify_actions);
+    toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", m_actionFactory->info_actions);
+    toolButton(toolbar, tr("Order"), ":/icons/order.lci", m_actionFactory->order_actions);
 
     addToLeft(toolbar);
     return toolbar;

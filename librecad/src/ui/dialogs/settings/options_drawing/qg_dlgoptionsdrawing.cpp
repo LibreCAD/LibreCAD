@@ -27,6 +27,7 @@
 #include "qg_dlgoptionsdrawing.h"
 
 #include <QMessageBox>
+#include <QListView>
 #include <cfloat>
 
 #include "lc_defaults.h"

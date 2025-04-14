@@ -21,6 +21,8 @@
  ******************************************************************************/
 
 #include "lc_actionmodifyalignref.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "lc_modifyalignrefoptions.h"
 #include "rs_modification.h"
 #include "lc_linemath.h"

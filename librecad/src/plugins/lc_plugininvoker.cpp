@@ -37,6 +37,8 @@
 LC_PluginInvoker::LC_PluginInvoker(QC_ApplicationWindow *appWindow): m_appWindow(appWindow){
 }
 
+LC_PluginInvoker::~LC_PluginInvoker() = default;
+
 void LC_PluginInvoker::loadPlugins(){
     m_loadedPluginList.clear();
     QStringList lst = RS_SYSTEM->getDirectoryList("plugins");

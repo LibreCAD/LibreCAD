@@ -24,13 +24,10 @@
 **
 **********************************************************************/
 
-#include<cmath>
-#include <QMouseEvent>
-
 #include "rs_actionzoomwindow.h"
-#include "rs_debug.h"
 
-#include "rs_graphicview.h"
+#include "lc_graphicviewport.h"
+#include "rs_debug.h"
 #include "rs_preview.h"
 
 struct RS_ActionZoomWindow::Points {

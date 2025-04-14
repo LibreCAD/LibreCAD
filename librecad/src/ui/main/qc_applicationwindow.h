@@ -31,6 +31,7 @@
 
 #include "lc_mdiapplicationwindow.h"
 
+class LC_ActionFactory;
 class LC_QTStatusbarManager;
 class LC_UCSStateWidget;
 class TwoStackedLabels;
@@ -323,12 +324,13 @@ protected:
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
-    LC_ActionGroupManager* m_actionGroupManager {nullptr};
+    std::unique_ptr<LC_ActionGroupManager> m_actionGroupManager;
     std::unique_ptr<LC_CreatorInvoker> m_creatorInvoker;
     std::unique_ptr<LC_PluginInvoker> m_pluginInvoker;
     std::unique_ptr<LC_AppWindowDialogsInvoker> m_dlgHelpr;
     std::unique_ptr<LC_WorkspacesInvoker> m_workspacesInvoker;
-    LC_MenuFactory* m_menuFactory {nullptr};
+    std::unique_ptr<LC_ActionFactory> m_actionFactory;
+    std::unique_ptr<LC_MenuFactory> m_menuFactory;
     std::unique_ptr<LC_ReleaseChecker> m_releaseChecker;
     LC_DefaultActionContext* m_actionContext{nullptr};
     LC_ActionOptionsManager* m_actionOptionsManager;
@@ -406,6 +408,7 @@ protected:
 
     friend class LC_WidgetFactory;
     friend class LC_ActionFactory;
+    friend class LC_MenuFactory;
     friend class LC_ToolbarFactory;
     friend class LC_ApplicationWindowInitializer;
 };

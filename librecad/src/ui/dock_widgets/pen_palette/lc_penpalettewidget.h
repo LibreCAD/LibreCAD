@@ -24,7 +24,7 @@
 #ifndef LC_PENPALETTEWIDGET_H
 #define LC_PENPALETTEWIDGET_H
 
-#include "lc_graphicviewaware.h"
+#include "lc_graphicviewawarewidget.h"
 #include "rs_pen.h"
 #include "ui_lc_penpalettewidget.h"
 
@@ -35,25 +35,20 @@ class RS_LayerList;
 /**
  * Central widget for Pens Palette
  */
-class LC_PenPaletteWidget :public QWidget, public LC_GraphicViewAware, public Ui::LC_PenPaletteWidget{
+class LC_PenPaletteWidget :public LC_GraphicViewAwareWidget, public Ui::LC_PenPaletteWidget{
     Q_OBJECT
-
 public:
     explicit LC_PenPaletteWidget(const QString& title, QWidget* parent);
-    virtual ~LC_PenPaletteWidget() = default ;
+    ~LC_PenPaletteWidget() override = default ;
     void setGraphicView(RS_GraphicView *gview) override;
     void persist();
 signals:
     void escape();
-
 public slots:
     void onTableClicked(QModelIndex modelIndex);
-    void onTableSelectionChanged(
-        const QItemSelection &selected,
-        const QItemSelection &deselected);
+    void onTableSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected);
     void onPenEditorChanged();
     void keyPressEvent(QKeyEvent* e) override;
-
     void fillPenEditorBySelectedEntityAttributesPen();
     void fillPenEditorBySelectedEntityDrawingPen();
     void fillPenEditorByPenToolBarPen();

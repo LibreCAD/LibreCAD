@@ -26,12 +26,12 @@
 
 #include "rs_actionselectsingle.h"
 
-#include "rs_graphicview.h"
+#include "rs_entity.h"
 #include "rs_selection.h"
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(LC_ActionContext *actionContext,
-											 RS_ActionInterface* action_select,
-            const QList<RS2::EntityType> &entityTypeList)
+                                             RS_ActionInterface* action_select,
+                                             const QList<RS2::EntityType> &entityTypeList)
     :RS_ActionSelectBase("Select Entities", actionContext,RS2::ActionSelectSingle, entityTypeList)
     ,actionSelect(action_select){
 }

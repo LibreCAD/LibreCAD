@@ -40,7 +40,7 @@
 #include "ui_lc_ucslistwidget.h"
 
 LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
-    : QWidget(parent)
+    : LC_GraphicViewAwareWidget(parent)
     , ui(new Ui::LC_UCSListWidget){
     ui->setupUi(this);
     setWindowTitle(title);

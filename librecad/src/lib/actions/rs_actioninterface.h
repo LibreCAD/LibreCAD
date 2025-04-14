@@ -26,10 +26,12 @@
 
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
+
 #include "lc_modifiersinfo.h"
 #include "rs_math.h"
 #include "rs_snapper.h"
 
+class RS_Undoable;
 class LC_ModifiersInfo;
 class QInputEvent;
 class QKeyEvent;

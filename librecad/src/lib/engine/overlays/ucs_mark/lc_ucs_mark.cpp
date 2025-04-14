@@ -1,7 +1,7 @@
 #include "lc_ucs_mark.h"
 #include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_math.h"
+#include "rs_painter.h"
 #include "rs_settings.h"
 
 void LC_UCSMarkOptions::loadSettings() {

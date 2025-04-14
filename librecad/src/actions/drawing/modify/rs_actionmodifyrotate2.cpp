@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionmodifyrotate2.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 #include "rs_debug.h"

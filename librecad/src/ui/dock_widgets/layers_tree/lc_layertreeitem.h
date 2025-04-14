@@ -119,7 +119,7 @@ private:
     // reference to primary item - used by secondary (informational, dimensional, alternative pos) layers
     LC_LayerTreeItem *m_primaryItem {nullptr};
     // actual layer, if any
-    RS_Layer* layer {nullptr};
+    RS_Layer* m_layer {nullptr};
     // part of raw parsed name
     QString name;
     // name used to display in UI

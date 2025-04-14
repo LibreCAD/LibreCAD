@@ -27,9 +27,10 @@
 class LC_SettingsExporter: public QObject{
   Q_OBJECT
 public:
-  static bool obtainFileName(QWidget *parent, QString &fileName, bool forRead);
-  static bool exportSettings(QWidget* parent = nullptr);
-  static bool importSettings(QWidget* parent = nullptr);
+   bool exportSettings(QWidget* parent = nullptr);
+   bool importSettings(QWidget* parent = nullptr);
+protected:
+   bool obtainFileName(QWidget *parent, QString &fileName, bool forRead);
 };
 
 #endif // LC_SETTINGSEXPORTER_H

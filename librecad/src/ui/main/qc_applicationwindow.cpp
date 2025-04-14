@@ -38,6 +38,7 @@
 #include <QPushButton>
 #include <QStatusBar>
 #include <QTimer>
+#include <QDockWidget>
 
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_anglesbasiswidget.h"
@@ -47,6 +48,7 @@
 #include "lc_customstylehelper.h"
 #include "lc_defaultactioncontext.h"
 #include "lc_exporttoimageservice.h"
+#include "lc_graphicviewport.h"
 #include "lc_gridviewinvoker.h"
 #include "lc_infocursorsettingsmanager.h"
 #include "lc_layertreewidget.h"
@@ -55,6 +57,7 @@
 #include "lc_penpalettewidget.h"
 #include "lc_penwizard.h"
 #include "lc_printing.h"
+#include "lc_plugininvoker.h"
 #include "lc_quickinfowidget.h"
 #include "lc_releasechecker.h"
 #include "lc_snapoptionswidgetsholder.h"
@@ -316,9 +319,7 @@ void QC_ApplicationWindow::setupWidgetsByWindow(QC_MDIWindow *w) const {
     m_penToolBar->setGraphicView(gv);
     m_activeLayerNameWidget->setGraphicView(gv);
     m_selectionWidget->setGraphicView(gv);
-
-    /// fixme - setup too in setupWidgetsByWindow???
-    m_penWizard->setMdiWindow(w);
+    m_penWizard->setGraphicView(gv);
 }
 
 /**
@@ -1437,7 +1438,7 @@ void QC_ApplicationWindow::updateGridViewActions(bool isometric, RS2::IsoGridVie
 }
 
 void QC_ApplicationWindow::slotOptionsShortcuts() {
-    LC_ActionsShortcutsDialog dlg(this, m_actionGroupManager);
+    LC_ActionsShortcutsDialog dlg(this, m_actionGroupManager.get());
     dlg.exec();
 }
 

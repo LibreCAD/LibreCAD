@@ -30,6 +30,7 @@
 
 #include "lc_actioncontext.h"
 #include "lc_crosshair.h"
+#include "lc_cursoroverlayinfo.h"
 #include "lc_defaults.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
@@ -215,6 +216,7 @@ RS_Snapper::RS_Snapper(LC_ActionContext *actionContext)
     :m_container(actionContext->getEntityContainer())
     ,m_graphicView(actionContext->getGraphicView())
     ,m_actionContext(actionContext)
+    ,m_infoCursorOverlayData{std::make_unique<LC_InfoCursorData>()}
     ,pImpData(new ImpData),
     m_snapIndicator(new Indicator){
     m_viewport = m_graphicView->getViewPort();
@@ -970,11 +972,11 @@ void RS_Snapper::drawInfoCursor(){
             if (!restrictionName.isEmpty()) {
                 snapName = snapName + (prefs->multiLine ? "\n" : " ") + restrictionName;
             }
-            m_infoCursorOverlayData.setZone2(snapName);
+            m_infoCursorOverlayData->setZone2(snapName);
         } else {
-            m_infoCursorOverlayData.setZone2("");
+            m_infoCursorOverlayData->setZone2("");
         }
-        infoCursor->setZonesData(&m_infoCursorOverlayData);
+        infoCursor->setZonesData(m_infoCursorOverlayData.get());
     }
     m_graphicView->redraw(RS2::RedrawOverlay);
 }
@@ -1209,8 +1211,8 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
         }
     }
 
-    m_infoCursorOverlayData.setZone1(coordAbs);
-    m_infoCursorOverlayData.setZone3(coordPolar);
+    m_infoCursorOverlayData->setZone1(coordAbs);
+    m_infoCursorOverlayData->setZone3(coordPolar);
 }
 
 void RS_Snapper::updateUnitFormat(RS_Graphic* graphic){
@@ -1280,7 +1282,7 @@ QString RS_Snapper::formatRelativePolar(const RS_Vector &wcsAngle) const {
 void RS_Snapper::forceUpdateInfoCursor(const RS_Vector &pos) {
     LC_OverlayInfoCursor* infoCursor = obtainInfoCursor();
     infoCursor->setPos(pos);
-    infoCursor->setZonesData(&m_infoCursorOverlayData);
+    infoCursor->setZonesData(m_infoCursorOverlayData.get());
 }
 
 double RS_Snapper::toWorldAngle(double ucsAbsAngle) const{

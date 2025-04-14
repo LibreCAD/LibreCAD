@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONSELECTSINGLE_H
 #define RS_ACTIONSELECTSINGLE_H
 
-#include <QList>
 #include "rs_actionselectbase.h"
 
 /**
@@ -36,7 +35,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectSingle:public RS_ActionSelectBase {
-Q_OBJECT
+    Q_OBJECT
 public:
     RS_ActionSelectSingle(LC_ActionContext *actionContext,
         RS_ActionInterface *actionSelect = nullptr,

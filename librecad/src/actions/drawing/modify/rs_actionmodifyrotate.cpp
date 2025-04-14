@@ -27,6 +27,8 @@
 #include <QApplication>
 #include <QKeyEvent>
 #include "rs_actionmodifyrotate.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

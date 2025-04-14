@@ -27,6 +27,7 @@
 #include "rs_actionselectcontour.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_entity.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 

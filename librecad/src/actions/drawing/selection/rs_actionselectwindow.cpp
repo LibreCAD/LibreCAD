@@ -24,16 +24,14 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
 
 #include "rs_actionselectwindow.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_overlaybox.h"
-#include "rs_preview.h"
-#include "rs_selection.h"
+
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 #include "lc_selectwindowoptions.h"
+#include "rs_debug.h"
+#include "rs_selection.h"
 
 struct RS_ActionSelectWindow::Points {
     RS_Vector v1;
@@ -118,7 +116,7 @@ void RS_ActionSelectWindow::onMouseMoveEvent([[maybe_unused]]int status, LC_Mous
             QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
             msg.append(tr(" entities "));
             msg.append(cross? tr("that intersect with box") : tr("that are within box"));
-            m_infoCursorOverlayData.setZone2(msg);
+            m_infoCursorOverlayData->setZone2(msg);
             const RS_Vector pos = e->graphPoint;
             forceUpdateInfoCursor(pos);
         }

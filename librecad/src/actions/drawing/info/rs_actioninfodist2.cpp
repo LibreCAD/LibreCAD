@@ -31,6 +31,9 @@
 #include "rs_graphicview.h"
 #include "rs_units.h"
 #include "rs_actioninfodist2.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
 #include "lc_infodist2options.h"
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(LC_ActionContext *actionContext, bool fromPoint)

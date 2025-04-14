@@ -25,6 +25,7 @@
 #include "mainwindowx.h"
 
 #include <QDockWidget>
+#include <QToolBar>
 
 namespace
 {
@@ -63,58 +64,51 @@ namespace
 }
 
 MainWindowX::MainWindowX(QWidget* parent)
-    : QMainWindow(parent)
-{}
+    : QMainWindow(parent) {
+}
 
-void MainWindowX::sortWidgetsByTitle(QList<QDockWidget*>& list){
+void MainWindowX::sortWidgetsByTitle(QList<QDockWidget*>& list) {
     std::sort(list.begin(), list.end(), Sorting::byWindowTitle);
 }
 
-void MainWindowX::sortWidgetsByTitle(QList<QToolBar*>& list){
+void MainWindowX::sortWidgetsByTitle(QList<QToolBar*>& list) {
     std::sort(list.begin(), list.end(), Sorting::byWindowTitle);
 }
 
-void MainWindowX::sortWidgetsByGroupAndTitle(QList<QToolBar *> &list) {
-        std::sort(list.begin(), list.end(), Sorting::byGroupAndWindowTitle);
+void MainWindowX::sortWidgetsByGroupAndTitle(QList<QToolBar*>& list) {
+    std::sort(list.begin(), list.end(), Sorting::byGroupAndWindowTitle);
 }
 
-void MainWindowX::toggleLeftDockArea(bool state){
-    foreach (QDockWidget* dw, findChildren<QDockWidget*>())
-    {
+void MainWindowX::toggleLeftDockArea(bool state) {
+    foreach(QDockWidget* dw, findChildren<QDockWidget*>()) {
         if (dockWidgetArea(dw) == Qt::LeftDockWidgetArea && !dw->isFloating())
             dw->setVisible(state);
     }
 }
 
-void MainWindowX::toggleRightDockArea(bool state){
-    foreach (QDockWidget* dw, findChildren<QDockWidget*>())
-    {
+void MainWindowX::toggleRightDockArea(bool state) {
+    foreach(QDockWidget* dw, findChildren<QDockWidget*>()) {
         if (dockWidgetArea(dw) == Qt::RightDockWidgetArea && !dw->isFloating())
             dw->setVisible(state);
     }
 }
 
-void MainWindowX::toggleTopDockArea(bool state){
-    foreach (QDockWidget* dw, findChildren<QDockWidget*>())
-    {
+void MainWindowX::toggleTopDockArea(bool state) {
+    foreach(QDockWidget* dw, findChildren<QDockWidget*>()) {
         if (dockWidgetArea(dw) == Qt::TopDockWidgetArea && !dw->isFloating())
             dw->setVisible(state);
     }
 }
 
-void MainWindowX::toggleBottomDockArea(bool state)
-{
-    foreach (QDockWidget* dw, findChildren<QDockWidget*>())
-    {
+void MainWindowX::toggleBottomDockArea(bool state) {
+    foreach(QDockWidget* dw, findChildren<QDockWidget*>()) {
         if (dockWidgetArea(dw) == Qt::BottomDockWidgetArea && !dw->isFloating())
             dw->setVisible(state);
     }
 }
 
-void MainWindowX::toggleFloatingDockwidgets(bool state)
-{
-    foreach (QDockWidget* dw, findChildren<QDockWidget*>())
-    {
+void MainWindowX::toggleFloatingDockwidgets(bool state) {
+    foreach(QDockWidget* dw, findChildren<QDockWidget*>()) {
         if (dw->isFloating())
             dw->setVisible(state);
     }

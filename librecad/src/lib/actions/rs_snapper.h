@@ -29,9 +29,10 @@
 #define RS_SNAPPER_H
 
 #include <QObject>
+#include "rs.h"
 
-#include "lc_cursoroverlayinfo.h"
-
+struct LC_InfoCursorData;
+class RS_Graphic;
 class LC_OverlayInfoCursor;
 struct LC_InfoCursorOverlayPrefs;
 class LC_ActionContext;
@@ -236,7 +237,7 @@ protected:
     bool m_finished{false};
 
     LC_InfoCursorOverlayPrefs* m_infoCursorOverlayPrefs = nullptr;
-    LC_InfoCursorData m_infoCursorOverlayData = LC_InfoCursorData();
+    std::unique_ptr<LC_InfoCursorData> m_infoCursorOverlayData;
 
     // values cached for the efficiency
     RS2::LinearFormat m_linearFormat{};

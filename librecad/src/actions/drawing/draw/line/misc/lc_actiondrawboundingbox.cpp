@@ -1,6 +1,7 @@
 #include "lc_actiondrawboundingbox.h"
 #include "lc_drawboundingboxoptions.h"
 #include "lc_align.h"
+#include "lc_graphicviewport.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_document.h"

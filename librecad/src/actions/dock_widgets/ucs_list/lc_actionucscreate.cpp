@@ -21,6 +21,8 @@
  ******************************************************************************/
 
 #include "lc_actionucscreate.h"
+
+#include "lc_graphicviewport.h"
 #include "rs_preview.h"
 #include "lc_ucs_mark.h"
 #include "rs_graphicview.h"
@@ -81,6 +83,8 @@ void LC_ActionUCSCreate::onMouseMoveEvent(int status, LC_MouseEvent *event) {
             showUCSMark(m_originPoint, -toUCSAngle(m_currentAngle));
             break;
         }
+        default:
+            break;
     }
 }
 

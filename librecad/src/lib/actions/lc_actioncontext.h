@@ -43,8 +43,8 @@ public:
     virtual void hideSnapOptions() {};
     virtual void updateSelectionWidget([[maybe_unused]]int countSelected, [[maybe_unused]]double selectedLength){}
 
-    virtual void updateMouseWidget([[maybe_unused]]const QString& left = QString(),
-                                  [[maybe_unused]]const QString& right = QString(),
+    virtual void updateMouseWidget([[maybe_unused]]const QString& left,
+                                  [[maybe_unused]]const QString& right,
                                   [[maybe_unused]]const LC_ModifiersInfo& modifiers){};
 
     virtual void commandMessage([[maybe_unused]]const QString& message) {};

@@ -35,6 +35,7 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_eventhandler.h"
 
+#include "lc_coordinates_parser.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_settings.h"

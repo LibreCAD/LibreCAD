@@ -36,6 +36,8 @@
  */
 
 struct LC_OverlayBoxOptions{
+    LC_OverlayBoxOptions() = default;
+    ~LC_OverlayBoxOptions() = default;
     RS_Color m_colorBoxLine;
     RS_Color m_colorBoxFill;
     RS_Color m_colorLineInverted;

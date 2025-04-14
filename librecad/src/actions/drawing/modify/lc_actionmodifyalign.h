@@ -29,6 +29,7 @@
 
 class LC_ActionModifyAlignData {
 public:
+    virtual ~LC_ActionModifyAlignData() = default;
     int getHAlign() const {return hAlign;}
     void setHAlign(int h) { hAlign = h;}
     int getVAlign() const {return vAlign;}
@@ -47,7 +48,6 @@ protected:
 
 class LC_ActionModifyAlign:public LC_ActionPreSelectionAwareBase, public LC_ActionModifyAlignData {
     Q_OBJECT
-
 public:
     LC_ActionModifyAlign(LC_ActionContext *actionContext);
     void setAlignType(int a) override;

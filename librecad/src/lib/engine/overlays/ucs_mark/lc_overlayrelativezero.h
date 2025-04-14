@@ -24,8 +24,8 @@
 #define LC_OVERLAYRELATIVEZERO_H
 
 #include "lc_overlayentity.h"
-#include "rs_vector.h"
 #include "rs_color.h"
+#include "rs_vector.h"
 
 struct LC_OverlayRelZeroOptions{
     bool hideRelativeZero = false;

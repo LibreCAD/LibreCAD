@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionmodifyoffset.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"

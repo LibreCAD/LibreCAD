@@ -28,6 +28,7 @@
 #include "lc_layertreeitem.h"
 #include "lc_layertreemodel.h"
 #include "lc_layertreemodel_options.h"
+#include "rs_layer.h"
 #include "rs_layerlist.h"
 
 LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_LayerTreeModel* model, LC_LayerTreeItem *treeItem, RS_LayerList* ll)

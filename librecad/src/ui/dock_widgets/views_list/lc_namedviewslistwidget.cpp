@@ -41,7 +41,7 @@
 #include "ui_lc_namedviewslistwidget.h"
 
 LC_NamedViewsListWidget::LC_NamedViewsListWidget(const QString& title, QWidget* parent)
-    : QWidget(parent)
+    : LC_GraphicViewAwareWidget(parent)
     , ui(new Ui::LC_NamedViewsListWidget){
     ui->setupUi(this);
     setWindowTitle(title);

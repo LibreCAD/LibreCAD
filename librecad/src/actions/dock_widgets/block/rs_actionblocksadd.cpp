@@ -26,11 +26,10 @@
 
 #include "rs_actionblocksadd.h"
 
-#include "rs_block.h"
-#include "rs_graphic.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_debug.h"
+#include "rs_graphic.h"
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(LC_ActionContext *actionContext)
 		:RS_ActionInterface("Add Block", actionContext, RS2::ActionBlocksAdd) {

@@ -23,6 +23,7 @@
 #include "lc_ucslistbutton.h"
 
 #include <QMenu>
+#include <QModelIndex>
 
 #include "lc_ucs.h"
 #include "lc_ucslistwidget.h"

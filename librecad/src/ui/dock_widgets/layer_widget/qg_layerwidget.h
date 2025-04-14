@@ -30,9 +30,8 @@
 
 #include <QAbstractTableModel>
 #include <QList>
-#include <QWidget>
 
-#include "lc_graphicviewaware.h"
+#include "lc_graphicviewawarewidget.h"
 #include "rs_layerlistlistener.h"
 
 class QItemSelection;
@@ -106,7 +105,7 @@ private:
  * This is the Qt implementation of a widget which can view a
  * layer list and provides a user interface for basic layer actions.
  */
-class QG_LayerWidget: public QWidget, public LC_GraphicViewAware,  public RS_LayerListListener {
+class QG_LayerWidget: public LC_GraphicViewAwareWidget,  public RS_LayerListListener {
     Q_OBJECT
 
 public:

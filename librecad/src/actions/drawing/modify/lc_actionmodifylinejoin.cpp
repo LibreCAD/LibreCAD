@@ -22,6 +22,8 @@
 #include <cmath>
 
 #include "lc_actionmodifylinejoin.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "lc_linejoinoptions.h"
 #include "lc_linemath.h"
 #include "rs_graphicview.h"

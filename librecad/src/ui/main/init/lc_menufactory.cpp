@@ -36,10 +36,11 @@
 
 class QToolBar;
 
-LC_MenuFactory::LC_MenuFactory(QC_ApplicationWindow *main_win, LC_ActionGroupManager *agm)
+LC_MenuFactory::LC_MenuFactory(QC_ApplicationWindow *main_win)
     : QObject(nullptr)
     , LC_AppWindowAware(main_win)
-    , m_actionGroupManager(agm){
+    , m_actionGroupManager{main_win->m_actionGroupManager.get()}
+    , m_actionFactory{main_win->m_actionFactory.get()}{
      m_allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
 }
 
@@ -155,87 +156,87 @@ void LC_MenuFactory::createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenu
 void LC_MenuFactory::createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) const {
     if (m_menuOptions.expandToolsTillEntity) {
         auto line = menu(tr("&Line"), "line", menu_bar);
-        line->addActions(m_actionGroupManager->line_actions);
+        line->addActions(m_actionFactory->line_actions);
         topMenuMenus << line;
 
         auto point = menu(tr("Poin&t"), "point", menu_bar);
-        point->addActions(m_actionGroupManager->point_actions);
+        point->addActions(m_actionFactory->point_actions);
         topMenuMenus << point;
 
         auto circle = menu(tr("&Circle"), "circle", menu_bar);
-        circle->addActions(m_actionGroupManager->circle_actions);
+        circle->addActions(m_actionFactory->circle_actions);
         topMenuMenus << circle;
 
         auto arc = menu(tr("&Arc"), "arc", menu_bar);
-        arc->addActions(m_actionGroupManager->curve_actions);
+        arc->addActions(m_actionFactory->curve_actions);
         topMenuMenus << arc;
 
         auto shape = menu(tr("Poly&gon"), "shape", menu_bar);
-        shape->addActions(m_actionGroupManager->shape_actions);
+        shape->addActions(m_actionFactory->shape_actions);
         topMenuMenus << shape;
 
         auto spline = menu(tr("Splin&e"), "spline", menu_bar);
-        spline->addActions(m_actionGroupManager->spline_actions);
+        spline->addActions(m_actionFactory->spline_actions);
         topMenuMenus << spline;
 
         auto ellipse = menu(tr("Ellip&se"), "ellipse", menu_bar);
-        ellipse->addActions(m_actionGroupManager->ellipse_actions);
+        ellipse->addActions(m_actionFactory->ellipse_actions);
         topMenuMenus << ellipse;
 
         auto polyline = menu(tr("&Polyline"), "polyline", menu_bar);
-        polyline->addActions(m_actionGroupManager->polyline_actions);
+        polyline->addActions(m_actionFactory->polyline_actions);
         topMenuMenus << polyline;
 
         auto other = menu(tr("&Other"), "other", menu_bar);
-        other->addActions(m_actionGroupManager->other_drawing_actions);
+        other->addActions(m_actionFactory->other_drawing_actions);
         topMenuMenus << other;
     }
     else {
         auto draw = menu(tr("&Draw"), "draw", menu_bar);
-        subMenuWithActions(draw, tr("&Line"), "line", ":/icons/line.lci", m_actionGroupManager->line_actions);
-        subMenuWithActions(draw, tr("Poin&t"), "point", ":/icons/points.lci", m_actionGroupManager->point_actions);
-        subMenuWithActions(draw, tr("&Circle"), "circle", ":/icons/circle.lci", m_actionGroupManager->circle_actions);
-        subMenuWithActions(draw, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", m_actionGroupManager->curve_actions);
-        subMenuWithActions(draw, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", m_actionGroupManager->shape_actions);
-        subMenuWithActions(draw, tr("Splin&e"), "spline", ":/icons/spline_points.lci", m_actionGroupManager->spline_actions);
-        subMenuWithActions(draw, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", m_actionGroupManager->ellipse_actions);
-        subMenuWithActions(draw, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", m_actionGroupManager->polyline_actions);
-        subMenuWithActions(draw, tr("Ot&her"), "other", ":/icons/text.lci", m_actionGroupManager->other_drawing_actions);
+        subMenuWithActions(draw, tr("&Line"), "line", ":/icons/line.lci", m_actionFactory->line_actions);
+        subMenuWithActions(draw, tr("Poin&t"), "point", ":/icons/points.lci", m_actionFactory->point_actions);
+        subMenuWithActions(draw, tr("&Circle"), "circle", ":/icons/circle.lci", m_actionFactory->circle_actions);
+        subMenuWithActions(draw, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", m_actionFactory->curve_actions);
+        subMenuWithActions(draw, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", m_actionFactory->shape_actions);
+        subMenuWithActions(draw, tr("Splin&e"), "spline", ":/icons/spline_points.lci", m_actionFactory->spline_actions);
+        subMenuWithActions(draw, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", m_actionFactory->ellipse_actions);
+        subMenuWithActions(draw, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", m_actionFactory->polyline_actions);
+        subMenuWithActions(draw, tr("Ot&her"), "other", ":/icons/text.lci", m_actionFactory->other_drawing_actions);
 
         topMenuMenus << draw;
     }
 
     auto modify = this->menu(tr("&Modify"), "info", menu_bar);
-    modify->addActions(this->m_actionGroupManager->modify_actions);
-    this->subMenuWithActions(modify, tr("&Order"), "order", ":/icons/order.lci", this->m_actionGroupManager->order_actions);
+    modify->addActions(this->m_actionFactory->modify_actions);
+    this->subMenuWithActions(modify, tr("&Order"), "order", ":/icons/order.lci", this->m_actionFactory->order_actions);
 
     topMenuMenus << modify;
 
     auto dims = this->menu(tr("&Dimensions"), "dims", menu_bar);
-    dims->addActions(this->m_actionGroupManager->dimension_actions);
+    dims->addActions(this->m_actionFactory->dimension_actions);
     topMenuMenus << dims;
 
     auto info = this->menu(tr("&Info"), "info", menu_bar);
-    info->addActions(this->m_actionGroupManager->info_actions);
+    info->addActions(this->m_actionFactory->info_actions);
     topMenuMenus << info;
 }
 
 void LC_MenuFactory::createToolsMenuCombined(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) {
     m_menuToolsCombined = menu(tr("&Tools"), "tools", menu_bar);
-    subMenuWithActions(m_menuToolsCombined, tr("&Line"), "line", ":/icons/line.lci", m_actionGroupManager->line_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("Poin&t"), "line", ":/icons/points.lci", m_actionGroupManager->point_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Circle"), "circle", ":/icons/circle.lci", m_actionGroupManager->circle_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", m_actionGroupManager->curve_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", m_actionGroupManager->shape_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("Splin&e"), "spline", ":/icons/spline_points.lci", m_actionGroupManager->spline_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", m_actionGroupManager->ellipse_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", m_actionGroupManager->polyline_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Select"), "select", ":/icons/select.lci", m_actionGroupManager->select_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", m_actionGroupManager->dimension_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("Ot&her"), "other", ":/icons/text.lci", m_actionGroupManager->other_drawing_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Modify"), "modify", ":/icons/move_rotate.lci", m_actionGroupManager->modify_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Info"), "info", ":/icons/measure.lci", m_actionGroupManager->info_actions);
-    subMenuWithActions(m_menuToolsCombined, tr("&Order"), "order", ":/icons/order.lci", m_actionGroupManager->order_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Line"), "line", ":/icons/line.lci", m_actionFactory->line_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Poin&t"), "line", ":/icons/points.lci", m_actionFactory->point_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Circle"), "circle", ":/icons/circle.lci", m_actionFactory->circle_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", m_actionFactory->curve_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", m_actionFactory->shape_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Splin&e"), "spline", ":/icons/spline_points.lci", m_actionFactory->spline_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", m_actionFactory->ellipse_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", m_actionFactory->polyline_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Select"), "select", ":/icons/select.lci", m_actionFactory->select_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", m_actionFactory->dimension_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("Ot&her"), "other", ":/icons/text.lci", m_actionFactory->other_drawing_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Modify"), "modify", ":/icons/move_rotate.lci", m_actionFactory->modify_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Info"), "info", ":/icons/measure.lci", m_actionFactory->info_actions);
+    subMenuWithActions(m_menuToolsCombined, tr("&Order"), "order", ":/icons/order.lci", m_actionFactory->order_actions);
 
     topMenuMenus << m_menuToolsCombined;
 }

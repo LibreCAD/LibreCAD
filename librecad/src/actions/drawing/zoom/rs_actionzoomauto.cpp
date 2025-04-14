@@ -25,7 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionzoomauto.h"
-#include "rs_graphicview.h"
+
+#include "lc_graphicviewport.h"
+
 
 /**
  * Constructor.

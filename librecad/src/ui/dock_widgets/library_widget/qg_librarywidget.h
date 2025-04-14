@@ -27,7 +27,7 @@
 #define QG_LIBRARYWIDGET_H
 
 #include <memory>
-#include <QWidget>
+#include "lc_graphicviewawarewidget.h"
 
 class QG_ActionHandler;
 class QListView;
@@ -37,7 +37,7 @@ class QStandardItemModel;
 class QStandardItem;
 class QTreeView;
 
-class QG_LibraryWidget : public QWidget{
+class QG_LibraryWidget : public LC_GraphicViewAwareWidget{
     Q_OBJECT
 public:
     QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
@@ -46,6 +46,8 @@ public:
     QPushButton* getInsertButton() const{
         return bInsert;
     }
+
+    void setGraphicView(RS_GraphicView* gview) override;
 private:
     QPushButton *bInsert=nullptr;
     QString getItemDir( QStandardItem * item );

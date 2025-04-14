@@ -25,7 +25,10 @@
 #include <QMessageBox>
 #include <QScrollBar>
 
+#include "lc_actiongroupmanager.h"
 #include "lc_shortcutsstorage.h"
+#include "lc_shortcutstreemodel.h"
+#include "lc_shortcuttreeitem.h"
 #include "ui_lc_actionsshortcutsdialog.h"
 #include "lc_widgets_common.h"
 #include "rs_settings.h"

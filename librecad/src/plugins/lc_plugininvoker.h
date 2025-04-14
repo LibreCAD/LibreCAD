@@ -29,7 +29,8 @@ class QC_ApplicationWindow;
 class LC_PluginInvoker: public QObject{
     Q_OBJECT
 public:
-    LC_PluginInvoker(QC_ApplicationWindow* appWindow);
+    explicit LC_PluginInvoker(QC_ApplicationWindow* appWindow);
+    ~LC_PluginInvoker() override;
     void loadPlugins();
 public slots:
     void execPlug();

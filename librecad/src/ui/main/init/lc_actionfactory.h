@@ -36,8 +36,30 @@ class LC_ActionFactory : public LC_ActionFactoryBase{
     Q_OBJECT
 public:
     LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
-    void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
+    void initActions(LC_ActionGroupManager* agm, bool useTheme);
+
+    QList<QAction*> file_actions;
+    QList<QAction*> line_actions;
+    QList<QAction*> point_actions;
+    QList<QAction*> shape_actions;
+    QList<QAction*> circle_actions;
+    QList<QAction*> curve_actions;
+    QList<QAction*> spline_actions;
+    QList<QAction*> ellipse_actions;
+    QList<QAction*> polyline_actions;
+    QList<QAction*> select_actions;
+    QList<QAction*> dimension_actions;
+    QList<QAction*> other_drawing_actions;
+    QList<QAction*> modify_actions;
+    QList<QAction*> order_actions;
+    QList<QAction*> info_actions;
+    QList<QAction*> layer_actions;
+    QList<QAction*> block_actions;
+    QList<QAction*> pen_actions;
+
 private:
+    void initActionGroupManager(LC_ActionGroupManager* agm);
+    void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
@@ -67,13 +89,12 @@ private:
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group);
-
     void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void setDefaultShortcuts(QMap<QString, QAction *> &map, LC_ActionGroupManager* agm);
     void setupCreatedActions(QMap<QString, QAction *> &map);
     void markNotEditableActionsShortcuts(const QMap<QString, QAction *> &map);
-    void fillActionLists(LC_ActionGroupManager *agm);
-    void prepareActionsToDisableInPrintPreview(LC_ActionGroupManager *agm, QList<QAction *> &actionsList);
+    void fillActionLists(QMap<QString, QAction *> &map);
+    void prepareActionsToDisableInPrintPreview(QList<QAction *> &actionsList,QMap<QString, QAction *> &map);
     void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group) const;

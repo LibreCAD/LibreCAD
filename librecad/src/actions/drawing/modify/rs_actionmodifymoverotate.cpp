@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionmodifymoverotate.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"

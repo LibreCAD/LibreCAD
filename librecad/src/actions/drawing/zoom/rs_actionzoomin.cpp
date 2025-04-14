@@ -25,8 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionzoomin.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
+#include "lc_graphicviewport.h"
 
 /**
  * Default constructor.

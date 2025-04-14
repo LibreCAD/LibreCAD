@@ -22,7 +22,6 @@
 
 #include "lc_overlaysmanager.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphic.h"
 #include "lc_overlayentitiescontainer.h"
 
 LC_OverlaysManager::LC_OverlaysManager() {

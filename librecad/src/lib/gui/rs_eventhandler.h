@@ -24,16 +24,10 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#include <memory>
 #include <QObject>
-
-#include "lc_coordinates_parser.h"
-#include "rs.h"
-#include "rs_vector.h"
 
 class LC_CoordinatesParser;
 class RS_ActionInterface;
@@ -46,16 +40,13 @@ class RS_GraphicView;
 
 struct RS_SnapMode;
 
-
 /**
  * The event handler owns and manages all actions that are currently
  * active. All events going from the view to the actions come over
  * this class.
  */
-class RS_EventHandler : public QObject
-{
+class RS_EventHandler : public QObject {
     Q_OBJECT
-
 public:
     explicit RS_EventHandler(RS_GraphicView* parent = 0);
     ~RS_EventHandler() override;

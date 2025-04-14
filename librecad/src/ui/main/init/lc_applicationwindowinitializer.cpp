@@ -37,7 +37,6 @@
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"
 #include "lc_releasechecker.h"
-#include "lc_snapoptionswidgetsholder.h"
 #include "lc_toolbarfactory.h"
 #include "lc_widgetfactory.h"
 #include "lc_workspacesinvoker.h"
@@ -70,6 +69,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     m_appWin->setAcceptDrops(true);
     initDockCorners();
     initIconSize();
+
     initActionFactory();
     initWidgets();
     initToolbars();
@@ -96,8 +96,8 @@ void LC_ApplicationWindowInitializer::initReleaseChecker(){
 }
 
 void LC_ApplicationWindowInitializer::initActionGroupManager(){
-    m_appWin->m_actionGroupManager = new LC_ActionGroupManager(m_appWin);
-    connect(RS_SETTINGS, &RS_Settings::optionsChanged, m_appWin->m_actionGroupManager, &LC_ActionGroupManager::onOptionsChanged);
+    m_appWin->m_actionGroupManager = std::make_unique<LC_ActionGroupManager>(m_appWin);
+    connect(RS_SETTINGS, &RS_Settings::optionsChanged, m_appWin->m_actionGroupManager.get(), &LC_ActionGroupManager::onOptionsChanged);
 }
 
 void LC_ApplicationWindowInitializer::initActionOptionsManager(){
@@ -108,9 +108,9 @@ void LC_ApplicationWindowInitializer::initActionOptionsManager(){
 }
 
 void LC_ApplicationWindowInitializer::initActionFactory() const {
-    LC_ActionFactory a_factory(m_appWin, m_appWin->m_actionHandler.get());
+    m_appWin->m_actionFactory = std::make_unique<LC_ActionFactory>(m_appWin, m_appWin->m_actionHandler.get());
     bool using_theme = LC_GET_ONE_BOOL("Widgets","AllowTheme", false);
-    a_factory.fillActionContainer(m_appWin->m_actionGroupManager, using_theme);
+    m_appWin->m_actionFactory->initActions(m_appWin->m_actionGroupManager.get(), using_theme);
 }
 
 void LC_ApplicationWindowInitializer::initDockCorners() const {
@@ -189,7 +189,7 @@ void LC_ApplicationWindowInitializer::initDockAreasActions() const {
 }
 
 void LC_ApplicationWindowInitializer::initMainMenu() const {
-    m_appWin->m_menuFactory = new LC_MenuFactory(m_appWin, m_appWin->m_actionGroupManager);
+    m_appWin->m_menuFactory = std::make_unique<LC_MenuFactory>(m_appWin);
     m_appWin->m_menuFactory->createMainMenu(m_appWin->menuBar());
 }
 

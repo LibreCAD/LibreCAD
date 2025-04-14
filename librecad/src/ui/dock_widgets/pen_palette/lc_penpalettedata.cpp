@@ -25,6 +25,9 @@
 #include <QFile>
 
 #include "lc_penpalettedata.h"
+
+#include <QTextStream>
+
 #include "lc_peninforegistry.h"
 #include "lc_penitem.h"
 #include "lc_penpaletteoptions.h"

@@ -29,6 +29,7 @@
 #include <QLineEdit>
 #include <QSettings>
 
+#include "lc_actiongroup.h"
 #include "lc_actiongroupmanager.h"
 #include "ui_widgetcreator.h"
 

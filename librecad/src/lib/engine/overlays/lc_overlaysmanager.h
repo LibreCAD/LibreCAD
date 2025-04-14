@@ -23,12 +23,10 @@
 #ifndef LC_OVERLAYSMANAGER_H
 #define LC_OVERLAYSMANAGER_H
 
-#include <QMap>
 #include "rs.h"
-#include "lc_overlayentity.h"
 
+class LC_OverlayDrawable;
 class RS_Graphic;
-
 class RS_EntityContainer;
 class LC_OverlayDrawablesContainer;
 

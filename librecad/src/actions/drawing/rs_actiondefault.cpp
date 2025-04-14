@@ -28,6 +28,9 @@
 
 #include "qc_applicationwindow.h"
 #include "rs_actiondefault.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
 #include "rs_commandevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactoryinterface.h"
@@ -170,7 +173,7 @@ void RS_ActionDefault::highlightHoveredEntities(LC_MouseEvent *event){
     entity = catchEntityByEvent(event, level);
 
     if (entity == nullptr) {
-        m_infoCursorOverlayData.setZone2("");
+        m_infoCursorOverlayData->setZone2("");
         return;
     }
     if (!entity->isVisible()){
@@ -180,7 +183,7 @@ void RS_ActionDefault::highlightHoveredEntities(LC_MouseEvent *event){
     if (showEntityDescriptions){
         QString entityInfoStr = obtainEntityDescriptionForInfoCursor(entity, RS2::EntityDescriptionLevel::DescriptionLong);
         if (!entityInfoStr.isEmpty()) {
-            m_infoCursorOverlayData.setZone2(entityInfoStr);
+            m_infoCursorOverlayData->setZone2(entityInfoStr);
             forceUpdateInfoCursor(event);
         }
     }
@@ -246,7 +249,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
             highlightHoveredEntities(e);
             if (m_infoCursorOverlayPrefs->enabled){
                 if (!isShowEntityDescriptionOnHighlight()) {
-                    m_infoCursorOverlayData.setZone2("");
+                    m_infoCursorOverlayData->setZone2("");
                 }
                 RS_Snapper::forceUpdateInfoCursor(mouse);
             }
@@ -556,7 +559,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
                     QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                     msg.append(tr(" entities "));
                     msg.append(cross? tr("that intersect with box") : tr("that are within box"));
-                    m_infoCursorOverlayData.setZone2(msg);
+                    m_infoCursorOverlayData->setZone2(msg);
                     forceUpdateInfoCursor(e);
                 }
             }

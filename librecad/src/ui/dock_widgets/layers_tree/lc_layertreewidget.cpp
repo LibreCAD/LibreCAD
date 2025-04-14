@@ -39,13 +39,13 @@
 #include "lc_layertreemodel.h"
 #include "rs_settings.h"
 #include "lc_widgets_common.h"
+#include "rs_layer.h"
 /**
  * Constructor.
  */
-LC_LayerTreeWidget::LC_LayerTreeWidget(
-    QG_ActionHandler *ah, QWidget *parent, const char *name, Qt::WindowFlags f):QWidget(parent, f){
+LC_LayerTreeWidget::LC_LayerTreeWidget(QG_ActionHandler* ah, QWidget* parent, const char* name, Qt::WindowFlags f):
+    LC_GraphicViewAwareWidget(parent, name, f) {
 
-    setObjectName(name);
     m_actionHandler = ah;
     m_layerList = nullptr;
 

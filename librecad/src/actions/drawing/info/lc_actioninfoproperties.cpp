@@ -23,8 +23,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs.h"
 #include "lc_actioninfoproperties.h"
+
+#include "lc_graphicviewport.h"
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
+#include "rs_entity.h"
 
 namespace {
 

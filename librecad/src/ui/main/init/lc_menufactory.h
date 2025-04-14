@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "lc_actionfactory.h"
 #include "lc_appwindowaware.h"
 
 class QC_MDIWindow;
@@ -36,17 +37,18 @@ class LC_ActionGroupManager;
 class LC_MenuFactory: public QObject, public LC_AppWindowAware{
     Q_OBJECT
 public:
-    LC_MenuFactory(QC_ApplicationWindow* main_win,
-                   LC_ActionGroupManager* agm);
+    LC_MenuFactory(QC_ApplicationWindow* main_win);
     void recreateMainMenuIfNeeded(QMenuBar *menuBar);
     void createMainMenu(QMenuBar* menu_bar);
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
     QMenu* createMainWindowPopupMenu() const;
+
     QMenu * getRecentFilesMenu() const{
         return m_menuRecentFiles;
     }
 protected:
     LC_ActionGroupManager* m_actionGroupManager = nullptr;
+    LC_ActionFactory *m_actionFactory = nullptr;
 
     struct MenuOptions {
         bool expandToolsMenu = false;

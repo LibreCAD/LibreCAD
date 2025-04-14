@@ -88,6 +88,7 @@
 #include "lc_actionsplineremovebetween.h"
 #include "lc_actionucscreate.h"
 #include "lc_defaultactioncontext.h"
+#include "lc_graphicviewport.h"
 #include "qg_snaptoolbar.h"
 #include "rs_actionblocksadd.h"
 #include "rs_actionblocksattributes.h"

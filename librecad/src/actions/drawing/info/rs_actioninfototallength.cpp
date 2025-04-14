@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actioninfototallength.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_units.h"

@@ -24,8 +24,8 @@
 #define LC_CURSOROVERLAYINFO_H
 
 #include <memory>
+#include "rs_vector.h"
 
-#include "rs_point.h"
 #include "lc_overlayentity.h"
 
 struct  LC_InfoCursorOptions{
@@ -145,8 +145,7 @@ struct LC_InfoCursorOverlayPrefs{
     void loadSettings();
 };
 
-class LC_OverlayInfoCursor:public LC_OverlayDrawable
-{
+class LC_OverlayInfoCursor:public LC_OverlayDrawable{
 public:
     LC_OverlayInfoCursor(const RS_Vector &coord, LC_InfoCursorOptions* cursorOverlaySettings);
     void setZonesData(LC_InfoCursorData *data);

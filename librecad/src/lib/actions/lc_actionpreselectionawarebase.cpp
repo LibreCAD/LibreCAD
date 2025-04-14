@@ -22,6 +22,9 @@
 #include <QMouseEvent>
 
 #include "lc_actionpreselectionawarebase.h"
+
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_debug.h"
@@ -163,7 +166,7 @@ void LC_ActionPreSelectionAwareBase::onMouseMoveEvent(int status, LC_MouseEvent 
                 QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                 msg.append(tr(" entities "));
                 msg.append(cross? tr("that intersect with box") : tr("that are within box"));
-                m_infoCursorOverlayData.setZone2(msg);
+                m_infoCursorOverlayData->setZone2(msg);
                 RS_Snapper::forceUpdateInfoCursor(mouse);
             }
         }

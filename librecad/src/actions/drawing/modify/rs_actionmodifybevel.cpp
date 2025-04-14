@@ -26,6 +26,8 @@
 
 #include "qg_beveloptions.h"
 #include "rs_actionmodifybevel.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_commandevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

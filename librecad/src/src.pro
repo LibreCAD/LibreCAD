@@ -301,6 +301,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalign.h \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
+    lib/actions/lc_actioninfomessagebuilder.h \
     lib/actions/lc_overlayboxaction.h \
     lib/engine/document/ucs/lc_ucslist.h \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h \
@@ -417,6 +418,7 @@ HEADERS += \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
     ui/dialogs/file/export/layers/lc_layerexportoptions.h \
     ui/dock_widgets/lc_dockwidget.h \
+    ui/dock_widgets/lc_graphicviewawarewidget.h \
     ui/dock_widgets/lc_widgets_common.h \
     #ui/dock_widgets/library_widget/lc_librarywidget.h \
     ui/lc_graphicviewaware.h \
@@ -529,6 +531,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    lib/actions/lc_actioninfomessagebuilder.cpp \
     lib/actions/lc_overlayboxaction.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp \
@@ -561,6 +564,7 @@ SOURCES += \
     #ui/dock_widgets/library_widget/lc_librarywidget.cpp \
     ui/dock_widgets/cad/lc_caddockwidget.cpp \
     ui/dock_widgets/lc_dockwidget.cpp \
+    ui/dock_widgets/lc_graphicviewawarewidget.cpp \
     ui/lc_uiutils.cpp \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/support/lc_appwindowdialogsinvoker.cpp \

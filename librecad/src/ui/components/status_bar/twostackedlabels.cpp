@@ -25,6 +25,7 @@
 #include "twostackedlabels.h"
 
 #include <QLabel>
+#include <QMouseEvent>
 #include <QVBoxLayout>
 
 TwoStackedLabels::TwoStackedLabels(QWidget* parent)

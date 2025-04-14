@@ -25,6 +25,9 @@
 **********************************************************************/
 
 #include "rs_actioninfodist.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

@@ -29,6 +29,7 @@
 
 #include "rs_graphic.h"
 
+class QG_GraphicView;
 class LC_DocumentsStorage;
 class LC_ActionContext;
 /**
@@ -39,7 +40,6 @@ class LC_ActionContext;
 class QC_MDIWindow:public QMdiSubWindow,
                    public LC_GraphicModificationListener {
     Q_OBJECT
-
 public:
     QC_MDIWindow(RS_Document *doc,QWidget *parent,bool printPreview, LC_ActionContext* actionContext);
     void removeWidgetsListeners() const;

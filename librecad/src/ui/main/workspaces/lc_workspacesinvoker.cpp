@@ -30,6 +30,8 @@ LC_WorkspacesInvoker::LC_WorkspacesInvoker(QC_ApplicationWindow* mainWin):
     LC_AppWindowAware{mainWin}, m_workspacesManager{std::make_unique<LC_WorkspacesManager>()} {
 }
 
+LC_WorkspacesInvoker::~LC_WorkspacesInvoker() = default;
+
 void LC_WorkspacesInvoker::init() {
     m_workspacesManager->init(m_appWin);
 }

@@ -28,6 +28,7 @@
 #include "lc_appwindowaware.h"
 #include "rs.h"
 
+class LC_ActionGroupManager;
 class QActionGroup;
 class QAction;
 class QG_ActionHandler;
@@ -61,6 +62,23 @@ protected:
             :key(actionKey),actionType(RS2::ActionNone),text(text),iconName(iconName), themeIconName(themeIcon), slotPtrBool(slotPtrBool){}
     };
 
+    struct ActionGroupInfo {
+        ActionGroupInfo(const QString& name,  const QString& title, const QString& description,
+            const char* iconName, bool toolGroup = true)
+            : name{name},
+              isToolGroup{toolGroup},
+              title{title},
+              description{description},
+              iconName{iconName} {
+        }
+
+        QString name;
+        bool isToolGroup{false};
+        QString title;
+        QString description;
+        const char* iconName{""};
+    };
+
     QG_ActionHandler* m_actionHandler = nullptr;
     bool m_usingTheme = false;
 
@@ -81,6 +99,8 @@ protected:
                                  const char *themeIconName,QActionGroup *parent) const;
     void createActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const;
     void addActionsToMainWindow(const QMap<QString, QAction *> &map) const;
+    void createActionGroups(const std::vector<ActionGroupInfo>& actionGroups, LC_ActionGroupManager* actionGroupManager) const;
+    void fillActionsList(QList<QAction*>& list, const std::vector<const char*>& actionNames, const QMap<QString, QAction*>& map) const;
 };
 
 #endif // LC_ACTIONFACTORYBASE_H

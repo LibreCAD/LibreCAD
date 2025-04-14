@@ -36,6 +36,8 @@
 #include "lc_shortcuts_manager.h"
 #include "lc_widgetviewportrenderer.h"
 #include "rs_graphicview.h"
+
+#include "lc_cursoroverlayinfo.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"

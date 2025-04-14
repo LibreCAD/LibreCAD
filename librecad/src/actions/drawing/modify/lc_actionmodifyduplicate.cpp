@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_duplicateoptions.h"
 #include "lc_actionmodifyduplicate.h"
 #include "lc_abstractactionwithpreview.h"
+#include "lc_actioninfomessagebuilder.h"
 
 #include "rs_ellipse.h"
 #include "rs_math.h"

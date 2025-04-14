@@ -24,21 +24,18 @@
 **
 **********************************************************************/
 
+#include "rs_actiondrawimage.h"
+
 #include <QImage>
 
-#include "rs_actiondrawimage.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
+#include "lc_graphicviewport.h"
+#include "qg_imageoptions.h"
 #include "rs_creation.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_image.h"
-#include "rs_line.h"
-#include "rs_math.h"
 #include "rs_preview.h"
 #include "rs_units.h"
-#include "qg_imageoptions.h"
 
 struct RS_ActionDrawImage::ImageData {
 	RS_ImageData data;

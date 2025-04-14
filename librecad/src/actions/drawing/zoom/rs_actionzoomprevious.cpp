@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionzoomprevious.h"
-#include "rs_graphicview.h"
+#include "lc_graphicviewport.h"
 
 /**
  * Constructor.

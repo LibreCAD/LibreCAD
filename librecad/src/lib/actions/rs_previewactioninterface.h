@@ -31,7 +31,11 @@
 
 #include "dxf_format.h"
 #include "rs_actioninterface.h"
+#include "rs_vector.h"
 
+class RS_Point;
+class LC_OverlayDrawable;
+class LC_ActionInfoMessageBuilder;
 class LC_Highlight;
 class LC_RefEllipse;
 
@@ -40,8 +44,6 @@ class RS_Circle;
 class RS_ConstructionLine;
 class RS_Ellipse;
 class RS_Line;
-
-
 struct RS_ArcData;
 struct RS_CircleData;
 struct RS_EllipseData;
@@ -55,7 +57,6 @@ struct LC_MouseEvent{
     bool isShift = false;
     QMouseEvent* originalEvent = nullptr;
 };
-
 
 /**
  * This is the interface that must be implemented for all
@@ -74,69 +75,7 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
-    class MessageBuilder: public LC_InfoMessageBuilder {
-    public:
-        explicit MessageBuilder(RS_PreviewActionInterface * snapper)
-            : snapper{snapper} {
-        }
-
-        MessageBuilder& string(const QString& name, const QString& value = nullptr) {
-            add(name, value);
-            return *this;
-        }
-        MessageBuilder& vector(const QString& name, const RS_Vector& value) {
-            add(name, snapper->formatVector(value));
-            return *this;
-        }
-
-
-        MessageBuilder& relative(const QString& name, const RS_Vector& value) {
-            add(name, snapper->formatRelative(value));
-            return *this;
-        }
-
-        MessageBuilder& relativePolar(const QString& name, const RS_Vector& value) {
-            add(name, snapper->formatRelativePolar(value));
-            return *this;
-        }
-
-        MessageBuilder& relative(const RS_Vector& value) {
-            add(snapper->formatRelative(value));
-            return *this;
-        }
-
-        MessageBuilder& relativePolar(const RS_Vector& value) {
-            add(snapper->formatRelativePolar(value));
-            return *this;
-        }
-
-        MessageBuilder& wcsAngle(const QString& name, double value) {
-            add(name, snapper->formatWCSAngle(value));
-            return *this;
-        }
-
-        MessageBuilder& rawAngle(const QString& name, double value) {
-            add(name, snapper->formatAngleRaw(value));
-            return *this;
-        }
-
-        MessageBuilder& linear(const QString& name, double value) {
-            add(name, snapper->formatLinear(value));
-            return *this;
-        }
-
-        void toInfoCursorZone2(bool replace) {
-            QString message = toString();
-            snapper->appendInfoCursorZoneMessage(message, 2, replace);
-            clear();
-        }
-
-    private:
-        RS_PreviewActionInterface *snapper;
-    };
-
-    MessageBuilder* m_msgBuilder{nullptr};
-
+    std::unique_ptr<LC_ActionInfoMessageBuilder> m_msgBuilder;
     // fixme - sand - tmp -  move to overlay!!!
     int m_angleSnapMarkerSize = 20;
     /**
@@ -230,8 +169,8 @@ protected:
     RS_Entity* catchModifiableAndDescribe(LC_MouseEvent *e, const RS2::EntityType &enType);
     RS_Entity* catchModifiableAndDescribe(LC_MouseEvent *e, const EntityTypeList &enTypeList);
 
-    MessageBuilder& msg(const QString& name, const QString& value);
-    MessageBuilder& msg(const QString& name);
+    LC_ActionInfoMessageBuilder& msg(const QString& name, const QString& value);
+    LC_ActionInfoMessageBuilder& msg(const QString& name);
 
     QString obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level);
     void prepareEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel level);
@@ -264,8 +203,9 @@ protected:
     bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad);
     double evalAngleValue(const QString &c, bool *ok) const;
     void initFromSettings() override;
-
 private:
     LC_MouseEvent toLCMouseMoveEvent(QMouseEvent *e);
+
+    friend LC_ActionInfoMessageBuilder;
 };
 #endif

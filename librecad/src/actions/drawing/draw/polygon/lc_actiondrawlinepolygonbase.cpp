@@ -34,6 +34,9 @@
 #include "rs_dialogfactory.h"
 #include "rs_polyline.h"
 #include "lc_actiondrawlinepolygonbase.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
 #include "qg_linepolygonoptions.h"
 #include "rs_commandevent.h"
 #include "lc_linemath.h"

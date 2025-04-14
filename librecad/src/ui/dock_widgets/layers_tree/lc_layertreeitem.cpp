@@ -126,9 +126,9 @@ void LC_LayerTreeItem::updateCalculatedFlagsForDescendentVirtualLayers(){
  */
 void LC_LayerTreeItem::collectLayers(QList<RS_Layer *> &result, LC_LayerTreeItemAcceptor *acceptor, bool includeSelf){
     if (includeSelf){
-        if (this->m_layer){
+        if (m_layer){
             if (acceptor->acceptLayerTreeItem(this)){
-                result << this->m_layer;
+                result << m_layer;
             }
         }
     }
@@ -176,7 +176,7 @@ void LC_LayerTreeItem::collectDescendantChildren(QList<LC_LayerTreeItem *> &resu
  * @return item with given layer
  */
 LC_LayerTreeItem *LC_LayerTreeItem::findItemWithLayer(RS_Layer *source){
-    if (this->m_layer == source){
+    if (m_layer == source){
         return this;
     }
     int count = m_childItems.length();

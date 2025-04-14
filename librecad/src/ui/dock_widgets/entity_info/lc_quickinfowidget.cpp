@@ -42,6 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
+#include "rs_point.h"
 #include "rs_settings.h"
 #include "ui_lc_quickinfowidget.h"
 
@@ -51,7 +52,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define DEBUG_QUICK_INFO_RAW_NO
 
 LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map):
-    QWidget(parent),
+    LC_GraphicViewAwareWidget(parent),
     ui(new Ui::LC_QuickInfoWidget),
     m_options{std::make_unique<LC_QuickInfoOptions>()},
     m_pointsData{std::make_unique<LC_QuickInfoPointsData>()},

@@ -44,13 +44,13 @@
 */
 
 class QStandardItemModel;
+class QListView;
 
 class LG_DimzerosBox : public QComboBox {
     Q_OBJECT
-
 public:
-    explicit LG_DimzerosBox(QWidget *parent = 0);
-    ~LG_DimzerosBox();
+    explicit LG_DimzerosBox(QWidget *parent = nullptr);
+    ~LG_DimzerosBox() override;
     void setLinear();
     void setData(int i);
     int getData();

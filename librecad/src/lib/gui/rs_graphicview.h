@@ -62,10 +62,7 @@ class LC_WidgetViewPortRenderer;
  * communicate with the LibreCAD from a GUI level.
  */
 class RS_GraphicView:public QWidget, LC_GraphicViewPortListener {
-Q_OBJECT
-
-    void onViewportRedrawNeeded() override;
-
+    Q_OBJECT
 public:
     RS_GraphicView(QWidget *parent = nullptr, Qt::WindowFlags f = {});
     virtual ~RS_GraphicView();
@@ -189,7 +186,7 @@ protected:
     void setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer);
     LC_WidgetViewPortRenderer* getRenderer() const;
     void resizeEvent(QResizeEvent *event) override;
-
+    void onViewportRedrawNeeded() override;
 private:
     std::unique_ptr<RS_EventHandler> m_eventHandler;
     RS_EntityContainer *container = nullptr;

@@ -5,6 +5,9 @@
 #include "rs_previewactioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
+class RS_Pen;
+class RS_Layer;
+
 class LC_ActionDrawBoundingBox : public LC_ActionPreSelectionAwareBase{
     Q_OBJECT
 public:

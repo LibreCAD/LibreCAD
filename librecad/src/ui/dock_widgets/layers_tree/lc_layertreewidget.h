@@ -25,9 +25,7 @@
 #ifndef LC_LAYERTREEWIDGET_H
 #define LC_LAYERTREEWIDGET_H
 
-#include <QWidget>
-
-#include "lc_graphicviewaware.h"
+#include "lc_graphicviewawarewidget.h"
 #include "rs_layerlistlistener.h"
 
 class QCheckBox;
@@ -36,11 +34,14 @@ class QG_ActionHandler;
 class LC_LayerTreeView;
 class LC_LayerTreeModel;
 class LC_LayerTreeItem;
+class QLineEdit;
+class RS_LayerList;
+
 /**
  * This is the Qt implementation of a widget which can view layers in tree mode
  * and provides interface for various layer-related operations
  */
-class LC_LayerTreeWidget:public QWidget, public LC_GraphicViewAware, public RS_LayerListListener {
+class LC_LayerTreeWidget:public LC_GraphicViewAwareWidget, public RS_LayerListListener {
     Q_OBJECT
 public:
     enum DropIndicatorPosition {

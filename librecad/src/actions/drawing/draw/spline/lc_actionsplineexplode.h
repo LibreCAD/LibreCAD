@@ -26,6 +26,8 @@
 #include <QObject>
 #include "lc_actionsplinemodifybase.h"
 
+class RS_Pen;
+class RS_Layer;
 
 class LC_ActionSplineExplode:public LC_ActionSplineModifyBase{
 Q_OBJECT

@@ -41,6 +41,7 @@
 #include <qabstractitemview.h>
 
 #include "lc_documentsstorage.h"
+#include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
@@ -51,6 +52,7 @@
 #include "rs_system.h"
 
 namespace {
+    // fixme - sand - rework, use reusable class
     void writePng(const QString& pngPath, QPixmap pixmap)
     {
         QImageWriter iio;
@@ -74,9 +76,7 @@ namespace {
  * @author Rallaz
  */
 QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl), actionHandler{action_handler}{
-    setObjectName(name);
-
+    : LC_GraphicViewAwareWidget(parent, name, fl), actionHandler{action_handler}{
     auto vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
     vboxLayout->setContentsMargins(2, 2, 2, 2);
@@ -99,17 +99,21 @@ QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* pa
 
     buildTree();
 
-    connect(dirView, SIGNAL(expanded(QModelIndex)), this, SLOT(expandView(QModelIndex)));
-    connect(dirView, SIGNAL(collapsed(QModelIndex)), this, SLOT(collapseView(QModelIndex)));
-    connect(dirView, SIGNAL(clicked(QModelIndex)), this, SLOT(updatePreview(QModelIndex)));
-    connect(bInsert, SIGNAL(clicked()), this, SLOT(insert()));
-    connect(bRefresh, SIGNAL(clicked()), this, SLOT(refresh()));
-    connect(bRebuild, SIGNAL(clicked()), this, SLOT(buildTree()));
+    connect(dirView, &QTreeView::expanded, this, &QG_LibraryWidget::expandView);
+    connect(dirView, &QTreeView::collapsed, this, &QG_LibraryWidget::collapseView);
+    connect(dirView, &QTreeView::clicked, this, &QG_LibraryWidget::updatePreview);
+    connect(bInsert, &QPushButton::clicked, this, &QG_LibraryWidget::insert);
+    connect(bRefresh, &QPushButton::clicked, this, &QG_LibraryWidget::refresh);
+    connect(bRebuild, &QPushButton::clicked, this, &QG_LibraryWidget::buildTree);
 
     updateWidgetSettings();
 }
 
 QG_LibraryWidget::~QG_LibraryWidget() = default;
+
+void QG_LibraryWidget::setGraphicView(RS_GraphicView* gview) {
+    // todo - add further processing later
+}
 
 void QG_LibraryWidget::setActionHandler(QG_ActionHandler* ah) {
     actionHandler = ah;

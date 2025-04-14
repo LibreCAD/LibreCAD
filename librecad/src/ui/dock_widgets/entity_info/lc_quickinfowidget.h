@@ -23,9 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_QUICKINFOWIDGET_H
 #define LC_QUICKINFOWIDGET_H
 
-#include <QWidget>
-
-#include "lc_graphicviewaware.h"
+#include "lc_graphicviewawarewidget.h"
 #include "rs.h"
 #include "rs_vector.h"
 
@@ -35,11 +33,12 @@ class LC_QuickInfoOptions;
 class RS_Vector;
 class RS_Entity;
 
-namespace Ui {
-class LC_QuickInfoWidget;
+namespace Ui
+{
+    class LC_QuickInfoWidget;
 }
 
-class LC_QuickInfoWidget : public QWidget, public LC_GraphicViewAware
+class LC_QuickInfoWidget : public LC_GraphicViewAwareWidget
 {
     Q_OBJECT
 

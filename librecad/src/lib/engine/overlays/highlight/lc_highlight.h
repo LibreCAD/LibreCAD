@@ -27,7 +27,6 @@
 #include "rs_entitycontainer.h"
 
 class LC_Highlight: public RS_EntityContainer{
-
 public:
     LC_Highlight();
     void addEntity([[maybe_unused]]RS_Entity *entity) override {};
@@ -37,7 +36,6 @@ public:
     void addEntitiesToContainer(RS_EntityContainer* container);
 protected:
    QMap<RS_Entity*, RS_Entity*> entitiesMap;
-
 };
 
 #endif // LC_HIGHLIGHT_H

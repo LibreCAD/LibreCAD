@@ -29,10 +29,14 @@
 
 #include <QAbstractTableModel>
 #include <QContextMenuEvent>
+#include <QHeaderView>
 #include <QIcon>
+#include <QLineEdit>
 #include <QMenu>
 #include <QObject>
 #include <QScrollBar>
+#include <QTableView>
+#include <QToolButton>
 
 #include "lc_flexlayout.h"
 #include "qc_applicationwindow.h"
@@ -181,8 +185,7 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const{
  * Constructor.
  */
 QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char *name, Qt::WindowFlags f)
-    : QWidget(parent, f){
-    setObjectName(name);
+    : LC_GraphicViewAwareWidget(parent, name, f){
     m_actionHandler = ah;
     m_layerList = nullptr;
     m_showByBlock = false;

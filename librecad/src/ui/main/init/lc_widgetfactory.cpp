@@ -54,8 +54,8 @@
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win)
     : QObject(nullptr)
     , LC_AppWindowAware(main_win)
-    , m_agm(main_win->m_actionGroupManager){
-   fillActionLists();
+    , m_agm(main_win->m_actionGroupManager.get()),
+    m_actionFactory{main_win->m_actionFactory.get()}{
 }
 
 void LC_WidgetFactory::updateDockOptions(QC_ApplicationWindow * mainWin, bool allowDockNesting, bool verticalTabs) {
@@ -68,52 +68,6 @@ void LC_WidgetFactory::updateDockOptions(QC_ApplicationWindow * mainWin, bool al
     }
 
     mainWin->setDockOptions(dockOptions);
-}
-
-void LC_WidgetFactory::fillActionLists(){
-     m_agm->fillActionsList(actionsToDisableInPrintPreview, {
-        "EditCut",
-        "EditCutQuick",
-        "EditCopy",
-        "EditCopyQuick",
-        "EditPaste",
-        "EditPasteTransform",
-        "ViewGrid",
-        "ViewDraft",
-        "ViewLinesDraft",
-        "ViewAntialiasing",
-        "ModifyDeleteQuick",
-        "EditKillAllActions",
-        "ZoomIn",
-        "ZoomOut",
-        "ZoomAuto",
-        "ZoomPrevious",
-        "ZoomWindow",
-        "ZoomPan",
-        "OptionsDrawing",
-        "ViewGridOrtho",
-        "ViewGridIsoLeft",
-        "ViewGridIsoTop",
-        "ViewGridIsoRight",
-        "UCSSetWCS",
-        "UCSCreate"
-    });
-
-    actionsToDisableInPrintPreview.append(m_agm->line_actions);
-    actionsToDisableInPrintPreview.append(m_agm->point_actions);
-    actionsToDisableInPrintPreview.append(m_agm->circle_actions);
-    actionsToDisableInPrintPreview.append(m_agm->curve_actions);
-    actionsToDisableInPrintPreview.append(m_agm->spline_actions);
-    actionsToDisableInPrintPreview.append(m_agm->ellipse_actions);
-    actionsToDisableInPrintPreview.append(m_agm->polyline_actions);
-    actionsToDisableInPrintPreview.append(m_agm->select_actions);
-    actionsToDisableInPrintPreview.append(m_agm->dimension_actions);
-    actionsToDisableInPrintPreview.append(m_agm->other_drawing_actions);
-    actionsToDisableInPrintPreview.append(m_agm->modify_actions);
-    actionsToDisableInPrintPreview.append(m_agm->order_actions);
-    actionsToDisableInPrintPreview.append(m_agm->info_actions);
-    actionsToDisableInPrintPreview.append(m_agm->block_actions);
-    actionsToDisableInPrintPreview.append(m_agm->pen_actions);
 }
 
 void LC_WidgetFactory::initWidgets(){
@@ -136,20 +90,20 @@ void LC_WidgetFactory::initLeftCADSidebar(){
 }
 
 void LC_WidgetFactory::createCADSidebar(int columns, int icon_size, bool flatButtons){
-    auto* line = cadDockWidget(tr("Line"), "Line", m_agm->line_actions, columns, icon_size, flatButtons);
-    auto* point = cadDockWidget(tr("Point"), "Point", m_agm->point_actions, columns, icon_size, flatButtons);
-    auto* shape = cadDockWidget(tr("Polygon"), "Polygon", m_agm->shape_actions, columns, icon_size, flatButtons);
-    auto* circle = cadDockWidget(tr("Circle"), "Circle", m_agm->circle_actions, columns, icon_size, flatButtons);
-    auto* curve = cadDockWidget(tr("Arc"), "Curve", m_agm->curve_actions, columns, icon_size, flatButtons);
-    auto* spline = cadDockWidget(tr("Spline"), "Spline", m_agm->spline_actions, columns, icon_size, flatButtons);
-    auto* ellipse = cadDockWidget(tr("Ellipse"), "Ellipse", m_agm->ellipse_actions, columns, icon_size, flatButtons);
-    auto* polyline = cadDockWidget(tr("Polyline"), "Polyline", m_agm->polyline_actions, columns, icon_size, flatButtons);
-    auto* select = cadDockWidget(tr("Select"), "Select", m_agm->select_actions, columns, icon_size, flatButtons);
-    auto* dimension = cadDockWidget(tr("Dimension"), "Dimension", m_agm->dimension_actions, columns, icon_size, flatButtons);
-    auto* other = cadDockWidget(tr("Other"), "Other", m_agm->other_drawing_actions, columns, icon_size, flatButtons);
-    auto* modify = cadDockWidget(tr("Modify"), "Modify", m_agm->modify_actions, columns, icon_size, flatButtons);
-    auto* info = cadDockWidget(tr("Info"), "Info", m_agm->info_actions, columns, icon_size, flatButtons);
-    auto* order = cadDockWidget(tr("Order"), "Order", m_agm->order_actions, columns, icon_size, flatButtons);
+    auto* line = cadDockWidget(tr("Line"), "Line", m_actionFactory->line_actions, columns, icon_size, flatButtons);
+    auto* point = cadDockWidget(tr("Point"), "Point", m_actionFactory->point_actions, columns, icon_size, flatButtons);
+    auto* shape = cadDockWidget(tr("Polygon"), "Polygon", m_actionFactory->shape_actions, columns, icon_size, flatButtons);
+    auto* circle = cadDockWidget(tr("Circle"), "Circle", m_actionFactory->circle_actions, columns, icon_size, flatButtons);
+    auto* curve = cadDockWidget(tr("Arc"), "Curve", m_actionFactory->curve_actions, columns, icon_size, flatButtons);
+    auto* spline = cadDockWidget(tr("Spline"), "Spline", m_actionFactory->spline_actions, columns, icon_size, flatButtons);
+    auto* ellipse = cadDockWidget(tr("Ellipse"), "Ellipse", m_actionFactory->ellipse_actions, columns, icon_size, flatButtons);
+    auto* polyline = cadDockWidget(tr("Polyline"), "Polyline", m_actionFactory->polyline_actions, columns, icon_size, flatButtons);
+    auto* select = cadDockWidget(tr("Select"), "Select", m_actionFactory->select_actions, columns, icon_size, flatButtons);
+    auto* dimension = cadDockWidget(tr("Dimension"), "Dimension", m_actionFactory->dimension_actions, columns, icon_size, flatButtons);
+    auto* other = cadDockWidget(tr("Other"), "Other", m_actionFactory->other_drawing_actions, columns, icon_size, flatButtons);
+    auto* modify = cadDockWidget(tr("Modify"), "Modify", m_actionFactory->modify_actions, columns, icon_size, flatButtons);
+    auto* info = cadDockWidget(tr("Info"), "Info", m_actionFactory->info_actions, columns, icon_size, flatButtons);
+    auto* order = cadDockWidget(tr("Order"), "Order", m_actionFactory->order_actions, columns, icon_size, flatButtons);
 
     m_appWin->addDockWidget(Qt::LeftDockWidgetArea, line);
     m_appWin->tabifyDockWidget(line, polyline);
@@ -289,7 +243,7 @@ QDockWidget*  LC_WidgetFactory::createLibraryWidget(QG_ActionHandler *action_han
 
     // result->resize(240, 400);
 
-    connect(widget, QG_LibraryWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    connect(widget, &QG_LibraryWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
     connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &QG_LibraryWidget::updateWidgetSettings);
 
     m_appWin->m_libraryWidget = widget;
@@ -349,7 +303,7 @@ void LC_WidgetFactory::updateDockWidgetsTitleBarType(const QC_ApplicationWindow*
 }
 
 void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
-    createPenWizardWidget();
+
     bool verticalTitle = LC_GET_ONE_BOOL("Widgets", "DockTitleBarVertical", false);
     QDockWidget *dock_pen_palette = createPenPalletteWidget();
     QDockWidget *dock_layer = createLayerWidget(action_handler);
@@ -360,6 +314,9 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     QDockWidget *dock_block = createBlockListWidget(action_handler);
     QDockWidget *dock_library = createLibraryWidget(action_handler);
     QDockWidget *dock_command = createCmdWidget(action_handler);
+    QDockWidget *doc_pen_wiz = createPenWizardWidget();
+
+    m_appWin->addDockWidget(Qt::RightDockWidgetArea, doc_pen_wiz);
 
     m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     m_appWin->tabifyDockWidget(dock_library, dock_block);
@@ -393,12 +350,18 @@ void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName) cons
     }
 }
 
-void LC_WidgetFactory::createPenWizardWidget(){
-    auto penWizard = new LC_PenWizard(QObject::tr("Pen Wizard"), m_appWin);
-    penWizard->setObjectName("pen_wiz");
-    connect(m_appWin, &QC_ApplicationWindow::windowsChanged,penWizard, &LC_PenWizard::setEnabled);
-    m_appWin->addDockWidget(Qt::RightDockWidgetArea, penWizard);
-    m_appWin->m_penWizard = penWizard;
+QDockWidget* LC_WidgetFactory::createPenWizardWidget(){
+    auto dock = createDockWidget(tr("Pen Wizard"), "pen_wiz_dockwidget", tr("PenWiz"));
+    auto widget = new LC_PenWizard(dock);
+    widget->setFocusPolicy(Qt::NoFocus);
+    dock->setWidget(widget);
+
+    // connect(widget, &LC_PenPaletteWidget::escape, m_appWin, &QC_ApplicationWindow::slotFocus);
+    // connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_PenPaletteWidget::updateWidgetSettings);
+    connect(m_appWin, &QC_ApplicationWindow::windowsChanged,widget, &LC_PenWizard::setEnabled);
+
+    m_appWin->m_penWizard = widget;
+    return dock;
 }
 
 void LC_WidgetFactory::setDockWidgetTitleType(QDockWidget *widget, bool verticalTitleBar){

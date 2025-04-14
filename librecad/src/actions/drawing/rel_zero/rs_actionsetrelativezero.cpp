@@ -25,12 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionsetrelativezero.h"
+
+#include "lc_graphicviewport.h"
 #include "rs_document.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
-#include "rs_previewactioninterface.h"
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionContext)
     : RS_PreviewActionInterface("Set the relative Zero",actionContext, RS2::ActionSetRelativeZero)

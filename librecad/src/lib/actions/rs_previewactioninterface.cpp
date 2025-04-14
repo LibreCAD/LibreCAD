@@ -27,6 +27,7 @@
 #include "rs_previewactioninterface.h"
 
 #include "lc_actioncontext.h"
+#include "lc_actioninfomessagebuilder.h"
 #include "lc_defaults.h"
 #include "lc_graphicviewport.h"
 #include "lc_highlight.h"
@@ -61,7 +62,8 @@
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name, LC_ActionContext* actionContext,
                                                      RS2::ActionType actionType) : RS_ActionInterface(name, actionContext, actionType)
     , m_preview(std::make_unique<RS_Preview>(actionContext->getEntityContainer(), m_viewport)),
-    m_highlight(std::make_unique<LC_Highlight>()) {
+    m_highlight(std::make_unique<LC_Highlight>()),
+    m_msgBuilder{std::make_unique<LC_ActionInfoMessageBuilder>(this)} {
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);
 
@@ -70,7 +72,6 @@ RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name, LC_Action
 
     m_preview->setLayer(nullptr);
     initRefEntitiesMetrics();
-    m_msgBuilder = new MessageBuilder(this);
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\": OK", name);
 }
@@ -80,7 +81,6 @@ RS_PreviewActionInterface::~RS_PreviewActionInterface() {
     deletePreview();
     deleteInfoCursor();
     deleteHighlights();
-    delete m_msgBuilder;
 }
 
 void RS_PreviewActionInterface::init(int status) {
@@ -530,11 +530,11 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableAndDescribe(LC_MouseEvent *
     return en;
 }
 
-RS_PreviewActionInterface::MessageBuilder& RS_PreviewActionInterface::msg(const QString& name, const QString& value) {
+LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msg(const QString& name, const QString& value) {
    return m_msgBuilder->string(name, value);
 }
 
-RS_PreviewActionInterface::MessageBuilder& RS_PreviewActionInterface::msg(const QString& name) {
+LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msg(const QString& name) {
     m_msgBuilder->add(name);
     return *m_msgBuilder;
 }
@@ -579,7 +579,7 @@ void RS_PreviewActionInterface::prepareEntityDescription(RS_Entity *entity, RS2:
            || (m_infoCursorOverlayPrefs->showEntityInfoOnModification && level == RS2::EntityDescriptionLevel::DescriptionModifying)){
             QString entityInfoStr = obtainEntityDescriptionForInfoCursor(entity,level);
             if (!entityInfoStr.isEmpty()) {
-                QString snapString = m_infoCursorOverlayData.getZone2();
+                QString snapString = m_infoCursorOverlayData->getZone2();
                 QString updatedZone2;
                 if (!snapString.isEmpty()){
                     updatedZone2 = snapString + "\n"  + entityInfoStr;
@@ -587,7 +587,7 @@ void RS_PreviewActionInterface::prepareEntityDescription(RS_Entity *entity, RS2:
                 else{
                     updatedZone2 = entityInfoStr;
                 }
-                m_infoCursorOverlayData.setZone2(updatedZone2);
+                m_infoCursorOverlayData->setZone2(updatedZone2);
             }
         }
     }
@@ -610,14 +610,14 @@ void RS_PreviewActionInterface::appendInfoCursorZoneMessage(QString message, int
                         msgToSet = message;
                     }
                     else{
-                        QString existingInfo = m_infoCursorOverlayData.getZone1();
+                        QString existingInfo = m_infoCursorOverlayData->getZone1();
                         if (!existingInfo.isEmpty()) {
                             msgToSet = existingInfo + "\n" + message;
                         } else {
                             msgToSet = message;
                         }
                     }
-                    m_infoCursorOverlayData.setZone1(msgToSet);
+                    m_infoCursorOverlayData->setZone1(msgToSet);
                     break;
                 }
                 case 2: {
@@ -626,14 +626,14 @@ void RS_PreviewActionInterface::appendInfoCursorZoneMessage(QString message, int
                         msgToSet = message;
                     }
                     else{
-                        QString existingInfo = m_infoCursorOverlayData.getZone2();
+                        QString existingInfo = m_infoCursorOverlayData->getZone2();
                         if (!existingInfo.isEmpty()) {
                             msgToSet = existingInfo + "\n" + message;
                         } else {
                             msgToSet = message;
                         }
                     }
-                    m_infoCursorOverlayData.setZone2(msgToSet);
+                    m_infoCursorOverlayData->setZone2(msgToSet);
                     break;
                 }
                 case 3: {
@@ -642,14 +642,14 @@ void RS_PreviewActionInterface::appendInfoCursorZoneMessage(QString message, int
                         msgToSet = message;
                     }
                     else{
-                        QString existingInfo = m_infoCursorOverlayData.getZone3();
+                        QString existingInfo = m_infoCursorOverlayData->getZone3();
                         if (!existingInfo.isEmpty()) {
                             msgToSet = existingInfo + "\n" + message;
                         } else {
                             msgToSet = message;
                         }
                     }
-                    m_infoCursorOverlayData.setZone3(msgToSet);
+                    m_infoCursorOverlayData->setZone3(msgToSet);
                     break;
                 }
                 case 4: {
@@ -658,14 +658,14 @@ void RS_PreviewActionInterface::appendInfoCursorZoneMessage(QString message, int
                         msgToSet = message;
                     }
                     else{
-                        QString existingInfo = m_infoCursorOverlayData.getZone4();
+                        QString existingInfo = m_infoCursorOverlayData->getZone4();
                         if (!existingInfo.isEmpty()) {
                             msgToSet = existingInfo + "\n" + message;
                         } else {
                             msgToSet = message;
                         }
                     }
-                    m_infoCursorOverlayData.setZone4(msgToSet);
+                    m_infoCursorOverlayData->setZone4(msgToSet);
                     break;
                 }
                 default:

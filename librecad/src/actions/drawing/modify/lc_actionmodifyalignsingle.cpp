@@ -24,6 +24,10 @@
 #include "rs_graphicview.h"
 #include "rs_document.h"
 #include "lc_actionmodifyalignsingle.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 #include "lc_modifyalignoptions.h"
 
 LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle(LC_ActionContext *actionContext)

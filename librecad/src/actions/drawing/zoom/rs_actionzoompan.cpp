@@ -24,11 +24,11 @@
 **
 **********************************************************************/
 
+#include "rs_actionzoompan.h"
+
 #include <QMouseEvent>
 
-#include "rs_actionzoompan.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
+#include "lc_graphicviewport.h"
 
 RS_ActionZoomPan::RS_ActionZoomPan(LC_ActionContext *actionContext)
         :RS_ActionInterface("Zoom Panning", actionContext, RS2::ActionZoomPan) {}

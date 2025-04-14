@@ -23,8 +23,7 @@
 #ifndef LC_UCSLISTWIDGET_H
 #define LC_UCSLISTWIDGET_H
 
-#include <QWidget>
-
+#include "lc_graphicviewawarewidget.h"
 #include "lc_ucslist.h"
 
 class RS_Graphic;
@@ -41,7 +40,7 @@ class LC_UCSListWidget;
 class LC_UCSListButton;
 class LC_GraphicViewport;
 
-class LC_UCSListWidget : public QWidget, LC_UCSListListener{
+class LC_UCSListWidget : public LC_GraphicViewAwareWidget, LC_UCSListListener{
     Q_OBJECT
 public:
     explicit LC_UCSListWidget(const QString& title, QWidget* parent);

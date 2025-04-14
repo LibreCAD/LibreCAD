@@ -1369,11 +1369,13 @@ void QG_DlgOptionsGeneral::on_rbRelSize_toggled([[maybe_unused]] bool checked){
 }
 
 void QG_DlgOptionsGeneral::exportSettings(){
-    LC_SettingsExporter::exportSettings(this);
+    LC_SettingsExporter exporter;
+    exporter.exportSettings(this);
 }
 
 void QG_DlgOptionsGeneral::importSettings(){
-    if (LC_SettingsExporter::importSettings(this)) {
+    LC_SettingsExporter importer;
+    if (importer.importSettings(this)) {
         init();
         QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
         appWin.initSettings();

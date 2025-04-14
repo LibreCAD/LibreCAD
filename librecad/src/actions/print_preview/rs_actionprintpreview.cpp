@@ -26,6 +26,8 @@
 
 #include "qg_printpreviewoptions.h"
 #include "rs_actionprintpreview.h"
+
+#include "lc_graphicviewport.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
