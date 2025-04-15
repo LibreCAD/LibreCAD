@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include "qg_lineparalleloptions.h"
 #include "rs_actiondrawlineparallel.h"
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_commandevent.h"
@@ -34,18 +35,16 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "qg_lineparalleloptions.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView, RS2::ActionType actionType)
-	:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
+    :RS_PreviewActionInterface("Draw Parallels", container, graphicView, actionType)
 	,parallel(nullptr)
 	,distance(1.0)
 	,number(1)
-	, coord(new RS_Vector{})
+    , coord(std::make_unique<RS_Vector>())
 	,entity(nullptr){
-    this->actionType= actionType;
 }
 
 RS_ActionDrawLineParallel::~RS_ActionDrawLineParallel() = default;
@@ -72,13 +71,13 @@ void RS_ActionDrawLineParallel::doTrigger() {
                                            distance, number,
                                            entity);
 
-    if (!e){
+    if (e != nullptr){
         RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:No parallels added\n");
     }
 }
 
 void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
-    *coord = {e->graphPoint};
+    *coord = e->graphPoint;
 
     entity = catchAndDescribe(e, RS2::ResolveAll);
 
@@ -149,7 +148,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
                 bool ok = false;
                 double d = RS_Math::eval(c, &ok);
                 accept = true;
-                if (ok && d > 1.0e-10){
+                if (ok && d > RS_TOLERANCE){
                     distance = d;
                 } else {
                     commandMessage(tr("Not a valid expression"));

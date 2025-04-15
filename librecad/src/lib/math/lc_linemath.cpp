@@ -289,7 +289,7 @@ double LC_LineMath::getMeaningfulAngle(double candidate, double replacementValue
  * @return
  */
 bool LC_LineMath::isMeaningful(double value){
-    return std::abs(value) > RS_TOLERANCE;
+    return std::abs(value) >= RS_TOLERANCE;
 }
 
 /**
@@ -307,7 +307,7 @@ bool LC_LineMath::isNotMeaningful(double value){
  * @return
  */
 bool LC_LineMath::isMeaningfulAngle(double value){
-    return std::abs(value) > RS_TOLERANCE_ANGLE;
+    return std::abs(value) >= RS_TOLERANCE_ANGLE;
 }
 
 /**
@@ -319,8 +319,7 @@ bool LC_LineMath::isMeaningfulAngle(double value){
  */
 bool LC_LineMath::isMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2){
     double distance = v1.distanceTo(v2);
-    bool result = distance > RS_TOLERANCE;
-    return result;
+    return distance >= RS_TOLERANCE;
 }
 /**
  * Return true if distance between two points is not meaningful (close to zero
@@ -332,8 +331,7 @@ bool LC_LineMath::isMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2)
  */
 bool LC_LineMath::isNotMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2){
     double distance = v1.distanceTo(v2);
-    bool result = distance < RS_TOLERANCE;
-    return result;
+    return distance < RS_TOLERANCE;
 }
 
 /**

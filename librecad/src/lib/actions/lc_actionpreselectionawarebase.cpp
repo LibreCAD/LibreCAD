@@ -31,9 +31,10 @@
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
-    const QList<RS2::EntityType> &entityTypeList, const bool countSelectionDeep)
-    :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
-    countDeep(countSelectionDeep){}
+    const QList<RS2::EntityType> &entityTypeList, bool countSelectionDeep, RS2::ActionType actionType)
+    :RS_ActionSelectBase(name, container, graphicView, entityTypeList, actionType),
+    countDeep(countSelectionDeep)
+{}
 
 void LC_ActionPreSelectionAwareBase::doTrigger() {
     bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);

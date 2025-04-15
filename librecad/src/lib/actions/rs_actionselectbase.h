@@ -38,7 +38,8 @@ public:
         const char *name,
         RS_EntityContainer &container,
         RS_GraphicView &graphicView,
-        QList<RS2::EntityType> entityTypeList = {});
+        QList<RS2::EntityType> entityTypeList = {},
+        RS2::ActionType actionType = RS2::ActionNone);
 
     void keyReleaseEvent(QKeyEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;

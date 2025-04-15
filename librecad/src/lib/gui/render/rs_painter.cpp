@@ -36,6 +36,7 @@
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_information.h"
+#include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
 #include "rs_painter.h"

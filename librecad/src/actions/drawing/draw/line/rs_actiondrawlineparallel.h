@@ -48,7 +48,8 @@ public:
     void setDistance(double d);
     int getNumber() const;
     void setNumber(int n);
-protected:
+
+private:
     // fixme - why no possibility to set distance via command line?
     enum Status {
         SetEntity,    /**< Choose original entity. */

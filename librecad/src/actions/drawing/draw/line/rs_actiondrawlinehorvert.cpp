@@ -47,7 +47,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("Draw horizontal/vertical lines",
-                               container, graphicView), pPoints(std::make_unique<Points>()){
+                               container, graphicView, RS2::ActionDrawLineHorVert), pPoints(std::make_unique<Points>()){
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
 }
@@ -66,15 +66,16 @@ void RS_ActionDrawLineHorVert::init(int status){
 }
 
 void RS_ActionDrawLineHorVert::doTrigger() {
-    auto *line = new RS_Line(container, pPoints->data);
+    auto line = std::make_unique<RS_Line>(container, pPoints->data);
 
-    setPenAndLayerToActive(line);
+    setPenAndLayerToActive(line.get());
 
     moveRelativeZero(line->getMiddlePoint());
 
-    undoCycleAdd(line);
+    undoCycleAdd(line.get());
 
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
+    line.release();
 }
 
 void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {

@@ -835,13 +835,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 // Hold ctrl to zoom. 1 % per pixel
                 double v = (invertZoomDirection) ? (numPixels.y() / zoomWheelDivisor) : (-numPixels.y() / zoomWheelDivisor);
                 RS2::ZoomDirection direction;
-                double factor;
 
                 if (v < 0) {
-                    direction = RS2::Out; factor = 1-v;
+                    direction = RS2::Out;
                 } else {
-                    direction = RS2::In;  factor = 1+v;
+                    direction = RS2::In;
                 }
+                double factor = 1. + std::abs(v);
                 // todo - sand - ucs - replace by direct zoom call??
                 setCurrentAction(std::make_shared<RS_ActionZoomIn>(*getContainer(), *this, direction, RS2::Both, &mouse, factor));
             }

@@ -29,12 +29,12 @@
 
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
 
-#include "qc_applicationwindow.h"
 
 #include <QByteArray>
 #include <QDockWidget>
 #include <QFileDialog>
 #include <QImageWriter>
+#include <QInputDialog>
 #include <QMdiArea>
 #include <QMenuBar>
 #include <QMessageBox>
@@ -48,42 +48,30 @@
 #include <QtSvg>
 
 #include <boost/version.hpp>
-#include <QInputDialog>
 
 #include "comboboxoption.h"
 #include "doc_plugin_interface.h"
-#include "main.h"
-#include "textfileviewer.h"
-#include "twostackedlabels.h"
-#include "widgetcreator.h"
-
-#include "rs_actionlibraryinsert.h"
-#include "rs_actionprintpreview.h"
-#include "rs_commands.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_document.h"
-#include "rs_painter.h"
-#include "rs_pen.h"
-#include "rs_settings.h"
-#include "rs_system.h"
-#include "rs_selection.h"
-#include "rs_units.h"
-
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_centralwidget.h"
+#include "lc_dlgabout.h"
+#include "lc_dlgnewversionavailable.h"
+#include "lc_inputtextdialog.h"
+#include "lc_layertreewidget.h"
+#include "lc_mdiapplicationwindow.h"
+#include "lc_menufactory.h"
 #include "lc_penwizard.h"
-#include "qg_librarywidget.h"
 #include "lc_printing.h"
+#include "lc_printviewportrenderer.h"
+#include "lc_releasechecker.h"
+#include "lc_undosection.h"
 #include "lc_widgetfactory.h"
 #include "lc_widgetoptionsdialog.h"
-#include "lc_undosection.h"
-
+#include "main.h"
+#include "qc_applicationwindow.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qc_plugininterface.h"
-
 #include "qg_actionhandler.h"
 #include "qg_activelayername.h"
 #include "qg_blockwidget.h"
@@ -94,19 +82,27 @@
 #include "qg_filedialog.h"
 #include "qg_graphicview.h"
 #include "qg_layerwidget.h"
-#include "lc_layertreewidget.h"
+#include "qg_librarywidget.h"
+#include "qg_mousewidget.h"
 #include "qg_pentoolbar.h"
+#include "qg_recentfiles.h"
 #include "qg_selectionwidget.h"
 #include "qg_snaptoolbar.h"
-#include "qg_mousewidget.h"
-#include "qg_recentfiles.h"
-#include "lc_mdiapplicationwindow.h"
-#include "lc_releasechecker.h"
-#include "lc_dlgnewversionavailable.h"
-#include "lc_dlgabout.h"
-#include "lc_inputtextdialog.h"
-#include "lc_menufactory.h"
-#include "lc_printviewportrenderer.h"
+#include "rs_actionlibraryinsert.h"
+#include "rs_actionprintpreview.h"
+#include "rs_commands.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_document.h"
+#include "rs_painter.h"
+#include "rs_pen.h"
+#include "rs_selection.h"
+#include "rs_settings.h"
+#include "rs_system.h"
+#include "rs_units.h"
+#include "textfileviewer.h"
+#include "twostackedlabels.h"
+#include "widgetcreator.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/images/librecad.png"
@@ -201,8 +197,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
 
-    LC_GROUP("Widgets");
     {
+        LC_GROUP_GUARD("Widgets");
         bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
         int icon_size = custom_size ? LC_GET_INT("ToolbarIconSize", 24) : 24;
 
@@ -223,17 +219,22 @@ QC_ApplicationWindow::QC_ApplicationWindow():
         widget_factory.createCategoriesToolbar();
         widget_factory.createStandardToolbars(actionHandler);
     }
-    LC_GROUP_END();
 
     settings.beginGroup("CustomToolbars");
-    foreach (auto key, settings.childKeys())
+    for(const QString& key: settings.childKeys())
     {
-        auto toolbar = new QToolBar(key, this);
-        toolbar->setObjectName(key);
-        foreach (auto actionName, settings.value(key).toStringList()){
-            toolbar->addAction(getAction(actionName));
+        std::vector<QAction*> actions;
+        for(const QString& actionName: settings.value(key).toStringList()){
+            QAction* action = getAction(actionName);
+            if (action != nullptr)
+                actions.push_back(getAction(actionName));
         }
-        addToolBar(toolbar);
+        if (!actions.empty()) {
+            auto* toolbar = new QToolBar(key, this);
+            toolbar->setObjectName(key);
+            toolbar->addActions({actions.cbegin(), actions.cend()});
+            addToolBar(toolbar);
+        }
     }
     settings.endGroup();
 

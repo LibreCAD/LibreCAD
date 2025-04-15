@@ -57,7 +57,7 @@ QG_LineTypeBox::QG_LineTypeBox(bool showByLayer, bool showUnchanged,
 /**
  * Destructor
  */
-QG_LineTypeBox::~QG_LineTypeBox() {}
+QG_LineTypeBox::~QG_LineTypeBox() = default;
 
 
 /**
@@ -67,6 +67,7 @@ QG_LineTypeBox::~QG_LineTypeBox() {}
  * @param showByLayer true: Show attribute ByLayer, ByBlock.
  */
 void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) {
+    LC_LOG<<__func__<<"(): QG_LineTypeBox, begin";
     this->showByLayer = showByLayer;
     this->showUnchanged = showUnchanged;
 
@@ -112,6 +113,7 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) 
 
     setCurrentIndex(0);
     slotLineTypeChanged(currentIndex());
+    LC_LOG<<__func__<<"(): QG_LineTypeBox, done";
 }
 
 /**
@@ -236,6 +238,7 @@ void QG_LineTypeBox::slotLineTypeChanged(int index) {
     }
 
 //    RS_DEBUG->print(RS_Debug::D_ERROR, "Current linetype is (%d): %d\n", index, currentLineType);
+    RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d: done\n", index);
 
     emit lineTypeChanged(currentLineType);
 }

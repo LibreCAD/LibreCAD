@@ -30,12 +30,14 @@ class LC_ActionPreSelectionAwareBase:public RS_ActionSelectBase{
 public:
     LC_ActionPreSelectionAwareBase(
         const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
-        const QList<RS2::EntityType> &entityTypeList = {}, bool countSelectionDeep = false);
+        const QList<RS2::EntityType> &entityTypeList = {}, bool countSelectionDeep = false,
+        RS2::ActionType actionType = RS2::ActionNone);
 
     ~LC_ActionPreSelectionAwareBase() override;
     void mousePressEvent(QMouseEvent*) override;
     void init(int status) override;
     void drawSnapper() override;
+
 protected:
     bool selectionComplete = false;
     bool countDeep = false;
