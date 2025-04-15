@@ -65,6 +65,18 @@ struct RS_Entity::Impl {
     //! pen (attributes) for this entity
     RS_Pen pen{};
     std::map<QString, QString> varList;
+
+    Impl() = default;
+
+    Impl(const Impl& other):
+        pen{other.pen},
+        varList{other.varList} {
+    }
+
+    void fromOther(Impl* other) {
+        pen = other->pen;
+        varList = other->varList;
+    }
 };
 
 /**
@@ -75,38 +87,35 @@ struct RS_Entity::Impl {
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
     : parent{parent}
-    , m_pImpl{std::make_unique<Impl>()}
-{
+    , m_pImpl{std::make_unique<Impl>()}{
     init();
 }
 
 RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
-{
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
 }
 
-RS_Entity& RS_Entity::operator = (const RS_Entity& other)
-{
+RS_Entity& RS_Entity::operator = (const RS_Entity& other){
     parent = other.parent;
-    *m_pImpl = *other.m_pImpl;
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
     return *this;
 }
 
 RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
-{
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
 }
 
-RS_Entity& RS_Entity::operator = (RS_Entity&& other)
-{
+RS_Entity& RS_Entity::operator = (RS_Entity&& other){
     parent = other.parent;
-    *m_pImpl = *other.m_pImpl;
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
     return *this;
 }
 
