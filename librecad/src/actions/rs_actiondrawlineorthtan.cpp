@@ -20,20 +20,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include<QAction>
+#include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlineorthtan.h"
 
+#include "rs_actiondrawlineorthtan.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_creation.h"
-#include "rs_selection.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_selection.h"
 
 namespace{
-auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
+auto g_circleList=EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
 }
 
 /**
@@ -99,7 +99,7 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent* e) {
 		return;
 	case SetCircle:{
 
-		RS_Entity* en = catchEntity(e, circleList, RS2::ResolveAll);
+        RS_Entity* en = catchEntity(e, g_circleList, RS2::ResolveAll);
 		if(!en) return;
 		deletePreview();
 		if(circle)
