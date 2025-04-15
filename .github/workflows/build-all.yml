@@ -249,11 +249,8 @@ jobs:
 
       - name: listFile
         run: |
-          cd generated
-          dir *.*
-          dir Release\*.*
-          dir x64\*.*
-        shell: cmd
+          find generated
+        shell: bash
 
       - name: List files
         run: |
