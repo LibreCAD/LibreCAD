@@ -46,7 +46,7 @@ public:
     explicit LC_UCSListWidget(const QString& title, QWidget* parent);
     virtual ~LC_UCSListWidget();
     void setUCSList(LC_UCSList* viewsList);
-    void setGraphicView(RS_GraphicView* gv);
+    void setGraphicView(RS_GraphicView* gv) override;
     void reload();
     void fillUCSList(QList<LC_UCS *> &list);
     QIcon getUCSTypeIcon(LC_UCS *view);

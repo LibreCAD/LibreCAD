@@ -56,7 +56,7 @@ public:
     ~QG_ActionHandler() override = default;
     RS_ActionInterface *getCurrentAction() const;
     RS_ActionInterface *setCurrentAction(RS2::ActionType id);
-    /**
+
     * Kills all running selection actions. Called when a selection action
     * is launched to reduce confusion.
    */

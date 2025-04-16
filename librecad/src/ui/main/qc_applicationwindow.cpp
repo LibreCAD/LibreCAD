@@ -1760,12 +1760,12 @@ void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent *event) {
     {
         if (isActiveWindow())
         {
-            if (current_subwindow)
-                mdiAreaCAD->setActiveSubWindow(current_subwindow);
+            if (m_currentSubWindow)
+                m_mdiAreaCAD->setActiveSubWindow(m_currentSubWindow);
         }
         else
         {
-            current_subwindow = mdiAreaCAD->currentSubWindow();
+            m_currentSubWindow = m_mdiAreaCAD->currentSubWindow();
         }
     }
 #endif
