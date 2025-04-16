@@ -90,7 +90,7 @@ protected slots:
     void onCADTabBarIndexChanged(int index) const;
 protected:
     /** MdiArea for MDI */
-cod    QMdiArea* m_mdiAreaCAD {nullptr};
+    QMdiArea* m_mdiAreaCAD {nullptr};
     QMdiSubWindow* m_activeMdiSubWindow {nullptr};
     QMdiSubWindow* m_currentSubWindow {nullptr};
     QList<QC_MDIWindow*> m_windowList;
