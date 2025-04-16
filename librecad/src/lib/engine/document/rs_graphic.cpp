@@ -715,10 +715,13 @@ int RS_Graphic::clean() {
     int how_many = 0;
 
     for(RS_Entity *e: std::as_const(entities)) {
-        if (e == nullptr || !validRange(e->getMin(), e->getMax())) {
-            // fixme - sand - files restore, the issue with
-            // removeEntity(e);
-            how_many += 1;
+        if (e != nullptr) {
+            e->calculateBorders();
+            if (!validRange(e->getMin(), e->getMax())) {
+                // fixme - sand - files restore, the issue with
+                // removeEntity(e);
+                how_many += 1;
+            }
         }
     }
     return how_many;
