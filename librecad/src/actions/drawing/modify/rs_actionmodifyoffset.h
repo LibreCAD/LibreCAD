@@ -62,8 +62,8 @@ protected:
     std::unique_ptr<RS_OffsetData> data;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;

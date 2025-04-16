@@ -28,6 +28,7 @@
 #define RS_ACTIONEDITCOPY_H
 
 #include "qg_actionhandler.h"
+#include "lc_actionpreselectionawarebase.h"
 #include "rs_previewactioninterface.h"
 
 // fixme - add disabling of paste actions if clipboard is empty!
@@ -37,20 +38,13 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionEditCopyPaste :public RS_PreviewActionInterface {
+class RS_ActionEditCopyPaste :public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
-    enum ActionMode{
-        CUT,
-        COPY,
-        CUT_QUICK,
-        COPY_QUICK,
-        PASTE
-    };
-
-    RS_ActionEditCopyPaste(ActionMode mode,LC_ActionContext *actionContext);
+    RS_ActionEditCopyPaste(LC_ActionContext *actionContext, RS2::ActionType actionType);
     ~RS_ActionEditCopyPaste() override;
     void init(int status) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit);
 protected:
     /**
   * Action States.
@@ -59,17 +53,16 @@ protected:
         SetReferencePoint    /**< Setting the reference point. */
     };
 
-    /** Copy (true) or cut (false) */
-    ActionMode mode;
     bool invokedWithControl = false;
     std::unique_ptr<RS_Vector> referencePoint;
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void doTrigger() override;
-
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void doTrigger(bool keepSelected) override;
+    // void onSelectionCompleted(bool singleEntity, bool fromInit) override;
+    void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
 };
 #endif

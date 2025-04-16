@@ -42,7 +42,7 @@ public:
     void setKeepOriginals(bool b);
 protected:
     virtual bool isShowModifyActionDialog();
-    void selectionCompleted(bool singleEntity, bool fromInit) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     virtual LC_ModifyOperationFlags* getModifyOperationFlags()=0;
 };
 

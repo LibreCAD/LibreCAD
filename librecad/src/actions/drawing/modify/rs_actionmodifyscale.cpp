@@ -228,7 +228,7 @@ void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
     }
 }
 
-void RS_ActionModifyScale::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyScale::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetReferencePoint: {
@@ -257,7 +257,7 @@ void RS_ActionModifyScale::mouseLeftButtonReleaseEventSelected(int status, LC_Mo
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyScale::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyScale::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint: {

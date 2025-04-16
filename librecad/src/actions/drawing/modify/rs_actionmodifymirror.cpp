@@ -126,7 +126,7 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     }
 }
 
-void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyMirror::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     if (mirrorToExistingLine && status == SetAxisPoint1){
         if (e->isShift){ // flip vertically
             RS_Vector start = RS_Vector();
@@ -167,7 +167,7 @@ void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, LC_M
     }
 }
 
-void RS_ActionModifyMirror::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyMirror::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (status == SetAxisPoint1){
         if (selectionComplete) {

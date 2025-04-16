@@ -40,12 +40,12 @@ public:
     void drawSnapper() override;
 protected:
     RS_Entity* targetEntity = nullptr;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void updateMouseButtonHintsForSelection() override;
-    void selectionCompleted(bool singleEntity, bool fromInit) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     void doTrigger(bool keepSelected) override;
 
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;

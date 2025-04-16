@@ -99,7 +99,7 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
     }
 }
 
-void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyOffset::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
             referencePoint = getRelZeroAwarePoint(e, e->snapPoint);
@@ -149,7 +149,7 @@ bool RS_ActionModifyOffset::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void RS_ActionModifyOffset::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
         if (selectionComplete) {

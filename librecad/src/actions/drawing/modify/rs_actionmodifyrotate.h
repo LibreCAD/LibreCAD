@@ -77,12 +77,12 @@ protected:
 
     void previewRotationCircleAndPoints(const RS_Vector &center,const RS_Vector &refPoint, double angle);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void selectionCompleted(bool singleEntity, bool fromInit) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     void tryTrigger();
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;

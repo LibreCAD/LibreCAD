@@ -200,11 +200,13 @@ void LC_ActionGroupManager::addActionGroup(const QString& name, LC_ActionGroup* 
 
 void LC_ActionGroupManager::completeInit(){
    for (const auto action: m_actionsMap) {
-       auto property = action->property("RS2:actionType");
-       if (property.isValid()) {
-           auto actionType = property.value<RS2::ActionType>();
-           if (isActionTypeSetsTheIcon(actionType)){
-               m_actionsByTypes.insert(actionType, action);
+       if (action != nullptr) { // fixme - sand - check where from null may be inserted to action map
+           auto property = action->property("RS2:actionType");
+           if (property.isValid()) {
+               auto actionType = property.value<RS2::ActionType>();
+               if (isActionTypeSetsTheIcon(actionType)){
+                   m_actionsByTypes.insert(actionType, action);
+               }
            }
        }
    }

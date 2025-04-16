@@ -45,9 +45,9 @@ protected:
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    virtual void selectionCompleted(bool singleEntity, bool fromInit);
-    virtual void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent);
-    virtual void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent);
+    virtual void onSelectionCompleted(bool singleEntity, bool fromInit);
+    virtual void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent);
+    virtual void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent);
     virtual void onMouseMoveEventSelected(int status, LC_MouseEvent *e);
     virtual void updateMouseButtonHintsForSelection() = 0;
     virtual void updateMouseButtonHintsForSelected(int status);

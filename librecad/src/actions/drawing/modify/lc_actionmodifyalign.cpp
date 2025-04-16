@@ -44,7 +44,7 @@ void LC_ActionModifyAlign::init(int status) {
     }
 }
 
-void LC_ActionModifyAlign::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+void LC_ActionModifyAlign::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     updateSelectionWidget();
@@ -187,7 +187,7 @@ void LC_ActionModifyAlign::previewRefLines(bool drawVertical, [[maybe_unused]]do
     }
 }
 
-void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
+void LC_ActionModifyAlign::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     bool mayTrigger = true;
     switch (alignType) {
@@ -232,7 +232,7 @@ void LC_ActionModifyAlign::onCoordinateEvent([[maybe_unused]]int status, bool is
     }
 }
 
-void LC_ActionModifyAlign::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
+void LC_ActionModifyAlign::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     deletePreview();
     if (selectionComplete) {
         selectionComplete = false;

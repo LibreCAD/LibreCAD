@@ -41,7 +41,7 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
 void LC_ActionPreSelectionAwareBase::doTrigger() {
     bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
     doTrigger(keepSelected);
-    updateMouseButtonHints(); // todo - is it really necessary??
+    // updateMouseButtonHints(); // todo - is it really necessary??
 }
 
 LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
@@ -57,7 +57,7 @@ void LC_ActionPreSelectionAwareBase::init(int status) {
         if (!selectionComplete) {
             unsigned int selectedCount = countSelectedEntities();
             if (selectedCount > 0) {
-                selectionCompleted(false, true);
+                onSelectionCompleted(false, true);
             }
         }
     }
@@ -78,7 +78,7 @@ void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKey
     }
     else{
         if (!selectionComplete) {
-            selectionCompleted(false,false);
+            onSelectionCompleted(false,false);
         }
     }
 }
@@ -93,7 +93,7 @@ void LC_ActionPreSelectionAwareBase::mousePressEvent(QMouseEvent * e) {
 
 void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (selectionComplete){
-        mouseLeftButtonReleaseEventSelected(status, e);
+        onMouseLeftButtonReleaseSelected(status, e);
     }
     else{
         if (inBoxSelectionMode){
@@ -126,7 +126,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
             bool selectContour = e->isShift;
             if (selectEntity(entityToSelect, selectContour)) {
                 if (e->isControl) {
-                    selectionCompleted(true, false);
+                    onSelectionCompleted(true, false);
                 }
             }
         }
@@ -138,7 +138,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
 
 void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {
     if (selectionComplete) {
-        mouseRightButtonReleaseEventSelected(status, e);
+        onMouseRightButtonReleaseSelected(status, e);
     }
     else{
         selectedEntities.clear();
@@ -197,7 +197,7 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+void LC_ActionPreSelectionAwareBase::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     if (selectionComplete) {
@@ -234,9 +234,9 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected([[maybe_u
     updateMouseWidget();
 }
 
-void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent) {}
+void LC_ActionPreSelectionAwareBase::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent) {}
 
-void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent) {}
+void LC_ActionPreSelectionAwareBase::onMouseRightButtonReleaseSelected([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent) {}
 
 void LC_ActionPreSelectionAwareBase::onMouseMoveEventSelected([[maybe_unused]] int status, [[maybe_unused]]LC_MouseEvent *event) {}
 

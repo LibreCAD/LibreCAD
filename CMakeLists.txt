@@ -748,8 +748,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/polyline/rs_actionpolylinetrim.h
 		librecad/src/actions/print_preview/rs_actionprintpreview.cpp
 		librecad/src/actions/print_preview/rs_actionprintpreview.h
-		librecad/src/actions/drawing/selection/rs_actionselect.cpp
-		librecad/src/actions/drawing/selection/rs_actionselect.h
+#        librecad/src/actions/not_used/rs_actionselect.cpp
+#        librecad/src/actions/not_used/rs_actionselect.h
 		librecad/src/actions/drawing/selection/rs_actionselectall.cpp
 		librecad/src/actions/drawing/selection/rs_actionselectall.h
         librecad/src/lib/actions/rs_actionselectbase.cpp

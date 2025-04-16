@@ -117,7 +117,7 @@ void LC_ActionModifyAlignRef::prepareAlignRefData(const RS_Vector &snap) {
     pPoints.data.scaleFactor = scaleFactor;
 }
 
-void LC_ActionModifyAlignRef::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void LC_ActionModifyAlignRef::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     switch (status){
         case SetRefPoint1:{
@@ -141,7 +141,7 @@ void LC_ActionModifyAlignRef::mouseLeftButtonReleaseEventSelected(int status, LC
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionModifyAlignRef::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
+void LC_ActionModifyAlignRef::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     if (status == SetRefPoint1){
         if (selectionComplete){
             selectionComplete = false;

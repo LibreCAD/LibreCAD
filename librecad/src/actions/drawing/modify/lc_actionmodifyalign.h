@@ -58,14 +58,14 @@ protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
     RS_Vector createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly);
     RS_Vector getReferencePoint(const RS_Vector &min, const RS_Vector &max);
-    void selectionCompleted(bool singleEntity, bool fromInit) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger(bool selected) override;
     void previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef);

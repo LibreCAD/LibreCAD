@@ -26,7 +26,6 @@
 
 #include "rs_actioneditcopy.h"
 #include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_modification.h"
@@ -39,34 +38,51 @@
  *
  * @param undo true for undo and false for redo.
  */
-// fixme - sand - no action type set!!!
-RS_ActionEditCopyPaste::RS_ActionEditCopyPaste(ActionMode actionMode, LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Edit Copy", actionContext, RS2::ActionEditCopy)
-    , mode{actionMode}
+
+RS_ActionEditCopyPaste::RS_ActionEditCopyPaste(LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :LC_ActionPreSelectionAwareBase("Edit Copy", actionContext, actionType)
     , referencePoint{new RS_Vector{}}{
 }
 
 RS_ActionEditCopyPaste::~RS_ActionEditCopyPaste() = default;
 
 void RS_ActionEditCopyPaste::init(int status) {
-    RS_PreviewActionInterface::init(status);
+    LC_ActionPreSelectionAwareBase::init(status);
     *referencePoint = RS_Vector(false);
-    if (mode == CUT_QUICK || mode == COPY_QUICK) {
-        trigger();
+    if (m_actionType  == RS2::ActionEditPaste) {
+        selectionComplete  = true;
+    }
+    if (selectionComplete) {
+        updateMouseButtonHints();
     }
 }
 
-void RS_ActionEditCopyPaste::doTrigger() {
-    switch (mode){
-        case CUT:
-        case CUT_QUICK:
-        case COPY:
-        case COPY_QUICK:{
+void RS_ActionEditCopyPaste::onSelectionCompleted([[maybe_unused]] bool singleEntity, bool fromInit) {
+    switch (m_actionType) {
+        case RS2::ActionEditCutQuick:
+        case RS2::ActionEditCopyQuick: {
+            LC_ActionPreSelectionAwareBase::onSelectionCompleted(singleEntity, fromInit);
+            break;
+        }
+        default: {
+            setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
+            updateMouseButtonHints();
+            updateSelectionWidget();
+        }
+    }
+}
+
+void RS_ActionEditCopyPaste::doTrigger(bool keepSelected) {
+    switch (m_actionType){
+        case  RS2::ActionEditCut:
+        case  RS2::ActionEditCutQuick:
+        case  RS2::ActionEditCopy:
+        case  RS2::ActionEditCopyQuick:{
             RS_Modification m(*m_container, m_viewport);
-            m.copy(*referencePoint, mode == CUT || mode == CUT_QUICK);
+            m.copy(*referencePoint, m_actionType ==  RS2::ActionEditCut || m_actionType == RS2::ActionEditCutQuick);
 
             if (invokedWithControl){
-                mode = PASTE;
+                m_actionType = RS2::ActionEditPaste;
                 invokedWithControl = false;
             }
             else{
@@ -76,7 +92,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
             }
             break;
         }
-        case PASTE: {
+        case RS2::ActionEditPaste: {
             RS_Modification m(*m_container, m_viewport);
             m.paste(RS_PasteData(*referencePoint, 1.0, 0.0, false, ""));
 
@@ -85,18 +101,19 @@ void RS_ActionEditCopyPaste::doTrigger() {
             }
             break;
         }
+        default:
+            break;
     }
 }
 
-void RS_ActionEditCopyPaste::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
     if (status==SetReferencePoint) {
-        switch (mode) {
-            case CUT:
-            case COPY:{
-//                (void) e->snapPoint;
+         switch (m_actionType) {
+            case RS2::ActionEditCut:
+            case RS2::ActionEditCopy:{
                 break;
             }
-            case PASTE:{
+            case RS2::ActionEditPaste:{
                 *referencePoint = e->snapPoint;
                 m_preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), m_viewport);
                 m_preview->move(*referencePoint);
@@ -118,12 +135,12 @@ void RS_ActionEditCopyPaste::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionEditCopyPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 
@@ -132,29 +149,53 @@ void RS_ActionEditCopyPaste::onCoordinateEvent( [[maybe_unused]]int status, [[ma
     trigger();
 }
 
-void RS_ActionEditCopyPaste::updateMouseButtonHints() {
-    switch (getStatus()) {
-    case SetReferencePoint:
-        switch (mode) {
-            case CUT:
-            case COPY: {
-                updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_CTRL(tr("Paste Immediately")));
-                break;
+void RS_ActionEditCopyPaste::updateMouseButtonHintsForSelection() {
+   switch (m_actionType) {
+       case RS2::ActionEditCut: {
+           updateMouseWidgetTRCancel(tr("Select to cut (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Set point after selection")));
+           break;
+       }
+       case RS2::ActionEditCutQuick: {
+           updateMouseWidgetTRCancel(tr("Select to cut (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Cut right after selection")));
+           break;
+       }
+       case RS2::ActionEditCopy: {
+           updateMouseWidgetTRCancel(tr("Select to copy (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Set point after selection")));
+           break;
+       }
+       case RS2::ActionEditCopyQuick: {
+           updateMouseWidgetTRCancel(tr("Select to cut (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Copy right after selection")));
+           break;
+       }
+       default:
+           break;
+   }
+}
+
+void RS_ActionEditCopyPaste::updateMouseButtonHintsForSelected(int status) {
+    switch (status) {
+        case SetReferencePoint: {
+            switch (m_actionType) {
+                case RS2::ActionEditCut:
+                case RS2::ActionEditCopy: {
+                    updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_CTRL(tr("Paste Immediately")));
+                    break;
+                }
+                case RS2::ActionEditPaste: {
+                    updateMouseWidgetTRCancel(tr("Set paste reference point"), MOD_CTRL(tr("Paste Multiple")));
+                    break;
+                }
+                default:
+                    break;
             }
-            case PASTE:{
-                updateMouseWidgetTRCancel(tr("Set paste reference point"), MOD_CTRL(tr("Paste Multiple")));
-                break;
-            }
-            default:
-                break;
+            break;
+        default:
+            updateMouseWidget();
+            break;
         }
-        break;
-    default:
-        updateMouseWidget();
-        break;
     }
 }
 
-RS2::CursorType RS_ActionEditCopyPaste::doGetMouseCursor([[maybe_unused]]int status){
+RS2::CursorType RS_ActionEditCopyPaste::doGetMouseCursorSelected([[maybe_unused]]int status){
     return RS2::CadCursor;
 }

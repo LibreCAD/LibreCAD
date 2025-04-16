@@ -121,7 +121,7 @@ void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e)
     }
 }
 
-void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyMove::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snapped = e->snapPoint;
     if (status == SetTargetPoint){
         snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
@@ -130,7 +130,7 @@ void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, LC_Mou
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyMove::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
         if (selectionComplete) {

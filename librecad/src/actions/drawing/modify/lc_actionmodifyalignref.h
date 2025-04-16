@@ -53,8 +53,8 @@ protected:
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void updateMouseButtonHintsForSelection() override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHintsForSelected(int status) override;
     bool doProcessCommand(int status, const QString &command) override;

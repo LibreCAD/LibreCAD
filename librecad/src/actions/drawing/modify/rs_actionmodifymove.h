@@ -53,8 +53,8 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

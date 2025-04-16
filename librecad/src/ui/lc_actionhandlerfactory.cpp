@@ -181,7 +181,7 @@
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
 #include "rs_actionpolylinetrim.h"
-#include "rs_actionselect.h"
+#include "../actions/not_used/rs_actionselect.h"
 #include "rs_actionselectall.h"
 #include "rs_actionselectcontour.h"
 #include "rs_actionselectintersected.h"
@@ -246,43 +246,19 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
             return std::make_shared<RS_ActionEditUndo>(false, ctx);
         }
         case RS2::ActionEditCut: {
-            if (hasNoSelection(ctx)) {
-                return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionEditCutNoSelect);
-            }
-            [[fallthrough]];
-        }
-        case RS2::ActionEditCutNoSelect: {
-            return std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::CUT, ctx);
+            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCut);
         }
         case RS2::ActionEditCutQuick: {
-            if (hasNoSelection(ctx)) {
-                return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionEditCutQuickNoSelect);
-            }
-            [[fallthrough]];
-        }
-        case RS2::ActionEditCutQuickNoSelect: {
-            return std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::CUT_QUICK, ctx);
+            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCutQuick);
         }
         case RS2::ActionEditCopy: {
-            if(hasNoSelection(ctx)){
-                return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionEditCopyNoSelect);
-            }
-            [[fallthrough]];
-        }
-        case RS2::ActionEditCopyNoSelect: {
-            return std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::COPY, ctx);
+            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCopy);
         }
         case RS2::ActionEditCopyQuick: {
-            if(hasNoSelection(ctx)){
-                return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionEditCopyQuickNoSelect);
-            }
-            [[fallthrough]];
-        }
-        case RS2::ActionEditCopyQuickNoSelect: {
-            return std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::COPY_QUICK, ctx);
+            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCopyQuick);
         }
         case RS2::ActionEditPaste: {
-            return std::make_shared<RS_ActionEditCopyPaste>(RS_ActionEditCopyPaste::PASTE, ctx);
+            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditPaste);
         }
         case RS2::ActionEditPasteTransform: {
             return std::make_shared<LC_ActionEditPasteTransform>(ctx);
@@ -705,7 +681,8 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
             return std::make_shared<RS_ActionModifyDelete>(ctx);
         }
         case RS2::ActionModifyDeleteQuick: {
-            return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionModifyDeleteQuick);
+            // return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionModifyDeleteQuick);
+            return std::make_shared<RS_ActionModifyDelete>(ctx);
         }
         case RS2::ActionModifyDeleteFree: {
             return std::make_shared<RS_ActionModifyDeleteFree>(ctx);
@@ -907,12 +884,6 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
             return std::make_shared<RS_ActionBlocksToggleView>(ctx);
         }
         case RS2::ActionBlocksCreate: {
-            if(hasNoSelection(ctx)){
-                return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionBlocksCreateNoSelect);
-            }
-            [[fallthrough]];
-        }
-        case RS2::ActionBlocksCreateNoSelect: {
             return std::make_shared<RS_ActionBlocksCreate>(ctx);
         }
         case RS2::ActionBlocksExplode: {

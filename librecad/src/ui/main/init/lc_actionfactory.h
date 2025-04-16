@@ -87,6 +87,10 @@ private:
     void createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
+
+    void createEditActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
@@ -98,8 +102,7 @@ private:
     void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
-    void createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
+
 };
 
 #endif

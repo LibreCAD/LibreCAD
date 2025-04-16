@@ -39,7 +39,7 @@ void RS_ActionOrder::drawSnapper() {
     // delete snapper
 }
 
-void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+void RS_ActionOrder::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     updateSelectionWidget();
@@ -105,7 +105,7 @@ void RS_ActionOrder::onMouseMoveEventSelected([[maybe_unused]]int status, LC_Mou
     }
 }
 
-void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
+void RS_ActionOrder::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     targetEntity = catchEntityByEvent(e);
     if (targetEntity == nullptr) {
         commandMessage(tr("No Entity found."));
@@ -114,7 +114,7 @@ void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int sta
     }
 }
 
-void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionOrder::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
      deletePreview();
      if (selectionComplete) {
          selectionComplete = false;

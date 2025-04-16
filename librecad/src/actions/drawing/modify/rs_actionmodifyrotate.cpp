@@ -53,8 +53,8 @@ void RS_ActionModifyRotate::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
-void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit) {
-    LC_ActionModifyBase::selectionCompleted(singleEntity, fromInit);
+void RS_ActionModifyRotate::onSelectionCompleted(bool singleEntity, bool fromInit) {
+    LC_ActionModifyBase::onSelectionCompleted(singleEntity, fromInit);
     if (selectRefPointFirst){
         setStatus(SetReferencePoint);
     }
@@ -424,7 +424,7 @@ void RS_ActionModifyRotate::tryTrigger(){
     }
 }
 
-void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyRotate::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetReferencePoint:{
@@ -468,7 +468,7 @@ void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, LC_M
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyRotate::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status)    {
         case SetReferencePoint: {

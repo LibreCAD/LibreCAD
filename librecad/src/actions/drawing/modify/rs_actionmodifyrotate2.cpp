@@ -95,7 +95,7 @@ void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent 
     }
 }
 
-void RS_ActionModifyRotate2::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyRotate2::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     switch (status){
         case SetReferencePoint2: {
@@ -106,7 +106,7 @@ void RS_ActionModifyRotate2::mouseLeftButtonReleaseEventSelected(int status, LC_
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionModifyRotate2::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyRotate2::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint2: {

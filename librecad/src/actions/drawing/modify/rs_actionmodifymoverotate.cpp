@@ -143,7 +143,7 @@ void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyMoveRotate::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
             fireCoordinateEventForSnap(e);
@@ -168,7 +168,7 @@ void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, 
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void RS_ActionModifyMoveRotate::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint: {

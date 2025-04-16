@@ -70,8 +70,8 @@ protected:
     void showPreview(RS_ScaleData &previewData);
     void determineScaleFactor(RS_ScaleData& data, const RS_Vector &reference, const RS_Vector &source, const RS_Vector &target);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;

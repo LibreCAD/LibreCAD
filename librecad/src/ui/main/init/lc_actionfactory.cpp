@@ -126,6 +126,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createRestrictActions(a_map, agm->getGroupByName("restriction"));
     createRelZeroActions(a_map, agm->getGroupByName("other"));
     createUCSActions(a_map, agm->getGroupByName("ucs"));
+    createEditActions(a_map, agm->getGroupByName("edit"));
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -639,14 +640,19 @@ void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &ma
     createActionHandlerActions(map, group, {
         {"EditUndo",           RS2::ActionEditUndo,           tr("&Undo"),              ":/icons/undo.lci",            "edit-undo"},
         {"EditRedo",           RS2::ActionEditRedo,           tr("&Redo"),              ":/icons/redo.lci",            "edit-redo"},
+        {"ModifyDeleteQuick",  RS2::ActionModifyDeleteQuick,       tr("&Delete Selected"),   ":/icons/delete.lci"},
+        {"EditKillAllActions", RS2::ActionEditKillAllActions, tr("&Selection Pointer"), ":/icons/cursor.lci",          "go-previous-view"}
+    });
+}
+
+void LC_ActionFactory::createEditActions(QMap<QString, QAction*>& map, QActionGroup* group) const {
+    createActionHandlerActions(map, group, {
         {"EditCut",            RS2::ActionEditCut,            tr("Cu&t"),               ":/icons/cut.lci",             "edit-cut"},
         {"EditCutQuick",       RS2::ActionEditCutQuick,       tr("Cut Quic&k"),         ":/icons/cut.lci",             "edit-cut"},
         {"EditCopy",           RS2::ActionEditCopy,           tr("&Copy"),              ":/icons/copy.lci",            "edit-copy"},
         {"EditCopyQuick",      RS2::ActionEditCopyQuick,      tr("Copy &Quick"),        ":/icons/copy.lci",            "edit-copy"},
         {"EditPaste",          RS2::ActionEditPaste,          tr("&Paste"),             ":/icons/paste.lci",           "edit-paste"},
-        {"EditPasteTransform", RS2::ActionEditPasteTransform, tr("Paste &Transform"),   ":/icons/paste_transform.lci", "edit-paste"},
-        {"ModifyDeleteQuick",  RS2::ActionModifyDelete,       tr("&Delete Selected"),   ":/icons/delete.lci"},
-        {"EditKillAllActions", RS2::ActionEditKillAllActions, tr("&Selection Pointer"), ":/icons/cursor.lci",          "go-previous-view"}
+        {"EditPasteTransform", RS2::ActionEditPasteTransform, tr("Paste &Transform"),   ":/icons/paste_transform.lci", "edit-paste"}
     });
 }
 
