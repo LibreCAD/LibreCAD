@@ -31,7 +31,7 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
         if (selectionAsGroup) {
             RS_Vector selectionMin;
             RS_Vector selectionMax;
-            LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
+            LC_Align::collectSelectionBounds(m_selectedEntities, selectionMin, selectionMax);
 
             if (cornerPointsOnly){
                 createCornerPoints(activeLayer, pen, selectionMin-offset, selectionMax+offset);
@@ -45,7 +45,7 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
                 }
             }
         } else {
-            for (auto e: selectedEntities){
+            for (auto e: m_selectedEntities){
                 if (cornerPointsOnly){
                     createCornerPoints(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
                 }
@@ -69,7 +69,7 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
             commandMessage(tr("Note: Bounding box was created for world coordinate system."));
         }
     }
-    selectedEntities.clear();
+    m_selectedEntities.clear();
     finish(false);
 }
 

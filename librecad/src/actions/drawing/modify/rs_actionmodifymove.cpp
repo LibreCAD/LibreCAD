@@ -58,11 +58,11 @@ void RS_ActionModifyMove::doTrigger(bool keepSelected) {
     if (pPoints->createCopy) {
         bool oldKeepOriginals = pPoints->data.keepOriginals;
         pPoints->data.keepOriginals = true;
-        m.move(pPoints->data, selectedEntities, false, keepSelected);
+        m.move(pPoints->data, m_selectedEntities, false, keepSelected);
         pPoints->data.keepOriginals = oldKeepOriginals;
     }
     else {
-        m.move(pPoints->data, selectedEntities, false, keepSelected);
+        m.move(pPoints->data, m_selectedEntities, false, keepSelected);
         finish(false);
         moveRelativeZero(pPoints->targetPoint);
     }
@@ -86,7 +86,7 @@ void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e)
                 pPoints->data.offset = offset;
 
                 RS_Modification m(*m_preview, m_viewport, false);
-                m.move(pPoints->data, selectedEntities, true, false);
+                m.move(pPoints->data, m_selectedEntities, true, false);
 
                 if (e->isShift){
                     previewLine(pPoints->referencePoint, mouse);
@@ -133,8 +133,8 @@ void RS_ActionModifyMove::onMouseLeftButtonReleaseSelected(int status, LC_MouseE
 void RS_ActionModifyMove::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
-        if (selectionComplete) {
-            selectionComplete = false;
+        if (m_selectionComplete) {
+            m_selectionComplete = false;
         }
         else{
             initPrevious(status);
@@ -146,7 +146,7 @@ void RS_ActionModifyMove::onMouseRightButtonReleaseSelected(int status, [[maybe_
 }
 
 void RS_ActionModifyMove::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
-    if (!selectionComplete){
+    if (!m_selectionComplete){
         return;
     }
     switch (status) {

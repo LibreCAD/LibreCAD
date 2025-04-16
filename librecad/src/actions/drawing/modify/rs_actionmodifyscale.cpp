@@ -79,7 +79,7 @@ void RS_ActionModifyScale::doTrigger(bool keepSelected) {
         pPoints->data.factor.y = pPoints->data.factor.x;
     }
     RS_Modification m(*m_container, m_viewport);
-    m.scale(pPoints->data, selectedEntities, false, keepSelected);
+    m.scale(pPoints->data, m_selectedEntities, false, keepSelected);
 }
 
 #define DRAW_TRIANGLES_ON_PREVIEW_NO
@@ -89,7 +89,7 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
     switch (status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
-            RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
+            RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
             RS_Vector selectionCenter = boundingForSelected.getCenter();
             pPoints->sourcePoint = selectionCenter;
             if (!trySnapToRelZeroCoordinateEvent(e)){
@@ -213,7 +213,7 @@ void RS_ActionModifyScale::showPreview(){
 
 void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
     RS_Modification m(*m_preview, m_viewport, false);
-    m.scale(previewData, selectedEntities, true, false);
+    m.scale(previewData, m_selectedEntities, true, false);
 
     if (m_showRefEntitiesOnPreview) {
         int numberOfCopies = previewData.obtainNumberOfCopies();
@@ -233,7 +233,7 @@ void RS_ActionModifyScale::onMouseLeftButtonReleaseSelected(int status, LC_Mouse
     switch (status){
         case SetReferencePoint: {
             if (e->isControl){
-                RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
+                RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
                 snapped = boundingForSelected.getCenter();
             }
             break;
@@ -261,7 +261,7 @@ void RS_ActionModifyScale::onMouseRightButtonReleaseSelected(int status, [[maybe
     deletePreview();
     switch (status) {
         case SetReferencePoint: {
-            selectionComplete = false;
+            m_selectionComplete = false;
             break;
         }
         default: {
@@ -276,7 +276,7 @@ bool RS_ActionModifyScale::doProcessCommand(int status, const QString &c) {
     switch (status){
         case SetReferencePoint: {
             if (checkCommand("center",c)) {
-                RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
+                RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
                 RS_Vector centerPoint = boundingForSelected.getCenter();
                 fireCoordinateEvent(centerPoint);
                 accepted = true;

@@ -49,7 +49,7 @@ RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
 
 void RS_ActionBlocksCreate::onSelectionCompleted(bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
-    if (selectionComplete) {
+    if (m_selectionComplete) {
         updateMouseButtonHints();
         updateSelectionWidget();
     }

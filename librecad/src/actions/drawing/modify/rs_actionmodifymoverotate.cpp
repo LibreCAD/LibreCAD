@@ -53,7 +53,7 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
     RS_Modification m(*m_container, m_viewport);
-	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
+	   m.moveRotate(pPoints->data, m_selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
     finish(false);
 }
@@ -72,7 +72,7 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
                 mouse = getSnapAngleAwarePoint(e, originalRefPoint, mouse, true);
                 pPoints->data.offset = mouse - originalRefPoint;
                 RS_Modification m(*m_preview, m_viewport);
-                m.moveRotate(pPoints->data, selectedEntities, true, false);
+                m.moveRotate(pPoints->data, m_selectedEntities, true, false);
                 if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(originalRefPoint);
                     previewRefSelectablePoint(mouse);
@@ -101,7 +101,7 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
                 double wcsRotationAngle = adjustRelativeAngleSignByBasis(rotationAngle);
                 pPoints->data.angle = wcsRotationAngle;
                 RS_Modification m(*m_preview, m_viewport);
-                m.moveRotate(pPoints->data, selectedEntities, true);
+                m.moveRotate(pPoints->data, m_selectedEntities, true);
                 if (m_showRefEntitiesOnPreview) {
                     previewSnapAngleMark(targetPoint, mouse);
 
@@ -172,8 +172,8 @@ void RS_ActionModifyMoveRotate::onMouseRightButtonReleaseSelected(int status, [[
     deletePreview();
     switch (status) {
         case SetReferencePoint: {
-            if (selectionComplete) {
-                selectionComplete = false;
+            if (m_selectionComplete) {
+                m_selectionComplete = false;
             } else {
                 initPrevious(status);
             }

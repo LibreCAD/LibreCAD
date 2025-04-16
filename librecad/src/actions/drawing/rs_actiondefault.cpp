@@ -554,11 +554,17 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
                     // restore selection box to ucs
                     RS_Vector ucsP1 = toUCS(pPoints->v1);
                     RS_Vector ucsP2 = toUCS(pPoints->v2);
-                    bool cross = (ucsP1.x > ucsP2.x);
+                    bool selectIntersecting = (ucsP1.x > ucsP2.x);
+
+                    bool alterSelectIntersecting = e->isControl;
+                    if (alterSelectIntersecting) {
+                        selectIntersecting = !selectIntersecting;
+                    }
                     bool deselect = e->isShift;
+
                     QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                     msg.append(tr(" entities "));
-                    msg.append(cross? tr("that intersect with box") : tr("that are within box"));
+                    msg.append(selectIntersecting? tr("that intersect with box") : tr("that are within box"));
                     m_infoCursorOverlayData->setZone2(msg);
                     forceUpdateInfoCursor(e);
                 }
@@ -855,16 +861,20 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             // restore selection box to ucs
             RS_Vector ucsP1 = toUCS(pPoints->v1);
             RS_Vector ucsP2 = toUCS(pPoints->v2);
-            bool cross = (ucsP1.x > ucsP2.x);
+            bool selectIntersecting = (ucsP1.x > ucsP2.x);
 
             RS_Selection s(*m_container, m_viewport);
             bool select = !e->isShift;
 
+            bool alterSelectIntersecting = e->isControl;
+            if (alterSelectIntersecting) {
+                selectIntersecting = !selectIntersecting;
+            }
             // expand selection wcs to ensure that selection box in ucs is fully within bounding rect in wcs
             RS_Vector wcsP1, wcsP2;
             m_viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
 
-            s.selectWindow(typeToSelect, wcsP1, wcsP2, select, cross);
+            s.selectWindow(typeToSelect, wcsP1, wcsP2, select, selectIntersecting);
             updateSelectionWidget();
             goToNeutralStatus();
             //}
@@ -949,7 +959,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case SetCorner2: {
-            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_LC(tr("De-Select entities")));
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(tr("Select/Deselect entities"), tr("Select Intersecting")));
             break;
         }
         default: {

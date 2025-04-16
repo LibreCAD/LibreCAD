@@ -55,7 +55,7 @@ RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 void RS_ActionModifyMirror::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
     RS_Modification m(*m_container, m_viewport);
-    m.mirror(pPoints->data, selectedEntities, false, keepSelected);
+    m.mirror(pPoints->data, m_selectedEntities, false, keepSelected);
 }
 
 void RS_ActionModifyMirror::onMouseMoveEventSelected(int status, LC_MouseEvent *e){
@@ -107,7 +107,7 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     tmpData.axisPoint2 = mirrorLinePoint2;
 
     RS_Modification m(*m_preview, m_viewport, false);
-    m.mirror(tmpData, selectedEntities, true, false);
+    m.mirror(tmpData, m_selectedEntities, true, false);
     previewLine(mirrorLinePoint1, mirrorLinePoint2);
 
     if (m_showRefEntitiesOnPreview) {
@@ -170,8 +170,8 @@ void RS_ActionModifyMirror::onMouseLeftButtonReleaseSelected(int status, LC_Mous
 void RS_ActionModifyMirror::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (status == SetAxisPoint1){
-        if (selectionComplete) {
-            selectionComplete = false;
+        if (m_selectionComplete) {
+            m_selectionComplete = false;
         }
         else{
             initPrevious(status);
@@ -183,7 +183,7 @@ void RS_ActionModifyMirror::onMouseRightButtonReleaseSelected(int status, [[mayb
 }
 
 void RS_ActionModifyMirror::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
-    if (!selectionComplete){
+    if (!m_selectionComplete){
         return;
     }
     switch (status) {
@@ -277,7 +277,7 @@ LC_ActionOptionsWidget* RS_ActionModifyMirror::createOptionsWidget(){
 void RS_ActionModifyMirror::obtainFlipLineCoordinates(RS_Vector *start, RS_Vector *end, bool verticalLine) {
     RS_Vector selectionMin;
     RS_Vector selectionMax;
-    LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
+    LC_Align::collectSelectionBounds(m_selectedEntities, selectionMin, selectionMax);
 
     if (verticalLine){
         double x = (selectionMin.x + selectionMax.x) / 2;

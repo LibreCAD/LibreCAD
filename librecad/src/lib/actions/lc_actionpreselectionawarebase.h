@@ -35,12 +35,12 @@ public:
     void init(int status) override;
     void drawSnapper() override;
 protected:
-    bool selectionComplete = false;
-    bool countDeep = false;
-    std::vector<RS_Entity*> selectedEntities;
+    bool m_selectionComplete = false;
+    bool m_countDeep = false;
+    std::vector<RS_Entity*> m_selectedEntities;
 
-    RS_Vector selectionCorner1 = RS_Vector(false);
-    bool inBoxSelectionMode = false;
+    RS_Vector m_selectionCorner1 = RS_Vector(false);
+    bool m_inBoxSelectionMode = false;
 
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

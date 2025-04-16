@@ -37,7 +37,7 @@ RS_ActionBlocksExplode::RS_ActionBlocksExplode(LC_ActionContext *actionContext)
 void RS_ActionBlocksExplode::doTrigger(bool keepSelected) {
     RS_Modification m(*m_container, m_viewport);
     // fixme - add options like "keep originals" and "current attributes"?
-    m.explode(selectedEntities, true, false, keepSelected);
+    m.explode(m_selectedEntities, true, false, keepSelected);
 }
 
 bool RS_ActionBlocksExplode::isEntityAllowedToSelect(RS_Entity *ent) const {

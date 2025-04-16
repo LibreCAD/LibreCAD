@@ -1,3 +1,5 @@
+This is just interim PR, that does not bring some notable new functionality - it is rather focused on internal code cleanup and bugfixing. 
+
 ### Generic refactoring
 
 Some generic refactorings were performed: 
@@ -7,9 +9,11 @@ Some generic refactorings were performed:
 3) the logic of working with drawings in QC_ApplicationWindow was reviewed and refined (events for opening, activation, closing etc.)
 4) several invalid/bad dependencies from model entities to view/ui, static references were removed
 5) connections were modernized to modern reference-based form of signals and slots
-6) not used classes were removed (old CAD Toolbars/widgets) 
-7) bugfixes
-8) code cleanup, fields renaming (WIP)
+6) not used classes were removed (old CAD Toolbars/widgets)
+7) refactoring for actions invocation, separate factory for actions creation 
+8) bugfixes
+9) code cleanup, fields renaming (WIP)
+10) copy&paste and generic entities selection functionality improvements
 
 
 ### Widget Options
@@ -19,7 +23,7 @@ Options dialog was expanded so now it's possible to control specifics of docking
 Inserting block and drawing from library was corrected so now they properly supports rotation angle if UCS is active.
 
 ### Command widget
-Command widget may be activated by focus action even if the widget is not visible
+Command widget may be activated by focus action even if the widget is not visible (it will be shown)
 
 ### Application Preference
 1) added settings for naming of auto-save file (Librecad#2061)
@@ -27,8 +31,14 @@ Command widget may be activated by focus action even if the widget is not visibl
 ### Layers export
 Generic refactoring, more export options in the save dialog, ability to save also UCSs and Named Views as part of export. 
 
+### Other 
+
+Initial support of creation of sharing library for LC_IconEngine in cmake build
+
 ### Fixed Issues
+* LibreCAD#2108
 * LibreCAD#2103
+* LibreCAD#2098
 * LibreCAD#2090
 * LibreCAD#2086 (?)
 * LibreCAD#2082

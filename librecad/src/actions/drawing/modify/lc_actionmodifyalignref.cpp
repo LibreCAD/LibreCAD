@@ -37,7 +37,7 @@ LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(LC_ActionContext *actionContext
 void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
     prepareAlignRefData(pPoints.targetPoint2);
     RS_Modification m(*m_container, m_viewport);
-    m.alignRef(pPoints.data, selectedEntities, false, keepSelected);
+    m.alignRef(pPoints.data, m_selectedEntities, false, keepSelected);
     finish(false);
 }
 
@@ -79,7 +79,7 @@ void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent
             prepareAlignRefData(snap);
 
             RS_Modification m(*m_preview, m_viewport, false);
-            m.alignRef(pPoints.data, selectedEntities, true, true);
+            m.alignRef(pPoints.data, m_selectedEntities, true, true);
 
             if (isInfoCursorForModificationEnabled()) {
                 msg(tr("Align References"))
@@ -143,8 +143,8 @@ void LC_ActionModifyAlignRef::onMouseLeftButtonReleaseSelected(int status, LC_Mo
 
 void LC_ActionModifyAlignRef::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     if (status == SetRefPoint1){
-        if (selectionComplete){
-            selectionComplete = false;
+        if (m_selectionComplete){
+            m_selectionComplete = false;
             updateMouseButtonHints();
         }
         else{

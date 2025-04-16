@@ -66,14 +66,14 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
                 undoableAdd(e);
             }
 
-            for (auto e: selectedEntities) {
+            for (auto e: m_selectedEntities) {
                 undoableDeleteEntity(e);
             }
 
             undoCycleEnd();
 
-            selectedEntities.clear();
-            selectionComplete = false;
+            m_selectedEntities.clear();
+            m_selectionComplete = false;
         }
     }
 }
@@ -234,8 +234,8 @@ void LC_ActionModifyAlign::onCoordinateEvent([[maybe_unused]]int status, bool is
 
 void LC_ActionModifyAlign::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     deletePreview();
-    if (selectionComplete) {
-        selectionComplete = false;
+    if (m_selectionComplete) {
+        m_selectionComplete = false;
     } else {
         initPrevious(status);
     }
@@ -284,23 +284,23 @@ RS_Vector LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &list, 
     RS_Vector targetPoint = getReferencePoint(min, max);
     bool updateAttributes = !previewOnly;
 
-    if (asGroup || selectedEntities.size() == 1) {
+    if (asGroup || m_selectedEntities.size() == 1) {
         RS_Vector selectionMin;
         RS_Vector selectionMax;
 
-        LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
+        LC_Align::collectSelectionBounds(m_selectedEntities, selectionMin, selectionMax);
         RS_Vector selectionRefPoint = getReferencePoint(selectionMin, selectionMax);
         RS_Vector offset = targetPoint - selectionRefPoint;
 
         result = offset;
         result.valid = true;
 
-        for (auto e: selectedEntities) {
+        for (auto e: m_selectedEntities) {
             RS_Entity* clone = LC_Align::createCloneMovedToOffset(e, offset, updateAttributes);
             list << clone;
         }
     } else {
-        for (auto e: selectedEntities) {
+        for (auto e: m_selectedEntities) {
             RS_Entity *clone = LC_Align::createCloneMovedToTarget(e, targetPoint, updateAttributes, hAlign, vAlign);
             list << clone;
         }

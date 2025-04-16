@@ -58,7 +58,7 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-    for(auto e: selectedEntities){
+    for(auto e: m_selectedEntities){
          entList.append(e);
     }
 
@@ -116,8 +116,8 @@ void RS_ActionOrder::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status
 
 void RS_ActionOrder::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
      deletePreview();
-     if (selectionComplete) {
-         selectionComplete = false;
+     if (m_selectionComplete) {
+         m_selectionComplete = false;
      }
      else{
          initPrevious(status);

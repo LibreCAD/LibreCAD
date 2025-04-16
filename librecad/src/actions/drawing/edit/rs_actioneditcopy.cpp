@@ -50,9 +50,9 @@ void RS_ActionEditCopyPaste::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
     *referencePoint = RS_Vector(false);
     if (m_actionType  == RS2::ActionEditPaste) {
-        selectionComplete  = true;
+        m_selectionComplete  = true;
     }
-    if (selectionComplete) {
+    if (m_selectionComplete) {
         updateMouseButtonHints();
     }
 }

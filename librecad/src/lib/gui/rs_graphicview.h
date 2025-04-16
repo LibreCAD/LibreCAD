@@ -111,8 +111,8 @@ public:
     void setDefaultAction(RS_ActionInterface *action) const;
     RS_ActionInterface *getDefaultAction() const;
     void hideOptions() const;
+    // fixme - sand - complete changes in plugin and remove this function from the public interface!!!
     bool setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
-    // bool setCurrentAction(RS2 action);
     RS_ActionInterface *getCurrentAction() const;
     QString getCurrentActionName() const;
     QIcon getCurrentActionIcon() const;
