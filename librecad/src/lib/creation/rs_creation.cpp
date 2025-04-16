@@ -51,7 +51,7 @@
 #include "rs_modification.h"
 #include "rs_units.h"
 #include "lc_graphicviewport.h"
-
+// fixme - sand - refactor - review this class completely
 namespace {
 
 /**
@@ -99,8 +99,8 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
   ,m_graphic{container?container->getGraphic():nullptr}
   ,m_document{container?container->getDocument():nullptr}
   ,m_viewport{viewport}
-  ,handleUndo(handleUndo)
-{
+  ,handleUndo(handleUndo){
+    // assert(viewport != nullptr);
 }
 
 /**
@@ -164,17 +164,17 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
 
     switch (e->rtti()) {
         case RS2::EntityLine:
-            return createParallelLine(coord, distance, number, (RS_Line*)e, symmetric);
+            return createParallelLine(coord, distance, number, static_cast<RS_Line*>(e), symmetric);
 
         case RS2::EntityArc:
-            return createParallelArc(coord, distance, number, (RS_Arc*)e);
+            return createParallelArc(coord, distance, number, static_cast<RS_Arc*>(e));
 
         case RS2::EntityCircle:
-            return createParallelCircle(coord, distance, number, (RS_Circle*)e);
+            return createParallelCircle(coord, distance, number, static_cast<RS_Circle*>(e));
 
         case RS2::EntityParabola:
         case RS2::EntitySplinePoints:
-            return createParallelSplinePoints(coord, distance, number, (LC_SplinePoints*)e);
+            return createParallelSplinePoints(coord, distance, number, static_cast<LC_SplinePoints*>(e));
 
         default:
             break;
@@ -642,7 +642,8 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
         return {};
     RS_Vector const& vp=normal->getNearestPointOnEntity(tangentPoint0, false);
     return std::make_unique<RS_Line>(m_container, vp, tangentPoint0);
-    // fixme - sand - files - merge - UNDO??? Previously it was in undo cycle
+    // fixme - sand - files - merge - UNDO??? Previously it was in undo cycle. Why this is changed - yet that's ok,
+    // the action should handle
     /*if(!t0.valid) return ret;
     RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
     LC_UndoSection undo( m_document,m_viewport, handleUndo);
@@ -786,11 +787,8 @@ std::unique_ptr<RS_Line> RS_Creation::createLineRelAngle(const RS_Vector& coord,
     }
 
     const RS_Vector vp = entity->getNearestPointOnEntity(coord, false);
-
     double const a1 = angle + entity->getTangentDirection(vp).angle();
-
     RS_Vector const v1 = RS_Vector::polar(length, a1);
-
     auto ret = std::make_unique<RS_Line>(m_container, coord, coord+v1);
     bool addedToUndo = setupAndAddEntity(ret.get());
     if (addedToUndo) {
@@ -950,33 +948,24 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
      * @param data Insert data (position, block name, ..)
      */
 RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
-
     RS_DEBUG->print("RS_Creation::createInsert");
-
     LC_UndoSection undo( m_document, m_viewport,handleUndo);
     auto ins = new RS_Insert(m_container, *pdata);
     // inserts are also on layers
     setupAndAddEntity(ins);
-
     RS_DEBUG->print("RS_Creation::createInsert: OK");
-
     return ins;
 }
-
-
 /**
      * Creates an image with the given data.
      */
 RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
-
     LC_UndoSection undo( m_document, m_viewport,handleUndo);
     auto* img = new RS_Image(m_container, *data);
     img->update();
     setupAndAddEntity(img);
-
     return img;
 }
-
 
 /**
      * Creates a new block from the currently selected entitiies.
@@ -1001,7 +990,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
 
     // copy entities into a block
     for(auto e: *m_container){ // fixme - iterating all entities for selection
-        if (e && e->isSelected()) {
+        if (e!= nullptr && e->isSelected()) {
 
             // delete / redraw entity in graphic view:
             if (remove) { // fixme - what's this? same logic there?
@@ -1024,7 +1013,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
         }
     }
 
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         m_graphic->addBlock(block);
     }
 
@@ -1044,11 +1033,10 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     }
 
     // unit conversion:
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         double uf = RS_Units::convert(1.0, insertGraphic->getUnit(),m_graphic->getUnit());
         insertGraphic->scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
     }
-
     QString insertFileName = QFileInfo(data.file).completeBaseName();
     RS_Modification m(*m_container, m_viewport);
     m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,insertFileName),insertGraphic);
@@ -1059,21 +1047,36 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 }
 
 bool RS_Creation::setupAndAddEntity(RS_Entity* en) const{
-    if (en == nullptr)
-        return false;
+    // this check is overkill - plus, if null is there - it's severe error of the developer.
+    //
+    // Returning false may lead to indefinite behavior.
+    //
+    // It's better to have a crash during the development with clear indication that something is wrong,
+    // than try to find some subtle effects based on the user-provided report
+    // if something may crash - it should fail as fast as possible.
+    //
+    // and MOREOVER!
+    // this is just a private method of this class.
+    // HOW IT MIGHT BE THAT CREATED ENTITY IS NULL????
+
+
+    assert(en != nullptr);
+
+    /*if (en == nullptr)
+        return false;*/
     en->setLayerToActive();
     en->setPenToActive();
 
     if (m_container) {
         m_container->addEntity(en);
     }
-    if (m_graphicView) {
-        m_graphicView->redraw();
-    }
-    if (m_viewport != nullptr) {
+    // why in general it could be null there? it's better to check in constructor once  and
+    // prohibit passing null during creation of RS_Creation.
+     if (m_viewport != nullptr) {
+        // fixme - sand - P.S. again, having undo semantic mixed with creation logic is just a mess...
         LC_UndoSection undo(m_document, m_viewport, handleUndo);
         undo.addUndoable(en);
-        return true;
-    }
-    return false;
+        return true;// fixme - sand - what if handle undo is false? in this sense, true is not correct...
+     }
+     return false;
 }

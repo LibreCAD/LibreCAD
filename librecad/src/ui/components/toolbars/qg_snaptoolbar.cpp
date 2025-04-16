@@ -45,7 +45,7 @@ QAction* QG_SnapToolBar::addOwnAction(QString name, const QMap<QString, QAction*
 }
 
 /*
- *  Constructs a QG_Cadhttps://apps.e-signlive.ca/error?error=eyJjb2RlIjo0MDEsIm1lc3NhZ2VLZXkiOiJlcnJvci51bmF1dGhvcmlzZWQuc2Vzc2lvbkV4cGlyZWQiLCJ0ZWNobmljYWwiOiJTZXNzaW9uIGlzIGV4cGlyZWQifQ%3D%3DToolBarSnap as a child of 'parent', with the
+ *  Constructs a QG_CadDToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
 
@@ -55,8 +55,11 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     auto action = justAddAction("ExclusiveSnapMode", actionsMap);
     connect(action, &QAction::triggered, agm, &LC_ActionGroupManager::toggleExclusiveSnapMode);
 
+    // fixme - sand - rework this !
     m_actionSnapMiddleManual = justAddAction("SnapMiddleManual", actionsMap);
     connect(m_actionSnapMiddleManual, &QAction::triggered, m_actionHandler, &QG_ActionHandler::slotSnapMiddleManual);
+
+    // m_actionSnapMiddleManual = addOwnAction("SnapMiddleManual", actionsMap);
 
     m_actionSnapFree = addOwnAction("SnapFree", actionsMap);
     m_actionSnapGrid = addOwnAction("SnapGrid", actionsMap);
@@ -85,11 +88,12 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     addSeparator();
 
     m_actionRelZero = justAddAction("SetRelativeZero", actionsMap);
-    // connect(bRelZero, &QAction::triggered, actionHandler, &QG_ActionHandler::slotSetRelativeZero);
+    connect(m_actionRelZero, &QAction::triggered, m_actionHandler, &QG_ActionHandler::slotSetRelativeZero);
 
     m_actionLockRelZero = justAddAction("LockRelativeZero", actionsMap);
     m_actionLockRelZero->setCheckable(true);
     connect(m_actionLockRelZero, &QAction::triggered, m_actionHandler, &QG_ActionHandler::slotLockRelativeZero);
+
 
     //restore snapMode from saved preferences
     setSnaps( RS_SnapMode::fromInt(LC_GET_ONE_INT("Snap", "SnapMode", 0)));
@@ -126,7 +130,7 @@ void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s ){
     m_actionRestrictNothing->setChecked(s.restriction==RS2::RestrictNothing);
 }
 
-RS_SnapMode QG_SnapToolBar::getSnaps( void ) const{
+RS_SnapMode QG_SnapToolBar::getSnaps() const{
     RS_SnapMode s;
 
     s.snapFree         = m_actionSnapFree->isChecked();
@@ -196,7 +200,7 @@ void QG_SnapToolBar::slotEnableRelativeZeroSnaps(const bool enabled){
 }
 
 void QG_SnapToolBar::actionTriggered(){
-    m_actionHandler->slotSetSnaps(getSnaps());
+    m_actionHandler->setSnaps(getSnaps());
 }
 
 LC_SnapOptionsWidgetsHolder *QG_SnapToolBar::getSnapOptionsHolder() {

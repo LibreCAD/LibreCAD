@@ -140,9 +140,7 @@ public:
         m_relZeroCoordinatesWidget = rel_zero_coordinates_widget;
     }
 
-    void set_snap_toolbar(QG_SnapToolBar* snap_toolbar) {
-        m_snapToolbar = snap_toolbar;
-    }
+
 protected:
 //! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;
@@ -153,7 +151,6 @@ protected:
     QG_CommandWidget* m_commandWidget = nullptr;
 
     LC_RelZeroCoordinatesWidget *m_relZeroCoordinatesWidget;
-    QG_SnapToolBar* m_snapToolbar = nullptr;
 
 };
 

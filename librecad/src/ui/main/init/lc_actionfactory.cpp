@@ -146,6 +146,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createWorkspacesActionsUncheckable(a_map, agm->getGroupByName("workspaces"));
     createWidgetActionsUncheckable(a_map, agm->getGroupByName("widgets"));
     createEditActionsUncheckable(a_map, agm->getGroupByName("edit"));
+
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
 

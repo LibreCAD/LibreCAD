@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actiondrawlineparallel.h"
+
+#include "lc_actioncontext.h"
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -133,8 +135,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
             if (checkCommand("through", c)){
                 finish(false);
                 accept = true;
-                // fixme - sand - files - direct action creation
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionDrawLineParallelThrough>(m_actionContext));
+                switchToAction(RS2::ActionDrawLineParallelThrough);
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);

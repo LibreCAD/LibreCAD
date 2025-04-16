@@ -130,8 +130,10 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
     bool event(QEvent * e) override;
+    void doZoom(RS2::ZoomDirection direction, RS_Vector& center, double zoom_factor);
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
+    void switchToAction(RS2::ActionType actionType, void* data = nullptr) const;
     void autoPanStep();
     void highlightUCSLocation(LC_UCS *ucs) override;
     void ucsHighlightStep();

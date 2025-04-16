@@ -156,7 +156,6 @@ private:
     RS_EntityContainer* m_container{nullptr};
     RS_Graphic* m_graphic{nullptr};
     RS_Document* m_document{nullptr};
-    RS_GraphicView* m_graphicView{nullptr};
     LC_GraphicViewport*  m_viewport{nullptr};
     bool handleUndo = false;
     /**
@@ -164,7 +163,7 @@ private:
     * @param en
     * @return
     */
-    void setupAndAddEntity(RS_Entity* en) const;
+    bool setupAndAddEntity(RS_Entity* en) const;
 };
 
 #endif

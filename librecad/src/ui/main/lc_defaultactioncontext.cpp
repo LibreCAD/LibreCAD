@@ -24,12 +24,14 @@
 
 #include "lc_actionoptionsmanager.h"
 #include "lc_qtstatusbarmanager.h"
+#include "qg_actionhandler.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
 #include "qg_mousewidget.h"
 #include "qg_selectionwidget.h"
 
-LC_DefaultActionContext::LC_DefaultActionContext() {}
+LC_DefaultActionContext::LC_DefaultActionContext(QG_ActionHandler* actionHandler):m_actionHandler{actionHandler} {
+}
 
 void LC_DefaultActionContext::addOptionsWidget(LC_ActionOptionsWidget *widget){
     m_actionOptionsManager->addOptionsWidget(widget);
@@ -95,4 +97,16 @@ void LC_DefaultActionContext::setDocumentAndView(RS_Document *document, RS_Graph
     if (m_coordinateWidget != nullptr) {
         m_coordinateWidget->setGraphicView(view);
     }
+}
+
+void LC_DefaultActionContext::setSnapMode(const RS_SnapMode& mode) {
+    m_actionHandler->setSnaps(mode);
+}
+
+void LC_DefaultActionContext::setCurrentAction(RS2::ActionType action, void* data) {
+    m_actionHandler->setCurrentAction(action, data);
+}
+
+RS_ActionInterface* LC_DefaultActionContext::getCurrentAction() {
+    return m_actionHandler->getCurrentAction();
 }

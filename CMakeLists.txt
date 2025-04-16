@@ -1208,6 +1208,10 @@ set(SOURCES
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.h
         librecad/src/ui/qg_actionhandler.cpp
         librecad/src/ui/qg_actionhandler.h
+        librecad/src/ui/lc_actionhandlerfactory.h
+        librecad/src/ui/lc_actionhandlerfactory.cpp
+        librecad/src/ui/lc_snapmanager.h
+        librecad/src/ui/lc_snapmanager.cpp
 		librecad/src/ui/lc_uiutils.h
 		librecad/src/ui/lc_uiutils.cpp
 		librecad/src/ui/dock_widgets/block_widget/qg_blockwidget.cpp

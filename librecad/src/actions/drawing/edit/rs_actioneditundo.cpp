@@ -26,7 +26,6 @@
 
 
 #include "rs_actioneditundo.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 
@@ -36,8 +35,8 @@
  * @param undo true for undo and false for redo.
  */
 RS_ActionEditUndo::RS_ActionEditUndo(bool undo,LC_ActionContext *actionContext)
-        :RS_ActionInterface("Edit Undo", actionContext,RS2::ActionEditUndo)
-		, undo(undo){
+  :RS_ActionInterface("Edit Undo", actionContext,undo? RS2::ActionEditUndo: RS2::ActionEditRedo)
+ , undo(undo){
 }
 
 void RS_ActionEditUndo::init(int status) {

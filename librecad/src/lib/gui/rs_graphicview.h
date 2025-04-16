@@ -108,16 +108,17 @@ public:
 
     RS_EntityContainer *getContainer() const;
 
-    void setDefaultAction(RS_ActionInterface *action);
-    RS_ActionInterface *getDefaultAction();
-    void hideOptions();
+    void setDefaultAction(RS_ActionInterface *action) const;
+    RS_ActionInterface *getDefaultAction() const;
+    void hideOptions() const;
     bool setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
-    RS_ActionInterface *getCurrentAction();
-    QString getCurrentActionName();
-    QIcon getCurrentActionIcon();
-    void killSelectActions();
-    void killAllActions();
-    void back();
+    // bool setCurrentAction(RS2 action);
+    RS_ActionInterface *getCurrentAction() const;
+    QString getCurrentActionName() const;
+    QIcon getCurrentActionIcon() const;
+    void killSelectActions() const;
+    void killAllActions() const;
+    void back() const;
     void processEnterKey();
     void commandEvent(RS_CommandEvent *e);
     void keyPressEvent(QKeyEvent *event) override;
@@ -218,6 +219,6 @@ private:
     bool m_skipFirstZoom = false;
     const RS_LineTypePattern *getPattern(RS2::LineType t);
 
-bool setEventHandlerAction(RS_ActionInterface* action);
+    bool setEventHandlerAction(std::shared_ptr<RS_ActionInterface>);
 };
 #endif

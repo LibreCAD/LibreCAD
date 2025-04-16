@@ -55,6 +55,7 @@ protected:
     LC_ActionDrawLineSnake* m_action = nullptr;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
     Ui::Ui_LineOptionsRel* ui;
     bool m_inUpdateCycle = false;

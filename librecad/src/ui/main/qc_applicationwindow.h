@@ -31,6 +31,7 @@
 
 #include "lc_mdiapplicationwindow.h"
 
+class LC_SnapManager;
 class LC_ActionFactory;
 class LC_QTStatusbarManager;
 class LC_UCSStateWidget;
@@ -338,6 +339,7 @@ protected:
     std::unique_ptr<LC_GridViewInvoker> m_gridViewInvoker;
     std::unique_ptr<LC_InfoCursorSettingsManager> m_infoCursorSettingsManager;
     std::unique_ptr<LC_CustomStyleHelper> m_styleHelper;
+    std::unique_ptr<LC_SnapManager> m_snapManager;
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;

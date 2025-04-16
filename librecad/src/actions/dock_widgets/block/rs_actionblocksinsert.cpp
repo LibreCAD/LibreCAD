@@ -108,7 +108,7 @@ void RS_ActionBlocksInsert::onMouseMoveEvent(int status, LC_MouseEvent *e){
             if (m_block != nullptr) {
                 //preview->addAllFrom(*block);
                 //preview->move(data->insertionPoint);
-                RS_Creation creation(m_preview.get(), nullptr, false);
+                RS_Creation creation(m_preview.get(), m_viewport, false);
                 // Create insert as preview only
                 m_data->updateMode = RS2::PreviewUpdate;
                 auto insertData = m_data.get();

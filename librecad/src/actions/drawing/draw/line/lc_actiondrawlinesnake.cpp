@@ -36,11 +36,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
 
-LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext *actionContext,int initialDirection)
-    :LC_AbstractActionDrawLine("Draw line snake",actionContext, RS2::ActionDrawSnakeLine)
+#include "lc_actioncontext.h"
+
+LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext *actionContext,RS2::ActionType actionType)
+    :LC_AbstractActionDrawLine("Draw line snake",actionContext, actionType)
     , pPoints(new Points{}){
-    primaryDirection = initialDirection;
-    direction = initialDirection;
+    switch (actionType) {
+        case (RS2::ActionDrawSnakeLine): {
+            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
+            break;
+        }
+        case (RS2::ActionDrawSnakeLineX): {
+            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_X;
+            break;
+        }
+        case (RS2::ActionDrawSnakeLineY): {
+            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_Y;
+            break;
+        }
+        default: {
+            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
+            break;
+        }
+    }
+    direction = primaryDirection;
 }
 
 LC_ActionDrawLineSnake::~LC_ActionDrawLineSnake() = default;
@@ -544,7 +563,7 @@ void LC_ActionDrawLineSnake::undo(){
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(true, m_actionContext));
+                switchToAction(RS2::ActionEditUndo);
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetDirection);
                 break;
@@ -582,12 +601,12 @@ void LC_ActionDrawLineSnake::redo(){
 
             case HA_Polyline:
             case HA_SetEndpoint:
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, m_actionContext));
+                switchToAction(RS2::ActionEditRedo);
                 setStatus(SetDirection);
                 break;
 
             case HA_Close:
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, m_actionContext));
+                switchToAction(RS2::ActionEditRedo);
                 setStatus(SetDirection);
                 break;
 
@@ -604,7 +623,13 @@ void LC_ActionDrawLineSnake::addHistory(LC_ActionDrawLineSnake::HistoryAction a,
     if (pPoints->historyIndex < -1){
         pPoints->historyIndex = -1;
     }
-    pPoints->history.erase(pPoints->history.begin() + pPoints->historyIndex + 1, pPoints->history.end());
+    auto offset =pPoints->historyIndex + 1;
+    if (offset == 0) { // MSVC-specific workaround
+        pPoints->history.erase(pPoints->history.begin(), pPoints->history.end());
+    }
+    else {
+        pPoints->history.erase(pPoints->history.begin()+offset, pPoints->history.end());
+    }
     pPoints->history.push_back(History(a, p, c, s));
     pPoints->historyIndex = static_cast<int>(pPoints->history.size() - 1);
 }
@@ -631,8 +656,7 @@ void LC_ActionDrawLineSnake::polyline(){
         finishAction();
         addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
         // fixme - sand - files - direct action creation
-        auto polylineSegmentAction = std::make_shared<RS_ActionPolylineSegment>(m_actionContext, en);
-        m_graphicView->setCurrentAction(polylineSegmentAction);
+        switchToAction(RS2::ActionPolylineSegment, en);
     }
 }
 

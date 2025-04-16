@@ -28,6 +28,8 @@
 #include <vector>
 
 #include "rs_actiondrawline.h"
+
+#include "lc_actioncontext.h"
 #include "rs_actioneditundo.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -335,7 +337,15 @@ void RS_ActionDrawLine::addHistory(RS_ActionDrawLine::HistoryAction a, const RS_
         pPoints->historyIndex = -1;
     }
 
-    pPoints->history.erase(pPoints->history.begin() + pPoints->historyIndex + 1, pPoints->history.end());
+    auto offset = pPoints->historyIndex + 1;
+    if (offset == 0) {
+        // this is for MSVC implementation of vector, it does not like 0 offset
+        pPoints->history.erase(pPoints->history.begin(), pPoints->history.end());
+    }
+    else {
+        pPoints->history.erase(pPoints->history.begin() + offset, pPoints->history.end());
+    }
+
     pPoints->history.push_back( History( a, p, c, s));
     pPoints->historyIndex = static_cast<int>(pPoints->history.size() - 1);
 }
@@ -355,7 +365,7 @@ void RS_ActionDrawLine::undo(){
             }
             case HA_SetEndpoint:
             case HA_Close: {
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(true, m_actionContext));
+                switchToAction(RS2::ActionEditUndo);
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetEndpoint);
                 break;
@@ -390,12 +400,12 @@ void RS_ActionDrawLine::redo(){
                 break;
             }
             case HA_SetEndpoint: {
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, m_actionContext));
+                switchToAction(RS2::ActionEditRedo);
                 setStatus(SetEndpoint);
                 break;
             }
             case HA_Close: {
-                m_graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, m_actionContext));
+                switchToAction(RS2::ActionEditRedo);
                 setStatus(SetStartpoint);
                 break;
             }

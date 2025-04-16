@@ -101,7 +101,7 @@ void RS_GraphicView::setContainer(RS_EntityContainer *c) {
 /**
  * @return Current action or nullptr.
  */
-RS_ActionInterface *RS_GraphicView::getDefaultAction() {
+RS_ActionInterface *RS_GraphicView::getDefaultAction() const {
     if (m_eventHandler!=nullptr) {
         return m_eventHandler->getDefaultAction();
     } else {
@@ -109,7 +109,7 @@ RS_ActionInterface *RS_GraphicView::getDefaultAction() {
     }
 }
 
-void RS_GraphicView::hideOptions(){
+void RS_GraphicView::hideOptions() const {
     if (m_eventHandler != nullptr) {
         auto defaultAction = m_eventHandler->getDefaultAction();
         if (defaultAction != nullptr) {
@@ -121,7 +121,7 @@ void RS_GraphicView::hideOptions(){
 /**
  * Sets the default action of the event handler.
  */
-void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) {
+void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) const {
     if (m_eventHandler !=nullptr) {
         m_eventHandler->setDefaultAction(action);
     }
@@ -130,11 +130,11 @@ void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) {
 /**
  * @return Current action or nullptr.
  */
-RS_ActionInterface *RS_GraphicView::getCurrentAction() {
+RS_ActionInterface *RS_GraphicView::getCurrentAction() const {
     return (nullptr != m_eventHandler) ? m_eventHandler->getCurrentAction() : nullptr;
 }
 
-QString RS_GraphicView::getCurrentActionName() {
+QString RS_GraphicView::getCurrentActionName() const {
     if (m_eventHandler !=nullptr) {
         QAction* qaction = m_eventHandler->getQAction();
         if (qaction != nullptr){
@@ -145,7 +145,7 @@ QString RS_GraphicView::getCurrentActionName() {
     return "";
 }
 
-QIcon RS_GraphicView::getCurrentActionIcon() {
+QIcon RS_GraphicView::getCurrentActionIcon() const {
     if (m_eventHandler != nullptr) {
         QAction* qaction = m_eventHandler->getQAction();
         if (qaction != nullptr){
@@ -184,7 +184,7 @@ bool RS_GraphicView::setCurrentAction(std::shared_ptr<RS_ActionInterface> action
  * Kills all running selection actions. Called when a selection action
  * is launched to reduce confusion.
  */
-void RS_GraphicView::killSelectActions() {
+void RS_GraphicView::killSelectActions() const {
     if (m_eventHandler != nullptr) {
         m_eventHandler->killSelectActions();
     }
@@ -193,7 +193,7 @@ void RS_GraphicView::killSelectActions() {
 /**
  * Kills all running actions.
  */
-void RS_GraphicView::killAllActions() {
+void RS_GraphicView::killAllActions() const {
     if (m_eventHandler != nullptr && forcedActionKillAllowed) {
         m_eventHandler->killAllActions();
     }
@@ -202,7 +202,7 @@ void RS_GraphicView::killAllActions() {
 /**
  * Go back in menu or current action.
  */
-void RS_GraphicView::back() {
+void RS_GraphicView::back() const {
     if (m_eventHandler && m_eventHandler->hasAction()) {
         m_eventHandler->back();
     }

@@ -40,6 +40,8 @@
 #include "lc_flexlayout.h"
 #include "qg_actionhandler.h"
 #include "qg_blockwidget.h"
+
+#include "lc_actiongroupmanager.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
@@ -135,9 +137,10 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
  /**
  * Constructor.
  */
-QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
+QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm,QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WindowFlags f)
         : LC_GraphicViewAwareWidget(parent, name, f) {
+    m_actionGroupManager = agm;
     m_actionHandler = ah;
     m_blockList = nullptr;
     m_lastBlock = nullptr;
@@ -161,76 +164,17 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     lay->setSpacing ( 2 );
     lay->setContentsMargins(2, 2, 2, 2);
 
-    auto *layButtons = new LC_FlexLayout(0,5,5);
+    auto layButtons = new LC_FlexLayout(0,5,5);
 
-    // QHBoxLayout* layButtons = new QHBoxLayout();
-    // QHBoxLayout* layButtons2 = new QHBoxLayout();
-    // show all blocks:
-    auto* but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/visible.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Show all blocks"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksDefreezeAll);
-    layButtons->addWidget(but);
-    // hide all blocks:
-    but = new QToolButton(this);
-//    but->setIcon( QIcon(":/icons/invisible.svg") );
-    but->setIcon( QIcon(":/icons/not_visible.lci") );
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Hide all blocks"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksFreezeAll);
-    layButtons->addWidget(but);
-    // create block:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/create_block.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Create Block"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksCreate);
-    layButtons->addWidget(but);
-    // add block:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/add.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Add an empty block"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksAdd);
-    layButtons->addWidget(but);
-    // remove block:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/remove.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Remove block"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksRemove);
-    layButtons->addWidget(but);
-    // edit attributes:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/rename_active_block.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Rename the active block"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksAttributes);
-      // layButtons2->addWidget(but);
-    layButtons->addWidget(but);
-    // edit block:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/properties.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Edit the active block\n"
-                          "in a separate window"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksEdit);
-    layButtons->addWidget(but);
-    // save block:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/save.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("save the active block to a file"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksSave);
-    layButtons->addWidget(but);
-    // insert block:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/insert_active_block.lci"));
-    // but->setMinimumSize(button_size);
-    but->setToolTip(tr("Insert the active block"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotBlocksInsert);
-    layButtons->addWidget(but);
+    addToolbarButton(layButtons, RS2::ActionBlocksDefreezeAll);
+    addToolbarButton(layButtons, RS2::ActionBlocksFreezeAll);
+    addToolbarButton(layButtons, RS2::ActionBlocksCreate);
+    addToolbarButton(layButtons, RS2::ActionBlocksAdd);
+    addToolbarButton(layButtons, RS2::ActionBlocksRemove);
+    addToolbarButton(layButtons, RS2::ActionBlocksAttributes);
+    addToolbarButton(layButtons, RS2::ActionBlocksEdit);
+    addToolbarButton(layButtons, RS2::ActionBlocksSave);
+    addToolbarButton(layButtons, RS2::ActionBlocksInsert);
 
     // lineEdit to filter block list with RegEx
     m_matchBlockName = new QLineEdit(this);
@@ -250,6 +194,15 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
             this, &QG_BlockWidget::slotSelectionChanged);
 
     updateWidgetSettings();
+}
+
+void QG_BlockWidget::addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType) {
+    QAction* action = m_actionGroupManager->getActionByType(actionType);
+    if (action != nullptr) {
+        auto button = new QToolButton(this);
+        button->setDefaultAction(action);
+        layButtons->addWidget(button);
+    }
 }
 
 
@@ -340,7 +293,7 @@ void QG_BlockWidget::slotActivated(const QModelIndex &blockIdx) {
     if (blockIdx.column() == QG_BlockModel::VISIBLE) {
         RS_Block* b = m_blockList->getActive();
         m_blockList->activate(block);
-        m_actionHandler->slotBlocksToggleView();
+        m_actionHandler->setCurrentAction(RS2::ActionBlocksToggleView);
         activateBlock(b);
         return;
     }
@@ -382,37 +335,34 @@ void QG_BlockWidget::slotSelectionChanged(
  * Shows a context menu for the block widget. Launched with a right click.
  */
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
-
     // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
     // slotActivated(blockView->currentIndex());
-
     auto contextMenu = std::make_unique<QMenu>(this);
-
-    using ActionMemberFunc = void (QG_ActionHandler::*)();
-    const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
-        contextMenu->addAction(name, m_actionHandler, func);
-    };
+    auto menu = contextMenu.get();
     // Actions for all blocks:
-    addActionFunc(tr("&Defreeze all Blocks"), &QG_ActionHandler::slotBlocksDefreezeAll);
-    addActionFunc(tr("&Freeze all Blocks"), &QG_ActionHandler::slotBlocksFreezeAll);
+    addMenuItem(menu, RS2::ActionBlocksDefreezeAll);
+    addMenuItem(menu, RS2::ActionBlocksFreezeAll);
     contextMenu->addSeparator();
-    // Actions for selected blocks or,
-    // if nothing is selected, for active block:
-    addActionFunc(tr("&Toggle Visibility"), &QG_ActionHandler::slotBlocksToggleView);
-    addActionFunc(tr("&Remove Block"), &QG_ActionHandler::slotBlocksRemove);
+    // Actions for selected blocks or, if nothing is selected, for active block:
+    addMenuItem(menu, RS2::ActionBlocksToggleView);
+    addMenuItem(menu, RS2::ActionBlocksRemove);
     contextMenu->addSeparator();
     // Single block actions:
-    addActionFunc(tr("&Add Block"), &QG_ActionHandler::slotBlocksAdd);
-    addActionFunc(tr("&Rename Block"), &QG_ActionHandler::slotBlocksAttributes);
-    addActionFunc(tr("&Edit Block"), &QG_ActionHandler::slotBlocksEdit);
-    addActionFunc(tr("&Insert Block"), &QG_ActionHandler::slotBlocksInsert);
-    addActionFunc(tr("&Create New Block"), &QG_ActionHandler::slotBlocksCreate);
+    addMenuItem(menu, RS2::ActionBlocksAdd);
+    addMenuItem(menu, RS2::ActionBlocksAttributes);
+    addMenuItem(menu, RS2::ActionBlocksEdit);
+    addMenuItem(menu, RS2::ActionBlocksInsert);
+    addMenuItem(menu, RS2::ActionBlocksCreate);
     contextMenu->exec(QCursor::pos());
-
     e->accept();
 }
 
-
+void QG_BlockWidget::addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) {
+    auto action = m_actionGroupManager->getActionByType(actionType);
+    if (action != nullptr) {
+        contextMenu->addAction(action);
+    }
+}
 
 /**
  * Escape releases focus.

@@ -96,11 +96,6 @@ protected:
     uint savedSnapMode  = 0;
 
     /**
-     * reference to action handler. It is not initialized and it is up to inherited actions to initialize it (mostly via constructor)
-     */
-    QG_ActionHandler* actionhandler  = nullptr;
-
-    /**
      * This is alternative mode of action that is invoked if SHIFT is pressed together with
      * mouse move or mouse click. Meaning of this flag depends on particular action.
      */

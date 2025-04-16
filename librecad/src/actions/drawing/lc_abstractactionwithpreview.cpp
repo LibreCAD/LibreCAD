@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QMouseEvent>
 
 #include "lc_abstractactionwithpreview.h"
+
+#include "lc_actioncontext.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
@@ -648,12 +650,8 @@ void LC_AbstractActionWithPreview::restoreSnapMode(){
  * @param mode new snap mode
  */
 void LC_AbstractActionWithPreview::setGlobalSnapMode(const RS_SnapMode &mode){
-
-    // fixme - sand - files - move to the action context, eliminate ref to ActionHandler!!!
     setSnapMode(mode);
-    if (actionhandler != nullptr){
-        actionhandler->slotSetSnaps(mode);
-    }
+    m_actionContext->setSnapMode(mode);
 }
 /**
  * Utility method that sets free snap mode

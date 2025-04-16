@@ -41,6 +41,10 @@ LC_LineOptions::LC_LineOptions()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineOptions::onSetAngle);
 }
 
+bool LC_LineOptions::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType == RS2::ActionDrawSnakeLine || actionType == RS2::ActionDrawSnakeLineX || actionType == RS2::ActionDrawSnakeLineY;
+}
+
 /*
  *  Destroys the object and frees any allocated resources
  */

@@ -38,6 +38,7 @@
 #include <QTableView>
 #include <QToolButton>
 
+#include "lc_actiongroupmanager.h"
 #include "lc_flexlayout.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
@@ -181,12 +182,22 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const{
     return QVariant();
 }
 
+void QG_LayerWidget::addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType) {
+    QAction* action = m_actionGroupManager->getActionByType(actionType);
+    if (action != nullptr) {
+        auto button = new QToolButton(this);
+        button->setDefaultAction(action);
+        layButtons->addWidget(button);
+    }
+}
+
 /**
  * Constructor.
  */
-QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char *name, Qt::WindowFlags f)
+QG_LayerWidget::QG_LayerWidget(LC_ActionGroupManager* agm, QG_ActionHandler *ah, QWidget *parent, const char *name, Qt::WindowFlags f)
     : LC_GraphicViewAwareWidget(parent, name, f){
     m_actionHandler = ah;
+    m_actionGroupManager = agm;
     m_layerList = nullptr;
     m_showByBlock = false;
     m_lastLayer = nullptr;
@@ -221,58 +232,13 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent, const char
 
     auto *layButtons = new LC_FlexLayout(0,5,5);
 
-    // auto* layButtons = new QHBoxLayout;
-    QToolButton* but;
-    // show all layer:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/visible.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Show all layers"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersDefreezeAll);
-    layButtons->addWidget(but);
-    // hide all layer:
-    but = new QToolButton(this);
-//    but->setIcon(QIcon(":/icons/invisible.lci"));
-    but->setIcon(QIcon(":/icons/not_visible.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Hide all layers"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersFreezeAll);
-    layButtons->addWidget(but);
-    // unlock all layers:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/unlocked.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Unlock all layers"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersUnlockAll);
-    layButtons->addWidget(but);
-    // lock all layers:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/locked.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Lock all layers"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersLockAll);
-    layButtons->addWidget(but);
-    // add layer:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/add.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Add a layer"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersAdd);
-    layButtons->addWidget(but);
-    // remove layer:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/remove.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Remove layer"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersRemove);
-    layButtons->addWidget(but);
-    // rename layer:
-    but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/rename_active_block.lci"));
-    // but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Modify layer attributes / rename"));
-    connect(but, &QToolButton::clicked, m_actionHandler, &QG_ActionHandler::slotLayersEdit);
-    layButtons->addWidget(but);
+    addToolbarButton(layButtons, RS2::ActionLayersDefreezeAll);
+    addToolbarButton(layButtons, RS2::ActionLayersFreezeAll);
+    addToolbarButton(layButtons, RS2::ActionLayersUnlockAll);
+    addToolbarButton(layButtons, RS2::ActionLayersLockAll);
+    addToolbarButton(layButtons, RS2::ActionLayersAdd);
+    addToolbarButton(layButtons, RS2::ActionLayersRemove);
+    addToolbarButton(layButtons, RS2::ActionLayersEdit);
 
     // lineEdit to filter layer list with RegEx
     m_matchLayerName = new QLineEdit(this);
@@ -469,7 +435,7 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
     }
 
     RS_Layer* lay = m_layerModel->getLayer(layerIdx.row());
-    if (lay == 0)
+    if (lay == nullptr)
         return;
 
     if (layerIdx.column() == QG_LayerModel::NAME) {
@@ -479,16 +445,19 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
 
     switch (layerIdx.column()) {
         case QG_LayerModel::VISIBLE:
-            m_actionHandler->toggleVisibility(lay);
+            m_actionHandler->setCurrentAction(RS2::ActionLayersToggleView, lay);
             break;
         case QG_LayerModel::LOCKED:
-            m_actionHandler->toggleLock(lay);
+            m_actionHandler->setCurrentAction(RS2::ActionLayersToggleLock, lay);
+            // m_actionHandler->toggleLock(lay);
             break;
         case QG_LayerModel::PRINT:
-            m_actionHandler->togglePrint(lay);
+            m_actionHandler->setCurrentAction(RS2::ActionLayersTogglePrint, lay);
+            // m_actionHandler->togglePrint(lay);
             break;
         case QG_LayerModel::CONSTRUCTION:
-            m_actionHandler->toggleConstruction(lay);
+            m_actionHandler->setCurrentAction(RS2::ActionLayersToggleConstruction, lay);
+            // m_actionHandler->toggleConstruction(lay);
             break;
         default:
             break;
@@ -543,44 +512,37 @@ void QG_LayerWidget::slotUpdateLayerList() {
     restoreSelections();
 }
 
+void QG_LayerWidget::addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) {
+    auto action = m_actionGroupManager->getActionByType(actionType);
+    if (action != nullptr) {
+        contextMenu->QWidget::addAction(action);
+    }
+}
+
 /**
  * Shows a context menu for the layer widget. Launched with a right click.
  */
 void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
-    if (m_actionHandler) {
-        auto contextMenu = std::make_unique<QMenu>(this);
-
-        using ActionMemberFunc = void (QG_ActionHandler::*)();
-        const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
-            contextMenu->addAction(name, m_actionHandler, func);
-        };
-
-        // Actions for all layers:
-        addActionFunc( tr("&Defreeze all Layers"), &QG_ActionHandler::slotLayersDefreezeAll);
-        addActionFunc( tr("&Freeze all Layers"), &QG_ActionHandler::slotLayersFreezeAll);
-        addActionFunc( tr("&Unlock all Layers"), &QG_ActionHandler::slotLayersUnlockAll);
-        addActionFunc( tr("&Lock all Layers"), &QG_ActionHandler::slotLayersLockAll);
-        contextMenu->addSeparator();
-        // Actions for selected layers or,
-        // if nothing is selected, for active layer:
-        addActionFunc( tr("Toggle Layer &Visibility"), &QG_ActionHandler::slotLayersToggleView);
-        addActionFunc( tr("Toggle Layer Loc&k"), &QG_ActionHandler::slotLayersToggleLock);
-        addActionFunc( tr("Toggle Layer &Printing"), &QG_ActionHandler::slotLayersTogglePrint);
-        addActionFunc( tr("Toggle &Construction Layer"), &QG_ActionHandler::slotLayersToggleConstruction);
-        addActionFunc( tr("&Remove Layer"), &QG_ActionHandler::slotLayersRemove);
-        contextMenu->addSeparator();
-        // Single layer actions:
-        addActionFunc( tr("&Add Layer"), &QG_ActionHandler::slotLayersAdd);
-        addActionFunc( tr("Edit Layer &Attributes"), &QG_ActionHandler::slotLayersEdit);
-
-        contextMenu->addSeparator();
-
-        addActionFunc( tr("&Export Selected Layer(s)"), &QG_ActionHandler::slotLayersExportSelected);
-        addActionFunc( tr("Export &Visible Layer(s)"), &QG_ActionHandler::slotLayersExportVisible);
-
-        contextMenu->exec(QCursor::pos());
-    }
-
+    auto menu = new QMenu(this);
+    addMenuItem(menu, RS2::ActionLayersDefreezeAll);
+    addMenuItem(menu, RS2::ActionLayersFreezeAll);
+    addMenuItem(menu, RS2::ActionLayersUnlockAll);
+    addMenuItem(menu, RS2::ActionLayersLockAll);
+    menu->addSeparator();
+    // Actions for selected layers or, if nothing is selected, for active layer:
+    addMenuItem(menu, RS2::ActionLayersToggleView);
+    addMenuItem(menu, RS2::ActionLayersToggleLock);
+    addMenuItem(menu, RS2::ActionLayersTogglePrint);
+    addMenuItem(menu, RS2::ActionLayersToggleConstruction);
+    addMenuItem(menu, RS2::ActionLayersRemove);
+    menu->addSeparator();
+    // Single layer actions:
+    addMenuItem(menu, RS2::ActionLayersAdd);
+    addMenuItem(menu, RS2::ActionLayersEdit);
+    menu->addSeparator();
+    addMenuItem(menu, RS2::ActionLayersExportSelected);
+    addMenuItem(menu, RS2::ActionLayersExportVisible);
+    menu->exec(QCursor::pos());
     e->accept();
 }
 

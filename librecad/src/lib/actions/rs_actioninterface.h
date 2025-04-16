@@ -133,6 +133,7 @@ protected:
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
     double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
 
+    void switchToAction(RS2::ActionType actionType, void* data = nullptr);
     QString msgAvailableCommands();
     void setActionType(RS2::ActionType actionType);
     // Accessor for drawing keys
@@ -175,7 +176,7 @@ protected:
     virtual bool doProcessCommand([[maybe_unused]]int status, const QString &command);
 
     bool checkCommand(const QString& cmd, const QString& str,
-                      RS2::ActionType action=RS2::ActionNone);
+                      RS2::ActionType action=RS2::ActionType::ActionNone);
     QString command(const QString& cmd);
     virtual QString getAdditionalHelpMessage();
     virtual QString prepareCommand(RS_CommandEvent *e) const;

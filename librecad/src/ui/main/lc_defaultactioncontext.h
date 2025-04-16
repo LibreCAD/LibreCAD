@@ -24,6 +24,7 @@
 #define LC_DEFAULTACTIONCONTEXT_H
 #include "lc_actioncontext.h"
 
+class QG_ActionHandler;
 class LC_QTStatusbarManager;
 class QG_MouseWidget;
 class QG_SelectionWidget;
@@ -33,7 +34,7 @@ class LC_ActionOptionsManager;
 
 class LC_DefaultActionContext: public LC_ActionContext{
 public:
-    LC_DefaultActionContext();
+    LC_DefaultActionContext(QG_ActionHandler* actionHandler);
     virtual ~LC_DefaultActionContext() = default;
     void addOptionsWidget(LC_ActionOptionsWidget *widget) override;
     void removeOptionsWidget(LC_ActionOptionsWidget *widget) override;
@@ -71,6 +72,9 @@ public:
         m_statusBarManager = status_bar_manager;
     }
     void setDocumentAndView(RS_Document *document, RS_GraphicView *view) override;
+    void setSnapMode(const RS_SnapMode& mode) override;
+    void setCurrentAction(RS2::ActionType, void* data) override;
+    RS_ActionInterface* getCurrentAction() override;
 private:
     LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
     QG_CoordinateWidget* m_coordinateWidget{nullptr};
@@ -78,6 +82,7 @@ private:
     QG_SelectionWidget* m_selectionWidget{nullptr};
     QG_MouseWidget* m_mouseWidget{nullptr};
     LC_QTStatusbarManager* m_statusBarManager{nullptr};
+    QG_ActionHandler* m_actionHandler{nullptr};
 };
 
 #endif // LC_DEFAULTACTIONCONTEXT_H

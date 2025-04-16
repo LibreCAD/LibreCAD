@@ -31,7 +31,9 @@
 #include <QAbstractTableModel>
 #include <QList>
 
+#include "lc_flexlayout.h"
 #include "lc_graphicviewawarewidget.h"
+#include "rs.h"
 #include "rs_layerlistlistener.h"
 
 class QItemSelection;
@@ -42,6 +44,7 @@ class QTableView;
 class QLineEdit;
 class RS_Document;
 class RS_GraphicView;
+class LC_ActionGroupManager;
 
 /**
  * Implementation of a model to use in QG_LayerWidget
@@ -63,8 +66,7 @@ public:
 
 	QG_LayerModel(QObject * parent = nullptr);
 	~QG_LayerModel() = default;
-    Qt::ItemFlags flags (const QModelIndex & index) const override
-    {
+    Qt::ItemFlags flags (const QModelIndex & index) const override{
         if (index.column() == 5)
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
         else
@@ -105,30 +107,32 @@ private:
  * This is the Qt implementation of a widget which can view a
  * layer list and provides a user interface for basic layer actions.
  */
-class QG_LayerWidget: public LC_GraphicViewAwareWidget,  public RS_LayerListListener {
+class QG_LayerWidget : public LC_GraphicViewAwareWidget, public RS_LayerListListener {
     Q_OBJECT
-
 public:
-  QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent,
-                 const char *name = nullptr, Qt::WindowFlags f = {});
-  virtual ~QG_LayerWidget() = default;
+    QG_LayerWidget(LC_ActionGroupManager* m_actionGroupManager, QG_ActionHandler *ah, QWidget* parent, const char* name = nullptr,
+                   Qt::WindowFlags f = {});
+    ~QG_LayerWidget() override = default;
 
-  void update();
-  void activateLayer(RS_Layer *layer, bool updateScroll = true);
+    void update();
+    void activateLayer(RS_Layer* layer, bool updateScroll = true);
+    void layerActivated(RS_Layer* layer) override { activateLayer(layer); }
+    void layerAdded(RS_Layer* layer) override;
+    void layerEdited(RS_Layer*) override;
+    void layerRemoved(RS_Layer*) override;
 
-  void layerActivated(RS_Layer *layer) override { activateLayer(layer);}
-  void layerAdded(RS_Layer *layer) override;
-  void layerEdited(RS_Layer *) override;
-  void layerRemoved(RS_Layer *) override;
     void layerToggled(RS_Layer*) override {
         update();
     }
+
     void layerToggledLock(RS_Layer*) override {
         update();
     }
+
     void layerToggledPrint(RS_Layer*) override {
         update();
     }
+
     void layerToggledConstruction(RS_Layer*) override {
         update();
     }
@@ -136,6 +140,7 @@ public:
     QLineEdit* getMatchLayerName() {
         return m_matchLayerName;
     }
+
     /**
      * @brief getActiveName
      * @return the name of the active layer
@@ -144,28 +149,30 @@ public:
     void setGraphicView(RS_GraphicView* gview) override;
 signals:
     void escape();
-
 public slots:
     void slotActivated(QModelIndex layerIdx);
     void slotSelectionChanged(
-        const QItemSelection &selected,
-        const QItemSelection &deselected);
+        const QItemSelection& selected,
+        const QItemSelection& deselected);
     void slotUpdateLayerList();
     void activateLayer(int row);
     void updateWidgetSettings();
 protected:
-    void contextMenuEvent(QContextMenuEvent *e) override;
+    void contextMenuEvent(QContextMenuEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
-    void setLayerList(RS_LayerList *layerList, bool showByBlock);
+    void setLayerList(RS_LayerList* layerList, bool showByBlock);
     void updateFiltering();
+    void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
+    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType);
 private:
     RS_LayerList* m_layerList = nullptr;
     bool m_showByBlock = false;
     QLineEdit* m_matchLayerName = nullptr;
     QTableView* m_layerView = nullptr;
-    QG_LayerModel *m_layerModel = nullptr;
+    QG_LayerModel* m_layerModel = nullptr;
     RS_Layer* m_lastLayer = nullptr;
     QG_ActionHandler* m_actionHandler = nullptr;
+    LC_ActionGroupManager* m_actionGroupManager{nullptr};
     void restoreSelections();
 };
 

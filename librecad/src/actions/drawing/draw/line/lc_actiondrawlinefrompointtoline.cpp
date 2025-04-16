@@ -29,14 +29,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_linefrompointtolineoptions.h"
 #include "rs_previewactioninterface.h"
 
-LC_ActionDrawLineFromPointToLine::LC_ActionDrawLineFromPointToLine(
-    QG_ActionHandler* a_handler,
-    LC_ActionContext *actionContext)
+LC_ActionDrawLineFromPointToLine::LC_ActionDrawLineFromPointToLine(LC_ActionContext *actionContext)
     :LC_AbstractActionWithPreview("Draw Line To Line", actionContext,RS2::ActionDrawLineFromPointToLine){
-    actionhandler = a_handler;
 }
-
-
 /*
  * check that we're fine to trigger
  */

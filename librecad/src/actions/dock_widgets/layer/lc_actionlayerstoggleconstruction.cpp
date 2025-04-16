@@ -38,7 +38,7 @@
 LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
     LC_ActionContext *actionContext,
     RS_Layer* layer)
-        : RS_ActionInterface("Toggle Construction Layer", actionContext, RS2::ActionLayersToggleConstruction)
+        : RS_ActionInterface("Toggle Construction Layer", actionContext, RS2::ActionType::ActionLayersToggleConstruction)
         , a_layer(layer){
 }
 

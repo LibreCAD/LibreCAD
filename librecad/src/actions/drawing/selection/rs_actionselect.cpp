@@ -24,21 +24,19 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionselect.h"
+
+#include "lc_actioncontext.h"
 #include "rs_actionselectsingle.h"
-#include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 
 
-RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,LC_ActionContext *actionContext,
+RS_ActionSelect::RS_ActionSelect(LC_ActionContext *actionContext,
                                  RS2::ActionType nextAction,
                                  QList<RS2::EntityType> allowedEntityTypes)
 	:RS_ActionInterface("Select Entities", actionContext, RS2::ActionSelect)
-    ,action_handler(a_handler)
     ,nextAction(nextAction)
     , entityTypeList(std::move(allowedEntityTypes)){
 }
@@ -61,7 +59,7 @@ void RS_ActionSelect::onMouseRightButtonRelease(int status, [[maybe_unused]]QMou
     initPrevious(status);
 }
 
-int RS_ActionSelect::countSelected(){
+int RS_ActionSelect::countSelected() const {
     int ret = m_container->countSelected();
     if (ret == 0){
         commandMessage(tr("No entity selected!"));
@@ -94,6 +92,6 @@ RS2::CursorType RS_ActionSelect::doGetMouseCursor([[maybe_unused]] int status){
 void RS_ActionSelect::keyPressEvent(QKeyEvent* e){
     if (e->key()==Qt::Key_Enter && countSelected() > 0){
         finish();
-        action_handler->setCurrentAction(nextAction);
+        switchToAction(nextAction);
     }
 }

@@ -37,6 +37,7 @@
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"
 #include "lc_releasechecker.h"
+#include "lc_snapmanager.h"
 #include "lc_toolbarfactory.h"
 #include "lc_widgetfactory.h"
 #include "lc_workspacesinvoker.h"
@@ -73,6 +74,8 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initActionFactory();
     initWidgets();
     initToolbars();
+    initSnapManager();
+
     initCentralWidget();
     initMainMenu();
     initDockAreasActions();
@@ -87,6 +90,11 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initPlugins();
     m_appWin->showStatusMessage(qApp->applicationName() + " Ready", 2000);
     initReleaseChecker();
+}
+
+void LC_ApplicationWindowInitializer::initSnapManager() {
+    m_appWin->m_snapManager = std::make_unique<LC_SnapManager>(m_appWin->m_snapToolBar);
+    m_appWin->m_actionHandler->setSnapManager(m_appWin->m_snapManager.get());
 }
 
 void LC_ApplicationWindowInitializer::initReleaseChecker(){
@@ -239,12 +247,17 @@ void LC_ApplicationWindowInitializer::initAutoSaveTimer() const {
  * LC_DefaultActionContext. Thinks whether this is practical..
  */
 void LC_ApplicationWindowInitializer::initActionContext() const {
-    m_appWin->m_actionContext = new LC_DefaultActionContext();
-    m_appWin->m_actionContext->setActionOptionsManager(m_appWin->m_actionOptionsManager);
-    m_appWin->m_actionContext->setCommandWidget(m_appWin->m_commandWidget);
-    m_appWin->m_actionContext->setCoordinateWidget(m_appWin->m_coordinateWidget);
-    m_appWin->m_actionContext->setMouseWidget(m_appWin->m_mouseWidget);
-    m_appWin->m_actionContext->setSelectionWidget(m_appWin->m_selectionWidget);
-    m_appWin->m_actionContext->setStatusBarManager(m_appWin->m_statusbarManager);
-    m_appWin->m_actionHandler->setActionContext(m_appWin->m_actionContext);
+    auto actionHandler = m_appWin->m_actionHandler.get();
+    auto action_context = new LC_DefaultActionContext(actionHandler);
+
+    action_context->setActionOptionsManager(m_appWin->m_actionOptionsManager);
+    action_context->setCommandWidget(m_appWin->m_commandWidget);
+    action_context->setCoordinateWidget(m_appWin->m_coordinateWidget);
+    action_context->setMouseWidget(m_appWin->m_mouseWidget);
+    action_context->setSelectionWidget(m_appWin->m_selectionWidget);
+    action_context->setStatusBarManager(m_appWin->m_statusbarManager);
+
+    m_appWin->m_actionContext = action_context;
+
+    actionHandler->setActionContext(action_context);
 }

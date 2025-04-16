@@ -29,19 +29,20 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include <QItemSelection>
 
 #include "lc_graphicviewawarewidget.h"
 #include "rs_blocklistlistener.h"
 
+class LC_ActionGroupManager;
 class QG_ActionHandler;
+class QItemSelection;
 class QTableView;
 class QLineEdit;
 
 class RS_Block;
 class RS_BlockList;
 class QG_BlockModel;
-
+class LC_FlexLayout;
 
 /**
  * Implementation of a model to use in QG_BlockWidget
@@ -84,9 +85,8 @@ private:
 class QG_BlockWidget: public LC_GraphicViewAwareWidget, public RS_BlockListListener {
     Q_OBJECT
 public:
-    QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
+    QG_BlockWidget(LC_ActionGroupManager* m_actionGroupManager, QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
-
     void setGraphicView(RS_GraphicView* doc) override;
     RS_BlockList* getBlockList() {
         return m_blockList;
@@ -112,8 +112,10 @@ public slots:
     void updateWidgetSettings() const;
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
+    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType);
     void keyPressEvent(QKeyEvent* e) override;
     void setBlockList(RS_BlockList* blockList);
+    void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
 private:
     RS_BlockList* m_blockList = nullptr;
     QLineEdit* m_matchBlockName = nullptr;
@@ -121,6 +123,7 @@ private:
     QG_BlockModel *m_blockModel = nullptr;
     RS_Block* m_lastBlock = nullptr;
     QG_ActionHandler* m_actionHandler = nullptr;
+    LC_ActionGroupManager* m_actionGroupManager{nullptr};
     void restoreSelections() const;
 };
 

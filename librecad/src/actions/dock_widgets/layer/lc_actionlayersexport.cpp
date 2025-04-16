@@ -30,6 +30,7 @@
 
 #include <QStatusBar>
 
+#include "lc_actioncontext.h"
 #include "../../../ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h"
 #include "lc_layersexporter.h"
 #include "qc_applicationwindow.h"
@@ -54,10 +55,11 @@ namespace
     This action class exports the current selected layers as a drawing file, 
     either as individual files, or combined within a single file.
 */
-LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, RS_LayerList* inputLayersList, Mode inputExportMode)
+LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, Mode inputExportMode)
     : RS_ActionInterface("Export selected layer(s)",actionContext, inputExportMode == SelectedMode ? RS2::ActionLayersExportSelected:RS2::ActionLayersExportVisible),
-    layersList(inputLayersList),
-    exportMode(inputExportMode){
+    exportMode{inputExportMode}{
+    auto container = actionContext->getEntityContainer() ->getDocument();
+    layersList = container->getLayerList();
 }
 
 void LC_ActionLayersExport::init(int status){

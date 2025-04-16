@@ -697,6 +697,10 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent *event) {
     drawPreviewAndHighlights();
 }
 
+QStringList RS_PreviewActionInterface::getAvailableCommands() {
+    return doGetAvailableCommands(getStatus());
+}
+
 void RS_PreviewActionInterface::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     LC_MouseEvent lcEvent = toLCMouseMoveEvent(e);
     onMouseLeftButtonRelease(status, &lcEvent);
@@ -721,6 +725,10 @@ void RS_PreviewActionInterface::onMouseLeftButtonRelease([[maybe_unused]]int sta
 void RS_PreviewActionInterface::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
 void RS_PreviewActionInterface::onMouseLeftButtonPress([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
 void RS_PreviewActionInterface::onMouseRightButtonPress([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
+
+QStringList RS_PreviewActionInterface::doGetAvailableCommands([[maybe_unused]]int status) {
+    return {};
+}
 
 void RS_PreviewActionInterface::onMouseMoveEvent([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent* event) {}
 

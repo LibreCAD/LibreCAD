@@ -27,24 +27,29 @@
 
 #ifndef QG_ACTIONHANDLER_H
 #define QG_ACTIONHANDLER_H
-#include "rs_snapper.h"
+#include "rs.h"
+#include <QObject>
 
+struct RS_SnapMode;
+class RS_GraphicView;
+class QC_ApplicationWindow;
 class RS_Document;
 class RS_ActionInterface;
 class LC_DefaultActionContext;
 class QG_SnapToolBar;
 class RS_Layer;
+class LC_SnapManager;
 
 /**
  * This class can trigger actions (from menus, buttons, ...).
  */
-class QG_ActionHandler:public QObject {
+class QG_ActionHandler : public QObject {
     Q_OBJECT
 public:
-    QG_ActionHandler(QObject *parent);
+    explicit QG_ActionHandler(QC_ApplicationWindow *parent);
     ~QG_ActionHandler() override = default;
-    RS_ActionInterface *getCurrentAction();
-    std::shared_ptr<RS_ActionInterface> setCurrentAction(RS2::ActionType id);
+    RS_ActionInterface *getCurrentAction() const;
+    std::shared_ptr<RS_ActionInterface> setCurrentAction(RS2::ActionType id, void* data = nullptr) const;
 /**
  * Kills all running selection actions. Called when a selection action
   * is launched to reduce confusion.
@@ -61,76 +66,26 @@ public:
     */
     void killAllActions() const;
     bool keycode(const QString &code);
-    //special handling of actions issued from command line, currently used for snap actions
-    //return true if handled
-    bool commandLineActions(RS2::ActionType id) const;
     bool command(const QString &cmd);
     QStringList getAvailableCommands() const;
-    RS_SnapMode getSnaps() const;
-    RS2::SnapRestriction getSnapRestriction() const;
-    void set_snap_toolbar(QG_SnapToolBar *snap_toolbar);
     void setDocumentAndView(RS_Document* document, RS_GraphicView* graphicView);
     void setActionContext(LC_DefaultActionContext* actionContext) {m_actionContext = actionContext;};
+    void setSnapManager(LC_SnapManager* snapManager);
+    std::shared_ptr<RS_ActionInterface> createActionInstance(RS2::ActionType id, void* data) const;
 public slots:
-    void slotZoomIn(); // fixme - remove
-    void slotZoomOut();// fixme - remove
-
-    void slotSetSnaps(RS_SnapMode const &s) const;
-    void slotSnapFree() const;
-    void slotSnapGrid() const;
-    void slotSnapEndpoint() const;
-    void slotSnapOnEntity() const;
-    void slotSnapCenter() const;
-    void slotSnapMiddle() const;
-    void slotSnapDist() const;
+    void setSnaps(RS_SnapMode const &s) const;
     void slotSnapMiddleManual();
-    void slotSnapIntersection() const;
-    void slotSnapIntersectionManual();
-    void slotRestrictNothing() const;
-    void slotRestrictOrthogonal() const;
-    void slotRestrictHorizontal() const;
-    void slotRestrictVertical() const;
-    void disableSnaps() const;
-    void disableRestrictions() const;
     void slotSetRelativeZero();
     void slotLockRelativeZero(bool on);
-    void toggleVisibility(RS_Layer *layer);
-    void toggleLock(RS_Layer *layer);
-    void togglePrint(RS_Layer *layer);
-    void toggleConstruction(RS_Layer *layer);
-
-    void slotBlocksDefreezeAll(); // fixme - remove
-    void slotBlocksFreezeAll(); // fixme - remove
-    void slotBlocksAdd(); // fixme - remove
-    void slotBlocksRemove(); // fixme - remove
-    void slotBlocksAttributes(); // fixme - remove
-    void slotBlocksEdit(); // fixme - remove
-    void slotBlocksSave(); // fixme - remove
-    void slotBlocksInsert(); // fixme - remove
-    void slotBlocksToggleView(); // fixme - remove
-    void slotBlocksCreate(); // fixme - remove
-    void slotBlocksExplode(); // fixme - remove
-    void slotLayersDefreezeAll(); // fixme - remove
-    void slotLayersFreezeAll();// fixme - remove
-    void slotLayersUnlockAll();// fixme - remove
-    void slotLayersLockAll();// fixme - remove
-    void slotLayersAdd();// fixme - remove
-    void slotLayersRemove();// fixme - remove
-    void slotLayersEdit();// fixme - remove
-    void slotLayersToggleView();// fixme - remove
-    void slotLayersToggleLock();// fixme - remove
-    void slotLayersTogglePrint();// fixme - remove
-    void slotLayersToggleConstruction();// fixme - remove
-    void slotLayersExportSelected();// fixme - remove
-    void slotLayersExportVisible();// fixme - remove
-
+    // void toggleVisibility(RS_Layer *layer);
+    // void toggleLock(RS_Layer *layer);
+    // void togglePrint(RS_Layer *layer);
+    // void toggleConstruction(RS_Layer *layer);
 private:
-    // Type of draw order selected command
     RS_GraphicView *view {nullptr};
     RS_Document* document {nullptr};
-    RS2::ActionType orderType{RS2::ActionOrderTop};
-    QG_SnapToolBar *snap_toolbar{nullptr};
-    LC_DefaultActionContext* m_actionContext{nullptr}; // fixme complete initialization
+    LC_DefaultActionContext* m_actionContext{nullptr};
+    LC_SnapManager* m_snapManager;
 };
 
 #endif

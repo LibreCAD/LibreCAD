@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionpolylineappend.h"
+
+#include "lc_graphicviewport.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
@@ -46,6 +48,7 @@ void RS_ActionPolylineAppend::doTrigger() {
     }
     moveRelativeZero(newPolyline->getEndpoint()); // fixme - relative zero check!
     undoCycleReplace(originalPolyline, newPolyline);
+    m_viewport->notifyChanged();
 
     RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",newPolyline->getId());
     originalPolyline = nullptr;

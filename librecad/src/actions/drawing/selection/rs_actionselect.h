@@ -40,19 +40,18 @@ class RS_ActionSelect:public RS_ActionInterface {
 Q_OBJECT
 
 public:
-    RS_ActionSelect(QG_ActionHandler *a_handler,LC_ActionContext *actionContext,
+    RS_ActionSelect(LC_ActionContext *actionContext,
         RS2::ActionType nextAction,
         QList<RS2::EntityType> allowedEntityTypes = {});
     void init(int status) override;
     void resume() override;
-    int countSelected();
+    int countSelected() const;
     void keyPressEvent(QKeyEvent *e) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
 private:
-    QG_ActionHandler *action_handler = nullptr;
     RS2::ActionType nextAction = RS2::ActionNone;
     QList<RS2::EntityType> const entityTypeList;
 };

@@ -62,7 +62,7 @@ double RS_ActionDrawLineRelAngle::getAngle() const {
 }
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
-    if( fixedAngle && RS_Math::getAngleDifference(RS_Math::deg2rad(relativeAngleRad), M_PI_2) < RS_TOLERANCE_ANGLE)
+    if( fixedAngle && RS_Math::getAngleDifference(relativeAngleRad, M_PI_2) < RS_TOLERANCE_ANGLE)
         return RS2::ActionDrawLineOrthogonal;
     else
         return RS2::ActionDrawLineRelAngle;
@@ -96,26 +96,13 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             RS_Creation creation(nullptr, nullptr, false);
             std::unique_ptr<RS_Line> lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
             if (lineToCreate != nullptr){
-                previewLine(lineToCreate->getStartpoint(), lineToCreate->getEndpoint());
+                previewEntityToCreate(lineToCreate.get()->clone(), true);
                 if (m_showRefEntitiesOnPreview) {
                     auto const vp = entity->getNearestPointOnEntity(*pos, false);
                     previewRefPoint(vp);
                     previewRefPoint(lineToCreate->getEndpoint());
                 }
             }
-
-            /*RS_Creation creation(m_preview.get(), nullptr, false);
-            auto lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
-            if (lineToCreate != nullptr){
-                previewEntityToCreate(lineToCreate.get(), false);
-            }
-            if (m_showRefEntitiesOnPreview) {
-                if (lineToCreate != nullptr) {
-                    auto const vp = entity->getNearestPointOnEntity(*pos, false);
-                    previewRefPoint(vp);
-                    previewRefPoint(lineToCreate->getEndpoint());
-                }
-            }*/
             break;
         }
         default:

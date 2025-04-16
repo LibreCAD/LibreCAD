@@ -56,7 +56,7 @@ private:
     };
 
     /** Closest tangent. */
-    std::unique_ptr<RS_Line> tangent;
+    std::unique_ptr<RS_Line> tangent; // fixme sand - files - remove and rework to data.
     /** Chosen startpoint */
     std::unique_ptr<RS_Vector> point;
 

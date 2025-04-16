@@ -52,7 +52,6 @@ public:
     };
 
     LC_ActionLayersExport( LC_ActionContext *actionContext,
-                           RS_LayerList* inputLayersList,
                            Mode inputExportMode);
     void init(int status) override;
     bool collectLayersToExport(LC_LayersExportOptions* exportOptions);

@@ -74,6 +74,7 @@ public:
     void resume() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    QStringList getAvailableCommands() override;
 protected:
     std::unique_ptr<LC_ActionInfoMessageBuilder> m_msgBuilder;
     // fixme - sand - tmp -  move to overlay!!!
@@ -197,6 +198,7 @@ protected:
     virtual void onMouseRightButtonRelease(int status, LC_MouseEvent *e);
     virtual void onMouseLeftButtonPress(int status, LC_MouseEvent *e);
     virtual void onMouseRightButtonPress(int status, LC_MouseEvent *e);
+    virtual QStringList doGetAvailableCommands(int status);
 
     bool parseToWCSAngle(const QString &c, double &wcsAngleRad);
     bool parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad);
@@ -205,7 +207,6 @@ protected:
     void initFromSettings() override;
 private:
     LC_MouseEvent toLCMouseMoveEvent(QMouseEvent *e);
-
     friend LC_ActionInfoMessageBuilder;
 };
 #endif

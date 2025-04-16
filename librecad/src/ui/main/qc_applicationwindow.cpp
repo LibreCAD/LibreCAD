@@ -61,6 +61,7 @@
 #include "lc_quickinfowidget.h"
 #include "lc_releasechecker.h"
 #include "lc_snapoptionswidgetsholder.h"
+#include "lc_snapmanager.h"
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
@@ -648,7 +649,7 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
             bool isometricGrid = activatedGraphic->isIsometricGrid();
             RS2::IsoGridViewType isoViewType = activatedGraphic->getIsoView();
             updateGridViewActions(isometricGrid, isoViewType);
-            m_actionHandler->slotSetSnaps(m_snapToolBar->getSnaps());
+            m_actionHandler->setSnaps(m_snapToolBar->getSnaps());
         }
 
         updateActionsAndWidgetsForPrintPreview(printPreview);
@@ -1552,12 +1553,12 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
 
         case Qt::Key_Plus:
         case Qt::Key_Equal:
-            m_actionHandler->slotZoomIn();
+            m_actionHandler-> setCurrentAction(RS2::ActionZoomIn);
             e->accept();
             break;
 
         case Qt::Key_Minus:
-            m_actionHandler->slotZoomOut();
+            m_actionHandler->setCurrentAction(RS2::ActionZoomOut);
             e->accept();
             break;
 

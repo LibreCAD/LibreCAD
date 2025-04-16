@@ -421,7 +421,9 @@ HEADERS += \
     ui/dock_widgets/lc_graphicviewawarewidget.h \
     ui/dock_widgets/lc_widgets_common.h \
     #ui/dock_widgets/library_widget/lc_librarywidget.h \
+    ui/lc_actionhandlerfactory.h \
     ui/lc_graphicviewaware.h \
+    ui/lc_snapmanager.h \
     ui/lc_uiutils.h \
     ui/main/init/lc_applicationwindowinitializer.h \
     ui/main/support/lc_appwindowdialogsinvoker.h \
@@ -565,6 +567,8 @@ SOURCES += \
     ui/dock_widgets/cad/lc_caddockwidget.cpp \
     ui/dock_widgets/lc_dockwidget.cpp \
     ui/dock_widgets/lc_graphicviewawarewidget.cpp \
+    ui/lc_actionhandlerfactory.cpp \
+    ui/lc_snapmanager.cpp \
     ui/lc_uiutils.cpp \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/support/lc_appwindowdialogsinvoker.cpp \

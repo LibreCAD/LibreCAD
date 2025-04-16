@@ -271,15 +271,9 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::editActiveLayer);
     layButtons->addWidget(but);
 
-    // add separator line
-    // auto *vFrame = new QFrame;
-    // vFrame->setFrameShape(QFrame::VLine);
-    // layButtons->addWidget(vFrame);
-
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/down.lci"));
-//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Flat List Mode)"));
     but->setCheckable(true);
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::toggleFlatView);
@@ -550,10 +544,10 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
                         manageLayersVisibilityFlag(layersToEnable, layersToDisable, false);
                     } else {
                         // we enable ony the layer itself, without touching it secondary children
-                        m_actionHandler->toggleVisibility(lay);
+                        m_actionHandler->setCurrentAction(RS2::ActionLayersToggleView, lay);
                     }
                 } else {
-                    m_actionHandler->toggleVisibility(lay);
+                    m_actionHandler->setCurrentAction(RS2::ActionLayersToggleView, lay);
                 }
                 break;
             }
@@ -568,7 +562,7 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
                     manageLayersLockFlag(layersToEnable, layersToDisable, false);
                 }
                 else{
-                    m_actionHandler->toggleLock(lay);
+                    m_actionHandler->setCurrentAction(RS2::ActionLayersToggleLock, lay);
                 }
                 break;
             case LC_LayerTreeModel::PRINT:
@@ -582,7 +576,7 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
                     manageLayersPrintFlag(layersToEnable, layersToDisable, false);
                 }
                 else{
-                    m_actionHandler->togglePrint(lay);
+                    m_actionHandler->setCurrentAction(RS2::ActionLayersTogglePrint, lay);
                 }
                 break;
             case LC_LayerTreeModel::CONSTRUCTION:
@@ -596,7 +590,7 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
                     manageLayersConstructionFlag(layersToEnable, layersToDisable, false);
                 }
                 else {
-                    m_actionHandler->toggleConstruction(lay);
+                    m_actionHandler->setCurrentAction(RS2::ActionLayersToggleConstruction, lay);
                 }
                 break;
             default:

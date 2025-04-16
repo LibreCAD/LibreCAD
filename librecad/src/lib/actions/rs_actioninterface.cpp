@@ -280,10 +280,12 @@ QStringList RS_ActionInterface::getAvailableCommands() {
  *               step back (i.e. presses the right mouse button).
  */
 void RS_ActionInterface::setStatus(int status) {
-    this->m_status = status;
+    m_status = status;
     updateMouseButtonHints();
     updateMouseCursor();
-    if(status<0) finish();
+    if(status<0) {
+        finish();
+    }
 }
 
 /**
@@ -471,6 +473,10 @@ bool RS_ActionInterface::checkCommand(const QString& cmd, const QString& str,
  // fixme - check for type and string literal
 QString RS_ActionInterface::command(const QString& cmd) {
     return RS_COMMANDS->command(cmd);
+}
+
+void RS_ActionInterface::switchToAction(RS2::ActionType actionType, void* data) {
+    m_actionContext->setCurrentAction(actionType, data);
 }
 
 /**

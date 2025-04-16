@@ -128,11 +128,13 @@ constexpr int g_hotspotXY=-1;
  *                      returns nullptr, if no entity is found in range
  */
 RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event) {
-    if (event == nullptr)
+    if (event == nullptr) {
         return nullptr;
+    }
     RS_EntityContainer* container = view.getContainer();
-    if (container == nullptr)
+    if (container == nullptr) {
         return nullptr;
+    }
     const QPointF mapped = event->pos();
     double distance = RS_MAXDOUBLE;
     const LC_GraphicViewport* viewPort = view.getViewPort();
@@ -157,8 +159,9 @@ RS_Insert* getAncestorInsert(RS_Entity* entity) {
 
 // whether the current insert is part of Text
 RS_Entity* getParentText(RS_Insert* insert) {
-    if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr)
+    if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr) {
         return nullptr;
+    }
     switch (insert->getParent()->rtti()) {
         case RS2::EntityText:
         case RS2::EntityMText:
@@ -213,32 +216,26 @@ void QG_GraphicView::editAction( RS_Entity& entity){
     }
     switch(entity.rtti()) {
         case RS2::EntityInsert: {
-            auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - remove static
+            auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - remove static, it just one of parents?
             RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
             RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
             auto* insert = static_cast<RS_Insert*>(&entity);
             RS_Block* current = insert->getBlockForInsert();
-            if (current == active)
+            if (current == active) {
                 active=nullptr;
-            else if (blockList != nullptr)
+            }
+            else if (blockList != nullptr) {
                 blockList->activate(current);
+            }
             std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
                 if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
                     blockList->activate(*pointer);
             }};
-
-            // fixme - sand - files - explicit action creation
-            auto action = std::make_shared<RS_ActionBlocksEdit>(m_actionContext);
-            setCurrentAction(action);
+            switchToAction(RS2::ActionBlocksEdit);
             break;
         }
         default:{
-            // fixme - sand - files - explicit action creation
-            auto action = std::make_shared<RS_ActionModifyEntity>(m_actionContext, false);
-            action->setEntity(&entity);
-            setCurrentAction(action);
-            action->trigger();
-            action->finish(false);
+            switchToAction(RS2::ActionModifyEntity, &entity);
         }
     }
 }
@@ -511,15 +508,16 @@ void QG_GraphicView::resizeEvent(QResizeEvent* e) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
 
+
+void QG_GraphicView::switchToAction(RS2::ActionType actionType, void* data ) const {
+    m_actionContext->setCurrentAction(actionType, data);
+}
+
 void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     // pan zoom with middle mouse button
     if (event->button()==Qt::MiddleButton){
-        // fixme - sand - rework this and ensure there is not delay for pan start!!!
-        auto action = std::make_shared<RS_ActionZoomPan>(m_actionContext);
-        if (setCurrentAction(action)){
-            // FIXME - SAND - Crash is here due to already deleted action???
-            action->mousePressEvent(event); // try to avoid delay as possible
-        }
+        switchToAction(RS2::ActionZoomPan);
+        getCurrentAction()->mousePressEvent(event);
     }
     else {
         getEventHandler()->mousePressEvent(event);
@@ -531,7 +529,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
         default:
             break;
         case Qt::MiddleButton:
-            setCurrentAction(std::make_shared<RS_ActionZoomAuto>(m_actionContext));
+            switchToAction(RS2::ActionZoomAuto);
             break;
         case Qt::LeftButton:
             if (m_menus.contains("Double-Click")){
@@ -550,7 +548,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
     event->accept();
-
+    // fixme - sand - delegate to invoker?
     switch (event->button()) {
     case Qt::RightButton: {
         if (event->modifiers() == Qt::ControlModifier) {
@@ -665,8 +663,9 @@ bool QG_GraphicView::event(QEvent *event){
             RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
             // todo - sand - ucs - replace by direct zoom call?
             // fixme - sand - files - explicit action creation
-            setCurrentAction(std::make_shared<RS_ActionZoomIn>(m_actionContext, direction,
-                                                 RS2::Both, &mouse, factor));
+            /*setCurrentAction(std::make_shared<RS_ActionZoomIn>(m_actionContext, direction,
+                                                 RS2::Both, &mouse, factor));*/
+            doZoom(direction, mouse, zoomFactor);
         }
 
         return true;
@@ -679,6 +678,14 @@ bool QG_GraphicView::event(QEvent *event){
     return true;
 }
 
+void QG_GraphicView::doZoom(RS2::ZoomDirection direction, RS_Vector& center, double zoom_factor) {
+    if (direction==RS2::In) {
+        getViewPort()->zoomIn(zoom_factor, center);
+    } else {
+        getViewPort()->zoomOut(zoom_factor, center);
+    }
+}
+
 /**
  * support for the wacom graphic tablet.
  */
@@ -689,8 +696,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         case QPointingDevice::PointerType::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (getContainer() != nullptr) {
-			    auto a =
-                        std::make_shared<RS_ActionSelectSingle>(m_actionContext);
+			        auto a = std::make_shared<RS_ActionSelectSingle>(m_actionContext);
                     setCurrentAction(a);
                     QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
                                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
@@ -698,8 +704,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                     a->finish();
 
                     if (getContainer()->countSelected()>0) {
-                        setCurrentAction(
-                            std::make_shared<RS_ActionModifyDelete>(m_actionContext));
+                        switchToAction(RS2::ActionModifyDelete);
                     }
                 }
             }
@@ -858,16 +863,14 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 // Hold ctrl to zoom. 1 % per pixel
                 double v = (m_invertZoomDirection) ? (numPixels.y() / zoomWheelDivisor) : (-numPixels.y() / zoomWheelDivisor);
                 RS2::ZoomDirection direction;
-                double factor;
+                double zoomFactor;
 
                 if (v < 0) {
-                    direction = RS2::Out; factor = 1-v;
+                    direction = RS2::Out; zoomFactor = 1-v;
                 } else {
-                    direction = RS2::In;  factor = 1+v;
+                    direction = RS2::In;  zoomFactor = 1+v;
                 }
-                // todo - sand - ucs - replace by direct zoom call??
-                // fixme - sand - files - explicit action creation
-                setCurrentAction(std::make_shared<RS_ActionZoomIn>(m_actionContext, direction, RS2::Both, &mouse, factor));
+                doZoom(direction, mouse, zoomFactor);
             }
             else{
                 int hDelta = (m_invertHorizontalScroll) ? -numPixels.x() : numPixels.x();
@@ -879,8 +882,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                     m_vScrollBar->setValue(m_vScrollBar->value() - vDelta);
                 }
                 else {
-                    // todo - sand - ucs - replace by direct zoom call??
-                    setCurrentAction(std::make_shared<RS_ActionZoomScroll>(hDelta, vDelta,m_actionContext));
+                    getViewPort()->zoomPan(hDelta, vDelta);
                 }
             }
             redraw();
@@ -974,10 +976,11 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
             RS_Vector& zoomCenter = mouse;
 //            LC_ERR << " Mouse "  << mouse << " Direction: " << (zoomDirection == RS2::In ? "In" : "Out");
 
-            // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
+            /*// todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
             // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
             auto zoomAction = std::make_unique<RS_ActionZoomIn>(m_actionContext, zoomDirection, RS2::Both, &zoomCenter,m_scrollZoomFactor);
-            zoomAction->trigger();
+            zoomAction->trigger();*/
+            doZoom(zoomDirection, zoomCenter, m_scrollZoomFactor);
         }
     }
     redraw();
@@ -1032,7 +1035,7 @@ void QG_GraphicView::keyPressEvent(QKeyEvent * e){
     }
 
     if (scroll) {
-        setCurrentAction(std::make_shared<RS_ActionZoomScroll>(direction, m_actionContext));
+        getViewPort()->zoomScroll(direction);
     }
     getEventHandler()->keyPressEvent(e);
 }

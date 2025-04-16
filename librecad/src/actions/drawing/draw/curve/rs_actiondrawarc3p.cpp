@@ -26,6 +26,8 @@
 
 #include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
+
+#include "lc_actioncontext.h"
 #include "rs_arc.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -214,8 +216,7 @@ bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QStr
     if (checkCommand("center", c, rtti())) {
         accept = true;
         finish(false);
-        // fixme - review why this action is called there
-        m_graphicView->setCurrentAction(std::make_shared<RS_ActionDrawArc>(m_actionContext, RS2::ActionDrawArc));
+        switchToAction(RS2::ActionDrawArc);
     }
     // fixme - sand - add these to commands
     else if (checkCommand("altpoint", c, rtti())){

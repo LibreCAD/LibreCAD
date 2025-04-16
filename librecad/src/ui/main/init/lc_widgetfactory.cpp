@@ -147,9 +147,9 @@ QDockWidget* LC_WidgetFactory::createPenPalletteWidget(){
     return dock;
 }
 
-QDockWidget* LC_WidgetFactory::createLayerWidget(QG_ActionHandler *action_handler){
+QDockWidget* LC_WidgetFactory::createLayerWidget(QG_ActionHandler *actionHandler){
     auto dock = createDockWidget(tr("Layers"), "layer_dockwidget", tr("Layers"));
-    auto widget = new QG_LayerWidget(action_handler, dock, "Layer");
+    auto widget = new QG_LayerWidget(m_agm, actionHandler, dock, "Layer");
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
@@ -220,10 +220,10 @@ QDockWidget* LC_WidgetFactory::createEntityInfoWidget(){
     return dock;
 }
 
-QDockWidget*  LC_WidgetFactory::createBlockListWidget(QG_ActionHandler *action_handler){
+QDockWidget*  LC_WidgetFactory::createBlockListWidget(QG_ActionHandler *actionHandler){
     auto dock =  createDockWidget(tr("Blocks"), "block_dockwidget", tr("Blocks"));
 
-    auto widget = new QG_BlockWidget(action_handler, dock, "Block");
+    auto widget = new QG_BlockWidget(m_agm, actionHandler, dock, "Block");
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
 
