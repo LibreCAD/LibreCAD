@@ -41,12 +41,14 @@ public:
     QString getLabel() const;
     QString getTagName() const;
 protected:
-    int major = 0;
-    int minor = 0;
-    int revision = 0;
-    int bugfix = 0;
-    QString label = "";
-    QString tagName = "";
+    // actually, that's just a suxx in GCC world... it's weird, and previous name crashed the build.
+    // https://bugzilla.redhat.com/show_bug.cgi?id=130601
+    int m_major = 0;
+    int m_minor = 0;
+    int m_revision = 0;
+    int m_bugfix = 0;
+    QString m_label = "";
+    QString m_tagName = "";
 };
 
 class LC_ReleaseInfo{
@@ -56,42 +58,42 @@ class LC_ReleaseInfo{
     LC_ReleaseInfo() = default;
 
     LC_ReleaseInfo(const QString &published, bool isDraft, bool isPreRelease, const QString &url, const QString &body):
-        draft{isDraft}
-      , prerelease{isPreRelease}
-      , publishedDate{!published.isEmpty() ? QDateTime::fromString(published, Qt::ISODate).toUTC() : QDateTime{}}
-      , htmlURL{url}
-      , releaseNotes{body}
-      , valid{true}
+        m_isDraft{isDraft}
+      , m_isPrerelease{isPreRelease}
+      , m_publishedDate{!published.isEmpty() ? QDateTime::fromString(published, Qt::ISODate).toUTC() : QDateTime{}}
+      , m_htmlURL{url}
+      , m_releaseNotes{body}
+      , m_valid{true}
     {
     }
 
    bool isAfter(LC_ReleaseInfo other) const {
-        return publishedDate > other.publishedDate;
+        return m_publishedDate > other.m_publishedDate;
     }
     const LC_TagInfo &getTagInfo() const {
-        return tagInfo;
+        return m_tagInfo;
     }
     void setTagInfo(const LC_TagInfo &tag) {
-        tagInfo = tag;
+        m_tagInfo = tag;
     }
     const QDateTime &getPublishedDate() const {
-        return publishedDate;
+        return m_publishedDate;
     }
     const QString &getHtmlUrl() const {
-        return htmlURL;
+        return m_htmlURL;
     }
     bool isValid() const {
-        return valid;
+        return m_valid;
     }
 
 protected:
-    LC_TagInfo tagInfo;
-    bool draft = true;
-    bool prerelease = true;
-    QDateTime publishedDate;
-    QString htmlURL = "";
-    QString releaseNotes = "";
-    bool valid = false;
+    LC_TagInfo m_tagInfo;
+    bool m_isDraft = true;
+    bool m_isPrerelease = true;
+    QDateTime m_publishedDate;
+    QString m_htmlURL = "";
+    QString m_releaseNotes = "";
+    bool m_valid = false;
 };
 
 

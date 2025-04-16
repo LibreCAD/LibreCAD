@@ -21,15 +21,6 @@
  * ********************************************************************************
  */
 
-
-
-#ifdef major
-#undef major
-#endif
-
-#ifdef minor
-#undef minor
-#endif
 #include "lc_releasechecker.h"
 
 #include <QJsonArray>
@@ -40,37 +31,37 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_settings.h"
 
-LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):major(majorVer), minor(minorVer), revision(
-                                                                                                                                           revisionNum), bugfix(bugfixVer), label(labelVer), tagName(tagNameVer) {
+LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):m_major(majorVer), m_minor(minorVer), m_revision(
+                                                                                                                                           revisionNum), m_bugfix(bugfixVer), m_label(labelVer), m_tagName(tagNameVer) {
 }
 
 QString LC_TagInfo::getLabel() const {
-    return label;
+    return m_label;
 }
 
 QString LC_TagInfo::getTagName() const {
-    return tagName;
+    return m_tagName;
 }
 
 
 bool LC_TagInfo::isSameVersion(const LC_TagInfo& other) const{
-    return major == other.major && minor == other.minor && revision == other.revision && bugfix == other.bugfix;
+    return m_major == other.m_major && m_minor == other.m_minor && m_revision == other.m_revision && m_bugfix == other.m_bugfix;
 }
 
 bool LC_TagInfo::isBefore(const LC_TagInfo& other) const{
-    if (major < other.major){
+    if (m_major < other.m_major){
         return true;
     }
-    else if (major == other.major){
-        if (minor < other.minor){
+    else if (m_major == other.m_major){
+        if (m_minor < other.m_minor){
             return true;
         }
-        else if (minor == other.minor) {
-            if (revision < other.revision) {
+        else if (m_minor == other.m_minor) {
+            if (m_revision < other.m_revision) {
                 return true;
             }
-            else if (revision == other.revision) {
-                if (bugfix < other.bugfix) {
+            else if (m_revision == other.m_revision) {
+                if (m_bugfix < other.m_bugfix) {
                     return true;
                 }
             }
@@ -195,7 +186,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 
             LC_TagInfo ignoredRelease = parseTagInfo(ignoredReleaseTagStr);
             LC_TagInfo ignoredPreRelease = parseTagInfo(ignoredPreReleaseTag);
-            if (m_ownReleaseInfo.prerelease){
+            if (m_ownReleaseInfo.m_isPrerelease){
                 ignorePreReleases = false;
             }
 
@@ -257,7 +248,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
                     m_latestRelease = info;
                 }
                 else{
-                    m_latestRelease.valid = false;
+                    m_latestRelease.m_valid = false;
                     availableReleases = 0;
                 }
             }
@@ -270,7 +261,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
                     m_latestPreRelease = info;
                 }
                 else {
-                    m_latestRelease.valid = false;
+                    m_latestRelease.m_valid = false;
                     availablePreReleases = 0;
                 }
             }
@@ -284,13 +275,13 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 
 void LC_ReleaseChecker::sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const {
     std::sort(list.begin(), list.end(), [](const LC_ReleaseInfo& v0, const LC_ReleaseInfo& v1) {
-        bool result = v0.tagInfo.isSameVersion(v1.tagInfo);
+        bool result = v0.m_tagInfo.isSameVersion(v1.m_tagInfo);
         if (result){
             // if releases has the same version (mostly pre-releases) - just sort them by date and use the freshest one
-            result = v1.publishedDate < v0.publishedDate;
+            result = v1.m_publishedDate < v0.m_publishedDate;
         }
         else {
-            result = v0.tagInfo.isBefore(v1.tagInfo);
+            result = v0.m_tagInfo.isBefore(v1.m_tagInfo);
         }
         
         return result;
