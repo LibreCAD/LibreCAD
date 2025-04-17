@@ -63,10 +63,30 @@ bool validRange(const RS_Vector& vp){
 
 // validate vpMin and vpMax forms a valid bounding box
 bool validRange(const RS_Vector& vpMin, const RS_Vector& vpMax){
-    return validRange(vpMin)
-           && validRange(vpMax)
-           && vpMin.x < vpMax.x
-           && vpMin.y < vpMax.y;
+    bool validCoords = validRange(vpMin) && validRange(vpMax);
+    if (validCoords) {
+        bool xValid{false};
+        double xDelta = vpMax.x - vpMin.x; // vpMax.x == vpMin.x is also valid for vertical lines
+        if (std::signbit(xDelta)) {
+            xValid = std::abs(xDelta) < RS_TOLERANCE; //
+        }
+        else {
+            xValid = true;
+        }
+        if (xValid) {
+            bool yValid{false};
+            double yDelta = vpMax.y - vpMin.y; // vpMax.x == vpMin.x is also valid for horizontal lines
+            if (std::signbit(yDelta)) {
+                yValid = std::abs(yDelta) < RS_TOLERANCE;
+            }
+            else {
+                yValid = true;
+            }
+            return yValid;
+        }
+    }
+    return false;
+
 }
 }
 /**
@@ -714,9 +734,10 @@ std::ostream& operator << (std::ostream& os, RS_Graphic& g) {
 int RS_Graphic::clean() {
     int how_many = 0;
 
+    forcedCalculateBorders();
+
     for(RS_Entity *e: std::as_const(entities)) {
         if (e != nullptr) {
-            e->calculateBorders();
             if (!validRange(e->getMin(), e->getMax())) {
                 // fixme - sand - files restore, the issue with
                 // removeEntity(e);
