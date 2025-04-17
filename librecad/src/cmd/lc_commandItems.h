@@ -76,7 +76,16 @@ const LC_CommandItem g_commandList[] = {
             RS2::ActionCommand
         },
 */
-
+        {
+            {{"cnlayer", QObject::tr("cnlayer")}},
+            {{"cnly", QObject::tr("cnly")}},
+            RS2::ActionLayersAddCmd
+        },
+        {
+            {{"cslayer", QObject::tr("cslayer")}},
+            {{"csly", QObject::tr("csly")}},
+            RS2::ActionLayersActivateCmd
+        },
         /* LINE COMMANDS */
         // draw line
         {

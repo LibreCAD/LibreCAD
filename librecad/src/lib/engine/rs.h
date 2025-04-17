@@ -428,6 +428,8 @@ namespace RS2 {
         ActionLayersUnlockAll,
         ActionLayersLockAll,
         ActionLayersAdd,
+        ActionLayersAddCmd,
+        ActionLayersActivateCmd,
         ActionLayersRemove,
         ActionLayersEdit,
         ActionLayersToggleView,

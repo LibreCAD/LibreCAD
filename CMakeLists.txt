@@ -670,10 +670,13 @@ set(SOURCES
         librecad/src/actions/drawing/info/rs_actioninfoinside.h
 		librecad/src/actions/drawing/info/rs_actioninfototallength.cpp
 		librecad/src/actions/drawing/info/rs_actioninfototallength.h
+        librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.h
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.cpp
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.h
-        librecad/src/actions/dock_widgets/layer/rs_actionlayersedit.cpp
+        librecad/src/actions/dock_widgets/layer/lc_actionlayerscmd.h
+        librecad/src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp
         librecad/src/actions/dock_widgets/layer/rs_actionlayersedit.h
+        librecad/src/actions/dock_widgets/layer/rs_actionlayersedit.cpp
         librecad/src/actions/dock_widgets/layer/rs_actionlayersfreezeall.cpp
         librecad/src/actions/dock_widgets/layer/rs_actionlayersfreezeall.h
         librecad/src/actions/dock_widgets/layer/rs_actionlayerslockall.cpp

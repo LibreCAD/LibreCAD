@@ -30,6 +30,12 @@ Command widget may be activated by focus action even if the widget is not visibl
 ### Layers export
 Generic refactoring, more export options in the save dialog, ability to save also UCSs and Named Views as part of export. 
 
+### 2092 - commands for layers
+Two simple commands were added to let management of layers via script file. 
+
+1) cslayer - makes the layer with specified name active
+2) cnlayer - creates layer with given name
+
 ### Other 
 
 * Initial support of creation of sharing library for LC_IconEngine in cmake build
@@ -43,8 +49,9 @@ Generic refactoring, more export options in the save dialog, ability to save als
 * LibreCAD#2108
 * LibreCAD#2103
 * LibreCAD#2098
+* LibreCAD#2092
 * LibreCAD#2090
-* LibreCAD#2086 (?)
+* LibreCAD#2086 (?)* 
 * LibreCAD#2082
 * LibreCAD#2075
 * LibreCAD#2074

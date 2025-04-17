@@ -56,6 +56,7 @@
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actioninfopickcoordinates.h"
 #include "lc_actioninfoproperties.h"
+#include "lc_actionlayerscmd.h"
 #include "lc_actionlayersexport.h"
 #include "lc_actionlayerstoggleconstruction.h"
 #include "lc_actionmodifyalign.h"
@@ -815,6 +816,12 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
         }
         case RS2::ActionLayersAdd: {
             return std::make_shared<RS_ActionLayersAdd>(ctx);
+        }
+        case RS2::ActionLayersAddCmd: {
+            return std::make_shared<LC_ActionLayersCmd>(ctx, RS2::ActionLayersAddCmd);
+        }
+        case RS2::ActionLayersActivateCmd: {
+            return std::make_shared<LC_ActionLayersCmd>(ctx, RS2::ActionLayersActivateCmd);
         }
         case RS2::ActionLayersRemove: {
             return std::make_shared<RS_ActionLayersRemove>(ctx);

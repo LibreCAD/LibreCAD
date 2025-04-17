@@ -72,9 +72,11 @@ RS_EventHandler::~RS_EventHandler() {
 }
 
 void RS_EventHandler::uncheckQAction(){
-    if (!hasAction() && m_QAction != nullptr) {
-        m_QAction->setChecked(false);
-        m_QAction = nullptr;
+    if (!hasAction()){
+        if (m_QAction != nullptr) {
+            m_QAction->setChecked(false);
+            m_QAction = nullptr;
+        }
         m_graphicView->notifyNoActiveAction();
     }
 }
@@ -254,7 +256,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                 }
                 else {
                     // send command event directly to current action:
-                    m_currentActions.last()->commandEvent(e);
+                    std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
+                    lastAction->commandEvent(e);
+                    if (e->isAccepted()) {
+                        checkLastActionCompletedAndUncheckQAction(lastAction);
+                        cleanUp();
+                    }
                 }
             }else{
                 //send the command to default action
