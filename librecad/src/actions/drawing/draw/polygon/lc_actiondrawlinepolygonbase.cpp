@@ -40,6 +40,7 @@
 #include "qg_linepolygonoptions.h"
 #include "rs_commandevent.h"
 #include "lc_linemath.h"
+#include "rs_line.h"
 
 LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
     :RS_PreviewActionInterface(name, actionContext, actionType),number(3), pPoints(std::make_unique<Points>()), lastStatus(SetPoint1){}

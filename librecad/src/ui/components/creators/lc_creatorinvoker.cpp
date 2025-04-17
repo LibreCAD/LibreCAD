@@ -44,19 +44,24 @@ LC_CreatorInvoker::LC_CreatorInvoker(QC_ApplicationWindow *appWin, LC_ActionGrou
 void LC_CreatorInvoker::createCustomToolbars() {
     QSettings settings;
     settings.beginGroup("CustomToolbars");
-    const QStringList &list = settings.childKeys();
-    for (const auto& key: list) {
-        auto toolbar = new QToolBar(key, m_appWindow);
-        toolbar->setObjectName(key);
-        const QVariant &variant = settings.value(key);
-        if (variant.isValid()) {
-            const QStringList &qList = variant.toStringList();
-            for (const auto &actionName: qList) {
-                toolbar->addAction(getAction(actionName));
-            }
+    const QStringList &customToolbars = settings.childKeys();
+
+    for (const QString& key : customToolbars) {
+        QList<QAction*> actionsList;
+        auto actionNames = settings.value(key).toStringList();
+        for (const QString& actionName : actionNames) {
+            QAction* action = getAction(actionName);
+            if (action != nullptr)
+                actionsList.push_back(getAction(actionName));
+        }
+        if (!actionsList.empty()) {
+            auto* toolbar = new QToolBar(key, m_appWindow);
+            toolbar->setObjectName(key);
+            toolbar->addActions(actionsList);
             m_appWindow->addToolBar(toolbar);
         }
     }
+
     settings.endGroup();
 }
 

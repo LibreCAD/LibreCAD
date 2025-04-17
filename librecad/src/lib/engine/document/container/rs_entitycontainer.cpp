@@ -767,7 +767,8 @@ void RS_EntityContainer::forcedCalculateBorders() {
         //RS_Layer* layer = e->getLayer();
 
         if (e->isContainer()) {
-            ((RS_EntityContainer *) e)->forcedCalculateBorders();
+            auto container = static_cast<RS_EntityContainer*>(e);
+            container->forcedCalculateBorders();
         } else {
             e->calculateBorders();
         }
@@ -876,7 +877,8 @@ void RS_EntityContainer::renameInserts(
             }
         }
         if (e->isContainer()) {
-            static_cast<RS_EntityContainer*>(e)->renameInserts(oldName, newName);
+            auto container = static_cast<RS_EntityContainer*>(e);
+            container->renameInserts(oldName, newName);
         }
     }
 
