@@ -24,7 +24,9 @@
 **
 **********************************************************************/
 
+#include "qg_linebisectoroptions.h"
 #include "rs_actiondrawlinebisector.h"
+#include "rs_actioninterface.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
@@ -33,8 +35,6 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "qg_linebisectoroptions.h"
-#include "rs_actioninterface.h"
 
 namespace {
 
@@ -190,7 +190,7 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetLength: {
-            bool ok;
+            bool ok = false;
             double l = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
@@ -203,8 +203,8 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetNumber: {
-            bool ok;
-            int n = (int) RS_Math::eval(c, &ok);
+            bool ok = false;
+            int n = std::lround(RS_Math::eval(c, &ok));
             if (ok){
                 accept= true;
                 if (n > 0 && n <= 200)

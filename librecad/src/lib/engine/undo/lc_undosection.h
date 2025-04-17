@@ -44,7 +44,7 @@ class LC_GraphicViewport;
 */
 class LC_UndoSection {
 public:
-    LC_UndoSection(RS_Document * doc, LC_GraphicViewport *view,const bool handleUndo = true);
+    LC_UndoSection(RS_Document * doc, LC_GraphicViewport *view, bool handleUndo = true);
     ~LC_UndoSection();
 
     void addUndoable(RS_Undoable * undoable);

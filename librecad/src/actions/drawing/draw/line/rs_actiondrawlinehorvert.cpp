@@ -44,7 +44,7 @@ struct RS_ActionDrawLineHorVert::Points {
 };
 
 RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Draw horizontal/vertical lines",actionContext),
+    :RS_PreviewActionInterface("Draw horizontal/vertical lines",actionContext,RS2::ActionDrawLineHorVert),
     pPoints(std::make_unique<Points>()){
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");

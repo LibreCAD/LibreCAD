@@ -34,6 +34,7 @@ public:
     void mousePressEvent(QMouseEvent*) override;
     void init(int status) override;
     void drawSnapper() override;
+
 protected:
     bool m_selectionComplete = false;
     bool m_countDeep = false;

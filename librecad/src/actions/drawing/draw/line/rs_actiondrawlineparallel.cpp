@@ -69,13 +69,13 @@ void RS_ActionDrawLineParallel::doTrigger() {
     RS_Creation creation(m_container, m_viewport);
     RS_Entity *e = creation.createParallel(*coord,distance, number,entity);
 
-    if (!e){
+    if (e != nullptr){
         RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:No parallels added\n");
     }
 }
 
 void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
-    *coord = {e->graphPoint};
+    *coord = {e->graphPoint}; // copy is needed there!
 
     entity = catchAndDescribe(e, RS2::ResolveAll);
 
@@ -144,7 +144,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
                 bool ok = false;
                 double d = RS_Math::eval(c, &ok);
                 accept = true;
-                if (ok && d > 1.0e-10){
+                if (ok && d > RS_TOLERANCE){
                     distance = d;
                 } else {
                     commandMessage(tr("Not a valid expression"));

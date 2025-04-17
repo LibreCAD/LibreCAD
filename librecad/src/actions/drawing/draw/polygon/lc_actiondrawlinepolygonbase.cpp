@@ -275,16 +275,7 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
     if (polyline != nullptr){
         previewEntity(polyline);
         if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
-            // LC_InfoMessageBuilder msg{};
-            // msg.add(tr("To be created:"), tr("Polygon"));
-            // msg.add(tr("Center:"), formatVector(polygonInfo.centerPoint));
-            // double wcsStartingAngle = ;
-            // msg.add(tr("Start angle:"), formatWCSAngle(wcsStartingAngle));
-            // msg.add(tr("Radius:"), formatLinear(polygonInfo.vertexRadius));
-            // msg.add(tr("Radius Inner:"), formatLinear(polygonInfo.innerRadius));
-            // appendInfoCursorZoneMessage(msg.toString(), 2, false);
-
-            msg(tr("To be created:"), tr("Polygon"))
+              msg(tr("To be created:"), tr("Polygon"))
                 .vector(tr("Center:"), polygonInfo.centerPoint)
                 .wcsAngle(tr("Start angle:"), polygonInfo.startingAngle)
                 .linear(tr("Radius:"), polygonInfo.vertexRadius)

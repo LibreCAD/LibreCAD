@@ -22,8 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_LINEMATH_H
 #define LC_LINEMATH_H
 
-#include "rs_line.h"
-#include "rs_vector.h"
+class RS_Line;
+class RS_Vector;
+class RS_VectorSolutions;
+
+struct RS_LineData;
 
 namespace LC_LineMath {
 

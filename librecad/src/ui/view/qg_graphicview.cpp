@@ -863,13 +863,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 // Hold ctrl to zoom. 1 % per pixel
                 double v = (m_invertZoomDirection) ? (numPixels.y() / zoomWheelDivisor) : (-numPixels.y() / zoomWheelDivisor);
                 RS2::ZoomDirection direction;
-                double zoomFactor;
-
                 if (v < 0) {
-                    direction = RS2::Out; zoomFactor = 1-v;
+                    direction = RS2::Out;
                 } else {
-                    direction = RS2::In;  zoomFactor = 1+v;
+                    direction = RS2::In;
                 }
+
+                double zoomFactor = 1. + std::abs(v);
                 doZoom(direction, mouse, zoomFactor);
             }
             else{
