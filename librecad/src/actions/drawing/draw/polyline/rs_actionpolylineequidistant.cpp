@@ -118,8 +118,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
                         "RS_ActionPolylineEquidistant::makeContour: no valid container");
     }
 
-//    auto *originalPolyline = (RS_Polyline *) originalEntity;
-//create a list of entities to offset without length = 0
+    //create a list of entities to offset without length = 0
     QList<RS_Entity *> entities;
     for (auto en: *originalPolyline) {
         if (en->getLength() > 1.0e-12)
@@ -140,7 +139,6 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
 
     for (int num = 1; num <= number || (number == 0 && num <= 1); num++) {
         auto newPolyline = new RS_Polyline(m_container);
-
 
         bool first = true;
         bool closed = originalPolyline->isClosed();
@@ -200,11 +198,13 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
                     prevEntity = newPolyline->lastEntity();
                     RS_Vector v0 = calculateIntersection(prevEntity, currEntity);
                     if (prevEntity->rtti() == RS2::EntityArc){
-                        ((RS_Arc *) prevEntity)->setAngle2(arcFirst.getCenter().angleTo(v0));
-                        ((RS_Arc *) prevEntity)->calculateBorders();
-                        newPolyline->setNextBulge(((RS_Arc *) prevEntity)->getBulge());
+                        auto arc = static_cast<RS_Arc*>(prevEntity);
+                        arc->setAngle2(arcFirst.getCenter().angleTo(v0));
+                        arc->calculateBorders();
+                        newPolyline->setNextBulge(arc->getBulge());
                     } else {
-                        ((RS_Line *) prevEntity)->setEndpoint(v0);
+                        auto line = static_cast<RS_Line*>(prevEntity);
+                        line->setEndpoint(v0);
                         newPolyline->setNextBulge(0.0);
                     }
                     newPolyline->setEndpoint(v0);
@@ -216,7 +216,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
                 } else
                     bulge = 0.0;
             }
-            if (prevEntity){
+            if (prevEntity != nullptr){
                 newPolyline->addVertex(v, bulge, false);
                 if (currEntity->rtti() == RS2::EntityArc){
                     arcFirst.setData(arc1.getData());

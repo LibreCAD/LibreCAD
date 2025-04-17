@@ -753,9 +753,11 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
             if(irev) {
                 setAngle2(ia);
                 setAngle1(ia2);
+                calculateBorders();
             } else {
                 setAngle1(ia);
                 setAngle2(ia2);
+                calculateBorders();
             }
             da1=fabs(remainder(getAngle1()-am,2*M_PI));
             da2=fabs(remainder(getAngle2()-am,2*M_PI));
@@ -778,6 +780,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
             } else {
                 setAngle1(ia);
             }
+            calculateBorders();
         }
     }
     LC_LOG<<"RS_Arc::prepareTrim(): line "<<__LINE__<<": angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getArcAngle(is)<<" ia2="<<ia2;

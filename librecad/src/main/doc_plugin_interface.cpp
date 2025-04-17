@@ -459,10 +459,12 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         }
         if (hash.contains(DPI::STARTANGLE)) {
              arc->setAngle1( (hash.take(DPI::STARTANGLE)).toDouble() );
+             arc->calculateBorders();
            vec.y = (hash.take(DPI::STARTANGLE)).toDouble();
         }
         if (hash.contains(DPI::ENDANGLE)) {
             arc->setAngle2( (hash.take(DPI::ENDANGLE)).toDouble() );
+            arc->calculateBorders();
         }
         break;}
     case RS2::EntityCircle: {

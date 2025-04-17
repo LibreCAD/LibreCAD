@@ -10,10 +10,9 @@ Some generic refactorings were performed:
 4) several invalid/bad dependencies from model entities to view/ui, static references were removed
 5) connections were modernized to modern reference-based form of signals and slots
 6) not used classes were removed (old CAD Toolbars/widgets)
-7) refactoring for actions invocation, separate factory for actions creation 
+7) refactoring for actions invocations,  QG_ActionHandler refactoring, separate factory for actions creation, actions adjustments 
 8) bugfixes
-9) code cleanup, fields renaming (WIP)
-10) copy&paste and generic entities selection functionality improvements
+9) generic code cleanup, fields renaming to conform m_ naming pattern (WIP)
 
 
 ### Widget Options
@@ -33,9 +32,14 @@ Generic refactoring, more export options in the save dialog, ability to save als
 
 ### Other 
 
-Initial support of creation of sharing library for LC_IconEngine in cmake build
+* Initial support of creation of sharing library for LC_IconEngine in cmake build
+* *.llf and *.cxf files may be also opened by drag&drop them to main window
+* added options to app preferences->render  that controls how many columns should be used for rendering letters in the opened font's file.
+* copy&paste and generic entities selection functionality improvements
 
 ### Fixed Issues
+* LibreCAD#2111
+* LibreCAD#2110
 * LibreCAD#2108
 * LibreCAD#2103
 * LibreCAD#2098
