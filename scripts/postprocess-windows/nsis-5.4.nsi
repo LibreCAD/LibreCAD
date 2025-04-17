@@ -121,6 +121,9 @@ FunctionEnd
 Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
   File /r "..\..\generated\Release\*.*"
+  SetOutPath "$INSTDIR\resources"
+  File /r "..\..\librecad\support\*.*"
+  File /r "..\..\generated\plugins"
   SetOutPath "$INSTDIR\resources\qm"
   File /NONFATAL "..\..\generated\*.qm"
   SetOutPath "$INSTDIR"

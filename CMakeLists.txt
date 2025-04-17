@@ -5,17 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
-set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
+#set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 
 #set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 
-set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
-set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
-set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
-set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
-set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC_OPTIONS --connections string)
@@ -1493,7 +1487,7 @@ set(SOURCES
 
 #qt5_wrap_cpp(TARGET LibreCAD ${SOURCES})
 #[[
-qt6_wrap_ui(SOURCES
+qt_wrap_ui(SOURCES
 ./librecad/src/ui/forms/lc_dlgsplinepoints.ui
 ./librecad/src/ui/forms/qg_beveloptions.ui
 ./librecad/src/ui/forms/qg_circleoptions.ui
@@ -1595,7 +1589,7 @@ qt6_wrap_ui(SOURCES
 ./librecad/src/ui/lc_quickinfowidgetoptionsdialog.ui)
 ]]
 
-qt6_standard_project_setup()
+#qt_standard_project_setup()
 # qt6_standard_project_setup(I18N_TRANSLATED_LANGUAGES ar ca cs da de el en_au en es_ar es_bo es_cl es_co es_cr es_do es_ec es_gt es_hn es_mx es_ni es_pa es_pe es_pr es_py es_sv es es_us es_uy es_ve et eu fi fr gl he hi hu id_ID it ja ka ko lv mk nl no pa pl pt_br pt_pt ro_ro ru sk sl sq_al sr sv ta th tr uk zh_cn zh_tw)
 
 qt_add_executable(librecad
@@ -1611,9 +1605,6 @@ endif(Boost_FOUND)
 
 endif(WIN32)
 
-
-
-#add_executable(LibreCAD ${SOURCES})
 target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt::Network)
 
 #set_target_properties(librecad PROPERTIES
@@ -1706,6 +1697,8 @@ target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
 target_include_directories(ttf2lff PRIVATE
 	${FREETYPE_INCLUDE_DIRS})
 endif(NOT WIN32)
+
+add_subdirectory(plugins)
 
 #qt_internal_add_plugin(QSvgIconPlugin
 #		OUTPUT_NAME lc_svgicon

@@ -65,21 +65,7 @@ convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/a
 
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
-wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+# Bundle EVERYTHING
+VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage -s deploy appdir/usr/share/applications/*.desktop
+VERSION=`git describe --always` ./appimagetool-*.AppImage ./appdir
 chmod +x *.AppImage
-#ARCH=x86_64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
-export QT_QPA_PLATFORM_PLUGIN_PATH=app/usr/lib/plugins/platforms
-export EXTRA_PLATFORM_PLUGINS="xcb;wayland"
-export EXTRA_QT_PLUGINS="waylandcompositor"
-export EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so"
-ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --list-plugins
-export QT_QPA_PLATFORM_PLUGIN_PATH=app/usr/lib/plugins
-ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --list-plugins
-echo "done"
-ARCH=x86_64 ./linuxdeploy-x86_64.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop -oxcb,wayland
-ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --help
-echo "done2"
-ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir -extra-plugins=platforms/
-#ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir -extra-plugins=appdir/usr/lib/plugins/platforms/
-VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage appdir/
