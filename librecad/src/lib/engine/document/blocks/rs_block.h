@@ -90,7 +90,7 @@ public:
     /**
      * @return base point of this block.
      */
-    RS_Vector getBasePoint() const {return data.basePoint;}
+    RS_Vector   getBasePoint() const {return data.basePoint;}
 
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;

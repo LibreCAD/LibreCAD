@@ -460,6 +460,9 @@ void QG_DlgOptionsGeneral::init(){
 
         bool checked = LC_GET_BOOL("CircleRenderAsArcs", false);
         rbRenderCirclesAsArcs->setChecked(checked);
+
+        int fontLettersColumnsCount = LC_GET_INT("FontLettersColumnsCount", 10);
+        sbFontLettersColumnCount->setValue(fontLettersColumnsCount);
     }
 
     LC_GROUP("NewDrawingDefaults");
@@ -783,6 +786,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ArcRenderInterpolateSegmentAngle", sbRenderArcSegmentAngle->value() * 100);
             LC_SET("ArcRenderInterpolateSegmentSagitta", sbRenderArcMaxSagitta->value() * 100);
             LC_SET("CircleRenderAsArcs", rbRenderCirclesAsArcs->isChecked());
+
+            LC_SET("FontLettersColumnsCount", sbFontLettersColumnCount->value());
         }
 
         LC_GROUP("Colors"); {

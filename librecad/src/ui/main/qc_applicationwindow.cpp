@@ -379,13 +379,22 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent *ce) {
     tryCloseAllBeforeExist() ? ce->accept() : ce->ignore();
 }
 
+bool QC_ApplicationWindow::isAcceptableDragNDropFileName(const QString& fileName) {
+    if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) ||
+        fileName.endsWith(R"(.cxf)", Qt::CaseInsensitive) ||
+        fileName.endsWith(R"(.lff)", Qt::CaseInsensitive)) {
+        return QFileInfo::exists(fileName);
+    }
+    return false;
+}
+
 void QC_ApplicationWindow::dropEvent(QDropEvent *event) {
     event->acceptProposedAction();
     //limit maximum number of dropped files to be opened
     unsigned counts = 0;
     for (QUrl const &url: event->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
-        if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo::exists(fileName)) {
+        if (isAcceptableDragNDropFileName(fileName)) {
             openFile(fileName);
             if (++counts > 32) return;
         }
@@ -396,7 +405,7 @@ void QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls()) {
         for (QUrl const &url: event->mimeData()->urls()) {
             const QString &fileName = url.toLocalFile();
-            if (fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive) && QFileInfo::exists(fileName)) {
+            if (isAcceptableDragNDropFileName(fileName)) {
                 event->acceptProposedAction();
                 return;
             }

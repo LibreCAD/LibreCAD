@@ -88,7 +88,8 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
     font.generateAllFonts();
     RS_BlockList* letterList = font.getLetterList();
-    for (unsigned i=0; i<font.countLetters(); ++i) {
+    auto lettersCount = font.countLetters();
+    for (unsigned i=0; i<lettersCount; ++i) { // fixme - sand - this cycle takes too long for large fonts (azomix), refactor reading and avoid  letterList->rename
         RS_Block* ch = font.letterAt(i);
 
         QString uCode;
@@ -282,4 +283,3 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 void RS_FilterLFF::stream(std::ofstream& fs, double value) {
     fs << RS_Utility::doubleToString(value).toLatin1().data();
 }
-

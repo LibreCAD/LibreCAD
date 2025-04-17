@@ -163,7 +163,7 @@ void RS_BlockList::remove(RS_Block* block) {
  * @retval true block was successfully renamed.
  * @retval false block couldn't be renamed.
  */
-bool RS_BlockList::rename(RS_Block* block, const QString& name) {
+bool RS_BlockList:: rename(RS_Block* block, const QString& name) {
 	if (block) {
 		if (!find(name)) {
 			QString oldName = block->getName();

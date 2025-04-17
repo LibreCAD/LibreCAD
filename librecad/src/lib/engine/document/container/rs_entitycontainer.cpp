@@ -830,18 +830,21 @@ void RS_EntityContainer::updateInserts() {
     std::string idTypeId = std::to_string(getId()) + "/" + std::to_string(rtti());
     RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %s", idTypeId.c_str());
 
-    for (RS_Entity *e: entities) {
+    for (RS_Entity *e: std::as_const(entities)) {
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti() == RS2::EntityInsert  /*&& e->getParent()==this*/) {
-            ((RS_Insert *) e)->update();
+            static_cast<RS_Insert*>(e)->update();
+
             RS_DEBUG->print("RS_EntityContainer::updateInserts: updated ID/type: %s", idTypeId.c_str());
         } else if (e->isContainer()) {
             if (e->rtti() == RS2::EntityHatch) {
+
                 RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip hatch ID/type: %s",
                                 idTypeId.c_str());
             } else {
                 RS_DEBUG->print("RS_EntityContainer::updateInserts: update container ID/type: %s", idTypeId.c_str());
-                ((RS_EntityContainer *) e)->updateInserts();
+
+                static_cast<RS_EntityContainer*>(e)->updateInserts();
             }
         } else {
             RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip entity ID/type: %s",
@@ -865,15 +868,15 @@ void RS_EntityContainer::renameInserts(
     //        e;
     //        e=nextEntity(RS2::ResolveNone)) {
 
-    for (RS_Entity *e: entities) {
+    for (RS_Entity *e: std::as_const(entities)) {
         if (e->rtti() == RS2::EntityInsert) {
-            RS_Insert *i = ((RS_Insert *) e);
+            auto *i = static_cast<RS_Insert*>(e);
             if (i->getName() == oldName) {
                 i->setName(newName);
             }
         }
         if (e->isContainer()) {
-            ((RS_EntityContainer *) e)->renameInserts(oldName, newName);
+            static_cast<RS_EntityContainer*>(e)->renameInserts(oldName, newName);
         }
     }
 

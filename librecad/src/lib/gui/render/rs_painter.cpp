@@ -418,7 +418,6 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath &path){
                     arcSegment.setAngle1(baseAngle + crossPoints[i - 1]);
                     arcSegment.setAngle2(baseAngle + crossPoints[i]);
 
-                    // fixme - sand - it seems this check is redundant if i is increased by 2
                     // fixme - sand - so it seems checking that segment is visible via middle point applies an additional check and performance overhead?
                     arcSegment.updateMiddlePoint();
                     if (arcSegment.getMiddlePoint().isInWindowOrdered(wcsBoundingBox.minP(), wcsBoundingBox.maxP())) {

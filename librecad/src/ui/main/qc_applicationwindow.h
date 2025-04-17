@@ -299,6 +299,7 @@ public:
     QG_LibraryWidget* getLibraryWidget(){return m_libraryWidget;}
 protected:
     void closeEvent(QCloseEvent*) override;
+    bool isAcceptableDragNDropFileName(const QString& fileName);
     //! \{ accept drop files to open
     void dropEvent(QDropEvent* e) override;
     void dragEnterEvent(QDragEnterEvent * event) override;

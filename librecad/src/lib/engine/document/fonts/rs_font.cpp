@@ -307,6 +307,15 @@ void RS_Font::readCXF(const QString& path) {
     }
 }
 
+QString letterNameToHexUnicodeCode(QString originalName) {
+    QString uCode;
+    uCode.setNum(originalName.at(0).unicode(), 16);
+    while (uCode.length()<4) {
+        uCode="0"+uCode;
+    }
+    return QString("[%1] %2").arg(uCode).arg(originalName.at(0));
+}
+
 void RS_Font::readLFF(const QString& path) {
     QFile f(path);
     encoding = "UTF-8";
@@ -364,6 +373,10 @@ void RS_Font::readLFF(const QString& path) {
                 continue;
             }
 
+            // fixme - sand - restore char name encoding later (as name is renamed anyway later at RS_FilterLFF::fileImport
+            // QString letterName = letterNameToHexUnicodeCode(ch);
+            QString letterName = ch;
+
             QStringList fontData;
             do {
                 line = ts.readLine();
@@ -371,8 +384,8 @@ void RS_Font::readLFF(const QString& path) {
                 fontData.push_back(line);
             } while(true);
             if (!fontData.isEmpty()                             // valid data
-                && !rawLffFontList.contains( ch)) {    // ignore duplicates
-                rawLffFontList[ch] = fontData;
+                && !rawLffFontList.contains( letterName)) {    // ignore duplicates
+                rawLffFontList[letterName] = fontData;
             }
         }
     }
@@ -495,4 +508,3 @@ std::ostream& operator << (std::ostream& os, const RS_Font& f) {
     //<< (RS_BlockList&)f << "\n";
     return os;
 }
-
