@@ -516,7 +516,12 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     copyBlocks(e);
 
     // set layer to the layer clone:
-    c->setLayer(e->getLayer()->getName());
+    auto originalLayer = e->getLayer();
+    // layer could be null if copy is performed in font file, where block is open. LibreCAD#2110
+    if (originalLayer != nullptr) {
+        c->setLayer(e->getLayer()->getName());
+    }
+
 
     if (cut) {
         LC_UndoSection undo(document, viewport);
