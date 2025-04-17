@@ -109,7 +109,10 @@ protected:
     void toggleSecondaryLayersVisibility();
     void moveSelectionToLayer();
     void duplicateSelectionToLayer();
-
+    void exportSelectedLayer();
+    void exportLayersList(QList<RS_Layer*> layersToExport);
+    void exportLayerSubTree();
+    void exportVisibleLayers();
 private:
     RS_LayerList *m_layerList {nullptr};
     QLineEdit *m_matchLayerName {nullptr};

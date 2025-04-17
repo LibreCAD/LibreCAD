@@ -29,6 +29,8 @@
 #include "lc_layertreeoptionsdialog.h"
 #include "lc_layertreeview.h"
 #include "lc_layertreewidget.h"
+
+#include "lc_exportlayersdialogservice.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
@@ -36,6 +38,7 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "lc_flexlayout.h"
+#include "lc_layersexporter.h"
 #include "lc_layertreemodel.h"
 #include "rs_settings.h"
 #include "lc_widgets_common.h"
@@ -732,16 +735,18 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
         contextMenu->addAction(tr("Enable &Printing All Layers"), this, &LC_LayerTreeWidget::printAllLayers);
         contextMenu->addAction(tr("&Disable Printing All Layers"), this, &LC_LayerTreeWidget::noPrintAllLayers);
         contextMenu->addSeparator();
+        if (index.isValid()) {
+            contextMenu->addAction(tr("&Export Single Layer"), this,&LC_LayerTreeWidget::exportSelectedLayer);
+            if (!m_flatListMode){
+                LC_LayerTreeItem *layerItem = m_layerTreeModel->getItemForIndex(index);
+                if (layerItem->childCount() > 0){
+                    contextMenu->addAction(tr("&Export Layer Sub-Tree"), this,&LC_LayerTreeWidget::exportLayerSubTree);
+                }
+            }
+        }
+        contextMenu->addAction(tr("Export &Visible Layer(s)"), this, &LC_LayerTreeWidget::exportVisibleLayers);
+        contextMenu->addSeparator();
         contextMenu->addAction(tr("&Find And Remove Empty Layers"), this, &LC_LayerTreeWidget::removeEmptyLayers);
-
-        /// TODO - check whether these action is needed. Actually, it is possible to support them,
-        // yet it is necessary to refactor these actions for proper selection of layer
-        // plus they are not part of release - probably will restore them later
-        //
-        //contextMenu->addAction(tr("Export &Visible Layer(s)"), actionHandler, &QG_ActionHandler::slotLayersExportVisible, 0);
-        //contextMenu->addAction(tr("&Export Selected Layer(s)"), actionHandler,
-        //                                &QG_ActionHandler::slotLayersExportSelected, 0);
-
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
     }
@@ -1936,4 +1941,48 @@ void LC_LayerTreeWidget::setGraphicView(RS_GraphicView *gview){
         setLayerList(doc->getLayerList());
         m_document = doc;
     }
+}
+
+void LC_LayerTreeWidget::exportSelectedLayer() {
+    QModelIndex selectedItemIndex = getSelectedItemIndex();
+    if (selectedItemIndex.isValid()) {
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
+        if (!currentItem->isVirtual()) {
+            LC_LayersExportOptions exportOptions;
+            auto layerToExport = currentItem->getLayer();
+            exportOptions.m_layers.push_back(layerToExport);
+            auto sourceGraphic = m_document->getGraphic();
+            LC_ExportLayersService::exportLayers(exportOptions, sourceGraphic);
+        }
+    }
+}
+
+void LC_LayerTreeWidget::exportLayersList(QList<RS_Layer*> layersToExport) {
+    if (!layersToExport.isEmpty()) {
+        LC_LayersExportOptions exportOptions;
+        for (const auto layer: layersToExport) {
+            exportOptions.m_layers.push_back(layer);
+        }
+        auto sourceGraphic = m_document->getGraphic();
+        LC_ExportLayersService::exportLayers(exportOptions, sourceGraphic);
+    }
+}
+
+void LC_LayerTreeWidget::exportLayerSubTree() {
+    QModelIndex selectedItemIndex = getSelectedItemIndex();
+    if (selectedItemIndex.isValid()) {
+        LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForIndex(selectedItemIndex);
+        LC_LayerTreeItemAcceptor ACCEPT_ALL = LC_LayerTreeItemAcceptor();
+        QList<RS_Layer*> layersToExport;
+        currentItem->collectLayers(layersToExport, &ACCEPT_ALL, true);
+        exportLayersList(layersToExport);
+    }
+}
+
+void LC_LayerTreeWidget::exportVisibleLayers() {
+    auto layerItem = m_layerTreeModel->getRoot();
+    QG_LayerTreeItemAcceptorVisible ACCEPT_VISIBLE;
+    QList<RS_Layer*> layersToExport;
+    layerItem->collectLayers(layersToExport, &ACCEPT_VISIBLE, false);
+    exportLayersList(layersToExport);
 }
