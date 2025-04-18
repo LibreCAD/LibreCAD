@@ -100,13 +100,6 @@ class LC_EntityPropertiesDlg;
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, [[maybe_unused]]QToolBar* optionsToolbar, [[maybe_unused]] LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
     : parent(parent)
 {
-    // fixme - sand - files - restore
- /*   RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
-    snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
-    setOptionWidget(optionsToolbar);
-    RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
-    */
-
 }
 
 
@@ -116,16 +109,6 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, [[maybe_unused]]QToolBar* op
 QG_DialogFactory::~QG_DialogFactory() {
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory");
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory: OK");
-}
-
-void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
-    // fixme - sand - files - restore
-    /*RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
-    optionWidget = ow;
-    optionWidgetHolder = new LC_OptionsWidgetsHolder(ow);
-    optionWidget->addWidget(optionWidgetHolder);
-    snapOptionsWidgetHolderOptionsToolbar = optionWidgetHolder->getSnapOptionsHolder();
-    RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");*/
 }
 
 
@@ -1013,7 +996,3 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
         return ext.toUpper();
     }
 }
-
-// void QG_DialogFactory::setStatusBarManager(LC_QTStatusbarManager *statusBarManager) {
-    // QG_DialogFactory::statusBarManager = statusBarManager;
-// }

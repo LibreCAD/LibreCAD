@@ -380,6 +380,7 @@ include_directories(librecad/src/ui/main/persistence)
 include_directories(librecad/src/ui/main/workspaces)
 include_directories(librecad/src/ui/main/release_check)
 include_directories(librecad/src/ui/main/support)
+include_directories(librecad/src/ui/main/fontviewer)
 include_directories(librecad/src/ui/dock_widgets)
 include_directories(librecad/src/ui/dock_widgets/command_line)
 include_directories(librecad/src/ui/dock_widgets/cad)
@@ -1207,6 +1208,9 @@ set(SOURCES
 		librecad/src/ui/main/init/lc_menufactory.h
 		librecad/src/ui/main/init/lc_applicationwindowinitializer.h
 		librecad/src/ui/main/init/lc_applicationwindowinitializer.cpp
+        librecad/src/ui/main/lc_defaultactioncontext.cpp
+        librecad/src/ui/main/fontviewer/lc_fontfileviewer.h
+        librecad/src/ui/main/fontviewer/lc_fontfileviewer.cpp
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.h
         librecad/src/ui/qg_actionhandler.cpp

@@ -426,6 +426,7 @@ HEADERS += \
     ui/lc_graphicviewaware.h \
     ui/lc_snapmanager.h \
     ui/lc_uiutils.h \
+    ui/main/fontviewer/lc_fontfileviewer.h \
     ui/main/init/lc_applicationwindowinitializer.h \
     ui/main/support/lc_appwindowdialogsinvoker.h \
     ui/main/lc_appwindowaware.h \
@@ -572,6 +573,7 @@ SOURCES += \
     ui/lc_actionhandlerfactory.cpp \
     ui/lc_snapmanager.cpp \
     ui/lc_uiutils.cpp \
+    ui/main/fontviewer/lc_fontfileviewer.cpp \
     ui/main/init/lc_applicationwindowinitializer.cpp \
     ui/main/support/lc_appwindowdialogsinvoker.cpp \
     ui/main/lc_appwindowaware.cpp \

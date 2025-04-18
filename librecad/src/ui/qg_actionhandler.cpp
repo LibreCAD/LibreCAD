@@ -55,16 +55,6 @@ QG_ActionHandler::QG_ActionHandler(QC_ApplicationWindow *parent)
     :QObject(parent) {
 }
 
-/**
- * Kills all running selection actions. Called when a selection action
-  * is launched to reduce confusion.
-   */
-void QG_ActionHandler::killSelectActions() const {
-    if (view != nullptr) {
-        view->killSelectActions();
-    }
-}
-
 void QG_ActionHandler::killAllActions() const {
     if (view != nullptr) {
         view->killAllActions();

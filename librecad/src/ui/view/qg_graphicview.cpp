@@ -661,10 +661,6 @@ bool QG_GraphicView::event(QEvent *event){
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
             RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
-            // todo - sand - ucs - replace by direct zoom call?
-            // fixme - sand - files - explicit action creation
-            /*setCurrentAction(std::make_shared<RS_ActionZoomIn>(m_actionContext, direction,
-                                                 RS2::Both, &mouse, factor));*/
             doZoom(direction, mouse, zoomFactor);
         }
 

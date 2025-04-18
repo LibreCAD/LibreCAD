@@ -46,7 +46,7 @@
 #include "rs_settings.h"
 #include "rs_snapper.h"
 #include "rs_actioninterface.h"
-
+#include "rs_selection.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -184,6 +184,9 @@ bool RS_GraphicView::setCurrentAction(std::shared_ptr<RS_ActionInterface> action
  * Kills all running selection actions. Called when a selection action
  * is launched to reduce confusion.
  */
+// fixme - sand - files - review this method again. Why it is so special and different from killAllActions?
+// actually, selection may be performed by any inherited class of RS_ActionSelectBase...
+// leave if for now as it, yet return later.
 void RS_GraphicView::killSelectActions() const {
     if (m_eventHandler != nullptr) {
         m_eventHandler->killSelectActions();
@@ -335,6 +338,13 @@ RS_Graphic *RS_GraphicView::getGraphic() const {
 
 RS_EntityContainer *RS_GraphicView::getContainer() const {
     return container;
+}
+
+void RS_GraphicView::switchToDefaultAction() {
+    killAllActions();
+    RS_Selection s(*container, m_viewport.get());
+    s.selectAll(false);
+    redraw(RS2::RedrawAll);
 }
 
 bool RS_GraphicView::isCleanUp(void) const {

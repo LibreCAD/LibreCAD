@@ -37,11 +37,10 @@
 #include "lc_printpreviewview.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+
+#include "lc_fontfileviewer.h"
 #include "qg_exitdialog.h"
 #include "rs_debug.h"
-#include "rs_insert.h"
-#include "rs_mtext.h"
-#include "rs_settings.h"
 
 /**
  * Constructor.
@@ -207,7 +206,7 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 /**
  * Called by Qt when the user closes this MDI window.
  */
-// fixme - sand - files - remove, fully delegate to main window
+// fixme - sand - files - fully delegate to main window ?
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     bool cancel = false;
     bool hasParent = getParentWindow() != nullptr;
@@ -368,59 +367,12 @@ bool QC_MDIWindow::isModified(){
     return getDocument()->isModified();
 }
 
-// fixme - sand - files - REFACTOR!!!
 void QC_MDIWindow::drawChars() {
-    RS_BlockList* bl = m_document->getBlockList();
-    double sep = m_document->getGraphic()->getVariableDouble("LetterSpacing", 3.0);
-    double h = sep/3;
-    sep = sep*3;
-    int columnCount = LC_GET_ONE_INT("Render", "FontLettersColumnsCount", 10);
-    if (columnCount == 0) {
-        columnCount = INT_MAX;
-    }
-    int currentColumn = 0;
-    int currentRow = 0;
-
-    int currentLetterY = 0;
-    double maxLetterHeight = 0;
-    double maxLetterWidth  = 0;
-
-    for (int i=0; i<bl->count(); ++i) {
-        RS_Block* ch = bl->at(i);
-        maxLetterHeight = std::max(maxLetterHeight, ch->getSize().y);
-        maxLetterWidth = std::max(maxLetterWidth, ch->getSize().x);
-
-    }
-
-    double currentLetterX  = 0;
-
-    for (int i=0; i<bl->count(); ++i) {
-        RS_Block* ch = bl->at(i);
-        RS_InsertData data(ch->getName(), RS_Vector(currentColumn*sep,currentLetterY), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
-        currentLetterX += maxLetterWidth + sep;
-        auto in = new RS_Insert(m_document, data);
-        m_document->addEntity(in);
-        QString uCode = (ch->getName()).mid(1,4);
-        RS_MTextData datatx(RS_Vector(currentColumn*sep,currentLetterY-h), h, 4*h, RS_MTextData::VATop,
-                           RS_MTextData::HALeft, RS_MTextData::ByStyle, RS_MTextData::AtLeast,
-                           1, uCode, "standard", 0);
-/*        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
-                           RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
-                           1, uCode, info.baseName(), 0);*/
-        auto tx = new RS_MText(m_document, datatx);
-        m_document->addEntity(tx);
-
-        currentColumn ++;
-        if (currentColumn == columnCount) {
-            currentColumn = 0;
-            currentLetterX = 0;
-            currentRow ++;
-            currentLetterY -= maxLetterHeight*1.5;
-        }
-    }
-
+   LC_FontFileViewer viewer(m_document);
+   viewer.drawFontChars();
 }
 
+// fixme - sand - refactor printing in general!!!
 void QC_MDIWindow::slotFilePrint() {
 
     RS_DEBUG->print("QC_MDIWindow::slotFilePrint");

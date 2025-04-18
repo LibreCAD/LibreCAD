@@ -547,7 +547,7 @@ void LC_DlgIconsSetup::resetToDefaults(){
 void LC_DlgIconsSetup::applyIconColors(){
     m_iconColorsOptions->applyOptions();
     QPixmapCache::clear();
-    auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
+    auto& appWindow = QC_ApplicationWindow::getAppWindow(); //      fixme - sand - files - remove static
     if (appWindow != nullptr) {
         appWindow->fireIconsRefresh();
     }

@@ -28,7 +28,6 @@
 #define RS_MTEXT_H
 
 #include "rs_entitycontainer.h"
-#include <iosfwd>
 
 class RS_Text;
 class RS_Font;

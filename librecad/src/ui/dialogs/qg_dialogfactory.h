@@ -50,11 +50,7 @@ public:
     QG_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *);
     ~QG_DialogFactory() override;
 
-protected:
-/**
- * Links factory to a widget that can host tool options.
- */
-    void setOptionWidget(QToolBar* ow);
+
 public:
 
 /**

@@ -386,7 +386,7 @@ QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile,
     }
 }
 
-// fixme - sand - files - generation of thumbnails should be extracted!!!
+// fixme - sand - files - generation of thumbnails should be extracted!!! Do this on general rework of the library
 
 /**
  * @return Path to the thumbnail of the given DXF file. If no thumbnail exists, one is

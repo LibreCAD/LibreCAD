@@ -90,8 +90,6 @@ bool LC_AppWindowDialogsInvoker::showWidgetOptionsDialog() const {
 bool LC_AppWindowDialogsInvoker::showGeneralOptionsDialog() const {
     QG_DlgOptionsGeneral dlg(m_appWin);
     bool  result = dlg.exec() == QDialog::Accepted;
-    // fixme - sand - files - restore
-    // getSnapOptionsHolder(); // as side effect, should update location of snap options
     return result;
 }
 

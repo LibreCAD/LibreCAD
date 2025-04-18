@@ -107,7 +107,7 @@ public:
     virtual void setMouseCursor(RS2::CursorType /*c*/) = 0;
 
     RS_EntityContainer *getContainer() const;
-
+    void switchToDefaultAction();
     void setDefaultAction(RS_ActionInterface *action) const;
     RS_ActionInterface *getDefaultAction() const;
     void hideOptions() const;

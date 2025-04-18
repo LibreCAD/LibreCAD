@@ -50,17 +50,6 @@ public:
     ~QG_ActionHandler() override = default;
     RS_ActionInterface *getCurrentAction() const;
     std::shared_ptr<RS_ActionInterface> setCurrentAction(RS2::ActionType id, void* data = nullptr) const;
-/**
- * Kills all running selection actions. Called when a selection action
-  * is launched to reduce confusion.
-    ~QG_ActionHandler() override = default;
-    RS_ActionInterface *getCurrentAction() const;
-    RS_ActionInterface *setCurrentAction(RS2::ActionType id);
-
-    * Kills all running selection actions. Called when a selection action
-    * is launched to reduce confusion.
-   */
-    void killSelectActions() const;
     /**
     * @brief killAllActions kill all actions
     */
@@ -77,10 +66,6 @@ public slots:
     void slotSnapMiddleManual();
     void slotSetRelativeZero();
     void slotLockRelativeZero(bool on);
-    // void toggleVisibility(RS_Layer *layer);
-    // void toggleLock(RS_Layer *layer);
-    // void togglePrint(RS_Layer *layer);
-    // void toggleConstruction(RS_Layer *layer);
 private:
     RS_GraphicView *view {nullptr};
     RS_Document* document {nullptr};

@@ -279,7 +279,7 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
         case RS2::ActionOrderTop: {
             return std::make_shared<RS_ActionOrder>(ctx, RS2::ActionOrderTop);
         }
-        case RS2::ActionSelectSingle: { // fixme - sand - files - that's suspicious implementation, check it again
+        case RS2::ActionSelectSingle: { // fixme - sand - files - that's suspicious implementation, check it again for plugins
             RS_ActionInterface* currentAction = ctx->getCurrentAction();
             if(currentAction->rtti() != RS2::ActionSelectSingle) {
                 return std::make_shared<RS_ActionSelectSingle>(ctx, currentAction);

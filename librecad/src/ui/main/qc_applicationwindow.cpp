@@ -40,6 +40,7 @@
 #include <QTimer>
 #include <QDockWidget>
 
+#include "lc_actionoptionsmanager.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_anglesbasiswidget.h"
 #include "lc_applicationwindowinitializer.h"
@@ -496,14 +497,13 @@ void QC_ApplicationWindow::slotKillAllActions() {
     if (win != nullptr) {
         RS_GraphicView* gv = win->getGraphicView();
         if (gv != nullptr) {
-            gv->killAllActions();
-            RS_Document* doc = win->getDocument();
-            RS_Selection s(*doc, gv->getViewPort()); // fixme - sand - files - rework this. selection hardly should be there.
-            s.selectAll(false);
-            const RS_EntityContainer::LC_SelectionInfo &selectionInfo = doc->getSelectionInfo();
-            m_selectionWidget->setNumber((int)selectionInfo.count);
-            m_selectionWidget->setTotalLength(selectionInfo.length);
-            gv->redraw(RS2::RedrawAll);
+            gv->switchToDefaultAction();
+            auto doc = gv->getContainer();
+            if (doc != nullptr) {
+                const RS_EntityContainer::LC_SelectionInfo &selectionInfo = doc->getSelectionInfo();
+                m_selectionWidget->setNumber((int)selectionInfo.count);
+                m_selectionWidget->setTotalLength(selectionInfo.length);
+            }
         }
     }
 }
@@ -1462,6 +1462,7 @@ void QC_ApplicationWindow::rebuildMenuIfNecessary(){
 void QC_ApplicationWindow::slotOptionsGeneral() {
     int dialogResult = m_dlgHelpr->showGeneralOptionsDialog();
     if (dialogResult == QDialog::Accepted){
+        m_actionOptionsManager->update();
         // fixme - check this signal, probably it's better to rely on settings change
         bool hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
         emit signalEnableRelativeZeroSnaps(!hideRelativeZero);

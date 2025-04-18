@@ -273,7 +273,7 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler
  * This slot modifies the commandline's title bar
  * depending on the dock area it is moved to.
  */
-// fixme - sand - files - remove, just port from ApppWindow - use uniform way
+// fixme - sand - files - remove later, just port from ApppWindow - use uniform way
 void LC_WidgetFactory::modifyCommandTitleBar(Qt::DockWidgetArea area) const {
     auto *cmdDockWidget = findChild<QDockWidget *>("command_dockwidget");
 
