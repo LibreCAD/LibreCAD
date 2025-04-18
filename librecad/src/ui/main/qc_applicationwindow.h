@@ -29,8 +29,11 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
+
 #include "lc_mdiapplicationwindow.h"
 
+class QSplashScreen;
+class LC_LastOpenFilesOpener;
 class LC_SnapManager;
 class LC_ActionFactory;
 class LC_QTStatusbarManager;
@@ -72,6 +75,7 @@ class QG_BlockWidget;
 class QG_PenToolBar;
 class RS_Pen;
 class RS_ActionInterface;
+
 
 struct DockAreas
 {
@@ -194,6 +198,7 @@ public slots:
     void slotImportBlock();
     /** shows an about dlg*/
     void showAboutWindow();
+    void openFilesOnStartup(QStringList& fileList, QSplashScreen* spash);
 
     /**
      * @brief slotUpdateActiveLayer
@@ -334,6 +339,7 @@ protected:
     std::unique_ptr<LC_ActionFactory> m_actionFactory;
     std::unique_ptr<LC_MenuFactory> m_menuFactory;
     std::unique_ptr<LC_ReleaseChecker> m_releaseChecker;
+    std::unique_ptr<LC_LastOpenFilesOpener> m_lastFilesOpener;
     LC_DefaultActionContext* m_actionContext{nullptr};
     LC_ActionOptionsManager* m_actionOptionsManager;
 

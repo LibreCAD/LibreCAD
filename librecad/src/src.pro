@@ -467,6 +467,7 @@ HEADERS += \
     ui/dock_widgets/views_list/lc_namedviewsmodel.h \
     ui/dock_widgets/workspaces/lc_workspacelistbutton.h \
     ui/dock_widgets/cad/lc_caddockwidget.h \
+    ui/main/support/lc_lastopenfilesopener.h \
     ui/main/workspaces/lc_workspacesmanager.h \
     ui/main/release_check/lc_releasechecker.h \
     lib/gui/grid/lc_gridsystem.h \
@@ -697,6 +698,7 @@ SOURCES += \
     ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \
     ui/dock_widgets/workspaces/lc_workspacelistbutton.cpp \
     ui/main/release_check/lc_releasechecker.cpp \
+    ui/main/support/lc_lastopenfilesopener.cpp \
     ui/main/workspaces/lc_workspacesmanager.cpp\
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \

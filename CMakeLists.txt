@@ -1259,6 +1259,8 @@ set(SOURCES
 		librecad/src/ui/components/toolbars/qg_pentoolbar.h
 		librecad/src/ui/main/support/qg_recentfiles.cpp
 		librecad/src/ui/main/support/qg_recentfiles.h
+        librecad/src/ui/main/support/lc_lastopenfilesopener.h
+        librecad/src/ui/main/support/lc_lastopenfilesopener.cpp
 		librecad/src/ui/components/qg_scrollbar.h
 		librecad/src/ui/components/comboboxes/qg_widthbox.cpp
 		librecad/src/ui/components/comboboxes/qg_widthbox.h

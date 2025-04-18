@@ -52,6 +52,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_gridviewinvoker.h"
 #include "lc_infocursorsettingsmanager.h"
+#include "lc_lastopenfilesopener.h"
 #include "lc_layertreewidget.h"
 #include "lc_menufactory.h"
 #include "lc_namedviewslistwidget.h"
@@ -86,7 +87,6 @@
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionprintpreview.h"
 #include "rs_debug.h"
-#include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "twostackedlabels.h"
@@ -109,7 +109,7 @@
  *	*/
 #define WTB_MAX_SIZE        79
 
-
+class QSplashScreen;
 /**
  * Constructor. Initializes the app.
  */
@@ -1519,27 +1519,16 @@ void QC_ApplicationWindow::showAboutWindow() {
     m_dlgHelpr->showAboutWindow();
 }
 
+void QC_ApplicationWindow::openFilesOnStartup(QStringList &fileList, QSplashScreen* splash) {
+    m_lastFilesOpener->openLastOpenFiles(fileList, splash);
+}
+
 bool QC_ApplicationWindow::tryCloseAllBeforeExist() {
-    bool rememberOpenedFiles = LC_GET_ONE_BOOL("Startup", "OpenLastOpenedFiles");
-    QString openedFiles;
-    QString activeFile = "";
-    if (rememberOpenedFiles) {
-        for (auto w: m_windowList) {
-            QString fileName = w->getFileName();
-            if (m_activeMdiSubWindow != nullptr && m_activeMdiSubWindow == w) {
-                activeFile = fileName;
-            }
-            openedFiles += fileName;
-            openedFiles += ";";
-        }
-    }
+    m_lastFilesOpener->collectFilesList(m_windowList, m_activeMdiSubWindow);
     bool mayExit = !doCloseAllFiles();
 
     if (mayExit) {
-        LC_GROUP_GUARD("Startup"); {
-            LC_SET("LastOpenFilesList", openedFiles);
-            LC_SET("LastOpenFilesActive", activeFile);
-        }
+        m_lastFilesOpener->saveSettings();
         storeSettings();
     }
     return mayExit;

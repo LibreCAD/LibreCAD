@@ -33,6 +33,7 @@
 #include "lc_defaultactioncontext.h"
 #include "lc_gridviewinvoker.h"
 #include "lc_infocursorsettingsmanager.h"
+#include "lc_lastopenfilesopener.h"
 #include "lc_menufactory.h"
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"
@@ -64,6 +65,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     m_appWin->m_gridViewInvoker = std::make_unique<LC_GridViewInvoker>(m_appWin);
     m_appWin->m_infoCursorSettingsManager = std::make_unique<LC_InfoCursorSettingsManager>(m_appWin);
     m_appWin->m_styleHelper = std::make_unique<LC_CustomStyleHelper>(m_appWin);
+    m_appWin->m_lastFilesOpener = std::make_unique<LC_LastOpenFilesOpener>(m_appWin);
 
     initActionGroupManager();
     //accept drop events to open files
