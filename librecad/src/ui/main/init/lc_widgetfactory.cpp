@@ -184,7 +184,7 @@ QDockWidget* LC_WidgetFactory::createNamedViewsWidget(){
 }
 
 QDockWidget*  LC_WidgetFactory::createUCSListWidget(){
-    auto dock = createDockWidget(tr("User Coordinate Systems"), "ucs_dockwidget", "UCSs");
+    auto dock = createDockWidget(tr("User Coordinate Systems"), "ucs_dockwidget", tr("UCSs"));
     auto widget = new LC_UCSListWidget("UCS", dock);
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);
@@ -196,7 +196,7 @@ QDockWidget*  LC_WidgetFactory::createUCSListWidget(){
 }
 
 QDockWidget* LC_WidgetFactory::createLayerTreeWidget(QG_ActionHandler *action_handler){
-    QDockWidget* dock = createDockWidget(tr("Layers Tree"), "layer_tree_dockwidget", "Layers Tree");
+    QDockWidget* dock = createDockWidget(tr("Layers Tree"), "layer_tree_dockwidget", tr("Layers Tree"));
     auto widget = new LC_LayerTreeWidget(action_handler, dock, "Layer Tree");
     widget->setFocusPolicy(Qt::NoFocus);
     dock->setWidget(widget);

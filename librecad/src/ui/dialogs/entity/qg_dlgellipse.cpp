@@ -37,7 +37,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgEllipse::QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse)
+QG_DlgEllipse:: QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse)
     :LC_EntityPropertiesDlg(parent, "EllipseProperties", pViewport){
     setupUi(this);
     setEntity(ellipse);
