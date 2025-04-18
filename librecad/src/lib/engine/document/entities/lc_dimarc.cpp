@@ -27,6 +27,7 @@
 #include <iostream>
 
 #include "lc_dimarc.h"
+#include "lc_rect.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -35,6 +36,20 @@
 #include "rs_solid.h"
 #include "rs_units.h"
 
+namespace {
+// trunc a floating point to multiplier of the giving unitLength
+void truncF(double& length, double unitLength)
+{
+    length -= std::fmod(length, unitLength);
+}
+
+// trunc a point to a 2D grid with spacing of the given unit length.
+void truncF(RS_Vector& point, double unitLength)
+{
+    truncF(point.x, unitLength);
+    truncF(point.y, unitLength);
+}
+}
 
 LC_DimArcData::LC_DimArcData(const LC_DimArcData &input_dimArcData)
     :
@@ -69,7 +84,7 @@ LC_DimArc::LC_DimArc( RS_EntityContainer* parent,
       RS_Dimension (parent, input_commonDimData),
       dimArcData (input_dimArcData)
 {
-    update();
+    LC_DimArc::update();
 }
 
 
@@ -208,9 +223,9 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
     {
         RS_Vector textPosOffset;
 
-        const double deg360 { M_PI * 2.0 };
+        constexpr double deg360 { M_PI * 2.0 };
 
-        const double degTolerance { 1.0E-3 };
+        constexpr double degTolerance { 1.0E-3 };
 
         /* With regards to Quadrants #1 and #2 */
         if (((textAngle_preliminary >= -degTolerance) && (textAngle_preliminary <= (M_PI + degTolerance))) 
@@ -231,9 +246,7 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
 
     bool ok = false;
 
-    const double dummyVar = dimLabel.toDouble(&ok);
-
-    if (dummyVar) { /* This is a dummy code, to suppress the unused variable compiler warning. */ }
+    dimLabel.toDouble(&ok);
 
     if (ok)
         dimLabel.prepend("∩ ");
@@ -253,11 +266,11 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
                       textAngle) 
     };
 
-    auto* text { new RS_MText (this, textData) };
+    auto text = std::make_unique<RS_MText>(this, textData);
 
     text->setPen (RS_Pen (getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
     text->setLayer (nullptr);
-    addEntity (text);
+    addEntity(text.get());
 
     double halfWidth_plusGap  = (text->getUsedTextWidth() / 2.0) + getDimensionLineGap() * getGeneralScale();
     double halfHeight_plusGap = (getTextHeight()          / 2.0) + getDimensionLineGap() * getGeneralScale();
@@ -275,16 +288,19 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
 
     RS_Vector cornerTopRight   { textRectCorners [1] };
     RS_Vector cornerBottomLeft { textRectCorners [3] };
+    LC_Rect textRect{cornerBottomLeft, cornerTopRight};
 
-    textRectCorners [0] = RS_Vector(cornerBottomLeft.x, cornerTopRight.y);
-    textRectCorners [2] = RS_Vector(cornerTopRight.x,   cornerBottomLeft.y);
+    textRectCorners [0] = textRect.upperLeftCorner();
+    textRectCorners [2] = textRect.lowerRightCorner();
 
-    for (int i = 0; i < 4; i++)
+    LC_Rect textRectRotated{};
+    for (RS_Vector& corner: textRectCorners)
     {
-        textRectCorners[i].rotate(textPos, text->getAngle());
-        textRectCorners[i].x = std::trunc(textRectCorners[i].x * 1.0E+4) * 1.0E-4;
-        textRectCorners[i].y = std::trunc(textRectCorners[i].y * 1.0E+4) * 1.0E-4;
+        corner.rotate(textPos, text->getAngle());
+        truncF(corner, 1.0E-4);
+        textRectRotated = textRectRotated.merge(corner);
     }
+    text.release();
 
     if (RS_DEBUG->getLevel() == RS_Debug::D_INFORMATIONAL)
     {
@@ -312,17 +328,11 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
                   << std::endl;
     }
 
-    const auto [cornerLeftX, cornerRightX] = std::minmax(
-        { textRectCorners[0].x, textRectCorners[1].x, textRectCorners[2].x, textRectCorners[3].x});
-
-    const auto [cornerBottomY, cornerTopY] = std::minmax(
-        { textRectCorners[0].y, textRectCorners[1].y, textRectCorners[2].y, textRectCorners[3].y});
-
+    //TODO: the current algorithm to find dimArc1/dimArc2 angles could be
+    // costly.
     constexpr double deltaOffset { 1.0E-2 };
 
-    while (((dimArc1->getEndpoint().x < cornerLeftX)   || (dimArc1->getEndpoint().x > cornerRightX) 
-    ||      (dimArc1->getEndpoint().y < cornerBottomY) || (dimArc1->getEndpoint().y > cornerTopY))
-
+    while (!textRectRotated.inArea(dimArc1->getEndpoint())
     &&     (dimArc1->getAngle2() < RS_MAXDOUBLE) 
     &&     (dimArc1->getAngle2() > RS_MINDOUBLE))
     {
@@ -330,9 +340,7 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
         dimArc1->calculateBorders();
     }
 
-    while (((dimArc2->getStartpoint().x < cornerLeftX)   || (dimArc2->getStartpoint().x > cornerRightX) 
-    ||      (dimArc2->getStartpoint().y < cornerBottomY) || (dimArc2->getStartpoint().y > cornerTopY)) 
-
+    while (!textRectRotated.inArea(dimArc2->getStartpoint())
     &&     (dimArc2->getAngle1() < RS_MAXDOUBLE) 
     &&     (dimArc2->getAngle1() > RS_MINDOUBLE))
     {
@@ -355,8 +363,8 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
 
 void LC_DimArc::update()
 {
-    updateDim();
     RS_Dimension::update();
+    LC_DimArc::updateDim();
 }
 
 

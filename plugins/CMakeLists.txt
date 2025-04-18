@@ -1,0 +1,96 @@
+set(PLUGIN_HEADERS
+    ../../librecad/src/plugins/document_interface.h
+    ../../librecad/src/plugins/document_interface.h
+  ../../libraries/muparser/include/muParser.h
+  ../../libraries/muparser/include/muParserBase.h
+  ../../libraries/muparser/include/muParserBytecode.h
+  ../../libraries/muparser/include/muParserCallback.h
+  ../../libraries/muparser/include/muParserDef.h
+  ../../libraries/muparser/include/muParserDLL.h
+  ../../libraries/muparser/include/muParserError.h
+  ../../libraries/muparser/include/muParserFixes.h
+  ../../libraries/muparser/include/muParserInt.h
+  ../../libraries/muparser/include/muParserTemplateMagic.h
+  ../../libraries/muparser/include/muParserToken.h
+  ../../libraries/muparser/include/muParserTokenReader.h
+  ../../libraries/muparser/src/muParser.cpp
+  ../../libraries/muparser/src/muParserBase.cpp
+  ../../libraries/muparser/src/muParserBytecode.cpp
+  ../../libraries/muparser/src/muParserCallback.cpp
+  ../../libraries/muparser/src/muParserDLL.cpp
+  ../../libraries/muparser/src/muParserError.cpp
+  ../../libraries/muparser/src/muParserInt.cpp
+  ../../libraries/muparser/src/muParserTokenReader.cpp
+   )
+
+set(PLUGIN_TS_FILES
+    plugins_ar.ts
+    plugins_ca.ts
+    plugins_cs.ts
+    plugins_en.ts
+    plugins_en_au.ts
+    plugins_da.ts
+    plugins_de.ts
+    plugins_el.ts
+    plugins_es.ts
+    plugins_es_ar.ts
+    plugins_es_bo.ts
+    plugins_es_cl.ts
+    plugins_es_co.ts
+    plugins_es_cr.ts
+    plugins_es_do.ts
+    plugins_es_ec.ts
+    plugins_es_gt.ts
+    plugins_es_hn.ts
+    plugins_es_mx.ts
+    plugins_es_ni.ts
+    plugins_es_pa.ts
+    plugins_es_pe.ts
+    plugins_es_pr.ts
+    plugins_es_py.ts
+    plugins_es_sv.ts
+    plugins_es_us.ts
+    plugins_es_uy.ts
+    plugins_es_ve.ts
+    plugins_et.ts
+    plugins_eu.ts
+    plugins_fi.ts
+    plugins_fr.ts
+    plugins_gl.ts
+    plugins_hi.ts
+    plugins_hu.ts
+    plugins_id_ID.ts
+    plugins_it.ts
+    plugins_ja.ts
+    plugins_ko.ts
+    plugins_lv.ts
+    plugins_mk.ts
+    plugins_nl.ts
+    plugins_no.ts
+    plugins_pa.ts
+    plugins_pl.ts
+    plugins_pt_br.ts
+    plugins_pt_pt.ts
+    plugins_ro_ro.ts
+    plugins_ru.ts
+    plugins_sk.ts
+    plugins_sl.ts
+    plugins_sq_al.ts
+    plugins_sv.ts
+    plugins_ta.ts
+    plugins_tr.ts
+    plugins_uk.ts
+    plugins_zh_cn.ts
+    plugins_zh_tw.ts
+   )
+
+add_subdirectory(asciifile)
+add_subdirectory(align)
+add_subdirectory(divide)
+add_subdirectory(list)
+add_subdirectory(sameprop)
+add_subdirectory(sample)
+add_subdirectory(picfile)
+add_subdirectory(plotequation)
+add_subdirectory(pointstocsv)
+add_subdirectory(gear)

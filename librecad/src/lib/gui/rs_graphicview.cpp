@@ -28,6 +28,7 @@
 #include<climits>
 #include<cmath>
 
+#include <QAction>
 #include <QApplication>
 #include <QMouseEvent>
 #include <QtAlgorithms>

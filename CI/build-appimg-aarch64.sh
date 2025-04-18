@@ -74,9 +74,9 @@ export EXTRA_QT_MODULES=svg
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-aarch64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
 wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-aarch64.AppImage
-wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-aarch64.AppImage
 chmod +x *.AppImage
-#ARCH=aarch64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
-ARCH=aarch64 ./linuxdeploy-aarch64.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop
-ARCH=aarch64 ./linuxdeploy-plugin-qt-aarch64.AppImage --appdir appdir
-VERSION=`git describe --always` ARCH=aarch64 ./appimagetool-*.AppImage appdir/
+# Bundle EVERYTHING
+VERSION=`git describe --always` ARCH=aarch64 ./appimagetool-*.AppImage -s deploy appdir/usr/share/applications/*.desktop
+VERSION=`git describe --always` ./appimagetool-*.AppImage ./appdir
+chmod +x *.AppImage
+
