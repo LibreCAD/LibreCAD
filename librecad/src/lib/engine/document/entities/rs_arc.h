@@ -27,10 +27,10 @@
 #ifndef RS_ARC_H
 #define RS_ARC_H
 
-#include <iosfwd>
-#include <vector>
+// #include <iosfwd>
+// #include <vector>
 
-#include "rs_atomicentity.h"
+// #include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;

@@ -28,6 +28,7 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
+#include <QString>
 #include <memory>
 #include "rs_vector.h"
 

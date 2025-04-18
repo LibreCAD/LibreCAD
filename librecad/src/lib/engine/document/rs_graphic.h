@@ -262,6 +262,7 @@ private:
     QDateTime lastSaveTime;
     QString currentFileName; //keep a copy of filename for the modifiedTime
 
+    // fixme - sand - files - change to unique_ptrs?
     RS_LayerList layerList{};
     RS_BlockList blockList{true};
     RS_VariableDict variableDict;

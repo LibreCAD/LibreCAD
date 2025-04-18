@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-
-#include "qg_layerwidget.h"
 #include "rs_actionlayersedit.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_layer.h"
+
+class RS_Layer;
 
 RS_ActionLayersEdit::RS_ActionLayersEdit(LC_ActionContext *actionContext)
         :RS_ActionInterface("Edit Layer", actionContext, RS2::ActionLayersEdit) {}
@@ -41,8 +41,7 @@ void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");
 
     if (m_graphic) {
-        RS_Layer* layer =
-            RS_DIALOGFACTORY->requestEditLayerDialog(m_graphic->getLayerList());
+        RS_Layer* layer = RS_DIALOGFACTORY->requestEditLayerDialog(m_graphic->getLayerList());
 
         if (layer) {
             m_graphic->editLayer(m_graphic->getActiveLayer(), *layer);

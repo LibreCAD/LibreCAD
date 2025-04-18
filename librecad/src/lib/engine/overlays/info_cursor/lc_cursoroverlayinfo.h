@@ -23,9 +23,9 @@
 #ifndef LC_CURSOROVERLAYINFO_H
 #define LC_CURSOROVERLAYINFO_H
 
-#include <memory>
-#include "rs_vector.h"
+#include <QString>
 
+#include "rs_vector.h"
 #include "lc_overlayentity.h"
 
 struct  LC_InfoCursorOptions{

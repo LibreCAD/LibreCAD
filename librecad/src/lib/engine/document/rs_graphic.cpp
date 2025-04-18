@@ -24,28 +24,19 @@
 **
 **********************************************************************/
 
-#include <cmath>
 #include <iostream>
 
-#include <QObject>
-#include <QDir>
+#include "rs_graphic.h"
 
 #include "dxf_format.h"
 #include "lc_defaults.h"
-#include "lc_graphicviewport.h"
-#include "rs_actioninterface.h"
-#include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_fileio.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-
 
 namespace {
 // default paper size A4: 210x297 mm

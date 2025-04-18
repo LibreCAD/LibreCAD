@@ -20,19 +20,21 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_graphicviewport.h"
-#include "rs_line.h"
+
+#include <QDateTime>
+
+#include "lc_graphicviewportlistener.h"
+#include "lc_linemath.h"
+#include "lc_overlayentitiescontainer.h"
+#include "lc_undoablerelzero.h"
 #include "rs_debug.h"
-#include "lc_ucs.h"
-#include "rs_grid.h"
-#include "rs_entitycontainer.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "lc_linemath.h"
+#include "rs_graphic.h"
+#include "rs_grid.h"
+#include "rs_line.h"
 #include "rs_settings.h"
-#include "lc_undoablerelzero.h"
 #include "rs_units.h"
-#include "lc_graphicviewportlistener.h"
-#include "lc_overlayentitiescontainer.h"
 
 LC_GraphicViewport::LC_GraphicViewport():
     grid{std::make_unique<RS_Grid>(this)},

@@ -29,6 +29,8 @@
 
 #include <QObject>
 
+#include "rs.h"
+
 class LC_CoordinatesParser;
 class RS_ActionInterface;
 class QAction;

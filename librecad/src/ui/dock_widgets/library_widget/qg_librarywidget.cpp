@@ -28,6 +28,7 @@
 #include "qg_librarywidget.h"
 
 #include <QApplication>
+#include <QDir>
 #include <QFileInfo>
 #include <QImageWriter>
 #include <QKeyEvent>
@@ -47,6 +48,7 @@
 #include "rs_actioninterface.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_system.h"

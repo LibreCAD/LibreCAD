@@ -21,9 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #ifndef LC_ACTIONCONTEXT_H
 #define LC_ACTIONCONTEXT_H
-#include <QString>
 
-#include "rs.h"
 #include "rs_actioninterface.h"
 
 struct RS_SnapMode;

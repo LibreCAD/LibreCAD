@@ -21,6 +21,7 @@
  ******************************************************************************/
 #include "lc_plugininvoker.h"
 #include <QAction>
+#include <QDir>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>

@@ -26,6 +26,7 @@
 #include "qg_activelayername.h"
 
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 
 QG_ActiveLayerName::QG_ActiveLayerName(QWidget *parent) :

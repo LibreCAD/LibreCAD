@@ -26,9 +26,8 @@
 #ifndef RS_IMAGE_H
 #define RS_IMAGE_H
 
-#include <memory>
-#include "rs_atomicentity.h"
 #include "lc_rectregion.h"
+#include "rs_atomicentity.h"
 
 class QImage;
 

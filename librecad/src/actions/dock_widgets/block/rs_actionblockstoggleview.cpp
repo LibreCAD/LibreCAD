@@ -25,10 +25,12 @@
 **********************************************************************/
 
 #include "rs_actionblockstoggleview.h"
+
 #include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
+
+class RS_BlockList;
 
 RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(LC_ActionContext *actionContext)
         :RS_ActionInterface("Toggle Block Visibility",actionContext, RS2::ActionBlocksToggleView) {}

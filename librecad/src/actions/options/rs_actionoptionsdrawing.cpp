@@ -24,14 +24,10 @@
 **
 **********************************************************************/
 
-#include <QDialog>
-#include "qc_applicationwindow.h"
 #include "rs_actionoptionsdrawing.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
+
+#include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
-#include "lc_quickinfowidget.h"
-#include "lc_anglesbasiswidget.h"
 
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex)
         :RS_ActionInterface("Drawing Options",actionContext, RS2::ActionOptionsDrawing) {

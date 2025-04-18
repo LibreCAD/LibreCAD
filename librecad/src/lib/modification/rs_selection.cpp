@@ -23,21 +23,17 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#include "rs_selection.h"
 
-
+#include "lc_graphicviewport.h"
 #include "qc_applicationwindow.h"
-
 #include "qg_dialogfactory.h"
-
-#include "rs_block.h"
 #include "rs_dialogfactory.h"
-#include "rs_entity.h"
+#include "rs_entitycontainer.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
-#include "rs_selection.h"
-#include "lc_graphicviewport.h"
 
 /**
  * Default constructor.

@@ -39,10 +39,10 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
-#include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "rs_vector.h"
 
 namespace {
 

@@ -21,10 +21,11 @@
  ******************************************************************************/
 
 #include "lc_printpreviewviewrenderer.h"
-#include "rs_painter.h"
+
+#include "lc_graphicviewport.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
-#include "lc_graphicviewport.h"
+#include "rs_painter.h"
 
 #define DEBUG_PRINT_PREVIEW_POINTS_NO
 
@@ -42,10 +43,10 @@ LC_PrintPreviewViewRenderer::LC_PrintPreviewViewRenderer(LC_GraphicViewport *vie
 
 void LC_PrintPreviewViewRenderer::doRender() {
     if (graphic != nullptr){
-        paperScale = graphic->getPaperScale();
+        m_paperScale = graphic->getPaperScale();
     }
     else{
-        paperScale = 1.0;
+        m_paperScale = 1.0;
     }
     LC_WidgetViewPortRenderer::doRender();
 }
@@ -62,23 +63,23 @@ void LC_PrintPreviewViewRenderer::doDrawLayerBackground(RS_Painter *painter) {
  * @see drawIt()
  */
 void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
-   if (paperScale < 1.0e-6) {
+   if (m_paperScale < 1.0e-6) {
         return;
     }
 // draw paper:
     RS_Vector pinsbase = graphic->getPaperInsertionBase();
     RS_Vector printAreaSize = graphic->getPrintAreaSize();
 
-    double paperFactorX = painter->toGuiDX(1.0) / paperScale;
-    double paperFactorY = painter->toGuiDX(1.0) / paperScale;
+    double paperFactorX = painter->toGuiDX(1.0) / m_paperScale;
+    double paperFactorY = painter->toGuiDX(1.0) / m_paperScale;
 
     int marginLeft = (int) (graphic->getMarginLeftInUnits() * paperFactorX);
     int marginTop = (int) (graphic->getMarginTopInUnits() * paperFactorY);
     int marginRight = (int) (graphic->getMarginRightInUnits() * paperFactorX);
     int marginBottom = (int) (graphic->getMarginBottomInUnits() * paperFactorY);
 
-    const RS_Vector &wcsLeftBottomCorner = (RS_Vector(0, 0) - pinsbase) / paperScale;
-    const RS_Vector &wcsTopBottomCorner = (printAreaSize - pinsbase) / paperScale;
+    const RS_Vector &wcsLeftBottomCorner = (RS_Vector(0, 0) - pinsbase) / m_paperScale;
+    const RS_Vector &wcsTopBottomCorner = (printAreaSize - pinsbase) / m_paperScale;
 
     double v1x, v1y, v2x, v2y;
     painter->toGui(wcsLeftBottomCorner, v1x, v1y);
@@ -220,11 +221,11 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
         if (width >0) {
             double wf = 1.0; // Width factor.
 
-            if (paperScale > RS_TOLERANCE) {
+            if (m_paperScale > RS_TOLERANCE) {
                 if (m_scaleLineWidth) {
                     wf = defaultWidthFactor;
                 } else {
-                    wf = 1.0 / paperScale;
+                    wf = 1.0 / m_paperScale;
                 }
             }
             double screenWidth = painter->toGuiDX(width * unitFactor100 * wf);
@@ -275,7 +276,7 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
 
 void LC_PrintPreviewViewRenderer::setupPainter(RS_Painter *painter)  {
     LC_WidgetViewPortRenderer::setupPainter(painter);
-    painter->setDrawingMode(drawingMode);
+    painter->setDrawingMode(m_drawingMode);
 
     // disable rendering minimums for printing, let's printer decide
     painter->setMinCircleDrawingRadius(0);
@@ -292,4 +293,9 @@ void LC_PrintPreviewViewRenderer::setupPainter(RS_Painter *painter)  {
     painter->setRenderArcsInterpolationAngleValue(M_PI/36); // 5 degrees
    // fixme - sand - paperspace - disabling UCS for print - for now, restore later
     painter->disableUCS();
+}
+
+void LC_PrintPreviewViewRenderer::setDrawingMode(RS2::DrawingMode mode){
+    m_drawingMode = mode;
+    viewport->notifyChanged();
 }

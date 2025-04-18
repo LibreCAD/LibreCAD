@@ -29,13 +29,13 @@
 #ifndef RS_DOCUMENT_H
 #define RS_DOCUMENT_H
 
-#include "lc_ucslist.h"
-#include "lc_viewslist.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
 #include "rs_pen.h"
 #include "rs_undo.h"
 
+class RS_GraphicView;
+class LC_UCSList;
+class LC_ViewList;
 class RS_BlockList;
 class RS_LayerList;
 
@@ -55,7 +55,7 @@ public:
     virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
     virtual LC_ViewList* getViewList() { return nullptr;}
-    virtual LC_UCSList* getUCSList() {return nullptr;}
+    virtual LC_UCSList* getUCSList() { return nullptr;}
 
     virtual void newDoc() = 0;
 

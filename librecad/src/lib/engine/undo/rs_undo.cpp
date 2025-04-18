@@ -26,16 +26,10 @@
 **********************************************************************/
 
 #include<iostream>
-
-#include<unordered_set>
-
-#include "qc_applicationwindow.h"
-#include "rs_debug.h"
 #include "rs_undo.h"
+#include <unordered_set>
+#include "rs_debug.h"
 #include "rs_undocycle.h"
-
-#include <list>
-#include <algorithm>
 
 /**
  * @return Number of Cycles that can be undone.

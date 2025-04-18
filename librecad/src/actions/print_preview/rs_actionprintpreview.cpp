@@ -22,22 +22,24 @@
 
 #include<cmath>
 
-#include <QMouseEvent>
 
-#include "qg_printpreviewoptions.h"
 #include "rs_actionprintpreview.h"
 
+#include <QMouseEvent>
+
 #include "lc_graphicviewport.h"
-#include "rs_commandevent.h"
+#include "lc_printpreviewview.h"
+#include "qg_printpreviewoptions.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
-#include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "lc_printpreviewview.h"
+#include "rs_vector.h"
+
+class LC_PrintPreviewView;
 
 struct RS_ActionPrintPreview::Points {
     RS_Vector v1{};

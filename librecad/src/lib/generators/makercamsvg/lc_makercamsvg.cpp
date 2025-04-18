@@ -20,12 +20,11 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // **********************************************************************
 //
-#include<cmath>
+
 #include "lc_makercamsvg.h"
 
-#include "lc_xmlwriterinterface.h"
-
 #include "lc_splinepoints.h"
+#include "lc_xmlwriterinterface.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"

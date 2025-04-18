@@ -22,6 +22,10 @@
 
 #include <QApplication>
 #include "lc_shortcuts_manager.h"
+
+#include <QDir>
+#include <QFile>
+
 #include "lc_shortcutsstorage.h"
 #include "rs_debug.h"
 #include "rs_settings.h"

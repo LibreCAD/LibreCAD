@@ -43,6 +43,8 @@
 #include "lc_application.h"
 #include "main.h"
 
+#include <QDir>
+
 #include "lc_iconcolorsoptions.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlginitial.h"

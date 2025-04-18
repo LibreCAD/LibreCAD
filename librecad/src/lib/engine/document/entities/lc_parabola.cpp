@@ -23,14 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_parabola.h"
 
-#include "lc_quadratic.h"
-#include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
-#include "rs_math.h"
-#include "rs_painter.h"
 
 namespace {
 

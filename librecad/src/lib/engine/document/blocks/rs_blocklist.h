@@ -28,7 +28,6 @@
 #ifndef RS_BLOCKLIST_H
 #define RS_BLOCKLIST_H
 
-
 #include <QList>
 
 class QString;

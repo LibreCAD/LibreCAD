@@ -23,13 +23,8 @@
 #include "lc_actionucscreate.h"
 
 #include "lc_graphicviewport.h"
-#include "rs_preview.h"
-#include "lc_ucs_mark.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
-#include "lc_ucssetoptions.h"
 #include "lc_overlayentitiescontainer.h"
-#include "lc_overlayanglesbasemark.h"
+#include "lc_ucssetoptions.h"
 
 LC_ActionUCSCreate::LC_ActionUCSCreate(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("UCSCreate", actionContext, RS2::ActionUCSCreate){

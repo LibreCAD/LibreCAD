@@ -20,17 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QImageCleanupFunction>
-#include <QActionEvent>
-#include "lc_orthogonalgrid.h"
-#include "rs_vector.h"
 
-#include "rs_math.h"
-#include "rs.h"
-#include "lc_gridsystem.h"
+#include "lc_orthogonalgrid.h"
+
 #include "lc_lattice.h"
-#include "rs_painter.h"
-#include "lc_graphicviewport.h"
+#include "rs_math.h"
 
 LC_OrthogonalGrid::LC_OrthogonalGrid(LC_GridSystem::LC_GridOptions *options):LC_GridSystem(options) {}
 

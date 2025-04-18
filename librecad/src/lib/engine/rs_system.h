@@ -29,14 +29,12 @@
 #ifndef RS_SYSTEM_H
 #define RS_SYSTEM_H
 
-#include <QDir>
+
+#define RS_SYSTEM RS_System::instance()
 #include <QList>
 #include <QSharedPointer>
 
-#include "rs_locale.h"
-
-#define RS_SYSTEM RS_System::instance()
-
+class RS_Locale;
 /**
  * Class for some system methods such as file system operations.
  * Implemented as singleton. Use init to Initialize the class
@@ -70,23 +68,15 @@ public:
     /**
      * @return Users home directory.
      */
-    static QString getHomeDir() {
-        return QDir::homePath();
-    }
-
+    static QString getHomeDir();
     /**
      * @return Users home directory.
      */
-    static QString getTempDir() {
-        return QDir::tempPath();
-    }
-
+    static QString getTempDir();
     /**
      * @return Current directory.
      */
-    static QString getCurrentDir() {
-        return QDir::currentPath();
-    }
+    static QString getCurrentDir();
 
     /**
      * @return Application Data directory.
@@ -187,9 +177,7 @@ public:
 private:
     RS_System() = default;
     void addLocale(RS_Locale *locale);
-
 protected:
-
     QString appName;
     QString appVersion;
     QString appDirName;
@@ -198,7 +186,7 @@ protected:
     QStringList languageList;   //< List of available translations
     bool initialized {false};
     bool externalAppDir {false};
-    QList<QSharedPointer<RS_Locale> > allKnownLocales;
+    QList<QSharedPointer<RS_Locale>> allKnownLocales;
 };
 
 #endif

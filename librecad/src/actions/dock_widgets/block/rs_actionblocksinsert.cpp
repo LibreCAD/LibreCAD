@@ -24,17 +24,15 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
+
 #include "rs_actionblocksinsert.h"
+
+#include "qg_insertoptions.h"
 #include "rs_block.h"
-#include "rs_coordinateevent.h"
 #include "rs_creation.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_insert.h"
-#include "rs_math.h"
 #include "rs_preview.h"
-#include "qg_insertoptions.h"
 
 /**
  * Constructor.
@@ -59,7 +57,7 @@ void RS_ActionBlocksInsert::init(int status){
             QString blockName = m_block->getName();
             m_data->name = blockName;
             if (document->is(RS2::EntityBlock)) {
-                QString parentBlockName = ((RS_Block *) (document))->getName();
+                QString parentBlockName = static_cast<RS_Block*>(document)->getName();
                 if (parentBlockName == blockName) {
                     commandMessage(tr("Block cannot contain an insert of itself."));
                     finish(false);

@@ -30,6 +30,8 @@
 #include "rs_debug.h"
 #include "rs_settings.h"
 
+#include "rs_pen.h"
+
 RS_Settings::GroupGuard::GroupGuard(const QString &group):m_group{group} {}
 
 RS_Settings::GroupGuard::~GroupGuard(){

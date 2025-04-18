@@ -22,11 +22,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actionlayerstoggleprint.h"
+
 #include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_layer.h"
 
+class RS_LayerList;
 /**
  * whether a layer should appear on print (a construction layer doesn't appear on
  printout, and have straight lines of infinite length)

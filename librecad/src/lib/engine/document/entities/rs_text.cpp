@@ -25,28 +25,30 @@
 **********************************************************************/
 
 #include<iostream>
-#include<cmath>
-#include "rs_font.h"
 #include "rs_text.h"
 
+#include "rs_debug.h"
+#include "rs_font.h"
 #include "rs_fontlist.h"
 #include "rs_insert.h"
-#include "rs_math.h"
-#include "rs_debug.h"
 #include "rs_line.h"
+#include "rs_math.h"
 #include "rs_painter.h"
+#include "rs_pen.h"
+
+class RS_Font;
 
 RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
-						 const RS_Vector& _secondPoint,
-						 double _height,
-						 double _widthRel,
-						 VAlign _valign,
-						 HAlign _halign,
-						 TextGeneration _textGeneration,
-						 const QString& _text,
-						 const QString& _style,
-						 double _angle,
-						 RS2::UpdateMode _updateMode):
+                         const RS_Vector& _secondPoint,
+                         double _height,
+                         double _widthRel,
+                         VAlign _valign,
+                         HAlign _halign,
+                         TextGeneration _textGeneration,
+                         const QString& _text,
+                         const QString& _style,
+                         double _angle,
+                         RS2::UpdateMode _updateMode):
 	insertionPoint(_insertionPoint)
   ,secondPoint(_secondPoint)
   ,height(_height)

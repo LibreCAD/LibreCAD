@@ -27,9 +27,9 @@
 #include<iostream>
 #include "rs_block.h"
 
+#include "rs_blocklist.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
-#include "rs_pen.h"
 
 RS_BlockData::RS_BlockData(const QString& _name,
                            const RS_Vector& _basePoint,

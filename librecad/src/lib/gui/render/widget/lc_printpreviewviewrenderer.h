@@ -24,7 +24,6 @@
 #define LC_PRINTPREVIEWVIEWRENDERER_H
 
 #include "lc_widgetviewportrenderer.h"
-#include "lc_graphicviewport.h"
 
 class RS_Painter;
 
@@ -34,26 +33,20 @@ public:
     void renderEntity(RS_Painter *painter, RS_Entity *e) override;
 
     RS2::DrawingMode getDrawingMode() const {
-        return drawingMode;
+        return m_drawingMode;
     }
 
-    void setDrawingMode(RS2::DrawingMode mode){
-        drawingMode = mode;
-        viewport->notifyChanged();
-    }
-
+    void setDrawingMode(RS2::DrawingMode mode);
     bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) const override { return false;}
 protected:
     void drawPaper(RS_Painter *painter);
     void setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e);
     void doDrawLayerBackground(RS_Painter *painter) override;
     void setupPainter(RS_Painter *painter) override;
-
     void doRender() override;
-
 private:
-    RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
-    double paperScale = 1.0;
+    RS2::DrawingMode m_drawingMode = RS2::DrawingMode::ModeAuto;
+    double m_paperScale = 1.0;
 };
 
 #endif // LC_PRINTPREVIEWVIEWRENDERER_H

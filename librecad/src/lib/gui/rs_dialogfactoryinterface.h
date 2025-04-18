@@ -27,14 +27,7 @@
 
 #ifndef RS_DIALOGFACTORYINTERFACE_H
 #define RS_DIALOGFACTORYINTERFACE_H
-
-#include "rs.h"
 #include "rs_block.h"
-#include "lc_modifiersinfo.h"
-#include "lc_actiongroupmanager.h"
-#include "lc_relzerocoordinateswidget.h"
-#include "lc_qtstatusbarmanager.h"
-#include <QString>
 
 class QWidget;
 class QG_CommandWidget;

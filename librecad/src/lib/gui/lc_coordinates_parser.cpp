@@ -23,6 +23,8 @@
 
 #include "lc_coordinates_parser.h"
 
+#include <QString>
+
 #include "lc_convert.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphicview.h"

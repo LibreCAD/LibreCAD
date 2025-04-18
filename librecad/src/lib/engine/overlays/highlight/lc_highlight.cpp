@@ -21,7 +21,7 @@
  ******************************************************************************/
 
 #include "lc_highlight.h"
-#include "rs_entity.h"
+
 #include "rs_pen.h"
 
 LC_Highlight::LC_Highlight()= default;

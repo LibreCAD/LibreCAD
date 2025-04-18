@@ -23,18 +23,14 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include <climits>
-#include <cstdarg>
-#include <cstdio>
-#include <iostream>
-#include <string_view>
+#include "rs_debug.h"
 
 #include <QDateTime>
 #include <QString>
 #include <QTextStream>
+#include <iostream>
 
-#include "rs_debug.h"
+#include "rs_vector.h"
 
 namespace {
 FILE *s_logStream = nullptr;

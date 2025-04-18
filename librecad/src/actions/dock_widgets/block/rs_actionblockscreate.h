@@ -28,7 +28,7 @@
 #define RS_ACTIONBLOCKSCREATE_H
 
 #include "lc_actionpreselectionawarebase.h"
-#include "rs_previewactioninterface.h"
+
 
 /**
  * This action class can handle user events for creating blocks from

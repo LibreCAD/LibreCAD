@@ -26,17 +26,21 @@
 
 #include "rs_insert.h"
 
-#include<cmath>
 #include<iostream>
 
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
+#include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_math.h"
+#include "rs_pen.h"
+
+class RS_Circle;
+class RS_Arc;
 
 namespace {
 

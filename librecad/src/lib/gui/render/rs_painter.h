@@ -28,17 +28,11 @@
 #ifndef RS_PAINTER_H
 #define RS_PAINTER_H
 
-#include <QPen>
 #include <QPainter>
-#include <Qt>
 
 #include "lc_coordinates_mapper.h"
-#include "rs.h"
+#include "lc_rect.h"
 #include "rs_pen.h"
-#include "lc_rect.h"
-#include "lc_rect.h"
-#include "rs_vector.h"
-
 
 class RS_Arc;
 class RS_Circle;

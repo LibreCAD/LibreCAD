@@ -32,6 +32,9 @@
 
 #include "lc_commandItems.h"
 #include "rs_commands.h"
+
+#include <QFileInfo>
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"

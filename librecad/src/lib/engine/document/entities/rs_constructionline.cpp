@@ -27,13 +27,11 @@
 
 #include "rs_constructionline.h"
 
-#include "rs_debug.h"
 #include "lc_quadratic.h"
+#include "rs_debug.h"
 #include "rs_math.h"
-#include "lc_rect.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
 #include "rs_painter.h"
+
 
 RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1,
 						const RS_Vector& point2):

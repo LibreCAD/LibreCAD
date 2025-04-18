@@ -28,9 +28,9 @@
 
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
+
+class RS_BlockList;
 
 RS_ActionBlocksEdit::RS_ActionBlocksEdit(LC_ActionContext *actionContext)
         :RS_ActionInterface("Edit Block",actionContext, RS2::ActionBlocksEdit) {}

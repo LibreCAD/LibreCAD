@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "lc_linemath.h"
+#include "rs_entity.h"
 
 RS_ActionModifyCut::RS_ActionModifyCut(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Cut Entity",actionContext, RS2::ActionModifyCut)

@@ -23,8 +23,6 @@
 #ifndef LC_ORTHOGONALGRID_H
 #define LC_ORTHOGONALGRID_H
 
-
-
 #include "rs_grid.h"
 #include "lc_gridsystem.h"
 

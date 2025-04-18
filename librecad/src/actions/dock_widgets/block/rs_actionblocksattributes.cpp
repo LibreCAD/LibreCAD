@@ -28,12 +28,14 @@
 
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
-#include "rs_graphic.h"
 #include "rs_block.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_debug.h"
+#include "rs_graphic.h"
 
+class RS_BlockList;
+class RS_Block;
 
 RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext *actionContext)
         :RS_ActionInterface("Edit Block Attributes",actionContext, RS2::ActionBlocksAttributes) {}

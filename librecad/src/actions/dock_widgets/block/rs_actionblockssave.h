@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actioninterface.h"
 
+class RS_Block;
 class RS_Insert;
 
 /**

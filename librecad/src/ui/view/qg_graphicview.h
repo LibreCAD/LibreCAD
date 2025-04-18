@@ -32,6 +32,7 @@
 #include <QString>
 #include <QWidget>
 
+#include "lc_ucslist.h"
 #include "rs.h"
 #include "rs_blocklistlistener.h"
 #include "rs_graphicview.h"

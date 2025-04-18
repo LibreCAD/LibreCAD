@@ -42,6 +42,7 @@
 #include "lc_layertreemodel.h"
 #include "rs_settings.h"
 #include "lc_widgets_common.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 /**
  * Constructor.

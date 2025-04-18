@@ -30,6 +30,8 @@
 #include "rs_settings.h"
 #include "lc_overlayentitiescontainer.h"
 #include "lc_linemath.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
 
 LC_GraphicViewRenderer::LC_GraphicViewRenderer(LC_GraphicViewport *viewport, QPaintDevice* p)
    :LC_WidgetViewPortRenderer(viewport, p) {
@@ -39,7 +41,7 @@ void LC_GraphicViewRenderer::loadSettings() {
     LC_WidgetViewPortRenderer::loadSettings();
     //increase grid point size on for DPI>96
     auto dpiX = int(qApp->screens().front()->logicalDotsPerInch());  // fixme - sand - potentially that should be something on higher layer
-    isHiDpi = dpiX > 96;
+    m_isHiDpi = dpiX > 96;
 
     m_relZeroOptions.loadSettings();
     m_absZeroOptions.loadSettings();
@@ -62,8 +64,8 @@ void LC_GraphicViewRenderer::loadSettings() {
 
     LC_GROUP("Render");
     {
-        drawTextsAsDraftForPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
-        drawTextsAsDraftForPanning = LC_GET_BOOL("DrawTextsAsDraftInPanning", true);
+        m_drawTextsAsDraftForPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
+        m_drawTextsAsDraftForPanning = LC_GET_BOOL("DrawTextsAsDraftInPanning", true);
     }
     LC_GROUP_END();
 
@@ -83,7 +85,7 @@ void LC_GraphicViewRenderer::loadSettings() {
         m_draftSignColor = QColor(  name);
     } // colors group
 
-    drawGrid = viewport->isGridOn();
+    m_drawGrid = viewport->isGridOn();
 }
 
 
@@ -141,7 +143,7 @@ void LC_GraphicViewRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
             switch (entityType) {
                 case RS2::EntityMText:
                 case RS2::EntityText: {
-                    if (drawTextsAsDraftForPanning) {
+                    if (m_drawTextsAsDraftForPanning) {
                         setPenForDraftEntity(painter, e, false);
                         e->drawDraft(painter);
                     } else {
@@ -194,7 +196,7 @@ void LC_GraphicViewRenderer::doDrawLayerBackground(RS_Painter *painter) {
     RS_Grid* grid = viewport->getGrid();
 
     if (grid != nullptr) {
-        if (drawGrid) {
+        if (m_drawGrid) {
             grid->calculateGrid();
             grid->drawGrid(painter);
         }
@@ -203,7 +205,7 @@ void LC_GraphicViewRenderer::doDrawLayerBackground(RS_Painter *painter) {
         }
     }
 
-    if (isHiDpi) {
+    if (m_isHiDpi) {
         RS_Pen pen = penSaved;
         pen.setWidth(RS2::Width01);
         painter->setPen(pen);
@@ -212,7 +214,7 @@ void LC_GraphicViewRenderer::doDrawLayerBackground(RS_Painter *painter) {
     if (isDraftMode() && m_drawDrawSign)
         drawDraftSign(painter);
 
-    if (isHiDpi)
+    if (m_isHiDpi)
         painter->setPen(penSaved);
 
 
@@ -256,7 +258,7 @@ void LC_GraphicViewRenderer::drawOverlay(RS_Painter *painter) {
 
     LC_OverlaysManager *overlaysManager = viewport->getOverlaysManager();
 
-    inOverlayDrawing = true;
+    m_inOverlayDrawing = true;
 
     drawEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::OverlayEffects);
     drawOverlayEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::OverlayEffects);
@@ -268,7 +270,7 @@ void LC_GraphicViewRenderer::drawOverlay(RS_Painter *painter) {
     drawEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::InfoCursor);
     drawOverlayEntitiesInOverlay(overlaysManager, painter, RS2::OverlayGraphics::InfoCursor);
 
-    inOverlayDrawing = false;
+    m_inOverlayDrawing = false;
 }
 
 void LC_GraphicViewRenderer::drawEntitiesInOverlay(LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType){
@@ -313,11 +315,11 @@ void LC_GraphicViewRenderer::drawEntityReferencePoints(RS_Painter *painter, cons
 void LC_GraphicViewRenderer::drawDraftSign(RS_Painter *painter) {
     painter->setPen(m_draftSignColor);
     painter->setFont(m_draftSignFont);
-    const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, draftMarkText);
+    const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, m_draftMarkText);
     int offset = 5;
     QRect boundingRect{offset, offset, size.width(), size.height()};
     for (int i = 1; i <= 4; ++i) {
-        painter->drawText(boundingRect, draftMarkText, &boundingRect);
+        painter->drawText(boundingRect, m_draftMarkText, &boundingRect);
         QPoint position{
             (i & 1) ? viewport->getWidth() - boundingRect.width() - offset : offset,
             (i & 2) ? viewport->getHeight() - boundingRect.height() - offset: offset};
@@ -384,20 +386,20 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter *painter, RS_Entity *e, 
     RS_Pen originalPen = pen;
     bool highlighted = e->getFlag(RS2::FlagHighlighted);
     bool selected = e->getFlag(RS2::FlagSelected);
-    bool overlayPaint = inOverlay || inOverlayDrawing;
+    bool overlayPaint = inOverlay || m_inOverlayDrawing;
     // try to avoid pen setup if the pen and entity flags are the same as for previous entity. This is important for performance reasons, so we'll reuse
     // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
     // arbitrary QPainter::setPen was called between drawing entities.
     double patternOffset = painter->currentDashOffset();
-    if (lastPaintedHighlighted == highlighted && lastPaintedSelected == selected && lastPaintOverlay == overlayPaint) {
+    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint) {
         if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
             return;
         }
     }
     else{
-        lastPaintedHighlighted = highlighted;
-        lastPaintedSelected = selected;
-        lastPaintOverlay = overlayPaint;
+        m_lastPaintedHighlighted = highlighted;
+        m_lastPaintedSelected = selected;
+        m_lastPaintOverlay = overlayPaint;
     }
 
 #ifdef DEBUG_RENDERING
@@ -494,20 +496,20 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter *painter, RS_Entity
     RS_Pen originalPen = pen;
     bool highlighted = e->getFlag(RS2::FlagHighlighted);
     bool selected = e->getFlag(RS2::FlagSelected);
-    bool overlayPaint = inOverlay || inOverlayDrawing;
+    bool overlayPaint = inOverlay || m_inOverlayDrawing;
 // try to avoid pen setup if the pen and entity flags are the same as for previous entity. This is important for performance reasons, so we'll reuse
     // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
     // arbitrary QPainter::setPen was called between drawing entities.
     double patternOffset = painter->currentDashOffset();
-    if (lastPaintedHighlighted == highlighted && lastPaintedSelected == selected && lastPaintOverlay == overlayPaint) {
+    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint) {
         if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
             return;
         }
     }
     else{
-        lastPaintedHighlighted = highlighted;
-        lastPaintedSelected = selected;
-        lastPaintOverlay = overlayPaint;
+        m_lastPaintedHighlighted = highlighted;
+        m_lastPaintedSelected = selected;
+        m_lastPaintOverlay = overlayPaint;
     }
     pen.setScreenWidth(0.0);
 
@@ -603,7 +605,7 @@ void LC_GraphicViewRenderer::drawCoordinateSystems(RS_Painter *painter){
 
 void LC_GraphicViewRenderer::doSetupBeforeContainerDraw() {
     LC_WidgetViewPortRenderer::doSetupBeforeContainerDraw();
-    lastPaintedHighlighted = false;
-    lastPaintedSelected = false;
-    lastPaintOverlay = false;
+    m_lastPaintedHighlighted = false;
+    m_lastPaintedSelected = false;
+    m_lastPaintOverlay = false;
 }

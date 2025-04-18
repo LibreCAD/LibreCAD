@@ -27,11 +27,13 @@
 
 #include "rs_pattern.h"
 
-#include "rs_system.h"
-#include "rs_fileio.h"
-#include "rs_layer.h"
-#include "rs_debug.h"
+#include <QFileInfo>
 
+#include "rs_debug.h"
+#include "rs_fileio.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
+#include "rs_system.h"
 
 /**
  * Constructor.
@@ -130,4 +132,3 @@ bool RS_Pattern::loadPattern() {
 QString RS_Pattern::getFileName() const {
 	return fileName;
 }
-

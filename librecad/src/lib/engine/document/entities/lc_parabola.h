@@ -24,12 +24,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #ifndef LC_Parabola_H
 #define LC_Parabola_H
-
-#include <array>
-#include <memory>
 #include <vector>
 
+#include "lc_quadratic.h"
 #include "lc_splinepoints.h"
+#include "rs_vector.h"
 
 class RS_Line;
 struct RS_LineData;

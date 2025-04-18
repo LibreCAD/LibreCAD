@@ -27,6 +27,9 @@
 #include <QMessageBox>
 
 #include "lc_workspacesmanager.h"
+
+#include <QFile>
+
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_settings.h"

@@ -23,8 +23,6 @@
 #ifndef LC_UCSLIST_H
 #define LC_UCSLIST_H
 
-#include <memory>
-
 #include <QList>
 #include "lc_ucs.h"
 

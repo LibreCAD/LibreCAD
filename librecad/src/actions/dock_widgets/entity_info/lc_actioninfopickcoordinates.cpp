@@ -20,9 +20,13 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "qc_applicationwindow.h"
+
 #include "lc_actioninfopickcoordinates.h"
+
 #include "lc_quickinfowidget.h"
+#include "qc_applicationwindow.h"
+
+class LC_QuickInfoWidget;
 
 LC_ActionInfoPickCoordinates::LC_ActionInfoPickCoordinates(LC_ActionContext *actionContext)
     :LC_AbstractActionWithPreview("Pick Coordinates", actionContext,RS2::ActionInfoPickCoordinates){

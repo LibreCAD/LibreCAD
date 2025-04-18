@@ -24,7 +24,10 @@
 
 #include "lc_graphicviewport.h"
 #include "rs_painter.h"
+#include "rs_pen.h"
 #include "rs_settings.h"
+
+class LC_GraphicViewport;
 
 void LC_OverlayUCSZeroOptions::loadSettings(){
     LC_GROUP("Appearance");
@@ -56,7 +59,7 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
     RS_Pen pen_yAxis (options->m_colorYAxisExtension, RS2::Width00, RS2::SolidLine);
     pen_yAxis.setScreenWidth(0);
 
-    LC_GraphicViewport* viewport = painter->getViewPort();
+    auto viewport = painter->getViewPort();
 
     int width = viewport->getWidth();
     int height = viewport->getHeight();

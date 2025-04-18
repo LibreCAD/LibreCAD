@@ -29,8 +29,8 @@
 #define RS_SETTINGS_H
 
 #include <QObject>
-#include "rs_pen.h"
 
+class RS_Pen;
 class QSettings;
 
 // ---------------------------------------------------------------------------

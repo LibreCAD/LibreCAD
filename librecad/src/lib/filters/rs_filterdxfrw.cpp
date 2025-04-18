@@ -30,6 +30,9 @@
 
 #include "rs_filterdxfrw.h"
 
+#include <QFile>
+#include <QFileInfo>
+
 #include "lc_parabola.h"
 #include "rs_arc.h"
 #include "rs_circle.h"

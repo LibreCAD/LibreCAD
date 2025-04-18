@@ -45,6 +45,7 @@
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 #include "rs_settings.h"

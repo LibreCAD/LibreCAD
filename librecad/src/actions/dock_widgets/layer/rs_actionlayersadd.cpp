@@ -24,8 +24,8 @@
 **
 **********************************************************************/
 
-#include "qg_layerwidget.h"
 #include "rs_actionlayersadd.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -42,7 +42,6 @@ void RS_ActionLayersAdd::trigger() {
         if (layer != nullptr) {
             m_graphic->addLayer(layer);
         }
-        // m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);
 }

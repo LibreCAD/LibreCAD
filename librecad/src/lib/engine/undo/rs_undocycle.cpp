@@ -29,6 +29,9 @@
 #include <ostream>
 #include "rs_undocycle.h"
 
+#include "rs_entity.h"
+
+class RS_Entity;
 /**
  * Adds an Undoable to this Undo Cycle. Every Cycle can contain one or
  * more Undoables.
@@ -86,7 +89,7 @@ std::ostream& operator << (std::ostream& os,
 	os << "   Undoable ids: ";
 	for (auto u: uc.undoables) {
 		if (u->undoRtti()==RS2::UndoableEntity) {
-			RS_Entity* e = (RS_Entity*)u;
+			auto e = reinterpret_cast<RS_Entity*>(u);
 			os << e->getId() << (u->isUndone() ? "*" : "") << " ";
 		} else {
 			os << "|";

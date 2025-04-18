@@ -29,11 +29,9 @@
 
 #include "lc_quadratic.h"
 #include "lc_rect.h"
-
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"

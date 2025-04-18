@@ -21,9 +21,9 @@
  ******************************************************************************/
 
 #include "lc_lattice.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
+
 #include "lc_graphicviewport.h"
+#include "rs_math.h"
 
 // fixme - potentially, distortion for axis x and y should be added, as so far distortion factor is 1 (which is fine for cartesian and isometric)
 LC_Lattice::LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth) {

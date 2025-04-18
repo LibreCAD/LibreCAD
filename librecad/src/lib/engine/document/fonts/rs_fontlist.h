@@ -25,7 +25,6 @@
 **********************************************************************/
 #ifndef RS_FONTLIST_H
 #define RS_FONTLIST_H
-#include <memory>
 #include <vector>
 
 class QString;

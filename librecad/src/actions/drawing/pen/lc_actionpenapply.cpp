@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "qg_pentoolbar.h"
 #include "qc_applicationwindow.h"
+#include "rs_entity.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 

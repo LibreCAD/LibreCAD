@@ -28,7 +28,6 @@
 #ifndef RS_SPLINE_H
 #define RS_SPLINE_H
 
-#include <vector>
 #include "rs_entitycontainer.h"
 
 /**

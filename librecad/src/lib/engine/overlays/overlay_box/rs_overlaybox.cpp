@@ -23,17 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include<iostream>
 #include "rs_overlaybox.h"
 
-#include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_graphic.h"
-#include <QBrush>
 #include "rs_settings.h"
-#include "lc_overlayentity.h"
 
 void LC_OverlayBoxOptions::loadSettings() {
     LC_GROUP_GUARD("Colors");

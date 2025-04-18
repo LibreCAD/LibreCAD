@@ -29,9 +29,12 @@
 ****************************************************************************/
 
 #include "rs_actionlayerstoggleview.h"
+
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+
+class RS_LayerList;
 
 RS_ActionLayersToggleView::RS_ActionLayersToggleView(LC_ActionContext *actionContext, RS_Layer* layer)
     : RS_ActionInterface("Toggle Layer Visibility", actionContext,  RS2::ActionLayersToggleView)

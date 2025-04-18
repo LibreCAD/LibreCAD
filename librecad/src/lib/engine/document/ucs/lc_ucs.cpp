@@ -19,14 +19,15 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+
+#include "lc_ucs.h"
+
 #include <QObject>
 
 #include "lc_linemath.h"
-#include "lc_ucs.h"
 #include "rs_math.h"
 
 LC_UCS LC_WCS::instance = LC_WCS();
-
 
 LC_UCS::LC_UCS() {}
 

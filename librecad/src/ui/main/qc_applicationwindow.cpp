@@ -40,6 +40,7 @@
 #include <QTimer>
 #include <QDockWidget>
 
+#include "lc_actiongroupmanager.h"
 #include "lc_actionoptionsmanager.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_anglesbasiswidget.h"
@@ -60,8 +61,10 @@
 #include "lc_penwizard.h"
 #include "lc_printing.h"
 #include "lc_plugininvoker.h"
+#include "lc_qtstatusbarmanager.h"
 #include "lc_quickinfowidget.h"
 #include "lc_releasechecker.h"
+#include "lc_relzerocoordinateswidget.h"
 #include "lc_snapoptionswidgetsholder.h"
 #include "lc_snapmanager.h"
 #include "lc_ucslistwidget.h"

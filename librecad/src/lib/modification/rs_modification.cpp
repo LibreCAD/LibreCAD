@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
+#include "rs_modification.h"
 
 #include <QSet>
 
@@ -39,24 +39,22 @@
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_image.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_math.h"
-#include "rs_modification.h"
 #include "rs_mtext.h"
 #include "rs_polyline.h"
+#include "rs_settings.h"
 #include "rs_text.h"
 #include "rs_units.h"
-#include "rs_settings.h"
-
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+class LC_SplinePoints;
 
 namespace {
 // fixme - hm, is it actually needed to mix the logic of modification and ui/undo?
@@ -2503,7 +2501,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         case RS2::EntitySplinePoints: {
             // interpolation spline can be closed
             // so we cannot use the default implementation
-            cut2 = ((LC_SplinePoints *) cutEntity)->cut(cutCoord);
+            cut2 = static_cast<LC_SplinePoints*>(cutEntity)->cut(cutCoord);
             cut1 = (RS_AtomicEntity *) cutEntity->clone();
 
             cut1->setPen(originalPen);

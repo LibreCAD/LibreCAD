@@ -24,18 +24,16 @@
 **
 **********************************************************************/
 
-#include <cmath>
 #include "rs_arc.h"
 
-#include "rs_line.h"
-#include "rs_linetypepattern.h"
-#include "rs_information.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "lc_quadratic.h"
-#include "rs_debug.h"
 #include "lc_rect.h"
+#include "rs_debug.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
+
 
 #ifdef EMU_C99
 #include "emu_c99.h"

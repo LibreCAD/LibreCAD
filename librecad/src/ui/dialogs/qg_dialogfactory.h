@@ -26,6 +26,7 @@
 #define QG_DIALOGFACTORY_H
 #include "rs_dialogfactoryinterface.h"
 
+class LC_RelZeroCoordinatesWidget;
 class QG_SnapToolBar;
 class LC_SnapOptionsWidgetsHolder;
 class QG_SnapMiddleOptions;

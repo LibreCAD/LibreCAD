@@ -22,6 +22,8 @@
 
 #include "rs_actionselectbase.h"
 
+#include <QKeyEvent>
+
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_selection.h"

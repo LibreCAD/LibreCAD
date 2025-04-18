@@ -22,13 +22,11 @@
 
 #ifndef LC_GRAPHICVIEWRENDERER_H
 #define LC_GRAPHICVIEWRENDERER_H
-
-
-#include "lc_widgetviewportrenderer.h"
+#include "lc_overlayanglesbasemark.h"
 #include "lc_overlayrelativezero.h"
 #include "lc_overlayucszero.h"
 #include "lc_ucs_mark.h"
-#include "lc_overlayanglesbasemark.h"
+#include "lc_widgetviewportrenderer.h"
 
 class RS_EntityContainer;
 class LC_OverlaysManager;
@@ -50,11 +48,11 @@ public:
         return uiLineHeight <getMinRenderableTextHeightInPx();
     }
 protected:
-    bool inOverlayDrawing = false;
-    bool isHiDpi = false;
+    bool m_inOverlayDrawing = false;
+    bool m_isHiDpi = false;
 
-    bool drawGrid = true;
-
+    bool m_drawGrid = true;
+    // fixme - sand - files - use uniq_ptr?
     LC_OverlayRelZeroOptions m_relZeroOptions;
     LC_OverlayUCSZeroOptions m_absZeroOptions;
     LC_UCSMarkOptions m_ucsMarkOptions;
@@ -62,15 +60,15 @@ protected:
 
     int m_entityHandleHalfSize = 2;
 
-    bool drawTextsAsDraftForPanning = true;
-    bool drawTextsAsDraftForPreview = true;
+    bool m_drawTextsAsDraftForPanning = true;
+    bool m_drawTextsAsDraftForPreview = true;
 
     bool m_ignoreDraftForHighlight = false;
 
     /** grid color */
-    RS_Color gridColor = Qt::gray;
+    RS_Color m_gridColor = Qt::gray;
     /** meta grid color */
-    RS_Color metaGridColor;
+    RS_Color m_metaGridColor;
     /** selected color */
     RS_Color m_colorSelectedEntity;
     /** highlighted color */
@@ -87,13 +85,12 @@ protected:
     /** reference entities on preview color */
     RS_Color m_colorPreviewReferenceHighlightedEntities;
 
-
-    bool lastPaintedHighlighted = false;
-    bool lastPaintedSelected = false;
-    bool lastPaintOverlay = false;
+    bool m_lastPaintedHighlighted = false;
+    bool m_lastPaintedSelected = false;
+    bool m_lastPaintOverlay = false;
     bool m_draftMode = false;
 
-    QString draftMarkText = QObject::tr("Draft");
+    QString m_draftMarkText = QObject::tr("Draft");
     RS_Color m_draftSignColor = Qt::white;
     bool m_drawDrawSign = true;
     QFont m_draftSignFont;

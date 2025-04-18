@@ -23,30 +23,28 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <cmath>
 #include <iostream>
-#include <memory>
-#include <set>
+#include "rs_hatch.h"
 
 #include <QPainterPath>
-#include <QBrush>
-#include <QString>
+#include <set>
 
 #include "lc_looputils.h"
-
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_graphicview.h"
-#include "rs_hatch.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
+#include "rs_pen.h"
 
+class RS_Arc;
+class RS_Pattern;
+class RS_AtomicEntity;
 
 namespace{
 // angular distance corrected for direction and range [0, 2 pi]

@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionblocksexplode.h"
+
+#include "rs_entity.h"
 #include "rs_modification.h"
 
 /**

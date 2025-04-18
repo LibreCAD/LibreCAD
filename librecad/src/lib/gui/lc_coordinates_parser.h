@@ -23,11 +23,12 @@
 
 #ifndef LC_COORDINATESPARSER_H
 #define LC_COORDINATESPARSER_H
-#include <QString>
 
-#include "lc_graphicviewaware.h"
 #include "rs_coordinateevent.h"
 #include "rs_vector.h"
+
+class QString;
+class RS_GraphicView;
 
 class LC_CoordinatesParser{
 public:

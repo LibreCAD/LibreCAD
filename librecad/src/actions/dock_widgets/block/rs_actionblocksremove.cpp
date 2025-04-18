@@ -25,13 +25,14 @@
 **********************************************************************/
 
 #include "rs_actionblocksremove.h"
+
 #include "rs_debug.h"
-#include "rs_block.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 
+class RS_BlockList;
 
 RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
     :RS_ActionInterface("Remove Block", actionContext, RS2::ActionBlocksRemove) {}

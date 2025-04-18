@@ -30,7 +30,6 @@
 
 #include "rs_block.h"
 
-
 /**
  * A character in a font is represented by this special block class.
  *

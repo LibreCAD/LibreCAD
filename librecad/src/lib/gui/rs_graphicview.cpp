@@ -25,29 +25,22 @@
 **
 **********************************************************************/
 
-#include<climits>
-#include<cmath>
 
-#include <QAction>
-#include <QApplication>
-#include <QMouseEvent>
-#include <QtAlgorithms>
-
-#include "lc_graphicviewport.h"
-#include "lc_shortcuts_manager.h"
-#include "lc_widgetviewportrenderer.h"
 #include "rs_graphicview.h"
 
 #include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
+#include "lc_shortcuts_manager.h"
+#include "lc_widgetviewportrenderer.h"
+#include "rs_actioninterface.h"
+#include "rs_entitycontainer.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
 #include "rs_linetypepattern.h"
-#include "rs_painter.h"
+#include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_snapper.h"
-#include "rs_actioninterface.h"
-#include "rs_selection.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

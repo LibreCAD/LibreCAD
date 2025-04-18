@@ -38,7 +38,9 @@
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_settings.h"
+
 /**
  * Constructor.
  *
@@ -158,7 +160,8 @@ void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
  * The default implementation does nothing.
  */
 void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
-    Qt::MouseButton button = e->button();
+    Qt::MouseButton button;
+    button = e->button();
     if (button == Qt::LeftButton){
         onMouseLeftButtonRelease(m_status, e);
     } else if (button == Qt::RightButton){
@@ -483,7 +486,7 @@ void RS_ActionInterface::switchToAction(RS2::ActionType actionType, void* data) 
  * Calls msgAvailableCommands() from the RS_COMMANDS module.
  */
 QString RS_ActionInterface::msgAvailableCommands() {
-    return RS_COMMANDS->msgAvailableCommands();
+    return RS_COMMANDS->msgAvailableCommands(); // fixme - sand - via m_actionContext
 }
 
 int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const{

@@ -23,12 +23,10 @@
 #include "lc_settingsexporter.h"
 
 #include <QFileDialog>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QSettings>
 
-#include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 

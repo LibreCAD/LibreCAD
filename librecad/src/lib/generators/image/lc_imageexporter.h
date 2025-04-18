@@ -24,8 +24,9 @@
 #define LC_IMAGEEXPORTER_H
 
 #include <QSvgGenerator>
-#include "rs_painter.h"
 
+class RS_Painter;
+class LC_GraphicViewport;
 class RS_Graphic;
 
 class LC_ImageExporter : public QObject {

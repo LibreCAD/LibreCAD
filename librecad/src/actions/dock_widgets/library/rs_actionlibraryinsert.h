@@ -29,9 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-#include "rs_graphic.h"
-#include "rs_creation.h"
-
 /**
  * This action class can handle user events for inserting library items 
  * (or any other DXF files) into the current drawing (as block/insert).

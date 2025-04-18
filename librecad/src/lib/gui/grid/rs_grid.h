@@ -28,10 +28,12 @@
 #ifndef RS_GRID_H
 #define RS_GRID_H
 
+#include <QString>
+
 #include "rs.h"
 #include "rs_vector.h"
-#include "rs_graphic.h"
 
+class RS_Painter;
 class RS_GraphicView;
 class LC_GraphicViewport;
 class LC_GridSystem;
@@ -99,8 +101,6 @@ public:
 	RS_Vector const &getCellVector() const;
 	void loadSettings();
 	void drawGrid(RS_Painter *painter);
-protected:
-
 private:
 	//! copy ctor disabled
     RS_Grid(RS_Grid const&) = delete;
@@ -113,15 +113,10 @@ private:
 
     //! Graphic view this grid is connected to.
     LC_GraphicViewport* viewport = nullptr;
-
-
     QString gridInfoString = "";
-
     RS_Vector metaGridWidth;
-
     bool isometric = false;
     RS2::IsoGridViewType isoViewType = RS2::IsoLeft;
-
     bool scaleGrid = true;
     RS_Vector userGrid;
     int minGridSpacing;

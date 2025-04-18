@@ -24,19 +24,17 @@
 **
 **********************************************************************/
 
-
-#include <QMouseEvent>
 #include "rs_actionblockscreate.h"
 
-#include "rs_creation.h"
 #include "rs_block.h"
+#include "rs_creation.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_insert.h"
-#include "rs_modification.h"
 
+class RS_BlockList;
 /**
  * Constructor.
  */

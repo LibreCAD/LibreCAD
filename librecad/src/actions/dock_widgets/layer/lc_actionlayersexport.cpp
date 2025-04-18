@@ -22,21 +22,17 @@
 **
 **********************************************************************/
 
-#include <algorithm>
-#include <memory>
 
-#include <QFileDialog>
 #include "lc_actionlayersexport.h"
 
 #include <QStatusBar>
 
 #include "lc_actioncontext.h"
-#include "../../../ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h"
+#include "lc_exportlayersdialogservice.h"
 #include "lc_layersexporter.h"
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_graphic.h"
+#include "rs_document.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
@@ -77,6 +73,7 @@ bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* export
     if (exportOptions->m_layers.empty())    {
         /* No export layer found. */
         QString exportModeString = (exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
+        // fixme - sand - files - use more generic way for message notify!
         QC_ApplicationWindow::getAppWindow()->statusBar()->showMessage( QObject::tr("No %1 layers found").arg(exportModeString),
                                                                         QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionLayersExport::trigger: No %s layers found", exportModeString.toStdString().c_str());

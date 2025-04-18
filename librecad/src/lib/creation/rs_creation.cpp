@@ -24,13 +24,10 @@
 **
 **********************************************************************/
 
-#include<cmath>
+#include "rs_creation.h"
 
-#include <QString>
 #include <QFileInfo>
 
-#include "lc_hyperbola.h"
-#include "lc_parabola.h"
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
@@ -38,11 +35,10 @@
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_constructionline.h"
-#include "rs_creation.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_information.h"
 #include "rs_insert.h"
@@ -50,7 +46,7 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_units.h"
-#include "lc_graphicviewport.h"
+
 // fixme - sand - refactor - review this class completely
 namespace {
 

@@ -25,7 +25,7 @@
 **
 **********************************************************************/
 #include<iostream>
-#include <QString>
+
 #include "rs_variabledict.h"
 #include "rs_debug.h"
 
@@ -296,4 +296,3 @@ std::ostream& operator << (std::ostream& os, RS_VariableDict& d)
 
     return os;
 }
-

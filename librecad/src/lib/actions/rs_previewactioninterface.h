@@ -26,7 +26,7 @@
 
 #ifndef RS_PREVIEWACTIONINTERFACE_H
 #define RS_PREVIEWACTIONINTERFACE_H
-#include <QMouseEvent>
+
 #include <QPointF>
 
 #include "dxf_format.h"

@@ -26,6 +26,7 @@
 
 #include "lc_coordinates_mapper.h"
 #include "lc_overlaysmanager.h"
+
 #include "rs.h"
 #include "rs_vector.h"
 class LC_OverlayDrawablesContainer;

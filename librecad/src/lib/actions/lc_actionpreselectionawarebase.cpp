@@ -19,18 +19,16 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QMouseEvent>
 
 #include "lc_actionpreselectionawarebase.h"
+
+#include <QMouseEvent>
 
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "rs_document.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
-#include "rs_settings.h"
 #include "rs_selection.h"
-#include "rs_overlaybox.h"
+#include "rs_settings.h"
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType,

@@ -26,6 +26,8 @@
 
 #include "rs_previewactioninterface.h"
 
+#include <QMouseEvent>
+
 #include "lc_actioncontext.h"
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_defaults.h"
@@ -45,6 +47,7 @@
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_point.h"
 #include "rs_preview.h"
 #include "rs_settings.h"
 #include "rs_units.h"

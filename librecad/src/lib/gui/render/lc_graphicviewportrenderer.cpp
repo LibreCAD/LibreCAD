@@ -21,14 +21,14 @@
  ******************************************************************************/
 
 #include "lc_graphicviewportrenderer.h"
+
+#include "lc_defaults.h"
 #include "lc_graphicviewport.h"
+#include "lc_linemath.h"
 #include "rs_entity.h"
-#include "lc_rect.h"
+#include "rs_graphic.h"
 #include "rs_painter.h"
 #include "rs_units.h"
-#include "rs_graphic.h"
-#include "lc_defaults.h"
-#include "lc_linemath.h"
 
 LC_GraphicViewportRenderer::LC_GraphicViewportRenderer(LC_GraphicViewport* v, QPaintDevice* painterDevice):
     pd{painterDevice}

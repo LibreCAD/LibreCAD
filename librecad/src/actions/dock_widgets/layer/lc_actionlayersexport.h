@@ -31,7 +31,6 @@
 
 #include "rs_actioninterface.h"
 
-
 class QString;
 class RS_EntityContainer;
 class RS_GraphicView;

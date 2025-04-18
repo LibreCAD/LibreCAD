@@ -24,19 +24,18 @@
 **
 **********************************************************************/
 
-#include <cmath>
-#include <iostream>
+
+ #include <iostream>
 
 #include "rs_mtext.h"
-
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_fontlist.h"
 #include "rs_insert.h"
-#include "rs_math.h"
 #include "rs_line.h"
+#include "rs_math.h"
 #include "rs_painter.h"
-
+#include "rs_pen.h"
 
 RS_MText::LC_TextLine *RS_MText::LC_TextLine::clone() const {
     auto *ec = new LC_TextLine(getParent(), isOwner());

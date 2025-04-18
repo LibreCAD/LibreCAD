@@ -201,6 +201,8 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_graphicview.h"
+#include "rs_layerlist.h"
 #include "rs_selection.h"
 
 RS_Layer* obtainLayer(LC_ActionContext* m_actionContext, void* data) {

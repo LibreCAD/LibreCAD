@@ -22,14 +22,15 @@
 
 #include "lc_documentsstorage.h"
 
-#include <QFileInfo>
 #include <QApplication>
 
 #include "qg_filedialog.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_document.h"
 #include "rs_fileio.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_settings.h"
 
 LC_DocumentsStorage::LC_DocumentsStorage() = default;

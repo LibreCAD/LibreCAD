@@ -32,6 +32,8 @@
 
 #include "rs_filterlff.h"
 
+#include <QFile>
+
 #include "rs_arc.h"
 #include "rs_line.h"
 #include "rs_font.h"

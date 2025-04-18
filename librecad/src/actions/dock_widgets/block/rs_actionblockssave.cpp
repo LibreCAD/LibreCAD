@@ -18,19 +18,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "qc_applicationwindow.h"
-#include "qg_blockwidget.h"
-#include "qg_filedialog.h"
 #include "rs_actionblockssave.h"
 
 #include <QApplication>
 
 #include "lc_documentsstorage.h"
+#include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+#include "qg_blockwidget.h"
+#include "qg_filedialog.h"
+#include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 
+class RS_Block;
 // fixme - sand - files - refactor action, move the logic outside as it might be reused
 RS_ActionBlocksSave::RS_ActionBlocksSave(LC_ActionContext *actionContext)
         :RS_ActionInterface("Edit Block", actionContext, RS2::ActionBlocksSave) {}

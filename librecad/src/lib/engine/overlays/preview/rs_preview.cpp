@@ -27,7 +27,9 @@
 #include "rs_preview.h"
 
 #include "lc_graphicviewport.h"
+#include "rs_color.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 #include "rs_settings.h"
 
 /**

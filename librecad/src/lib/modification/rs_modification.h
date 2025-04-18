@@ -26,12 +26,12 @@
 
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
+#include <QString>
 
-#include <QHash>
 #include "rs_pen.h"
 #include "rs_vector.h"
-#include "rs_arc.h"
 
+class RS_Arc;
 class RS_AtomicEntity;
 class RS_Entity;
 class RS_EntityContainer;
@@ -94,7 +94,6 @@ struct RS_BoundData{
     }
 };
 
-
 /**
  * Holds the data needed for offset modifications.
  */
@@ -126,7 +125,6 @@ struct RS_ScaleData : public LC_ModifyOperationFlags {
     bool toFindFactor = false;
 };
 
-
 /**
  * Holds the data needed for mirror modifications.
  */
@@ -146,7 +144,6 @@ struct RS_MoveRotateData : public LC_ModifyOperationFlags{
     bool sameAngleForCopies = false;
 };
 
-
 /**
  * Holds the data needed for rotation around two centers modifications.
  */
@@ -159,7 +156,6 @@ struct RS_Rotate2Data : public LC_ModifyOperationFlags{
     bool mirrorAngles = false;
     bool sameAngle2ForCopies = false;
 };
-
 
 /**
  * Holds the data needed for beveling modifications.
@@ -221,8 +217,6 @@ struct LC_RoundResult{
     };
 };
 
-
-
 /**
  * Holds the data needed for rounding modifications.
  */
@@ -230,7 +224,6 @@ struct RS_RoundData {
     double radius = 0.;
     bool trim = false;
 };
-
 
 /**
  * Holds the data needed for moving reference points.
@@ -240,21 +233,18 @@ struct RS_MoveRefData {
     RS_Vector offset;
 };
 
-
-
 /**
  * Holds the data needed for changing attributes.
  */
 struct RS_AttributesData {
-        QString layer;
-        RS_Pen pen;
-        bool changeLayer = false;
-        bool changeColor = false;
-        bool changeLineType = false;
-        bool changeWidth = false;
-        bool applyBlockDeep = false;
+    QString layer;
+    RS_Pen pen;
+    bool changeLayer = false;
+    bool changeColor = false;
+    bool changeLineType = false;
+    bool changeWidth = false;
+    bool applyBlockDeep = false;
 };
-
 
 /**
  * Holds the data needed for pasting.
@@ -278,7 +268,6 @@ struct RS_PasteData {
         QString blockName;
 };
 
-
 /**
  * API Class for manipulating entities.
  * There's no interaction handled in this class.
@@ -294,114 +283,125 @@ struct RS_PasteData {
 class RS_Modification {
 public:
     RS_Modification(
-        RS_EntityContainer &entityContainer,
-        LC_GraphicViewport *viewport,
+        RS_EntityContainer& entityContainer,
+        LC_GraphicViewport* viewport,
         bool handleUndo = true);
     void remove();
-    void remove(const std::vector<RS_Entity*> &entitiesList);
+    void remove(const std::vector<RS_Entity*>& entitiesList);
     void revertDirection(bool keepSelected);
-    void revertDirection(const std::vector<RS_Entity*> &entitiesList, bool keepSelected);
-    bool changeAttributes(RS_AttributesData &data, const bool keepSelected);
-    bool changeAttributes(RS_AttributesData& data, const std::vector<RS_Entity*> &entitiesList,RS_EntityContainer *container, bool keepSelected);
-    bool changeAttributes(RS_AttributesData &data, RS_EntityContainer *container, const bool keepSelected);
-    void copy(const RS_Vector &ref, const bool cut);
-    void paste(const RS_PasteData &data, RS_Graphic *source = nullptr);
-    bool move(RS_MoveData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
-    bool move(RS_MoveData& data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected);
-    bool rotate(RS_RotateData &data, bool forPreviewOnly = false, bool keepSelected = false);
-    bool rotate(RS_RotateData &data, const std::vector<RS_Entity *> &entitiesList, bool forPreviewOnly, bool keepSelected);
-    bool scale(RS_ScaleData &data, bool forPreviewOnly = false, const bool keepSelected = false);
-    bool scale(RS_ScaleData &data, const std::vector<RS_Entity *> &entitiesList, bool forPreviewOnly, const bool keepSelected);
-    bool mirror(RS_MirrorData &data, bool keepSelected);
-    bool mirror(RS_MirrorData &data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected);
-    bool moveRotate(RS_MoveRotateData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr, bool keepSelected = false);
-    bool moveRotate(RS_MoveRotateData &data, const std::vector<RS_Entity*> &entitiesList, bool previewOnly = false, bool keepSelected = false);
-    bool rotate2(RS_Rotate2Data &data, bool forPreviewOnly, bool keepSelected);
-    bool rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected);
+    void revertDirection(const std::vector<RS_Entity*>& entitiesList, bool keepSelected);
+    bool changeAttributes(RS_AttributesData& data, const bool keepSelected);
+    bool changeAttributes(RS_AttributesData& data, const std::vector<RS_Entity*>& entitiesList,
+                          RS_EntityContainer* container, bool keepSelected);
+    bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container, const bool keepSelected);
+    void copy(const RS_Vector& ref, const bool cut);
+    void paste(const RS_PasteData& data, RS_Graphic* source = nullptr);
+    bool move(RS_MoveData& data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
+    bool move(RS_MoveData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly, bool keepSelected);
+    bool rotate(RS_RotateData& data, bool forPreviewOnly = false, bool keepSelected = false);
+    bool rotate(RS_RotateData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly,
+                bool keepSelected);
+    bool scale(RS_ScaleData& data, bool forPreviewOnly = false, const bool keepSelected = false);
+    bool scale(RS_ScaleData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly,
+               const bool keepSelected);
+    bool mirror(RS_MirrorData& data, bool keepSelected);
+    bool mirror(RS_MirrorData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly,
+                bool keepSelected);
+    bool moveRotate(RS_MoveRotateData& data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr,
+                    bool keepSelected = false);
+    bool moveRotate(RS_MoveRotateData& data, const std::vector<RS_Entity*>& entitiesList, bool previewOnly = false,
+                    bool keepSelected = false);
+    bool rotate2(RS_Rotate2Data& data, bool forPreviewOnly, bool keepSelected);
+    bool rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly,
+                 bool keepSelected);
     LC_TrimResult trim(
-        const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
-        const RS_Vector &limitCoord, RS_Entity *limitEntity,
+        const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,
+        const RS_Vector& limitCoord, RS_Entity* limitEntity,
         bool both, bool forPreview = false);
-    RS_Entity* trimAmount(const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
-                          double dist, bool trimBoth, bool &trimStart, bool &trimEnd, bool forPreview = false);
-    bool offset(const RS_OffsetData &data, bool previewOny = false, RS_EntityContainer* previewContainer = nullptr);
-    bool offset(const RS_OffsetData& data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected);
-    bool cut(const RS_Vector &cutCoord, RS_AtomicEntity *cutEntity);
+    RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,
+                          double dist, bool trimBoth, bool& trimStart, bool& trimEnd, bool forPreview = false);
+    bool offset(const RS_OffsetData& data, bool previewOny = false, RS_EntityContainer* previewContainer = nullptr);
+    bool offset(const RS_OffsetData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly,
+                bool keepSelected);
+    bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity);
     bool stretch(
-        const RS_Vector &firstCorner,
-        const RS_Vector &secondCorner,
-        const RS_Vector &offset,
+        const RS_Vector& firstCorner,
+        const RS_Vector& secondCorner,
+        const RS_Vector& offset,
         bool removeOriginals);
     LC_BevelResult* bevel(
-        const RS_Vector &coord1, RS_AtomicEntity *entity1,
-        const RS_Vector &coord2, RS_AtomicEntity *entity2,
-        RS_BevelData &data, bool previewOnly);
+        const RS_Vector& coord1, RS_AtomicEntity* entity1,
+        const RS_Vector& coord2, RS_AtomicEntity* entity2,
+        RS_BevelData& data, bool previewOnly);
     LC_RoundResult* round(
-        const RS_Vector &coord,
-        const RS_Vector &coord1,
-        RS_AtomicEntity *entity1,
-        const RS_Vector &coord2,
-        RS_AtomicEntity *entity2,
-        RS_RoundData &data);
+        const RS_Vector& coord,
+        const RS_Vector& coord1,
+        RS_AtomicEntity* entity1,
+        const RS_Vector& coord2,
+        RS_AtomicEntity* entity2,
+        RS_RoundData& data);
     bool explode(const bool remove = true, const bool forceUndoable = false);
-    bool explode(const std::vector<RS_Entity*> &entitiesList, const bool remove = true, const bool forceUndoableOperation = false, const bool keepSelected = false);
+    bool explode(const std::vector<RS_Entity*>& entitiesList, const bool remove = true,
+                 const bool forceUndoableOperation = false, const bool keepSelected = false);
     bool explodeTextIntoLetters(bool keepSelected);
-    bool explodeTextIntoLetters(const std::vector<RS_Entity*> &entitiesList, bool keepSelected);
-    bool moveRef(RS_MoveRefData &data);
+    bool explodeTextIntoLetters(const std::vector<RS_Entity*>& entitiesList, bool keepSelected);
+    bool moveRef(RS_MoveRefData& data);
     bool splitPolyline(
-        RS_Polyline &polyline,
-        RS_Entity &e1, RS_Vector v1,
-        RS_Entity &e2, RS_Vector v2,
-        RS_Polyline **polyline1,
-        RS_Polyline **polyline2) const;
-    RS_Polyline *addPolylineNode(
-        RS_Polyline &polyline,
-        const RS_AtomicEntity &segment,
-        const RS_Vector &node);
-    RS_Polyline *deletePolylineNode(
-        RS_Polyline &polyline,
-        const RS_Vector &node, bool createOnly);
-    RS_Polyline *deletePolylineNodesBetween(
-        RS_Polyline &polyline,
-        const RS_Vector &node1, const RS_Vector &node2, bool createOnly);
-    RS_Polyline *polylineTrim(
-        RS_Polyline &polyline,
-        RS_AtomicEntity &segment1,
-        RS_AtomicEntity &segment2,
+        RS_Polyline& polyline,
+        RS_Entity& e1, RS_Vector v1,
+        RS_Entity& e2, RS_Vector v2,
+        RS_Polyline** polyline1,
+        RS_Polyline** polyline2) const;
+    RS_Polyline* addPolylineNode(
+        RS_Polyline& polyline,
+        const RS_AtomicEntity& segment,
+        const RS_Vector& node);
+    RS_Polyline* deletePolylineNode(
+        RS_Polyline& polyline,
+        const RS_Vector& node, bool createOnly);
+    RS_Polyline* deletePolylineNodesBetween(
+        RS_Polyline& polyline,
+        const RS_Vector& node1, const RS_Vector& node2, bool createOnly);
+    RS_Polyline* polylineTrim(
+        RS_Polyline& polyline,
+        RS_AtomicEntity& segment1,
+        RS_AtomicEntity& segment2,
         bool createOnly);
-    static RS_BoundData getBoundingRect(std::vector<RS_Entity *> &selected); // todo - probably it should be located in other utility class..
-    void collectSelectedEntities(std::vector<RS_Entity *> &entitiesList) const;
-    bool alignRef(LC_AlignRefData &data, const std::vector<RS_Entity *> &entitiesList, bool forPreviewOnly, bool keepSelected);
+    static RS_BoundData getBoundingRect(std::vector<RS_Entity*>& selected);
+    // todo - probably it should be located in other utility class..
+    void collectSelectedEntities(std::vector<RS_Entity*>& entitiesList) const;
+    bool alignRef(LC_AlignRefData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly,
+                  bool keepSelected);
 private:
-    void copyEntity(RS_Entity *e, const RS_Vector &ref, bool cut);
-    void copyLayers(RS_Entity *e);
-    void copyBlocks(RS_Entity *e);
-    bool pasteLayers(RS_Graphic *source);
-    bool pasteContainer(RS_Entity *entity, RS_EntityContainer *containerToPaste, QHash<QString, QString> blocksDict, RS_Vector insertionPoint);
-    bool pasteEntity(RS_Entity *entity, RS_EntityContainer *containerToPaste);
+    void copyEntity(RS_Entity* e, const RS_Vector& ref, bool cut);
+    void copyLayers(RS_Entity* e);
+    void copyBlocks(RS_Entity* e);
+    bool pasteLayers(RS_Graphic* source);
+    bool pasteContainer(RS_Entity* entity, RS_EntityContainer* containerToPaste, QHash<QString, QString> blocksDict,
+                        RS_Vector insertionPoint);
+    bool pasteEntity(RS_Entity* entity, RS_EntityContainer* containerToPaste);
     void deselectOriginals(bool remove);
-    void deselectOriginals(const std::vector<RS_Entity*> &entitiesList, bool remove);
-    void addNewEntities(const std::vector<RS_Entity *> &addList, bool forceUndoable = false);
-    bool explodeTextIntoLetters(RS_MText *text, std::vector<RS_Entity *> &addList);
-    bool explodeTextIntoLetters(RS_Text *text, std::vector<RS_Entity *> &addList);
-
+    void deselectOriginals(const std::vector<RS_Entity*>& entitiesList, bool remove);
+    void addNewEntities(const std::vector<RS_Entity*>& addList, bool forceUndoable = false);
+    bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
+    bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 protected:
-    RS_EntityContainer *container = nullptr;
-    RS_Graphic *graphic = nullptr;
-    RS_Document *document = nullptr;
+    RS_EntityContainer* container = nullptr;
+    RS_Graphic* graphic = nullptr;
+    RS_Document* document = nullptr;
     LC_GraphicViewport* viewport = nullptr;
     bool handleUndo = false;
 
-    void trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const;
+    void trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is) const;
 
-    void deleteOriginalAndAddNewEntities(const std::vector<RS_Entity *> &addList, const std::vector<RS_Entity*> &originalEntities,
+    void deleteOriginalAndAddNewEntities(const std::vector<RS_Entity*>& addList,
+                                         const std::vector<RS_Entity*>& originalEntities,
                                          bool addOnly, bool deleteOriginals, bool forceUndoable = false);
 
-
-    void setupModifiedClones(std::vector<RS_Entity *> &addList, const LC_ModifyOperationFlags &data,
+    void setupModifiedClones(std::vector<RS_Entity*>& addList, const LC_ModifyOperationFlags& data,
                              bool forPreviewOnly, bool keepSelected) const;
 
-    RS_Entity *getClone(bool forPreviewOnly, const RS_Entity *e) const;
+    RS_Entity* getClone(bool forPreviewOnly, const RS_Entity* e) const;
 };
 
 #endif

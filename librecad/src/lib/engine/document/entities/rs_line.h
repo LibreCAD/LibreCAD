@@ -25,9 +25,6 @@
 **********************************************************************/
 #pragma once
 
-#include <memory>
-
-#include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
 class LC_Quadratic;
 

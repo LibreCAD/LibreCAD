@@ -24,28 +24,29 @@
 **
 **********************************************************************/
 
-#include <cmath>
+#include <QList>
 #include <iostream>
+#include "rs_entitycontainer.h"
+
+#include <QObject>
 #include <set>
 
-#include <QtGlobal>
 #include "lc_looputils.h"
-
 #include "qg_dialogfactory.h"
-
 #include "rs_constructionline.h"
 #include "rs_debug.h"
-#include "rs_dimension.h"
 #include "rs_dialogfactory.h"
+#include "rs_dimension.h"
 #include "rs_ellipse.h"
-#include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
-#include "rs_solid.h"
 #include "rs_painter.h"
+#include "rs_solid.h"
+#include "rs_vector.h"
+
+class RS_Dimension;
 
 namespace {
 
@@ -80,10 +81,8 @@ namespace {
  *
  * @param owner True if we own and also delete the entities.
  */
-RS_EntityContainer::RS_EntityContainer(
-    RS_EntityContainer *parent,
-    bool owner)
-    :RS_Entity(parent) {
+RS_EntityContainer::RS_EntityContainer(RS_EntityContainer *parent,  bool owner):
+    RS_Entity(parent) {
 
     autoDelete = owner;
     //    RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "

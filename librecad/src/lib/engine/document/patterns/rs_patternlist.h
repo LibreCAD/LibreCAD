@@ -27,9 +27,7 @@
 
 #ifndef RS_PATTERNLIST_H
 #define RS_PATTERNLIST_H
-
-#include<map>
-#include<memory>
+#include <map>
 
 class RS_Pattern;
 class QString;

@@ -27,15 +27,11 @@
 #include "rs_actionlibraryinsert.h"
 
 #include "lc_documentsstorage.h"
-#include "rs_dialogfactory.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
+#include "qg_libraryinsertoptions.h"
+#include "rs_creation.h"
+#include "rs_graphic.h"
 #include "rs_preview.h"
 #include "rs_units.h"
-#include "qg_libraryinsertoptions.h"
-#include "rs_debug.h"
 
 struct RS_ActionLibraryInsert::Points {
     RS_Graphic* prev;

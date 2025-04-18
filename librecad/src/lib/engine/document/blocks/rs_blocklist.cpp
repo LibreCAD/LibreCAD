@@ -24,14 +24,14 @@
 **
 **********************************************************************/
 
-#include <set>
-#include <iostream>
-#include <QString>
-#include <QRegularExpression>
-#include "rs_debug.h"
 #include "rs_blocklist.h"
+
+#include <QRegularExpression>
+#include <iostream>
+
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -41,7 +41,7 @@
  *              list is deleted.
  */
 RS_BlockList::RS_BlockList(bool owner) {
-    this->m_owner = owner;
+    m_owner = owner;
     //blocks.setAutoDelete(owner);
 	m_activeBlock = nullptr;
 	setModified(false);

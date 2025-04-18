@@ -28,7 +28,6 @@
 #ifndef RS_HATCH_H
 #define RS_HATCH_H
 
-#include "rs_entity.h"
 #include "rs_entitycontainer.h"
 
 /**

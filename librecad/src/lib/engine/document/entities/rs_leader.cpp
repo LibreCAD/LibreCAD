@@ -26,8 +26,10 @@
 
 #include<iostream>
 
-#include "rs_debug.h"
 #include "rs_leader.h"
+
+#include "rs_atomicentity.h"
+#include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_pen.h"
 #include "rs_solid.h"
@@ -79,8 +81,8 @@ void RS_Leader::update() {
 
     RS_Entity* fe = firstEntity();
     if (fe && fe->isAtomic()) {
-        RS_Vector p1 = ((RS_AtomicEntity*)fe)->getStartpoint();
-        RS_Vector p2 = ((RS_AtomicEntity*)fe)->getEndpoint();
+        RS_Vector p1 = static_cast<RS_AtomicEntity*>(fe)->getStartpoint();
+        RS_Vector p2 = static_cast<RS_AtomicEntity*>(fe)->getEndpoint();
 
         // first entity must be the line which gets the arrow:
         if (hasArrowHead()) {

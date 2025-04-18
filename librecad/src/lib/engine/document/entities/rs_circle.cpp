@@ -26,17 +26,16 @@
 **
 **********************************************************************/
 
-#include <cfloat>
-#include <QPolygonF>
+
 #include "rs_circle.h"
 
-#include "rs_line.h"
-#include "rs_information.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
-#include "rs_math.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
+
 
 namespace {
 // tangent condition tolerance

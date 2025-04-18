@@ -24,18 +24,17 @@
 **
 **********************************************************************/
 #include<iostream>
+#include "rs_image.h"
+
 #include <QDir>
 #include <QFileInfo>
-#include <QImage>
 
+#include "qc_applicationwindow.h"
 #include "rs_debug.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
-#include "rs_image.h"
+#include "rs_entitycontainer.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
-#include "qc_applicationwindow.h"
 #include "rs_polyline.h"
 #include "rs_settings.h"
 

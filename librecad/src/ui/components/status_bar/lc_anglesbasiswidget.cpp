@@ -24,6 +24,7 @@
 #include "lc_anglesbasiswidget.h"
 
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "ui_lc_anglesbasiswidget.h"
 
 

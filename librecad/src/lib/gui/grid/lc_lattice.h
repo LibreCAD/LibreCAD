@@ -27,7 +27,6 @@
 
 class LC_GraphicViewport;
 
-
 class LC_Lattice{
 public:
     LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth);

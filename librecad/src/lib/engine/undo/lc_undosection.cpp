@@ -25,7 +25,6 @@
 
 #include "lc_graphicviewport.h"
 #include "lc_undosection.h"
-#include "rs_debug.h"
 #include "rs_document.h"
 
 LC_UndoSection::LC_UndoSection(RS_Document *doc, LC_GraphicViewport* view, const bool handleUndo /*= true*/) :

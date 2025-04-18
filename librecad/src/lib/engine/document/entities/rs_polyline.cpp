@@ -24,24 +24,23 @@
 **
 **********************************************************************/
 
-#include <cassert>
-#include <cmath>
+
 #include <iostream>
+
+#include "rs_polyline.h"
 
 #include <QObject>
 
-#include "qc_applicationwindow.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
-#include "rs_polyline.h"
-
-#include "rs_dialogfactory.h"
+#include "rs_pen.h"
 
 RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
                                  const RS_Vector& _endpoint,

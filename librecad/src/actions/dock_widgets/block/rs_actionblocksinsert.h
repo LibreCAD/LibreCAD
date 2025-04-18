@@ -27,7 +27,7 @@
 #define RS_ACTIONBLOCKSINSERT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_insert.h"
+
 class RS_Block;
 struct RS_InsertData;
 

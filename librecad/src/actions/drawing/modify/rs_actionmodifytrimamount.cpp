@@ -36,6 +36,7 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "qg_trimamountoptions.h"
+#include "rs_arc.h"
 
 namespace {
 

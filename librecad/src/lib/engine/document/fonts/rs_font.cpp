@@ -27,17 +27,20 @@
 #include <iostream>
 
 #include <QRegularExpression>
-#include <QStringConverter>
 #include <QTextStream>
+#include "rs_font.h"
+
+#include <QFileInfo>
 
 #include "rs_arc.h"
 #include "rs_debug.h"
-#include "rs_font.h"
 #include "rs_fontchar.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
 #include "rs_system.h"
+
+class RS_FontChar;
 
 namespace {
 
@@ -507,4 +510,11 @@ std::ostream& operator << (std::ostream& os, const RS_Font& f) {
     os << " Font file name: " << f.getFileName().toLatin1().data() << "\n";
     //<< (RS_BlockList&)f << "\n";
     return os;
+}
+
+unsigned RS_Font::countLetters() const {
+    return letterList.count();
+}
+RS_Block* RS_Font::letterAt(unsigned i) {
+    return letterList.at(i);
 }

@@ -27,8 +27,6 @@
 #include <iostream>
 
 #include "rs_clipboard.h"
-#include <cassert>
-#include <memory>
 #include "rs_graphic.h"
 
 RS_Clipboard::RS_Clipboard():

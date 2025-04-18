@@ -19,11 +19,10 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include<cmath>
 
-#include<QPainterPath>
-#include<QPolygon>
-#include<QPointF>
+#include "rs_painter.h"
+
+#include <QPainterPath>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -32,17 +31,17 @@
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "rs_painter.h"
 #include "rs_polyline.h"
 #include "rs_spline.h"
 
+struct RS_EllipseData;
+struct RS_CircleData;
 
 namespace {
 

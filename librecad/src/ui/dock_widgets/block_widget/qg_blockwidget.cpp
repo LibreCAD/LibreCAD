@@ -47,6 +47,7 @@
 #include "rs_settings.h"
 #include "lc_widgets_common.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     m_iconBlockVisible = QIcon(":/icons/visible.lci");

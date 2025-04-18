@@ -28,13 +28,9 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-#include <iosfwd>
-#include <memory>
 #include <QString>
 
-
 #include "lc_drawable.h"
-// #include "lc_quadratic.h"
 #include "rs_undoable.h"
 #include "rs_vector.h"
 

@@ -37,6 +37,7 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "qg_roundoptions.h"
+#include "rs_arc.h"
 
 namespace {
 // supported entity types for fillet
