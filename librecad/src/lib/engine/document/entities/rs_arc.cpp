@@ -301,7 +301,6 @@ RS_Vector RS_Arc::getStartpoint() const{
 /** @return End point of the entity. */
 RS_Vector RS_Arc::getEndpoint() const{
     return m_endPoint;
-    return data.center + RS_Vector::polar(data.radius, data.angle2);
 }
 
 RS_VectorSolutions RS_Arc::getRefPoints() const{
@@ -1015,8 +1014,7 @@ void RS_Arc::updateMiddlePoint() {
     } else {
         a += RS_Math::correctAngle(b - a) * 0.5;
     }
-    RS_Vector ret(a);
-    middlePoint =  getCenter() + ret * getRadius();
+    middlePoint =  getCenter() + RS_Vector::polar(getRadius(), a);
 }
 
 void RS_Arc::moveMiddlePoint(const RS_Vector& vector) {
