@@ -11,14 +11,14 @@ BLOCK "StringFileInfo"
 {
 	BLOCK "040904E4"
 	{
-		VALUE "Comments", "Custom icon engine to render SVG icons depending on palette"
+		VALUE "Comments", "Icon engine for .lci SVG icons"
 		VALUE "CompanyName", "LibreCAD"
-		VALUE "FileDescription", "Palette Icon Engine"
+		VALUE "FileDescription", "Icon engine for .lci SVG icons"
 		VALUE "FileVersion", "1.0.0.001"
 		VALUE "InternalName", "lc_svgicons.dll"
 		VALUE "LegalCopyright", "(c) 2025 LibreCAD.org, sand1024"
-		VALUE "OriginalFilename", "paletteicon.dll"
-		VALUE "ProductName", "Palette Icon Engine"
+		VALUE "OriginalFilename", "lc_svgicons.dll"
+		VALUE "ProductName", "LibreCAD"
 		VALUE "ProductVersion", "1.0.0"
 	}
 }

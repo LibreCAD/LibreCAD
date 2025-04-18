@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 project(LibreCAD VERSION 2.2.2)
 
-
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #LOCAL
@@ -22,6 +20,7 @@ set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
 set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
 #
 
+set (CMAKE_INSTALL_PREFIX "Z:/LC_BUILD_PROD")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC_OPTIONS --connections string)
@@ -1573,5 +1572,3 @@ endif(NOT WIN32)
 
 add_subdirectory(libraries/lciconengine)
 add_subdirectory(plugins)
-
-target_link_libraries(librecad PUBLIC ${DLL_NAME})
