@@ -21,6 +21,7 @@ set(PLUGIN_HEADERS
   ../../libraries/muparser/src/muParserError.cpp
   ../../libraries/muparser/src/muParserInt.cpp
   ../../libraries/muparser/src/muParserTokenReader.cpp
+
    )
 
 set(PLUGIN_TS_FILES

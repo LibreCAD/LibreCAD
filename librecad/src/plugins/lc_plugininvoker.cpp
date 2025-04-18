@@ -34,7 +34,9 @@
 #include "rs_debug.h"
 #include "rs_system.h"
 
-LC_PluginInvoker::LC_PluginInvoker(QC_ApplicationWindow *appWindow): m_appWindow(appWindow){
+LC_PluginInvoker::LC_PluginInvoker(QC_ApplicationWindow *appWindow, LC_ActionContext* ctx):
+    m_appWindow(appWindow),
+    m_actionContext(ctx) {
 }
 
 LC_PluginInvoker::~LC_PluginInvoker() = default;
@@ -80,11 +82,7 @@ void LC_PluginInvoker::loadPlugins(){
                         if (atMenu) {
                             atMenu->addAction(actpl);
                         } else {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
                             QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
-#else
-                            QStringList treemenu = loc.menuEntryPoint.split('/', QString::SkipEmptyParts);
-#endif
                             QString currentLevel = "";
                             QMenu *parentMenu = 0;
                             do {
@@ -124,7 +122,7 @@ void LC_PluginInvoker::execPlug(){
     RS_Document *currdoc = w->getDocument();
     //create document interface instance
     QG_GraphicView *graphicView = w->getGraphicView();
-    Doc_plugin_interface pligundoc(currdoc, graphicView, m_appWindow);
+    Doc_plugin_interface pligundoc(m_actionContext, m_appWindow);
     //execute plugin
     LC_UndoSection undo(currdoc, graphicView->getViewPort());
     plugin->execComm(&pligundoc, m_appWindow, action->data().toString());

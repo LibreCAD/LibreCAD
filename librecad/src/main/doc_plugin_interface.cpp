@@ -53,7 +53,6 @@
 #include "rs_mtext.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
-#include "rs_polyline.h"
 #include "rs_text.h"
 #include "rs_units.h"
 
@@ -766,11 +765,12 @@ QString Plugin_Entity::intColor2str(int color){
     return Converter.intColor2str(color);
 }
 
-Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent):
-doc(d)
-,docGr(doc->getGraphic())
-,gView(gv)
-,main_window(parent)
+Doc_plugin_interface::Doc_plugin_interface(LC_ActionContext* actionContext, QWidget* parent):
+    doc(actionContext->getEntityContainer()->getDocument())
+    ,docGr(doc->getGraphic())
+    ,gView(actionContext->getGraphicView())
+    ,main_window(parent)
+    ,m_actionContext{actionContext}
 {
 }
 
@@ -1193,9 +1193,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 									QPointF *base){
     bool status = false;
 
-    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
-
-    auto a = std::make_shared<QC_ActionGetPoint>(ctxt);
+    auto a = std::make_shared<QC_ActionGetPoint>(m_actionContext);
     if (a) {
         if (!(message.isEmpty()) ) a->setMessage(message);
         gView->killAllActions();
@@ -1219,8 +1217,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 }
 
 Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
-    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
-    auto a = std::make_shared<QC_ActionGetEnt>(ctxt);
+    auto a = std::make_shared<QC_ActionGetEnt>(m_actionContext);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1282,8 +1279,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     
     gView->setTypeToSelect(typeToSelect);
-    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
-    auto a =std::make_shared<QC_ActionGetSelect> (typeToSelect, ctxt);
+    auto a =std::make_shared<QC_ActionGetSelect> (typeToSelect, m_actionContext);
 
     if (a) {
         if (!(message.isEmpty()) )
@@ -1326,8 +1322,7 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
 }
 
 void Doc_plugin_interface::unselectEntities() {
-    LC_ActionContext* ctxt = nullptr; // fixme - sand - files - restore!
-    auto a = new QC_ActionGetSelect(ctxt);
+    auto a = new QC_ActionGetSelect(m_actionContext);
     a->unselectEntities();
 }
 

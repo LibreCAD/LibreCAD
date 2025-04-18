@@ -22,14 +22,16 @@
 #ifndef LC_PLUGININVOKER_H
 #define LC_PLUGININVOKER_H
 
-#include <QObject>
+#include "lc_actioncontext.h"
+
 class QC_PluginInterface;
 class QC_ApplicationWindow;
+class LC_ActionContext;
 
 class LC_PluginInvoker: public QObject{
     Q_OBJECT
 public:
-    explicit LC_PluginInvoker(QC_ApplicationWindow* appWindow);
+    explicit LC_PluginInvoker(QC_ApplicationWindow* appWindow, LC_ActionContext* ctx);
     ~LC_PluginInvoker() override;
     void loadPlugins();
 public slots:
@@ -37,6 +39,7 @@ public slots:
 private:
     QC_ApplicationWindow* m_appWindow;
     QList<QC_PluginInterface*> m_loadedPluginList;
+    LC_ActionContext* m_actionContext;
 };
 
 #endif // LC_PLUGININVOKER_H

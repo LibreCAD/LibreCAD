@@ -577,7 +577,7 @@ QStringList RS_System::getFileList(const QString& subDirectory,
  * all possible LibreCAD directories.
  */
 QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
-    QStringList dirList;
+        QStringList dirList;
 
     QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
 
@@ -642,11 +642,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     {
         LC_GROUP_GUARD( "Paths");
         {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             auto option = Qt::SkipEmptyParts;
-#else
-            auto option = QString::SkipEmptyParts;
-#endif
+
             if (subDirectory == "fonts") {
                 QString savedFonts = LC_GET_STR("Fonts", "");
                 RS_DEBUG->print("saved fonts: %s\n", savedFonts.toUtf8().constData());
