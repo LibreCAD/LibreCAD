@@ -60,6 +60,40 @@ void RS_ArcData::reset() {
 	reversed = false;
 }
 
+void RS_Arc::setCenter(const RS_Vector& center) {
+    data.center = center;
+    calculateBorders();
+}
+
+void RS_Arc::setRadius(double radius) {
+    if (!RS_Math::equal(data.radius, radius)) {
+        data.radius = radius;
+        calculateBorders();
+    }
+}
+
+void RS_Arc::setAngle1(double a1) {
+    if (!RS_Math::equal(data.angle1, a1)) {
+        data.angle1 = a1;
+        calculateBorders();
+    }
+}
+
+/** Sets new end angle. */
+void RS_Arc::setAngle2(double a2) {
+    if (!RS_Math::equal(data.angle2, a2)) {
+        data.angle2 = a2;
+        calculateBorders();
+    }
+}
+
+void RS_Arc::setReversed(bool r) {
+    if (data.reversed != r) {
+        data.reversed = r;
+        std::swap(m_startPoint, m_endPoint);
+    }
+}
+
 bool RS_ArcData::isValid() const{
 	return (center.valid && radius>RS_TOLERANCE &&
 			fabs(remainder(angle1-angle2, 2.*M_PI))>RS_TOLERANCE_ANGLE);

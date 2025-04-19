@@ -335,7 +335,6 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
     &&     (dimArc1->getAngle2() > RS_MINDOUBLE))
     {
         dimArc1->setAngle2(dimArc1->getAngle2() + deltaOffset);
-        dimArc1->calculateBorders();
     }
 
     while (!textRectRotated.inArea(dimArc2->getStartpoint())
@@ -343,7 +342,6 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
     &&     (dimArc2->getAngle1() > RS_MINDOUBLE))
     {
         dimArc2->setAngle1(dimArc2->getAngle1() - deltaOffset);
-        dimArc2->calculateBorders();
     }
 
     dimArc1->setPen (pen);

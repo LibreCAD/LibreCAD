@@ -109,9 +109,7 @@ public:
         return data.center;
     }
     /** Sets new center. */
-    void setCenter(const RS_Vector& c) {
-        data.center = c;
-    }
+    void setCenter(const RS_Vector& c);
 
     /** @return The radius of this arc */
     double getRadius() const override {
@@ -119,26 +117,23 @@ public:
     }
 
     /** Sets new radius. */
-    void setRadius(double r) override {
-        data.radius = r;
-    }
+    void setRadius(double r) override;
 
     /** @return The start angle of this arc */
     double getAngle1() const {
         return data.angle1;
     }
+
     /** Sets new start angle. */
-    void setAngle1(double a1) {
-        data.angle1 = a1;
-    }
+    void setAngle1(double a1);
+
     /** @return The end angle of this arc */
     double getAngle2() const {
         return data.angle2;
     }
     /** Sets new end angle. */
-    void setAngle2(double a2) {
-        data.angle2 = a2;
-    }
+    void setAngle2(double a2);
+
     /** get angle relative arc center*/
     double getArcAngle(const RS_Vector& vp) {
         return (vp - data.center).angle();
@@ -172,9 +167,7 @@ public:
         return data.reversed;
     }
     /** sets the reversed status. */
-    void setReversed(bool r) {
-        data.reversed = r;
-    }
+    void setReversed(bool r);
 
     /** @return Start point of the entity. */
     RS_Vector getStartpoint() const override;
