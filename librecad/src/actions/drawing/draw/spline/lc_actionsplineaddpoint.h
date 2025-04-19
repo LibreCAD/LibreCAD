@@ -31,7 +31,7 @@ public:
     LC_ActionSplineAddPoint(LC_ActionContext *actionContext);
     ~LC_ActionSplineAddPoint() override = default;
 protected:
-    bool endpointIsSelected = false;
+    bool m_endpointIsSelected = false;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool adjustPosition) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

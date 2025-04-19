@@ -57,7 +57,7 @@ public:
     double scaleToDpi(double scale) const;
 protected:
     struct ImageData;
-    std::unique_ptr<ImageData> pImg;
+    std::unique_ptr<ImageData> m_imageData;
 /**
      * Action States.
      */
@@ -74,7 +74,7 @@ protected:
     };
 
 /** Last status before entering option. */
-    Status lastStatus = ShowDialog;
+    Status m_lastStatus = ShowDialog;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

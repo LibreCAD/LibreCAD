@@ -48,7 +48,7 @@ protected:
         CONTINUE
     };
 
-    ActionMode actionMode = NORMAL;
+    ActionMode m_actionMode = NORMAL;
 
     virtual RS_Vector getExtensionPoint1() = 0;
     virtual void setExtensionPoint1(RS_Vector p) = 0;

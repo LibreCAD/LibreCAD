@@ -53,9 +53,9 @@ namespace
 */
 LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, Mode inputExportMode)
     : RS_ActionInterface("Export selected layer(s)",actionContext, inputExportMode == SelectedMode ? RS2::ActionLayersExportSelected:RS2::ActionLayersExportVisible),
-    exportMode{inputExportMode}{
+    m_exportMode{inputExportMode}{
     auto container = actionContext->getEntityContainer() ->getDocument();
-    layersList = container->getLayerList();
+    m_layersList = container->getLayerList();
 }
 
 void LC_ActionLayersExport::init(int status){
@@ -65,14 +65,14 @@ void LC_ActionLayersExport::init(int status){
 }
 
 bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* exportOptions) {
-    RS_LayerList *originalLayersList = document->getLayerList();
+    RS_LayerList *originalLayersList = m_document->getLayerList();
     // layers to use: by selected or not frozen
     std::copy_if(originalLayersList->begin(), originalLayersList->end(), std::back_inserter(exportOptions->m_layers),
-                 (exportMode == SelectedMode) ? isSelected : isNotFrozen);
+                 (m_exportMode == SelectedMode) ? isSelected : isNotFrozen);
 
     if (exportOptions->m_layers.empty())    {
         /* No export layer found. */
-        QString exportModeString = (exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
+        QString exportModeString = (m_exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
         // fixme - sand - files - use more generic way for message notify!
         QC_ApplicationWindow::getAppWindow()->statusBar()->showMessage( QObject::tr("No %1 layers found").arg(exportModeString),
                                                                         QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
@@ -85,7 +85,7 @@ bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* export
 void LC_ActionLayersExport::performExport() {
     LC_LayersExportOptions exportOptions;
     if (collectLayersToExport(&exportOptions)) {
-        auto sourceGraphic = document->getGraphic();
+        auto sourceGraphic = m_document->getGraphic();
         LC_ExportLayersService::exportLayers(exportOptions, sourceGraphic);
     }
 }

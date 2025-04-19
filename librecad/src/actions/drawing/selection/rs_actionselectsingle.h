@@ -47,10 +47,10 @@ public:
     void trigger() override;
     enum RS2::EntityType getTypeToSelect();
 protected:
-    bool selectContour = false;
-    RS_Entity *entityToSelect = nullptr;
-    RS_ActionInterface *actionSelect = nullptr;
-    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    bool m_selectContour = false;
+    RS_Entity *m_entityToSelect = nullptr;
+    RS_ActionInterface *m_actionSelect = nullptr;
+    enum RS2::EntityType m_typeToSelect = RS2::EntityType::EntityUnknown;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

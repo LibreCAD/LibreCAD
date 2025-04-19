@@ -33,19 +33,19 @@ class LC_ActionDrawStar:public LC_AbstractActionWithPreview{
 public:
     LC_ActionDrawStar(LC_ActionContext *actionContext);
     QStringList getAvailableCommands() override;
-    double getRadiusInner() const {return innerRadius;};
+    double getRadiusInner() const {return m_innerRadius;};
     void setRadiusInner(double d);
-    double getRadiusOuter() const {return outerRadius;};
+    double getRadiusOuter() const {return m_outerRadius;};
     void setRadiusOuter(double d);
-    int getRaysNumber() const {return raysNumber;};
+    int getRaysNumber() const {return m_raysNumber;};
     void setRaysNumber(int i);
-    bool isOuterRounded() const {return outerRadiusRounded;};
+    bool isOuterRounded() const {return m_outerRadiusRounded;};
     void setOuterRounded(bool value);
-    bool isInnerRounded() const {return innerRadiusRounded;};
+    bool isInnerRounded() const {return m_innerRadiusRounded;};
     void setInnerRounded(bool value);
-    bool isPolyline() const {return createPolyline;};
+    bool isPolyline() const {return m_createPolyline;};
     void setPolyline(bool value);
-    bool isSymmetric() const {return symmetric;};
+    bool isSymmetric() const {return m_symmetric;};
     void setSymmetric(bool value);
 protected:
     /**
@@ -61,43 +61,43 @@ protected:
     /**
      * outer point of rays
      */
-    RS_Vector outerPoint = RS_Vector(false);
+    RS_Vector m_outerPoint = RS_Vector(false);
     /**
      * inner point of rays
      */
-    RS_Vector innerPoint  = RS_Vector(false);
+    RS_Vector m_innerPoint  = RS_Vector(false);
     /**
      * center point of star
      */
-    RS_Vector centerPoint  = RS_Vector(false);
+    RS_Vector m_centerPoint  = RS_Vector(false);
     /**
      * is star symmetric or not
      */
-    bool symmetric = true;
+    bool m_symmetric = true;
     /**
      * determines whether inner ray junction should be rounded
      */
-    bool innerRadiusRounded = false;
+    bool m_innerRadiusRounded = false;
     /**
      * determines whether outer ray junction should be rounded
      */
-    bool outerRadiusRounded = true;
+    bool m_outerRadiusRounded = true;
     /**
      * inner rays rounding radius
      */
-    double innerRadius = 4;
+    double m_innerRadius = 4;
     /**
      * outer rays rounding radius
      */
-    double outerRadius = 10;
+    double m_outerRadius = 10;
     /**
      * determines whether entire start should be drawn using polyline or via individual entities
      */
-    bool createPolyline = false;
+    bool m_createPolyline = false;
     /**
      * amount of rays for star
      */
-    int raysNumber = 5;
+    int m_raysNumber = 5;
 
     void addPolylineToEntitiesList(RS_Polyline *pPolyline, QList<RS_Entity *> &list, bool b);
     RS_Polyline *createShapePolyline(RS_Vector &snap, QList<RS_Entity *> &list, int status, bool preview);

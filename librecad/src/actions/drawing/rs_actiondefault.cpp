@@ -84,10 +84,10 @@ namespace {
  * Constructor.
  */
 RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
-    :LC_OverlayBoxAction("Default",actionContext, RS2::ActionDefault), m_actionData(std::make_unique<ActionData>()), snapRestriction(RS2::RestrictNothing){
+    :LC_OverlayBoxAction("Default",actionContext, RS2::ActionDefault), m_actionData(std::make_unique<ActionData>()), m_snapRestriction(RS2::RestrictNothing){
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
-    typeToSelect = m_graphicView->getTypeToSelect();
+    m_typeToSelect = m_graphicView->getTypeToSelect();
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
@@ -124,7 +124,7 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
     //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch (e->key()) {
         case Qt::Key_Shift:
-            snapRestriction = m_snapMode.restriction;
+            m_snapRestriction = m_snapMode.restriction;
             setSnapRestriction(RS2::RestrictOrthogonal);
             e->accept();
             break; //avoid clearing command line at shift key
@@ -143,7 +143,7 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){
     if (e->key() == Qt::Key_Shift){
-        setSnapRestriction(snapRestriction);
+        setSnapRestriction(m_snapRestriction);
         e->accept();
     }
 }
@@ -796,7 +796,7 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
                 clone->moveRef(m_actionData->v1, m_actionData->v2 - m_actionData->v1);
             }
 
-            if (document) {
+            if (m_document) {
                 clone->setSelected(true);
                 clone->setLayer(refMovingEntity->getLayer());
                 clone->setPen(refMovingEntity->getPen(false));
@@ -872,7 +872,7 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             RS_Vector wcsP1, wcsP2;
             m_viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
 
-            s.selectWindow(typeToSelect, wcsP1, wcsP2, select, selectIntersecting);
+            s.selectWindow(m_typeToSelect, wcsP1, wcsP2, select, selectIntersecting);
             updateSelectionWidget();
             goToNeutralStatus();
             //}
@@ -1003,7 +1003,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity *entity){
 }
 
 RS2::EntityType RS_ActionDefault::getTypeToSelect(){
-    return typeToSelect;
+    return m_typeToSelect;
 }
 
 // fixme - sand - avoid direct call to appWindow??

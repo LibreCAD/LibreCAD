@@ -43,7 +43,7 @@ public:
 	void trigger() override;
 
 private:
-    bool lock = false;
+    bool m_lock = false;
 };
 
 #endif

@@ -51,8 +51,8 @@ protected:
         SetReferencePoint    /**< Setting the reference point. */
     };
 
-    bool invokedWithControl = false;
-    std::unique_ptr<RS_Vector> referencePoint;
+    bool m_invokedWithControl = false;
+    std::unique_ptr<RS_Vector> m_referencePoint;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger(bool keepSelected) override;
     // void onSelectionCompleted(bool singleEntity, bool fromInit) override;

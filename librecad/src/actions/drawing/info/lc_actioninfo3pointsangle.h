@@ -37,9 +37,9 @@ protected:
         SetPoint3
     };
 
-    RS_Vector point1{false};
-    RS_Vector point2{false};
-    RS_Vector point3{false};
+    RS_Vector m_point1{false};
+    RS_Vector m_point2{false};
+    RS_Vector m_point3{false};
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

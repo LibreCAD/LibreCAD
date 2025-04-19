@@ -29,23 +29,23 @@
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction, LC_ActionContext *actionContext)
 	:RS_ActionInterface("Zoom scroll", actionContext, RS2::ActionZoomScroll)
-	,direction(direction)
-	,hasOffset(false){
+	,m_direction(direction)
+	,m_hasOffset(false){
 }
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
 										 LC_ActionContext *actionContext)
 	:RS_ActionInterface("Zoom scroll", actionContext,RS2::ActionZoomScroll)
-	,hasOffset(true)
-	,offsetX(offsetX)
-	,offsetY(offsetY){
+	,m_hasOffset(true)
+	,m_offsetX(offsetX)
+	,m_offsetY(offsetY){
 }
 
 void RS_ActionZoomScroll::trigger() {
-    if (hasOffset) {
-        m_viewport->zoomPan(offsetX, offsetY);
+    if (m_hasOffset) {
+        m_viewport->zoomPan(m_offsetX, m_offsetY);
     } else {
-        m_viewport->zoomScroll(direction);
+        m_viewport->zoomScroll(m_direction);
     }
     finish(false);
 }

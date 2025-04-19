@@ -38,14 +38,14 @@ public:
 
     LC_AbstractActionDrawLine(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_AbstractActionDrawLine() override;
-    int getDirection() const{return direction;}
+    int getDirection() const{return m_direction;}
     void setNewStartPointState();
     void setSetAngleDirectionState();
     void setSetPointDirectionState();
     void setSetXDirectionState();
     void setSetYDirectionState();
     void setAngleValue(double value);
-    void setAngle(double value){doSetAngle(angleDegrees = value);};
+    void setAngle(double value){doSetAngle(m_angleDegrees = value);};
     double getAngle() const;
     bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
@@ -63,10 +63,10 @@ protected:
     };
 
 
-    double angleDegrees = 0.0; // fixed angle for line
-    bool angleIsRelative = true; // is angle relative to previous segment (if any)
-    int direction = DIRECTION_NONE; // current line direction
-    int primaryDirection = DIRECTION_NONE; // major direction of line - used for subsequent lines
+    double m_angleDegrees = 0.0; // fixed angle for line
+    bool m_angleIsRelative = true; // is angle relative to previous segment (if any)
+    int m_direction = DIRECTION_NONE; // current line direction
+    int m_primaryDirection = DIRECTION_NONE; // major direction of line - used for subsequent lines
 
     void setSetAngleState(bool relative);
     virtual bool processAngleValueInput(const QString &c);

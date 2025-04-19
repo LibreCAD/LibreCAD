@@ -46,7 +46,7 @@ public:
     void keyPressEvent(QKeyEvent* e) override;
 
     void setMessage(QString msg);
-    bool isCompleted() const {return completed;}
+    bool isCompleted() const {return m_completed;}
     Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
 protected:
@@ -55,9 +55,9 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
     void updateMouseButtonHints() override;
 private:
-    bool completed;
-    QString message;
-    RS_Entity* en;
+    bool m_completed;
+    QString m_message;
+    RS_Entity* m_entity;
 };
 
 #endif

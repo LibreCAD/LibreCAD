@@ -34,7 +34,7 @@
 
 RS_ActionModifyCut::RS_ActionModifyCut(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Cut Entity",actionContext, RS2::ActionModifyCut)
-    ,cutEntity(nullptr), cutCoord(new RS_Vector{}){
+    ,m_cutEntity(nullptr), m_cutCoord(new RS_Vector{}){
 }
 
 RS_ActionModifyCut::~RS_ActionModifyCut() = default;
@@ -46,22 +46,22 @@ void RS_ActionModifyCut::init(int status){
 void RS_ActionModifyCut::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
-    if (cutEntity && cutEntity->isAtomic() && cutCoord->valid &&
-        cutEntity->isPointOnEntity(*cutCoord)){
+    if (m_cutEntity && m_cutEntity->isAtomic() && m_cutCoord->valid &&
+        m_cutEntity->isPointOnEntity(*m_cutCoord)){
 
-        cutEntity->setHighlighted(false);
+        m_cutEntity->setHighlighted(false);
 
         RS_Modification m(*m_container, m_viewport);
-        m.cut(*cutCoord, reinterpret_cast<RS_AtomicEntity*>(cutEntity));
+        m.cut(*m_cutCoord, reinterpret_cast<RS_AtomicEntity*>(m_cutEntity));
 
-        cutEntity = nullptr;
-        *cutCoord = RS_Vector(false);
+        m_cutEntity = nullptr;
+        *m_cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
     }
 }
 
 void RS_ActionModifyCut::finish(bool updateTB){
-    cutEntity = nullptr;
+    m_cutEntity = nullptr;
     RS_PreviewActionInterface::finish(updateTB);
 }
 
@@ -79,8 +79,8 @@ void RS_ActionModifyCut::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetCutCoord: {
-            highlightSelected(cutEntity);
-            RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
+            highlightSelected(m_cutEntity);
+            RS_Vector nearest = m_cutEntity->getNearestPointOnEntity(snap, true);
             previewRefSelectablePoint(nearest);
             // todo - is description for selected entity necessary there?
             if (isInfoCursorForModificationEnabled()){
@@ -98,10 +98,10 @@ void RS_ActionModifyCut::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseCutEntity: {
-            cutEntity = catchEntityByEvent(e);
-            if (cutEntity == nullptr){
+            m_cutEntity = catchEntityByEvent(e);
+            if (m_cutEntity == nullptr){
                 commandMessage(tr("No Entity found."));
-            } else if (cutEntity->trimmable()){
+            } else if (m_cutEntity->trimmable()){
                 setStatus(SetCutCoord);
             } else
                 commandMessage(tr("Entity must be a line, arc, circle, ellipse or interpolation spline."));
@@ -109,12 +109,12 @@ void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
         }
         case SetCutCoord: {
             RS_Vector snap = e->snapPoint;
-            RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
-            if (LC_LineMath::isNotMeaningfulDistance(cutEntity->getStartpoint(), nearest) ||
-                LC_LineMath::isNotMeaningfulDistance(cutEntity->getEndpoint(), nearest)){
+            RS_Vector nearest = m_cutEntity->getNearestPointOnEntity(snap, true);
+            if (LC_LineMath::isNotMeaningfulDistance(m_cutEntity->getStartpoint(), nearest) ||
+                LC_LineMath::isNotMeaningfulDistance(m_cutEntity->getEndpoint(), nearest)){
                 commandMessage(tr("Cutting point may not be entity's endpoint."));
             } else {
-                *cutCoord = nearest;
+                *m_cutCoord = nearest;
                 trigger();
             }
             break;

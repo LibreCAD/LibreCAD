@@ -65,15 +65,15 @@ protected:
     /**
      * Aligned dimension data.
      */
-    std::unique_ptr<RS_DimLinearData> edata;
+    std::unique_ptr<RS_DimLinearData> m_edata;
 
-    double ucsBasisAngleDegrees = 0.0;
+    double m_ucsBasisAngleDegrees = 0.0;
     /**
      * Is the angle fixed?
      */
-    bool fixedAngle = false;
+    bool m_fixedAngle = false;
 /** Last status before entering text or angle. */
-    Status lastStatus = SetExtPoint1;
+    Status m_lastStatus = SetExtPoint1;
     void reset() override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;

@@ -57,7 +57,7 @@ namespace {
 
 RS_ActionDrawHatch::RS_ActionDrawHatch(LC_ActionContext *actionContext)
     :LC_ActionPreSelectionAwareBase("Draw Hatch", actionContext, RS2::ActionDrawHatch)
-    , data{std::make_unique<RS_HatchData>()}{
+    , m_hatchData{std::make_unique<RS_HatchData>()}{
 }
 
 RS_ActionDrawHatch::~RS_ActionDrawHatch() = default;
@@ -78,11 +78,11 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
     RS_DEBUG->print("RS_ActionDrawHatch::trigger()");
 
-    RS_Hatch tmp(m_container, *data);
+    RS_Hatch tmp(m_container, *m_hatchData);
     setPenAndLayerToActive(&tmp);
 
     if (RS_DIALOGFACTORY->requestHatchDialog(&tmp, m_viewport)) {
-        *data = tmp.getData();
+        *m_hatchData = tmp.getData();
 
         // fixme - sand - optimize that mess with cycles!!!
         // deselect unhatchable entities:
@@ -113,7 +113,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
             return;
         }
 
-        std::unique_ptr<RS_Hatch> hatch = std::make_unique<RS_Hatch>(m_container, *data);
+        std::unique_ptr<RS_Hatch> hatch = std::make_unique<RS_Hatch>(m_container, *m_hatchData);
         hatch->setLayerToActive();
         hatch->setPenToActive();
         auto *loop = new RS_EntityContainer(hatch.get());

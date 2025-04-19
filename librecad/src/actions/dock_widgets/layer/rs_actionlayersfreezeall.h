@@ -43,7 +43,7 @@ public:
 	void trigger() override;
 
 private:
-    bool freeze = false;
+    bool m_freeze = false;
 };
 
 #endif

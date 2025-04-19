@@ -50,7 +50,7 @@ protected:
     enum Status {
         ShowDialog           /**< Showing the hatch dialog. */
     };
-    std::unique_ptr<RS_HatchData> data;
+    std::unique_ptr<RS_HatchData> m_hatchData;
     bool m_bShowArea{true};
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool keepSelected) override;

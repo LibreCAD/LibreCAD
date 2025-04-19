@@ -34,7 +34,7 @@ class RS_LayerList;
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(LC_ActionContext *actionContext,RS_Layer* layer)
     : RS_ActionInterface("Toggle Layer Visibility", actionContext, RS2::ActionLayersToggleLock)
-    , a_layer(layer){
+    , m_layer(layer){
 }
 
 void RS_ActionLayersToggleLock::trigger() {
@@ -53,8 +53,8 @@ void RS_ActionLayersToggleLock::trigger() {
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            m_graphic->toggleLayerLock(a_layer);
-            deselectEntitiesOnLockedLayer(a_layer);
+            m_graphic->toggleLayerLock(m_layer);
+            deselectEntitiesOnLockedLayer(m_layer);
         }
     }
     redrawDrawing();

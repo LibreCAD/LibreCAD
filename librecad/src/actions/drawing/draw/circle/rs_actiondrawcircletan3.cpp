@@ -82,7 +82,7 @@ void RS_ActionDrawCircleTan3::finish(bool updateTB){
 void RS_ActionDrawCircleTan3::doTrigger() {
     auto circle = new RS_Circle(m_container, *m_actionData->cData);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
 

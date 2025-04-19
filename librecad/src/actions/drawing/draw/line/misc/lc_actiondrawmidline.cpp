@@ -39,13 +39,13 @@ LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
 
 void LC_ActionDrawMidLine::init(int status) {
     RS_PreviewActionInterface::init(status);
-    mainStatus = SetEntity1;
+    m_mainStatus = SetEntity1;
 }
 
 void LC_ActionDrawMidLine::doTrigger() {
-    if (document != nullptr) {
+    if (m_document != nullptr) {
         LineInfo lineInfo;
-        prepareLine(lineInfo, secondEntity, alternateEndpoints);
+        prepareLine(lineInfo, m_secondEntity, m_alternateEndpoints);
         RS_Line *lineToCreate = lineInfo.line;
         if (lineToCreate != nullptr) {
             lineToCreate->reparent(m_container);
@@ -66,7 +66,7 @@ void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetEntity2:{
-            highlightSelected(firstEntity);
+            highlightSelected(m_firstEntity);
             RS_Entity* ent = catchAndDescribe(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
@@ -96,8 +96,8 @@ void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
 // fixme - more division points?
 void LC_ActionDrawMidLine::prepareLine(LC_ActionDrawMidLine::LineInfo &info, RS_Entity *ent, bool alternate) {
-    RS_Vector start1 = firstEntity->getStartpoint();
-    RS_Vector end1 = firstEntity->getEndpoint();
+    RS_Vector start1 = m_firstEntity->getStartpoint();
+    RS_Vector end1 = m_firstEntity->getEndpoint();
 
     RS_Vector start2 = ent->getStartpoint();
     RS_Vector end2 = ent->getEndpoint();
@@ -131,7 +131,7 @@ void LC_ActionDrawMidLine::prepareLine(LC_ActionDrawMidLine::LineInfo &info, RS_
         mayProceed = true;
     }
     else { // check for parallel lines. In this case - just draw line between centers of lines.
-        RS_VectorSolutions const &sol = RS_Information::getIntersection(firstEntity, ent, false);
+        RS_VectorSolutions const &sol = RS_Information::getIntersection(m_firstEntity, ent, false);
         if (!sol.hasValid()) {
             point1  = (start1 + end1) / count;
             point2 = (start2 + end2) / count;
@@ -145,8 +145,8 @@ void LC_ActionDrawMidLine::prepareLine(LC_ActionDrawMidLine::LineInfo &info, RS_
 
         double angle = point1.angleTo(point2);
 
-        RS_Vector start = point1.relative(-offset, angle);
-        RS_Vector end = point2.relative(offset, angle);
+        RS_Vector start = point1.relative(-m_offset, angle);
+        RS_Vector end = point2.relative(m_offset, angle);
 
         auto* line = new RS_Line(nullptr, start, end);
         info.line = line;
@@ -166,19 +166,19 @@ void LC_ActionDrawMidLine::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
         case SetEntity1: {
             RS_Entity* ent = catchEntityByEvent(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
-                firstEntity = ent;
+                m_firstEntity = ent;
                 setStatus(SetEntity2);
-                mainStatus = SetEntity2;
+                m_mainStatus = SetEntity2;
             }
             break;
         }
         case SetEntity2:{
-            highlightSelected(firstEntity);
+            highlightSelected(m_firstEntity);
             RS_Entity* ent = catchEntityByEvent(e, g_enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
-                secondEntity = ent;
+                m_secondEntity = ent;
             }
-            alternateEndpoints = e->isShift;
+            m_alternateEndpoints = e->isShift;
             trigger();
             break;
         }
@@ -215,7 +215,7 @@ void LC_ActionDrawMidLine::onMouseRightButtonRelease([[maybe_unused]]int status,
 bool LC_ActionDrawMidLine::doProcessCommand(int status, const QString &command) {
     bool accept = false;
     if (checkCommand(command, "offset")){
-        mainStatus = status;
+        m_mainStatus = status;
         setStatus(SetOffset);
     }
     else{
@@ -226,7 +226,7 @@ bool LC_ActionDrawMidLine::doProcessCommand(int status, const QString &command) 
         }
         if (ok){
             accept = true;
-            offset = a;
+            m_offset = a;
         } else {
             commandMessage(tr("Not a valid expression"));
         }
@@ -269,11 +269,11 @@ RS2::CursorType LC_ActionDrawMidLine::doGetMouseCursor([[maybe_unused]]int statu
 }
 
 double LC_ActionDrawMidLine::getOffset() const {
-    return offset;
+    return m_offset;
 }
 
 void LC_ActionDrawMidLine::setOffset(double o) {
-    offset = o;
+    m_offset = o;
 }
 
 LC_ActionOptionsWidget *LC_ActionDrawMidLine::createOptionsWidget() {

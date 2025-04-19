@@ -29,7 +29,7 @@
 
 RS_ActionSelectAll::RS_ActionSelectAll(LC_ActionContext *actionContext, bool select)
         :RS_ActionInterface("Select All Entities",actionContext, RS2::ActionSelectAll)
-		,select(select)
+		,m_select(select)
 {
 	m_actionType=RS2::ActionSelectAll;
 }
@@ -42,6 +42,6 @@ void RS_ActionSelectAll::init(int status) {
 
 void RS_ActionSelectAll::trigger() {
     RS_Selection s(*m_container, m_viewport);
-    s.selectAll(select);
+    s.selectAll(m_select);
     updateSelectionWidget();
 }

@@ -65,14 +65,14 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (extPoint1.valid){
                 mouse = getSnapAngleAwarePoint(e, extPoint1, mouse, true);
 
-                data->definitionPoint = mouse;
+                m_dimensionData->definitionPoint = mouse;
                 setExtensionPoint2(mouse);
 
                 if (m_showRefEntitiesOnPreview) {
                     previewRefLine(extPoint1, mouse);
                     previewRefSelectablePoint(mouse);
                 }
-                if (previewShowsFullDimension) {
+                if (m_previewShowsFullDimension) {
                     preparePreview();
                     RS_Entity *dim = createDim(m_preview.get());
                     dim->update();
@@ -94,7 +94,7 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 // less restrictive snap
                 mouse = getFreeSnapAwarePoint(e, mouse);
                 mouse = adjustByAdjacentDim(mouse, true);
-                data->definitionPoint = mouse;
+                m_dimensionData->definitionPoint = mouse;
                 preparePreview();
                 RS_Entity* dim = createDim(m_preview.get());
                 dim->update();
@@ -148,7 +148,7 @@ void LC_ActionDimLinearBase::onCoordinateEvent(int status, [[maybe_unused]] bool
             break;
         }
         case SetDefPoint: {
-            data->definitionPoint = pos;
+            m_dimensionData->definitionPoint = pos;
             trigger();
             reset();
             setStatus(SetExtPoint1);

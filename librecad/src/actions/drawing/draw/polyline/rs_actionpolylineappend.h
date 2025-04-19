@@ -51,6 +51,6 @@ private:
     /**
      * Polyline entity we're working on.
      */
-    RS_Polyline *originalPolyline = nullptr;
+    RS_Polyline *m_originalPolyline = nullptr;
 };
 #endif

@@ -31,7 +31,7 @@
 RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock, LC_ActionContext *actionContext)
         :RS_ActionInterface("Lock all Layers",actionContext, RS2::ActionLayersLockAll) {
 
-    this->lock = lock;
+    this->m_lock = lock;
 }
 
 void RS_ActionLayersLockAll::trigger() {
@@ -39,11 +39,11 @@ void RS_ActionLayersLockAll::trigger() {
     if (m_graphic) {
 
         // Deselect entities before locking all layers
-        if (lock && m_container) {
+        if (m_lock && m_container) {
             m_container->setSelected(false);
         }
 
-        m_graphic->lockAllLayers(lock);
+        m_graphic->lockAllLayers(m_lock);
     }
     finish(false);
 }

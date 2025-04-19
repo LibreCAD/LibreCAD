@@ -49,7 +49,7 @@ public:
     void mouseReleaseEvent(QMouseEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void setMessage(QString msg);
-    bool isCompleted() const{return completed;}
+    bool isCompleted() const{return m_completed;}
     void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
     void unselectEntities();
 protected:
@@ -63,8 +63,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
 private:
-    bool completed = false;
-    std::unique_ptr<QString> message;
-    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    bool m_completed = false;
+    std::unique_ptr<QString> m_message;
+    RS2::EntityType m_entityTypeToSelect = RS2::EntityType::EntityUnknown;
 };
 #endif

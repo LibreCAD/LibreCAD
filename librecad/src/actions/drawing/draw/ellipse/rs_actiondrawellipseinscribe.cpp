@@ -73,7 +73,7 @@ void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
 void RS_ActionDrawEllipseInscribe::doTrigger() {
     auto *ellipse = new RS_Ellipse(m_container, m_actionData->eData);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(ellipse->getCenter());
     }
 

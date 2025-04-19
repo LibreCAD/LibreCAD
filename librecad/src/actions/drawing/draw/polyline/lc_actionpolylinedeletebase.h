@@ -41,8 +41,8 @@ protected:
         SetVertex2     /**< Setting the node's point2. */
     };
 
-    RS_Polyline *polylineToModify = nullptr;
-    RS_Vector vertexToDelete = RS_Vector(false);
+    RS_Polyline *m_polylineToModify = nullptr;
+    RS_Vector m_vertexToDelete = RS_Vector(false);
 
     void getSelectedPolylineVertex(LC_MouseEvent *e, RS_Vector &vertex, RS_Entity *&segment);
     void finish(bool updateTB) override;

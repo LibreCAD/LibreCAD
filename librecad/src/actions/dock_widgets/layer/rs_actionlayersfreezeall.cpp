@@ -32,14 +32,14 @@ RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
         LC_ActionContext *actionContext)
         :RS_ActionInterface("Freeze all Layers",actionContext, RS2::ActionLayersFreezeAll) {
 
-    this->freeze = freeze;
+    this->m_freeze = freeze;
 }
 
 void RS_ActionLayersFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersFreezeAll::trigger");
     if (m_graphic) {
         //RS_Layer* layer = graphic->getActiveLayer();
-        m_graphic->freezeAllLayers(freeze);
+        m_graphic->freezeAllLayers(m_freeze);
     }
     finish(false);
 }

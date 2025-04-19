@@ -57,10 +57,10 @@ protected:
 
     //RS_Vector v1;
     //RS_Vector v2;
-    int x1 = 0;
-    int y1 = 0;
-    int x2 = 0;
-    int y2 = 0;
+    int m_x1 = 0;
+    int m_y1 = 0;
+    int m_x2 = 0;
+    int m_y2 = 0;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
 };

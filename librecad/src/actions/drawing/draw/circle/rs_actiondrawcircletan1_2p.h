@@ -55,9 +55,9 @@ protected:
     };
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
+    RS_AtomicEntity *m_baseEntity = nullptr;
 
     RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
-    RS_AtomicEntity *m_baseEntity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

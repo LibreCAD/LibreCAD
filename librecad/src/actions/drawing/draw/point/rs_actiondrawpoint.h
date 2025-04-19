@@ -48,7 +48,7 @@ protected:
     void updateMouseButtonHints() override;
     void doTrigger() override;
 private:
-    std::unique_ptr<RS_Vector> pt;
+    std::unique_ptr<RS_Vector> m_pointPosition;
 
     RS_Vector getFreeSnapAwarePointAlt(const LC_MouseEvent *e, const RS_Vector &pos) const;
 };

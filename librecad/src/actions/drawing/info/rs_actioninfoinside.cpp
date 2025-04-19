@@ -35,12 +35,12 @@
 
 RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
 	:RS_ActionInterface("Info Inside", actionContext, m_actionType=RS2::ActionInfoInside)
-    , pt(std::make_unique<RS_Vector>())
-    ,contour(std::make_unique<RS_EntityContainer>()){
+    , m_point(std::make_unique<RS_Vector>())
+    ,m_contour(std::make_unique<RS_EntityContainer>()){
     auto container = actionContext->getEntityContainer();
     for(auto e: container->getEntityList()){
         if (e->isSelected()) {
-            contour->addEntity(e);
+            m_contour->addEntity(e);
         }
     }
 }
@@ -49,7 +49,7 @@ RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
-    if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
+    if (RS_Information::isPointInsideContour(*m_point, m_contour.get(), &onContour)) {
         commandMessage(tr("Point is inside selected contour."));
     } else {
         commandMessage(tr("Point is outside selected contour."));
@@ -67,7 +67,7 @@ void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void RS_ActionInfoInside::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    *pt = snapPoint(e);
+    *m_point = snapPoint(e);
     trigger();
 }
 

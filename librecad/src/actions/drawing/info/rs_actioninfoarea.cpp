@@ -49,7 +49,7 @@ void RS_ActionInfoArea::init(int status) {
     void RS_ActionInfoArea::doTrigger() {
         RS_DEBUG->print("RS_ActionInfoArea::trigger()");
         display(false);
-        lastPointRequested = false;
+        m_lastPointRequested = false;
         init(SetFirstPoint);
     }
 // fixme - sand - consider displaying information in EntityInfo widget
@@ -137,7 +137,7 @@ void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, m_infoArea->back(), snap);
     }
-    lastPointRequested = e->isControl;
+    m_lastPointRequested = e->isControl;
     fireCoordinateEvent(snap);
 }
 
@@ -147,7 +147,7 @@ void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[
 }
 
 void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    bool shouldComplete = m_infoArea->duplicated(mouse) || lastPointRequested;
+    bool shouldComplete = m_infoArea->duplicated(mouse) || m_lastPointRequested;
     if (shouldComplete){
         m_infoArea->push_back(mouse);
         commandMessage(tr("Closing Point: %1").arg(formatVector(mouse)));

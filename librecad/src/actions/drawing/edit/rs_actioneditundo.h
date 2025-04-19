@@ -42,7 +42,7 @@ public:
     void trigger() override;
 protected:
     /** Undo (true) or redo (false) */
-    bool const undo = false;
+    bool const m_performUndo = false;
 };
 
 #endif

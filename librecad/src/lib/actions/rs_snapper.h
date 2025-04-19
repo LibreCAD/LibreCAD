@@ -131,7 +131,7 @@ public:
      * method will return NULL.
      */
     RS_Entity *getKeyEntity() const{
-        return keyEntity;
+        return m_keyEntity;
     }
 
     /** Sets a new snap mode. */
@@ -214,7 +214,7 @@ protected:
     RS_EntityContainer *m_container = nullptr;
     RS_GraphicView *m_graphicView = nullptr;
     LC_GraphicViewport* m_viewport = nullptr;
-    RS_Entity *keyEntity = nullptr;
+    RS_Entity *m_keyEntity = nullptr;
     RS_SnapMode m_snapMode{};
     LC_ActionContext* m_actionContext {nullptr};
 

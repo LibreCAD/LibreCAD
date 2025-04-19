@@ -30,31 +30,31 @@ LC_ActionDrawArc2PointsAngle::LC_ActionDrawArc2PointsAngle(LC_ActionContext *act
 
 bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
-    double chordAngle = startPoint.angleTo(pos);
+    double chordAngle = m_startPoint.angleTo(pos);
     double chordAngleNormal = chordAngle + M_PI_2;
     double chordAngleNormalAlt = chordAngle - M_PI_2;
 
-    double chordLen = pos.distanceTo(startPoint);
+    double chordLen = pos.distanceTo(m_startPoint);
     double chordLenHalf = chordLen * 0.5;
 
-    double angle = parameterLen;
+    double angle = m_parameterLen;
 
     double angleHalf = angle*0.5;
 
     double distanceFromChordCenterToCenter = chordLenHalf / tan(angleHalf);
 
-    RS_Vector chordLenHalfPont = (startPoint + pos) * 0.5;
+    RS_Vector chordLenHalfPont = (m_startPoint + pos) * 0.5;
 
-    bool reverseArc = reversed;
+    bool reverseArc = m_reversed;
     if (alternate){
         reverseArc = !reverseArc;
     }
 
-    double angleToCenter = /*reverseArc*/ reversed ? chordAngleNormalAlt : chordAngleNormal;
+    double angleToCenter = /*reverseArc*/ m_reversed ? chordAngleNormalAlt : chordAngleNormal;
     RS_Vector center = chordLenHalfPont.relative(distanceFromChordCenterToCenter, angleToCenter);
 
-    double radius = center.distanceTo(startPoint);
-    double angle1 = center.angleTo(startPoint);
+    double radius = center.distanceTo(m_startPoint);
+    double angle1 = center.angleTo(m_startPoint);
     double angle2 = center.angleTo(pos);
 
     // double secondLegAngle = M_PI - angleHalf;
@@ -78,12 +78,12 @@ void LC_ActionDrawArc2PointsAngle::doPreviewOnPoint2Custom(RS_Arc *arc) {
 
     RS_Vector center = arc->getCenter();
 
-    previewRefLine(center, startPoint);
+    previewRefLine(center, m_startPoint);
     previewRefLine(center, arc->getEndpoint());
 }
 
 void LC_ActionDrawArc2PointsAngle::setParameterValue(double r) {
-    parameterLen = RS_Math::deg2rad(r);
+    m_parameterLen = RS_Math::deg2rad(r);
 }
 
 QString LC_ActionDrawArc2PointsAngle::getParameterCommand() {

@@ -45,11 +45,11 @@ public:
     double getAngle() const;
     void setAngle(double angle);
     void setFreeAngle(bool enable);
-    bool isFreeAngle() const {return freeAngle;};
+    bool isFreeAngle() const {return m_freeAngle;};
     double getRefPointAngle();
     void setRefPointAngle(double angle);
     void setFreeRefPointAngle(bool value);
-    bool isFreeRefPointAngle() const{return freeRefPointAngle;};
+    bool isFreeRefPointAngle() const{return m_freeRefPointAngle;};
     bool isRefPointAngleAbsolute();
     void setRefPointAngleAbsolute(bool val);
     bool isRotateAlsoAroundReferencePoint();
@@ -68,12 +68,12 @@ protected:
         SetTargetPoint2ndRotation,    /**< Setting the target to rotation around ref point*/
     };
     // support of old mode, most probably it should be removed and one selection mode should remain
-    bool selectRefPointFirst = true;
-    bool freeAngle = false;
-    bool freeRefPointAngle = false;
-    std::unique_ptr<RS_RotateData> data;
-    double currentAngle = 0.0;
-    double currentAngle2 = 0.0;
+    bool m_selectRefPointFirst = true;
+    bool m_freeAngle = false;
+    bool m_freeRefPointAngle = false;
+    std::unique_ptr<RS_RotateData> m_rotateData;
+    double m_currentAngle = 0.0;
+    double m_currentAngle2 = 0.0;
 
     void previewRotationCircleAndPoints(const RS_Vector &center,const RS_Vector &refPoint, double angle);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;

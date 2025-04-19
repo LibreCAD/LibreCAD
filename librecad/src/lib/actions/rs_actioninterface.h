@@ -106,13 +106,13 @@ private:
     int m_status = 0;
 protected:
     /** Action name. Used internally for debugging */
-    QString name;
+    QString m_name;
 
     /**
      * This flag is set when the action has terminated and
      * can be deleted.
      */
-    bool finished = false; // fixme- sand - review!!! Hides one from super?
+    bool m_finished = false; // fixme- sand - review!!! Hides one from super?
 
     /**
      * Pointer to the graphic is this container is a graphic.
@@ -124,11 +124,11 @@ protected:
     * Pointer to the document (graphic or block) or NULL.
     */
 
-    RS_Document *document = nullptr;// fixme- sand - review!!!
+    RS_Document *m_document = nullptr;// fixme- sand - review!!!
     /**
      * Predecessor of this action or NULL.
      */
-    RS_ActionInterface* predecessor = nullptr; // fixme- sand - review!!!
+    RS_ActionInterface* m_predecessor = nullptr; // fixme- sand - review!!!
     RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
     double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;

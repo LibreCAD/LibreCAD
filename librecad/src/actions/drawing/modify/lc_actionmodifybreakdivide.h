@@ -85,22 +85,22 @@ class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview{
 public:
     LC_ActionModifyBreakDivide(LC_ActionContext *actionContext);
 
-    bool isRemoveSegment() const{return removeSegments;}
-    void setRemoveSegment(bool value){removeSegments = value;};
-    bool isRemoveSelected() const{return removeSelected;};
-    void setRemoveSelected(bool value){removeSelected = value;}
+    bool isRemoveSegment() const{return m_removeSegments;}
+    void setRemoveSegment(bool value){m_removeSegments = value;};
+    bool isRemoveSelected() const{return m_removeSelected;};
+    void setRemoveSelected(bool value){m_removeSelected = value;}
 protected:
     /**
      * Flag that defines whether we should remove segments of entity or just divide entity
      */
-    bool removeSegments = false;
+    bool m_removeSegments = false;
 
     /**
      * For segments removal, specifies whether it is necessary to remove selected segment or remaining ones
      */
-    bool removeSelected = false;
+    bool m_removeSelected = false;
 
-    TriggerData* triggerData = nullptr;
+    TriggerData* m_triggerData = nullptr;
 
     bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;

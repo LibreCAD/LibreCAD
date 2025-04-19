@@ -34,7 +34,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionPolylineDel:public LC_ActionPolylineDeleteBase {
-Q_OBJECT
+    Q_OBJECT
 public:
     RS_ActionPolylineDel(LC_ActionContext *actionContext);
     ~RS_ActionPolylineDel() override;

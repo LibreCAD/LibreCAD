@@ -35,7 +35,7 @@ public:
     virtual void setReversed ([[maybe_unused]]bool b) const{};
 protected:
     virtual void reset();
-    bool moveRelPointAtCenterAfterTrigger = true; // todo - move to options?
+    bool m_moveRelPointAtCenterAfterTrigger = true; // todo - move to options?
     void previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises = false,  bool allPointsNotSelectable = false, RS_Vector mouse=RS_Vector(false));
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

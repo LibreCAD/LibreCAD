@@ -59,22 +59,14 @@ protected:
     /**
      * Generic dimension data.
      */
-    std::unique_ptr<RS_DimensionData> data;
-    QString label;
-    QString tol1;
-    QString tol2;
-    bool diameter = false;
+    std::unique_ptr<RS_DimensionData> m_dimensionData;
+    QString m_label;
+    QString m_tol1;
+    QString m_tol2;
+    bool m_diameter = false;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    /**
-     * Commands.
-     */
-    /*
-      QString cmdText;
-      QString cmdText2;
-    */
-
     RS2::CursorType doGetMouseCursor(int status) override;
-    bool previewShowsFullDimension = false;
+    bool m_previewShowsFullDimension = false;
     void readSettings();
     virtual void reset();
 };

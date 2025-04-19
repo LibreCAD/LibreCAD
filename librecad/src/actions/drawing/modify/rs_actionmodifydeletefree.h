@@ -48,9 +48,9 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
     void updateMouseButtonHints() override;
 private:
-    RS_Polyline *polyline = nullptr;
-    RS_Entity *e1 = nullptr;
-    RS_Entity *e2 = nullptr;
+    RS_Polyline *m_polyline = nullptr;
+    RS_Entity *m_entity1 = nullptr;
+    RS_Entity *m_entity2 = nullptr;
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;

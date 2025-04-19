@@ -42,7 +42,7 @@ void RS_ActionDrawLinePolygonCorCor::previewAdditionalReferences(const RS_Vector
 void RS_ActionDrawLinePolygonCorCor::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
 //    creation.createPolygon2(pPoints->point1, mouse, number);
     double const len = m_actionData->point1.distanceTo(snap);
-    double const da = 2.*M_PI/number;
+    double const da = 2.*M_PI/m_edgesNumber;
     polygonInfo.vertexRadius = 0.5*len/sin(0.5*da);
 
     double const angle1 = m_actionData->point1.angleTo(snap);
@@ -66,7 +66,7 @@ RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter(const RS_Vector
     rotatedCorner2 = rotatedCorner2.rotate(m_actionData->point1, -edgeAngle);
 
     // half inner angle of polygon
-    double angleFromCornerToCenter = RS_Math::deg2rad((90.0 * (number - 2)) / number);
+    double angleFromCornerToCenter = RS_Math::deg2rad((90.0 * (m_edgesNumber - 2)) / m_edgesNumber);
 
     // middle point of edge
     RS_Vector edgeCenter = (m_actionData->point1 + rotatedCorner2) * 0.5;

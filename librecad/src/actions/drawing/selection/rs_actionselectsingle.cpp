@@ -33,7 +33,7 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(LC_ActionContext *actionContext,
                                              RS_ActionInterface* action_select,
                                              const QList<RS2::EntityType> &entityTypeList)
     :RS_ActionSelectBase("Select Entities", actionContext,RS2::ActionSelectSingle, entityTypeList)
-    ,actionSelect(action_select){
+    ,m_actionSelect(action_select){
 }
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType selectType,
@@ -41,13 +41,13 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType selectType,
                                              RS_ActionInterface* action_select,
                                              const QList<RS2::EntityType> &entityTypeList)
     :RS_ActionSelectBase("Select Entities", actionContext, RS2::ActionSelectSingle, entityTypeList)
-    ,actionSelect(action_select)
-    ,typeToSelect(selectType){
+    ,m_actionSelect(action_select)
+    ,m_typeToSelect(selectType){
 }
 
 void RS_ActionSelectSingle::trigger(){
-    selectEntity(entityToSelect,selectContour);
-    selectContour = false;
+    selectEntity(m_entityToSelect,m_selectContour);
+    m_selectContour = false;
 }
 
 void RS_ActionSelectSingle::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
@@ -56,13 +56,13 @@ void RS_ActionSelectSingle::onMouseMoveEvent([[maybe_unused]]int status, LC_Mous
 
 void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]]bool escape) {
     finish(false);
-    actionSelect->keyPressEvent(e);
+    m_actionSelect->keyPressEvent(e);
 }
 
 void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
-    entityToSelect = catchEntityByEvent(e, catchForSelectionEntityTypes);
-    if (entityToSelect != nullptr){
-       selectContour = e->isShift;
+    m_entityToSelect = catchEntityByEvent(e, m_catchForSelectionEntityTypes);
+    if (m_entityToSelect != nullptr){
+       m_selectContour = e->isShift;
        trigger();
     }
 }
@@ -82,10 +82,10 @@ void RS_ActionSelectSingle::doSelectEntity(RS_Entity *entityToSelect, bool selec
 
 void RS_ActionSelectSingle::onMouseRightButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     finish();
-    if (actionSelect->rtti() == RS2::ActionSelect)
-        actionSelect->finish();
+    if (m_actionSelect->rtti() == RS2::ActionSelect)
+        m_actionSelect->finish();
     else
-        actionSelect->mouseReleaseEvent(e->originalEvent); // fixme - sand - review, rework
+        m_actionSelect->mouseReleaseEvent(e->originalEvent); // fixme - sand - review, rework
 }
 
 RS2::CursorType RS_ActionSelectSingle::doGetMouseCursor([[maybe_unused]] int status){
@@ -93,14 +93,14 @@ RS2::CursorType RS_ActionSelectSingle::doGetMouseCursor([[maybe_unused]] int sta
 }
 
 enum RS2::EntityType RS_ActionSelectSingle::getTypeToSelect(){
-    return typeToSelect;
+    return m_typeToSelect;
 }
 
 bool RS_ActionSelectSingle::isEntityAllowedToSelect(RS_Entity *ent) const {
-    if (typeToSelect == RS2::EntityType::EntityUnknown)
+    if (m_typeToSelect == RS2::EntityType::EntityUnknown)
         return true;
     else
-        return ent ->rtti() == typeToSelect;
+        return ent ->rtti() == m_typeToSelect;
 }
 
 void RS_ActionSelectSingle::updateMouseButtonHints() {

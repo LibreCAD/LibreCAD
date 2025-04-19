@@ -46,7 +46,7 @@ public:
     ~RS_ActionModifyOffset() override;
     double getDistance();
     void setDistance(double distance);
-    bool isFixedDistance() {return distanceIsFixed;};
+    bool isFixedDistance() {return m_distanceIsFixed;};
     void setDistanceFixed(bool value);
 protected:
     /**
@@ -57,9 +57,9 @@ protected:
         SetPosition       /**< Setting the direction of offset*/
     };
 
-    bool distanceIsFixed = true;
-    RS_Vector referencePoint = RS_Vector(false);
-    std::unique_ptr<RS_OffsetData> data;
+    bool m_distanceIsFixed = true;
+    RS_Vector m_referencePoint = RS_Vector(false);
+    std::unique_ptr<RS_OffsetData> m_offsetData;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;

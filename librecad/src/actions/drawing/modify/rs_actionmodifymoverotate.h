@@ -49,7 +49,7 @@ public:
     void setUseSameAngleForCopies(bool b);
     bool isUseSameAngleForCopies();
     void setAngleIsFree(bool b);
-    bool isAngleFree(){return !angleIsFixed;};
+    bool isAngleFree(){return !m_angleIsFixed;};
 protected:
     /**
  * Action States.
@@ -63,15 +63,8 @@ protected:
     struct MoveRotateActionData;
     std::unique_ptr<MoveRotateActionData> m_actionData;
 /** Last status before entering angle. */
-    Status lastStatus = SetReferencePoint;
-    bool angleIsFixed = true;
-/**
- * Commands
- */
-    QString cmdAngle;
-    QString cmdAngle2;
-    QString cmdAngle3;
-
+    Status m_lastStatus = SetReferencePoint;
+    bool m_angleIsFixed = true;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;

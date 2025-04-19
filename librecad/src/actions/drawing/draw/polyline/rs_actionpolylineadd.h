@@ -51,16 +51,15 @@ protected:
         SetAddCoord   /**< Setting the reference point. */
     };
 
-    RS_Polyline *polylineToModify = nullptr;
-    RS_Entity *addSegment = nullptr;
-    std::unique_ptr<RS_Vector> addCoord;
+    RS_Polyline *m_polylineToModify = nullptr;
+    RS_Entity *m_addSegment = nullptr;
+    std::unique_ptr<RS_Vector> m_addCoord;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

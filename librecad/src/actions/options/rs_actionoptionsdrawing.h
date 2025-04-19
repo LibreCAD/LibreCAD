@@ -42,7 +42,7 @@ public:
     void init(int status) override;
     void trigger() override;
 protected:
-    int tabToShow = -1;
+    int m_tabToShow = -1;
 };
 
 #endif

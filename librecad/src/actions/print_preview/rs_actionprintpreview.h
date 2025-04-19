@@ -87,7 +87,7 @@ protected:
     };
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    bool hasOptions = false;
+    bool m_hasOptions = false;
     bool m_bPaperOffset = false;
 
     void updateMouseButtonHints() override;

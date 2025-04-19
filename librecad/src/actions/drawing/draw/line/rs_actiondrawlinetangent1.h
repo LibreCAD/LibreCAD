@@ -56,12 +56,12 @@ private:
     };
 
     /** Closest tangent. */
-    std::unique_ptr<RS_Line> tangent; // fixme sand - files - remove and rework to data.
+    std::unique_ptr<RS_Line> m_tangent; // fixme sand - files - remove and rework to data.
     /** Chosen startpoint */
-    std::unique_ptr<RS_Vector> point;
+    std::unique_ptr<RS_Vector> m_point;
 
     //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{ RS2::EntityArc,
+    const EntityTypeList m_circleType = EntityTypeList{ RS2::EntityArc,
                                                       RS2::EntityCircle,
                                                       RS2::EntityEllipse,
                                                       RS2::EntityParabola,

@@ -36,7 +36,7 @@ LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;
 
 void LC_ActionDrawLinePolygonCenTan::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
     //  creation.createPolygon3(pPoints->point1, mouse, number);
-    double angle = 2.*M_PI/number/2.0;
+    double angle = 2.*M_PI/m_edgesNumber/2.0;
     double tangensAngle = tan(angle);
 
     RS_Vector vertex(0, 0);

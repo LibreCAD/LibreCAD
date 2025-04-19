@@ -37,7 +37,7 @@
 RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext, RS_Entity *entity)
 		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity)
 		,m_entity(entity){
-   modifyCursor = entity == nullptr;
+   m_modifyCursor = entity == nullptr;
 }
 
 void RS_ActionModifyEntity::init(int status) {
@@ -69,7 +69,7 @@ void RS_ActionModifyEntity::doTrigger() {
             m_entity->setSelected(false);
             clone->setSelected(false);
 
-            if (document) {
+            if (m_document) {
                 undoCycleReplace(m_entity, clone.get());
             }
 
@@ -114,7 +114,7 @@ void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused
 }
 
 RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int status){
-    if (modifyCursor) {
+    if (m_modifyCursor) {
         return RS2::SelectCursor;
     }
     else{

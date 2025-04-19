@@ -50,8 +50,8 @@ protected:
         SetEntity1,    /**< Setting the 1st entity. */
         SetEntity2     /**< Setting the 2nd entity. */
     };
-    RS_Entity *entity1 = nullptr;
-    RS_Entity *entity2 = nullptr;
+    RS_Entity *m_entity1 = nullptr;
+    RS_Entity *m_entity2 = nullptr;
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;

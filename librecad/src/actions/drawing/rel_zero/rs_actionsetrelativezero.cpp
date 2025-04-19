@@ -31,20 +31,20 @@
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionContext)
     : RS_PreviewActionInterface("Set the relative Zero",actionContext, RS2::ActionSetRelativeZero)
-    , pt(std::make_unique<RS_Vector>()){
+    , m_position(std::make_unique<RS_Vector>()){
 }
 
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
 
 void RS_ActionSetRelativeZero::trigger(){
     bool wasLocked = m_viewport->isRelativeZeroLocked();
-    if (pt->valid) {
+    if (m_position->valid) {
         m_viewport->lockRelativeZero(false);
-        moveRelativeZero(*pt);
+        moveRelativeZero(*m_position);
         undoCycleStart();
         RS_Undoable *relativeZeroUndoable = m_viewport->getRelativeZeroUndoable();
         if (relativeZeroUndoable != nullptr) {
-            document->addUndoable(relativeZeroUndoable);
+            m_document->addUndoable(relativeZeroUndoable);
         }
         undoCycleEnd();
         m_viewport->lockRelativeZero(wasLocked);
@@ -61,7 +61,7 @@ void RS_ActionSetRelativeZero::onMouseRightButtonRelease(int status, [[maybe_unu
 }
 
 void RS_ActionSetRelativeZero::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
-    *pt = pos;
+    *m_position = pos;
     trigger();
     updateMouseButtonHints();
 }

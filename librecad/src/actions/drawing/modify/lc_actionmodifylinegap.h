@@ -39,20 +39,20 @@ class LC_ActionModifyLineGap:public LC_AbstractActionWithPreview{
 public:
     LC_ActionModifyLineGap(LC_ActionContext *actionContext);
 
-    double getGapSize()const{return gapSize;};
-    void setGapSize(double value){gapSize =value;};
+    double getGapSize()const{return m_gapSize;};
+    void setGapSize(double value){m_gapSize =value;};
 
-    int getLineSnapMode() const{return lineSnapMode;};
-    void setLineSnapMode(int value){lineSnapMode = value;};
+    int getLineSnapMode() const{return m_lineSnapMode;};
+    void setLineSnapMode(int value){m_lineSnapMode = value;};
 
-    double getSnapDistance() const{return snapDistance;};
-    void setSnapDistance(double value){snapDistance = value;};
+    double getSnapDistance() const{return m_snapDistance;};
+    void setSnapDistance(double value){m_snapDistance = value;};
 
-    bool isFreeGapSize() const{return freeGapSize;};
-    void setFreeGapSize(bool value){freeGapSize = value;}
+    bool isFreeGapSize() const{return m_freeGapSize;};
+    void setFreeGapSize(bool value){m_freeGapSize = value;}
 
-    bool getGapSnapMode() const {return gapSnapMode;};
-    void setGapSnapMode(int mode){gapSnapMode = mode;};
+    bool getGapSnapMode() const {return m_gapSnapMode;};
+    void setGapSnapMode(int mode){m_gapSnapMode = mode;};
 protected:
 
     /**
@@ -67,29 +67,29 @@ protected:
     /**
      * length of gap for fixed size mode
      */
-    double gapSize = 0.0;
+    double m_gapSize = 0.0;
 
     /**
      * snap mode that controls in which part of line the gap will be placed.
      * In alternative action mode (SHIFT pressed with mouse), snap mode for line
      * and gap is mirrored (so they are applied to another end of line)
      */
-    int lineSnapMode = LINE_SNAP_START;
+    int m_lineSnapMode = LINE_SNAP_START;
 
     /**
      * distance of gap snap point from line snap point (if not free gap mode)
      */
-    double snapDistance = 0.0;
+    double m_snapDistance = 0.0;
 
     /**
      * if true - gap size is selected by the user, if false - it is defined by the option
      */
-    bool freeGapSize = false;
+    bool m_freeGapSize = false;
 
     /**
      * controls how the gap is positioned to gap snap point
      */
-    int gapSnapMode = GAP_SNAP_START;
+    int m_gapSnapMode = GAP_SNAP_START;
 
     struct GapData{
         RS_Line* originalLine;
@@ -100,7 +100,7 @@ protected:
     /**
      * information of gap needed for trigger
      */
-    GapData* gapData = nullptr;
+    GapData* m_gapData = nullptr;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;

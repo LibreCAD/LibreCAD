@@ -28,7 +28,7 @@
 // todo - think whether it's practical adding multiple dimensions to selected circles?
 RS_ActionDimDiametric::RS_ActionDimDiametric(LC_ActionContext *actionContext)
         :LC_ActionCircleDimBase("Draw Diametric Dimensions", actionContext, RS2::ActionDimDiametric)
-        , edata{std::make_unique<RS_DimDiametricData>()}{
+        , m_edata{std::make_unique<RS_DimDiametricData>()}{
     reset();
 }
 
@@ -36,14 +36,14 @@ RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
 
 void RS_ActionDimDiametric::reset(){
     LC_ActionCircleDimBase::reset();
-    *edata = {{}, 0.0};
-    entity = nullptr;
-    *pos = {};
+    *m_edata = {{}, 0.0};
+    m_entity = nullptr;
+    *m_position = {};
     updateOptions();
 }
 
 RS_Dimension *RS_ActionDimDiametric::createDim(RS_EntityContainer *parent) const{
-    auto *newEntity= new RS_DimDiametric(parent,*data,*edata);
+    auto *newEntity= new RS_DimDiametric(parent,*m_dimensionData,*m_edata);
     return newEntity;
 }
 
@@ -52,13 +52,13 @@ RS_Vector RS_ActionDimDiametric::preparePreview(RS_Entity *en, RS_Vector &positi
         double radius = en->getRadius();
         RS_Vector center = en->getCenter();
         double angleToUse = m_currentAngle;
-        if (angleIsFree || forcePosition){
+        if (m_angleIsFree || forcePosition){
             angleToUse = center.angleTo(position);
         }
-        data->definitionPoint.setPolar(radius, angleToUse + M_PI);
-        data->definitionPoint += center;
-        edata->definitionPoint.setPolar(radius, angleToUse);
-        edata->definitionPoint += center;
+        m_dimensionData->definitionPoint.setPolar(radius, angleToUse + M_PI);
+        m_dimensionData->definitionPoint += center;
+        m_edata->definitionPoint.setPolar(radius, angleToUse);
+        m_edata->definitionPoint += center;
 
         RS_Vector result = center + RS_Vector::polar(radius, angleToUse);
         return result;

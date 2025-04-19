@@ -42,7 +42,7 @@ public:
     ~RS_ActionDimDiametric() override;
 protected:
     /** Data of new dimension */
-    std::unique_ptr<RS_DimDiametricData> edata;
+    std::unique_ptr<RS_DimDiametricData> m_edata;
     void reset() override;
     RS_Dimension *createDim(RS_EntityContainer *parent) const override;
     RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) override;

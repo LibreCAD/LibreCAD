@@ -60,12 +60,12 @@ protected:
         SetTrim    /**< Setting trim flag in command line. */
     };
 
-    RS_Entity *entity1 = nullptr;
-    RS_Entity *entity2 = nullptr;
+    RS_Entity *m_entity1 = nullptr;
+    RS_Entity *m_entity2 = nullptr;
     struct RoundActionData;
     std::unique_ptr<RoundActionData> m_actionData;
     /** Last status before entering angle. */
-    Status lastStatus = SetEntity1;
+    Status m_lastStatus = SetEntity1;
 
     bool removeOldFillet(RS_Entity *e, const bool &isPolyline);
     LC_ActionOptionsWidget* createOptionsWidget() override;
@@ -76,7 +76,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

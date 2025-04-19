@@ -231,7 +231,7 @@ RS_Snapper::~RS_Snapper() = default;
  */
 void RS_Snapper::init(){
     m_snapMode = m_graphicView->getDefaultSnapMode();
-    keyEntity = nullptr;
+    m_keyEntity = nullptr;
     pImpData->snapSpot = RS_Vector{false};
     pImpData->snapCoord = RS_Vector{false};
     m_SnapDistance = 1.0;
@@ -545,7 +545,7 @@ double RS_Snapper::getSnapRange() const{
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapFree(const RS_Vector& coord) {
-    keyEntity = nullptr;
+    m_keyEntity = nullptr;
     return coord;
 }
 
@@ -584,7 +584,7 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
  */
 RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
     RS_Vector vec{};
-    vec = m_container->getNearestPointOnEntity(coord, true, nullptr, &keyEntity);
+    vec = m_container->getNearestPointOnEntity(coord, true, nullptr, &m_keyEntity);
     return vec;
 }
 

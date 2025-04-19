@@ -140,12 +140,12 @@ void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status,
         if (m_mode == Line) {
             mouse = getSnapAngleAwarePoint(e, m_actionData->point, mouse, true);
         } else {
-            alternateArc = e->isControl;
+            m_alternateArc = e->isControl;
         }
     }
-    if (equationSettingOn || stepSizeSettingOn) return;
+    if (m_equationSettingOn || m_stepSizeSettingOn) return;
 
-    if (startPointSettingOn || endPointSettingOn){
+    if (m_startPointSettingOn || m_endPointSettingOn){
         RS_Vector snap = e->snapPoint;
         QString pointNumberString(QString::number(snap.x)); // fixme - review and check the logic
 
@@ -162,11 +162,11 @@ void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status,
 }
 
 void RS_ActionDrawPolyline::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
-    if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
-        equationSettingOn = false;
-        startPointSettingOn = false;
-        endPointSettingOn = false;
-        stepSizeSettingOn = false;
+    if (m_equationSettingOn || m_startPointSettingOn || m_endPointSettingOn || m_stepSizeSettingOn){
+        m_equationSettingOn = false;
+        m_startPointSettingOn = false;
+        m_endPointSettingOn = false;
+        m_stepSizeSettingOn = false;
     }
     else {
         if (status == SetNextPoint) {
@@ -194,7 +194,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //        break;
         case Tangential:
             if (m_actionData->polyline){
-                if (prepend) {
+                if (m_prepend) {
                     lastentity = dynamic_cast<RS_AtomicEntity *>(m_actionData->polyline->firstEntity());
                     direction = RS_Math::correctAngle(lastentity->getDirection1() + M_PI);
                 }
@@ -236,7 +236,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
             // fall-through
         case TanRad: {
             if (m_actionData->polyline){
-                if (prepend){
+                if (m_prepend){
                     lastentity = dynamic_cast<RS_AtomicEntity *>(m_actionData->polyline->firstEntity());
                     direction = RS_Math::correctAngle(lastentity->getDirection1() + M_PI);
                 }
@@ -263,7 +263,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 
         case TanAng: {
             if (m_actionData->polyline){
-                if (prepend){
+                if (m_prepend){
                     lastentity = dynamic_cast<RS_AtomicEntity *>(m_actionData->polyline->firstEntity());
                     direction = RS_Math::correctAngle(lastentity->getDirection1() + M_PI);
                 }
@@ -294,7 +294,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
         b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;*/
         case Ang: {
-            if (prepend){
+            if (m_prepend){
                 b = std::tan(m_reversed * m_angle * M_PI / 720.0);
 //                b = std::tan(m_reversed * -1 * m_angle * M_PI / 720.0);
                 suc = arc.createFrom2PBulge( mouse, m_actionData->point,b);
@@ -329,7 +329,7 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
 
     switch (status) {
         case SetStartpoint: {
-            if (!startPointSettingOn){
+            if (!m_startPointSettingOn){
                 //	data.startpoint = mouse;
                 //printf ("SetStartpoint\n");
                 m_actionData->point = mouse;
@@ -340,11 +340,11 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                 m_actionData->start = m_actionData->point;
                 updateMouseButtonHints();
             } else {
-                startPointSettingOn = false;
-                endPointSettingOn = true;
-                startPointX = mouse.x;
-                startPointY = mouse.y;
-                shiftY = true;
+                m_startPointSettingOn = false;
+                m_endPointSettingOn = true;
+                m_startPointX = mouse.x;
+                m_startPointY = mouse.y;
+                m_shiftY = true;
                 updateMouseWidgetTRBack(tr("Enter the end point x")); // fixme - check if this is correct
             }
             drawSnapper();
@@ -353,9 +353,9 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
             break;
         }
         case SetNextPoint: {
-            if (!endPointSettingOn){
+            if (!m_endPointSettingOn){
                 double bulge = 0.;
-                if (alternateArc && m_mode == Ang){
+                if (m_alternateArc && m_mode == Ang){
                     int originalReversed = m_reversed;
                     m_reversed = m_reversed == -1 ? 1: -1;
                     bulge = solveBulge(mouse);
@@ -365,13 +365,13 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                     bulge = solveBulge(mouse);
                 }
 
-                if (alternateArc && m_mode != Ang && m_mode != Line){
+                if (m_alternateArc && m_mode != Ang && m_mode != Line){
                     RS_ArcData tmpArcData = m_actionData->arc_data;
                     tmpArcData.reversed = !tmpArcData.reversed;
                     RS_Arc arc = RS_Arc(nullptr, tmpArcData);
                     bulge = arc.getBulge();
                 }
-                alternateArc = false;
+                m_alternateArc = false;
                 m_actionData->point = mouse;
                 m_actionData->history.append(mouse);
                 m_actionData->bHistory.append(bulge);
@@ -393,10 +393,10 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                 }
                 updateMouseButtonHints();
             } else {
-                endPointSettingOn = false;
-                stepSizeSettingOn = true;
-                endPointX = mouse.x;
-                endPointY = mouse.y;
+                m_endPointSettingOn = false;
+                m_stepSizeSettingOn = true;
+                m_endPointX = mouse.x;
+                m_endPointY = mouse.y;
                 updateMouseWidgetTRBack(tr("Enter number of polylines")); // fixme - check if this is correct
             }
             drawSnapper();
@@ -507,14 +507,14 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
 
     if ((m_mode == Line) && (checkCommand("equation", c))) {
         updateMouseWidgetTRBack(tr("Enter an equation, f(x)"));
-        equationSettingOn = true;
+        m_equationSettingOn = true;
         return true;
     }
 
-    if (equationSettingOn) {
-        equationSettingOn = false;
+    if (m_equationSettingOn) {
+        m_equationSettingOn = false;
 
-        shiftX = false;
+        m_shiftX = false;
 
         try {
             QString cRef = c;
@@ -530,7 +530,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
 
             updateMouseWidgetTRBack(tr("Enter the start point x"));
 
-            startPointSettingOn = true;
+            m_startPointSettingOn = true;
 
             m_actionData->equation = c;
         }
@@ -541,27 +541,27 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
         return true;
     }
 
-    if (startPointSettingOn) {
-        if (getPlottingX(c, startPointX)) {
-            endPointSettingOn = true;
-            startPointSettingOn = false;
-            shiftY = false;
+    if (m_startPointSettingOn) {
+        if (getPlottingX(c, m_startPointX)) {
+            m_endPointSettingOn = true;
+            m_startPointSettingOn = false;
+            m_shiftY = false;
             updateMouseWidgetTRBack(tr("Enter the end point x"));
         }
         return true;
     }
 
-    if (endPointSettingOn){
-        if (getPlottingX(c, endPointX) && std::abs(endPointX - startPointX) > RS_TOLERANCE){
-            endPointSettingOn = false;
-            stepSizeSettingOn = true;
+    if (m_endPointSettingOn){
+        if (getPlottingX(c, m_endPointX) && std::abs(m_endPointX - m_startPointX) > RS_TOLERANCE){
+            m_endPointSettingOn = false;
+            m_stepSizeSettingOn = true;
             updateMouseWidgetTRBack(tr("Enter number of polylines"));
         }
         return true;
     }
 
-    if (stepSizeSettingOn){
-        stepSizeSettingOn = false;
+    if (m_stepSizeSettingOn){
+        m_stepSizeSettingOn = false;
 
         int numberOfPolylines = 0;
 
@@ -594,7 +594,7 @@ bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
 
         if (command.startsWith("@")) isRelative = true;
 
-        if (command.startsWith("@@")) shiftX = true;
+        if (command.startsWith("@@")) m_shiftX = true;
 
         setParserExpression(command.remove("@"));
 
@@ -604,7 +604,7 @@ bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
             x += getRelativeZero().x;
         }
 
-        endPointSettingOn = true;
+        m_endPointSettingOn = true;
     }
     catch (...) {
         commandMessage(tr("The value x entered is invalid."));
@@ -617,20 +617,20 @@ bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
 
 void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
     deleteSnapper();
-    const double stepSize = (endPointX - startPointX) / numberOfPolylines;
+    const double stepSize = (m_endPointX - m_startPointX) / numberOfPolylines;
 
-    double equationX = startPointX;
-    double plottingX = startPointX;
+    double equationX = m_startPointX;
+    double plottingX = m_startPointX;
     m_muParserObject->DefineVar(_T("x"), &equationX);
     setParserExpression(m_actionData->equation);
 
-    if (shiftX || shiftY)
+    if (m_shiftX || m_shiftY)
         equationX = 0.0;
 
     if (getStatus() == SetStartpoint) {
-        m_actionData->point = RS_Vector(startPointX, m_muParserObject->Eval());
-        if (shiftY)
-            m_actionData->point.y += startPointY;
+        m_actionData->point = RS_Vector(m_startPointX, m_muParserObject->Eval());
+        if (m_shiftY)
+            m_actionData->point.y += m_startPointY;
         m_actionData->history.clear();
         m_actionData->history.append(m_actionData->point);
         m_actionData->bHistory.clear();
@@ -705,7 +705,7 @@ QStringList RS_ActionDrawPolyline::getAvailableCommands() {
 }
 
 void RS_ActionDrawPolyline::updateMouseButtonHints() {
-    if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn) return;
+    if (m_equationSettingOn || m_startPointSettingOn || m_endPointSettingOn || m_stepSizeSettingOn) return;
 
     switch (getStatus()) {
         case SetStartpoint: {

@@ -54,16 +54,16 @@ protected:
         SetNumXPoints,
         SetNumYPoints
     };
-    RS_Vector point1;
-    RS_Vector point2;
-    RS_Vector point3;
-    RS_Vector point4;
+    RS_Vector m_point1;
+    RS_Vector m_point2;
+    RS_Vector m_point3;
+    RS_Vector m_point4;
 
-    int pointsByX = 5;
-    int pointsByY = 5;
+    int m_pointsAmountByX = 5;
+    int m_pointsAmountByY = 5;
 
-    bool adjustLastPointToFirst = false;
-    int majorStatus;
+    bool m_adjustLastPointToFirst = false;
+    int m_majorStatus;
     void createPointsLine(RS_Vector start, RS_Vector end, int count, QVector<RS_Vector> &points);
     void createPointsLattice(RS_Vector vector, QVector<RS_Vector> &points);
     RS_Vector getLastPointPosition(RS_Vector &pos, bool alternate) const;

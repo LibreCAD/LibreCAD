@@ -60,7 +60,7 @@ void RS_ActionDrawEllipse4Points::doTrigger() {
         en = new RS_Circle(m_container, m_actionData->cData);
     }
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(en->getCenter());
     }
 

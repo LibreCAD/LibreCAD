@@ -53,7 +53,7 @@ protected:
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    bool valid = false;
+    bool m_valid = false;
 
     bool preparePreview(RS_Line *en);
     /**

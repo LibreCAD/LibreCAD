@@ -43,8 +43,8 @@ protected:
         SetEntity,
         SetPos
     };
-    RS_Entity* selectedArcEntity = nullptr;
-    LC_DimArcData dimArcData;
+    RS_Entity* m_selectedArcEntity = nullptr;
+    LC_DimArcData m_dimArcData;
     void reset()   override;
     void setRadius(const RS_Vector& selectedPosition);
     void updateMouseButtonHints() override;

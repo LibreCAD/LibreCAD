@@ -42,39 +42,39 @@ public:
 
     void init(int status) override;
 
-    int getEndZeroPointCorner() const {return endRelativeZeroPointCorner;};
-    void setEndZeroPointCorner(int value){endRelativeZeroPointCorner = value;};
+    int getEndZeroPointCorner() const {return m_endRelativeZeroPointCorner;};
+    void setEndZeroPointCorner(int value){m_endRelativeZeroPointCorner = value;};
 
-    void setCreateQuadrangle(bool value) {createQuadrangle = value;};
-    bool isCreateQuadrangle() const {return createQuadrangle;};
+    void setCreateQuadrangle(bool value) {m_createQuadrangle = value;};
+    bool isCreateQuadrangle() const {return m_createQuadrangle;};
 
-    double getFixedInnerAngle() const {return innerAngle;};
-    void setFixedInnerAngle(double value){innerAngle = value;};
+    double getFixedInnerAngle() const {return m_innerAngle;};
+    void setFixedInnerAngle(double value){m_innerAngle = value;};
 
-    bool isInnerAngleFixed() const{return innerAngleIsFixed;};
-    void setInnerAngleFixed(bool value){innerAngleIsFixed = value;};
+    bool isInnerAngleFixed() const{return m_innerAngleIsFixed;};
+    void setInnerAngleFixed(bool value){m_innerAngleIsFixed = value;};
 
 protected:
     /**
      * information about corners
      */
     struct ActionData;
-    int endRelativeZeroPointCorner {3};
     std::unique_ptr<ActionData> m_actionData;
+    int m_endRelativeZeroPointCorner {3};
 
     /**
      * inner angle of quadrangle
      */
-    double innerAngle = 0.0;
+    double m_innerAngle = 0.0;
     /**
      * flag that indicates that inner angle of quadrangle is fixed
      */
-    bool innerAngleIsFixed = false;
+    bool m_innerAngleIsFixed = false;
 
     /**
      * if true, quadrangle will be created, if false - rectangle
      */
-    bool createQuadrangle = false;
+    bool m_createQuadrangle = false;
 
     void resetPoints();
     void doResetPoints(const RS_Vector &zero);

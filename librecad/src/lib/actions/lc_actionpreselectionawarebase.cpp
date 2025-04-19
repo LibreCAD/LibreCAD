@@ -63,7 +63,7 @@ void LC_ActionPreSelectionAwareBase::init(int status) {
 
 unsigned int LC_ActionPreSelectionAwareBase::countSelectedEntities() {
     m_selectedEntities.clear();
-    document->collectSelected(m_selectedEntities, m_countDeep, catchForSelectionEntityTypes);
+    m_document->collectSelected(m_selectedEntities, m_countDeep, m_catchForSelectionEntityTypes);
     unsigned int selectedCount = m_selectedEntities.size();
 //    LC_ERR << " Selected Count: " << selectedCount;
     return selectedCount;
@@ -115,16 +115,16 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
             RS_Vector wcsP1, wcsP2;
             m_viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
 
-            if (catchForSelectionEntityTypes.isEmpty()){
+            if (m_catchForSelectionEntityTypes.isEmpty()){
                 s.selectWindow(RS2::EntityUnknown, wcsP1, wcsP2, performSelection, selectIntersecting);
             }
             else {
-                s.selectWindow(catchForSelectionEntityTypes, wcsP1, wcsP2, performSelection, selectIntersecting);
+                s.selectWindow(m_catchForSelectionEntityTypes, wcsP1, wcsP2, performSelection, selectIntersecting);
             }
             updateSelectionWidget();
         }
         else{
-            RS_Entity* entityToSelect = catchEntityByEvent(e, catchForSelectionEntityTypes);
+            RS_Entity* entityToSelect = catchEntityByEvent(e, m_catchForSelectionEntityTypes);
             bool selectContour = e->isShift;
             if (selectEntity(entityToSelect, selectContour)) {
                 if (e->isControl) {

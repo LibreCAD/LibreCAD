@@ -36,7 +36,7 @@ LC_ActionDrawPointsLattice::LC_ActionDrawPointsLattice(LC_ActionContext *actionC
 
 void LC_ActionDrawPointsLattice::doTrigger() {
     QVector<RS_Vector> pointsToCreate;
-    createPointsLattice(point4, pointsToCreate);
+    createPointsLattice(m_point4, pointsToCreate);
 
     qsizetype pointsCount = pointsToCreate.size();
     if (pointsCount > 0) {
@@ -66,34 +66,34 @@ void LC_ActionDrawPointsLattice::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             break;
         }
         case SetPoint2:{
-            RS_Vector pos = getSnapAngleAwarePoint(e, point1, mouse, true);
-            createPointsLine(point1, pos, pointsByX, pointsToCreate);
+            RS_Vector pos = getSnapAngleAwarePoint(e, m_point1, mouse, true);
+            createPointsLine(m_point1, pos, m_pointsAmountByX, pointsToCreate);
             if (m_showRefEntitiesOnPreview){
-                previewRefPoint(point1);
+                previewRefPoint(m_point1);
                 previewRefSelectablePoint(pos);
             }
             break;
         }
         case SetPoint3:{
-            RS_Vector pos = getSnapAngleAwarePoint(e, point2, mouse, true);
-            createPointsLine(point1, point2, pointsByX, pointsToCreate);
-            createPointsLine(point2, pos, pointsByY, pointsToCreate);
+            RS_Vector pos = getSnapAngleAwarePoint(e, m_point2, mouse, true);
+            createPointsLine(m_point1, m_point2, m_pointsAmountByX, pointsToCreate);
+            createPointsLine(m_point2, pos, m_pointsAmountByY, pointsToCreate);
             if (m_showRefEntitiesOnPreview){
-                previewRefPoint(point1);
-                previewRefPoint(point2);
+                previewRefPoint(m_point1);
+                previewRefPoint(m_point2);
                 previewRefSelectablePoint(pos);
             }
             break;
         }
         case SetPoint4:{
-            RS_Vector pos = getSnapAngleAwarePoint(e, point3, mouse , true);
+            RS_Vector pos = getSnapAngleAwarePoint(e, m_point3, mouse , true);
             bool alternateLastPointAdjustment = e->isControl;
             pos = getLastPointPosition(pos, alternateLastPointAdjustment);
             createPointsLattice(pos, pointsToCreate);
             if (m_showRefEntitiesOnPreview){
-                previewRefPoint(point1);
-                previewRefPoint(point2);
-                previewRefPoint(point3);
+                previewRefPoint(m_point1);
+                previewRefPoint(m_point2);
+                previewRefPoint(m_point3);
                 previewRefSelectablePoint(pos);
             }
             break;
@@ -113,15 +113,15 @@ void LC_ActionDrawPointsLattice::onMouseLeftButtonRelease(int status, LC_MouseEv
             break;
         }
         case SetPoint2:{
-            pos = getSnapAngleAwarePoint(e, point1, pos, false);
+            pos = getSnapAngleAwarePoint(e, m_point1, pos, false);
             break;
         }
         case SetPoint3:{
-            pos = getSnapAngleAwarePoint(e, point2, pos, false);
+            pos = getSnapAngleAwarePoint(e, m_point2, pos, false);
             break;
         }
         case SetPoint4:{
-            pos = getSnapAngleAwarePoint(e, point3, pos, false);
+            pos = getSnapAngleAwarePoint(e, m_point3, pos, false);
             bool alternateLastPointAdjustment = e->isControl;
             pos = getLastPointPosition(pos, alternateLastPointAdjustment);
             break;
@@ -131,13 +131,13 @@ void LC_ActionDrawPointsLattice::onMouseLeftButtonRelease(int status, LC_MouseEv
 }
 
 RS_Vector LC_ActionDrawPointsLattice::getLastPointPosition(RS_Vector &pos, bool alternateLastPointAdjustment) const {
-    bool doAdjustPoint4 = adjustLastPointToFirst;
+    bool doAdjustPoint4 = m_adjustLastPointToFirst;
     if (alternateLastPointAdjustment){
         doAdjustPoint4 = !doAdjustPoint4;
     }
     if (doAdjustPoint4) {
-         RS_Vector firstSideDelta = point2 - point1;
-         pos = point3 - firstSideDelta;
+         RS_Vector firstSideDelta = m_point2 - m_point1;
+         pos = m_point3 - firstSideDelta;
     }
     return pos;
 }
@@ -153,7 +153,7 @@ void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, [[maybe_u
         }
         case SetNumXPoints:
         case SetNumYPoints:{
-            setStatus(majorStatus);
+            setStatus(m_majorStatus);
             break;
         }
     }
@@ -162,39 +162,39 @@ void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, [[maybe_u
 void LC_ActionDrawPointsLattice::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetPoint1:{
-            point1 = pos;
+            m_point1 = pos;
             moveRelativeZero(pos);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2:{
-            if (LC_LineMath::isNotMeaningfulDistance(pos, point1)){
+            if (LC_LineMath::isNotMeaningfulDistance(pos, m_point1)){
                 commandMessage(tr("Second point is too close to the first one"));
             }
             else{
-                point2 = pos;
+                m_point2 = pos;
                 moveRelativeZero(pos);
                 setStatus(SetPoint3);
             }
             break;
         }
         case SetPoint3:{
-            if (LC_LineMath::isNotMeaningfulDistance(pos, point2)){
+            if (LC_LineMath::isNotMeaningfulDistance(pos, m_point2)){
                 commandMessage(tr("Third point is too close to the second one"));
             }
             else{
-                point3 = pos;
+                m_point3 = pos;
                 moveRelativeZero(pos);
                 setStatus(SetPoint4);
             }
             break;
         }
         case SetPoint4:{
-            if (LC_LineMath::isNotMeaningfulDistance(pos, point3)){
+            if (LC_LineMath::isNotMeaningfulDistance(pos, m_point3)){
                 commandMessage(tr("Third point is too close to the second one"));
             }
             else{
-                point4 = pos;
+                m_point4 = pos;
                 moveRelativeZero(pos);
                 trigger();
             }
@@ -206,21 +206,21 @@ void LC_ActionDrawPointsLattice::onCoordinateEvent(int status, [[maybe_unused]]b
 bool LC_ActionDrawPointsLattice::doProcessCommand(int status, const QString &command) {
     bool accept;
     if (checkCommand("cols", command)){
-        majorStatus = status;
+        m_majorStatus = status;
         setStatus(SetNumXPoints);
         accept = true;
     }
     else if (checkCommand("rows", command)){
-        majorStatus = status;
+        m_majorStatus = status;
         setStatus(SetNumYPoints);
         accept = true;
     }
     else if (checkCommand("p4off", command)){
-        adjustLastPointToFirst = true;
+        m_adjustLastPointToFirst = true;
         accept = true;
     }
     else if (checkCommand("p4on", command)){
-        adjustLastPointToFirst = false;
+        m_adjustLastPointToFirst = false;
         accept = true;
     }
     else if (status == SetNumYPoints || status == SetNumXPoints){
@@ -228,13 +228,13 @@ bool LC_ActionDrawPointsLattice::doProcessCommand(int status, const QString &com
         int count = RS_Math::eval(command, &ok);
         if (ok && count > 0){ // at least 1 point should be present
             if (status == SetNumXPoints){
-                pointsByX = count;
+                m_pointsAmountByX = count;
             }
             else{
-                pointsByY = count;
+                m_pointsAmountByY = count;
             }
             updateOptions();
-            setStatus(majorStatus);
+            setStatus(m_majorStatus);
             accept = true;
         } else {
             commandMessage(tr("Invalid value provided"));
@@ -267,7 +267,7 @@ void LC_ActionDrawPointsLattice::updateMouseButtonHints() {
             break;
         }
         case SetPoint4: {
-            updateMouseWidgetTRCancel(tr("Specify fourth point"), adjustLastPointToFirst ? MOD_SHIFT_AND_CTRL_ANGLE(tr("Last point position is un-adjusted")):
+            updateMouseWidgetTRCancel(tr("Specify fourth point"), m_adjustLastPointToFirst ? MOD_SHIFT_AND_CTRL_ANGLE(tr("Last point position is un-adjusted")):
                                                                      MOD_SHIFT_AND_CTRL_ANGLE(tr("Last point position is adjusted to first")));
             break;
         }
@@ -297,41 +297,41 @@ void LC_ActionDrawPointsLattice::createPointsLine(RS_Vector start, RS_Vector end
 
 void LC_ActionDrawPointsLattice::createPointsLattice(RS_Vector lastPoint, QVector<RS_Vector> &pointsToCreate) {
 
-    createPointsLine(point1, point2, pointsByX, pointsToCreate);
-    int numByY = pointsByY - 1;
-    RS_Vector dv1 = (point1 - lastPoint) / numByY;
-    RS_Vector dv2 = (point2 - point3) / numByY;
-    RS_Vector v1 = point1;
-    RS_Vector v2 = point2;
+    createPointsLine(m_point1, m_point2, m_pointsAmountByX, pointsToCreate);
+    int numByY = m_pointsAmountByY - 1;
+    RS_Vector dv1 = (m_point1 - lastPoint) / numByY;
+    RS_Vector dv2 = (m_point2 - m_point3) / numByY;
+    RS_Vector v1 = m_point1;
+    RS_Vector v2 = m_point2;
     for (int i = 1; i < numByY; ++i) {
         createPointsLine(v1 - dv1*i,
-                         v2 - dv2*i,pointsByX,pointsToCreate);
+                         v2 - dv2*i,m_pointsAmountByX,pointsToCreate);
     }
-    createPointsLine(point3, lastPoint,  pointsByX, pointsToCreate);
+    createPointsLine(m_point3, lastPoint,  m_pointsAmountByX, pointsToCreate);
 }
 
 int LC_ActionDrawPointsLattice::getColumnPointsCount() const {
-    return pointsByX;
+    return m_pointsAmountByX;
 }
 
 void LC_ActionDrawPointsLattice::setColumnPointsCount(int count) {
-    pointsByX = count;
+    m_pointsAmountByX = count;
 }
 
 int LC_ActionDrawPointsLattice::getRowPointsCount() const {
-    return pointsByY;
+    return m_pointsAmountByY;
 }
 
 void LC_ActionDrawPointsLattice::setRowPointsCount(int count) {
-    pointsByY = count;
+    m_pointsAmountByY = count;
 }
 
 bool LC_ActionDrawPointsLattice::isAdjustLastPointToFirst() const {
-    return adjustLastPointToFirst;
+    return m_adjustLastPointToFirst;
 }
 
 void LC_ActionDrawPointsLattice::setAdjustLastPointToFirst(bool val) {
-    adjustLastPointToFirst = val;
+    m_adjustLastPointToFirst = val;
 }
 
 RS2::CursorType LC_ActionDrawPointsLattice::doGetMouseCursor([[maybe_unused]]int status) {

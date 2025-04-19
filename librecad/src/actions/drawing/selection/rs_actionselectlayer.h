@@ -46,7 +46,7 @@ protected:
     void updateMouseButtonHints() override;
     void doTrigger() override;
 private:
-    RS_Entity* en = nullptr;
+    RS_Entity* m_entity = nullptr;
 };
 
 #endif

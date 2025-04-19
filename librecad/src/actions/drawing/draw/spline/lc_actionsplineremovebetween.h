@@ -31,7 +31,7 @@ public:
     LC_ActionSplineRemoveBetween(LC_ActionContext *actionContext);
     ~LC_ActionSplineRemoveBetween() override = default;
 protected:
-    bool splineIsClosed = false;
+    bool m_splineIsClosed = false;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
@@ -39,7 +39,6 @@ protected:
     void collectPointsThatRemainsAfterDeletion(
         const RS_Vector &controlPoint, unsigned int splinePointsCount, bool deleteNotFoundPoints, std::vector<RS_Vector> &pointsVector,
         std::vector<RS_Vector> &remainingPoints) const;
-
     bool isValidSplinePointsData(unsigned long long int size, bool closed);
     bool isValidSplineData(unsigned long long int size, bool closed, int degree);
     void doOnEntityNotCreated() override;

@@ -60,14 +60,14 @@ protected:
         RS_Vector end2;
     };
 
-    double offset = 0.0;
-    bool alternateEndpoints = false;
+    double m_offset = 0.0;
+    bool m_alternateEndpoints = false;
 
-    RS_Entity* firstEntity = nullptr;
-    RS_Entity* secondEntity = nullptr;
+    RS_Entity* m_firstEntity = nullptr;
+    RS_Entity* m_secondEntity = nullptr;
 
-    int mainStatus = 0;
-    void restoreMainStatus(){setStatus(mainStatus);}
+    int m_mainStatus = 0;
+    void restoreMainStatus(){setStatus(m_mainStatus);}
     void prepareLine(LineInfo &info, RS_Entity* ent, bool alternate);
     void doTrigger() override;
 

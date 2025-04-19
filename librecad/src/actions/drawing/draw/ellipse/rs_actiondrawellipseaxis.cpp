@@ -93,7 +93,7 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
     }
     setPenAndLayerToActive(ellipse);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(ellipse->getCenter());
     }
 

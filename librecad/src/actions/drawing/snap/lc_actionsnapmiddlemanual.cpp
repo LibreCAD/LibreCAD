@@ -65,16 +65,16 @@ LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual(LC_ActionContext *actionCon
     m_actionData{std::make_unique<SnapMiddleManualData>()}{
     RS_DEBUG->print("LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual");
 
-    m_actionData->currentAppPen = document->getActivePen();
+    m_actionData->currentAppPen = m_document->getActivePen();
     const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
-    document->setActivePen(snapMiddleManual_pen);
+    m_document->setActivePen(snapMiddleManual_pen);
 }
 
 LC_ActionSnapMiddleManual::~LC_ActionSnapMiddleManual() = default;
 
 void LC_ActionSnapMiddleManual::init(int status){
     RS_DEBUG->print("LC_ActionSnapMiddleManual::init");
-    document->setActivePen(m_actionData->currentAppPen); // fixme - sand - check this, it looks like invalid pen is set
+    m_document->setActivePen(m_actionData->currentAppPen); // fixme - sand - check this, it looks like invalid pen is set
     RS_PreviewActionInterface::init(status);
     m_actionData->percentage = g_defaultRatio;
     drawSnapper();
@@ -94,9 +94,9 @@ void LC_ActionSnapMiddleManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             previewRefPoint(mouse);
         }
     } else if (getStatus() == SetPercentage){
-        if (predecessor != nullptr){
-            if (predecessor->getName().compare("Snap Middle Manual") == 0){
-                predecessor->init(-1);
+        if (m_predecessor != nullptr){
+            if (m_predecessor->getName().compare("Snap Middle Manual") == 0){
+                m_predecessor->init(-1);
                 init(-1);
             }
         }
@@ -150,12 +150,12 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bo
 
                 moveRelativeZero(middleManualPoint);
 
-                if (predecessor != nullptr) {
-                    if (predecessor->getName().compare("Default") != 0) {
+                if (m_predecessor != nullptr) {
+                    if (m_predecessor->getName().compare("Default") != 0) {
                         fireUnsetMiddleManual();
-                        document->setActivePen(m_actionData->currentAppPen);
+                        m_document->setActivePen(m_actionData->currentAppPen);
                         RS_CoordinateEvent new_e(middleManualPoint);
-                        predecessor->coordinateEvent(&new_e);
+                        m_predecessor->coordinateEvent(&new_e);
                         init(-1);
                     }
                 }

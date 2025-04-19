@@ -57,15 +57,15 @@ private:
     };
 
     /** Closest parallel. */
-    RS_Entity *parallel = nullptr;
+    RS_Entity *m_parallel = nullptr;
     /** Distance of the parallel. */
-    double distance = 0.;
+    double m_distance = 0.;
 /** Number of parallels. */
-    int number = 0;
+    int m_numberToCreate = 0;
 /** Coordinate of the mouse. */
-    std::unique_ptr<RS_Vector> coord;
+    std::unique_ptr<RS_Vector> m_coord;
 /** Original entity. */
-    RS_Entity *entity = nullptr;
+    RS_Entity *m_entity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

@@ -31,7 +31,6 @@
 
 class RS_Layer;
 
-
 /**
  * This action class can handle user events to edit layers.
  *
@@ -44,7 +43,7 @@ public:
 	void init(int status) override;
 	void trigger() override;
 protected:
-    RS_Layer* a_layer = nullptr;
+    RS_Layer* m_layer = nullptr;
 
 private:
     void deselectEntitiesOnLockedLayer(RS_Layer* layer);

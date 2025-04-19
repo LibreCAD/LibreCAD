@@ -63,12 +63,12 @@ protected:
         SetLength1,      /**< Setting length 1 in command line. */
         SetLength2       /**< Setting length 2 in command line. */
     };
-    RS_AtomicEntity* entity1 = nullptr;
-    RS_AtomicEntity* entity2 = nullptr;
+    RS_AtomicEntity* m_entity1 = nullptr;
+    RS_AtomicEntity* m_entity2 = nullptr;
     struct BevelActionData;
     std::unique_ptr<BevelActionData> m_actionData;
     /** Last status before entering angle. */
-    Status lastStatus = SetEntity1;
+    Status m_lastStatus = SetEntity1;
 
     bool isEntityAccepted(RS_Entity *en) const;
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;

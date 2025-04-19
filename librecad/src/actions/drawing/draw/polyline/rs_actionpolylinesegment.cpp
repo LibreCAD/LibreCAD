@@ -42,8 +42,8 @@ RS_ActionPolylineSegment::RS_ActionPolylineSegment(LC_ActionContext *actionConte
 
 RS_ActionPolylineSegment::RS_ActionPolylineSegment(LC_ActionContext *actionContext,RS_Entity* target)
     :RS_PreviewActionInterface("Create Polyline Existing from Segments",actionContext, RS2::ActionPolylineSegment) {
-    targetEntity = target;
-    initWithTarget = true;
+    m_targetEntity = target;
+    m_initWithTarget = true;
 }
 
 void RS_ActionPolylineSegment::drawSnapper() {
@@ -52,9 +52,9 @@ void RS_ActionPolylineSegment::drawSnapper() {
 
 void RS_ActionPolylineSegment::init(int status){
     RS_PreviewActionInterface::init(status);
-    if (initWithTarget){
-        initWithTarget = false;
-        convertPolyline(m_container, targetEntity, false);
+    if (m_initWithTarget){
+        m_initWithTarget = false;
+        convertPolyline(m_container, m_targetEntity, false);
         commandMessage(tr("Polyline created"));
         redraw();
         updateSelectionWidget();
@@ -62,7 +62,7 @@ void RS_ActionPolylineSegment::init(int status){
         return;
     }
     else {
-        targetEntity = nullptr;
+        m_targetEntity = nullptr;
 //Experimental feature: trigger action, if already has selected entities
         if (m_container->countSelected(true, entityType)){
 //find a selected entity
@@ -70,12 +70,12 @@ void RS_ActionPolylineSegment::init(int status){
             for (RS_Entity *e: *m_container) {
                 if (e->isSelected() &&
                     std::count(entityType.begin(), entityType.end(), e->rtti())){
-                    targetEntity = e;
+                    m_targetEntity = e;
                     break;
                 }
             }
-            if (targetEntity){
-                convertPolyline(m_container, targetEntity, true);
+            if (m_targetEntity){
+                convertPolyline(m_container, m_targetEntity, true);
                 commandMessage(tr("Polyline created"));
                 redraw();
                 updateSelectionWidget();
@@ -214,7 +214,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
 
     bool closed = false;
     RS_Polyline *newPolyline = nullptr;
-    if (document != nullptr){
+    if (m_document != nullptr){
         if (!createOnly){
             undoCycleStart();
         }
@@ -280,10 +280,10 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
 void RS_ActionPolylineSegment::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineSegment::trigger()");
 
-    if (targetEntity != nullptr /*&& selectedSegment && targetPoint.valid */){
-        convertPolyline(m_container, targetEntity);
+    if (m_targetEntity != nullptr /*&& selectedSegment && targetPoint.valid */){
+        convertPolyline(m_container, m_targetEntity);
 
-        targetEntity = nullptr;
+        m_targetEntity = nullptr;
         setStatus(ChooseEntity);
     }
 }
@@ -301,10 +301,10 @@ void RS_ActionPolylineSegment::onMouseMoveEvent([[maybe_unused]]int status, LC_M
 void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity:
-            targetEntity = catchEntityByEvent(e, entityType);
-            if (targetEntity == nullptr){
+            m_targetEntity = catchEntityByEvent(e, entityType);
+            if (m_targetEntity == nullptr){
                 commandMessage(tr("No Entity found."));
-            } else if (targetEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(targetEntity)->isClosed()){
+            } else if (m_targetEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(m_targetEntity)->isClosed()){
                 commandMessage(tr("Entity can not be a closed polyline."));
             } else {
                 redraw();
@@ -318,7 +318,7 @@ void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, LC_MouseEven
 
 void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  LC_MouseEvent *e) {
     deleteSnapper();
-    if (targetEntity){
+    if (m_targetEntity){
          redraw();
     }
     initPrevious(status);

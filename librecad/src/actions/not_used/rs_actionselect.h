@@ -52,8 +52,8 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
 private:
-    RS2::ActionType nextAction = RS2::ActionNone;
-    QList<RS2::EntityType> const entityTypeList;
+    RS2::ActionType m_nextAction = RS2::ActionNone;
+    QList<RS2::EntityType> const m_entityTypeList;
 };
 
 #endif

@@ -45,7 +45,7 @@ public:
 	void trigger() override;
 
 protected:
-    bool select = false;
+    bool m_select = false;
 };
 
 #endif

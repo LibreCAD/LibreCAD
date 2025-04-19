@@ -52,21 +52,21 @@ void LC_ActionInfoPickCoordinates::updateCollectedPointsByWidget(){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
         int size = entityInfoWidget->getCollectedCoordinatesCount();
-        points.clear();
+        m_points.clear();
         for (int i = 0; i < size; i++) {
             RS_Vector p = entityInfoWidget->getCollectedCoordinate(i);
-            points << p;
+            m_points << p;
         }
         entityInfoWidget->setWidgetMode(LC_QuickInfoWidget::MODE_COORDINATE_COLLECTING);
         entityInfoWidget->updateCollectedPointsView();
 
-        drawPointsPath = entityInfoWidget->isDisplayPointsPathOnPreview();
+        m_drawPointsPath = entityInfoWidget->isDisplayPointsPathOnPreview();
     }
 }
 
 void LC_ActionInfoPickCoordinates::doFinish(bool updateTB){
     LC_AbstractActionWithPreview::doFinish(updateTB);
-    points.clear();
+    m_points.clear();
 
     // notify widget that collection points is completed
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
@@ -77,7 +77,7 @@ void LC_ActionInfoPickCoordinates::doFinish(bool updateTB){
 
 void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]int status, const RS_Vector &snapPoint){
     // add point
-    points << snapPoint;
+    m_points << snapPoint;
     updateQuickInfoWidget(snapPoint);
     drawPreviewForLastPoint();
 }
@@ -97,13 +97,13 @@ void LC_ActionInfoPickCoordinates::doPreparePreviewEntities([[maybe_unused]]LC_M
     // todo - review - should we display normal or reference point?
     createPoint(snap, list);
     // preview for previously collected points
-    int size = points.size();
+    int size = m_points.size();
     for (int i = 0; i < size ;i++){
-        RS_Vector point = points.at(i);
+        RS_Vector point = m_points.at(i);
         createPoint(point, list);
-        if (drawPointsPath){ //optional points path
+        if (m_drawPointsPath){ //optional points path
             if (i > 0){
-                RS_Vector prevPoint = points.at(i - 1);
+                RS_Vector prevPoint = m_points.at(i - 1);
                 createLine(prevPoint, point, list);
             }
         }

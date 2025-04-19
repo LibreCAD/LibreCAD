@@ -41,14 +41,14 @@
 
 RS_ActionEditCopyPaste::RS_ActionEditCopyPaste(LC_ActionContext *actionContext, RS2::ActionType actionType)
     :LC_ActionPreSelectionAwareBase("Edit Copy", actionContext, actionType)
-    , referencePoint{new RS_Vector{}}{
+    , m_referencePoint{new RS_Vector{}}{
 }
 
 RS_ActionEditCopyPaste::~RS_ActionEditCopyPaste() = default;
 
 void RS_ActionEditCopyPaste::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
-    *referencePoint = RS_Vector(false);
+    *m_referencePoint = RS_Vector(false);
     if (m_actionType  == RS2::ActionEditPaste) {
         m_selectionComplete  = true;
     }
@@ -79,11 +79,11 @@ void RS_ActionEditCopyPaste::doTrigger(bool keepSelected) {
         case  RS2::ActionEditCopy:
         case  RS2::ActionEditCopyQuick:{
             RS_Modification m(*m_container, m_viewport);
-            m.copy(*referencePoint, m_actionType ==  RS2::ActionEditCut || m_actionType == RS2::ActionEditCutQuick);
+            m.copy(*m_referencePoint, m_actionType ==  RS2::ActionEditCut || m_actionType == RS2::ActionEditCutQuick);
 
-            if (invokedWithControl){
+            if (m_invokedWithControl){
                 m_actionType = RS2::ActionEditPaste;
-                invokedWithControl = false;
+                m_invokedWithControl = false;
             }
             else{
                 //graphicView->redraw();
@@ -94,9 +94,9 @@ void RS_ActionEditCopyPaste::doTrigger(bool keepSelected) {
         }
         case RS2::ActionEditPaste: {
             RS_Modification m(*m_container, m_viewport);
-            m.paste(RS_PasteData(*referencePoint, 1.0, 0.0, false, ""));
+            m.paste(RS_PasteData(*m_referencePoint, 1.0, 0.0, false, ""));
 
-            if (!invokedWithControl) {
+            if (!m_invokedWithControl) {
                 finish(false);
             }
             break;
@@ -114,15 +114,15 @@ void RS_ActionEditCopyPaste::onMouseMoveEventSelected(int status, LC_MouseEvent 
                 break;
             }
             case RS2::ActionEditPaste:{
-                *referencePoint = e->snapPoint;
+                *m_referencePoint = e->snapPoint;
                 m_preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), m_viewport);
-                m_preview->move(*referencePoint);
+                m_preview->move(*m_referencePoint);
 
                 if (m_graphic) {
                     RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
                     RS2::Unit targetUnit = m_graphic->getUnit();
                     double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
-                    m_preview->scale(*referencePoint, {f, f});
+                    m_preview->scale(*m_referencePoint, {f, f});
                 }
                 break;
             }
@@ -136,7 +136,7 @@ void RS_ActionEditCopyPaste::onMouseMoveEventSelected(int status, LC_MouseEvent 
 }
 
 void RS_ActionEditCopyPaste::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
-    invokedWithControl = e->isControl;
+    m_invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
@@ -145,7 +145,7 @@ void RS_ActionEditCopyPaste::onMouseRightButtonReleaseSelected(int status, [[may
 }
 
 void RS_ActionEditCopyPaste::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
-    *referencePoint = pos;
+    *m_referencePoint = pos;
     trigger();
 }
 

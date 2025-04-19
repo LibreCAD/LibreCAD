@@ -47,38 +47,38 @@ void LC_ActionDrawBoundingBox::updateMouseButtonHintsForSelection() {
 }
 
 void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
-    if (document != nullptr) {
+    if (m_document != nullptr) {
         RS_Graphic* graphic = m_graphicView->getGraphic();
         RS_Layer* activeLayer = graphic->getActiveLayer();
-        RS_Pen pen = document->getActivePen();
+        RS_Pen pen = m_document->getActivePen();
         undoCycleStart();
-        if (selectionAsGroup) {
+        if (m_selectionAsGroup) {
             RS_Vector selectionMin;
             RS_Vector selectionMax;
             LC_Align::collectSelectionBounds(m_selectedEntities, selectionMin, selectionMax);
 
-            if (cornerPointsOnly){
-                createCornerPoints(activeLayer, pen, selectionMin-offset, selectionMax+offset);
+            if (m_cornerPointsOnly){
+                createCornerPoints(activeLayer, pen, selectionMin-m_offset, selectionMax+m_offset);
             }
             else{
-                if (createPolyline){
-                    createBoxPolyline(activeLayer, pen, selectionMin-offset, selectionMax+offset);
+                if (m_createPolyline){
+                    createBoxPolyline(activeLayer, pen, selectionMin-m_offset, selectionMax+m_offset);
                 }
                 else {
-                    createBoxLines(activeLayer, pen, selectionMin-offset, selectionMax+offset);
+                    createBoxLines(activeLayer, pen, selectionMin-m_offset, selectionMax+m_offset);
                 }
             }
         } else {
             for (auto e: m_selectedEntities){
-                if (cornerPointsOnly){
-                    createCornerPoints(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
+                if (m_cornerPointsOnly){
+                    createCornerPoints(activeLayer, pen, e->getMin()-m_offset, e->getMax()+m_offset);
                 }
                 else{
-                    if (createPolyline) {
-                        createBoxPolyline(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
+                    if (m_createPolyline) {
+                        createBoxPolyline(activeLayer, pen, e->getMin()-m_offset, e->getMax()+m_offset);
                     }
                     else{
-                        createBoxLines(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
+                        createBoxLines(activeLayer, pen, e->getMin()-m_offset, e->getMax()+m_offset);
                     }
                 }
             }
@@ -109,7 +109,7 @@ void LC_ActionDrawBoundingBox::createBoxPolyline(RS_Layer *activeLayer, const RS
     e->addVertex({selectionMin.x, selectionMax.y});
 
     m_container->addEntity(e);
-    document->addUndoable(e);
+    m_document->addUndoable(e);
 }
 
 void LC_ActionDrawBoundingBox::createBoxLines(RS_Layer *activeLayer, const RS_Pen &pen, const RS_Vector &selectionMin, const RS_Vector &selectionMax) {
@@ -131,7 +131,7 @@ void LC_ActionDrawBoundingBox::createPoint(RS_Layer *activeLayer, const RS_Pen &
     e->setLayer(activeLayer);
     e->setPen(pen);
     m_container->addEntity(e);
-    document->addUndoable(e);
+    m_document->addUndoable(e);
 }
 
 void LC_ActionDrawBoundingBox::createLine(RS_Layer *activeLayer, const RS_Pen &pen, double x1, double y1, double x2, double y2) {

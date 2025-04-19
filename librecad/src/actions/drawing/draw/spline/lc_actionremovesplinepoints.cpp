@@ -35,8 +35,8 @@ LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(LC_ActionContext *actio
 }
 
 void LC_ActionRemoveSplinePoints::doAfterTrigger() {
-    if (!mayModifySplineEntity(entityToModify)) {
-        entityToModify->setSelected(false);
+    if (!mayModifySplineEntity(m_entityToModify)) {
+        m_entityToModify->setSelected(false);
         setStatus(SetEntity);
     }
 }
@@ -54,10 +54,10 @@ void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, LC_Mo
         }
         case SetControlPoint:{
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid) {
                 previewRefSelectablePoint(nearestPoint);
-                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, nearestPoint, directionFromStart);
+                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(m_entityToModify, nearestPoint, m_directionFromStart);
                 if (previewUpdatedEntity != nullptr) {
                     previewEntity(previewUpdatedEntity);
                 }
@@ -74,8 +74,8 @@ void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, LC_MouseE
         case SetEntity:{
             auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
-                entityToModify = entity;
-                entityToModify->setSelected(true);
+                m_entityToModify = entity;
+                m_entityToModify->setSelected(true);
                 redrawDrawing();
                 setStatus(SetControlPoint);
             }
@@ -84,9 +84,9 @@ void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, LC_MouseE
         case SetControlPoint: {
             RS_Vector mouse = e->snapPoint;
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
-                vertexPoint = nearestPoint;
+                m_vertexPoint = nearestPoint;
                 trigger();
             }
             break;

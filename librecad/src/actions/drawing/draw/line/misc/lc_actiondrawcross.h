@@ -37,15 +37,15 @@ public:
     LC_ActionDrawCross(LC_ActionContext *actionContext);
     ~LC_ActionDrawCross() override;
 
-    double getLenX() const {return lenX;};
-    double getLenY() const {return lenY;};
-    double getCrossAngle() const{return ucsBasisAngleDegrees;};
-    int getCrossMode() const{return crossSizeMode;};
+    double getLenX() const {return m_lenX;};
+    double getLenY() const {return m_lenY;};
+    double getCrossAngle() const{return m_ucsBasisAngleDegrees;};
+    int getCrossMode() const{return m_crossSizeMode;};
 
-    void setXLength(double d) {lenX = d;};
-    void setYLength(double d) {lenY = d;};
-    void setCrossAngle(double d) { ucsBasisAngleDegrees = d;};
-    void setCrossMode(int i) {crossSizeMode = i;};
+    void setXLength(double d) {m_lenX = d;};
+    void setYLength(double d) {m_lenY = d;};
+    void setCrossAngle(double d) { m_ucsBasisAngleDegrees = d;};
+    void setCrossMode(int i) {m_crossSizeMode = i;};
 protected:
     enum Status {
         SetEntity      /**< Choose the circle / arc. */
@@ -61,9 +61,9 @@ protected:
     };
 
     /** Chosen entity */
-    RS_Entity *entity = nullptr;
+    RS_Entity *m_entity = nullptr;
     //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc,
+    const EntityTypeList m_circleType = EntityTypeList{RS2::EntityArc,
                                                      RS2::EntityCircle,
                                                      RS2::EntityEllipse/*,
                                                      RS2::EntitySplinePoints*/};
@@ -71,19 +71,19 @@ protected:
     /**
      * Mode that controls how the circle should be drawn
      */
-    int crossSizeMode = CROSS_SIZE_EXTEND;
+    int m_crossSizeMode = CROSS_SIZE_EXTEND;
     /*
      * length value for axis x
      */
-    double lenX = 0.0;
+    double m_lenX = 0.0;
     /*
      * length value for axis x
      */
-    double lenY = 0.0;
+    double m_lenY = 0.0;
     /**
      * Angle between axis x and horizontal cross line
      */
-    double ucsBasisAngleDegrees = 0.0;
+    double m_ucsBasisAngleDegrees = 0.0;
 
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;

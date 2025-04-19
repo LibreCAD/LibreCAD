@@ -43,8 +43,8 @@ struct RS_ActionModifyTrim::TrimActionData {
  */
 RS_ActionModifyTrim::RS_ActionModifyTrim(LC_ActionContext *actionContext, bool both)
     : RS_PreviewActionInterface("Trim Entity",actionContext, both ? RS2::ActionModifyTrim2 : RS2::ActionModifyTrim)
-    , trimEntity{nullptr}, limitEntity{nullptr}
-    , m_actionData(std::make_unique<TrimActionData>()), both{both} {
+    , m_trimEntity{nullptr}, m_limitEntity{nullptr}
+    , m_actionData(std::make_unique<TrimActionData>()), m_both{both} {
 }
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim() = default;
@@ -62,17 +62,17 @@ void RS_ActionModifyTrim::finish(bool updateTB) {
 void RS_ActionModifyTrim::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyTrim::trigger()");
 
-    if (trimEntity && trimEntity->isAtomic() &&
-        limitEntity /* && limitEntity->isAtomic()*/) {
+    if (m_trimEntity && m_trimEntity->isAtomic() &&
+        m_limitEntity /* && limitEntity->isAtomic()*/) {
 
         RS_Modification m(*m_container, m_viewport);
-        [[maybe_unused]] LC_TrimResult trimResult =  m.trim(m_actionData->trimCoord,  trimEntity,
-               m_actionData->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
-               both);
+        [[maybe_unused]] LC_TrimResult trimResult =  m.trim(m_actionData->trimCoord,  m_trimEntity,
+               m_actionData->limitCoord, /*(RS_AtomicEntity*)*/m_limitEntity,
+               m_both);
 
-        trimEntity = nullptr;
-        if (both) {
-            limitEntity = nullptr;
+        m_trimEntity = nullptr;
+        if (m_both) {
+            m_limitEntity = nullptr;
             setStatus(ChooseLimitEntity);
         } else {
             setStatus(ChooseTrimEntity);
@@ -95,15 +95,15 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             RS_Entity *se = catchAndDescribe(e, RS2::ResolveNone);
             bool trimInvalid = true;
 
-            if (se != nullptr && se != limitEntity) {
+            if (se != nullptr && se != m_limitEntity) {
                 if (se->isAtomic()) {
 
                     auto *atomicTrimCandidate = dynamic_cast<RS_AtomicEntity *>(se);
 
                     RS_Modification m(*m_container, m_viewport);
                     LC_TrimResult trimResult = m.trim(mouse, atomicTrimCandidate,
-                                                      m_actionData->limitCoord, limitEntity,
-                                                      both, true);
+                                                      m_actionData->limitCoord, m_limitEntity,
+                                                      m_both, true);
                     if (trimResult.result) {
                         trimInvalid = false;
                         highlightHover(se);
@@ -113,9 +113,9 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                             if (trimResult.intersection2.valid) {
                                 previewRefPoint(trimResult.intersection2);
                             }
-                            if (both) {
+                            if (m_both) {
                                 if (trimResult.trimmed2 != nullptr) {
-                                    previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
+                                    previewRefTrimmedEntity(trimResult.trimmed2, m_limitEntity);
                                 }
                             }
                             if (isInfoCursorForModificationEnabled()){
@@ -131,7 +131,7 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 }
             }
             if (trimInvalid) {
-                highlightSelected(limitEntity);
+                highlightSelected(m_limitEntity);
             }
             break;
         }
@@ -146,8 +146,8 @@ void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
         case ChooseLimitEntity: {
             RS_Entity *se = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
             if (se != nullptr) {
-                limitEntity = se;
-                if (limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
+                m_limitEntity = se;
+                if (m_limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
                     m_actionData->limitCoord = mouse;
                     setStatus(ChooseTrimEntity);
                 }
@@ -157,9 +157,9 @@ void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
         case ChooseTrimEntity: {
             RS_Entity *se = catchEntityByEvent(e, RS2::ResolveNone);
             if (se != nullptr) {
-                if (se->isAtomic() && se != limitEntity) {
+                if (se->isAtomic() && se != m_limitEntity) {
                     m_actionData->trimCoord = mouse;
-                    trimEntity = dynamic_cast<RS_AtomicEntity *>(se);
+                    m_trimEntity = dynamic_cast<RS_AtomicEntity *>(se);
                     trigger();
                 }
             }
@@ -178,14 +178,14 @@ void RS_ActionModifyTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]
 void RS_ActionModifyTrim::updateMouseButtonHints() {
     switch (getStatus()) {
         case ChooseLimitEntity:
-            if (both) {
+            if (m_both) {
                 updateMouseWidgetTRCancel(tr("Select first trim entity"));
             } else {
                 updateMouseWidgetTRBack(tr("Select limiting entity"));
             }
             break;
         case ChooseTrimEntity:
-            if (both) {
+            if (m_both) {
                 updateMouseWidgetTRCancel(tr("Select second trim entity"));
             } else {
                 updateMouseWidgetTRBack(tr("Select entity to trim"));

@@ -48,7 +48,7 @@ struct RS_ActionZoomWindow::ActionData {
  */
 RS_ActionZoomWindow::RS_ActionZoomWindow(LC_ActionContext *actionContext, bool keepAspectRatio)
     :RS_PreviewActionInterface("Zoom Window",actionContext, RS2::ActionZoomWindow)
-    , m_actionData(std::make_unique<ActionData>()), keepAspectRatio(keepAspectRatio){
+    , m_actionData(std::make_unique<ActionData>()), m_keepAspectRatio(keepAspectRatio){
 }
 
 RS_ActionZoomWindow::~RS_ActionZoomWindow() = default;
@@ -69,7 +69,7 @@ void RS_ActionZoomWindow::doTrigger() {
         if (m_viewport->toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 5){
             RS_Vector point1 = toUCS(m_actionData->v1);
             RS_Vector point2 = toUCS(m_actionData->v2);
-            m_viewport->zoomWindow(point1, point2, keepAspectRatio);
+            m_viewport->zoomWindow(point1, point2, m_keepAspectRatio);
             init(SetFirstCorner);
         }
     }

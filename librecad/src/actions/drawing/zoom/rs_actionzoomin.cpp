@@ -39,10 +39,10 @@ RS_ActionZoomIn::RS_ActionZoomIn(LC_ActionContext *actionContext,
 								 RS_Vector const* pCenter,
                                  double factor)
             :RS_ActionInterface("Zoom in", actionContext, RS2::ActionZoomIn)
-        ,zoom_factor(factor)
-        ,direction(direction)
-        ,axis(axis)
-		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{}){;
+        ,m_zoomFactor(factor)
+        ,m_direction(direction)
+        ,m_axis(axis)
+		,m_centerPoint(pCenter?new RS_Vector{*pCenter}:new RS_Vector{}){;
 }
 
 RS_ActionZoomIn::~RS_ActionZoomIn() = default;
@@ -53,7 +53,7 @@ void RS_ActionZoomIn::init(int status) {
 }
 
 void RS_ActionZoomIn::trigger() {
-    switch (axis) {
+    switch (m_axis) {
         // fixme - sand - review and remove this if not needed...
         case RS2::OnlyX:
     /*        if (direction==RS2::In) {
@@ -72,10 +72,10 @@ void RS_ActionZoomIn::trigger() {
             break;
 
         case RS2::Both:
-            if (direction==RS2::In) {
-                m_viewport->zoomIn(zoom_factor, *center);
+            if (m_direction==RS2::In) {
+                m_viewport->zoomIn(m_zoomFactor, *m_centerPoint);
             } else {
-                m_viewport->zoomOut(zoom_factor, *center);
+                m_viewport->zoomOut(m_zoomFactor, *m_centerPoint);
             }
             break;
     }

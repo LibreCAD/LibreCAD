@@ -39,9 +39,9 @@ protected:
         SetArcPoint
     };
 
-    RS_Polyline* polyline;
-    RS_Entity* polylineSegment;
-    RS_Vector arcPoint;
+    RS_Polyline* m_polyline;
+    RS_Entity* m_polylineSegment;
+    RS_Vector m_arcPoint;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;

@@ -41,9 +41,9 @@ public:
     void finish(bool updateTB) override;
 private:
     // entity that might be used as source for pen applying
-    RS_Entity* srcEntity {nullptr};
+    RS_Entity* m_srcEntity {nullptr};
     // controls whether pen should be copied from source entity or applied from pen toolbar
-    bool copyMode;
+    bool m_copyMode;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

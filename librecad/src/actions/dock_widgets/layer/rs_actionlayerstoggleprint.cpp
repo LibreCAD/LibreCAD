@@ -36,7 +36,7 @@ class RS_LayerList;
  */
 RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(LC_ActionContext *actionContext, RS_Layer* layer)
         : RS_ActionInterface("Toggle Layer Printing", actionContext, RS2::ActionLayersTogglePrint)
-        , a_layer(layer)
+        , m_layer(layer)
 {}
 
 void RS_ActionLayersTogglePrint::trigger() {
@@ -55,8 +55,8 @@ void RS_ActionLayersTogglePrint::trigger() {
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            m_graphic->toggleLayerPrint(a_layer);
-            deselectEntities(a_layer);
+            m_graphic->toggleLayerPrint(m_layer);
+            deselectEntities(m_layer);
         }
     }
     redrawDrawing();

@@ -32,20 +32,20 @@
 
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(LC_ActionContext *actionContext)
 	:RS_PreviewActionInterface("Draw Tangents 1", actionContext,RS2::ActionDrawLineTangent1)
-	,tangent(nullptr)
-	,point(new RS_Vector{}){
+	,m_tangent(nullptr)
+	,m_point(new RS_Vector{}){
 }
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
 void RS_ActionDrawLineTangent1::doTrigger() {
-    if (tangent){
-        auto *newEntity = new RS_Line(m_container, tangent->getData());
+    if (m_tangent){
+        auto *newEntity = new RS_Line(m_container, m_tangent->getData());
 
         setPenAndLayerToActive(newEntity);
         undoCycleAdd(newEntity);
         setStatus(SetPoint);
-        tangent.reset();
+        m_tangent.reset();
     } else {
         RS_DEBUG->print("RS_ActionDrawLineTangent1::trigger: Entity is nullptr\n");
     }
@@ -57,14 +57,14 @@ void RS_ActionDrawLineTangent1::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
     switch (status) {
         case SetPoint: {
-            *point = snap;
+            *m_point = snap;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetCircle: {
             deleteSnapper();
 
-            RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, m_circleType, RS2::ResolveAll);
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
@@ -73,16 +73,16 @@ void RS_ActionDrawLineTangent1::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 RS_Vector altTangentPoint;
                 RS_Creation creation(nullptr, nullptr);
 
-                auto *tangentLine = creation.createTangent1(mouse, *point, en, tangentPoint, altTangentPoint);
-                tangent.reset(tangentLine);
+                auto *tangentLine = creation.createTangent1(mouse, *m_point, en, tangentPoint, altTangentPoint);
+                m_tangent.reset(tangentLine);
 
                 if (tangentLine != nullptr){
                     highlightHover(en);
-                    previewEntityToCreate(tangent->clone(), false);
+                    previewEntityToCreate(m_tangent->clone(), false);
                     previewRefSelectablePoint(tangentPoint);
                     previewRefSelectablePoint(altTangentPoint);
                     if (m_showRefEntitiesOnPreview) {
-                        previewRefPoint(*point);
+                        previewRefPoint(*m_point);
                     }
                 }
             }
@@ -100,7 +100,7 @@ void RS_ActionDrawLineTangent1::onMouseLeftButtonRelease(int status, LC_MouseEve
             break;
         }
         case SetCircle: {
-            if (tangent){
+            if (m_tangent){
                 trigger();
             }
             break;
@@ -118,8 +118,8 @@ void RS_ActionDrawLineTangent1::onMouseRightButtonRelease(int status, [[maybe_un
 void RS_ActionDrawLineTangent1::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetPoint: {
-            *point = pos;
-            moveRelativeZero(*point);
+            *m_point = pos;
+            moveRelativeZero(*m_point);
             setStatus(SetCircle);
             invalidateSnapSpot();
             break;

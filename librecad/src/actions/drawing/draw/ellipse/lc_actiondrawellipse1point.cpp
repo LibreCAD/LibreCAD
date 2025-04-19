@@ -73,7 +73,7 @@ void LC_ActionDrawEllipse1Point::doTrigger() {
     }
     setPenAndLayerToActive(ellipse);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(ellipse->getCenter());
     }
 

@@ -48,9 +48,9 @@ public:
     QStringList getAvailableCommands() override;
     void setAngle(double angleDeg);
     double getAngle() const;
-    void setLength(double l){length = l;}
-    double getLength() const{return length;}
-    bool hasFixedAngle() const{return fixedAngle;}
+    void setLength(double l){m_length = l;}
+    double getLength() const{return m_length;}
+    bool hasFixedAngle() const{return m_fixedAngle;}
 protected:
     enum Status {
         SetEntity,     /**< Choose entity. */
@@ -59,21 +59,21 @@ protected:
         SetLength      /**< Set length in console. */
     };
     /** Chosen entity */
-    RS_Entity *entity = nullptr;
+    RS_Entity *m_entity = nullptr;
     /** Chosen position */
-    std::unique_ptr<RS_Vector> pos;
+    std::unique_ptr<RS_Vector> m_pos;
     /**
      * Line angle.
      */
-    double relativeAngleRad = 0.;
+    double m_relativeAngleRad = 0.;
     /**
      * Line length.
      */
-    double length = 10.;
+    double m_length = 10.;
     /**
      * Is the angle fixed?
      */
-    bool fixedAngle = false;
+    bool m_fixedAngle = false;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
@@ -82,7 +82,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
-
     void doTrigger() override;
 };
 

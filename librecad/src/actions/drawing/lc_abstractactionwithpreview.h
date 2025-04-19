@@ -75,29 +75,29 @@ protected:
     /**
      * Entity that is highlighted as part of mouse selection operation (if any)
      */
-    RS_Entity* highlightedEntity  = nullptr;
+    RS_Entity* m_highlightedEntity  = nullptr;
 
     /**
      * Last point of snap during mouse move
      */
-    RS_Vector lastSnapPoint  = RS_Vector(false);
+    RS_Vector m_lastSnapPoint  = RS_Vector(false);
 
     /**
     * This is "major" status of action - it is used for determining, to which status state should be changed after various intermediate statuses (mostly,
     * this is needed for support of command events);
     */
-    int mainStatus  = 0;
+    int m_mainStatus  = 0;
 
     /**
      * snap mode saved for further restored, convenient if the actions would like to manage current snap (say, for simpler selection of entities)
      */
-    uint savedSnapMode  = 0;
+    uint m_savedSnapMode  = 0;
 
     /**
      * This is alternative mode of action that is invoked if SHIFT is pressed together with
      * mouse move or mouse click. Meaning of this flag depends on particular action.
      */
-    bool alternativeActionMode = false;
+    bool m_alternativeActionMode = false;
 
     // functions starting with "do" prefix are the most probable candidates for overriding in inherited actions
 
@@ -175,8 +175,8 @@ protected:
     virtual bool doCheckMouseEventValidForInitialSnap(LC_MouseEvent *e);
 
     // main status support
-    void setMainStatus(int status) {mainStatus = status; setStatus(status);}
-    void restoreMainStatus(){setStatus(mainStatus);}
+    void setMainStatus(int status) {m_mainStatus = status; setStatus(status);}
+    void restoreMainStatus(){setStatus(m_mainStatus);}
 
     // snap control support
     void restoreSnapMode();

@@ -51,13 +51,13 @@ protected:
         ChooseTrimEntity /**< Choosing the entity to trim. */
     };
 
-    RS_AtomicEntity *trimEntity = nullptr;
-    RS_Entity *limitEntity = nullptr;
+    RS_AtomicEntity *m_trimEntity = nullptr;
+    RS_Entity *m_limitEntity = nullptr;
     struct TrimActionData;
     std::unique_ptr<TrimActionData> m_actionData;
-    bool both = false;
-    void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
+    bool m_both = false;
 
+    void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

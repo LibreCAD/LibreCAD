@@ -52,7 +52,7 @@ protected:
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    bool alternatedPoints = false;
+    bool m_alternatedPoints = false;
     void reset() override;
     void preparePreview(bool alternatePoints);
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

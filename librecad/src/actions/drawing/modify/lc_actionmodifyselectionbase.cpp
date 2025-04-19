@@ -48,6 +48,6 @@ int LC_ActionModifySelectionBase::countSelected() {
 
 void LC_ActionModifySelectionBase::keyPressEvent(QKeyEvent *e){
     if (e->key()==Qt::Key_Enter && countSelected() > 0){
-        selectionFinished = true;
+        m_selectionFinished = true;
     }
 }

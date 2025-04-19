@@ -43,25 +43,25 @@ void LC_ActionModifyAlignSingle::init(int status) {
 }
 
 void LC_ActionModifyAlignSingle::doTrigger() {
-    if (entityToAlign != nullptr) {
-        if (document != nullptr) {
-            RS_Vector target = LC_Align::getReferencePoint(alignMin, alignMax, hAlign, vAlign);
-            RS_Entity *clone = LC_Align::createCloneMovedToTarget(entityToAlign, target, true, hAlign, vAlign);
+    if (m_entityToAlign != nullptr) {
+        if (m_document != nullptr) {
+            RS_Vector target = LC_Align::getReferencePoint(m_alignMin, m_alignMax, hAlign, vAlign);
+            RS_Entity *clone = LC_Align::createCloneMovedToTarget(m_entityToAlign, target, true, hAlign, vAlign);
             if (clone != nullptr) {
                 clone->setSelected(false);
                 m_container->addEntity(clone);
 
-                undoCycleReplace(entityToAlign, clone);
+                undoCycleReplace(m_entityToAlign, clone);
             }
         }
     }
-    entityToAlign = nullptr;
-    if (finishActionAfterTrigger){
+    m_entityToAlign = nullptr;
+    if (m_finishActionAfterTrigger){
         setStatus(-1);
     }
     else {
         if (m_showRefEntitiesOnPreview) {
-            previewAlignRefPoint(alignMin, alignMax);
+            previewAlignRefPoint(m_alignMin, m_alignMax);
         }
     }
     drawPreview();
@@ -120,23 +120,23 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
         case SelectEntity:{
 
             double verticalRef;
-            bool drawVertical  = LC_Align::getVerticalRefCoordinate(alignMin, alignMax, hAlign, verticalRef);
+            bool drawVertical  = LC_Align::getVerticalRefCoordinate(m_alignMin, m_alignMax, hAlign, verticalRef);
 
             double horizontalRef;
-            bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(alignMin, alignMax, vAlign, horizontalRef);
+            bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(m_alignMin, m_alignMax, vAlign, horizontalRef);
 
             if (m_showRefEntitiesOnPreview){
                 previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
             }
-            if (baseAlignEntity != nullptr) {
-                highlightSelected(baseAlignEntity);
+            if (m_baseAlignEntity != nullptr) {
+                highlightSelected(m_baseAlignEntity);
             }
 
             RS_Entity* entity = catchAndDescribe(e);
             RS_Vector offset;
             if (entity != nullptr){
                 highlightHover(entity);
-                RS_Vector target = LC_Align::getReferencePoint(alignMin, alignMax, hAlign, vAlign);
+                RS_Vector target = LC_Align::getReferencePoint(m_alignMin, m_alignMax, hAlign, vAlign);
 
                 RS_Vector entityRefPoint = LC_Align::getReferencePoint(entity->getMin(), entity->getMax(), hAlign, vAlign);
                 offset = target - entityRefPoint;
@@ -264,23 +264,23 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEv
                 case LC_Align::ENTITY:{
                     RS_Entity *entity = catchEntityByEvent(e);
                     if (entity != nullptr) {
-                        baseAlignEntity = entity;
-                        alignMin = entity->getMin();
-                        alignMax = entity->getMax();
+                        m_baseAlignEntity = entity;
+                        m_alignMin = entity->getMin();
+                        m_alignMax = entity->getMax();
                         setStatus(SelectEntity);
                     }
                     break;
                 }
                 case LC_Align::POSITION: {
                     snap = getRelZeroAwarePoint(e, snap);
-                    alignMin = snap;
-                    alignMax = snap;
+                    m_alignMin = snap;
+                    m_alignMax = snap;
                     setStatus(SelectEntity);
                     break;
                 }
                 case LC_Align::DRAWING:
-                    alignMin = m_container->getMin();
-                    alignMax = m_container->getMax();
+                    m_alignMin = m_container->getMin();
+                    m_alignMax = m_container->getMax();
                     setStatus(SelectEntity);
                     break;
                 default:
@@ -291,8 +291,8 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEv
         case SelectEntity:{
             RS_Entity* entity = catchEntityByEvent(e);
             if (entity != nullptr){
-                entityToAlign = entity;
-                finishActionAfterTrigger = e->isControl;
+                m_entityToAlign = entity;
+                m_finishActionAfterTrigger = e->isControl;
                 trigger();
             }
             break;
@@ -309,7 +309,7 @@ void LC_ActionModifyAlignSingle::onMouseRightButtonRelease(int status, [[maybe_u
             break;
         }
         case SelectEntity:{
-            entityToAlign = nullptr;
+            m_entityToAlign = nullptr;
             if (alignType == LC_Align::AlignMode::DRAWING){
                 setStatus(-1);
             }
@@ -325,8 +325,8 @@ void LC_ActionModifyAlignSingle::onMouseRightButtonRelease(int status, [[maybe_u
 
 void LC_ActionModifyAlignSingle::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
     if (status == SetRefPoint && !isZero && alignType == LC_Align::AlignMode::POSITION) {
-        alignMin = pos;
-        alignMax = pos;
+        m_alignMin = pos;
+        m_alignMax = pos;
         setStatus(SelectEntity);
     } else {
         commandMessage(tr("Coordinate is accepted only for Align to \"Position\""));
@@ -341,8 +341,8 @@ void LC_ActionModifyAlignSingle::setAlignType(int a) {
     if (a != alignType) {
         LC_ActionModifyAlignData::setAlignType(a);
         if (a == LC_Align::AlignMode::DRAWING){
-            alignMin = m_container->getMin();
-            alignMax = m_container->getMax();
+            m_alignMin = m_container->getMin();
+            m_alignMax = m_container->getMax();
             setStatus(SelectEntity);
         }
         else {

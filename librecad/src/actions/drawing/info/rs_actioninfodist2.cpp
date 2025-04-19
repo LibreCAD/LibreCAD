@@ -34,8 +34,8 @@
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(LC_ActionContext *actionContext, bool fromPoint)
     :RS_PreviewActionInterface("Info Dist2", actionContext, fromPoint? RS2::ActionInfoDistPoint2Entity : RS2::ActionInfoDistEntity2Point)
-    ,entity(nullptr){
-    selectionMode = fromPoint ? FIRST_IS_POINT : FIRST_IS_ENTITY;
+    ,m_entity(nullptr){
+    m_selectionMode = fromPoint ? FIRST_IS_POINT : FIRST_IS_ENTITY;
 }
 
 RS_ActionInfoDist2::~RS_ActionInfoDist2()= default;
@@ -43,10 +43,10 @@ RS_ActionInfoDist2::~RS_ActionInfoDist2()= default;
 void RS_ActionInfoDist2::init(int status){
     RS_PreviewActionInterface::init(status);
     if (status == 0){
-        if (selectionMode == FIRST_IS_POINT){
+        if (m_selectionMode == FIRST_IS_POINT){
             setStatus(SetPoint);
         } else {
-            savedRelZero = getRelativeZero();
+            m_savedRelZero = getRelativeZero();
         }
     } else if (status < 0){
         restoreRelZero();
@@ -59,23 +59,23 @@ void RS_ActionInfoDist2::finish(bool updateTB){
 }
 
 void RS_ActionInfoDist2::restoreRelZero(){
-    if (selectionMode == FIRST_IS_ENTITY){
-        moveRelativeZero(savedRelZero);
+    if (m_selectionMode == FIRST_IS_ENTITY){
+        moveRelativeZero(m_savedRelZero);
     }
 }
 
 // fixme - consider displaying information in EntityInfo widget
 void RS_ActionInfoDist2::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoDist2::trigger()");
-    if (point.valid && entity != nullptr){
+    if (m_point.valid && m_entity != nullptr){
         RS_Vector dV;
-        if (selectionMode == FIRST_IS_ENTITY){
-            dV = point - entityNearestPoint;
+        if (m_selectionMode == FIRST_IS_ENTITY){
+            dV = m_point - m_entityNearestPoint;
         } else {
-            dV = entityNearestPoint - point;
+            dV = m_entityNearestPoint - m_point;
         }
         QStringList dists;
-        for (double a: {dV.magnitude(), dV.x, dV.y, entityNearestPoint.x, entityNearestPoint.y, point.x, point.y}) {
+        for (double a: {dV.magnitude(), dV.x, dV.y, m_entityNearestPoint.x, m_entityNearestPoint.y, m_point.x, m_point.y}) {
             dists << formatLinear(a);
 
         }
@@ -100,14 +100,14 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (en != nullptr){
                 highlightHover(en);
                 deleteSnapper();
-                if (point.valid){
-                    if (selectionMode == FIRST_IS_POINT){
-                        RS_Vector nearest = en->getNearestPointOnEntity(point, nearestPointShouldBeOnEntity);
-                        previewLine(nearest, point);
-                        updateInfoCursor(nearest,point);
+                if (m_point.valid){
+                    if (m_selectionMode == FIRST_IS_POINT){
+                        RS_Vector nearest = en->getNearestPointOnEntity(m_point, m_nearestPointShouldBeOnEntity);
+                        previewLine(nearest, m_point);
+                        updateInfoCursor(nearest,m_point);
                         if (m_showRefEntitiesOnPreview) {
-                            previewRefLine(nearest, point);
-                            previewRefPoint(point);
+                            previewRefLine(nearest, m_point);
+                            previewRefPoint(m_point);
                             previewRefSelectablePoint(nearest);
                         }
                     } else {
@@ -115,19 +115,19 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     }
                 }
             } else {
-                if (selectionMode == FIRST_IS_POINT){
-                    previewLine(snap, point);
-                    updateInfoCursor(snap, point);
+                if (m_selectionMode == FIRST_IS_POINT){
+                    previewLine(snap, m_point);
+                    updateInfoCursor(snap, m_point);
                     if (m_showRefEntitiesOnPreview) {
-                        previewRefLine(snap, point);
-                        previewRefPoint(point);
+                        previewRefLine(snap, m_point);
+                        previewRefPoint(m_point);
                     }
                 }
             }
             break;
         }
         case SetPoint: {
-            switch (selectionMode) {
+            switch (m_selectionMode) {
                 case FIRST_IS_POINT: {
                     trySnapToRelZeroCoordinateEvent(e);
                     if (m_showRefEntitiesOnPreview) {
@@ -136,8 +136,8 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     break;
                 }
                 case FIRST_IS_ENTITY: {
-                    if (entity != nullptr){
-                        highlightSelected(entity);
+                    if (m_entity != nullptr){
+                        highlightSelected(m_entity);
                         snap = getRelZeroAwarePoint(e, snap);
                         RS_Vector nearest = obtainNearestPointOnEntity(snap);
                         previewLine(nearest, snap);
@@ -167,11 +167,11 @@ void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            entity = doCatchEntity(e, false);
-            if (entity != nullptr){
-                switch (selectionMode) {
+            m_entity = doCatchEntity(e, false);
+            if (m_entity != nullptr){
+                switch (m_selectionMode) {
                     case FIRST_IS_POINT: {
-                        entityNearestPoint = obtainNearestPointOnEntity(point);
+                        m_entityNearestPoint = obtainNearestPointOnEntity(m_point);
                         trigger();
                         setStatus(SetPoint);
                         break;
@@ -188,15 +188,15 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
         case SetPoint: {
             RS_Vector snap = e->snapPoint;
             snap = getRelZeroAwarePoint(e, snap);
-            switch (selectionMode) {
+            switch (m_selectionMode) {
                 case FIRST_IS_POINT: {
-                    point = snap;
-                    moveRelativeZero(point);
+                    m_point = snap;
+                    moveRelativeZero(m_point);
                     setStatus(SetEntity);
                     break;
                 }
                 case FIRST_IS_ENTITY: {
-                    entityNearestPoint = obtainNearestPointOnEntity(snap);
+                    m_entityNearestPoint = obtainNearestPointOnEntity(snap);
                     fireCoordinateEvent(snap);
                     break;
                 }
@@ -210,7 +210,7 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
 void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     int newStatus = -1;
-    bool firstIsPoint = selectionMode == FIRST_IS_POINT;
+    bool firstIsPoint = m_selectionMode == FIRST_IS_POINT;
     switch (status) {
         case SetEntity: {
             newStatus = firstIsPoint ? SetPoint : -1;
@@ -228,7 +228,7 @@ void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]L
 }
 
 RS_Vector RS_ActionInfoDist2::obtainNearestPointOnEntity(const RS_Vector &snap) const{
-    return entity->getNearestPointOnEntity(snap, nearestPointShouldBeOnEntity);
+    return m_entity->getNearestPointOnEntity(snap, m_nearestPointShouldBeOnEntity);
 }
 
 RS_Entity *RS_ActionInfoDist2::doCatchEntity(LC_MouseEvent *e, bool preview){
@@ -246,9 +246,9 @@ RS_Entity *RS_ActionInfoDist2::doCatchEntity(LC_MouseEvent *e, bool preview){
 
 void RS_ActionInfoDist2::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     if (status == SetPoint){
-        point = pos;
-        moveRelativeZero(point);
-        switch (selectionMode) {
+        m_point = pos;
+        moveRelativeZero(m_point);
+        switch (m_selectionMode) {
             case FIRST_IS_POINT: {
                 setStatus(SetEntity);
                 break;
@@ -268,7 +268,7 @@ void RS_ActionInfoDist2::updateMouseButtonHints(){
             updateMouseWidgetTRCancel(tr("Specify entity"), MOD_CTRL(tr("Do not snap to child entities in container")));
             break;
         case SetPoint: {
-            if (selectionMode == FIRST_IS_ENTITY){
+            if (m_selectionMode == FIRST_IS_ENTITY){
                 updateMouseWidgetTRCancel(tr("Specify point"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Relative point is on entity")));
             }
             else{

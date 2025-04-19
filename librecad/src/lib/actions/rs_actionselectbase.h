@@ -37,8 +37,9 @@ public:
     void keyReleaseEvent(QKeyEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;
 protected:
+    const QList<RS2::EntityType> m_catchForSelectionEntityTypes;
+
     RS2::CursorType doGetMouseCursor(int status) override;
-    const QList<RS2::EntityType> catchForSelectionEntityTypes;
     virtual bool isEntityAllowedToSelect([[maybe_unused]]RS_Entity *ent) const { return true; };
     bool selectEntity(RS_Entity* entityToSelect, bool selectContour);
     RS_Entity *selectionMouseMove(LC_MouseEvent *event);

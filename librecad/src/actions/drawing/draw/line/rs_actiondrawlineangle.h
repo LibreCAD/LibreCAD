@@ -52,7 +52,7 @@ public:
     double getLength() const;
     bool hasFixedAngle() const;
     void setInAngleBasis(bool b);
-    bool isInAngleBasis(){return orthoToAnglesBasis;}
+    bool isInAngleBasis(){return m_orthoToAnglesBasis;}
 protected:
     /**
  * Action States.
@@ -67,8 +67,8 @@ protected:
     };
     struct Points;
     std::unique_ptr<Points> m_ActionData;
-    bool persistRelativeZero = false;
-    bool orthoToAnglesBasis = false;
+    bool m_persistRelativeZero = false;
+    bool m_orthoToAnglesBasis = false;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

@@ -29,7 +29,7 @@
 
 RS_ActionDimRadial::RS_ActionDimRadial(LC_ActionContext *actionContext)
     :LC_ActionCircleDimBase("Draw Radial Dimensions",actionContext, RS2::ActionDimRadial)
-    , edata{ std::make_unique<RS_DimRadialData>()}{
+    , m_edata{ std::make_unique<RS_DimRadialData>()}{
     reset();
 }
 
@@ -38,14 +38,14 @@ RS_ActionDimRadial::~RS_ActionDimRadial() = default;
 void RS_ActionDimRadial::reset(){
     RS_ActionDimension::reset();
 
-    *edata = {};
-    entity = nullptr;
-    *pos = {};
-    lastStatus = SetEntity;
+    *m_edata = {};
+    m_entity = nullptr;
+    *m_position = {};
+    m_lastStatus = SetEntity;
 }
 
 RS_Dimension *RS_ActionDimRadial::createDim(RS_EntityContainer *parent) const{
-    auto *newEntity = new RS_DimRadial(parent, *data, *edata);
+    auto *newEntity = new RS_DimRadial(parent, *m_dimensionData, *m_edata);
     return newEntity;
 }
 
@@ -53,13 +53,13 @@ RS_Vector RS_ActionDimRadial::preparePreview(RS_Entity *en, RS_Vector &position,
     if (en != nullptr){
         double radius = en->getRadius();
         RS_Vector center = en->getCenter();
-        data->definitionPoint = center;
+        m_dimensionData->definitionPoint = center;
         double angleToUse = m_currentAngle;
-        if (angleIsFree || forcePosition){
-            angleToUse = data->definitionPoint.angleTo(position);
+        if (m_angleIsFree || forcePosition){
+            angleToUse = m_dimensionData->definitionPoint.angleTo(position);
         }
-        edata->definitionPoint.setPolar(radius, angleToUse);
-        edata->definitionPoint += data->definitionPoint;
+        m_edata->definitionPoint.setPolar(radius, angleToUse);
+        m_edata->definitionPoint += m_dimensionData->definitionPoint;
         RS_Vector result = center + RS_Vector::polar(radius, angleToUse);
         return result;
     }

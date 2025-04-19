@@ -51,10 +51,10 @@ public:
 	void trigger() override;
 
 protected:
-    double zoom_factor = 1.;
-    RS2::ZoomDirection direction = RS2::In;
-    RS2::Axis axis = RS2::Both;
-	std::unique_ptr<RS_Vector> center;
+    double m_zoomFactor = 1.;
+    RS2::ZoomDirection m_direction = RS2::In;
+    RS2::Axis m_axis = RS2::Both;
+	std::unique_ptr<RS_Vector> m_centerPoint;
 };
 
 #endif

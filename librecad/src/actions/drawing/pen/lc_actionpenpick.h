@@ -42,7 +42,7 @@ private:
     /**
      * flag that indicates whether pen from entity should be resolved
      */
-    bool resolveMode;
+    bool m_resolveMode;
     void applyPenToPenToolBar(RS_Entity* entity);
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;

@@ -37,7 +37,7 @@ int LC_ActionDrawStar::doGetStatusForInitialSnapToRelativeZero(){
 
 void LC_ActionDrawStar::doInitialSnapToRelativeZero(RS_Vector vector){
     // snap center to relative zero and change status
-    centerPoint = vector;
+    m_centerPoint = vector;
     setMainStatus(SetOuterPoint);
 }
 
@@ -49,7 +49,7 @@ RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(LC_MouseEvent *e){
     int status = getStatus();
     RS_Vector snap = LC_AbstractActionWithPreview::doGetMouseSnapPoint(e);
     if (status == SetOuterPoint || status == SetInnerPoint){
-        snap = getSnapAngleAwarePoint(e, centerPoint, snap, isMouseMove(e));
+        snap = getSnapAngleAwarePoint(e, m_centerPoint, snap, isMouseMove(e));
     }
     return snap;
 }
@@ -92,40 +92,40 @@ void LC_ActionDrawStar::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent
 void LC_ActionDrawStar::onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) {
     switch (status){
         case SetCenter: // setting center of star
-           centerPoint = coord;
+           m_centerPoint = coord;
            moveRelativeZero(coord);
            setMainStatus(SetOuterPoint);
            break;
         case SetOuterPoint: // setting outer point
-           outerPoint = coord;
+           m_outerPoint = coord;
            setMainStatus(SetInnerPoint);
            break;
         case SetInnerPoint: // setting inner point
-           innerPoint = coord;
+           m_innerPoint = coord;
            trigger();
            setMainStatus(SetCenter);
            break;
         case SetRadiuses: // setting rounding radius's
             if (isZero){
-                innerRadiusRounded = false;
-                outerRadiusRounded = false;
+                m_innerRadiusRounded = false;
+                m_outerRadiusRounded = false;
             }
             else {
                 double innerR = coord.y;
                 if (LC_LineMath::isMeaningful(innerR)){
-                    innerRadius = innerR;
-                    innerRadiusRounded = true;
+                    m_innerRadius = innerR;
+                    m_innerRadiusRounded = true;
                 }
                 else{
-                    innerRadiusRounded = false;
+                    m_innerRadiusRounded = false;
                 }
                 double outerR = coord.x;
                 if (LC_LineMath::isMeaningful(outerR)){
-                    outerRadius = outerR;
-                    outerRadiusRounded = true;
+                    m_outerRadius = outerR;
+                    m_outerRadiusRounded = true;
                 }
                 else{
-                    outerRadiusRounded = false;
+                    m_outerRadiusRounded = false;
                 }
             }
             updateOptions();
@@ -145,11 +145,11 @@ void LC_ActionDrawStar::onCoordinateEvent(int status, bool isZero, const RS_Vect
 bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]int status, const QString &c){
     bool processed = true;
     if (checkCommand("nopoly",c)){ // don't create polyline
-        createPolyline = false;
+        m_createPolyline = false;
         updateOptions();
     }
     else if (checkCommand("usepoly",c)){ // draw star by single polyline
-        createPolyline = true;
+        m_createPolyline = true;
         updateOptions();
     }
     else if (checkCommand("number",c)){ // set number of rays
@@ -159,11 +159,11 @@ bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]int status, const QStri
         setStatus(SetRadiuses);
     }
     else if (checkCommand("sym",c)){ // draw symmetric star
-        symmetric = true;
+        m_symmetric = true;
         updateOptions();
     }
     else if (checkCommand("nosym",c)){ // draw asymmetric star
-        symmetric = false;
+        m_symmetric = false;
         updateOptions();
     }
     else{
@@ -174,7 +174,7 @@ bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]int status, const QStri
             switch (getStatus()) {
                 case SetRays:{ // handling number of rays
                     if ((value >= STAR_MIN_RAYS) && (value <= STAR_MAX_RAYS)){
-                        raysNumber  = value;
+                        m_raysNumber  = value;
                         updateOptions();
                         restoreMainStatus();
                     }
@@ -202,7 +202,7 @@ bool LC_ActionDrawStar::doCheckMayTrigger(){
  * @param list
  */
 void LC_ActionDrawStar::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    RS_Polyline* polyline = createShapePolyline(innerPoint, list, SetInnerPoint, false);
+    RS_Polyline* polyline = createShapePolyline(m_innerPoint, list, SetInnerPoint, false);
     addPolylineToEntitiesList(polyline, list, false);
 }
 
@@ -219,7 +219,7 @@ void LC_ActionDrawStar::addPolylineToEntitiesList(RS_Polyline *polyline, QList<R
             list << polyline;
         }
         else{
-            if (createPolyline){
+            if (m_createPolyline){
                 list << polyline;
             }
             else{
@@ -270,7 +270,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
     double innerAngle= 0.0;
 
     // angle on circle that takes one segment (from one outer vertex to another outer vertex)
-    double segmentAngle = 2 * M_PI / raysNumber;
+    double segmentAngle = 2 * M_PI / m_raysNumber;
 
     // angle on circle between outer vertex and inner vertex
     double angleBetweenOuterAndInner = 0.0;
@@ -281,9 +281,9 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             return nullptr;
         case SetOuterPoint:
             // outer distance is distance to snap
-            outerDistance = centerPoint.distanceTo(snap);
+            outerDistance = m_centerPoint.distanceTo(snap);
             // outer angle is angle from center point to snap position
-            outerAngle = centerPoint.angleTo(snap);
+            outerAngle = m_centerPoint.angleTo(snap);
 
             // just a half of segment
             angleBetweenOuterAndInner = segmentAngle / 2;
@@ -294,12 +294,12 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             break;
         case SetInnerPoint:
             // we know the outer point fixed already, so rely on it
-            outerDistance = centerPoint.distanceTo(outerPoint);
-            outerAngle = centerPoint.angleTo(outerPoint);
+            outerDistance = m_centerPoint.distanceTo(m_outerPoint);
+            outerAngle = m_centerPoint.angleTo(m_outerPoint);
 
             // determine distance to snap
-            innerDistance = centerPoint.distanceTo(snap);
-            if (symmetric){
+            innerDistance = m_centerPoint.distanceTo(snap);
+            if (m_symmetric){
                 // for symmetric star, we just calculate based on outer position
                 angleBetweenOuterAndInner = segmentAngle / 2;
                 // angle to inner is actually defined by the position and angle to outer
@@ -307,7 +307,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             }
             else {
                 // for non-symmetric start, we rely on snap point
-                innerAngle = centerPoint.angleTo(snap);
+                innerAngle = m_centerPoint.angleTo(snap);
                 angleBetweenOuterAndInner = RS_Math::getAngleDifference(outerAngle, innerAngle, false);
             }
             break;
@@ -326,21 +326,21 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
     // do calculation for case when outer edge is rounded
     // determining rounding bulge and correction for outer rounding
 
-    bool mayDrawOuterRound = outerRadiusRounded;
-    if (outerRadiusRounded){
+    bool mayDrawOuterRound = m_outerRadiusRounded;
+    if (m_outerRadiusRounded){
 
         // here we do calculation of one segment of start. For simplicity of calculations and debugging, that segment is positioned in
         // such way that the line from center to outer vertex is parallel to x-axis
 
         // calculate initial positions of one outer and 2 adjusent inner vertexes
-        RS_Vector inner = centerPoint.relative(innerDistance, angleBetweenOuterAndInner);
-        RS_Vector outer = centerPoint.relative( outerDistance, 0);
-        RS_Vector inner1 = centerPoint.relative( innerDistance, -angleBetweenOuterAndInner);
+        RS_Vector inner = m_centerPoint.relative(innerDistance, angleBetweenOuterAndInner);
+        RS_Vector outer = m_centerPoint.relative( outerDistance, 0);
+        RS_Vector inner1 = m_centerPoint.relative( innerDistance, -angleBetweenOuterAndInner);
 
         // create parallel lines that we'll use for defining position of rounding join points
         // these lines are within star ray
-        RS_LineData par1data = LC_LineMath::createParallel(inner, outer, -outerRadius);
-        RS_LineData par2data = LC_LineMath::createParallel(inner1, outer, outerRadius);
+        RS_LineData par1data = LC_LineMath::createParallel(inner, outer, -m_outerRadius);
+        RS_LineData par2data = LC_LineMath::createParallel(inner1, outer, m_outerRadius);
 
         // find intersection of parallel lines
         RS_Vector outerIntersection = LC_LineMath::getIntersectionLineLine(par1data.startpoint, par1data.endpoint, par2data.startpoint, par2data.endpoint);
@@ -355,13 +355,13 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
 
 
         // we may draw rounding if intersection of rounding is not before center point (as otherwise, it creates funny yet hardly usable shape artefacts
-        double distanceToIntersection = outerIntersection.x - centerPoint.x;
+        double distanceToIntersection = outerIntersection.x - m_centerPoint.x;
         double outerShift;
         if (outerIntersection.x > 0){
-            outerShift = outerDistance - distanceToIntersection - outerRadius;
+            outerShift = outerDistance - distanceToIntersection - m_outerRadius;
         }
         else{
-            outerShift = outerDistance - outerRadius + distanceToIntersection * 2;
+            outerShift = outerDistance - m_outerRadius + distanceToIntersection * 2;
         }
 
         outerIntersection.x = outerIntersection.x + outerShift; // just move to right
@@ -372,7 +372,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
 
         // this is the distance from center point to rounding join point
 
-        double distanceToJoin1 = centerPoint.distanceTo(outerJoint1);
+        double distanceToJoin1 = m_centerPoint.distanceTo(outerJoint1);
 
         // correction of inner distance if outer is rounded - in order to stay with initial angle of line between outer and inner point
         RS_Vector outerP3 = LC_LineMath::getNearestPointOnInfiniteLine(outerJoint1, inner, outer);
@@ -412,7 +412,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             outerDistance = distanceToJoin1;
 
             // save the angle from center to out join point for later drawing. Here we don't consider the angle from center to outer, as it is zero
-            outerAngleCorrection = centerPoint.angleTo(outerJoint1);
+            outerAngleCorrection = m_centerPoint.angleTo(outerJoint1);
 
 #ifdef DEBUG_OUTPUT_DRAW_ROUNDING
             if (preview){
@@ -461,18 +461,18 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
     double innerAngleCorrection2 = 0.0; // correction of angle for second join point
     double innerDistance2 = innerDistance; // inner distance for second join point
 
-    bool mayDrawInnerRound = innerRadiusRounded;
-    if (innerRadiusRounded){
+    bool mayDrawInnerRound = m_innerRadiusRounded;
+    if (m_innerRadiusRounded){
 
         // prepare calculation ray (one inner vertex and 2 nearest outer vertexes
 
-        RS_Vector outer = centerPoint.relative(outerDistance, outerAngleCorrection);
-        RS_Vector inner = centerPoint.relative( innerDistance, angleBetweenOuterAndInner);
-        RS_Vector outer1 = centerPoint.relative(outerDistance, segmentAngle - outerAngleCorrection);
+        RS_Vector outer = m_centerPoint.relative(outerDistance, outerAngleCorrection);
+        RS_Vector inner = m_centerPoint.relative( innerDistance, angleBetweenOuterAndInner);
+        RS_Vector outer1 = m_centerPoint.relative(outerDistance, segmentAngle - outerAngleCorrection);
 
         // parallel lines for inner rounding - they are above of ray lines
-        RS_LineData par1data = LC_LineMath::createParallel(inner, outer, innerRadius);
-        RS_LineData par2data = LC_LineMath::createParallel(inner, outer1, -innerRadius);
+        RS_LineData par1data = LC_LineMath::createParallel(inner, outer, m_innerRadius);
+        RS_LineData par2data = LC_LineMath::createParallel(inner, outer1, -m_innerRadius);
 
         // determining rounding bulge and correction for inner angle
 
@@ -497,7 +497,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
         }
 
         // distance from center to rounding point
-        double distanceToInnerJoint1 = centerPoint.distanceTo(innerJoint1);
+        double distanceToInnerJoint1 = m_centerPoint.distanceTo(innerJoint1);
 
         // we need to ensure that center of rounding point is within outer distance, so we actually can do rounding.
         // without such check - on larger radiuses there will be drawing artefacts
@@ -514,9 +514,9 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
 
             // determine distances and agles for rounding joint points
             innerDistance = distanceToInnerJoint1;
-            innerDistance2 = centerPoint.distanceTo(innerJoint2);
-            innerAngleCorrection1 = centerPoint.angleTo(innerJoint1) - centerPoint.angleTo(inner);
-            innerAngleCorrection2 = centerPoint.angleTo(innerJoint2) - centerPoint.angleTo(inner);
+            innerDistance2 = m_centerPoint.distanceTo(innerJoint2);
+            innerAngleCorrection1 = m_centerPoint.angleTo(innerJoint1) - m_centerPoint.angleTo(inner);
+            innerAngleCorrection2 = m_centerPoint.angleTo(innerJoint2) - m_centerPoint.angleTo(inner);
 
 #ifdef DEBUG_OUTPUT_DRAW_INNER
             if (preview){
@@ -556,16 +556,16 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
     RS_Vector startingVertex;
 
     // create all necessary segments one by one. Here we'll draw 2 edges - from outer point to inner and from inner point to next outer point of rays
-    for (int i=0; i < raysNumber; ++i) {
+    for (int i=0; i < m_raysNumber; ++i) {
 
         double baseInnerAngle = innerAngle + i * segmentAngle;
         double baseOuterAngle = outerAngle + i * (segmentAngle);
 
         // definition of vertexes. Vertexes will be either edge points or rounding join points
-        RS_Vector outer1 = centerPoint.relative(outerDistance, baseOuterAngle + outerAngleCorrection);
-        RS_Vector inner1 = centerPoint.relative(innerDistance, baseInnerAngle + innerAngleCorrection1);
-        RS_Vector inner2 = centerPoint.relative( innerDistance2, baseInnerAngle + innerAngleCorrection2);
-        RS_Vector outer2 = centerPoint.relative( outerDistance, baseOuterAngle + segmentAngle - outerAngleCorrection);
+        RS_Vector outer1 = m_centerPoint.relative(outerDistance, baseOuterAngle + outerAngleCorrection);
+        RS_Vector inner1 = m_centerPoint.relative(innerDistance, baseInnerAngle + innerAngleCorrection1);
+        RS_Vector inner2 = m_centerPoint.relative( innerDistance2, baseInnerAngle + innerAngleCorrection2);
+        RS_Vector outer2 = m_centerPoint.relative( outerDistance, baseOuterAngle + segmentAngle - outerAngleCorrection);
 
         if (i == 0){ // store starting vertex for later use
             startingVertex = outer1;
@@ -635,36 +635,36 @@ void LC_ActionDrawStar::updateMouseButtonHints(){
 }
 
 void LC_ActionDrawStar::setRadiusOuter(double d){
-   outerRadius = d;
+   m_outerRadius = d;
    drawPreviewForLastPoint();
 }
 
 void LC_ActionDrawStar::setRadiusInner(double d){
-  innerRadius = d;
+  m_innerRadius = d;
    drawPreviewForLastPoint();
 }
 
 void LC_ActionDrawStar::setRaysNumber(int i){
-    raysNumber = i;
+    m_raysNumber = i;
     drawPreviewForLastPoint();
 }
 
 void LC_ActionDrawStar::setPolyline(bool value){
-  createPolyline = value;
+  m_createPolyline = value;
 }
 
 void LC_ActionDrawStar::setOuterRounded(bool value){
-    outerRadiusRounded = value;
+    m_outerRadiusRounded = value;
     drawPreviewForLastPoint();
 }
 
 void LC_ActionDrawStar::setInnerRounded(bool value){
-    innerRadiusRounded = value;
+    m_innerRadiusRounded = value;
     drawPreviewForLastPoint();
 }
 
 void LC_ActionDrawStar::setSymmetric(bool value){
-   symmetric = value;
+   m_symmetric = value;
    drawPreviewForLastPoint();
 }
 

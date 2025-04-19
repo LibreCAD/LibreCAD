@@ -36,16 +36,16 @@
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(LC_ActionContext *actionContext)
 	:RS_PreviewActionInterface("Create Equidistant Polylines", actionContext, RS2::ActionPolylineEquidistant)
-	, dist(1.)
-	,number(1){
+	, m_dist(1.)
+	,m_number(1){
 }
 
 RS_ActionPolylineEquidistant::~RS_ActionPolylineEquidistant()=default;
 
 void RS_ActionPolylineEquidistant::init(int status){
     RS_PreviewActionInterface::init(status);
-    originalEntity = nullptr;
-    bRightSide = false;
+    m_originalEntity = nullptr;
+    m_bRightSide = false;
 }
 
 /**
@@ -136,7 +136,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
     RS_Arc arc1(nullptr, RS_ArcData(origin, 0, 0, 0, false));//current arc
     RS_Arc arcFirst(nullptr, RS_ArcData(origin, 0, 0, 0, false));//previous arc
 
-    for (int num = 1; num <= number || (number == 0 && num <= 1); num++) {
+    for (int num = 1; num <= m_number || (m_number == 0 && num <= 1); num++) {
         auto newPolyline = new RS_Polyline(m_container);
 
         bool first = true;
@@ -148,19 +148,19 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
             RS_Vector v{false};
             if (isArc(en)){
                 currEntity = &arc1;
-                calculateOffset(currEntity, en, dist * num * neg);
+                calculateOffset(currEntity, en, m_dist * num * neg);
                 bulge = arc1.getBulge();
             } else {
                 currEntity = &line1;
                 bulge = 0.0;
-                calculateOffset(currEntity, en, dist * num * neg);
+                calculateOffset(currEntity, en, m_dist * num * neg);
             }
             if (first){
                 if (closed){
                     if (isArc(prevEntity)){
-                        prevEntity = calculateOffset(&arcFirst, prevEntity, dist * num * neg);
+                        prevEntity = calculateOffset(&arcFirst, prevEntity, m_dist * num * neg);
                     } else {
-                        prevEntity = calculateOffset(&lineFirst, prevEntity, dist * num * neg);
+                        prevEntity = calculateOffset(&lineFirst, prevEntity, m_dist * num * neg);
                     }
                     v = calculateIntersection(prevEntity, currEntity);
                 }
@@ -251,12 +251,12 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
 
 void RS_ActionPolylineEquidistant::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineEquidistant::trigger()");
-    if (originalEntity != nullptr) {
-        if (document != nullptr){
+    if (m_originalEntity != nullptr) {
+        if (m_document != nullptr){
             undoCycleStart();
 
             QList<RS_Polyline *> polylines;
-            makeContour(originalEntity, bRightSide, polylines);
+            makeContour(m_originalEntity, m_bRightSide, polylines);
 
             for (RS_Polyline *newPolyline: polylines) {
                 newPolyline->setLayerToActive(); // fixme - cache layer to set
@@ -266,8 +266,8 @@ void RS_ActionPolylineEquidistant::doTrigger() {
             undoCycleEnd();
         }
 
-        originalEntity = nullptr;
-        bRightSide = false;
+        m_originalEntity = nullptr;
+        m_bRightSide = false;
         setStatus(ChooseEntity);
     }
 }
@@ -309,8 +309,8 @@ void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, LC_Mouse
                 auto polyline = dynamic_cast<RS_Polyline *>(en);
                 RS_Vector snapPoint = e->graphPoint;
                 bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, snapPoint);
-                bRightSide = pointOnRightSide;
-                originalEntity = polyline;
+                m_bRightSide = pointOnRightSide;
+                m_originalEntity = polyline;
                 trigger();
             }
             break;
@@ -323,7 +323,7 @@ void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, LC_Mouse
 
 void RS_ActionPolylineEquidistant::onMouseRightButtonRelease(int status, [[maybe_unused]]  LC_MouseEvent *e) {
     deleteSnapper();
-    if (originalEntity){
+    if (m_originalEntity){
         redraw();
     }
     initPrevious(status);

@@ -72,7 +72,7 @@ void LC_AbstractActionDrawLine::doInitialSnapToRelativeZero(RS_Vector relZero){
  */
 RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(LC_MouseEvent *e){
     RS_Vector snapped = e->snapPoint;
-    if (direction == DIRECTION_POINT || direction == DIRECTION_NONE){
+    if (m_direction == DIRECTION_POINT || m_direction == DIRECTION_NONE){
         // Snapping to angle(15*) if shift key is pressed
         snapped = getSnapAngleAwarePoint(e, getStartPointForAngleSnap(), snapped, isMouseMove(e));
     }
@@ -151,7 +151,7 @@ bool LC_AbstractActionDrawLine::doProcessCommandValue([[maybe_unused]]int status
  * @param value
  */
 void LC_AbstractActionDrawLine::setAngleIsRelative(bool value){
-    angleIsRelative = value;
+    m_angleIsRelative = value;
     updateOptions();
 }
 
@@ -160,14 +160,14 @@ void LC_AbstractActionDrawLine::setAngleIsRelative(bool value){
  * @return
  */
 bool LC_AbstractActionDrawLine::isAngleRelative() const{
-    return angleIsRelative;
+    return m_angleIsRelative;
 }
 
 /**
  * Sets action drawing state to drawing with angle mode
  */
 void LC_AbstractActionDrawLine::setSetAngleDirectionState(){
-    direction = DIRECTION_ANGLE;
+    m_direction = DIRECTION_ANGLE;
     setStatusForValidStartPoint(SetAngle);
     updateOptions();
 }
@@ -176,7 +176,7 @@ void LC_AbstractActionDrawLine::setSetAngleDirectionState(){
 * Sets action drawing state to drawing to point mode
 */
 void LC_AbstractActionDrawLine::setSetPointDirectionState(){
-    direction = DIRECTION_POINT;
+    m_direction = DIRECTION_POINT;
     setStatusForValidStartPoint(SetPoint);
     updateOptions();
 }
@@ -186,8 +186,8 @@ void LC_AbstractActionDrawLine::setSetPointDirectionState(){
  * @param relative
  */
 void LC_AbstractActionDrawLine::setSetAngleState(bool relative){
-    direction = DIRECTION_ANGLE;
-    angleIsRelative = relative;
+    m_direction = DIRECTION_ANGLE;
+    m_angleIsRelative = relative;
     setStatusForValidStartPoint(SetAngle);
     updateOptions();
 }
@@ -196,7 +196,7 @@ void LC_AbstractActionDrawLine::setSetAngleState(bool relative){
  * Sets drawing mode to X state
  */
 void LC_AbstractActionDrawLine::setSetXDirectionState(){
-    direction = DIRECTION_X;
+    m_direction = DIRECTION_X;
     setStatusForValidStartPoint(SetDistance);
     updateOptions();
 }
@@ -205,7 +205,7 @@ void LC_AbstractActionDrawLine::setSetXDirectionState(){
  * Sets drawing mode to Y state
  */
 void LC_AbstractActionDrawLine::setSetYDirectionState(){
-    direction = DIRECTION_Y;
+    m_direction = DIRECTION_Y;
     setStatusForValidStartPoint(SetDistance);
     updateOptions();
 }
@@ -222,7 +222,7 @@ void LC_AbstractActionDrawLine::setAngleValue(double value){
 }
 
 void LC_AbstractActionDrawLine::doSetAngle(double value) {
-    angleDegrees = value;
+    m_angleDegrees = value;
 }
 
 void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
@@ -235,7 +235,7 @@ void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
 }
 
 double LC_AbstractActionDrawLine::getAngle() const{
-    return angleDegrees;
+    return m_angleDegrees;
 }
 
 bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){

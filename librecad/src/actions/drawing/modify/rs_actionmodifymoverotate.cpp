@@ -182,7 +182,7 @@ void RS_ActionModifyMoveRotate::onMouseRightButtonReleaseSelected(int status, [[
         }
         case SetAngle: {
             m_actionData->targetPoint = RS_Vector(false);
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         default:
@@ -202,13 +202,13 @@ void RS_ActionModifyMoveRotate::onCoordinateEvent(int status, [[maybe_unused]]bo
             m_actionData->targetPoint = pos;
             setStatus(ShowDialog);
             m_actionData->data.offset = pos - m_actionData->data.referencePoint;
-            if (angleIsFixed) {
+            if (m_angleIsFixed) {
                 doPerformTrigger();
             }
             else{
                 moveRelativeZero(pos);
                 setStatus(SetAngle);
-                lastStatus = SetTargetPoint;
+                m_lastStatus = SetTargetPoint;
             }
             break;
         }
@@ -251,7 +251,7 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
             // RVT_PORT changed from if (c==checkCommand("angle", c)) {
             if (checkCommand("angle", c)) {
                 deletePreview();
-                lastStatus = (Status) status;
+                m_lastStatus = (Status) status;
                 setStatus(SetAngle);
                 accept = true;
             }
@@ -264,17 +264,17 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 // relative angle is used, no need to translate
                 m_actionData->data.angle = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(a));
-                if (angleIsFixed) {
+                if (m_angleIsFixed) {
                     updateOptions();
-                    setStatus(lastStatus);
+                    setStatus(m_lastStatus);
                 }
                 else if (m_actionData->targetPoint.valid){
                     updateOptions();
                     doPerformTrigger();
                 } else {
-                    angleIsFixed = true;
+                    m_angleIsFixed = true;
                     updateOptions();
-                    setStatus(lastStatus);
+                    setStatus(m_lastStatus);
                 }
             } else {
                 commandMessage(tr("Not a valid expression"));
@@ -340,8 +340,8 @@ LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {
 }
 
 void RS_ActionModifyMoveRotate::setAngleIsFree(bool b) {
-    angleIsFixed = !b;
-    if (angleIsFixed && getStatus() == SetAngle){
+    m_angleIsFixed = !b;
+    if (m_angleIsFixed && getStatus() == SetAngle){
         setStatus(SetTargetPoint);
     }
 }

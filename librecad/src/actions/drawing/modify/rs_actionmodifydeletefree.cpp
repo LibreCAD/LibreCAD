@@ -48,35 +48,35 @@ RS_ActionModifyDeleteFree::~RS_ActionModifyDeleteFree() = default;
 
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
-    polyline = nullptr;
-    e1 = e2 = nullptr;
+    m_polyline = nullptr;
+    m_entity1 = m_entity2 = nullptr;
     m_actionData.reset(new ActionData{});
     RS_SnapMode *s = getSnapMode();
     s->snapOnEntity = true;
 }
 
 void RS_ActionModifyDeleteFree::trigger(){
-    if (e1 && e2) {
-        RS_EntityContainer *parent = e2->getParent();
+    if (m_entity1 && m_entity2) {
+        RS_EntityContainer *parent = m_entity2->getParent();
         if (parent) {
             if (parent->rtti() == RS2::EntityPolyline) {
-                if (parent->getId() == polyline->getId()) {
+                if (parent->getId() == m_polyline->getId()) {
 
                     // splits up the polyline in the container:
                     RS_Polyline *pl1 = nullptr;
                     RS_Polyline *pl2 = nullptr;
                     RS_Modification m(*m_container,m_viewport);
-                    m.splitPolyline(*polyline,
-                                    *e1, m_actionData->v1,
-                                    *e2, m_actionData->v2,
+                    m.splitPolyline(*m_polyline,
+                                    *m_entity1, m_actionData->v1,
+                                    *m_entity2, m_actionData->v2,
                                     &pl1, &pl2);
 
-                    if (document) {
-                        document->startUndoCycle();
-                        document->addUndoable(polyline);
-                        document->addUndoable(pl1);
-                        document->addUndoable(pl2);
-                        document->endUndoCycle();
+                    if (m_document) {
+                        m_document->startUndoCycle();
+                        m_document->addUndoable(m_polyline);
+                        m_document->addUndoable(pl1);
+                        m_document->addUndoable(pl2);
+                        m_document->endUndoCycle();
                     }
 
                     // draws the new polylines on the screen:
@@ -104,12 +104,12 @@ void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent
     switch (status) {
         case 0: {
             m_actionData->v1 = snapPoint(e);
-            e1 = getKeyEntity();
-            if (e1) {
-                RS_EntityContainer *parent = e1->getParent();
+            m_entity1 = getKeyEntity();
+            if (m_entity1) {
+                RS_EntityContainer *parent = m_entity1->getParent();
                 if (parent) {
                     if (parent->rtti() == RS2::EntityPolyline) {
-                        polyline = dynamic_cast<RS_Polyline *>(parent);
+                        m_polyline = dynamic_cast<RS_Polyline *>(parent);
                         setStatus(1);
                     } else {
                         commandMessage(tr("Parent of first entity is not a polyline"));
@@ -124,9 +124,9 @@ void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent
         }
         case 1: {
             m_actionData->v2 = snapPoint(e);
-            e2 = getKeyEntity();
+            m_entity2 = getKeyEntity();
 
-            if (e2) {
+            if (m_entity2) {
                 trigger();
             } else {
                 commandMessage(tr("Second entity is nullptr"));

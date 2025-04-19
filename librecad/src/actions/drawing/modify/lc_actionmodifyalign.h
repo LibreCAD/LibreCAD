@@ -52,8 +52,8 @@ public:
     void setAlignType(int a) override;
     void init(int status) override;
 protected:
-    RS_Vector alignMin = RS_Vector(false);
-    RS_Vector alignMax = RS_Vector(false);
+    RS_Vector m_alignMin = RS_Vector(false);
+    RS_Vector m_alignMax = RS_Vector(false);
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;

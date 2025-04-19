@@ -48,9 +48,9 @@ protected:
 /**
 * Aligned dimension data.
 */
-    std::unique_ptr<RS_DimAlignedData> edata;
+    std::unique_ptr<RS_DimAlignedData> m_edata;
 /** Last status before entering text. */
-    Status lastStatus = SetExtPoint1;
+    Status m_lastStatus = SetExtPoint1;
     void reset() override;
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;

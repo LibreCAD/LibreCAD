@@ -51,9 +51,9 @@ void LC_ActionModifyAlign::onSelectionCompleted([[maybe_unused]]bool singleEntit
 
 void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     QList<RS_Entity *> entitiesToCreate;
-    createAlignedEntities(entitiesToCreate, alignMin, alignMax, false);
+    createAlignedEntities(entitiesToCreate, m_alignMin, m_alignMax, false);
     if (!entitiesToCreate.isEmpty()) {
-        if (document) {
+        if (m_document) {
             undoCycleStart();
 
             for (auto e: entitiesToCreate) {
@@ -194,8 +194,8 @@ void LC_ActionModifyAlign::onMouseLeftButtonReleaseSelected([[maybe_unused]]int 
             RS2::ResolveLevel resolveLevel = e->isControl ? RS2::ResolveAll : RS2::ResolveNone;
             RS_Entity *entity  = catchEntity(snap, resolveLevel);
             if (entity != nullptr) {
-                alignMin = entity->getMin();
-                alignMax = entity->getMax();
+                m_alignMin = entity->getMin();
+                m_alignMax = entity->getMax();
             } else {
                 mayTrigger = false;
             }
@@ -203,13 +203,13 @@ void LC_ActionModifyAlign::onMouseLeftButtonReleaseSelected([[maybe_unused]]int 
         }
         case LC_Align::POSITION: {
             snap = getRelZeroAwarePoint(e, snap);
-            alignMin = snap;
-            alignMax = snap;
+            m_alignMin = snap;
+            m_alignMax = snap;
             break;
         }
         case LC_Align::DRAWING: {
-            alignMin = m_container->getMin();
-            alignMax = m_container->getMax();
+            m_alignMin = m_container->getMin();
+            m_alignMax = m_container->getMax();
             break;
         }
         default:
@@ -222,8 +222,8 @@ void LC_ActionModifyAlign::onMouseLeftButtonReleaseSelected([[maybe_unused]]int 
 
 void LC_ActionModifyAlign::onCoordinateEvent([[maybe_unused]]int status, bool isZero, const RS_Vector &pos) {
     if (alignType == LC_Align::POSITION && !isZero) {
-        alignMin = pos;
-        alignMax = pos;
+        m_alignMin = pos;
+        m_alignMax = pos;
         trigger();
     }
     else{

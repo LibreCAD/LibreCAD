@@ -31,7 +31,7 @@ public:
     LC_ActionInfoProperties(LC_ActionContext *actionContext);
     void init(int status) override;
 private:
-    RS_Entity* highlightedEntity = nullptr;
+    RS_Entity* m_highlightedEntity = nullptr;
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void clearQuickInfoWidget();
     void highlightHoveredEntity(LC_MouseEvent *event, bool resolveChildren);

@@ -67,12 +67,12 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
 
         switch (m_actionType) {
             case RS2::ActionOrderLower:
-                index = document->findEntity(targetEntity);
-                document->moveEntity(index, entList);
+                index = m_document->findEntity(targetEntity);
+                m_document->moveEntity(index, entList);
                 break;
             case RS2::ActionOrderRaise:
-                index = document->findEntity(targetEntity) + 1;
-                document->moveEntity(index, entList);
+                index = m_document->findEntity(targetEntity) + 1;
+                m_document->moveEntity(index, entList);
                 break;
             default:
                 break;
@@ -81,10 +81,10 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     } else {
         switch (m_actionType) {
             case RS2::ActionOrderBottom:
-                document->moveEntity(-1, entList);
+                m_document->moveEntity(-1, entList);
                 break;
             case RS2::ActionOrderTop:
-                document->moveEntity(document->count() + 1, entList);
+                m_document->moveEntity(m_document->count() + 1, entList);
                 break;
             default:
                 break;

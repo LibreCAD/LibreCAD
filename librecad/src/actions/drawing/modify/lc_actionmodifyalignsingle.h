@@ -37,11 +37,11 @@ protected:
         SetRefPoint,
         SelectEntity
     };
-    RS_Vector alignMin = RS_Vector(false);
-    RS_Vector alignMax = RS_Vector(false);
-    RS_Entity* baseAlignEntity = nullptr;
-    RS_Entity* entityToAlign = nullptr;
-    bool finishActionAfterTrigger = false;
+    RS_Vector m_alignMin = RS_Vector(false);
+    RS_Vector m_alignMax = RS_Vector(false);
+    RS_Entity* m_baseAlignEntity = nullptr;
+    RS_Entity* m_entityToAlign = nullptr;
+    bool m_finishActionAfterTrigger = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;

@@ -30,7 +30,7 @@
 
 RS_ActionSelectBase::RS_ActionSelectBase(const char* name,LC_ActionContext *actionContext, RS2::ActionType actionType, QList<RS2::EntityType> entityTypeList)
         :LC_OverlayBoxAction(name, actionContext, actionType),
-        catchForSelectionEntityTypes(std::move(entityTypeList)){
+        m_catchForSelectionEntityTypes(std::move(entityTypeList)){
 }
 
 /**
@@ -38,7 +38,7 @@ RS_ActionSelectBase::RS_ActionSelectBase(const char* name,LC_ActionContext *acti
  * action and finishing this one when the enter key is pressed.
  */
 void RS_ActionSelectBase::keyReleaseEvent(QKeyEvent* e) {
-    if (e->key()==Qt::Key_Return && predecessor) {
+    if (e->key()==Qt::Key_Return && m_predecessor) {
         finish(false);
     }
 }
@@ -89,7 +89,7 @@ void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unu
 
 RS_Entity* RS_ActionSelectBase::selectionMouseMove(LC_MouseEvent *event) {
     RS_Entity* result = nullptr;
-    auto ent = catchAndDescribe(event, catchForSelectionEntityTypes, RS2::ResolveNone);
+    auto ent = catchAndDescribe(event, m_catchForSelectionEntityTypes, RS2::ResolveNone);
     if (ent != nullptr){
         bool selectionAllowed = isEntityAllowedToSelect(ent);
         if (selectionAllowed){

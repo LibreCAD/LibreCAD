@@ -37,7 +37,7 @@ protected:
     enum Status{
         SetEntity
     };
-    RS_Polyline* polyline;
+    RS_Polyline* m_polyline;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

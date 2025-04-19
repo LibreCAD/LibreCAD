@@ -40,22 +40,22 @@ public:
     ~LC_ActionDrawRectangle2Points() override;
     QStringList getAvailableCommands() override;
     void init(int status) override;
-    int getSecondPointSnapMode() const{return secondPointSnapMode;};
+    int getSecondPointSnapMode() const{return m_secondPointSnapMode;};
     void setSecondPointSnapMode(int value);
 protected:
     /**
      * position of corner 1
      */
-    RS_Vector corner1 = RS_Vector(false);
+    RS_Vector m_corner1 = RS_Vector(false);
     /*
      * flag that indicates that corner 1 is already set
      */
-    bool corner1Set = false;
+    bool m_corner1Set = false;
 
     /**
      * mode that indicates how snap second point
      */
-    int secondPointSnapMode = SNAP_CORNER;
+    int m_secondPointSnapMode = SNAP_CORNER;
 
     ShapeData createPolyline(const RS_Vector &snapPoint) override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;

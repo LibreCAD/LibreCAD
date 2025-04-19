@@ -38,8 +38,8 @@
  */
 RS_ActionDimLinear::RS_ActionDimLinear(LC_ActionContext *actionContext,double angle,bool _fixedAngle, RS2::ActionType type)
     :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, type),
-     edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
-     fixedAngle(_fixedAngle), lastStatus(SetExtPoint1){
+     m_edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
+     m_fixedAngle(_fixedAngle), m_lastStatus(SetExtPoint1){
     setUcsAngleDegrees(angle);
     updateOptions();
     reset();
@@ -50,35 +50,35 @@ RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 void RS_ActionDimLinear::reset(){
     RS_ActionDimension::reset();
 
-    double angleDeg = fixedAngle ? ucsBasisAngleDegrees : 0; // keep selected angle
+    double angleDeg = m_fixedAngle ? m_ucsBasisAngleDegrees : 0; // keep selected angle
 
-    *edata = {{}, {}, toWorldAngleFromUCSBasisDegrees(angleDeg), toWorldAngle(0.0)};
+    *m_edata = {{}, {}, toWorldAngleFromUCSBasisDegrees(angleDeg), toWorldAngle(0.0)};
 }
 
 void RS_ActionDimLinear::preparePreview(){
     double angle = getDimAngle();
     RS_Vector dirV = RS_Vector::polar(100., angle + M_PI_2);
-    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(edata->extensionPoint2,edata->extensionPoint2 + dirV));
-    data->definitionPoint = cl.getNearestPointOnEntity(data->definitionPoint);
+    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
+    m_dimensionData->definitionPoint = cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);
 }
 
 RS_Entity *RS_ActionDimLinear::createDim(RS_EntityContainer* parent){
-    edata->angle = getDimAngle();
-    edata->oblique =  toWorldAngle(0.0);
-    auto *dim = new RS_DimLinear(parent, *data, *edata);
+    m_edata->angle = getDimAngle();
+    m_edata->oblique =  toWorldAngle(0.0);
+    auto *dim = new RS_DimLinear(parent, *m_dimensionData, *m_edata);
     return dim;
 }
 
 double RS_ActionDimLinear::getUcsAngleDegrees() const{
-    return ucsBasisAngleDegrees;
+    return m_ucsBasisAngleDegrees;
 }
 
 void RS_ActionDimLinear::setUcsAngleDegrees(double ucsRelAngleDegrees){
-    ucsBasisAngleDegrees = ucsRelAngleDegrees;
+    m_ucsBasisAngleDegrees = ucsRelAngleDegrees;
 }
 
 bool RS_ActionDimLinear::hasFixedAngle() const{
-    return fixedAngle;
+    return m_fixedAngle;
 }
 
 void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
@@ -87,7 +87,7 @@ void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vec
             if (isZero){
                 setUcsAngleDegrees(0);
                 updateOptions();
-                setStatus(lastStatus);
+                setStatus(m_lastStatus);
                 return;
             }
             break;
@@ -105,7 +105,7 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
             setText(c);
             updateOptions();
             enableCoordinateInput();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             accept = true;
             break;
         }
@@ -114,22 +114,22 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
             bool ok = parseToUCSBasisAngle(c, ucsBasisAngleDeg);
             if (ok){
                 accept = true;
-                ucsBasisAngleDegrees = ucsBasisAngleDeg;
+                m_ucsBasisAngleDegrees = ucsBasisAngleDeg;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         default:
-            lastStatus = (Status) getStatus();
+            m_lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)){
                 disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
-            } else if (!fixedAngle && (checkCommand("angle", c))){
+            } else if (!m_fixedAngle && (checkCommand("angle", c))){
                 setStatus(SetAngle);
                 accept = true;
             }
@@ -146,7 +146,7 @@ QStringList RS_ActionDimLinear::getAvailableCommands(){
         case SetExtPoint2:
         case SetDefPoint: {
             cmd += command("text");
-            if (!fixedAngle){
+            if (!m_fixedAngle){
                 cmd += command("angle");
             }
             break;
@@ -158,11 +158,11 @@ QStringList RS_ActionDimLinear::getAvailableCommands(){
 }
 
 RS_Vector RS_ActionDimLinear::getExtensionPoint1(){
-    return edata->extensionPoint1;
+    return m_edata->extensionPoint1;
 }
 
 RS_Vector RS_ActionDimLinear::getExtensionPoint2(){
-    return edata->extensionPoint2;
+    return m_edata->extensionPoint2;
 }
 
 double RS_ActionDimLinear::getDimAngle(){
@@ -180,15 +180,15 @@ double RS_ActionDimLinear::getDimAngle(){
             return toWorldAngle(M_PI_2);
         }
         default:{
-            return toWorldAngleFromUCSBasisDegrees(ucsBasisAngleDegrees);
+            return toWorldAngleFromUCSBasisDegrees(m_ucsBasisAngleDegrees);
         }
     }
 }
 
 void RS_ActionDimLinear::setExtensionPoint1(RS_Vector p){
-    edata->extensionPoint1 = p;
+    m_edata->extensionPoint1 = p;
 }
 
 void RS_ActionDimLinear::setExtensionPoint2(RS_Vector p){
-    edata->extensionPoint2 = p;
+    m_edata->extensionPoint2 = p;
 }

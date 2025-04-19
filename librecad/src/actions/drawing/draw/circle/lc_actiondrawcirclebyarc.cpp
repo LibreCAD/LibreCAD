@@ -57,7 +57,7 @@ bool LC_ActionDrawCircleByArc::isAcceptSelectedEntityToTriggerOnInit(RS_Entity *
 }
 
 void LC_ActionDrawCircleByArc::doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list){
-    if (replaceArcByCircle){
+    if (m_replaceArcByCircle){
         for (auto e: list){
             deleteOriginalArcOrEllipse(e);
         }
@@ -66,21 +66,21 @@ void LC_ActionDrawCircleByArc::doPerformOriginalEntitiesDeletionOnInitTrigger(QL
 
 // trigger support
 bool LC_ActionDrawCircleByArc::doCheckMayTrigger(){
-    return entity != nullptr;
+    return m_entity != nullptr;
 }
 
 RS_Vector LC_ActionDrawCircleByArc::doGetRelativeZeroAfterTrigger(){
     // for normal trigger, we'll position relative zero to center point
-    return entity->getCenter();
+    return m_entity->getCenter();
 }
 
 void LC_ActionDrawCircleByArc::doAfterTrigger(){
-    entity = nullptr;
+    m_entity = nullptr;
     setStatus(SetArc);
 }
 
 void LC_ActionDrawCircleByArc::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    doCreateEntitiesOnTrigger(entity, list);
+    doCreateEntitiesOnTrigger(m_entity, list);
 }
 
 bool LC_ActionDrawCircleByArc::isSetActivePenAndLayerOnTrigger(){
@@ -98,7 +98,7 @@ void LC_ActionDrawCircleByArc::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
             // setup new circle
             RS_Entity* circle = new RS_Circle(m_container, circleData);
             // apply attributes
-            applyPenAndLayerBySourceEntity(arc, circle, penMode, layerMode);
+            applyPenAndLayerBySourceEntity(arc, circle, m_penMode, m_layerMode);
             list << circle;
             break;
         }
@@ -109,7 +109,7 @@ void LC_ActionDrawCircleByArc::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
             // setup new circle
             auto ellipse = new RS_Ellipse(m_container, ellipseData);
             // apply attributes
-            applyPenAndLayerBySourceEntity(ellipseArc, ellipse, penMode, layerMode);
+            applyPenAndLayerBySourceEntity(ellipseArc, ellipse, m_penMode, m_layerMode);
             list << ellipse;
             break;
         }
@@ -121,8 +121,8 @@ void LC_ActionDrawCircleByArc::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
 // deletion of original entities, if needed
 void LC_ActionDrawCircleByArc::performTriggerDeletions(){
     // check whether we need to delete original arc
-    if (replaceArcByCircle){
-        deleteOriginalArcOrEllipse(entity);
+    if (m_replaceArcByCircle){
+        deleteOriginalArcOrEllipse(m_entity);
     }
 }
 
@@ -135,10 +135,10 @@ void LC_ActionDrawCircleByArc::deleteOriginalArcOrEllipse(RS_Entity *en){
 RS_CircleData LC_ActionDrawCircleByArc::createCircleData(RS_Arc* arc){
     RS_Vector center = arc->getCenter();
     double radius = arc->getRadius();
-    if (!replaceArcByCircle){
+    if (!m_replaceArcByCircle){
         // adjust radius to specified shift if necessary
-        if (LC_LineMath::isMeaningful(radiusShift)){
-            radius = radius + radiusShift;
+        if (LC_LineMath::isMeaningful(m_radiusShift)){
+            radius = radius + m_radiusShift;
         }
     }
     RS_CircleData result = RS_CircleData(center, radius);
@@ -154,10 +154,10 @@ RS_EllipseData LC_ActionDrawCircleByArc::createEllipseData(RS_Ellipse *ellipseAr
 
     RS_Vector majorP = originalData.majorP;
 
-    if (!replaceArcByCircle){
+    if (!m_replaceArcByCircle){
         // adjust major axis of ellipse for necessary shift
-        if (LC_LineMath::isMeaningful(radiusShift)){
-            majorP = majorP.relative(radiusShift, ellipseArc->getAngle());
+        if (LC_LineMath::isMeaningful(m_radiusShift)){
+            majorP = majorP.relative(m_radiusShift, ellipseArc->getAngle());
         }
     }
 
@@ -178,7 +178,7 @@ void LC_ActionDrawCircleByArc::drawSnapper() {
 
 void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
 
-    RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchAndDescribe(e, m_circleType, RS2::ResolveAll);
     if (en != nullptr){
         highlightHover(en);
         int rtti = en->rtti();
@@ -195,7 +195,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
                 createRefPoint(circleData.center, list);
             }
 
-            entity = arc;
+            m_entity = arc;
         } else {
             if (rtti == RS2::EntityEllipse){
                 auto *ellipseArc = dynamic_cast<RS_Ellipse *>(en);
@@ -209,12 +209,12 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
                     if (m_showRefEntitiesOnPreview) {
                         createRefPoint(ellipse->getCenter(), list);
                     }
-                    entity = ellipseArc;
+                    m_entity = ellipseArc;
                 }
             }
         }
     } else {
-        entity = nullptr;
+        m_entity = nullptr;
     }
 }
 
@@ -245,5 +245,5 @@ LC_ActionOptionsWidget* LC_ActionDrawCircleByArc::createOptionsWidget(){
 }
 
 void LC_ActionDrawCircleByArc::setReplaceArcByCircle(bool value){
-    replaceArcByCircle = value;
+    m_replaceArcByCircle = value;
 }

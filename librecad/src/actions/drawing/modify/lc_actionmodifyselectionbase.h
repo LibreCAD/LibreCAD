@@ -35,7 +35,7 @@ public:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *e) override;
 protected:
-    bool selectionFinished = false;
+    bool m_selectionFinished = false;
     int countSelected();
 
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;

@@ -51,9 +51,9 @@ protected:
         SetSegment1,    /**< Setting first segment. */
         SetSegment2       /**< Setting second segment. */
     };
-    RS_Polyline *polylineToModify = nullptr;
-    RS_AtomicEntity *Segment1 = nullptr;
-    RS_AtomicEntity *Segment2 = nullptr;
+    RS_Polyline *m_polylineToModify = nullptr;
+    RS_AtomicEntity *m_segment1 = nullptr;
+    RS_AtomicEntity *m_segment2 = nullptr;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

@@ -31,7 +31,7 @@
 // some functions are duplicated with DimLiner action, however, that's intentional as later we can support angular dimensions in additional to linear ones
 LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(LC_ActionContext *actionContext, RS2::ActionType type)
        :LC_ActionDimLinearBase(type == RS2::ActionDimBaseline? "Draw Dim Baseline": "Draw Dim Continue", actionContext, type),
-       edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), 0, 0.)){
+       m_edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), 0, 0.)){
 }
 
 namespace {
@@ -42,8 +42,8 @@ namespace {
 void LC_ActionDrawDimBaseline::reset(){
     RS_ActionDimension::reset();
 
-    double oldAngle = edata->angle; // keep selected angle
-    *edata = {{}, {}, oldAngle, 0.0};
+    double oldAngle = m_edata->angle; // keep selected angle
+    *m_edata = {{}, {}, oldAngle, 0.0};
 }
 
 void LC_ActionDrawDimBaseline::doTrigger() {
@@ -55,31 +55,31 @@ void LC_ActionDrawDimBaseline::doTrigger() {
     bool baseline = isBaseline();
 
     if (baseline){
-        moveRelativeZero(edata->extensionPoint1);
+        moveRelativeZero(m_edata->extensionPoint1);
     }
     else{
-        moveRelativeZero(edata->extensionPoint2);
+        moveRelativeZero(m_edata->extensionPoint2);
     }
 
     undoCycleAdd(dim);
 
     if (baseline) {
-        prevExtensionPointEnd = edata->extensionPoint2;
+        m_prevExtensionPointEnd = m_edata->extensionPoint2;
         // test is just in case
         auto* dimLinear = dynamic_cast<RS_DimLinear*>(dim);
         if (dimLinear != nullptr) {
-            baseDefPoint = dimLinear->getDefinitionPoint();
+            m_baseDefPoint = dimLinear->getDefinitionPoint();
         }
     }
     else{
-        edata->extensionPoint1 = edata->extensionPoint2;
-        prevExtensionPointEnd = edata->extensionPoint1; // todo - check whether this is necessary. Potentially - for ordnance continued
+        m_edata->extensionPoint1 = m_edata->extensionPoint2;
+        m_prevExtensionPointEnd = m_edata->extensionPoint1; // todo - check whether this is necessary. Potentially - for ordnance continued
     }
-    baseDefPoint = data->definitionPoint;
+    m_baseDefPoint = m_dimensionData->definitionPoint;
 }
 
 RS_Entity *LC_ActionDrawDimBaseline::createDim(RS_EntityContainer* parent){
-    auto *dim = new RS_DimLinear(parent, *data, *edata);
+    auto *dim = new RS_DimLinear(parent, *m_dimensionData, *m_edata);
     return dim;
 }
 
@@ -143,15 +143,15 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                 // make a projection for new def point
                 // vector in direction controlled by angle of dimension
-                const RS_Vector &dimVector = RS_Vector::polar(100.0, edata->angle);
+                const RS_Vector &dimVector = RS_Vector::polar(100.0, m_edata->angle);
                 // infinite line from extPoint1 to angle direction
                 RS_ConstructionLine dimLine(nullptr, RS_ConstructionLineData(extPoint1, extPoint1 + dimVector));
                 // projection of mouse on infinite line
                 RS_Vector ext2Candidate = dimLine.getNearestPointOnEntity(mouse, false);
                 // projection of previous definition point on infinite line
-                RS_Vector originalDefPointProjection = dimLine.getNearestPointOnEntity(baseDefPoint, false);
+                RS_Vector originalDefPointProjection = dimLine.getNearestPointOnEntity(m_baseDefPoint, false);
                 // distance vector between projection of old definition point projection and mouse projections
-                RS_Vector defPointsDistance = baseDefPoint - originalDefPointProjection;
+                RS_Vector defPointsDistance = m_baseDefPoint - originalDefPointProjection;
                 // coordinate of definition point on base dimension line
                 RS_Vector newDefPointInline = ext2Candidate + defPointsDistance;
                 RS_Vector newDefPoint;
@@ -159,12 +159,12 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 // complete calculation of new definition point for dimension
                 if (isBaseline()) {
                     // for base line, we need to offset definition point on infinite line that corresponds old dim line to specified distance
-                    double dimAngle = dimDirectionAngle; // angle we use for offset vector - it's the same as angle from base dimension
+                    double dimAngle = m_dimDirectionAngle; // angle we use for offset vector - it's the same as angle from base dimension
                     if (e->isControl) { // swap direction of the offset, if needed, so we'll offset in opposite direction
                         dimAngle = M_PI + dimAngle;
                     }
-                    double previewDistance = baselineDistance;
-                    if (freeBaselineDistance){
+                    double previewDistance = m_baselineDistance;
+                    if (m_freeBaselineDistance){
                         previewDistance = 16; // of it's better to use zero there? Just a placeholder for preview
                     }
                     // find new definition point for this dimension
@@ -175,9 +175,9 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 }
 
                 setExtensionPoint2(mouse);
-                data->definitionPoint = newDefPoint;
+                m_dimensionData->definitionPoint = newDefPoint;
 
-                if (previewShowsFullDimension) {
+                if (m_previewShowsFullDimension) {
                     auto dim = dynamic_cast<RS_DimLinear *>(createDim(m_preview.get()));
                     dim->update();
                     previewEntity(dim);
@@ -203,22 +203,22 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 mouse = getFreeSnapAwarePoint(e, mouse);
                 mouse = adjustByAdjacentDim(mouse, true);
 
-                const RS_Vector &dimVector = RS_Vector::polar(100.0, dimDirectionAngle);
+                const RS_Vector &dimVector = RS_Vector::polar(100.0, m_dimDirectionAngle);
                 // infinite line in normal direction to dimension angle
                 RS_ConstructionLine dimLine(nullptr, RS_ConstructionLineData(extPoint1, extPoint1 + dimVector));
 
                 // projection of old definition point on infinite line
-                RS_Vector originalDefPointProjection = dimLine.getNearestPointOnEntity(baseDefPoint, false);
+                RS_Vector originalDefPointProjection = dimLine.getNearestPointOnEntity(m_baseDefPoint, false);
                 // projection of mouse on infinite line
                 RS_Vector newDefPointProjection = dimLine.getNearestPointOnEntity(mouse, false);
 
                 // distance between projections of old definition point and new one
-                currentDistance = originalDefPointProjection.distanceTo(newDefPointProjection);
+                m_currentDistance = originalDefPointProjection.distanceTo(newDefPointProjection);
                 updateOptionsUI(QG_DimOptions::UI_UPDATE_BASELINE_DISTANCE);
 
-                data->definitionPoint = mouse;
+                m_dimensionData->definitionPoint = mouse;
                 preparePreview();
-                previewRefSelectablePoint(data->definitionPoint);
+                previewRefSelectablePoint(m_dimensionData->definitionPoint);
                 previewRefPoint(extPoint1);
                 previewRefPoint(extPoint2);
                 RS_Entity* dim = createDim(m_preview.get());
@@ -239,7 +239,7 @@ void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, LC_MouseEven
     switch (status){
         case SetExtPoint1:
         case SetExtPoint2:{
-            alternateMode = e->isControl;
+            m_alternateMode = e->isControl;
             break;
         }
         case SetDefPoint: {
@@ -271,9 +271,9 @@ void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, [[maybe_unused]] bo
                         extPoint1 = dimLinear->getExtensionPoint1();
                         extPoint2 = dimLinear->getExtensionPoint2();
                         dimLinear->getDimPoints(dim1, dim2);
-                        baseDefPoint = dimLinear->getDefinitionPoint();
+                        m_baseDefPoint = dimLinear->getDefinitionPoint();
                         dimAngle = dimLinear->getAngle();
-                        dimDirectionAngle = extPoint1.angleTo(dim1);
+                        m_dimDirectionAngle = extPoint1.angleTo(dim1);
                         break;
                     }
                     case RS2::EntityDimAligned:{
@@ -281,9 +281,9 @@ void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, [[maybe_unused]] bo
                         extPoint1 = dimAligned->getExtensionPoint1();
                         extPoint2 = dimAligned->getExtensionPoint2();
                         dimAligned->getDimPoints(dim1, dim2);
-                        baseDefPoint = dimAligned->getDefinitionPoint();
+                        m_baseDefPoint = dimAligned->getDefinitionPoint();
                         dimAngle = extPoint1.angleTo(extPoint2);
-                        dimDirectionAngle = extPoint2.angleTo(dim2);
+                        m_dimDirectionAngle = extPoint2.angleTo(dim2);
                         break;
                     }
                     default:
@@ -295,44 +295,44 @@ void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, [[maybe_unused]] bo
                 double dist2 = mouse.distanceTo(dim2);
 
                 bool dim1CloserToMouse = dist1 < dist2;
-                if (alternateMode){
+                if (m_alternateMode){
                     dim1CloserToMouse = !dim1CloserToMouse;
                 }
                 if (dim1CloserToMouse){
-                    edata->extensionPoint1 = extPoint1;
-                    prevExtensionPointEnd = extPoint2;
+                    m_edata->extensionPoint1 = extPoint1;
+                    m_prevExtensionPointEnd = extPoint2;
                 } else {
-                    edata->extensionPoint1 = extPoint2;
-                    prevExtensionPointEnd = extPoint1;
+                    m_edata->extensionPoint1 = extPoint2;
+                    m_prevExtensionPointEnd = extPoint1;
                 }
 
-                edata->angle =  dimAngle;
-                moveRelativeZero(edata->extensionPoint1);
+                m_edata->angle =  dimAngle;
+                moveRelativeZero(m_edata->extensionPoint1);
                 setStatus(SetExtPoint2);
             }
             break;
         }
         case SetExtPoint2:{
             const RS_Vector &extPoint1 = getExtensionPoint1();
-            const RS_Vector &dimVector = RS_Vector::polar(100.0, edata->angle);
+            const RS_Vector &dimVector = RS_Vector::polar(100.0, m_edata->angle);
             RS_ConstructionLine dimLine(nullptr, RS_ConstructionLineData(extPoint1, extPoint1 + dimVector));
             RS_Vector ext2Candidate = dimLine.getNearestPointOnEntity(mouse, false);
-            RS_Vector originalDefPointProjection = dimLine.getNearestPointOnEntity(baseDefPoint, false);
-            RS_Vector defPointsDistance = baseDefPoint - originalDefPointProjection;
+            RS_Vector originalDefPointProjection = dimLine.getNearestPointOnEntity(m_baseDefPoint, false);
+            RS_Vector defPointsDistance = m_baseDefPoint - originalDefPointProjection;
 
             RS_Vector newDefPoint = ext2Candidate + defPointsDistance;
             if (isBaseline()) {
-                double dimAngle = dimDirectionAngle;
+                double dimAngle = m_dimDirectionAngle;
 
-                if (alternateMode){
+                if (m_alternateMode){
                     dimAngle = M_PI+dimAngle;
                 }
-                newDefPoint = newDefPoint +RS_Vector::polar(baselineDistance, dimAngle);
+                newDefPoint = newDefPoint +RS_Vector::polar(m_baselineDistance, dimAngle);
             }
-            data->definitionPoint = newDefPoint;
+            m_dimensionData->definitionPoint = newDefPoint;
 
-            if (freeBaselineDistance && isBaseline()){
-                currentDistance = 0.0;
+            if (m_freeBaselineDistance && isBaseline()){
+                m_currentDistance = 0.0;
                 setStatus(SetDefPoint);
             }
             else{
@@ -342,7 +342,7 @@ void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, [[maybe_unused]] bo
             break;
         }
         case SetDefPoint:{
-            data->definitionPoint = mouse;
+            m_dimensionData->definitionPoint = mouse;
             trigger();
             setStatus(SetExtPoint2);
             break;
@@ -359,12 +359,12 @@ bool LC_ActionDrawDimBaseline::doProcessCommand(int status, const QString &c) {
             setText(c);
             updateOptions();
             enableCoordinateInput();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             accept = true;
             break;
         }
         default:
-            lastStatus = (Status) getStatus();
+            m_lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)) {
                 disableCoordinateInput();
@@ -399,7 +399,7 @@ void LC_ActionDrawDimBaseline::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Select base linear/aligned dimension"), MOD_CTRL(tr("Select distant extension point")));
             break;
         case SetExtPoint2:
-            updateMouseWidgetTRBack(tr("Specify second extension line origin"), isBaseline() && !freeBaselineDistance ? MOD_CTRL(tr("Mirror offset direction")): MOD_NONE);
+            updateMouseWidgetTRBack(tr("Specify second extension line origin"), isBaseline() && !m_freeBaselineDistance ? MOD_CTRL(tr("Mirror offset direction")): MOD_NONE);
             break;
         case SetDefPoint:
             updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));
@@ -414,50 +414,50 @@ void LC_ActionDrawDimBaseline::updateMouseButtonHints() {
 }
 
 bool LC_ActionDrawDimBaseline::isFreeBaselineDistance() const {
-    return freeBaselineDistance;
+    return m_freeBaselineDistance;
 }
 
 void LC_ActionDrawDimBaseline::setFreeBaselineDistance(bool freeDistance) {
-    this->freeBaselineDistance = freeDistance;
-    if (!freeBaselineDistance && getStatus() == SetDefPoint){
+    this->m_freeBaselineDistance = freeDistance;
+    if (!m_freeBaselineDistance && getStatus() == SetDefPoint){
         setStatus(SetExtPoint2);
     }
 }
 
 double LC_ActionDrawDimBaseline::getBaselineDistance() const {
-    return baselineDistance;
+    return m_baselineDistance;
 }
 
 void LC_ActionDrawDimBaseline::setBaselineDistance(double distance) {
-    LC_ActionDrawDimBaseline::baselineDistance = distance;
+    LC_ActionDrawDimBaseline::m_baselineDistance = distance;
 }
 
 double LC_ActionDrawDimBaseline::getCurrentBaselineDistance() const {
-    return currentDistance;
+    return m_currentDistance;
 }
 
 RS_Vector LC_ActionDrawDimBaseline::getExtensionPoint1(){
-    return edata->extensionPoint1;
+    return m_edata->extensionPoint1;
 }
 
 RS_Vector LC_ActionDrawDimBaseline::getExtensionPoint2(){
-    return edata->extensionPoint2;
+    return m_edata->extensionPoint2;
 }
 
 double LC_ActionDrawDimBaseline::getDimAngle(){
-    return edata->angle;
+    return m_edata->angle;
 }
 
 void LC_ActionDrawDimBaseline::setExtensionPoint1(RS_Vector p){
-    edata->extensionPoint1 = p;
+    m_edata->extensionPoint1 = p;
 }
 
 void LC_ActionDrawDimBaseline::setExtensionPoint2(RS_Vector p){
-    edata->extensionPoint2 = p;
+    m_edata->extensionPoint2 = p;
 }
 
 void LC_ActionDrawDimBaseline::preparePreview() {
-    RS_Vector dirV = RS_Vector::polar(100., edata->angle + M_PI_2);
-    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(edata->extensionPoint2,edata->extensionPoint2 + dirV));
-    data->definitionPoint = cl.getNearestPointOnEntity(data->definitionPoint);
+    RS_Vector dirV = RS_Vector::polar(100., m_edata->angle + M_PI_2);
+    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
+    m_dimensionData->definitionPoint = cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);
 }

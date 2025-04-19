@@ -31,20 +31,20 @@
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(LC_ActionContext *actionContext)
         :LC_ActionDrawCircleBase("Draw circles",actionContext, RS2::ActionDrawCircle)
-    , data(std::make_unique<RS_CircleData>()){
+    , m_circleData(std::make_unique<RS_CircleData>()){
 }
 
 RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
-    data = std::make_unique<RS_CircleData>();
+    m_circleData = std::make_unique<RS_CircleData>();
 }
 
 void RS_ActionDrawCircle::doTrigger() {
-    auto* circle = new RS_Circle(m_container,*data);
+    auto* circle = new RS_Circle(m_container,*m_circleData);
     setPenAndLayerToActive(circle);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
 
@@ -59,18 +59,19 @@ void RS_ActionDrawCircle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetCenter: {
-            data->center = mouse;
+            m_circleData->center = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetRadius: {
-            if (data->center.valid){
-                data->radius = data->center.distanceTo(mouse);
-                previewToCreateCircle(*data);
+            const auto& center = m_circleData->center;
+            if (center.valid){
+                m_circleData->radius = center.distanceTo(mouse);
+                previewToCreateCircle(*m_circleData);
                 if (m_showRefEntitiesOnPreview) {
-                    previewRefPoint(data->center);
+                    previewRefPoint(center);
                     previewRefSelectablePoint(mouse);
-                    previewRefLine(data->center, mouse);
+                    previewRefLine(center, mouse);
                 }
             }
             break;
@@ -83,14 +84,14 @@ void RS_ActionDrawCircle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionDrawCircle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetCenter:
-            data->center = mouse;
+            m_circleData->center = mouse;
             moveRelativeZero(mouse);
             setStatus(SetRadius);
             break;
         case SetRadius:
-            if (data->center.valid){
+            if (m_circleData->center.valid){
                 moveRelativeZero(mouse);
-                data->radius = data->center.distanceTo(mouse);
+                m_circleData->radius = m_circleData->center.distanceTo(mouse);
                 trigger();
             }
             //setStatus(SetCenter);
@@ -107,7 +108,7 @@ bool RS_ActionDrawCircle::doProcessCommand(int status, const QString &c) {
             bool ok = false;
             double r = RS_Math::eval(c, &ok);
             if (ok && r > RS_TOLERANCE){
-                data->radius = r;
+                m_circleData->radius = r;
                 accept = true;
                 trigger();
             } else

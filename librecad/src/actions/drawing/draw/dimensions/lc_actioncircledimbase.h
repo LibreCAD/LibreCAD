@@ -48,16 +48,15 @@ protected:
     };
 
     /** Chosen entity (arc / circle) */
-    RS_Entity *entity = nullptr;
+    RS_Entity *m_entity = nullptr;
     /** Last status before entering text. */
-    Status lastStatus = SetEntity;
+    Status m_lastStatus = SetEntity;
     /** Chosen position */
-    std::unique_ptr<RS_Vector> pos;
+    std::unique_ptr<RS_Vector> m_position;
 
-    double ucsBasisAngleDegrees = 0;
-    bool angleIsFree = false;
-    bool alternateAngle = false;
-
+    double m_ucsBasisAngleDegrees = 0;
+    bool m_angleIsFree = false;
+    bool m_alternateAngle = false;
     double m_currentAngle = 0.0;
 
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

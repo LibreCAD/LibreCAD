@@ -35,7 +35,7 @@ LC_ActionSplineRemoveBetween::LC_ActionSplineRemoveBetween(LC_ActionContext *act
 }
 
 void LC_ActionSplineRemoveBetween::doCompleteTrigger() {
-    directionFromStart = false;
+    m_directionFromStart = false;
 }
 
 void LC_ActionSplineRemoveBetween::doOnEntityNotCreated() {
@@ -55,7 +55,7 @@ void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, LC_M
         }
         case SetBeforeControlPoint:{
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid) {
                 previewRefSelectablePoint(nearestPoint);
             }
@@ -63,11 +63,11 @@ void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, LC_M
         }
         case SetControlPoint:{
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid) {
-                previewRefPoint(selectedVertexPoint);
+                previewRefPoint(m_selectedVertexPoint);
                 previewRefSelectablePoint(nearestPoint);
-                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, nearestPoint, e->isShift);
+                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(m_entityToModify, nearestPoint, e->isShift);
                 if (previewUpdatedEntity != nullptr) {
                     previewEntity(previewUpdatedEntity);
                 }
@@ -84,17 +84,17 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_Mouse
         case SetEntity:{
             auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
-                entityToModify = entity;
-                entityToModify->setSelected(true);
-                switch (entityToModify->rtti()){
+                m_entityToModify = entity;
+                m_entityToModify->setSelected(true);
+                switch (m_entityToModify->rtti()){
                     case RS2::EntitySplinePoints:{
-                        auto* sp = dynamic_cast<LC_SplinePoints *>(entityToModify);
-                        splineIsClosed = sp->isClosed();
+                        auto* sp = dynamic_cast<LC_SplinePoints *>(m_entityToModify);
+                        m_splineIsClosed = sp->isClosed();
                         break;
                     }
                     case RS2::EntitySpline:{
-                        auto* sp = dynamic_cast<RS_Spline*>(entityToModify);
-                        splineIsClosed = sp->isClosed();
+                        auto* sp = dynamic_cast<RS_Spline*>(m_entityToModify);
+                        m_splineIsClosed = sp->isClosed();
                         break;
                     }
                     default:
@@ -109,9 +109,9 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_Mouse
         case SetBeforeControlPoint:{
             RS_Vector mouse = e->snapPoint;
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
-                selectedVertexPoint = nearestPoint;
+                m_selectedVertexPoint = nearestPoint;
                 setStatus(SetControlPoint);
             }
             break;
@@ -119,11 +119,11 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_Mouse
         case SetControlPoint: {
             RS_Vector mouse = e->snapPoint;
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
-                if (nearestPoint != vertexPoint) {
-                    vertexPoint = nearestPoint;
-                    directionFromStart = e->isShift;
+                if (nearestPoint != m_vertexPoint) {
+                    m_vertexPoint = nearestPoint;
+                    m_directionFromStart = e->isShift;
                     trigger();
                 }
             }
@@ -136,7 +136,7 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_Mouse
 
 RS_Entity *LC_ActionSplineRemoveBetween::createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) {
     RS_Entity* result = nullptr;
-    bool deleteNotFoundPoints = startDirection && splineIsClosed;
+    bool deleteNotFoundPoints = startDirection && m_splineIsClosed;
     std::vector<RS_Vector> remainingPoints;
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
@@ -152,7 +152,7 @@ RS_Entity *LC_ActionSplineRemoveBetween::createModifiedSplineEntity(RS_Entity *e
                 collectPointsThatRemainsAfterDeletion(controlPoint, controlPointsCount, deleteNotFoundPoints, data.controlPoints, remainingPoints);
             }
 
-            if (isValidSplinePointsData(remainingPoints.size(), splineIsClosed)) {
+            if (isValidSplinePointsData(remainingPoints.size(), m_splineIsClosed)) {
                 data.splinePoints.clear();
                 data.splinePoints = remainingPoints;
                 splinePoints->update();
@@ -168,7 +168,7 @@ RS_Entity *LC_ActionSplineRemoveBetween::createModifiedSplineEntity(RS_Entity *e
 
             collectPointsThatRemainsAfterDeletion(controlPoint, count, deleteNotFoundPoints, data.controlPoints, remainingPoints);
 
-            if (isValidSplineData(remainingPoints.size(), splineIsClosed, spline->getDegree())){
+            if (isValidSplineData(remainingPoints.size(), m_splineIsClosed, spline->getDegree())){
                 data.knotslist.clear();
                 data.controlPoints.clear();
                 data.controlPoints = remainingPoints;
@@ -192,7 +192,7 @@ void LC_ActionSplineRemoveBetween::collectPointsThatRemainsAfterDeletion(
     bool found = false;
     for (unsigned int i = 0; i < splinePointsCount; i++) {
         RS_Vector cp = pointsVector.at(i);
-        if (cp == selectedVertexPoint || cp == controlPoint){
+        if (cp == m_selectedVertexPoint || cp == controlPoint){
             if (deleteNotFoundPoints){
                 if (found){
                     remainingPoints.push_back(cp);
@@ -225,7 +225,7 @@ void LC_ActionSplineRemoveBetween::updateMouseButtonHints() {
             break;
         }
         case SetControlPoint: {
-            updateMouseWidgetTRCancel(tr("Select second point for deletion"), splineIsClosed ? MOD_SHIFT_LC(tr("Delete from endpoints TO selected points")) : MOD_NONE);
+            updateMouseWidgetTRCancel(tr("Select second point for deletion"), m_splineIsClosed ? MOD_SHIFT_LC(tr("Delete from endpoints TO selected points")) : MOD_NONE);
             break;
         }
         default:

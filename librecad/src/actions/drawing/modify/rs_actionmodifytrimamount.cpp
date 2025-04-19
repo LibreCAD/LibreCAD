@@ -41,7 +41,7 @@ namespace {
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Trim Entity by a given amount",actionContext, RS2::ActionModifyTrimAmount)
-    , trimEntity(nullptr), trimCoord(new RS_Vector{}), distance(0.0), distanceIsTotalLength(false){
+    , m_trimEntity(nullptr), m_trimCoord(new RS_Vector{}), m_distance(0.0), m_distanceIsTotalLength(false){
 }
 
 RS_ActionModifyTrimAmount::~RS_ActionModifyTrimAmount() = default;
@@ -58,30 +58,30 @@ void RS_ActionModifyTrimAmount::init(int status) {
 void RS_ActionModifyTrimAmount::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyTrimAmount::trigger()");
 
-    if (trimEntity && trimEntity->isAtomic()){
+    if (m_trimEntity && m_trimEntity->isAtomic()){
 
         RS_Modification m(*m_container, m_viewport, true);
-        auto* e = dynamic_cast<RS_AtomicEntity *>(trimEntity);
+        auto* e = dynamic_cast<RS_AtomicEntity *>(m_trimEntity);
         double dist = determineDistance(e);
 
         bool trimStart;
         bool trimEnd;
-        bool trimBoth = symmetricDistance && !distanceIsTotalLength;
+        bool trimBoth = m_symmetricDistance && !m_distanceIsTotalLength;
 
-        m.trimAmount(*trimCoord, e, dist, trimBoth, trimStart, trimEnd);
+        m.trimAmount(*m_trimCoord, e, dist, trimBoth, trimStart, trimEnd);
 
-        trimEntity = nullptr;
+        m_trimEntity = nullptr;
         setStatus(ChooseTrimEntity);
     }
 }
 
 double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) const{
     double d;
-    if (distanceIsTotalLength){
+    if (m_distanceIsTotalLength){
         //the distance is taken as the new total length
-        d = fabs(distance) - e->getLength();
+        d = fabs(m_distance) - e->getLength();
     } else {
-        d = distance;
+        d = m_distance;
     }
     return d;
 }
@@ -96,7 +96,7 @@ void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_
             auto* atomic = reinterpret_cast<RS_AtomicEntity *>(en);
             RS_Modification m(*m_container, m_viewport, false);
             double dist = determineDistance(atomic);
-            bool trimBoth = symmetricDistance && !distanceIsTotalLength;
+            bool trimBoth = m_symmetricDistance && !m_distanceIsTotalLength;
             bool trimStart;
             bool trimEnd;
             auto trimmed = m.trimAmount(coord, atomic, dist, trimBoth, trimStart, trimEnd, true);
@@ -161,13 +161,13 @@ void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_
 void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseTrimEntity: {
-            *trimCoord = e->graphPoint;
+            *m_trimCoord = e->graphPoint;
             RS_Entity* en = catchEntityByEvent(e, g_enTypeList, RS2::ResolveNone);
             if (en == nullptr){
                 commandMessage(tr("No entity found."));
             }
             else if (en->isAtomic()){
-                trimEntity = dynamic_cast<RS_AtomicEntity *>(en);
+                m_trimEntity = dynamic_cast<RS_AtomicEntity *>(en);
                 trigger();
             }
             else {
@@ -194,7 +194,7 @@ bool RS_ActionModifyTrimAmount::doProcessCommand(int status, const QString &c) {
             double d = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
-                distance = d;
+                m_distance = d;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }

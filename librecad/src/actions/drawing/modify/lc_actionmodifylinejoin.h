@@ -51,20 +51,20 @@ public:
     ~LC_ActionModifyLineJoin() override;
     void init(int status) override;
 
-    bool isCreatePolyline() const{return createPolyline;};
+    bool isCreatePolyline() const{return m_createPolyline;};
     void setCreatePolyline(bool value);
 
-    bool isRemoveOriginalLines() const{return removeOriginalLines;};
+    bool isRemoveOriginalLines() const{return m_removeOriginalLines;};
     void setRemoveOriginalLines(bool value);
 
-    int getLine1EdgeMode() const{return line1EdgeMode;};
+    int getLine1EdgeMode() const{return m_line1EdgeMode;};
     void setLine1EdgeMode(int value);
 
-    int getLine2EdgeMode() const{return line2EdgeMode;};
+    int getLine2EdgeMode() const{return m_line2EdgeMode;};
     void setLine2EdgeMode(int index);
 
     void setAttributesSource(int value);
-    int getAttributesSource() const{return attributesSource;}
+    int getAttributesSource() const{return m_attributesSource;}
 
     void drawSnapper() override;;
 protected:
@@ -140,49 +140,49 @@ private:
     /*
      * should we create polyline or just individual lines
      */
-    bool createPolyline = false;
+    bool m_createPolyline = false;
 
     /**
      * specifies whether original lines be removed from drawing
      */
-    bool removeOriginalLines = false;
+    bool m_removeOriginalLines = false;
 
     /**
      * where from apply attributes
      */
-    int attributesSource = ATTRIBUTES_ACTIVE_PEN_LAYER;
+    int m_attributesSource = ATTRIBUTES_ACTIVE_PEN_LAYER;
 
     /**
      * entity types that may be caught
      */
-    const EntityTypeList lineType = EntityTypeList{RS2::EntityLine};
+    const EntityTypeList m_lineType = EntityTypeList{RS2::EntityLine};
 
     /**
      * specifies how to handle edges for line 1
      */
-    int line1EdgeMode = EDGE_EXTEND_TRIM;
+    int m_line1EdgeMode = EDGE_EXTEND_TRIM;
 
     /**
      * specifies how to handle edges for line 2
      */
-    int line2EdgeMode = EDGE_EXTEND_TRIM;
+    int m_line2EdgeMode = EDGE_EXTEND_TRIM;
 
     /**
      * selected line 1
      */
-    RS_Line* line1 = nullptr;
+    RS_Line* m_line1 = nullptr;
 
     /**
      * selected line 2
      */
-    RS_Line* line2 = nullptr;
+    RS_Line* m_line2 = nullptr;
 
     /**
      * data that describes join
      */
-    LC_LineJoinData* linesJoinData = nullptr;
+    LC_LineJoinData* m_linesJoinData = nullptr;
 
-    RS_Vector line1ClickPosition = RS_Vector(false);
+    RS_Vector m_line1ClickPosition = RS_Vector(false);
 
     LC_LineJoinData* createLineJoinData(RS_Line* secondLine, RS_Vector &snapPoint);
     LC_PointsDisposition determine3PointsDisposition(RS_Vector start, RS_Vector end, const RS_Vector intersection, const RS_Vector &snapPoint) const;

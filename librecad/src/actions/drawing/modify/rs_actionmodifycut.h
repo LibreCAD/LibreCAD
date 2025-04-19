@@ -50,8 +50,8 @@ protected:
         ChooseCutEntity,      /**< Choosing the entity to cut in two. */
         SetCutCoord        /**< Choosing the cutting point. */
     };
-    RS_Entity* cutEntity = nullptr;
-    std::unique_ptr<RS_Vector> cutCoord;
+    RS_Entity* m_cutEntity = nullptr;
+    std::unique_ptr<RS_Vector> m_cutCoord;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

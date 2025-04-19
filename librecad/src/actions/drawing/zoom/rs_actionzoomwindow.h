@@ -50,7 +50,7 @@ protected:
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    bool keepAspectRatio = false;
+    bool m_keepAspectRatio = false;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

@@ -44,9 +44,9 @@ struct QC_ActionGetPoint::ActionData {
 // fixme - sand actiontype is not set???
 QC_ActionGetPoint::QC_ActionGetPoint(LC_ActionContext *actionContext)
         :RS_PreviewActionInterface("Get Point",actionContext)
-        , canceled(false)
-		, completed{false}
-		, setTargetPoint{false}
+        , m_canceled(false)
+		, m_completed{false}
+		, m_setTargetPoint{false}
 		, m_actionData(std::make_unique<ActionData>()){
     m_actionData->targetPoint = RS_Vector(0,0);
 }
@@ -56,7 +56,7 @@ QC_ActionGetPoint::~QC_ActionGetPoint() = default;
 
 void QC_ActionGetPoint::trigger() {
     RS_DEBUG->print("QC_ActionGetPoint::trigger()");
-    completed = true;
+    m_completed = true;
     updateMouseButtonHints();
 }
 
@@ -65,7 +65,7 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if(setTargetPoint){
+    if(m_setTargetPoint){
         if (m_actionData->referencePoint.valid) {
             m_actionData->targetPoint = mouse;
             RS_Line *line =new RS_Line{m_preview.get(),
@@ -90,8 +90,8 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-        canceled = true;
-        completed = true;
+        m_canceled = true;
+        m_completed = true;
         finish();
     }
 }
@@ -104,7 +104,7 @@ void QC_ActionGetPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_u
 
 
 void QC_ActionGetPoint::updateMouseButtonHints() {
-    if (!completed)
+    if (!m_completed)
         updateMouseWidget(m_actionData->message, tr("Cancel"));
     else
         updateMouseWidget();
@@ -116,7 +116,7 @@ RS2::CursorType QC_ActionGetPoint::doGetMouseCursor([[maybe_unused]] int status)
 void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
     m_actionData->referencePoint.x = basepoint->x();
     m_actionData->referencePoint.y = basepoint->y();
-    setTargetPoint = true;
+    m_setTargetPoint = true;
 }
 
 void QC_ActionGetPoint::setMessage(QString msg){

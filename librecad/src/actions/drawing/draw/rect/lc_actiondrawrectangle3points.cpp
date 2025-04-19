@@ -59,7 +59,7 @@ void LC_ActionDrawRectangle3Points::doAfterTrigger(){
 // to parent class or simplified
 RS_Vector LC_ActionDrawRectangle3Points::doGetRelativeZeroAfterTrigger(){
     RS_Vector zeroCorner;
-    switch (endRelativeZeroPointCorner){
+    switch (m_endRelativeZeroPointCorner){
         case (SNAP_CORNER1):
             zeroCorner = m_actionData->corner1;
             break;
@@ -126,9 +126,9 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
                 break;
             case SetPoint3: {
                 double baseAngle = m_actionData->corner1.angleTo(m_actionData->corner2);
-                if (createQuadrangle){
-                    if (innerAngleIsFixed){
-                        double innerAngleRad = RS_Math::deg2rad(innerAngle);
+                if (m_createQuadrangle){
+                    if (m_innerAngleIsFixed){
+                        double innerAngleRad = RS_Math::deg2rad(m_innerAngle);
                         double actualAngle = baseAngle + innerAngleRad;
                         m_actionData->corner3 = calculatePossibleEndpointForAngle(snapPoint, m_actionData->corner2, actualAngle);
                     } else {
@@ -150,7 +150,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
         switch (status) {
             case SetPoint3:
             case SetHeight: {
-                drawPrimitiveShape = createQuadrangle; // for quadrangle we just connect corners
+                drawPrimitiveShape = m_createQuadrangle; // for quadrangle we just connect corners
                 break;
             }
             default:
@@ -158,7 +158,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
         }
 
         // check how we'll handle edges
-        bool shouldInspectForNonCompleteShape = cornersDrawMode == CORNER_STRAIGHT && edgesDrawMode != EDGES_BOTH;
+        bool shouldInspectForNonCompleteShape = m_cornersDrawMode == CORNER_STRAIGHT && m_edgesDrawMode != EDGES_BOTH;
 
         if (!drawPrimitiveShape){
             drawPrimitiveShape = shouldInspectForNonCompleteShape;
@@ -218,7 +218,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
 
             normalizeCorners(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner);
 
-            if (drawBulge && snapToCornerArcCenter){
+            if (drawBulge && m_snapToCornerArcCenter){
 
                 // adjust corners coordinates, so we'll snap to arc centers
 
@@ -255,7 +255,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
  */
 void LC_ActionDrawRectangle3Points::calculateCorner2(const RS_Vector &snapPoint, double angleRad, bool cornerSet) const{
 
-    if (baseAngleIsFixed){
+    if (m_baseAngleIsFixed){
         m_actionData->corner2 =calculatePossibleEndpointForAngle(snapPoint, m_actionData->corner1, angleRad);
     } else {
         m_actionData->corner2 = snapPoint;
@@ -280,17 +280,17 @@ bool LC_ActionDrawRectangle3Points::doCheckMayDrawPreview([[maybe_unused]]LC_Mou
 RS_Vector LC_ActionDrawRectangle3Points::doGetMouseSnapPoint(LC_MouseEvent *e){
     RS_Vector snapped = e->snapPoint;
     // Snapping to angle(15*) if shift key is pressed
-    if (alternativeActionMode){
+    if (m_alternativeActionMode){
         int status = getStatus();
         switch (status){
             case (SetPoint2):
-                if (!baseAngleIsFixed){
+                if (!m_baseAngleIsFixed){
                     // if base angle is not explicitly set, try to make snap to angle
                     snapped = getSnapAngleAwarePoint(e, m_actionData->corner1, snapped, isMouseMove(e));
                 }
                break;
             case (SetPoint3):{
-                if (createQuadrangle && !innerAngleIsFixed){
+                if (m_createQuadrangle && !m_innerAngleIsFixed){
                     // we'll do angle snap, yet related ot the base edge, so we'll calculate an angle 
                     // from corner 1 to corner 2 first
                     double baseAngle = m_actionData->corner1.angleTo(m_actionData->corner2);
@@ -479,7 +479,7 @@ switch (getStatus()) {
 void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMainStatus){
     switch (getStatus()){
         case SetInnerAngle:
-            innerAngle = value;
+            m_innerAngle = value;
             updateOptions();
             restoreMainStatus();
             break;
@@ -517,8 +517,8 @@ void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMa
  */
 double LC_ActionDrawRectangle3Points::getActualInnerAngle() const{
     double result = M_PI / 2;
-    if (createQuadrangle && innerAngleIsFixed){
-        result = RS_Math::deg2rad(innerAngle);
+    if (m_createQuadrangle && m_innerAngleIsFixed){
+        result = RS_Math::deg2rad(m_innerAngle);
     }
     return result;
 }
@@ -530,15 +530,15 @@ bool LC_ActionDrawRectangle3Points::processCustomCommand([[maybe_unused]]int sta
         setMainStatus(SetPoint1);
     }
     else if (checkCommand("quad",command)){ // sets quadrangle mode
-        createQuadrangle = true;
+        m_createQuadrangle = true;
         updateOptions();
     }
     if (checkCommand("noquad",command)){ // sets rectangle mode
-        createQuadrangle = false;
+        m_createQuadrangle = false;
         updateOptions();
     }
     else if (checkCommand("angle_inner",command)){ // starts entering of inner angle for quadrangle (and enables quadrangle mode)
-        innerAngleIsFixed = true;
+        m_innerAngleIsFixed = true;
         setStatus(SetInnerAngle);
         toMainStatus = false;
     }
@@ -595,7 +595,7 @@ void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(int status){
             updateMouseWidgetTRBack(tr("Specify start point)"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack(tr("Specify second point"), baseAngleIsFixed ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second point"), m_baseAngleIsFixed ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint3:
             updateMouseWidgetTRBack(tr("Specify third point"),MOD_SHIFT_ANGLE_SNAP);

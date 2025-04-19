@@ -79,7 +79,7 @@ void RS_ActionDrawCircleTan1_2P::doTrigger() {
     //    std::cout<<"begin"<<std::endl;
     auto *c = new RS_Circle(m_container, m_actionData->cData);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(c->getCenter());
     }
 

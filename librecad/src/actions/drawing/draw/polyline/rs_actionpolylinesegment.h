@@ -54,12 +54,13 @@ protected:
         ChooseEntity = 0 /**< Choosing one of the polyline segments. */
     };
 
+    RS_Entity *m_targetEntity = nullptr;
+    bool m_initWithTarget{false};
+
     //! create polyline from segments
 //! @param useSelected only create from selected entities
     RS_Polyline* convertPolyline(RS_EntityContainer* cnt, RS_Entity *selectedEntity, bool useSelected = false, bool createOnly=false);
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
-    RS_Entity *targetEntity = nullptr;
-    bool initWithTarget{false};
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

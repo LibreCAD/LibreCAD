@@ -41,7 +41,7 @@ public:
 	void init(int status) override;
 	void trigger() override;
 protected:
-    bool keepAspectRatio = false;
+    bool m_keepAspectRatio = false;
 };
 
 #endif

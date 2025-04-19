@@ -47,8 +47,8 @@ struct RS_ActionInfoAngle::ActionData {
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Info Angle", actionContext, RS2::ActionInfoAngle)
-    ,entity1(nullptr)
-    ,entity2(nullptr)
+    ,m_entity1(nullptr)
+    ,m_entity2(nullptr)
     ,m_actionData(std::make_unique<ActionData>()){
 }
 
@@ -68,8 +68,8 @@ void RS_ActionInfoAngle::doTrigger() {
     int status = getStatus();
     switch (status){
         case SetEntity1: {
-            if (entity1 != nullptr){
-                auto line = dynamic_cast<RS_Line*>(entity1);
+            if (m_entity1 != nullptr){
+                auto line = dynamic_cast<RS_Line*>(m_entity1);
                 double angle1 = line->getAngle1();
                 double angle2 = line->getAngle2();
                 QString strAngle1 = formatWCSAngle(angle1);
@@ -86,14 +86,14 @@ void RS_ActionInfoAngle::doTrigger() {
                 const QString &msgTemplate = tr("Angle 1: %1\nAngle 2: %2");
                 const QString &msg = msgTemplate.arg(strAngle1, strAngle2);
                 commandMessage(msg);
-                entity1 = nullptr;
+                m_entity1 = nullptr;
                 setStatus(SetEntity1);
             }
             break;
         }
         case SetEntity2:{
-            if (entity1 != nullptr && entity2 != nullptr){
-                RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, entity2, false);
+            if (m_entity1 != nullptr && m_entity2 != nullptr){
+                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_entity1, m_entity2, false);
                 if (sol.hasValid()) {
                     m_actionData->intersection = sol.get(0);
                     double angle1 = m_actionData->intersection.angleTo(m_actionData->point1);
@@ -151,12 +151,12 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
         }
         case SetEntity2: {
             auto en = catchAndDescribe(event, RS2::ResolveAll);
-            highlightSelected(entity1);
+            highlightSelected(m_entity1);
             if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(m_actionData->point1);
             }
             if (isLine(en)){
-                RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, en, false);
+                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_entity1, en, false);
                 if (sol.hasValid()){
                     highlightHover(en);
                     if (m_showRefEntitiesOnPreview) {
@@ -187,9 +187,9 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
     RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetEntity1:
-            entity1 = catchEntityByEvent(e, RS2::ResolveAll);
-            if (isLine(entity1)){
-                m_actionData->point1 = entity1->getNearestPointOnEntity(mouse);
+            m_entity1 = catchEntityByEvent(e, RS2::ResolveAll);
+            if (isLine(m_entity1)){
+                m_actionData->point1 = m_entity1->getNearestPointOnEntity(mouse);
                 if (e->isControl){
                     trigger();
                 }
@@ -200,9 +200,9 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
             break;
 
         case SetEntity2:
-            entity2 = catchEntityByEvent(e, RS2::ResolveAll);
-            if (isLine(entity2)){
-                m_actionData->point2 = entity2->getNearestPointOnEntity(mouse);
+            m_entity2 = catchEntityByEvent(e, RS2::ResolveAll);
+            if (isLine(m_entity2)){
+                m_actionData->point2 = m_entity2->getNearestPointOnEntity(mouse);
                 trigger();
                 setStatus(SetEntity1);
             }

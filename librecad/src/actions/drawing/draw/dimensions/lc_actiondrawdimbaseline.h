@@ -39,15 +39,15 @@ public:
     double getCurrentBaselineDistance() const;
     QStringList getAvailableCommands() override;
 protected:
-    std::unique_ptr<RS_DimLinearData> edata;
-    RS_Vector baseDefPoint;
-    RS_Vector prevExtensionPointEnd; // fixme - probably remove
-    double dimDirectionAngle = 0.0;
-    bool freeBaselineDistance = false;
-    double baselineDistance = 20;
-    bool alternateMode = false;
-    double currentDistance = 0.0;
-    Status lastStatus = SetExtPoint1;
+    std::unique_ptr<RS_DimLinearData> m_edata;
+    RS_Vector m_baseDefPoint;
+    RS_Vector m_prevExtensionPointEnd; // fixme - probably remove
+    double m_dimDirectionAngle = 0.0;
+    bool m_freeBaselineDistance = false;
+    double m_baselineDistance = 20;
+    bool m_alternateMode = false;
+    double m_currentDistance = 0.0;
+    Status m_lastStatus = SetExtPoint1;
     bool isBaseline();
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     RS_Vector getExtensionPoint1() override;

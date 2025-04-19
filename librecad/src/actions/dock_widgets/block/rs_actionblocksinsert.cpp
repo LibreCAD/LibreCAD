@@ -56,8 +56,8 @@ void RS_ActionBlocksInsert::init(int status){
         if (m_block != nullptr) {
             QString blockName = m_block->getName();
             m_data->name = blockName;
-            if (document->is(RS2::EntityBlock)) {
-                QString parentBlockName = static_cast<RS_Block*>(document)->getName();
+            if (m_document->is(RS2::EntityBlock)) {
+                QString parentBlockName = static_cast<RS_Block*>(m_document)->getName();
                 if (parentBlockName == blockName) {
                     commandMessage(tr("Block cannot contain an insert of itself."));
                     finish(false);

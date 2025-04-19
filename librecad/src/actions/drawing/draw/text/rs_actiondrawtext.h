@@ -63,10 +63,10 @@ protected:
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    std::unique_ptr<RS_TextData> data;
-    double ucsBasicAngleDegrees = 0.0;
-    bool textChanged = false;
-    bool snappedToRelZero = false;
+    std::unique_ptr<RS_TextData> m_textData;
+    double m_ucsBasicAngleDegrees = 0.0;
+    bool m_textChanged = false;
+    bool m_snappedToRelZero = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

@@ -41,7 +41,7 @@ struct RS_ActionSelectIntersected::ActionData {
  */
 RS_ActionSelectIntersected::RS_ActionSelectIntersected(LC_ActionContext *actionContext, bool select)
     :RS_PreviewActionInterface("Select Intersected",actionContext, RS2::ActionSelectIntersected),
-    m_actionData(std::make_unique<ActionData>()), select(select){
+    m_actionData(std::make_unique<ActionData>()), m_performSelect(select){
 }
 
 RS_ActionSelectIntersected::~RS_ActionSelectIntersected() = default;
@@ -57,7 +57,7 @@ void RS_ActionSelectIntersected::doTrigger() {
     if (m_actionData->v1.valid && m_actionData->v2.valid){
         if (toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 10){
             RS_Selection s(*m_container, m_viewport);
-            s.selectIntersected(m_actionData->v1, m_actionData->v2, select);
+            s.selectIntersected(m_actionData->v1, m_actionData->v2, m_performSelect);
             init(SetPoint1);
         }
     }

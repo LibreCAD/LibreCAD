@@ -37,7 +37,7 @@ LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
     LC_ActionContext *actionContext,
     RS_Layer* layer)
         : RS_ActionInterface("Toggle Construction Layer", actionContext, RS2::ActionType::ActionLayersToggleConstruction)
-        , a_layer(layer){
+        , m_layer(layer){
 }
 
 
@@ -57,8 +57,8 @@ void LC_ActionLayersToggleConstruction::trigger() {
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            m_graphic->toggleLayerConstruction(a_layer);
-            deselectEntities(a_layer);
+            m_graphic->toggleLayerConstruction(m_layer);
+            deselectEntities(m_layer);
         }
         redrawDrawing();
     }

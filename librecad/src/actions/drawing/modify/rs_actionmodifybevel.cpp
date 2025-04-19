@@ -43,7 +43,7 @@ struct RS_ActionModifyBevel::BevelActionData {
 RS_ActionModifyBevel::RS_ActionModifyBevel(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Bevel Entities",actionContext, RS2::ActionModifyBevel)
     , m_actionData(std::make_unique<BevelActionData>())
-    ,lastStatus(SetEntity1){
+    ,m_lastStatus(SetEntity1){
 }
 
 RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;
@@ -63,11 +63,11 @@ void RS_ActionModifyBevel::init(int status) {
 void RS_ActionModifyBevel::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
 
-    if (entity1 && entity1->isAtomic() &&
-        entity2 && entity2->isAtomic()){
+    if (m_entity1 && m_entity1->isAtomic() &&
+        m_entity2 && m_entity2->isAtomic()){
 
         RS_Modification m(*m_container, m_viewport);
-        LC_BevelResult* bevelResult = m.bevel(m_actionData->coord1, entity1, m_actionData->coord2, entity2, m_actionData->data, false);
+        LC_BevelResult* bevelResult = m.bevel(m_actionData->coord1, m_entity1, m_actionData->coord2, m_entity2, m_actionData->data, false);
         if (bevelResult != nullptr){
             switch (bevelResult->error) {
                 case LC_BevelResult::OK:
@@ -87,7 +87,7 @@ void RS_ActionModifyBevel::doTrigger() {
 
         m_actionData->coord1 = {};
         m_actionData->coord2 = {};
-        entity1 = nullptr;
+        m_entity1 = nullptr;
         setStatus(SetEntity1);
     }
 }
@@ -110,12 +110,12 @@ void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetEntity2: {
-            highlightSelected(entity1);
-            if (se != entity1 && areBothEntityAccepted(entity1, se)){
+            highlightSelected(m_entity1);
+            if (se != m_entity1 && areBothEntityAccepted(m_entity1, se)){
                 auto atomicCandidate2 = dynamic_cast<RS_AtomicEntity *>(se);
 
                 RS_Modification m(*m_container, m_viewport);
-                LC_BevelResult* bevelResult = m.bevel(m_actionData->coord1,  entity1, mouse, atomicCandidate2, m_actionData->data, true);
+                LC_BevelResult* bevelResult = m.bevel(m_actionData->coord1,  m_entity1, mouse, atomicCandidate2, m_actionData->data, true);
 
                 if (bevelResult != nullptr){
                     if (bevelResult->error == LC_BevelResult::OK){
@@ -134,7 +134,7 @@ void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                             // changes in lines
                             if (m_actionData->data.trim) {
-                                previewLineModifications(entity1, bevelResult->trimmed1, bevelResult->trimStart1);
+                                previewLineModifications(m_entity1, bevelResult->trimmed1, bevelResult->trimStart1);
                                 previewLineModifications(atomicCandidate2, bevelResult->trimmed2,
                                                          bevelResult->trimStart2);
                             }
@@ -191,8 +191,8 @@ void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
             case SetEntity1: {
                 if (se->isAtomic()){
                     if (RS_Information::isTrimmable(se)){
-                        entity1 = dynamic_cast<RS_AtomicEntity *>(se);
-                        m_actionData->coord1 = entity1->getNearestPointOnEntity(e->graphPoint, true);
+                        m_entity1 = dynamic_cast<RS_AtomicEntity *>(se);
+                        m_actionData->coord1 = m_entity1->getNearestPointOnEntity(e->graphPoint, true);
                         setStatus(SetEntity2);
                     } else {
                         commandMessage(tr("Invalid entity selected (non-trimmable)."));
@@ -204,8 +204,8 @@ void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
             }
             case SetEntity2: {
                 if (se->isAtomic()){
-                    if (RS_Information::isTrimmable(entity1, se)){
-                        entity2 = dynamic_cast<RS_AtomicEntity *>(se);
+                    if (RS_Information::isTrimmable(m_entity1, se)){
+                        m_entity2 = dynamic_cast<RS_AtomicEntity *>(se);
                         m_actionData->coord2 = e->graphPoint;
                         trigger();
                     }
@@ -234,7 +234,7 @@ void RS_ActionModifyBevel::onMouseRightButtonRelease(int status, [[maybe_unused]
             break;
         case SetLength1:
         case SetLength2:
-            newStatus = lastStatus;
+            newStatus = m_lastStatus;
             break;
         default:
             break;
@@ -257,12 +257,12 @@ bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {
         case SetEntity2: {
             if (checkCommand("length1", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                m_lastStatus = (Status) getStatus();
                 setStatus(SetLength1);
                 accept = true;
             } else if (checkCommand("length2", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                m_lastStatus = (Status) getStatus();
                 setStatus(SetLength2);
                 accept = true;
             } else if (checkCommand("trim", c)){
@@ -282,7 +282,7 @@ bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         case SetLength2: {
@@ -295,7 +295,7 @@ bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         default:

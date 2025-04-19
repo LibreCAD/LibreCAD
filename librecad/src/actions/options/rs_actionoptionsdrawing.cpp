@@ -31,7 +31,7 @@
 
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex)
         :RS_ActionInterface("Drawing Options",actionContext, RS2::ActionOptionsDrawing) {
-    tabToShow = tabIndex;
+    m_tabToShow = tabIndex;
 }
 
 void RS_ActionOptionsDrawing::init(int status) {
@@ -42,7 +42,7 @@ void RS_ActionOptionsDrawing::init(int status) {
 void RS_ActionOptionsDrawing::trigger(){
     if (m_graphic != nullptr) {
         m_graphicView->setForcedActionKillAllowed(false);
-        QC_ApplicationWindow::getAppWindow()->changeDrawingOptions(tabToShow);
+        QC_ApplicationWindow::getAppWindow()->changeDrawingOptions(m_tabToShow);
         m_graphicView->setForcedActionKillAllowed(true);
     }
     finish(false);

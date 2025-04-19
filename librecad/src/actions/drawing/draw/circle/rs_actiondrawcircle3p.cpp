@@ -62,7 +62,7 @@ void RS_ActionDrawCircle3P::doTrigger() {
 
         setPenAndLayerToActive(circle);
 
-        if (moveRelPointAtCenterAfterTrigger){
+        if (m_moveRelPointAtCenterAfterTrigger){
             moveRelativeZero(m_actionData->data.center);
         }
 

@@ -62,21 +62,21 @@ void RS_ActionDrawArc3P::init(int status) {
 }
 
 void RS_ActionDrawArc3P::doTrigger() {
-    preparePreview(alternatedPoints);
+    preparePreview(m_alternatedPoints);
     if (m_actionData->data.isValid()){
         auto *arc = new RS_Arc{m_container, m_actionData->data};
 
         setPenAndLayerToActive(arc);
 
         RS_Vector rz = arc->getEndpoint();
-        if (moveRelPointAtCenterAfterTrigger){
+        if (m_moveRelPointAtCenterAfterTrigger){
             rz = arc->getCenter();
         }
         moveRelativeZero(rz);
 
         undoCycleAdd(arc);
 
-        alternatedPoints = false;
+        m_alternatedPoints = false;
         setStatus(SetPoint1);
         reset();
     } else {
@@ -129,7 +129,7 @@ void RS_ActionDrawArc3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             // todo - which point (1 or 2) is more suitable there for snap?
             mouse = getSnapAngleAwarePoint(e,m_actionData->point1, mouse, true);
             m_actionData->point3 = mouse;
-            bool alternatePoints = e->isControl || alternatedPoints;
+            bool alternatePoints = e->isControl || m_alternatedPoints;
             preparePreview(alternatePoints);
             if (m_actionData->data.isValid()){
                 previewToCreateArc(m_actionData->data);
@@ -162,7 +162,7 @@ void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
         case SetPoint3:{
             snap = getSnapAngleAwarePoint(e, m_actionData->point1, snap);
             if (e->isControl){
-               alternatedPoints = true;
+               m_alternatedPoints = true;
             }
             break;
         }
@@ -211,11 +211,11 @@ bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QStr
     // fixme - sand - add these to commands
     else if (checkCommand("altpoint", c, rtti())){
         accept = true;
-        alternatedPoints = true;
+        m_alternatedPoints = true;
     }
     else if (checkCommand("normpoint", c, rtti())){
         accept = true;
-        alternatedPoints = false;
+        m_alternatedPoints = false;
     }
     return accept;
 }

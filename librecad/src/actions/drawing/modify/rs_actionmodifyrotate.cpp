@@ -41,7 +41,7 @@
 
 RS_ActionModifyRotate::RS_ActionModifyRotate(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("Rotate Entities",actionContext, m_actionType=RS2::ActionModifyRotate)
-    ,data(new RS_RotateData()){
+    ,m_rotateData(new RS_RotateData()){
 }
 
 RS_ActionModifyRotate::~RS_ActionModifyRotate() = default;
@@ -52,7 +52,7 @@ void RS_ActionModifyRotate::init(int status) {
 
 void RS_ActionModifyRotate::onSelectionCompleted(bool singleEntity, bool fromInit) {
     LC_ActionModifyBase::onSelectionCompleted(singleEntity, fromInit);
-    if (selectRefPointFirst){
+    if (m_selectRefPointFirst){
         setStatus(SetReferencePoint);
     }
     else{
@@ -62,16 +62,16 @@ void RS_ActionModifyRotate::onSelectionCompleted(bool singleEntity, bool fromIni
 
 void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
-    moveRelativeZero(data->center);
+    moveRelativeZero(m_rotateData->center);
     RS_Modification m(*m_container, m_viewport);
-    m.rotate(*data, m_selectedEntities, false, keepSelected);
+    m.rotate(*m_rotateData, m_selectedEntities, false, keepSelected);
 }
 
 void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetReferencePoint: {
-            if (selectRefPointFirst){
+            if (m_selectRefPointFirst){
                 if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
                     mouse = boundingForSelected.getCenter();
@@ -89,49 +89,49 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                     mouse = boundingForSelected.getCenter();
                 }
                 else {
-                    mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
+                    mouse = getSnapAngleAwarePoint(e, m_rotateData->center, mouse, true);
                 }
                 if (m_showRefEntitiesOnPreview) {
-                    previewRefLine(data->center, mouse);
-                    previewRefPoint(data->center);
+                    previewRefLine(m_rotateData->center, mouse);
+                    previewRefPoint(m_rotateData->center);
                     previewRefSelectablePoint(mouse);
                 }
-                if (!freeAngle){
-                    RS_RotateData tmpData = *data;
+                if (!m_freeAngle){
+                    RS_RotateData tmpData = *m_rotateData;
                     tmpData.refPoint = mouse;
                     RS_Modification m(*m_preview, m_viewport, false);
                     m.rotate(tmpData, m_selectedEntities, true, false);
-                    previewRotationCircleAndPoints(data->center, mouse, data->angle);
+                    previewRotationCircleAndPoints(m_rotateData->center, mouse, m_rotateData->angle);
                 }
             }
             break;
         }
         case SetCenterPoint: {
-            if (selectRefPointFirst){
+            if (m_selectRefPointFirst){
                 if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
                     mouse = boundingForSelected.getCenter();
                 }
                 else {
-                    mouse = getSnapAngleAwarePoint(e, data->refPoint, mouse, true);
+                    mouse = getSnapAngleAwarePoint(e, m_rotateData->refPoint, mouse, true);
                 }
-                RS_Vector originalReferencePoint = data->refPoint;
+                RS_Vector originalReferencePoint = m_rotateData->refPoint;
                 if (m_showRefEntitiesOnPreview) {
                     previewRefLine(originalReferencePoint, mouse);
                     previewRefPoint(originalReferencePoint);
                 }
-                if (!freeAngle) {
-                    RS_RotateData tmpData = *data;
+                if (!m_freeAngle) {
+                    RS_RotateData tmpData = *m_rotateData;
                     tmpData.center = mouse;
                     RS_Modification m(*m_preview, m_viewport, false);
                     m.rotate(tmpData, m_selectedEntities, true, false);
-                    previewRotationCircleAndPoints(mouse, data->refPoint, data->angle);
+                    previewRotationCircleAndPoints(mouse, m_rotateData->refPoint, m_rotateData->angle);
 
                     if (isInfoCursorForModificationEnabled()) {
                         RS_Vector offset = mouse - originalReferencePoint;
                         msg(tr("Rotation"))
-                            .rawAngle(tr("Angle:"), adjustRelativeAngleSignByBasis(data->angle))
-                            .vector(tr("Reference Point:"), data->refPoint)
+                            .rawAngle(tr("Angle:"), adjustRelativeAngleSignByBasis(m_rotateData->angle))
+                            .vector(tr("Reference Point:"), m_rotateData->refPoint)
                             .vector(tr("Center Point:"), mouse)
                             .string(tr("Offset:"))
                             .relative(offset)
@@ -143,7 +143,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                     RS_Vector offset = mouse - originalReferencePoint;
 
                     msg(tr("Rotation"))
-                           .vector(tr("Reference Point:"), data->refPoint)
+                           .vector(tr("Reference Point:"), m_rotateData->refPoint)
                            .vector(tr("Center Point:"), mouse)
                            .string(tr("Offset:"))
                            .relative(offset)
@@ -165,8 +165,8 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             break;
         }
         case SetTargetPoint: {
-            RS_Vector &center = data->center;
-            RS_Vector &originalReferencePoint = data->refPoint;
+            RS_Vector &center = m_rotateData->center;
+            RS_Vector &originalReferencePoint = m_rotateData->refPoint;
             mouse = getSnapAngleAwarePoint(e, center, mouse, true);
             double radius = center.distanceTo(originalReferencePoint);
             double wcsAngle = center.angleTo(mouse);
@@ -183,10 +183,10 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 previewRefLine(mouse, center);
             }
 
-            currentAngle = rotationAngle;
+            m_currentAngle = rotationAngle;
             updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::UPDATE_ANGLE);
 
-            RS_RotateData tmpData = *data;
+            RS_RotateData tmpData = *m_rotateData;
             double wcsRotationAngle = adjustRelativeAngleSignByBasis(rotationAngle);
             tmpData.angle = wcsRotationAngle;
 
@@ -194,7 +194,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             m.rotate(tmpData, m_selectedEntities, true, false);
 
             // todo - sand - we can temporarily add a copy of circle to the document, so intersection snap for target reference point will work.
-            previewRotationCircleAndPoints(center, data->refPoint, wcsRotationAngle);
+            previewRotationCircleAndPoints(center, m_rotateData->refPoint, wcsRotationAngle);
 
             if (isInfoCursorForModificationEnabled()) {
                 RS_Vector offset = newAxisPoint - originalReferencePoint;
@@ -210,10 +210,10 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             break;
         }
         case SetTargetPoint2ndRotation:{
-            RS_Vector originalRefPoint = data->refPoint;
-            RS_Vector center = data->center;
+            RS_Vector originalRefPoint = m_rotateData->refPoint;
+            RS_Vector center = m_rotateData->center;
             RS_Vector newRefPoint =  originalRefPoint;
-            newRefPoint.rotate(center, data->angle);
+            newRefPoint.rotate(center, m_rotateData->angle);
             mouse = getSnapAngleAwarePoint(e, originalRefPoint, mouse, true);
 
             if (m_showRefEntitiesOnPreview) {
@@ -222,15 +222,15 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 previewRefLine(newRefPoint, mouse);
                 previewRefPoint(center);
             }
-            previewRotationCircleAndPoints(center, originalRefPoint, data->angle);
+            previewRotationCircleAndPoints(center, originalRefPoint, m_rotateData->angle);
 
             double wcsAngle = newRefPoint.angleTo(mouse);
             double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
 
-            currentAngle2 = rotationAngle;
+            m_currentAngle2 = rotationAngle;
             updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::UPDATE_ANGLE2);
 
-            RS_RotateData tmpData = *data;
+            RS_RotateData tmpData = *m_rotateData;
             tmpData.secondAngle = adjustRelativeAngleSignByBasis(rotationAngle);
 
             RS_Modification m(*m_preview, m_viewport, false);
@@ -239,13 +239,13 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             if (isInfoCursorForModificationEnabled()) {
                 RS_Vector offset = newRefPoint - originalRefPoint;
                 msg(tr("Rotation"))
-                    .rawAngle(tr("Angle:"), data->angle)
+                    .rawAngle(tr("Angle:"), m_rotateData->angle)
                     .vector("Source Point:", originalRefPoint)
                     .vector("Target Point:", newRefPoint)
                     .string(tr("Offset:"))
                     .relative(offset)
                     .relativePolar(offset)
-                    .rawAngle(tr("Second Angle:"), currentAngle2)
+                    .rawAngle(tr("Second Angle:"), m_currentAngle2)
                     .toInfoCursorZone2(false);
             }
             break;
@@ -259,7 +259,7 @@ void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &cent
     if (m_showRefEntitiesOnPreview) {
         double radius = center.distanceTo(refPoint);
         previewRefCircle(center, radius);
-        int numberOfCopies = data->obtainNumberOfCopies();
+        int numberOfCopies = m_rotateData->obtainNumberOfCopies();
         for (int i = 1; i <= numberOfCopies; i++) {//
             RS_Vector rotatedRefPoint = refPoint;
             double rotationAngle = angle * i;
@@ -289,14 +289,14 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
     }
     switch (status) {
         case SetReferencePoint: {
-            if (selectRefPointFirst){
-                data->refPoint = pos;
+            if (m_selectRefPointFirst){
+                m_rotateData->refPoint = pos;
                 moveRelativeZero(pos);
                 setStatus(SetCenterPoint);
             }
             else{
-                data->refPoint = pos;
-                RS_Vector radius = pos - data->center;
+                m_rotateData->refPoint = pos;
+                RS_Vector radius = pos - m_rotateData->center;
                 bool rotationOverSamePoint = radius.squared() <= RS_TOLERANCE;
                 if (rotationOverSamePoint){
                     updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::DISABLE_SECOND_ROTATION);
@@ -305,9 +305,9 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
                     updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::ENABLE_SECOND_ROTATION);
                 }
 
-                if (freeAngle) {
-                    data->angle = (data->center - pos).angle();
-                    moveRelativeZero(data->center);
+                if (m_freeAngle) {
+                    m_rotateData->angle = (m_rotateData->center - pos).angle();
+                    moveRelativeZero(m_rotateData->center);
                     setStatus(SetTargetPoint);
                 }
                 else{
@@ -326,8 +326,8 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
             break;
         }
         case SetCenterPoint:{
-            if (selectRefPointFirst){
-                RS_Vector radius = pos - data->refPoint;
+            if (m_selectRefPointFirst){
+                RS_Vector radius = pos - m_rotateData->refPoint;
                 bool rotationOverSamePoint = radius.squared() <= RS_TOLERANCE;
                 if (rotationOverSamePoint){
                     updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::DISABLE_SECOND_ROTATION);
@@ -335,14 +335,14 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
                 else{
                     updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::ENABLE_SECOND_ROTATION);
                 }
-                if (freeAngle) {
-                    data->center = pos;
-                    data->angle = (data->refPoint - pos).angle();
-                    moveRelativeZero(data->center);
+                if (m_freeAngle) {
+                    m_rotateData->center = pos;
+                    m_rotateData->angle = (m_rotateData->refPoint - pos).angle();
+                    moveRelativeZero(m_rotateData->center);
                     setStatus(SetTargetPoint);
                 }
                 else{
-                    data->center = pos;
+                    m_rotateData->center = pos;
                     if (rotationOverSamePoint) { // rotation over center, no need for second rotation
                         tryTrigger();
                     }
@@ -356,27 +356,27 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
                 break;
             }
             else{
-                data->center = pos;
-                moveRelativeZero(data->center);
+                m_rotateData->center = pos;
+                moveRelativeZero(m_rotateData->center);
                 setStatus(SetReferencePoint);
                 break;
             }
         }
         case SetTargetPoint: {
-            double wcsAngle = data->center.angleTo(pos);
+            double wcsAngle = m_rotateData->center.angleTo(pos);
             double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
-            data->angle = adjustRelativeAngleSignByBasis(rotationAngle);
+            m_rotateData->angle = adjustRelativeAngleSignByBasis(rotationAngle);
 
-            RS_Vector radius = data->center - data->refPoint;
+            RS_Vector radius = m_rotateData->center - m_rotateData->refPoint;
             bool rotationOverSamePoint = radius.squared() <= RS_TOLERANCE;
             if (rotationOverSamePoint) { // rotation over center, no need for second rotation
                 tryTrigger();
             }
             else if (isRotateAlsoAroundReferencePoint() && isFreeRefPointAngle()){
                 setStatus(SetTargetPoint2ndRotation);
-                RS_Vector originalRefPoint = data->refPoint;
-                RS_Vector center = data->center;
-                RS_Vector newRefPoint =  originalRefPoint.rotate(center, data->angle);
+                RS_Vector originalRefPoint = m_rotateData->refPoint;
+                RS_Vector center = m_rotateData->center;
+                RS_Vector newRefPoint =  originalRefPoint.rotate(center, m_rotateData->angle);
                 moveRelativeZero(newRefPoint);
             }
             else{
@@ -385,8 +385,8 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
             break;
         }
         case SetTargetPoint2ndRotation:{
-            RS_Vector newRefPoint =  data->refPoint;
-            newRefPoint.rotate(data->center, data->angle);
+            RS_Vector newRefPoint =  m_rotateData->refPoint;
+            newRefPoint.rotate(m_rotateData->center, m_rotateData->angle);
             RS_Vector delta = pos - newRefPoint;
 
             double secondAngle;
@@ -398,7 +398,7 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
                 double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
                 secondAngle = adjustRelativeAngleSignByBasis(rotationAngle);
             }
-            data->secondAngle = secondAngle;
+            m_rotateData->secondAngle = secondAngle;
             tryTrigger();
             break;
         }
@@ -409,7 +409,7 @@ void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool i
 
 void RS_ActionModifyRotate::tryTrigger(){
     if (isShowModifyActionDialog()) {
-        if (RS_DIALOGFACTORY->requestRotateDialog(*data)) {
+        if (RS_DIALOGFACTORY->requestRotateDialog(*m_rotateData)) {
             updateOptions();
             trigger();
             finish(false);
@@ -425,7 +425,7 @@ void RS_ActionModifyRotate::onMouseLeftButtonReleaseSelected(int status, LC_Mous
     RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetReferencePoint:{
-            if (selectRefPointFirst){
+            if (m_selectRefPointFirst){
                 if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
                     snapped = boundingForSelected.getCenter();
@@ -440,7 +440,7 @@ void RS_ActionModifyRotate::onMouseLeftButtonReleaseSelected(int status, LC_Mous
                     snapped = boundingForSelected.getCenter();
                 }
                 else {
-                    snapped = getSnapAngleAwarePoint(e, data->center, snapped);
+                    snapped = getSnapAngleAwarePoint(e, m_rotateData->center, snapped);
                 }
             }
             break;
@@ -451,12 +451,12 @@ void RS_ActionModifyRotate::onMouseLeftButtonReleaseSelected(int status, LC_Mous
                 snapped = boundingForSelected.getCenter();
             }
             else {
-                snapped = getSnapAngleAwarePoint(e, data->refPoint, snapped);
+                snapped = getSnapAngleAwarePoint(e, m_rotateData->refPoint, snapped);
             }
             break;
         }
         case SetTargetPoint:{
-            snapped = getSnapAngleAwarePoint(e, data->center, snapped);
+            snapped = getSnapAngleAwarePoint(e, m_rotateData->center, snapped);
             break;
         }
         default:
@@ -469,7 +469,7 @@ void RS_ActionModifyRotate::onMouseRightButtonReleaseSelected(int status, [[mayb
     deletePreview();
     switch (status)    {
         case SetReferencePoint: {
-            if (selectRefPointFirst){
+            if (m_selectRefPointFirst){
                 m_selectionComplete = false;
             } else {
                 setStatus(SetCenterPoint);
@@ -477,7 +477,7 @@ void RS_ActionModifyRotate::onMouseRightButtonReleaseSelected(int status, [[mayb
             break;
         }
         case SetCenterPoint: {
-            if (selectRefPointFirst){
+            if (m_selectRefPointFirst){
                 setStatus(SetReferencePoint);
 
             } else {
@@ -486,7 +486,7 @@ void RS_ActionModifyRotate::onMouseRightButtonReleaseSelected(int status, [[mayb
             break;
         }
         case SetTargetPoint: {
-            if (selectRefPointFirst) {
+            if (m_selectRefPointFirst) {
                 setStatus(SetCenterPoint);
 
             } else {
@@ -496,7 +496,7 @@ void RS_ActionModifyRotate::onMouseRightButtonReleaseSelected(int status, [[mayb
         }
         case SetTargetPoint2ndRotation:{
             setStatus(SetTargetPoint);
-            moveRelativeZero(data->center);
+            moveRelativeZero(m_rotateData->center);
             break;
         }
         default:
@@ -505,7 +505,7 @@ void RS_ActionModifyRotate::onMouseRightButtonReleaseSelected(int status, [[mayb
 }
 
 void RS_ActionModifyRotate::setFreeAngle(bool enable) {
-    if (freeAngle != enable) {
+    if (m_freeAngle != enable) {
         int status = getStatus();
         switch (status){
             case SetReferencePoint:
@@ -513,57 +513,57 @@ void RS_ActionModifyRotate::setFreeAngle(bool enable) {
                 break;
             case SetTargetPoint:
                 setStatus(SetCenterPoint);
-                moveRelativeZero(data->center);
+                moveRelativeZero(m_rotateData->center);
                 break;
             default:
                 break;
         }
-        freeAngle = enable;
+        m_freeAngle = enable;
     }
 }
 
 void RS_ActionModifyRotate::setFreeRefPointAngle(bool value) {
-    freeRefPointAngle = value;
+    m_freeRefPointAngle = value;
 }
 
 double RS_ActionModifyRotate::getCurrentAngleDegrees() {
-    return RS_Math::rad2deg(currentAngle);
+    return RS_Math::rad2deg(m_currentAngle);
 }
 
 double RS_ActionModifyRotate::getCurrentAngle2Degrees() {
-    return toUCSBasisAngleDegrees(currentAngle2);
+    return toUCSBasisAngleDegrees(m_currentAngle2);
 }
 
 double RS_ActionModifyRotate::getAngle() const{
-    return adjustRelativeAngleSignByBasis(data->angle);
+    return adjustRelativeAngleSignByBasis(m_rotateData->angle);
 }
 
 void RS_ActionModifyRotate::setAngle(double angle) {
-    data->angle = adjustRelativeAngleSignByBasis(angle);
+    m_rotateData->angle = adjustRelativeAngleSignByBasis(angle);
 }
 
 double RS_ActionModifyRotate::getRefPointAngle() {
-    return adjustRelativeAngleSignByBasis(data->secondAngle);
+    return adjustRelativeAngleSignByBasis(m_rotateData->secondAngle);
 }
 
 void RS_ActionModifyRotate::setRefPointAngle(double angle) {
-    data->secondAngle = adjustRelativeAngleSignByBasis(angle);
+    m_rotateData->secondAngle = adjustRelativeAngleSignByBasis(angle);
 }
 
 bool RS_ActionModifyRotate::isRotateAlsoAroundReferencePoint() {
-    return data->twoRotations;
+    return m_rotateData->twoRotations;
 }
 
 void RS_ActionModifyRotate::setRotateAlsoAroundReferencePoint(bool value) {
-    data->twoRotations = value;
+    m_rotateData->twoRotations = value;
 }
 
 bool RS_ActionModifyRotate::isRefPointAngleAbsolute() {
-    return data->secondAngleIsAbsolute;
+    return m_rotateData->secondAngleIsAbsolute;
 }
 
 void RS_ActionModifyRotate::setRefPointAngleAbsolute(bool val) {
-    data->secondAngleIsAbsolute = val;
+    m_rotateData->secondAngleIsAbsolute = val;
 }
 
 void RS_ActionModifyRotate::updateMouseButtonHintsForSelection() {
@@ -594,7 +594,7 @@ RS2::CursorType RS_ActionModifyRotate::doGetMouseCursorSelected([[maybe_unused]]
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyRotate::getModifyOperationFlags() {
-    return data.get();
+    return m_rotateData.get();
 }
 
 LC_ActionOptionsWidget *RS_ActionModifyRotate::createOptionsWidget() {

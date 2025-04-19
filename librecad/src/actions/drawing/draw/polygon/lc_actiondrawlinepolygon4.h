@@ -31,14 +31,14 @@ class LC_ActionDrawLinePolygon4:public LC_ActionDrawLinePolygonBase {
 public:
     LC_ActionDrawLinePolygon4(LC_ActionContext *actionContext);
     ~LC_ActionDrawLinePolygon4() override;
-    void setVertexVertexMode(bool val){useVertexVertexMode = val;}
-    bool isVertexVertexMode(){return useVertexVertexMode;}
+    void setVertexVertexMode(bool val){m_useVertexVertexMode = val;}
+    bool isVertexVertexMode(){return m_useVertexVertexMode;}
 protected:
     /* Status
     SetPoint1 - Setting side/vertex.
     SetPoint2 - Setting side/vertex.
 */
-    bool useVertexVertexMode = false;
+    bool m_useVertexVertexMode = false;
 
     QString getPoint2Hint() const override;
     QString getPoint1Hint() const override;

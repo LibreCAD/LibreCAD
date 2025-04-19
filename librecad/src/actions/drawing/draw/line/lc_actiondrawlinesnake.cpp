@@ -31,23 +31,23 @@ LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext *actionContext,R
     , m_actionData(new ActionData{}){
     switch (actionType) {
         case (RS2::ActionDrawSnakeLine): {
-            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
             break;
         }
         case (RS2::ActionDrawSnakeLineX): {
-            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_X;
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_X;
             break;
         }
         case (RS2::ActionDrawSnakeLineY): {
-            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_Y;
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_Y;
             break;
         }
         default: {
-            primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
             break;
         }
     }
-    direction = primaryDirection;
+    m_direction = m_primaryDirection;
 }
 
 LC_ActionDrawLineSnake::~LC_ActionDrawLineSnake() = default;
@@ -60,7 +60,7 @@ void LC_ActionDrawLineSnake::init(int status){
     if (status >= 0){
         resetPoints();
         // restore primary direction of action
-        direction = primaryDirection;
+        m_direction = m_primaryDirection;
     }
     LC_AbstractActionWithPreview::init(status);
 }
@@ -85,8 +85,8 @@ void LC_ActionDrawLineSnake::doSetStartPoint(RS_Vector start){
 
     //  adjust state and direction of action based on primary direction.
     // this is needef for horizontal/vertical line actions
-    if (primaryDirection == DIRECTION_POINT){
-        if (direction == DIRECTION_POINT){
+    if (m_primaryDirection == DIRECTION_POINT){
+        if (m_direction == DIRECTION_POINT){
             setStatus(SetPoint);
         }
         else{
@@ -94,7 +94,7 @@ void LC_ActionDrawLineSnake::doSetStartPoint(RS_Vector start){
         }
     }
     else{
-        direction = primaryDirection;
+        m_direction = m_primaryDirection;
         setStatus(SetDistance);
     }
     moveRelativeZero(start);
@@ -121,7 +121,7 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]LC_MouseEv
             directionName = tr("Angle");
             break;
         case SetDistance: {
-            switch (direction) {
+            switch (m_direction) {
                 case DIRECTION_Y: {
                     // draw horizontal line segment, y-axis is fixed
                     possibleEndPoint = restrictVertical(m_actionData->data.startpoint, snap);
@@ -203,7 +203,7 @@ bool LC_ActionDrawLineSnake::isNonZeroLine(const RS_Vector &possiblePoint) const
 void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetDistance:{
-            switch (direction) {
+            switch (m_direction) {
                 case DIRECTION_Y: {
                     // draw horizontal segment, fix start point y coordinate
                     RS_Vector possiblePoint = restrictVertical(m_actionData->data.startpoint, mouse);
@@ -282,29 +282,29 @@ void LC_ActionDrawLineSnake::completeLineSegment(bool close){
     trigger();
     m_actionData->data.startpoint = m_actionData->data.endpoint;
 
-    switch (direction) {
+    switch (m_direction) {
         case DIRECTION_X: {
             // switch direction (snake)
-            direction = DIRECTION_Y;
+            m_direction = DIRECTION_Y;
             setStatus(SetDistance);
             break;
         }
         case DIRECTION_Y: {
             // switch direction (snake)
-            direction = DIRECTION_X;
+            m_direction = DIRECTION_X;
             setStatus(SetDistance);
             break;
         }
         case DIRECTION_POINT:
             // stay in free direction
-            direction = DIRECTION_POINT;
+            m_direction = DIRECTION_POINT;
             setStatus(SetPoint);
             break;
         case DIRECTION_ANGLE:
             // stay in angle mode
-            direction = DIRECTION_ANGLE;
+            m_direction = DIRECTION_ANGLE;
             // by handle status differently for relative and absolute mode
-            if (angleIsRelative){
+            if (m_angleIsRelative){
                 setStatus(SetDistance);
             }
             else {
@@ -356,7 +356,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(int status, const QString &c)
             bool ok = false;
             double distance = RS_Math::eval(c, &ok);
             if (ok && LC_LineMath::isMeaningful(distance)){
-                switch (direction) {
+                switch (m_direction) {
                     case DIRECTION_X: {// the value is for x coordinate adjustment
                         RS_Vector ucsStart = toUCS(m_actionData->data.startpoint);
                         RS_Vector ucsEndPoint = RS_Vector(ucsStart.x + distance, ucsStart.y);
@@ -469,8 +469,8 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             updateMouseWidgetTRBack(tr("Specify direction (x or y) or [%1]").arg(msg));
             break;
         case SetDistance: {
-            bool toX = direction == DIRECTION_X;
-            bool toY = direction == DIRECTION_Y;
+            bool toX = m_direction == DIRECTION_X;
+            bool toY = m_direction == DIRECTION_Y;
             msg += "/";
             msg += command("p");
             msg += "/";
@@ -486,10 +486,10 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
                 msg += command("x");
                 updateMouseWidgetTRBack(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg));
             }
-            else if (direction == DIRECTION_ANGLE){
+            else if (m_direction == DIRECTION_ANGLE){
                 msg += "/";
                 msg += command("x");
-                QString angleStr = RS_Math::doubleToString(angleDegrees, 1);
+                QString angleStr = RS_Math::doubleToString(m_angleDegrees, 1);
                 updateMouseWidgetTRBack(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;
@@ -681,13 +681,13 @@ double LC_ActionDrawLineSnake::defineActualSegmentAngle(double relativeAngleRad)
 }
 
 RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
-    double ucsBasisAngleToUse = angleDegrees;
-    if (alternativeActionMode){
-        ucsBasisAngleToUse = 180 - angleDegrees;
+    double ucsBasisAngleToUse = m_angleDegrees;
+    if (m_alternativeActionMode){
+        ucsBasisAngleToUse = 180 - m_angleDegrees;
     }
 
     double wcsAngle;
-    if (angleIsRelative){
+    if (m_angleIsRelative){
         double angleRadians = RS_Math::deg2rad(ucsBasisAngleToUse);
         wcsAngle = defineActualSegmentAngle(angleRadians);
     }
@@ -701,12 +701,12 @@ RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
 
 void LC_ActionDrawLineSnake::calculateAngleSegment(double distance){
     double wcsAngle;
-    if (angleIsRelative){
-        double angleRadians = RS_Math::deg2rad(angleDegrees);
+    if (m_angleIsRelative){
+        double angleRadians = RS_Math::deg2rad(m_angleDegrees);
         wcsAngle = defineActualSegmentAngle(angleRadians);
     }
     else{
-        wcsAngle = toWorldAngleFromUCSBasisDegrees(angleDegrees);
+        wcsAngle = toWorldAngleFromUCSBasisDegrees(m_angleDegrees);
     }
     m_actionData->data.endpoint = m_actionData->data.startpoint.relative(distance, wcsAngle);
 }

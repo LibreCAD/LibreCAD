@@ -43,9 +43,9 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool selected) override;
 
-    double angle = 0.0;
-    double scaleFactor = 1.0;
-    bool removePointAfterPaste = false;
+    double m_angle = 0.0;
+    double m_scaleFactor = 1.0;
+    bool m_removePointAfterPaste = false;
 };
 
 #endif // LC_ACTIONPASTETOPOINTS_H

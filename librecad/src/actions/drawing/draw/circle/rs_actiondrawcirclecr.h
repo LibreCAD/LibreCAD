@@ -59,7 +59,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    std::unique_ptr<RS_CircleData> data;
+    std::unique_ptr<RS_CircleData> m_circleData;
     bool setRadiusStr(const QString &sr) ;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;

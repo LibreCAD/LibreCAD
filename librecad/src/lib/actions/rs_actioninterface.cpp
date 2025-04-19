@@ -62,10 +62,10 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
                                        RS2::ActionType actionType)
     :RS_Snapper(actionContext)
     , m_status{0}
-    , name{name}
-    , finished{false}
+    , m_name{name}
+    , m_finished{false}
     , m_graphic{m_container->getGraphic()}
-    , document{m_container->getDocument()}
+    , m_document{m_container->getDocument()}
     , m_actionType{actionType}{
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
@@ -105,11 +105,11 @@ RS2::ActionType RS_ActionInterface::rtti() const{
  * @return name of this action
  */
 QString RS_ActionInterface::getName() {
-    return name;
+    return m_name;
 }
 
 void RS_ActionInterface::setName(const char* _name) {
-    this->name=_name;
+    m_name=_name;
 }
 
 /**
@@ -336,7 +336,7 @@ RS2::CursorType RS_ActionInterface::doGetMouseCursor([[maybe_unused]]int status)
  * @return true, if the action is finished and can be deleted.
  */
 bool RS_ActionInterface::isFinished() const {
-    return finished;
+    return m_finished;
 }
 
 
@@ -357,7 +357,7 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
 	//refuse to quit the default action
 	if(rtti() != RS2::ActionDefault) {
 		m_status = -1;
-		finished = true;
+		m_finished = true;
 		hideOptions();
 		RS_Snapper::finish();
 	}
@@ -369,7 +369,7 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
  * communicate with its predecessor.
  */
 void RS_ActionInterface::setPredecessor(RS_ActionInterface* pre) {
-    predecessor = pre;
+    m_predecessor = pre;
 }
 
 /**
@@ -658,7 +658,7 @@ bool RS_ActionInterface::undoCycleAdd(RS_Entity *e, bool addToContainer) const{
     if (addToContainer){
         m_container->addEntity(e);
     }
-    if (document){
+    if (m_document){
         undoCycleStart();
         undoableAdd(e);
         undoCycleEnd();
@@ -677,7 +677,7 @@ void RS_ActionInterface::undoableDeleteEntity(RS_Entity *entity){
 }
 
 void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity *entityReplacing) {
-    if (document != nullptr) {
+    if (m_document != nullptr) {
         undoCycleStart();
         undoableDeleteEntity(entityToReplace);
         undoableAdd(entityReplacing);
@@ -688,13 +688,13 @@ void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity 
 void RS_ActionInterface::undoCycleEnd() const {
     RS_Undoable* relZeroUndoable = m_viewport->getRelativeZeroUndoable();
     if (relZeroUndoable != nullptr) {
-        document->addUndoable(relZeroUndoable);
+        m_document->addUndoable(relZeroUndoable);
     }
-    document->endUndoCycle();
+    m_document->endUndoCycle();
 }
 
-void RS_ActionInterface::undoCycleStart() const { document->startUndoCycle(); }
-void RS_ActionInterface::undoableAdd(RS_Undoable *e) const { document->addUndoable(e); }
+void RS_ActionInterface::undoCycleStart() const { m_document->startUndoCycle(); }
+void RS_ActionInterface::undoableAdd(RS_Undoable *e) const { m_document->addUndoable(e); }
 
 void RS_ActionInterface::setPenAndLayerToActive(RS_Entity *e) {
     e->setLayerToActive();

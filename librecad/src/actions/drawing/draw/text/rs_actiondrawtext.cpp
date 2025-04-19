@@ -42,7 +42,7 @@ struct RS_ActionDrawText::ActionData {
 RS_ActionDrawText::RS_ActionDrawText(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw Text",actionContext, RS2::ActionDrawText)
 	, m_actionData(std::make_unique<ActionData>())
-	,textChanged(true){
+	,m_textChanged(true){
 }
 
 RS_ActionDrawText::~RS_ActionDrawText() = default;
@@ -53,11 +53,11 @@ void RS_ActionDrawText::init(int status){
     switch (status) {
         case ShowDialog: {
             reset();
-            RS_Text tmp(nullptr, *data);
+            RS_Text tmp(nullptr, *m_textData);
             
             if (RS_DIALOGFACTORY->requestTextDialog(&tmp, m_viewport)){
                 const RS_TextData &editedData = tmp.getData();
-                data.reset(new RS_TextData(editedData));
+                m_textData.reset(new RS_TextData(editedData));
                 setStatus(SetPos);
                 updateOptions();
             } else {
@@ -77,15 +77,15 @@ void RS_ActionDrawText::init(int status){
         default:
             if (status < 0) {
                 m_actionData.release();
-                data.release();
+                m_textData.release();
             }
             break;
     }
 }
 
 void RS_ActionDrawText::reset(){
-    const QString text = data.get() ? data->text : "";
-    data.reset(new RS_TextData(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0),
+    const QString text = m_textData.get() ? m_textData->text : "";
+    m_textData.reset(new RS_TextData(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0),
                                1.0, 1.0,
                                RS_TextData::VABaseline,
                                RS_TextData::HALeft,
@@ -99,16 +99,16 @@ void RS_ActionDrawText::reset(){
 void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
     if (m_actionData->pos.valid){
-        data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
-        auto *text = new RS_Text(m_container, *data);
+        m_textData->angle = toWorldAngleFromUCSBasisDegrees(m_ucsBasicAngleDegrees);
+        auto *text = new RS_Text(m_container, *m_textData);
         text->update();
 
         undoCycleAdd(text);
 
-        textChanged = true;
+        m_textChanged = true;
         m_actionData->secPos = {};
-        if (snappedToRelZero){
-            snappedToRelZero = false;
+        if (m_snappedToRelZero){
+            m_snappedToRelZero = false;
             setStatus(-1);
         }
         else {
@@ -118,19 +118,19 @@ void RS_ActionDrawText::doTrigger() {
 }
 
 void RS_ActionDrawText::preparePreview(){
-    data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
-    if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned){
+    m_textData->angle = toWorldAngleFromUCSBasisDegrees(m_ucsBasicAngleDegrees);
+    if (m_textData->halign == RS_TextData::HAFit || m_textData->halign == RS_TextData::HAAligned){
         if (m_actionData->secPos.valid){
-            auto *text = new RS_Line(data->insertionPoint, m_actionData->secPos);
+            auto *text = new RS_Line(m_textData->insertionPoint, m_actionData->secPos);
             previewEntity(text);
         }
     } else {
-        data->insertionPoint = m_actionData->pos;
-        auto *text = new RS_Text(m_preview.get(), *data);
+        m_textData  ->insertionPoint = m_actionData->pos;
+        auto *text = new RS_Text(m_preview.get(), *m_textData);
         text->update();
         previewEntity(text);
     }
-    textChanged = false;
+    m_textChanged = false;
 }
 
 void RS_ActionDrawText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -145,7 +145,7 @@ void RS_ActionDrawText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetSecPos:{
-            mouse = getSnapAngleAwarePoint(e, data->insertionPoint, mouse, true);
+            mouse = getSnapAngleAwarePoint(e, m_textData->insertionPoint, mouse, true);
             m_actionData->secPos = mouse;
             preparePreview();
             break;
@@ -153,7 +153,7 @@ void RS_ActionDrawText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         default:
             break;
     }
-    appendInfoCursorZoneMessage(tr("Text: ")/*.append("\n")*/.append(data->text), 2, false);
+    appendInfoCursorZoneMessage(tr("Text: ")/*.append("\n")*/.append(m_textData->text), 2, false);
 }
 
 void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
@@ -164,7 +164,7 @@ void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_
             break;
         }
         case SetSecPos:{
-            pos = getSnapAngleAwarePoint(e, data->insertionPoint, pos, false);
+            pos = getSnapAngleAwarePoint(e, m_textData->insertionPoint, pos, false);
             break;
         }
         default:
@@ -182,15 +182,15 @@ void RS_ActionDrawText::onCoordinateEvent(int status, [[maybe_unused]]bool isZer
         case ShowDialog:
             break;
         case SetPos: {
-            data->insertionPoint = mouse;
-            if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned)
+            m_textData->insertionPoint = mouse;
+            if (m_textData->halign == RS_TextData::HAFit || m_textData->halign == RS_TextData::HAAligned)
                 setStatus(SetSecPos);
             else
                 trigger();
             break;
         }
         case SetSecPos: {
-            data->secondPoint = mouse;
+            m_textData->secondPoint = mouse;
             trigger();
             break;
         }
@@ -256,22 +256,22 @@ RS2::CursorType RS_ActionDrawText::doGetMouseCursor([[maybe_unused]] int status)
 }
 
 void RS_ActionDrawText::setText(const QString &t){
-    data->text = t;
-    textChanged = true;
+    m_textData->text = t;
+    m_textChanged = true;
 }
 
 const QString &RS_ActionDrawText::getText() const{
-    return data->text;
+    return m_textData->text;
 }
 
 void RS_ActionDrawText::setUcsAngleDegrees(double ucsRelAngleDegrees){
-    ucsBasicAngleDegrees = ucsRelAngleDegrees;
-    data->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
-    textChanged = true;
+    m_ucsBasicAngleDegrees = ucsRelAngleDegrees;
+    m_textData->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
+    m_textChanged = true;
 }
 
 double RS_ActionDrawText::getUcsAngleDegrees() const{
-    return ucsBasicAngleDegrees;
+    return m_ucsBasicAngleDegrees;
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawText::createOptionsWidget(){

@@ -58,7 +58,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType)
     :RS_PreviewActionInterface(name, actionContext, actionType),
-    highlightedEntity{nullptr}{
+    m_highlightedEntity{nullptr}{
 }
 
 
@@ -86,7 +86,7 @@ void LC_AbstractActionWithPreview::init(int status){
         }
         if (!entitiesForTrigger.isEmpty()){
             showOptions(); // use this as simplest way to read settings for the action
-            if (document){
+            if (m_document){
                 // take care of undo cycle
                 if (isUndoableTrigger()){
                     undoCycleStart();
@@ -191,7 +191,7 @@ bool LC_AbstractActionWithPreview::isUnselectEntitiesOnInitTrigger(){
  */
 void LC_AbstractActionWithPreview::doTrigger() {
     if (doCheckMayTrigger()){
-        if (document){
+        if (m_document){
             if (isUndoableTrigger()){
                 undoCycleStart();
                 performTrigger();
@@ -251,7 +251,7 @@ void LC_AbstractActionWithPreview::setupAndAddTriggerEntities(const QList<RS_Ent
         }
         m_container->addEntity(ent);
         if (undoableTrigger){
-            document->addUndoable(ent);
+            m_document->addUndoable(ent);
         }
     }
 }
@@ -343,7 +343,7 @@ void LC_AbstractActionWithPreview::onMouseRightButtonRelease(int status, LC_Mous
  */
 
 void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
-    alternativeActionMode = false;
+    m_alternativeActionMode = false;
 }
 
 /**
@@ -356,7 +356,7 @@ void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
  * @param e mouse event
  */
 void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]const LC_MouseEvent *e, [[maybe_unused]]int status){
-    alternativeActionMode = e->isShift;
+    m_alternativeActionMode = e->isShift;
 }
 
 /**
@@ -414,8 +414,8 @@ bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]LC_Mous
  */
 void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
     unHighlightEntity();
-    highlightedEntity = en;
-    highlightedEntity->setHighlighted(true);
+    m_highlightedEntity = en;
+    m_highlightedEntity->setHighlighted(true);
     redraw(RS2::RedrawDrawing);
 }
 
@@ -423,10 +423,10 @@ void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
  * Un-highlights previously highlighted and saved entity. Method is pair for highlightEntity() method.
  */
 void LC_AbstractActionWithPreview::unHighlightEntity(){
-    if(highlightedEntity){
-        highlightedEntity->setHighlighted(false);
+    if(m_highlightedEntity){
+        m_highlightedEntity->setHighlighted(false);
         redraw(RS2::RedrawDrawing);
-        highlightedEntity = nullptr;
+        m_highlightedEntity = nullptr;
     }
 }
 
@@ -464,7 +464,7 @@ void LC_AbstractActionWithPreview::onMouseMoveEvent(int status, LC_MouseEvent *e
         if (shouldDrawPreview){
             unHighlightEntity();
             drawPreviewForPoint(e, snap);
-            lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
+            m_lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
         }
         else{
             drawPreview(); // ensure that preview is refreshed if something (like angle snap mark) is there
@@ -527,7 +527,7 @@ void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, LC_Mou
  * @return true if initial pre-snap to relative zero may be triggered by the mouse event
  */
 bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]]LC_MouseEvent *e){
-    return alternativeActionMode;
+    return m_alternativeActionMode;
 }
 
 
@@ -585,9 +585,9 @@ void LC_AbstractActionWithPreview::drawPreviewForPoint(LC_MouseEvent *e, RS_Vect
  */
 void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
     deletePreview();
-    if (lastSnapPoint.valid){
+    if (m_lastSnapPoint.valid){
         if (doCheckMayDrawPreview(nullptr, getStatus())){
-            drawPreviewForPoint(nullptr, lastSnapPoint);
+            drawPreviewForPoint(nullptr, m_lastSnapPoint);
             redraw();
         }
     }
@@ -634,7 +634,7 @@ void LC_AbstractActionWithPreview::finishAction(){
  * May be used by actions that would like to control snap mode during their operations (say, for simplicity of entities selection).
  */
 void LC_AbstractActionWithPreview::restoreSnapMode(){
-    RS_SnapMode restoredMode = RS_SnapMode::fromInt(savedSnapMode);
+    RS_SnapMode restoredMode = RS_SnapMode::fromInt(m_savedSnapMode);
     setGlobalSnapMode(restoredMode);
 }
 
@@ -651,7 +651,7 @@ void LC_AbstractActionWithPreview::setGlobalSnapMode(const RS_SnapMode &mode){
  */
 void LC_AbstractActionWithPreview::setFreeSnap(){
     RS_SnapMode* currentSnapMode = getSnapMode();
-    savedSnapMode = RS_SnapMode::toInt(*currentSnapMode);
+    m_savedSnapMode = RS_SnapMode::toInt(*currentSnapMode);
     currentSnapMode->clear();
     currentSnapMode->snapFree = true;
     setGlobalSnapMode(*currentSnapMode);

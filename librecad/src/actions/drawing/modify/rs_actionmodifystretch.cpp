@@ -55,8 +55,8 @@ void RS_ActionModifyStretch::doTrigger() {
     RS_Modification m(*m_container, m_viewport);
     m.stretch(m_actionData->firstCorner,
               m_actionData->secondCorner,
-              m_actionData->targetPoint - m_actionData->referencePoint, removeOriginals);
-    if (removeOriginals) {
+              m_actionData->targetPoint - m_actionData->referencePoint, m_removeOriginals);
+    if (m_removeOriginals) {
         setStatus(SetFirstCorner);
     }
     else{

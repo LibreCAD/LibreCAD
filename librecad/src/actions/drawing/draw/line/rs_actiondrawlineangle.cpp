@@ -91,7 +91,7 @@ void RS_ActionDrawLineAngle::doTrigger() {
     auto *line = new RS_Line{m_container, m_ActionData->data};
 
     setPenAndLayerToActive(line);
-    if (!persistRelativeZero){
+    if (!m_persistRelativeZero){
         RS_Vector &newRelZero = m_ActionData->data.startpoint;
         if (m_ActionData->snpPoint == SNAP_MIDDLE){ // snap to middle
             newRelZero = (m_ActionData->data.startpoint + m_ActionData->data.endpoint)*0.5;
@@ -101,7 +101,7 @@ void RS_ActionDrawLineAngle::doTrigger() {
 
     undoCycleAdd(line);
 
-    persistRelativeZero = false;
+    m_persistRelativeZero = false;
 
     RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",line->getId());
 }
@@ -127,11 +127,11 @@ void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent 
             RS_Vector relZero = getRelativeZero();
             if (relZero.valid){
                 position = relZero;
-                persistRelativeZero = true;
+                m_persistRelativeZero = true;
             }
         }
         else{
-            persistRelativeZero = false;
+            m_persistRelativeZero = false;
         }
         fireCoordinateEvent(position);
     }
@@ -146,7 +146,7 @@ void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
     double angleRad = adjustRelativeAngleSignByBasis(m_ActionData->ucsBasisAngleRad);
     if (hasFixedAngle()) {
-        if (orthoToAnglesBasis) {
+        if (m_orthoToAnglesBasis) {
             angleRad = toWorldAngleFromUCSBasis(angleRad);
         } else {
             angleRad = toWorldAngle(angleRad);
@@ -315,5 +315,5 @@ LC_ActionOptionsWidget* RS_ActionDrawLineAngle::createOptionsWidget(){
 }
 
 void RS_ActionDrawLineAngle::setInAngleBasis(bool b) {
-  orthoToAnglesBasis = b;
+  m_orthoToAnglesBasis = b;
 }

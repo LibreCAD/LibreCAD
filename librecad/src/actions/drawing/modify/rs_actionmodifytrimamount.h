@@ -43,12 +43,12 @@ public:
     ~RS_ActionModifyTrimAmount() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;
-    double getDistance() const{return distance;}
-    void setDistance(double d){distance = d;}
-    bool isDistanceTotalLength() const{return distanceIsTotalLength;}
-    void setDistanceIsTotalLength(bool on){distanceIsTotalLength = on;}
-    void setSymmetricDistance(bool val){symmetricDistance = val;};
-    bool isSymmetricDistance() const {return symmetricDistance;};
+    double getDistance() const{return m_distance;}
+    void setDistance(double d){m_distance = d;}
+    bool isDistanceTotalLength() const{return m_distanceIsTotalLength;}
+    void setDistanceIsTotalLength(bool on){m_distanceIsTotalLength = on;}
+    void setSymmetricDistance(bool val){m_symmetricDistance = val;};
+    bool isSymmetricDistance() const {return m_symmetricDistance;};
 protected:
     /**
  * Action States.
@@ -57,19 +57,12 @@ protected:
         ChooseTrimEntity      /**< Choosing the entity to trim. */
     };
 
-    RS_AtomicEntity *trimEntity = nullptr;
-    std::unique_ptr<RS_Vector> trimCoord;
-    double distance = 0.;
-    bool distanceIsTotalLength = false;
-    bool symmetricDistance = false;
-    /**
-     * Commands
-     */
-    /*
-    QString cmdDistance;
-    QString cmdDistance2;
-    QString cmdDistance3;
-    */
+    RS_AtomicEntity *m_trimEntity = nullptr;
+    std::unique_ptr<RS_Vector> m_trimCoord;
+    double m_distance = 0.;
+    bool m_distanceIsTotalLength = false;
+    bool m_symmetricDistance = false;
+
     double determineDistance(const RS_AtomicEntity *e) const;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

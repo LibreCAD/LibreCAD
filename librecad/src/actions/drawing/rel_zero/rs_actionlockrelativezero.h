@@ -42,7 +42,7 @@ public:
     void init(int status) override;
     void trigger() override;
 private:
-    bool on = false;
+    bool m_modeOn = false;
 };
 
 #endif

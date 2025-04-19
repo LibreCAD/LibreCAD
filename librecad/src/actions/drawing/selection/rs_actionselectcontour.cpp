@@ -32,7 +32,7 @@
 
 RS_ActionSelectContour::RS_ActionSelectContour(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Select Contours", actionContext, RS2::ActionSelectContour)
-	,en(nullptr){
+	,m_entity(nullptr){
 }
 
 void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
@@ -47,10 +47,10 @@ void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_Mou
 }
 
 void RS_ActionSelectContour::doTrigger() {
-    if (en){
-        if (en->isAtomic()){ // fixme - why it is so??? why it's not suitable to select, say, polyline here too?
+    if (m_entity){
+        if (m_entity->isAtomic()){ // fixme - why it is so??? why it's not suitable to select, say, polyline here too?
             RS_Selection s(*m_container, m_viewport);
-            s.selectContour(en);
+            s.selectContour(m_entity);
         } else
            commandMessage(tr("Entity must be an Atomic Entity."));
     } else
@@ -58,7 +58,7 @@ void RS_ActionSelectContour::doTrigger() {
 }
 
 void RS_ActionSelectContour::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
-    en = catchEntityByEvent(e);
+    m_entity = catchEntityByEvent(e);
     trigger();
 }
 

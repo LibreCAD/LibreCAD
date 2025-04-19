@@ -32,8 +32,8 @@
 
 LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("PasteTransform", actionContext,  RS2::ActionEditPasteTransform),
-    referencePoint{new RS_Vector(false)},
-    data{new PasteData()}{
+    m_referencePoint{new RS_Vector(false)},
+    m_pasteData{new PasteData()}{
 }
 
 void LC_ActionEditPasteTransform::init(int status) {
@@ -47,15 +47,15 @@ void LC_ActionEditPasteTransform::init(int status) {
 void LC_ActionEditPasteTransform::doTrigger() {
     RS_Modification m(*m_container, m_viewport, false);
 
-    int numX = data->arrayXCount;
-    int numY = data->arrayYCount;
+    int numX = m_pasteData->arrayXCount;
+    int numY = m_pasteData->arrayYCount;
 
     RS_Vector xArrayVector;
     RS_Vector yArrayVector;
-    if (data->arrayCreated){
-        double arrayAngle = data->arrayAngle;
-        xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
-        yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
+    if (m_pasteData->arrayCreated){
+        double arrayAngle = m_pasteData->arrayAngle;
+        xArrayVector = RS_Vector::polar(m_pasteData->arraySpacing.x, arrayAngle);
+        yArrayVector = RS_Vector::polar(m_pasteData->arraySpacing.y, arrayAngle + M_PI_2);
     }
     else{
         numX = 1;
@@ -66,8 +66,8 @@ void LC_ActionEditPasteTransform::doTrigger() {
 
     for (int x = 0; x < numX; x++){
         for (int y = 0; y < numY; y++){
-            RS_Vector currentPoint = *referencePoint + xArrayVector*x + yArrayVector * y;
-            const RS_PasteData &pasteData = RS_PasteData(currentPoint, data->factor , data->angle,
+            RS_Vector currentPoint = *m_referencePoint + xArrayVector*x + yArrayVector * y;
+            const RS_PasteData &pasteData = RS_PasteData(currentPoint, m_pasteData->factor , m_pasteData->angle,
                                                          false, "");
             m.paste(pasteData);
             // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
@@ -77,23 +77,23 @@ void LC_ActionEditPasteTransform::doTrigger() {
 
     undoCycleEnd();
 
-    if (!invokedWithControl) {
+    if (!m_invokedWithControl) {
         finish(false);
     }
 }
 
 void LC_ActionEditPasteTransform::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (status==SetReferencePoint) {
-        *referencePoint = e->snapPoint;
+        *m_referencePoint = e->snapPoint;
         m_preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),m_viewport);
-        m_preview->move(*referencePoint);
+        m_preview->move(*m_referencePoint);
 
         if (m_graphic) {
             RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
             RS2::Unit targetUnit = m_graphic->getUnit();
-            double const f = RS_Units::convert(data->factor, sourceUnit, targetUnit);
-            m_preview->scale(*referencePoint, {f, f});
-            m_preview->rotate(*referencePoint, data->angle);
+            double const f = RS_Units::convert(m_pasteData->factor, sourceUnit, targetUnit);
+            m_preview->scale(*m_referencePoint, {f, f});
+            m_preview->rotate(*m_referencePoint, m_pasteData->angle);
 
             if (m_showRefEntitiesOnPreview) {
                 previewMultipleReferencePoints();
@@ -106,7 +106,7 @@ void LC_ActionEditPasteTransform::onMouseMoveEvent(int status, LC_MouseEvent *e)
 }
 
 void LC_ActionEditPasteTransform::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
-    invokedWithControl = e->isControl;
+    m_invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
@@ -115,7 +115,7 @@ void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status,[[maybe_u
 }
 
 void LC_ActionEditPasteTransform::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
-    *referencePoint = pos;
+    *m_referencePoint = pos;
     trigger();
 }
 
@@ -135,34 +135,34 @@ void LC_ActionEditPasteTransform::updateMouseButtonHints() {
     }
 }
 
-double LC_ActionEditPasteTransform::getAngle() const {return data-> angle;}
-void LC_ActionEditPasteTransform::setAngle(double angle) {data->angle = angle;}
-double LC_ActionEditPasteTransform::getFactor() const {return data->factor;}
-void LC_ActionEditPasteTransform::setFactor(double factor) {data->factor = factor;}
-bool LC_ActionEditPasteTransform::isArrayCreated() const {return data->arrayCreated;}
-void LC_ActionEditPasteTransform::setArrayCreated(bool arrayCreated) {data->arrayCreated = arrayCreated;}
-int LC_ActionEditPasteTransform::getArrayXCount() const {return data->arrayXCount;}
-void LC_ActionEditPasteTransform::setArrayXCount(int arrayXCount) {data->arrayXCount = arrayXCount;}
-int LC_ActionEditPasteTransform::getArrayYCount() const {return data->arrayYCount;}
-void LC_ActionEditPasteTransform::setArrayYCount(int arrayYCount) {data->arrayYCount = arrayYCount;}
-double LC_ActionEditPasteTransform::getArraySpacingX() const {return data->arraySpacing.x;}
-void LC_ActionEditPasteTransform::setArraySpacingX(double arraySpacing) {data->arraySpacing.x = arraySpacing;}
-double LC_ActionEditPasteTransform::getArraySpacingY() const {return data->arraySpacing.y;}
-void LC_ActionEditPasteTransform::setArraySpacingY(double arraySpacing) {data->arraySpacing.y = arraySpacing;}
-double LC_ActionEditPasteTransform::getArrayAngle() const {return data->arrayAngle;}
-void LC_ActionEditPasteTransform::setArrayAngle(double arrayAngle) {data->arrayAngle = arrayAngle;}
+double LC_ActionEditPasteTransform::getAngle() const {return m_pasteData-> angle;}
+void LC_ActionEditPasteTransform::setAngle(double angle) {m_pasteData->angle = angle;}
+double LC_ActionEditPasteTransform::getFactor() const {return m_pasteData->factor;}
+void LC_ActionEditPasteTransform::setFactor(double factor) {m_pasteData->factor = factor;}
+bool LC_ActionEditPasteTransform::isArrayCreated() const {return m_pasteData->arrayCreated;}
+void LC_ActionEditPasteTransform::setArrayCreated(bool arrayCreated) {m_pasteData->arrayCreated = arrayCreated;}
+int LC_ActionEditPasteTransform::getArrayXCount() const {return m_pasteData->arrayXCount;}
+void LC_ActionEditPasteTransform::setArrayXCount(int arrayXCount) {m_pasteData->arrayXCount = arrayXCount;}
+int LC_ActionEditPasteTransform::getArrayYCount() const {return m_pasteData->arrayYCount;}
+void LC_ActionEditPasteTransform::setArrayYCount(int arrayYCount) {m_pasteData->arrayYCount = arrayYCount;}
+double LC_ActionEditPasteTransform::getArraySpacingX() const {return m_pasteData->arraySpacing.x;}
+void LC_ActionEditPasteTransform::setArraySpacingX(double arraySpacing) {m_pasteData->arraySpacing.x = arraySpacing;}
+double LC_ActionEditPasteTransform::getArraySpacingY() const {return m_pasteData->arraySpacing.y;}
+void LC_ActionEditPasteTransform::setArraySpacingY(double arraySpacing) {m_pasteData->arraySpacing.y = arraySpacing;}
+double LC_ActionEditPasteTransform::getArrayAngle() const {return m_pasteData->arrayAngle;}
+void LC_ActionEditPasteTransform::setArrayAngle(double arrayAngle) {m_pasteData->arrayAngle = arrayAngle;}
 LC_ActionOptionsWidget *LC_ActionEditPasteTransform::createOptionsWidget() {return new LC_PasteTransformOptions();}
 
 void LC_ActionEditPasteTransform::previewMultipleReferencePoints() {
-    int numX = data->arrayXCount;
-    int numY = data->arrayYCount;
+    int numX = m_pasteData->arrayXCount;
+    int numY = m_pasteData->arrayYCount;
 
     RS_Vector xArrayVector;
     RS_Vector yArrayVector;
-    if (data->arrayCreated) {
-        double arrayAngle = data->arrayAngle;
-        xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
-        yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
+    if (m_pasteData->arrayCreated) {
+        double arrayAngle = m_pasteData->arrayAngle;
+        xArrayVector = RS_Vector::polar(m_pasteData->arraySpacing.x, arrayAngle);
+        yArrayVector = RS_Vector::polar(m_pasteData->arraySpacing.y, arrayAngle + M_PI_2);
     }
     else{
         xArrayVector = RS_Vector(0,0,0);
@@ -173,7 +173,7 @@ void LC_ActionEditPasteTransform::previewMultipleReferencePoints() {
 
     for (int x = 0; x < numX; x++){
         for (int y = 0; y < numY; y++){
-            RS_Vector currentPoint = *referencePoint + xArrayVector*x + yArrayVector * y;
+            RS_Vector currentPoint = *m_referencePoint + xArrayVector*x + yArrayVector * y;
          /*   const RS_PasteData &pasteData = RS_PasteData(currentPoint, data->factor , data->angle,
                                                          false, "");*/
 //            m.paste(pasteData);

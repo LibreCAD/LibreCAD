@@ -53,8 +53,8 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
 private:
-    std::unique_ptr<RS_Vector> pt;
-    std::unique_ptr<RS_EntityContainer> contour;
+    std::unique_ptr<RS_Vector> m_point;
+    std::unique_ptr<RS_EntityContainer> m_contour;
 };
 
 #endif

@@ -31,7 +31,7 @@ LC_ActionDrawArc2PointsBase::LC_ActionDrawArc2PointsBase(const char* name, LC_Ac
 }
 
 void LC_ActionDrawArc2PointsBase::doTrigger() {
-    RS_Entity* createdEntity = createArc(getStatus(), endPoint, alternated, true);
+    RS_Entity* createdEntity = createArc(getStatus(), m_endPoint, m_alternated, true);
     if (createdEntity != nullptr){
 
         createdEntity->setSelected(true);
@@ -40,7 +40,7 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
         undoCycleAdd(createdEntity);
 
         setStatus(SetPoint1);
-        alternated = false;
+        m_alternated = false;
         doAfterTrigger();
     }
     else{
@@ -59,14 +59,14 @@ void LC_ActionDrawArc2PointsBase::onMouseMoveEvent(int status, LC_MouseEvent *e)
             break;
         }
         case SetPoint2:{
-            mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
+            mouse = getSnapAngleAwarePoint(e, m_startPoint, mouse, true);
             bool alternate = e->isControl;
             RS_Arc* arc = createArc(status, mouse, alternate);
             if (arc != nullptr){
                 previewEntityToCreate(arc);
                 RS_Vector center = arc->getCenter();
                 if (m_showRefEntitiesOnPreview) {
-                    previewRefPoint(startPoint);
+                    previewRefPoint(m_startPoint);
                     previewRefSelectablePoint(arc->getEndpoint());
                     previewRefPoint(center);
                     doPreviewOnPoint2Custom(arc);
@@ -89,12 +89,12 @@ void LC_ActionDrawArc2PointsBase::onMouseLeftButtonRelease(int status, LC_MouseE
             break;
         }
         case SetPoint2:{
-            mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
-            if (LC_LineMath::isNotMeaningfulDistance(startPoint, mouse)){
+            mouse = getSnapAngleAwarePoint(e, m_startPoint, mouse, true);
+            if (LC_LineMath::isNotMeaningfulDistance(m_startPoint, mouse)){
                 command(tr("The end point is too close to the start point"));
             }
             else{
-                alternated = e->isControl;
+                m_alternated = e->isControl;
                 fireCoordinateEvent(mouse);
             }
             break;
@@ -114,7 +114,7 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(int status, const QString &co
    bool accept = false;
    QString parameterValueCommand = getParameterCommand();
    if (checkCommand(parameterValueCommand, command)){
-       savedState = status;
+       m_savedState = status;
        setStatus(SetParameterValue);
        accept = true;
    }
@@ -130,7 +130,7 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(int status, const QString &co
            if (r > RS_TOLERANCE) {
                setParameterValue(r);
                updateOptions();
-               setStatus(savedState);
+               setStatus(m_savedState);
            }else {
                commandMessage(tr("Positive value is expected"));
            }
@@ -144,13 +144,13 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(int status, const QString &co
 void LC_ActionDrawArc2PointsBase::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetPoint1:{
-            startPoint = pos;
+            m_startPoint = pos;
             moveRelativeZero(pos);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2:{
-            endPoint = pos;
+            m_endPoint = pos;
             moveRelativeZero(pos);
             proceedFromSetPoint2();
             break;
@@ -197,19 +197,19 @@ RS2::CursorType LC_ActionDrawArc2PointsBase::doGetMouseCursor([[maybe_unused]] i
 }
 
 bool LC_ActionDrawArc2PointsBase::isReversed() const {
-    return reversed;
+    return m_reversed;
 }
 
 void LC_ActionDrawArc2PointsBase::setReversed(bool r) {
-    reversed = r;
+    m_reversed = r;
 }
 
 double LC_ActionDrawArc2PointsBase::getParameter() const {
-    return parameterLen;
+    return m_parameterLen;
 }
 
 void LC_ActionDrawArc2PointsBase::setParameter(double pL) {
-    parameterLen = pL;
+    m_parameterLen = pL;
 }
 
 LC_ActionOptionsWidget *LC_ActionDrawArc2PointsBase::createOptionsWidget() {
@@ -228,5 +228,5 @@ RS_Arc *LC_ActionDrawArc2PointsBase::createArc(int status, RS_Vector pos, bool r
 }
 
 void LC_ActionDrawArc2PointsBase::setParameterValue(double r) {
-    parameterLen = r;
+    m_parameterLen = r;
 }

@@ -31,19 +31,19 @@ LC_ActionSplineModifyBase::LC_ActionSplineModifyBase(const char* name, LC_Action
 }
 
 void LC_ActionSplineModifyBase::doTrigger() {
-    RS_Entity* createdEntity = createModifiedSplineEntity(entityToModify, vertexPoint, directionFromStart);
+    RS_Entity* createdEntity = createModifiedSplineEntity(m_entityToModify, m_vertexPoint, m_directionFromStart);
     if (createdEntity != nullptr){
-        if (document) {
+        if (m_document) {
             createdEntity->setSelected(true);
-            createdEntity->setLayer(entityToModify->getLayer());
-            createdEntity->setPen(entityToModify->getPen(false));
-            createdEntity->setParent(entityToModify->getParent());
+            createdEntity->setLayer(m_entityToModify->getLayer());
+            createdEntity->setPen(m_entityToModify->getPen(false));
+            createdEntity->setParent(m_entityToModify->getParent());
             m_container->addEntity(createdEntity);
             doCompleteTrigger();
-            undoCycleReplace(entityToModify, createdEntity);
+            undoCycleReplace(m_entityToModify, createdEntity);
         }
-        entityToModify = createdEntity;
-        vertexPoint = RS_Vector(false);
+        m_entityToModify = createdEntity;
+        m_vertexPoint = RS_Vector(false);
         doAfterTrigger();
     }
     else{
@@ -61,8 +61,8 @@ void LC_ActionSplineModifyBase::finish(bool updateTB) {
 }
 
 void LC_ActionSplineModifyBase::clean() {
-    if (entityToModify){
-        entityToModify->setSelected(false);
+    if (m_entityToModify){
+        m_entityToModify->setSelected(false);
     }
     deletePreview();
     redraw();

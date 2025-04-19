@@ -52,7 +52,7 @@ protected:
     void setDisplaySelected(bool selected);
 private:
     RS_Entity* m_entity = nullptr;
-    bool modifyCursor = true;
+    bool m_modifyCursor = true;
 };
 
 #endif

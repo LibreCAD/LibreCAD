@@ -45,17 +45,17 @@ public:
     void setArraySpacingY(double arraySpacing);
     double getArrayAngle() const;
     void setArrayAngle(double arrayAngle);
-    bool isSameAngles() const {return sameAngles;}
-    void setSameAngles(bool val) {sameAngles = val;}
+    bool isSameAngles() const {return m_sameAngles;}
+    void setSameAngles(bool val) {m_sameAngles = val;}
     double getAngle() const;
 protected:
     enum Status{
         SetReferencePoint
     };
 
-    std::unique_ptr<RS_Vector> referencePoint;
-    bool invokedWithControl = false;
-    bool sameAngles = false;
+    std::unique_ptr<RS_Vector> m_referencePoint;
+    bool m_invokedWithControl = false;
+    bool m_sameAngles = false;
 
     struct PasteData{
         double angle = 0.0;
@@ -67,7 +67,7 @@ protected:
         double arrayAngle = 0.0;
     };
 
-    std::unique_ptr<PasteData> data;
+    std::unique_ptr<PasteData> m_pasteData;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

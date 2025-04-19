@@ -42,11 +42,11 @@ private:
     /**
      * collected points
      */
-    QVector<RS_Vector> points;
+    QVector<RS_Vector> m_points;
     /*
      * flag from options that indicates whether a line between points should be drawsn
      */
-    bool drawPointsPath = true;
+    bool m_drawPointsPath = true;
 
     void updateQuickInfoWidget(const RS_Vector &coord);
     void updateCollectedPointsByWidget();

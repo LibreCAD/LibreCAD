@@ -58,7 +58,7 @@ public:
     void performExport();
     void trigger() override;
 private:
-    RS_LayerList* layersList = nullptr;
-    Mode exportMode = SelectedMode;
+    RS_LayerList* m_layersList = nullptr;
+    Mode m_exportMode = SelectedMode;
 };
 #endif // LC_ACTIONLAYERSEXPORT_H

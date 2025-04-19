@@ -30,7 +30,7 @@
 
 RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(LC_ActionContext *actionContext, bool on)
     :RS_ActionInterface("(Un-)lock the relative Zero", actionContext, RS2::ActionLockRelativeZero)
-        ,on(on){
+        ,m_modeOn(on){
 }
 
 void RS_ActionLockRelativeZero::init(int status) {
@@ -40,5 +40,5 @@ void RS_ActionLockRelativeZero::init(int status) {
 }
 
 void RS_ActionLockRelativeZero::trigger() {
-    m_viewport->lockRelativeZero(on);
+    m_viewport->lockRelativeZero(m_modeOn);
 }

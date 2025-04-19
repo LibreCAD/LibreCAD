@@ -40,7 +40,7 @@ struct RS_ActionDrawCircleInscribe::ActionData {
  *
  */
 RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(LC_ActionContext *actionContext)
-    :LC_ActionDrawCircleBase("Draw circle inscribed",actionContext, RS2::ActionDrawCircleInscribe), m_actionData(std::make_unique<ActionData>()), valid(false){
+    :LC_ActionDrawCircleBase("Draw circle inscribed",actionContext, RS2::ActionDrawCircleInscribe), m_actionData(std::make_unique<ActionData>()), m_valid(false){
 }
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
@@ -73,7 +73,7 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
 void RS_ActionDrawCircleInscribe::doTrigger() {
     auto *circle = new RS_Circle(m_container, m_actionData->cData);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
     undoCycleAdd(circle);
@@ -165,21 +165,21 @@ void RS_ActionDrawCircleInscribe::onMouseRightButtonRelease(int status, [[maybe_
 }
 
 bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
-    valid = false;
+    m_valid = false;
     if (getStatus() == SetLine3){
         if (en != nullptr){
           m_actionData->lines.push_back(en);
         }
         RS_Circle c(m_preview.get(), m_actionData->cData);
-        valid = c.createInscribe(m_actionData->coord, m_actionData->lines);
-        if (valid){
+        m_valid = c.createInscribe(m_actionData->coord, m_actionData->lines);
+        if (m_valid){
             m_actionData->cData = c.getData();
         }
     }
     if (en != nullptr){
         m_actionData->lines.pop_back();
     }
-    return valid;
+    return m_valid;
 }
 
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints(){

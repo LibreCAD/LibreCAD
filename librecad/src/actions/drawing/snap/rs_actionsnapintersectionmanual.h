@@ -53,9 +53,9 @@ protected:
         ChooseEntity2       /**< Choosing the 2nd entity. */
     };
 
-    RS_Entity* entity1 = nullptr;
-    RS_Entity* entity2 = nullptr;
-    std::unique_ptr<RS_Vector> coord;
+    RS_Entity* m_entity1 = nullptr;
+    RS_Entity* m_entity2 = nullptr;
+    std::unique_ptr<RS_Vector> m_coord;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

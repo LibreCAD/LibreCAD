@@ -34,14 +34,14 @@
 
 QC_ActionGetEnt::QC_ActionGetEnt(LC_ActionContext* actionContext)
         :RS_ActionInterface("Get Entity", actionContext,RS2::ActionGetEntity) {
-    completed = false;
-    message = tr("Select object:");
-    en = nullptr;
+    m_completed = false;
+    m_message = tr("Select object:");
+    m_entity = nullptr;
 }
 
 void QC_ActionGetEnt::updateMouseButtonHints() {
-    if (!completed)
-        updateMouseWidget(message, tr("Cancel"));
+    if (!m_completed)
+        updateMouseWidget(m_message, tr("Cancel"));
     else
         updateMouseWidget();
 }
@@ -52,14 +52,14 @@ RS2::CursorType QC_ActionGetEnt::doGetMouseCursor([[maybe_unused]] int status){
 }
 
 void QC_ActionGetEnt::setMessage(QString msg){
-    message = msg;
+    m_message = msg;
 }
 
 void QC_ActionGetEnt::trigger() {
-    if (en) {
+    if (m_entity) {
         RS_Selection s(*m_container, m_viewport);
-        s.selectSingle(en);
-        completed = true;
+        s.selectSingle(m_entity);
+        m_completed = true;
         updateMouseButtonHints();
     } else {
         RS_DEBUG->print("QC_ActionGetEnt::trigger: Entity is NULL\n");
@@ -67,11 +67,11 @@ void QC_ActionGetEnt::trigger() {
 }
 
 void QC_ActionGetEnt::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e) {
-    en = catchEntity(e);
+    m_entity = catchEntity(e);
     trigger();
 }
 void QC_ActionGetEnt::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e){
-    completed = true;
+    m_completed = true;
     updateMouseButtonHints();
     finish();
 }
@@ -80,7 +80,7 @@ void QC_ActionGetEnt::keyPressEvent(QKeyEvent *e){
     // qDebug() << "QC_ActionGetEnt::keyPressEvent";
     if (e->key() == Qt::Key_Escape) {
         updateMouseWidget();
-        completed = true;
+        m_completed = true;
         // qDebug() << "escape QC_ActionGetEnt";
     }
 }
@@ -89,6 +89,6 @@ void QC_ActionGetEnt::keyPressEvent(QKeyEvent *e){
  * Add selected entity from 'container' to the selection.
  */
 Plugin_Entity *QC_ActionGetEnt::getSelected(Doc_plugin_interface* d) {
-    Plugin_Entity *pe = en ? new Plugin_Entity(en, d) : nullptr;
+    Plugin_Entity *pe = m_entity ? new Plugin_Entity(m_entity, d) : nullptr;
     return pe;
 }

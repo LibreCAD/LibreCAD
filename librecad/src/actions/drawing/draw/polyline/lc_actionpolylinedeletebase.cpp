@@ -35,7 +35,7 @@ void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(LC_MouseEvent *e, RS
     m_snapMode.snapOnEntity = oldSnapOnEntity;
     deletePreview();
     auto polyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e, RS2::EntityPolyline));
-    if (polyline == polylineToModify){
+    if (polyline == m_polylineToModify){
         RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
         segment = RS_Snapper::catchEntity(coordinate, RS2::ResolveAll);
         vertex  = segment->getNearestEndpoint(coordinate);
@@ -58,8 +58,8 @@ void LC_ActionPolylineDeleteBase::finish(bool updateTB){
 }
 
 void LC_ActionPolylineDeleteBase::clean(){
-    if (polylineToModify){
-        polylineToModify->setSelected(false);
+    if (m_polylineToModify){
+        m_polylineToModify->setSelected(false);
     }
     deletePreview();
     redraw();

@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 LC_ActionPenPick::LC_ActionPenPick(LC_ActionContext *actionContext, bool resolve)
     :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", actionContext,
-        resolve?  RS2::ActionPenPickResolved : RS2::ActionPenPick), resolveMode{resolve}{
+        resolve?  RS2::ActionPenPickResolved : RS2::ActionPenPick), m_resolveMode{resolve}{
 }
 
 void LC_ActionPenPick::init(int status){
@@ -92,7 +92,7 @@ void LC_ActionPenPick::applyPenToPenToolBar(RS_Entity* entity){
     if (penToolBar != nullptr){
             RS_Layer *layer = entity->getLayer(true);
             if (layer != nullptr){
-                RS_Pen pen = entity->getPen(resolveMode);
+                RS_Pen pen = entity->getPen(m_resolveMode);
                 RS_Pen layerPen = layer->getPen();
                 RS2::LineType lineType = pen.getLineType();
                 RS2::LineWidth width = pen.getWidth();

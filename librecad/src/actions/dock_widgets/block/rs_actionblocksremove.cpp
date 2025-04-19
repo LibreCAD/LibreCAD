@@ -40,7 +40,7 @@ RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 
-    if (!(m_graphic && document)) {
+    if (!(m_graphic && m_document)) {
         finish(false);
         return;
     }
@@ -75,7 +75,7 @@ void RS_ActionBlocksRemove::trigger() {
                     if (e->is(RS2::EntityInsert)) {
                         auto *ins = static_cast<RS_Insert *>(e);
                         if (ins->getName() == block->getName() && !ins->isUndone()) {
-                            document->addUndoable(ins);
+                            m_document->addUndoable(ins);
                             ins->setUndoState(true);
                             done = false;
                             break;
@@ -96,7 +96,7 @@ void RS_ActionBlocksRemove::trigger() {
 
         // Now remove block from the block list, but do not delete:
         block->setUndoState(true);
-        document->addUndoable(block);
+        m_document->addUndoable(block);
     }
     undoCycleEnd();
 

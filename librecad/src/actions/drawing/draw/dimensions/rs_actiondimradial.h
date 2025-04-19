@@ -43,7 +43,7 @@ public:
     ~RS_ActionDimRadial() override;
 protected:
     /** Data of new dimension */
-    std::unique_ptr<RS_DimRadialData> edata;
+    std::unique_ptr<RS_DimRadialData> m_edata;
     void reset() override;
     RS_Dimension *createDim(RS_EntityContainer *parent) const override;
     RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) override;

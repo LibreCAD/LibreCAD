@@ -38,7 +38,7 @@ class RS_LayerList;
 
 RS_ActionLayersToggleView::RS_ActionLayersToggleView(LC_ActionContext *actionContext, RS_Layer* layer)
     : RS_ActionInterface("Toggle Layer Visibility", actionContext,  RS2::ActionLayersToggleView)
-    , a_layer(layer) {}
+    , m_layer(layer) {}
 
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
@@ -55,7 +55,7 @@ void RS_ActionLayersToggleView::trigger() {
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            m_graphic->toggleLayer(a_layer);
+            m_graphic->toggleLayer(m_layer);
         }
         m_graphic->updateInserts();
         m_container->calculateBorders();

@@ -29,7 +29,7 @@ LC_ActionDrawLinePolygon4::LC_ActionDrawLinePolygon4(LC_ActionContext *actionCon
 LC_ActionDrawLinePolygon4::~LC_ActionDrawLinePolygon4() = default;
 
 QString LC_ActionDrawLinePolygon4::getPoint2Hint() const {
-    if (useVertexVertexMode){
+    if (m_useVertexVertexMode){
         return tr("Specify second corner");
     }
     else{
@@ -38,7 +38,7 @@ QString LC_ActionDrawLinePolygon4::getPoint2Hint() const {
 }
 
 QString LC_ActionDrawLinePolygon4::getPoint1Hint() const {
-    if (useVertexVertexMode){
+    if (m_useVertexVertexMode){
         return tr("Specify first corner");
     }
     else{
@@ -47,7 +47,7 @@ QString LC_ActionDrawLinePolygon4::getPoint1Hint() const {
 }
 
 void LC_ActionDrawLinePolygon4::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
-    double angle = M_PI/number;
+    double angle = M_PI/m_edgesNumber;
     double pointsAngle = m_actionData->point1.angleTo(snap);
 
     double dist = m_actionData->point1.distanceTo(snap) / 2.0;
@@ -57,20 +57,20 @@ void LC_ActionDrawLinePolygon4::preparePolygonInfo(LC_ActionDrawLinePolygonBase:
 
     RS_Vector center = m_actionData->point1.relative(dist, pointsAngle);
     RS_Vector vertex;
-    if (useVertexVertexMode) {
+    if (m_useVertexVertexMode) {
         vertex = snap;
     } else {
         vertex = center.relative(hipotenuse, center.angleTo(m_actionData->point1) + angle);
     }
 
-    if ((number % 2) == 1) {
+    if ((m_edgesNumber % 2) == 1) {
         // odd no. of corners
         double newdist = (dist / (dist + hipotenuse)) * (dist * 2);
         double newopp = tan(angle) * newdist;
         double newhyp = sqrt((newdist * newdist) + (newopp * newopp));
         RS_Vector newcen = RS_Vector::polar(newdist, pointsAngle);
         RS_Vector newcenter = m_actionData->point1 + newcen;
-        if (useVertexVertexMode) {
+        if (m_useVertexVertexMode) {
             newcenter = snap - newcen;
             vertex = newcenter.relative(newhyp, newcenter.angleTo(m_actionData->point1));
         } else {

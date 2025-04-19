@@ -56,7 +56,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    std::unique_ptr<RS_CircleData> data;
+    std::unique_ptr<RS_CircleData> m_circleData;
     struct Points;
     std::unique_ptr<Points> m_actionData;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

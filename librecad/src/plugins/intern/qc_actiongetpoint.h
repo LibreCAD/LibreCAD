@@ -48,12 +48,12 @@ public:
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
     void setMessage(QString msg);
-    bool isCompleted(){return completed;}
-    bool wasCanceled(){return canceled;}
+    bool isCompleted(){return m_completed;}
+    bool wasCanceled(){return m_canceled;}
 protected:
-    bool canceled;
-    bool completed;
-    bool setTargetPoint;
+    bool m_canceled;
+    bool m_completed;
+    bool m_setTargetPoint;
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;

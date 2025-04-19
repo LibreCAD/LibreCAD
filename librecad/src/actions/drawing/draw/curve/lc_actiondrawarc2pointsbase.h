@@ -40,12 +40,12 @@ protected:
         SetPoint2,
         SetParameterValue
     };
-    RS_Vector startPoint;
-    RS_Vector endPoint;
-    bool reversed = false;
-    double parameterLen = 0.0;
-    bool alternated = false;
-    int savedState = SetPoint1;
+    RS_Vector m_startPoint;
+    RS_Vector m_endPoint;
+    bool m_reversed = false;
+    double m_parameterLen = 0.0;
+    bool m_alternated = false;
+    int m_savedState = SetPoint1;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;

@@ -64,7 +64,7 @@ struct LC_CrossData {
  * @param graphicView
  */
 LC_ActionDrawCross::LC_ActionDrawCross(LC_ActionContext *actionContext)
-    :LC_AbstractActionWithPreview("Draw Cross", actionContext,RS2::ActionDrawCross), entity(nullptr){
+    :LC_AbstractActionWithPreview("Draw Cross", actionContext,RS2::ActionDrawCross), m_entity(nullptr){
 }
 
 LC_ActionDrawCross::~LC_ActionDrawCross() = default;
@@ -91,7 +91,7 @@ void LC_ActionDrawCross::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS_Entit
  * @param list
  */
 void LC_ActionDrawCross::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    doCreateEntitiesOnTrigger(entity, list);
+    doCreateEntitiesOnTrigger(m_entity, list);
 }
 
 /**
@@ -114,15 +114,15 @@ void LC_ActionDrawCross::addCrossDataEntities(QList<RS_Entity *> &list, const LC
 }
 
 bool LC_ActionDrawCross::doCheckMayTrigger(){
-    return entity != nullptr; // we need entity selected
+    return m_entity != nullptr; // we need entity selected
 }
 
 RS_Vector LC_ActionDrawCross::doGetRelativeZeroAfterTrigger(){
-    return entity->getCenter(); // just put in center of circle
+    return m_entity->getCenter(); // just put in center of circle
 }
 
 void LC_ActionDrawCross::doAfterTrigger(){
-    entity = nullptr; // cleanup
+    m_entity = nullptr; // cleanup
 }
 
 /**
@@ -146,25 +146,25 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
         isEllipseArcShape = ellipse->isEllipticArc();
     }
 
-    double lenYToUse = lenY;
+    double lenYToUse = m_lenY;
 
-    if (std::abs(lenY) < RS_TOLERANCE){
-        lenYToUse = lenX;
+    if (std::abs(m_lenY) < RS_TOLERANCE){
+        lenYToUse = m_lenX;
     }
 
     // first, determine size of cross based on specified mode
-    switch (crossSizeMode) {
+    switch (m_crossSizeMode) {
         case CROSS_SIZE_EXTEND: // cross should extend shape on specified length
             if (arcShape || isCircle){
                 // for arc and circle we rely on radius
                 double radius = ent->getRadius();
-                lengthX = radius + lenX;
+                lengthX = radius + m_lenX;
                 lengthY = radius + lenYToUse;
                 ellipseAngle = 0.0; // we'll draw for circle, so no ellipse angle there
 
             } else if (ellipse != nullptr) {
                 // for ellipses - we rely on axis radiuses
-                lengthX = ellipse->getMajorRadius() + lenX;
+                lengthX = ellipse->getMajorRadius() + m_lenX;
                 lengthY = ellipse->getMinorRadius() + lenYToUse;
                 ellipseAngle = ellipse->getAngle();
             }
@@ -177,7 +177,7 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
         case CROSS_SIZE_LENGTH:  // cross should have fixed length
             // divide length by 2 because + operator on vector
             // adds the length to both ends of the line.
-            lengthX = lenX / 2;
+            lengthX = m_lenX / 2;
             lengthY = lenYToUse / 2;
             if (isEllipse || isEllipseArcShape){
                 ellipseAngle = ellipse->getAngle();
@@ -188,11 +188,11 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
         case CROSS_SIZE_PERCENT:  //Length is value in percents of radius
             if (arcShape || isCircle){ // for circle, it will be percent of radius
                 double radius = ent->getRadius();
-                lengthX = radius * lenX / 100.0;
+                lengthX = radius * m_lenX / 100.0;
                 lengthY = radius * lenYToUse / 100.0;
                 ellipseAngle = 0.0;
             } else if (isEllipse || isEllipseArcShape){  // for ellipse, calculate percents for each axis
-                lengthX = ellipse->getMajorRadius() * lenX / 100.0;
+                lengthX = ellipse->getMajorRadius() * m_lenX / 100.0;
                 lengthY = ellipse->getMinorRadius() * lenYToUse / 100.0;
                 ellipseAngle = ellipse->getAngle();
             }
@@ -213,7 +213,7 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     RS_Vector vertEnd;
 
 
-    double orientationAngle = toWorldAngleFromUCSBasisDegrees(ucsBasisAngleDegrees);
+    double orientationAngle = toWorldAngleFromUCSBasisDegrees(m_ucsBasisAngleDegrees);
 //    ellipseAngle = toUCSAngle(ellipseAngle);
 
     // determine start and end points for cross lines based on calculated lengths and angle
@@ -261,7 +261,7 @@ bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *ev
  */
 void LC_ActionDrawCross::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
     deleteSnapper();
-    RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchAndDescribe(e, m_circleType, RS2::ResolveAll);
     // check whether entity is ok for drawing cross
     if (en != nullptr){
         bool isArc = en->isArc();
@@ -273,7 +273,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unus
         }
         if (isArc){ // can draw
             // handle visual highlighting
-            entity = en;
+            m_entity = en;
 
             highlightHover(en);
 

@@ -39,7 +39,7 @@ RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;
 void RS_ActionPolylineDel::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (status <= SetPolyline){
-        polylineToModify = nullptr;
+        m_polylineToModify = nullptr;
     }
 }
 
@@ -50,10 +50,10 @@ void RS_ActionPolylineDel::drawSnapper() {
 void RS_ActionPolylineDel::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
     RS_Modification m(*m_container, m_viewport);
-    auto createdPolyline = m.deletePolylineNode(*polylineToModify, vertexToDelete, false);
+    auto createdPolyline = m.deletePolylineNode(*m_polylineToModify, m_vertexToDelete, false);
     if (createdPolyline != nullptr){
-        polylineToModify = createdPolyline;
-        vertexToDelete = RS_Vector(false);
+        m_polylineToModify = createdPolyline;
+        m_vertexToDelete = RS_Vector(false);
         deleteHighlights();
     }
 }
@@ -77,7 +77,7 @@ void RS_ActionPolylineDel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 highlightHover(segment);
                 previewRefSelectablePoint(vertex);
                 RS_Modification m(*m_preview, m_viewport);
-                m.deletePolylineNode(*polylineToModify, vertex, true);
+                m.deletePolylineNode(*m_polylineToModify, vertex, true);
             }
             break;
          }
@@ -95,26 +95,26 @@ void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
             } else if (!isPolyline(en)){
                 commandMessage(tr("Entity must be a polyline."));
             } else {
-                polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                polylineToModify->setSelected(true);
+                m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
+                m_polylineToModify->setSelected(true);
                 setStatus(SetVertex1);
                 redraw();
             }
             break;
         }
         case SetVertex1: {
-            if (polylineToModify == nullptr){
+            if (m_polylineToModify == nullptr){
                 commandMessage(tr("No Entity found."));
             } else {
                 RS_Vector vertex;
                 RS_Entity * segment;
                 getSelectedPolylineVertex(e, vertex, segment);
                 if (vertex.valid){
-                    if (!polylineToModify->isPointOnEntity(vertex)){
+                    if (!m_polylineToModify->isPointOnEntity(vertex)){
                         commandMessage(tr("Deleting point is not on entity."));
                     }
                     else{
-                        vertexToDelete = vertex;
+                        m_vertexToDelete = vertex;
                         deleteSnapper();
                         trigger();
                     }
