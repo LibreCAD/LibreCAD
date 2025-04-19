@@ -31,13 +31,13 @@
 #include "rs_debug.h"
 #include "rs_leader.h"
 
-struct RS_ActionDimLeader::Points {
+struct RS_ActionDimLeader::ActionData {
 std::vector<RS_Vector> points;
 };
 
 RS_ActionDimLeader::RS_ActionDimLeader(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw leaders", actionContext, RS2::ActionDimLeader)
-	, pPoints(std::make_unique<Points>()) {
+	, m_actionData(std::make_unique<ActionData>()) {
     reset();
 }
 
@@ -47,7 +47,7 @@ void RS_ActionDimLeader::reset() {
     //data = RS_LineData(RS_Vector(false), RS_Vector(false));
     //start = RS_Vector(false);
     //history.clear();
-    pPoints->points.clear();
+    m_actionData->points.clear();
 }
 
 void RS_ActionDimLeader::init(int status) {
@@ -56,12 +56,12 @@ void RS_ActionDimLeader::init(int status) {
 }
 
 void RS_ActionDimLeader::doTrigger() {
-    if (!pPoints->points.empty()){
+    if (!m_actionData->points.empty()){
 
         auto *leaderEntity = new RS_Leader(m_container, RS_LeaderData(true));
         setPenAndLayerToActive(leaderEntity);
 
-        for (const auto &vp: pPoints->points) {
+        for (const auto &vp: m_actionData->points) {
             leaderEntity->addVertex(vp);
         }
 
@@ -80,19 +80,19 @@ void RS_ActionDimLeader::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         case SetEndpoint: {
 
-            if (!pPoints->points.empty()){
-                mouse = getSnapAngleAwarePoint(e, pPoints->points.back(), mouse, true);
+            if (!m_actionData->points.empty()){
+                mouse = getSnapAngleAwarePoint(e, m_actionData->points.back(), mouse, true);
 
                 // fill in lines that were already set:
                 RS_Vector last(false);
-                for (const auto &v: pPoints->points) {
+                for (const auto &v: m_actionData->points) {
                     if (last.valid){
                         previewLine(last, v);
                     }
                     last = v;
                 }
 
-                RS_Vector const &p = pPoints->points.back();
+                RS_Vector const &p = m_actionData->points.back();
                 if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(p);
                     previewRefSelectablePoint(mouse);
@@ -113,8 +113,8 @@ void RS_ActionDimLeader::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
             break;
         }
         case SetEndpoint:{
-            if (!pPoints->points.empty()){
-                snapped = getSnapAngleAwarePoint(e, pPoints->points.back(), snapped);
+            if (!m_actionData->points.empty()){
+                snapped = getSnapAngleAwarePoint(e, m_actionData->points.back(), snapped);
             }
             break;
         }
@@ -146,14 +146,14 @@ void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
 void RS_ActionDimLeader::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetStartpoint: {
-            pPoints->points.clear();
-            pPoints->points.push_back(mouse);
+            m_actionData->points.clear();
+            m_actionData->points.push_back(mouse);
             setStatus(SetEndpoint);
             moveRelativeZero(mouse);
             break;
         }
         case SetEndpoint: {
-            pPoints->points.push_back(mouse);
+            m_actionData->points.push_back(mouse);
             moveRelativeZero(mouse);
             break;
         }

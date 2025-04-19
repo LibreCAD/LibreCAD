@@ -41,12 +41,12 @@ void RS_ActionDrawLinePolygonCorCor::previewAdditionalReferences(const RS_Vector
 
 void RS_ActionDrawLinePolygonCorCor::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
 //    creation.createPolygon2(pPoints->point1, mouse, number);
-    double const len = pPoints->point1.distanceTo(snap);
+    double const len = m_actionData->point1.distanceTo(snap);
     double const da = 2.*M_PI/number;
     polygonInfo.vertexRadius = 0.5*len/sin(0.5*da);
 
-    double const angle1 = pPoints->point1.angleTo(snap);
-    RS_Vector center = (pPoints->point1 + snap)*0.5;
+    double const angle1 = m_actionData->point1.angleTo(snap);
+    RS_Vector center = (m_actionData->point1 + snap)*0.5;
 
     //TODO, the center or the polygon could be at left or right side
     //left is chosen here
@@ -54,37 +54,37 @@ void RS_ActionDrawLinePolygonCorCor::preparePolygonInfo(LC_ActionDrawLinePolygon
 
     polygonInfo.centerPoint = center;
 
-    polygonInfo.startingAngle = center.angleTo(pPoints->point1);
+    polygonInfo.startingAngle = center.angleTo(m_actionData->point1);
 }
 
 RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter(const RS_Vector &mouse) const{
     // angle for edge
-    double edgeAngle = pPoints->point1.angleTo(mouse);
+    double edgeAngle = m_actionData->point1.angleTo(mouse);
 
     // rotate second corner so edge will be horizontal
     RS_Vector rotatedCorner2 = mouse;
-    rotatedCorner2 = rotatedCorner2.rotate(pPoints->point1, -edgeAngle);
+    rotatedCorner2 = rotatedCorner2.rotate(m_actionData->point1, -edgeAngle);
 
     // half inner angle of polygon
     double angleFromCornerToCenter = RS_Math::deg2rad((90.0 * (number - 2)) / number);
 
     // middle point of edge
-    RS_Vector edgeCenter = (pPoints->point1 + rotatedCorner2) * 0.5;
+    RS_Vector edgeCenter = (m_actionData->point1 + rotatedCorner2) * 0.5;
 
     // distance between corner and edge center
-    double distanceToEdgeCenter = pPoints->point1.distanceTo(edgeCenter);
+    double distanceToEdgeCenter = m_actionData->point1.distanceTo(edgeCenter);
 
     // leg of triangle with vertexes in corner1, edgeCenter and polygon center
     double distanceToPolygonCenter =  distanceToEdgeCenter * tan(angleFromCornerToCenter);
 
     //normal angle to center of polygon from edge center - depends on whether center is on left or on right from the corner
-    double normalAngle = (edgeCenter.x > pPoints->point1.x) ? M_PI_2 : - M_PI_2;
+    double normalAngle = (edgeCenter.x > m_actionData->point1.x) ? M_PI_2 : - M_PI_2;
 
     // position of rotate polygon center
     RS_Vector center = edgeCenter + RS_Vector::polar(distanceToPolygonCenter, normalAngle);
 
     // actual position of center taking into consideration rotation of the edge
-    center = center.rotate(pPoints->point1, edgeAngle);
+    center = center.rotate(m_actionData->point1, edgeAngle);
     return center;
 }
 

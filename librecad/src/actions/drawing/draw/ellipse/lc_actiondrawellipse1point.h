@@ -45,16 +45,15 @@ public:
     void setReversed(bool b) const override;
     QStringList getAvailableCommands() override;
 protected:
-    struct Points;
-
-    enum Status{
+enum Status{
         SetPoint,
         SetMajorAngle,
         SetAngle1,
         SetAngle2
     };
 
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_ActionData;
     void toSetPointStatus();
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHints() override;

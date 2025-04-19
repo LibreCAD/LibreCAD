@@ -61,8 +61,8 @@ protected:
         SetText               /**< Setting the text in the command line. */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     std::unique_ptr<RS_TextData> data;
     double ucsBasicAngleDegrees = 0.0;
     bool textChanged = false;

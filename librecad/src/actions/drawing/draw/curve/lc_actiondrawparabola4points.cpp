@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_preview.h"
 
-struct LC_ActionDrawParabola4Points::Points {
+struct LC_ActionDrawParabola4Points::ActionData {
     RS_VectorSolutions points;
     std::vector<LC_ParabolaData> pData;
     LC_ParabolaData data;
@@ -37,7 +37,7 @@ struct LC_ActionDrawParabola4Points::Points {
  */
 LC_ActionDrawParabola4Points::LC_ActionDrawParabola4Points(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw parabola from 4 points", actionContext,RS2::ActionDrawParabola4Points),
-     pPoints(std::make_unique<Points>()){
+     m_actionData(std::make_unique<ActionData>()){
 }
 
 LC_ActionDrawParabola4Points::~LC_ActionDrawParabola4Points() = default;
@@ -45,12 +45,12 @@ LC_ActionDrawParabola4Points::~LC_ActionDrawParabola4Points() = default;
 void LC_ActionDrawParabola4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (status == SetPoint1)
-        pPoints->points.clear();
+        m_actionData->points.clear();
 }
 
 void LC_ActionDrawParabola4Points::doTrigger() {
-    if(pPoints->valid){
-        auto* en = new LC_Parabola{m_container, pPoints->data};
+    if(m_actionData->valid){
+        auto* en = new LC_Parabola{m_container, m_actionData->data};
         undoCycleAdd(en);
     }
     setStatus(SetPoint1);
@@ -58,10 +58,10 @@ void LC_ActionDrawParabola4Points::doTrigger() {
 
 void LC_ActionDrawParabola4Points::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
-    pPoints->points.set(status, mouse);
+    m_actionData->points.set(status, mouse);
     if (m_showRefEntitiesOnPreview) {
         for (int i = 0; i < status;i++) {
-            previewRefPoint(pPoints->points.at(i));
+            previewRefPoint(m_actionData->points.at(i));
         }
     }
     switch(status) {
@@ -85,29 +85,29 @@ void LC_ActionDrawParabola4Points::onMouseMoveEvent(int status, LC_MouseEvent *e
 }
 
 bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse, bool rebuild){
-    pPoints->valid = false;
-    if (rebuild|| pPoints->pData.empty()) {
-        pPoints->pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
+    m_actionData->valid = false;
+    if (rebuild|| m_actionData->pData.empty()) {
+        m_actionData->pData = LC_ParabolaData::From4Points({m_actionData->points.begin(), m_actionData->points.end()});
     }
-    if (!pPoints->pData.empty()) {
+    if (!m_actionData->pData.empty()) {
         double ds = RS_MAXDOUBLE;
-        for(const auto& pd: pPoints->pData) {
+        for(const auto& pd: m_actionData->pData) {
             if (pd.valid) {
                 const RS_LineData &axis = pd.GetAxis();
                 auto *l = previewRefLine(axis.startpoint, axis.endpoint);
                 double ds0 = RS_MAXDOUBLE;
                 l->getNearestPointOnEntity(mouse, false, &ds0);
                 if (ds0 < ds) {
-                    pPoints->data = pd;
+                    m_actionData->data = pd;
                     ds = ds0;
-                    pPoints->valid = true;
+                    m_actionData->valid = true;
                 }
             }
         }
-        auto* pl = new LC_Parabola{m_preview.get(), pPoints->data};
+        auto* pl = new LC_Parabola{m_preview.get(), m_actionData->data};
         previewEntity(pl);
     }
-    return pPoints->valid;
+    return m_actionData->valid;
 }
 
 void LC_ActionDrawParabola4Points::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
@@ -121,16 +121,16 @@ void LC_ActionDrawParabola4Points::onMouseRightButtonRelease(int status, [[maybe
     deletePreview();
     initPrevious(status);
     status = getStatus();
-    pPoints->points.resize(status+1);
-    if (!pPoints->points.empty()) {
-        moveRelativeZero(pPoints->points.at(status));
+    m_actionData->points.resize(status+1);
+    if (!m_actionData->points.empty()) {
+        moveRelativeZero(m_actionData->points.at(status));
     }
 }
 
 void LC_ActionDrawParabola4Points::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     int nextStatus = status + 1;
-    pPoints->points.resize(nextStatus);
-    pPoints->points.set(status,mouse);
+    m_actionData->points.resize(nextStatus);
+    m_actionData->points.set(status,mouse);
 
     switch (status) {
         case SetPoint1:
@@ -142,17 +142,17 @@ void LC_ActionDrawParabola4Points::onCoordinateEvent(int status, [[maybe_unused]
         }
         case SetPoint4:    {
             // reject the same point
-            if ((pPoints->points.at(SetPoint4) - pPoints->points.at(SetPoint3)).magnitude() < RS_TOLERANCE){
+            if ((m_actionData->points.at(SetPoint4) - m_actionData->points.at(SetPoint3)).magnitude() < RS_TOLERANCE){
                 break;
             }
-            auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
+            auto pData = LC_ParabolaData::From4Points({m_actionData->points.begin(), m_actionData->points.end()});
             if (!pData.empty()) {
-                pPoints->pData.clear();
-                std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(pPoints->pData), [](const LC_ParabolaData& data){
+                m_actionData->pData.clear();
+                std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(m_actionData->pData), [](const LC_ParabolaData& data){
                     return data.valid;
                 });
-                if (pPoints->pData.size() == 1) { // shortcut for single solution
-                    pPoints->data = pPoints->pData.front();
+                if (m_actionData->pData.size() == 1) { // shortcut for single solution
+                    m_actionData->data = m_actionData->pData.front();
                     trigger();
                 } else {
                     setStatus(nextStatus);

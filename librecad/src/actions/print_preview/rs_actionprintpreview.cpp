@@ -41,7 +41,7 @@
 
 class LC_PrintPreviewView;
 
-struct RS_ActionPrintPreview::Points {
+struct RS_ActionPrintPreview::ActionData {
     RS_Vector v1{};
     RS_Vector v2{};
 };
@@ -51,7 +51,7 @@ struct RS_ActionPrintPreview::Points {
  */
 RS_ActionPrintPreview::RS_ActionPrintPreview(LC_ActionContext *actionContext)
     :RS_ActionInterface("Print Preview", actionContext, RS2::ActionFilePrintPreview)
-    , pPoints(std::make_unique<Points>()){
+    , m_actionData(std::make_unique<ActionData>()){
 
     bool fixed = LC_GET_ONE_BOOL("PrintPreview", "PrintScaleFixed");
 
@@ -95,26 +95,26 @@ void RS_ActionPrintPreview::setPaperOrientation(bool portrait) {
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
         case Moving: {
-            pPoints->v2 = toGraph(e);
+            m_actionData->v2 = toGraph(e);
             // if Shift is pressed the paper moves only horizontally
             if (isShift(e)) {
-                pPoints->v2.y = pPoints->v1.y;
+                m_actionData->v2.y = m_actionData->v1.y;
             }
             // if Ctrl is pressed the paper moves only vertically
             if (isControl(e)) {
-                pPoints->v2.x = pPoints->v1.x;
+                m_actionData->v2.x = m_actionData->v1.x;
             }
             if (m_graphic) {
                 RS_Vector pinsbase = m_graphic->getPaperInsertionBase();
                 double scale = m_graphic->getPaperScale();
-                m_graphic->setPaperInsertionBase(pinsbase - pPoints->v2 * scale + pPoints->v1 * scale);
+                m_graphic->setPaperInsertionBase(pinsbase - m_actionData->v2 * scale + m_actionData->v1 * scale);
 
 #ifdef DEBUG_PAPER_INSERTION_BASE
                 const RS_Vector &pib = graphic->getPaperInsertionBase();
                 LC_ERR << "PIB:" <<  pib.x << " , " << pib.y;
 #endif
             }
-            pPoints->v1 = pPoints->v2;
+            m_actionData->v1 = m_actionData->v2;
             m_graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
             break;
         }
@@ -127,7 +127,7 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral: {
-            pPoints->v1 = toGraph(e);
+            m_actionData->v1 = toGraph(e);
             setStatus(Moving);
             break;
         }

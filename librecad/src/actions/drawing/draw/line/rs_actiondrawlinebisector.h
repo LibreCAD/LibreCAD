@@ -67,8 +67,8 @@ protected:
     double length = 0.;
     /** Number of bisectors to create. */
     int number = 0;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     /** Last status before entering length or number. */
     Status lastStatus = SetLine1;
 

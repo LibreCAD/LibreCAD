@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 
-struct RS_ActionDrawEllipseFociPoint::Points {
+struct RS_ActionDrawEllipseFociPoint::ActionData {
 	// Foci of ellipse
 	RS_Vector focus1,focus2;
 	// A point on ellipse
@@ -41,7 +41,7 @@ struct RS_ActionDrawEllipseFociPoint::Points {
  */
 RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(LC_ActionContext *actionContext)
         :LC_ActionDrawCircleBase("Draw ellipse by foci and a point", actionContext,RS2::ActionDrawEllipseFociPoint)
-    , pPoints(std::make_unique<Points>()){
+    , m_actionData(std::make_unique<ActionData>()){
 }
 
 RS_ActionDrawEllipseFociPoint::~RS_ActionDrawEllipseFociPoint() = default;
@@ -50,18 +50,18 @@ void RS_ActionDrawEllipseFociPoint::init(int status){
     LC_ActionDrawCircleBase::init(status);
 
     if (status == SetFocus1){
-        pPoints->focus1.valid = false;
+        m_actionData->focus1.valid = false;
     }
 }
 
 double RS_ActionDrawEllipseFociPoint::findRatio() const{
-    return std::sqrt(pPoints->d*pPoints->d-pPoints->c*pPoints->c)/pPoints->d;
+    return std::sqrt(m_actionData->d*m_actionData->d-m_actionData->c*m_actionData->c)/m_actionData->d;
 }
 
 void RS_ActionDrawEllipseFociPoint::doTrigger() {
     auto* ellipse = new RS_Ellipse{m_container,
-                                   {pPoints->center,
-                                    pPoints->major*pPoints->d,
+                                   {m_actionData->center,
+                                    m_actionData->major*m_actionData->d,
                                     findRatio(),
                                     0., 0.,false}
     };
@@ -82,28 +82,28 @@ void RS_ActionDrawEllipseFociPoint::onMouseMoveEvent(int status, LC_MouseEvent *
             trySnapToRelZeroCoordinateEvent(e);
             break;
         case SetFocus2: {
-            mouse = getSnapAngleAwarePoint(e, pPoints->focus1, mouse, true);
+            mouse = getSnapAngleAwarePoint(e, m_actionData->focus1, mouse, true);
 
             if (m_showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->focus1);
+                previewRefPoint(m_actionData->focus1);
                 previewRefSelectablePoint(mouse);
-                previewLine(pPoints->focus1, mouse);
-                previewRefLine(pPoints->focus1, mouse);
+                previewLine(m_actionData->focus1, mouse);
+                previewRefLine(m_actionData->focus1, mouse);
             }
             break;
         }
         case SetPoint: {
-            pPoints->point = mouse;
-            pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) +
-                                pPoints->focus2.distanceTo(pPoints->point));
-            if (pPoints->d > pPoints->c + RS_TOLERANCE){
-                auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->major * pPoints->d, findRatio(), 0., 0., false});
+            m_actionData->point = mouse;
+            m_actionData->d = 0.5 * (m_actionData->focus1.distanceTo(m_actionData->point) +
+                                m_actionData->focus2.distanceTo(m_actionData->point));
+            if (m_actionData->d > m_actionData->c + RS_TOLERANCE){
+                auto ellipse = previewToCreateEllipse({m_actionData->center, m_actionData->major * m_actionData->d, findRatio(), 0., 0., false});
                 previewEllipseReferencePoints(ellipse, true, false, mouse);
             }
 
             if (m_showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->focus1);
-                previewRefPoint(pPoints->focus2);
+                previewRefPoint(m_actionData->focus1);
+                previewRefPoint(m_actionData->focus2);
             }
             break;
         }
@@ -115,7 +115,7 @@ void RS_ActionDrawEllipseFociPoint::onMouseMoveEvent(int status, LC_MouseEvent *
 void RS_ActionDrawEllipseFociPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     if (status == SetFocus2){
-        snap = getSnapAngleAwarePoint(e, pPoints->focus1, snap);
+        snap = getSnapAngleAwarePoint(e, m_actionData->focus1, snap);
     }
     fireCoordinateEvent(snap);
 }
@@ -129,26 +129,26 @@ void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(int status, [[maybe_unused
     switch (status) {
         case SetFocus1: {
             moveRelativeZero(mouse);
-            pPoints->focus1 = mouse;
+            m_actionData->focus1 = mouse;
             setStatus(SetFocus2);
             break;
         }
         case SetFocus2: {
-            pPoints->c = 0.5 * pPoints->focus1.distanceTo(mouse);
-            if (pPoints->c > RS_TOLERANCE){
-                pPoints->focus2 = mouse;
-                pPoints->center = (pPoints->focus1 + pPoints->focus2) * 0.5;
-                pPoints->major = pPoints->focus1 - pPoints->center;
-                pPoints->major /= pPoints->c;
-                moveRelativeZero(pPoints->center);
+            m_actionData->c = 0.5 * m_actionData->focus1.distanceTo(mouse);
+            if (m_actionData->c > RS_TOLERANCE){
+                m_actionData->focus2 = mouse;
+                m_actionData->center = (m_actionData->focus1 + m_actionData->focus2) * 0.5;
+                m_actionData->major = m_actionData->focus1 - m_actionData->center;
+                m_actionData->major /= m_actionData->c;
+                moveRelativeZero(m_actionData->center);
                 setStatus(SetPoint);
             }
             break;
         }
         case SetPoint: {
-            pPoints->point = mouse;
-            pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) + pPoints->focus2.distanceTo(pPoints->point));
-            if (pPoints->d > pPoints->c + RS_TOLERANCE){
+            m_actionData->point = mouse;
+            m_actionData->d = 0.5 * (m_actionData->focus1.distanceTo(m_actionData->point) + m_actionData->focus2.distanceTo(m_actionData->point));
+            if (m_actionData->d > m_actionData->c + RS_TOLERANCE){
                 moveRelativeZero(mouse);
                 trigger();
             }
@@ -170,9 +170,9 @@ bool RS_ActionDrawEllipseFociPoint::doProcessCommand(int status, const QString &
         bool ok;
         double a = RS_Math::eval(c, &ok);
         if (ok){
-            pPoints->d = 0.5 * fabs(a);
+            m_actionData->d = 0.5 * fabs(a);
             accept = true;
-            if (pPoints->d > pPoints->c + RS_TOLERANCE){
+            if (m_actionData->d > m_actionData->c + RS_TOLERANCE){
                 trigger();
             } else
                 commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));

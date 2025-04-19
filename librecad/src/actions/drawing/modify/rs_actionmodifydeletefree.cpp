@@ -33,14 +33,14 @@
 #include "rs_polyline.h"
 #include "rs_vector.h"
 
-struct RS_ActionModifyDeleteFree::Points {
+struct RS_ActionModifyDeleteFree::ActionData {
 	RS_Vector v1;
 	RS_Vector v2;
 };
 
 RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(LC_ActionContext *actionContext)
         :RS_ActionInterface("Delete Entities Freehand", actionContext, RS2::ActionModifyDeleteFree)
-		, pPoints(std::make_unique<Points>()){
+		, m_actionData(std::make_unique<ActionData>()){
 	init(0);
 }
 
@@ -50,7 +50,7 @@ void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
     polyline = nullptr;
     e1 = e2 = nullptr;
-    pPoints.reset(new Points{});
+    m_actionData.reset(new ActionData{});
     RS_SnapMode *s = getSnapMode();
     s->snapOnEntity = true;
 }
@@ -67,8 +67,8 @@ void RS_ActionModifyDeleteFree::trigger(){
                     RS_Polyline *pl2 = nullptr;
                     RS_Modification m(*m_container,m_viewport);
                     m.splitPolyline(*polyline,
-                                    *e1, pPoints->v1,
-                                    *e2, pPoints->v2,
+                                    *e1, m_actionData->v1,
+                                    *e2, m_actionData->v2,
                                     &pl1, &pl2);
 
                     if (document) {
@@ -103,7 +103,7 @@ void RS_ActionModifyDeleteFree::trigger(){
 void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent *e){
     switch (status) {
         case 0: {
-            pPoints->v1 = snapPoint(e);
+            m_actionData->v1 = snapPoint(e);
             e1 = getKeyEntity();
             if (e1) {
                 RS_EntityContainer *parent = e1->getParent();
@@ -123,7 +123,7 @@ void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent
             break;
         }
         case 1: {
-            pPoints->v2 = snapPoint(e);
+            m_actionData->v2 = snapPoint(e);
             e2 = getKeyEntity();
 
             if (e2) {

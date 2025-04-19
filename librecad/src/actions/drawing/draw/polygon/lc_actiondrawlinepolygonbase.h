@@ -53,7 +53,7 @@ protected:
         SetRadius
     };
 
-    struct Points {
+    struct ActionData {
         RS_Vector point1;
         RS_Vector point2;
     };
@@ -65,7 +65,7 @@ protected:
         double innerRadius = 0.0;
     };
 
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<ActionData> m_actionData;
 
 /** Last status before entering text. */
     Status lastStatus = SetPoint1;

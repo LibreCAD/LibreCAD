@@ -58,9 +58,9 @@ protected:
     /**
      * information about corners
      */
-    struct Points;
+    struct ActionData;
     int endRelativeZeroPointCorner {3};
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<ActionData> m_actionData;
 
     /**
      * inner angle of quadrangle

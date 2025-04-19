@@ -46,8 +46,8 @@ protected:
         SetFocus2,    //  Setting the second focus. */
         SetPoint    //  Setting a point on ellipse
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     double findRatio() const;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

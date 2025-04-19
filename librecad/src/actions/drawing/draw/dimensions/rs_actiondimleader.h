@@ -56,8 +56,8 @@ protected:
     /**
      * Points set so far.
      */
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
     void reset();
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;

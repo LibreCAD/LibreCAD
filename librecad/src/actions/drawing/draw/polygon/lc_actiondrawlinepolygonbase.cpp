@@ -36,14 +36,14 @@
 class RS_Layer;
 
 LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, actionContext, actionType),number(3), pPoints(std::make_unique<Points>()), lastStatus(SetPoint1){}
+    :RS_PreviewActionInterface(name, actionContext, actionType),number(3), m_actionData(std::make_unique<ActionData>()), lastStatus(SetPoint1){}
 
 LC_ActionDrawLinePolygonBase::~LC_ActionDrawLinePolygonBase() = default;
 
 void LC_ActionDrawLinePolygonBase::doTrigger() {
     if (document != nullptr) {
         PolygonInfo polygonInfo;
-        preparePolygonInfo(polygonInfo, pPoints->point2);
+        preparePolygonInfo(polygonInfo, m_actionData->point2);
         RS_Polyline *polyline = createShapePolyline(polygonInfo, false);
         if (polyline != nullptr) {
             undoCycleStart();
@@ -90,12 +90,12 @@ void LC_ActionDrawLinePolygonBase::onMouseMoveEvent(int status, LC_MouseEvent *e
             break;
         }
         case SetPoint2: {
-            if (pPoints->point1.valid){
-                mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
+            if (m_actionData->point1.valid){
+                mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
                 createPolygonPreview(mouse);
                 if (m_showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints->point1);
-                    previewRefLine(pPoints->point1,mouse);
+                    previewRefPoint(m_actionData->point1);
+                    previewRefLine(m_actionData->point1,mouse);
                     previewRefSelectablePoint(mouse);
                     previewAdditionalReferences(mouse);
                 }
@@ -111,7 +111,7 @@ void LC_ActionDrawLinePolygonBase::onMouseMoveEvent(int status, LC_MouseEvent *e
 void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
-        coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        coord = getSnapAngleAwarePoint(e, m_actionData->point1, coord);
         completeActionOnTrigger = e->isControl;
     }
     fireCoordinateEvent(coord);
@@ -125,13 +125,13 @@ void LC_ActionDrawLinePolygonBase::onMouseRightButtonRelease(int status, [[maybe
 void LC_ActionDrawLinePolygonBase::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPoint1: {
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             setStatus(SetPoint2);
             moveRelativeZero(mouse);
             break;
         }
         case SetPoint2: {
-            pPoints->point2 = mouse;
+            m_actionData->point2 = mouse;
             trigger();
             break;
         }

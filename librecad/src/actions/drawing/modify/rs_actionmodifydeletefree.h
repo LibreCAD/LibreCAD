@@ -51,8 +51,9 @@ private:
     RS_Polyline *polyline = nullptr;
     RS_Entity *e1 = nullptr;
     RS_Entity *e2 = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 };
 
 #endif

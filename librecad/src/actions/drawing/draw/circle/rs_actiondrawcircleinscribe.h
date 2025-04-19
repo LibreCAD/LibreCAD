@@ -51,8 +51,8 @@ protected:
         SetLine3   //  Setting the Third Line.  */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     bool valid = false;
 
     bool preparePreview(RS_Line *en);

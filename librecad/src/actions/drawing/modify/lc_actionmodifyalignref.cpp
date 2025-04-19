@@ -32,9 +32,9 @@ LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(LC_ActionContext *actionContext
 }
 
 void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
-    prepareAlignRefData(pPoints.targetPoint2);
+    prepareAlignRefData(m_actionData.targetPoint2);
     RS_Modification m(*m_container, m_viewport);
-    m.alignRef(pPoints.data, m_selectedEntities, false, keepSelected);
+    m.alignRef(m_actionData.data, m_selectedEntities, false, keepSelected);
     finish(false);
 }
 
@@ -47,42 +47,42 @@ void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent
             break;
         }
         case SetTargetPoint1:{
-            snap = getSnapAngleAwarePoint(e, pPoints.referencePoint1, snap, true);
-            previewRefPoint(pPoints.referencePoint1);
-            previewRefLine(snap, pPoints.referencePoint1);
+            snap = getSnapAngleAwarePoint(e, m_actionData.referencePoint1, snap, true);
+            previewRefPoint(m_actionData.referencePoint1);
+            previewRefLine(snap, m_actionData.referencePoint1);
             previewRefSelectablePoint(snap);
             break;
         }
         case SetRefPoint2:{
             snap = getRelZeroAwarePoint(e, snap);
-            previewRefPoint(pPoints.referencePoint1);
-            previewRefSelectablePoint(pPoints.targetPoint1);
-            previewRefLine(pPoints.referencePoint1, pPoints.targetPoint1);
+            previewRefPoint(m_actionData.referencePoint1);
+            previewRefSelectablePoint(m_actionData.targetPoint1);
+            previewRefLine(m_actionData.referencePoint1, m_actionData.targetPoint1);
             break;
         }
         case SetTargetPoint2:{
-            snap = getSnapAngleAwarePoint(e, pPoints.targetPoint1, snap, true);
-            previewRefPoint(pPoints.referencePoint1);
-            previewRefSelectablePoint(pPoints.targetPoint1);
-            previewRefPoint(pPoints.referencePoint2);
+            snap = getSnapAngleAwarePoint(e, m_actionData.targetPoint1, snap, true);
+            previewRefPoint(m_actionData.referencePoint1);
+            previewRefSelectablePoint(m_actionData.targetPoint1);
+            previewRefPoint(m_actionData.referencePoint2);
             previewRefSelectablePoint(snap);
             if (m_showRefEntitiesOnPreview) {
-                previewRefLine(pPoints.referencePoint1, pPoints.targetPoint1);
-                previewRefLine(pPoints.referencePoint2, snap);
-                previewRefLine(pPoints.targetPoint1, snap);
-                previewRefLine(pPoints.referencePoint1, pPoints.referencePoint2);
+                previewRefLine(m_actionData.referencePoint1, m_actionData.targetPoint1);
+                previewRefLine(m_actionData.referencePoint2, snap);
+                previewRefLine(m_actionData.targetPoint1, snap);
+                previewRefLine(m_actionData.referencePoint1, m_actionData.referencePoint2);
             }
 
             prepareAlignRefData(snap);
 
             RS_Modification m(*m_preview, m_viewport, false);
-            m.alignRef(pPoints.data, m_selectedEntities, true, true);
+            m.alignRef(m_actionData.data, m_selectedEntities, true, true);
 
             if (isInfoCursorForModificationEnabled()) {
                 msg(tr("Align References"))
-                .relative(tr("Offset:"),pPoints.data.offset)
-                .rawAngle(tr("Angle:"), pPoints.data.rotationAngle)
-                .linear(tr("Scale:"),pPoints.data.scaleFactor)
+                .relative(tr("Offset:"),m_actionData.data.offset)
+                .rawAngle(tr("Angle:"), m_actionData.data.rotationAngle)
+                .linear(tr("Scale:"),m_actionData.data.scaleFactor)
                 .toInfoCursorZone2(false);
             }
             break;
@@ -93,25 +93,25 @@ void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent
 }
 
 void LC_ActionModifyAlignRef::prepareAlignRefData(const RS_Vector &snap) {
-    pPoints.data.offset = pPoints.targetPoint1 - pPoints.referencePoint1;
-    pPoints.data.rotationCenter = pPoints.referencePoint1;
+    m_actionData.data.offset = m_actionData.targetPoint1 - m_actionData.referencePoint1;
+    m_actionData.data.rotationCenter = m_actionData.referencePoint1;
 
-    double angleOriginal = pPoints.referencePoint1.angleTo(pPoints.referencePoint2);
-    double angleNew = pPoints.targetPoint1.angleTo(snap);
+    double angleOriginal = m_actionData.referencePoint1.angleTo(m_actionData.referencePoint2);
+    double angleNew = m_actionData.targetPoint1.angleTo(snap);
 
     double rotationAngle = angleNew - angleOriginal;
 
-    pPoints.data.rotationAngle = rotationAngle;
+    m_actionData.data.rotationAngle = rotationAngle;
 
-    double distanceOriginal = pPoints.referencePoint1.distanceTo(pPoints.referencePoint2);
-    double distanceNew = pPoints.targetPoint1.distanceTo(snap);
+    double distanceOriginal = m_actionData.referencePoint1.distanceTo(m_actionData.referencePoint2);
+    double distanceNew = m_actionData.targetPoint1.distanceTo(snap);
 
     double scaleFactor = distanceNew / distanceOriginal;
     if (LC_LineMath::isNotMeaningful(scaleFactor)){
         scaleFactor = 1.0;
     }
 
-    pPoints.data.scaleFactor = scaleFactor;
+    m_actionData.data.scaleFactor = scaleFactor;
 }
 
 void LC_ActionModifyAlignRef::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
@@ -129,7 +129,7 @@ void LC_ActionModifyAlignRef::onMouseLeftButtonReleaseSelected(int status, LC_Mo
             break;
         }
         case SetTargetPoint2:{
-            snap = getSnapAngleAwarePoint(e, pPoints.targetPoint1, snap, true);
+            snap = getSnapAngleAwarePoint(e, m_actionData.targetPoint1, snap, true);
             break;
         }
         default:
@@ -154,26 +154,26 @@ void LC_ActionModifyAlignRef::onMouseRightButtonReleaseSelected(int status, [[ma
 }
 
 LC_ModifyOperationFlags *LC_ActionModifyAlignRef::getModifyOperationFlags() {
-    return &pPoints.data;
+    return &m_actionData.data;
 }
 
 void LC_ActionModifyAlignRef::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetRefPoint1:{
-            pPoints.referencePoint1 = pos;
+            m_actionData.referencePoint1 = pos;
             moveRelativeZero(pos);
             setStatus(SetTargetPoint1);
             break;
         }
         case SetTargetPoint1:{
-            pPoints.targetPoint1 = pos;
+            m_actionData.targetPoint1 = pos;
             setStatus(SetRefPoint2);
             break;
         }
         case SetRefPoint2:{
-            if (LC_LineMath::isMeaningfulDistance(pPoints.referencePoint1, pos)){
-                pPoints.referencePoint2 = pos;
-                moveRelativeZero(pPoints.targetPoint1);
+            if (LC_LineMath::isMeaningfulDistance(m_actionData.referencePoint1, pos)){
+                m_actionData.referencePoint2 = pos;
+                moveRelativeZero(m_actionData.targetPoint1);
                 setStatus(SetTargetPoint2);
             }
             else {
@@ -182,8 +182,8 @@ void LC_ActionModifyAlignRef::onCoordinateEvent(int status, [[maybe_unused]]bool
             break;
         }
         case SetTargetPoint2:{
-            if (LC_LineMath::isMeaningfulDistance(pPoints.targetPoint1, pos)){
-                pPoints.targetPoint2 = pos;
+            if (LC_LineMath::isMeaningfulDistance(m_actionData.targetPoint1, pos)){
+                m_actionData.targetPoint2 = pos;
                 moveRelativeZero(pos);
                 trigger();
             }
@@ -233,11 +233,11 @@ RS2::CursorType LC_ActionModifyAlignRef::doGetMouseCursorSelected([[maybe_unused
 }
 
 void LC_ActionModifyAlignRef::setScale(bool val) {
-   pPoints.data.scale = val;
+   m_actionData.data.scale = val;
 }
 
 bool LC_ActionModifyAlignRef::isScale() {
-    return pPoints.data.scale;
+    return m_actionData.data.scale;
 }
 
 bool LC_ActionModifyAlignRef::isAllowTriggerOnEmptySelection() {

@@ -85,8 +85,8 @@ protected:
         Neutral,
         Moving
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     bool hasOptions = false;
     bool m_bPaperOffset = false;
 

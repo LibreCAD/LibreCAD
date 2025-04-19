@@ -52,14 +52,15 @@ protected:
         SetCircle3,   //  Setting the Third Circle.  */
         SetCenter   //  select the closest tangential Circle.  */
     };
+
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+
     void drawSnapper() override;
     bool preparePreview();
-    struct Points;
     RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
-    std::unique_ptr<Points> pPoints;
     bool getData(RS_Entity *en = nullptr);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
-
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

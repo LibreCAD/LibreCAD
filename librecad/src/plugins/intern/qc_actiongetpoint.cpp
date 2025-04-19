@@ -34,7 +34,7 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 
-struct QC_ActionGetPoint::Points {
+struct QC_ActionGetPoint::ActionData {
     RS_MoveData data;
     RS_Vector referencePoint;
     RS_Vector targetPoint;
@@ -47,8 +47,8 @@ QC_ActionGetPoint::QC_ActionGetPoint(LC_ActionContext *actionContext)
         , canceled(false)
 		, completed{false}
 		, setTargetPoint{false}
-		, pPoints(std::make_unique<Points>()){
-    pPoints->targetPoint = RS_Vector(0,0);
+		, m_actionData(std::make_unique<ActionData>()){
+    m_actionData->targetPoint = RS_Vector(0,0);
 }
 
 QC_ActionGetPoint::~QC_ActionGetPoint() = default;
@@ -66,17 +66,17 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = snapPoint(e);
     if(setTargetPoint){
-        if (pPoints->referencePoint.valid) {
-            pPoints->targetPoint = mouse;
+        if (m_actionData->referencePoint.valid) {
+            m_actionData->targetPoint = mouse;
             RS_Line *line =new RS_Line{m_preview.get(),
-                                       pPoints->referencePoint, mouse};
+                                       m_actionData->referencePoint, mouse};
             line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
             m_preview->addEntity(line);
             RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent: draw preview");
             m_preview->addSelectionFrom(*m_container,m_viewport);
         }
     } else {
-        pPoints->targetPoint = mouse;
+        m_actionData->targetPoint = mouse;
     }
 
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent end");
@@ -97,15 +97,15 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void QC_ActionGetPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
-    pPoints->targetPoint = pos;
-    moveRelativeZero(pPoints->targetPoint);
+    m_actionData->targetPoint = pos;
+    moveRelativeZero(m_actionData->targetPoint);
     trigger();
 }
 
 
 void QC_ActionGetPoint::updateMouseButtonHints() {
     if (!completed)
-        updateMouseWidget(pPoints->message, tr("Cancel"));
+        updateMouseWidget(m_actionData->message, tr("Cancel"));
     else
         updateMouseWidget();
 }
@@ -114,18 +114,18 @@ RS2::CursorType QC_ActionGetPoint::doGetMouseCursor([[maybe_unused]] int status)
     return RS2::CadCursor;
 }
 void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
-    pPoints->referencePoint.x = basepoint->x();
-    pPoints->referencePoint.y = basepoint->y();
+    m_actionData->referencePoint.x = basepoint->x();
+    m_actionData->referencePoint.y = basepoint->y();
     setTargetPoint = true;
 }
 
 void QC_ActionGetPoint::setMessage(QString msg){
-    pPoints->message = msg;
+    m_actionData->message = msg;
 }
 
 void QC_ActionGetPoint::getPoint(QPointF *point){
-    if (pPoints)    {
-        point->setX(pPoints->targetPoint.x);
-        point->setY(pPoints->targetPoint.y);
+    if (m_actionData)    {
+        point->setX(m_actionData->targetPoint.x);
+        point->setY(m_actionData->targetPoint.y);
     }
 }

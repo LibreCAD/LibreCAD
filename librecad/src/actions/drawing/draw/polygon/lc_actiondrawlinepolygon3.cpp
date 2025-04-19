@@ -40,12 +40,12 @@ void LC_ActionDrawLinePolygonCenTan::preparePolygonInfo(LC_ActionDrawLinePolygon
     double tangensAngle = tan(angle);
 
     RS_Vector vertex(0, 0);
-    vertex.x = snap.x + (pPoints->point1.y - snap.y) * tangensAngle;
-    vertex.y = snap.y + (snap.x - pPoints->point1.x) * tangensAngle;
+    vertex.x = snap.x + (m_actionData->point1.y - snap.y) * tangensAngle;
+    vertex.y = snap.y + (snap.x - m_actionData->point1.x) * tangensAngle;
 
-    polygonInfo.vertexRadius = pPoints->point1.distanceTo(vertex);
-    polygonInfo.startingAngle = pPoints->point1.angleTo(vertex);
-    polygonInfo.centerPoint = pPoints->point1;
+    polygonInfo.vertexRadius = m_actionData->point1.distanceTo(vertex);
+    polygonInfo.startingAngle = m_actionData->point1.angleTo(vertex);
+    polygonInfo.centerPoint = m_actionData->point1;
 }
 
 QString LC_ActionDrawLinePolygonCenTan::getPoint2Hint() const { return tr("Specify a tangent"); }

@@ -50,8 +50,8 @@ protected:
         SetPoint3        /**< Setting the 3rd point. */
     };
 
-    struct Points;
-    std::unique_ptr<Points> m_pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     bool alternatedPoints = false;
     void reset() override;
     void preparePreview(bool alternatePoints);

@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 #include "rs_preview.h"
 
-struct RS_ActionDrawEllipse4Points::Points {
+struct RS_ActionDrawEllipse4Points::ActionData {
     RS_VectorSolutions points;
     RS_CircleData cData;
     RS_EllipseData eData;
@@ -40,7 +40,7 @@ struct RS_ActionDrawEllipse4Points::Points {
  */
 RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(LC_ActionContext *actionContext)
 	:LC_ActionDrawCircleBase("Draw ellipse from 4 points", actionContext, RS2::ActionDrawEllipse4Points)
-    ,pPoints(std::make_unique<Points>()){
+    ,m_actionData(std::make_unique<ActionData>()){
 }
 
 RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
@@ -48,16 +48,16 @@ RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 void RS_ActionDrawEllipse4Points::init(int status) {
     LC_ActionDrawCircleBase::init(status);
     if(getStatus() == SetPoint1) {
-        pPoints->points.clear();
+        m_actionData->points.clear();
     }
 }
 
 void RS_ActionDrawEllipse4Points::doTrigger() {
     RS_Entity *en;
-    if (getStatus() == SetPoint4 && pPoints->evalid){
-        en = new RS_Ellipse(m_container, pPoints->eData);
+    if (getStatus() == SetPoint4 && m_actionData->evalid){
+        en = new RS_Ellipse(m_container, m_actionData->eData);
     } else {
-        en = new RS_Circle(m_container, pPoints->cData);
+        en = new RS_Circle(m_container, m_actionData->cData);
     }
 
     if (moveRelPointAtCenterAfterTrigger){
@@ -78,33 +78,33 @@ void RS_ActionDrawEllipse4Points::onMouseMoveEvent(int status, LC_MouseEvent *e)
 
     if (m_showRefEntitiesOnPreview) {
         for (int i = SetPoint2; i <= status; i++) {
-            previewRefPoint(pPoints->points.at(i - 1));
+            previewRefPoint(m_actionData->points.at(i - 1));
         }
     }
 
     if (status == SetPoint2){
-        mouse = getSnapAngleAwarePoint(e, pPoints->points.at(SetPoint1), mouse, true);
+        mouse = getSnapAngleAwarePoint(e, m_actionData->points.at(SetPoint1), mouse, true);
     }
 
-    pPoints->points.set(status, mouse);
+    m_actionData->points.set(status, mouse);
     if (preparePreview()){
         switch (status) {
             case SetPoint2: {
                 break;
             }
             case SetPoint3: {
-                if (pPoints->valid){
-                    previewToCreateCircle(pPoints->cData);
+                if (m_actionData->valid){
+                    previewToCreateCircle(m_actionData->cData);
 
                     if (m_showRefEntitiesOnPreview) {
-                        previewRefPoint(pPoints->cData.center);
+                        previewRefPoint(m_actionData->cData.center);
                     }
                 }
                 break;
             }
             case SetPoint4: {
-                if (pPoints->evalid) {
-                    auto ellipse = previewToCreateEllipse(pPoints->eData);
+                if (m_actionData->evalid) {
+                    auto ellipse = previewToCreateEllipse(m_actionData->eData);
                     if (m_showRefEntitiesOnPreview) {
                         previewEllipseReferencePoints(ellipse, true);
                         previewRefSelectablePoint(mouse);
@@ -121,7 +121,7 @@ void RS_ActionDrawEllipse4Points::onMouseMoveEvent(int status, LC_MouseEvent *e)
 void RS_ActionDrawEllipse4Points::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     if (status == SetPoint2){
-        snap = getSnapAngleAwarePoint(e, pPoints->points.at(SetPoint1), snap);
+        snap = getSnapAngleAwarePoint(e, m_actionData->points.at(SetPoint1), snap);
     }
     fireCoordinateEvent(snap);
 }
@@ -132,38 +132,38 @@ void RS_ActionDrawEllipse4Points::onMouseRightButtonRelease(int status, [[maybe_
 }
 
 bool RS_ActionDrawEllipse4Points::preparePreview(){
-    pPoints->valid = false;
+    m_actionData->valid = false;
     switch (getStatus()) {
         case SetPoint2:
         case SetPoint3: {
-            RS_Circle c(m_preview.get(), pPoints->cData);
-            pPoints->valid = c.createFrom3P(pPoints->points);
-            if (pPoints->valid){
-                pPoints->cData = c.getData();
+            RS_Circle c(m_preview.get(), m_actionData->cData);
+            m_actionData->valid = c.createFrom3P(m_actionData->points);
+            if (m_actionData->valid){
+                m_actionData->cData = c.getData();
             }
             break;
         }
         case SetPoint4: {
             int j = SetPoint4;
-            pPoints->evalid = false;
-            if ((pPoints->points.get(j) - pPoints->points.get(j - 1)).squared() < RS_TOLERANCE15){
-                RS_Circle c(m_preview.get(), pPoints->cData);
-                pPoints->valid = c.createFrom3P(pPoints->points);
-                if (pPoints->valid){
-                    pPoints->cData = c.getData();
+            m_actionData->evalid = false;
+            if ((m_actionData->points.get(j) - m_actionData->points.get(j - 1)).squared() < RS_TOLERANCE15){
+                RS_Circle c(m_preview.get(), m_actionData->cData);
+                m_actionData->valid = c.createFrom3P(m_actionData->points);
+                if (m_actionData->valid){
+                    m_actionData->cData = c.getData();
                 }
             } else {
-                RS_Ellipse e{m_preview.get(), pPoints->eData};
-                pPoints->valid = e.createFrom4P(pPoints->points);
-                if (pPoints->valid){
-                    pPoints->evalid = pPoints->valid;
-                    pPoints->eData = e.getData();
-                    pPoints->m_bUniqueEllipse = false;
+                RS_Ellipse e{m_preview.get(), m_actionData->eData};
+                m_actionData->valid = e.createFrom4P(m_actionData->points);
+                if (m_actionData->valid){
+                    m_actionData->evalid = m_actionData->valid;
+                    m_actionData->eData = e.getData();
+                    m_actionData->m_bUniqueEllipse = false;
                 } else {
-                    pPoints->evalid = false;
-                    if (pPoints->m_bUniqueEllipse == false){
+                    m_actionData->evalid = false;
+                    if (m_actionData->m_bUniqueEllipse == false){
                         commandMessage(tr("Can not determine uniquely an ellipse"));
-                        pPoints->m_bUniqueEllipse = true;
+                        m_actionData->m_bUniqueEllipse = true;
                     }
                 }
             }
@@ -172,12 +172,12 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
         default:
             break;
     }
-    return pPoints->valid;
+    return m_actionData->valid;
 }
 
 void RS_ActionDrawEllipse4Points::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    pPoints->points.alloc(status + 1);
-    pPoints->points.set(status, mouse);
+    m_actionData->points.alloc(status + 1);
+    m_actionData->points.set(status, mouse);
 
     switch (status) {
         case SetPoint1: {
@@ -191,7 +191,7 @@ void RS_ActionDrawEllipse4Points::onCoordinateEvent(int status, [[maybe_unused]]
             if (preparePreview()){
                 moveRelativeZero(mouse);
                 if (status == SetPoint4 ||
-                    (pPoints->points.get(status) - pPoints->points.get(status - 1)).squared() < RS_TOLERANCE15){
+                    (m_actionData->points.get(status) - m_actionData->points.get(status - 1)).squared() < RS_TOLERANCE15){
                     //also draw the entity, if clicked on the same point twice
                     trigger();
                 } else {

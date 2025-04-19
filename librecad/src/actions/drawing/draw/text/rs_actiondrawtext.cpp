@@ -34,14 +34,14 @@
 #include "rs_preview.h"
 #include "rs_text.h"
 
-struct RS_ActionDrawText::Points {
+struct RS_ActionDrawText::ActionData {
 	RS_Vector pos;
 	RS_Vector secPos;
 };
 
 RS_ActionDrawText::RS_ActionDrawText(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw Text",actionContext, RS2::ActionDrawText)
-	, pPoints(std::make_unique<Points>())
+	, m_actionData(std::make_unique<ActionData>())
 	,textChanged(true){
 }
 
@@ -76,7 +76,7 @@ void RS_ActionDrawText::init(int status){
         }
         default:
             if (status < 0) {
-                pPoints.release();
+                m_actionData.release();
                 data.release();
             }
             break;
@@ -98,7 +98,7 @@ void RS_ActionDrawText::reset(){
 
 void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
-    if (pPoints->pos.valid){
+    if (m_actionData->pos.valid){
         data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
         auto *text = new RS_Text(m_container, *data);
         text->update();
@@ -106,7 +106,7 @@ void RS_ActionDrawText::doTrigger() {
         undoCycleAdd(text);
 
         textChanged = true;
-        pPoints->secPos = {};
+        m_actionData->secPos = {};
         if (snappedToRelZero){
             snappedToRelZero = false;
             setStatus(-1);
@@ -120,12 +120,12 @@ void RS_ActionDrawText::doTrigger() {
 void RS_ActionDrawText::preparePreview(){
     data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
     if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned){
-        if (pPoints->secPos.valid){
-            auto *text = new RS_Line(data->insertionPoint, pPoints->secPos);
+        if (m_actionData->secPos.valid){
+            auto *text = new RS_Line(data->insertionPoint, m_actionData->secPos);
             previewEntity(text);
         }
     } else {
-        data->insertionPoint = pPoints->pos;
+        data->insertionPoint = m_actionData->pos;
         auto *text = new RS_Text(m_preview.get(), *data);
         text->update();
         previewEntity(text);
@@ -139,14 +139,14 @@ void RS_ActionDrawText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetPos:{
             bool snapped = trySnapToRelZeroCoordinateEvent(e);
             if (!snapped) {
-                pPoints->pos = mouse;
+                m_actionData->pos = mouse;
                 preparePreview();
             }
             break;
         }
         case SetSecPos:{
             mouse = getSnapAngleAwarePoint(e, data->insertionPoint, mouse, true);
-            pPoints->secPos = mouse;
+            m_actionData->secPos = mouse;
             preparePreview();
             break;
         }

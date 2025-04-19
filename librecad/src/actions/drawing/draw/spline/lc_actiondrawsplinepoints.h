@@ -46,8 +46,8 @@ public:
     //using degree=2 only
     void setDegree(int /*deg*/) override{}
 protected:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
     void redo();
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

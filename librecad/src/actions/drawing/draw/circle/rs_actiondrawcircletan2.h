@@ -57,8 +57,8 @@ protected:
         SetCenter   //  select the closest tangential Circle.  */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
     RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity * circle);

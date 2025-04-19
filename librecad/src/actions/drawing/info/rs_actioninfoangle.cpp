@@ -36,7 +36,7 @@
 #include "emu_c99.h"
 #endif
 
-struct RS_ActionInfoAngle::Points {
+struct RS_ActionInfoAngle::ActionData {
 	RS_Vector point1;
 	RS_Vector point2;
 
@@ -49,7 +49,7 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Info Angle", actionContext, RS2::ActionInfoAngle)
     ,entity1(nullptr)
     ,entity2(nullptr)
-    ,pPoints(std::make_unique<Points>()){
+    ,m_actionData(std::make_unique<ActionData>()){
 }
 
 RS_ActionInfoAngle::~RS_ActionInfoAngle() = default;
@@ -95,13 +95,13 @@ void RS_ActionInfoAngle::doTrigger() {
             if (entity1 != nullptr && entity2 != nullptr){
                 RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, entity2, false);
                 if (sol.hasValid()) {
-                    pPoints->intersection = sol.get(0);
-                    double angle1 = pPoints->intersection.angleTo(pPoints->point1);
-                    double angle2 = pPoints->intersection.angleTo(pPoints->point2);
+                    m_actionData->intersection = sol.get(0);
+                    double angle1 = m_actionData->intersection.angleTo(m_actionData->point1);
+                    double angle2 = m_actionData->intersection.angleTo(m_actionData->point2);
                     double angle = remainder(angle2 - angle1, 2. * M_PI);
                     QString str = formatAngleRaw(angle);
 
-                    RS_Vector ucsIntersection = toUCS(pPoints->intersection);
+                    RS_Vector ucsIntersection = toUCS(m_actionData->intersection);
                     QString intersectX = formatLinear(ucsIntersection.x);
                     QString intersectY = formatLinear(ucsIntersection.y);
                     if (angle < 0.) {
@@ -153,7 +153,7 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
             auto en = catchAndDescribe(event, RS2::ResolveAll);
             highlightSelected(entity1);
             if (m_showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->point1);
+                previewRefPoint(m_actionData->point1);
             }
             if (isLine(en)){
                 RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, en, false);
@@ -164,9 +164,9 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
                         previewRefSelectablePoint(p2);
                         RS_Vector intersection = sol.get(0);
                         updateInfoCursor(p2,intersection);
-                        previewRefArc(intersection, pPoints->point1, p2, true);
+                        previewRefArc(intersection, m_actionData->point1, p2, true);
                         previewRefPoint(intersection);
-                        previewRefLine(intersection, pPoints->point1);
+                        previewRefLine(intersection, m_actionData->point1);
                         previewRefLine(intersection, p2);
                     }
                 }
@@ -189,7 +189,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
         case SetEntity1:
             entity1 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(entity1)){
-                pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
+                m_actionData->point1 = entity1->getNearestPointOnEntity(mouse);
                 if (e->isControl){
                     trigger();
                 }
@@ -202,7 +202,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
         case SetEntity2:
             entity2 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(entity2)){
-                pPoints->point2 = entity2->getNearestPointOnEntity(mouse);
+                m_actionData->point2 = entity2->getNearestPointOnEntity(mouse);
                 trigger();
                 setStatus(SetEntity1);
             }
@@ -238,7 +238,7 @@ RS2::CursorType RS_ActionInfoAngle::doGetMouseCursor([[maybe_unused]] int status
 
 void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vector &intersection) {
     if (m_infoCursorOverlayPrefs->enabled){
-        double angle1 = intersection.angleTo(pPoints->point1);
+        double angle1 = intersection.angleTo(m_actionData->point1);
         double angle2 = intersection.angleTo(point2);
         double angle = remainder(angle2 - angle1, 2. * M_PI);
 

@@ -96,7 +96,7 @@ private:
         int             startOffset;// offset to start point for close method
     };
 
-    struct Points
+    struct ActionData
     {
         /// Line data defined so far
         RS_LineData data = RS_LineData();
@@ -116,7 +116,7 @@ private:
     /**
      * points data
      */
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<ActionData> m_actionData;
     void resetPoints();
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
     void completeLineSegment(bool close);

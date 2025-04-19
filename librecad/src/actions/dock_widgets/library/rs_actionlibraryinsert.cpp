@@ -33,7 +33,7 @@
 #include "rs_preview.h"
 #include "rs_units.h"
 
-struct RS_ActionLibraryInsert::Points {
+struct RS_ActionLibraryInsert::ActionData {
     RS_Graphic* prev;
     RS_LibraryInsertData data;
 };
@@ -45,8 +45,8 @@ struct RS_ActionLibraryInsert::Points {
  */
 RS_ActionLibraryInsert::RS_ActionLibraryInsert(LC_ActionContext *actionContext)
         :RS_PreviewActionInterface("Library Insert", actionContext, RS2::ActionLibraryInsert)
-		, pPoints(std::make_unique<Points>())
-		,lastStatus(SetTargetPoint){
+		, m_actionData(std::make_unique<ActionData>())
+		,m_lastStatus(SetTargetPoint){
 }
 
 RS_ActionLibraryInsert::~RS_ActionLibraryInsert() = default;
@@ -57,28 +57,28 @@ void RS_ActionLibraryInsert::init(int status) {
 }
 
 void RS_ActionLibraryInsert::setFile(const QString& file) {
-    pPoints->data.file = file;
+    m_actionData->data.file = file;
     LC_DocumentsStorage storage;
-    delete pPoints->prev;
-    pPoints->prev = new RS_Graphic();
-    if (!storage.loadDocument(pPoints->prev, file, RS2::FormatUnknown)) {
+    delete m_actionData->prev;
+    m_actionData->prev = new RS_Graphic();
+    if (!storage.loadDocument(m_actionData->prev, file, RS2::FormatUnknown)) {
         commandMessage(tr("Cannot open file '%1'").arg(file));
     }
 }
 
 void RS_ActionLibraryInsert::reset() {
-    pPoints->data.insertionPoint = {};
-    pPoints->data.factor = 1.0;
-    pPoints->data.angle = 0.0;
-    delete pPoints->prev;
+    m_actionData->data.insertionPoint = {};
+    m_actionData->data.factor = 1.0;
+    m_actionData->data.angle = 0.0;
+    delete m_actionData->prev;
 }
 
 void RS_ActionLibraryInsert::trigger() {
     deletePreview();
     RS_Creation creation(m_container, m_viewport);
-    auto insertData    = pPoints->data;
-    insertData.graphic = pPoints->prev;
-    insertData.angle = toWorldAngleFromUCSBasis(pPoints->data.angle);
+    auto insertData    = m_actionData->data;
+    insertData.graphic = m_actionData->prev;
+    insertData.angle = toWorldAngleFromUCSBasis(m_actionData->data.angle);
     creation.createLibraryInsert(insertData);
     redrawDrawing();
 }
@@ -86,20 +86,20 @@ void RS_ActionLibraryInsert::trigger() {
 void RS_ActionLibraryInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetTargetPoint: {
-            pPoints->data.insertionPoint = e->snapPoint;
+            m_actionData->data.insertionPoint = e->snapPoint;
             //if (block) {
-            m_preview->addAllFrom(*pPoints->prev, m_viewport);
-            m_preview->move(pPoints->data.insertionPoint);
-            m_preview->scale(pPoints->data.insertionPoint,
-                           RS_Vector(pPoints->data.factor, pPoints->data.factor));
+            m_preview->addAllFrom(*m_actionData->prev, m_viewport);
+            m_preview->move(m_actionData->data.insertionPoint);
+            m_preview->scale(m_actionData->data.insertionPoint,
+                           RS_Vector(m_actionData->data.factor, m_actionData->data.factor));
             // unit conversion:
             if (m_graphic) {
-                double const uf = RS_Units::convert(1.0, pPoints->prev->getUnit(),
+                double const uf = RS_Units::convert(1.0, m_actionData->prev->getUnit(),
                                                     m_graphic->getUnit());
-                m_preview->scale(pPoints->data.insertionPoint,
+                m_preview->scale(m_actionData->data.insertionPoint,
                                {uf, uf});
             }
-            m_preview->rotate(pPoints->data.insertionPoint, toWorldAngleFromUCSBasis(pPoints->data.angle));
+            m_preview->rotate(m_actionData->data.insertionPoint, toWorldAngleFromUCSBasis(m_actionData->data.angle));
             // too slow:
             //RS_Creation creation(preview, NULL, false);
             //creation.createInsert(data);
@@ -121,7 +121,7 @@ void RS_ActionLibraryInsert::onMouseRightButtonRelease(int status, [[maybe_unuse
 }
 
 void RS_ActionLibraryInsert::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
-    pPoints->data.insertionPoint = pos;
+    m_actionData->data.insertionPoint = pos;
     trigger();
 }
 
@@ -131,12 +131,12 @@ bool RS_ActionLibraryInsert::doProcessCommand(int status, const QString &c) {
         case SetTargetPoint: {
             if (checkCommand("angle", c)) {
                 deletePreview();
-                lastStatus = SetTargetPoint;
+                m_lastStatus = SetTargetPoint;
                 setStatus(SetAngle);
                 accept = true;
             } else if (checkCommand("factor", c)) {
                 deletePreview();
-                lastStatus = (Status) status;
+                m_lastStatus = (Status) status;
                 setStatus(SetFactor);
                 accept = true;
             }
@@ -146,13 +146,13 @@ bool RS_ActionLibraryInsert::doProcessCommand(int status, const QString &c) {
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok) {
-                pPoints->data.angle = RS_Math::deg2rad(a);
+                m_actionData->data.angle = RS_Math::deg2rad(a);
                 accept = true;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         case SetFactor: {
@@ -165,7 +165,7 @@ bool RS_ActionLibraryInsert::doProcessCommand(int status, const QString &c) {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         default:
@@ -206,19 +206,19 @@ void RS_ActionLibraryInsert::updateMouseButtonHints() {
 }
 
 double RS_ActionLibraryInsert::getAngle() const{
-    return pPoints->data.angle;
+    return m_actionData->data.angle;
 }
 
 void RS_ActionLibraryInsert::setAngle(double a) {
-    pPoints->data.angle = a;
+    m_actionData->data.angle = a;
 }
 
 double RS_ActionLibraryInsert::getFactor() const{
-    return pPoints->data.factor;
+    return m_actionData->data.factor;
 }
 
 void RS_ActionLibraryInsert::setFactor(double f) {
-    pPoints->data.factor = f;
+    m_actionData->data.factor = f;
 }
 
 RS2::CursorType RS_ActionLibraryInsert::doGetMouseCursor([[maybe_unused]] int status){

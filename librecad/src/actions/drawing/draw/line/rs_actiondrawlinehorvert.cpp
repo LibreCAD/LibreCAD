@@ -29,7 +29,7 @@
 #include "rs_debug.h"
 #include "rs_line.h"
 
-struct RS_ActionDrawLineHorVert::Points {
+struct RS_ActionDrawLineHorVert::ActionData {
 	/**
 	 * Line data.
 	 */
@@ -43,7 +43,7 @@ struct RS_ActionDrawLineHorVert::Points {
 
 RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw horizontal/vertical lines",actionContext,RS2::ActionDrawLineHorVert),
-    pPoints(std::make_unique<Points>()){
+    m_actionData(std::make_unique<ActionData>()){
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
 }
@@ -51,7 +51,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(LC_ActionContext *actionConte
 RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
 void RS_ActionDrawLineHorVert::reset(){
-    pPoints->data = {};
+    m_actionData->data = {};
 }
 
 void RS_ActionDrawLineHorVert::init(int status){
@@ -61,7 +61,7 @@ void RS_ActionDrawLineHorVert::init(int status){
 }
 
 void RS_ActionDrawLineHorVert::doTrigger() {
-    auto *line = new RS_Line(m_container, pPoints->data);
+    auto *line = new RS_Line(m_container, m_actionData->data);
     setPenAndLayerToActive(line);
     moveRelativeZero(line->getMiddlePoint());
     undoCycleAdd(line);
@@ -70,17 +70,17 @@ void RS_ActionDrawLineHorVert::doTrigger() {
 
 void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
-    if (getStatus() == SetEndpoint && pPoints->p1.valid){
-        RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
-        RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
+    if (getStatus() == SetEndpoint && m_actionData->p1.valid){
+        RS_Vector p2x = RS_Vector(mouse.x, m_actionData->p1.y);
+        RS_Vector p2y = RS_Vector(m_actionData->p1.x, mouse.y);
         if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x)) {
-            pPoints->p2 = p2x;
+            m_actionData->p2 = p2x;
         }
         else {
-            pPoints->p2 = p2y;
+            m_actionData->p2 = p2y;
         }
-        pPoints->data = {pPoints->p1, pPoints->p2};
-        previewToCreateLine(pPoints->p1, pPoints->p2);
+        m_actionData->data = {m_actionData->p1, m_actionData->p2};
+        previewToCreateLine(m_actionData->p1, m_actionData->p2);
     }
 }
 
@@ -88,12 +88,12 @@ void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, LC_MouseEven
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetStartpoint: {
-            pPoints->p1 = mouse;
+            m_actionData->p1 = mouse;
             setStatus(SetEndpoint);
             break;
         }
         case SetEndpoint: {
-            pPoints->p2 = mouse;
+            m_actionData->p2 = mouse;
             trigger();
             setStatus(SetStartpoint);
             break;

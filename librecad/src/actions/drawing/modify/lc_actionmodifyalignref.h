@@ -41,7 +41,7 @@ protected:
         SetTargetPoint2
     };
 
-    struct Points {
+    struct ActionData {
         LC_AlignRefData data;
         RS_Vector referencePoint1;
         RS_Vector targetPoint1;
@@ -49,7 +49,7 @@ protected:
         RS_Vector targetPoint2;
     };
 
-    Points pPoints;
+    ActionData m_actionData;
 
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void updateMouseButtonHintsForSelection() override;

@@ -52,8 +52,8 @@ protected:
         SetPoint=2,   //  Setting point on the desired circle.  */
         SetCenter
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS_Entity* catchCircle(LC_MouseEvent* e, bool forPreview);
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

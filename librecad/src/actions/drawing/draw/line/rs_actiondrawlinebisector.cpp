@@ -38,7 +38,7 @@ namespace {
 }
 
 
-struct RS_ActionDrawLineBisector::Points {
+struct RS_ActionDrawLineBisector::ActionData {
 	/** Mouse pos when choosing the 1st line */
 	RS_Vector coord1;
 	/** Mouse pos when choosing the 2nd line */
@@ -48,7 +48,7 @@ struct RS_ActionDrawLineBisector::Points {
 RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw Bisectors", actionContext, RS2::ActionDrawLineBisector),
     bisector(nullptr), line1(nullptr), line2(nullptr), length(10.), number(1),
-    pPoints(std::make_unique<Points>()), lastStatus(SetLine1){
+    m_actionData(std::make_unique<ActionData>()), lastStatus(SetLine1){
 }
 
 RS_ActionDrawLineBisector::~RS_ActionDrawLineBisector() = default;
@@ -84,7 +84,7 @@ void RS_ActionDrawLineBisector::setStatus(int status) {
 
 void RS_ActionDrawLineBisector::doTrigger() {
     RS_Creation creation(m_container, m_viewport);
-    creation.createBisector(pPoints->coord1, pPoints->coord2, length, number, line1, line2);
+    creation.createBisector(m_actionData->coord1, m_actionData->coord2, length, number, line1, line2);
 }
 
 void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -100,7 +100,7 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetLine2: {
             highlightSelected(line1);
-            pPoints->coord2 = mouse;
+            m_actionData->coord2 = mouse;
             RS_Entity *en = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
             if (en == line1){
                 line2 = nullptr;
@@ -108,7 +108,7 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 line2 = dynamic_cast<RS_Line *>(en);
 
                 RS_Creation creation(m_preview.get(), nullptr, false);
-                auto ent = creation.createBisector(pPoints->coord1, pPoints->coord2, length, number, line1, line2);
+                auto ent = creation.createBisector(m_actionData->coord1, m_actionData->coord2, length, number, line1, line2);
                 if (ent != nullptr){
                     highlightHover(line2);
                     if (number == 1){
@@ -118,7 +118,7 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
                     }
                     if (m_showRefEntitiesOnPreview) {
-                        previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
+                        previewRefPoint(line1->getNearestPointOnEntity(m_actionData->coord1));
                         previewRefPoint(ent->getStartpoint());
                         RS_Vector nearest = line2->getNearestPointOnEntity(mouse, false);
                         previewRefSelectablePoint(nearest);
@@ -143,7 +143,7 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEve
     RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetLine1: {
-            pPoints->coord1 = mouse;
+            m_actionData->coord1 = mouse;
             RS_Entity *en = RS_Snapper::catchEntity(mouse,g_enTypeList,RS2::ResolveAll);
             if (isLine(en)){
                 line1 = dynamic_cast<RS_Line *>(en);
@@ -153,7 +153,7 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEve
             break;
         }
         case SetLine2:
-            pPoints->coord2 = mouse;
+            m_actionData->coord2 = mouse;
             trigger();
             setStatus(SetLine1);
             break;

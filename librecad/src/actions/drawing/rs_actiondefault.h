@@ -100,8 +100,8 @@ protected:
 
 private:
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS2::SnapRestriction snapRestriction;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 

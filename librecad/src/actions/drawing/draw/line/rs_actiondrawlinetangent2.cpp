@@ -30,7 +30,7 @@
 #include "rs_line.h"
 #include "rs_preview.h"
 
-struct RS_ActionDrawLineTangent2::Points {
+struct RS_ActionDrawLineTangent2::ActionData {
     /** Closest tangent. */
     std::vector<std::unique_ptr<RS_Line>> tangents;
     /** 1st chosen entity */
@@ -49,7 +49,7 @@ namespace {
 }
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Draw Tangents 2", actionContext, RS2::ActionDrawLineTangent2), m_pPoints{std::make_unique<Points>()}{
+    :RS_PreviewActionInterface("Draw Tangents 2", actionContext, RS2::ActionDrawLineTangent2), m_actionData{std::make_unique<ActionData>()}{
     init(SetCircle1);
 }
 
@@ -64,7 +64,7 @@ void RS_ActionDrawLineTangent2::init(int status){
             cleanup();
             break;
         case SetCircle2:
-            m_pPoints->circle2 = nullptr;
+            m_actionData->circle2 = nullptr;
             break;
         case SelectLine:
             break;
@@ -80,10 +80,10 @@ void RS_ActionDrawLineTangent2::finish(bool updateTB){
 }
 
 void RS_ActionDrawLineTangent2::doTrigger() {
-    if (m_pPoints->tangents.empty() || m_pPoints->tangents.front() == nullptr)
+    if (m_actionData->tangents.empty() || m_actionData->tangents.front() == nullptr)
         return;
 
-    auto *newEntity = new RS_Line{m_container, m_pPoints->tangents.front()->getData()};
+    auto *newEntity = new RS_Line{m_container, m_actionData->tangents.front()->getData()};
 
     setPenAndLayerToActive(newEntity);
     undoCycleAdd(newEntity);
@@ -92,8 +92,8 @@ void RS_ActionDrawLineTangent2::doTrigger() {
 }
 
 void RS_ActionDrawLineTangent2::cleanup(){
-    this->m_pPoints->circle1 = nullptr;
-    this->m_pPoints->circle2 = nullptr;
+    this->m_actionData->circle1 = nullptr;
+    this->m_actionData->circle2 = nullptr;
 }
 
 void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -109,13 +109,13 @@ void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetCircle2: {
             RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
-            highlightSelected(m_pPoints->circle1);
-            if (en != nullptr && en != m_pPoints->circle1){
+            highlightSelected(m_actionData->circle1);
+            if (en != nullptr && en != m_actionData->circle1){
                 highlightHover(en);
-                m_pPoints->circle2 = en;
+                m_actionData->circle2 = en;
 
-                m_pPoints->tangents = RS_Creation{m_preview.get(), nullptr, false}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
-                if (m_pPoints->tangents.empty()){
+                m_actionData->tangents = RS_Creation{m_preview.get(), nullptr, false}.createTangent2(m_actionData->circle1, m_actionData->circle2);
+                if (m_actionData->tangents.empty()){
                 } else {
                     preparePreview(status, e);
                 }
@@ -124,8 +124,8 @@ void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SelectLine: {
             // FIXME _ SAND _ is there not-necessary click?
-            highlightSelected(m_pPoints->circle1);
-            highlightSelected(m_pPoints->circle2);
+            highlightSelected(m_actionData->circle1);
+            highlightSelected(m_actionData->circle2);
             preparePreview(status, e);
             break;
         }
@@ -136,15 +136,15 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
     deleteSnapper();
     switch (status) {
         case SetCircle1: {
-            m_pPoints->circle1 = catchEntityByEvent(e, circleType, RS2::ResolveAll);
-            if (!m_pPoints->circle1) return;
+            m_actionData->circle1 = catchEntityByEvent(e, circleType, RS2::ResolveAll);
+            if (!m_actionData->circle1) return;
             init(status + 1);
             break;
         }
         case SetCircle2: {
-            m_pPoints->tangents = RS_Creation{m_preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
-            if (!m_pPoints->tangents.empty()){
-                if (m_pPoints->tangents.size() == 1){
+            m_actionData->tangents = RS_Creation{m_preview.get()}.createTangent2(m_actionData->circle1, m_actionData->circle2);
+            if (!m_actionData->tangents.empty()){
+                if (m_actionData->tangents.size() == 1){
                     trigger();
                 } else {
                     init(status + 1);
@@ -155,7 +155,7 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
             break;
         }
         case SelectLine: {
-            if (!m_pPoints->tangents.empty())
+            if (!m_actionData->tangents.empty())
                 trigger();
             break;
         }
@@ -168,8 +168,8 @@ void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_un
     deleteSnapper();
     deletePreview();
     if (status == SetCircle1){
-        if (m_pPoints->circle1 != nullptr){
-            m_pPoints->circle1 = nullptr;
+        if (m_actionData->circle1 != nullptr){
+            m_actionData->circle1 = nullptr;
         }
     }
     initPrevious(status);
@@ -180,18 +180,18 @@ void RS_ActionDrawLineTangent2::preparePreview(int status, LC_MouseEvent *e){
         case SetCircle2:
         case SelectLine: {
             RS_Vector mouse = e->graphPoint;
-            std::sort(m_pPoints->tangents.begin(), m_pPoints->tangents.end(), [&mouse](
+            std::sort(m_actionData->tangents.begin(), m_actionData->tangents.end(), [&mouse](
                 const std::unique_ptr<RS_Line> &lhs,
                 const std::unique_ptr<RS_Line> &rhs){
                 return linePointDist(*lhs, mouse) < linePointDist(*rhs, mouse);
             });
-            for (const auto &line: m_pPoints->tangents) {
+            for (const auto &line: m_actionData->tangents) {
                 if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(line->getData().startpoint);
                 }
                 previewRefSelectablePoint(line->getData().endpoint);
             }
-            const RS_LineData &lineData = m_pPoints->tangents.front()->getData();
+            const RS_LineData &lineData = m_actionData->tangents.front()->getData();
             previewToCreateLine(lineData.startpoint, lineData.endpoint);
             break;
         }
