@@ -34,7 +34,6 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 
-
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
@@ -239,8 +238,6 @@ bool RS_Arc::createFrom2PDirectionAngle(
 
     return true;
 }
-
-
 
 /**
  * Creates an arc from its startpoint, endpoint and bulge.
