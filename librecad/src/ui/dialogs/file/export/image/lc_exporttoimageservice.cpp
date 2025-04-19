@@ -23,6 +23,8 @@
 
 #include "lc_exporttoimageservice.h"
 
+#include <QApplication>
+
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_imageexporter.h"
 #include "qc_applicationwindow.h"

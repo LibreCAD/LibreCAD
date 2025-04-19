@@ -34,7 +34,7 @@
  * File Open / Save dialogs.
  */
 class QG_FileDialog : public QFileDialog {
-
+    Q_OBJECT
 public:
     enum FileType{
         DrawingFile=0,

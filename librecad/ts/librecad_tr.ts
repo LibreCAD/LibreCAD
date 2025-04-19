@@ -149,7 +149,7 @@
 <context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="44"/>
+        <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41"/>
         <source>Start point may set in distance or point state only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,78 +157,78 @@
 <context>
     <name>LC_AbstractActionDrawRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>Rectangle</source>
         <translation type="unfinished">Dikdörtgen</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="168"/>
         <source>Width:</source>
         <translation type="unfinished">Genişlik:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="169"/>
         <source>Height:</source>
         <translation type="unfinished">Yükseklik:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="170"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="199"/>
         <source>Invalid Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="210"/>
         <source>Invalid radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="360"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="355"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="411"/>
         <source>Specify insertion point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="414"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="417"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="420"/>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="423"/>
         <source>Specify corner bevel length (x,y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="431"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="426"/>
         <source>Specify corner radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="434"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="429"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished"></translation>
@@ -237,12 +237,12 @@
 <context>
     <name>LC_AbstractActionWithPreview</name>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="734"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="727"/>
         <source> is not divided as it is locked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="742"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="735"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -250,32 +250,32 @@
 <context>
     <name>LC_ActionCircleDimBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
         <translation type="unfinished">Bir çember ya da yay değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="179"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="202"/>
         <source>Select arc or circle entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="202"/>
         <source>Free angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="205"/>
         <source>Specify dimension line position or enter angle:</source>
         <translation type="unfinished">Ölçüm noktasını ve ölçü çizgisinin açısını belirtin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="208"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,7 +283,7 @@
 <context>
     <name>LC_ActionDimArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="184"/>
         <source>Select arc entity</source>
         <translation>Yay varlığı seçin</translation>
     </message>
@@ -292,7 +292,7 @@
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="187"/>
         <source>Specify dimension arc location</source>
         <translation>Boyutlu yay konumu belirt</translation>
     </message>
@@ -300,32 +300,32 @@
 <context>
     <name>LC_ActionDimLinearBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="254"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="252"/>
         <source>Specify first extension line origin</source>
         <translation type="unfinished">İlk ölçüm noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="255"/>
         <source>Specify second extension line origin</source>
         <translation type="unfinished">İkinci ölçüm noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="258"/>
         <source>Specify dimension line location</source>
         <translation type="unfinished">Ölçü çizgisinin yerini belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="258"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="261"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="264"/>
         <source>Enter dimension line angle:</source>
         <translation type="unfinished">Ölçü çzgisinin açısı:</translation>
     </message>
@@ -391,12 +391,12 @@
 <context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="96"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94"/>
         <source>Enter value of central angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="100"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98"/>
         <source>Alternate angle to outer arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -404,32 +404,32 @@
 <context>
     <name>LC_ActionDrawArc2PointsBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="97"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="94"/>
         <source>The end point is too close to the start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="135"/>
         <source>Positive value is expected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="141"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="138"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="178"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="175"/>
         <source>Specify first point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="182"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="179"/>
         <source>Specify second point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="192"/>
         <source>Opposite Arc direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -437,12 +437,12 @@
 <context>
     <name>LC_ActionDrawArc2PointsHeight</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="103"/>
         <source>Enter height of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="107"/>
         <source>Alternative arc where diameter is reduced by height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -450,17 +450,17 @@
 <context>
     <name>LC_ActionDrawArc2PointsLength</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="41"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="42"/>
         <source>The distance between the two points must be less than the arc length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="103"/>
         <source>Enter length of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="107"/>
         <source>Alternate solutions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -504,19 +504,19 @@
 <context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="193"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>yarıçap=%1 seçilen noktalar için çok küçük
 noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="204"/>
         <source>Select from two possible circle centers</source>
         <translation>İki olası çember merkezinden birini seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="225"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
     </message>
@@ -525,7 +525,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="228"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
     </message>
@@ -534,7 +534,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="235"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="231"/>
         <source>Select circle center</source>
         <translation>Çember merkezini seç</translation>
     </message>
@@ -542,7 +542,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawCircleByArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="231"/>
         <source>Select arc or ellipse arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -550,7 +550,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawCross</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="308"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,37 +558,37 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="399"/>
         <source>Select base linear/aligned dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="399"/>
         <source>Select distant extension point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="402"/>
         <source>Specify second extension line origin</source>
         <translation type="unfinished">İkinci ölçüm noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="402"/>
         <source>Mirror offset direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="405"/>
         <source>Specify dimension line location</source>
         <translation type="unfinished">Ölçü çizgisinin yerini belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="405"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="409"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="408"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -596,29 +596,29 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawEllipse1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="269"/>
         <source>Specify ellipse center</source>
         <translation type="unfinished">Elipsin merkezini belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="274"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273"/>
         <source>Specify angle for major axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277"/>
         <source>Set start angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281"/>
         <source>Set end angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="318"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="329"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="340"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="328"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="339"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Geçerli bir ifade değil</translation>
     </message>
@@ -626,12 +626,12 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawLineAngleRel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="437"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="435"/>
         <source>Select base line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="440"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="438"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -639,12 +639,12 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawLineFromPointToLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="316"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="314"/>
         <source>Select Initial Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="319"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="317"/>
         <source>Select Line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -652,78 +652,78 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
 <context>
     <name>LC_ActionDrawLinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="503"/>
         <source>Specify First Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510"/>
         <source>Specify Second Point
 or [number]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="516"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="523"/>
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="544"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Back</source>
         <translation type="unfinished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="544"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="549"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
         <source>Specify points count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -754,62 +754,62 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="188"/>
         <source>Not a valid number. Try 1..9999</source>
         <translation type="unfinished">Sayı geçersiz. 1..9999 deneyin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="207"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="200"/>
         <source>Invalid value of rounding radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="210"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="242"/>
         <source>Enter number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="245"/>
         <source>Enter rounding radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="253"/>
         <source>Specify center</source>
         <translation type="unfinished">Merkezi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="272"/>
         <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="273"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="274"/>
         <source>Start angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="275"/>
         <source>Radius:</source>
         <translation type="unfinished">Yarıçap:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="276"/>
         <source>Radius Inner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="272"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -821,7 +821,7 @@ or [%2]</source>
         <translation type="vanished">Merkezi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>Bir teğet belirt</translation>
     </message>
@@ -841,70 +841,70 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="472"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="460"/>
         <source>Specify first point</source>
         <translation type="unfinished">İlk noktayı belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="481"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="469"/>
         <source>Specify direction (x or y) or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="483"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="487"/>
         <source>Specify distance (%1) or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="146"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="483"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="129"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="117"/>
         <source>Point</source>
         <translation type="unfinished">Nokta</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="121"/>
         <source>Angle</source>
         <translation type="unfinished">Açı</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="140"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="487"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="165"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153"/>
         <source>Direction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="493"/>
         <source>Specify distance (%1 deg) or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="520"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="508"/>
         <source>Specify angle or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="532"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="520"/>
         <source>Specify point or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="581"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="569"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation type="unfinished">Geri alınamıyor: Geçmişin başlangıcına ulaşıldı</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="618"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="606"/>
         <source>Cannot redo: End of history reached</source>
         <translation type="unfinished">İleri al yapılamıyor: Geçmişin sonuna ulaşıldı</translation>
     </message>
@@ -912,27 +912,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawMidLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="231"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="253"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="251"/>
         <source>Select first entity</source>
         <translation type="unfinished">İlk varlığı seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="255"/>
         <source>Select second entity</source>
         <translation type="unfinished">İkinci varlığı seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="255"/>
         <source>Alternate endpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="259"/>
         <source>Enter offset value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -940,27 +940,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="180"/>
         <source>Specify the first point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="183"/>
         <source>Specify the second point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="186"/>
         <source>Specify the third point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="189"/>
         <source>Specify the fourth point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="192"/>
         <source>Specify the Axis on parabola</source>
         <translation type="unfinished"></translation>
     </message>
@@ -968,22 +968,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="275"/>
         <source>Specify the focus of parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="278"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="289"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
         <source>Specify the start point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="286"/>
         <source>Specify the end point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
@@ -991,58 +991,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawPointsLattice</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="172"/>
         <source>Second point is too close to the first one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="184"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194"/>
         <source>Third point is too close to the second one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="240"/>
         <source>Invalid value provided</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="259"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258"/>
         <source>Specify first point</source>
         <translation type="unfinished">İlk noktayı belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262"/>
         <source>Specify second point</source>
         <translation type="unfinished">İkinci noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="266"/>
         <source>Specify third point</source>
         <translation type="unfinished">Üçüncü noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
         <source>Specify fourth point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
         <source>Last point position is un-adjusted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="272"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
         <source>Last point position is adjusted to first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275"/>
         <source>Enter number of points by X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279"/>
         <source>Enter number of points by Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1050,32 +1050,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="367"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="368"/>
         <source>Specify height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="370"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="371"/>
         <source>Specify width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="373"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="374"/>
         <source>Specify size (width, height))</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="376"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="377"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="379"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
         <source>Specify point that defines base angle for rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="379"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
         <source>Don&apos;t keep insertion point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1083,27 +1083,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle2Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Specify second point</source>
         <translation type="unfinished">İkinci noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Draw Square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="283"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="286"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="290"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="289"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1111,48 +1111,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="556"/>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="574"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569"/>
         <source>Specify first point first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="565"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560"/>
         <source>Specify width or second point first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="594"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="589"/>
         <source>Specify width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="597"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="592"/>
         <source>Specify height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="600"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="595"/>
         <source>Specify start point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="603"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="598"/>
         <source>Specify second point</source>
         <translation type="unfinished">İkinci noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="606"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="601"/>
         <source>Specify third point</source>
         <translation type="unfinished">Üçüncü noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="609"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="612"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="607"/>
         <source>Specify inner angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1160,27 +1160,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="203"/>
         <source>Line</source>
         <translation type="unfinished">Çizgi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="213"/>
         <source>Arc</source>
         <translation type="unfinished">Yay</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="223"/>
         <source>Circle</source>
         <translation type="unfinished">Çember</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="568"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="587"/>
         <source>Select line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="571"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="590"/>
         <source>Select circle or arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1188,7 +1188,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="201"/>
         <source>Specify first control point</source>
         <translation>İlk kontrol noktasını belirt</translation>
     </message>
@@ -1197,28 +1197,28 @@ or [%2]</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="218"/>
         <source>Specify next control point or [%1]</source>
         <translation>Sonraki kontrol noktasını belirtin veya [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="218"/>
         <source>Back</source>
         <translation>Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="220"/>
         <source>Specify next control point</source>
         <translation>Sonraki kontrol noktasını belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="257"/>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="273"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Geri alınamıyor: Henüz yeterli sayıda varlık tanımlanmadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="289"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Geri alınamaz: Hiçbir şey yeniden yapılamaz.</translation>
     </message>
@@ -1226,37 +1226,37 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawStar</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182"/>
         <source>Invalid rays number, should be in range [3..99]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="617"/>
         <source>Set center point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
         <source>Set outer point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
         <source>Set inner point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
         <source>Set rounding radiuses (outer, inner)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="632"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
         <source>Set rays number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1264,17 +1264,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionEditPasteTransform</name>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="45"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="42"/>
         <source>Clipboard is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="132"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Set paste reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="132"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Paste Multiple</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1282,244 +1282,244 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="493"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="506"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp;Çerçeveye Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Zoom &amp;Panning</source>
         <translation>Yakınlaştır &amp;Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241"/>
         <source>Select Entity</source>
         <translation>Varlık Seç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242"/>
         <source>Select Window</source>
         <translation>Pencere Seç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243"/>
         <source>Deselect Window</source>
         <translation>Pencere Seçimini Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244"/>
         <source>(De-)Select &amp;Contour</source>
         <translation>&amp;Dış Sınırı Seç/Seçme</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
         <source>Select Intersected Entities</source>
         <translation>Kesişen Varlıkları Seç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Deselect Intersected Entities</source>
         <translation>Kesişen Varlıkların Seçimini Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
         <source>(De-)Select Layer</source>
         <translation>Katmanı Seç/Seçme</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230"/>
         <source>&amp;Points</source>
         <translation>&amp;Noktalar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202"/>
         <source>&amp;2 Points</source>
         <translation>&amp;2 Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203"/>
         <source>&amp;Angle</source>
         <translation>&amp;Açı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>&amp;Horizontal</source>
         <translation>Y&amp;atay</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
         <source>Vertical</source>
         <translation>Dikey</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;Freehand Line</source>
         <translation>&amp;Serbest Çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Parallel</source>
         <translation>Paralel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
         <source>Parallel through point</source>
         <translation>Noktadan paralel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="175"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="188"/>
         <source>Rectangle</source>
         <translation>Dikdörtgen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
         <source>Bisector</source>
         <translation>Açıortay</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>Tangent (P,C)</source>
         <translation>Teğet (P,C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>Tangent (C,C)</source>
         <translation>Teğet (C,C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation>Teğet &amp;Dik açılı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Orthogonal</source>
         <translation>Dik açılı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="201"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Relative angle</source>
         <translation>Göreceli açı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="176"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation>Ç&amp;okgen (Mrk,Köş)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="178"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>Çokg&amp;en (Köşe,Köşe)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Snake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Snake (X)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
         <source>Snake (Y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="181"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Rectangle (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="182"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
         <source>Rectangle (2 Points)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="183"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
         <source>Rectangle (3 Points)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="180"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
         <source>Angle From Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Orthogonal From Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
         <source>From Point To Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Slice/Divide Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>Slice/Divide Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231"/>
         <source>Line of Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
         <source>Center, &amp;Point</source>
         <translation>Merkez, &amp;Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254"/>
         <source>By Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="255"/>
         <source>Center, &amp;Radius</source>
         <translation>Merkez, &amp;Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="256"/>
         <source>2 Points</source>
         <translation>2 Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257"/>
         <source>2 Points, Radius</source>
         <translation>2 Nokta, Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258"/>
         <source>3 Points</source>
         <translation>3 Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Concentric</source>
         <translation>&amp;Eş merkezli</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
         <source>Circle &amp;Inscribed</source>
         <translation>Çember &amp;İçine</translation>
     </message>
@@ -1529,107 +1529,107 @@ or [%2]</source>
         <translation type="vanished">Teğetsel 2 Çember, Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation>Teğetsel 2 Çember, 1 Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Tangential &amp;3 Circles</source>
         <translation>Teğetsel &amp;3 Çember</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Teğetsel, 2 &amp;Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>&amp;Merkez, Nokta, Açı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273"/>
         <source>&amp;3 Points</source>
         <translation>&amp;3 nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>Arc &amp;Tangential</source>
         <translation>Yay &amp;Teğetsel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp;Elips (Eksen)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>Elips &amp;Yayı (Eksen)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>Elips &amp;Odak Noktası</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>Elips &amp;4 Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>Elips Merkezi ve &amp;3 Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="308"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>Elips &amp;İçine</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Spline</source>
         <translation>&amp;Eğri çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
         <source>&amp;Spline through points</source>
         <translation>&amp;Noktalardan eğri çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Çoklu çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>&amp;Add node</source>
         <translation>&amp;Düğüm ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>A&amp;ppend node</source>
         <translation>&amp;Sona düğüm ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>&amp;Delete node</source>
         <translation>&amp;Düğüm sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
         <source>Delete &amp;between two nodes</source>
         <translation>İki düğüm &amp;arasını sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
         <source>&amp;Trim segments</source>
         <translation>&amp;Segmentleri Kırp</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>&amp;Eş Mesafeli Çoklu Çizgi Oluştur</translation>
     </message>
@@ -1638,67 +1638,67 @@ or [%2]</source>
         <translation type="vanished">&amp;Varolan Segmentlerden Çoklu Çizgi Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>&amp;MText</source>
         <translation>&amp;Çoklu Yazı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>&amp;Text</source>
         <translation>&amp;Metin</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>&amp;Hatch</source>
         <translation>&amp;Tarama</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333"/>
         <source>Insert &amp;Image</source>
         <translation>&amp;Görüntü Ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Aligned</source>
         <translation>&amp;Hizalı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Linear</source>
         <translation>&amp;Doğrusal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
         <source>&amp;Vertical</source>
         <translation>&amp;Dikey</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="344"/>
         <source>&amp;Radial</source>
         <translation>&amp;Radyal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="345"/>
         <source>&amp;Diametric</source>
         <translation>&amp;Çapsal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="346"/>
         <source>&amp;Angular</source>
         <translation>&amp;Açısal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="335"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348"/>
         <source>&amp;Leader</source>
         <translation>&amp;Uzaktan</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>&amp;Attributes</source>
         <translation>&amp;Öznitelikler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
         <source>&amp;Delete</source>
         <translation>&amp;Sil</translation>
     </message>
@@ -1707,102 +1707,102 @@ or [%2]</source>
         <translation type="vanished">Serbest çizim sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Taşı / Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
         <source>Re&amp;vert direction</source>
         <translation>&amp;Yönü Geri Al</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="703"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="366"/>
         <source>&amp;Rotate</source>
         <translation>&amp;Döndür</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276"/>
         <source>&amp;2 Points, Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
         <source>&amp;2 Points, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="309"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="322"/>
         <source>Polyline Arcs to Chords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="367"/>
         <source>&amp;Scale</source>
         <translation>&amp;Ölçekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Mirror</source>
         <translation>&amp;Ayna</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
         <source>Rotate T&amp;wo</source>
         <translation>İ&amp;ki Döndür</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
         <source>&amp;Properties</source>
         <translation>&amp;Özellikler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
         <source>&amp;Trim</source>
         <translation>&amp;Kırp</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
         <source>&amp;Lengthen</source>
         <translation>&amp;Uzat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="376"/>
         <source>&amp;Divide</source>
         <translation>&amp;Bölüştür</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377"/>
         <source>&amp;Stretch</source>
         <translation>&amp;Sündür</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Bevel</source>
         <translation>&amp;Pah Kır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="366"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Fillet</source>
         <translation>&amp;Yuvarlat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>Metni &amp;Harflerine Ayır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="478"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="491"/>
         <source>Point inside contour</source>
         <translation>Konturun içindeki nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="479"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="492"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Noktadan noktaya uzaklık</translation>
     </message>
@@ -1811,7 +1811,7 @@ or [%2]</source>
         <translation type="vanished">N&amp;oktadan Varlığa Uzaklık</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="482"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="495"/>
         <source>An&amp;gle between two lines</source>
         <translation>İ&amp;ki çizgi arasındaki açı</translation>
     </message>
@@ -1820,7 +1820,7 @@ or [%2]</source>
         <translation type="vanished">Seçili varlıkların &amp;toplam uzunluğu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="484"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="497"/>
         <source>Polygonal &amp;Area</source>
         <translation>Çokgen Alanı</translation>
     </message>
@@ -1829,27 +1829,27 @@ or [%2]</source>
         <translation type="vanished">&amp;Seçim işareti</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Undo</source>
         <translation>&amp;Geri Al</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>&amp;Redo</source>
         <translation>&amp;İleri al</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="663"/>
         <source>Cu&amp;t</source>
         <translation>Ke&amp;s</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="665"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="667"/>
         <source>&amp;Paste</source>
         <translation>&amp;Yapıştır</translation>
     </message>
@@ -1858,203 +1858,203 @@ or [%2]</source>
         <translation type="vanished">aşağı taşı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
         <source>Middle Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
         <source>Middle Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Lattice of Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
         <source>Select Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Tangential 2 Circles, Radius</source>
         <translation type="unfinished">Teğetsel 2 Çember, Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>&amp;Center, Point, Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>&amp;Center, Point, Arc Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274"/>
         <source>&amp;2 Points, Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275"/>
         <source>&amp;2 Points, Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>Para&amp;bola 4 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
         <source>&amp;Remove spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
         <source>&amp;Explode spline to lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
         <source>&amp;Spline from polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>&amp;Remove between two points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Ellipse (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="308"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>Polyline Change Segment Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="334"/>
         <source>Bounding &amp;Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="336"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Baseline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="337"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>Break/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>Line Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
         <source>Align One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="375"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>Align Reference Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
         <source>Apply Pen to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="409"/>
         <source>Show Entity Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="412"/>
         <source>Enable Info Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
         <source>Absolute Pos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="414"/>
         <source>Snap</source>
         <translation type="unfinished">Yakala</translation>
     </message>
@@ -2339,117 +2339,152 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <source>Entity Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <source>Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="103"/>
+        <source>Activate Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="104"/>
+        <source>Hide Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="105"/>
+        <source>Lock Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="106"/>
+        <source>Toggle Entity&apos;s Layer Construction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="107"/>
+        <source>Toggle Entity&apos;s Layer Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
         <source>Relative</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>Prompt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423"/>
         <source>Snap on grid</source>
         <translation type="unfinished">Izgarayı yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="411"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="412"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished">Uç noktadan yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="426"/>
         <source>Snap on Entity</source>
         <translation type="unfinished">Varlık Yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="414"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="427"/>
         <source>Snap Center</source>
         <translation type="unfinished">Merkez Yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
         <source>Snap Middle</source>
         <translation type="unfinished">Orta Nokta Yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
         <source>Snap Distance</source>
         <translation type="unfinished">Mesafe Yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">Kesişme Yakala</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="436"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished">Yataya Kısıtlı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="437"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished">Dikeye Kısıtlı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="438"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished">Yatay ve Dikeye Kısıtlı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="426"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished">Hiçbir şeyle kısıtlı değil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
         <source>To WCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="437"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="450"/>
         <source>Create UCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="443"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Save Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="444"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Remove Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Restore Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="451"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="464"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">Göreli sıfır konumunu ayarla</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="454"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="467"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">Göreli sıfır konumunu kilitle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="462"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="475"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished">Özel Yakalama Modu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="463"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="476"/>
         <source>Free Snap</source>
         <translation type="unfinished">Serbest Yakala</translation>
     </message>
@@ -2466,152 +2501,152 @@ or [%2]</source>
         <translation type="vanished">en üste taşı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="480"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="493"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="494"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="483"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="496"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="485"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="486"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="487"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
         <source>&amp;Draft Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="513"/>
         <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="515"/>
         <source>&amp;Orthogonal Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
         <source>&amp;Isometric Left Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="504"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
         <source>&amp;Isometric Top Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="505"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
         <source>&amp;Isometric Right Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="515"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="528"/>
         <source>&amp;Add Layer</source>
         <translation>Katman &amp;Ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="529"/>
         <source>&amp;Remove Layer</source>
         <translation>Katmanı &amp;Sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
         <source>&amp;Edit Layer</source>
         <translation>Katmanı &amp;Düzenle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>&amp;Katman Kilitle/Kilidi aç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="519"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="532"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>Katman &amp;Gizle/Göster</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="520"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>Katman &amp;Yazdır/Yazdırma</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="521"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>&amp;Yapı Katmanı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"/>
         <source>&amp;Add Block</source>
         <translation>Blok &amp;Ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="532"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="545"/>
         <source>&amp;Remove Block</source>
         <translation>Bloğu &amp;Sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
         <source>&amp;Rename Block</source>
         <translation>Blok &amp;Adını Değiştir</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="547"/>
         <source>&amp;Edit Block</source>
         <translation>Bloğu &amp;Düzenle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
         <source>&amp;Save Block</source>
         <translation>&amp;Bloğu Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="549"/>
         <source>&amp;Insert Block</source>
         <translation>Blok &amp;Yerleştir</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="537"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>Blok &amp;Göster/Gizle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="538"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Create Block</source>
         <translation>Blok &amp;Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
         <source>Ex&amp;plode</source>
         <translation>&amp;Patlat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="561"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;Uygulama Tercihleri</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Geçerli &amp;Çizim Tercihleri</translation>
     </message>
@@ -2620,390 +2655,390 @@ or [%2]</source>
         <translation type="vanished">Seçili &amp;olanı sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646"/>
         <source>Select &amp;All</source>
         <translation>Tümünü &amp;Seç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="634"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647"/>
         <source>Deselect &amp;all</source>
         <translation>Seçilenlerin Tümünü &amp;Bırak</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="711"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648"/>
         <source>Invert Selection</source>
         <translation>Diğerlerini Seç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>Focus on &amp;Options Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Zoom &amp;Out</source>
         <translation>&amp;Uzaklaştır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Auto Zoom</source>
         <translation>&amp;Otomatik yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="613"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Previous &amp;View</source>
         <translation>Ö&amp;nceki Görünüm</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="614"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Redraw</source>
         <translation>&amp;Yeniden Çiz</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="572"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>&amp;New</source>
         <translation>&amp;Yeni</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>New From &amp;Template</source>
         <translation>Ş&amp;ablondan Yeni</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>&amp;Open...</source>
         <translation>&amp;Aç...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>&amp;Save</source>
         <translation>&amp;Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="576"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Save &amp;as...</source>
         <translation>&amp;Farklı kaydet...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="581"/>
         <source>&amp;Export as image</source>
         <translation>&amp;Görüntü Olarak Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
         <source>&amp;Close</source>
         <translation>Kapa&amp;t</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="578"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
         <source>&amp;Print...</source>
         <translation>&amp;Yazdır...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="570"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>Export as PDF</source>
         <translation>&amp;PDF olarak dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="558"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
         <source>Print Pre&amp;view</source>
         <translation>&amp;Baskı Önizleme</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="579"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="592"/>
         <source>&amp;Quit</source>
         <translation>&amp;Çık</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>&amp;Block</source>
         <translation>&amp;Blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="496"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="509"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Tam Ekran</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="497"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="510"/>
         <source>&amp;Grid</source>
         <translation>I&amp;zgara</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="728"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="741"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Draft</source>
         <translation>&amp;Taslak</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514"/>
         <source>&amp;Statusbar</source>
         <translation>&amp;Durum Çubuğu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="731"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>Focus on &amp;Command Line</source>
         <translation>&amp;Komut Satırına Geç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="549"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="562"/>
         <source>Widget Options</source>
         <translation>Bileşen Seçenekleri</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
         <source>Left</source>
         <translation>Sol</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>Right</source>
         <translation>Sağ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>Top</source>
         <translation>Üst</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>Bottom</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>Floating</source>
         <translation>Yüzüyor</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="552"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Reload Style Sheet</source>
         <translation>Stil Sayfasını Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="551"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
         <source>Device Options</source>
         <translation>Cihaz Seçenekleri</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>&amp;Taşı ve Döndür</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290"/>
         <source>&amp;Append spline point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
         <source>&amp;Insert spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"/>
         <source>Tr&amp;im Two</source>
         <translation>İki &amp;Budama</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="375"/>
         <source>O&amp;ffset</source>
         <translation>&amp;Paraleli</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>Caught Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="469"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="482"/>
         <source>Move to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="470"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="483"/>
         <source>Lower After Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="471"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="484"/>
         <source>Raise Over Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="472"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="485"/>
         <source>Move to Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="598"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
         <source>Menu Creator</source>
         <translation>Menü Yapıcı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="599"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
         <source>Toolbar Creator</source>
         <translation>Araç Çubuğu Yapıcı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>Restore Current View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>Restore View 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
         <source>Restore View 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="638"/>
         <source>Restore View 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>Restore View 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
         <source>Restore View 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="651"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Cut Quic&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="653"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="666"/>
         <source>Copy &amp;Quick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="668"/>
         <source>Paste &amp;Transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
         <source>&amp;Delete Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="657"/>
         <source>&amp;Selection Pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="177"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>&amp;Çokgen (Mrk,Tğt)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="334"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="347"/>
         <source>&amp;Arc</source>
         <translation>&amp;Yay</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="511"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="524"/>
         <source>&amp;Show all layers</source>
         <translation>&amp;Tüm katmanları göster</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
         <source>&amp;Hide all layers</source>
         <translation>&amp;Tüm katmanları gizle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="513"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="526"/>
         <source>&amp;Unlock all</source>
         <translation>&amp;Tümünün kilidini aç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="527"/>
         <source>&amp;Lock all</source>
         <translation>&amp;Tümünü kilitle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="522"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>&amp;Seçili katmanları dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="523"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>&amp;Görünür katmanları dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="529"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Show all blocks</source>
         <translation>&amp;Tüm blokları göster</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="543"/>
         <source>&amp;Hide all blocks</source>
         <translation>Tüm &amp;blokları gizle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="595"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>CA&amp;M /plain SVG olarak dışa aktar...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="569"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>Close All</source>
         <translation>Tümünü Kapat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>Re-dock Widgets</source>
         <translation>Bileşenleri Yeniden Yerleştir</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Save A&amp;ll...</source>
         <translation>&amp;Tümünü Kaydet...</translation>
     </message>
@@ -3011,7 +3046,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
-        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="105"/>
+        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation>Şu olarak dışa aktar</translation>
     </message>
@@ -3114,7 +3149,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="56"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="53"/>
         <source>Angle: %1 (%2)
  Start Edge Point: (%3 , %4)
  Intersection Point :(%5, %6)
@@ -3122,76 +3157,76 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="136"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="133"/>
         <source>Select first edge point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="140"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="137"/>
         <source>Select second (intersection) point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="144"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="198"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="179"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="195"/>
         <source>Info</source>
         <translation type="unfinished">Bilgi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="180"/>
         <source>Distance:</source>
         <translation type="unfinished">Mesafe:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="184"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="199"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="196"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="185"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="198"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="186"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="197"/>
         <source>Angle (Alt):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="199"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
         <source>Distance1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="205"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
         <source>Distance2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="206"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
         <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="207"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3199,7 +3234,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfoPickCoordinates</name>
     <message>
-        <location filename="../src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp" line="117"/>
+        <location filename="../src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp" line="121"/>
         <source>Select point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3207,12 +3242,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfoProperties</name>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="158"/>
         <source>Select entity</source>
         <translation type="unfinished">Varlık seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="158"/>
         <source>Select child entities</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3238,13 +3273,13 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="79"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="79"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
@@ -3257,77 +3292,77 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlign</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="38"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="137"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="136"/>
         <source>Align to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="140"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="139"/>
         <source>Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="144"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="143"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="147"/>
         <source>Drawing</source>
         <translation type="unfinished">Çizim</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="152"/>
         <source>Reference: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="167"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="231"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="230"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="246"/>
         <source>Select base alignment entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="246"/>
         <source>Select child entities of containers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="249"/>
         <source>Specify base alignment point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="252"/>
         <source>Click or Enter to finish align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select entities to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select and align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3335,57 +3370,57 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignRef</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="82"/>
         <source>Align References</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="83"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="84"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="85"/>
         <source>Scale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Select to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Align immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="214"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="211"/>
         <source>Select first reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="218"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="215"/>
         <source>Select first target point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="222"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="219"/>
         <source>Select second reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="226"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="223"/>
         <source>Select second target point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3393,62 +3428,62 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignSingle</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="39"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="157"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="155"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="169"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="167"/>
         <source>Align to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="170"/>
         <source>Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="174"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="178"/>
         <source>Drawing</source>
         <translation type="unfinished">Çizim</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="185"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="183"/>
         <source>Reference: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="238"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="236"/>
         <source>Select base alignment entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="241"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="239"/>
         <source>Specify base alignment point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="251"/>
         <source>Select entity to align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="251"/>
         <source>Finish alignment after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="334"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="332"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3456,58 +3491,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyBreakDivide</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="140"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="138"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="235"/>
         <source>Break/Divide Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="238"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="356"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="453"/>
         <source>Point 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="239"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="360"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="457"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
         <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="356"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="354"/>
         <source>Break/Divide Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="355"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="452"/>
+        <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="357"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="454"/>
-        <source>Angle 1:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="359"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="456"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="453"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="451"/>
         <source>Break/Divide Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1001"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="999"/>
         <source>Select line, arc or circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1001"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="999"/>
         <source>Proceed even if no intersections</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3515,23 +3550,23 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyDuplicate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="199"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="197"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="233"/>
         <source>Duplicate Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="258"/>
         <source>Select entity to duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="258"/>
         <source>Interactive Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="263"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="261"/>
         <source>Select direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3539,35 +3574,35 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineGap</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="62"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="87"/>
-        <source>Line Gap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="63"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="88"/>
-        <source>Start:</source>
+        <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="64"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="89"/>
+        <source>Start:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="65"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="90"/>
         <source>End:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="429"/>
         <source>Select line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="429"/>
         <source>Use Alternative Line Endpoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="432"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="433"/>
         <source>Select endpoint of gap</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3575,48 +3610,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineJoin</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="105"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="104"/>
         <source>Lines Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="107"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="106"/>
         <source>Lines are parallel</source>
         <translation type="unfinished">Çizgiler paralel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="110"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="109"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="163"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="212"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="162"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="211"/>
         <source>No line selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="182"/>
         <source>Lines are parallel, can&apos;t merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="188"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="187"/>
         <source>Lines already intersects, can&apos;t merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="796"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="795"/>
         <source>Select first line</source>
         <translation type="unfinished">İlk kenarı seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="799"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="798"/>
         <source>Select second line</source>
         <translation type="unfinished">İkinci çizgiyi seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="802"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="801"/>
         <source>Select part of first line that should remain after trim</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3632,12 +3667,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionPasteToPoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="38"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="36"/>
         <source>Clipboard is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="102"/>
         <source>Select and paste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3645,17 +3680,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="143"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
         <source>Specify entity to pick the pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="149"/>
         <source>Specify entity to apply pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="149"/>
         <source>Apply Resolved Pen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3679,22 +3714,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineChangeSegmentType</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="50"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="51"/>
         <source>Invalid arc point to create arc, select another one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="221"/>
         <source>Select polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="224"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="225"/>
         <source>Select segment of polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="229"/>
         <source>Specify position on arc to create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3702,47 +3737,47 @@ or [%2]</source>
 <context>
     <name>LC_ActionPreSelectionAwareBase</name>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="174"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="174"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>De-Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="175"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="181"/>
         <source> entities </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="176"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="182"/>
         <source>that intersect with box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="176"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="182"/>
         <source>that are within box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Choose second edge</source>
         <translation type="unfinished">İkinci kenarı seçin</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Select/Deselect entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Select Intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="237"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="243"/>
         <source>No valid entities selected, select them first</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3750,12 +3785,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionRemoveSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="201"/>
         <source>Select control point of entity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3763,17 +3798,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="229"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="227"/>
         <source>Specify percentage / start-point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="232"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="230"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="235"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="233"/>
         <source>Specify end point</source>
         <translation type="unfinished">Uç noktayı belirtin</translation>
     </message>
@@ -3781,22 +3816,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineAddPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="201"/>
         <source>Select control point to insert before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"/>
         <source>Specify control point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"/>
         <source>Insert AFTER selected point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3822,7 +3857,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineExplode</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="194"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3838,27 +3873,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineRemoveBetween</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="43"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="221"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="220"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="224"/>
         <source>Select first point for deletion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Select second point for deletion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Delete from endpoints TO selected points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4102,12 +4137,12 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="75"/>
+        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
         <source>Positive angles direction is counterclockwise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="79"/>
+        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="80"/>
         <source>Positive angles direction is clockwise.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4125,24 +4160,24 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">Cihaz</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="118"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="116"/>
         <source>Closing Drawing</source>
         <translation type="unfinished">Çizim kapatılıyor</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="124"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="122"/>
         <source>Draft Mode</source>
         <translation type="unfinished">Taslak Mod</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="130"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="128"/>
         <source>Save changes to the following item?
 %1</source>
         <translation type="unfinished">Aşağıdaki öğede yapılan değişiklikler kaydedilsin mi?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="164"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="162"/>
         <source>Export as</source>
         <translation type="unfinished">Şu olarak dışa aktar</translation>
     </message>
@@ -5163,7 +5198,7 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_DocumentsStorage</name>
     <message>
-        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="142"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="143"/>
         <source>Unnamed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5397,17 +5432,17 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="53"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="55"/>
         <source>Exporting drawing...</source>
         <translation type="unfinished">Çizim dışa aktarılıyor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="60"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
         <translation type="unfinished">Aktarıldı: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="63"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
         <source>Export failed!</source>
         <translation type="unfinished">Dışa aktarım gerçekleşmedi!</translation>
     </message>
@@ -5913,265 +5948,265 @@ Please specify a different value.</source>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="146"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="147"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="148"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished">Eşleşen katman adları aranıyor</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="153"/>
         <source>Highlight Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="162"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="163"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="181"/>
         <source>Show all layers</source>
         <translation type="unfinished">Tüm katmanları göster</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="187"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="188"/>
         <source>Hide all layers</source>
         <translation type="unfinished">Tüm katmanları gizle</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="194"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="195"/>
         <source>Show Secondary Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="204"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="205"/>
         <source>Show Active Layer Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="212"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="213"/>
         <source>Expand All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="220"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="221"/>
         <source>Collapse All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="228"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="229"/>
         <source>Collapse Secondary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="236"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="237"/>
         <source>Unlock all layers</source>
         <translation type="unfinished">Tüm katmanların kilidini aç</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="243"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="244"/>
         <source>Lock all layers</source>
         <translation type="unfinished">Tüm katmanları kilitle</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="250"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="251"/>
         <source>Add a layer</source>
         <translation type="unfinished">Bir Katman Ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="257"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="258"/>
         <source>Add dimensions Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="266"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="267"/>
         <source>Remove layer</source>
         <translation type="unfinished">Katmanı sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="273"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="274"/>
         <source>Modify layer attributes / rename</source>
         <translation type="unfinished">Katman öznitelikleri</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="280"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="281"/>
         <source>Flat List Mode)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="625"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="626"/>
         <source>Layer Menu</source>
         <translation type="unfinished">Katman Menüsü</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="645"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="646"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="646"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="647"/>
         <source>&amp;Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="647"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="648"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="649"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="650"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="650"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="652"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="653"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="659"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Remove Layer</source>
         <translation type="unfinished">Katmanı &amp;Sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="669"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="672"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="673"/>
         <source>&amp;Add Info Sub-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="676"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="682"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Remove Sub-layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="690"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="700"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="691"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <source>Convert to Dimensional Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="691"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="692"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="704"/>
         <source>Convert to Info Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="692"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="706"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="707"/>
         <source>Convert to Alternative Position Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="698"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="699"/>
         <source>Convert to Normal Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="712"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="713"/>
         <source>&amp;Select Layer&apos;s Entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="715"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="716"/>
         <source>&amp;Create Layer Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="716"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>&amp;Duplicate Layer With Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="720"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"/>
         <source>Move Selection to Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="722"/>
         <source>Duplicate Selection to Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="728"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="729"/>
         <source>&amp;Add Layer</source>
         <translation type="unfinished">Katman &amp;Ekle</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="730"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>&amp;Freeze Others Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>&amp;Defreeze All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="733"/>
         <source>&amp;Freeze All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="733"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"/>
         <source>&amp;Unlock All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="735"/>
         <source>&amp;Lock All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="735"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"/>
         <source>Enable &amp;Printing All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="737"/>
         <source>&amp;Disable Printing All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="740"/>
         <source>&amp;Export Single Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Export Layer Sub-Tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="748"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="749"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10709,73 +10744,73 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_SettingsExporter</name>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
         <source>Import settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
         <source>Export Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="72"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="95"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="103"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="70"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="93"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Settings Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="103"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Application preferences were exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="72"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="95"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="70"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="93"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="41"/>
         <source>LibreCAD settings file (*.%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="119"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="117"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Import Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="119"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="117"/>
         <source>Unexpected error during preferences parsing. Message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="128"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="143"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="126"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
         <source>Settings Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="143"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
         <source>Application preferences were imported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="128"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="126"/>
         <source>No settings groups to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
         <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11187,7 +11222,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="101"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="284"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="304"/>
         <source>Order</source>
         <translation type="unfinished">Sıra</translation>
     </message>
@@ -11212,146 +11247,151 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tercihler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="167"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="154"/>
+        <source>Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="186"/>
         <source>Tool Options</source>
         <translation type="unfinished">Araç Seçenekleri</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="213"/>
         <source>Info Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="238"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="258"/>
         <source>Line</source>
         <translation type="unfinished">Çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="239"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="259"/>
         <source>Point</source>
         <translation type="unfinished">Nokta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="240"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="260"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="241"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="261"/>
         <source>Circle</source>
         <translation type="unfinished">Çember</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="242"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="262"/>
         <source>Arc</source>
         <translation type="unfinished">Yay</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="243"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="263"/>
         <source>Spline</source>
         <translation type="unfinished">Eğriçizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="244"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="264"/>
         <source>Ellipse</source>
         <translation type="unfinished">Elips</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="265"/>
         <source>Polyline</source>
         <translation type="unfinished">Çoklu çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="246"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="266"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="299"/>
         <source>Select</source>
         <translation type="unfinished">Seç</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="267"/>
         <source>Dimension</source>
         <translation type="unfinished">Ölçülendirme</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="248"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="301"/>
         <source>Other</source>
         <translation type="unfinished">Diğer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="249"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="269"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="302"/>
         <source>Modify</source>
         <translation type="unfinished">Değiştir</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="270"/>
         <source>Info</source>
         <translation type="unfinished">Bilgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="288"/>
         <source>Categories</source>
         <translation type="unfinished">Kategoriler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="271"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="291"/>
         <source>Lines</source>
         <translation type="unfinished">Çizgiler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="272"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="292"/>
         <source>Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="273"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="296"/>
         <source>Polygons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="274"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="294"/>
         <source>Arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="275"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="295"/>
         <source>Splines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="297"/>
         <source>Ellipses</source>
         <translation type="unfinished">Elipsler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="298"/>
         <source>PolyLines</source>
         <translation type="unfinished">Çoklu Çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="300"/>
         <source>Dimensions</source>
         <translation type="unfinished">Boyutlar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="283"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="303"/>
         <source>Measure</source>
         <translation type="unfinished">Ölçüm</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="291"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="311"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="306"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="326"/>
         <source>UCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="347"/>
         <source>Workspaces</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12359,18 +12399,18 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>LC_WorkspacesManager</name>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="417"/>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="425"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="420"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="428"/>
         <source>Saving Workspaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="418"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="421"/>
         <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="426"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="429"/>
         <source>Workspaces file does not exists.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12434,12 +12474,12 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
         <source>Select object:</source>
         <translation>Nesne seç:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="45"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="44"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
@@ -12447,7 +12487,7 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="109"/>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="108"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
@@ -12455,13 +12495,13 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="37"/>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="43"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="45"/>
         <source>Select objects:</source>
         <translation>Nesneler seç:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="52"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="54"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
@@ -12557,32 +12597,32 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">&amp;Yatay Döşe</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="777"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="780"/>
         <source>Creating new file...</source>
         <translation>Yeni dosya oluşturuluyor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="725"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="725"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="728"/>
         <source>unnamed document %1</source>
         <translation>isimsiz %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="801"/>
         <source>New Drawing created.</source>
         <translation>Yeni Çizim oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1641"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
         <source>Opening recent file...</source>
         <translation>Son kullanılan dosya açılıyor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="837"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="840"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -12591,22 +12631,22 @@ dosyası açılamıyor.
 Lütfen dosya izinlerini kontrol edin.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1014"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1017"/>
         <source>Loaded document: </source>
         <translation>Yüklü belge: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="958"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="961"/>
         <source>Opening aborted</source>
         <translation>Açmaktan vazgeçildi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="221"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="225"/>
         <source>Saving drawing...</source>
         <translation>Çizim kaydediliyor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="236"/>
         <source>Saved drawing: %1</source>
         <translation>Kaydedilen çizim: %1</translation>
     </message>
@@ -12631,22 +12671,22 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <translation type="vanished">Dışa aktarım gerçekleşmedi!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1246"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1249"/>
         <source>Printing...</source>
         <translation>Yazdırılıyor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1250"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1253"/>
         <source>Printing complete</source>
         <translation>Yazdırma tamamlandı</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="191"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="195"/>
         <source>Print preview for %1</source>
         <translation>%1 için yazıcı çıktı örneği</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1344"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1347"/>
         <source>Exiting application...</source>
         <translation>Uygulamadan çıkılıyor...</translation>
     </message>
@@ -12655,17 +12695,17 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <translation type="vanished">&amp;Çoklu çizgi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1088"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1091"/>
         <source>Auto-saving drawing...</source>
         <translation>Çizim otomatik olarak kaydediliyor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1094"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1097"/>
         <source>Auto-saved drawing</source>
         <translation>Otomatik kaydedilen çizim</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1099"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -12692,17 +12732,17 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
         <translation type="vanished">Sürüm: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="965"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="968"/>
         <source>Warning: File already opened : </source>
         <translation>Uyarı: Dosya zaten açık: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="248"/>
         <source>Cannot save the file </source>
         <translation>Şu dosya kaydedilemiyor </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="248"/>
         <source> , please check the filename and permissions.</source>
         <translation> , lütfen dosya adını ve izinlerini kontrol edin.</translation>
     </message>
@@ -12715,17 +12755,17 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
         <translation type="vanished">Ta&amp;b modu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="794"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="797"/>
         <source>New document from template: </source>
         <translation>Şablondan yeni dosya: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="822"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="825"/>
         <source>Select Template aborted</source>
         <translation>Şablon seçme iptal edildi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Auto-saving failed</source>
         <translation>Otomatik kaydetme başarısız oldu</translation>
     </message>
@@ -12750,7 +12790,7 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
         <translation type="vanished">Qt Sürüm: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="202"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="206"/>
         <source>Draft Mode</source>
         <translation>Taslak Mod</translation>
     </message>
@@ -12763,7 +12803,7 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
         <translation type="vanished">Dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="978"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="981"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -12772,7 +12812,7 @@ dosyası açılamıyor
 Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="957"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>&apos;%1&apos; dosyası yok. Açılış iptal edildi</translation>
     </message>
@@ -12917,12 +12957,12 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation type="vanished">&amp;Çizimler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="221"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="225"/>
         <source>Saving drawing: %1</source>
         <translation>Çizim kaydediliyor: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="227"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="231"/>
         <source>Save cancelled</source>
         <translation>Kaydet iptal edildi</translation>
     </message>
@@ -12937,22 +12977,22 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="350"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="354"/>
         <source>&amp;Save</source>
         <translation>&amp;Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="351"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="355"/>
         <source>Save &amp;as...</source>
         <translation>&amp;Farklı kaydet...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="354"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="358"/>
         <source>&amp;Save %1</source>
         <translation>Kaydet %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="355"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="359"/>
         <source>Save %1 &amp;as...</source>
         <translation>%1 &amp;Farklı kaydet...</translation>
     </message>
@@ -12997,14 +13037,14 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation type="vanished">&amp;Büyütülmüş</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1065"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
         <source>Save All cancelled</source>
         <translation>Tümünü kaydet iptal edildi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1183"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1189"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1203"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1186"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1192"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1206"/>
         <source>Close All cancelled</source>
         <translation>Tümünü kapat iptal edildi</translation>
     </message>
@@ -13069,17 +13109,17 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="177"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="167"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="178"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="168"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="188"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="178"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>kaçış</translation>
@@ -13228,12 +13268,12 @@ pencerede düzenle</translation>
         <translation type="vanished">Bloğu sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="182"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
         <translation>Süzgeç</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="185"/>
         <source>Looking for matching block names</source>
         <translation>Eşleşen blok adları aranıyor</translation>
     </message>
@@ -20262,7 +20302,7 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
         <translation type="vanished">Katmanı &amp;Sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Eşleşen katman adları aranıyor</translation>
     </message>
@@ -20295,7 +20335,7 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
         <translation type="vanished">Katmanı sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="246"/>
+        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation>Süz</translation>
     </message>
@@ -20323,22 +20363,22 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="208"/>
         <source>Directories</source>
         <translation>Dizinler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="90"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="92"/>
         <source>Insert</source>
         <translation>Yerleştir</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="94"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
         <source>Refresh</source>
         <translation>Yenile</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="98"/>
         <source>Rebuild</source>
         <translation>Yeniden oluştur</translation>
     </message>
@@ -20950,99 +20990,99 @@ p, li { white-space: pre-wrap; }
         <translation>&quot;%1&quot; isminde bir katman var. Lütfen başka bir isim verin.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="136"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="980"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1098"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="119"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="842"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="983"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1101"/>
         <source>Warning</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="231"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="243"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="305"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1717"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="214"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="226"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="288"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1718"/>
         <source>Remove Layer</source>
         <translation>Katmanı Sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="244"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="227"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>&quot;%1&quot; katmanı silinemez.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="386"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="369"/>
         <source>Layer Dialog</source>
         <translation>Katman Özellikleri</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="500"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="483"/>
         <source>Remove Block</source>
         <translation>Bloğu Sil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="501"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="484"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation>&quot;%1&quot; bloğu ve içerdiği tüm varlıklar silinecek.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="232"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="215"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>Katman &quot;%1&quot; ve üzerindeki tüm varlıklar kaldırılacak.
 Bu işlem geri alınamaz.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="306"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1717"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="289"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1718"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>&quot;0&quot; katmanı hiçbir zaman silinemez.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="316"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1765"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="299"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1766"/>
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>%n katmanı sil</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="320"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1766"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="303"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1767"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>Listelenen katmanlar ve üzerlerindeki tüm varlıklar silinecek.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="322"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1767"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="305"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1768"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="327"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="310"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation>Uyarı: &quot;0&quot; katmanı hiçbir zaman kaldırılamaz.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="331"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1768"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="314"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1769"/>
         <source>Layers for removal:</source>
         <translation>Silinecek katmanlar:</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="559"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="542"/>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>%n bloğu kaldır</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="561"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="544"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation>Listelenen bloklar ve üzerindeki tüm varlıklar silinecek.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="564"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="547"/>
         <source>Blocks for removal:</source>
         <translation>Silinecek bloklar:</translation>
     </message>
@@ -21071,62 +21111,62 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="951"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="961"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="952"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <source>Remove empty layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="952"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="953"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1105"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1150"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1158"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1106"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1159"/>
         <source>Add Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1106"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1107"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1152"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1159"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1160"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1222"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1223"/>
         <source>Move Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1229"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1230"/>
         <source>Duplicate Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1246"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1247"/>
         <source>Replace &quot;By Layer&quot; value to source layers values?
 
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
@@ -21135,8 +21175,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1783"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1834"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1784"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1835"/>
         <source>Layer DialogEx</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21233,67 +21273,67 @@ Please specify a different value.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="619"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
         <source>All Image Files (%1)</source>
         <translation>Tüm Resim Dosyaları (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="621"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="604"/>
         <source>All Files (*.*)</source>
         <translation>Tüm Dosyalar (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="626"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="609"/>
         <source>Open Image</source>
         <translation>Görüntü Aç</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="968"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="951"/>
         <source>Windows Bitmap</source>
         <translation>Windows Biteşlemi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="970"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="953"/>
         <source>Joint Photographic Experts Group</source>
         <translation>JPEG - Joint Photographic Experts Group</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="972"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="955"/>
         <source>Graphics Interchange Format</source>
         <translation>GIF - Graphics Interchange Format</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="974"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="957"/>
         <source>Multiple-image Network Graphics</source>
         <translation>MNG - Multiple-image Network Graphics</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="976"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="959"/>
         <source>Portable Bit Map</source>
         <translation>Taşınabilir Bit Haritası(pbm)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="978"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="961"/>
         <source>Portable Grey Map</source>
         <translation>Taşınabilir Gri Harita(pgm)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="980"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="963"/>
         <source>Portable Network Graphic</source>
         <translation>Taşınabilir Ağ Grafiği(png)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="982"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="965"/>
         <source>Portable Pixel Map</source>
         <translation>Taşınabilir Piksel Haritası(ppm)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="984"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="967"/>
         <source>X Bitmap Format</source>
         <translation>X Bit Eşlem Biçimi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="986"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="969"/>
         <source>X Pixel Map</source>
         <translation>X Piksel Haritası</translation>
     </message>
@@ -21451,54 +21491,54 @@ Do you want to replace it?</source>
         <translation>Parsek</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="477"/>
+        <location filename="../src/main/main.cpp" line="487"/>
         <source>Loading..</source>
         <translation>Yükleniyor..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="363"/>
+        <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="62"/>
         <source>Loading File %1..</source>
         <translation>%1 dosyası yükleniyor..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="325"/>
+        <location filename="../src/main/main.cpp" line="384"/>
         <source>Loading...</source>
         <translation>Yükleniyor…</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="446"/>
+        <location filename="../src/main/main.cpp" line="456"/>
         <source>Release Candidate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="447"/>
+        <location filename="../src/main/main.cpp" line="457"/>
         <source>BETA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="448"/>
+        <location filename="../src/main/main.cpp" line="458"/>
         <source>ALPHA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1366"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1362"/>
         <source>enter an integer number</source>
         <translation>bir tam sayı gir</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1370"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1388"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1405"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1366"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1384"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1401"/>
         <source>LibreCAD query</source>
         <translation>LibreCAD sorgusu</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1384"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1380"/>
         <source>enter a number</source>
         <translation>bir sayı gir</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1401"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1397"/>
         <source>enter text</source>
         <translation>metin gir</translation>
     </message>
@@ -21513,62 +21553,62 @@ Do you want to replace it?</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="988"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="971"/>
         <source>Scalable Vector Graphics</source>
         <translation>Ölçeklenebilir Vektör Grafiği(svg)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="990"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="973"/>
         <source>SGI Black &amp; White</source>
         <translation>SGI Siyah &amp; Beyaz</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="992"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="975"/>
         <source>Encapsulated PostScript</source>
         <translation>Kapsülleşmiş PostScript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="994"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="977"/>
         <source>Encapsulated PostScript Format</source>
         <translation>Kapsülleşmiş PostScript Biçimi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="996"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="979"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>Kapsüllenmiş PostScript Değişimi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="998"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="981"/>
         <source>Windows Icon</source>
         <translation>Windows simgesi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1000"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="983"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1002"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="985"/>
         <source>ZSoft Paintbrush</source>
         <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1004"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="987"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1006"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="989"/>
         <source>SGI-Bilddatei</source>
         <translation>SGI-Bilddatei</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1008"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="991"/>
         <source>Targa Image File</source>
         <translation>Targa Görüntü Dosyası(tga)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1010"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="993"/>
         <source>Tagged Image File Format</source>
         <translation>Etiketli Resim Dosyası Formatı(tiff)</translation>
     </message>
@@ -21578,52 +21618,52 @@ Do you want to replace it?</source>
         <translation>Eski Çizim Değişimi %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="183"/>
         <source>Opened dwg file version %1.</source>
         <translation>Dwg dosyası sürüm %1 açıldı.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4268"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4271"/>
         <source>unknown error opening dwg file</source>
         <translation>dwg dosyasını açarken bilinmeyen hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4272"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4275"/>
         <source>can&apos;t open this dwg file</source>
         <translation>bu dwg dosyası açılamıyor</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4276"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4279"/>
         <source>unsupported dwg version</source>
         <translation>desteklenmeyen dwg sürümü</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4284"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4287"/>
         <source>error reading file header in dwg file</source>
         <translation>dwg dosyasında dosya başlığı okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4288"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4291"/>
         <source>error reading header vars in dwg file</source>
         <translation>dwg dosyasındaki başlık değişiklikleri okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4292"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4295"/>
         <source>error reading classes in dwg file</source>
         <translation>dwg dosyasındaki sınıflar okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4296"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4299"/>
         <source>error reading offsets in dwg file</source>
         <translation>dwg dosyasındaki ofsetler okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4300"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4303"/>
         <source>error reading tables in dwg file</source>
         <translation>dwg dosyasındaki tablolar okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4308"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4311"/>
         <source>error reading entities in dwg file</source>
         <translation>dwg dosyasındaki varlıklar okunurken hata</translation>
     </message>
@@ -21633,12 +21673,12 @@ Do you want to replace it?</source>
         <translation>dwg Çizim %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="191"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="192"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
         <translation>Diskteki dosya değiştirildi. Veri kaybını önlemek için lütfen başka bir dosyaya kaydedin! Dosya değiştirildi: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1774"/>
+        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1773"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>(%2, %3) ile (%4, %5) arasındaki boşluk=%1 nedeniyle tarama başarısız oldu</translation>
     </message>
@@ -21648,17 +21688,17 @@ Do you want to replace it?</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4304"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4307"/>
         <source>error reading blocks in dwg file</source>
         <translation>dwg dosyasındaki bloklar okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4312"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4315"/>
         <source>error reading objects in dwg file</source>
         <translation>dwg dosyasındaki nesneler okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
         <translation>: çoğaltılmış komut: %1 zaten %2 tarafından alınmış</translation>
     </message>
@@ -22767,38 +22807,38 @@ Do you want to replace it?</source>
         <translation type="vanished">Komut: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="258"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="261"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="388"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation>RS_Commands:: komut bulunamadı: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="413"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="415"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="430"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
         <translation>Komut bulunamadı: %1</translation>
     </message>
@@ -22807,7 +22847,7 @@ Do you want to replace it?</source>
         <translation type="vanished">Kabul edilen klavye kodu: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="469"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation>Mevcut Komutlar:</translation>
     </message>
@@ -22828,7 +22868,7 @@ Do you want to replace it?</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4280"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4283"/>
         <source>error reading file metadata in dwg file</source>
         <translation>dwg dosyasındaki meta verileri okunurken hata</translation>
     </message>
@@ -22962,7 +23002,7 @@ Do you want to replace it?</source>
         <translation>Tümü</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="937"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="940"/>
         <source>Invalid objects removed:</source>
         <translation>Geçersiz nesneler kaldırıldı:</translation>
     </message>
@@ -23029,7 +23069,7 @@ Do you want to replace it?</source>
         <translation>Lisans</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="80"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
         <translation>%1 katman bulunamadı</translation>
     </message>
@@ -24919,85 +24959,85 @@ Do you want to replace it?</source>
         <translation>Hatayı göz ardı edip dosya açılsın mı?</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="112"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG hatası yok</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="114"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG dosyası açılırken hata oluştu</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="116"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>desteklenmeyen DXF/DWG dosya sürümü</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="118"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG meta verileri okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="120"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG dosya başlığını okurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="122"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG başlık verileri okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="124"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG nesne haritası okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="126"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG sınıfları okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="128"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG tabloları okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="130"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG bloklarını okurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="132"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG varlıklarını okurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="134"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG nesneleri okunurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="133"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="136"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG bölümlerini okurken hata</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="135"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="138"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG kodu okunurken hata</translation>
@@ -25148,13 +25188,13 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="157"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="140"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation>adsız</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="43"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="34"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
         <translation type="unfinished"></translation>
@@ -25195,17 +25235,17 @@ Do you want to replace it?</source>
         <translation type="unfinished">- Değişmedi -</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="634"/>
+        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="633"/>
         <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="65"/>
+        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="92"/>
+        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25350,17 +25390,17 @@ Do you want to replace it?</source>
         <translation type="unfinished">2.11mm</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="134"/>
+        <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="135"/>
         <source>WCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="693"/>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="684"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/printing/lc_printing.cpp" line="142"/>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="140"/>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25368,17 +25408,17 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="103"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select to create block (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="103"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="109"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="107"/>
         <source>Specify reference point</source>
         <translation>Başlangıç noktası belirtilir</translation>
     </message>
@@ -25390,12 +25430,12 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select to explode container (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select and explode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25403,17 +25443,17 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="184"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="197"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="210"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="223"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="236"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="249"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="182"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="195"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="208"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="221"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="234"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="247"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="331"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="329"/>
         <source>Specify reference point</source>
         <translation>Başlangıç noktasını belirtin</translation>
     </message>
@@ -25422,49 +25462,49 @@ Do you want to replace it?</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="334"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="332"/>
         <source>Enter angle:</source>
         <translation>Açıyı girin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="337"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="335"/>
         <source>Enter factor:</source>
         <translation>Çarpanı girin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="340"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="338"/>
         <source>Enter columns:</source>
         <translation>Sütun sayısı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="343"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="341"/>
         <source>Enter rows:</source>
         <translation>Satır sayısı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="346"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="344"/>
         <source>Enter column spacing:</source>
         <translation>Sütun genişliği:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="347"/>
         <source>Enter row spacing:</source>
         <translation>Satır yüksekliği:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="64"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="62"/>
         <source>Block cannot contain an insert of itself.</source>
         <translation>Blok kendisinin bir ekini içeremez.</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="71"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="69"/>
         <source> has nested insert of current block in:
 </source>
         <translation> geçerli bloğun iç içe geçmiş ekini içeriyor:
 </translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="73"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="71"/>
         <source>
 This block cannot be inserted.</source>
         <translation>
@@ -25474,7 +25514,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="96"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
         <source>No block activated to save</source>
         <translation>Kaydedilecek blok etkinleştirilmedi</translation>
     </message>
@@ -25482,169 +25522,169 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="563"/>
         <source>Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="563"/>
         <source>De-Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="566"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source> entities </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source>that intersect with box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source>that are within box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="608"/>
         <source>Line</source>
         <translation type="unfinished">Çizgi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="611"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="609"/>
         <source>Length: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="612"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
         <source>Angle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="619"/>
         <source>Arc</source>
         <translation type="unfinished">Yay</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="492"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="490"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="495"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="493"/>
         <source>New Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="537"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="535"/>
         <source>Copy Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="539"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="537"/>
         <source>Move Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="620"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="631"/>
         <source>Radius:</source>
         <translation type="unfinished">Yarıçap:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="632"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Angle Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="625"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
         <source>Chord Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="626"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
         <source>Height:</source>
         <translation type="unfinished">Yükseklik:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="632"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="630"/>
         <source>Circle</source>
         <translation type="unfinished">Çember</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="934"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="932"/>
         <source>Set new position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="934"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="932"/>
         <source>Create a copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="942"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="940"/>
         <source>Lengthen Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="943"/>
         <source>Lengthen/Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="943"/>
         <source>Lengthen Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="946"/>
         <source>Move in Previous segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="946"/>
         <source>Move in Next segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="953"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
         <source>Set new ref position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Zoom, pan or select entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Scroll Horizontally / Select Contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Scroll Vertically / Select Child entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Select/Deselect entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Select Intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Choose second edge</source>
         <translation>İkinci kenarı seçin</translation>
     </message>
@@ -25683,7 +25723,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="206"/>
         <source>Select first line</source>
         <translation>İlk kenarı seçin</translation>
     </message>
@@ -25692,17 +25732,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="212"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="209"/>
         <source>Select second line</source>
         <translation>İkinci çizgiyi seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="212"/>
         <source>Specify dimension arc line location</source>
         <translation>Ölçü yayının yerini belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="215"/>
         <source>Enter dimension text:</source>
         <translation>Ölçü metnini girin:</translation>
     </message>
@@ -25737,7 +25777,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Hedefi belirtin</translation>
     </message>
@@ -25746,12 +25786,12 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Specify next point</source>
         <translation>Uzak noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Finish</source>
         <translation>Bitiş</translation>
     </message>
@@ -25759,7 +25799,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="126"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="119"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -25822,47 +25862,47 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="277"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="268"/>
         <source>Length of chord should be non-zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="417"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="428"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="448"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="461"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="483"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="408"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="439"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="474"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="481"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="472"/>
         <source>Not a valid chord length</source>
         <translation>Geçerli bir kiriş uzunluğu değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="496"/>
         <source>Specify center</source>
         <translation>Merkezi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="503"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="519"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Specify chord length (negative for alt point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Use alternative arc point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25871,7 +25911,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Yarıçapı belirtin</translation>
     </message>
@@ -25880,17 +25920,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
         <source>Specify start angle:</source>
         <translation>Başlangıç açısı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <source>Specify end angle or [angle/chordlen]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Specify included angle:</source>
         <translation>İç açı:</translation>
     </message>
@@ -25906,12 +25946,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="94"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="84"/>
         <source>Invalid arc data.</source>
         <translation>Veriler geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="236"/>
         <source>Specify third point</source>
         <translation type="unfinished">Üçüncü noktayı belirtin</translation>
     </message>
@@ -25920,7 +25960,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="243"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
     </message>
@@ -25933,7 +25973,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Bitiş noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
         <source>Specify startpoint or [center]</source>
         <translation>Başlangıç noktası veya [merkez] belirt</translation>
     </message>
@@ -25941,17 +25981,17 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="252"/>
         <source>Specify base entity</source>
         <translation>Baz varlığı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="256"/>
         <source>Alternate arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="258"/>
         <source>Alternate Arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25960,7 +26000,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="256"/>
         <source>Specify end angle</source>
         <translation>Bitiş açısını belirtin</translation>
     </message>
@@ -25969,7 +26009,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="258"/>
         <source>Specify end point</source>
         <translation>Uç noktayı belirtin</translation>
     </message>
@@ -25977,12 +26017,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="115"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="126"/>
         <source>Specify center</source>
         <translation>Merkezi belirtin</translation>
     </message>
@@ -25995,7 +26035,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation>Çemberde noktayı belirtin</translation>
     </message>
@@ -26003,12 +26043,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="77"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="75"/>
         <source>Invalid Circle data.</source>
         <translation>Veriler geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="153"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
     </message>
@@ -26017,7 +26057,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
     </message>
@@ -26029,12 +26069,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="76"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="74"/>
         <source>Invalid circle data.</source>
         <translation>Veriler geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="172"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
     </message>
@@ -26043,7 +26083,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="177"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
     </message>
@@ -26052,7 +26092,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
         <source>Specify third point</source>
         <translation>Üçüncü noktayı belirtin</translation>
     </message>
@@ -26060,12 +26100,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="128"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="122"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="165"/>
         <source>Specify circle center</source>
         <translation>Çemberin merkezini belirtin</translation>
     </message>
@@ -26074,7 +26114,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="168"/>
         <source>Specify circle radius</source>
         <translation>Çemberin yarıçapını belirtin</translation>
     </message>
@@ -26083,17 +26123,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="143"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="137"/>
         <source>radius=%1 is invalid (expression)</source>
         <translation>yarı çap=%1 geçersiz (ifade)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="145"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="139"/>
         <source>radius=%1 is invalid (negative)</source>
         <translation>yarı çap=%1 geçersiz (negatif)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="142"/>
         <source>radius=%1 is invalid (zero)</source>
         <translation>yarıçap=%1 geçersiz (sıfır)</translation>
     </message>
@@ -26101,7 +26141,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="188"/>
         <source>Specify the first line</source>
         <translation>İlk çizgiyi belirtin</translation>
     </message>
@@ -26110,7 +26150,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="191"/>
         <source>Specify the second line</source>
         <translation>İkinci çizgiyi belirtin</translation>
     </message>
@@ -26119,7 +26159,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="194"/>
         <source>Specify the third line</source>
         <translation>Üçüncü çizgiyi belirtin</translation>
     </message>
@@ -26131,7 +26171,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="449"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="445"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Teğet çember üzerindeki ilk noktayı belirt</translation>
     </message>
@@ -26140,17 +26180,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="448"/>
         <source>Specify the second point on the tangent circle</source>
         <translation>Teğet çember üzerindeki ikinci noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="455"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="451"/>
         <source>Select the center of the tangent circle</source>
         <translation>Teğet çemberin merkezini seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="446"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="442"/>
         <source>Specify a line/arc/circle</source>
         <translation>Bir çizgi/yay/çember belirtin</translation>
     </message>
@@ -26158,7 +26198,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="257"/>
         <source>Specify the first line/arc/circle</source>
         <translation>İlk çizgiyi/yayı/çemberi belirtin</translation>
     </message>
@@ -26167,7 +26207,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="260"/>
         <source>Specify the second line/arc/circle</source>
         <translation>İkinci çizgiyi/yayı/çemberi belirtin</translation>
     </message>
@@ -26176,7 +26216,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="263"/>
         <source>Select the center of the tangent circle</source>
         <translation>Teğet çemberin merkezini seçin</translation>
     </message>
@@ -26197,7 +26237,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">&apos;%1&apos; yarıçapı için teğet çember mümkün değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="230"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="226"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
         <translation>&apos;%1&apos; yarı çapı için ortak teğet çember yok</translation>
     </message>
@@ -26205,7 +26245,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="318"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="311"/>
         <source>Specify a line/arc/circle</source>
         <translation>Bir çizgi/yay/çember belirtin</translation>
     </message>
@@ -26214,7 +26254,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="321"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="314"/>
         <source>Specify the another arc/circle</source>
         <translation>Başka bir yay/çember belirtin</translation>
     </message>
@@ -26223,12 +26263,12 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="324"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="317"/>
         <source>Specify a point on the tangent circle</source>
         <translation>Teğet çember üzerinde bir nokta belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="327"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="320"/>
         <source>Select the center of the tangent circle</source>
         <translation>Teğet çemberin merkezini seçin</translation>
     </message>
@@ -26244,27 +26284,27 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="495"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="492"/>
         <source>Select the center of the tangent circle</source>
         <translation>Teğet çemberin merkezini seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="486"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="483"/>
         <source>Specify the first line/arc/circle</source>
         <translation>İlk çizgiyi/yayı/çemberi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="402"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="399"/>
         <source>No common tangential circle for selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="489"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="486"/>
         <source>Specify the second line/arc/circle</source>
         <translation>İkinci çizgiyi/yayı/çemberi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="492"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="489"/>
         <source>Specify the third line/arc/circle</source>
         <translation>Üçüncü çizgiyi/yayı/çemberi belirtin</translation>
     </message>
@@ -26272,7 +26312,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"/>
         <source>Specify the first point on ellipse</source>
         <translation>Elipsin ilk noktasını belirt</translation>
     </message>
@@ -26281,7 +26321,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Elips üzerindeki ikinci noktayı belirtin</translation>
     </message>
@@ -26290,17 +26330,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
         <source>Specify the third point on ellipse</source>
         <translation>Elips üzerinde üçüncü noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
         <source>Specify the fourth point on ellipse</source>
         <translation>Elips üzerinde dördüncü noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="167"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="165"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>Benzersiz bir elips belirlenemiyor</translation>
     </message>
@@ -26308,14 +26348,14 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="308"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="319"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="330"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="313"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="324"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="336"/>
         <source>Specify ellipse center</source>
         <translation>Elipsin merkezini belirtin</translation>
     </message>
@@ -26324,7 +26364,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Büyük eksenin bitiş noktasını belirtin</translation>
     </message>
@@ -26333,17 +26373,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
         <source>Specify endpoint or length of minor axis:</source>
         <translation>Küçük eksenin bitiş noktasını veya uzunluğunu belirtin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="351"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
         <source>Specify start angle</source>
         <translation>Başlangıç açısını belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="354"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
         <source>Specify end angle</source>
         <translation>Bitiş açısını belirtin</translation>
     </message>
@@ -26351,7 +26391,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"/>
         <source>Specify the center of ellipse</source>
         <translation>Elips merkezini belirtin</translation>
     </message>
@@ -26360,12 +26400,12 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Elipsin ilk noktasını belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Elips üzerindeki ikinci noktayı belirtin</translation>
     </message>
@@ -26374,7 +26414,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
         <source>Specify the third point on ellipse</source>
         <translation>Elips üzerinde üçüncü noktayı belirtin</translation>
     </message>
@@ -26382,12 +26422,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="200"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="192"/>
         <source>Specify first focus of ellipse</source>
         <translation>Elipsin ilk odağını belirtin</translation>
     </message>
@@ -26396,7 +26436,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Elipsin ikinci odağını belirtin</translation>
     </message>
@@ -26405,17 +26445,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
         <source>Specify a point on ellipse or total distance to foci</source>
         <translation>Elips üzerinde bir nokta veya odaklara olan toplam mesafeyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="163"/>
         <source>specify a point on ellipse, or total distance to foci</source>
         <translation>elips üzerinde bir nokta veya odaklara olan toplam mesafeyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="186"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
         <translation>Toplam mesafe %1, odaklar arasındaki mesafeden daha küçük</translation>
     </message>
@@ -26423,7 +26463,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the first line</source>
         <translation>İlk çizgiyi belirt</translation>
     </message>
@@ -26432,7 +26472,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="288"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="287"/>
         <source>Specify the second line</source>
         <translation>İkinci çizgiyi belirt</translation>
     </message>
@@ -26441,17 +26481,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="291"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <source>Specify the third line</source>
         <translation>Üçüncü çizgiyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="293"/>
         <source>Specify the fourth line</source>
         <translation>Dördüncü çizgiyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="203"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>Benzersiz bir elips belirlenemiyor</translation>
     </message>
@@ -26459,52 +26499,52 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="156"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="155"/>
         <source>Hatch created successfully.</source>
         <translation>Tarama başarıyla oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="184"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation>Geçersiz tarama alanı. Lütfen seçilen objelerin bir veya daha fazla kapalı kontur oluşturduğunu kontrol edin.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="158"/>
         <source>Hatch Error: Invalid contour found!</source>
         <translation>Tarama Hatası: Geçersiz kontur bulundu!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="162"/>
         <source>Hatch Error: Pattern not found!</source>
         <translation>Tarama Hatası: Desen bulunamadı!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="165"/>
         <source>Hatch Error: Contour or pattern too small!</source>
         <translation>Tarama Hatası: Kontur veya desen çok küçük!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="169"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="168"/>
         <source>Hatch Error: Contour too big!</source>
         <translation>Tarama Hatası: Kontur çok büyük!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="171"/>
         <source>Hatch Error: Undefined Error!</source>
         <translation>Tarama Hatası: Tanımlanamayan Hata!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="176"/>
         <source>Total hatch area = %1</source>
         <translation>Toplam tarama alanı = %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="202"/>
         <source>Select to hatch (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="202"/>
         <source>Hatch immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26546,7 +26586,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="263"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
     </message>
@@ -26555,7 +26595,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="295"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="285"/>
         <source>Specify next point or [%1]</source>
         <translation>Sonraki noktayı ya da [%1] belirtin</translation>
     </message>
@@ -26564,22 +26604,22 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="297"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="287"/>
         <source>Specify next point</source>
         <translation>Sonraki noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="325"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="315"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <translation>Çizgi dizisi kapatılamıyor: Henüz yeterli sayıda varlık tanımlanmamış veya zaten kapatılmış.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="385"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="375"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation>Geri alınamıyor: Geçmişin başlangıcına ulaşıldı</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="409"/>
         <source>Cannot redo: End of history reached</source>
         <translation>İleri al yapılamıyor: Geçmişin sonuna ulaşıldı</translation>
     </message>
@@ -26587,13 +26627,13 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="224"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="231"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="296"/>
         <source>Specify position</source>
         <translation>Yerini belirtin</translation>
     </message>
@@ -26602,7 +26642,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="305"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="299"/>
         <source>Enter angle:</source>
         <translation>Açıyı girin:</translation>
     </message>
@@ -26611,7 +26651,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="302"/>
         <source>Enter length:</source>
         <translation>Uzunluğu girin:</translation>
     </message>
@@ -26619,18 +26659,18 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="123"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="118"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="199"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="216"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="211"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="241"/>
         <source>Select first line</source>
         <translation>İlk kenarı seçin</translation>
     </message>
@@ -26639,7 +26679,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="244"/>
         <source>Select second line</source>
         <translation>İkinci çizgiyi seçin</translation>
     </message>
@@ -26648,17 +26688,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="247"/>
         <source>Enter bisector length:</source>
         <translation>Açıortay uzunluğunu girin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="250"/>
         <source>Enter number of bisectors:</source>
         <translation>Açıortay sayısı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="209"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
         <translation>Aralık içinde olmayan sektör çizgi sayısı: </translation>
@@ -26667,7 +26707,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="113"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="114"/>
         <source>Click and drag to draw a line</source>
         <translation>Çizgiyi çizmek için tıklayın ve fareyi sürükleyin</translation>
     </message>
@@ -26679,7 +26719,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="114"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
     </message>
@@ -26688,7 +26728,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
     </message>
@@ -26700,7 +26740,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="157"/>
         <source>Select a line</source>
         <translation>Bir çizgi seçin</translation>
     </message>
@@ -26709,7 +26749,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="162"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="160"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Çember, yay ya da elips seçin</translation>
     </message>
@@ -26721,7 +26761,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="111"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Mesafe belirtin &lt;%1&gt; ya da varlık veya [%2] seçin</translation>
     </message>
@@ -26730,23 +26770,23 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="93"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="85"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="122"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="114"/>
         <source>Enter number:</source>
         <translation>Paralel sayısı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="150"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="160"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="158"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Paralel sayısı geçersiz: 1..99 arasında olmalı</translation>
     </message>
@@ -26754,7 +26794,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="150"/>
         <source>Select entity</source>
         <translation>Varlık seçin</translation>
     </message>
@@ -26763,7 +26803,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="153"/>
         <source>Specify through point</source>
         <translation>Geçiş noktasını belirtin</translation>
     </message>
@@ -26772,22 +26812,22 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="93"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="88"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="161"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="156"/>
         <source>Number:</source>
         <translation>Paralel sayısı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="186"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Paralel sayısı geçersiz. 1..99 arasında olmalı</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="189"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -26799,7 +26839,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Merkezi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="49"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Bir köşe belirtin</translation>
     </message>
@@ -26819,7 +26859,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="101"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="91"/>
         <source>Specify first corner</source>
         <translation>İlk köşeyi belirtin</translation>
     </message>
@@ -26828,7 +26868,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>İkinci köşeyi belirtin</translation>
     </message>
@@ -26852,32 +26892,32 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>Rectangle</source>
         <translation type="unfinished">Dikdörtgen</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="103"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="97"/>
         <source>Width:</source>
         <translation type="unfinished">Genişlik:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="98"/>
         <source>Height:</source>
         <translation type="unfinished">Yükseklik:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="105"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="99"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="147"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="141"/>
         <source>Specify first corner</source>
         <translation>İlk köşeyi belirtin</translation>
     </message>
@@ -26886,7 +26926,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="150"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>İkinci köşeyi belirtin</translation>
     </message>
@@ -26898,23 +26938,23 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="175"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="181"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="213"/>
         <source>Select base entity</source>
         <translation>Temel varlığı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="226"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="219"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="222"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26923,7 +26963,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="216"/>
         <source>Specify position</source>
         <translation>Kesişme yerini belirtin</translation>
     </message>
@@ -26935,7 +26975,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="135"/>
         <source>Specify point</source>
         <translation>Noktayı belirtin</translation>
     </message>
@@ -26944,7 +26984,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="141"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="138"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Bir çember, yay ya da elips seçin</translation>
     </message>
@@ -26972,17 +27012,17 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İkinci çemberi veya elipsi seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="211"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="207"/>
         <source>Select first circle/ellipse/parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="210"/>
         <source>Select second circle/ellipse/parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="213"/>
         <source>Select the tangent line closest to cursor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26990,7 +27030,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="185"/>
         <source>Specify insertion point</source>
         <translation>Yerleşme noktasını belirtin</translation>
     </message>
@@ -26999,7 +27039,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Metni girin:</translation>
     </message>
@@ -27011,7 +27051,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="80"/>
+        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Yerini belirtin</translation>
     </message>
@@ -27023,7 +27063,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="720"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="712"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
     </message>
@@ -27036,34 +27076,34 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="751"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="743"/>
         <source>Specify next point or [%1]</source>
         <translation>Sonraki noktayı belirtin veya [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="753"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Specify next point</source>
         <translation>Sonraki noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="774"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="766"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation>Çoklu çizgi kapatılamıyor: Henüz yeterli sayıda varlık tanımlanmadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="797"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="789"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Geri alınamıyor: Henüz yeterli sayıda varlık tanımlanmadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="356"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="557"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="348"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="549"/>
         <source>Enter the end point x</source>
         <translation>Bitiş noktası x&apos;i girin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="408"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="566"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="558"/>
         <source>Enter number of polylines</source>
         <translation>Çoklu çizgi sayısını girin</translation>
     </message>
@@ -27072,37 +27112,37 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">denklem</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="517"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter an equation, f(x)</source>
         <translation>Bir denklem girin, f(x)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="531"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="523"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="531"/>
         <source>Enter the start point x</source>
         <translation>Başlangıç noktası x&apos;i girin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="546"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="538"/>
         <source>The entered x is invalid.</source>
         <translation>Girilen x geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="583"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The step size entered is invalid.</source>
         <translation>Girilen adım boyutu geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="618"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="610"/>
         <source>The value x entered is invalid.</source>
         <translation>Girilen x değeri geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="740"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="732"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27110,7 +27150,7 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="219"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="213"/>
         <source>Specify first control point</source>
         <translation>İlk kontrol noktasını belirt</translation>
     </message>
@@ -27119,7 +27159,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="225"/>
         <source>Specify next control point or [%1]</source>
         <translation>Sonraki kontrol noktasını belirtin veya [%1]</translation>
     </message>
@@ -27128,12 +27168,12 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point</source>
         <translation>Sonraki kontrol noktasını belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="281"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Geri alınamıyor: Henüz yeterli sayıda varlık tanımlanmadı.</translation>
     </message>
@@ -27141,12 +27181,12 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="156"/>
         <source>Text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="242"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="240"/>
         <source>Specify insertion point</source>
         <translation>Yerleştirileceği noktayı belirtin</translation>
     </message>
@@ -27155,7 +27195,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Metni girin:</translation>
     </message>
@@ -27164,7 +27204,7 @@ Bu blok eklenemez.</translation>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="245"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
     </message>
@@ -27266,61 +27306,61 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="92"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="86"/>
         <source>Angle 1: %1
 Angle 2: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="124"/>
         <source>Angle: %1
 Intersection: (%2 , %3)
 Intersection :@(%4, %5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="136"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="175"/>
         <source>Lines are parallel</source>
         <translation>Çizgiler paralel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="230"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="224"/>
         <source>Specify first line</source>
         <translation>İlk çizgiyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="230"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="224"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="245"/>
         <source>Info</source>
         <translation type="unfinished">Bilgi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="252"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="246"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="256"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="257"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Line 1 Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="258"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="252"/>
         <source>Line 2 Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="248"/>
         <source>Angle (alt): </source>
         <translation type="unfinished"></translation>
     </message>
@@ -27329,7 +27369,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="233"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="227"/>
         <source>Specify second line</source>
         <translation>İkinci çizgiyi belirtin</translation>
     </message>
@@ -27345,23 +27385,23 @@ Intersection :@(%4, %5)</source>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="105"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="113"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="99"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
         <source>Circumference: %1</source>
         <translation>Çevre: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify point and complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27370,7 +27410,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Nokta: %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="184"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Çokgenin ilk noktasını belirt</translation>
     </message>
@@ -27379,7 +27419,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Çokgenin sonraki noktasını belirt</translation>
     </message>
@@ -27388,8 +27428,8 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Kapanış Noktası: %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="114"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
         <translation>Alan: %1 %2^2</translation>
     </message>
@@ -27397,7 +27437,7 @@ Intersection :@(%4, %5)</source>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="68"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="61"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -27406,37 +27446,37 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="104"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="97"/>
         <source>Info</source>
         <translation type="unfinished">Bilgi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="105"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
         <source>Distance:</source>
         <translation type="unfinished">Mesafe:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="106"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="99"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="107"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="100"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="108"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="101"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="163"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="156"/>
         <source>Specify first point of distance</source>
         <translation>İlk mesafe noktasını belirt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="159"/>
         <source>Don&apos;t move relative zero</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27445,7 +27485,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="159"/>
         <source>Specify second point of distance</source>
         <translation>İkinci mesafe noktasını belirtin</translation>
     </message>
@@ -27465,7 +27505,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">Mesafe: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="89"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="85"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -27474,42 +27514,42 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="268"/>
         <source>Specify entity</source>
         <translation>Varlığı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="268"/>
         <source>Do not snap to child entities in container</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="276"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
         <source>Relative point is on entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="303"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="299"/>
         <source>Info</source>
         <translation type="unfinished">Bilgi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="304"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="300"/>
         <source>Distance:</source>
         <translation type="unfinished">Mesafe:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="305"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="301"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="306"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="302"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="307"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="303"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27518,8 +27558,8 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="276"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
         <source>Specify point</source>
         <translation>Noktayı belirtin</translation>
     </message>
@@ -27553,37 +27593,37 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="51"/>
         <source>Total Length of selected entities: %1</source>
         <translation>Seçili varlıkların toplam uzunluğu: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="55"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
         <source>At least one of the selected entities cannot be measured.</source>
         <translation>Seçilen varlıklardan en az biri ölçülemiyor.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="62"/>
         <source>Selected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="66"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
         <source>Total Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select to measure total length (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select and finish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27591,22 +27631,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="517"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="520"/>
         <source>Back</source>
         <translation type="unfinished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="539"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="542"/>
         <source>SHIFT:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="546"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="549"/>
         <source>CTRL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="565"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="568"/>
         <source>Cancel</source>
         <translation type="unfinished">İptal</translation>
     </message>
@@ -27618,13 +27658,13 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Nesne Yerleştir</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="156"/>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="169"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="198"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>Yerleştirme noktasını belirtin</translation>
     </message>
@@ -27633,17 +27673,17 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="201"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
         <source>Enter angle:</source>
         <translation>Açıyı girin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="204"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="200"/>
         <source>Enter factor:</source>
         <translation>Çarpanı girin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="69"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>&apos;%1&apos; dosyası açılamıyor</translation>
     </message>
@@ -27658,17 +27698,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select to modify attributes (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Modify attributes immediately after selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27676,59 +27716,59 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="79"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="76"/>
         <source>Selected lines are parallel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="79"/>
         <source>Selected lines are not children of the same polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="151"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="148"/>
         <source>Trim</source>
         <translation type="unfinished">Kırp</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="152"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="149"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="150"/>
         <source>Point 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="154"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="151"/>
         <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="198"/>
         <source>Invalid entity selected (non-trimmable).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="204"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="216"/>
         <source>Invalid entity selected (non-atomic).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="216"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="213"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="285"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="298"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="282"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="295"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="352"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="349"/>
         <source>Select first entity</source>
         <translation>İlk varlığı seçin</translation>
     </message>
@@ -27737,7 +27777,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="355"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="352"/>
         <source>Select second entity</source>
         <translation>İkinci varlığı seçin</translation>
     </message>
@@ -27746,12 +27786,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="355"/>
         <source>Enter length 1:</source>
         <translation>1. uzunluğu girin:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="361"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="358"/>
         <source>Enter length 2:</source>
         <translation>2. uzunluğu girin:</translation>
     </message>
@@ -27759,22 +27799,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="87"/>
         <source>Divide</source>
         <translation type="unfinished">Bölme çizgisi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="89"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="88"/>
         <source>At:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="104"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="103"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="115"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27787,7 +27827,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Kesme noktası varlık üzerinde değil.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="134"/>
         <source>Specify entity to cut</source>
         <translation>Kesilecek varlığı belirtin</translation>
     </message>
@@ -27796,7 +27836,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="138"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="137"/>
         <source>Specify cutting point</source>
         <translation>Kesme noktasını belirtin</translation>
     </message>
@@ -27805,7 +27845,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="108"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="107"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation>Varlık bir çizgi, yay, çember, elips veya interpolasyon eğri çizgisi olmalıdır.</translation>
     </message>
@@ -27813,17 +27853,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select to delete (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Delete immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27831,7 +27871,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
         <translation>Çoklu çizgide ilk kırılma noktasını belirt</translation>
     </message>
@@ -27840,7 +27880,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Aynı çoklu çizgi üzerinde ikinci kırılma noktasını belirtin</translation>
     </message>
@@ -27849,42 +27889,42 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
         <source>Entities not in the same polyline.</source>
         <translation>Varlıklar aynı çoklu çizgide değil.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="90"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="92"/>
         <source>Parent of second entity is not a polyline</source>
         <translation>İkinci varlığın atası çoklu çizgi değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>Parent of first entity is not a polyline</source>
         <translation>İlk varlığın atası çoklu çizgi değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="93"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
         <source>Parent of second entity is nullptr</source>
         <translation>İkinci varlığın atası nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="96"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="98"/>
         <source>One of the chosen entities is nullptr</source>
         <translation>Seçilen varlıklardan biri nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="118"/>
         <source>Parent of first entity is nullptr</source>
         <translation>İlk varlığın atası nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="119"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="121"/>
         <source>First entity is nullptr</source>
         <translation>İlk varlık nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="130"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="132"/>
         <source>Second entity is nullptr</source>
         <translation>İkinci varlık nullptr</translation>
     </message>
@@ -27903,7 +27943,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="126"/>
         <source>Click on entity to modify</source>
         <translation>Değiştirmek için varlığa tıklayın</translation>
     </message>
@@ -27928,57 +27968,57 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="119"/>
         <source>Mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
         <source>Angle (alt):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
         <source>Line From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
         <source>Line To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select to mirror (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Specify mirror line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="245"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="244"/>
         <source>Specify first point of mirror line</source>
         <translation>Aynalama çizgisinin ilk noktasını belirt</translation>
     </message>
@@ -27987,7 +28027,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Yansılama ekseninin ikinci noktasını belirtin</translation>
     </message>
@@ -27999,37 +28039,37 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Moving Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Copy Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="184"/>
         <source>Specify reference point</source>
         <translation>Başlama noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Create a Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select to move (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Move immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28038,7 +28078,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Hedef noktasını belirtin</translation>
     </message>
@@ -28054,56 +28094,56 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="83"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="79"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="112"/>
         <source>Moving with rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="84"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="117"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="80"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="113"/>
         <source>Source:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="85"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="81"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="114"/>
         <source>Target:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="86"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="119"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="115"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="284"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="280"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="320"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="316"/>
         <source>Specify reference point</source>
         <translation>Başlama noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Select to move and rotate  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Move and rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28112,7 +28152,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="323"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="319"/>
         <source>Specify target point</source>
         <translation>Hedef noktasını belirtin</translation>
     </message>
@@ -28121,7 +28161,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="326"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="322"/>
         <source>Enter rotation angle:</source>
         <translation>Döndürme açısı:</translation>
     </message>
@@ -28129,38 +28169,38 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="88"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="92"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="89"/>
         <source>Distance:</source>
         <translation type="unfinished">Mesafe:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="171"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="178"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="175"/>
         <source>Specify direction of offset</source>
         <translation>Öteleme yönünü belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="174"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="171"/>
         <source>Specify reference point for direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Offset immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28172,17 +28212,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select to revert direction (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Revert immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28190,7 +28230,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
         <source>Specify reference point</source>
         <translation>Döndürme noktasını belirtin</translation>
     </message>
@@ -28199,88 +28239,88 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="244"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="145"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="202"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="242"/>
         <source>Angle:</source>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="206"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="139"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="151"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="208"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="137"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146"/>
         <source>Reference Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="138"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="150"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147"/>
         <source>Center Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="251"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
         <source>Second Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Select to rotate (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
         <source>Specify rotation center</source>
         <translation>Döndürme merkezini belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Specify target point to rotate to</source>
         <translation>Döndürülecek hedef noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
         <source>Specify target point for rotation around reference point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28288,47 +28328,47 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="81"/>
         <source>Rotating Twice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="84"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="82"/>
         <source>Center 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="83"/>
         <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="84"/>
         <source>Center 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="85"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select for two axis rotation  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Rotate 2 Axis immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="166"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="164"/>
         <source>Specify absolute reference point</source>
         <translation>Mutlak döndürme noktasını belirtin</translation>
     </message>
@@ -28337,7 +28377,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="169"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="167"/>
         <source>Specify relative reference point</source>
         <translation>Göreli döndürme noktasını belirtin</translation>
     </message>
@@ -28349,8 +28389,8 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="339"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="354"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="337"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="352"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -28359,27 +28399,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="227"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="225"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="228"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="226"/>
         <source>Point 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="227"/>
         <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="416"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
         <translation>İkinci varlığı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="419"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="417"/>
         <source>Enter radius:</source>
         <translation>Yarıçapı girin:</translation>
     </message>
@@ -28388,7 +28428,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="413"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="411"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation>İlk varlığı belirtin veya yarıçapı girin &lt;%1&gt;</translation>
     </message>
@@ -28404,77 +28444,77 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="174"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="170"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="175"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
         <source>Scale by X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
         <source>Scale by Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Specify scale center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="370"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
         <source>Specify source point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Free snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select to scale  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28482,7 +28522,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="198"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="195"/>
         <source>Specify first corner</source>
         <translation>İlk köşeyi belirtin</translation>
     </message>
@@ -28491,7 +28531,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="198"/>
         <source>Specify second corner</source>
         <translation>İkinci köşeyi belirtin</translation>
     </message>
@@ -28500,45 +28540,45 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="93"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="78"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="90"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="110"/>
         <source>Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
         <source>Start Corner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80"/>
         <source>End Corner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="94"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
         <source>Reference Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="115"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
         <source>Offset:</source>
         <translation type="unfinished">Öteleme:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="201"/>
         <source>Specify reference point</source>
         <translation>Başlama noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
         <source>Specify target point</source>
         <translation>Hedef noktasını belirtin</translation>
     </message>
@@ -28546,7 +28586,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="182"/>
         <source>Select first trim entity</source>
         <translation>İlk kırpma varlığını seçin</translation>
     </message>
@@ -28555,7 +28595,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="184"/>
         <source>Select limiting entity</source>
         <translation>Sınırlayıcı varlığı seçin</translation>
     </message>
@@ -28564,27 +28604,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="121"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="122"/>
         <source>Trim</source>
         <translation type="unfinished">Kırp</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="123"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="125"/>
         <source>Intersection 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="188"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select second trim entity</source>
         <translation>İkinci kırpma varlığını seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="191"/>
         <source>Select entity to trim</source>
         <translation>Kırpılacak varlığı seçin</translation>
     </message>
@@ -28600,22 +28640,22 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Seçilen Varlık bir bloktadır. Lütfen bloğu düzenleyin.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="172"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="167"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="179"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="174"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
         <translation>Seçilen Varlık atomik bir varlık değil veya kırpılamaz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="199"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="231"/>
         <source>Select line, arc, ellipse or parabola to trim or enter distance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28631,27 +28671,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionOrder</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="111"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="110"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Choose entities (Enter to Complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Order immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="131"/>
         <source>Choose entity for order</source>
         <translation>Dizmek için varlık seçin</translation>
     </message>
@@ -28709,27 +28749,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="113"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="109"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
         <translation>Varlık bir çoklu çizgi olmalıdır.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="156"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="152"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>Mevcut çoklu çizginin başlangıcına veya sonuna yakın bir yere tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="266"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished">Çoklu çizgi sayısını girin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="280"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>Çoklu çizgiyi başlangıç veya bitiş noktasına yakın bir yerde belirtin</translation>
     </message>
@@ -28746,12 +28786,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Sonraki noktayı belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="115"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>Kapalı çoklu çizgiye düğümler eklenemez.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="304"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="300"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Geri alınamıyor: Henüz yeterli sayıda varlık tanımlanmadı.</translation>
     </message>
@@ -28767,33 +28807,33 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="96"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="109"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="94"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="107"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="98"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="96"/>
         <source>Entity must be a polyline.</source>
         <translation>Varlık bir çoklu çizgi olmalıdır.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="139"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="137"/>
         <source>Specify polyline to delete node</source>
         <translation>Düğümü silmek için çoklu çizgiyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="140"/>
         <source>Specify deleting node&apos;s point</source>
         <translation>Silinecek düğüm noktasını belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="125"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="123"/>
         <source>Deleting point is invalid.</source>
         <translation>Silme noktası geçersiz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="114"/>
         <source>Deleting point is not on entity.</source>
         <translation>Silme noktası varlıkta değil.</translation>
     </message>
@@ -28860,17 +28900,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="306"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="307"/>
         <source>Entity must be a polyline.</source>
         <translation>Varlık bir çoklu çizgi olmalıdır.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="357"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="356"/>
         <source>Choose the original polyline</source>
         <translation>Özgün çoklu çizgiyi seçin</translation>
     </message>
@@ -28882,12 +28922,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="309"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="306"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="333"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="330"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Özgün çoklu çizgideki bölümlerden birini seçin</translation>
     </message>
@@ -28896,13 +28936,13 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="311"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="308"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>Varlık kapalı çoklu çizgi olamaz.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="61"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="82"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="58"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="79"/>
         <source>Polyline created</source>
         <translation>Çoklu çizgi oluşturuldu</translation>
     </message>
@@ -28918,12 +28958,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="115"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="118"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="117"/>
         <source>Entity must be a polyline.</source>
         <translation>Varlık bir çoklu çizgi olmalıdır.</translation>
     </message>
@@ -28936,27 +28976,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Varlıkta bölüm bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="136"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="135"/>
         <source>First segment should be on selected polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="148"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="147"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="182"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
         <translation>Kırpılacak çoklu çizgiyi belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="184"/>
         <source>Specify first segment</source>
         <translation>İlk bölümü belirtin</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="187"/>
         <source>Specify second segment</source>
         <translation>İkinci bölümü belirtin</translation>
     </message>
@@ -28964,72 +29004,72 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="274"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="276"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): Geçersiz kağıt boyutu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="156"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation>Kağıt koordinatlarında çıktı ofseti (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="159"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="161"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation>Grafik koordinatlarında çıktı ofseti (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="183"/>
         <source>Printout offset in graph coordinates</source>
         <translation>Grafik koordinatlarında çıktı ofseti</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset in paper coordinates</source>
         <translation>Kağıt koordinatlarında çıktı ofseti</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="218"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="220"/>
         <source>: select printout offset coordinates</source>
         <translation>: çıktı ofset koordinatlarını seçin</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="219"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="221"/>
         <source>type in offset from command line to offset printout</source>
         <translation>ofset çıktısına komut satırından uzaklık yazın</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="389"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="391"/>
         <source>Limit of pages has been exceeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Move Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Move Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="193"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="195"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Çıktı ofseti göreceli sıfırı yok sayar. &apos;@&apos; göz ardı ediliyor</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="175"/>
         <source>Printout in Black/White</source>
         <translation>Siyah/Beyaz Çıktı</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout in color</source>
         <translation>Renkli çıktı</translation>
     </message>
@@ -29120,12 +29160,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="56"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="55"/>
         <source>Entity must be an Atomic Entity.</source>
         <translation>Varlık bir Atomik Varlık olmalıdır.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="75"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="74"/>
         <source>Specify entity to select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29133,7 +29173,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="111"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="109"/>
         <source>Choose first point of intersection line</source>
         <translation>Kesişen çizginin ilk noktasını seçin</translation>
     </message>
@@ -29142,7 +29182,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="114"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="112"/>
         <source>Choose second point of intersection line</source>
         <translation>Kesişen çizginin ikinci noktasını seçin</translation>
     </message>
@@ -29154,7 +29194,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="70"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="69"/>
         <source>Specify entity with desired layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29261,7 +29301,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">&amp;Elle Kesişim</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="146"/>
+        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
         <source>Select first entity</source>
         <translation>İlk varlığı seçin</translation>
     </message>
@@ -29270,7 +29310,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Geri</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="149"/>
+        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="148"/>
         <source>Select second entity</source>
         <translation>İkinci varlığı seçin</translation>
     </message>
@@ -29278,12 +29318,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="59"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="58"/>
         <source>Regenerated %1 dimension entities</source>
         <translation>%1 ölçülendirme varlığı yeniden oluşturuldu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="60"/>
         <source>No dimension entities found</source>
         <translation>Bir ölçülendirme varlığı bulunamadı</translation>
     </message>
@@ -29308,7 +29348,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="137"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify first edge</source>
         <translation>İlk kenarı belirtin</translation>
     </message>
@@ -29317,7 +29357,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">İptal</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>İkinci kenarı belirtin</translation>
     </message>

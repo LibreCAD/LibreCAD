@@ -31,6 +31,7 @@ class LC_ActionGroupManager;
 class QC_ApplicationWindow;
 
 class LC_CreatorInvoker : public QObject{
+    Q_OBJECT
 public:
     LC_CreatorInvoker(QC_ApplicationWindow * appWindows, LC_ActionGroupManager * actionGrupManager);
     void createCustomToolbars();

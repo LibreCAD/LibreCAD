@@ -8,6 +8,7 @@ class LC_AppWindowDialogsInvoker;
 class RS_Graphic;
 
 class LC_ExportToImageService:public QObject, public LC_AppWindowAware{
+    Q_OBJECT
 public:
     LC_ExportToImageService(QC_ApplicationWindow* mainWin, LC_AppWindowDialogsInvoker* dlgHelper)
         : LC_AppWindowAware{mainWin},

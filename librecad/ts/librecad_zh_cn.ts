@@ -149,7 +149,7 @@
 <context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="44"/>
+        <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41"/>
         <source>Start point may set in distance or point state only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,78 +157,78 @@
 <context>
     <name>LC_AbstractActionDrawRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="168"/>
         <source>Width:</source>
         <translation type="unfinished">宽度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="169"/>
         <source>Height:</source>
         <translation type="unfinished">高度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="170"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="199"/>
         <source>Invalid Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="210"/>
         <source>Invalid radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="360"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="355"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="411"/>
         <source>Specify insertion point</source>
         <translation type="unfinished">指定插入点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="414"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="417"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="420"/>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="423"/>
         <source>Specify corner bevel length (x,y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="431"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="426"/>
         <source>Specify corner radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="434"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="429"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished"></translation>
@@ -237,12 +237,12 @@
 <context>
     <name>LC_AbstractActionWithPreview</name>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="734"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="727"/>
         <source> is not divided as it is locked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="742"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="735"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -250,32 +250,32 @@
 <context>
     <name>LC_ActionCircleDimBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
         <translation type="unfinished">不是圆或圆弧实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="179"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="202"/>
         <source>Select arc or circle entity</source>
         <translation type="unfinished">选择圆或圆弧实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="202"/>
         <source>Free angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="205"/>
         <source>Specify dimension line position or enter angle:</source>
         <translation type="unfinished">指定尺寸线位置或输入角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="208"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished">输入标注文字:</translation>
     </message>
@@ -283,7 +283,7 @@
 <context>
     <name>LC_ActionDimArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="184"/>
         <source>Select arc entity</source>
         <translation>选择圆弧实体</translation>
     </message>
@@ -292,7 +292,7 @@
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="187"/>
         <source>Specify dimension arc location</source>
         <translation>指定圆弧标注位置</translation>
     </message>
@@ -300,32 +300,32 @@
 <context>
     <name>LC_ActionDimLinearBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="254"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="252"/>
         <source>Specify first extension line origin</source>
         <translation type="unfinished">指定第一延伸线的起点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="255"/>
         <source>Specify second extension line origin</source>
         <translation type="unfinished">指定第二延伸线的起点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="258"/>
         <source>Specify dimension line location</source>
         <translation type="unfinished">指定尺寸线位置</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="258"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="261"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished">输入标注文字:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="264"/>
         <source>Enter dimension line angle:</source>
         <translation type="unfinished">输入尺寸线角度:</translation>
     </message>
@@ -391,12 +391,12 @@
 <context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="96"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94"/>
         <source>Enter value of central angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="100"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98"/>
         <source>Alternate angle to outer arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -404,32 +404,32 @@
 <context>
     <name>LC_ActionDrawArc2PointsBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="97"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="94"/>
         <source>The end point is too close to the start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="135"/>
         <source>Positive value is expected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="141"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="138"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="178"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="175"/>
         <source>Specify first point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="182"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="179"/>
         <source>Specify second point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="192"/>
         <source>Opposite Arc direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -437,12 +437,12 @@
 <context>
     <name>LC_ActionDrawArc2PointsHeight</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="103"/>
         <source>Enter height of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="107"/>
         <source>Alternative arc where diameter is reduced by height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -450,17 +450,17 @@
 <context>
     <name>LC_ActionDrawArc2PointsLength</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="41"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="42"/>
         <source>The distance between the two points must be less than the arc length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="103"/>
         <source>Enter length of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="107"/>
         <source>Alternate solutions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -504,19 +504,19 @@
 <context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="193"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>对所选点而言半径=%1太小
 两点之间的距离=%2大于直径=%3</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="204"/>
         <source>Select from two possible circle centers</source>
         <translation>从两个可能的圆心中选择</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="225"/>
         <source>Specify first point</source>
         <translation>指定第一点</translation>
     </message>
@@ -525,7 +525,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="228"/>
         <source>Specify second point</source>
         <translation>指定第二点</translation>
     </message>
@@ -534,7 +534,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="235"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="231"/>
         <source>Select circle center</source>
         <translation>选择圆心</translation>
     </message>
@@ -542,7 +542,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawCircleByArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="231"/>
         <source>Select arc or ellipse arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -550,7 +550,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawCross</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="308"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,37 +558,37 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="399"/>
         <source>Select base linear/aligned dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="399"/>
         <source>Select distant extension point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="402"/>
         <source>Specify second extension line origin</source>
         <translation type="unfinished">指定第二延伸线的起点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="402"/>
         <source>Mirror offset direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="405"/>
         <source>Specify dimension line location</source>
         <translation type="unfinished">指定尺寸线位置</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="405"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="409"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="408"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished">输入标注文字:</translation>
     </message>
@@ -596,29 +596,29 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawEllipse1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="269"/>
         <source>Specify ellipse center</source>
         <translation type="unfinished">指定椭圆中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="274"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273"/>
         <source>Specify angle for major axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277"/>
         <source>Set start angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281"/>
         <source>Set end angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="318"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="329"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="340"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="328"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="339"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">无效表达式</translation>
     </message>
@@ -626,12 +626,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLineAngleRel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="437"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="435"/>
         <source>Select base line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="440"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="438"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -639,12 +639,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLineFromPointToLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="316"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="314"/>
         <source>Select Initial Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="319"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="317"/>
         <source>Select Line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -652,78 +652,78 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="503"/>
         <source>Specify First Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510"/>
         <source>Specify Second Point
 or [number]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="516"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="523"/>
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="544"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Back</source>
         <translation type="unfinished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="544"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="549"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
         <source>Specify points count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -754,62 +754,62 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="188"/>
         <source>Not a valid number. Try 1..9999</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="207"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="200"/>
         <source>Invalid value of rounding radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="210"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="242"/>
         <source>Enter number:</source>
         <translation type="unfinished">输入数值:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="245"/>
         <source>Enter rounding radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="253"/>
         <source>Specify center</source>
         <translation type="unfinished">指定中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="272"/>
         <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="273"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="274"/>
         <source>Start angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="275"/>
         <source>Radius:</source>
         <translation type="unfinished">半径:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="276"/>
         <source>Radius Inner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="272"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -821,7 +821,7 @@ or [%2]</source>
         <translation type="vanished">指定中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>指定切线</translation>
     </message>
@@ -841,70 +841,70 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="472"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="460"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="481"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="469"/>
         <source>Specify direction (x or y) or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="483"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="487"/>
         <source>Specify distance (%1) or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="146"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="483"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="129"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="117"/>
         <source>Point</source>
         <translation type="unfinished">点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="121"/>
         <source>Angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="140"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="487"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="165"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153"/>
         <source>Direction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="493"/>
         <source>Specify distance (%1 deg) or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="520"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="508"/>
         <source>Specify angle or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="532"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="520"/>
         <source>Specify point or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="581"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="569"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="618"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="606"/>
         <source>Cannot redo: End of history reached</source>
         <translation type="unfinished"></translation>
     </message>
@@ -912,27 +912,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawMidLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="231"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="253"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="251"/>
         <source>Select first entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="255"/>
         <source>Select second entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="255"/>
         <source>Alternate endpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="259"/>
         <source>Enter offset value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -940,27 +940,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="180"/>
         <source>Specify the first point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="183"/>
         <source>Specify the second point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="186"/>
         <source>Specify the third point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="189"/>
         <source>Specify the fourth point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="192"/>
         <source>Specify the Axis on parabola</source>
         <translation type="unfinished"></translation>
     </message>
@@ -968,22 +968,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="275"/>
         <source>Specify the focus of parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="278"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="289"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
         <source>Specify the start point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="286"/>
         <source>Specify the end point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
@@ -991,58 +991,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawPointsLattice</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="172"/>
         <source>Second point is too close to the first one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="184"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194"/>
         <source>Third point is too close to the second one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="240"/>
         <source>Invalid value provided</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="259"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262"/>
         <source>Specify second point</source>
         <translation type="unfinished">指定第二点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="266"/>
         <source>Specify third point</source>
         <translation type="unfinished">指定第三点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
         <source>Specify fourth point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
         <source>Last point position is un-adjusted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="272"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
         <source>Last point position is adjusted to first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275"/>
         <source>Enter number of points by X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279"/>
         <source>Enter number of points by Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1050,32 +1050,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="367"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="368"/>
         <source>Specify height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="370"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="371"/>
         <source>Specify width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="373"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="374"/>
         <source>Specify size (width, height))</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="376"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="377"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="379"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
         <source>Specify point that defines base angle for rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="379"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
         <source>Don&apos;t keep insertion point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1083,27 +1083,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle2Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Specify second point</source>
         <translation type="unfinished">指定第二点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Draw Square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="283"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="286"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="290"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="289"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1111,48 +1111,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="556"/>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="574"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569"/>
         <source>Specify first point first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="565"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560"/>
         <source>Specify width or second point first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="594"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="589"/>
         <source>Specify width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="597"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="592"/>
         <source>Specify height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="600"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="595"/>
         <source>Specify start point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="603"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="598"/>
         <source>Specify second point</source>
         <translation type="unfinished">指定第二点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="606"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="601"/>
         <source>Specify third point</source>
         <translation type="unfinished">指定第三点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="609"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="612"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="607"/>
         <source>Specify inner angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1160,27 +1160,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="203"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="213"/>
         <source>Arc</source>
         <translation type="unfinished">圆弧</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="223"/>
         <source>Circle</source>
         <translation type="unfinished">圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="568"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="587"/>
         <source>Select line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="571"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="590"/>
         <source>Select circle or arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1188,7 +1188,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="201"/>
         <source>Specify first control point</source>
         <translation>指定第一控制点</translation>
     </message>
@@ -1197,28 +1197,28 @@ or [%2]</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="218"/>
         <source>Specify next control point or [%1]</source>
         <translation>指定下一控制点或[%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="218"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="220"/>
         <source>Specify next control point</source>
         <translation>指定下一控制点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="257"/>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="273"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>无法撤消: 实体数目尚不足.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="289"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>无法撤销：没有可重做的。</translation>
     </message>
@@ -1226,37 +1226,37 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawStar</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182"/>
         <source>Invalid rays number, should be in range [3..99]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="617"/>
         <source>Set center point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
         <source>Set outer point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
         <source>Set inner point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
         <source>Set rounding radiuses (outer, inner)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="632"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
         <source>Set rays number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1264,17 +1264,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionEditPasteTransform</name>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="45"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="42"/>
         <source>Clipboard is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="132"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Set paste reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="132"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Paste Multiple</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1282,249 +1282,249 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="493"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="506"/>
         <source>&amp;Window Zoom</source>
         <translation>窗口缩放(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Zoom &amp;Panning</source>
         <translation>缩放和平移(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241"/>
         <source>Select Entity</source>
         <translation>选择实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242"/>
         <source>Select Window</source>
         <translation>选择窗口</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243"/>
         <source>Deselect Window</source>
         <translation>取消选中窗口</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244"/>
         <source>(De-)Select &amp;Contour</source>
         <translation type="unfinished">(放弃)选择轮廓(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
         <source>Select Intersected Entities</source>
         <translation type="unfinished">选择相交实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Deselect Intersected Entities</source>
         <translation type="unfinished">放弃选择相交实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
         <source>(De-)Select Layer</source>
         <translation type="unfinished">(放弃)选择图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230"/>
         <source>&amp;Points</source>
         <translation>点(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202"/>
         <source>&amp;2 Points</source>
         <translation>两点(&amp;2)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203"/>
         <source>&amp;Angle</source>
         <translation>角度(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>&amp;Horizontal</source>
         <translation>水平(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
         <source>Vertical</source>
         <translation>垂直</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;Freehand Line</source>
         <translation>徒手绘线(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Parallel</source>
         <translation>平行线(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
         <source>Parallel through point</source>
         <translation type="unfinished">过指定点平行线</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="175"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="188"/>
         <source>Rectangle</source>
         <translation>矩形</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
         <source>Bisector</source>
         <translation>角均分线</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>Tangent (P,C)</source>
         <translation type="unfinished">切线(点,圆)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>Tangent (C,C)</source>
         <translation type="unfinished">切线(圆,圆)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation type="unfinished">正交切线 (&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Orthogonal</source>
         <translation type="unfinished">正交</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="201"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Relative angle</source>
         <translation type="unfinished">相对角度</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="176"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation type="unfinished">多边形(中心,角点)(&amp;y)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="177"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="178"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation type="unfinished">多边形(角点,角点)(&amp;n)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Snake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Snake (X)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
         <source>Snake (Y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="181"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Rectangle (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="182"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
         <source>Rectangle (2 Points)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="183"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
         <source>Rectangle (3 Points)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="180"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
         <source>Angle From Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Orthogonal From Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
         <source>From Point To Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Slice/Divide Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>Slice/Divide Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231"/>
         <source>Line of Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
         <source>Center, &amp;Point</source>
         <translation type="unfinished">中心, 点(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254"/>
         <source>By Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="255"/>
         <source>Center, &amp;Radius</source>
         <translation type="unfinished">中心, 半径(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="256"/>
         <source>2 Points</source>
         <translation>两点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257"/>
         <source>2 Points, Radius</source>
         <translation>两点，半径</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258"/>
         <source>3 Points</source>
         <translation>三点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Concentric</source>
         <translation>同心(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
         <source>Circle &amp;Inscribed</source>
         <translation>内切圆(&amp;I)</translation>
     </message>
@@ -1534,253 +1534,253 @@ or [%2]</source>
         <translation type="vanished">相切两圆，半径</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation>相切两圆，一点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Tangential &amp;3 Circles</source>
         <translation>相切三圆(&amp;3)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>相切，两点(&amp;o)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>中心, 点, 角度(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273"/>
         <source>&amp;3 Points</source>
         <translation>三点(&amp;3)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>Arc &amp;Tangential</source>
         <translation>圆弧相切(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>椭圆(轴)(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>椭圆弧(轴)(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>椭圆焦点(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>四点椭圆(&amp;4)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>中心及三点椭圆(&amp;3)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="308"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>内切椭圆(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Spline</source>
         <translation>样条线(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276"/>
         <source>&amp;2 Points, Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
         <source>&amp;2 Points, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
         <source>&amp;Spline through points</source>
         <translation>过点样条线(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290"/>
         <source>&amp;Append spline point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
         <source>&amp;Insert spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>&amp;Polyline</source>
         <translation>多段线(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="309"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="322"/>
         <source>Polyline Arcs to Chords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="334"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="347"/>
         <source>&amp;Arc</source>
         <translation>圆弧(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>移动并旋转(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"/>
         <source>Tr&amp;im Two</source>
         <translation>两次修剪(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="375"/>
         <source>O&amp;ffset</source>
         <translation>偏移(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>Caught Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="469"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="482"/>
         <source>Move to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="470"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="483"/>
         <source>Lower After Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="471"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="484"/>
         <source>Raise Over Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="472"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="485"/>
         <source>Move to Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="511"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="524"/>
         <source>&amp;Show all layers</source>
         <translation>显示所有图层(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
         <source>&amp;Hide all layers</source>
         <translation>隐藏所有图层(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="513"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="526"/>
         <source>&amp;Unlock all</source>
         <translation>解锁所有(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="527"/>
         <source>&amp;Lock all</source>
         <translation>锁定全部(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="522"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>导出选定图层(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="523"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>导出可见图层(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="529"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Show all blocks</source>
         <translation>显示所有图块(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="543"/>
         <source>&amp;Hide all blocks</source>
         <translation>隐藏所有图块(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="595"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>导出为CA&amp;M/plain SVG...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="569"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>Close All</source>
         <translation>全部关闭</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>Re-dock Widgets</source>
         <translation>重停靠部件</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="598"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
         <source>Menu Creator</source>
         <translation>菜单创建器</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="599"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
         <source>Toolbar Creator</source>
         <translation>工具栏创建器</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>&amp;Add node</source>
         <translation>添加节点(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>A&amp;ppend node</source>
         <translation>追加节点(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>&amp;Delete node</source>
         <translation>删除节点(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
         <source>Delete &amp;between two nodes</source>
         <translation>删除两节点间(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
         <source>&amp;Trim segments</source>
         <translation type="unfinished">修剪分段(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation type="unfinished">创建等距多段线(&amp;E)</translation>
     </message>
@@ -1789,67 +1789,67 @@ or [%2]</source>
         <translation type="obsolete">从现有分段创建多段线(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>&amp;MText</source>
         <translation>多行文字(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>&amp;Text</source>
         <translation>文本(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>&amp;Hatch</source>
         <translation>填充(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333"/>
         <source>Insert &amp;Image</source>
         <translation>插入图像(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Aligned</source>
         <translation>对齐(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Linear</source>
         <translation>线性(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
         <source>&amp;Vertical</source>
         <translation>垂直(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="344"/>
         <source>&amp;Radial</source>
         <translation>半径(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="345"/>
         <source>&amp;Diametric</source>
         <translation>直径(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="346"/>
         <source>&amp;Angular</source>
         <translation>角度(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="335"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348"/>
         <source>&amp;Leader</source>
         <translation>引线(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>&amp;Attributes</source>
         <translation>属性(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
         <source>&amp;Delete</source>
         <translation>删除(&amp;D)</translation>
     </message>
@@ -1858,87 +1858,87 @@ or [%2]</source>
         <translation type="vanished">删除徒手画</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
         <source>&amp;Move / Copy</source>
         <translation>移动/复制(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
         <source>Re&amp;vert direction</source>
         <translation>返转方向(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="703"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="366"/>
         <source>&amp;Rotate</source>
         <translation>旋转(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="367"/>
         <source>&amp;Scale</source>
         <translation>缩放(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Mirror</source>
         <translation>镜像(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
         <source>Rotate T&amp;wo</source>
         <translation>两点旋转(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
         <source>&amp;Properties</source>
         <translation>特性(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
         <source>&amp;Trim</source>
         <translation>修剪(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
         <source>&amp;Lengthen</source>
         <translation>延长(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="376"/>
         <source>&amp;Divide</source>
         <translation>打断(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377"/>
         <source>&amp;Stretch</source>
         <translation>拉伸(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Bevel</source>
         <translation>倒角(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="366"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Fillet</source>
         <translation>圆角(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Explode Text into Letters</source>
         <translation type="unfinished">分解文本为字符(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="478"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="491"/>
         <source>Point inside contour</source>
         <translation type="unfinished">轮廓内点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="479"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="492"/>
         <source>&amp;Distance Point to Point</source>
         <translation type="unfinished">点到点距离(&amp;D)</translation>
     </message>
@@ -1947,7 +1947,7 @@ or [%2]</source>
         <translation type="obsolete">实体到点距离(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="482"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="495"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished">两线夹角 (&amp;g)</translation>
     </message>
@@ -1956,7 +1956,7 @@ or [%2]</source>
         <translation type="obsolete">选中实体总长(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="484"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="497"/>
         <source>Polygonal &amp;Area</source>
         <translation>多边形面积(&amp;A)</translation>
     </message>
@@ -1965,37 +1965,37 @@ or [%2]</source>
         <translation type="vanished">选择指针(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Undo</source>
         <translation>撤消(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>&amp;Redo</source>
         <translation>重做(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="663"/>
         <source>Cu&amp;t</source>
         <translation>剪切(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="651"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Cut Quic&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="665"/>
         <source>&amp;Copy</source>
         <translation>复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="653"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="666"/>
         <source>Copy &amp;Quick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="667"/>
         <source>&amp;Paste</source>
         <translation>粘贴(&amp;P)</translation>
     </message>
@@ -2004,42 +2004,42 @@ or [%2]</source>
         <translation type="vanished">移到最底</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="549"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="562"/>
         <source>Widget Options</source>
         <translation>窗体选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="551"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
         <source>Device Options</source>
         <translation>设备选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>Top</source>
         <translation>上</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>Bottom</source>
         <translation>下</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>Floating</source>
         <translation>浮动</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="552"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Reload Style Sheet</source>
         <translation>重载样式表</translation>
     </message>
@@ -2324,318 +2324,353 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <source>Entity Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <source>Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="103"/>
+        <source>Activate Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="104"/>
+        <source>Hide Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="105"/>
+        <source>Lock Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="106"/>
+        <source>Toggle Entity&apos;s Layer Construction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="107"/>
+        <source>Toggle Entity&apos;s Layer Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
         <source>Middle Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
         <source>Middle Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Lattice of Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
         <source>Select Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Tangential 2 Circles, Radius</source>
         <translation type="unfinished">相切两圆，半径</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>&amp;Center, Point, Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>&amp;Center, Point, Arc Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274"/>
         <source>&amp;2 Points, Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275"/>
         <source>&amp;2 Points, Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>Para&amp;bola 4 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
         <source>&amp;Remove spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
         <source>&amp;Explode spline to lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
         <source>&amp;Spline from polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>&amp;Remove between two points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Ellipse (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="308"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>Polyline Change Segment Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="334"/>
         <source>Bounding &amp;Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="336"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Baseline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="337"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>Break/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>Line Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
         <source>Align One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="375"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>Align Reference Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
         <source>Apply Pen to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="409"/>
         <source>Show Entity Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="412"/>
         <source>Enable Info Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
         <source>Absolute Pos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="414"/>
         <source>Snap</source>
         <translation type="unfinished">捕捉</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
         <source>Relative</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>Prompt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423"/>
         <source>Snap on grid</source>
         <translation type="unfinished">捕捉格点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="411"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="412"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished">捕捉端点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="426"/>
         <source>Snap on Entity</source>
         <translation type="unfinished">捕捉实体上点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="414"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="427"/>
         <source>Snap Center</source>
         <translation type="unfinished">捕捉中心点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
         <source>Snap Middle</source>
         <translation type="unfinished">捕捉实体上等距离点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
         <source>Snap Distance</source>
         <translation type="unfinished">捕捉实体上距端点给定距离点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">捕捉交点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="436"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished">仅限于水平方移动</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="437"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished">仅限于垂直方向移动</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="438"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished">仅限于十字的两方向移动</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="426"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished">不限制移动</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
         <source>To WCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="437"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="450"/>
         <source>Create UCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="443"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Save Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="444"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Remove Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Restore Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="451"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="464"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">设相对零点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="454"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="467"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">锁定相对零点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="462"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="475"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished">反选捕捉模式</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="463"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="476"/>
         <source>Free Snap</source>
         <translation type="unfinished">自由捕捉</translation>
     </message>
@@ -2652,152 +2687,152 @@ or [%2]</source>
         <translation type="vanished">移到顶部</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="480"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="493"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="494"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="483"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="496"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="485"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="486"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="487"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
         <source>&amp;Draft Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="513"/>
         <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="515"/>
         <source>&amp;Orthogonal Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
         <source>&amp;Isometric Left Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="504"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
         <source>&amp;Isometric Top Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="505"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
         <source>&amp;Isometric Right Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="515"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="528"/>
         <source>&amp;Add Layer</source>
         <translation>添加图层(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="529"/>
         <source>&amp;Remove Layer</source>
         <translation>移除图层(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
         <source>&amp;Edit Layer</source>
         <translation>编辑图层(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>切换图层锁定 (&amp;K)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="519"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="532"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>切换图层可见 (&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="520"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>切换图层打印(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="521"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>是否为构造图层(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"/>
         <source>&amp;Add Block</source>
         <translation>添加图块(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="532"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="545"/>
         <source>&amp;Remove Block</source>
         <translation>移除图块(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
         <source>&amp;Rename Block</source>
         <translation>重命名图块(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="547"/>
         <source>&amp;Edit Block</source>
         <translation>编辑图块(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
         <source>&amp;Save Block</source>
         <translation>保存图块(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="549"/>
         <source>&amp;Insert Block</source>
         <translation>插入图块(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="537"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>切换图块可见(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="538"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Create Block</source>
         <translation>创建图块(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
         <source>Ex&amp;plode</source>
         <translation>拆分 (&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="561"/>
         <source>&amp;Application Preferences</source>
         <translation>应用程序选项(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>当前图纸选项(&amp;D)</translation>
     </message>
@@ -2806,204 +2841,204 @@ or [%2]</source>
         <translation type="vanished">删除所选(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646"/>
         <source>Select &amp;All</source>
         <translation>选择所有(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="634"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647"/>
         <source>Deselect &amp;all</source>
         <translation>取消全选(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="711"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648"/>
         <source>Invert Selection</source>
         <translation>反选</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>Focus on &amp;Options Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>Zoom &amp;In</source>
         <translation>放大(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Zoom &amp;Out</source>
         <translation>缩小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Auto Zoom</source>
         <translation>自动缩放(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="613"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Previous &amp;View</source>
         <translation>前一视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="614"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Redraw</source>
         <translation>重画(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="572"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>&amp;New</source>
         <translation>新建(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>New From &amp;Template</source>
         <translation>从模板新建(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>&amp;Open...</source>
         <translation>打开(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="576"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Save &amp;as...</source>
         <translation>另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="581"/>
         <source>&amp;Export as image</source>
         <translation>导出为图像(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Save A&amp;ll...</source>
         <translation>全部保存(&amp;L)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="578"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
         <source>&amp;Print...</source>
         <translation>打印(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="570"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>Export as PDF</source>
         <translation>导出为PDF</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="558"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
         <source>Print Pre&amp;view</source>
         <translation>打印预览(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="579"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="592"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>&amp;Block</source>
         <translation>图块(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="496"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="509"/>
         <source>&amp;Fullscreen</source>
         <translation>全屏(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="497"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="510"/>
         <source>&amp;Grid</source>
         <translation>网格(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>Restore Current View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>Restore View 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
         <source>Restore View 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="638"/>
         <source>Restore View 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>Restore View 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
         <source>Restore View 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="668"/>
         <source>Paste &amp;Transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
         <source>&amp;Delete Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="657"/>
         <source>&amp;Selection Pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="728"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="741"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Draft</source>
         <translation>草图(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514"/>
         <source>&amp;Statusbar</source>
         <translation>状态栏(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="731"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>Focus on &amp;Command Line</source>
         <translation>聚焦命令行(&amp;C)</translation>
     </message>
@@ -3011,7 +3046,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
-        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="105"/>
+        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation type="unfinished">导出为</translation>
     </message>
@@ -3110,7 +3145,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="56"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="53"/>
         <source>Angle: %1 (%2)
  Start Edge Point: (%3 , %4)
  Intersection Point :(%5, %6)
@@ -3118,76 +3153,76 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="136"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="133"/>
         <source>Select first edge point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="140"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="137"/>
         <source>Select second (intersection) point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="144"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="198"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="179"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="195"/>
         <source>Info</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="180"/>
         <source>Distance:</source>
         <translation type="unfinished">距离:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="184"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="199"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="196"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="185"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="198"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="186"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="197"/>
         <source>Angle (Alt):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="199"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
         <source>Distance1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="205"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
         <source>Distance2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="206"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
         <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="207"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3195,7 +3230,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfoPickCoordinates</name>
     <message>
-        <location filename="../src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp" line="117"/>
+        <location filename="../src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp" line="121"/>
         <source>Select point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3203,12 +3238,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfoProperties</name>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="158"/>
         <source>Select entity</source>
         <translation type="unfinished">选择实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="158"/>
         <source>Select child entities</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3234,13 +3269,13 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="79"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="79"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
@@ -3249,77 +3284,77 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlign</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="38"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="137"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="136"/>
         <source>Align to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="140"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="139"/>
         <source>Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="144"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="143"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="147"/>
         <source>Drawing</source>
         <translation type="unfinished">制图</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="152"/>
         <source>Reference: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="167"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="231"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="230"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="246"/>
         <source>Select base alignment entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="246"/>
         <source>Select child entities of containers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="249"/>
         <source>Specify base alignment point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="252"/>
         <source>Click or Enter to finish align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select entities to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select and align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3327,57 +3362,57 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignRef</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="82"/>
         <source>Align References</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="83"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="84"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="85"/>
         <source>Scale:</source>
         <translation type="unfinished">缩放:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Select to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Align immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="214"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="211"/>
         <source>Select first reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="218"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="215"/>
         <source>Select first target point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="222"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="219"/>
         <source>Select second reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="226"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="223"/>
         <source>Select second target point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3385,62 +3420,62 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignSingle</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="39"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="157"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="155"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="169"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="167"/>
         <source>Align to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="170"/>
         <source>Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="174"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="178"/>
         <source>Drawing</source>
         <translation type="unfinished">制图</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="185"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="183"/>
         <source>Reference: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="238"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="236"/>
         <source>Select base alignment entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="241"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="239"/>
         <source>Specify base alignment point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="251"/>
         <source>Select entity to align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="251"/>
         <source>Finish alignment after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="334"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="332"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3448,58 +3483,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyBreakDivide</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="140"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="138"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="235"/>
         <source>Break/Divide Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="238"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="356"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="453"/>
         <source>Point 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="239"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="360"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="457"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
         <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="356"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="354"/>
         <source>Break/Divide Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="355"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="452"/>
+        <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="357"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="454"/>
-        <source>Angle 1:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="359"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="456"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="453"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="451"/>
         <source>Break/Divide Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1001"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="999"/>
         <source>Select line, arc or circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1001"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="999"/>
         <source>Proceed even if no intersections</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3507,23 +3542,23 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyDuplicate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="199"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="197"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="233"/>
         <source>Duplicate Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="258"/>
         <source>Select entity to duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="258"/>
         <source>Interactive Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="263"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="261"/>
         <source>Select direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3531,35 +3566,35 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineGap</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="62"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="87"/>
-        <source>Line Gap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="63"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="88"/>
-        <source>Start:</source>
+        <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="64"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="89"/>
+        <source>Start:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="65"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="90"/>
         <source>End:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="429"/>
         <source>Select line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="429"/>
         <source>Use Alternative Line Endpoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="432"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="433"/>
         <source>Select endpoint of gap</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3567,48 +3602,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineJoin</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="105"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="104"/>
         <source>Lines Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="107"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="106"/>
         <source>Lines are parallel</source>
         <translation type="unfinished">线相互平行</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="110"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="109"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="163"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="212"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="162"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="211"/>
         <source>No line selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="182"/>
         <source>Lines are parallel, can&apos;t merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="188"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="187"/>
         <source>Lines already intersects, can&apos;t merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="796"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="795"/>
         <source>Select first line</source>
         <translation type="unfinished">选择第一条线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="799"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="798"/>
         <source>Select second line</source>
         <translation type="unfinished">选择第二条线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="802"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="801"/>
         <source>Select part of first line that should remain after trim</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3624,12 +3659,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionPasteToPoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="38"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="36"/>
         <source>Clipboard is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="102"/>
         <source>Select and paste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3637,17 +3672,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="143"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
         <source>Specify entity to pick the pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="149"/>
         <source>Specify entity to apply pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="149"/>
         <source>Apply Resolved Pen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3671,22 +3706,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineChangeSegmentType</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="50"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="51"/>
         <source>Invalid arc point to create arc, select another one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="221"/>
         <source>Select polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="224"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="225"/>
         <source>Select segment of polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="229"/>
         <source>Specify position on arc to create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3694,47 +3729,47 @@ or [%2]</source>
 <context>
     <name>LC_ActionPreSelectionAwareBase</name>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="174"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="174"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>De-Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="175"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="181"/>
         <source> entities </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="176"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="182"/>
         <source>that intersect with box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="176"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="182"/>
         <source>that are within box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Choose second edge</source>
         <translation type="unfinished">选择第二条边</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Select/Deselect entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Select Intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="237"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="243"/>
         <source>No valid entities selected, select them first</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3742,12 +3777,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionRemoveSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="201"/>
         <source>Select control point of entity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3755,17 +3790,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="229"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="227"/>
         <source>Specify percentage / start-point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="232"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="230"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="235"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="233"/>
         <source>Specify end point</source>
         <translation type="unfinished">指定终点</translation>
     </message>
@@ -3773,22 +3808,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineAddPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="201"/>
         <source>Select control point to insert before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"/>
         <source>Specify control point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"/>
         <source>Insert AFTER selected point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3814,7 +3849,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineExplode</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="194"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3830,27 +3865,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineRemoveBetween</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="43"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="221"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="220"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="224"/>
         <source>Select first point for deletion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Select second point for deletion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Delete from endpoints TO selected points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4094,12 +4129,12 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="75"/>
+        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
         <source>Positive angles direction is counterclockwise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="79"/>
+        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="80"/>
         <source>Positive angles direction is clockwise.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4117,24 +4152,24 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">设备</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="118"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="116"/>
         <source>Closing Drawing</source>
         <translation type="unfinished">关闭图纸</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="124"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="122"/>
         <source>Draft Mode</source>
         <translation type="unfinished">草图模式</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="130"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="128"/>
         <source>Save changes to the following item?
 %1</source>
         <translation type="unfinished">是否保存对以下项目的更改？
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="164"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="162"/>
         <source>Export as</source>
         <translation type="unfinished">导出为</translation>
     </message>
@@ -5155,7 +5190,7 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_DocumentsStorage</name>
     <message>
-        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="142"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="143"/>
         <source>Unnamed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5389,17 +5424,17 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="53"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="55"/>
         <source>Exporting drawing...</source>
         <translation type="unfinished">导出图纸...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="60"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
         <translation type="unfinished">导出: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="63"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
         <source>Export failed!</source>
         <translation type="unfinished">导出失败!</translation>
     </message>
@@ -5905,265 +5940,265 @@ Please specify a different value.</source>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="146"/>
         <source>Filter</source>
         <translation type="unfinished">过滤</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="147"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="148"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished">查找匹配图层名</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="153"/>
         <source>Highlight Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="162"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="163"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="181"/>
         <source>Show all layers</source>
         <translation type="unfinished">显示所有图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="187"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="188"/>
         <source>Hide all layers</source>
         <translation type="unfinished">隐藏所有图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="194"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="195"/>
         <source>Show Secondary Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="204"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="205"/>
         <source>Show Active Layer Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="212"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="213"/>
         <source>Expand All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="220"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="221"/>
         <source>Collapse All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="228"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="229"/>
         <source>Collapse Secondary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="236"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="237"/>
         <source>Unlock all layers</source>
         <translation type="unfinished">解锁所有图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="243"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="244"/>
         <source>Lock all layers</source>
         <translation type="unfinished">锁定所有图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="250"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="251"/>
         <source>Add a layer</source>
         <translation type="unfinished">添加图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="257"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="258"/>
         <source>Add dimensions Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="266"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="267"/>
         <source>Remove layer</source>
         <translation type="unfinished">移除图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="273"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="274"/>
         <source>Modify layer attributes / rename</source>
         <translation type="unfinished">修改图层属性/重命名</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="280"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="281"/>
         <source>Flat List Mode)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="625"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="626"/>
         <source>Layer Menu</source>
         <translation type="unfinished">图层菜单</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="645"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="646"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="646"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="647"/>
         <source>&amp;Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="647"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="648"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="649"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="650"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="650"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="652"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="653"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="659"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Remove Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="669"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="672"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="673"/>
         <source>&amp;Add Info Sub-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="676"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="682"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Remove Sub-layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="690"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="700"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="691"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <source>Convert to Dimensional Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="691"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="692"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="704"/>
         <source>Convert to Info Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="692"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="706"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="707"/>
         <source>Convert to Alternative Position Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="698"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="699"/>
         <source>Convert to Normal Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="712"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="713"/>
         <source>&amp;Select Layer&apos;s Entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="715"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="716"/>
         <source>&amp;Create Layer Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="716"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>&amp;Duplicate Layer With Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="720"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"/>
         <source>Move Selection to Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="722"/>
         <source>Duplicate Selection to Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="728"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="729"/>
         <source>&amp;Add Layer</source>
         <translation type="unfinished">添加图层(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="730"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>&amp;Freeze Others Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>&amp;Defreeze All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="733"/>
         <source>&amp;Freeze All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="733"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"/>
         <source>&amp;Unlock All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="735"/>
         <source>&amp;Lock All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="735"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"/>
         <source>Enable &amp;Printing All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="737"/>
         <source>&amp;Disable Printing All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="740"/>
         <source>&amp;Export Single Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Export Layer Sub-Tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="748"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation type="unfinished">导出可见图层(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="749"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10701,73 +10736,73 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_SettingsExporter</name>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
         <source>Import settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
         <source>Export Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="72"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="95"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="103"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="70"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="93"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Settings Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="103"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Application preferences were exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="72"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="95"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="70"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="93"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="41"/>
         <source>LibreCAD settings file (*.%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="119"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="117"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Import Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="119"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="117"/>
         <source>Unexpected error during preferences parsing. Message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="128"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="143"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="126"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
         <source>Settings Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="143"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
         <source>Application preferences were imported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="128"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="126"/>
         <source>No settings groups to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
         <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11179,7 +11214,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="101"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="284"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="304"/>
         <source>Order</source>
         <translation type="unfinished">排序</translation>
     </message>
@@ -11204,146 +11239,151 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="167"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="154"/>
+        <source>Entity&apos;s Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="186"/>
         <source>Tool Options</source>
         <translation type="unfinished">工具选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="213"/>
         <source>Info Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="238"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="258"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="239"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="259"/>
         <source>Point</source>
         <translation type="unfinished">点</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="240"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="260"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="241"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="261"/>
         <source>Circle</source>
         <translation type="unfinished">圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="242"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="262"/>
         <source>Arc</source>
         <translation type="unfinished">圆弧</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="243"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="263"/>
         <source>Spline</source>
         <translation type="unfinished">样条线</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="244"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="264"/>
         <source>Ellipse</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="265"/>
         <source>Polyline</source>
         <translation type="unfinished">多段线</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="246"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="266"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="299"/>
         <source>Select</source>
         <translation type="unfinished">选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="267"/>
         <source>Dimension</source>
         <translation type="unfinished">标注</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="248"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="301"/>
         <source>Other</source>
         <translation type="unfinished">其他</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="249"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="269"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="302"/>
         <source>Modify</source>
         <translation type="unfinished">修改</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="270"/>
         <source>Info</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="288"/>
         <source>Categories</source>
         <translation type="unfinished">类别</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="271"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="291"/>
         <source>Lines</source>
         <translation type="unfinished">线</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="272"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="292"/>
         <source>Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="273"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="296"/>
         <source>Polygons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="274"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="294"/>
         <source>Arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="275"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="295"/>
         <source>Splines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="297"/>
         <source>Ellipses</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="298"/>
         <source>PolyLines</source>
         <translation type="unfinished">多段线</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="300"/>
         <source>Dimensions</source>
         <translation type="unfinished">标注</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="283"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="303"/>
         <source>Measure</source>
         <translation type="unfinished">测量</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="291"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="311"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="306"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="326"/>
         <source>UCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="347"/>
         <source>Workspaces</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12351,18 +12391,18 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>LC_WorkspacesManager</name>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="417"/>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="425"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="420"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="428"/>
         <source>Saving Workspaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="418"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="421"/>
         <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="426"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="429"/>
         <source>Workspaces file does not exists.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12426,12 +12466,12 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
         <source>Select object:</source>
         <translation>选择对象:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="45"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="44"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -12439,7 +12479,7 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="109"/>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="108"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -12447,13 +12487,13 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="37"/>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="43"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="45"/>
         <source>Select objects:</source>
         <translation>选择对象:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="52"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="54"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -12685,12 +12725,12 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">最近的文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="221"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="225"/>
         <source>Saving drawing: %1</source>
         <translation>保存图纸: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="227"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="231"/>
         <source>Save cancelled</source>
         <translation>保存已取消</translation>
     </message>
@@ -12705,22 +12745,22 @@ Warning: this action can NOT be undone!</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="350"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="354"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="351"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="355"/>
         <source>Save &amp;as...</source>
         <translation>另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="354"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="358"/>
         <source>&amp;Save %1</source>
         <translation>保存(&amp;S)%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="355"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="359"/>
         <source>Save %1 &amp;as...</source>
         <translation>将%1另存为(&amp;A)...</translation>
     </message>
@@ -12761,44 +12801,44 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">&amp;最大化</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="777"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="780"/>
         <source>Creating new file...</source>
         <translation>新建文件...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="725"/>
         <source>Block &apos;%1&apos;</source>
         <translation>图块 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="725"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="728"/>
         <source>unnamed document %1</source>
         <translation>未命名文档 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="801"/>
         <source>New Drawing created.</source>
         <translation>新图纸已创建.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="794"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="797"/>
         <source>New document from template: </source>
         <translation>从模板新建文档: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="822"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="825"/>
         <source>Select Template aborted</source>
         <translation>退出选择模板</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1065"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1183"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1189"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1203"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1186"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1192"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1206"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12835,7 +12875,7 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">停靠部件</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1641"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
         <source>Opening recent file...</source>
         <translation>最近打开文件...</translation>
     </message>
@@ -12861,7 +12901,7 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">菜单指定</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="965"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="968"/>
         <source>Warning: File already opened : </source>
         <translation>警告: 文件已被打开.</translation>
     </message>
@@ -12870,7 +12910,7 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">导出为PDF</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="837"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="840"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -12883,32 +12923,32 @@ Please check the permissions.</source>
         <translation type="vanished">网格状态</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1014"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1017"/>
         <source>Loaded document: </source>
         <translation>已加载文档: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="958"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="961"/>
         <source>Opening aborted</source>
         <translation>打开中止</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="221"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="225"/>
         <source>Saving drawing...</source>
         <translation>保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="236"/>
         <source>Saved drawing: %1</source>
         <translation>已保存图纸: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="248"/>
         <source>Cannot save the file </source>
         <translation>无法保存文件 </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="248"/>
         <source> , please check the filename and permissions.</source>
         <translation> , 请检查文件名及操作权限.</translation>
     </message>
@@ -12925,7 +12965,7 @@ Please check the permissions.</source>
         <translation type="vanished">Qt版本：%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="202"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="206"/>
         <source>Draft Mode</source>
         <translation>草图模式</translation>
     </message>
@@ -12946,7 +12986,7 @@ Please check the permissions.</source>
         <translation type="vanished">视图</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="978"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="981"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -12955,22 +12995,22 @@ Please check its existence and permissions.</source>
 请检查文件是否存在及其权限</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="957"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>文件 %1 不存在。打开终止</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1088"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1091"/>
         <source>Auto-saving drawing...</source>
         <translation>自动保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1094"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1097"/>
         <source>Auto-saved drawing</source>
         <translation>自动保存的图纸</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1099"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -12981,7 +13021,7 @@ Auto-save disabled.</source>
 自动保存已禁用.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Auto-saving failed</source>
         <translation>自动保存失败</translation>
     </message>
@@ -13010,22 +13050,22 @@ Auto-save disabled.</source>
         <translation type="vanished">导出失败!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1246"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1249"/>
         <source>Printing...</source>
         <translation>打印...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1250"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1253"/>
         <source>Printing complete</source>
         <translation>打印所有</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="191"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="195"/>
         <source>Print preview for %1</source>
         <translation>%1 打印预览</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1344"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1347"/>
         <source>Exiting application...</source>
         <translation>退出程序...</translation>
     </message>
@@ -13049,17 +13089,17 @@ Auto-save disabled.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="177"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="167"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="178"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="168"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="188"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="178"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>退出</translation>
@@ -13160,12 +13200,12 @@ in a separate window</source>
         <translation type="vanished">插入当前图块</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="182"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
         <translation type="unfinished">过滤</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="185"/>
         <source>Looking for matching block names</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20205,12 +20245,12 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="vanished">修改图层属性/重命名</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="246"/>
+        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>查找匹配图层名</translation>
     </message>
@@ -20278,22 +20318,22 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="94"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="98"/>
         <source>Rebuild</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="208"/>
         <source>Directories</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="90"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="92"/>
         <source>Insert</source>
         <translation>插入</translation>
     </message>
@@ -20893,10 +20933,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="136"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="980"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1098"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="119"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="842"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="983"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1101"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -20913,91 +20953,91 @@ p, li { white-space: pre-wrap; }
         <translation>图层&quot;%1&quot;已存在. 请另选名称.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="231"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="243"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="305"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1717"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="214"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="226"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="288"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1718"/>
         <source>Remove Layer</source>
         <translation>删除图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="232"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="215"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>图层 &quot;%1&quot; 以及其上所有实体将被删除。
 此动作不可撤销。</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="244"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="227"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>图层&quot;%1&quot;无法删除.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="306"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1717"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="289"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1718"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="316"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1765"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="299"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1766"/>
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>移除%n个图层</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="320"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1766"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="303"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1767"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="322"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1767"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="305"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1768"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="327"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="310"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="331"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1768"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="314"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1769"/>
         <source>Layers for removal:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="386"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="369"/>
         <source>Layer Dialog</source>
         <translation>图层对话框</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="500"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="483"/>
         <source>Remove Block</source>
         <translation>删除图块</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="501"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="484"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation>图块&quot;%1&quot;及其所有实体将被删除.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="559"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="542"/>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>移除%n图块</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="561"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="544"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="564"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="547"/>
         <source>Blocks for removal:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21026,62 +21066,62 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="951"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="961"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="952"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <source>Remove empty layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="952"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="953"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1105"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1150"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1158"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1106"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1159"/>
         <source>Add Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1106"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1107"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1152"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1159"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1160"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1222"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1223"/>
         <source>Move Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1229"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1230"/>
         <source>Duplicate Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1246"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1247"/>
         <source>Replace &quot;By Layer&quot; value to source layers values?
 
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
@@ -21090,8 +21130,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1783"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1834"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1784"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1835"/>
         <source>Layer DialogEx</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21518,163 +21558,163 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="477"/>
+        <location filename="../src/main/main.cpp" line="487"/>
         <source>Loading..</source>
         <translation>加载..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="325"/>
+        <location filename="../src/main/main.cpp" line="384"/>
         <source>Loading...</source>
         <translation>加载...</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="363"/>
+        <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="62"/>
         <source>Loading File %1..</source>
         <translation>加载文件 %1..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="446"/>
+        <location filename="../src/main/main.cpp" line="456"/>
         <source>Release Candidate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="447"/>
+        <location filename="../src/main/main.cpp" line="457"/>
         <source>BETA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="448"/>
+        <location filename="../src/main/main.cpp" line="458"/>
         <source>ALPHA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="619"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
         <source>All Image Files (%1)</source>
         <translation>所有图像文件(%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="157"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="140"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="621"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="604"/>
         <source>All Files (*.*)</source>
         <translation>所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="626"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="609"/>
         <source>Open Image</source>
         <translation>打开图像</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="968"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="951"/>
         <source>Windows Bitmap</source>
         <translation>Windows位图</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="970"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="953"/>
         <source>Joint Photographic Experts Group</source>
         <translation>联合图像专家组</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="972"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="955"/>
         <source>Graphics Interchange Format</source>
         <translation>图形交换格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="974"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="957"/>
         <source>Multiple-image Network Graphics</source>
         <translation>多重图像网络图形</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="976"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="959"/>
         <source>Portable Bit Map</source>
         <translation>便携式位图</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="978"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="961"/>
         <source>Portable Grey Map</source>
         <translation>便携式灰度图</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="980"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="963"/>
         <source>Portable Network Graphic</source>
         <translation>便携式网络图形</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="982"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="965"/>
         <source>Portable Pixel Map</source>
         <translation>便携式像素图</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="984"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="967"/>
         <source>X Bitmap Format</source>
         <translation>X位图格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="986"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="969"/>
         <source>X Pixel Map</source>
         <translation>X像素图</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="988"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="971"/>
         <source>Scalable Vector Graphics</source>
         <translation>可縮放向量圖形(SVG)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="990"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="973"/>
         <source>SGI Black &amp; White</source>
         <translation>SGI黑白图像</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="992"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="975"/>
         <source>Encapsulated PostScript</source>
         <translation>EPS</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="994"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="977"/>
         <source>Encapsulated PostScript Format</source>
         <translation>EPS格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="996"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="979"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>EPSI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="998"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="981"/>
         <source>Windows Icon</source>
         <translation>窗口图标</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1000"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="983"/>
         <source>JPEG 2000</source>
         <translation>JPEG2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1002"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="985"/>
         <source>ZSoft Paintbrush</source>
         <translation>PCX</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1004"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="987"/>
         <source>PC Paint</source>
         <translation>PC Paint .PIC 图形文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1006"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="989"/>
         <source>SGI-Bilddatei</source>
         <translation>SGI .rgb文件格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1008"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="991"/>
         <source>Targa Image File</source>
         <translation>TGA格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1010"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="993"/>
         <source>Tagged Image File Format</source>
         <translation>TIFF格式</translation>
     </message>
@@ -21732,173 +21772,173 @@ Do you want to replace it?</source>
         <translation>打开图纸</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1366"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1362"/>
         <source>enter an integer number</source>
         <translation>输入整数</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1370"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1388"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1405"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1366"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1384"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1401"/>
         <source>LibreCAD query</source>
         <translation>LibreCAD查询</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1384"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1380"/>
         <source>enter a number</source>
         <translation>输入数值</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1401"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1397"/>
         <source>enter text</source>
         <translation>输入文字</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="112"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="114"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="116"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="118"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="120"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="122"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="124"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="126"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="128"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="130"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="132"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="134"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="133"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="136"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="135"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="138"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="183"/>
         <source>Opened dwg file version %1.</source>
         <translation>已打开DWG文件，版本 %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4268"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4271"/>
         <source>unknown error opening dwg file</source>
         <translation>打开DWG文件时出现未知错误</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4272"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4275"/>
         <source>can&apos;t open this dwg file</source>
         <translation>不能打开本DWG文件</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4276"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4279"/>
         <source>unsupported dwg version</source>
         <translation>未支持的DWG版本</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4280"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4283"/>
         <source>error reading file metadata in dwg file</source>
         <translation type="unfinished">读取dwg文件元数据时出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4284"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4287"/>
         <source>error reading file header in dwg file</source>
         <translation>读取DWG文件头是出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4288"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4291"/>
         <source>error reading header vars in dwg file</source>
         <translation>读取DWG头参数是出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4292"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4295"/>
         <source>error reading classes in dwg file</source>
         <translation>读取DWG文件类时出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4296"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4299"/>
         <source>error reading offsets in dwg file</source>
         <translation>读取DWG文件偏移量出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4300"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4303"/>
         <source>error reading tables in dwg file</source>
         <translation>读取DWG文件表格出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4304"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4307"/>
         <source>error reading blocks in dwg file</source>
         <translation type="unfinished">读取dwg文件图块时出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4308"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4311"/>
         <source>error reading entities in dwg file</source>
         <translation>读取DWG文件实体出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4312"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4315"/>
         <source>error reading objects in dwg file</source>
         <translation type="unfinished">读取dwg文件对象时出错</translation>
     </message>
@@ -21958,7 +21998,7 @@ Do you want to replace it?</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
         <translation>: 指令重复: %1 已被 %2 执行</translation>
     </message>
@@ -24714,38 +24754,38 @@ Do you want to replace it?</source>
         <translation type="obsolete">命令: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="258"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="261"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="388"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="413"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="415"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="430"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
         <translation type="unfinished">命令未找到：%1</translation>
     </message>
@@ -24766,7 +24806,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="469"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation type="unfinished">可用命令:</translation>
     </message>
@@ -24901,7 +24941,7 @@ Do you want to replace it?</source>
         <translation type="vanished">画笔精灵</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="937"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="940"/>
         <source>Invalid objects removed:</source>
         <translation>移除无效对象:</translation>
     </message>
@@ -24934,7 +24974,7 @@ Do you want to replace it?</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="80"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
         <translation>未找到%1图层</translation>
     </message>
@@ -25084,7 +25124,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="43"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="34"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
         <translation type="unfinished"></translation>
@@ -25110,7 +25150,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/printing/lc_printing.cpp" line="142"/>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="140"/>
         <source>Export as PDF</source>
         <translation type="unfinished">导出为PDF</translation>
     </message>
@@ -25130,27 +25170,27 @@ Do you want to replace it?</source>
         <translation type="unfinished">- 无变化 -</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1774"/>
+        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1773"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="634"/>
+        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="633"/>
         <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="65"/>
+        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="92"/>
+        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="191"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="192"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25295,12 +25335,12 @@ Do you want to replace it?</source>
         <translation type="unfinished">2.11mm</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="134"/>
+        <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="135"/>
         <source>WCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="693"/>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="684"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25308,17 +25348,17 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="103"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select to create block (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="103"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="109"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="107"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
@@ -25330,12 +25370,12 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select to explode container (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select and explode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25343,34 +25383,34 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="64"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="62"/>
         <source>Block cannot contain an insert of itself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="71"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="69"/>
         <source> has nested insert of current block in:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="73"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="71"/>
         <source>
 This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="184"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="197"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="210"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="223"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="236"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="249"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="182"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="195"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="208"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="221"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="234"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="247"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="331"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="329"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
@@ -25379,32 +25419,32 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="334"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="332"/>
         <source>Enter angle:</source>
         <translation>输入角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="337"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="335"/>
         <source>Enter factor:</source>
         <translation>输入因子:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="340"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="338"/>
         <source>Enter columns:</source>
         <translation>输入列数:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="343"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="341"/>
         <source>Enter rows:</source>
         <translation>输入行数:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="346"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="344"/>
         <source>Enter column spacing:</source>
         <translation>输入列距:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="347"/>
         <source>Enter row spacing:</source>
         <translation>输入行距:</translation>
     </message>
@@ -25412,7 +25452,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="96"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
         <source>No block activated to save</source>
         <translation>没有激活图块可保存</translation>
     </message>
@@ -25420,169 +25460,169 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="563"/>
         <source>Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="563"/>
         <source>De-Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="566"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source> entities </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source>that intersect with box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source>that are within box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="608"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="611"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="609"/>
         <source>Length: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="612"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
         <source>Angle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="619"/>
         <source>Arc</source>
         <translation type="unfinished">圆弧</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="492"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="490"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="495"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="493"/>
         <source>New Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="537"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="535"/>
         <source>Copy Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="539"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="537"/>
         <source>Move Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="620"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="631"/>
         <source>Radius:</source>
         <translation type="unfinished">半径:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="632"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Angle Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="625"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
         <source>Chord Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="626"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
         <source>Height:</source>
         <translation type="unfinished">高度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="632"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="630"/>
         <source>Circle</source>
         <translation type="unfinished">圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="934"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="932"/>
         <source>Set new position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="934"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="932"/>
         <source>Create a copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="942"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="940"/>
         <source>Lengthen Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="943"/>
         <source>Lengthen/Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="943"/>
         <source>Lengthen Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="946"/>
         <source>Move in Previous segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="946"/>
         <source>Move in Next segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="953"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
         <source>Set new ref position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Zoom, pan or select entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Scroll Horizontally / Select Contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Scroll Vertically / Select Child entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Select/Deselect entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Select Intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Choose second edge</source>
         <translation>选择第二条边</translation>
     </message>
@@ -25621,7 +25661,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="206"/>
         <source>Select first line</source>
         <translation>选择第一条线</translation>
     </message>
@@ -25630,17 +25670,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="212"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="209"/>
         <source>Select second line</source>
         <translation>选择第二条线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="212"/>
         <source>Specify dimension arc line location</source>
         <translation>指定圆弧标注位置</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="215"/>
         <source>Enter dimension text:</source>
         <translation>输入标注文字:</translation>
     </message>
@@ -25675,7 +25715,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>指定目标点</translation>
     </message>
@@ -25684,12 +25724,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Specify next point</source>
         <translation>指定下一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Finish</source>
         <translation>完成</translation>
     </message>
@@ -25697,7 +25737,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="126"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="119"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
@@ -25760,52 +25800,52 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="277"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="268"/>
         <source>Length of chord should be non-zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="417"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="428"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="448"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="461"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="483"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="408"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="439"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="474"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="481"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="472"/>
         <source>Not a valid chord length</source>
         <translation>无效弦长</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="496"/>
         <source>Specify center</source>
         <translation>指定中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="503"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <source>Specify end angle or [angle/chordlen]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="519"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Specify chord length (negative for alt point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Use alternative arc point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25814,7 +25854,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>指定半径</translation>
     </message>
@@ -25823,7 +25863,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
         <source>Specify start angle:</source>
         <translation>指定起始角度:</translation>
     </message>
@@ -25832,7 +25872,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">指定终止角度或者弦长度</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Specify included angle:</source>
         <translation>指定夹角:</translation>
     </message>
@@ -25844,17 +25884,17 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="94"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="84"/>
         <source>Invalid arc data.</source>
         <translation>无效圆弧数据.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
         <source>Specify startpoint or [center]</source>
         <translation>指定起始点或中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="236"/>
         <source>Specify third point</source>
         <translation type="unfinished">指定第三点</translation>
     </message>
@@ -25863,7 +25903,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="243"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>指定第二点</translation>
     </message>
@@ -25879,17 +25919,17 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="252"/>
         <source>Specify base entity</source>
         <translation>指定基准实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="256"/>
         <source>Alternate arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="258"/>
         <source>Alternate Arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25898,7 +25938,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="256"/>
         <source>Specify end angle</source>
         <translation>指定终止角度</translation>
     </message>
@@ -25907,7 +25947,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="258"/>
         <source>Specify end point</source>
         <translation>指定终点</translation>
     </message>
@@ -25915,12 +25955,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="115"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="126"/>
         <source>Specify center</source>
         <translation>指定中心</translation>
     </message>
@@ -25929,7 +25969,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25941,12 +25981,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="77"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="75"/>
         <source>Invalid Circle data.</source>
         <translation>圆参数无效.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="153"/>
         <source>Specify first point</source>
         <translation>指定第一点</translation>
     </message>
@@ -25955,7 +25995,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>指定第二点</translation>
     </message>
@@ -25967,12 +26007,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="76"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="74"/>
         <source>Invalid circle data.</source>
         <translation>圆参数无效.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="172"/>
         <source>Specify first point</source>
         <translation>指定第一点</translation>
     </message>
@@ -25981,7 +26021,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="177"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>指定第二点</translation>
     </message>
@@ -25990,7 +26030,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
         <source>Specify third point</source>
         <translation>指定第三点</translation>
     </message>
@@ -25998,27 +26038,27 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="143"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="137"/>
         <source>radius=%1 is invalid (expression)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="145"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="139"/>
         <source>radius=%1 is invalid (negative)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="142"/>
         <source>radius=%1 is invalid (zero)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="128"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="122"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="165"/>
         <source>Specify circle center</source>
         <translation>指定圆心</translation>
     </message>
@@ -26027,7 +26067,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="168"/>
         <source>Specify circle radius</source>
         <translation>指定半径</translation>
     </message>
@@ -26039,7 +26079,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="188"/>
         <source>Specify the first line</source>
         <translation>指定第一条线</translation>
     </message>
@@ -26048,7 +26088,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="191"/>
         <source>Specify the second line</source>
         <translation>指定第二条线</translation>
     </message>
@@ -26057,7 +26097,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="194"/>
         <source>Specify the third line</source>
         <translation>指定第三条线</translation>
     </message>
@@ -26065,7 +26105,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="446"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="442"/>
         <source>Specify a line/arc/circle</source>
         <translation>指定一线或圆</translation>
     </message>
@@ -26074,7 +26114,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="449"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="445"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>指定一圆上点</translation>
     </message>
@@ -26083,12 +26123,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="448"/>
         <source>Specify the second point on the tangent circle</source>
         <translation>指定圆上第二个点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="455"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="451"/>
         <source>Select the center of the tangent circle</source>
         <translation>选择相切圆圆心</translation>
     </message>
@@ -26096,12 +26136,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="230"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="226"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="257"/>
         <source>Specify the first line/arc/circle</source>
         <translation>指定第一线/弧/圆</translation>
     </message>
@@ -26110,7 +26150,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="260"/>
         <source>Specify the second line/arc/circle</source>
         <translation>指定第二线/弧/圆</translation>
     </message>
@@ -26119,7 +26159,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="263"/>
         <source>Select the center of the tangent circle</source>
         <translation>指定切圆圆心</translation>
     </message>
@@ -26127,7 +26167,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="318"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="311"/>
         <source>Specify a line/arc/circle</source>
         <translation>指定一线/弧/圆</translation>
     </message>
@@ -26136,7 +26176,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="321"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="314"/>
         <source>Specify the another arc/circle</source>
         <translation>指定另一弧/圆</translation>
     </message>
@@ -26145,12 +26185,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="324"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="317"/>
         <source>Specify a point on the tangent circle</source>
         <translation>指定切圆上一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="327"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="320"/>
         <source>Select the center of the tangent circle</source>
         <translation>选择切圆圆心</translation>
     </message>
@@ -26158,22 +26198,22 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="402"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="399"/>
         <source>No common tangential circle for selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="486"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="483"/>
         <source>Specify the first line/arc/circle</source>
         <translation>指定第一线/弧/圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="489"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="486"/>
         <source>Specify the second line/arc/circle</source>
         <translation>指定第二线/弧/圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="492"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="489"/>
         <source>Specify the third line/arc/circle</source>
         <translation>指定第三条线，弧，或第三个圆</translation>
     </message>
@@ -26186,7 +26226,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="495"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="492"/>
         <source>Select the center of the tangent circle</source>
         <translation>选择公切圆圆心</translation>
     </message>
@@ -26194,12 +26234,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="167"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="165"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>不能唯一确定椭圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"/>
         <source>Specify the first point on ellipse</source>
         <translation>指定椭圆上第一点</translation>
     </message>
@@ -26208,7 +26248,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>指定椭圆上第二点</translation>
     </message>
@@ -26217,12 +26257,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
         <source>Specify the third point on ellipse</source>
         <translation>指定椭圆上第三点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
         <source>Specify the fourth point on ellipse</source>
         <translation>指定椭圆上第四点</translation>
     </message>
@@ -26230,14 +26270,14 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="308"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="319"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="330"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="313"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="324"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="336"/>
         <source>Specify ellipse center</source>
         <translation>指定椭圆中心</translation>
     </message>
@@ -26246,7 +26286,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>指定长轴端点</translation>
     </message>
@@ -26255,17 +26295,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
         <source>Specify endpoint or length of minor axis:</source>
         <translation>指定短轴的端点或长度</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="351"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
         <source>Specify start angle</source>
         <translation>指定起始角度</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="354"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
         <source>Specify end angle</source>
         <translation>指定终止角度</translation>
     </message>
@@ -26273,7 +26313,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"/>
         <source>Specify the center of ellipse</source>
         <translation>指定椭圆中心</translation>
     </message>
@@ -26282,12 +26322,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>指定椭圆上第一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>指定椭圆上第二点</translation>
     </message>
@@ -26296,7 +26336,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
         <source>Specify the third point on ellipse</source>
         <translation>指定椭圆上第三点</translation>
     </message>
@@ -26304,22 +26344,22 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="163"/>
         <source>specify a point on ellipse, or total distance to foci</source>
         <translation>指定椭圆上一点，或至焦点的距离之和</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="186"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
         <translation>长度%1小于焦点之间的距离</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="200"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="192"/>
         <source>Specify first focus of ellipse</source>
         <translation>指定椭圆第一个焦点</translation>
     </message>
@@ -26328,7 +26368,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>指定椭圆第二个焦点</translation>
     </message>
@@ -26337,7 +26377,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
         <source>Specify a point on ellipse or total distance to foci</source>
         <translation>指定椭圆上一点或到两焦点的距离之和</translation>
     </message>
@@ -26345,12 +26385,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="203"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>无法确定唯一椭圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the first line</source>
         <translation>指定第一条线</translation>
     </message>
@@ -26359,7 +26399,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="288"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="287"/>
         <source>Specify the second line</source>
         <translation>指定第二条线</translation>
     </message>
@@ -26368,12 +26408,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="291"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <source>Specify the third line</source>
         <translation>指定第三条线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="293"/>
         <source>Specify the fourth line</source>
         <translation>指定第四条线</translation>
     </message>
@@ -26381,52 +26421,52 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="156"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="155"/>
         <source>Hatch created successfully.</source>
         <translation>成功创建填充.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="158"/>
         <source>Hatch Error: Invalid contour found!</source>
         <translation>阴影区错误：没有有效边界</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="162"/>
         <source>Hatch Error: Pattern not found!</source>
         <translation>阴影错误：找不到花样</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="165"/>
         <source>Hatch Error: Contour or pattern too small!</source>
         <translation>阴影错误：边界或者花样太小</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="169"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="168"/>
         <source>Hatch Error: Contour too big!</source>
         <translation>阴影错误：边界现对花样尺寸太大</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="171"/>
         <source>Hatch Error: Undefined Error!</source>
         <translation>阴影错误：未知错误！</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="176"/>
         <source>Total hatch area = %1</source>
         <translation type="unfinished">总填充面积 = %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="184"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation>填充区域无效. 请选择封闭轮廓线.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="202"/>
         <source>Select to hatch (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="202"/>
         <source>Hatch immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26468,7 +26508,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="263"/>
         <source>Specify first point</source>
         <translation>指定第一个点</translation>
     </message>
@@ -26477,7 +26517,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="295"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="285"/>
         <source>Specify next point or [%1]</source>
         <translation>指定下一点或[%1]</translation>
     </message>
@@ -26486,22 +26526,22 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="297"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="287"/>
         <source>Specify next point</source>
         <translation>指定下一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="325"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="315"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <translation>不能封闭折线。没有足够多线段或是已经是封闭折线。</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="385"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="375"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="409"/>
         <source>Cannot redo: End of history reached</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26509,13 +26549,13 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="224"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="231"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="296"/>
         <source>Specify position</source>
         <translation>指定位置</translation>
     </message>
@@ -26524,7 +26564,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="305"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="299"/>
         <source>Enter angle:</source>
         <translation>输入角度:</translation>
     </message>
@@ -26533,7 +26573,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="302"/>
         <source>Enter length:</source>
         <translation>输入长度:</translation>
     </message>
@@ -26541,24 +26581,24 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="123"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="118"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="199"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="216"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="211"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="209"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="241"/>
         <source>Select first line</source>
         <translation>选择第一条线</translation>
     </message>
@@ -26567,7 +26607,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="244"/>
         <source>Select second line</source>
         <translation>选择第二条线</translation>
     </message>
@@ -26576,12 +26616,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="247"/>
         <source>Enter bisector length:</source>
         <translation>输入角均分线长度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="250"/>
         <source>Enter number of bisectors:</source>
         <translation>输入角均分线数量:</translation>
     </message>
@@ -26589,7 +26629,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="113"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="114"/>
         <source>Click and drag to draw a line</source>
         <translation>单击并拖动绘制线</translation>
     </message>
@@ -26601,7 +26641,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="114"/>
         <source>Specify first point</source>
         <translation>指定第一点</translation>
     </message>
@@ -26610,7 +26650,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>指定第二点</translation>
     </message>
@@ -26622,7 +26662,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="157"/>
         <source>Select a line</source>
         <translation>选择线</translation>
     </message>
@@ -26631,7 +26671,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="162"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="160"/>
         <source>Select circle, arc or ellipse</source>
         <translation>选择圆、圆弧或椭圆</translation>
     </message>
@@ -26643,7 +26683,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="111"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>指定距离&lt;%1&gt; 或 选择实体 或 [%2]</translation>
     </message>
@@ -26652,23 +26692,23 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="93"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="85"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="122"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="114"/>
         <source>Enter number:</source>
         <translation>输入数值:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="150"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="160"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="158"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>无效数值. 请输入1..99</translation>
     </message>
@@ -26676,7 +26716,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="150"/>
         <source>Select entity</source>
         <translation>选择实体</translation>
     </message>
@@ -26685,7 +26725,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="153"/>
         <source>Specify through point</source>
         <translation>指定通过点</translation>
     </message>
@@ -26694,22 +26734,22 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="93"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="88"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="161"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="156"/>
         <source>Number:</source>
         <translation>数值:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="186"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>无效数值. 请输入1..99</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="189"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
@@ -26721,7 +26761,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">指定中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="49"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>指定角点</translation>
     </message>
@@ -26741,7 +26781,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="101"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="91"/>
         <source>Specify first corner</source>
         <translation>指定第一角点</translation>
     </message>
@@ -26750,7 +26790,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>指定第二角点</translation>
     </message>
@@ -26774,32 +26814,32 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="103"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="97"/>
         <source>Width:</source>
         <translation type="unfinished">宽度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="98"/>
         <source>Height:</source>
         <translation type="unfinished">高度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="105"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="99"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="147"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="141"/>
         <source>Specify first corner</source>
         <translation>指定第一角点</translation>
     </message>
@@ -26808,7 +26848,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="150"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>指定第二角点</translation>
     </message>
@@ -26820,23 +26860,23 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="175"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="181"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="213"/>
         <source>Select base entity</source>
         <translation>选择基准实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="226"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="219"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="222"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26845,7 +26885,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="216"/>
         <source>Specify position</source>
         <translation>指定位置</translation>
     </message>
@@ -26857,7 +26897,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="135"/>
         <source>Specify point</source>
         <translation>指定点</translation>
     </message>
@@ -26866,7 +26906,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="141"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="138"/>
         <source>Select circle, arc or ellipse</source>
         <translation>选择圆, 圆弧或椭圆</translation>
     </message>
@@ -26894,17 +26934,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="211"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="207"/>
         <source>Select first circle/ellipse/parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="210"/>
         <source>Select second circle/ellipse/parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="213"/>
         <source>Select the tangent line closest to cursor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26912,7 +26952,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="185"/>
         <source>Specify insertion point</source>
         <translation>指定插入点</translation>
     </message>
@@ -26921,7 +26961,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>输入文本:</translation>
     </message>
@@ -26933,7 +26973,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="80"/>
+        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>指定位置</translation>
     </message>
@@ -26945,54 +26985,54 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="356"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="557"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="348"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="549"/>
         <source>Enter the end point x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="408"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="566"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="558"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="517"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter an equation, f(x)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="531"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="523"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="531"/>
         <source>Enter the start point x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="546"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="538"/>
         <source>The entered x is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="583"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The step size entered is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="618"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="610"/>
         <source>The value x entered is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="720"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="712"/>
         <source>Specify first point</source>
         <translation>指定第一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="740"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="732"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27001,7 +27041,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="751"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="743"/>
         <source>Specify next point or [%1]</source>
         <translation>指定下一点或[%1]</translation>
     </message>
@@ -27010,17 +27050,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="753"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Specify next point</source>
         <translation>指定下一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="774"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="766"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation>无法闭合直线序列. 实体数目尚不足.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="797"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="789"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>无法撤消: 实体数目尚不足.</translation>
     </message>
@@ -27028,7 +27068,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="219"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="213"/>
         <source>Specify first control point</source>
         <translation>指定第一控制点</translation>
     </message>
@@ -27037,7 +27077,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="225"/>
         <source>Specify next control point or [%1]</source>
         <translation>指定下一控制点或[%1]</translation>
     </message>
@@ -27046,12 +27086,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point</source>
         <translation>指定下一控制点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="281"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>无法撤消: 实体数目尚不足.</translation>
     </message>
@@ -27059,7 +27099,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="242"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="240"/>
         <source>Specify insertion point</source>
         <translation>指定插入点</translation>
     </message>
@@ -27068,17 +27108,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="156"/>
         <source>Text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="245"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>指定第二点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>输入文本:</translation>
     </message>
@@ -27188,61 +27228,61 @@ This block cannot be inserted.</source>
         <translation type="vanished">角度: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="92"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="86"/>
         <source>Angle 1: %1
 Angle 2: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="124"/>
         <source>Angle: %1
 Intersection: (%2 , %3)
 Intersection :@(%4, %5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="136"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="175"/>
         <source>Lines are parallel</source>
         <translation>线相互平行</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="230"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="224"/>
         <source>Specify first line</source>
         <translation>指定第一条线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="230"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="224"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="245"/>
         <source>Info</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="252"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="246"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="256"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="257"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Line 1 Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="258"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="252"/>
         <source>Line 2 Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="248"/>
         <source>Angle (alt): </source>
         <translation type="unfinished"></translation>
     </message>
@@ -27251,7 +27291,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="233"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="227"/>
         <source>Specify second line</source>
         <translation>指定第二条线</translation>
     </message>
@@ -27263,29 +27303,29 @@ Intersection :@(%4, %5)</source>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="105"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="113"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="99"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
         <source>Circumference: %1</source>
         <translation>周长: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="114"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
         <translation type="unfinished">面积：%1 %2^2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify point and complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27298,7 +27338,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">点: %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="184"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>指定多边形第一点</translation>
     </message>
@@ -27307,7 +27347,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>指定多边形下一点</translation>
     </message>
@@ -27319,7 +27359,7 @@ Intersection :@(%4, %5)</source>
         <translation type="obsolete">距离：%1 直角坐标：（%2 , %3), 极坐标： (%4&lt;%5 {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="68"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="61"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -27328,37 +27368,37 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="104"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="97"/>
         <source>Info</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="105"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
         <source>Distance:</source>
         <translation type="unfinished">距离:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="106"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="99"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="107"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="100"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="108"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="101"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="163"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="156"/>
         <source>Specify first point of distance</source>
         <translation>指定距离的第一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="159"/>
         <source>Don&apos;t move relative zero</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27367,7 +27407,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="159"/>
         <source>Specify second point of distance</source>
         <translation>指定距离的第二点</translation>
     </message>
@@ -27383,7 +27423,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">距离: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="89"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="85"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -27392,42 +27432,42 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="268"/>
         <source>Specify entity</source>
         <translation>指定实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="268"/>
         <source>Do not snap to child entities in container</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="276"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
         <source>Relative point is on entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="303"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="299"/>
         <source>Info</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="304"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="300"/>
         <source>Distance:</source>
         <translation type="unfinished">距离:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="305"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="301"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="306"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="302"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="307"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="303"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27436,8 +27476,8 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="276"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
         <source>Specify point</source>
         <translation>指定点</translation>
     </message>
@@ -27471,37 +27511,37 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="51"/>
         <source>Total Length of selected entities: %1</source>
         <translation>选中实体总长: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="55"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
         <source>At least one of the selected entities cannot be measured.</source>
         <translation>至少有一个选中实体无法测量.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="62"/>
         <source>Selected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="66"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
         <source>Total Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select to measure total length (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select and finish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27509,22 +27549,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="517"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="520"/>
         <source>Back</source>
         <translation type="unfinished">返回</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="539"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="542"/>
         <source>SHIFT:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="546"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="549"/>
         <source>CTRL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="565"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="568"/>
         <source>Cancel</source>
         <translation type="unfinished">取消</translation>
     </message>
@@ -27536,18 +27576,18 @@ Point: (%8 , %9)</source>
         <translation type="vanished">插入库对象</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="69"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>无法打开文件 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="156"/>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="169"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="198"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
@@ -27556,12 +27596,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="201"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
         <source>Enter angle:</source>
         <translation>输入角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="204"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="200"/>
         <source>Enter factor:</source>
         <translation>输入因子:</translation>
     </message>
@@ -27576,17 +27616,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select to modify attributes (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Modify attributes immediately after selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27594,59 +27634,59 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="79"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="76"/>
         <source>Selected lines are parallel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="79"/>
         <source>Selected lines are not children of the same polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="151"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="148"/>
         <source>Trim</source>
         <translation type="unfinished">修剪</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="152"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="149"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="150"/>
         <source>Point 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="154"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="151"/>
         <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="198"/>
         <source>Invalid entity selected (non-trimmable).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="204"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="216"/>
         <source>Invalid entity selected (non-atomic).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="216"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="213"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="285"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="298"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="282"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="295"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="352"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="349"/>
         <source>Select first entity</source>
         <translation>指定第一实体</translation>
     </message>
@@ -27655,7 +27695,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="355"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="352"/>
         <source>Select second entity</source>
         <translation>指定第二实体</translation>
     </message>
@@ -27664,12 +27704,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="355"/>
         <source>Enter length 1:</source>
         <translation>输入长度1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="361"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="358"/>
         <source>Enter length 2:</source>
         <translation>输入长度2:</translation>
     </message>
@@ -27677,27 +27717,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="87"/>
         <source>Divide</source>
         <translation type="unfinished">Divide</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="89"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="88"/>
         <source>At:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="104"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="103"/>
         <source>No Entity found.</source>
         <translation>未发现实体。</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="108"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="107"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation>实体必须是线、圆弧、圆、椭圆或插值样条线。</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="115"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27710,7 +27750,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">剪切点不在实体上。</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="134"/>
         <source>Specify entity to cut</source>
         <translation>指定待剪切实体</translation>
     </message>
@@ -27719,7 +27759,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="138"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="137"/>
         <source>Specify cutting point</source>
         <translation>指定剪切点</translation>
     </message>
@@ -27731,17 +27771,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select to delete (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Delete immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27749,47 +27789,47 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
         <source>Entities not in the same polyline.</source>
         <translation>实体不属于同一多段线.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="90"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="92"/>
         <source>Parent of second entity is not a polyline</source>
         <translation>第二个实体的父对象不是多段线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>Parent of first entity is not a polyline</source>
         <translation>第一个实体的父对象不是多段线</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="93"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
         <source>Parent of second entity is nullptr</source>
         <translation type="unfinished">第二个实体祖先为空</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="96"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="98"/>
         <source>One of the chosen entities is nullptr</source>
         <translation type="unfinished">其中一个实体为空</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="118"/>
         <source>Parent of first entity is nullptr</source>
         <translation type="unfinished">第一个实体祖先为空</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="119"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="121"/>
         <source>First entity is nullptr</source>
         <translation type="unfinished">第一个实体为空</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="130"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="132"/>
         <source>Second entity is nullptr</source>
         <translation>第二个实体为空</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
         <translation>指定多段线上的第一个打断点</translation>
     </message>
@@ -27798,7 +27838,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>指定同一多段线上的第二个打断点</translation>
     </message>
@@ -27821,7 +27861,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="126"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27846,57 +27886,57 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="119"/>
         <source>Mirror</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
         <source>Angle (alt):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
         <source>Line From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
         <source>Line To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select to mirror (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Specify mirror line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="245"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="244"/>
         <source>Specify first point of mirror line</source>
         <translation>指定镜像轴第一点</translation>
     </message>
@@ -27905,7 +27945,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>指定镜像轴第二点</translation>
     </message>
@@ -27921,37 +27961,37 @@ Point: (%8 , %9)</source>
         <translation type="vanished">无效副本数， 实际使用%1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Moving Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Copy Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="184"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Create a Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select to move (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Move immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27960,7 +28000,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>指定目标点</translation>
     </message>
@@ -27972,56 +28012,56 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="83"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="79"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="112"/>
         <source>Moving with rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="84"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="117"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="80"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="113"/>
         <source>Source:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="85"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="81"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="114"/>
         <source>Target:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="86"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="119"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="115"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="284"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="280"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="320"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="316"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Select to move and rotate  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Move and rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28030,7 +28070,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="323"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="319"/>
         <source>Specify target point</source>
         <translation>指定目标点</translation>
     </message>
@@ -28039,7 +28079,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="326"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="322"/>
         <source>Enter rotation angle:</source>
         <translation>输入旋转角度:</translation>
     </message>
@@ -28047,38 +28087,38 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="88"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="92"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="89"/>
         <source>Distance:</source>
         <translation type="unfinished">距离:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="171"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="178"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="175"/>
         <source>Specify direction of offset</source>
         <translation>指定偏移方向</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="174"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="171"/>
         <source>Specify reference point for direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Offset immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28090,17 +28130,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select to revert direction (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Revert immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28108,93 +28148,93 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
         <source>Specify rotation center</source>
         <translation>指定旋转中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="244"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="145"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="202"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="242"/>
         <source>Angle:</source>
         <translation type="unfinished">角度:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="206"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="139"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="151"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="208"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="137"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146"/>
         <source>Reference Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="138"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="150"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147"/>
         <source>Center Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="251"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
         <source>Second Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Select to rotate (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Specify target point to rotate to</source>
         <translation>指定旋转目标点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
         <source>Specify target point for rotation around reference point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28206,47 +28246,47 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="81"/>
         <source>Rotating Twice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="84"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="82"/>
         <source>Center 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="83"/>
         <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="84"/>
         <source>Center 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="85"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select for two axis rotation  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Rotate 2 Axis immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="166"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="164"/>
         <source>Specify absolute reference point</source>
         <translation>指定绝对参照点</translation>
     </message>
@@ -28255,7 +28295,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="169"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="167"/>
         <source>Specify relative reference point</source>
         <translation>指定相对参照点</translation>
     </message>
@@ -28267,28 +28307,28 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="227"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="225"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="228"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="226"/>
         <source>Point 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="227"/>
         <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="339"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="354"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="337"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="352"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="413"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="411"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28297,12 +28337,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="416"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
         <translation>指定第二实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="419"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="417"/>
         <source>Enter radius:</source>
         <translation>输入半径:</translation>
     </message>
@@ -28322,77 +28362,77 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="174"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="170"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="175"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
         <source>Scale by X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
         <source>Scale by Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Specify scale center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="370"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
         <source>Specify source point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Specify target point</source>
         <translation type="unfinished">指定目标点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Free snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select to scale  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28400,7 +28440,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="198"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="195"/>
         <source>Specify first corner</source>
         <translation>指定第一角点</translation>
     </message>
@@ -28409,7 +28449,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="198"/>
         <source>Specify second corner</source>
         <translation>指定第二角点</translation>
     </message>
@@ -28418,45 +28458,45 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="93"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="78"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="90"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="110"/>
         <source>Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
         <source>Start Corner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80"/>
         <source>End Corner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="94"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
         <source>Reference Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="115"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
         <source>Offset:</source>
         <translation type="unfinished">偏置:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="201"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
         <source>Specify target point</source>
         <translation>指定目标点</translation>
     </message>
@@ -28464,7 +28504,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="182"/>
         <source>Select first trim entity</source>
         <translation>选择第一个修剪实体</translation>
     </message>
@@ -28473,7 +28513,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="184"/>
         <source>Select limiting entity</source>
         <translation>选择限制实体</translation>
     </message>
@@ -28482,27 +28522,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="121"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="122"/>
         <source>Trim</source>
         <translation type="unfinished">修剪</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="123"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="125"/>
         <source>Intersection 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="188"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select second trim entity</source>
         <translation>选择第二个修剪实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="191"/>
         <source>Select entity to trim</source>
         <translation>选择待修剪实体</translation>
     </message>
@@ -28518,22 +28558,22 @@ Point: (%8 , %9)</source>
         <translation type="vanished">所选实体属于图块. 请编辑图块.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="172"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="167"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="179"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="174"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
         <translation>所选实体不是元实体或无法修剪.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="199"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="231"/>
         <source>Select line, arc, ellipse or parabola to trim or enter distance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28549,27 +28589,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionOrder</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="111"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="110"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Choose entities (Enter to Complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Order immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="131"/>
         <source>Choose entity for order</source>
         <translation>选择要排序的实体</translation>
     </message>
@@ -28623,32 +28663,32 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="113"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="109"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
         <translation>实体类型必须为多段线.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="115"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>无法向闭合多段线追加节点.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="156"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="152"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>点击现有多段线起点或终点的附近区域.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="266"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="280"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>在起点或终点的附近区域指定多段线</translation>
     </message>
@@ -28669,7 +28709,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">指定下一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="304"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="300"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>无法撤消: 实体数目尚不足.</translation>
     </message>
@@ -28677,28 +28717,28 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="96"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="109"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="94"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="107"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="98"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="96"/>
         <source>Entity must be a polyline.</source>
         <translation>实体类型必须为多段线.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="125"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="123"/>
         <source>Deleting point is invalid.</source>
         <translation>无效删除点</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="114"/>
         <source>Deleting point is not on entity.</source>
         <translation>删除点不在实体上.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="139"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="137"/>
         <source>Specify polyline to delete node</source>
         <translation>指定待删除节点多段线</translation>
     </message>
@@ -28707,7 +28747,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="140"/>
         <source>Specify deleting node&apos;s point</source>
         <translation>指定删除节点点位</translation>
     </message>
@@ -28778,17 +28818,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="306"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="307"/>
         <source>Entity must be a polyline.</source>
         <translation>实体类型必须为多段线.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="357"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="356"/>
         <source>Choose the original polyline</source>
         <translation>选择原始多段线</translation>
     </message>
@@ -28800,23 +28840,23 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="309"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="306"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="311"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="308"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>实体不能是封闭多线段</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="61"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="82"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="58"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="79"/>
         <source>Polyline created</source>
         <translation>已创建多线段</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="333"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="330"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>选择原始多段线上的某一分段</translation>
     </message>
@@ -28828,22 +28868,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="115"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="118"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="117"/>
         <source>Entity must be a polyline.</source>
         <translation>实体类型必须为多段线.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="136"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="135"/>
         <source>First segment should be on selected polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="148"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="147"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28856,7 +28896,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">实体上未发现分段.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="182"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
         <translation>指定待修剪多段线</translation>
     </message>
@@ -28865,7 +28905,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="184"/>
         <source>Specify first segment</source>
         <translation>指定第一分段</translation>
     </message>
@@ -28874,7 +28914,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="187"/>
         <source>Specify second segment</source>
         <translation>指定第二分段</translation>
     </message>
@@ -28882,72 +28922,72 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="156"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation type="unfinished">打印偏置按打印纸坐标(%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="159"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="161"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation type="unfinished">打印偏置按图像坐标(%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="175"/>
         <source>Printout in Black/White</source>
         <translation type="unfinished">以黑白打印</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout in color</source>
         <translation type="unfinished">彩色打印</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="183"/>
         <source>Printout offset in graph coordinates</source>
         <translation type="unfinished">打印偏置按图像坐标</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset in paper coordinates</source>
         <translation type="unfinished">打印偏置按打印纸坐标</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="218"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="220"/>
         <source>: select printout offset coordinates</source>
         <translation type="unfinished">: 选取打印偏置坐标</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="219"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="221"/>
         <source>type in offset from command line to offset printout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="389"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="391"/>
         <source>Limit of pages has been exceeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Move Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Move Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="193"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="195"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation type="unfinished">打印偏置忽略相对零点，忽略&apos;@&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="274"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="276"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): 无效纸张尺寸</translation>
     </message>
@@ -29034,12 +29074,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="56"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="55"/>
         <source>Entity must be an Atomic Entity.</source>
         <translation>实体类型必须为元实体.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="75"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="74"/>
         <source>Specify entity to select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29047,7 +29087,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="111"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="109"/>
         <source>Choose first point of intersection line</source>
         <translation>选择相交直线的第一点</translation>
     </message>
@@ -29056,7 +29096,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="114"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="112"/>
         <source>Choose second point of intersection line</source>
         <translation>选择相交直线的第二点</translation>
     </message>
@@ -29068,7 +29108,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="70"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="69"/>
         <source>Specify entity with desired layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29175,7 +29215,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">手动求交</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="146"/>
+        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
         <source>Select first entity</source>
         <translation>选择第一个实体</translation>
     </message>
@@ -29184,7 +29224,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="149"/>
+        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="148"/>
         <source>Select second entity</source>
         <translation>选择第二个实体</translation>
     </message>
@@ -29192,12 +29232,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="59"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="58"/>
         <source>Regenerated %1 dimension entities</source>
         <translation>重生成标注实体%1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="60"/>
         <source>No dimension entities found</source>
         <translation>未发现标注实体</translation>
     </message>
@@ -29222,7 +29262,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="137"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify first edge</source>
         <translation>指定第一条边</translation>
     </message>
@@ -29231,7 +29271,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>指定第二条边</translation>
     </message>

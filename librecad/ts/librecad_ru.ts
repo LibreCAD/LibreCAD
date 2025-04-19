@@ -169,7 +169,7 @@
 <context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="44"/>
+        <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Начальная точка может быть задана только в режиме &quot;Расстояние&quot; или &quot;Точка&quot;</translation>
     </message>
@@ -197,79 +197,79 @@
         <translation type="vanished">Центр: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>To be created:</source>
         <translation>Создаваемый Объект:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>Rectangle</source>
         <translation>Прямоугольник</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="168"/>
         <source>Width:</source>
         <translation>Ширина:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="169"/>
         <source>Height:</source>
         <translation>Высота:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="170"/>
         <source>Center:</source>
         <translation>Центр:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="199"/>
         <source>Invalid Angle</source>
         <translation>Некорректный Угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="210"/>
         <source>Invalid radius</source>
         <translation>Некорректный радиус</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="360"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="355"/>
         <source>Invalid value</source>
         <translation>Некорректное значение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="411"/>
         <source>Specify insertion point</source>
         <translation>Укажите точку вставки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="414"/>
         <source>Specify angle</source>
         <translation>Укажите угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="417"/>
         <source>Specify size (width, height)</source>
         <translation>Укажите размер (ширина,высота)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="420"/>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation>Укажите тип углов 
 [str|round|bevels]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="423"/>
         <source>Specify corner bevel length (x,y)</source>
         <translation>Укажите длину сторон фаски (x,y)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="431"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="426"/>
         <source>Specify corner radius</source>
         <translation>Укажите радиус скругления</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="434"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="429"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation>Укажите режим граней \n[both|hor|vert]</translation>
@@ -278,12 +278,12 @@
 <context>
     <name>LC_AbstractActionWithPreview</name>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="734"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="727"/>
         <source> is not divided as it is locked.</source>
         <translation>не может быть разбит так как он заблокирован.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="742"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="735"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation>не может быть разбит так как это часть полилинии. Сначала разбейте полилинию.</translation>
     </message>
@@ -291,32 +291,32 @@
 <context>
     <name>LC_ActionCircleDimBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
         <translation>Не является окружностью или дугой</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="179"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="202"/>
         <source>Select arc or circle entity</source>
         <translation>Выделите дугу или окружность</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="202"/>
         <source>Free angle</source>
         <translation>Свободный угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="205"/>
         <source>Specify dimension line position or enter angle:</source>
         <translation>Укажите положение размерной линии или введите угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="208"/>
         <source>Enter dimension text:</source>
         <translation>Введите текст размерной надписи:</translation>
     </message>
@@ -324,7 +324,7 @@
 <context>
     <name>LC_ActionDimArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="184"/>
         <source>Select arc entity</source>
         <translation>Выберите объект дуги</translation>
     </message>
@@ -333,7 +333,7 @@
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="187"/>
         <source>Specify dimension arc location</source>
         <translation>Указать положение размерности дуги</translation>
     </message>
@@ -341,32 +341,32 @@
 <context>
     <name>LC_ActionDimLinearBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="254"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="252"/>
         <source>Specify first extension line origin</source>
         <translation>Укажите точку привязки первой размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="255"/>
         <source>Specify second extension line origin</source>
         <translation>Укажите точку привязки второй размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="258"/>
         <source>Specify dimension line location</source>
         <translation>Укажите положение размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="258"/>
         <source>Snap to Adjacent Dim</source>
         <translation>Привязка к соседней размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="261"/>
         <source>Enter dimension text:</source>
         <translation>Введите текст размерной надписи:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="264"/>
         <source>Enter dimension line angle:</source>
         <translation>Введите угол размерной надписи:</translation>
     </message>
@@ -432,12 +432,12 @@
 <context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="96"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94"/>
         <source>Enter value of central angle</source>
         <translation>Введите центральный угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="100"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98"/>
         <source>Alternate angle to outer arc</source>
         <translation>Использовать альтернативный дополняющий угол дуги</translation>
     </message>
@@ -445,32 +445,32 @@
 <context>
     <name>LC_ActionDrawArc2PointsBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="97"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="94"/>
         <source>The end point is too close to the start point</source>
         <translation>Конечная точка слишком близко к начальной</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="135"/>
         <source>Positive value is expected</source>
         <translation>Ожидается значение больше нуля</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="141"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="138"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="178"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="175"/>
         <source>Specify first point of arc</source>
         <translation>Укажите начальную точку дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="182"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="179"/>
         <source>Specify second point of arc</source>
         <translation>Укажите конечную точку дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="192"/>
         <source>Opposite Arc direction</source>
         <translation>Альтернативная дуга</translation>
     </message>
@@ -478,12 +478,12 @@
 <context>
     <name>LC_ActionDrawArc2PointsHeight</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="103"/>
         <source>Enter height of arc</source>
         <translation>Введите высоту дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="107"/>
         <source>Alternative arc where diameter is reduced by height</source>
         <translation>Альтернативная дуга с диаметром уменьшенным на высоту</translation>
     </message>
@@ -491,17 +491,17 @@
 <context>
     <name>LC_ActionDrawArc2PointsLength</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="41"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="42"/>
         <source>The distance between the two points must be less than the arc length</source>
         <translation>Расстояние между точками должно быть меньше длины дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="103"/>
         <source>Enter length of arc</source>
         <translation>Введите длину дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="107"/>
         <source>Alternate solutions</source>
         <translation>Альтернативная дуга</translation>
     </message>
@@ -545,19 +545,19 @@
 <context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="193"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>радиус=%1 слишком мал для выбранных точек
 расстояние между точками=%2 больше диаметра=%3</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="204"/>
         <source>Select from two possible circle centers</source>
         <translation>Выберите из двух возможных центров</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="225"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
@@ -566,7 +566,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="228"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
@@ -575,7 +575,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="235"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="231"/>
         <source>Select circle center</source>
         <translation>Укажите центр окружности</translation>
     </message>
@@ -583,7 +583,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawCircleByArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="231"/>
         <source>Select arc or ellipse arc</source>
         <translation>Выделите дугу или окружность</translation>
     </message>
@@ -591,7 +591,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawCross</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="308"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Выделите окружность, дугу или эллипс</translation>
     </message>
@@ -599,37 +599,37 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="399"/>
         <source>Select base linear/aligned dimension</source>
         <translation>Выберите начальный линейный или выровненный размер</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="399"/>
         <source>Select distant extension point</source>
         <translation>Выбрать дальную точку выноски</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="402"/>
         <source>Specify second extension line origin</source>
         <translation>Укажите точку привязки второй размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="402"/>
         <source>Mirror offset direction</source>
         <translation>Зеркальное направление смещения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="405"/>
         <source>Specify dimension line location</source>
         <translation>Укажите положение размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="405"/>
         <source>Snap to Adjacent Dim</source>
         <translation>Привязка к соседней размерной линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="409"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="408"/>
         <source>Enter dimension text:</source>
         <translation>Введите текст размерной надписи:</translation>
     </message>
@@ -637,29 +637,29 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawEllipse1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="269"/>
         <source>Specify ellipse center</source>
         <translation>Укажите центр эллипса</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="274"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273"/>
         <source>Specify angle for major axis</source>
         <translation>Укажите угол главной оси</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277"/>
         <source>Set start angle of arc</source>
         <translation>Укажите начальный угол дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281"/>
         <source>Set end angle of arc</source>
         <translation>Укажите конечный угол дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="318"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="329"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="340"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="328"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="339"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
@@ -667,12 +667,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLineAngleRel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="437"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="435"/>
         <source>Select base line</source>
         <translation>Укажите базовую линию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="440"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="438"/>
         <source>Specify length</source>
         <translation>Укажите длину</translation>
     </message>
@@ -680,12 +680,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLineFromPointToLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="316"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="314"/>
         <source>Select Initial Point</source>
         <translation>Укажите начальную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="319"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="317"/>
         <source>Select Line</source>
         <translation>Выберите линию</translation>
     </message>
@@ -693,79 +693,79 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="503"/>
         <source>Specify First Point</source>
         <translation>Укажите начальную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation>Укажите конечную точку или \n [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510"/>
         <source>Specify Second Point
 or [number]</source>
         <translation>Укажите конечную точку точку или [number]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="516"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation>Укажите режим направления линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation>Укажите угол линии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation>Укажите режим конечных точек</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="523"/>
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
         <translation>Укажите расстояние между точками</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
         <translation>Укажите расстояние (%1)\nили [%2]&quot;)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="536"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="544"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="544"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
         <translation>Укажите  дистанцию (угол %1 град.)
 или [%2]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="549"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
         <source>Specify points count</source>
         <translation>Укажите количество точек</translation>
     </message>
@@ -796,57 +796,57 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="188"/>
         <source>Not a valid number. Try 1..9999</source>
         <translation>Недопустимое число вне диапазона 1..9999</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="207"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="200"/>
         <source>Invalid value of rounding radius</source>
         <translation>Недопустимое значение радиуса скругления</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="210"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="242"/>
         <source>Enter number:</source>
         <translation>Введите число вершин:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="245"/>
         <source>Enter rounding radius:</source>
         <translation>Укажите радиус скругления:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="253"/>
         <source>Specify center</source>
         <translation>Укажите центр</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="272"/>
         <source>To be created:</source>
         <translation>Создаваемый Объект:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="273"/>
         <source>Center:</source>
         <translation>Центр:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="274"/>
         <source>Start angle:</source>
         <translation>Начальный угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="275"/>
         <source>Radius:</source>
         <translation>Радиус:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="276"/>
         <source>Radius Inner:</source>
         <translation>Радиус вписаный:</translation>
     </message>
@@ -855,7 +855,7 @@ or [%2]</source>
         <translation type="vanished">Создаваемый Объект: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="272"/>
         <source>Polygon</source>
         <translation>Многоугольник</translation>
     </message>
@@ -879,7 +879,7 @@ or [%2]</source>
         <translation type="vanished">Указать центр</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>Укажите касательную</translation>
     </message>
@@ -899,55 +899,55 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="472"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="460"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="481"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="469"/>
         <source>Specify direction (x or y) or [%1]</source>
         <translation>Укажите направление (x или y) или [%1]&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="483"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="487"/>
         <source>Specify distance (%1) or [%2]</source>
         <translation>Укажите расстояние (%1) или [%2]&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="146"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="483"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="129"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="117"/>
         <source>Point</source>
         <translation>Точка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="121"/>
         <source>Angle</source>
         <translation>Угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="140"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="487"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="165"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153"/>
         <source>Direction:</source>
         <translation>Направление:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="493"/>
         <source>Specify distance (%1 deg) or [%2]</source>
         <translation>Укажите расстояние (%1 град) или [%2]&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="520"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="508"/>
         <source>Specify angle or [%1]</source>
         <translation>Укажите угол или [%1]</translation>
     </message>
@@ -956,17 +956,17 @@ or [%2]</source>
         <translation type="vanished">Укажите расстояние или (%1)&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="532"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="520"/>
         <source>Specify point or [%1]</source>
         <translation>Укажите точку или [%1]&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="581"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="569"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation>Невозможно отменить: достигнуто начало истории</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="618"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="606"/>
         <source>Cannot redo: End of history reached</source>
         <translation>Невозможно повторить: Достигнут конец истории</translation>
     </message>
@@ -974,27 +974,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawMidLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="231"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="253"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="251"/>
         <source>Select first entity</source>
         <translation>Выберите первый объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="255"/>
         <source>Select second entity</source>
         <translation>Выберите второй объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="257"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="255"/>
         <source>Alternate endpoints</source>
         <translation>Использовать другие концы объектов</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="259"/>
         <source>Enter offset value</source>
         <translation>Укажите значение смещения</translation>
     </message>
@@ -1002,27 +1002,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="180"/>
         <source>Specify the first point on parabola</source>
         <translation>Укажите первую точку параболы</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="183"/>
         <source>Specify the second point on parabola</source>
         <translation>Укажите вторую точку параболы</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="186"/>
         <source>Specify the third point on parabola</source>
         <translation>Укажите третью точку параболы</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="189"/>
         <source>Specify the fourth point on parabola</source>
         <translation>Укажите четвертую точку параболы</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="192"/>
         <source>Specify the Axis on parabola</source>
         <translation>Укажите ось параболы</translation>
     </message>
@@ -1030,22 +1030,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="275"/>
         <source>Specify the focus of parabola</source>
         <translation>Укажите точку фокуса параболы</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="278"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
         <translation>Выберите линию параллельную директриссе параболы или задайте точку вершины</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="289"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
         <source>Specify the start point on parabola</source>
         <translation>Укажите начальную точку параболы</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="286"/>
         <source>Specify the end point on parabola</source>
         <translation>Укажите конечную точку параболы</translation>
     </message>
@@ -1053,58 +1053,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawPointsLattice</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="172"/>
         <source>Second point is too close to the first one</source>
         <translation>Вторая точка слишком близко к первой</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="184"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194"/>
         <source>Third point is too close to the second one</source>
         <translation>Третья точка слишком близко ко второй</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="240"/>
         <source>Invalid value provided</source>
         <translation>Некорректное значение, количество точек должно быть положительным целым числом</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="259"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="266"/>
         <source>Specify third point</source>
         <translation>Укажите третью точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
         <source>Specify fourth point</source>
         <translation>Укажите четвертую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
         <source>Last point position is un-adjusted</source>
         <translation>Не выравнивать последнюю точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="272"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"/>
         <source>Last point position is adjusted to first</source>
         <translation>Выравнивать по первой точке</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275"/>
         <source>Enter number of points by X</source>
         <translation>Количество столбцов (первое направление)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279"/>
         <source>Enter number of points by Y</source>
         <translation>Количество строк (второе направление)</translation>
     </message>
@@ -1112,32 +1112,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="367"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="368"/>
         <source>Specify height</source>
         <translation>Укажите высоту</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="370"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="371"/>
         <source>Specify width</source>
         <translation>Укажите ширину</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="373"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="374"/>
         <source>Specify size (width, height))</source>
         <translation>Укажите размер (ширина,высота)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="376"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="377"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Укажите положение точки привязки ([topl|top|topr|left|middle|right|bottoml|bottom|bottomr])</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="379"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
         <source>Specify point that defines base angle for rectangle</source>
         <translation>Укажите точку которая определяет базовый угол прямоугольника</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="379"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
         <source>Don&apos;t keep insertion point</source>
         <translation>Не сохранять точку вставки</translation>
     </message>
@@ -1145,27 +1145,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle2Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Draw Square</source>
         <translation>Создать квадрат</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="283"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation>Укажите режим привязки первой точку [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="286"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation>Укажите режим привязки второй точку [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="290"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="289"/>
         <source>Specify size (width, height)</source>
         <translation>Укажите размер (ширина, высота)</translation>
     </message>
@@ -1173,48 +1173,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="556"/>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="574"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569"/>
         <source>Specify first point first</source>
         <translation>Сначала укажите первую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="565"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560"/>
         <source>Specify width or second point first</source>
         <translation>Сначала укажите ширину или вторую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="594"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="589"/>
         <source>Specify width</source>
         <translation>Укажите ширину</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="597"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="592"/>
         <source>Specify height</source>
         <translation>Укажите высоту</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="600"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="595"/>
         <source>Specify start point)</source>
         <translation>Укажите начальную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="603"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="598"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="606"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="601"/>
         <source>Specify third point</source>
         <translation>Укажите третью точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="609"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604"/>
         <source>Specify angle</source>
         <translation>Укажите угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="612"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="607"/>
         <source>Specify inner angle</source>
         <translation>Укажите внутренний угол</translation>
     </message>
@@ -1222,27 +1222,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="203"/>
         <source>Line</source>
         <translation>Линия</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="213"/>
         <source>Arc</source>
         <translation>Дуга</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="223"/>
         <source>Circle</source>
         <translation>Окружность</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="568"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="587"/>
         <source>Select line</source>
         <translation>Выберите линию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="571"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="590"/>
         <source>Select circle or arc</source>
         <translation>Выберите окружность или дугу</translation>
     </message>
@@ -1250,7 +1250,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="201"/>
         <source>Specify first control point</source>
         <translation>Указать первую контрольную точку</translation>
     </message>
@@ -1259,28 +1259,28 @@ or [%2]</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="218"/>
         <source>Specify next control point or [%1]</source>
         <translation>Укажите следующую контрольную точку или [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="218"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="220"/>
         <source>Specify next control point</source>
         <translation>Укажите следующую контрольную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="257"/>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="273"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Отмена невозможна: определено недостаточно элементов.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="289"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Отмена невозможна: восстанавливать нечего.</translation>
     </message>
@@ -1288,37 +1288,37 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawStar</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182"/>
         <source>Invalid rays number, should be in range [3..99]</source>
         <translation>Количество лучей должно быть в интервале [3..99]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190"/>
         <source>Invalid value</source>
         <translation>Недопустимое значение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="617"/>
         <source>Set center point</source>
         <translation>Укажите центральную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
         <source>Set outer point</source>
         <translation>Укажите точку внешней вершины</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
         <source>Set inner point</source>
         <translation>Укажите точку внутренней вершины</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
         <source>Set rounding radiuses (outer, inner)</source>
         <translation>Укажите радусы сскругления (внешний, внутренний)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="632"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
         <source>Set rays number</source>
         <translation>Укажите количество лучей</translation>
     </message>
@@ -1326,17 +1326,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionEditPasteTransform</name>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="45"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="42"/>
         <source>Clipboard is empty</source>
         <translation>Буффер обмена пуст</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="132"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Set paste reference point</source>
         <translation>Укажите базовую точку вставки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="132"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Paste Multiple</source>
         <translation>Вставить несколько</translation>
     </message>
@@ -1344,244 +1344,244 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="493"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="506"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp;Увеличение окна</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Zoom &amp;Panning</source>
         <translation>Масштабирование &amp;Панорамирование</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241"/>
         <source>Select Entity</source>
         <translation>Выбрать объект</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242"/>
         <source>Select Window</source>
         <translation>Выделить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243"/>
         <source>Deselect Window</source>
         <translation>Отменить выделение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244"/>
         <source>(De-)Select &amp;Contour</source>
         <translation>Выделение &amp;Контура</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
         <source>Select Intersected Entities</source>
         <translation>Выделить пересекающиеся объекты</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Deselect Intersected Entities</source>
         <translation>Отменить выделение пересекающихся объектов</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
         <source>(De-)Select Layer</source>
         <translation>Выбрать слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230"/>
         <source>&amp;Points</source>
         <translation>&amp;Точки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202"/>
         <source>&amp;2 Points</source>
         <translation>По &amp;2 точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203"/>
         <source>&amp;Angle</source>
         <translation>&amp;Угол</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>&amp;Horizontal</source>
         <translation>&amp;Горизонтально</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
         <source>Vertical</source>
         <translation>Вертикально</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;Freehand Line</source>
         <translation>&amp;Произвольная кривая</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Parallel</source>
         <translation>&amp;Параллельно</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
         <source>Parallel through point</source>
         <translation>Параллельная через точку</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="175"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="188"/>
         <source>Rectangle</source>
         <translation>Прямоугольник</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
         <source>Bisector</source>
         <translation>Биссектриса</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>Tangent (P,C)</source>
         <translation>Касательная (Т,О)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>Tangent (C,C)</source>
         <translation>Касательная (О,О)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation>Касательная &amp;ортогональ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Orthogonal</source>
         <translation>Ортогональный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="201"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Relative angle</source>
         <translation>Относительный угол</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="176"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation>Много&amp;угольник (Цен, Уг)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="178"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>Многоу&amp;гольник (Уг,Уг)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Snake</source>
         <translation>Змейка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Snake (X)</source>
         <translation>Змейка (X)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
         <source>Snake (Y)</source>
         <translation>Змейка (Y)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="181"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Rectangle (1 Point)</source>
         <translation>Прямоугольник (1 Точка)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="182"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
         <source>Rectangle (2 Points)</source>
         <translation>Прямоугольник (2 Точки)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="183"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
         <source>Rectangle (3 Points)</source>
         <translation>Прямоугольник (3 Точки)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="180"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Star</source>
         <translation>Звезда</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
         <source>Angle From Line</source>
         <translation>Угол от линии</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Orthogonal From Line</source>
         <translation>Ортогональ от линии</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
         <source>From Point To Line</source>
         <translation>От точки к линии</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Cross</source>
         <translation>Перекрестье</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Slice/Divide Line</source>
         <translation>Поделить Прямую</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>Slice/Divide Circle</source>
         <translation>Поделить Окружность</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231"/>
         <source>Line of Points</source>
         <translation>Прямая Точек</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
         <source>Center, &amp;Point</source>
         <translation>Центр, &amp;Точка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254"/>
         <source>By Arc</source>
         <translation>Из Дуги</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="255"/>
         <source>Center, &amp;Radius</source>
         <translation>Центр, &amp;Радиус</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="256"/>
         <source>2 Points</source>
         <translation>По 2 точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257"/>
         <source>2 Points, Radius</source>
         <translation>По 2 точкам и радиусу</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258"/>
         <source>3 Points</source>
         <translation>По 3 точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Concentric</source>
         <translation>&amp;Концентрический</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
         <source>Circle &amp;Inscribed</source>
         <translation>Вписанный &amp;круг</translation>
     </message>
@@ -1591,107 +1591,107 @@ or [%2]</source>
         <translation type="vanished">Касательная к 2 окружностям и радиус</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation>Касательная к 2 окружностям, 1 точка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Tangential &amp;3 Circles</source>
         <translation>Касательная к &amp;3 окружностям</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Касательная, 2 &amp;точки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>&amp;Центр, точка, углы</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273"/>
         <source>&amp;3 Points</source>
         <translation>По &amp;3 точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>Arc &amp;Tangential</source>
         <translation>Касательная к &amp;дуге</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp;Эллипс (по осям)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>Эллиптическая &amp;дуга (по осям)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>Точка &amp;фокуса эллипса</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>Эллипс по &amp;4 точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>Эллипс по центру и &amp;3 точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="308"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>&amp;Вписанный эллипс</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Spline</source>
         <translation>&amp;Сплайн</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
         <source>&amp;Spline through points</source>
         <translation>Сплайн по &amp;точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Ломаная</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>&amp;Add node</source>
         <translation>&amp;Добавить вершину</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>A&amp;ppend node</source>
         <translation>&amp;Присоединить вершину</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>&amp;Delete node</source>
         <translation>&amp;Удалить вершину</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
         <source>Delete &amp;between two nodes</source>
         <translation>Удалить отрезок &amp;между вершинами</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
         <source>&amp;Trim segments</source>
         <translation>&amp;Подогнать отрезки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>Создать &amp;равноудаленные ломаные</translation>
     </message>
@@ -1700,67 +1700,67 @@ or [%2]</source>
         <translation type="vanished">Создать ломаную из существующих &amp;отрезков</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>&amp;MText</source>
         <translation>&amp;Текст по строкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>&amp;Text</source>
         <translation>&amp;Текст</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>&amp;Hatch</source>
         <translation>&amp;Штриховка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333"/>
         <source>Insert &amp;Image</source>
         <translation>Вставить &amp;изображение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Aligned</source>
         <translation>Вы&amp;ровненный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Linear</source>
         <translation>&amp;Линейный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
         <source>&amp;Vertical</source>
         <translation>&amp;Вертикальный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="344"/>
         <source>&amp;Radial</source>
         <translation>&amp;Радиальный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="345"/>
         <source>&amp;Diametric</source>
         <translation>&amp;Диаметральный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="346"/>
         <source>&amp;Angular</source>
         <translation>&amp;Угловой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="335"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348"/>
         <source>&amp;Leader</source>
         <translation>П&amp;олка-выноска</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>&amp;Attributes</source>
         <translation>&amp;Атрибуты</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
         <source>&amp;Delete</source>
         <translation>&amp;Удалить</translation>
     </message>
@@ -1769,102 +1769,102 @@ or [%2]</source>
         <translation type="vanished">Удалить произвольную кривую</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Переместить / копировать</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
         <source>Re&amp;vert direction</source>
         <translation>Изм&amp;енить направление</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="703"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="366"/>
         <source>&amp;Rotate</source>
         <translation>&amp;Поворот</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276"/>
         <source>&amp;2 Points, Length</source>
         <translation>Дуга 2 Tочки, Длина дуги</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
         <source>&amp;2 Points, Height</source>
         <translation>Дуга 2 Tочки, Высота</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="309"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="322"/>
         <source>Polyline Arcs to Chords</source>
         <translation>Заменить дуги хордами</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="367"/>
         <source>&amp;Scale</source>
         <translation>&amp;Масштабировать</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Mirror</source>
         <translation>Отр&amp;азить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
         <source>Rotate T&amp;wo</source>
         <translation>Вращени&amp;е по двум</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
         <source>&amp;Properties</source>
         <translation>&amp;Характеристики</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
         <source>&amp;Trim</source>
         <translation>Подо&amp;гнать</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
         <source>&amp;Lengthen</source>
         <translation>&amp;Удлинить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="376"/>
         <source>&amp;Divide</source>
         <translation>Разде&amp;лить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377"/>
         <source>&amp;Stretch</source>
         <translation>&amp;Вытянуть</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Bevel</source>
         <translation>&amp;Фаска</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="366"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Fillet</source>
         <translation>С&amp;кругление</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>&amp;Разрушить текст на буквы</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="478"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="491"/>
         <source>Point inside contour</source>
         <translation>Точка внутри контура</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="479"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="492"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Расстояние от точки до точки</translation>
     </message>
@@ -1873,7 +1873,7 @@ or [%2]</source>
         <translation type="vanished">Р&amp;асстояние от объекта до точки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="482"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="495"/>
         <source>An&amp;gle between two lines</source>
         <translation>&amp;Угол между двумя линиями</translation>
     </message>
@@ -1882,7 +1882,7 @@ or [%2]</source>
         <translation type="vanished">Су&amp;ммарная длина выбранных объектов</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="484"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="497"/>
         <source>Polygonal &amp;Area</source>
         <translation>&amp;Многоугольная область</translation>
     </message>
@@ -1891,27 +1891,27 @@ or [%2]</source>
         <translation type="vanished">&amp;Указатель</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Undo</source>
         <translation>&amp;Отменить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>&amp;Redo</source>
         <translation>&amp;Повторить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="663"/>
         <source>Cu&amp;t</source>
         <translation>Вы&amp;резать</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="665"/>
         <source>&amp;Copy</source>
         <translation>&amp;Копировать</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="667"/>
         <source>&amp;Paste</source>
         <translation>&amp;Вставить</translation>
     </message>
@@ -1920,37 +1920,37 @@ or [%2]</source>
         <translation type="vanished">на задний план</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Tangential 2 Circles, Radius</source>
         <translation>Касательная к 2 окружностям и радиус</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>&amp;Center, Point, Chord</source>
         <translation>Дуга Центр, Точка, Хорда</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>&amp;Center, Point, Arc Angle</source>
         <translation>Дуга Центр,Точка, Угол дуги</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274"/>
         <source>&amp;2 Points, Angle</source>
         <translation>Дуга 2 Tочки, Угол</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275"/>
         <source>&amp;2 Points, Radius</source>
         <translation>Дуга 2 Точки, Радиус</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>Para&amp;bola 4 points</source>
         <translation>Парабола, 4 точки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation>Парабола по фокусу и директриссе</translation>
     </message>
@@ -1959,7 +1959,7 @@ or [%2]</source>
         <translation type="vanished">Вставить точку сплайна</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
         <source>&amp;Remove spline points</source>
         <translation>Удалить точку сплайна</translation>
     </message>
@@ -1968,128 +1968,128 @@ or [%2]</source>
         <translation type="vanished">Добавить точки сплайна</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Ellipse (1 Point)</source>
         <translation>Эллипс (1 Точка)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation>Эллиптическая дуга (1 Точка)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="308"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation>Ломаная из сегментов</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>Polyline Change Segment Type</source>
         <translation>Изменить тип сегмента</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="334"/>
         <source>Bounding &amp;Box</source>
         <translation>Рамка вокруг</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="336"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Baseline</source>
         <translation>Размер от базовой линии</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="337"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Continue</source>
         <translation>Продолжить размер</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>Break/Divide</source>
         <translation>Разделить по пересечениям</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>Line Gap</source>
         <translation>Разрыв</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>Line Join</source>
         <translation>Объединить прямые</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Duplicate</source>
         <translation>Дубликат</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Align</source>
         <translation>Выравнивание</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
         <source>Align One</source>
         <translation>Выравнивание по одному</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="375"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>Align Reference Points</source>
         <translation>Выравнивание по точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>Обновить текущее перо по перу из активного слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation>Выбрать Перо из Oбъекта</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation>Выбрать Перо из Объекта (Результирующее)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
         <source>Apply Pen to Entity</source>
         <translation>Применить Перо к Объекту</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
         <source>Copy Pen</source>
         <translation>Скопировать Перо</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="409"/>
         <source>Show Entity Description</source>
         <translation>Показать свойства объекта</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="412"/>
         <source>Enable Info Cursor</source>
         <translation>Включить ИнфоКурсор</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
         <source>Absolute Pos</source>
         <translation>Абсолютные координаты</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="414"/>
         <source>Snap</source>
         <translation>Привязка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
         <source>Relative</source>
         <translation>Относительные координаты</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>Prompt</source>
         <translation>Подсказка команды</translation>
     </message>
@@ -2098,82 +2098,82 @@ or [%2]</source>
         <translation type="obsolete">Захваченный объект</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423"/>
         <source>Snap on grid</source>
         <translation>К сетке</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="411"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
         <source>Snap Middle Manual</source>
         <translation>К середине вручную</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="412"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Snap on Endpoints</source>
         <translation>К конечным точками</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="426"/>
         <source>Snap on Entity</source>
         <translation>К объекту</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="414"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="427"/>
         <source>Snap Center</source>
         <translation>К точкам центра</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
         <source>Snap Middle</source>
         <translation>К середине</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
         <source>Snap Distance</source>
         <translation>На заданном расстоянии</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap Intersection</source>
         <translation>К точкам пересечения</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="436"/>
         <source>Restrict Horizontal</source>
         <translation>Ограничить горизонтально</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="437"/>
         <source>Restrict Vertical</source>
         <translation>Ограничить вертикально</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="438"/>
         <source>Restrict Orthogonal</source>
         <translation>Ограничить ортогонально</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="426"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
         <source>Restrict Nothing</source>
         <translation>Без ограничений</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="451"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="464"/>
         <source>Set relative zero position</source>
         <translation>Задать положение относительного нуля</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="454"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="467"/>
         <source>Lock relative zero position</source>
         <translation>Заблокировать положение относительного нуля</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="462"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="475"/>
         <source>Exclusive Snap Mode</source>
         <translation>Режим единственной привязки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="463"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="476"/>
         <source>Free Snap</source>
         <translation>Без привязки</translation>
     </message>
@@ -2190,152 +2190,152 @@ or [%2]</source>
         <translation type="vanished">На передний план</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="480"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="493"/>
         <source>Distance &amp;Entity to Point</source>
         <translation>Расстояние от Объекта до Точки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="494"/>
         <source>Distance &amp;Point to Entity</source>
         <translation>Расстояние от Точки до Объекта</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="483"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="496"/>
         <source>Total &amp;length of selected entities</source>
         <translation>Общая длина выбраных объектов</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="485"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>Entity Pro&amp;perties</source>
         <translation>Свойства Объекта</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="486"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Collect &amp;Coordinates</source>
         <translation>Собрать Координаты</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="487"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500"/>
         <source>Ang&amp;le between 3 points</source>
         <translation>Угол между 3-мя точками</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
         <source>&amp;Draft Lines</source>
         <translation>Черновая толщина линий</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="513"/>
         <source>&amp;Antialiasing</source>
         <translation>Сглаживание при отрисовке</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="515"/>
         <source>&amp;Orthogonal Grid</source>
         <translation>Ортогональная Сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
         <source>&amp;Isometric Left Grid</source>
         <translation>Изметрическая сетка (Левая)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="504"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
         <source>&amp;Isometric Top Grid</source>
         <translation>Изметрическая сетка (Сверху)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="505"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
         <source>&amp;Isometric Right Grid</source>
         <translation>Изметрическая сетка (Правая)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="515"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="528"/>
         <source>&amp;Add Layer</source>
         <translation>&amp;Добавить слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="529"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;Удалить слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
         <source>&amp;Edit Layer</source>
         <translation>&amp;Редактировать слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>Защита &amp;слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="519"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="532"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>&amp;Видимость слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="520"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>Пе&amp;чать слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="521"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>&amp;Вспомогательный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"/>
         <source>&amp;Add Block</source>
         <translation>&amp;Добавить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="532"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="545"/>
         <source>&amp;Remove Block</source>
         <translation>&amp;Удалить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
         <source>&amp;Rename Block</source>
         <translation>&amp;Переименовать блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="547"/>
         <source>&amp;Edit Block</source>
         <translation>&amp;Редактировать блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
         <source>&amp;Save Block</source>
         <translation>&amp;Сохранить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="549"/>
         <source>&amp;Insert Block</source>
         <translation>&amp;Вставить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="537"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>&amp;Видимость блока</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="538"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Create Block</source>
         <translation>&amp;Создать блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
         <source>Ex&amp;plode</source>
         <translation>&amp;Разрушить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="561"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Текущие настройки &amp;чертежа</translation>
     </message>
@@ -2344,194 +2344,194 @@ or [%2]</source>
         <translation type="vanished">&amp;Удалить выбранное</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646"/>
         <source>Select &amp;All</source>
         <translation>&amp;Выделить все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="634"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647"/>
         <source>Deselect &amp;all</source>
         <translation>Отменить &amp;выделение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="711"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648"/>
         <source>Invert Selection</source>
         <translation>Инвертировать выделение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>Focus on &amp;Options Widget</source>
         <translation>Фокус на опциях</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;Приблизить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Zoom &amp;Out</source>
         <translation>Увеличение&amp;Уменьшение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Auto Zoom</source>
         <translation>П&amp;оказать всё</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="613"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Previous &amp;View</source>
         <translation>Предыдущий &amp;вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="614"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Redraw</source>
         <translation>&amp;Обновить изображение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="572"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>&amp;New</source>
         <translation>&amp;Новый</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>New From &amp;Template</source>
         <translation>Новый из &amp;шаблона</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>&amp;Open...</source>
         <translation>&amp;Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="576"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Save &amp;as...</source>
         <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="581"/>
         <source>&amp;Export as image</source>
         <translation>Экспорт в &amp;изображение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
         <source>&amp;Close</source>
         <translation>&amp;Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="578"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
         <source>&amp;Print...</source>
         <translation>&amp;Печать...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="570"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>Export as PDF</source>
         <translation>Экспортировать в PDF</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="558"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
         <source>Print Pre&amp;view</source>
         <translation>Предпрос&amp;мотр печати</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="579"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="592"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>&amp;Block</source>
         <translation>&amp;Блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="496"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="509"/>
         <source>&amp;Fullscreen</source>
         <translation>Полный &amp;экран</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="497"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="510"/>
         <source>&amp;Grid</source>
         <translation>&amp;Сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="728"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="741"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Draft</source>
         <translation>&amp;Черновик</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514"/>
         <source>&amp;Statusbar</source>
         <translation>С&amp;трока состояния</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="731"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Перейти к &amp;командной строке</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="549"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="562"/>
         <source>Widget Options</source>
         <translation>Параметры интерфейса</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
         <source>Left</source>
         <translation>Левые</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>Right</source>
         <translation>Правые</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>Top</source>
         <translation>Верхние</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>Bottom</source>
         <translation>Нижние</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>Floating</source>
         <translation>Плавающие</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="552"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Reload Style Sheet</source>
         <translation>Перезагрузить таблицу стилей</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="551"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
         <source>Device Options</source>
         <translation>Параметры устройства</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>Сдвиг и п&amp;оворот</translation>
     </message>
@@ -2816,268 +2816,303 @@ or [%2]</source>
         <translation>Настройки информирующего указателя</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <source>Entity Layer</source>
+        <translation>Оперции со слоем объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <source>Entity&apos;s Layer</source>
+        <translation>Слой Объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="103"/>
+        <source>Activate Entity&apos;s Layer</source>
+        <translation>Активировать Слой объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="104"/>
+        <source>Hide Entity&apos;s Layer</source>
+        <translation>Скрыть Слой объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="105"/>
+        <source>Lock Entity&apos;s Layer</source>
+        <translation>Заблокировать Слой объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="106"/>
+        <source>Toggle Entity&apos;s Layer Construction</source>
+        <translation>Переключить вспомогательный режим Слоя объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="107"/>
+        <source>Toggle Entity&apos;s Layer Printing</source>
+        <translation>Переключить режим печати Слоя объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation>Многоу&amp;гольник (Касат, Касат)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
         <source>Middle Line</source>
         <translation>Средняя линия</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
         <source>Middle Points</source>
         <translation>Средняя точка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Lattice of Points</source>
         <translation>Решетка точек</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
         <source>Select Points</source>
         <translation>Выбор точек</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>Paste to Points</source>
         <translation>Вставить по точкам</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290"/>
         <source>&amp;Append spline point</source>
         <translation>Присоединить контрольную точку</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
         <source>&amp;Insert spline points</source>
         <translation>Добавить контрольную точку</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
         <source>&amp;Explode spline to lines</source>
         <translation>Прямые из сплайна</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
         <source>&amp;Spline from polyline</source>
         <translation>Сплайн из ломаной</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>&amp;Remove between two points</source>
         <translation>Удалить между 2 точками сплайна</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"/>
         <source>Tr&amp;im Two</source>
         <translation>&amp;Подогнать по двум</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="375"/>
         <source>O&amp;ffset</source>
         <translation>&amp;Смещение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>Caught Entity</source>
         <translation>Захваченный Объект</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
         <source>To WCS</source>
         <translation>К Мировой Системе Координат</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="437"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="450"/>
         <source>Create UCS</source>
         <translation>Создать Пользовательскую Систему Координат</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="443"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Save Workspace</source>
         <translation>Сохранить Рабочее Пространство</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="444"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Remove Workspace</source>
         <translation>Удалить Рабочее Пространстов</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Restore Workspace</source>
         <translation>Восстановить Рабочее Пространство</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="469"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="482"/>
         <source>Move to Bottom</source>
         <translation>На Задний план</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="470"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="483"/>
         <source>Lower After Entity</source>
         <translation>За объектом</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="471"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="484"/>
         <source>Raise Over Entity</source>
         <translation>Перед объектом</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="472"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="485"/>
         <source>Move to Top</source>
         <translation>На передний план</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="598"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
         <source>Menu Creator</source>
         <translation>Создание меню</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="599"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
         <source>Toolbar Creator</source>
         <translation>Создание панели</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
         <source>&amp;Save View</source>
         <translation>Сохранить Вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>Restore Current View</source>
         <translation>Восстановить выбранный Вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>Restore View 1</source>
         <translation>Восстановить Вид 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
         <source>Restore View 2</source>
         <translation>Восстановить Вид 2</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="638"/>
         <source>Restore View 3</source>
         <translation>Восстановить Вид 3</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>Restore View 4</source>
         <translation>Восстановить Вид 4</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
         <source>Restore View 5</source>
         <translation>Восстановить Вид 5</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="651"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Cut Quic&amp;k</source>
         <translation>Вырезать быстро</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="653"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="666"/>
         <source>Copy &amp;Quick</source>
         <translation>Копировать быстро</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="668"/>
         <source>Paste &amp;Transform</source>
         <translation>Вставить с Трансформацией</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
         <source>&amp;Delete Selected</source>
         <translation>&amp;Удалить выбранное</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="657"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp;Указатель</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="177"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>&amp;Многоугольник (Центр,Касат)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="334"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="347"/>
         <source>&amp;Arc</source>
         <translation>&amp;Дуга</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="511"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="524"/>
         <source>&amp;Show all layers</source>
         <translation>&amp;Показать все слои</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
         <source>&amp;Hide all layers</source>
         <translation>&amp;Скрыть все слои</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="513"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="526"/>
         <source>&amp;Unlock all</source>
         <translation>&amp;Разблокировать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="527"/>
         <source>&amp;Lock all</source>
         <translation>&amp;Заблокировать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="522"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>&amp;Экспорт Выбранных Слоев(s)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="523"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>Экспортировать &amp;Видимые Слои(s)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="529"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Show all blocks</source>
         <translation>&amp;Показать все блоки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="543"/>
         <source>&amp;Hide all blocks</source>
         <translation>&amp;Скрыть все блоки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Keyboard Shortcuts</source>
         <translation>Настройки клавиатуры</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="595"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>Экспортировать в CA&amp;M/обычный SVG...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="569"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>Close All</source>
         <translation>Закрыть все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>Re-dock Widgets</source>
         <translation>Повторно закрепить виджеты</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Save A&amp;ll...</source>
         <translation>Сохранить &amp;Все...</translation>
     </message>
@@ -3085,7 +3120,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
-        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="105"/>
+        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation>Экспортировать как</translation>
     </message>
@@ -3336,7 +3371,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="56"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="53"/>
         <source>Angle: %1 (%2)
  Start Edge Point: (%3 , %4)
  Intersection Point :(%5, %6)
@@ -3344,76 +3379,76 @@ or [%2]</source>
         <translation>Угол: %1 (%2)\n Начальная точка: (%3 , %4)\n Точка пересечения :(%5, %6)\n Конечная точка: (%7 , %8)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="136"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="133"/>
         <source>Select first edge point of angle</source>
         <translation>Укажите первую точку первой прямой угла</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="140"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="137"/>
         <source>Select second (intersection) point of angle</source>
         <translation>Укажите точку вершины угла (пересечение прямых)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="144"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
         <source>Select second edge point of angle</source>
         <translation>Укажите вторую точку второй прямой угла</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="198"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="179"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="195"/>
         <source>Info</source>
         <translation>Информация о Угле</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="180"/>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="184"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="199"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="196"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="185"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="198"/>
         <source>From:</source>
         <translation>Из точки:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="186"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
         <source>To:</source>
         <translation>В точку:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="197"/>
         <source>Angle (Alt):</source>
         <translation>Угол (дополняющий): </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="199"/>
         <source>Intersection:</source>
         <translation>Точка пересечения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
         <source>Distance1:</source>
         <translation>Расстояние 1: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="205"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
         <source>Distance2:</source>
         <translation>Расстояние 2: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="206"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
         <source>Angle 1:</source>
         <translation>Угол 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="207"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
         <source>Angle 2:</source>
         <translation>Угол 2:</translation>
     </message>
@@ -3453,7 +3488,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfoPickCoordinates</name>
     <message>
-        <location filename="../src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp" line="117"/>
+        <location filename="../src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp" line="121"/>
         <source>Select point</source>
         <translation>Укажите точку</translation>
     </message>
@@ -3461,12 +3496,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionInfoProperties</name>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="158"/>
         <source>Select entity</source>
         <translation>Выберите объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="158"/>
         <source>Select child entities</source>
         <translation>Выбирать дочерние объекты</translation>
     </message>
@@ -3492,13 +3527,13 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="79"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
         <translation>выбранные</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="79"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation>видимые</translation>
@@ -3511,77 +3546,77 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlign</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="38"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation>Команда поддерживает только Мировую Систему Координат, и не может быть выполнена если активна Пользовательская Система Координат</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="137"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="136"/>
         <source>Align to </source>
         <translation>Выравнивание по </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="140"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="139"/>
         <source>Entity</source>
         <translation>Объекту</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="144"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="143"/>
         <source>Position</source>
         <translation>Позиции</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="147"/>
         <source>Drawing</source>
         <translation>Чертежу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="152"/>
         <source>Reference: </source>
         <translation>Назначение: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="167"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="231"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="230"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation>Координата задается только при выравнивании к координате</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="246"/>
         <source>Select base alignment entity</source>
         <translation>Выберите базовый объект выравнивания</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="246"/>
         <source>Select child entities of containers</source>
         <translation>Выбирать дочерние объекты контейнера (если они есть)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="249"/>
         <source>Specify base alignment point</source>
         <translation>Укажите базовую точку выравнивания</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="252"/>
         <source>Click or Enter to finish align</source>
         <translation>Кликните мышью или Enter для подтвержения выравнивания</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select entities to align (Enter to complete)</source>
         <translation>Выберите объекты для выравнивания (Enter -завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select and align</source>
         <translation>Выбрать и сразу выровнять</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="261"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="260"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -3589,57 +3624,57 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignRef</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="82"/>
         <source>Align References</source>
         <translation>Выравнивание по точкам</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="83"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="84"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="85"/>
         <source>Scale:</source>
         <translation>Масштаб:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Select to align (Enter to complete)</source>
         <translation>Выберите объекты для выравнивания (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Align immediately after selection</source>
         <translation>Выровнять сразу после выделения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="205"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="214"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="211"/>
         <source>Select first reference point</source>
         <translation>Укажите первую исходную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="218"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="215"/>
         <source>Select first target point</source>
         <translation>Укажите первую точку назначения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="222"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="219"/>
         <source>Select second reference point</source>
         <translation>Укажите вторую исходную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="226"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="223"/>
         <source>Select second target point</source>
         <translation>Укажите вторую точку назначения</translation>
     </message>
@@ -3647,62 +3682,62 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignSingle</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="39"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation>Команда поддерживает только Мировую Систему Координат, и не может быть выполнена если активна Пользовательская Система Координат</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="157"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="155"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="169"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="167"/>
         <source>Align to </source>
         <translation>Выровнивание по </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="172"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="170"/>
         <source>Entity</source>
         <translation>Объекту</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="174"/>
         <source>Position</source>
         <translation>Позиции</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="178"/>
         <source>Drawing</source>
         <translation>Чертежу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="185"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="183"/>
         <source>Reference: </source>
         <translation>Назначение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="238"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="236"/>
         <source>Select base alignment entity</source>
         <translation>Выберите базовый объект выравнивания</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="241"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="239"/>
         <source>Specify base alignment point</source>
         <translation>Укажите базовую точку выравнивания</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="251"/>
         <source>Select entity to align</source>
         <translation>Выберите объект для выравнивания</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="251"/>
         <source>Finish alignment after selection</source>
         <translation>Выровнять и закончить после выбора объекта</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="334"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="332"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation>Координата задается только при выравнивании к координате</translation>
     </message>
@@ -3710,58 +3745,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyBreakDivide</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="140"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="138"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
         <translation>Выбран неподходящий объект - нет сегментов между пересечениями с другими объектами</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="235"/>
         <source>Break/Divide Line</source>
         <translation>Разделение Прямой</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="238"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="356"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="453"/>
         <source>Point 1:</source>
         <translation>Точка 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="239"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="360"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="457"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
         <source>Point 2:</source>
         <translation>Точка 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="356"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="354"/>
         <source>Break/Divide Circle</source>
         <translation>Разделение Окружности</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="357"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="454"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="355"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="452"/>
         <source>Angle 1:</source>
         <translation>Угол 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="359"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="456"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="357"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="454"/>
         <source>Angle 2:</source>
         <translation>Угол 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="453"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="451"/>
         <source>Break/Divide Arc</source>
         <translation>Разделение Дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1001"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="999"/>
         <source>Select line, arc or circle</source>
         <translation>Выделите линию, дугу или окружность</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1001"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="999"/>
         <source>Proceed even if no intersections</source>
         <translation>Также удалять объекты без пересечений</translation>
     </message>
@@ -3775,23 +3810,23 @@ or [%2]</source>
 </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="199"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="197"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="233"/>
         <source>Duplicate Offset</source>
         <translation>Смещение дубликата</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="258"/>
         <source>Select entity to duplicate</source>
         <translation>Выберите объект для дублирования</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="258"/>
         <source>Interactive Offset</source>
         <translation>Интерактивное смещение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="263"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="261"/>
         <source>Select direction of offset</source>
         <translation>Выберите направление смещения</translation>
     </message>
@@ -3799,35 +3834,35 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineGap</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="62"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="63"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="88"/>
         <source>Line Gap</source>
         <translation>Разрыв</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="63"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="64"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="89"/>
         <source>Start:</source>
         <translation>Начало:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="64"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="89"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="65"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="90"/>
         <source>End:</source>
         <translation>Конец:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="429"/>
         <source>Select line</source>
         <translation>Выберите прямую</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="429"/>
         <source>Use Alternative Line Endpoint</source>
         <translation>Использовать другой конец прямой</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="432"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="433"/>
         <source>Select endpoint of gap</source>
         <translation>Выберите конечную точку разрыва</translation>
     </message>
@@ -3835,48 +3870,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineJoin</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="105"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="104"/>
         <source>Lines Join</source>
         <translation>Соединение линий</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="107"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="106"/>
         <source>Lines are parallel</source>
         <translation>Линии параллельны</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="110"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="109"/>
         <source>Intersection:</source>
         <translation>Точка пересечения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="163"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="212"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="162"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="211"/>
         <source>No line selected</source>
         <translation>Нет выбранной прямой</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="182"/>
         <source>Lines are parallel, can&apos;t merge</source>
         <translation>Прямые параллельны, объединить нельзя</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="188"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="187"/>
         <source>Lines already intersects, can&apos;t merge</source>
         <translation>Прямый уже пересекаются, нечего объединять</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="796"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="795"/>
         <source>Select first line</source>
         <translation>Выделите первую прямую</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="799"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="798"/>
         <source>Select second line</source>
         <translation>Выделите вторую прямую</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="802"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="801"/>
         <source>Select part of first line that should remain after trim</source>
         <translation>Выберите часть первой прямой которая должна остаться после отсечения</translation>
     </message>
@@ -3892,12 +3927,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionPasteToPoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="38"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="36"/>
         <source>Clipboard is empty</source>
         <translation>Буффер обмена пуст</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="102"/>
         <source>Select and paste</source>
         <translation>Выбрать и сразу вставить</translation>
     </message>
@@ -3905,17 +3940,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="143"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
         <source>Specify entity to pick the pen</source>
         <translation>Укажите объект для получения пера</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="149"/>
         <source>Specify entity to apply pen</source>
         <translation>Укажите объект для применения пера</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="146"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="149"/>
         <source>Apply Resolved Pen</source>
         <translation>Применить результирующее Перо</translation>
     </message>
@@ -3939,22 +3974,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineChangeSegmentType</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="50"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="51"/>
         <source>Invalid arc point to create arc, select another one</source>
         <translation>Некорректная точка дуги окружности, выберите другую</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="221"/>
         <source>Select polyline to modify</source>
         <translation>Выбрите ломаную для изменения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="224"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="225"/>
         <source>Select segment of polyline to modify</source>
         <translation>Выберите сегмент ломаной</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="229"/>
         <source>Specify position on arc to create</source>
         <translation>Укажите позицию точки дуги</translation>
     </message>
@@ -3962,42 +3997,42 @@ or [%2]</source>
 <context>
     <name>LC_ActionPreSelectionAwareBase</name>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="174"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>Selecting</source>
         <translation>Выделение</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="174"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>De-Selecting</source>
         <translation>Снятие выделения</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="175"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="181"/>
         <source> entities </source>
         <translation> объектов </translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="176"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="182"/>
         <source>that intersect with box</source>
         <translation>которых пересекает рамка</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="176"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="182"/>
         <source>that are within box</source>
         <translation>которые внутри рамки</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Choose second edge</source>
         <translation>Выберите вторую грань</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Select/Deselect entities</source>
         <translation>Добавить\Убрать выделенные объекты</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="200"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="206"/>
         <source>Select Intersecting</source>
         <translation>Выбрать пересекаемые</translation>
     </message>
@@ -4006,7 +4041,7 @@ or [%2]</source>
         <translation type="vanished">Снять выделение</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="237"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="243"/>
         <source>No valid entities selected, select them first</source>
         <translation>Подходящие объекты не выбраны, выберите их для продолжения</translation>
     </message>
@@ -4014,12 +4049,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionRemoveSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
         <translation>Выберите объект Сплайн или Сплайн по Точкам</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="201"/>
         <source>Select control point of entity</source>
         <translation>Укажите контрольную точку</translation>
     </message>
@@ -4027,17 +4062,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="229"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="227"/>
         <source>Specify percentage / start-point</source>
         <translation>Укажите процент / начальная точка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="232"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="230"/>
         <source>Specify start point</source>
         <translation>Укажите начальную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="235"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="233"/>
         <source>Specify end point</source>
         <translation>Укажите конечную точку</translation>
     </message>
@@ -4045,22 +4080,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineAddPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
         <translation>Выберите объект Сплайн или Сплайн по Точкам</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="201"/>
         <source>Select control point to insert before</source>
         <translation>Выберите контрольную точку перед которой нужно вставить</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"/>
         <source>Specify control point</source>
         <translation>Укажите контрольну.точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"/>
         <source>Insert AFTER selected point</source>
         <translation>Вставить ПОСЛЕ выбранной точки</translation>
     </message>
@@ -4086,7 +4121,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineExplode</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="194"/>
         <source>Select spline or spline points entity</source>
         <translation>Выберите объект Сплайн или Сплайн по Точкам</translation>
     </message>
@@ -4102,27 +4137,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineRemoveBetween</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="43"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
         <translation>Остается недостаточно точек для построения сплайна</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="221"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="220"/>
         <source>Select spline or spline points entity</source>
         <translation>Выберите объект Сплайн или Сплайн по Точкам</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="224"/>
         <source>Select first point for deletion</source>
         <translation>Выберите начальную точку диапазона удаления в сплайне</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Select second point for deletion</source>
         <translation>Выберите конечную точку диапазона удаления в сплайне</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Delete from endpoints TO selected points</source>
         <translation>Удалять от конечных точек ДО выбранных</translation>
     </message>
@@ -4374,12 +4409,12 @@ Are you sure you are going to discard changes?</source>
         <translation>0.000</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="75"/>
+        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
         <source>Positive angles direction is counterclockwise.</source>
         <translation>Позитивное направление углов направлено против часовой стрелки.</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="79"/>
+        <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="80"/>
         <source>Positive angles direction is clockwise.</source>
         <translation>Позитивное направление углов направлено по часовой стрелки.</translation>
     </message>
@@ -4397,24 +4432,24 @@ Are you sure you are going to discard changes?</source>
         <translation>Устройство</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="118"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="116"/>
         <source>Closing Drawing</source>
         <translation>Закрытие чертежа</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="124"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="122"/>
         <source>Draft Mode</source>
         <translation>режим черновика</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="130"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="128"/>
         <source>Save changes to the following item?
 %1</source>
         <translation>Сохранить изменения в следующем элементе?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="164"/>
+        <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="162"/>
         <source>Export as</source>
         <translation>Экспортировать как</translation>
     </message>
@@ -5497,7 +5532,7 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_DocumentsStorage</name>
     <message>
-        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="142"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="143"/>
         <source>Unnamed</source>
         <translation>Безымянный</translation>
     </message>
@@ -5745,17 +5780,17 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="53"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="55"/>
         <source>Exporting drawing...</source>
         <translation>Экспорт чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="60"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
         <translation>Экспортирован: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="63"/>
+        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
         <source>Export failed!</source>
         <translation>Ошибка экспорта!</translation>
     </message>
@@ -6267,265 +6302,265 @@ Please specify a different value.</source>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="146"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="147"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="148"/>
         <source>Looking for matching layer names</source>
         <translation>Поиск совпадений названий слоёв</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="153"/>
         <source>Highlight Mode</source>
         <translation>Подсвечивать</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="162"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="163"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="181"/>
         <source>Show all layers</source>
         <translation>Показать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="187"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="188"/>
         <source>Hide all layers</source>
         <translation>Скрыть все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="194"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="195"/>
         <source>Show Secondary Layers</source>
         <translation>Показать дочерние слои</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="204"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="205"/>
         <source>Show Active Layer Only</source>
         <translation>Показать только Активный Слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="212"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="213"/>
         <source>Expand All</source>
         <translation>Распахнуть все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="220"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="221"/>
         <source>Collapse All</source>
         <translation>Свернуть все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="228"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="229"/>
         <source>Collapse Secondary</source>
         <translation>Свернуть вторичные слои</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="236"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="237"/>
         <source>Unlock all layers</source>
         <translation>Разблокировать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="243"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="244"/>
         <source>Lock all layers</source>
         <translation>&amp;Заблокировать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="250"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="251"/>
         <source>Add a layer</source>
         <translation>&amp;Добавить слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="257"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="258"/>
         <source>Add dimensions Layer</source>
         <translation>Добавить Слой Размеров</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="266"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="267"/>
         <source>Remove layer</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="273"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="274"/>
         <source>Modify layer attributes / rename</source>
         <translation>Изменение слоя атрибуты / переименование</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="280"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="281"/>
         <source>Flat List Mode)</source>
         <translation>Режим плоского списка</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="625"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="626"/>
         <source>Layer Menu</source>
         <translation>Меню слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="645"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="646"/>
         <source>&amp;Add Child Layer</source>
         <translation>Добавить дочерний слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="646"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="647"/>
         <source>&amp;Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="647"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="648"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
         <translation>Удалить поддерево слоев</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="649"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="650"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
         <translation>Дублировать структуру слоев (под-дерево)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="650"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
         <translation>Дублировать с содержимым (под-дерево)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="652"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="653"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
         <translation>Выбрать объекты (под-дерево)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
         <translation>Редактировать свойства слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="659"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;Удалить</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="669"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
         <translation>Добавить слой размеров</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="672"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="673"/>
         <source>&amp;Add Info Sub-Layer</source>
         <translation>Добавить дочерний Слой Заметок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="676"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
         <translation>Добавить слой альтернативного положения</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="682"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Remove Sub-layers</source>
         <translation>Удалить слои ниже</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="690"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="700"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="691"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <source>Convert to Dimensional Layer</source>
         <translation>Преобразовать в Слой Размеров</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="691"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="692"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="704"/>
         <source>Convert to Info Layer</source>
         <translation>Преобразовать в слой Заметок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="692"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="706"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="707"/>
         <source>Convert to Alternative Position Layer</source>
         <translation>Преобразовать в Слой Альтернативного Положения</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="698"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="699"/>
         <source>Convert to Normal Layer</source>
         <translation>Преобразовать в Основной</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="712"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="713"/>
         <source>&amp;Select Layer&apos;s Entities</source>
         <translation>Выбрать объекты слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="715"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="716"/>
         <source>&amp;Create Layer Copy</source>
         <translation>Создать Копию слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="716"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>&amp;Duplicate Layer With Content</source>
         <translation>Дублировать слой с содержимым</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="720"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"/>
         <source>Move Selection to Layer</source>
         <translation>Перенести выбранные объекты в Слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="722"/>
         <source>Duplicate Selection to Layer</source>
         <translation>Дублировать выделенные объекты в слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="728"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="729"/>
         <source>&amp;Add Layer</source>
         <translation>&amp;Добавить слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="730"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>&amp;Freeze Others Layers</source>
         <translation>Скрыть остальные слои</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>&amp;Defreeze All Layers</source>
         <translation>&amp;Разморозить все слои</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="733"/>
         <source>&amp;Freeze All Layers</source>
         <translation>&amp;Заморозить все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="733"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"/>
         <source>&amp;Unlock All Layers</source>
         <translation>&amp;Разблокировать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="735"/>
         <source>&amp;Lock All Layers</source>
         <translation>&amp;Заблокировать все</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="735"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"/>
         <source>Enable &amp;Printing All Layers</source>
         <translation>Разрешить печать Всех слоев</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="737"/>
         <source>&amp;Disable Printing All Layers</source>
         <translation>Запретить печать Всех слоев</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="740"/>
         <source>&amp;Export Single Layer</source>
         <translation>Экспортировать Слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Export Layer Sub-Tree</source>
         <translation>Экспортировать Под-дерево Слоев</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="748"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>Экспортировать &amp;Видимые Слои(s)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="749"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>Найти и удалить слои без объектов</translation>
     </message>
@@ -11160,73 +11195,73 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_SettingsExporter</name>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
         <source>Import settings</source>
         <translation>Импорт настроек</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
         <source>Export Settings</source>
         <translation>Экспорт настроек</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="72"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="95"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="103"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="70"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="93"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Settings Export</source>
         <translation>Экспорт Настроек</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="103"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Application preferences were exported.</source>
         <translation>Настройки приложения были экспортированы.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="72"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="95"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="70"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="93"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
         <translation>Невозможно открыть файл для записи. Настройки не были экспортированы.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="43"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="41"/>
         <source>LibreCAD settings file (*.%1)</source>
         <translation>Файл настроек LibreCAD (*.%1)</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="119"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="117"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Import Error</source>
         <translation>Ошибка Импорта Настроек</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="119"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="117"/>
         <source>Unexpected error during preferences parsing. Message:</source>
         <translation>Ошибка парсинга файла. Сообщение:</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="128"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="143"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="126"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
         <source>Settings Import</source>
         <translation>Импорт Настроек</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="143"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
         <source>Application preferences were imported.</source>
         <translation>Настройки приложения были импортированы.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="128"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="126"/>
         <source>No settings groups to import.</source>
         <translation>Пустой файл настроек, нечего импортировать.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
         <translation>Неверный формат файла, он не содержит настройки LibreCAD.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
         <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
         <translation>Невозможно открыть файл настроек для чтения. Импорт не выполнен.</translation>
     </message>
@@ -11656,7 +11691,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="101"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="284"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="304"/>
         <source>Order</source>
         <translation>Порядок</translation>
     </message>
@@ -11681,146 +11716,151 @@ p, li { white-space: pre-wrap; }
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="167"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="154"/>
+        <source>Entity&apos;s Layer</source>
+        <translation>Слой объекта</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="186"/>
         <source>Tool Options</source>
         <translation>Опции Команды</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="213"/>
         <source>Info Cursor</source>
         <translation>Информирующий Указатель</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="238"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="258"/>
         <source>Line</source>
         <translation>Прямая</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="239"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="259"/>
         <source>Point</source>
         <translation>Точка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="240"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="260"/>
         <source>Polygon</source>
         <translation>Многоугольник</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="241"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="261"/>
         <source>Circle</source>
         <translation>Окружность</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="242"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="262"/>
         <source>Arc</source>
         <translation>Дуга</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="243"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="263"/>
         <source>Spline</source>
         <translation>Сплайн</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="244"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="264"/>
         <source>Ellipse</source>
         <translation>Эллипс</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="265"/>
         <source>Polyline</source>
         <translation>Ломаная</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="246"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="266"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="299"/>
         <source>Select</source>
         <translation>Выбор объектов</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="267"/>
         <source>Dimension</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="248"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="301"/>
         <source>Other</source>
         <translation>Прочее</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="249"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="269"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="302"/>
         <source>Modify</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="270"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="288"/>
         <source>Categories</source>
         <translation>Категории</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="271"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="291"/>
         <source>Lines</source>
         <translation>Прямые</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="272"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="292"/>
         <source>Points</source>
         <translation>Точки</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="273"/>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="296"/>
         <source>Polygons</source>
         <translation>Многоугольники</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="274"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="294"/>
         <source>Arcs</source>
         <translation>Дуги</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="275"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="295"/>
         <source>Splines</source>
         <translation>Сплайны</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="297"/>
         <source>Ellipses</source>
         <translation>Эллипсы</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="298"/>
         <source>PolyLines</source>
         <translation>Ломаные</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="300"/>
         <source>Dimensions</source>
         <translation>Размеры</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="283"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="303"/>
         <source>Measure</source>
         <translation>Измерения</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="291"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="311"/>
         <source>Named Views</source>
         <translation>Именованные Виды</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="306"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="326"/>
         <source>UCS</source>
         <translation>Системa Координат</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="347"/>
         <source>Workspaces</source>
         <translation>Рабочие Пространства</translation>
     </message>
@@ -12937,18 +12977,18 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>LC_WorkspacesManager</name>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="417"/>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="425"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="420"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="428"/>
         <source>Saving Workspaces</source>
         <translation>Сохранение Рабочего Пространства</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="418"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="421"/>
         <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
         <translation>Невозможно открыть файл рабочих пространств для записи. Рабочее пространство не сохранено. Файл: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="426"/>
+        <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="429"/>
         <source>Workspaces file does not exists.</source>
         <translation>Файл рабочих пространств не существуюет.</translation>
     </message>
@@ -13012,12 +13052,12 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
         <source>Select object:</source>
         <translation>Выбрать объект:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="45"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="44"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -13025,7 +13065,7 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="109"/>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="108"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -13033,13 +13073,13 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="37"/>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="43"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="45"/>
         <source>Select objects:</source>
         <translation>Выбрать объекты:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="52"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="54"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -13103,37 +13143,37 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">Мозаика по &amp;горизонтали</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="777"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="780"/>
         <source>Creating new file...</source>
         <translation>Создание нового файла...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="725"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="728"/>
         <source>unnamed document %1</source>
         <translation>безымянный документ %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1641"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
         <source>Opening recent file...</source>
         <translation>Открытие последнего файла...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1014"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1017"/>
         <source>Loaded document: </source>
         <translation>Документ загружен: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="958"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="961"/>
         <source>Opening aborted</source>
         <translation>Открытие прервано</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1246"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1249"/>
         <source>Printing...</source>
         <translation>Печать...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1344"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1347"/>
         <source>Exiting application...</source>
         <translation>Выход из программы...</translation>
     </message>
@@ -13166,22 +13206,22 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">Блочный список</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="191"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="195"/>
         <source>Print preview for %1</source>
         <translation>Предварительный просмотр %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="801"/>
         <source>New Drawing created.</source>
         <translation>Был создан новый чертёж.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="221"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="225"/>
         <source>Saving drawing...</source>
         <translation>Сохранение чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="236"/>
         <source>Saved drawing: %1</source>
         <translation>Чертёж сохранен: %1</translation>
     </message>
@@ -13206,7 +13246,7 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">Ошибка экспорта!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1250"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1253"/>
         <source>Printing complete</source>
         <translation>Печать завершена</translation>
     </message>
@@ -13231,12 +13271,12 @@ Warning: this action can NOT be undone!</source>
         <translation type="vanished">Выберите рабочее пространство для удаления:</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="725"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Блок &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="837"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="840"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -13249,17 +13289,17 @@ Please check the permissions.</source>
         <translation type="vanished">&amp;Ломаная</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1088"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1091"/>
         <source>Auto-saving drawing...</source>
         <translation>Автосохранение чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1094"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1097"/>
         <source>Auto-saved drawing</source>
         <translation>Чертёж автоматически сохранен</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1099"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -13286,17 +13326,17 @@ Auto-save disabled.</source>
         <translation type="vanished">Версия: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="965"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="968"/>
         <source>Warning: File already opened : </source>
         <translation>Предупреждение: файл уже открыт: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="248"/>
         <source>Cannot save the file </source>
         <translation>Невозможно сохранить файл </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="248"/>
         <source> , please check the filename and permissions.</source>
         <translation> , проверьте правильность имени файла и права доступа.</translation>
     </message>
@@ -13309,17 +13349,17 @@ Auto-save disabled.</source>
         <translation type="vanished">&amp;Режим вкладок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="794"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="797"/>
         <source>New document from template: </source>
         <translation>Новый документ из шаблона: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="822"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="825"/>
         <source>Select Template aborted</source>
         <translation>Выбор шаблона прерван</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Auto-saving failed</source>
         <translation>Ошибка при автосохранении</translation>
     </message>
@@ -13344,7 +13384,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Версия Qt: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="202"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="206"/>
         <source>Draft Mode</source>
         <translation>режим черновика</translation>
     </message>
@@ -13357,7 +13397,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="978"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="981"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -13366,7 +13406,7 @@ Please check its existence and permissions.</source>
 Проверьте его наличие и права доступа.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="957"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Файл &apos;%1&apos; не существует. Операция прервана</translation>
     </message>
@@ -13511,12 +13551,12 @@ Please check its existence and permissions.</source>
         <translation type="vanished">&amp;Чертежи</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="221"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="225"/>
         <source>Saving drawing: %1</source>
         <translation>Сохранение чертежа: % 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="227"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="231"/>
         <source>Save cancelled</source>
         <translation>Сохранение отменено</translation>
     </message>
@@ -13531,22 +13571,22 @@ Please check its existence and permissions.</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="350"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="354"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="351"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="355"/>
         <source>Save &amp;as...</source>
         <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="354"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="358"/>
         <source>&amp;Save %1</source>
         <translation>&amp;Сохранить %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="355"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="359"/>
         <source>Save %1 &amp;as...</source>
         <translation>Сохраните %1 &amp;как...</translation>
     </message>
@@ -13591,14 +13631,14 @@ Please check its existence and permissions.</source>
         <translation type="vanished">&amp;Увеличенный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1065"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
         <source>Save All cancelled</source>
         <translation>Сохранить Все отменено</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1183"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1189"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1203"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1186"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1192"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1206"/>
         <source>Close All cancelled</source>
         <translation>Закрыть Все отменено</translation>
     </message>
@@ -13663,17 +13703,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="177"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="167"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation>Пробел: режим привязки восстановлен к нормальному</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="178"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="168"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>Пробел: временно установлен режим без привязки</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="188"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="178"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>отмена</translation>
@@ -13818,12 +13858,12 @@ in a separate window</source>
         <translation type="vanished">Удалить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="182"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="185"/>
         <source>Looking for matching block names</source>
         <translation>Поиск совпадений названий блоков</translation>
     </message>
@@ -21019,7 +21059,7 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="vanished">&amp;Удалить</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Поиск совпадений названий слоёв</translation>
     </message>
@@ -21052,7 +21092,7 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="vanished">Удалить</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="246"/>
+        <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
@@ -21080,22 +21120,22 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="208"/>
         <source>Directories</source>
         <translation>Каталоги</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="90"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="92"/>
         <source>Insert</source>
         <translation>Вставка</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="94"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
         <source>Refresh</source>
         <translation>Перечитать</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="98"/>
         <source>Rebuild</source>
         <translation>Пересобрать</translation>
     </message>
@@ -21699,38 +21739,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="136"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="980"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1098"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="119"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="842"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="983"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1101"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="231"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="243"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="305"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1717"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="214"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="226"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="288"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1718"/>
         <source>Remove Layer</source>
         <translation>Удалить слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="244"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="227"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>Слой &quot;%1&quot; никогда нельзя удалить.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="386"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="369"/>
         <source>Layer Dialog</source>
         <translation>Диалоговое окно слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="500"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="483"/>
         <source>Remove Block</source>
         <translation>Удалить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="501"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="484"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation>Блок &quot;%1&quot; и все его объекты будут удалены.</translation>
     </message>
@@ -21747,21 +21787,21 @@ p, li { white-space: pre-wrap; }
         <translation>Слой &quot;%1&quot; уже существует. Укажите другое имя.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="232"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="215"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>Слой &quot;%1&quot; и всё его содержимое будет удалено.
 Это действие будет НЕВОЗМОЖНО отменить.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="306"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1717"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="289"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1718"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>Слой &quot;0&quot; никогда не может быть удален.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="316"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1765"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="299"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1766"/>
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>Удалить слой %n</numerusform>
@@ -21770,30 +21810,30 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="320"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1766"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="303"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1767"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>Перечисленные слои и все объекты на них будут удалены.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="322"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1767"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="305"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1768"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>Предупреждение: это действие не может быть отменено!</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="327"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="310"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation>Предупреждение: слой &quot;0&quot; никогда не может быть удален.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="331"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1768"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="314"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1769"/>
         <source>Layers for removal:</source>
         <translation>Слои для удаления:</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="559"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="542"/>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>Удалить блок %n</numerusform>
@@ -21802,12 +21842,12 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="561"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="544"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation>Перечисленные блоки и все их объекты будут удалены.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="564"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="547"/>
         <source>Blocks for removal:</source>
         <translation>Блоки для удаления:</translation>
     </message>
@@ -21846,32 +21886,32 @@ Please specify a different value.</source>
 Пожалуйста используйте другое значение.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="951"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="961"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="952"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <source>Remove empty layers</source>
         <translation>Удаление пустых слоев</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="952"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="953"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
         <translation>Слои без сущностей найдены, но они отфильтрованы и не видны.\n\nОчистите маску фильтрации и повторите.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Не найдено пустых слоев без объектов, нечего удалять.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1105"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1150"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1158"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1106"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1159"/>
         <source>Add Layer</source>
         <translation>Добавление Слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1106"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1107"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
@@ -21880,7 +21920,7 @@ Please specify a different name.</source>
 Укажите другое имя.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1152"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
@@ -21889,23 +21929,23 @@ Please specify a different name.</source>
 </translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1159"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1160"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
         <translation>Слой размеров может быть добавлен только к обычному слою.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1222"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1223"/>
         <source>Move Selection</source>
         <translation>Перемещение выбранных объектов в слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1229"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1230"/>
         <source>Duplicate Selection</source>
         <translation>Дублирование выбранных объектов в слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1246"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1247"/>
         <source>Replace &quot;By Layer&quot; value to source layers values?
 
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
@@ -21920,8 +21960,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Поэтому внешний вид объектов может измениться. </translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1783"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1834"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1784"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1835"/>
         <source>Layer DialogEx</source>
         <translation>Диалог слоя</translation>
     </message>
@@ -22045,62 +22085,62 @@ Do you want to replace it?</source>
         <translation>Открыть чертеж</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="626"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="609"/>
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="968"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="951"/>
         <source>Windows Bitmap</source>
         <translation>Растровое изображение Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="970"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="953"/>
         <source>Joint Photographic Experts Group</source>
         <translation>Объединенная группа экспертов по фотографии</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="974"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="957"/>
         <source>Multiple-image Network Graphics</source>
         <translation>Сетевая графика с несколькими изображениями</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="976"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="959"/>
         <source>Portable Bit Map</source>
         <translation>Портативная битовая карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="978"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="961"/>
         <source>Portable Grey Map</source>
         <translation>Портативная серая карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="980"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="963"/>
         <source>Portable Network Graphic</source>
         <translation>Портативный сетевой график</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="982"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="965"/>
         <source>Portable Pixel Map</source>
         <translation>Портативная пиксельная карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="984"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="967"/>
         <source>X Bitmap Format</source>
         <translation>X Растровый формат</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="986"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="969"/>
         <source>X Pixel Map</source>
         <translation>X пиксельная карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="619"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
         <source>All Image Files (%1)</source>
         <translation>Все файлы изображений (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="972"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="955"/>
         <source>Graphics Interchange Format</source>
         <translation>Формат обмена графикой</translation>
     </message>
@@ -22120,7 +22160,7 @@ Do you want to replace it?</source>
         <translation>Шрифт %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="621"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="604"/>
         <source>All Files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -22245,54 +22285,54 @@ Do you want to replace it?</source>
         <translation>Парсек</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="477"/>
+        <location filename="../src/main/main.cpp" line="487"/>
         <source>Loading..</source>
         <translation>Загрузка..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="363"/>
+        <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="62"/>
         <source>Loading File %1..</source>
         <translation>Загрузка файла %1..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="325"/>
+        <location filename="../src/main/main.cpp" line="384"/>
         <source>Loading...</source>
         <translation>Загрузка...</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="446"/>
+        <location filename="../src/main/main.cpp" line="456"/>
         <source>Release Candidate</source>
         <translation>Release Candidate</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="447"/>
+        <location filename="../src/main/main.cpp" line="457"/>
         <source>BETA</source>
         <translation>BETA</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="448"/>
+        <location filename="../src/main/main.cpp" line="458"/>
         <source>ALPHA</source>
         <translation>ALPHA</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1366"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1362"/>
         <source>enter an integer number</source>
         <translation>введите целое число</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1370"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1388"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1405"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1366"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1384"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1401"/>
         <source>LibreCAD query</source>
         <translation>Запрос LibreCAD</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1384"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1380"/>
         <source>enter a number</source>
         <translation>введите число</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1401"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1397"/>
         <source>enter text</source>
         <translation>введите текст</translation>
     </message>
@@ -22307,62 +22347,62 @@ Do you want to replace it?</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="988"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="971"/>
         <source>Scalable Vector Graphics</source>
         <translation>Векторный формат SVG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="990"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="973"/>
         <source>SGI Black &amp; White</source>
         <translation>Чёрно-белый SGI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="992"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="975"/>
         <source>Encapsulated PostScript</source>
         <translation>Встраиваемый Postscript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="994"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="977"/>
         <source>Encapsulated PostScript Format</source>
         <translation>Встраиваемый формат Postscript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="996"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="979"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>Встраиваемый формат Postscript для обмена</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="998"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="981"/>
         <source>Windows Icon</source>
         <translation>Значок Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1000"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="983"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1002"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="985"/>
         <source>ZSoft Paintbrush</source>
         <translation>ZМягкая кисть</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1004"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="987"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1006"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="989"/>
         <source>SGI-Bilddatei</source>
         <translation>Файл изображения-SGI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1008"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="991"/>
         <source>Targa Image File</source>
         <translation>Файл изображения Targa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1010"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="993"/>
         <source>Tagged Image File Format</source>
         <translation>Теговый формат растровых изображений</translation>
     </message>
@@ -22372,52 +22412,52 @@ Do you want to replace it?</source>
         <translation>Старый DXF %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="183"/>
         <source>Opened dwg file version %1.</source>
         <translation>Открыт файл DWG версии %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4268"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4271"/>
         <source>unknown error opening dwg file</source>
         <translation>неизвестная ошибка при открытии файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4272"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4275"/>
         <source>can&apos;t open this dwg file</source>
         <translation>невозможно открыть данный файл DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4276"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4279"/>
         <source>unsupported dwg version</source>
         <translation>неподдерживаемая версия DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4284"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4287"/>
         <source>error reading file header in dwg file</source>
         <translation>ошибка чтения заголовка файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4288"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4291"/>
         <source>error reading header vars in dwg file</source>
         <translation>ошибка чтения заголовка переменных файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4292"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4295"/>
         <source>error reading classes in dwg file</source>
         <translation>ошибка чтения классов файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4296"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4299"/>
         <source>error reading offsets in dwg file</source>
         <translation>ошибка чтения смещений файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4300"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4303"/>
         <source>error reading tables in dwg file</source>
         <translation>ошибка чтения таблиц файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4308"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4311"/>
         <source>error reading entities in dwg file</source>
         <translation>ошибка чтения объектов файла DWG</translation>
     </message>
@@ -22427,12 +22467,12 @@ Do you want to replace it?</source>
         <translation>Чертёж DWG %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="191"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="192"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
         <translation>Изменён файл на диске. Для избежания потери данных сохраните в файл с другим именем! Файл изменён: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1774"/>
+        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1773"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Ошибка штриховки из-за расстояния %1 между (%2; %3) и (%4; %5)</translation>
     </message>
@@ -22442,17 +22482,17 @@ Do you want to replace it?</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4304"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4307"/>
         <source>error reading blocks in dwg file</source>
         <translation>Ошибка чтения блоков файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4312"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4315"/>
         <source>error reading objects in dwg file</source>
         <translation>Ошибка чтения объектов файла DWG</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
         <translation>: повтор команды: %1 уже занято %2</translation>
     </message>
@@ -23570,38 +23610,38 @@ Do you want to replace it?</source>
         <translation type="vanished">Команда: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="258"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="261"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="388"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation>RS_Commands:: команда не найдена: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="413"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
         <translation>клавиша: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="415"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="430"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
         <translation>Команда не найдена: %1</translation>
     </message>
@@ -23610,7 +23650,7 @@ Do you want to replace it?</source>
         <translation type="vanished">Принята клавиатурная последовательность: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="469"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation>Доступные команды:</translation>
     </message>
@@ -23631,7 +23671,7 @@ Do you want to replace it?</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4280"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4283"/>
         <source>error reading file metadata in dwg file</source>
         <translation>ошибка чтения метаданных файла DWG</translation>
     </message>
@@ -23766,7 +23806,7 @@ Do you want to replace it?</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="937"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="940"/>
         <source>Invalid objects removed:</source>
         <translation>Исключенные объекты:</translation>
     </message>
@@ -23833,7 +23873,7 @@ Do you want to replace it?</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="80"/>
+        <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
         <translation>Нет %1 слоев</translation>
     </message>
@@ -25723,85 +25763,85 @@ Do you want to replace it?</source>
         <translation>Игнорировать ошибку и открыть файл?</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="112"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>нет ошибки DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="114"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка открытия файла DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="116"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>неподдерживаемая версия файла DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="118"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения метаданных DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="120"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения заголовка файла DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="122"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения DXF/DWG заголовка dara</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="124"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения карты объектов DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="126"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения классов DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="128"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения таблиц DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="130"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения блоков DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="132"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="134"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения DXF/DWG объектов</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="133"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="136"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения разделов DXF/DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="135"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="138"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ошибка чтения кода DXF/DWG</translation>
@@ -25952,13 +25992,13 @@ Do you want to replace it?</source>
         <translation>Пользовательский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="157"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="140"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation>безымянный</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="43"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="34"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
         <translation>R</translation>
@@ -25984,22 +26024,22 @@ Do you want to replace it?</source>
         <translation>Привязка к Относительному Нулю</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="65"/>
+        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
         <translation>Штриховка: Шаблоны не найдены. Пожалуйста укажите путь к шаблонам в настройках приложения</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="92"/>
+        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
         <translation>Штриховка: ошибка загрузки шаблона: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="634"/>
+        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="633"/>
         <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
         <translation>Ломаная содержит дуги, масштабирование с разными коэффициентами по X и Y может приводить к некорректным результатам.</translation>
     </message>
     <message>
-        <location filename="../src/lib/printing/lc_printing.cpp" line="142"/>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="140"/>
         <source>Export as PDF</source>
         <translation>Экспорт в PDF</translation>
     </message>
@@ -26159,12 +26199,12 @@ Do you want to replace it?</source>
         <translation>2.11 мм</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="134"/>
+        <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="135"/>
         <source>WCS</source>
         <translation>МИР</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="693"/>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="684"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26172,17 +26212,17 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="103"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select to create block (Enter to complete)</source>
         <translation>Выберите объекты для создания блока (Enter -завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="103"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="109"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="107"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
@@ -26194,12 +26234,12 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select to explode container (Enter to complete)</source>
         <translation>Выберите объекты которые нужно разобрать (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select and explode</source>
         <translation>Разобрать сразу после выделения</translation>
     </message>
@@ -26207,17 +26247,17 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="184"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="197"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="210"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="223"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="236"/>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="249"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="182"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="195"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="208"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="221"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="234"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="247"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="331"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="329"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
@@ -26226,49 +26266,49 @@ Do you want to replace it?</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="334"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="332"/>
         <source>Enter angle:</source>
         <translation>Введите угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="337"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="335"/>
         <source>Enter factor:</source>
         <translation>Введите коэффициент:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="340"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="338"/>
         <source>Enter columns:</source>
         <translation>Введите количество столбцов:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="343"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="341"/>
         <source>Enter rows:</source>
         <translation>Введите количество рядов:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="346"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="344"/>
         <source>Enter column spacing:</source>
         <translation>Введите промежуток между столбцами:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="347"/>
         <source>Enter row spacing:</source>
         <translation>Введите промежуток между рядами:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="64"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="62"/>
         <source>Block cannot contain an insert of itself.</source>
         <translation>Блок не может содержать вставки сам по себе.</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="71"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="69"/>
         <source> has nested insert of current block in:
 </source>
         <translation> вложена вставка из текущего блока в:
 </translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="73"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="71"/>
         <source>
 This block cannot be inserted.</source>
         <translation>
@@ -26278,7 +26318,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="96"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
         <source>No block activated to save</source>
         <translation>Не выбран блок для сохранения</translation>
     </message>
@@ -26286,17 +26326,17 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="934"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="932"/>
         <source>Set new position</source>
         <translation>Укажите новую позицию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="934"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="932"/>
         <source>Create a copy</source>
         <translation>Создать копию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="942"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="940"/>
         <source>Lengthen Line</source>
         <translation>Увеличить прямую</translation>
     </message>
@@ -26328,47 +26368,47 @@ This block cannot be inserted.</source>
 </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="563"/>
         <source>Selecting</source>
         <translation>Выделение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="563"/>
         <source>De-Selecting</source>
         <translation>Снятие выделения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="566"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source> entities </source>
         <translation> объектов </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source>that intersect with box</source>
         <translation>которых пересекает рамка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source>that are within box</source>
         <translation>которые внутри рамки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="608"/>
         <source>Line</source>
         <translation>Линия</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="611"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="609"/>
         <source>Length: </source>
         <translation>Длина: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="612"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
         <source>Angle: </source>
         <translation>Угол: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="619"/>
         <source>Arc</source>
         <translation>ДУГА</translation>
     </message>
@@ -26393,104 +26433,104 @@ This block cannot be inserted.</source>
         <translation type="vanished">Высота: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="492"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="490"/>
         <source>Offset</source>
         <translation>Смещение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="495"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="493"/>
         <source>New Position</source>
         <translation>Новая позиция:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="537"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="535"/>
         <source>Copy Offset</source>
         <translation>Смещение копии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="539"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="537"/>
         <source>Move Offset</source>
         <translation>Смещение перемещения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="620"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="631"/>
         <source>Radius:</source>
         <translation>Радиус:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="632"/>
         <source>Center:</source>
         <translation>Центр:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Angle Length:</source>
         <translation>Угловая длина:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="625"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
         <source>Chord Length:</source>
         <translation>Длина хорды:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="626"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
         <source>Height:</source>
         <translation>Высота:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="632"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="630"/>
         <source>Circle</source>
         <translation>ОКРУЖНОСТЬ</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="943"/>
         <source>Lengthen/Scale</source>
         <translation>Изменить угол или Масштабировать</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="943"/>
         <source>Lengthen Chord</source>
         <translation>Изменить хорду</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="946"/>
         <source>Move in Previous segment direction</source>
         <translation>Перемещать в направлении предыдущего сегмента</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="946"/>
         <source>Move in Next segment direction</source>
         <translation>Перемещать в направлении следующего сегмента</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="953"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
         <source>Set new ref position</source>
         <translation>Укажите новую позицию контрольной точки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Zoom, pan or select entity</source>
         <translation>Увеличте или позиционируйте чертеж или выберите объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Scroll Horizontally / Select Contour</source>
         <translation>Пролистывать Вертикально / Выделять контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="957"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="955"/>
         <source>Scroll Vertically / Select Child entities</source>
         <translation>Пролистывать Горизонтально / Выделять дочерние объекты</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Select/Deselect entities</source>
         <translation>Добавить\Отменить выделение объектов</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Select Intersecting</source>
         <translation>Выбрать пересекаемые</translation>
     </message>
@@ -26507,7 +26547,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Горизонтальная прокрутка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="962"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Choose second edge</source>
         <translation>Выберите вторую грань</translation>
     </message>
@@ -26550,7 +26590,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="206"/>
         <source>Select first line</source>
         <translation>Выделите первую линию</translation>
     </message>
@@ -26559,17 +26599,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="212"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="209"/>
         <source>Select second line</source>
         <translation>Выделите вторую линию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="212"/>
         <source>Specify dimension arc line location</source>
         <translation>Укажите положение размерной дуги</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="215"/>
         <source>Enter dimension text:</source>
         <translation>Введите текст размерной надписи:</translation>
     </message>
@@ -26604,7 +26644,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Укажите исходную точку</translation>
     </message>
@@ -26613,12 +26653,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Specify next point</source>
         <translation>Укажите следующую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Finish</source>
         <translation>Закончить</translation>
     </message>
@@ -26626,7 +26666,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="126"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="119"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
@@ -26689,47 +26729,47 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="277"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="268"/>
         <source>Length of chord should be non-zero</source>
         <translation>Длина хорды должна быть больше нуля</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="417"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="428"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="448"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="461"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="483"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="408"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="439"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="474"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="481"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="472"/>
         <source>Not a valid chord length</source>
         <translation>Недопустимая длина хорды</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="496"/>
         <source>Specify center</source>
         <translation>Укажите центр</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="503"/>
         <source>Specify start point</source>
         <translation>Укажите начальную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="519"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Alternative Arc</source>
         <translation>Альтернативная дуга</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Specify chord length (negative for alt point):</source>
         <translation>Укажите длину хорды (меньше нуля - вторая точка):</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Use alternative arc point</source>
         <translation>Альтернативное решение</translation>
     </message>
@@ -26738,7 +26778,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Укажите радиус</translation>
     </message>
@@ -26747,12 +26787,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
         <source>Specify start angle:</source>
         <translation>Укажите начальный угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <source>Specify end angle or [angle/chordlen]</source>
         <translation>Укажите конечный угол или [угол/длину хорды]</translation>
     </message>
@@ -26761,7 +26801,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Укажите длину хорды:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Specify included angle:</source>
         <translation>Укажите внутренний угол:</translation>
     </message>
@@ -26773,12 +26813,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="94"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="84"/>
         <source>Invalid arc data.</source>
         <translation>Некорректные данные дуги.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="236"/>
         <source>Specify third point</source>
         <translation>Укажите третью точку</translation>
     </message>
@@ -26787,7 +26827,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="243"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
@@ -26800,7 +26840,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Укажите конечную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
         <source>Specify startpoint or [center]</source>
         <translation>Укажите начальную точку или [центр]</translation>
     </message>
@@ -26808,17 +26848,17 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="252"/>
         <source>Specify base entity</source>
         <translation>Укажите базовый объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="256"/>
         <source>Alternate arc</source>
         <translation>Альтернативная дуга</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="258"/>
         <source>Alternate Arc</source>
         <translation>Альтернативная дуга</translation>
     </message>
@@ -26827,7 +26867,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="256"/>
         <source>Specify end angle</source>
         <translation>Укажите конечный угол</translation>
     </message>
@@ -26836,7 +26876,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="266"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="258"/>
         <source>Specify end point</source>
         <translation>Укажите конечную точку</translation>
     </message>
@@ -26844,12 +26884,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="115"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="126"/>
         <source>Specify center</source>
         <translation>Укажите центр</translation>
     </message>
@@ -26862,7 +26902,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation>Указать точку на круге</translation>
     </message>
@@ -26870,12 +26910,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="77"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="75"/>
         <source>Invalid Circle data.</source>
         <translation>Некорректные данные окружности.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="153"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
@@ -26884,7 +26924,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
@@ -26896,12 +26936,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="76"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="74"/>
         <source>Invalid circle data.</source>
         <translation>Некорректные данные окружности.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="172"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
@@ -26910,7 +26950,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="177"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
@@ -26919,7 +26959,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
         <source>Specify third point</source>
         <translation>Укажите третью точку</translation>
     </message>
@@ -26927,12 +26967,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="128"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="122"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="165"/>
         <source>Specify circle center</source>
         <translation>Укажите центр окружности</translation>
     </message>
@@ -26941,7 +26981,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="168"/>
         <source>Specify circle radius</source>
         <translation>Укажите радиус окружности</translation>
     </message>
@@ -26950,17 +26990,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="143"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="137"/>
         <source>radius=%1 is invalid (expression)</source>
         <translation>радиус=%1 недействителен (выражение)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="145"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="139"/>
         <source>radius=%1 is invalid (negative)</source>
         <translation>радиус=% 1 недопустим (отрицательный)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="142"/>
         <source>radius=%1 is invalid (zero)</source>
         <translation>радиус=% 1 недопустим (ноль)</translation>
     </message>
@@ -26968,7 +27008,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="188"/>
         <source>Specify the first line</source>
         <translation>Укажите первую линию</translation>
     </message>
@@ -26977,7 +27017,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="191"/>
         <source>Specify the second line</source>
         <translation>Укажите вторую линию</translation>
     </message>
@@ -26986,7 +27026,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="194"/>
         <source>Specify the third line</source>
         <translation>Укажите третью линию</translation>
     </message>
@@ -26998,7 +27038,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="449"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="445"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Укажите первую точку касательной к окружности</translation>
     </message>
@@ -27007,17 +27047,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="448"/>
         <source>Specify the second point on the tangent circle</source>
         <translation>Укажите вторую точку касательной к окружности</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="455"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="451"/>
         <source>Select the center of the tangent circle</source>
         <translation>Укажите центр касательной к окружности</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="446"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="442"/>
         <source>Specify a line/arc/circle</source>
         <translation>Укажите линию, дугу или окружность</translation>
     </message>
@@ -27025,7 +27065,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="257"/>
         <source>Specify the first line/arc/circle</source>
         <translation>Укажите первую прямую, дугу или окружность</translation>
     </message>
@@ -27034,7 +27074,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="264"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="260"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Укажите вторую прямую, дугу или окружность</translation>
     </message>
@@ -27043,7 +27083,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="263"/>
         <source>Select the center of the tangent circle</source>
         <translation>Укажите центр касательной к окружности</translation>
     </message>
@@ -27064,7 +27104,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Касательная к окружности для радиуса &apos;%1&apos; невозможна</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="230"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="226"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
         <translation>Нет общей касательной к окружности для радиуса &apos;%1&apos;</translation>
     </message>
@@ -27072,7 +27112,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="318"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="311"/>
         <source>Specify a line/arc/circle</source>
         <translation>Укажите прямую, дугу или окружность</translation>
     </message>
@@ -27081,7 +27121,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="321"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="314"/>
         <source>Specify the another arc/circle</source>
         <translation>Укажите другую дугу или окружность</translation>
     </message>
@@ -27090,12 +27130,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="324"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="317"/>
         <source>Specify a point on the tangent circle</source>
         <translation>Укажите точку на окружности</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="327"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="320"/>
         <source>Select the center of the tangent circle</source>
         <translation>Укажите центр окружности</translation>
     </message>
@@ -27111,27 +27151,27 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="495"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="492"/>
         <source>Select the center of the tangent circle</source>
         <translation>Укажите центр окружности</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="486"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="483"/>
         <source>Specify the first line/arc/circle</source>
         <translation>Укажите первую линию, дугу или окружность</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="402"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="399"/>
         <source>No common tangential circle for selected entities</source>
         <translation>Не существует общей тангенциальной окружности для выбранных объектов</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="489"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="486"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Укажите вторую линию, дугу или окружность</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="492"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="489"/>
         <source>Specify the third line/arc/circle</source>
         <translation>Укажите третью линию, дугу или окружность</translation>
     </message>
@@ -27139,7 +27179,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"/>
         <source>Specify the first point on ellipse</source>
         <translation>Укажите первую точку на эллипсе</translation>
     </message>
@@ -27148,7 +27188,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Укажите вторую точку на эллипсе</translation>
     </message>
@@ -27157,17 +27197,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
         <source>Specify the third point on ellipse</source>
         <translation>Укажите третью точку на эллипсе</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
         <source>Specify the fourth point on ellipse</source>
         <translation>Укажите четвёртую точку на эллипсе</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="167"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="165"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>Точки не обеспечивают однозначности построения эллипса</translation>
     </message>
@@ -27175,14 +27215,14 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="308"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="319"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="330"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="313"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="324"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="336"/>
         <source>Specify ellipse center</source>
         <translation>Укажите центр эллипса</translation>
     </message>
@@ -27191,7 +27231,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Укажите конечную точку большей оси</translation>
     </message>
@@ -27200,17 +27240,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
         <source>Specify endpoint or length of minor axis:</source>
         <translation>Укажите конечную точку или длины меньшей оси:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="351"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
         <source>Specify start angle</source>
         <translation>Укажите начальный угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="354"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
         <source>Specify end angle</source>
         <translation>Укажите конечный угол</translation>
     </message>
@@ -27218,7 +27258,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"/>
         <source>Specify the center of ellipse</source>
         <translation>Укажите центр эллипса</translation>
     </message>
@@ -27227,12 +27267,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Укажите первую точку на эллипсе</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Укажите вторую точку на эллипсе</translation>
     </message>
@@ -27241,7 +27281,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
         <source>Specify the third point on ellipse</source>
         <translation>Укажите третью точку на эллипсе</translation>
     </message>
@@ -27249,12 +27289,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="200"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="192"/>
         <source>Specify first focus of ellipse</source>
         <translation>Укажите первый фокус эллипса</translation>
     </message>
@@ -27263,7 +27303,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Укажите второй фокус эллипса</translation>
     </message>
@@ -27272,17 +27312,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
         <source>Specify a point on ellipse or total distance to foci</source>
         <translation>Укажите точку на эллипсе или общее расстояние между фокусами</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="163"/>
         <source>specify a point on ellipse, or total distance to foci</source>
         <translation>укажите точку на эллипсе или общее расстояние между фокусами</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="186"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
         <translation>Общее расстояние %1 меньше чем расстояние между фокусами</translation>
     </message>
@@ -27290,7 +27330,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the first line</source>
         <translation>Укажите первую линию</translation>
     </message>
@@ -27299,7 +27339,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="288"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="287"/>
         <source>Specify the second line</source>
         <translation>Укажите вторую линию</translation>
     </message>
@@ -27308,17 +27348,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="291"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <source>Specify the third line</source>
         <translation>Укажите третью линию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="293"/>
         <source>Specify the fourth line</source>
         <translation>Укажите четвёртую линию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="203"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>Точки не обеспечивают однозначности построения эллипса</translation>
     </message>
@@ -27326,52 +27366,52 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="184"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation>Неправильно задана область штриховки. Пожалуйста, проверьте, что выбранные объекты формируют один или более закрытых контуров.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="156"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="155"/>
         <source>Hatch created successfully.</source>
         <translation>Штриховка создана успешно.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="158"/>
         <source>Hatch Error: Invalid contour found!</source>
         <translation>Ошибка штриховки: неверный контур!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="162"/>
         <source>Hatch Error: Pattern not found!</source>
         <translation>Ошибка штриховки: вид штриховки не найден!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="165"/>
         <source>Hatch Error: Contour or pattern too small!</source>
         <translation>Ошибка штриховки: контур или вид штриховки слишком мал!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="169"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="168"/>
         <source>Hatch Error: Contour too big!</source>
         <translation>Ошибка штриховки: контур слишком велик!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="171"/>
         <source>Hatch Error: Undefined Error!</source>
         <translation>Ошибка штриховки: непредусмотренная ошибка!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="176"/>
         <source>Total hatch area = %1</source>
         <translation>Общая площадь штриховки = %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="202"/>
         <source>Select to hatch (Enter to complete)</source>
         <translation>Выберите объекты для штриховки (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="202"/>
         <source>Hatch immediately after selection</source>
         <translation>Заштриховать сразу после выделения</translation>
     </message>
@@ -27413,7 +27453,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="263"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
@@ -27422,7 +27462,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="295"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="285"/>
         <source>Specify next point or [%1]</source>
         <translation>Укажите следующую точку или [%1]</translation>
     </message>
@@ -27431,22 +27471,22 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="297"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="287"/>
         <source>Specify next point</source>
         <translation>Укажите следующую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="325"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="315"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <translation>Невозможно замкнуть последовательность отрезков — выбрано недостаточно объектов или уже замкнуто.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="385"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="375"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation>Невозможно отменить: достигнуто начало истории</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="409"/>
         <source>Cannot redo: End of history reached</source>
         <translation>Невозможно повторить: Достигнут конец истории</translation>
     </message>
@@ -27454,13 +27494,13 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="224"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="231"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="296"/>
         <source>Specify position</source>
         <translation>Укажите положение</translation>
     </message>
@@ -27469,7 +27509,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="305"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="299"/>
         <source>Enter angle:</source>
         <translation>Введите угол:</translation>
     </message>
@@ -27478,7 +27518,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="302"/>
         <source>Enter length:</source>
         <translation>Введите длину:</translation>
     </message>
@@ -27486,18 +27526,18 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="123"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="118"/>
         <source> entities will be created</source>
         <translation> объектов будет создано</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="199"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="216"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="211"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="241"/>
         <source>Select first line</source>
         <translation>Выделите первую линию</translation>
     </message>
@@ -27506,7 +27546,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="244"/>
         <source>Select second line</source>
         <translation>Выделите вторую линию</translation>
     </message>
@@ -27515,17 +27555,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="247"/>
         <source>Enter bisector length:</source>
         <translation>Укажите длину биссектрисы:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="250"/>
         <source>Enter number of bisectors:</source>
         <translation>Укажите количество биссектрис:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="209"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
         <translation>Количество биссектрис не в диапазоне: </translation>
@@ -27534,7 +27574,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="113"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="114"/>
         <source>Click and drag to draw a line</source>
         <translation>Щелкните мышью и потяните, чтобы нарисовать линию</translation>
     </message>
@@ -27546,7 +27586,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="114"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
@@ -27555,7 +27595,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
@@ -27567,7 +27607,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="157"/>
         <source>Select a line</source>
         <translation>Выберите линию</translation>
     </message>
@@ -27576,7 +27616,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="162"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="160"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Выделите окружность, дугу или эллипс</translation>
     </message>
@@ -27592,28 +27632,28 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="93"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="85"/>
         <source> entities will be created</source>
         <translation> объектов будет создано</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="122"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="114"/>
         <source>Enter number:</source>
         <translation>Введите число:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="150"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="160"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="158"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Недопустимое число. Попробуйте от 1..99</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="111"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Укажите расстояние &lt;%1&gt; или выберите объект или [%2]</translation>
     </message>
@@ -27621,7 +27661,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="150"/>
         <source>Select entity</source>
         <translation>Выберите объект</translation>
     </message>
@@ -27630,7 +27670,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="153"/>
         <source>Specify through point</source>
         <translation>Укажите сквозную точку</translation>
     </message>
@@ -27639,22 +27679,22 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="93"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="88"/>
         <source> entities will be created</source>
         <translation> объектов будет создано</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="161"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="156"/>
         <source>Number:</source>
         <translation>Число:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="186"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Недопустимое число. Попробуйте от 1..99</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="189"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
@@ -27666,7 +27706,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Укажите центр</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="49"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Укажите вершину</translation>
     </message>
@@ -27686,7 +27726,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="101"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="91"/>
         <source>Specify first corner</source>
         <translation>Укажите первую вершину</translation>
     </message>
@@ -27695,7 +27735,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>Укажите вторую вершину</translation>
     </message>
@@ -27719,32 +27759,32 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>To be created:</source>
         <translation>Создаваемый Объект: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>Rectangle</source>
         <translation>Прямоугольник</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="103"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="97"/>
         <source>Width:</source>
         <translation>Ширина:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="98"/>
         <source>Height:</source>
         <translation>Высота:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="105"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="99"/>
         <source>Center:</source>
         <translation>Центр: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="147"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="141"/>
         <source>Specify first corner</source>
         <translation>Укажите первый угол</translation>
     </message>
@@ -27773,7 +27813,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="150"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>Укажите второй угол</translation>
     </message>
@@ -27785,23 +27825,23 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="175"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="181"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="213"/>
         <source>Select base entity</source>
         <translation>Выберите базовый объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="226"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="219"/>
         <source>Specify angle</source>
         <translation>Укажите угол</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="222"/>
         <source>Specify length</source>
         <translation>Укажите длину</translation>
     </message>
@@ -27810,7 +27850,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="216"/>
         <source>Specify position</source>
         <translation>Укажите положение</translation>
     </message>
@@ -27822,7 +27862,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="135"/>
         <source>Specify point</source>
         <translation>Укажите точку</translation>
     </message>
@@ -27835,7 +27875,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="141"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="138"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Выделите окружность, дугу или эллипс</translation>
     </message>
@@ -27859,17 +27899,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Укажите вторую окружность или эллипс</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="211"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="207"/>
         <source>Select first circle/ellipse/parabola</source>
         <translation>Укажите первую окружность/дугу/эллипс/параболу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="210"/>
         <source>Select second circle/ellipse/parabola</source>
         <translation>Укажите вторую окружность/дугу/эллипс/параболу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="213"/>
         <source>Select the tangent line closest to cursor</source>
         <translation>Выберите касательную прямую</translation>
     </message>
@@ -27877,7 +27917,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="185"/>
         <source>Specify insertion point</source>
         <translation>Укажите точку вставки</translation>
     </message>
@@ -27886,7 +27926,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Введите текст:</translation>
     </message>
@@ -27898,7 +27938,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="80"/>
+        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Укажите местоположение</translation>
     </message>
@@ -27910,7 +27950,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="720"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="712"/>
         <source>Specify first point</source>
         <translation>Укажите первую точку</translation>
     </message>
@@ -27919,7 +27959,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="751"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="743"/>
         <source>Specify next point or [%1]</source>
         <translation>Укажите следующую точку или [%1]</translation>
     </message>
@@ -27928,29 +27968,29 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="753"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Specify next point</source>
         <translation>Укажите следующую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="774"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="766"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation>Невозможно замкнуть последовательность линий. Указано недостаточно элементов.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="797"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="789"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Невозможно отменить. Недостаточно элементов.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="356"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="557"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="348"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="549"/>
         <source>Enter the end point x</source>
         <translation>Введите конечную точку x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="408"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="566"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="400"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="558"/>
         <source>Enter number of polylines</source>
         <translation>Введите количество полилиний</translation>
     </message>
@@ -27959,37 +27999,37 @@ This block cannot be inserted.</source>
         <translation type="vanished">уравнение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="517"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter an equation, f(x)</source>
         <translation>Введите уравнение, f(x)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="531"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="523"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="539"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="531"/>
         <source>Enter the start point x</source>
         <translation>Введите начало x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="546"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="538"/>
         <source>The entered x is invalid.</source>
         <translation>Введенное x является недействительным.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="583"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The step size entered is invalid.</source>
         <translation>Введенный размер шага недействителен.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="618"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="610"/>
         <source>The value x entered is invalid.</source>
         <translation>Введенное значение x является недействительным.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="740"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="732"/>
         <source>Alternative Arc</source>
         <translation>Альтернативная дуга</translation>
     </message>
@@ -27997,7 +28037,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="219"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="213"/>
         <source>Specify first control point</source>
         <translation>Укажите первую контрольную точку</translation>
     </message>
@@ -28006,7 +28046,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="225"/>
         <source>Specify next control point or [%1]</source>
         <translation>Укажите следующую контрольную точку или [%1]</translation>
     </message>
@@ -28015,12 +28055,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point</source>
         <translation>Укажите следующую контрольную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="281"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Невозможно отменить. Недостаточно элементов.</translation>
     </message>
@@ -28028,12 +28068,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="158"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="156"/>
         <source>Text: </source>
         <translation>Текст: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="242"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="240"/>
         <source>Specify insertion point</source>
         <translation>Укажите точку вставки</translation>
     </message>
@@ -28042,7 +28082,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Введите текст:</translation>
     </message>
@@ -28051,7 +28091,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="245"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>Укажите вторую точку</translation>
     </message>
@@ -28153,14 +28193,14 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="92"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="86"/>
         <source>Angle 1: %1
 Angle 2: %2</source>
         <translation>Угол 1: %1
 Угол 2: %2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="124"/>
         <source>Angle: %1
 Intersection: (%2 , %3)
 Intersection :@(%4, %5)</source>
@@ -28169,43 +28209,43 @@ Intersection :@(%4, %5)</source>
 Точка пересечения:@(%4, %5)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="136"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="130"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="175"/>
         <source>Lines are parallel</source>
         <translation>Линии параллельны</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="230"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="224"/>
         <source>Specify first line</source>
         <translation>Укажите первую линию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="230"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="224"/>
         <source>Single Line Mode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="245"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="252"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="246"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="256"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Intersection:</source>
         <translation>Точка пересечения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="257"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Line 1 Angle:</source>
         <translation>Угол прямой 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="258"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="252"/>
         <source>Line 2 Angle:</source>
         <translation>Угол прямой 2:</translation>
     </message>
@@ -28214,7 +28254,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Угол: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="248"/>
         <source>Angle (alt): </source>
         <translation>Угол (дополняющий): </translation>
     </message>
@@ -28235,7 +28275,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="233"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="227"/>
         <source>Specify second line</source>
         <translation>Укажите вторую линию</translation>
     </message>
@@ -28251,23 +28291,23 @@ Intersection :@(%4, %5)</source>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="105"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="113"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="99"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
         <source>Circumference: %1</source>
         <translation>Периметр: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="159"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
         <translation>Завершающая точка: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
         <translation>Точка: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify point and complete</source>
         <translation>Указать конечную точку и завершить</translation>
     </message>
@@ -28276,7 +28316,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Точка: %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="184"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Укажите первую точку многоугольника</translation>
     </message>
@@ -28285,7 +28325,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Укажите следующую точку многоугольника</translation>
     </message>
@@ -28294,8 +28334,8 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Завершающая точка: %1; %2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="114"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
         <translation>Площадь: %1 %2^2</translation>
     </message>
@@ -28303,7 +28343,7 @@ Intersection :@(%4, %5)</source>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="68"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="61"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -28312,27 +28352,27 @@ End: (%8 , %9)</source>
         <translation>Расстояние: %1\nКартезианские: (%2 , %3)\nПолярные: (%4 &lt; %5)\nНачало: (%6 , %7)\nКонец: (%8 , %9)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="104"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="97"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="105"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="106"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="99"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="107"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="100"/>
         <source>From:</source>
         <translation>Из точки:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="108"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="101"/>
         <source>To:</source>
         <translation>В точку:</translation>
     </message>
@@ -28353,12 +28393,12 @@ End: (%8 , %9)</source>
         <translation type="vanished">В точку: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="163"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="156"/>
         <source>Specify first point of distance</source>
         <translation>Укажите первую точку измеряемого расстояния</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="159"/>
         <source>Don&apos;t move relative zero</source>
         <translation>Не изменять Относительный Ноль</translation>
     </message>
@@ -28367,7 +28407,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="159"/>
         <source>Specify second point of distance</source>
         <translation>Укажите вторую точку измеряемого расстояния</translation>
     </message>
@@ -28387,7 +28427,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">Расстояние: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="89"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="85"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -28396,42 +28436,42 @@ Point: (%8 , %9)</source>
         <translation>Расстояние: %1\nКартезианские: (%2 , %3)\nПолярные: (%4 &lt; %5)\nТочка в объекте: (%6 , %7)\nТочка: (%8 , %9)&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="268"/>
         <source>Specify entity</source>
         <translation>Укажите объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="268"/>
         <source>Do not snap to child entities in container</source>
         <translation>Не привязываться к объектам в контейнере</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="276"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
         <source>Relative point is on entity</source>
         <translation>Перемещать точку Относительного Нуля внутри объекта</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="303"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="299"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="304"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="300"/>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="305"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="301"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="306"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="302"/>
         <source>From:</source>
         <translation>Из точки:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="307"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="303"/>
         <source>To:</source>
         <translation>В точку:</translation>
     </message>
@@ -28456,8 +28496,8 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="276"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="272"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
         <source>Specify point</source>
         <translation>Укажите точку</translation>
     </message>
@@ -28491,37 +28531,37 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="51"/>
         <source>Total Length of selected entities: %1</source>
         <translation>Суммарная длина выбранных объектов: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="55"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
         <source>At least one of the selected entities cannot be measured.</source>
         <translation>По крайней мере один из выбранных объектов не может быть измерен.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="62"/>
         <source>Selected:</source>
         <translation>Выбрано:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="66"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
         <source>Total Length:</source>
         <translation>Общая длина:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select to measure total length (Enter to complete)</source>
         <translation>Выберите объекты для измерения общей длины (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="73"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select and finish</source>
         <translation>Выбрать и завершить</translation>
     </message>
@@ -28529,22 +28569,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="517"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="520"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="539"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="542"/>
         <source>SHIFT:</source>
         <translation>SHIFT:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="546"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="549"/>
         <source>CTRL:</source>
         <translation>CTRL:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="565"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="568"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -28552,13 +28592,13 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="156"/>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="169"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="198"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
@@ -28567,12 +28607,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="201"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
         <source>Enter angle:</source>
         <translation>Введите угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="204"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="200"/>
         <source>Enter factor:</source>
         <translation>Введите коэффициент:</translation>
     </message>
@@ -28581,7 +28621,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Вставить библиотечный объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="69"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>Невозможно открыть файл &apos;%1&apos;</translation>
     </message>
@@ -28596,17 +28636,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select to modify attributes (Enter to complete)</source>
         <translation>Выберите объекты для изменения аттрибутов (Enter -завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Modify attributes immediately after selecting</source>
         <translation>Изменить аттрибуты сразу после выделения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -28614,59 +28654,59 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="79"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="76"/>
         <source>Selected lines are parallel</source>
         <translation>Выбраные прямые параллельны</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="79"/>
         <source>Selected lines are not children of the same polyline</source>
         <translation>Выбраные прямые не принадлежат одной ломаной</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="151"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="148"/>
         <source>Trim</source>
         <translation>Подогнать</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="152"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="149"/>
         <source>Intersection:</source>
         <translation>Точка пересечения: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="150"/>
         <source>Point 1:</source>
         <translation>Точка 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="154"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="151"/>
         <source>Point 2:</source>
         <translation>Точка 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="198"/>
         <source>Invalid entity selected (non-trimmable).</source>
         <translation>Выбран некорректный объект который не поддерживает обрезку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="204"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="216"/>
         <source>Invalid entity selected (non-atomic).</source>
         <translation>Выбраный некорректный объект который не атомарный</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="216"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="213"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
         <translation>Выбран некорректный объект который не может быть обрезан первым объектом</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="285"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="298"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="282"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="295"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="352"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="349"/>
         <source>Select first entity</source>
         <translation>Выберите первый объект</translation>
     </message>
@@ -28675,7 +28715,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="355"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="352"/>
         <source>Select second entity</source>
         <translation>Выберите второй объект</translation>
     </message>
@@ -28684,12 +28724,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="355"/>
         <source>Enter length 1:</source>
         <translation>Введите длину 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="361"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="358"/>
         <source>Enter length 2:</source>
         <translation>Введите длину 2:</translation>
     </message>
@@ -28697,27 +28737,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="87"/>
         <source>Divide</source>
         <translation>Разделение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="89"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="88"/>
         <source>At:</source>
         <translation>В точке:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="104"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="103"/>
         <source>No Entity found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="115"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
         <translation>Точка обрезки не может быть конечной точкой объекта</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="134"/>
         <source>Specify entity to cut</source>
         <translation>Укажите объект для разделения</translation>
     </message>
@@ -28726,7 +28766,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="138"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="137"/>
         <source>Specify cutting point</source>
         <translation>Укажите точку разделения</translation>
     </message>
@@ -28743,7 +28783,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Точка разделения не принадлежит объекту.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="108"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="107"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation>Объект должен быть линией, дугой, окружностью, эллипсом или интерполированной кривой.</translation>
     </message>
@@ -28751,17 +28791,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select to delete (Enter to complete)</source>
         <translation>Выберите объекты для удаления (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Delete immediately after selection</source>
         <translation>Удалить сразу после выделения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -28769,7 +28809,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
         <translation>Укажите первую точку разделения ломаной</translation>
     </message>
@@ -28778,7 +28818,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Укажите вторую точку разделения на той же ломаной</translation>
     </message>
@@ -28787,42 +28827,42 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
         <source>Entities not in the same polyline.</source>
         <translation>Объекты не принадлежат ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="90"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="92"/>
         <source>Parent of second entity is not a polyline</source>
         <translation>Второй родительский объект не является ломаной</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>Parent of first entity is not a polyline</source>
         <translation>Родитель первого объекта — не ломаная</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="93"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
         <source>Parent of second entity is nullptr</source>
         <translation>Родителем второго объекта является nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="96"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="98"/>
         <source>One of the chosen entities is nullptr</source>
         <translation>Одним из выбранных объектов является nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="118"/>
         <source>Parent of first entity is nullptr</source>
         <translation>Родителем первого объекта является nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="119"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="121"/>
         <source>First entity is nullptr</source>
         <translation>Первый объект nullptr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="130"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="132"/>
         <source>Second entity is nullptr</source>
         <translation>Второй объект является nullptr</translation>
     </message>
@@ -28841,7 +28881,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="126"/>
         <source>Click on entity to modify</source>
         <translation>Нажмите на объект для изменения</translation>
     </message>
@@ -28866,57 +28906,57 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="119"/>
         <source>Mirror</source>
         <translation>Отражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
         <source>Angle (alt):</source>
         <translation>Угол (дополняющий): </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
         <source>Line From:</source>
         <translation>Конец оси:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
         <source>Line To:</source>
         <translation>Начало оси:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select to mirror (Enter to complete)</source>
         <translation>Выделите размеры для отражения (Enter-завершает выделение)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="235"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Specify mirror line</source>
         <translation>Выберите прямую которая будет осью симметрии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Vertically</source>
         <translation>Перевернуть Вертикально</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Horizontally</source>
         <translation>Перевернуть Горизонтально</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="245"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="244"/>
         <source>Specify first point of mirror line</source>
         <translation>Укажите первую точку на оси симметрии</translation>
     </message>
@@ -28925,7 +28965,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Укажите вторую точку на оси симметрии</translation>
     </message>
@@ -28943,37 +28983,37 @@ Point: (%8 , %9)</source>
 </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Moving Offset</source>
         <translation>Смещение перемещения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Copy Offset</source>
         <translation>Смещение копии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="184"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Create a Copy</source>
         <translation>Создать копию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select to move (Enter to complete)</source>
         <translation>Выберите объекты для перемещения (Enter - завершает выделение)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Move immediately after selection</source>
         <translation>Передвинуть сразу после выделения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -28982,7 +29022,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Укажите точку назначения</translation>
     </message>
@@ -28998,56 +29038,56 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="83"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="79"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="112"/>
         <source>Moving with rotation</source>
         <translation>Сдвиг с поворотом</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="84"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="117"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="80"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="113"/>
         <source>Source:</source>
         <translation>Исходная точка:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="85"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="81"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="114"/>
         <source>Target:</source>
         <translation>Точка назначения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="86"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="119"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="115"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="284"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="280"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="320"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="316"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Select to move and rotate  (Enter to complete)</source>
         <translation>Выберите объекты для перемещения и поворота (Enter-завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Move and rotate immediately after selection</source>
         <translation>Передвинуть и повернуть сразу после выбора</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="335"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -29056,7 +29096,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="323"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="319"/>
         <source>Specify target point</source>
         <translation>Укажите точку назначения</translation>
     </message>
@@ -29065,7 +29105,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="326"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="322"/>
         <source>Enter rotation angle:</source>
         <translation>Введите угол поворота:</translation>
     </message>
@@ -29073,38 +29113,38 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="88"/>
         <source>Offset</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="92"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="89"/>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="171"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="178"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="175"/>
         <source>Specify direction of offset</source>
         <translation>Укажите направление смещения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="174"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="171"/>
         <source>Specify reference point for direction of offset</source>
         <translation>Задайте базовую точку для направленя смещения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
         <translation>Выберите прямые, ломаные, окружности или дуги для смещения (Enter-завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Offset immediately after selection</source>
         <translation>Сместить сразу после выбора</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="184"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -29116,17 +29156,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select to revert direction (Enter to complete)</source>
         <translation>Выберите объекты для смены направления (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Revert immediately after selection</source>
         <translation>Изменить направление сразу после выбора</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="47"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -29134,7 +29174,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
@@ -29143,88 +29183,88 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="244"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="145"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241"/>
         <source>Rotation</source>
         <translation>Поворот</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="202"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="242"/>
         <source>Angle:</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="206"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203"/>
         <source>Source Point:</source>
         <translation>Исходная точка:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
         <source>Target Point:</source>
         <translation>Точка назначения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="139"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="151"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="208"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="137"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146"/>
         <source>Reference Point:</source>
         <translation>Базовая точка:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="138"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="150"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147"/>
         <source>Center Point:</source>
         <translation>Центр поворота:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="251"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
         <source>Second Angle:</source>
         <translation>Второй Угол:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Select to rotate (Enter to complete)</source>
         <translation>Выберите объекты для поворота (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Rotate immediately after selection</source>
         <translation>Повернуть сразу после выбора</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="570"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Snap to center of selection</source>
         <translation>Использовать центр выделения как базовую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
         <source>Specify rotation center</source>
         <translation>Укажите центр вращения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Specify target point to rotate to</source>
         <translation>Укажите целевую точку вращения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
         <source>Specify target point for rotation around reference point</source>
         <translation>Задайте точку назначения для поворота вокруг базовой точки</translation>
     </message>
@@ -29232,47 +29272,47 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="81"/>
         <source>Rotating Twice</source>
         <translation>Двойное вращение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="84"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="82"/>
         <source>Center 1:</source>
         <translation>Центр 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="83"/>
         <source>Angle 1:</source>
         <translation>Угол 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="84"/>
         <source>Center 2:</source>
         <translation>Центр 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="85"/>
         <source>Angle 2:</source>
         <translation>Угол 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select for two axis rotation  (Enter to complete)</source>
         <translation>Выберите объекты для двойного поворота (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Rotate 2 Axis immediately after selection</source>
         <translation>Повернуть сразу после выбора</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="160"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="166"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="164"/>
         <source>Specify absolute reference point</source>
         <translation>Укажите абсолютную базовую точку</translation>
     </message>
@@ -29281,7 +29321,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="169"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="167"/>
         <source>Specify relative reference point</source>
         <translation>Укажите относительную базовую точку</translation>
     </message>
@@ -29293,8 +29333,8 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="339"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="354"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="337"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="352"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
@@ -29303,27 +29343,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="227"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="225"/>
         <source>Round</source>
         <translation>Скругление</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="228"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="226"/>
         <source>Point 1:</source>
         <translation>Точка 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="227"/>
         <source>Point 2:</source>
         <translation>Точка 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="416"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
         <translation>Укажите второй объект</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="419"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="417"/>
         <source>Enter radius:</source>
         <translation>Введите радиус:</translation>
     </message>
@@ -29332,7 +29372,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="413"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="411"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation>Указать первый объект или выбрать радиус &lt;%1&gt;</translation>
     </message>
@@ -29348,77 +29388,77 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
         <translation>Масштабирование</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="174"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="170"/>
         <source>Center:</source>
         <translation>Центр: </translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="175"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171"/>
         <source>Source Point:</source>
         <translation>Исходная точка:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172"/>
         <source>Target Point:</source>
         <translation>Точка назначения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
         <source>Scale by X:</source>
         <translation>Масштаб по X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
         <source>Scale by Y:</source>
         <translation>Масштаб по Y:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Specify scale center</source>
         <translation>Укажите центральную точку масштабирования</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Snap to center of selection</source>
         <translation>Использовать центр выделения как базовую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="370"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
         <source>Specify source point</source>
         <translation>Укажите исходную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Specify target point</source>
         <translation>Укажите конечную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Free snap</source>
         <translation>Свободная привязка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select to scale  (Enter to complete)</source>
         <translation>Выберите объекты для масштабирования (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Scale immediately after selection</source>
         <translation>Масштабировать сразу после выделения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="382"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
@@ -29426,7 +29466,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="198"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="195"/>
         <source>Specify first corner</source>
         <translation>Укажите первый угол</translation>
     </message>
@@ -29435,7 +29475,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="198"/>
         <source>Specify second corner</source>
         <translation>Укажите второй угол</translation>
     </message>
@@ -29444,45 +29484,45 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="93"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="78"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="90"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="110"/>
         <source>Stretch</source>
         <translation>Растяжение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="82"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
         <source>Start Corner:</source>
         <translation>Начальный угол области:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80"/>
         <source>End Corner:</source>
         <translation>Конечный угол области:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="94"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
         <source>Reference Point:</source>
         <translation>Базовая точка:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="115"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112"/>
         <source>Target Point:</source>
         <translation>Точка назначения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="116"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
         <source>Offset:</source>
         <translation>Смещение:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="201"/>
         <source>Specify reference point</source>
         <translation>Укажите базовую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
         <source>Specify target point</source>
         <translation>Укажите точку назначения</translation>
     </message>
@@ -29490,7 +29530,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="182"/>
         <source>Select first trim entity</source>
         <translation>Выберите первый объект для подгонки</translation>
     </message>
@@ -29499,7 +29539,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="184"/>
         <source>Select limiting entity</source>
         <translation>Выберите ограничивающий объект</translation>
     </message>
@@ -29508,27 +29548,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="121"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="122"/>
         <source>Trim</source>
         <translation>Подгонка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="123"/>
         <source>Intersection:</source>
         <translation>Точка пересечения:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="124"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="125"/>
         <source>Intersection 2:</source>
         <translation>Точка пересечения 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="188"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select second trim entity</source>
         <translation>Выберите второй объект для подгонки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="191"/>
         <source>Select entity to trim</source>
         <translation>Выберите объект для подгонки</translation>
     </message>
@@ -29544,22 +29584,22 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Выбранный объект находится внутри блока. Отредактируйте, пожалуйста, блок.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="172"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="167"/>
         <source>No entity found.</source>
         <translation>Объект на найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="179"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="174"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
         <translation>Выбранный объект не является элементарным объектом или его невозможно подогнать.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="199"/>
         <source>Not a valid expression</source>
         <translation>Недопустимое выражение</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="231"/>
         <source>Select line, arc, ellipse or parabola to trim or enter distance:</source>
         <translation>Выберите прямую, эллипс или параболу для подгонки - или введите дистанцию: </translation>
     </message>
@@ -29575,27 +29615,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionOrder</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="111"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="110"/>
         <source>No Entity found.</source>
         <translation>Объекты не найдены.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Choose entities (Enter to Complete)</source>
         <translation>Выберите объекты (Enter - завершает выбор)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Order immediately after selection</source>
         <translation>Упорядочить сразу после выбора</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="128"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="127"/>
         <source>Select contour</source>
         <translation>Выбрать контур</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="131"/>
         <source>Choose entity for order</source>
         <translation>Укажите объекты для упорядочивания</translation>
     </message>
@@ -29653,27 +29693,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="113"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="109"/>
         <source>No Entity found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
         <translation>Объект должен быть ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="156"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="152"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>Щёлкните рядом с началом или концом существующей ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="266"/>
         <source>Enter number of polylines</source>
         <translation>Введите количество полилиний</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="280"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>Укажите ломаную рядом с началом или концом точки</translation>
     </message>
@@ -29690,12 +29730,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Укажите следующую точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="115"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>Нельзя прикрепить узел к замкнутой ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="304"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="300"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Не могу отменить: мало объектов.</translation>
     </message>
@@ -29711,33 +29751,33 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="96"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="109"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="94"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="107"/>
         <source>No Entity found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="98"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="96"/>
         <source>Entity must be a polyline.</source>
         <translation>Объект должен быть ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="139"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="137"/>
         <source>Specify polyline to delete node</source>
         <translation>Укажите ломаную для удаления вершины</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="140"/>
         <source>Specify deleting node&apos;s point</source>
         <translation>Укажите удаляемую вершину</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="125"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="123"/>
         <source>Deleting point is invalid.</source>
         <translation>Некорректная удаляемая точка.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="114"/>
         <source>Deleting point is not on entity.</source>
         <translation>Удаляемая точка не принадлежит объекту.</translation>
     </message>
@@ -29804,17 +29844,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="306"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="307"/>
         <source>Entity must be a polyline.</source>
         <translation>Объект должен быть ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="357"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="356"/>
         <source>Choose the original polyline</source>
         <translation>Укажите исходную ломаную</translation>
     </message>
@@ -29826,12 +29866,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="309"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="306"/>
         <source>No Entity found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="333"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="330"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Выберите один из отрезков на исходной ломаной</translation>
     </message>
@@ -29840,13 +29880,13 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="311"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="308"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>Объект не может быть замкнутой ломаной.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="61"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="82"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="58"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="79"/>
         <source>Polyline created</source>
         <translation>Полилиния создана</translation>
     </message>
@@ -29862,12 +29902,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="115"/>
         <source>No Entity found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="118"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="117"/>
         <source>Entity must be a polyline.</source>
         <translation>Объект должен быть ломаной.</translation>
     </message>
@@ -29880,27 +29920,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Нет отрезков принадлежащих объекту.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="136"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="135"/>
         <source>First segment should be on selected polyline.</source>
         <translation>Первый сегмент должен быть на выбраной полилинии</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="148"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="147"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
         <translation>Второй сегмент должен быть на выбраной полилинии и не равен первому выбраному</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="182"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
         <translation>Укажите ломаную для подгонки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="184"/>
         <source>Specify first segment</source>
         <translation>Укажите первый отрезок</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="187"/>
         <source>Specify second segment</source>
         <translation>Укажите второй отрезок</translation>
     </message>
@@ -29908,72 +29948,72 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="274"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="276"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): некорректный размер бумаги</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="156"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation>Смещение вывода на печать в координатах бумаги (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="159"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="161"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation>Смещение вывода на печать в графических координатах (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="183"/>
         <source>Printout offset in graph coordinates</source>
         <translation>Смещение вывода на печать в графических координатах</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset in paper coordinates</source>
         <translation>Смещение вывода на печать в координатах бумаг</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="218"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="220"/>
         <source>: select printout offset coordinates</source>
         <translation>: выберите координаты смещения вывода на печать</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="219"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="221"/>
         <source>type in offset from command line to offset printout</source>
         <translation>введите отступы при печати из командной строки</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="389"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="391"/>
         <source>Limit of pages has been exceeded.</source>
         <translation>Достигнут предел числа страниц.</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
         <translation>Зажмите Левую Кнопку мыши для перемещения бумаги, или Среднюю для перемещения чертежа</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Move Horizontally</source>
         <translation>Перемещать только по вертикали</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="449"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="451"/>
         <source>Move Vertically</source>
         <translation>Перемещать только по горизонтали</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="193"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="195"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Игнорирование относительного нуля в смещении вывода на печать. Игнорирование &apos;@&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="175"/>
         <source>Printout in Black/White</source>
         <translation>Печать в чёрно-белом</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout in color</source>
         <translation>Печать в цвете</translation>
     </message>
@@ -30064,12 +30104,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="56"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="55"/>
         <source>Entity must be an Atomic Entity.</source>
         <translation>Объект должен быть элементарным.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="75"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="74"/>
         <source>Specify entity to select</source>
         <translation>Укажите объект для выделения</translation>
     </message>
@@ -30085,12 +30125,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="111"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="109"/>
         <source>Choose first point of intersection line</source>
         <translation>Укажите первую точку линии пересечения</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="114"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="112"/>
         <source>Choose second point of intersection line</source>
         <translation>Укажите вторую точку линии пересечения</translation>
     </message>
@@ -30098,7 +30138,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="70"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="69"/>
         <source>Specify entity with desired layer</source>
         <translation>Укажите объект с желаемым слоем для выделения</translation>
     </message>
@@ -30201,7 +30241,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="146"/>
+        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
         <source>Select first entity</source>
         <translation>Выберите первый объект</translation>
     </message>
@@ -30210,7 +30250,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="149"/>
+        <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="148"/>
         <source>Select second entity</source>
         <translation>Выберите второй объект</translation>
     </message>
@@ -30222,12 +30262,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="59"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="58"/>
         <source>Regenerated %1 dimension entities</source>
         <translation>Перестроено %1 элементов размеров</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="60"/>
         <source>No dimension entities found</source>
         <translation>Не найдены элементы размеров</translation>
     </message>
@@ -30252,7 +30292,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="137"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify first edge</source>
         <translation>Укажите первую грань</translation>
     </message>
@@ -30261,7 +30301,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>Укажите вторую грань</translation>
     </message>
