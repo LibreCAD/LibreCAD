@@ -89,6 +89,12 @@ void LC_ActionPreSelectionAwareBase::mousePressEvent(QMouseEvent * e) {
     }
 }
 
+void LC_ActionPreSelectionAwareBase::proceedSelectedEntity(LC_MouseEvent* e) {
+    if (e->isControl) {
+        onSelectionCompleted(true, false);
+    }
+}
+
 void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (m_selectionComplete){
         onMouseLeftButtonReleaseSelected(status, e);
@@ -127,9 +133,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
             RS_Entity* entityToSelect = catchEntityByEvent(e, m_catchForSelectionEntityTypes);
             bool selectContour = e->isShift;
             if (selectEntity(entityToSelect, selectContour)) {
-                if (e->isControl) {
-                    onSelectionCompleted(true, false);
-                }
+                proceedSelectedEntity(e);
             }
         }
         m_inBoxSelectionMode = false;
@@ -148,15 +152,19 @@ void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, LC_Mo
     }
 }
 
+void LC_ActionPreSelectionAwareBase::applyBoxSelectionModeIfNeeded(RS_Vector mouse) {
+    if (m_selectionCorner1.valid && (m_viewport->toGuiDX(m_selectionCorner1.distanceTo(mouse)) > 10.0)){
+        m_inBoxSelectionMode = true;
+    }
+}
+
 void LC_ActionPreSelectionAwareBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (m_selectionComplete){
         onMouseMoveEventSelected(status, e);
     }
     else{
         RS_Vector mouse = e->graphPoint;
-        if (m_selectionCorner1.valid && (m_viewport->toGuiDX(m_selectionCorner1.distanceTo(mouse)) > 10.0)){
-            m_inBoxSelectionMode = true;
-        }
+        applyBoxSelectionModeIfNeeded(mouse);
         if (m_inBoxSelectionMode){
             drawOverlayBox(m_selectionCorner1, mouse);
             if (m_infoCursorOverlayPrefs->enabled) {

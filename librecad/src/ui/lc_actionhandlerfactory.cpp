@@ -52,6 +52,7 @@
 #include "lc_actiondrawsplinepoints.h"
 #include "lc_actiondrawstar.h"
 #include "lc_actioneditpastetransform.h"
+#include "lc_actionentitylayertoggle.h"
 #include "lc_actionfileexportmakercam.h"
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actioninfopickcoordinates.h"
@@ -919,12 +920,19 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
         case RS2::ActionSnapMiddleManual: {
             auto currentAction = ctx->getCurrentAction();
             if (currentAction != nullptr) {
-                if (currentAction->rtti() == RS2::ActionSnapMiddleManual)    {
+                if (currentAction->rtti() == RS2::ActionSnapMiddleManual){
                     currentAction->init(-1);
                     return nullptr;
                 }
                 return std::make_shared<LC_ActionSnapMiddleManual>(ctx);
             }
+        }
+        case RS2::ActionLayerEntityActivate:
+        case RS2::ActionLayerEntityToggleView:
+        case RS2::ActionLayerEntityToggleConstruction:
+        case RS2::ActionLayerEntityTogglePrint:
+        case RS2::ActionLayerEntityToggleLock:{
+            return std::make_shared<LC_ActionLayerToggle>(ctx, actionType);
         }
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,&"LC_ActionsHandlerFactory::createActionInstance: No such action found. Type " [ actionType]);

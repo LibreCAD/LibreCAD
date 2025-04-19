@@ -179,12 +179,9 @@ namespace RS2 {
         ActionNone,        /**< Invalid action id. */
 
         ActionDefault,
-
         ActionFileNew,
         ActionFileNewTemplate,
         ActionFileOpen,
-//        ActionFileSave,
-//        ActionFileSaveAs,
         ActionFileExport,
         ActionFileClose,
         ActionFilePrint,
@@ -208,7 +205,6 @@ namespace RS2 {
         ActionOrderLower,
         ActionOrderRaise,
         ActionOrderTop,
-
         ActionViewStatusBar,
         ActionViewLayerList,
         ActionViewBlockList,
@@ -221,10 +217,8 @@ namespace RS2 {
         ActionViewFileToolbar,
         ActionViewEditToolbar,
         ActionViewSnapToolbar,
-
         ActionViewGrid,
         ActionViewDraft,
-
         ActionZoomIn,
         ActionZoomOut,
         ActionZoomAuto,
@@ -233,7 +227,6 @@ namespace RS2 {
         ActionZoomRedraw,
         ActionZoomPrevious,
         ActionZoomScroll, // fixme - sand - or probably it's better to incorporate into view?
-
         ActionSelect,
         ActionSelectSingle,
         ActionSelectContour,
@@ -438,6 +431,12 @@ namespace RS2 {
         ActionLayersToggleConstruction,
         ActionLayersExportSelected,
         ActionLayersExportVisible,
+
+        ActionLayerEntityActivate,
+        ActionLayerEntityToggleView,
+        ActionLayerEntityTogglePrint,
+        ActionLayerEntityToggleConstruction,
+        ActionLayerEntityToggleLock,
 
         ActionBlocksDefreezeAll,
         ActionBlocksFreezeAll,

@@ -345,6 +345,12 @@ set(SOURCES
         librecad/src/actions/dock_widgets/layer/lc_actionlayersexport.h
         librecad/src/actions/dock_widgets/layer/lc_actionlayerstoggleconstruction.cpp
         librecad/src/actions/dock_widgets/layer/lc_actionlayerstoggleconstruction.h
+
+        librecad/src/actions/dock_widgets/layer/lc_actionentitylayerbase.h
+        librecad/src/actions/dock_widgets/layer/lc_actionentitylayerbase.cpp
+        librecad/src/actions/dock_widgets/layer/lc_actionentitylayertoggle.cpp
+        librecad/src/actions/dock_widgets/layer/lc_actionentitylayertoggle.cpp
+
 		librecad/src/actions/dock_widgets/block/rs_actionblocksadd.cpp
 		librecad/src/actions/dock_widgets/block/rs_actionblocksadd.h
 		librecad/src/actions/dock_widgets/block/rs_actionblocksattributes.cpp

@@ -47,7 +47,7 @@ void LC_ToolbarFactory::initToolBars(){
     createCustomToolbars();
 }
 
-QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
+QToolBar* LC_ToolbarFactory::createPenToolbar(const QSizePolicy &tbPolicy) const{
     auto result = new QG_PenToolBar(tr("Pen"), m_appWin);
     result->setSizePolicy(tbPolicy);
     result->setObjectName("pen_toolbar");
@@ -60,7 +60,7 @@ QToolBar* LC_ToolbarFactory::createPenToolbar(QSizePolicy tbPolicy){
     return result;
 }
 
-QToolBar * LC_ToolbarFactory::createSnapToolbar(QSizePolicy tbPolicy) const {
+QToolBar * LC_ToolbarFactory::createSnapToolbar(const QSizePolicy &tbPolicy) const {
     auto ag_manager = m_appWin->m_actionGroupManager.get();
     auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler.get(), ag_manager,ag_manager->getActionsMap());
     result->setWindowTitle(tr("Snap Selection"));
@@ -150,6 +150,23 @@ QToolBar *LC_ToolbarFactory::createPreferencesToolbar(const QSizePolicy &tbPolic
                                 }, 1);
 }
 
+QToolBar * LC_ToolbarFactory::createEntityLayersToolbar(const QSizePolicy  &tbPolicy) const{
+    auto result = createGenericToolbar(tr("Entity's Layer"), "Entity Layer", tbPolicy,{
+                "EntityLayerActivate",
+            }, 1);
+
+    QToolButton *btn = new QToolButton;
+    btn->setDefaultAction(m_agm->getActionByName("EntityLayerView"));
+    btn->setPopupMode(QToolButton::ToolButtonPopupMode::MenuButtonPopup);
+    btn->addAction(m_agm->getActionByName("EntityLayerLock"));
+    btn->addAction(m_agm->getActionByName("EntityLayerConstruction"));
+    btn->addAction(m_agm->getActionByName("EntityLayerPrint"));
+
+    result->addWidget(btn);
+
+    return result;
+}
+
 void LC_ToolbarFactory::createStandardToolbars(){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -164,6 +181,8 @@ void LC_ToolbarFactory::createStandardToolbars(){
     auto snap = createSnapToolbar(tbPolicy);
 
     auto pen = createPenToolbar(tbPolicy);
+    auto entityLayers = createEntityLayersToolbar(tbPolicy);
+
     m_appWin->m_toolOptionsToolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {},1);
 
     auto infoCursor = createInfoCursorToolbar(tbPolicy);
@@ -181,6 +200,7 @@ void LC_ToolbarFactory::createStandardToolbars(){
     addToTop(preferences);
     m_appWin->addToolBarBreak();
     addToTop(pen);
+    addToTop(entityLayers);
     addToTop(m_appWin->m_toolOptionsToolbar);
     addToLeft(order);
 

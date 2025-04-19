@@ -46,23 +46,26 @@ protected:
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    virtual void applyBoxSelectionModeIfNeeded(RS_Vector mouse);
     virtual void onSelectionCompleted(bool singleEntity, bool fromInit);
     virtual void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent);
     virtual void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent);
     virtual void onMouseMoveEventSelected(int status, LC_MouseEvent *e);
     virtual void updateMouseButtonHintsForSelection() = 0;
     virtual void updateMouseButtonHintsForSelected(int status);
+    virtual bool isAllowTriggerOnEmptySelection(){return true;};
+    virtual void doTrigger(bool keepSelected) = 0;
+    virtual void finishMouseMoveOnSelection(LC_MouseEvent *event);
+    virtual void proceedSelectedEntity(LC_MouseEvent* e);
     RS2::CursorType doGetMouseCursor(int status) override;
     virtual RS2::CursorType doGetMouseCursorSelected(int status);
     unsigned int countSelectedEntities();
     void setSelectionComplete(bool allowEmptySelection, bool fromInit);
-    virtual bool isAllowTriggerOnEmptySelection(){return true;};
     void updateMouseButtonHints() override;
-    virtual void doTrigger(bool keepSelected) = 0;
-    virtual void finishMouseMoveOnSelection(LC_MouseEvent *event);
     void doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const override;
     void doTrigger() override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+
 };
 
 #endif // LC_ACTIONPRESELECTIONAWAREBASE_H

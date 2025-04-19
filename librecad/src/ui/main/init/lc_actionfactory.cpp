@@ -78,7 +78,8 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"workspaces", tr("Workspaces"), tr("Workspaces operations"), ":/icons/workspace.lci", false},
         {"ucs", tr("UCS"), tr("UCS operations"), ":/icons/set_ucs.lci"},
         {"widgets", tr("Widgets"), tr("Widgets management"), ":/icons/dockwidgets_bottom.lci", false},
-        {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false}
+        {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false},
+        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/info_cursor_enable.lci", false}
     },agm);
 
     auto fileGroup = agm->getGroupByName("file");
@@ -95,6 +96,16 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
     for (auto actionGroup : toolGroups) {
         connect(actionGroup, &LC_ActionGroup::triggered, m_appWin, &QC_ApplicationWindow::relayAction);
     }
+}
+
+void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group) {
+    createActionHandlerActions(map, group,{
+     {"EntityLayerActivate",     RS2::ActionLayerEntityActivate,          tr("Activate Entity's Layer"),           ":/icons/select_entity.lci"},
+     {"EntityLayerView",         RS2::ActionLayerEntityToggleView,        tr("Toggle Entity's Layer Visibility"),  ":/icons/not_visible.lci"},
+     {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Toggle Entity's Layer Lock"),        ":/icons/locked.lci"},
+     {"EntityLayerConstruction", RS2::ActionLayerEntityToggleConstruction,tr("Toggle Entity's Layer Construction"),":/icons/construction_layer.lci"},
+     {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,           tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
+ });
 }
 
 // todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
@@ -127,6 +138,8 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createRelZeroActions(a_map, agm->getGroupByName("other"));
     createUCSActions(a_map, agm->getGroupByName("ucs"));
     createEditActions(a_map, agm->getGroupByName("edit"));
+
+    createEntityLayerActions(a_map, agm->getGroupByName("entity_layer"));
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -1006,6 +1019,14 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "PenPickResolved",
                         "PenApply",
                         "PenCopy"
+                    }, map);
+
+    fillActionsList(entity_layer_actions,{
+                        "EntityLayerActivate",
+                        "EntityLayerView",
+                        "EntityLayerLock",
+                        "EntityLayerConstruction",
+                        "EntityLayerPrint"
                     }, map);
 }
 

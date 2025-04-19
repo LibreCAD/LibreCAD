@@ -25,6 +25,7 @@
 #define LC_ACTIONFACTORY_H
 
 #include "lc_actionfactorybase.h"
+#include "lc_actiongroup.h"
 
 class QActionGroup;
 class QAction;
@@ -56,9 +57,10 @@ public:
     QList<QAction*> layer_actions;
     QList<QAction*> block_actions;
     QList<QAction*> pen_actions;
-
+    QList<QAction*> entity_layer_actions;
 private:
     void initActionGroupManager(LC_ActionGroupManager* agm);
+    void createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group);
     void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group) const;

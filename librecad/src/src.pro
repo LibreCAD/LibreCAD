@@ -274,6 +274,8 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/dock_widgets/layer/lc_actionentitylayerbase.h \
+    actions/dock_widgets/layer/lc_actionentitylayertoggle.h \
     actions/dock_widgets/layer/lc_actionlayerscmd.h \
     actions/dock_widgets/ucs_list/lc_actionucscreate.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.h \
@@ -516,6 +518,8 @@ HEADERS += \
     ui/main/lc_mdiapplicationwindow.h
 
 SOURCES += \
+    actions/dock_widgets/layer/lc_actionentitylayerbase.cpp \
+    actions/dock_widgets/layer/lc_actionentitylayertoggle.cpp \
     actions/dock_widgets/layer/lc_actionlayerscmd.cpp \
     actions/dock_widgets/ucs_list/lc_actionucscreate.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp \

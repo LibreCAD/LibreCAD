@@ -48,8 +48,8 @@ private:
     void createCADToolbars() const;
     void createCustomToolbars();
 
-    QToolBar *createPenToolbar(QSizePolicy tbPolicy);
-    QToolBar *createSnapToolbar(QSizePolicy tbPolicy) const;
+    QToolBar *createPenToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createSnapToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createFileToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createEditToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createOrderToolbar(const QSizePolicy &tbPolicy) const;
@@ -58,6 +58,7 @@ private:
     QToolBar *createCreatorsToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createPreferencesToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createInfoCursorToolbar(const QSizePolicy &tbPolicy);
+    QToolBar * createEntityLayersToolbar(const QSizePolicy &tbPolicy) const;
 
     QToolBar *createCategoriesToolbar();
     QToolBar *createNamedViewsToolbar(const QSizePolicy &toolBarPolicy) const;
