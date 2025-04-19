@@ -27,3 +27,7 @@ target_link_libraries(
     Qt6::Widgets
 )
 
+if(WIN32)
+SET(RC_SOURCE plugin.rc)
+target_sources( ${PLUGIN_NAME} PRIVATE ${RC_SOURCE})
+endif()
