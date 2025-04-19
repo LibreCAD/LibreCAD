@@ -41,7 +41,7 @@ class RS_ActionModifyMirror:public LC_ActionModifyBase {
 public:
     RS_ActionModifyMirror(LC_ActionContext *actionContext);
     ~RS_ActionModifyMirror() override;
-    bool isMirrorToExistingLine() const {return mirrorToExistingLine;};
+    bool isMirrorToExistingLine() const {return m_mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
 protected:
     /**
@@ -52,9 +52,9 @@ protected:
         SetAxisPoint2,    /**< Setting the 2nd point of the axis. */
         ShowDialog,        /**< Showing the options dialog. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool mirrorToExistingLine;
+    struct MirrorActionData;
+    std::unique_ptr<MirrorActionData> m_actionData;
+    bool m_mirrorToExistingLine;
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
     RS2::CursorType doGetMouseCursorSelected(int status) override;

@@ -23,34 +23,31 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <algorithm>
-#include <QKeyEvent>
-
-#include "qc_applicationwindow.h"
 #include "rs_actiondefault.h"
+
+#include <QKeyEvent>
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "rs_commandevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_modification.h"
-#include "rs_overlaybox.h"
-#include "rs_preview.h"
-#include "rs_selection.h"
-#include "rs_units.h"
-#include "rs_actioninterface.h"
-#include "lc_linemath.h"
-#include "rs_snapper.h"
 #include "lc_graphicviewport.h"
+#include "lc_linemath.h"
 #include "lc_quickinfowidget.h"
+#include "qc_applicationwindow.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_constructionline.h"
+#include "rs_debug.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
+#include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_preview.h"
+#include "rs_selection.h"
 #include "rs_settings.h"
+
+class RS_Polyline;
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;

@@ -21,11 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actiondrawlineorthtan.h"
-#include "rs_creation.h"
 
-#include "rs_graphicview.h"
+#include "rs_creation.h"
 #include "rs_line.h"
-#include "rs_preview.h"
 
 namespace{
 //this holds a list of entity types which supports tangent

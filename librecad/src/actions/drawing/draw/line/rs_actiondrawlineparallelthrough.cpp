@@ -25,15 +25,10 @@
 **********************************************************************/
 
 #include "rs_actiondrawlineparallelthrough.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
+
+#include "qg_lineparallelthroughoptions.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
-#include "qg_lineparallelthroughoptions.h"
-#include "rs_actioninterface.h"
 // fixme - sand - consider relaxing existing restrictions, if any - and use no-restrictions mode for this action.
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(LC_ActionContext *actionContext)

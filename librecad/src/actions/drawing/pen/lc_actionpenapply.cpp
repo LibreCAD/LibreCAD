@@ -20,12 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_actionpenapply.h"
-#include "rs_dialogfactory.h"
-#include "qg_pentoolbar.h"
+
 #include "qc_applicationwindow.h"
+#include "qg_pentoolbar.h"
 #include "rs_entity.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_pen.h"
+
+class QG_PenToolBar;
 
 LC_ActionPenApply::LC_ActionPenApply(LC_ActionContext *actionContext, bool copy):
     RS_PreviewActionInterface(copy? "PenCopy" : "PenApply", actionContext, copy? RS2::ActionPenCopy :  RS2::ActionPenApply),

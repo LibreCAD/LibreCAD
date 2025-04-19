@@ -24,7 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONMODIFYBASE_H
 
 #include "lc_actionpreselectionawarebase.h"
-#include "rs_modification.h"
+
+struct LC_ModifyOperationFlags;
 
 class LC_ActionModifyBase:public LC_ActionPreSelectionAwareBase{
 public:

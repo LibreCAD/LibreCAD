@@ -24,14 +24,13 @@
 **
 **********************************************************************/
 
+#include "qc_actiongetent.h"
 
 #include <QKeyEvent>
+
 #include "doc_plugin_interface.h"
-#include "qc_actiongetent.h"
 #include "rs_debug.h"
 #include "rs_selection.h"
-#include "rs_snapper.h"
-
 
 QC_ActionGetEnt::QC_ActionGetEnt(LC_ActionContext* actionContext)
         :RS_ActionInterface("Get Entity", actionContext,RS2::ActionGetEntity) {

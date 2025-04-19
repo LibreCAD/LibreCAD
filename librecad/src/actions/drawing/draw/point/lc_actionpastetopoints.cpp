@@ -21,13 +21,11 @@
  ******************************************************************************/
 
 #include "lc_actionpastetopoints.h"
+
 #include "lc_pastetopointsoptions.h"
-#include "rs_document.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_clipboard.h"
+#include "rs_entity.h"
 #include "rs_modification.h"
-#include "rs_debug.h"
 
 LC_ActionPasteToPoints::LC_ActionPasteToPoints(LC_ActionContext *actionContext):
     LC_ActionPreSelectionAwareBase("PasteToPoints", actionContext, RS2::ActionPasteToPoints, {RS2::EntityPoint}){

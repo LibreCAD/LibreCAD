@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONMODIFYLINEJOIN_H
 #define LC_ACTIONMODIFYLINEJOIN_H
 
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
 
 /**

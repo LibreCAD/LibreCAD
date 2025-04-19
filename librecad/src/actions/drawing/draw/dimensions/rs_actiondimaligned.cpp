@@ -23,18 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #include "rs_actiondimaligned.h"
-#include "rs_commandevent.h"
+
 #include "rs_constructionline.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_dimaligned.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
-#include "lc_actiondimlinearbase.h"
 
 RS_ActionDimAligned::RS_ActionDimAligned(LC_ActionContext *actionContext)
     :LC_ActionDimLinearBase("Draw aligned dimensions",actionContext, RS2::ActionDimAligned){

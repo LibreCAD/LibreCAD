@@ -18,14 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include <cmath>
 
 #include "lc_actiondrawcircle2pr.h"
+
 #include "rs_circle.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_preview.h"
 
 struct LC_ActionDrawCircle2PR::Points{
@@ -35,7 +31,7 @@ struct LC_ActionDrawCircle2PR::Points{
 
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(LC_ActionContext *actionContext)
     :RS_ActionDrawCircleCR(actionContext)
-    , pPoints(std::make_unique<Points>()){
+    , m_actionData(std::make_unique<Points>()){
     m_actionType=RS2::ActionDrawCircle2PR;
     reset();
 }
@@ -47,8 +43,8 @@ void LC_ActionDrawCircle2PR::reset(){
     double radius = data->radius;
     *data = {};
     data->radius = radius;
-    pPoints->point1 = {};
-    pPoints->point2 = {};
+    m_actionData->point1 = {};
+    m_actionData->point2 = {};
 }
 
 void LC_ActionDrawCircle2PR::init(int status){
@@ -71,10 +67,10 @@ void LC_ActionDrawCircle2PR::doTrigger() {
 }
 
 bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse, RS_Vector& altCenter){
-    const RS_Vector vp = (pPoints->point1 + pPoints->point2) * 0.5;
-    double const angle = pPoints->point1.angleTo(pPoints->point2) + 0.5 * M_PI;
+    const RS_Vector vp = (m_actionData->point1 + m_actionData->point2) * 0.5;
+    double const angle = m_actionData->point1.angleTo(m_actionData->point2) + 0.5 * M_PI;
     double const &r0 = data->radius;
-    double const r = sqrt(r0 * r0 - 0.25 * pPoints->point1.squaredTo(pPoints->point2));
+    double const r = sqrt(r0 * r0 - 0.25 * m_actionData->point1.squaredTo(m_actionData->point2));
     const RS_Vector dvp = RS_Vector(angle) * r;
     const RS_Vector &center1 = vp + dvp;
     const RS_Vector &center2 = vp - dvp;
@@ -106,20 +102,20 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint1:
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
 
         case SetPoint2: {
-            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-            if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius) {
-                pPoints->point2 = mouse;
+            mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
+            if (mouse.distanceTo(m_actionData->point1) <= 2. * data->radius) {
+                m_actionData->point2 = mouse;
             }
 
             if (m_showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->point1);
-                previewRefSelectablePoint(pPoints->point2);
-                previewRefLine(pPoints->point1, pPoints->point2);
+                previewRefPoint(m_actionData->point1);
+                previewRefSelectablePoint(m_actionData->point2);
+                previewRefLine(m_actionData->point1, m_actionData->point2);
             }
 
             RS_Vector altCenter;
@@ -149,9 +145,9 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewRefSelectablePoint(data->center);
                     previewRefSelectablePoint(altCenter);
                     if (m_showRefEntitiesOnPreview) {
-                        previewRefPoint(pPoints->point1);
-                        previewRefPoint(pPoints->point2);
-                        previewRefLine(pPoints->point1, pPoints->point2);
+                        previewRefPoint(m_actionData->point1);
+                        previewRefPoint(m_actionData->point2);
+                        previewRefLine(m_actionData->point1, m_actionData->point2);
                     }
                 }
             } else {
@@ -166,7 +162,7 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
-        coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        coord = getSnapAngleAwarePoint(e, m_actionData->point1, coord);
     }
     else if (status == SelectCenter){
         invalidateSnapSpot();
@@ -182,15 +178,15 @@ void LC_ActionDrawCircle2PR::onMouseRightButtonRelease(int status, [[maybe_unuse
 void LC_ActionDrawCircle2PR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPoint1: {
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
-            double distance = mouse.distanceTo(pPoints->point1);
+            double distance = mouse.distanceTo(m_actionData->point1);
             if (distance <= 2. * data->radius){
-                pPoints->point2 = mouse;
+                m_actionData->point2 = mouse;
                 moveRelativeZero(mouse);
                 setStatus(SelectCenter);
             } else {

@@ -27,9 +27,7 @@
 #ifndef RS_ACTIONDRAWCIRCLE_H
 #define RS_ACTIONDRAWCIRCLE_H
 
-#include <memory>
 
-#include "rs_previewactioninterface.h"
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
@@ -63,7 +61,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *e) override;
 };
 #endif

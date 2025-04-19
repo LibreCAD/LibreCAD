@@ -29,6 +29,7 @@
 #define RS_SETTINGS_H
 
 #include <QObject>
+#include <QVariant>
 
 class RS_Pen;
 class QSettings;
@@ -107,7 +108,7 @@ public:
         QString m_group;
     };
 
-    virtual ~RS_Settings();
+    ~RS_Settings() override;
 
 /**
     * @return Instance to the unique settings object.

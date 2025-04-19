@@ -20,28 +20,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QList>
-#include <QMouseEvent>
-
 #include "lc_abstractactionwithpreview.h"
 
-#include "lc_actioncontext.h"
-#include "rs_commandevent.h"
-#include "rs_commands.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
+#include <QMouseEvent>
 
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
+#include "lc_actioncontext.h"
+#include "lc_refarc.h"
+#include "lc_refline.h"
+#include "lc_refpoint.h"
+#include "rs_document.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
-#include "rs_preview.h"
 #include "rs_line.h"
 #include "rs_point.h"
-#include "lc_refpoint.h"
-#include "lc_refline.h"
-#include "rs_previewactioninterface.h"
-#include "lc_refarc.h"
-#include "rs_actioninterface.h"
+#include "rs_preview.h"
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions

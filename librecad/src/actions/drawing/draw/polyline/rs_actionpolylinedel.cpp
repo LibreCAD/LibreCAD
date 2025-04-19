@@ -24,13 +24,11 @@
 **
 **********************************************************************/
 #include "rs_actionpolylinedel.h"
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_preview.h"
 #include "rs_polyline.h"
-#include "lc_actionpolylinedeletebase.h"
+#include "rs_preview.h"
 
 RS_ActionPolylineDel::RS_ActionPolylineDel(LC_ActionContext *actionContext)
     :LC_ActionPolylineDeleteBase("Delete node",actionContext, RS2::ActionPolylineDel){

@@ -21,13 +21,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "rs_math.h"
-#include "lc_linemath.h"
-#include "rs_point.h"
-#include "lc_abstractactionwithpreview.h"
 #include "lc_actiondrawlinefrompointtoline.h"
+
 #include "lc_linefrompointtolineoptions.h"
-#include "rs_previewactioninterface.h"
+#include "lc_linemath.h"
+#include "rs_line.h"
 
 LC_ActionDrawLineFromPointToLine::LC_ActionDrawLineFromPointToLine(LC_ActionContext *actionContext)
     :LC_AbstractActionWithPreview("Draw Line To Line", actionContext,RS2::ActionDrawLineFromPointToLine){

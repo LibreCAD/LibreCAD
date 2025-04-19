@@ -23,7 +23,6 @@
 #ifndef RS_ACTIONDRAWCIRCLETAN3_H
 #define RS_ACTIONDRAWCIRCLETAN3_H
 
-#include<vector>
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;

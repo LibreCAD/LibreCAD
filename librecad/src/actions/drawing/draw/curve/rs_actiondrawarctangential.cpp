@@ -23,19 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include<cmath>
-
 #include "rs_actiondrawarctangential.h"
-#include "rs_arc.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_preview.h"
-#include "rs_actioninterface.h"
+
 #include "qg_arctangentialoptions.h"
+#include "rs_arc.h"
+#include "rs_debug.h"
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw arcs tangential",actionContext, RS2::ActionDrawArcTangential)

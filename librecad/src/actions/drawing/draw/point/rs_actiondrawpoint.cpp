@@ -25,10 +25,7 @@
 **********************************************************************/
 
 #include "rs_actiondrawpoint.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+
 #include "rs_point.h"
 
 RS_ActionDrawPoint::RS_ActionDrawPoint(LC_ActionContext *actionContext)

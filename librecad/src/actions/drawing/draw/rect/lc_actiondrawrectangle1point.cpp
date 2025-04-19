@@ -19,11 +19,12 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include "rs_arc.h"
-#include "rs_math.h"
-#include "lc_linemath.h"
+
 #include "lc_actiondrawrectangle1point.h"
+
+#include "lc_linemath.h"
 #include "lc_rectangle1pointoptions.h"
+#include "rs_polyline.h"
 
 LC_ActionDrawRectangle1Point::LC_ActionDrawRectangle1Point(LC_ActionContext *actionContext)
     :LC_AbstractActionDrawRectangle("Draw rectangles rel",actionContext, RS2::ActionDrawRectangle1Point){

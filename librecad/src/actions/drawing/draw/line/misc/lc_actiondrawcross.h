@@ -23,40 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWCROSS_H
 #define LC_ACTIONDRAWCROSS_H
 
-#include <QMouseEvent>
-#include "rs_coordinateevent.h"
-#include "rs_entity.h"
-#include "rs_snapper.h"
-#include "rs_previewactioninterface.h"
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
 
-/**
- * Structure that contains information about cross lines
- */
-struct LC_CrossData {
-    LC_CrossData() :
-        horizontal(),
-        vertical(),
-        centerPoint()
-    {}
-
-    LC_CrossData(const RS_Vector& horPoint1,
-                 const RS_Vector& horPoint2,
-                 const RS_Vector& vertPoint1,
-                 const RS_Vector& vertPoint2,
-                 const RS_Vector& center) :
-        horizontal( horPoint1, horPoint2),
-        vertical( vertPoint1, vertPoint2),
-        centerPoint(center){}
-
-    // horizontal line
-    RS_LineData horizontal;
-    // vertical line
-    RS_LineData vertical;
-    // center point
-    RS_Vector centerPoint;
-};
+struct LC_CrossData;
 
 /**
  * Action that draws cross positioned in center of selected circle, arc or ellipse

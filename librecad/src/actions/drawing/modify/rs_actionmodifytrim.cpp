@@ -28,12 +28,12 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "rs_arc.h"
+#include "rs_atomicentity.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
 
-struct RS_ActionModifyTrim::Points {
+struct RS_ActionModifyTrim::TrimActionData {
     RS_Vector limitCoord;
     RS_Vector trimCoord;
 };
@@ -44,7 +44,7 @@ struct RS_ActionModifyTrim::Points {
 RS_ActionModifyTrim::RS_ActionModifyTrim(LC_ActionContext *actionContext, bool both)
     : RS_PreviewActionInterface("Trim Entity",actionContext, both ? RS2::ActionModifyTrim2 : RS2::ActionModifyTrim)
     , trimEntity{nullptr}, limitEntity{nullptr}
-    , pPoints(std::make_unique<Points>()), both{both} {
+    , m_actionData(std::make_unique<TrimActionData>()), both{both} {
 }
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim() = default;
@@ -66,8 +66,8 @@ void RS_ActionModifyTrim::doTrigger() {
         limitEntity /* && limitEntity->isAtomic()*/) {
 
         RS_Modification m(*m_container, m_viewport);
-        [[maybe_unused]] LC_TrimResult trimResult =  m.trim(pPoints->trimCoord,  trimEntity,
-               pPoints->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
+        [[maybe_unused]] LC_TrimResult trimResult =  m.trim(m_actionData->trimCoord,  trimEntity,
+               m_actionData->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
                both);
 
         trimEntity = nullptr;
@@ -102,7 +102,7 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                     RS_Modification m(*m_container, m_viewport);
                     LC_TrimResult trimResult = m.trim(mouse, atomicTrimCandidate,
-                                                      pPoints->limitCoord, limitEntity,
+                                                      m_actionData->limitCoord, limitEntity,
                                                       both, true);
                     if (trimResult.result) {
                         trimInvalid = false;
@@ -148,7 +148,7 @@ void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
             if (se != nullptr) {
                 limitEntity = se;
                 if (limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
-                    pPoints->limitCoord = mouse;
+                    m_actionData->limitCoord = mouse;
                     setStatus(ChooseTrimEntity);
                 }
             }
@@ -158,7 +158,7 @@ void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
             RS_Entity *se = catchEntityByEvent(e, RS2::ResolveNone);
             if (se != nullptr) {
                 if (se->isAtomic() && se != limitEntity) {
-                    pPoints->trimCoord = mouse;
+                    m_actionData->trimCoord = mouse;
                     trimEntity = dynamic_cast<RS_AtomicEntity *>(se);
                     trigger();
                 }

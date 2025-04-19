@@ -20,11 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_point.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
 #include "lc_abstractactiondrawline.h"
-#include "lc_abstractactionwithpreview.h"
+
 #include "lc_linemath.h"
 
 LC_AbstractActionDrawLine::LC_AbstractActionDrawLine(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)

@@ -20,13 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_math.h"
-#include "rs_point.h"
+#include "lc_actiondrawlinepoints.h"
+
 #include "lc_linemath.h"
 #include "lc_linepointsoptions.h"
-#include "lc_abstractactiondrawline.h"
-#include "lc_actiondrawlinepoints.h"
-#include "rs_previewactioninterface.h"
+#include "rs_point.h"
 
 LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(LC_ActionContext *actionContext, bool drawMiddle)
     :LC_AbstractActionDrawLine("LineDrawPoints", actionContext,

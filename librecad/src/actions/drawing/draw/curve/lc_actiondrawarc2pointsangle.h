@@ -23,8 +23,6 @@
 #ifndef LC_ACTIONDRAWARC2POINTSANGLE_H
 #define LC_ACTIONDRAWARC2POINTSANGLE_H
 
-#include <QObject>
-
 #include "lc_actiondrawarc2pointsbase.h"
 
 class LC_ActionDrawArc2PointsAngle:public LC_ActionDrawArc2PointsBase{

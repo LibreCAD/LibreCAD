@@ -20,12 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actioncircledimbase.h"
+
 #include "qg_dimoptions.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
+#include "rs_dimension.h"
 #include "rs_preview.h"
-
 
 LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
   : RS_ActionDimension(name, actionContext, actionType)

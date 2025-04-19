@@ -23,9 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWLINEANGLEREL_H
 #define LC_ACTIONDRAWLINEANGLEREL_H
 
-#include "rs_previewactioninterface.h"
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
+#include "rs_line.h"
 
 class LC_ActionDrawLineAngleRel :public LC_AbstractActionWithPreview {
     Q_OBJECT

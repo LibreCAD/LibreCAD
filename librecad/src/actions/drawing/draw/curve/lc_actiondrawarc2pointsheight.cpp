@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointsheight.h"
+
 #include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_circle.h"

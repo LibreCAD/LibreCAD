@@ -27,11 +27,7 @@
 #include "rs_actionpolylineappend.h"
 
 #include "lc_graphicviewport.h"
-#include "rs_commands.h"
-#include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_polyline.h"
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(LC_ActionContext *actionContext)
@@ -42,7 +38,7 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(LC_ActionContext *actionContext
 void RS_ActionPolylineAppend::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineAppend::trigger()");
 
-    auto newPolyline = pPoints->polyline;
+    auto newPolyline = m_actionData->polyline;
     if (newPolyline == nullptr){
         return;
     }
@@ -52,7 +48,7 @@ void RS_ActionPolylineAppend::doTrigger() {
 
     RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",newPolyline->getId());
     originalPolyline = nullptr;
-    pPoints->polyline = nullptr;
+    m_actionData->polyline = nullptr;
 }
 
 void RS_ActionPolylineAppend::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -97,7 +93,7 @@ void RS_ActionPolylineAppend::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetNextPoint: {
-            highlightSelected(pPoints->polyline);
+            highlightSelected(m_actionData->polyline);
             RS_ActionDrawPolyline::onMouseMoveEvent(status, e);
             break;
         }
@@ -130,28 +126,28 @@ void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, LC_MouseEvent
                 double distToEnd = originalPolyline->getEndpoint().distanceTo(mouse);
 
                 if (distToStart < distToEnd){
-                    pPoints->point = originalPolyline->getStartpoint();
+                    m_actionData->point = originalPolyline->getStartpoint();
                 }
                 else{
-                    pPoints->point = originalPolyline->getEndpoint();
+                    m_actionData->point = originalPolyline->getEndpoint();
                 }
 
                 auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
-                pPoints->polyline = clone;
-                pPoints->data = clone->getData();
+                m_actionData->polyline = clone;
+                m_actionData->data = clone->getData();
                 m_container->addEntity(clone);
             } else {
                 auto nearestSegment = originalPolyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
                 auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
-                pPoints->polyline = clone;
-                pPoints->data = clone->getData();
+                m_actionData->polyline = clone;
+                m_actionData->data = clone->getData();
                 m_container->addEntity(clone);
                 prepend = false;
                 if (nearestSegment == entFirst) {
                     prepend = true;
-                    pPoints->point = originalPolyline->getStartpoint();
+                    m_actionData->point = originalPolyline->getStartpoint();
                 } else if (nearestSegment == entLast) {
-                    pPoints->point = originalPolyline->getEndpoint();
+                    m_actionData->point = originalPolyline->getEndpoint();
                 } else {
                     commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
                 }
@@ -175,7 +171,7 @@ void RS_ActionPolylineAppend::onMouseRightButtonRelease(int status, [[maybe_unus
 void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     RS_Vector mouse;
     if (m_calculatedSegment){
-        mouse = pPoints->calculatedEndpoint;
+        mouse = m_actionData->calculatedEndpoint;
     }
     else{
         mouse = pos;
@@ -183,11 +179,11 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
 
     switch (status) {
         case SetStartpoint: {
-            pPoints->history.clear();
-            pPoints->history.append(pPoints->point);
-            pPoints->bHistory.clear();
-            pPoints->bHistory.append(0.0);
-            pPoints->start = pPoints->point;
+            m_actionData->history.clear();
+            m_actionData->history.append(m_actionData->point);
+            m_actionData->bHistory.clear();
+            m_actionData->bHistory.append(0.0);
+            m_actionData->start = m_actionData->point;
             setStatus(SetNextPoint);
             moveRelativeZero(getPoint());
             updateMouseButtonHints();
@@ -213,7 +209,7 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                             m_reversed = m_reversed == -1 ? 1 : -1;
                             bulge = solveBulge(mouse);
                             m_reversed = originalReversed;
-                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            RS_ArcData tmpArcData = m_actionData->arc_data;
                             tmpArcData.reversed = !tmpArcData.reversed;
                             RS_Arc arc = RS_Arc(nullptr, tmpArcData);
                             bulge = arc.getBulge();
@@ -223,7 +219,7 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
 //                            m_reversed = m_reversed == -1 ? 1 : -1;
                             bulge = solveBulge(mouse);
                             m_reversed = originalReversed;
-                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            RS_ArcData tmpArcData = m_actionData->arc_data;
                             tmpArcData.reversed = !tmpArcData.reversed;
                             RS_Arc arc = RS_Arc(nullptr, tmpArcData);
                             bulge = arc.getBulge();
@@ -237,7 +233,7 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                 if (m_mode != Ang && m_mode != Line){
                     if (alternateArc) {
                         if (!prepend) {
-                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            RS_ArcData tmpArcData = m_actionData->arc_data;
                             tmpArcData.reversed = !tmpArcData.reversed;
                             RS_Arc arc = RS_Arc(nullptr, tmpArcData);
                             bulge = arc.getBulge();
@@ -245,7 +241,7 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                     }
                     else{
                         if (prepend) {
-                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            RS_ArcData tmpArcData = m_actionData->arc_data;
                             tmpArcData.reversed = !tmpArcData.reversed;
                             RS_Arc arc = RS_Arc(nullptr, tmpArcData);
                             bulge = arc.getBulge();
@@ -254,11 +250,11 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                 }
                 alternateArc = false;
 
-                pPoints->point = mouse;
-                pPoints->history.append(mouse);
-                pPoints->bHistory.append(bulge);
-                pPoints->polyline->setNextBulge(bulge);
-                pPoints->polyline->addVertex(mouse, 0.0, prepend);
+                m_actionData->point = mouse;
+                m_actionData->history.append(mouse);
+                m_actionData->bHistory.append(bulge);
+                m_actionData->polyline->setNextBulge(bulge);
+                m_actionData->polyline->addVertex(mouse, 0.0, prepend);
                 deletePreview(); // fixme - sand - clean this up
                 deleteSnapper();
                 updateMouseButtonHints();

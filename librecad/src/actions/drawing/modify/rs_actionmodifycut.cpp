@@ -27,12 +27,10 @@
 #include "rs_actionmodifycut.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_modification.h"
 #include "lc_linemath.h"
+#include "rs_debug.h"
 #include "rs_entity.h"
+#include "rs_modification.h"
 
 RS_ActionModifyCut::RS_ActionModifyCut(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Cut Entity",actionContext, RS2::ActionModifyCut)
@@ -54,7 +52,7 @@ void RS_ActionModifyCut::doTrigger() {
         cutEntity->setHighlighted(false);
 
         RS_Modification m(*m_container, m_viewport);
-        m.cut(*cutCoord, (RS_AtomicEntity *) cutEntity);
+        m.cut(*cutCoord, reinterpret_cast<RS_AtomicEntity*>(cutEntity));
 
         cutEntity = nullptr;
         *cutCoord = RS_Vector(false);

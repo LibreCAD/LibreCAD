@@ -47,7 +47,7 @@ protected:
     };
 
     struct Points;
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<Points> m_actionData;
     bool preparePreview(const RS_Vector &mouse, RS_Vector& altCenter);
     void reset() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

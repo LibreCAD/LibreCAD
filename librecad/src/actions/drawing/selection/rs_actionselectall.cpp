@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionselectall.h"
-#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
 RS_ActionSelectAll::RS_ActionSelectAll(LC_ActionContext *actionContext, bool select)

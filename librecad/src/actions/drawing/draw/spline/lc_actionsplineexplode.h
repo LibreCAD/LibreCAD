@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONSPLINEEXPLODE_H
 #define LC_ACTIONSPLINEEXPLODE_H
 
-#include <QObject>
 #include "lc_actionsplinemodifybase.h"
 
 class RS_Pen;

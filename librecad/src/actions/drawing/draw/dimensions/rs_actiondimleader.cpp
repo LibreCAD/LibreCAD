@@ -23,19 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include<vector>
-#include <QKeyEvent>
-#include "rs_actiondimleader.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_leader.h"
-#include "rs_line.h"
-#include "rs_preview.h"
-#include "rs_actioninterface.h"
 
+#include "rs_actiondimleader.h"
+
+#include <QKeyEvent>
+
+#include "rs_debug.h"
+#include "rs_leader.h"
 
 struct RS_ActionDimLeader::Points {
 std::vector<RS_Vector> points;

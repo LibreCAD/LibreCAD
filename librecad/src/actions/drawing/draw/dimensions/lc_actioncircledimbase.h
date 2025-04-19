@@ -24,7 +24,8 @@
 #define LC_ACTIONCIRCLEDIMBASE_H
 
 #include "rs_actiondimension.h"
-#include "rs_dimension.h"
+
+class RS_Dimension;
 
 class LC_ActionCircleDimBase:public RS_ActionDimension {
     Q_OBJECT

@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWSPLINEPOINTS_H
 #define LC_ACTIONDRAWSPLINEPOINTS_H
 
-#include "rs_previewactioninterface.h"
+
 #include "rs_actiondrawspline.h"
 
 /**

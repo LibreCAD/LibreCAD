@@ -26,7 +26,6 @@
 #ifndef RS_ACTIONPOLYLINEDELBETWEEN_H
 #define RS_ACTIONPOLYLINEDELBETWEEN_H
 
-
 #include "lc_actionpolylinedeletebase.h"
 
 class RS_AtomicEntity;

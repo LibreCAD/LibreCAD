@@ -23,10 +23,10 @@
 #ifndef LC_ACTIONSPLINEFROMPOLYLINE_H
 #define LC_ACTIONSPLINEFROMPOLYLINE_H
 
-#include <QObject>
-#include "rs_entity.h"
 #include "rs_previewactioninterface.h"
 
+class RS_Layer;
+class RS_Pen;
 class RS_Polyline;
 
 class LC_ActionSplineFromPolyline :public RS_PreviewActionInterface{

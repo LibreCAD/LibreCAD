@@ -28,9 +28,7 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "rs_debug.h"
-#include "rs_graphic.h"
-#include "rs_units.h"
-
+#include "rs_entitycontainer.h"
 
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(LC_ActionContext *actionContext)
         :LC_ActionPreSelectionAwareBase("Info Total Length",actionContext, RS2::ActionInfoTotalLength){

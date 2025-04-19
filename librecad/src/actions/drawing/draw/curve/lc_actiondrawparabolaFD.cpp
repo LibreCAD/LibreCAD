@@ -19,19 +19,12 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-
-#include <cmath>
-
 #include "lc_actiondrawparabolaFD.h"
 
 #include "lc_parabola.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_constructionline.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
-#include "rs_constructionline.h"
 
 struct LC_ActionDrawParabolaFD::Points {
     RS_Vector focus, startPoint, endPoint, projection;

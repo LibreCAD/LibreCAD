@@ -31,6 +31,7 @@
 
 #include "doc_plugin_interface.h"
 
+#include "lc_actioncontext.h"
 #include "lc_documentsstorage.h"
 #include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"

@@ -27,12 +27,9 @@
 #include "rs_actionmodifyoffset.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "qg_modifyoffsetoptions.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "qg_modifyoffsetoptions.h"
-#include "rs_debug.h"
 
 RS_ActionModifyOffset::RS_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("Modify Offset", actionContext,RS2::ActionModifyOffset,

@@ -25,20 +25,16 @@
 **********************************************************************/
 
 #include "rs_actionmodifyscale.h"
-
 #include "lc_actioninfomessagebuilder.h"
-#include "rs_coordinateevent.h"
+#include "lc_modifyscaleoptions.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "lc_modifyscaleoptions.h"
-#include "rs_math.h"
 
-struct RS_ActionModifyScale::Points {
+struct RS_ActionModifyScale::ScaleActionData {
     RS_ScaleData data;
     RS_Vector sourcePoint;
     RS_Vector targetPoint;
@@ -63,7 +59,7 @@ namespace {
 
 RS_ActionModifyScale::RS_ActionModifyScale(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("Scale Entities", actionContext, RS2::ActionModifyScale)
-    , pPoints(std::make_unique<Points>()){
+    , m_actionData(std::make_unique<ScaleActionData>()){
 }
 
 RS_ActionModifyScale::~RS_ActionModifyScale() = default;
@@ -75,11 +71,11 @@ void RS_ActionModifyScale::init(int status) {
 void RS_ActionModifyScale::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyScale::trigger()");
     deletePreview();
-    if (pPoints->data.isotropicScaling){
-        pPoints->data.factor.y = pPoints->data.factor.x;
+    if (m_actionData->data.isotropicScaling){
+        m_actionData->data.factor.y = m_actionData->data.factor.x;
     }
     RS_Modification m(*m_container, m_viewport);
-    m.scale(pPoints->data, m_selectedEntities, false, keepSelected);
+    m.scale(m_actionData->data, m_selectedEntities, false, keepSelected);
 }
 
 #define DRAW_TRIANGLES_ON_PREVIEW_NO
@@ -88,15 +84,15 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetReferencePoint: {
-            pPoints->data.referencePoint = mouse;
+            m_actionData->data.referencePoint = mouse;
             RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(m_selectedEntities);
             RS_Vector selectionCenter = boundingForSelected.getCenter();
-            pPoints->sourcePoint = selectionCenter;
+            m_actionData->sourcePoint = selectionCenter;
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 if (e->isControl){
                     mouse = selectionCenter;
                 }
-                RS_ScaleData previewData = pPoints->data;
+                RS_ScaleData previewData = m_actionData->data;
                 previewData.referencePoint = mouse;
                 if (previewData.isotropicScaling){
                     previewData.factor.y = previewData.factor.x;
@@ -109,31 +105,31 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
             break;
         }
         case SetSourcePoint: {
-            mouse = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, mouse, true);
-            previewRefPoint(pPoints->data.referencePoint);
-            pPoints->sourcePoint = mouse;
-            RS_ScaleData previewData = pPoints->data;
+            mouse = getSnapAngleAwarePoint(e, m_actionData->data.referencePoint, mouse, true);
+            previewRefPoint(m_actionData->data.referencePoint);
+            m_actionData->sourcePoint = mouse;
+            RS_ScaleData previewData = m_actionData->data;
             if (m_showRefEntitiesOnPreview) {
-                determineScaleFactor(previewData, pPoints->data.referencePoint, mouse, mouse);
-                previewRefLine(mouse, pPoints->data.referencePoint);
+                determineScaleFactor(previewData, m_actionData->data.referencePoint, mouse, mouse);
+                previewRefLine(mouse, m_actionData->data.referencePoint);
                 previewRefSelectablePoint(mouse);
             }
             showPreview(previewData);
             break;
         }
         case SetTargetPoint: {
-            if (pPoints->data.isotropicScaling){
+            if (m_actionData->data.isotropicScaling){
                mouse = getTargetPoint(e);
             }
             else{
-                mouse = getSnapAngleAwarePoint(e, pPoints->sourcePoint, mouse, true); // todo - review whether it's necessary
+                mouse = getSnapAngleAwarePoint(e, m_actionData->sourcePoint, mouse, true); // todo - review whether it's necessary
             }
 
             if (m_showRefEntitiesOnPreview) {
                 // control points
-                previewRefSelectablePoint(pPoints->sourcePoint);
+                previewRefSelectablePoint(m_actionData->sourcePoint);
                 previewRefSelectablePoint(mouse);
-                previewRefPoint(pPoints->data.referencePoint);
+                previewRefPoint(m_actionData->data.referencePoint);
 
 #ifdef DRAW_TRIANGLES_ON_PREVIEW
                 RS_Vector intersectionPoint = RS_Vector(mouse.x, pPoints->data.referencePoint.y);
@@ -155,30 +151,30 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
 #endif
 
                 // source point triangle
-                previewRefLine(pPoints->sourcePoint, pPoints->data.referencePoint);
+                previewRefLine(m_actionData->sourcePoint, m_actionData->data.referencePoint);
                 // target point triangle
-                previewRefLine(mouse, pPoints->data.referencePoint);
+                previewRefLine(mouse, m_actionData->data.referencePoint);
                 // source to target
-                previewRefSelectableLine(mouse, pPoints->sourcePoint);
+                previewRefSelectableLine(mouse, m_actionData->sourcePoint);
             }
-            RS_ScaleData previewData = pPoints->data;
-            determineScaleFactor(previewData, pPoints->data.referencePoint, pPoints->sourcePoint, mouse);
-            pPoints->targetPoint = mouse;
+            RS_ScaleData previewData = m_actionData->data;
+            determineScaleFactor(previewData, m_actionData->data.referencePoint, m_actionData->sourcePoint, mouse);
+            m_actionData->targetPoint = mouse;
 
             showPreview();
 
             if (isInfoCursorForModificationEnabled()) {
-                RS_Vector centerPoint =  pPoints->data.referencePoint;
-                RS_Vector offset = pPoints->sourcePoint - mouse;
+                RS_Vector centerPoint =  m_actionData->data.referencePoint;
+                RS_Vector offset = m_actionData->sourcePoint - mouse;
                 msg(tr("Scale"))
                     .vector(tr("Center:"), centerPoint)
-                    .vector(tr("Source Point:"), pPoints->sourcePoint)
+                    .vector(tr("Source Point:"), m_actionData->sourcePoint)
                     .vector(tr("Target Point:"), mouse)
                     .string(tr("Offset:"))
                     .relative(offset)
                     .relativePolar(offset)
-                    .linear(tr("Scale by X:"), pPoints->data.factor.x)
-                    .linear(tr("Scale by Y:"), pPoints->data.factor.y)
+                    .linear(tr("Scale by X:"), m_actionData->data.factor.x)
+                    .linear(tr("Scale by Y:"), m_actionData->data.factor.y)
                     .toInfoCursorZone2(false);
             }
             break;
@@ -189,13 +185,13 @@ void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e
 }
 
 RS_Vector RS_ActionModifyScale::getTargetPoint(LC_MouseEvent* e){
-    if (pPoints->data.isotropicScaling) {
+    if (m_actionData->data.isotropicScaling) {
         RS_Vector mouse = e->snapPoint;
         if (e->isControl){
             mouse = e->graphPoint;
         }
         // project mouse to the line (center, source)
-        RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
+        RS_Line centerSourceLine{nullptr, {m_actionData->data.referencePoint, m_actionData->sourcePoint}};
         RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
         snapPoint(projected, true);
         return projected;
@@ -206,7 +202,7 @@ RS_Vector RS_ActionModifyScale::getTargetPoint(LC_MouseEvent* e){
 
 void RS_ActionModifyScale::showPreview(){
     findFactor();
-    RS_ScaleData &previewData = pPoints->data;
+    RS_ScaleData &previewData = m_actionData->data;
     showPreview(previewData);
     updateOptionsUI(0);
 }
@@ -220,7 +216,7 @@ void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
 
         if (numberOfCopies > 1) {
             for (int i = 1; i <= numberOfCopies; i++) {
-                RS_Vector scaledSource = pPoints->sourcePoint;
+                RS_Vector scaledSource = m_actionData->sourcePoint;
                 scaledSource.scale(previewData.referencePoint, RS_Math::pow(previewData.factor, i));
                 previewRefPoint(scaledSource);
             }
@@ -239,15 +235,15 @@ void RS_ActionModifyScale::onMouseLeftButtonReleaseSelected(int status, LC_Mouse
             break;
         }
         case SetSourcePoint: {
-            snapped = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, snapped);
+            snapped = getSnapAngleAwarePoint(e, m_actionData->data.referencePoint, snapped);
             break;
         }
         case SetTargetPoint: {
-            if (pPoints->data.isotropicScaling){
+            if (m_actionData->data.isotropicScaling){
                 snapped = getTargetPoint(e);
             }
             else{
-                snapped = getSnapAngleAwarePoint(e, pPoints->sourcePoint, snapped, true); // todo - review whether it's necessary
+                snapped = getSnapAngleAwarePoint(e, m_actionData->sourcePoint, snapped, true); // todo - review whether it's necessary
             }
             break;
         }
@@ -297,7 +293,7 @@ QStringList RS_ActionModifyScale::getAvailableCommands() {
 }
 
 void RS_ActionModifyScale::tryTrigger() {
-    if (pPoints->data.toFindFactor) {
+    if (m_actionData->data.toFindFactor) {
         setStatus(SetSourcePoint);
     } else {
         trigger();
@@ -308,10 +304,10 @@ void RS_ActionModifyScale::tryTrigger() {
 void RS_ActionModifyScale::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch(status) {
         case SetReferencePoint: {
-            pPoints->data.referencePoint = mouse;
+            m_actionData->data.referencePoint = mouse;
             moveRelativeZero(mouse);
             if (isShowModifyActionDialog()) {
-                if (RS_DIALOGFACTORY->requestScaleDialog(pPoints->data)) {
+                if (RS_DIALOGFACTORY->requestScaleDialog(m_actionData->data)) {
                     tryTrigger();
                 }
             }
@@ -321,16 +317,16 @@ void RS_ActionModifyScale::onCoordinateEvent(int status, [[maybe_unused]]bool is
             break;
         }
         case SetSourcePoint: {
-            previewRefPoint(pPoints->data.referencePoint);
-            if (mouse.squaredTo(pPoints->data.referencePoint) > RS_TOLERANCE2) {
-                pPoints->sourcePoint = mouse;
+            previewRefPoint(m_actionData->data.referencePoint);
+            if (mouse.squaredTo(m_actionData->data.referencePoint) > RS_TOLERANCE2) {
+                m_actionData->sourcePoint = mouse;
                 setStatus(SetTargetPoint);
             }
             break;
         }
         case SetTargetPoint: {
-            if (mouse.squaredTo(pPoints->data.referencePoint) > RS_TOLERANCE2) {
-                pPoints->targetPoint = mouse;
+            if (mouse.squaredTo(m_actionData->data.referencePoint) > RS_TOLERANCE2) {
+                m_actionData->targetPoint = mouse;
                 trigger();
                 finish();
             }
@@ -342,10 +338,10 @@ void RS_ActionModifyScale::onCoordinateEvent(int status, [[maybe_unused]]bool is
 }
 
 void RS_ActionModifyScale::findFactor(){
-    auto& reference = pPoints->data.referencePoint;
-    auto& source = pPoints->sourcePoint;
-    auto& target = pPoints->targetPoint;
-    determineScaleFactor(pPoints->data, reference, source, target);
+    auto& reference = m_actionData->data.referencePoint;
+    auto& source = m_actionData->sourcePoint;
+    auto& target = m_actionData->targetPoint;
+    determineScaleFactor(m_actionData->data, reference, source, target);
 }
 
 void RS_ActionModifyScale::determineScaleFactor(RS_ScaleData& data,
@@ -367,10 +363,10 @@ void RS_ActionModifyScale::updateMouseButtonHintsForSelected(int status) {
             break;
             // Find the scale factors to scale the pPoints->sourcePoint to pPoints->targetPoint
         case SetSourcePoint:
-            updateMouseWidgetTRCancel(tr("Specify source point"), pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify source point"), m_actionData->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRCancel(tr("Specify target point"), pPoints->data.isotropicScaling ? MOD_CTRL(tr("Free snap")): MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify target point"), m_actionData->data.isotropicScaling ? MOD_CTRL(tr("Free snap")): MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();
@@ -387,35 +383,35 @@ RS2::CursorType RS_ActionModifyScale::doGetMouseCursorSelected([[maybe_unused]] 
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyScale::getModifyOperationFlags() {
-    return &pPoints->data;
+    return &m_actionData->data;
 }
 
 bool RS_ActionModifyScale::isIsotropicScaling(){
-    return pPoints->data.isotropicScaling;
+    return m_actionData->data.isotropicScaling;
 }
 
 void RS_ActionModifyScale::setIsotropicScaling(bool enable){
-    pPoints->data.isotropicScaling = enable;
+    m_actionData->data.isotropicScaling = enable;
 }
 
 double RS_ActionModifyScale::getFactorX() {
-    return pPoints->data.factor.x;
+    return m_actionData->data.factor.x;
 }
 
 void RS_ActionModifyScale::setFactorX(double val) {
-    pPoints->data.factor.x = val;
+    m_actionData->data.factor.x = val;
 }
 
 double RS_ActionModifyScale::getFactorY() {
-    return pPoints->data.factor.y;
+    return m_actionData->data.factor.y;
 }
 
 void RS_ActionModifyScale::setFactorY(double val) {
-    pPoints->data.factor.y = val;
+    m_actionData->data.factor.y = val;
 }
 
 bool RS_ActionModifyScale::isExplicitFactor() {
-    return pPoints->data.toFindFactor;
+    return m_actionData->data.toFindFactor;
 }
 
 void RS_ActionModifyScale::setExplicitFactor(bool val) {
@@ -425,7 +421,7 @@ void RS_ActionModifyScale::setExplicitFactor(bool val) {
             setStatus(SetReferencePoint);
         }
     }
-    pPoints->data.toFindFactor = val;
+    m_actionData->data.toFindFactor = val;
 }
 
 LC_ActionOptionsWidget *RS_ActionModifyScale::createOptionsWidget() {

@@ -25,13 +25,10 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinetangent1.h"
-#include "rs_coordinateevent.h"
+
 #include "rs_creation.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_preview.h"
 
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(LC_ActionContext *actionContext)
 	:RS_PreviewActionInterface("Draw Tangents 1", actionContext,RS2::ActionDrawLineTangent1)

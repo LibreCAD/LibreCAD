@@ -21,13 +21,10 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointsbase.h"
+
 #include "lc_actiondrawarc2poptions.h"
 #include "lc_linemath.h"
 #include "rs_arc.h"
-#include "rs_document.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
 
 LC_ActionDrawArc2PointsBase::LC_ActionDrawArc2PointsBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
     :RS_PreviewActionInterface(name, actionContext,actionType)  {

@@ -53,8 +53,8 @@ protected:
 
     RS_AtomicEntity *trimEntity = nullptr;
     RS_Entity *limitEntity = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct TrimActionData;
+    std::unique_ptr<TrimActionData> m_actionData;
     bool both = false;
     void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
 

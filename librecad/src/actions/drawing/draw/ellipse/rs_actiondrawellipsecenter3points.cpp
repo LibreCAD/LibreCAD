@@ -21,14 +21,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actiondrawellipsecenter3points.h"
+
 #include "rs_circle.h"
-#include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_ellipse.h"
-#include "rs_graphicview.h"
 #include "rs_preview.h"
-#include "lc_actiondrawcirclebase.h"
 
 struct RS_ActionDrawEllipseCenter3Points::Points {
 	RS_VectorSolutions points;

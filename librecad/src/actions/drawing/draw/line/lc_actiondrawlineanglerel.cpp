@@ -21,14 +21,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cmath>
-
-#include "rs_line.h"
-#include "rs_layer.h"
-#include "rs_math.h"
-#include "lc_linemath.h"
-#include "lc_lineanglereloptions.h"
 #include "lc_actiondrawlineanglerel.h"
+
+#include "lc_lineanglereloptions.h"
+#include "lc_linemath.h"
+#include "rs_line.h"
+#include "rs_pen.h"
 
 namespace {
     //list of entity types supported by current action - only lines so far

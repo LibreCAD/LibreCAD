@@ -23,7 +23,7 @@
 #ifndef LC_ACTIONDRAWARC2POINTSHEIGHT_H
 #define LC_ACTIONDRAWARC2POINTSHEIGHT_H
 
-#include <QObject>
+
 #include "lc_actiondrawarc2pointsbase.h"
 
 class LC_ActionDrawArc2PointsHeight: public LC_ActionDrawArc2PointsBase{

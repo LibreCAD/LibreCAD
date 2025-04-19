@@ -23,12 +23,9 @@
 #include "lc_actionmodifyalignref.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_modifyalignrefoptions.h"
-#include "rs_modification.h"
 #include "lc_linemath.h"
+#include "lc_modifyalignrefoptions.h"
 #include "rs_preview.h"
-#include "rs_graphicview.h"
-
 
 LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(LC_ActionContext *actionContext)
   : LC_ActionModifyBase("ModifyAlignRef", actionContext, RS2::ActionModifyAlignRef) {

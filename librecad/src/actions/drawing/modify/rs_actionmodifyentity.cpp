@@ -24,14 +24,16 @@
 **
 **********************************************************************/
 
+#include "rs_actionmodifyentity.h"
+
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
-#include "rs_actionmodifyentity.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_entity.h"
 #include "rs_graphicview.h"
-
+#
 RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext, RS_Entity *entity)
 		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity)
 		,m_entity(entity){

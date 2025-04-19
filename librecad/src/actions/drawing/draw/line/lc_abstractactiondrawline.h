@@ -23,9 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H
 #define LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H
 
-#include "rs_line.h"
-#include "rs_vector.h"
-#include "rs_previewactioninterface.h"
 #include "lc_abstractactionwithpreview.h"
 
 /**

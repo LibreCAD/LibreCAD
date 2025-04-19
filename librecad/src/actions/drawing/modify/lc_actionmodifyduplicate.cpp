@@ -20,17 +20,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QList>
 
-#include "lc_linemath.h"
-#include "lc_duplicateoptions.h"
 #include "lc_actionmodifyduplicate.h"
-#include "lc_abstractactionwithpreview.h"
-#include "lc_actioninfomessagebuilder.h"
 
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_duplicateoptions.h"
+#include "lc_linemath.h"
 #include "rs_ellipse.h"
-#include "rs_math.h"
-#include "rs_previewactioninterface.h"
+#include "rs_entity.h"
+
 // fixme - sand - cmd - add support of commands for entering offset(?) and setting direction (for interactive mode)!!
 LC_ActionModifyDuplicate::LC_ActionModifyDuplicate(LC_ActionContext *actionContext):
     LC_AbstractActionWithPreview("ModifyDuplicate", actionContext, RS2::ActionModifyDuplicate),

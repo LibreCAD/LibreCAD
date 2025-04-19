@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 #include "rs_actiondrawlinefree.h"
+
+#include <qline.h>
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
 

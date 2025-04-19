@@ -20,15 +20,15 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
 #include "lc_actionsplinefrompolyline.h"
+
 #include "lc_splinefrompolylineoptions.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
-#include "rs_document.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 #include "rs_polyline.h"
 #include "rs_spline.h"
 

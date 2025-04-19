@@ -24,9 +24,7 @@
 **
 **********************************************************************/
 
-
 #include "rs_actionselectinvert.h"
-#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
 RS_ActionSelectInvert::RS_ActionSelectInvert(LC_ActionContext *actionContext)

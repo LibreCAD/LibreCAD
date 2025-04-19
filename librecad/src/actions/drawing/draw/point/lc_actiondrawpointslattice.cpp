@@ -20,16 +20,15 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actiondrawpointslattice.h"
+
 #include "lc_linemath.h"
 #include "lc_pointslatticeoptions.h"
-#include "rs_document.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
-#include "rs_layer.h"
-#include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_point.h"
 
+class RS_Layer;
 
 LC_ActionDrawPointsLattice::LC_ActionDrawPointsLattice(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Points Lattice", actionContext,RS2::ActionDrawPointsLattice) {

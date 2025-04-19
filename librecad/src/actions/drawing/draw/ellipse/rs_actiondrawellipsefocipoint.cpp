@@ -20,18 +20,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-
-#include<cmath>
-
 #include "rs_actiondrawellipsefocipoint.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_ellipse.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_preview.h"
 
 struct RS_ActionDrawEllipseFociPoint::Points {
 	// Foci of ellipse

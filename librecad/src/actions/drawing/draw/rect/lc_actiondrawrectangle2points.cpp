@@ -20,13 +20,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "lc_abstractactiondrawrectangle.h"
+
 #include "lc_actiondrawrectangle2points.h"
+
 #include "lc_linemath.h"
 #include "lc_rectangle2pointsoptions.h"
-#include "rs_math.h"
 #include "rs_polyline.h"
-#include "rs_previewactioninterface.h"
 
 LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(LC_ActionContext *actionContext)
     :LC_AbstractActionDrawRectangle("Draw rectangle 2 points",actionContext, RS2::ActionDrawRectangle2Points){

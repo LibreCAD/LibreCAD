@@ -32,7 +32,6 @@
 #include "lc_dimarc.h"
 #include "rs_actiondimension.h"
 
-
 class LC_ActionDimArc : public RS_ActionDimension{
    Q_OBJECT
 public:

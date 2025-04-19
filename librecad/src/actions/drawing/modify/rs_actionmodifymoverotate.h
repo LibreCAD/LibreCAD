@@ -60,8 +60,8 @@ protected:
         SetAngle,              /**< Setting angle in command line. */
         ShowDialog           /**< Showing the options dialog. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct MoveRotateActionData;
+    std::unique_ptr<MoveRotateActionData> m_actionData;
 /** Last status before entering angle. */
     Status lastStatus = SetReferencePoint;
     bool angleIsFixed = true;

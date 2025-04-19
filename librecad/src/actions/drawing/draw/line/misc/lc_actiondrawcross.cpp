@@ -21,13 +21,38 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cmath>
-#include "rs_line.h"
-#include "rs_ellipse.h"
-#include "rs_math.h"
 #include "lc_actiondrawcross.h"
-#include "lc_crossoptions.h"
 
+#include "lc_crossoptions.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
+
+/**
+ * Structure that contains information about cross lines
+ */
+struct LC_CrossData {
+    LC_CrossData() :
+        horizontal(),
+        vertical(),
+        centerPoint()
+    {}
+
+    LC_CrossData(const RS_Vector& horPoint1,
+                 const RS_Vector& horPoint2,
+                 const RS_Vector& vertPoint1,
+                 const RS_Vector& vertPoint2,
+                 const RS_Vector& center) :
+        horizontal( horPoint1, horPoint2),
+        vertical( vertPoint1, vertPoint2),
+        centerPoint(center){}
+
+    // horizontal line
+    RS_LineData horizontal;
+    // vertical line
+    RS_LineData vertical;
+    // center point
+    RS_Vector centerPoint;
+};
 // todo - it is possible to duplicate UI by commands, but it seems that's not too practical
 // todo - the action should be initiated by mouse anyway, so in order to make the action fully scriptable,
 // todo - it is necessary either have command for entity selection or skip commands for now

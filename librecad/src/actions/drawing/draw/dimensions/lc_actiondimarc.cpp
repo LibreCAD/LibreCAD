@@ -24,15 +24,11 @@
 
 #include <iostream>
 
+#include "lc_actiondimarc.h"
+
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_preview.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_coordinateevent.h"
-
-#include "lc_actiondimarc.h"
 
 LC_ActionDimArc::LC_ActionDimArc(LC_ActionContext *actionContext):
     RS_ActionDimension("Draw Arc Dimensions", actionContext, RS2::ActionDimArc){
@@ -111,12 +107,13 @@ void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
                     dimArcData.centre = selectedArcEntity->getCenter();
                     dimArcData.arcLength = selectedArcEntity->getLength();
 
-                    dimArcData.startAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle1());
-                    dimArcData.endAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle2());
+                    auto selectedEntity = static_cast<RS_Arc*>(selectedArcEntity);
+                    dimArcData.startAngle = RS_Vector(selectedEntity->getAngle1());
+                    dimArcData.endAngle = RS_Vector(selectedEntity->getAngle2());
 
                     data->definitionPoint = selectedArcEntity->getStartpoint();
 
-                    if (((RS_Arc *) selectedArcEntity)->isReversed()){
+                    if (static_cast<RS_Arc*>(selectedArcEntity)->isReversed()){
                         const RS_Vector tempAngle = RS_Vector(dimArcData.startAngle);
 
                         dimArcData.startAngle = dimArcData.endAngle;

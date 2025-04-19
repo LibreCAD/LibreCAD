@@ -24,10 +24,10 @@
 **
 **********************************************************************/
 
-
 #include "rs_actioneditundo.h"
+
+#include "rs_document.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 
 /**
  * Constructor.

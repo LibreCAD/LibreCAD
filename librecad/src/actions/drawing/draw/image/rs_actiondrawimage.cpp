@@ -33,8 +33,8 @@
 #include "rs_creation.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_document.h"
 #include "rs_image.h"
-#include "rs_preview.h"
 #include "rs_units.h"
 
 struct RS_ActionDrawImage::ImageData {

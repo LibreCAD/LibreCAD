@@ -20,11 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_document.h"
-#include "rs_spline.h"
-#include "lc_splinepoints.h"
-#include "rs_graphicview.h"
 #include "lc_actionsplinemodifybase.h"
+
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
+#include "rs_pen.h"
 
 LC_ActionSplineModifyBase::LC_ActionSplineModifyBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
     :RS_PreviewActionInterface(name, actionContext, actionType) {

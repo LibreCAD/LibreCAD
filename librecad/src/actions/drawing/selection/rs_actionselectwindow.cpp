@@ -23,9 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QMouseEvent>
-
 #include "rs_actionselectwindow.h"
+
+#include <QMouseEvent>
 
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"

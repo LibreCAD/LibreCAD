@@ -23,8 +23,6 @@
 #include "lc_actiondrawarc2pointsangle.h"
 
 #include "rs_arc.h"
-#include "rs_debug.h"
-#include "rs_math.h"
 
 LC_ActionDrawArc2PointsAngle::LC_ActionDrawArc2PointsAngle(LC_ActionContext *actionContext)
     :LC_ActionDrawArc2PointsBase("DrawArc2Angle",actionContext, RS2::ActionDrawArc2PAngle) {

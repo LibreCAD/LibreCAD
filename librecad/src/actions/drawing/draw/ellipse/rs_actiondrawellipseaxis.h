@@ -23,7 +23,6 @@
 #ifndef RS_ACTIONDRAWELLIPSEAXIS_H
 #define RS_ACTIONDRAWELLIPSEAXIS_H
 
-
 #include "lc_actiondrawcirclebase.h"
 
 /**

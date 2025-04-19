@@ -26,7 +26,6 @@
 
 #include "rs_actionmodifydelete.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
 
 RS_ActionModifyDelete::RS_ActionModifyDelete(LC_ActionContext *actionContext)

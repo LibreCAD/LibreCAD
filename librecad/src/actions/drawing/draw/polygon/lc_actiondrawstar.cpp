@@ -20,15 +20,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include <cmath>
-
 #include "lc_actiondrawstar.h"
+
 #include "lc_linemath.h"
 #include "lc_staroptions.h"
-#include "rs_math.h"
+#include "rs_line.h"
 #include "rs_polyline.h"
-#include "rs_point.h"
-#include "rs_previewactioninterface.h"
 
 LC_ActionDrawStar::LC_ActionDrawStar(LC_ActionContext *actionContext)
    :LC_AbstractActionWithPreview("Draw Star", actionContext, RS2::ActionDrawStar){

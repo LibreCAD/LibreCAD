@@ -24,17 +24,12 @@
 **
 **********************************************************************/
 
-#include "qg_linebisectoroptions.h"
+
 #include "rs_actiondrawlinebisector.h"
-#include "rs_actioninterface.h"
-#include "rs_commandevent.h"
+
+#include "qg_linebisectoroptions.h"
 #include "rs_creation.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_math.h"
-#include "rs_preview.h"
 
 namespace {
 

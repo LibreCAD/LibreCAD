@@ -21,16 +21,8 @@
  ******************************************************************************/
 
 #include "rs_actiondimdiametric.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
+
 #include "rs_dimdiametric.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_preview.h"
 
 // fixme - sand - possibility to define label inside/outside,
 // todo - think whether it's practical adding multiple dimensions to selected circles?

@@ -21,11 +21,14 @@
  ******************************************************************************/
 
 #include "lc_actionsplineexplode.h"
+
 #include "lc_splineexplodeoptions.h"
 #include "lc_splinepoints.h"
+#include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 #include "rs_polyline.h"
 #include "rs_spline.h"
 

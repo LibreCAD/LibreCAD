@@ -25,13 +25,12 @@
 **********************************************************************/
 
 #include "rs_actionpolylinetrim.h"
+
 #include "rs_atomicentity.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_preview.h"
 
 RS_ActionPolylineTrim::RS_ActionPolylineTrim(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Trim segments",actionContext, RS2::ActionPolylineTrim) {

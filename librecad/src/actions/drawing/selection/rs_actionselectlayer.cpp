@@ -25,9 +25,8 @@
 **********************************************************************/
 
 #include "rs_actionselectlayer.h"
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_selection.h"
 
 RS_ActionSelectLayer::RS_ActionSelectLayer(LC_ActionContext *actionContext)

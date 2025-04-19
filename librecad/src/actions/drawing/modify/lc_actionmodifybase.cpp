@@ -21,8 +21,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_actionmodifybase.h"
 
+#include "rs_modification.h"
+
 LC_ActionModifyBase::LC_ActionModifyBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType,
-    const QList<RS2::EntityType> &entityTypeList, bool countSelectionDeep)
+                                         const QList<RS2::EntityType> &entityTypeList, bool countSelectionDeep)
     :LC_ActionPreSelectionAwareBase(name, actionContext, actionType, entityTypeList, countSelectionDeep){}
 
 void LC_ActionModifyBase::onSelectionCompleted([[maybe_unused]] bool singleEntity, bool fromInit) {

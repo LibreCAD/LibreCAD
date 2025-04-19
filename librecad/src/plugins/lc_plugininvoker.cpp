@@ -20,12 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_plugininvoker.h"
+
 #include <QAction>
 #include <QDir>
-#include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QPluginLoader>
+
 #include "doc_plugin_interface.h"
 #include "lc_undosection.h"
 #include "qc_applicationwindow.h"

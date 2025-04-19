@@ -24,20 +24,17 @@
 **
 **********************************************************************/
 
-#include <QList>
 #include "rs_actionmodifyround.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "rs_commandevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_information.h"
-#include "rs_math.h"
-#include "rs_modification.h"
-#include "rs_preview.h"
 #include "qg_roundoptions.h"
 #include "rs_arc.h"
+#include "rs_debug.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
+#include "rs_information.h"
+#include "rs_modification.h"
+#include "rs_preview.h"
 
 namespace {
 // supported entity types for fillet
@@ -59,7 +56,7 @@ namespace {
         return atEndPoint(entity1, point) || atEndPoint(entity2, point);
     }
 }
-struct RS_ActionModifyRound::Points {
+struct RS_ActionModifyRound::RoundActionData {
     RS_Vector coord1;
     RS_Vector coord2;
     RS_RoundData data{};
@@ -69,7 +66,7 @@ struct RS_ActionModifyRound::Points {
 // fixme - potentially, it's better to support more fine grained trim mode that will control which entities should be trimmed (first, second, both)?
 
 RS_ActionModifyRound::RS_ActionModifyRound(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Round Entities", actionContext, RS2::ActionModifyRound), pPoints(std::make_unique<Points>()), lastStatus(SetEntity1){
+    :RS_PreviewActionInterface("Round Entities", actionContext, RS2::ActionModifyRound), m_actionData(std::make_unique<RoundActionData>()), lastStatus(SetEntity1){
 }
 
 RS_ActionModifyRound::~RS_ActionModifyRound() = default;
@@ -148,17 +145,17 @@ void RS_ActionModifyRound::doTrigger() {
         }
 
         RS_Modification m(*m_container, m_viewport);
-        m.round(pPoints->coord2,
-                pPoints->coord1,
+        m.round(m_actionData->coord2,
+                m_actionData->coord1,
                 (RS_AtomicEntity *) entity1,
-                pPoints->coord2,
+                m_actionData->coord2,
                 (RS_AtomicEntity *) entity2,
-                pPoints->data);
+                m_actionData->data);
 
         //coord = RS_Vector(false);
-        pPoints->coord1 = RS_Vector(false);
+        m_actionData->coord1 = RS_Vector(false);
         entity1 = nullptr;
-        pPoints->coord2 = RS_Vector(false);
+        m_actionData->coord2 = RS_Vector(false);
         entity2 = nullptr;
         // fixme - decide to which state go after trigger - probably it's more convenient to say in SetEntity2?
         setStatus(SetEntity1);
@@ -190,15 +187,15 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewEntity(tmp1);
                     previewEntity(tmp2);
 
-                    bool trim = pPoints->data.trim;
+                    bool trim = m_actionData->data.trim;
 //                    pPoints->data.trim = false;
                     RS_Modification m(*m_preview, m_viewport, false);
                     LC_RoundResult *roundResult = m.round(mouse,
-                                                          pPoints->coord1,
+                                                          m_actionData->coord1,
                                                           (RS_AtomicEntity *) tmp1,
                                                           coord2,
                                                           (RS_AtomicEntity *) tmp2,
-                                                          pPoints->data);
+                                                          m_actionData->data);
 
                     if (roundResult != nullptr && roundResult->error == LC_RoundResult::OK){
                         highlightHover(se);
@@ -210,7 +207,7 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                             if (m_showRefEntitiesOnPreview) {
                                 previewRefPoint(arcStartPoint);
                                 previewRefPoint(arcEndPoint);
-                                previewRefPoint(pPoints->coord1);
+                                previewRefPoint(m_actionData->coord1);
                                 previewRefSelectablePoint(coord2);
                                 previewRefPoint(mouse);
                                 previewRefLine(mouse, coord2);
@@ -233,7 +230,7 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         }
                     }
 
-                    pPoints->data.trim = trim;
+                    m_actionData->data.trim = trim;
 
                     m_preview->removeEntity(tmp1);
                     m_preview->removeEntity(tmp2);
@@ -286,7 +283,7 @@ void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
             if (se && se->isAtomic() &&
                 RS_Information::isTrimmable(se)){
                 entity1 = se;
-                pPoints->coord1 = se->getNearestPointOnEntity(mouse, true);
+                m_actionData->coord1 = se->getNearestPointOnEntity(mouse, true);
                 setStatus(SetEntity2);
             }
             break;
@@ -295,7 +292,7 @@ void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
             if (se && se->isAtomic() &&
                 RS_Information::isTrimmable(entity1, se)){
                 entity2 = se;
-                pPoints->coord2 = mouse;/* se->getNearestPointOnEntity(mouse, true);*/
+                m_actionData->coord2 = mouse;/* se->getNearestPointOnEntity(mouse, true);*/
                 //setStatus(ChooseRounding);
                 trigger();
             }
@@ -326,7 +323,7 @@ bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
                 deletePreview();
                 lastStatus = (Status) status;
                 setStatus(SetTrim);
-                pPoints->data.trim = !pPoints->data.trim;
+                m_actionData->data.trim = !m_actionData->data.trim;
                 updateOptions();
                 accept = true;
             } else {
@@ -334,7 +331,7 @@ bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
                 double r = RS_Math::eval(c, &ok);
                 if (ok && r > 1.0e-10){
                     accept = true;
-                    pPoints->data.radius = r;
+                    m_actionData->data.radius = r;
 
                 } else {
                     commandMessage(tr("Not a valid expression"));
@@ -350,7 +347,7 @@ bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
             double r = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
-                pPoints->data.radius = r;
+                m_actionData->data.radius = r;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -393,19 +390,19 @@ QStringList RS_ActionModifyRound::getAvailableCommands(){
 }
 
 void RS_ActionModifyRound::setRadius(double r){
-    pPoints->data.radius = r;
+    m_actionData->data.radius = r;
 }
 
 double RS_ActionModifyRound::getRadius() const{
-    return pPoints->data.radius;
+    return m_actionData->data.radius;
 }
 
 void RS_ActionModifyRound::setTrim(bool t){
-    pPoints->data.trim = t;
+    m_actionData->data.trim = t;
 }
 
 bool RS_ActionModifyRound::isTrimOn() const{
-    return pPoints->data.trim;
+    return m_actionData->data.trim;
 }
 
 void RS_ActionModifyRound::updateMouseButtonHints(){

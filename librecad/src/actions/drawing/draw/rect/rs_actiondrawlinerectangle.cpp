@@ -27,14 +27,8 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineRectangle::Points {
 /**

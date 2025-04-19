@@ -25,9 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionpolylineadd.h"
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_entity.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
 

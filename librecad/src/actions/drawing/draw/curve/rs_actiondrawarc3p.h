@@ -22,6 +22,7 @@
 
 #ifndef RS_ACTIONDRAWARC3P_H
 #define RS_ACTIONDRAWARC3P_H
+
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_ArcData;

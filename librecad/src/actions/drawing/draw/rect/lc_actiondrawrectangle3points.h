@@ -24,8 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LIBRECAD_MASTER_LC_ACTIONDRAWLINERECTANGLEREL_H
 #define LIBRECAD_MASTER_LC_ACTIONDRAWLINERECTANGLEREL_H
 
-#include "rs_vector.h"
-#include "rs_polyline.h"
 #include "lc_abstractactiondrawrectangle.h"
 
 

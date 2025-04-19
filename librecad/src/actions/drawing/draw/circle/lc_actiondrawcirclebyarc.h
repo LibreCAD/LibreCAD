@@ -23,8 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWCIRCLEBYARC_H
 
 #include "lc_abstractactionwithpreview.h"
-#include "rs_circle.h"
-#include "rs_ellipse.h"
+
 
 /**
  * Action draws circle with the same center and radius as selected arc.

@@ -21,16 +21,15 @@
  ******************************************************************************/
 #include <iostream>
 
-
 #include "rs_actiondrawhatch.h"
+
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_eventhandler.h"
-#include "rs_graphicview.h"
-#include "rs_information.h"
+#include "rs_entity.h"
 #include "rs_hatch.h"
-#include "rs_debug.h"
-#include "rs_selection.h"
+#include "rs_information.h"
+#include "rs_pen.h"
 
 namespace {
     bool hatchAble(RS_Entity *entity) {

@@ -23,16 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
-#include <QList>
 #include "rs_actionpolylinesegment.h"
+
 #include "rs_arc.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
+#include "rs_entitycontainer.h"
 #include "rs_polyline.h"
+#include "rs_preview.h"
 
 namespace {
 QList<RS2::EntityType>
@@ -118,18 +115,18 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
 //First polyline vertex
     if (isArc(e)) {
         if (reversed)
-            current->setNextBulge(((RS_Arc *) e)->getBulge() * -1);
+            current->setNextBulge(static_cast<RS_Arc*>(e)->getBulge() * -1);
         else
-            current->setNextBulge(((RS_Arc *) e)->getBulge());
+            current->setNextBulge(static_cast<RS_Arc*>(e)->getBulge());
     }
 
     while (!entities.isEmpty()) {
         e = entities.takeFirst();
         if (isArc(e)) {
             if (reversed)
-                bulge = ((RS_Arc *) e)->getBulge() * -1;
+                bulge = static_cast<RS_Arc*>(e)->getBulge() * -1;
             else
-                bulge = ((RS_Arc *) e)->getBulge();
+                bulge = static_cast<RS_Arc*>(e)->getBulge();
         } else {
             bulge = 0.0;
         }
@@ -173,7 +170,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
         if (isLine(e1) || isArc(e1)
             || e1->rtti() == RS2::EntityPolyline){
-            if (selectedEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) selectedEntity)->isClosed())
+            if (selectedEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(selectedEntity)->isClosed())
                 continue;
             if (e1 == selectedEntity)
                 continue;
@@ -251,14 +248,14 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
             }
             if (e2->rtti() == RS2::EntityArc){
                 if (revert)
-                    bulge = ((RS_Arc *) e2)->getBulge() * -1;
+                    bulge = static_cast<RS_Arc*>(e2)->getBulge() * -1;
                 else
-                    bulge = ((RS_Arc *) e2)->getBulge();
+                    bulge = static_cast<RS_Arc*>(e2)->getBulge();
             } else
                 bulge = 0.0;
             if (e2->rtti() == RS2::EntityPolyline){
                 newPolyline->addVertex(start, bulge);
-                end = appendPol(newPolyline, (RS_Polyline *) e2, revert);
+                end = appendPol(newPolyline, static_cast<RS_Polyline*>(e2), revert);
             } else
                 newPolyline->addVertex(start, bulge);
         }
@@ -295,7 +292,7 @@ void RS_ActionPolylineSegment::onMouseMoveEvent([[maybe_unused]]int status, LC_M
     RS_Entity* en = catchAndDescribe(event, entityType, RS2::ResolveNone);
     if (en != nullptr){
         highlightHover(en);
-        if (!(en->rtti() == RS2::EntityPolyline && ((RS_Polyline *) en)->isClosed())){
+        if (!(en->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(en)->isClosed())){
             convertPolyline(m_preview.get(), en, false, true);
         }
     }
@@ -307,7 +304,7 @@ void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, LC_MouseEven
             targetEntity = catchEntityByEvent(e, entityType);
             if (targetEntity == nullptr){
                 commandMessage(tr("No Entity found."));
-            } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
+            } else if (targetEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(targetEntity)->isClosed()){
                 commandMessage(tr("Entity can not be a closed polyline."));
             } else {
                 redraw();

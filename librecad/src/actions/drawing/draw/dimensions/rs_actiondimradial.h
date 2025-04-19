@@ -27,8 +27,6 @@
 #ifndef RS_ACTIONDIMRADIAL_H
 #define RS_ACTIONDIMRADIAL_H
 
-#include "rs_actiondimension.h"
-#include "rs_dimradial.h"
 #include "lc_actioncircledimbase.h"
 
 struct RS_DimRadialData;

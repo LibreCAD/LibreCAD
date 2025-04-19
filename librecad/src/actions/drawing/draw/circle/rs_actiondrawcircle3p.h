@@ -56,7 +56,7 @@ protected:
      * Circle data defined so far.
      */
     struct Points;
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<Points> m_actionData;
 
     void reset() override;
     void preparePreview();

@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWSLICEDIVIDE_H
 #define LC_ACTIONDRAWSLICEDIVIDE_H
 
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
 
 class LC_ActionDrawSliceDivide:public LC_AbstractActionWithPreview {
@@ -65,28 +64,6 @@ public:
         SELECTION_CIRCLE
     };
 
-    /**
-     * Structure that describes single tick
-     */
-    struct TickData {
-        explicit TickData(
-            bool e,
-            bool v,
-            const RS_Vector &p,
-            const RS_LineData &l,
-            double ang):
-            isVisible(v),
-            edge(e),
-            snapPoint(p),
-            tickLine(l),
-            arcAngle(ang){}
-
-        bool isVisible{true}; // visible or not
-        bool edge{false}; // is for edge?
-        RS_Vector snapPoint; // point on entity where tick is snapped
-        RS_LineData tickLine; // line data for tick
-        double arcAngle; // angle for snapping tick
-    };
 
     LC_ActionDrawSliceDivide(LC_ActionContext *actionContext, bool forCircle);
     bool isTickAngleRelative() const{return tickAngleIsRelative;}
@@ -162,6 +139,8 @@ private:
     /**
      * Data that describes ticks
      */
+    struct TickData;
+
     std::vector<TickData> ticksData;
     /**
      * original entity for which ticks will be created

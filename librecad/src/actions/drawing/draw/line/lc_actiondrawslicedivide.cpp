@@ -22,18 +22,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cmath>
-
-#include "lc_abstractactionwithpreview.h"
 #include "lc_actiondrawslicedivide.h"
+
 #include "lc_linemath.h"
 #include "lc_slicedivideoptions.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_line.h"
-#include "rs_math.h"
 #include "rs_pen.h"
-#include "rs_point.h"
 
 namespace {
     //list of entity types supported by current action
@@ -43,6 +39,29 @@ namespace {
 // todo - think about free mode for selection of tick length... not clear how to do this in convenient way yet
 // todo - think whether dividing arc/circle for fixed angle (similar to fixed length for lines is needed
 
+
+/**
+ * Structure that describes single tick
+ */
+struct LC_ActionDrawSliceDivide::TickData {
+    explicit TickData(
+        bool e,
+        bool v,
+        const RS_Vector &p,
+        const RS_LineData &l,
+        double ang):
+        isVisible(v),
+        edge(e),
+        snapPoint(p),
+        tickLine(l),
+        arcAngle(ang){}
+
+    bool isVisible{true}; // visible or not
+    bool edge{false}; // is for edge?
+    RS_Vector snapPoint; // point on entity where tick is snapped
+    RS_LineData tickLine; // line data for tick
+    double arcAngle; // angle for snapping tick
+};
 LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(LC_ActionContext *actionContext,bool forCircle)
     :LC_AbstractActionWithPreview("Draw slice divide", actionContext){
     if (forCircle){

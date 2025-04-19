@@ -20,27 +20,20 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_math.h"
-#include "rs_actioninterface.h"
-#include "rs_debug.h"
-#include "rs_preview.h"
-#include "rs_graphic.h"
-#include "rs_coordinateevent.h"
-#include "rs_document.h"
-#include "rs_point.h"
-#include "rs_creation.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
-#include "rs_dialogfactory.h"
-#include "rs_polyline.h"
 #include "lc_actiondrawlinepolygonbase.h"
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "qg_linepolygonoptions.h"
-#include "rs_commandevent.h"
 #include "lc_linemath.h"
+#include "qg_linepolygonoptions.h"
+#include "rs_document.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_pen.h"
+#include "rs_polyline.h"
+
+class RS_Layer;
 
 LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
     :RS_PreviewActionInterface(name, actionContext, actionType),number(3), pPoints(std::make_unique<Points>()), lastStatus(SetPoint1){}

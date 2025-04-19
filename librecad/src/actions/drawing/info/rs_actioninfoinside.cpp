@@ -24,14 +24,14 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actioninfoinside.h"
 
+#include <QMouseEvent>
+
 #include "lc_actioncontext.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_information.h"
 #include "rs_entitycontainer.h"
+#include "rs_information.h"
+#include "rs_vector.h"
 
 RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
 	:RS_ActionInterface("Info Inside", actionContext, m_actionType=RS2::ActionInfoInside)

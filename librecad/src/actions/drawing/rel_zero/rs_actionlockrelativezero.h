@@ -26,9 +26,7 @@
 
 #ifndef RS_ACTIONLOCKRELATIVEZERO_H
 #define RS_ACTIONLOCKRELATIVEZERO_H
-
-#include "rs_previewactioninterface.h"
-
+#include "rs_actioninterface.h"
 
 /**
  * This action class can handle user events to lock or unlock
@@ -38,7 +36,7 @@
  * @author Ulf Lehnert
  */
 class RS_ActionLockRelativeZero : public RS_ActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
     RS_ActionLockRelativeZero(LC_ActionContext *actionContext,bool on);
     void init(int status) override;

@@ -26,9 +26,8 @@
 
 #ifndef QC_ACTIONGETENT_H
 #define QC_ACTIONGETENT_H
-#include "lc_actioncontext.h"
+
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
  class Plugin_Entity;
  class Doc_plugin_interface;

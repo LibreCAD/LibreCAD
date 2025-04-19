@@ -24,8 +24,10 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
+
 #include "rs_actionzoomwindow.h"
+
+#include <QMouseEvent>
 
 #include "lc_graphicviewport.h"
 #include "rs_debug.h"

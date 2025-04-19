@@ -23,9 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONMODIFYBREAKOUTLINE_H
 #define LC_ACTIONMODIFYBREAKOUTLINE_H
 
-#include "rs_arc.h"
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
+
+class RS_Layer;
+class RS_Pen;
 
 class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview{
     Q_OBJECT

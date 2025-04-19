@@ -25,22 +25,12 @@
 **
 **********************************************************************/
 
-#include <vector>
 
 #include "rs_actiondrawline.h"
 
-#include "lc_actioncontext.h"
-#include "rs_actioneditundo.h"
-#include "rs_commandevent.h"
-#include "rs_commands.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_preview.h"
 #include "qg_lineoptions.h"
-#include "rs_actioninterface.h"
+#include "rs_debug.h"
+#include "rs_line.h"
 
 struct RS_ActionDrawLine::History
 {

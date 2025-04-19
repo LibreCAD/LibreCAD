@@ -22,14 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actiondrawcircletan2.h"
 
-#include<vector>
-
+#include "qg_circletan2options.h"
+#include "rs_atomicentity.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
-#include "qg_circletan2options.h"
 
 namespace {
 

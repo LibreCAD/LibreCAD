@@ -27,11 +27,7 @@
 
 #ifndef RS_ACTIONDIMANGULAR_H
 #define RS_ACTIONDIMANGULAR_H
-
-#include <vector>
-
 #include "rs_actiondimension.h"
-#include "rs_line.h"
 
 struct RS_DimAngularData;
 

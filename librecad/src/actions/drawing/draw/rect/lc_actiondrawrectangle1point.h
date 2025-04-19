@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWRECTANGLE1POINT_H
 #define LC_ACTIONDRAWRECTANGLE1POINT_H
 
-#include "rs_polyline.h"
 #include "lc_abstractactiondrawrectangle.h"
 
 class LC_ActionDrawRectangle1Point :public LC_AbstractActionDrawRectangle {

@@ -25,11 +25,11 @@
 **********************************************************************/
 
 #include "rs_actionpolylinedelbetween.h"
+
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_preview.h"
 #include "rs_polyline.h"
+#include "rs_preview.h"
 
 RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(LC_ActionContext *actionContext)
     :LC_ActionPolylineDeleteBase("Delete between two nodes", actionContext, RS2::ActionPolylineDelBetween){

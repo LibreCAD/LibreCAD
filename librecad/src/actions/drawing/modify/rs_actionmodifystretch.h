@@ -53,8 +53,8 @@ protected:
         SetReferencePoint,    /**< Setting the reference point. */
         SetTargetPoint        /**< Setting the target point. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct StretchActionData;
+    std::unique_ptr<StretchActionData> m_actionData;
     bool removeOriginals = true;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

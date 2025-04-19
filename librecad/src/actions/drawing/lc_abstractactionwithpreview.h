@@ -23,10 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ABSTRACTACTIONWITHPREVIEW_H
 #define LC_ABSTRACTACTIONWITHPREVIEW_H
 
-#include "qg_actionhandler.h"
 #include "rs_previewactioninterface.h"
 #include "rs_vector.h"
-#include "rs_line.h"
 
 class RS_Line;
 class RS_Point;
@@ -167,7 +165,6 @@ protected:
     // default implementation of right mouse release
     virtual void onRightMouseButtonRelease(LC_MouseEvent *e, int status);
 
-
     void unHighlightEntity();
     void highlightEntity(RS_Entity *en);
     void highlightEntityExplicit(RS_Entity *en, bool highlight);
@@ -202,13 +199,9 @@ protected:
     void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     static bool isMouseMove(LC_MouseEvent* e);
     void createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const;
-
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
 };
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

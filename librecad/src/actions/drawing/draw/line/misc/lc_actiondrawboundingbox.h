@@ -1,8 +1,7 @@
 #ifndef LC_ACTIONDRAWBOUNDINGBOX_H
 #define LC_ACTIONDRAWBOUNDINGBOX_H
 
-#include <QObject>
-#include "rs_previewactioninterface.h"
+
 #include "lc_actionpreselectionawarebase.h"
 
 class RS_Pen;

@@ -29,7 +29,10 @@
 #define RS_CREATION_H
 
 #include <QString>
+#include <complex.h>
 #include <memory>
+
+#include "rs_preview.h"
 #include "rs_vector.h"
 
 class RS_Document;
@@ -75,6 +78,7 @@ public:
     RS_Creation(RS_EntityContainer* container,
                 LC_GraphicViewport* viewport = nullptr,
                 bool handleUndo=true);
+
     ~RS_Creation()=default;
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,

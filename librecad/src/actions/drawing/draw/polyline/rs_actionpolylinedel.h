@@ -26,7 +26,6 @@
 #ifndef RS_ACTIONPOLYLINEDEL_H
 #define RS_ACTIONPOLYLINEDEL_H
 
-
 #include "lc_actionpolylinedeletebase.h"
 
 /**

@@ -24,17 +24,15 @@
 **
 **********************************************************************/
 
-#include<cmath>
 #include "rs_actionpolylineequidistant.h"
+
+#include "qg_polylineequidistantoptions.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_polyline.h"
-#include "qg_polylineequidistantoptions.h"
+#include "rs_preview.h"
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(LC_ActionContext *actionContext)
 	:RS_PreviewActionInterface("Create Equidistant Polylines", actionContext, RS2::ActionPolylineEquidistant)
@@ -63,22 +61,23 @@ void RS_ActionPolylineEquidistant::init(int status){
  */
 RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double distance){
     if (isArc(orgEntity) && isArc(newEntity)){
-        auto *arc = (RS_Arc *) newEntity;
-        double r0 = ((RS_Arc *) orgEntity)->getRadius();
+        auto *arc = static_cast<RS_Arc*>(newEntity);
+        auto originalEntity = static_cast<RS_Arc*>(orgEntity);
+        double r0 = originalEntity->getRadius();
         double r;
-        if (((RS_Arc *) orgEntity)->isReversed())
+        if (originalEntity->isReversed())
             r = r0 + distance;
         else
             r = r0 - distance;
         if (r < 0)
             return nullptr;
-        arc->setData(((RS_Arc *) orgEntity)->getData());
+        arc->setData(originalEntity->getData());
         arc->setRadius(r);
         arc->calculateBorders();
         return newEntity;
     } else if (isLine(orgEntity) && isLine(newEntity)){
-        auto *line0 = (RS_Line *) orgEntity;
-        auto *line1 = (RS_Line *) newEntity;
+        auto *line0 = static_cast<RS_Line*>(orgEntity);
+        auto *line1 = static_cast<RS_Line*>(newEntity);
         RS_Vector v0 = line0->getStartpoint();
         RS_Vector v1(v0.x, v0.y + distance);
         RS_Vector v2(v0.x + line0->getLength(), v0.y + distance);

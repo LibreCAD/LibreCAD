@@ -24,17 +24,13 @@
 **
 **********************************************************************/
 
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_units.h"
 #include "rs_actioninfodist2.h"
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_infodist2options.h"
+#include "rs_debug.h"
+#include "rs_entity.h"
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(LC_ActionContext *actionContext, bool fromPoint)
     :RS_PreviewActionInterface("Info Dist2", actionContext, fromPoint? RS2::ActionInfoDistPoint2Entity : RS2::ActionInfoDistEntity2Point)

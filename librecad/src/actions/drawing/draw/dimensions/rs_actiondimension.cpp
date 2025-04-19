@@ -23,21 +23,12 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include "rs_settings.h"
-#include "lc_actiondimlinearbase.h"
-#include "rs_constructionline.h"
-#include "rs_coordinateevent.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
-#include "rs_dimlinear.h"
-#include "rs_math.h"
-#include "rs_dimaligned.h"
 #include "rs_actiondimension.h"
-#include "rs_dialogfactory.h"
-#include "rs_dimension.h"
-#include "rs_graphicview.h"
+
 #include "qg_dimoptions.h"
+#include "rs_dimension.h"
+#include "rs_mtext.h"
+#include "rs_settings.h"
 
 namespace {
     const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");

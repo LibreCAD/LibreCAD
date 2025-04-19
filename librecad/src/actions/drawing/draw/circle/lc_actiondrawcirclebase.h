@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONDRAWCIRCLEBASE_H
 #define LC_ACTIONDRAWCIRCLEBASE_H
 
-#include <QMouseEvent>
 #include "rs_previewactioninterface.h"
 
 class LC_ActionDrawCircleBase:public RS_PreviewActionInterface {

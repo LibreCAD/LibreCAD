@@ -27,9 +27,9 @@
 #ifndef RS_ACTIONMODIFYSCALE_H
 #define RS_ACTIONMODIFYSCALE_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actionmodifybase.h"
 
+struct RS_ScaleData;
 /**
  * This action class can handle user events to move entities.
  *
@@ -61,8 +61,8 @@ protected:
         SetTargetPoint,        /**< Set the target point to scale the source point to */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ScaleActionData;
+    std::unique_ptr<ScaleActionData> m_actionData;
     // set scaling target point to support isotropic or xy-scaling
     RS_Vector getTargetPoint(LC_MouseEvent* e);
     void findFactor();

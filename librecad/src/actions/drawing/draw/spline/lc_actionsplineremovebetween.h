@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONSPLINEREMOVEBETWEEN_H
 #define LC_ACTIONSPLINEREMOVEBETWEEN_H
 
-#include <QObject>
 #include "lc_actionsplinemodifybase.h"
 
 class LC_ActionSplineRemoveBetween:public LC_ActionSplineModifyBase{

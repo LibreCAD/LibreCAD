@@ -26,13 +26,8 @@
 **********************************************************************/
 
 #include "lc_actiondrawsplinepoints.h"
+
 #include "lc_splinepoints.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_preview.h"
 #include "rs_debug.h"
 
 struct LC_ActionDrawSplinePoints::Points {

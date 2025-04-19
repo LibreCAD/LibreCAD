@@ -27,9 +27,10 @@
 #ifndef RS_ACTIONMODIFYROTATE2_H
 #define RS_ACTIONMODIFYROTATE2_H
 
-#include "rs_modification.h"
+
 #include "lc_actionmodifybase.h"
 
+struct RS_Rotate2Data;
 /**
  * This action class can handle user events to rotate entities around
  * two entities.
@@ -60,7 +61,7 @@ protected:
         ShowDialog             /**< Showing the options dialog. */
     };
 
-    std::unique_ptr<RS_Rotate2Data> data;
+    std::unique_ptr<RS_Rotate2Data> m_actionData;
     void previewRefPointsForMultipleCopies(const RS_Vector& mouse);
     void doPerformTrigger();
     LC_ModifyOperationFlags *getModifyOperationFlags() override;

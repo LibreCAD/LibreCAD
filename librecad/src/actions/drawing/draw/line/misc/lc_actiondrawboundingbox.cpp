@@ -22,11 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_actiondrawboundingbox.h"
+
 #include "lc_align.h"
-#include "lc_graphicviewport.h"
 #include "lc_drawboundingboxoptions.h"
+#include "lc_graphicviewport.h"
 #include "lc_linemath.h"
-#include "rs_document.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"

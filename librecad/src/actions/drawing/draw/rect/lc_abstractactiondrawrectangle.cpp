@@ -19,16 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-
-#include <cmath>
-
 #include "lc_abstractactiondrawrectangle.h"
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_linemath.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
 #include "rs_polyline.h"
 
 LC_AbstractActionDrawRectangle::LC_AbstractActionDrawRectangle(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)

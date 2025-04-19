@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONREMOVESPLINEPOINTS_H
 #define LC_ACTIONREMOVESPLINEPOINTS_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actionsplinemodifybase.h"
 
 class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase{

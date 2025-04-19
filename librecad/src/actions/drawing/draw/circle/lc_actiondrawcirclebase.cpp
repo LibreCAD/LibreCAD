@@ -20,9 +20,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_ellipse.h"
-#include "rs_graphicview.h"
 #include "lc_actiondrawcirclebase.h"
+
+#include "rs_ellipse.h"
 
 LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType type)
     :RS_PreviewActionInterface(name,actionContext, type){}

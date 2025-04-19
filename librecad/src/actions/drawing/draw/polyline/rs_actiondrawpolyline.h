@@ -27,11 +27,12 @@
 #ifndef RS_ACTIONDRAWPOLYLINE_H
 #define RS_ACTIONDRAWPOLYLINE_H
 
-#include <memory>
-
 #include "rs_arc.h"
 #include "rs_polyline.h"
 #include "rs_previewactioninterface.h"
+
+struct RS_PolylineData;
+class RS_Polyline;
 
 namespace mu {
     class Parser;
@@ -85,27 +86,11 @@ protected:
         SetNextPoint,  /*  Setting the endpoint.    */
     };
 
-    RS_Polyline*& getPolyline() const;
-    QList<RS_Vector>& getHistory() const;
-    QList<double>& getBHistory() const;
-    RS_Vector& getPoint() const;
-    RS_Vector& getStart() const;
-    RS_PolylineData& getData() const;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    double m_radius = 0.;
-    double m_angle = 0.;
-    SegmentMode m_mode{};
-    int alternateArc = false;
-    int m_reversed = 1;
-    bool m_calculatedSegment = false;
-
-    bool prepend = false;
-
     struct Points {
 
-/**
- * Line data defined so far.
- */
+        /**
+         * Line data defined so far.
+         */
         RS_PolylineData data;
         RS_ArcData arc_data;
         /**
@@ -135,7 +120,24 @@ protected:
         QString equation;
     };
 
-    std::unique_ptr<Points> pPoints;
+    RS_Polyline*& getPolyline() const;
+    QList<RS_Vector>& getHistory() const;
+    QList<double>& getBHistory() const;
+    RS_Vector& getPoint() const;
+    RS_Vector& getStart() const;
+    RS_PolylineData& getData() const;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+    double m_radius = 0.;
+    double m_angle = 0.;
+    SegmentMode m_mode{};
+    int alternateArc = false;
+    int m_reversed = 1;
+    bool m_calculatedSegment = false;
+
+    bool prepend = false;
+
+
+    std::unique_ptr<Points> m_actionData;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

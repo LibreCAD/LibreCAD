@@ -28,14 +28,7 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_preview.h"
-#include "rs_units.h"
 
 struct RS_ActionInfoDist::Points {
     RS_Vector point1;

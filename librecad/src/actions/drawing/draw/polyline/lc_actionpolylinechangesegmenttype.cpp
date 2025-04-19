@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinechangesegmenttype.h"
+
 #include "rs_arc.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
+#include "rs_pen.h"
+#include "rs_polyline.h"
 
 LC_ActionPolylineChangeSegmentType::LC_ActionPolylineChangeSegmentType(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("PolylineChangeSegment",actionContext, RS2::ActionPolylineChangeSegmentType) {

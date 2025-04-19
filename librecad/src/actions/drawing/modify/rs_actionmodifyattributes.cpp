@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionmodifyattributes.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"

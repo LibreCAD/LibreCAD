@@ -66,7 +66,7 @@ protected:
         SNAP_START, SNAP_MIDDLE, SNAP_END
     };
     struct Points;
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<Points> m_ActionData;
     bool persistRelativeZero = false;
     bool orthoToAnglesBasis = false;
     RS2::CursorType doGetMouseCursor(int status) override;

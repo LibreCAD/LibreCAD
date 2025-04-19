@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN2_1P_H
 #define RS_ACTIONDRAWCIRCLETAN2_1P_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actiondrawcirclebase.h"
 
 class RS_AtomicEntity;

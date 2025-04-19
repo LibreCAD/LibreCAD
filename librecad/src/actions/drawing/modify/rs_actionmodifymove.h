@@ -50,8 +50,8 @@ protected:
         SetTargetPoint,       /**< Setting the target point. */
         ShowDialog            /**< Showing the options dialog. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct MoveActionData;
+    std::unique_ptr<MoveActionData> m_actionData;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;

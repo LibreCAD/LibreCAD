@@ -20,9 +20,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_polyline.h"
-#include "rs_graphicview.h"
 #include "lc_actionpolylinedeletebase.h"
+
+#include "rs_polyline.h"
 
 LC_ActionPolylineDeleteBase::LC_ActionPolylineDeleteBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
    :RS_PreviewActionInterface(name, actionContext, actionType){

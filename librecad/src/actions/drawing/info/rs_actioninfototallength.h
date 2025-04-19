@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONINFOTOTALLENGTH_H
 #define RS_ACTIONINFOTOTALLENGTH_H
 
-#include "rs_actioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
 /**

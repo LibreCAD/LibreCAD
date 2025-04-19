@@ -62,8 +62,8 @@ protected:
 
     RS_Entity *entity1 = nullptr;
     RS_Entity *entity2 = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct RoundActionData;
+    std::unique_ptr<RoundActionData> m_actionData;
     /** Last status before entering angle. */
     Status lastStatus = SetEntity1;
 

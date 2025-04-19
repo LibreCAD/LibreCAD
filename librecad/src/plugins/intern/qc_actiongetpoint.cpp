@@ -26,14 +26,13 @@
 
 #include "qc_actiongetpoint.h"
 
-#include <QPointF>
 #include <QMouseEvent>
-#include "rs_snapper.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
+
 #include "rs_coordinateevent.h"
-#include "rs_preview.h"
 #include "rs_debug.h"
+#include "rs_line.h"
+#include "rs_modification.h"
+#include "rs_preview.h"
 
 struct QC_ActionGetPoint::Points {
     RS_MoveData data;

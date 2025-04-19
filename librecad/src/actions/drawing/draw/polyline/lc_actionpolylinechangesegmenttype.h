@@ -23,9 +23,9 @@
 #ifndef LC_ACTIONPOLYLINECHANGESEGMENTTYPE_H
 #define LC_ACTIONPOLYLINECHANGESEGMENTTYPE_H
 
-#include "rs_entitycontainer.h"
 #include "rs_previewactioninterface.h"
-#include "rs_polyline.h"
+
+class RS_Polyline;
 
 class LC_ActionPolylineChangeSegmentType:public RS_PreviewActionInterface {
  Q_OBJECT

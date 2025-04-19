@@ -20,11 +20,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "lc_linemath.h"
 #include "lc_actionmodifylinegap.h"
-#include "lc_modifygapoptions.h"
-#include "lc_abstractactionwithpreview.h"
+
 #include "lc_actioninfomessagebuilder.h"
+#include "lc_linemath.h"
+#include "lc_modifygapoptions.h"
+#include "rs_line.h"
 
 namespace {
     //list of entity types supported by current action - line

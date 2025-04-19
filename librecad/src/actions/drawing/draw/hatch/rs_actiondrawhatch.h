@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWHATCH_H
 #define RS_ACTIONDRAWHATCH_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
 struct RS_HatchData;

@@ -21,13 +21,11 @@
  ******************************************************************************/
 
 #include "lc_actiondrawmidline.h"
+
 #include "lc_linemath.h"
 #include "lc_midlineoptions.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
-#include "rs_math.h"
 
 namespace {
 

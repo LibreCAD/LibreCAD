@@ -27,9 +27,6 @@
 #ifndef QC_ACTIONGETSELECT_H
 #define QC_ACTIONGETSELECT_H
 
-#include <memory>
-
-#include "lc_actioncontext.h"
 #include "rs_actioninterface.h"
 
 class Doc_plugin_interface;

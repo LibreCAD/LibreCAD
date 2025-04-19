@@ -21,9 +21,9 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinearcstolines.h"
+
+#include "rs_pen.h"
 #include "rs_polyline.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
 
 LC_ActionPolylineArcsToLines::LC_ActionPolylineArcsToLines(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("PolylineArcsToLines", actionContext, RS2::ActionPolylineArcsToLines) {

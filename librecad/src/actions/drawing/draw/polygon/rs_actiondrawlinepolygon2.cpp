@@ -25,17 +25,7 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinepolygon2.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_creation.h"
-#include "rs_debug.h"
-#include "rs_point.h"
-#include "rs_math.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
-#include "rs_actioninterface.h"
-#include "lc_actiondrawlinepolygonbase.h"
+
 
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(LC_ActionContext *actionContext)
 		  :LC_ActionDrawLinePolygonBase("Draw Polygons (Corner,Corner)", actionContext, m_actionType=RS2::ActionDrawLinePolygonCorCor){

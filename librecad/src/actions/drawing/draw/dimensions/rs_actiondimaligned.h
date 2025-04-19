@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDIMALIGNED_H
 #define RS_ACTIONDIMALIGNED_H
 
-#include "rs_actiondimension.h"
 #include "lc_actiondimlinearbase.h"
 
 struct RS_DimAlignedData;

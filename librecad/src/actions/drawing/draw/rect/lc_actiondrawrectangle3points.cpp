@@ -21,16 +21,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cmath>
-#include "rs_polyline.h"
-#include "rs_line.h"
-#include "rs_preview.h"
-#include "rs_math.h"
-#include "lc_linemath.h"
-#include "lc_abstractactionwithpreview.h"
 #include "lc_actiondrawrectangle3points.h"
+
+#include "lc_linemath.h"
 #include "lc_rectangle3pointsoptions.h"
-#include "rs_previewactioninterface.h"
+#include "rs_polyline.h"
 
 /**
  * data that holds corners of rectangle

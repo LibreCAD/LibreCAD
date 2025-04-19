@@ -25,11 +25,13 @@
 **********************************************************************/
 
 #include "rs_actionmodifydeletefree.h"
-#include "rs_dialogfactory.h"
+
 #include "rs_document.h"
-#include "rs_graphicview.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_vector.h"
 
 struct RS_ActionModifyDeleteFree::Points {
 	RS_Vector v1;

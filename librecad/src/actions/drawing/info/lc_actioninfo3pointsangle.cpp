@@ -23,9 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "rs_graphic.h"
-#include "rs_math.h"
-#include "rs_units.h"
 
 LC_ActionInfo3PointsAngle::LC_ActionInfo3PointsAngle(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("InfoAngle3Points", actionContext, RS2::ActionInfoAngle3Points) {

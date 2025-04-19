@@ -22,10 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWLINESNAKE_H
 #define LC_ACTIONDRAWLINESNAKE_H
 
-#include "rs_previewactioninterface.h"
-#include "rs_vector.h"
-#include "rs_line.h"
 #include "lc_abstractactiondrawline.h"
+#include "rs_line.h"
 
 class LC_ActionDrawLineSnake :public LC_AbstractActionDrawLine {
     Q_OBJECT
@@ -37,7 +35,7 @@ public:
     void next();
     void undo();
     void redo();
-    void polyline();;
+    void polyline();
     bool mayClose();
     bool mayUndo() const;
     bool mayStart() override;

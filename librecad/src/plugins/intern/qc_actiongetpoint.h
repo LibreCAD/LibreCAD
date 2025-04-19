@@ -28,7 +28,6 @@
 #define QC_ACTIONGETPOINT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
 class QPointF;
 

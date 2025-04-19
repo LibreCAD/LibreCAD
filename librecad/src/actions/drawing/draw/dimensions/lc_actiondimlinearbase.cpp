@@ -20,17 +20,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "rs_dimaligned.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
-#include "rs_dimlinear.h"
-#include "rs_debug.h"
-#include "rs_preview.h"
-#include "rs_coordinateevent.h"
-#include "rs_constructionline.h"
 #include "lc_actiondimlinearbase.h"
-#include "rs_settings.h"
-#include "rs_actiondimension.h"
+
+#include "rs_constructionline.h"
+#include "rs_debug.h"
+#include "rs_dimaligned.h"
+#include "rs_dimension.h"
+#include "rs_dimlinear.h"
+#include "rs_entity.h"
+#include "rs_preview.h"
 
 LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType):
    RS_ActionDimension(name, actionContext, actionType){

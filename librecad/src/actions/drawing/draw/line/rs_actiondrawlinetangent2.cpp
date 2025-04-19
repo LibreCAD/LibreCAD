@@ -24,14 +24,10 @@
 **
 **********************************************************************/
 
-#include <vector>
-
 #include "rs_actiondrawlinetangent2.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+
 #include "rs_creation.h"
 #include "rs_line.h"
-#include "rs_point.h"
 #include "rs_preview.h"
 
 struct RS_ActionDrawLineTangent2::Points {

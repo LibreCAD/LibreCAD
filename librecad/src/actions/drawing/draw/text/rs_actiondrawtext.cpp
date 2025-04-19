@@ -25,16 +25,14 @@
 **********************************************************************/
 
 #include "rs_actiondrawtext.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
+
+#include "qg_textoptions.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
 #include "rs_text.h"
-#include "qg_textoptions.h"
 
 struct RS_ActionDrawText::Points {
 	RS_Vector pos;

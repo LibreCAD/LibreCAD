@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONSPLINEADDPOINTACTION_H
 #define LC_ACTIONSPLINEADDPOINTACTION_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actionsplinemodifybase.h"
 
 class LC_ActionSplineAddPoint:public LC_ActionSplineModifyBase{

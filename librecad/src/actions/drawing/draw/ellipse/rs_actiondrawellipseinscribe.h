@@ -53,7 +53,7 @@ protected:
     };
 
     struct Points;
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<Points> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
     // 4 points on ellipse
     bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);

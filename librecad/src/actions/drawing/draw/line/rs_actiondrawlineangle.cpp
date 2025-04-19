@@ -25,16 +25,10 @@
 **********************************************************************/
 
 #include "rs_actiondrawlineangle.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_math.h"
-#include "rs_preview.h"
+
 #include "qg_lineangleoptions.h"
-#include "rs_actioninterface.h"
+#include "rs_debug.h"
+#include "rs_line.h"
 
 struct RS_ActionDrawLineAngle::Points {
 /**
@@ -65,8 +59,8 @@ struct RS_ActionDrawLineAngle::Points {
 };
 
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(LC_ActionContext *actionContext, bool fixedAngle, RS2::ActionType actionType)
-    :RS_PreviewActionInterface("Draw lines with given angle", actionContext, actionType), pPoints(std::make_unique<Points>()){
-    pPoints->fixedAngle = fixedAngle;
+    :RS_PreviewActionInterface("Draw lines with given angle", actionContext, actionType), m_ActionData(std::make_unique<Points>()){
+    m_ActionData->fixedAngle = fixedAngle;
     reset();
 }
 
@@ -74,7 +68,7 @@ RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() = default;
 
 
 void RS_ActionDrawLineAngle::reset() {
-	pPoints->data = {{}, {}};
+	m_ActionData->data = {{}, {}};
 }
 
 void RS_ActionDrawLineAngle::init(int status) {
@@ -85,22 +79,22 @@ void RS_ActionDrawLineAngle::init(int status) {
 void RS_ActionDrawLineAngle::initFromSettings() {
     RS_PreviewActionInterface::initFromSettings();
     if (m_actionType == RS2::ActionDrawLineVertical){
-        pPoints->ucsBasisAngleRad = M_PI_2;
+        m_ActionData->ucsBasisAngleRad = M_PI_2;
     }
     else if (m_actionType == RS2::ActionDrawLineHorizontal){
-        pPoints->ucsBasisAngleRad = 0;
+        m_ActionData->ucsBasisAngleRad = 0;
     }
 }
 
 void RS_ActionDrawLineAngle::doTrigger() {
     preparePreview();
-    auto *line = new RS_Line{m_container, pPoints->data};
+    auto *line = new RS_Line{m_container, m_ActionData->data};
 
     setPenAndLayerToActive(line);
     if (!persistRelativeZero){
-        RS_Vector &newRelZero = pPoints->data.startpoint;
-        if (pPoints->snpPoint == SNAP_MIDDLE){ // snap to middle
-            newRelZero = (pPoints->data.startpoint + pPoints->data.endpoint)*0.5;
+        RS_Vector &newRelZero = m_ActionData->data.startpoint;
+        if (m_ActionData->snpPoint == SNAP_MIDDLE){ // snap to middle
+            newRelZero = (m_ActionData->data.startpoint + m_ActionData->data.endpoint)*0.5;
         }
         moveRelativeZero(newRelZero);
     }
@@ -116,9 +110,9 @@ void RS_ActionDrawLineAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (status==SetPos) {
         RS_Vector position = e->snapPoint;
         position = getRelZeroAwarePoint(e, position);
-        pPoints->pos = position;
+        m_ActionData->pos = position;
         preparePreview();
-        previewToCreateLine(pPoints->data.startpoint, pPoints->data.endpoint);
+        previewToCreateLine(m_ActionData->data.startpoint, m_ActionData->data.endpoint);
         previewRefSelectablePoint(position);
     }
 }
@@ -150,7 +144,7 @@ void RS_ActionDrawLineAngle::onMouseRightButtonRelease(int status, [[maybe_unuse
 
 void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
-    double angleRad = adjustRelativeAngleSignByBasis(pPoints->ucsBasisAngleRad);
+    double angleRad = adjustRelativeAngleSignByBasis(m_ActionData->ucsBasisAngleRad);
     if (hasFixedAngle()) {
         if (orthoToAnglesBasis) {
             angleRad = toWorldAngleFromUCSBasis(angleRad);
@@ -162,33 +156,33 @@ void RS_ActionDrawLineAngle::preparePreview(){
         angleRad = toWorldAngleFromUCSBasis(angleRad);
     }
 
-    if (pPoints->snpPoint == SNAP_END){
-        p2.setPolar(-pPoints->length, angleRad);
+    if (m_ActionData->snpPoint == SNAP_END){
+        p2.setPolar(-m_ActionData->length, angleRad);
     } else {
-        p2.setPolar(pPoints->length, angleRad);
+        p2.setPolar(m_ActionData->length, angleRad);
     }
 
     // Middle:
-    if (pPoints->snpPoint == SNAP_MIDDLE){
-        p1 = pPoints->pos - (p2 / 2);
+    if (m_ActionData->snpPoint == SNAP_MIDDLE){
+        p1 = m_ActionData->pos - (p2 / 2);
     } else {
-        p1 = pPoints->pos;
+        p1 = m_ActionData->pos;
     }
 
     p2 += p1;
-    pPoints->data = {p1, p2};
+    m_ActionData->data = {p1, p2};
 }
 
 void RS_ActionDrawLineAngle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetPos:{
-            pPoints->pos = pos;
+            m_ActionData->pos = pos;
             trigger();
             break;
         }
         case SetAngle:{
             if (isZero){
-                pPoints->ucsBasisAngleRad = 0.0;
+                m_ActionData->ucsBasisAngleRad = 0.0;
                 updateOptions();
                 setStatus(SetPos);
             }
@@ -203,7 +197,7 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
     bool accept = false;
     switch (status) {
         case SetPos: {
-            if (!pPoints->fixedAngle && checkCommand("angle", c)){
+            if (!m_ActionData->fixedAngle && checkCommand("angle", c)){
                 deletePreview();
                 setStatus(SetAngle);
                 accept = true;
@@ -219,7 +213,7 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
             bool ok = parseToUCSBasisAngle(c, ucsBasisAngleRad);
             if (ok){
                 accept = true;
-                pPoints->ucsBasisAngleRad = ucsBasisAngleRad;
+                m_ActionData->ucsBasisAngleRad = ucsBasisAngleRad;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -232,7 +226,7 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
             double l = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
-                pPoints->length = l;
+                m_ActionData->length = l;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -247,27 +241,27 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
 }
 
 void RS_ActionDrawLineAngle::setSnapPoint(int sp){
-    pPoints->snpPoint = sp;
+    m_ActionData->snpPoint = sp;
 }
 
 int RS_ActionDrawLineAngle::getSnapPoint() const{
-    return pPoints->snpPoint;
+    return m_ActionData->snpPoint;
 }
 
 void RS_ActionDrawLineAngle::setUcsAngleDegrees(double ucsRelAngleDegrees){
-    pPoints->ucsBasisAngleRad =RS_Math::deg2rad(ucsRelAngleDegrees);
+    m_ActionData->ucsBasisAngleRad =RS_Math::deg2rad(ucsRelAngleDegrees);
 }
 
 double RS_ActionDrawLineAngle::getUcsAngleDegrees() const{
-    return RS_Math::rad2deg(pPoints->ucsBasisAngleRad);
+    return RS_Math::rad2deg(m_ActionData->ucsBasisAngleRad);
 }
 
 void RS_ActionDrawLineAngle::setLength(double l){
-    pPoints->length = l;
+    m_ActionData->length = l;
 }
 
 double RS_ActionDrawLineAngle::getLength() const{
-    return pPoints->length;
+    return m_ActionData->length;
 }
 
 bool RS_ActionDrawLineAngle::hasFixedAngle() const{
@@ -285,7 +279,7 @@ QStringList RS_ActionDrawLineAngle::getAvailableCommands(){
 
     switch (getStatus()) {
         case SetPos:
-            if (!pPoints->fixedAngle){
+            if (!m_ActionData->fixedAngle){
                 cmd += command("angle");
             }
             cmd += command("length");

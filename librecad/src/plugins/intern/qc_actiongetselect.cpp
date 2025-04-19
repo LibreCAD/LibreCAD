@@ -26,10 +26,12 @@
 #include "qc_actiongetselect.h"
 
 #include <QKeyEvent>
+
 #include "doc_plugin_interface.h"
 #include "rs_actionselectsingle.h"
 #include "rs_graphicview.h"
-#include "rs_snapper.h"
+
+class Plugin_Entity;
 
 QC_ActionGetSelect::QC_ActionGetSelect(LC_ActionContext* actionContext)
     :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect)

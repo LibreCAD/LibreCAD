@@ -26,17 +26,9 @@
 
 #include "rs_actiondrawlineparallel.h"
 
-#include "lc_actioncontext.h"
-#include "rs_actiondrawlineparallelthrough.h"
-#include "rs_commandevent.h"
-#include "rs_commands.h"
+#include "qg_lineparalleloptions.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_preview.h"
-#include "qg_lineparalleloptions.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(LC_ActionContext *actionContext, RS2::ActionType actionType)
 	:RS_PreviewActionInterface("Draw Parallels", actionContext, actionType)

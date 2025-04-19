@@ -21,12 +21,11 @@
  ******************************************************************************/
 
 #include "lc_actiondrawdimbaseline.h"
+
 #include "qg_dimoptions.h"
-#include "rs_actiondimension.h"
-#include "rs_debug.h"
+#include "rs_constructionline.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
-#include "rs_graphicview.h"
 #include "rs_preview.h"
 
 // some functions are duplicated with DimLiner action, however, that's intentional as later we can support angular dimensions in additional to linear ones

@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONPENPICK_H
 #define LC_ACTIONPENPICK_H
 
-#include "rs_pen.h"
 #include "rs_previewactioninterface.h"
 
 /**

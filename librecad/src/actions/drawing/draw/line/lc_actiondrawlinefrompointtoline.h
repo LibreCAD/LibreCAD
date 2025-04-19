@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWLINEFROMPOINTTOLINE_H
 
 #include "lc_abstractactionwithpreview.h"
-#include "qg_actionhandler.h"
 
 /**
  * Actions draws line from given point to selected target line. Angle between target line and created line is either user defined

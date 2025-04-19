@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONMODIFYALIGN_H
 #define LC_ACTIONMODIFYALIGN_H
 
-#include <QObject>
 #include "lc_actionpreselectionawarebase.h"
 #include "lc_align.h"
 

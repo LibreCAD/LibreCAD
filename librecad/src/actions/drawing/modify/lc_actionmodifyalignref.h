@@ -23,8 +23,9 @@
 #ifndef LC_ACTIONMODIFYALIGNREF_H
 #define LC_ACTIONMODIFYALIGNREF_H
 
-#include <QObject>
+
 #include "lc_actionmodifybase.h"
+#include "rs_modification.h"
 
 class LC_ActionModifyAlignRef: public LC_ActionModifyBase{
     Q_OBJECT

@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDIMENSION_H
 #define RS_ACTIONDIMENSION_H
 
-#include "rs_constructionline.h"
 #include "rs_previewactioninterface.h"
 
 struct RS_DimensionData;

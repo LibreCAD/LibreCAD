@@ -23,19 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
 
-#include "lc_actioncontext.h"
 #include "rs_arc.h"
-#include "rs_commandevent.h"
-#include "rs_commands.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
-
 
 /**
  * Arc data defined so far.

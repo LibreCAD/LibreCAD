@@ -37,7 +37,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionBlocksExplode : public LC_ActionPreSelectionAwareBase {
-Q_OBJECT
+    Q_OBJECT
 public:
     RS_ActionBlocksExplode(LC_ActionContext *actionContext);
 protected:

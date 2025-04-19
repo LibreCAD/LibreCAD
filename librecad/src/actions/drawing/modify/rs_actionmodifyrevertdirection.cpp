@@ -25,8 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionmodifyrevertdirection.h"
+
 #include "rs_debug.h"
-#include "rs_document.h"
+#include "rs_entity.h"
 #include "rs_modification.h"
 
 RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(LC_ActionContext *actionContext)

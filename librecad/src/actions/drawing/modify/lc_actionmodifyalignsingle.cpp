@@ -19,16 +19,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QInputEvent>
-
-#include "rs_graphicview.h"
-#include "rs_document.h"
 #include "lc_actionmodifyalignsingle.h"
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "lc_modifyalignoptions.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
 
 LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle(LC_ActionContext *actionContext)
   :RS_PreviewActionInterface("ModifyAlignSingle", actionContext, RS2::ActionModifyAlignOne){

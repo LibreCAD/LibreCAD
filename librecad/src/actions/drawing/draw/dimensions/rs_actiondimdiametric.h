@@ -26,11 +26,6 @@
 
 #ifndef RS_ACTIONDIMDIAMETRIC_H
 #define RS_ACTIONDIMDIAMETRIC_H
-
-#include <memory>
-
-#include "rs_actiondimension.h"
-#include "rs_dimdiametric.h"
 #include "lc_actioncircledimbase.h"
 
 struct RS_DimDiametricData;

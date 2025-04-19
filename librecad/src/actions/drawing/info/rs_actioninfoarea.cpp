@@ -27,17 +27,11 @@
 #include "rs_actioninfoarea.h"
 
 #include "lc_cursoroverlayinfo.h"
-#include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_infoarea.h"
-#include "rs_line.h"
-#include "rs_preview.h"
 #include "rs_units.h"
 
-RS_ActionInfoArea::RS_ActionInfoArea(LC_ActionContext *actionContext)
+    RS_ActionInfoArea::RS_ActionInfoArea(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Info Area", actionContext, RS2::ActionInfoArea)
     , m_infoArea(std::make_unique<RS_InfoArea>()){
 }

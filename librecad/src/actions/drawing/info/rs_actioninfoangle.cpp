@@ -24,19 +24,13 @@
 **
 **********************************************************************/
 
-#include <cmath>
-
 #include "rs_actioninfoangle.h"
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
-#include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

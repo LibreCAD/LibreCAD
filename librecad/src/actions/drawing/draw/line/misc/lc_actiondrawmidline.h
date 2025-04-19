@@ -23,7 +23,6 @@
 #ifndef LC_ACTIONDRAWMIDLINE_H
 #define LC_ACTIONDRAWMIDLINE_H
 
-#include <QObject>
 #include "rs_previewactioninterface.h"
 
 class LC_ActionDrawMidLine: public RS_PreviewActionInterface{

@@ -23,7 +23,7 @@
 #ifndef RS_ACTIONDRAWARC_H
 #define RS_ACTIONDRAWARC_H
 
-#include "rs_previewactioninterface.h"
+
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_ArcData;

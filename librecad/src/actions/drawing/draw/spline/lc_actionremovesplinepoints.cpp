@@ -21,11 +21,10 @@
  ******************************************************************************/
 
 #include "lc_actionremovesplinepoints.h"
-#include "rs_graphicview.h"
+
 #include "lc_splinepoints.h"
-#include "rs_document.h"
+#include "rs_entity.h"
 #include "rs_spline.h"
-#include "lc_actionsplinemodifybase.h"
 
 namespace {
     const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};

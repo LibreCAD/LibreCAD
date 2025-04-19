@@ -27,8 +27,6 @@
 #ifndef RS_ACTIONINFODIST2_H
 #define RS_ACTIONINFODIST2_H
 
-#include <memory>
-
 #include "rs_previewactioninterface.h"
 
 /**

@@ -25,15 +25,13 @@
 **********************************************************************/
 
 #include "rs_actiondrawmtext.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
+
+#include "qg_mtextoptions.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_mtext.h"
 #include "rs_preview.h"
-#include "qg_mtextoptions.h"
 
 RS_ActionDrawMText::RS_ActionDrawMText(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw Text",actionContext, RS2::ActionDrawMText)

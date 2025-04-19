@@ -25,17 +25,11 @@
 **********************************************************************/
 
 #include "rs_actiondrawellipseaxis.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
+
+#include "lc_ellipsearcoptions.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_preview.h"
-#include "qg_arcoptions.h"
-#include "lc_ellipsearcoptions.h"
 
 struct RS_ActionDrawEllipseAxis::Points {
 	/** Center of ellipse */

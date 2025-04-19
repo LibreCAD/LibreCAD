@@ -27,8 +27,6 @@
 #ifndef RS_ACTIONMODIFYBEVEL_H
 #define RS_ACTIONMODIFYBEVEL_H
 
-#include<memory>
-
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
@@ -67,8 +65,8 @@ protected:
     };
     RS_AtomicEntity* entity1 = nullptr;
     RS_AtomicEntity* entity2 = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct BevelActionData;
+    std::unique_ptr<BevelActionData> m_actionData;
     /** Last status before entering angle. */
     Status lastStatus = SetEntity1;
 

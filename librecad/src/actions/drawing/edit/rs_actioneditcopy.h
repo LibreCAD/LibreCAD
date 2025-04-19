@@ -27,9 +27,7 @@
 #ifndef RS_ACTIONEDITCOPY_H
 #define RS_ACTIONEDITCOPY_H
 
-#include "qg_actionhandler.h"
 #include "lc_actionpreselectionawarebase.h"
-#include "rs_previewactioninterface.h"
 
 // fixme - add disabling of paste actions if clipboard is empty!
 /**

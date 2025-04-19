@@ -27,18 +27,17 @@
 #include "rs_actionmodifymirror.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "rs_coordinateevent.h"
+#include "lc_align.h"
+#include "lc_modifymirroroptions.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "lc_modifymirroroptions.h"
-#include "lc_align.h"
 
-struct RS_ActionModifyMirror::Points {
+
+struct RS_ActionModifyMirror::MirrorActionData {
     RS_MirrorData data;
     RS_Vector axisPoint1;
     RS_Vector axisPoint2;
@@ -46,8 +45,8 @@ struct RS_ActionModifyMirror::Points {
 
 RS_ActionModifyMirror::RS_ActionModifyMirror(LC_ActionContext *actionContext)
         :LC_ActionModifyBase("Mirror Entities", actionContext, RS2::ActionModifyMirror)
-        , pPoints(std::make_unique<Points>()){
-    mirrorToExistingLine = false;
+        , m_actionData(std::make_unique<MirrorActionData>()){
+    m_mirrorToExistingLine = false;
 }
 
 RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
@@ -55,14 +54,14 @@ RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 void RS_ActionModifyMirror::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
     RS_Modification m(*m_container, m_viewport);
-    m.mirror(pPoints->data, m_selectedEntities, false, keepSelected);
+    m.mirror(m_actionData->data, m_selectedEntities, false, keepSelected);
 }
 
 void RS_ActionModifyMirror::onMouseMoveEventSelected(int status, LC_MouseEvent *e){
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetAxisPoint1: {
-            if (mirrorToExistingLine){
+            if (m_mirrorToExistingLine){
 //                deleteSnapper();
                 if (e->isShift){ // flip vertically
                     RS_Vector start = RS_Vector();
@@ -90,9 +89,9 @@ void RS_ActionModifyMirror::onMouseMoveEventSelected(int status, LC_MouseEvent *
             break;
         }
         case SetAxisPoint2: {
-            if (pPoints->axisPoint1.valid){
-                mouse = getSnapAngleAwarePoint(e, pPoints->axisPoint1, mouse, true);
-                previewMirror(pPoints->axisPoint1, mouse);
+            if (m_actionData->axisPoint1.valid){
+                mouse = getSnapAngleAwarePoint(e, m_actionData->axisPoint1, mouse, true);
+                previewMirror(m_actionData->axisPoint1, mouse);
             }
             break;
         }
@@ -127,13 +126,13 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
 }
 
 void RS_ActionModifyMirror::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
-    if (mirrorToExistingLine && status == SetAxisPoint1){
+    if (m_mirrorToExistingLine && status == SetAxisPoint1){
         if (e->isShift){ // flip vertically
             RS_Vector start = RS_Vector();
             RS_Vector end = RS_Vector();
             obtainFlipLineCoordinates(&start, &end, true);
-            pPoints->axisPoint1 = start;
-            pPoints->axisPoint2 = end;
+            m_actionData->axisPoint1 = start;
+            m_actionData->axisPoint2 = end;
             setStatus(ShowDialog);
             showOptionsAndTrigger();
         }
@@ -141,8 +140,8 @@ void RS_ActionModifyMirror::onMouseLeftButtonReleaseSelected(int status, LC_Mous
             RS_Vector start = RS_Vector();
             RS_Vector end = RS_Vector();
             obtainFlipLineCoordinates(&start, &end, false);
-            pPoints->axisPoint1 = start;
-            pPoints->axisPoint2 = end;
+            m_actionData->axisPoint1 = start;
+            m_actionData->axisPoint2 = end;
             setStatus(ShowDialog);
             showOptionsAndTrigger();
         }
@@ -150,8 +149,8 @@ void RS_ActionModifyMirror::onMouseLeftButtonReleaseSelected(int status, LC_Mous
             RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
             if (en != nullptr) {
                 auto line = dynamic_cast<RS_Line *>(en);
-                pPoints->axisPoint1 = line->getStartpoint();
-                pPoints->axisPoint2 = line->getEndpoint();
+                m_actionData->axisPoint1 = line->getStartpoint();
+                m_actionData->axisPoint2 = line->getEndpoint();
                 setStatus(ShowDialog);
                 showOptionsAndTrigger();
             }
@@ -161,7 +160,7 @@ void RS_ActionModifyMirror::onMouseLeftButtonReleaseSelected(int status, LC_Mous
     else {
         RS_Vector snapped = e->snapPoint;
         if (status == SetAxisPoint2){
-            snapped = getSnapAngleAwarePoint(e, pPoints->axisPoint1, snapped);
+            snapped = getSnapAngleAwarePoint(e, m_actionData->axisPoint1, snapped);
         }
         fireCoordinateEvent(snapped);
     }
@@ -188,13 +187,13 @@ void RS_ActionModifyMirror::onCoordinateEvent(int status, [[maybe_unused]]bool i
     }
     switch (status) {
         case SetAxisPoint1: {
-            pPoints->axisPoint1 = mouse;
+            m_actionData->axisPoint1 = mouse;
             setStatus(SetAxisPoint2);
             moveRelativeZero(mouse);
             break;
         }
         case SetAxisPoint2: {
-            pPoints->axisPoint2 = mouse;
+            m_actionData->axisPoint2 = mouse;
             setStatus(ShowDialog);
             moveRelativeZero(mouse);
             showOptionsAndTrigger();
@@ -207,11 +206,11 @@ void RS_ActionModifyMirror::onCoordinateEvent(int status, [[maybe_unused]]bool i
 
 void RS_ActionModifyMirror::showOptionsAndTrigger(){
     if (isShowModifyActionDialog()) {
-        if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)) {
+        if (RS_DIALOGFACTORY->requestMirrorDialog(m_actionData->data)) {
             updateOptions();
             doPerformTrigger();
         } else {
-            if (mirrorToExistingLine) {
+            if (m_mirrorToExistingLine) {
                 setStatus(SetAxisPoint1);
             } else {
                 setStatus(SetAxisPoint2);
@@ -224,8 +223,8 @@ void RS_ActionModifyMirror::showOptionsAndTrigger(){
 }
 
 void RS_ActionModifyMirror::doPerformTrigger() {
-    pPoints->data.axisPoint1 = pPoints->axisPoint1;
-    pPoints->data.axisPoint2 = pPoints->axisPoint2;
+    m_actionData->data.axisPoint1 = m_actionData->axisPoint1;
+    m_actionData->data.axisPoint2 = m_actionData->axisPoint2;
     deletePreview();
     trigger();
     finish(false);
@@ -238,7 +237,7 @@ void RS_ActionModifyMirror::updateMouseButtonHintsForSelection() {
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetAxisPoint1: {
-            if (mirrorToExistingLine){
+            if (m_mirrorToExistingLine){
                 updateMouseWidgetTRCancel(tr("Specify mirror line"), MOD_SHIFT_AND_CTRL(tr("Flip Vertically"), tr("Flip Horizontally")));
             }
             else{
@@ -258,7 +257,7 @@ void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyMirror::setMirrorToExistingLine(bool value){
-    mirrorToExistingLine = value;
+    m_mirrorToExistingLine = value;
     setStatus(SetAxisPoint1);
 }
 
@@ -267,7 +266,7 @@ RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected([[maybe_unused]]
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags()  {
-    return &pPoints->data;
+    return &m_actionData->data;
 }
 
 LC_ActionOptionsWidget* RS_ActionModifyMirror::createOptionsWidget(){

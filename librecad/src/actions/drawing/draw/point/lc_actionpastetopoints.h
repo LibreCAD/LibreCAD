@@ -23,8 +23,6 @@
 #ifndef LC_ACTIONPASTETOPOINTS_H
 #define LC_ACTIONPASTETOPOINTS_H
 
-#include <QObject>
-#include "rs_previewactioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
 class LC_ActionPasteToPoints: public LC_ActionPreSelectionAwareBase{

@@ -23,8 +23,6 @@
 #ifndef LC_ACTIONDRAWARC2POINTSBASE_H
 #define LC_ACTIONDRAWARC2POINTSBASE_H
 
-#include <QObject>
-
 #include "rs_previewactioninterface.h"
 
 class LC_ActionDrawArc2PointsBase:public RS_PreviewActionInterface{

@@ -20,13 +20,10 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actioneditpastetransform.h"
+
 #include "lc_pastetransformoptions.h"
 #include "rs_clipboard.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "rs_units.h"

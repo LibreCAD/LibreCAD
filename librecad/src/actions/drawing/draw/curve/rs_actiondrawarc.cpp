@@ -24,23 +24,14 @@
 **
 **********************************************************************/
 
-#include<cmath>
-
 #include "rs_actiondrawarc.h"
-#include "rs_arc.h"
-#include "rs_line.h"
-#include "rs_circle.h"
-#include "rs_commandevent.h"
-#include "rs_commands.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_preview.h"
+
 #include "lc_linemath.h"
-#include "rs_actioninterface.h"
 #include "qg_arcoptions.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_debug.h"
+#include "rs_line.h"
 
 // fixme - sand -  expand actions options widget to support all possible settings (like angle, radius, start angle, end/total angle, chordlen)
 RS_ActionDrawArc::RS_ActionDrawArc(LC_ActionContext *actionContext,RS2::ActionType ownActionType)
