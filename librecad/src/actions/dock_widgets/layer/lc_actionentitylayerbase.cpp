@@ -35,21 +35,23 @@ void LC_ActionLayerBase::onSelectionCompleted(bool singleEntity, bool fromInit) 
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     if (m_selectionComplete) {
-        deselectAll();
         trigger();
-        init(-1);
     }
 }
 
 void LC_ActionLayerBase::doTrigger(bool keepSelected) {
-    if (m_selectedEntities.size() > 0) {
-        // hmm.. what to do? notify the user?
-    }
-    auto firstEntity = m_selectedEntities.front();
-    RS_Layer* layer = firstEntity->getLayer();
+    if (!m_selectedEntities.empty()) {
+        auto firstEntity = m_selectedEntities.front();
+        RS_Layer* layer = firstEntity->getLayer();
 
-    if (layer != nullptr) {
-         doProceedLayer(layer);
+        if (layer != nullptr) {
+            doProceedLayer(layer);
+            deselectAll();
+            init(-1);
+        }
+    }
+    else {
+        // hmm.. what to do? notify the user?
     }
 }
 

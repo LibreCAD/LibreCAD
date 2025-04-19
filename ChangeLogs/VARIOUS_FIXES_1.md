@@ -10,9 +10,10 @@ Some generic refactorings were performed:
 4) several invalid/bad dependencies from model entities to view/ui, static references were removed
 5) connections were modernized to modern reference-based form of signals and slots
 6) not used classes were removed (old CAD Toolbars/widgets)
-   7) refactoring for actions invocations,  QG_ActionHandler refactoring, separate factory for actions creation, actions adjustments 
+7) refactoring for actions invocations,  QG_ActionHandler refactoring, separate factory for actions creation, actions adjustments 
 8) bugfixes
 9) generic code cleanup, fields renaming to conform m_ naming pattern (WIP)
+10) Entity's layer actions
 
 
 ### Widget Options
@@ -35,6 +36,17 @@ Two simple commands were added to let management of layers via script file.
 
 1) cslayer - activates layer with specified name
 2) cnlayer - creates and activates layer with given name
+
+### Entity's layer actions
+Several small actions (and toolbar for them) where added for layer-related operations based on the entity. 
+
+Using them the user is able to select some entity, and for the layer of this selected entity:
+* activate layer
+* make layer invisible
+* lock layer
+* toggle layer's printing and construction flag. 
+
+Thus these actions allows quick invocation of some common operations without switching to the Layers List or Layers Tree widgets.  
 
 ### Other 
 

@@ -101,8 +101,8 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
 void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group) {
     createActionHandlerActions(map, group,{
      {"EntityLayerActivate",     RS2::ActionLayerEntityActivate,          tr("Activate Entity's Layer"),           ":/icons/select_entity.lci"},
-     {"EntityLayerView",         RS2::ActionLayerEntityToggleView,        tr("Toggle Entity's Layer Visibility"),  ":/icons/not_visible.lci"},
-     {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Toggle Entity's Layer Lock"),        ":/icons/locked.lci"},
+     {"EntityLayerView",         RS2::ActionLayerEntityToggleView,        tr("Hide Entity's Layer"),  ":/icons/not_visible.lci"},
+     {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Lock Entity's Layer"),        ":/icons/locked.lci"},
      {"EntityLayerConstruction", RS2::ActionLayerEntityToggleConstruction,tr("Toggle Entity's Layer Construction"),":/icons/construction_layer.lci"},
      {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,           tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
  });
