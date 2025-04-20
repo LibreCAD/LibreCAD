@@ -218,728 +218,761 @@ RS_Layer* obtainLayer(LC_ActionContext* m_actionContext, void* data) {
 }
 
 bool hasSelection(LC_ActionContext* m_actionContext) {
-    return m_actionContext->getEntityContainer()->countSelected() > 0; // fixme - sand - think about moving to the action context
+    return m_actionContext->getEntityContainer()->countSelected() > 0;
+    // fixme - sand - think about moving to the action context
 }
 
 bool hasNoSelection(LC_ActionContext* m_actionContext) {
-    return m_actionContext->getEntityContainer()->countSelected() == 0; // fixme - sand - think about moving to the action context
+    return m_actionContext->getEntityContainer()->countSelected() == 0;
+    // fixme - sand - think about moving to the action context
 }
 
-std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstance(RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
-    auto view = ctx->getGraphicView();
-    switch (actionType) {
-        case RS2::ActionEditKillAllActions:   {
-            if (view != nullptr) {
-                // DO we need to call some form of a 'clean' function?
-                view->killAllActions();
-                auto document = ctx->getEntityContainer();
-                RS_Selection s(static_cast<RS_EntityContainer&>(*document), view->getViewPort());
-                s.selectAll(false);
-                RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(),document->totalSelectedLength());
-            }
-            return nullptr;
-        }
-        case RS2::ActionEditUndo: {
-            //to avoid operation on deleted entities, Undo action invalid all suspended
-            //actions
-            view->killAllActions();
-            return std::make_shared<RS_ActionEditUndo>(true, ctx);
-        }
-        case RS2::ActionEditRedo: {
-            return std::make_shared<RS_ActionEditUndo>(false, ctx);
-        }
-        case RS2::ActionEditCut: {
-            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCut);
-        }
-        case RS2::ActionEditCutQuick: {
-            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCutQuick);
-        }
-        case RS2::ActionEditCopy: {
-            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCopy);
-        }
-        case RS2::ActionEditCopyQuick: {
-            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditCopyQuick);
-        }
-        case RS2::ActionEditPaste: {
-            return std::make_shared<RS_ActionEditCopyPaste>(ctx, RS2::ActionEditPaste);
-        }
-        case RS2::ActionEditPasteTransform: {
-            return std::make_shared<LC_ActionEditPasteTransform>(ctx);
-        }
-        case RS2::ActionPasteToPoints: {
-            return std::make_shared<LC_ActionPasteToPoints>(ctx);
-        }
-        case RS2::ActionOrderBottom: {
-            return std::make_shared<RS_ActionOrder>(ctx, RS2::ActionOrderBottom);
-        }
-        case RS2::ActionOrderLower: {
-            return std::make_shared<RS_ActionOrder>(ctx, RS2::ActionOrderLower);
-        }
-        case RS2::ActionOrderRaise: {
-            return std::make_shared<RS_ActionOrder>(ctx, RS2::ActionOrderRaise);
-        }
-        case RS2::ActionOrderTop: {
-            return std::make_shared<RS_ActionOrder>(ctx, RS2::ActionOrderTop);
-        }
-        case RS2::ActionSelectSingle: { // fixme - sand - files - that's suspicious implementation, check it again for plugins
-            RS_ActionInterface* currentAction = ctx->getCurrentAction();
-            if(currentAction->rtti() != RS2::ActionSelectSingle) {
-                return std::make_shared<RS_ActionSelectSingle>(ctx, currentAction);
-            }
-            break;
-        }
-        case RS2::ActionSelectContour:{
-            view->killSelectActions();
-            return std::make_shared<RS_ActionSelectContour>(ctx);
-        }
-        case RS2::ActionSelectAll: {
-            return std::make_shared<RS_ActionSelectAll>(ctx, true);
-        }
-        case RS2::ActionDeselectAll: {
-            return std::make_shared<RS_ActionSelectAll>(ctx, false);
-        }
-        case RS2::ActionSelectWindow:{
-            view->killSelectActions();
-            return std::make_shared<RS_ActionSelectWindow>(view->getTypeToSelect(), ctx, true);
-        }
-        case RS2::ActionSelectPoints:{
-            view->killSelectActions();
-            return std::make_shared<LC_ActionSelectPoints>(ctx);
-        }
-        case RS2::ActionDeselectWindow:{
-            view->killSelectActions();
-            return std::make_shared<RS_ActionSelectWindow>(ctx, false);
-        }
-        case RS2::ActionSelectInvert:{
-            return std::make_shared<RS_ActionSelectInvert>(ctx);
-        }
-        case RS2::ActionSelectIntersected: {
-            view->killSelectActions();
-            return std::make_shared<RS_ActionSelectIntersected>(ctx, true);
-        }
-        case RS2::ActionDeselectIntersected: {
-            view->killSelectActions();
-            return std::make_shared<RS_ActionSelectIntersected>(ctx, false);
-        }
-        case RS2::ActionSelectLayer: {
-            view->killSelectActions();
-            return std::make_shared<RS_ActionSelectLayer>(ctx);
-        }
-        case RS2::ActionToolRegenerateDimensions: {
-            return std::make_shared<RS_ActionToolRegenerateDimensions>(ctx);
-        }
-        case RS2::ActionZoomIn: {
-            return std::make_shared<RS_ActionZoomIn>(ctx, RS2::In, RS2::Both);
-        }
-        case RS2::ActionZoomOut: {
-            return std::make_shared<RS_ActionZoomIn>(ctx, RS2::Out, RS2::Both);
-        }
-        case RS2::ActionZoomAuto: {
-            return std::make_shared<RS_ActionZoomAuto>(ctx);
-        }
-        case RS2::ActionZoomWindow: {
-            return std::make_shared<RS_ActionZoomWindow>(ctx);
-        }
-        case RS2::ActionZoomPan: {
-            return std::make_shared<RS_ActionZoomPan>(ctx);
-        }
-        case RS2::ActionZoomPrevious: {
-            return std::make_shared<RS_ActionZoomPrevious>(ctx);
-        }
-        case RS2::ActionZoomRedraw: {
-            return std::make_shared<RS_ActionZoomRedraw>(ctx);
-        }
-        case RS2::ActionDrawPoint: {
-            return std::make_shared<RS_ActionDrawPoint>(ctx);
-        }
-        case RS2::ActionDrawLine: {
-            return std::make_shared<RS_ActionDrawLine>(ctx);
-        }
-        case RS2::ActionDrawLineAngle: {
-            return std::make_shared<RS_ActionDrawLineAngle>(ctx, false);
-        }
-        case RS2::ActionDrawLineHorizontal: {
-            return std::make_shared<RS_ActionDrawLineAngle>(ctx, true,
-                                                            RS2::ActionDrawLineHorizontal);
-        }
-        case RS2::ActionDrawLineHorVert: {
-            return std::make_shared<RS_ActionDrawLineHorVert>(ctx);
-        }
-        case RS2::ActionDrawLineVertical: {
-            return std::make_shared<RS_ActionDrawLineAngle>(ctx, true,
-                                                            RS2::ActionDrawLineVertical);
-        }
-        case RS2::ActionDrawLineFree: {
-            return std::make_shared<RS_ActionDrawLineFree>(ctx);
-        }
-        case RS2::ActionDrawLineParallel: {
-            return std::make_shared<RS_ActionDrawLineParallel>(ctx, RS2::ActionDrawLineParallel);
-        }
-        case RS2::ActionDrawCircleParallel: {
-            return std::make_shared<RS_ActionDrawLineParallel>(ctx, RS2::ActionDrawCircleParallel);
-        }
-        case RS2::ActionDrawArcParallel: {
-            return std::make_shared<RS_ActionDrawLineParallel>(ctx, RS2::ActionDrawArcParallel);
-        }
-        case RS2::ActionDrawLineParallelThrough: {
-            return std::make_shared<RS_ActionDrawLineParallelThrough>(ctx);
-        }
-        case RS2::ActionDrawLineRectangle: {
-            return std::make_shared<RS_ActionDrawLineRectangle>(ctx);
-        }
-        case RS2::ActionDrawRectangle3Points: {
-            return std::make_shared<LC_ActionDrawRectangle3Points>(ctx);
-        }
-        case RS2::ActionDrawRectangle2Points: {
-            return std::make_shared<LC_ActionDrawRectangle2Points>(ctx);
-        }
-        case RS2::ActionDrawRectangle1Point: {
-            return std::make_shared<LC_ActionDrawRectangle1Point>(ctx);
-        }
-        case RS2::ActionDrawCross: {
-            return std::make_shared<LC_ActionDrawCross>(ctx);
-        }
-        case RS2::ActionDrawBoundingBox: {
-            return std::make_shared<LC_ActionDrawBoundingBox>(ctx);
-        }
-        case RS2::ActionDrawSnakeLine: {
-            return std::make_shared<LC_ActionDrawLineSnake>(ctx, RS2::ActionDrawSnakeLine);
-        }
-        case RS2::ActionDrawSnakeLineX: {
-            return std::make_shared<LC_ActionDrawLineSnake>(ctx, RS2::ActionDrawSnakeLineX);
-        }
-        case RS2::ActionDrawSnakeLineY: {
-            return std::make_shared<LC_ActionDrawLineSnake>(ctx, RS2::ActionDrawSnakeLineY);
-        }
-        case RS2::ActionDrawSliceDivideLine: {
-            return std::make_shared<LC_ActionDrawSliceDivide>(ctx, false);
-        }
-        case RS2::ActionDrawSliceDivideCircle: {
-            return std::make_shared<LC_ActionDrawSliceDivide>(ctx, true);
-        }
-        case RS2::ActionDrawLinePoints: {
-            return std::make_shared<LC_ActionDrawLinePoints>(ctx, false);
-        }
-        case RS2::ActionDrawPointsMiddle: {
-            return std::make_shared<LC_ActionDrawLinePoints>(ctx, true);
-        }
-        case RS2::ActionDrawPointsLattice: {
-            return std::make_shared<LC_ActionDrawPointsLattice>(ctx);
-        }
-        case RS2::ActionDrawLineBisector: {
-            return std::make_shared<RS_ActionDrawLineBisector>(ctx);
-        }
-        case RS2::ActionDrawLineOrthTan: {
-            return std::make_shared<RS_ActionDrawLineOrthTan>(ctx);
-        }
-        case RS2::ActionDrawLineTangent1: {
-            return std::make_shared<RS_ActionDrawLineTangent1>(ctx);
-        }
-        case RS2::ActionDrawLineTangent2: {
-            return std::make_shared<RS_ActionDrawLineTangent2>(ctx);
-        }
-        case RS2::ActionDrawLineOrthogonal: {
-            return std::make_shared<RS_ActionDrawLineRelAngle>(ctx, M_PI_2, true);
-        }
-        case RS2::ActionDrawLineRelAngle: {
-            return std::make_shared<RS_ActionDrawLineRelAngle>(ctx, M_PI_2, false);
-        }
-        case RS2::ActionDrawPolyline: {
-            return std::make_shared<RS_ActionDrawPolyline>(ctx);
-        }
-        case RS2::ActionDrawLineOrthogonalRel: {
-            return std::make_shared<LC_ActionDrawLineAngleRel>(ctx, 90.0, true);
-        }
-        case RS2::ActionDrawLineAngleRel: {
-            return std::make_shared<LC_ActionDrawLineAngleRel>(ctx, 0.0, false);
-        }
-        case RS2::ActionDrawLineFromPointToLine: {
-            return std::make_shared<LC_ActionDrawLineFromPointToLine>(ctx);
-        }
-        case RS2::ActionDrawLineMiddle: {
-            return std::make_shared<LC_ActionDrawMidLine>(ctx);
-        }
-        case RS2::ActionDrawStar: {
-            return std::make_shared<LC_ActionDrawStar>(ctx);
-        }
-        case RS2::ActionPolylineAdd: {
-            return std::make_shared<RS_ActionPolylineAdd>(ctx);
-        }
-        case RS2::ActionPolylineAppend: {
-            return std::make_shared<RS_ActionPolylineAppend>(ctx);
-        }
-        case RS2::ActionPolylineDel: {
-            return std::make_shared<RS_ActionPolylineDel>(ctx);
-        }
-        case RS2::ActionPolylineDelBetween: {
-            return std::make_shared<RS_ActionPolylineDelBetween>(ctx);
-        }
-        case RS2::ActionPolylineTrim: {
-            return std::make_shared<RS_ActionPolylineTrim>(ctx);
-        }
-        case RS2::ActionPolylineEquidistant: {
-            return std::make_shared<RS_ActionPolylineEquidistant>(ctx);
-        }
-        case RS2::ActionPolylineSegment: {
-            if (data == nullptr) {
-                return std::make_shared<RS_ActionPolylineSegment>(ctx);
-            }
-            else {
-                return std::make_shared<RS_ActionPolylineSegment>(ctx, static_cast<RS_Entity*>(data));
-            }
-        }
-        case RS2::ActionPolylineArcsToLines: {
-            return std::make_shared<LC_ActionPolylineArcsToLines>(ctx);
-        }
-        case RS2::ActionPolylineChangeSegmentType: {
-            return std::make_shared<LC_ActionPolylineChangeSegmentType>(ctx);
-        }
-        case RS2::ActionDrawLinePolygonCenCor: {
-            return std::make_shared<RS_ActionDrawLinePolygonCenCor>(ctx);
-        }
-        case RS2::ActionDrawLinePolygonCenTan: {//20161223 added by txmy
-            return std::make_shared<LC_ActionDrawLinePolygonCenTan>(ctx);
-        }
-        case RS2::ActionDrawLinePolygonSideSide: {
-            return std::make_shared<LC_ActionDrawLinePolygon4>(ctx);
-        }
-        case RS2::ActionDrawLinePolygonCorCor: {
-            return std::make_shared<RS_ActionDrawLinePolygonCorCor>(ctx);
-        }
-        case RS2::ActionDrawCircle: {
-            return std::make_shared<RS_ActionDrawCircle>(ctx);
-        }
-        case RS2::ActionDrawCircleCR: {
-            return std::make_shared<RS_ActionDrawCircleCR>(ctx);
-        }
-        case RS2::ActionDrawCircleByArc: {
-            return std::make_shared<LC_ActionDrawCircleByArc>(ctx);
-        }
-        case RS2::ActionDrawCircle2P: {
-            return std::make_shared<RS_ActionDrawCircle2P>(ctx);
-        }
-        case RS2::ActionDrawCircle2PR: {
-            return std::make_shared<LC_ActionDrawCircle2PR>(ctx);
-        }
-        case RS2::ActionDrawCircle3P: {
-            return std::make_shared<RS_ActionDrawCircle3P>(ctx);
-        }
-        case RS2::ActionDrawCircleTan1_2P: {
-            return std::make_shared<RS_ActionDrawCircleTan1_2P>(ctx);
-        }
-        case RS2::ActionDrawCircleTan2_1P: {
-            return std::make_shared<RS_ActionDrawCircleTan2_1P>(ctx);
-        }
-        case RS2::ActionDrawCircleInscribe: {
-            return std::make_shared<RS_ActionDrawCircleInscribe>(ctx);
-        }
-        case RS2::ActionDrawCircleTan2: {
-            return std::make_shared<RS_ActionDrawCircleTan2>(ctx);
-        }
-        case RS2::ActionDrawCircleTan3: {
-            return std::make_shared<RS_ActionDrawCircleTan3>(ctx);
-        }
-        case RS2::ActionDrawArc: {
-            return std::make_shared<RS_ActionDrawArc>(ctx, RS2::ActionDrawArc);
-        }
-        case RS2::ActionDrawArcChord: {
-            return std::make_shared<RS_ActionDrawArc>(ctx, RS2::ActionDrawArcChord);
-        }
-        case RS2::ActionDrawArcAngleLen: {
-            return std::make_shared<RS_ActionDrawArc>(ctx, RS2::ActionDrawArcAngleLen);
-        }
-        case RS2::ActionDrawArc3P: {
-            return std::make_shared<RS_ActionDrawArc3P>(ctx);
-        }
-        case RS2::ActionDrawArcTangential: {
-            return std::make_shared<RS_ActionDrawArcTangential>(ctx);
-        }
-        case RS2::ActionDrawArc2PRadius: {
-            return std::make_shared<LC_ActionDrawArc2PointsRadius>(ctx);
-        }
-        case RS2::ActionDrawArc2PAngle: {
-            return std::make_shared<LC_ActionDrawArc2PointsAngle>(ctx);
-        }
-        case RS2::ActionDrawArc2PHeight: {
-            return std::make_shared<LC_ActionDrawArc2PointsHeight>(ctx);
-        }
-        case RS2::ActionDrawArc2PLength: {
-            return std::make_shared<LC_ActionDrawArc2PointsLength>(ctx);
-        }
-        case RS2::ActionDrawEllipseAxis: {
-            return std::make_shared<RS_ActionDrawEllipseAxis>(ctx, false);
-        }
-        case RS2::ActionDrawEllipseArcAxis: {
-            return std::make_shared<RS_ActionDrawEllipseAxis>(ctx, true);
-        }
-        case RS2::ActionDrawEllipse1Point: {
-            return std::make_shared<LC_ActionDrawEllipse1Point>(ctx, false);
-        }
-        case RS2::ActionDrawEllipseArc1Point: {
-            return std::make_shared<LC_ActionDrawEllipse1Point>(ctx, true);
-        }
-        case RS2::ActionDrawParabola4Points: {
-            return std::make_shared<LC_ActionDrawParabola4Points>(ctx);
-        }
-        case RS2::ActionDrawParabolaFD: {
-            return std::make_shared<LC_ActionDrawParabolaFD>(ctx);
-        }
-        case RS2::ActionDrawEllipseFociPoint: {
-            return std::make_shared<RS_ActionDrawEllipseFociPoint>(ctx);
-        }
-        case RS2::ActionDrawEllipse4Points: {
-            return std::make_shared<RS_ActionDrawEllipse4Points>(ctx);
-        }
-        case RS2::ActionDrawEllipseCenter3Points: {
-            return std::make_shared<RS_ActionDrawEllipseCenter3Points>(ctx);
-        }
-        case RS2::ActionDrawEllipseInscribe: {
-            return std::make_shared<RS_ActionDrawEllipseInscribe>(ctx);
-        }
-        case RS2::ActionDrawSpline: {
-            return std::make_shared<RS_ActionDrawSpline>(ctx);
-        }
-        case RS2::ActionDrawSplinePoints: {
-            return std::make_shared<LC_ActionDrawSplinePoints>(ctx);
-        }
-        case RS2::ActionDrawSplinePointRemove: {
-            return std::make_shared<LC_ActionRemoveSplinePoints>(ctx);
-        }
-        case RS2::ActionDrawSplinePointDelTwo: {
-            return std::make_shared<LC_ActionSplineRemoveBetween>(ctx);
-        }
-        case RS2::ActionDrawSplinePointAppend: {
-            return std::make_shared<LC_ActionSplineAppendPoint>(ctx);
-        }
-        case RS2::ActionDrawSplinePointAdd: {
-            return std::make_shared<LC_ActionSplineAddPoint>(ctx);
-        }
-        case RS2::ActionDrawSplineExplode: {
-            return std::make_shared<LC_ActionSplineExplode>(ctx);
-        }
-        case RS2::ActionDrawSplineFromPolyline: {
-            return std::make_shared<LC_ActionSplineFromPolyline>(ctx);
-        }
-        case RS2::ActionDrawMText: {
-            return std::make_shared<RS_ActionDrawMText>(ctx);
-        }
-        case RS2::ActionDrawText: {
-            return std::make_shared<RS_ActionDrawText>(ctx);
-        }
-        case RS2::ActionDrawHatch: {
-            return std::make_shared<RS_ActionDrawHatch>(ctx);
-        }
-        case RS2::ActionDrawImage: {
-            return std::make_shared<RS_ActionDrawImage>(ctx);
-        }
-        case RS2::ActionDimAligned: {
-            return std::make_shared<RS_ActionDimAligned>(ctx);
-        }
-        case RS2::ActionDimLinear: {
-            return std::make_shared<RS_ActionDimLinear>(ctx);
-        }
-        case RS2::ActionDimLinearHor: {
-            return std::make_shared<RS_ActionDimLinear>(ctx, 0.0, true, RS2::ActionDimLinearHor);
-        }
-        case RS2::ActionDimLinearVer: {
-            return std::make_shared<RS_ActionDimLinear>(ctx, M_PI_2, true, RS2::ActionDimLinearVer);
-        }
-        case RS2::ActionDimRadial: {
-            return std::make_shared<RS_ActionDimRadial>(ctx);
-        }
-        case RS2::ActionDimDiametric: {
-            return std::make_shared<RS_ActionDimDiametric>(ctx);
-        }
-        case RS2::ActionDimAngular: {
-            return std::make_shared<RS_ActionDimAngular>(ctx);
-        }
-        case RS2::ActionDimArc: {
-            return std::make_shared<LC_ActionDimArc>(ctx);
-        }
-        case RS2::ActionDimLeader: {
-            return std::make_shared<RS_ActionDimLeader>(ctx);
-        }
-        case RS2::ActionDimBaseline: {
-            return std::make_shared<LC_ActionDrawDimBaseline>(ctx, RS2::ActionDimBaseline);
-        }
-        case RS2::ActionDimContinue: {
-            return std::make_shared<LC_ActionDrawDimBaseline>(ctx, RS2::ActionDimContinue);
-        }
-        case RS2::ActionModifyLineJoin: {
-            return std::make_shared<LC_ActionModifyLineJoin>(ctx);
-        }
-        case RS2::ActionModifyDuplicate: {
-            return std::make_shared<LC_ActionModifyDuplicate>(ctx);
-        }
-        case RS2::ActionModifyBreakDivide: {
-            return std::make_shared<LC_ActionModifyBreakDivide>(ctx);
-        }
-        case RS2::ActionModifyLineGap: {
-            return std::make_shared<LC_ActionModifyLineGap>(ctx);
-        }
-        case RS2::ActionModifyAttributes: {
-            return std::make_shared<RS_ActionModifyAttributes>(ctx);
-        }
-        case RS2::ActionModifyDelete: {
-            return std::make_shared<RS_ActionModifyDelete>(ctx);
-        }
-        case RS2::ActionModifyDeleteQuick: {
-            return std::make_shared<RS_ActionModifyDelete>(ctx);
-        }
-        case RS2::ActionModifyDeleteFree: {
-            return std::make_shared<RS_ActionModifyDeleteFree>(ctx);
-        }
-        case RS2::ActionModifyMove: {
-            return std::make_shared<RS_ActionModifyMove>(ctx);
-        }
-        case RS2::ActionModifyRevertDirection: {
-            return std::make_shared<RS_ActionModifyRevertDirection>(ctx);
-        }
-        case RS2::ActionModifyRotate: {
-            return std::make_shared<RS_ActionModifyRotate>(ctx);
-        }
-        case RS2::ActionModifyScale: {
-            return std::make_shared<RS_ActionModifyScale>(ctx);
-        }
-        case RS2::ActionModifyMirror: {
-            return std::make_shared<RS_ActionModifyMirror>(ctx);
-        }
-        case RS2::ActionModifyMoveRotate: {
-            return std::make_shared<RS_ActionModifyMoveRotate>(ctx);
-        }
-        case RS2::ActionModifyRotate2: {
-            return std::make_shared<RS_ActionModifyRotate2>(ctx);
-        }
-        case RS2::ActionModifyEntity: {
-            return std::make_shared<RS_ActionModifyEntity>(ctx, static_cast<RS_Entity*>(data));
-        }
-        case RS2::ActionModifyTrim: {
-            return std::make_shared<RS_ActionModifyTrim>(ctx, false);
-        }
-        case RS2::ActionModifyTrim2: {
-            return std::make_shared<RS_ActionModifyTrim>(ctx, true);
-        }
-        case RS2::ActionModifyTrimAmount: {
-            return std::make_shared<RS_ActionModifyTrimAmount>(ctx);
-        }
-        case RS2::ActionModifyCut: {
-            return std::make_shared<RS_ActionModifyCut>(ctx);
-        }
-        case RS2::ActionModifyStretch: {
-            return std::make_shared<RS_ActionModifyStretch>(ctx);
-        }
-        case RS2::ActionModifyBevel: {
-            return std::make_shared<RS_ActionModifyBevel>(ctx);
-        }
-        case RS2::ActionModifyRound: {
-            return std::make_shared<RS_ActionModifyRound>(ctx);
-        }
-        case RS2::ActionModifyOffset: {
-            return std::make_shared<RS_ActionModifyOffset>(ctx);
-        }
-        case RS2::ActionModifyExplodeText: {
-            return std::make_shared<RS_ActionModifyExplodeText>(ctx);
-        }
-        case RS2::ActionModifyAlign: {
-            return std::make_shared<LC_ActionModifyAlign>(ctx);
-        }
-        case RS2::ActionModifyAlignOne: {
-            return std::make_shared<LC_ActionModifyAlignSingle>(ctx);
-        }
-        case RS2::ActionModifyAlignRef: {
-            return std::make_shared<LC_ActionModifyAlignRef>(ctx);
-        }
-        case RS2::ActionSetRelativeZero: {
-            return std::make_shared<RS_ActionSetRelativeZero>(ctx);
-        }
-        case RS2::ActionLockRelativeZero: {
-            return std::make_shared<RS_ActionLockRelativeZero>(ctx, true);
-        }
-        case RS2::ActionUnlockRelativeZero: {
-            return std::make_shared<RS_ActionLockRelativeZero>(ctx, false);
-        }
-        case RS2::ActionPenPick: {
-            return std::make_shared<LC_ActionPenPick>(ctx, false);
-        }
-        case RS2::ActionPenPickResolved: {
-            return std::make_shared<LC_ActionPenPick>(ctx, true);
-        }
-        case RS2::ActionPenApply: {
-            return std::make_shared<LC_ActionPenApply>(ctx, false);
-        }
-        case RS2::ActionPenCopy: {
-            return std::make_shared<LC_ActionPenApply>(ctx, true);
-        }
-        case RS2::ActionPenSyncFromLayer: {
-            return std::make_shared<LC_ActionPenSyncActiveByLayer>(ctx);
-        }
-        case RS2::ActionInfoInside: {
-            return std::make_shared<RS_ActionInfoInside>(ctx);
-        }
-        case RS2::ActionInfoDistPoint2Point: {
-            return std::make_shared<RS_ActionInfoDist>(ctx);
-        }
-    /*    case RS2::ActionInfoDistEntity2Point: {
-            return std::make_shared<RS_ActionInfoDist2>(ctx);
-        }
-        case RS2::ActionInfoDistPoint2Entity: {
-            return std::make_shared<RS_ActionInfoDist2>(ctx, true);
-        }
-        case RS2::ActionInfoAngle: {
-            return std::make_shared<RS_ActionInfoAngle>(ctx);
-        }
-        case RS2::ActionInfoAngle3Points: {
-            return std::make_shared<LC_ActionInfo3PointsAngle>(ctx);
-        }
-        case RS2::ActionInfoTotalLength: {
-            return std::make_shared<RS_ActionInfoTotalLength>(ctx);
-        }
-        case RS2::ActionInfoArea: {
-            return std::make_shared<RS_ActionInfoArea>(ctx);
-        }
-        case RS2::ActionInfoProperties: {
-            return std::make_shared<LC_ActionInfoProperties>(ctx);
-        }
-        case RS2::ActionInfoPickCoordinates: {
-            return std::make_shared<LC_ActionInfoPickCoordinates>(ctx);
-        }
-        case RS2::ActionLayersDefreezeAll: {
-            return std::make_shared<RS_ActionLayersFreezeAll>(false, ctx);
-        }
-        case RS2::ActionLayersFreezeAll: {
-            return std::make_shared<RS_ActionLayersFreezeAll>(true, ctx);
-        }
-        case RS2::ActionLayersUnlockAll: {
-            return std::make_shared<RS_ActionLayersLockAll>(false, ctx);
-        }
-        case RS2::ActionLayersLockAll: {
-            return std::make_shared<RS_ActionLayersLockAll>(true, ctx);
-        }
-        case RS2::ActionLayersAdd: {
-            return std::make_shared<RS_ActionLayersAdd>(ctx);
-        }
-        case RS2::ActionLayersAddCmd: {
-            return std::make_shared<LC_ActionLayersCmd>(ctx, RS2::ActionLayersAddCmd);
-        }
-        case RS2::ActionLayersActivateCmd: {
-            return std::make_shared<LC_ActionLayersCmd>(ctx, RS2::ActionLayersActivateCmd);
-        }
-        case RS2::ActionLayersRemove: {
-            return std::make_shared<RS_ActionLayersRemove>(ctx);
-        }
-          case RS2::ActionLayersEdit: {
-            return std::make_shared<RS_ActionLayersEdit>(ctx);
-        }
-        case RS2::ActionLayersToggleView: {
-            auto a_layer = obtainLayer(ctx, data);
-            if (a_layer != nullptr) {
-                return std::make_shared<RS_ActionLayersToggleView>(ctx, a_layer);
-            }
-            break;
-        }
-        case RS2::ActionLayersToggleLock: {
-            auto a_layer = obtainLayer(ctx, data);
-            if (a_layer != nullptr) {
-                return std::make_shared<RS_ActionLayersToggleLock>(ctx, a_layer);
-            }
-            break;
-        }
-        case RS2::ActionLayersTogglePrint: {
-            auto a_layer = obtainLayer(ctx, data);
-            if (a_layer != nullptr) {
-                return std::make_shared<RS_ActionLayersTogglePrint>(ctx, a_layer);
-            }
-            break;
-        }
-        case RS2::ActionLayersToggleConstruction:{
-            auto a_layer = obtainLayer(ctx, data);
-            if (a_layer != nullptr) {
-                return std::make_shared<LC_ActionLayersToggleConstruction>(ctx, a_layer);
-            }
-            break;
-        }
-        case RS2::ActionLayersExportSelected: {
-            return std::make_shared<LC_ActionLayersExport>(ctx, LC_ActionLayersExport::SelectedMode);
-        }
-        case RS2::ActionLayersExportVisible: {
-            return std::make_shared<LC_ActionLayersExport>(ctx, LC_ActionLayersExport::VisibleMode);
-        }
-        case RS2::ActionBlocksDefreezeAll: {
-            return std::make_shared<RS_ActionBlocksFreezeAll>(false, ctx);
-        }
-        case RS2::ActionBlocksFreezeAll: {
-            return std::make_shared<RS_ActionBlocksFreezeAll>(true, ctx);
-        }
-        case RS2::ActionBlocksAdd: {
-            return std::make_shared<RS_ActionBlocksAdd>(ctx);
-        }
-      case RS2::ActionBlocksRemove: {
-            return std::make_shared<RS_ActionBlocksRemove>(ctx);
-        }
-        case RS2::ActionBlocksAttributes: {
-            return std::make_shared<RS_ActionBlocksAttributes>(ctx);
-        }
-        case RS2::ActionBlocksEdit: {
-            return std::make_shared<RS_ActionBlocksEdit>(ctx);
-        }
-        case RS2::ActionBlocksSave: {
-            return std::make_shared<RS_ActionBlocksSave>(ctx);
-        }
-        case RS2::ActionBlocksInsert: {
-            return std::make_shared<RS_ActionBlocksInsert>(ctx);
-        }
-        case RS2::ActionBlocksToggleView: {
-            return std::make_shared<RS_ActionBlocksToggleView>(ctx);
-        }
-        case RS2::ActionBlocksCreate: {
-            return std::make_shared<RS_ActionBlocksCreate>(ctx);
-        }
-        case RS2::ActionBlocksExplode: {
-            return std::make_shared<RS_ActionBlocksExplode>(ctx);
-        }
-        case RS2::ActionLibraryInsert: {
-            return std::make_shared<RS_ActionLibraryInsert>(ctx);
-        }
-        case RS2::ActionOptionsDrawing: {
-            return std::make_shared<RS_ActionOptionsDrawing>(ctx);
-        }
-        case RS2::ActionOptionsDrawingGrid: {
-            return std::make_shared<RS_ActionOptionsDrawing>(ctx, 2);
-        }
-        case RS2::ActionOptionsDrawingUnits: {
-            return std::make_shared<RS_ActionOptionsDrawing>(ctx, 1);
-        }
-        case RS2::ActionUCSCreate: {
-            return std::make_shared<LC_ActionUCSCreate>(ctx);
-        }
-        case RS2::ActionFileExportMakerCam: {
-            return std::make_shared<LC_ActionFileExportMakerCam>(ctx);
-        }
-        case RS2::ActionSnapMiddleManual: {
-            auto currentAction = ctx->getCurrentAction();
-            if (currentAction != nullptr) {
-                if (currentAction->rtti() == RS2::ActionSnapMiddleManual){
-                    currentAction->init(-1);
-                    return nullptr;
+namespace InnerFactory{
+    RS_ActionInterface* doCreateActionInstance(RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
+        auto view = ctx->getGraphicView();
+        switch (actionType) {
+            case RS2::ActionEditKillAllActions: {
+                if (view != nullptr) {
+                    // DO we need to call some form of a 'clean' function?
+                    view->killAllActions();
+                    auto document = ctx->getEntityContainer();
+                    RS_Selection s(static_cast<RS_EntityContainer&>(*document), view->getViewPort());
+                    s.selectAll(false);
+                    RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
                 }
-                return std::make_shared<LC_ActionSnapMiddleManual>(ctx);
+                return nullptr;
             }
-            break;
-        }
-        case RS2::ActionLayerEntityActivate:
-            [[fallthrough]];
-        case RS2::ActionLayerEntityToggleView:
-            [[fallthrough]];
-        case RS2::ActionLayerEntityToggleConstruction:
-            [[fallthrough]];
-        case RS2::ActionLayerEntityTogglePrint:
-            [[fallthrough]];
-        case RS2::ActionLayerEntityToggleLock:{            
-            return std::make_shared<LC_ActionLayerToggle>(ctx, actionType);
-        }*/
-        default:
-            RS_DEBUG->print(RS_Debug::D_WARNING,&"LC_ActionsHandlerFactory::createActionInstance: No such action found. Type " [ actionType]);
-            break;
+            case RS2::ActionEditUndo: {
+                //to avoid operation on deleted entities, Undo action invalid all suspended
+                //actions
+                view->killAllActions();
+                return new RS_ActionEditUndo(true, ctx);
+            }
+            case RS2::ActionEditRedo: {
+                return new RS_ActionEditUndo(false, ctx);
+            }
+            case RS2::ActionEditCut: {
+                return new RS_ActionEditCopyPaste(ctx, RS2::ActionEditCut);
+            }
+            case RS2::ActionEditCutQuick: {
+                return new RS_ActionEditCopyPaste(ctx, RS2::ActionEditCutQuick);
+            }
+            case RS2::ActionEditCopy: {
+                return new RS_ActionEditCopyPaste(ctx, RS2::ActionEditCopy);
+            }
+            case RS2::ActionEditCopyQuick: {
+                return new RS_ActionEditCopyPaste(ctx, RS2::ActionEditCopyQuick);
+            }
+            case RS2::ActionEditPaste: {
+                return new RS_ActionEditCopyPaste(ctx, RS2::ActionEditPaste);
+            }
+            case RS2::ActionEditPasteTransform: {
+                return new LC_ActionEditPasteTransform(ctx);
+            }
+            case RS2::ActionPasteToPoints: {
+                return new LC_ActionPasteToPoints(ctx);
+            }
+            case RS2::ActionOrderBottom: {
+                return new RS_ActionOrder(ctx, RS2::ActionOrderBottom);
+            }
+            case RS2::ActionOrderLower: {
+                return new RS_ActionOrder(ctx, RS2::ActionOrderLower);
+            }
+            case RS2::ActionOrderRaise: {
+                return new RS_ActionOrder(ctx, RS2::ActionOrderRaise);
+            }
+            case RS2::ActionOrderTop: {
+                return new RS_ActionOrder(ctx, RS2::ActionOrderTop);
+            }
+            case RS2::ActionSelectSingle: {
+                // fixme - sand - files - that's suspicious implementation, check it again for plugins
+                RS_ActionInterface* currentAction = ctx->getCurrentAction();
+                if (currentAction->rtti() != RS2::ActionSelectSingle) {
+                    return new RS_ActionSelectSingle(ctx, currentAction);
+                }
+                break;
+            }
+            case RS2::ActionSelectContour: {
+                view->killSelectActions();
+                return new RS_ActionSelectContour(ctx);
+            }
+            case RS2::ActionSelectAll: {
+                return new RS_ActionSelectAll(ctx, true);
+            }
+            case RS2::ActionDeselectAll: {
+                return new RS_ActionSelectAll(ctx, false);
+            }
+            case RS2::ActionSelectWindow: {
+                view->killSelectActions();
+                return new RS_ActionSelectWindow(view->getTypeToSelect(), ctx, true);
+            }
+            case RS2::ActionSelectPoints: {
+                view->killSelectActions();
+                return new LC_ActionSelectPoints(ctx);
+            }
+            case RS2::ActionDeselectWindow: {
+                view->killSelectActions();
+                return new RS_ActionSelectWindow(ctx, false);
+            }
+            case RS2::ActionSelectInvert: {
+                return new RS_ActionSelectInvert(ctx);
+            }
+            case RS2::ActionSelectIntersected: {
+                view->killSelectActions();
+                return new RS_ActionSelectIntersected(ctx, true);
+            }
+            case RS2::ActionDeselectIntersected: {
+                view->killSelectActions();
+                return new RS_ActionSelectIntersected(ctx, false);
+            }
+            case RS2::ActionSelectLayer: {
+                view->killSelectActions();
+                return new RS_ActionSelectLayer(ctx);
+            }
+            case RS2::ActionToolRegenerateDimensions: {
+                return new RS_ActionToolRegenerateDimensions(ctx);
+            }
+            case RS2::ActionZoomIn: {
+                return new RS_ActionZoomIn(ctx, RS2::In, RS2::Both);
+            }
+            case RS2::ActionZoomOut: {
+                return new RS_ActionZoomIn(ctx, RS2::Out, RS2::Both);
+            }
+            case RS2::ActionZoomAuto: {
+                return new RS_ActionZoomAuto(ctx);
+            }
+            case RS2::ActionZoomWindow: {
+                return new RS_ActionZoomWindow(ctx);
+            }
+            case RS2::ActionZoomPan: {
+                return new RS_ActionZoomPan(ctx);
+            }
+            case RS2::ActionZoomPrevious: {
+                return new RS_ActionZoomPrevious(ctx);
+            }
+            case RS2::ActionZoomRedraw: {
+                return new RS_ActionZoomRedraw(ctx);
+            }
+            case RS2::ActionDrawPoint: {
+                return new RS_ActionDrawPoint(ctx);
+            }
+            case RS2::ActionDrawLine: {
+                return new RS_ActionDrawLine(ctx);
+            }
+            case RS2::ActionDrawLineAngle: {
+                return new RS_ActionDrawLineAngle(ctx, false);
+            }
+            case RS2::ActionDrawLineHorizontal: {
+                return new RS_ActionDrawLineAngle(ctx, true,RS2::ActionDrawLineHorizontal);
+            }
+            case RS2::ActionDrawLineHorVert: {
+                return new RS_ActionDrawLineHorVert(ctx);
+            }
+            case RS2::ActionDrawLineVertical: {
+                return new RS_ActionDrawLineAngle(ctx, true,RS2::ActionDrawLineVertical);
+            }
+            case RS2::ActionDrawLineFree: {
+                return new RS_ActionDrawLineFree(ctx);
+            }
+            case RS2::ActionDrawLineParallel: {
+                return new RS_ActionDrawLineParallel(ctx, RS2::ActionDrawLineParallel);
+            }
+            case RS2::ActionDrawCircleParallel: {
+                return new RS_ActionDrawLineParallel(ctx, RS2::ActionDrawCircleParallel);
+            }
+            case RS2::ActionDrawArcParallel: {
+                return new RS_ActionDrawLineParallel(ctx, RS2::ActionDrawArcParallel);
+            }
+            case RS2::ActionDrawLineParallelThrough: {
+                return new RS_ActionDrawLineParallelThrough(ctx);
+            }
+            case RS2::ActionDrawLineRectangle: {
+                return new RS_ActionDrawLineRectangle(ctx);
+            }
+            case RS2::ActionDrawRectangle3Points: {
+                return new LC_ActionDrawRectangle3Points(ctx);
+            }
+            case RS2::ActionDrawRectangle2Points: {
+                return new LC_ActionDrawRectangle2Points(ctx);
+            }
+            case RS2::ActionDrawRectangle1Point: {
+                return new LC_ActionDrawRectangle1Point(ctx);
+            }
+            case RS2::ActionDrawCross: {
+                return new LC_ActionDrawCross(ctx);
+            }
+            case RS2::ActionDrawBoundingBox: {
+                return new LC_ActionDrawBoundingBox(ctx);
+            }
+            case RS2::ActionDrawSnakeLine: {
+                return new LC_ActionDrawLineSnake(ctx, RS2::ActionDrawSnakeLine);
+            }
+            case RS2::ActionDrawSnakeLineX: {
+                return new LC_ActionDrawLineSnake(ctx, RS2::ActionDrawSnakeLineX);
+            }
+            case RS2::ActionDrawSnakeLineY: {
+                return new LC_ActionDrawLineSnake(ctx, RS2::ActionDrawSnakeLineY);
+            }
+            case RS2::ActionDrawSliceDivideLine: {
+                return new LC_ActionDrawSliceDivide(ctx, false);
+            }
+            case RS2::ActionDrawSliceDivideCircle: {
+                return new LC_ActionDrawSliceDivide(ctx, true);
+            }
+            case RS2::ActionDrawLinePoints: {
+                return new LC_ActionDrawLinePoints(ctx, false);
+            }
+            case RS2::ActionDrawPointsMiddle: {
+                return new LC_ActionDrawLinePoints(ctx, true);
+            }
+            case RS2::ActionDrawPointsLattice: {
+                return new LC_ActionDrawPointsLattice(ctx);
+            }
+            case RS2::ActionDrawLineBisector: {
+                return new RS_ActionDrawLineBisector(ctx);
+            }
+            case RS2::ActionDrawLineOrthTan: {
+                return new RS_ActionDrawLineOrthTan(ctx);
+            }
+            case RS2::ActionDrawLineTangent1: {
+                return new RS_ActionDrawLineTangent1(ctx);
+            }
+            case RS2::ActionDrawLineTangent2: {
+                return new RS_ActionDrawLineTangent2(ctx);
+            }
+            case RS2::ActionDrawLineOrthogonal: {
+                return new RS_ActionDrawLineRelAngle(ctx, M_PI_2, true);
+            }
+            case RS2::ActionDrawLineRelAngle: {
+                return new RS_ActionDrawLineRelAngle(ctx, M_PI_2, false);
+            }
+            case RS2::ActionDrawPolyline: {
+                return new RS_ActionDrawPolyline(ctx);
+            }
+            case RS2::ActionDrawLineOrthogonalRel: {
+                return new LC_ActionDrawLineAngleRel(ctx, 90.0, true);
+            }
+            case RS2::ActionDrawLineAngleRel: {
+                return new LC_ActionDrawLineAngleRel(ctx, 0.0, false);
+            }
+            case RS2::ActionDrawLineFromPointToLine: {
+                return new LC_ActionDrawLineFromPointToLine(ctx);
+            }
+            case RS2::ActionDrawLineMiddle: {
+                return new LC_ActionDrawMidLine(ctx);
+            }
+            case RS2::ActionDrawStar: {
+                return new LC_ActionDrawStar(ctx);
+            }
+            case RS2::ActionPolylineAdd: {
+                return new RS_ActionPolylineAdd(ctx);
+            }
+            case RS2::ActionPolylineAppend: {
+                return new RS_ActionPolylineAppend(ctx);
+            }
+            case RS2::ActionPolylineDel: {
+                return new RS_ActionPolylineDel(ctx);
+            }
+            case RS2::ActionPolylineDelBetween: {
+                return new RS_ActionPolylineDelBetween(ctx);
+            }
+            case RS2::ActionPolylineTrim: {
+                return new RS_ActionPolylineTrim(ctx);
+            }
+            case RS2::ActionPolylineEquidistant: {
+                return new RS_ActionPolylineEquidistant(ctx);
+            }
+            case RS2::ActionPolylineSegment: {
+                if (data == nullptr) {
+                    return new RS_ActionPolylineSegment(ctx);
+                }
+                else {
+                    return new RS_ActionPolylineSegment(ctx, static_cast<RS_Entity*>(data));
+                }
+            }
+            case RS2::ActionPolylineArcsToLines: {
+                return new LC_ActionPolylineArcsToLines(ctx);
+            }
+            case RS2::ActionPolylineChangeSegmentType: {
+                return new LC_ActionPolylineChangeSegmentType(ctx);
+            }
+            case RS2::ActionDrawLinePolygonCenCor: {
+                return new RS_ActionDrawLinePolygonCenCor(ctx);
+            }
+            case RS2::ActionDrawLinePolygonCenTan: {
+                //20161223 added by txmy
+                return new LC_ActionDrawLinePolygonCenTan(ctx);
+            }
+            case RS2::ActionDrawLinePolygonSideSide: {
+                return new LC_ActionDrawLinePolygon4(ctx);
+            }
+            case RS2::ActionDrawLinePolygonCorCor: {
+                return new RS_ActionDrawLinePolygonCorCor(ctx);
+            }
+            case RS2::ActionDrawCircle: {
+                return new RS_ActionDrawCircle(ctx);
+            }
+            case RS2::ActionDrawCircleCR: {
+                return new RS_ActionDrawCircleCR(ctx);
+            }
+            case RS2::ActionDrawCircleByArc: {
+                return new LC_ActionDrawCircleByArc(ctx);
+            }
+            case RS2::ActionDrawCircle2P: {
+                return new RS_ActionDrawCircle2P(ctx);
+            }
+            case RS2::ActionDrawCircle2PR: {
+                return new LC_ActionDrawCircle2PR(ctx);
+            }
+            case RS2::ActionDrawCircle3P: {
+                return new RS_ActionDrawCircle3P(ctx);
+            }
+            case RS2::ActionDrawCircleTan1_2P: {
+                return new RS_ActionDrawCircleTan1_2P(ctx);
+            }
+            case RS2::ActionDrawCircleTan2_1P: {
+                return new RS_ActionDrawCircleTan2_1P(ctx);
+            }
+            case RS2::ActionDrawCircleInscribe: {
+                return new RS_ActionDrawCircleInscribe(ctx);
+            }
+            case RS2::ActionDrawCircleTan2: {
+                return new RS_ActionDrawCircleTan2(ctx);
+            }
+            case RS2::ActionDrawCircleTan3: {
+                return new RS_ActionDrawCircleTan3(ctx);
+            }
+            case RS2::ActionDrawArc: {
+                return new RS_ActionDrawArc(ctx, RS2::ActionDrawArc);
+            }
+            case RS2::ActionDrawArcChord: {
+                return new RS_ActionDrawArc(ctx, RS2::ActionDrawArcChord);
+            }
+            case RS2::ActionDrawArcAngleLen: {
+                return new RS_ActionDrawArc(ctx, RS2::ActionDrawArcAngleLen);
+            }
+            case RS2::ActionDrawArc3P: {
+                return new RS_ActionDrawArc3P(ctx);
+            }
+            case RS2::ActionDrawArcTangential: {
+                return new RS_ActionDrawArcTangential(ctx);
+            }
+            case RS2::ActionDrawArc2PRadius: {
+                return new LC_ActionDrawArc2PointsRadius(ctx);
+            }
+            case RS2::ActionDrawArc2PAngle: {
+                return new LC_ActionDrawArc2PointsAngle(ctx);
+            }
+            case RS2::ActionDrawArc2PHeight: {
+                return new LC_ActionDrawArc2PointsHeight(ctx);
+            }
+            case RS2::ActionDrawArc2PLength: {
+                return new LC_ActionDrawArc2PointsLength(ctx);
+            }
+            case RS2::ActionDrawEllipseAxis: {
+                return new RS_ActionDrawEllipseAxis(ctx, false);
+            }
+            case RS2::ActionDrawEllipseArcAxis: {
+                return new RS_ActionDrawEllipseAxis(ctx, true);
+            }
+            case RS2::ActionDrawEllipse1Point: {
+                return new LC_ActionDrawEllipse1Point(ctx, false);
+            }
+            case RS2::ActionDrawEllipseArc1Point: {
+                return new LC_ActionDrawEllipse1Point(ctx, true);
+            }
+            case RS2::ActionDrawParabola4Points: {
+                return new LC_ActionDrawParabola4Points(ctx);
+            }
+            case RS2::ActionDrawParabolaFD: {
+                return new LC_ActionDrawParabolaFD(ctx);
+            }
+            case RS2::ActionDrawEllipseFociPoint: {
+                return new RS_ActionDrawEllipseFociPoint(ctx);
+            }
+            case RS2::ActionDrawEllipse4Points: {
+                return new RS_ActionDrawEllipse4Points(ctx);
+            }
+            case RS2::ActionDrawEllipseCenter3Points: {
+                return new RS_ActionDrawEllipseCenter3Points(ctx);
+            }
+            case RS2::ActionDrawEllipseInscribe: {
+                return new RS_ActionDrawEllipseInscribe(ctx);
+            }
+            case RS2::ActionDrawSpline: {
+                return new RS_ActionDrawSpline(ctx);
+            }
+            case RS2::ActionDrawSplinePoints: {
+                return new LC_ActionDrawSplinePoints(ctx);
+            }
+            case RS2::ActionDrawSplinePointRemove: {
+                return new LC_ActionRemoveSplinePoints(ctx);
+            }
+            case RS2::ActionDrawSplinePointDelTwo: {
+                return new LC_ActionSplineRemoveBetween(ctx);
+            }
+            case RS2::ActionDrawSplinePointAppend: {
+                return new LC_ActionSplineAppendPoint(ctx);
+            }
+            case RS2::ActionDrawSplinePointAdd: {
+                return new LC_ActionSplineAddPoint(ctx);
+            }
+            case RS2::ActionDrawSplineExplode: {
+                return new LC_ActionSplineExplode(ctx);
+            }
+            case RS2::ActionDrawSplineFromPolyline: {
+                return new LC_ActionSplineFromPolyline(ctx);
+            }
+            case RS2::ActionDrawMText: {
+                return new RS_ActionDrawMText(ctx);
+            }
+            case RS2::ActionDrawText: {
+                return new RS_ActionDrawText(ctx);
+            }
+            case RS2::ActionDrawHatch: {
+                return new RS_ActionDrawHatch(ctx);
+            }
+            case RS2::ActionDrawImage: {
+                return new RS_ActionDrawImage(ctx);
+            }
+            case RS2::ActionDimAligned: {
+                return new RS_ActionDimAligned(ctx);
+            }
+            case RS2::ActionDimLinear: {
+                return new RS_ActionDimLinear(ctx);
+            }
+            case RS2::ActionDimLinearHor: {
+                return new RS_ActionDimLinear(ctx, 0.0, true, RS2::ActionDimLinearHor);
+            }
+            case RS2::ActionDimLinearVer: {
+                return new RS_ActionDimLinear(ctx, M_PI_2, true, RS2::ActionDimLinearVer);
+            }
+            case RS2::ActionDimRadial: {
+                return new RS_ActionDimRadial(ctx);
+            }
+            case RS2::ActionDimDiametric: {
+                return new RS_ActionDimDiametric(ctx);
+            }
+            case RS2::ActionDimAngular: {
+                return new RS_ActionDimAngular(ctx);
+            }
+            case RS2::ActionDimArc: {
+                return new LC_ActionDimArc(ctx);
+            }
+            case RS2::ActionDimLeader: {
+                return new RS_ActionDimLeader(ctx);
+            }
+            case RS2::ActionDimBaseline: {
+                return new LC_ActionDrawDimBaseline(ctx, RS2::ActionDimBaseline);
+            }
+            case RS2::ActionDimContinue: {
+                return new LC_ActionDrawDimBaseline(ctx, RS2::ActionDimContinue);
+            }
+            case RS2::ActionModifyLineJoin: {
+                return new LC_ActionModifyLineJoin(ctx);
+            }
+            case RS2::ActionModifyDuplicate: {
+                return new LC_ActionModifyDuplicate(ctx);
+            }
+            case RS2::ActionModifyBreakDivide: {
+                return new LC_ActionModifyBreakDivide(ctx);
+            }
+            case RS2::ActionModifyLineGap: {
+                return new LC_ActionModifyLineGap(ctx);
+            }
+            case RS2::ActionModifyAttributes: {
+                return new RS_ActionModifyAttributes(ctx);
+            }
+            case RS2::ActionModifyDelete:
+                [[fallthrough]];
+            case RS2::ActionModifyDeleteQuick: {
+                return new RS_ActionModifyDelete(ctx);
+            }
+            case RS2::ActionModifyDeleteFree: {
+                return new RS_ActionModifyDeleteFree(ctx);
+            }
+            case RS2::ActionModifyMove: {
+                return new RS_ActionModifyMove(ctx);
+            }
+            case RS2::ActionModifyRevertDirection: {
+                return new RS_ActionModifyRevertDirection(ctx);
+            }
+            case RS2::ActionModifyRotate: {
+                return new RS_ActionModifyRotate(ctx);
+            }
+            case RS2::ActionModifyScale: {
+                return new RS_ActionModifyScale(ctx);
+            }
+            case RS2::ActionModifyMirror: {
+                return new RS_ActionModifyMirror(ctx);
+            }
+            case RS2::ActionModifyMoveRotate: {
+                return new RS_ActionModifyMoveRotate(ctx);
+            }
+            case RS2::ActionModifyRotate2: {
+                return new RS_ActionModifyRotate2(ctx);
+            }
+            case RS2::ActionModifyEntity: {
+                return new RS_ActionModifyEntity(ctx, static_cast<RS_Entity*>(data));
+            }
+            case RS2::ActionModifyTrim: {
+                return new RS_ActionModifyTrim(ctx, false);
+            }
+            case RS2::ActionModifyTrim2: {
+                return new RS_ActionModifyTrim(ctx, true);
+            }
+            case RS2::ActionModifyTrimAmount: {
+                return new RS_ActionModifyTrimAmount(ctx);
+            }
+            case RS2::ActionModifyCut: {
+                return new RS_ActionModifyCut(ctx);
+            }
+            case RS2::ActionModifyStretch: {
+                return new RS_ActionModifyStretch(ctx);
+            }
+            case RS2::ActionModifyBevel: {
+                return new RS_ActionModifyBevel(ctx);
+            }
+            case RS2::ActionModifyRound: {
+                return new RS_ActionModifyRound(ctx);
+            }
+            case RS2::ActionModifyOffset: {
+                return new RS_ActionModifyOffset(ctx);
+            }
+            case RS2::ActionModifyExplodeText: {
+                return new RS_ActionModifyExplodeText(ctx);
+            }
+            case RS2::ActionModifyAlign: {
+                return new LC_ActionModifyAlign(ctx);
+            }
+            case RS2::ActionModifyAlignOne: {
+                return new LC_ActionModifyAlignSingle(ctx);
+            }
+            case RS2::ActionModifyAlignRef: {
+                return new LC_ActionModifyAlignRef(ctx);
+            }
+            case RS2::ActionSetRelativeZero: {
+                return new RS_ActionSetRelativeZero(ctx);
+            }
+            case RS2::ActionLockRelativeZero: {
+                return new RS_ActionLockRelativeZero(ctx, true);
+            }
+            case RS2::ActionUnlockRelativeZero: {
+                return new RS_ActionLockRelativeZero(ctx, false);
+            }
+            case RS2::ActionPenPick: {
+                return new LC_ActionPenPick(ctx, false);
+            }
+            case RS2::ActionPenPickResolved: {
+                return new LC_ActionPenPick(ctx, true);
+            }
+            case RS2::ActionPenApply: {
+                return new LC_ActionPenApply(ctx, false);
+            }
+            case RS2::ActionPenCopy: {
+                return new LC_ActionPenApply(ctx, true);
+            }
+            case RS2::ActionPenSyncFromLayer: {
+                return new LC_ActionPenSyncActiveByLayer(ctx);
+            }
+            case RS2::ActionInfoInside: {
+                return new RS_ActionInfoInside(ctx);
+            }
+            case RS2::ActionInfoDistPoint2Point: {
+                return new RS_ActionInfoDist(ctx);
+            }
+            case RS2::ActionInfoDistEntity2Point: {
+                return new RS_ActionInfoDist2(ctx);
+            }
+            case RS2::ActionInfoDistPoint2Entity: {
+                return new RS_ActionInfoDist2(ctx, true);
+            }
+            case RS2::ActionInfoAngle: {
+                return new RS_ActionInfoAngle(ctx);
+            }
+            case RS2::ActionInfoAngle3Points: {
+                return new LC_ActionInfo3PointsAngle(ctx);
+            }
+            case RS2::ActionInfoTotalLength: {
+                return new RS_ActionInfoTotalLength(ctx);
+            }
+            case RS2::ActionInfoArea: {
+                return new RS_ActionInfoArea(ctx);
+            }
+            case RS2::ActionInfoProperties: {
+                return new LC_ActionInfoProperties(ctx);
+            }
+            case RS2::ActionInfoPickCoordinates: {
+                return new LC_ActionInfoPickCoordinates(ctx);
+            }
+            case RS2::ActionLayersDefreezeAll: {
+                return new RS_ActionLayersFreezeAll(false, ctx);
+            }
+            case RS2::ActionLayersFreezeAll: {
+                return new RS_ActionLayersFreezeAll(true, ctx);
+            }
+            case RS2::ActionLayersUnlockAll: {
+                return new RS_ActionLayersLockAll(false, ctx);
+            }
+            case RS2::ActionLayersLockAll: {
+                return new RS_ActionLayersLockAll(true, ctx);
+            }
+            case RS2::ActionLayersAdd: {
+                return new RS_ActionLayersAdd(ctx);
+            }
+            case RS2::ActionLayersAddCmd: {
+                return new LC_ActionLayersCmd(ctx, RS2::ActionLayersAddCmd);
+            }
+            case RS2::ActionLayersActivateCmd: {
+                return new LC_ActionLayersCmd(ctx, RS2::ActionLayersActivateCmd);
+            }
+            case RS2::ActionLayersRemove: {
+                return new RS_ActionLayersRemove(ctx);
+            }
+            case RS2::ActionLayersEdit: {
+                return new RS_ActionLayersEdit(ctx);
+            }
+            case RS2::ActionLayersToggleView: {
+                auto a_layer = obtainLayer(ctx, data);
+                if (a_layer != nullptr) {
+                    return new RS_ActionLayersToggleView(ctx, a_layer);
+                }
+                break;
+            }
+            case RS2::ActionLayersToggleLock: {
+                auto a_layer = obtainLayer(ctx, data);
+                if (a_layer != nullptr) {
+                    return new RS_ActionLayersToggleLock(ctx, a_layer);
+                }
+                break;
+            }
+            case RS2::ActionLayersTogglePrint: {
+                auto a_layer = obtainLayer(ctx, data);
+                if (a_layer != nullptr) {
+                    return new RS_ActionLayersTogglePrint(ctx, a_layer);
+                }
+                break;
+            }
+            case RS2::ActionLayersToggleConstruction: {
+                auto a_layer = obtainLayer(ctx, data);
+                if (a_layer != nullptr) {
+                    return new LC_ActionLayersToggleConstruction(ctx, a_layer);
+                }
+                break;
+            }
+            case RS2::ActionLayersExportSelected: {
+                return new LC_ActionLayersExport(ctx, LC_ActionLayersExport::SelectedMode);
+            }
+            case RS2::ActionLayersExportVisible: {
+                return new LC_ActionLayersExport(ctx, LC_ActionLayersExport::VisibleMode);
+            }
+            case RS2::ActionBlocksDefreezeAll: {
+                return new RS_ActionBlocksFreezeAll(false, ctx);
+            }
+            case RS2::ActionBlocksFreezeAll: {
+                return new RS_ActionBlocksFreezeAll(true, ctx);
+            }
+            case RS2::ActionBlocksAdd: {
+                return new RS_ActionBlocksAdd(ctx);
+            }
+            case RS2::ActionBlocksRemove: {
+                return new RS_ActionBlocksRemove(ctx);
+            }
+            case RS2::ActionBlocksAttributes: {
+                return new RS_ActionBlocksAttributes(ctx);
+            }
+            case RS2::ActionBlocksEdit: {
+                return new RS_ActionBlocksEdit(ctx);
+            }
+            case RS2::ActionBlocksSave: {
+                return new RS_ActionBlocksSave(ctx);
+            }
+            case RS2::ActionBlocksInsert: {
+                return new RS_ActionBlocksInsert(ctx);
+            }
+            case RS2::ActionBlocksToggleView: {
+                return new RS_ActionBlocksToggleView(ctx);
+            }
+            case RS2::ActionBlocksCreate: {
+                return new RS_ActionBlocksCreate(ctx);
+            }
+            case RS2::ActionBlocksExplode: {
+                return new RS_ActionBlocksExplode(ctx);
+            }
+            case RS2::ActionLibraryInsert: {
+                return new RS_ActionLibraryInsert(ctx);
+            }
+            case RS2::ActionOptionsDrawing: {
+                return new RS_ActionOptionsDrawing(ctx);
+            }
+            case RS2::ActionOptionsDrawingGrid: {
+                return new RS_ActionOptionsDrawing(ctx, 2);
+            }
+            case RS2::ActionOptionsDrawingUnits: {
+                return new RS_ActionOptionsDrawing(ctx, 1);
+            }
+            case RS2::ActionUCSCreate: {
+                return new LC_ActionUCSCreate(ctx);
+            }
+            case RS2::ActionFileExportMakerCam: {
+                return new LC_ActionFileExportMakerCam(ctx);
+            }
+            case RS2::ActionSnapMiddleManual: {
+                auto currentAction = ctx->getCurrentAction();
+                if (currentAction != nullptr) {
+                    if (currentAction->rtti() == RS2::ActionSnapMiddleManual) {
+                        currentAction->init(-1);
+                        return nullptr;
+                    }
+                    return new LC_ActionSnapMiddleManual(ctx);
+                }
+                break;
+            }
+            case RS2::ActionLayerEntityActivate:
+                [[fallthrough]];
+            case RS2::ActionLayerEntityToggleView:
+                [[fallthrough]];
+            case RS2::ActionLayerEntityToggleConstruction:
+                [[fallthrough]];
+            case RS2::ActionLayerEntityTogglePrint:
+                [[fallthrough]];
+            case RS2::ActionLayerEntityToggleLock: {
+                return new LC_ActionLayerToggle(ctx, actionType);
+            }
+            default:
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                                &"LC_ActionsHandlerFactory::createActionInstance: No such action found. Type "[
+                                    actionType]);
+                break;
         }
         return nullptr;
     }
+}
+
+/*
+ * Usage of raw pointers in factory is intentional. The reason for this is as follows:  
+ * 1) shared_ptr is actually just a template.
+ * 2) the preprocessor expands that template, and since the amount of different classes wrapped by shared_ptr within the same
+ * comiplation unit is big, the resulting file is also big - something like 20MB (maybe even bigger).
+ * 3) While MSVC compiler handles this generated file, the GCC compiler fails after achieving some limiting amount of shared_ptr templates
+ * (at least with MinGW), and returns the following compilation error
+ *
+ *
+\generated\librecad\obj\lc_actionhandlerfactory.o ..\..\..\..\librecad\src\ui\lc_actionhandlerfactory.cpp
+D:/Qt/QT6/Tools/mingw1120_64/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/bin/as.exe: ..\..\generated\librecad\obj\lc_actionhandlerfactory.o: too many sections (38292)
+C:\Users\sand1\AppData\Local\Temp\ccayHcyJ.s: Assembler messages:
+C:\Users\sand1\AppData\Local\Temp\ccayHcyJ.s: Fatal error: can't write 42 bytes to section .text of ..\..\generated\librecad\obj\lc_actionhandlerfactory.o: 'file too big'
+D:/Qt/QT6/Tools/mingw1120_64/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/bin/as.exe: ..\..\generated\librecad\obj\lc_actionhandlerfactory.o: too many sections (38292)
+C:\Users\sand1\AppData\Local\Temp\ccayHcyJ.s: Fatal error: ..\..\generated\librecad\obj\lc_actionhandlerfactory.o: file too big
+mingw32-make[3]: *** [Makefile.Debug:88797: ../../generated/librecad/obj/lc_actionhandlerfactory.o] Error 1
+*
+*  So either this factory should be split on several ones, or wrapping of raw pointer to shared one is performed only once.
+*  The later case is also fine, and shared_ptr to base type is returned and all actions has virtual destructors
+*
+*/
+std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstance(
+    RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
+    RS_ActionInterface* actionInstance = InnerFactory::doCreateActionInstance(actionType, ctx, data);
+    std::shared_ptr<RS_ActionInterface> result{actionInstance};
+    return result;
+}
