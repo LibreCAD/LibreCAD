@@ -36,12 +36,6 @@ mkdir -p appdir/usr/share/doc/librecad
 mkdir -p appdir/usr/share/icons/hicolor/256x256/apps
 mkdir -p appdir/usr/share/icons/hicolor/scalable/apps
 mkdir -p appdir/usr/share/librecad
-mkdir -p appdir/usr/lib/x86_64-linux-gnu/qt6
-#export QPA_PLUGIN_FOLDER="$(find ../Qt -type d -name plugins -print)"
-echo "copying plugins"
-export QPA_PLUGIN_FOLDER="$(find /usr/lib/x86_64-linux-gnu/qt6/ -type d -name plugins -print)"
-rsync -Par ${QPA_PLUGIN_FOLDER} appdir/usr/lib/x86_64-linux-gnu/qt6/
-rsync -Par ${QPA_PLUGIN_FOLDER}/platforms appdir/usr/bin/
 
 # strip binaries
 strip unix/librecad
