@@ -24,6 +24,7 @@
 #define LC_ACTIONDRAWDIMBASELINE_H
 
 #include "lc_actiondimlinearbase.h"
+#include "rs_dimlinear.h"
 
 struct RS_DimLinearData;
 

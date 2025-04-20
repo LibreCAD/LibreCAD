@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include "rs_creation.h"
+
 
 #include <QFileInfo>
 
@@ -34,6 +34,7 @@
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
+#include "rs_creation.h"
 #include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"

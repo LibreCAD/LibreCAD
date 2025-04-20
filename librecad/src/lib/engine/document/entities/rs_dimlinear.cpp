@@ -51,6 +51,9 @@ RS_DimLinearData::RS_DimLinearData(const RS_Vector& _extensionPoint1,
     ,oblique(_oblique){
 }
 
+RS_DimLinearData::~RS_DimLinearData() {
+}
+
 std::ostream& operator << (std::ostream& os,
                            const RS_DimLinearData& dd) {
     os << "(" << dd.extensionPoint1 << ","

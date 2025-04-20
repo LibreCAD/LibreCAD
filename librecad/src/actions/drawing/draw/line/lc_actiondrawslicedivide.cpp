@@ -56,6 +56,8 @@ struct LC_ActionDrawSliceDivide::TickData {
         tickLine(l),
         arcAngle(ang){}
 
+    ~TickData() = default;
+
     bool isVisible{true}; // visible or not
     bool edge{false}; // is for edge?
     RS_Vector snapPoint; // point on entity where tick is snapped
@@ -137,17 +139,17 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
 
             if (doDrawTicks){
                 for (uint i = 0; i < createdTicksCount; i++) {
-                    TickData tick = m_ticksData.at(i);
-                    if (tick.isVisible){
+                    TickData* tick = m_ticksData.at(i);
+                    if (tick->isVisible){
                         if (hasTickLength){ // create preview line for tick with non-zero length
-                            auto tickLine = new RS_Line(tick.tickLine.startpoint, tick.tickLine.endpoint);
+                            auto tickLine = new RS_Line(tick->tickLine.startpoint, tick->tickLine.endpoint);
                             list << tickLine;
                         }
                         if (m_doDivideEntity) { // if tick length is zero - it is just divide mode, without ticks
                             // so on preview, we just indicate that we may have divide points
                             // even if tick is present - we'd better highlight division points
                             if (m_showRefEntitiesOnPreview) {
-                                createRefPoint(tick.snapPoint, list);
+                                createRefPoint(tick->snapPoint, list);
                             }
                         }
                     }
@@ -191,8 +193,15 @@ bool LC_ActionDrawSliceDivide::isSetActivePenAndLayerOnTrigger(){
     return false; // this action will handle attributes (as if there is divide, we'll use original attributes for created entities)
 }
 
-void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list){
+void LC_ActionDrawSliceDivide::clearTickData() {
+    for (auto t: m_ticksData) {
+        delete t;
+    }
     m_ticksData.clear();
+}
+
+void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list){
+    clearTickData();
     int rtti = m_entity->rtti();
     RS_Entity *entityToDelete = nullptr;
     switch (rtti) {
@@ -241,9 +250,9 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
         // ticks are non-zero, so we'll need to create lines for them
         uint count = m_ticksData.size();
         for (uint i = 0; i < count; i++) {
-            TickData tick = m_ticksData.at(i);
-            if (tick.isVisible){
-                auto *line = new RS_Line(m_container, tick.tickLine);
+            TickData* tick = m_ticksData.at(i);
+            if (tick->isVisible){
+                auto *line = new RS_Line(m_container, tick->tickLine);
                 // for ticks, we'll always use current pen and layer
                 setPenAndLayerToActive(line);
                 list<<line;
@@ -273,7 +282,7 @@ void LC_ActionDrawSliceDivide::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     // just perform a cleanup
     m_entity = nullptr;
-    m_ticksData.clear();
+    clearTickData();
     init(SetEntity);
 }
 
@@ -304,10 +313,10 @@ void LC_ActionDrawSliceDivide::createLineSegments(RS_Line *pLine, QList<RS_Entit
         RS_Layer *originalLayer = pLine->getLayer();
 
         for (uint i = 1; i < count; i++) {
-            TickData startTick = m_ticksData.at(i - 1);
-            TickData endTick = m_ticksData.at(i);
-            RS_Vector startPoint = startTick.snapPoint;
-            RS_Vector endPoint = endTick.snapPoint;
+            TickData* startTick = m_ticksData.at(i - 1);
+            TickData* endTick = m_ticksData.at(i);
+            RS_Vector startPoint = startTick->snapPoint;
+            RS_Vector endPoint = endTick->snapPoint;
             auto *line = createLine(startPoint, endPoint,list);
             line->setLayer(originalLayer);
             line->setPen(originalPen);
@@ -357,10 +366,10 @@ void LC_ActionDrawSliceDivide::doCreateArcSegments(RS_Entity *pArc, const RS_Vec
 
 
         for (size_t i = 1; i < count; i++) {
-            TickData startTick = m_ticksData.at(i - 1);
-            TickData endTick = m_ticksData.at(i);
-            double startAngle = startTick.arcAngle;
-            double endAngle = endTick.arcAngle;
+            TickData* startTick = m_ticksData.at(i - 1);
+            TickData* endTick = m_ticksData.at(i);
+            double startAngle = startTick->arcAngle;
+            double endAngle = endTick->arcAngle;
             if (reversed){
                 std::swap(startAngle, endAngle);
             }
@@ -521,7 +530,7 @@ void LC_ActionDrawSliceDivide::createTickData(RS_Entity *e, RS_Vector tickSnapPo
  * @param angle
  */
 void LC_ActionDrawSliceDivide::addTick(RS_Vector &tickSnapPoint, RS_LineData &lineData, bool edge, bool visible, double angle){
-    m_ticksData.push_back(TickData(edge, visible, tickSnapPoint, lineData, angle));
+    m_ticksData.push_back(new TickData(edge, visible, tickSnapPoint, lineData, angle));
 }
 
 /**

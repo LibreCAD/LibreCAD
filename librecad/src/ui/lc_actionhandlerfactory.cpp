@@ -183,7 +183,6 @@
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
 #include "rs_actionpolylinetrim.h"
-#include "../actions/not_used/rs_actionselect.h"
 #include "rs_actionselectall.h"
 #include "rs_actionselectcontour.h"
 #include "rs_actionselectintersected.h"
@@ -685,7 +684,6 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
             return std::make_shared<RS_ActionModifyDelete>(ctx);
         }
         case RS2::ActionModifyDeleteQuick: {
-            // return std::make_shared<RS_ActionSelect>(ctx, RS2::ActionModifyDeleteQuick);
             return std::make_shared<RS_ActionModifyDelete>(ctx);
         }
         case RS2::ActionModifyDeleteFree: {
@@ -781,7 +779,7 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
         case RS2::ActionInfoDistPoint2Point: {
             return std::make_shared<RS_ActionInfoDist>(ctx);
         }
-        case RS2::ActionInfoDistEntity2Point: {
+    /*    case RS2::ActionInfoDistEntity2Point: {
             return std::make_shared<RS_ActionInfoDist2>(ctx);
         }
         case RS2::ActionInfoDistPoint2Entity: {
@@ -829,7 +827,7 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
         case RS2::ActionLayersRemove: {
             return std::make_shared<RS_ActionLayersRemove>(ctx);
         }
-        case RS2::ActionLayersEdit: {
+          case RS2::ActionLayersEdit: {
             return std::make_shared<RS_ActionLayersEdit>(ctx);
         }
         case RS2::ActionLayersToggleView: {
@@ -875,7 +873,7 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
         case RS2::ActionBlocksAdd: {
             return std::make_shared<RS_ActionBlocksAdd>(ctx);
         }
-        case RS2::ActionBlocksRemove: {
+      case RS2::ActionBlocksRemove: {
             return std::make_shared<RS_ActionBlocksRemove>(ctx);
         }
         case RS2::ActionBlocksAttributes: {
@@ -926,14 +924,19 @@ std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstan
                 }
                 return std::make_shared<LC_ActionSnapMiddleManual>(ctx);
             }
+            break;
         }
         case RS2::ActionLayerEntityActivate:
+            [[fallthrough]];
         case RS2::ActionLayerEntityToggleView:
+            [[fallthrough]];
         case RS2::ActionLayerEntityToggleConstruction:
+            [[fallthrough]];
         case RS2::ActionLayerEntityTogglePrint:
-        case RS2::ActionLayerEntityToggleLock:{
+            [[fallthrough]];
+        case RS2::ActionLayerEntityToggleLock:{            
             return std::make_shared<LC_ActionLayerToggle>(ctx, actionType);
-        }
+        }*/
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,&"LC_ActionsHandlerFactory::createActionInstance: No such action found. Type " [ actionType]);
             break;

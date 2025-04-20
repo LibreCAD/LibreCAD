@@ -49,15 +49,9 @@
 #include "qg_blockwidget.h"
 #include "qg_scrollbar.h"
 #include "rs.h"
-#include "rs_actionblocksedit.h"
 #include "rs_actiondefault.h"
-#include "rs_actionmodifydelete.h"
 #include "rs_actionmodifyentity.h"
 #include "rs_actionselectsingle.h"
-#include "rs_actionzoomauto.h"
-#include "rs_actionzoomin.h"
-#include "rs_actionzoompan.h"
-#include "rs_actionzoomscroll.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -316,9 +310,9 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
     ,m_cursorMagnifier(new QCursor(QPixmap(":cursors/cur_glass_bmp.png"), g_hotspotXY, g_hotspotXY))
     ,m_cursorHand(new QCursor(QPixmap(":cursors/cur_hand_bmp.png"), g_hotspotXY, g_hotspotXY))
     ,m_isSmoothScrolling(false)
+    , m_ucsMarkOptions{std::make_unique<LC_UCSMarkOptions>()}
     , m_panData{std::make_unique<AutoPanData>()}
     , m_ucsHighlightData{std::make_unique<UCSHighlightData>()}
-    , m_ucsMarkOptions{std::make_unique<LC_UCSMarkOptions>()}
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
@@ -661,7 +655,7 @@ bool QG_GraphicView::event(QEvent *event){
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
             RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
-            doZoom(direction, mouse, zoomFactor);
+            doZoom(direction, mouse, factor);
         }
 
         return true;

@@ -31,7 +31,7 @@ LC_ActionLayerBase::LC_ActionLayerBase(const char* name, LC_ActionContext* actio
        : LC_ActionPreSelectionAwareBase{name, actionContext, actionType} {
 }
 
-void LC_ActionLayerBase::onSelectionCompleted(bool singleEntity, bool fromInit) {
+void LC_ActionLayerBase::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     if (m_selectionComplete) {
@@ -39,7 +39,7 @@ void LC_ActionLayerBase::onSelectionCompleted(bool singleEntity, bool fromInit) 
     }
 }
 
-void LC_ActionLayerBase::doTrigger(bool keepSelected) {
+void LC_ActionLayerBase::doTrigger([[maybe_unused]]bool keepSelected) {
     if (!m_selectedEntities.empty()) {
         auto firstEntity = m_selectedEntities.front();
         RS_Layer* layer = firstEntity->getLayer();
@@ -55,11 +55,11 @@ void LC_ActionLayerBase::doTrigger(bool keepSelected) {
     }
 }
 
-void LC_ActionLayerBase::applyBoxSelectionModeIfNeeded(RS_Vector mouse) {
+void LC_ActionLayerBase::applyBoxSelectionModeIfNeeded([[maybe_unused]]RS_Vector mouse) {
     m_inBoxSelectionMode = false;
 }
 
-void LC_ActionLayerBase::proceedSelectedEntity(LC_MouseEvent* e) {
+void LC_ActionLayerBase::proceedSelectedEntity([[maybe_unused]]LC_MouseEvent* e) {
     onSelectionCompleted(true, false);
 }
 

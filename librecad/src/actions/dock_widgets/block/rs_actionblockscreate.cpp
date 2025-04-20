@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+
 #include "rs_actionblockscreate.h"
 
 #include "rs_block.h"
@@ -45,7 +46,7 @@ RS_ActionBlocksCreate::RS_ActionBlocksCreate(LC_ActionContext *actionContext)
 
 RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
 
-void RS_ActionBlocksCreate::onSelectionCompleted(bool singleEntity, bool fromInit) {
+void RS_ActionBlocksCreate::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     if (m_selectionComplete) {
         updateMouseButtonHints();
@@ -53,7 +54,7 @@ void RS_ActionBlocksCreate::onSelectionCompleted(bool singleEntity, bool fromIni
     }
 }
 
-void RS_ActionBlocksCreate::doTrigger(bool keepSelected) {
+void RS_ActionBlocksCreate::doTrigger([[maybe_unused]]bool keepSelected) {
     if (m_graphic != nullptr) {
         RS_BlockList* blockList = m_graphic->getBlockList();
         if (blockList != nullptr) {
@@ -77,11 +78,11 @@ void RS_ActionBlocksCreate::doTrigger(bool keepSelected) {
     finish(false);
 }
 
-void RS_ActionBlocksCreate::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent* pEvent) {
+void RS_ActionBlocksCreate::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent* pEvent) {
     fireCoordinateEventForSnap(pEvent);
 }
 
-void RS_ActionBlocksCreate::onMouseRightButtonReleaseSelected(int status, LC_MouseEvent* pEvent) {
+void RS_ActionBlocksCreate::onMouseRightButtonReleaseSelected([[maybe_unused]]int status,[[maybe_unused]] LC_MouseEvent* pEvent) {
     init(getStatus()-1);
 }
 

@@ -37,9 +37,10 @@ namespace {
 LC_GridSystem::LC_GridSystem(LC_GridSystem::LC_GridOptions *options):
     gridOptions{std::make_unique<LC_GridSystem::LC_GridOptions>(options != nullptr ? *options: LC_GridSystem::LC_GridOptions{})}
 , gridLattice{std::make_unique<LC_Lattice>()}
-, metaGridLattice{std::make_unique<LC_Lattice>()}
-{
+, metaGridLattice{std::make_unique<LC_Lattice>()}{
 }
+
+LC_GridSystem::~LC_GridSystem() = default;
 
 void LC_GridSystem::createGrid(
     LC_GraphicViewport* view,

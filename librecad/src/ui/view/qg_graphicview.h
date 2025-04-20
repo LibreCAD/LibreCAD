@@ -28,6 +28,7 @@
 #define QG_GRAPHICVIEW_H
 
 #include <mutex>
+#include <cstdlib>
 
 #include <QString>
 #include <QWidget>

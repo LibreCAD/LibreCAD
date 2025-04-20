@@ -62,11 +62,6 @@ public:
 	void calculateSnapSettings();
 	void invalidate(bool gridOn);
 
-//	/**
-//		 * @return Array of all visible grid points.
-//		 */
-//	std::vector<RS_Vector> const& getPoints() const;
-
 	/**
 	* \brief the closest grid point
 	* \return the closest grid to given point
@@ -74,10 +69,6 @@ public:
 	*/
 	RS_Vector snapGrid(const RS_Vector& coord) const;
 
-//	/**
-//		 * @return Number of visible grid points.
-//		 */
-//	int count() const;
 	void setIsoViewType(RS2::IsoGridViewType chType);
 	RS2::IsoGridViewType getIsoViewType() const;
 
@@ -85,16 +76,6 @@ public:
 		 * @return Grid info for status widget.
 		 */
 	QString getInfo() const;
-
-//	/**
-//		 * @return a vector of Meta grid positions in X.
-//		 */
-//	std::vector<double> const& getMetaX() const;
-//
-//	/**
-//		 * @return a vector of Meta grid positions in Y.
-//		 */
-//	std::vector<double> const& getMetaY() const;
 	bool isIsometric() const;
 	void setIsometric(bool b);
 	RS_Vector getMetaGridWidth() const;
@@ -105,11 +86,11 @@ private:
 	//! copy ctor disabled
     RS_Grid(RS_Grid const&) = delete;
     RS_Grid& operator = (RS_Grid const&) = delete;
-//! \{ \brief determine grid width
+    //! \{ \brief determine grid width
     RS_Vector getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
     RS_Vector getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
     void prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
-//! \}
+    //! \}
 
     //! Graphic view this grid is connected to.
     LC_GraphicViewport* viewport = nullptr;

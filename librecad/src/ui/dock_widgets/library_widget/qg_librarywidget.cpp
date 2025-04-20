@@ -113,7 +113,7 @@ QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* pa
 
 QG_LibraryWidget::~QG_LibraryWidget() = default;
 
-void QG_LibraryWidget::setGraphicView(RS_GraphicView* gview) {
+void QG_LibraryWidget::setGraphicView([[maybe_unused]]RS_GraphicView* gview) {
     // todo - add further processing later
 }
 

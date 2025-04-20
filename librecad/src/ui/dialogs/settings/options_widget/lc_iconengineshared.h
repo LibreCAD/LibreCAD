@@ -44,10 +44,10 @@ namespace LC_SVGIconEngineAPI {
         Background
     };
 
-    static const char* KEY_ICONS_OVERRIDES_DIR = "LCI_BaseDir";
-    static const char* KEY_COLOR_MAIN = "LCI_ColorMain";
-    static const char* KEY_COLOR_ACCENT = "LCI_ColorAccent";
-    static const char* KEY_COLOR_BG = "LCI_ColorBack";
+    [[maybe_unused]] static const char* KEY_ICONS_OVERRIDES_DIR = "LCI_BaseDir";
+    [[maybe_unused]] static const char* KEY_COLOR_MAIN = "LCI_ColorMain";
+    [[maybe_unused]] static const char* KEY_COLOR_ACCENT = "LCI_ColorAccent";
+    [[maybe_unused]] static const char* KEY_COLOR_BG = "LCI_ColorBack";
 
     QString getColorAppKeyName(QString baseName, int mode, int state);
 

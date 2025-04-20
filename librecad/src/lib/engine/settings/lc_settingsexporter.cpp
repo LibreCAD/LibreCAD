@@ -23,7 +23,9 @@
 #include "lc_settingsexporter.h"
 
 #include <QFileDialog>
+#include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonParseError>
 #include <QMessageBox>
 #include <QSettings>
 

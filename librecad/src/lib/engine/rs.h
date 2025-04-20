@@ -27,6 +27,8 @@
 #ifndef RS_H
 #define RS_H
 
+#include <cstddef>
+
 //#define RS_TEST
 
 // Windoze XP can't handle the original MAX/MINDOUBLE's

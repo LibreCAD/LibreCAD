@@ -491,7 +491,7 @@ void LC_SimpleTests::slotTestDrawFreehand() {
  */
 void LC_SimpleTests::slotTestInsertBlock() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
-    auto& appWin=QC_ApplicationWindow::getAppWindow();
+   /* auto& appWin=QC_ApplicationWindow::getAppWindow();
 
 	RS_Document* d = appWin->getCurrentDocument();
 	if (d && d->rtti()==RS2::EntityGraphic) {
@@ -625,7 +625,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		if (v) {
 			v->redraw();
 		}
-	}
+    }*/
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 

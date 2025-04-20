@@ -37,7 +37,7 @@
 static const char *const PEN_DATA_FIELDS_SEPARATOR = ",";
 
 LC_PenPaletteData::LC_PenPaletteData(LC_PenPaletteOptions* opts):
-    m_options{opts}, m_registry{LC_PenInfoRegistry::instance()} {
+    m_registry{LC_PenInfoRegistry::instance()}, m_options{opts} {
 }
 
 LC_PenPaletteData::~LC_PenPaletteData(){

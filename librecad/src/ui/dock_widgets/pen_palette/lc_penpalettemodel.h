@@ -24,6 +24,9 @@
 #ifndef LC_PENPALETTEMODEL_H
 #define LC_PENPALETTEMODEL_H
 
+#include <QAbstractTableModel>
+
+
 class LC_PenInfoRegistry;
 class LC_PenPaletteOptions;
 class LC_PenItem;

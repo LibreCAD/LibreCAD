@@ -53,13 +53,13 @@ void LC_ActionLayersCmd::updateMouseButtonHints() {
     updateMouseWidgetTRCancel(tr("Enter layer name to %1").arg(m_actionType == RS2::ActionLayersActivateCmd? tr("activate") : tr("create")));
 }
 
-bool LC_ActionLayersCmd::doProcessCommand(int status, const QString& command) {
+bool LC_ActionLayersCmd::doProcessCommand([[maybe_unused]]int status, const QString& command) {
     m_layerName = command;
     trigger();
     return true;
 }
 
-void LC_ActionLayersCmd::onMouseRightButtonRelease(int status, QMouseEvent* e) {
+void LC_ActionLayersCmd::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e) {
     init(-1);
 }
 

@@ -23,6 +23,7 @@
 #ifndef LC_UCSLISTWIDGET_H
 #define LC_UCSLISTWIDGET_H
 
+#include <QModelIndex>
 #include "lc_graphicviewawarewidget.h"
 #include "lc_ucslist.h"
 
@@ -30,15 +31,17 @@ class RS_Graphic;
 class RS_GraphicView;
 class LC_UCSListOptions;
 class LC_UCSListModel;
+
 class QItemSelection;
 class LC_UCSStateWidget;
-
-namespace Ui {
-class LC_UCSListWidget;
-}
-
 class LC_UCSListButton;
 class LC_GraphicViewport;
+
+namespace Ui {
+    class LC_UCSListWidget;
+}
+
+
 
 class LC_UCSListWidget : public LC_GraphicViewAwareWidget, LC_UCSListListener{
     Q_OBJECT

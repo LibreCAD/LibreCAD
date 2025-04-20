@@ -29,7 +29,6 @@
 #define RS_CREATION_H
 
 #include <QString>
-#include <complex.h>
 #include <memory>
 
 #include "rs_preview.h"

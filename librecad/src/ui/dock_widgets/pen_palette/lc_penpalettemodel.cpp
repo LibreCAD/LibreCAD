@@ -37,8 +37,8 @@ static int COLOR_ICON_SIZE = 24;
 
 LC_PenPaletteModel::LC_PenPaletteModel(LC_PenPaletteOptions* modelOptions, LC_PenPaletteData* data, QObject* parent) :
     QAbstractTableModel(parent),
-    m_registry{LC_PenInfoRegistry::instance()},
-    m_filteringRegexp{std::make_unique<QRegularExpression>()} {
+    m_filteringRegexp{std::make_unique<QRegularExpression>()},
+    m_registry{LC_PenInfoRegistry::instance()} {
     m_options = modelOptions;
     m_penPaletteData = data;
     update(true);

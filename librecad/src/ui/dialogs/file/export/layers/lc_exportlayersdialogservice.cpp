@@ -49,7 +49,7 @@ void LC_ExportLayersService::exportLayers(LC_LayersExportOptions& exportOptions,
 
 QString LC_ExportLayersService::createExportDocumentFileName(bool separateFileForLayer, LC_FileDialogResult& fileInfo,
                                                              size_t exportFilesCount, size_t currentExportLayerIndex,
-                                                             const QString& dataName) {
+                                                             [[maybe_unused]]const QString& dataName) {
     QString actualFileName = QDir::toNativeSeparators(
         fileInfo.dirPath + "/"
         + fileInfo.fileName + (separateFileForLayer ? paddedIndex(currentExportLayerIndex + 1, exportFilesCount) : "")
@@ -74,7 +74,7 @@ void LC_ExportLayersService::doExportLayers(LC_LayersExportOptions& exportOption
             auto graphicToSave = exportData->m_graphic;
             QString actualFileName = createExportDocumentFileName(exportOptions.m_createSeparateDocumentPerLayer,
                                           fileInfo, exportFilesCount, currentExportLayerIndex, exportData->m_name);
-            bool saveWasSuccessful = storage.exportGraphics(graphicToSave, actualFileName, fileInfo.fileType);
+            [[maybe_unused]]bool saveWasSuccessful = storage.exportGraphics(graphicToSave, actualFileName, fileInfo.fileType);
 
             graphicToSave->setGraphicView(nullptr);
             graphicToSave->setParent(nullptr);

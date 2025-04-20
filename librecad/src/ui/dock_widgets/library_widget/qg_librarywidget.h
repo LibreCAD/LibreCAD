@@ -28,10 +28,10 @@
 
 #include <memory>
 #include "lc_graphicviewawarewidget.h"
+#include <QModelIndex>
 
 class QG_ActionHandler;
 class QListView;
-class QModelIndex;
 class QPushButton;
 class QStandardItemModel;
 class QStandardItem;

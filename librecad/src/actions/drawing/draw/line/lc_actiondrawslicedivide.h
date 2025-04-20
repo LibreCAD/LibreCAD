@@ -141,7 +141,7 @@ private:
      */
     struct TickData;
 
-    std::vector<TickData> m_ticksData;
+    std::vector<TickData*> m_ticksData;
     /**
      * original entity for which ticks will be created
      */
@@ -175,6 +175,7 @@ protected:
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     bool isSetActivePenAndLayerOnTrigger() override;
+    void clearTickData();
     RS2::CursorType doGetMouseCursor(int status) override;
     EntityTypeList getCatchEntityTypeList() const;
     void updateMouseButtonHints() override;

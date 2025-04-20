@@ -24,6 +24,7 @@
 #ifndef LC_PENPALETTEDATA_H
 #define LC_PENPALETTEDATA_H
 #include "rs.h"
+#include <QObject>
 
 class LC_PenInfoRegistry;
 class RS_Color;
@@ -35,7 +36,7 @@ class LC_PenPaletteOptions;
  */
 
 class LC_PenPaletteData:public QObject{
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit LC_PenPaletteData(LC_PenPaletteOptions *opts);
     ~LC_PenPaletteData() override;

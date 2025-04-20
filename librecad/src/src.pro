@@ -254,6 +254,7 @@ INCLUDEPATH += \
     ui/main/persistence \
     ui/main/release_check \
     ui/main/support \
+    ui/main/fontviewer \
     ui/main/workspaces \
     ui/view \
     # ui/not_used \
@@ -901,7 +902,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/rel_zero/rs_actionlockrelativezero.h \
     actions/drawing/rel_zero/rs_actionsetrelativezero.h \
     actions/drawing/rs_actiondefault.h \
-    actions/drawing/selection/rs_actionselect.h \
+    # actions/drawing/selection/rs_actionselect.h \
     actions/drawing/selection/rs_actionselectall.h \
     lib/actions/rs_actionselectbase.h \
     actions/drawing/selection/rs_actionselectcontour.h \
@@ -1071,7 +1072,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/rel_zero/rs_actionlockrelativezero.cpp \
     actions/drawing/rel_zero/rs_actionsetrelativezero.cpp \
     actions/drawing/rs_actiondefault.cpp \
-    actions/drawing/selection/rs_actionselect.cpp \
+    # actions/drawing/selection/rs_actionselect.cpp \
     actions/drawing/selection/rs_actionselectall.cpp \
     lib/actions/rs_actionselectbase.cpp \
     actions/drawing/selection/rs_actionselectcontour.cpp \

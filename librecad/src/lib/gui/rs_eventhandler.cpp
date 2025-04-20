@@ -48,8 +48,8 @@ namespace {
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(RS_GraphicView *parent):QObject(parent), m_graphicView{parent},
-    m_coordinatesParser{std::make_unique<LC_CoordinatesParser>(parent)}{
+RS_EventHandler::RS_EventHandler(RS_GraphicView *parent):QObject(parent), m_coordinatesParser{std::make_unique<LC_CoordinatesParser>(parent)},
+    m_graphicView{parent}{
 }
 /**
  * Destructor.

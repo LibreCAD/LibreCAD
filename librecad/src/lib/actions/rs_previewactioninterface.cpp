@@ -64,9 +64,9 @@
  */
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name, LC_ActionContext* actionContext,
                                                      RS2::ActionType actionType) : RS_ActionInterface(name, actionContext, actionType)
-    , m_preview(std::make_unique<RS_Preview>(actionContext->getEntityContainer(), m_viewport)),
-    m_highlight(std::make_unique<LC_Highlight>()),
-    m_msgBuilder{std::make_unique<LC_ActionInfoMessageBuilder>(this)} {
+    , m_msgBuilder{std::make_unique<LC_ActionInfoMessageBuilder>(this)},
+    m_preview(std::make_unique<RS_Preview>(actionContext->getEntityContainer(), m_viewport)),
+    m_highlight(std::make_unique<LC_Highlight>()) {
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);
 

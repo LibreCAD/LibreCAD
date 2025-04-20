@@ -62,8 +62,8 @@ public:
 
     virtual void setDocumentAndView(RS_Document *document, RS_GraphicView *view);
 
-    virtual void setSnapMode(const RS_SnapMode &mode) {};
-    virtual void setCurrentAction(RS2::ActionType, void* data){};
+    virtual void setSnapMode([[maybe_unused]]const RS_SnapMode &mode) {};
+    virtual void setCurrentAction(RS2::ActionType, [[maybe_unused]]void* data){};
 protected:
     RS_EntityContainer * m_entityContainer {nullptr};
     RS_GraphicView * m_graphicView {nullptr};
