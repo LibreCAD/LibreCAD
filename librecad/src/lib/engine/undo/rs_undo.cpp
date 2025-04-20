@@ -199,8 +199,7 @@ bool RS_Undo::redo() {
   * enable/disable redo/undo buttons in main application window
   * Author: Dongxu Li
   **/
-void RS_Undo::updateUndoState() const{
-    std::size_t undoListSize = undoList.size();
+void RS_Undo::updateUndoState() const{   
     bool redoAvailable = m_redoPointer != undoList.end();
     bool undoAvailable = !undoList.empty() && m_redoPointer != undoList.cbegin();
     fireUndoStateChanged(undoAvailable, redoAvailable);

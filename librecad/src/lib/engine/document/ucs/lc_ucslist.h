@@ -24,6 +24,7 @@
 #define LC_UCSLIST_H
 
 #include <QList>
+#include <memory>
 #include "lc_ucs.h"
 
 class LC_UCSListListener {

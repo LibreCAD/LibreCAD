@@ -31,11 +31,10 @@
 #include "lc_dialog.h"
 #include "lc_peninforegistry.h"
 #include "lc_penpaletteoptions.h"
-#include "ui_lc_penpaletteoptionsdialog.h"
 
 class LC_PenPaletteOptions;
 
-LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnFile) :
+LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, [[maybe_unused]]bool focusOnFile) :
     LC_Dialog(parent, "PenPaletteOptions"), m_options{options}{
     setupUi(this);
 

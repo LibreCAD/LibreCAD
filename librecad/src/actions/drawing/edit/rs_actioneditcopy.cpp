@@ -72,7 +72,7 @@ void RS_ActionEditCopyPaste::onSelectionCompleted([[maybe_unused]] bool singleEn
     }
 }
 
-void RS_ActionEditCopyPaste::doTrigger(bool keepSelected) {
+void RS_ActionEditCopyPaste::doTrigger([[maybe_unused]]bool keepSelected) {
     switch (m_actionType){
         case  RS2::ActionEditCut:
         case  RS2::ActionEditCutQuick:
