@@ -30,6 +30,9 @@
 #include <QFileInfo>
 
 #include "doc_plugin_interface.h"
+
+#include "lc_actioncontext.h"
+#include "lc_documentsstorage.h"
 #include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
@@ -50,7 +53,6 @@
 #include "rs_math.h"
 #include "rs_mtext.h"
 #include "rs_point.h"
-#include "rs_polyline.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
 #include "rs_units.h"
@@ -457,10 +459,12 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         }
         if (hash.contains(DPI::STARTANGLE)) {
              arc->setAngle1( (hash.take(DPI::STARTANGLE)).toDouble() );
+             arc->calculateBorders();
            vec.y = (hash.take(DPI::STARTANGLE)).toDouble();
         }
         if (hash.contains(DPI::ENDANGLE)) {
             arc->setAngle2( (hash.take(DPI::ENDANGLE)).toDouble() );
+            arc->calculateBorders();
         }
         break;}
     case RS2::EntityCircle: {
@@ -762,11 +766,12 @@ QString Plugin_Entity::intColor2str(int color){
     return Converter.intColor2str(color);
 }
 
-Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent):
-doc(d)
-,docGr(doc->getGraphic())
-,gView(gv)
-,main_window(parent)
+Doc_plugin_interface::Doc_plugin_interface(LC_ActionContext* actionContext, QWidget* parent):
+    doc(actionContext->getEntityContainer()->getDocument())
+    ,docGr(doc->getGraphic())
+    ,gView(actionContext->getGraphicView())
+    ,main_window(parent)
+    ,m_actionContext{actionContext}
 {
 }
 
@@ -1023,7 +1028,9 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
         RS_BlockData d(name, RS_Vector(0,0), false);
         auto *b = new RS_Block(doc, d);
         RS_Graphic g;
-        if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
+        LC_DocumentsStorage storage;
+        if (!storage.loadDocument(&g, fi.absoluteFilePath(), RS2::FormatUnknown)) {
+        // if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s", fullName.toStdString().c_str());
             delete b;
@@ -1186,7 +1193,8 @@ void Doc_plugin_interface::setCurrentLayerProperties(int c, QString const& w,
 bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 									QPointF *base){
     bool status = false;
-    auto a = std::make_shared<QC_ActionGetPoint>(*doc, *gView);
+
+    auto a = std::make_shared<QC_ActionGetPoint>(m_actionContext);
     if (a) {
         if (!(message.isEmpty()) ) a->setMessage(message);
         gView->killAllActions();
@@ -1210,7 +1218,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
 }
 
 Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
-    auto a = std::make_shared<QC_ActionGetEnt>(*doc, *gView);
+    auto a = std::make_shared<QC_ActionGetEnt>(m_actionContext);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1231,7 +1239,8 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
 
 bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
     bool status = false;
-    auto a = std::make_shared<QC_ActionGetSelect>(*doc, *gView);
+    LC_ActionContext* actionContext = nullptr; // fixme - sand - files - restore!
+    auto a = std::make_shared<QC_ActionGetSelect>(actionContext);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1271,7 +1280,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     
     gView->setTypeToSelect(typeToSelect);
-    auto a = std::make_shared<QC_ActionGetSelect>(typeToSelect, *doc, *gView);
+    auto a =std::make_shared<QC_ActionGetSelect> (typeToSelect, m_actionContext);
 
     if (a) {
         if (!(message.isEmpty()) )
@@ -1314,7 +1323,7 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
 }
 
 void Doc_plugin_interface::unselectEntities() {
-    auto a = new QC_ActionGetSelect(*doc, *gView);
+    auto a = new QC_ActionGetSelect(m_actionContext);
     a->unselectEntities();
 }
 

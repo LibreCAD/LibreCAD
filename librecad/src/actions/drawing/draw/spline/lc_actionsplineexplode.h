@@ -23,36 +23,36 @@
 #ifndef LC_ACTIONSPLINEEXPLODE_H
 #define LC_ACTIONSPLINEEXPLODE_H
 
-#include <QObject>
 #include "lc_actionsplinemodifybase.h"
 
+class RS_Pen;
+class RS_Layer;
 
 class LC_ActionSplineExplode:public LC_ActionSplineModifyBase{
 Q_OBJECT
 public:
-    LC_ActionSplineExplode(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionSplineExplode(LC_ActionContext *actionContext);
     ~LC_ActionSplineExplode() override = default;
-
     int getSegmentsCountFromDrawing();
-    bool isUseCurrentAttributes() {return useCurrentAttributes;};
-    void setUseCurrentAttributes(bool b) {useCurrentAttributes  = b;};
-    bool isUseCurrentLayer() {return useCurrentLayer;};
-    void setUseCurrentLayer(bool b) {useCurrentLayer = b;}
-    bool isKeepOriginals() {return keepOriginals;};
-    void setKeepOriginals(bool b) {keepOriginals = b;};
-    bool isToPolyline() {return createPolyline;};
-    void setUsePolyline(bool b) {createPolyline = b;};
-    int getCustomSegmentsCount() {return customSegmentsCount;};
-    void setSegmentsCountValue(int i) {customSegmentsCount = i;};
-    bool isUseCustomSegmentsCount() {return useCustomSegmentsCount;};
-    void setUseCustomSegmentsCount(bool b) {useCustomSegmentsCount = b;}
+    bool isUseCurrentAttributes() {return m_useCurrentAttributes;};
+    void setUseCurrentAttributes(bool b) {m_useCurrentAttributes  = b;};
+    bool isUseCurrentLayer() {return m_useCurrentLayer;};
+    void setUseCurrentLayer(bool b) {m_useCurrentLayer = b;}
+    bool isKeepOriginals() {return m_keepOriginals;};
+    void setKeepOriginals(bool b) {m_keepOriginals = b;};
+    bool isToPolyline() {return m_createPolyline;};
+    void setUsePolyline(bool b) {m_createPolyline = b;};
+    int getCustomSegmentsCount() {return m_customSegmentsCount;};
+    void setSegmentsCountValue(int i) {m_customSegmentsCount = i;};
+    bool isUseCustomSegmentsCount() {return m_useCustomSegmentsCount;};
+    void setUseCustomSegmentsCount(bool b) {m_useCustomSegmentsCount = b;}
 protected:
-    bool createPolyline {false};
-    bool keepOriginals {false};
-    bool useCurrentLayer {false};
-    bool useCurrentAttributes {false};
-    bool useCustomSegmentsCount {false};
-    int customSegmentsCount = 8;
+    bool m_createPolyline {false};
+    bool m_keepOriginals {false};
+    bool m_useCurrentLayer {false};
+    bool m_useCurrentAttributes {false};
+    bool m_useCustomSegmentsCount {false};
+    int m_customSegmentsCount = 8;
 
     RS_Entity *createPolylineByVertexes(const std::vector<RS_Vector> &strokePoints, bool closed) const;
     int obtainSegmentsCount();

@@ -25,22 +25,15 @@
 **********************************************************************/
 
 #include "rs_actioninfoarea.h"
-#include "rs_coordinateevent.h"
+
+#include "lc_cursoroverlayinfo.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_infoarea.h"
-#include "rs_line.h"
-#include "rs_preview.h"
 #include "rs_units.h"
 
-RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Info Area",
-                               container, graphicView)
+    RS_ActionInfoArea::RS_ActionInfoArea(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Info Area", actionContext, RS2::ActionInfoArea)
     , m_infoArea(std::make_unique<RS_InfoArea>()){
-    actionType=RS2::ActionInfoArea;
 }
 
 RS_ActionInfoArea::~RS_ActionInfoArea() = default;
@@ -56,7 +49,7 @@ void RS_ActionInfoArea::init(int status) {
     void RS_ActionInfoArea::doTrigger() {
         RS_DEBUG->print("RS_ActionInfoArea::trigger()");
         display(false);
-        lastPointRequested = false;
+        m_lastPointRequested = false;
         init(SetFirstPoint);
     }
 // fixme - sand - consider displaying information in EntityInfo widget
@@ -69,7 +62,7 @@ void RS_ActionInfoArea::display(bool forPreview){
     }
     switch (m_infoArea->size()) {
         case 1: {
-            if (showRefEntitiesOnPreview && forPreview) {
+            if (m_showRefEntitiesOnPreview && forPreview) {
                 previewRefSelectablePoint(m_infoArea->at(0));
             }
             break;
@@ -77,7 +70,7 @@ void RS_ActionInfoArea::display(bool forPreview){
         case 2: {
             if (forPreview) {
                 previewLine(m_infoArea->at(0), m_infoArea->at(1));
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(m_infoArea->at(0), m_infoArea->at(1));
                     previewRefPoint(m_infoArea->at(0));
                     previewRefSelectablePoint(m_infoArea->at(1));
@@ -91,17 +84,17 @@ void RS_ActionInfoArea::display(bool forPreview){
             if (forPreview) {
                 for (int i = 0; i < m_infoArea->size(); i++) {
                     previewLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
-                    if (showRefEntitiesOnPreview) {
+                    if (m_showRefEntitiesOnPreview) {
                         previewRefLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
                     }
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     for (const RS_Vector& point: *m_infoArea) {
                         previewRefPoint(point);
                     }
                     previewRefSelectablePoint(m_infoArea->back());
                 }
-                if (infoCursorOverlayPrefs->enabled) {
+                if (m_infoCursorOverlayPrefs->enabled) {
                     QString msg = "\n";
                     msg.append(tr("Circumference: %1").arg(length));
                     msg.append("\n");
@@ -144,7 +137,7 @@ void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, m_infoArea->back(), snap);
     }
-    lastPointRequested = e->isControl;
+    m_lastPointRequested = e->isControl;
     fireCoordinateEvent(snap);
 }
 
@@ -154,7 +147,7 @@ void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[
 }
 
 void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    bool shouldComplete = m_infoArea->duplicated(mouse) || lastPointRequested;
+    bool shouldComplete = m_infoArea->duplicated(mouse) || m_lastPointRequested;
     if (shouldComplete){
         m_infoArea->push_back(mouse);
         commandMessage(tr("Closing Point: %1").arg(formatVector(mouse)));

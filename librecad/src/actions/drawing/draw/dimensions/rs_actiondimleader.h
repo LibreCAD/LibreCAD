@@ -41,9 +41,7 @@ class RS_Leader;
 class RS_ActionDimLeader:public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionDimLeader(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimLeader(LC_ActionContext *actionContext);
     ~RS_ActionDimLeader() override;
     void init(int status) override;
     void keyPressEvent(QKeyEvent *) override;
@@ -58,8 +56,8 @@ protected:
     /**
      * Points set so far.
      */
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
     void reset();
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;

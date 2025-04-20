@@ -27,15 +27,18 @@
 
 #include<vector>
 
-#include <QObject>
 #include <QRegularExpression>
 #include <QTextStream>
 
 #include "lc_commandItems.h"
 #include "rs_commands.h"
+
+#include <QFileInfo>
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_settings.h"
 
 #include "rs_system.h"
 
@@ -215,14 +218,14 @@ RS_Commands::RS_Commands() {
     }
 }
 
-QString RS_Commands::getALiasFile()
+QString RS_Commands::getAliasFile()
 {
-    QString aliasName = RS_SYSTEM->getAppDataDir();
-    if (aliasName.isEmpty()) {
+    QString settingsDir = LC_GET_ONE_STR("Paths","OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    if (settingsDir.isEmpty()) {
         LC_ERR << __func__ << "(): line "<<__LINE__<<": empty alias folder name: aborting";
         return {};
     }
-    aliasName += "/librecad.alias";
+    QString aliasName = settingsDir + "/librecad.alias";
     return aliasName;
 }
 
@@ -236,7 +239,7 @@ void RS_Commands::updateAlias()
 {
     LC_LOG << __func__ << "(): begin";
 
-    QString aliasName = getALiasFile();
+    QString aliasName = getAliasFile();
     if (aliasName.isEmpty()) {
         LC_ERR << __func__ << "(): line "<<__LINE__<<": empty alias folder name: aborting";
         return;
@@ -409,6 +412,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
     if (action != RS2::ActionNone) {
         //found
         const QString& cmd = (m_actionToCommand.count(action) == 1) ? m_actionToCommand.at(action) : QString{};
+        // fixme - sand - make better command context indication - #2084
         RS_DIALOGFACTORY->commandMessage(QObject::tr("keycode: %1 (%2)").arg(code).arg(cmd));
     } else {
         RS_DIALOGFACTORY->commandMessage(QObject::tr("invalid keycode: %1").arg(code));

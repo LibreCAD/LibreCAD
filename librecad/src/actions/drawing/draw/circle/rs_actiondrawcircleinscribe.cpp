@@ -19,17 +19,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include<vector>
 
 #include "rs_actiondrawcircleinscribe.h"
+
 #include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
 
-struct RS_ActionDrawCircleInscribe::Points {
+struct RS_ActionDrawCircleInscribe::ActionData {
     RS_CircleData cData;
     RS_Vector coord;
     std::vector<RS_Line *> lines;
@@ -41,21 +39,17 @@ struct RS_ActionDrawCircleInscribe::Points {
  * Constructor.
  *
  */
-RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw circle inscribed",
-                             container, graphicView), pPoints(std::make_unique<Points>()), valid(false){
-    actionType = RS2::ActionDrawCircleInscribe;
+RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw circle inscribed",actionContext, RS2::ActionDrawCircleInscribe), m_actionData(std::make_unique<ActionData>()), m_valid(false){
 }
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
 void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus){
-    while (!pPoints->lines.empty()) {
-        if (checkStatus && (int) pPoints->lines.size() <= getStatus())
+    while (!m_actionData->lines.empty()) {
+        if (checkStatus && (int) m_actionData->lines.size() <= getStatus())
             break;
-        pPoints->lines.pop_back();
+        m_actionData->lines.pop_back();
     }
 }
 
@@ -77,9 +71,9 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
 }
 
 void RS_ActionDrawCircleInscribe::doTrigger() {
-    auto *circle = new RS_Circle(container, pPoints->cData);
+    auto *circle = new RS_Circle(m_container, m_actionData->cData);
 
-    if (moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
     undoCycleAdd(circle);
@@ -90,7 +84,7 @@ void RS_ActionDrawCircleInscribe::doTrigger() {
 }
 
 void RS_ActionDrawCircleInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
+    for(RS_AtomicEntity* const pc: m_actionData->lines) { // highlight already selected
         highlightSelected(pc);
     }
     auto en = catchModifiableAndDescribe(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
@@ -103,22 +97,22 @@ void RS_ActionDrawCircleInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e)
                 break;
             }
             case SetLine2: {
-                if (en != pPoints->lines[SetLine1]){
+                if (en != m_actionData->lines[SetLine1]){
                     highlightHover(en);
                 }
                 break;
             }
             case SetLine3: {
-                if (pPoints->lines[SetLine1] != line && pPoints->lines[SetLine2] != line){
-                    pPoints->coord = e->graphPoint;
+                if (m_actionData->lines[SetLine1] != line && m_actionData->lines[SetLine2] != line){
+                    m_actionData->coord = e->graphPoint;
                     if (preparePreview(line)){
                         highlightHover(en);
-                        previewToCreateCircle(pPoints->cData);
-                        if (showRefEntitiesOnPreview) {
-                            RS_Vector &center = pPoints->cData.center;
-                            previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
-                            previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
-                            previewRefPoint(pPoints->lines[SetLine3]->getNearestPointOnEntity(center, false));
+                        previewToCreateCircle(m_actionData->cData);
+                        if (m_showRefEntitiesOnPreview) {
+                            RS_Vector &center = m_actionData->cData.center;
+                            previewRefPoint(m_actionData->lines[SetLine1]->getNearestPointOnEntity(center, false));
+                            previewRefPoint(m_actionData->lines[SetLine2]->getNearestPointOnEntity(center, false));
+                            previewRefPoint(m_actionData->lines[SetLine3]->getNearestPointOnEntity(center, false));
                         }
                     }
                 }
@@ -135,20 +129,20 @@ void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, LC_MouseE
     if (!en) return;
     if (!(en->isVisible() && isLine(en))) return;
     for (int i = 0; i < status; i++) {
-        if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
+        if (en->getId() == m_actionData->lines[i]->getId()) return; //do not pull in the same line again
     }
 
-    pPoints->coord = e->graphPoint;
+    m_actionData->coord = e->graphPoint;
     auto *line = dynamic_cast<RS_Line *>(en);
 
     switch (status) {
         case SetLine1:{
-            pPoints->lines.push_back(line);
+            m_actionData->lines.push_back(line);
             setStatus(SetLine2);
             break;
         }
         case SetLine2:
-            pPoints->lines.push_back(line);
+            m_actionData->lines.push_back(line);
             setStatus(SetLine3);
             break;
         case SetLine3:
@@ -164,28 +158,28 @@ void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, LC_MouseE
 void RS_ActionDrawCircleInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (status > 0){
-        pPoints->lines.pop_back();
+        m_actionData->lines.pop_back();
         deletePreview();
     }
     initPrevious(status);
 }
 
 bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
-    valid = false;
+    m_valid = false;
     if (getStatus() == SetLine3){
         if (en != nullptr){
-          pPoints->lines.push_back(en);
+          m_actionData->lines.push_back(en);
         }
-        RS_Circle c(preview.get(), pPoints->cData);
-        valid = c.createInscribe(pPoints->coord, pPoints->lines);
-        if (valid){
-            pPoints->cData = c.getData();
+        RS_Circle c(m_preview.get(), m_actionData->cData);
+        m_valid = c.createInscribe(m_actionData->coord, m_actionData->lines);
+        if (m_valid){
+            m_actionData->cData = c.getData();
         }
     }
     if (en != nullptr){
-        pPoints->lines.pop_back();
+        m_actionData->lines.pop_back();
     }
-    return valid;
+    return m_valid;
 }
 
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints(){

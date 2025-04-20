@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLEINSCRIBE_H
 #define RS_ACTIONDRAWCIRCLEINSCRIBE_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actiondrawcirclebase.h"
 
 class RS_Line;
@@ -37,9 +36,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleInscribe:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleInscribe(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleInscribe(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleInscribe() override;
     void init(int status) override;
     void finish(bool updateTB) override;
@@ -54,9 +51,9 @@ protected:
         SetLine3   //  Setting the Third Line.  */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool valid = false;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+    bool m_valid = false;
 
     bool preparePreview(RS_Line *en);
     /**

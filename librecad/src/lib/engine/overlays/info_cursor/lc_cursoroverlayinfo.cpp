@@ -20,15 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QColor>
-#include <QFont>
 
 #include "lc_cursoroverlayinfo.h"
-#include "rs_painter.h"
-#include "rs_graphicview.h"
-#include "lc_overlayentity.h"
-#include "rs_settings.h"
 
+#include <QColor>
+
+#include "rs_painter.h"
+#include "rs_settings.h"
 
 struct LC_InfoCursorOptions::ZoneSetup{
     QColor color;

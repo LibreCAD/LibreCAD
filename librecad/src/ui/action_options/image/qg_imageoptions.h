@@ -45,7 +45,7 @@ public slots:
     void onDpiEditingFinished();
     void onFactorEditingFinished();
 private:
-    RS_ActionDrawImage* action = nullptr;
+    RS_ActionDrawImage* m_action = nullptr;
     std::unique_ptr<Ui::Ui_ImageOptions> ui;
 protected:
     void doSaveSettings() override;

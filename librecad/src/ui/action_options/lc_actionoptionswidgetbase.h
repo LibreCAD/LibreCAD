@@ -25,21 +25,18 @@
 
 #include "lc_actionoptionswidget.h"
 
-class LC_ActionOptionsWidgetBase:public LC_ActionOptionsWidget
-{
+class LC_ActionOptionsWidgetBase:public LC_ActionOptionsWidget{
 public:
     LC_ActionOptionsWidgetBase(RS2::ActionType actionType, const QString &optionsGroupName, const QString &optionNamePrefix);
     ~LC_ActionOptionsWidgetBase() override;
-
 protected:
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     QString getSettingsGroupName() override;
     QString getSettingsOptionNamePrefix() override;
-
 private:
-    RS2::ActionType supportedActionType;
-    QString settingsGroupName;
-    QString settingsOptionNamePrefix;
+    RS2::ActionType m_supportedActionType;
+    QString m_settingsGroupName;
+    QString m_settingsOptionNamePrefix;
 };
 
 #endif // LC_ACTIONOPTIONSWIDGETBASE_H

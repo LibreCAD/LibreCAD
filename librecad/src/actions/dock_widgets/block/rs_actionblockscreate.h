@@ -27,7 +27,8 @@
 #ifndef RS_ACTIONBLOCKSCREATE_H
 #define RS_ACTIONBLOCKSCREATE_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
+
 
 /**
  * This action class can handle user events for creating blocks from
@@ -35,28 +36,29 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionBlocksCreate : public RS_PreviewActionInterface {
-        Q_OBJECT
+class RS_ActionBlocksCreate : public LC_ActionPreSelectionAwareBase {
+    Q_OBJECT
 public:
-    RS_ActionBlocksCreate(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    explicit RS_ActionBlocksCreate(LC_ActionContext* actionContext);
     ~RS_ActionBlocksCreate() override;
-    void init(int status) override;
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
 protected:
     /**
      * Action States.
      */
     enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
-        ShowDialog            /**< Showing dialog for name. */
+        SetReferencePoint, /**< Setting the reference point. */
+        ShowDialog /**< Showing dialog for name. */
     };
 
-    std::unique_ptr<RS_Vector> referencePoint;
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
+    std::unique_ptr<RS_Vector> m_referencePoint;
+
+    void doTrigger(bool keepSelected) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent* pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent* pEvent) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
 };
 #endif

@@ -27,24 +27,24 @@
 #define QG_MOUSEWIDGET_H
 
 #include "ui_qg_mousewidget.h"
-#include "lc_modifiersinfo.h"
 
-class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget
-{
+class LC_ModifiersInfo;
+
+class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget{
     Q_OBJECT
 public:
     QG_MouseWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
-    void updatePixmap(QString iconName, QLabel *label);
-    ~QG_MouseWidget();
+    ~QG_MouseWidget() override;
 
-    virtual void setHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo = LC_ModifiersInfo::NONE()) const;
-    void setCurrentQAction(QAction *a);
+    void updatePixmap(QString iconName, QLabel *label);
+    void setHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo) const;
     void setActionIcon(QIcon icon);
     void clearActionIcon();
 public slots:
-    virtual void languageChange();
+    void languageChange();
     void setupModifier(QLabel *btn, const QString& helpMsg) const;
     void onIconsRefreshed();
+    void setCurrentQAction(QAction *a);
 protected:
     int iconSize = 24;
 };

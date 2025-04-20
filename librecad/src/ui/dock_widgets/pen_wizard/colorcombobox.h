@@ -3,12 +3,10 @@
 
 #include <QComboBox>
 
-class ColorComboBox : public QComboBox
-{
+class ColorComboBox : public QComboBox{
     Q_OBJECT
-
 public:
-    ColorComboBox(QWidget* parent);
+    explicit ColorComboBox(QWidget* parent);
 };
 
 #endif // COLORCOMBOBOX_H

@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to change general 
  * application options.
@@ -39,13 +38,11 @@
 class RS_ActionOptionsDrawing : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionOptionsDrawing(RS_EntityContainer& container,
-                            RS_GraphicView& graphicView, int tabIndex = -1);
-
+    RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex = -1);
     void init(int status) override;
     void trigger() override;
 protected:
-    int tabToShow = -1;
+    int m_tabToShow = -1;
 };
 
 #endif

@@ -33,7 +33,6 @@
 
 class RS_Layer;
 class RS_LayerListListener;
-class QG_LayerWidget;
 
 /**
  * A list of layers.
@@ -51,14 +50,14 @@ public:
      * @return Number of layers in the list.
      */
     unsigned int count() const {
-        return layers.count();
+        return m_layers.count();
     }
 
     /**
      * @return Layer at given position or NULL if i is out of range.
      */
     RS_Layer* at(unsigned int i) {
-        return layers.at(i);
+        return m_layers.at(i);
     }
     QList<RS_Layer*>::iterator begin();
     QList<RS_Layer*>::iterator end();
@@ -66,14 +65,15 @@ public:
     QList<RS_Layer*>::const_iterator end()const;
 
     void activate(const QString& name, bool notify = false);
+    void fireLayerActivated();
     void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
-    RS_Layer* getActive() const
-    {
-        return activeLayer;
+    RS_Layer* getActive() const {
+        return m_activeLayer;
     }
-    virtual void add(RS_Layer* layer);
-    virtual void remove(RS_Layer* layer);
+    virtual void add(RS_Layer* layerToAdd);
+    void fireLayerRemoved(RS_Layer* layer);
+    virtual void remove(RS_Layer* layerToRemove);
     virtual void edit(RS_Layer* layer, const RS_Layer& source);
     RS_Layer* find(const QString& name);
     int getIndex(const QString& name);
@@ -96,62 +96,36 @@ public:
     void setConstructionMulti(QList<RS_Layer*> layersNoConstruction, QList<RS_Layer*> layersConstruction);
     void fireEdit(RS_Layer* layer);
 
-    //! sets the layerWidget pointer in RS_LayerListClass
-    // TODO - This is actually BAD DEPENDENCY, from Model to View - SHOULD be Refactored
-    void setLayerWitget(QG_LayerWidget * lw) {
-        layerWidget=lw;
-    }
-    //! @return the layerWidget pointer inside the RS_LayerListClass
-    QG_LayerWidget* getLayerWitget() {
-        return layerWidget;
-    }
-    //! @return First layer of the list.
-    //RS_Layer* firstLayer() {
-    //    return layers.first();
-    //}
-    /** @return Next layer from the list after
-     * calling firstLayer() or nextLayer().
-     */
-    //RS_Layer* nextLayer() {
-    //    return layers.next();
-    //}
-
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
-
     /**
      * Sets the layer lists modified status to 'm'.
      */
     void setModified(bool m);
-
     /**
      * @retval true The layer list has been modified.
      * @retval false The layer list has not been modified.
      */
     virtual bool isModified() const {
-        return modified;
+        return m_modified;
     }
     /**
      * @brief sort by layer names
      */
     void sort();
-
+    void fireLayerAdded(RS_Layer* layer);
     void slotUpdateLayerList();
-
     friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
 
 private:
-
     void fireLayerToggled();
 	//! layers in the graphic
-    QList<RS_Layer*> layers;
+    QList<RS_Layer*> m_layers;
     //! List of registered LayerListListeners
-    QList<RS_LayerListListener*> layerListListeners;
-    QG_LayerWidget *layerWidget = nullptr;
-    //! Currently active layer
-    RS_Layer *activeLayer = nullptr;
+    QList<RS_LayerListListener*> m_layerListListeners;
+    RS_Layer *m_activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
-    bool modified = false;
+    bool m_modified = false;
 };
 
 #endif

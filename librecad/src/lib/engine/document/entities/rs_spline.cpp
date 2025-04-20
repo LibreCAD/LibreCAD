@@ -24,18 +24,12 @@
 **
 **********************************************************************/
 
-#include <algorithm>
-#include <cmath>
 #include <iostream>
-#include <numeric>
-
 #include "rs_spline.h"
-
-#include "rs_line.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_painter.h"
-
+#include "rs_pen.h"
 
 RS_SplineData::RS_SplineData(int _degree, bool _closed):
 	degree(_degree)
@@ -189,7 +183,7 @@ void RS_Spline::update() {
         if (prev.valid) {
             auto* line = new RS_Line{this, prev, vp};
             line->setLayer(nullptr);
-            line->setPen(RS2::FlagInvalid);
+            line->setPen(RS_Pen(RS2::FlagInvalid));
             addEntity(line);
         }
         prev = vp;

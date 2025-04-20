@@ -23,30 +23,33 @@
 #ifndef LC_UCSLISTWIDGET_H
 #define LC_UCSLISTWIDGET_H
 
-#include <QWidget>
-#include <QMdiSubWindow>
-#include <QItemSelection>
-#include "lc_ucslistoptions.h"
-#include "lc_ucslistmodel.h"
+#include <QModelIndex>
+#include "lc_graphicviewawarewidget.h"
 #include "lc_ucslist.h"
-#include "rs_graphicview.h"
-#include "qg_actionhandler.h"
-#include "lc_ucsstatewidget.h"
 
-namespace Ui {
-class LC_UCSListWidget;
-}
+class RS_Graphic;
+class RS_GraphicView;
+class LC_UCSListOptions;
+class LC_UCSListModel;
 
+class QItemSelection;
+class LC_UCSStateWidget;
 class LC_UCSListButton;
 class LC_GraphicViewport;
 
-class LC_UCSListWidget : public QWidget, LC_UCSListListener{
+namespace Ui {
+    class LC_UCSListWidget;
+}
+
+
+
+class LC_UCSListWidget : public LC_GraphicViewAwareWidget, LC_UCSListListener{
     Q_OBJECT
 public:
     explicit LC_UCSListWidget(const QString& title, QWidget* parent);
     virtual ~LC_UCSListWidget();
     void setUCSList(LC_UCSList* viewsList);
-    void setGraphicView(RS_GraphicView* gv, QMdiSubWindow* window);
+    void setGraphicView(RS_GraphicView* gv) override;
     void reload();
     void fillUCSList(QList<LC_UCS *> &list);
     QIcon getUCSTypeIcon(LC_UCS *view);
@@ -75,22 +78,20 @@ protected slots:
     void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void onTableDoubleClicked();
 protected:
-    LC_UCSList* currentUCSList{nullptr};
-    LC_UCSListModel* ucsListModel{nullptr};
-    LC_UCSListOptions *options {nullptr};
-    LC_UCSListButton *ucsListButton {nullptr};
-    LC_UCSStateWidget* ucsStateWidget {nullptr};
-    QAction* applyUCSAction {nullptr};
-    QAction* createUCSAction {nullptr};
-    QMdiSubWindow* window {nullptr};
-    RS_GraphicView *graphicView {nullptr};
-    LC_GraphicViewport *viewport {nullptr};
-
-    RS2::LinearFormat linearFormat;
-    RS2::AngleFormat angleFormat;
-    int precision;
-    int anglePrecision;
-    RS2::Unit drawingUnit;
+    LC_UCSList* m_currentUCSList{nullptr};
+    LC_UCSListModel* m_ucsListModel{nullptr};
+    LC_UCSListOptions *m_options {nullptr};
+    LC_UCSListButton *m_ucsListButton {nullptr};
+    LC_UCSStateWidget* m_ucsStateWidget {nullptr};
+    QAction* m_applyUCSAction {nullptr};
+    QAction* m_createUCSAction {nullptr};
+    RS_GraphicView *m_graphicView {nullptr};
+    LC_GraphicViewport *m_viewport {nullptr};
+    RS2::LinearFormat m_linearFormat;
+    RS2::AngleFormat m_angleFormat;
+    int m_precision;
+    int m_anglePrecision;
+    RS2::Unit m_drawingUnit;
     Ui::LC_UCSListWidget *ui;
 
     void initToolbar() const;

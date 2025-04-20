@@ -39,11 +39,9 @@ struct RS_MirrorData;
 class RS_ActionModifyMirror:public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyMirror(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionModifyMirror(LC_ActionContext *actionContext);
     ~RS_ActionModifyMirror() override;
-    bool isMirrorToExistingLine() const {return mirrorToExistingLine;};
+    bool isMirrorToExistingLine() const {return m_mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
 protected:
     /**
@@ -54,14 +52,14 @@ protected:
         SetAxisPoint2,    /**< Setting the 2nd point of the axis. */
         ShowDialog,        /**< Showing the options dialog. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool mirrorToExistingLine;
+    struct MirrorActionData;
+    std::unique_ptr<MirrorActionData> m_actionData;
+    bool m_mirrorToExistingLine;
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;

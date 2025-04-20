@@ -44,14 +44,14 @@ void LC_PointsLatticeOptions::doSaveSettings() {
 }
 
 void LC_PointsLatticeOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionDrawPointsLattice *>(a);
+    m_action = dynamic_cast<LC_ActionDrawPointsLattice *>(a);
     int rows;
     int columns;
     bool adjustLastPoint;
     if (update){
-        columns = action->getColumnPointsCount();
-        rows = action->getRowPointsCount();
-        adjustLastPoint = action->isAdjustLastPointToFirst();
+        columns = m_action->getColumnPointsCount();
+        rows = m_action->getRowPointsCount();
+        adjustLastPoint = m_action->isAdjustLastPointToFirst();
     }
     else{
         columns = loadInt("Columns", 1);
@@ -77,17 +77,17 @@ void LC_PointsLatticeOptions::onAdjustLastPointToggled([[maybe_unused]]bool valu
 
 void LC_PointsLatticeOptions::setAdjustLastPointToActionAndView(bool value) {
    ui->cbAdjustLastPoint->setChecked(value);
-   action->setAdjustLastPointToFirst(value);
+   m_action->setAdjustLastPointToFirst(value);
 }
 
 void LC_PointsLatticeOptions::setColumnsToActionAndView(int value) {
     ui->sbNumX->setValue(value);
-    action->setColumnPointsCount(value);
+    m_action->setColumnPointsCount(value);
 }
 
 void LC_PointsLatticeOptions::setRowsToActionAndView(int value) {
     ui->sbNumY->setValue(value);
-    action->setRowPointsCount(value);
+    m_action->setRowPointsCount(value);
 }
 
 void LC_PointsLatticeOptions::languageChange(){

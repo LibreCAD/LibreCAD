@@ -27,22 +27,18 @@
 #include "rs_actionsetsnapmode.h"
 #include "rs_graphicview.h"
 
-
 /**
  * Constructor.
  *
  * @param snapMode The new snap mode used from now on.
  */
-RS_ActionSetSnapMode::RS_ActionSetSnapMode(RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        RS2::SnapMode snapMode)
-        :RS_ActionInterface("Set Snap Mode", container, graphicView) {
-
+RS_ActionSetSnapMode::RS_ActionSetSnapMode(LC_ActionContext *actionContext,RS2::SnapMode snapMode)
+        :RS_ActionInterface("Set Snap Mode", actionContext) {
     this->snapMode = snapMode;
 }
 
 void RS_ActionSetSnapMode::trigger() {
-    RS_SnapMode s = graphicView->getDefaultSnapMode();
+    RS_SnapMode s = m_graphicView->getDefaultSnapMode();
 
     switch (snapMode) {
 
@@ -82,7 +78,7 @@ void RS_ActionSetSnapMode::trigger() {
             break;
     }
 
-    graphicView->setDefaultSnapMode(s);
+    m_graphicView->setDefaultSnapMode(s);
 
     finish(false);
 }

@@ -23,8 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWCIRCLEBYARC_H
 
 #include "lc_abstractactionwithpreview.h"
-#include "rs_circle.h"
-#include "rs_ellipse.h"
+
 
 /**
  * Action draws circle with the same center and radius as selected arc.
@@ -33,23 +32,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 class LC_ActionDrawCircleByArc:public LC_AbstractActionWithPreview {
     Q_OBJECT
-
 public:
-    LC_ActionDrawCircleByArc(RS_EntityContainer& container,RS_GraphicView& graphicView);
+    LC_ActionDrawCircleByArc(LC_ActionContext *actionContext);
     ~LC_ActionDrawCircleByArc() override;
 
-
-
-    bool isReplaceArcByCircle() const{return replaceArcByCircle;};
+    bool isReplaceArcByCircle() const{return m_replaceArcByCircle;};
     void setReplaceArcByCircle(bool value);
-    void setPenMode(int i) {penMode = i;};
-    int getPenMode() const{return penMode;};
+    void setPenMode(int i) {m_penMode = i;};
+    int getPenMode() const{return m_penMode;};
 
-    double getRadiusShift() const{return radiusShift;};
-    void setRadiusShift(double shift){radiusShift = shift;};
+    double getRadiusShift() const{return m_radiusShift;};
+    void setRadiusShift(double shift){m_radiusShift = shift;};
 
-    void setLayerMode(int mode){layerMode = mode;};
-    int getLayerMode() const{return layerMode;}
+    void setLayerMode(int mode){m_layerMode = mode;};
+    int getLayerMode() const{return m_layerMode;}
 
     void drawSnapper() override;
 
@@ -75,29 +71,29 @@ protected:
     void updateMouseButtonHints() override;
 private:
     /** Chosen arc or ellipse arc entity */
-    RS_Entity *entity = nullptr;
+    RS_Entity *m_entity = nullptr;
 
     /**
      * controls whether original arc should be deleted or not
      */
-    bool replaceArcByCircle = false;
+    bool m_replaceArcByCircle = false;
 
     //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityEllipse};
+    const EntityTypeList m_circleType = EntityTypeList{RS2::EntityArc, RS2::EntityEllipse};
 
     /**
      * controls how to apply pen for new entity
      */
-    int penMode = PEN_ACTIVE;
+    int m_penMode = PEN_ACTIVE;
     /*
      * controls which layer should be set to new entity
      */
-    int layerMode = LAYER_ACTIVE;
+    int m_layerMode = LAYER_ACTIVE;
 
     /**
      * adjustment for radius
      */
-    double radiusShift = 0.0;
+    double m_radiusShift = 0.0;
 
     RS_CircleData createCircleData(RS_Arc* arc);
     RS_EllipseData createEllipseData(RS_Ellipse *pEllipse);

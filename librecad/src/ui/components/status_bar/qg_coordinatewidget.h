@@ -26,37 +26,36 @@
 #ifndef QG_COORDINATEWIDGET_H
 #define QG_COORDINATEWIDGET_H
 
-#include "ui_qg_coordinatewidget.h"
-#include "rs_vector.h"
+#include "lc_graphicviewaware.h"
 #include "rs.h"
-#include "rs_graphicview.h"
+#include "rs_vector.h"
+#include "ui_qg_coordinatewidget.h"
 
+class LC_GraphicViewport;
 class RS_Graphic;
 
-class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget{
+class QG_CoordinateWidget : public QWidget, public LC_GraphicViewAware,  public Ui::QG_CoordinateWidget{
     Q_OBJECT
 public:
-    QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
-    ~QG_CoordinateWidget();
+    QG_CoordinateWidget(QWidget *parent = nullptr, const char *name = nullptr, Qt::WindowFlags fl = {});
+    ~QG_CoordinateWidget() override;
     void clearContent();
-    void setGraphic(RS_Graphic * g, RS_GraphicView* gv);
+    void setGraphicView(RS_GraphicView* gv) override;
 public slots:
-    virtual void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
+    void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
 protected slots:
-    virtual void languageChange();
-    virtual void setCoordinates(double ucsX, double ucsY, double ucsDeltaX, double ucsDeltaY, bool updateFormat );
+    void languageChange();
+    void setCoordinates(double ucsX, double ucsY, double ucsDeltaX, double ucsDeltaY, bool updateFormat );
 private:
-    RS_Graphic* graphic = nullptr;
-    RS_GraphicView *graphicView = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
-    int prec = 0;
-    RS2::LinearFormat format = RS2::Decimal;
-    int aprec = 0;
-    RS2::AngleFormat aformat = RS2::DegreesDecimal;
-
-
-    RS_Vector absoluteCoordinates;
-    RS_Vector relativeCoordinates;
+    RS_Graphic* m_graphic = nullptr;
+    RS_GraphicView *m_graphicView = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
+    int m_linearPrecision = 0;
+    RS2::LinearFormat m_linearFormat = RS2::Decimal;
+    int m_anglePrecision = 0;
+    RS2::AngleFormat m_angleFormat = RS2::DegreesDecimal;
+    RS_Vector m_absoluteCoordinates;
+    RS_Vector m_relativeCoordinates;
 };
 
 #endif // QG_COORDINATEWIDGET_H

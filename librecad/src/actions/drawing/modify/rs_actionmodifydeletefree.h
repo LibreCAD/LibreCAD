@@ -39,9 +39,7 @@ class RS_ActionModifyDeleteFree:public RS_ActionInterface {
 Q_OBJECT
 
 public:
-    RS_ActionModifyDeleteFree(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionModifyDeleteFree(LC_ActionContext *actionContext);
     ~RS_ActionModifyDeleteFree() override;
     void init(int status) override;
     void trigger() override;
@@ -50,11 +48,12 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
     void updateMouseButtonHints() override;
 private:
-    RS_Polyline *polyline = nullptr;
-    RS_Entity *e1 = nullptr;
-    RS_Entity *e2 = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    RS_Polyline *m_polyline = nullptr;
+    RS_Entity *m_entity1 = nullptr;
+    RS_Entity *m_entity2 = nullptr;
+
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 };
 
 #endif

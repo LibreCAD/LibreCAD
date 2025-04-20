@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWCIRCLECR_H
 #define RS_ACTIONDRAWCIRCLECR_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
@@ -41,9 +40,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleCR:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleCR(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleCR(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleCR() override;
     void reset() override;
     void init(int status) override;
@@ -62,7 +59,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    std::unique_ptr<RS_CircleData> data;
+    std::unique_ptr<RS_CircleData> m_circleData;
     bool setRadiusStr(const QString &sr) ;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;

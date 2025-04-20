@@ -23,31 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include "rs_settings.h"
-#include "lc_actiondimlinearbase.h"
-#include "rs_constructionline.h"
-#include "rs_coordinateevent.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
-#include "rs_dimlinear.h"
-#include "rs_math.h"
-#include "rs_dimaligned.h"
 #include "rs_actiondimension.h"
-#include "rs_dialogfactory.h"
-#include "rs_dimension.h"
-#include "rs_graphicview.h"
+
 #include "qg_dimoptions.h"
+#include "rs_dimension.h"
+#include "rs_mtext.h"
+#include "rs_settings.h"
 
 namespace {
     const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");
 }
 
-RS_ActionDimension::RS_ActionDimension(
-    const char *name,
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name,container, graphicView){
+RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name,actionContext, actionType){
     reset();
     readSettings();
 }
@@ -56,7 +44,7 @@ RS_ActionDimension::~RS_ActionDimension() = default;
 
 void RS_ActionDimension::reset(){
     RS_PreviewActionInterface::init(0);
-    data = std::make_unique<RS_DimensionData>(RS_Vector(false),
+    m_dimensionData = std::make_unique<RS_DimensionData>(RS_Vector(false),
                                               RS_Vector(false),
                                               RS_MTextData::VAMiddle,
                                               RS_MTextData::HACenter,
@@ -65,7 +53,7 @@ void RS_ActionDimension::reset(){
                                               "",
                                               "Standard",
                                               0.0);
-    diameter = false;
+    m_diameter = false;
 }
 
 void RS_ActionDimension::init(int status){
@@ -95,18 +83,18 @@ bool RS_ActionDimension::isDimensionAction(RS2::ActionType type){
 }
 
 QString RS_ActionDimension::getText() const{
-    if (!data->text.isEmpty()){
-        return data->text;
+    if (!m_dimensionData->text.isEmpty()){
+        return m_dimensionData->text;
     }
 
-    QString l = label;
+    QString l = m_label;
 
     if (l.isEmpty() &&
-        (diameter == true || !tol1.isEmpty() || !tol2.isEmpty())){
+        (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())){
         l = "<>";
     }
 
-    if (diameter){
+    if (m_diameter){
         if (rtti() == RS2::ActionDimRadial && !l.startsWith(g_radialPrefix))
             l = g_radialPrefix + l;
         else if (l.at(0) != QChar(0x2205))
@@ -117,48 +105,48 @@ QString RS_ActionDimension::getText() const{
         l = l.mid(g_radialPrefix.length());
     }
 
-    if (!tol1.isEmpty() || !tol2.isEmpty()){
-        l += QString("\\S%1\\%2;").arg(tol1,tol2);
+    if (!m_tol1.isEmpty() || !m_tol2.isEmpty()){
+        l += QString("\\S%1\\%2;").arg(m_tol1,m_tol2);
     }
 
     return l;
 }
 
 void RS_ActionDimension::setText(const QString &t){
-    data->text = t;
+    m_dimensionData->text = t;
 }
 
 const QString &RS_ActionDimension::getLabel() const{
-    return label;
+    return m_label;
 }
 
 void RS_ActionDimension::setLabel(const QString &t){
 //data->text = t;
-    label = t;
+    m_label = t;
 }
 
 const QString &RS_ActionDimension::getTol1() const{
-    return tol1;
+    return m_tol1;
 }
 
 void RS_ActionDimension::setTol1(const QString &t){
-    tol1 = t;
+    m_tol1 = t;
 }
 
 const QString &RS_ActionDimension::getTol2() const{
-    return tol2;
+    return m_tol2;
 }
 
 void RS_ActionDimension::setTol2(const QString &t){
-    tol2 = t;
+    m_tol2 = t;
 }
 
 bool RS_ActionDimension::getDiameter() const{
-    return diameter;
+    return m_diameter;
 }
 
 void RS_ActionDimension::setDiameter(bool d){
-    diameter = d;
+    m_diameter = d;
 }
 
 LC_ActionOptionsWidget* RS_ActionDimension::createOptionsWidget(){
@@ -167,7 +155,7 @@ LC_ActionOptionsWidget* RS_ActionDimension::createOptionsWidget(){
 
 // FIXME - sand - REWORK
 void RS_ActionDimension::readSettings() {
-    previewShowsFullDimension = LC_GET_ONE_BOOL("Appearance", "PreviewFullDimOnExt2", true);
+    m_previewShowsFullDimension = LC_GET_ONE_BOOL("Appearance", "PreviewFullDimOnExt2", true);
 }
 
 void RS_ActionDimension::resume() {

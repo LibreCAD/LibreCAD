@@ -37,35 +37,35 @@ class LC_LineOptions : public LC_ActionOptionsWidgetBase{
 public:
     LC_LineOptions();
     ~LC_LineOptions() override;
-
 public slots:
-    virtual void closeLine();
-    virtual void undo();
-    virtual void redo();
-    virtual void polyline();
-    virtual void start();
+    void closeLine();
+    void undo();
+    void redo();
+    void polyline();
+    void start();
 protected slots:
     void onAngleClicked(bool value);
     void onXClicked(bool value);
     void onYClicked(bool value);
-    void onPointClicked(bool value);
+    void onPointClicked(bool value) const;
     void onSetAngle();
     void onAngleRelativeClicked(bool value);
     void languageChange() override;
 protected:
-    LC_ActionDrawLineSnake* action = nullptr;
+    LC_ActionDrawLineSnake* m_action = nullptr;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
     Ui::Ui_LineOptionsRel* ui;
-    bool inUpdateCycle = false;
-    void setXDirectionToActionAndView(bool value);
-    void setYDirectionToActionAndView(bool value);
-    void setAngleDirectionToActionAndView(bool value);
-    void setPointDirectionToActionAndView(bool value);
+    bool m_inUpdateCycle = false;
+    void setXDirectionToActionAndView(bool value) const;
+    void setYDirectionToActionAndView(bool value) const;
+    void setAngleDirectionToActionAndView(bool value) const;
+    void setPointDirectionToActionAndView(bool value) const;
     void setAngleToActionAndView(const QString& val, bool affectState);
-    void setAngleRelativeToActionAndView(bool relative);
-    void setupAngleRelatedUI(bool value);
+    void setAngleRelativeToActionAndView(bool relative) const;
+    void setupAngleRelatedUI(bool value) const;
 };
 
 #endif // LC_LINEOPTIONS_H

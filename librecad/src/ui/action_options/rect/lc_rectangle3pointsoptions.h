@@ -52,7 +52,7 @@ protected slots:
     void onBaseAngleFixedClicked(bool value);
     void onEdgesIndexChanged(int index);
 protected:
-    LC_ActionDrawRectangle3Points* action = nullptr;
+    LC_ActionDrawRectangle3Points* m_action = nullptr;
     Ui::LC_Rectangle3PointsOptions *ui;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void setSnapToCornerArcCenter(bool value);

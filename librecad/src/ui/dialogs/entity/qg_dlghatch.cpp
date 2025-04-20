@@ -25,16 +25,13 @@
 **********************************************************************/
 #include "qg_dlghatch.h"
 
-#include "rs_settings.h"
+#include "lc_graphicviewport.h"
 #include "rs_hatch.h"
 #include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_patternlist.h"
-#include "rs_pattern.h"
 #include "rs_math.h"
-#include "lc_graphicviewport.h"
-
-
+#include "rs_pattern.h"
+#include "rs_patternlist.h"
+#include "rs_settings.h"
 /*
  *  Constructs a QG_DlgHatch as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -60,8 +57,8 @@ void QG_DlgHatch::languageChange(){
 }
 
 void QG_DlgHatch::init() {
-    preview = std::make_unique<RS_EntityContainer>();
-    gvPreview->setContainer(preview.get());
+    m_preview = std::make_unique<RS_EntityContainer>();
+    gvPreview->setContainer(m_preview.get());
     gvPreview->getViewPort()->setBorders(15,15,15,15);
     gvPreview->initView();
     gvPreview->addScrollbars();
@@ -81,8 +78,8 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
 }
 
 void QG_DlgHatch::setEntity(RS_Hatch* h, bool isNew) {
-    entity = h;
-    this->isNew = isNew;
+    m_entity = h;
+    this->m_isNew = isNew;
     bool enablePrev = LC_GET_ONE_BOOL("Draw","HatchPreview", false);
 
     cbEnablePreview->setChecked(enablePrev);
@@ -104,39 +101,39 @@ void QG_DlgHatch::setEntity(RS_Hatch* h, bool isNew) {
     }
     // initialize dialog based on given hatch:
     else {
-        cbSolid->setChecked(entity->isSolid());
-        setPattern(entity->getPattern());
+        cbSolid->setChecked(m_entity->isSolid());
+        setPattern(m_entity->getPattern());
 
-        toUIValue(entity->getScale(), leScale);
+        toUIValue(m_entity->getScale(), leScale);
 
         // todo - here we assumed that angle in hatch is always stored in wcs coordinates
-        toUIAngleDeg(entity->getAngle(),leAngle);
+        toUIAngleDeg(m_entity->getAngle(),leAngle);
 
         showArea();
     }
 }
 
 void QG_DlgHatch::updateEntity() {
-    if (entity) {
-        entity->setSolid(cbSolid->isChecked());
-        entity->setPattern(cbPattern->currentText());
+    if (m_entity) {
+        m_entity->setSolid(cbSolid->isChecked());
+        m_entity->setPattern(cbPattern->currentText());
 
-        entity->setScale(toWCSValue(leScale,1.0));
+        m_entity->setScale(toWCSValue(leScale,1.0));
         // here we assume that the user enters angle of the hatch as current ucs basis angle, and it is stored as wcs
-        entity->setAngle(toWCSAngle(leAngle, 0.0));
+        m_entity->setAngle(toWCSAngle(leAngle, 0.0));
 
-        if (!isNew) {
+        if (!m_isNew) {
             showArea();
         }
         saveSettings();
-        entity->update();
+        m_entity->update();
     }
 }
 
 void QG_DlgHatch::showArea(){
-    double area = entity->getTotalArea();
+    double area = m_entity->getTotalArea();
     if (!RS_Math::equal(area, RS_MAXDOUBLE)) {
-        QString number = QString::number(entity->getTotalArea(), 'g', 10);
+        QString number = QString::number(m_entity->getTotalArea(), 'g', 10);
         leHatchArea->setText(number);
     } else {
         leHatchArea->setText({});
@@ -148,7 +145,7 @@ void QG_DlgHatch::setPattern(const QString& p) {
         cbPattern->addItem(p);
     }
     cbPattern->setCurrentIndex( cbPattern->findText(p) );
-    pattern = cbPattern->getPattern();
+    m_pattern = cbPattern->getPattern();
 }
 
 void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
@@ -156,16 +153,16 @@ void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
 }
 
 void QG_DlgHatch::updatePreview() {
-    if (preview==nullptr) {
+    if (m_preview==nullptr) {
         return;
     }
-    if (entity == nullptr || !cbEnablePreview->isChecked()) {
-        preview->clear();
+    if (m_entity == nullptr || !cbEnablePreview->isChecked()) {
+        m_preview->clear();
         gvPreview->zoomAuto();
         return;
     }
-    pattern = cbPattern->getPattern();
-    if (pattern->countDeep()==0)
+    m_pattern = cbPattern->getPattern();
+    if (m_pattern->countDeep()==0)
         return;
 
     QString patName = cbPattern->currentText();
@@ -173,16 +170,16 @@ void QG_DlgHatch::updatePreview() {
     double scale = toWCSValue(leScale, 1.0);
     double angle = toWCSAngle(leAngle, 0.0);
     double prevSize = 100.0;
-    if (pattern) {
-        pattern->calculateBorders();
-        prevSize = std::max(prevSize, pattern->getSize().magnitude());
+    if (m_pattern) {
+        m_pattern->calculateBorders();
+        prevSize = std::max(prevSize, m_pattern->getSize().magnitude());
     }
 
-    preview->clear();
+    m_preview->clear();
 
-    auto* prevHatch = new RS_Hatch(preview.get(),
+    auto* prevHatch = new RS_Hatch(m_preview.get(),
                                        RS_HatchData(isSolid, scale, angle, patName));
-    prevHatch->setPen(entity->getPen());
+    prevHatch->setPen(m_entity->getPen());
 
     auto* loop = new RS_EntityContainer(prevHatch);
 //    loop->setPen(RS_Pen(RS2::FlagInvalid));
@@ -190,7 +187,7 @@ void QG_DlgHatch::updatePreview() {
     loop->setPen(pen);
     addRectangle(pen, {0., 0.}, {prevSize,prevSize}, loop);
     prevHatch->addEntity(loop);
-    preview->addEntity(prevHatch);
+    m_preview->addEntity(prevHatch);
     if (!isSolid) {
         prevHatch->update();
     }
@@ -209,7 +206,7 @@ void QG_DlgHatch::addRectangle(RS_Pen pen, RS_Vector const &v0, RS_Vector const 
 }
 
 void QG_DlgHatch::saveSettings(){
-    if (isNew){
+    if (m_isNew){
         LC_GROUP_GUARD("Draw");
         LC_SET("HatchSolid", cbSolid->isChecked());
         LC_SET("HatchPattern", cbPattern->currentText());

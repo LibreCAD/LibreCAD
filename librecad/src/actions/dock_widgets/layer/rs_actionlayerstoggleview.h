@@ -39,16 +39,11 @@ class RS_Layer;
 class RS_ActionLayersToggleView : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionLayersToggleView(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView,
-                              RS_Layer* layer);
-
+    RS_ActionLayersToggleView(LC_ActionContext *actionContext,RS_Layer* layer);
 	void init(int status) override;
 	void trigger() override;
-
 protected:
-    RS_Layer* a_layer = nullptr;
-
+    RS_Layer* m_layer = nullptr;
 };
 
 #endif

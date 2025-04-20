@@ -23,7 +23,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-
 #ifndef LC_ACTIONLAYERSTOGGLECONSTRUCTION_H
 #define LC_ACTIONLAYERSTOGGLECONSTRUCTION_H
 
@@ -41,15 +40,11 @@ class RS_Layer;
 class LC_ActionLayersToggleConstruction : public RS_ActionInterface {
     Q_OBJECT
 public:
-    LC_ActionLayersToggleConstruction(RS_EntityContainer& container,
-                                      RS_GraphicView& graphicView,
-                                      RS_Layer* layer);
-
+    LC_ActionLayersToggleConstruction(LC_ActionContext *actionContext, RS_Layer* layer);
 	void init(int status) override;
 	void trigger() override;
-
 protected:
-    RS_Layer* a_layer = nullptr;
+    RS_Layer* m_layer = nullptr;
 private:
     void deselectEntities(RS_Layer* layer);
 };

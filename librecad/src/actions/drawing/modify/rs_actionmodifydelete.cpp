@@ -26,18 +26,16 @@
 
 #include "rs_actionmodifydelete.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
 
-RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer &container,RS_GraphicView& graphicView)
-    :LC_ActionPreSelectionAwareBase("Delete Entities",container, graphicView) {
-    actionType=RS2::ActionModifyDelete;
+RS_ActionModifyDelete::RS_ActionModifyDelete(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Delete Entities", actionContext, RS2::ActionModifyDelete) {
 }
 
 void RS_ActionModifyDelete::doTrigger([[maybe_unused]] bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyDelete::trigger()");
-    RS_Modification m(*container, viewport);
-    m.remove(selectedEntities);
+    RS_Modification m(*m_container, m_viewport);
+    m.remove(m_selectedEntities);
     redrawDrawing();
 }
 

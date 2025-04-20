@@ -1,9 +1,13 @@
-#include <QStandardItemModel>
+
 #include "lc_dlgsplinepoints.h"
+
+#include <QStandardItemModel>
+
 #include "lc_splinepoints.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
 #include "ui_lc_dlgsplinepoints.h"
+
+class RS_Graphic;
 
 LC_DlgSplinePoints::LC_DlgSplinePoints(QWidget* parent, LC_GraphicViewport* vp,LC_SplinePoints * splinePoints)
     : LC_EntityPropertiesDlg(parent,"SplinePointProperties",vp)
@@ -21,7 +25,7 @@ void LC_DlgSplinePoints::languageChange(){
 }
 
 void LC_DlgSplinePoints::setEntity(LC_SplinePoints* b){
-    bezier = b;
+    m_entity = b;
 
     RS_Graphic* graphic = b->getGraphic();
     if (graphic) {
@@ -32,7 +36,7 @@ void LC_DlgSplinePoints::setEntity(LC_SplinePoints* b){
         ui->cbLayer->setLayer(*lay);
     }
 
-    ui->wPen->setPen(b,lay, "Pen");
+    ui->wPen->setPen(b,lay, tr("Pen"));
 
     ui->cbClosed->setChecked(b->isClosed());
 
@@ -51,7 +55,7 @@ void LC_DlgSplinePoints::setEntity(LC_SplinePoints* b){
 void LC_DlgSplinePoints::updatePoints() {
     bool const useSpline = ui->rbSplinePoints->isChecked();
 
-    auto const &bData = bezier->getData();
+    auto const &bData = m_entity->getData();
     auto const &pts = useSpline ? bData.splinePoints : bData.controlPoints;
     auto model = new QStandardItemModel(pts.size(), 2, this);
     model->setHorizontalHeaderLabels({"x", "y"});
@@ -71,16 +75,16 @@ void LC_DlgSplinePoints::updatePoints() {
 }
 
 void LC_DlgSplinePoints::updateEntity() {
-    if (!bezier) return;
+    if (!m_entity) return;
 
-    bezier->setClosed(ui->cbClosed->isChecked());
-    bezier->setPen(ui->wPen->getPen());
-    bezier->setLayer(ui->cbLayer->getLayer());
+    m_entity->setClosed(ui->cbClosed->isChecked());
+    m_entity->setPen(ui->wPen->getPen());
+    m_entity->setLayer(ui->cbLayer->getLayer());
 
  //update Spline Points
     auto model = static_cast<QStandardItemModel *>(ui->tvPoints->model());
     size_t const n = model->rowCount();
-    auto &d = bezier->getData();
+    auto &d = m_entity->getData();
 
 //update points
     bool const useSpline = ui->rbSplinePoints->isChecked();
@@ -97,5 +101,5 @@ void LC_DlgSplinePoints::updateEntity() {
         vp.x = wcsPoint.x;
         vp.y = wcsPoint.y;
     }
-    bezier->update();
+    m_entity->update();
 }

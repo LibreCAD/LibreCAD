@@ -25,7 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionzoomauto.h"
-#include "rs_graphicview.h"
+
+#include "lc_graphicviewport.h"
+
 
 /**
  * Constructor.
@@ -33,11 +35,9 @@
  * @param keepAspectRatio true: keep same zoom value for x/y.
  *                        false: adjust both x and y individually
  */
-RS_ActionZoomAuto::RS_ActionZoomAuto(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView,
-                                     bool keepAspectRatio)
-        :RS_ActionInterface("Auto zoom", container, graphicView) {
-    this->keepAspectRatio = keepAspectRatio;
+RS_ActionZoomAuto::RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio)
+        :RS_ActionInterface("Auto zoom", actionContext, RS2::ActionZoomAuto) {
+    this->m_keepAspectRatio = keepAspectRatio;
 }
 
 void RS_ActionZoomAuto::init(int status) {
@@ -46,6 +46,6 @@ void RS_ActionZoomAuto::init(int status) {
 }
 
 void RS_ActionZoomAuto::trigger() {
-    viewport->zoomAuto(false, keepAspectRatio);
+    m_viewport->zoomAuto(false, m_keepAspectRatio);
     finish(false);
 }

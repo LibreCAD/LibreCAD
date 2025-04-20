@@ -23,7 +23,6 @@
 #ifndef LC_POINTSLATTICEOPTIONS_H
 #define LC_POINTSLATTICEOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidget.h"
 #include "lc_actionoptionswidgetbase.h"
 
@@ -48,7 +47,7 @@ protected slots:
     void onAdjustLastPointToggled(bool value);
 private:
     Ui::LC_PointsLatticeOptions *ui;
-    LC_ActionDrawPointsLattice* action = nullptr;
+    LC_ActionDrawPointsLattice* m_action = nullptr;
     void setColumnsToActionAndView(int value);
     void setRowsToActionAndView(int value);
     void setAdjustLastPointToActionAndView(bool value);

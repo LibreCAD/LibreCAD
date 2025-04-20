@@ -39,11 +39,9 @@ struct RS_ArcData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawArcTangential:public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionDrawArcTangential(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawArcTangential(LC_ActionContext *actionContext);
     ~RS_ActionDrawArcTangential() override;
     void reset();
     void init(int status) override;
@@ -66,25 +64,25 @@ protected:
     /**
      * Base entity.
      */
-    RS_AtomicEntity *baseEntity = nullptr;
+    RS_AtomicEntity *m_baseEntity = nullptr;
     /**
   * Start point of base entity clicked?
   */
-    bool isStartPoint = false;
+    bool m_isStartPoint = false;
     /**
      * Point that determines end angle.
      */
-    RS_Vector point;
+    RS_Vector m_point;
 
-    RS_Vector arcStartPoint;
+    RS_Vector m_arcStartPoint;
     /**
   * Arc data calculated.
   */
-    std::unique_ptr<RS_ArcData> data;
+    std::unique_ptr<RS_ArcData> m_arcData;
 
-    double angleLength = 0.;
-    bool byRadius = false;
-    bool alternateArc = false;
+    double m_angleLength = 0.;
+    bool m_byRadius = false;
+    bool m_alternateArc = false;
 
     RS_Vector forecastArcCenter() const;
     void updateOptionsRadius(double radius);
@@ -96,7 +94,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
-
     void doTrigger() override;
 };
 #endif

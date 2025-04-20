@@ -23,14 +23,14 @@
 #ifndef LC_ACTIONPOLYLINECHANGESEGMENTTYPE_H
 #define LC_ACTIONPOLYLINECHANGESEGMENTTYPE_H
 
-#include "rs_entitycontainer.h"
 #include "rs_previewactioninterface.h"
-#include "rs_polyline.h"
+
+class RS_Polyline;
 
 class LC_ActionPolylineChangeSegmentType:public RS_PreviewActionInterface {
  Q_OBJECT
 public:
-    LC_ActionPolylineChangeSegmentType(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionPolylineChangeSegmentType(LC_ActionContext *actionContext);
     ~LC_ActionPolylineChangeSegmentType() override;
 protected:
     enum State{
@@ -39,9 +39,9 @@ protected:
         SetArcPoint
     };
 
-    RS_Polyline* polyline;
-    RS_Entity* polylineSegment;
-    RS_Vector arcPoint;
+    RS_Polyline* m_polyline;
+    RS_Entity* m_polylineSegment;
+    RS_Vector m_arcPoint;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;

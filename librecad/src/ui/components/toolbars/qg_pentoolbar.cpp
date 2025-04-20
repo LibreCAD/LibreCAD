@@ -25,6 +25,9 @@
 #include "qg_colorbox.h"
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
 #include "rs_pen.h"
 
 /**
@@ -32,143 +35,158 @@
  */
 QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
 		: QToolBar(title, parent)
-		, currentPen(new RS_Pen{})
-		, colorBox(new QG_ColorBox{true, false, this, "colorbox"})
-		, widthBox(new QG_WidthBox{true, false, this, "widthbox"})
-		, lineTypeBox(new QG_LineTypeBox{true, false, this, "lineTypebox"})
+		, m_currentPen(new RS_Pen{})
+		, m_colorBox(new QG_ColorBox{true, false, this, "colorbox"})
+		, m_widthBox(new QG_WidthBox{true, false, this, "widthbox"})
+		, m_lineTypeBox(new QG_LineTypeBox{true, false, this, "lineTypebox"})
 {
-    colorBox->setToolTip(tr("Line color"));
-    connect(colorBox.get(), SIGNAL(colorChanged(const RS_Color&)),
-            this, SLOT(slotColorChanged(const RS_Color&)));
+    m_colorBox->setToolTip(tr("Line color"));
+    connect(m_colorBox.get(), &QG_ColorBox::colorChanged, this, &QG_PenToolBar::slotColorChanged);
 
-    widthBox->setToolTip(tr("Line width"));
-    connect(widthBox.get(), SIGNAL(widthChanged(RS2::LineWidth)),
-            this, SLOT(slotWidthChanged(RS2::LineWidth)));
+    m_widthBox->setToolTip(tr("Line width"));
+    connect(m_widthBox.get(), &QG_WidthBox::widthChanged,this, &QG_PenToolBar::slotWidthChanged);
 
-    lineTypeBox->setToolTip(tr("Line type"));
-    connect(lineTypeBox.get(), SIGNAL(lineTypeChanged(RS2::LineType)),
-            this, SLOT(slotLineTypeChanged(RS2::LineType)));
+    m_lineTypeBox->setToolTip(tr("Line type"));
+    connect(m_lineTypeBox.get(), &QG_LineTypeBox::lineTypeChanged,this,&QG_PenToolBar::slotLineTypeChanged);
 
-    currentPen->setColor(colorBox->getColor());
-    currentPen->setWidth(widthBox->getWidth());
-    currentPen->setLineType(lineTypeBox->getLineType());
+    m_currentPen->setColor(m_colorBox->getColor());
+    m_currentPen->setWidth(m_widthBox->getWidth());
+    m_currentPen->setLineType(m_lineTypeBox->getLineType());
 
-    addWidget(colorBox.get());
-    addWidget(widthBox.get());
-    addWidget(lineTypeBox.get());
+    addWidget(m_colorBox.get());
+    addWidget(m_widthBox.get());
+    addWidget(m_lineTypeBox.get());
 }
-
 
 /**
  * Destructor
  */
 QG_PenToolBar::~QG_PenToolBar() = default;
 
+void QG_PenToolBar::updateByLayer(RS_Layer* l) {
+    if (l==nullptr) return;
+    m_colorBox->setLayerColor(l->getPen().getColor());
+    m_widthBox->setLayerWidth(l->getPen().getWidth());
+    m_lineTypeBox->setLayerLineType(l->getPen().getLineType());
+}
 
 /**
  * Called by the layer list if this object was added as a listener
  * to a layer list.
  */
 void QG_PenToolBar::layerActivated(RS_Layer* l) {
-
-    //printf("QG_PenToolBar::layerActivated\n");
-
-    if (l==nullptr) return;
-
-    //colorBox->setColor(l->getPen().getColor());
-    //widthBox->setWidth(l->getPen().getWidth());
-
-    colorBox->setLayerColor(l->getPen().getColor());
-    widthBox->setLayerWidth(l->getPen().getWidth());
-    lineTypeBox->setLayerLineType(l->getPen().getLineType());
-
-    //if (colorBox->getColor().getFlag(C_BY_LAYER)) {
-    //printf("  Color by layer\n");
-    //colorBox->setColor(l->getPen().getColor());
-    //}
+    updateByLayer(l);
 }
 
 void QG_PenToolBar::setLayerColor(RS_Color color, bool updateSelection){
-    colorBox->setLayerColor(color);
+    m_colorBox->setLayerColor(color);
     if (updateSelection){
-        colorBox->setCurrentIndex(0);
+        m_colorBox->setCurrentIndex(0);
     }
-    currentPen->setColor(color);
+    m_currentPen->setColor(color);
     emitPenChanged();
 }
 
 void QG_PenToolBar::setColor(RS_Color color){
-    colorBox->setColor(color);
+    m_colorBox->setColor(color);
 }
 
 void QG_PenToolBar::setLayerLineType(RS2::LineType lineType, bool updateSelection){
-    lineTypeBox->setLayerLineType(lineType);
+    m_lineTypeBox->setLayerLineType(lineType);
     if (updateSelection){
-        lineTypeBox->setCurrentIndex(0);
+        m_lineTypeBox->setCurrentIndex(0);
     }
-    currentPen->setLineType(lineType);
+    m_currentPen->setLineType(lineType);
     emitPenChanged();
 }
 
 void QG_PenToolBar::setLineType(RS2::LineType lineType){
-    lineTypeBox->setLineType(lineType);
+    m_lineTypeBox->setLineType(lineType);
 }
 
 void QG_PenToolBar::setLayerWidth(RS2::LineWidth width, bool updateSelection){
-    widthBox->setLayerWidth(width);
+    m_widthBox->setLayerWidth(width);
     if (updateSelection){
-        widthBox->setCurrentIndex(0);
+        m_widthBox->setCurrentIndex(0);
     }
-    currentPen->setWidth(width);
+    m_currentPen->setWidth(width);
     emitPenChanged();
 }
 
 void QG_PenToolBar::setWidth(RS2::LineWidth width){
-    widthBox->setWidth(width);
+    m_widthBox->setWidth(width);
 }
 
 void QG_PenToolBar::emitPenChanged(){
-    emit penChanged(*currentPen);
+    emit penChanged(*m_currentPen);
+}
+
+void QG_PenToolBar::setLayerList(RS_LayerList* ll) {
+    if (m_layerList != nullptr) {
+        m_layerList->removeListener(this);
+    }
+    m_layerList = ll;
+    if (ll != nullptr) {
+        m_layerList->addListener(this);
+        auto activeLayer = m_layerList->getActive();
+        if (activeLayer != nullptr) {
+            updateByLayer(activeLayer);
+        }
+    }
+}
+
+void QG_PenToolBar::setGraphicView(RS_GraphicView* gv) {
+    if (gv == nullptr) {
+        setLayerList(nullptr);
+    }
+    else {
+        auto graphic = gv->getGraphic();
+        if (graphic == nullptr) {
+            setLayerList(nullptr);
+        }
+        else {
+            auto layerList = graphic->getLayerList();
+            setLayerList(layerList);
+        }
+    }
 }
 
 RS_Pen QG_PenToolBar::getPen() const {
-    return *currentPen;
+    return *m_currentPen;
 }
 
 /**
  * Called by the layer list (if this object was previously
  * added as a listener to a layer list).
  */
-void QG_PenToolBar::layerEdited(RS_Layer*)
-{}
-
+void QG_PenToolBar::layerEdited(RS_Layer* l) { updateByLayer(l); }
 
 /**
  * Called when the color was changed by the user.
  */
 void QG_PenToolBar::slotColorChanged(const RS_Color& color) {
-    currentPen->setColor(color);
+    m_currentPen->setColor(color);
     //printf("  color changed\n");
 
-    emit penChanged(*currentPen);
+    emit penChanged(*m_currentPen);
 }
 
 /**
  * Called when the width was changed by the user.
  */
 void QG_PenToolBar::slotWidthChanged(RS2::LineWidth w) {
-    currentPen->setWidth(w);
+    m_currentPen->setWidth(w);
     //printf("  width changed\n");
 
-    emit penChanged(*currentPen);
+    emit penChanged(*m_currentPen);
 }
 
 /**
  * Called when the linetype was changed by the user.
  */
 void QG_PenToolBar::slotLineTypeChanged(RS2::LineType w) {
-    currentPen->setLineType(w);
+    m_currentPen->setLineType(w);
     //printf("  line type changed\n");
 
-    emit penChanged(*currentPen);
+    emit penChanged(*m_currentPen);
 }

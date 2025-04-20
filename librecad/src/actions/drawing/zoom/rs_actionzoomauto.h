@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action triggers an auto zoom.
  *
@@ -38,15 +37,11 @@
 class RS_ActionZoomAuto : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionZoomAuto(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView,
-                      bool keepAspectRatio=true);
-
+    RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio=true);
 	void init(int status) override;
 	void trigger() override;
-
 protected:
-    bool keepAspectRatio = false;
+    bool m_keepAspectRatio = false;
 };
 
 #endif

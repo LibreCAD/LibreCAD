@@ -21,12 +21,13 @@
  ******************************************************************************/
 
 #include "lc_printviewportrenderer.h"
-#include "rs.h"
-#include "rs_entity.h"
-#include "rs_painter.h"
-#include "rs_math.h"
+
 #include "lc_graphicviewport.h"
 #include "rs_entitycontainer.h"
+#include "rs_math.h"
+#include "rs_painter.h"
+
+class RS_EntityContainer;
 
 LC_PrintViewportRenderer::LC_PrintViewportRenderer(LC_GraphicViewport *viewport, RS_Painter* p)
    :LC_GraphicViewportRenderer(viewport, nullptr)

@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDIMALIGNED_H
 #define RS_ACTIONDIMALIGNED_H
 
-#include "rs_actiondimension.h"
 #include "lc_actiondimlinearbase.h"
 
 struct RS_DimAlignedData;
@@ -39,12 +38,9 @@ struct RS_DimAlignedData;
  * @author Andrew Mustun
  */
 class RS_ActionDimAligned:public LC_ActionDimLinearBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    RS_ActionDimAligned(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimAligned(LC_ActionContext *actionContext);
     ~RS_ActionDimAligned() override;
     void preparePreview() override;
     QStringList getAvailableCommands() override;
@@ -52,9 +48,9 @@ protected:
 /**
 * Aligned dimension data.
 */
-    std::unique_ptr<RS_DimAlignedData> edata;
+    std::unique_ptr<RS_DimAlignedData> m_edata;
 /** Last status before entering text. */
-    Status lastStatus = SetExtPoint1;
+    Status m_lastStatus = SetExtPoint1;
     void reset() override;
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;

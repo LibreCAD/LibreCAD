@@ -19,38 +19,40 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include <QMouseEvent>
-
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_math.h"
-#include "rs_debug.h"
-#include "rs_preview.h"
-#include "rs_actioneditundo.h"
-#include "rs_commands.h"
-#include "rs_actionpolylinesegment.h"
-#include "lc_linemath.h"
-#include "lc_abstractactiondrawline.h"
-#include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
 
-LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    int initialDirection)
-    :LC_AbstractActionDrawLine("Draw line snake",
-                               container, graphicView)
-    , pPoints(new Points{}){
-    primaryDirection = initialDirection;
-    direction = initialDirection;
-    actionType = RS2::ActionDrawSnakeLine;
+#include <QMouseEvent>
+
+#include "lc_linemath.h"
+#include "lc_lineoptions.h"
+
+LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext *actionContext,RS2::ActionType actionType)
+    :LC_AbstractActionDrawLine("Draw line snake",actionContext, actionType)
+    , m_actionData(new ActionData{}){
+    switch (actionType) {
+        case (RS2::ActionDrawSnakeLine): {
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
+            break;
+        }
+        case (RS2::ActionDrawSnakeLineX): {
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_X;
+            break;
+        }
+        case (RS2::ActionDrawSnakeLineY): {
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_Y;
+            break;
+        }
+        default: {
+            m_primaryDirection = LC_ActionDrawLineSnake::DIRECTION_POINT;
+            break;
+        }
+    }
+    m_direction = m_primaryDirection;
 }
 
 LC_ActionDrawLineSnake::~LC_ActionDrawLineSnake() = default;
 
-size_t LC_ActionDrawLineSnake::Points::index(const int offset /*= 0*/){
+size_t LC_ActionDrawLineSnake::ActionData::index(const int offset /*= 0*/){
     return static_cast<size_t>( std::max(0, historyIndex + offset));
 }
 
@@ -58,13 +60,13 @@ void LC_ActionDrawLineSnake::init(int status){
     if (status >= 0){
         resetPoints();
         // restore primary direction of action
-        direction = primaryDirection;
+        m_direction = m_primaryDirection;
     }
     LC_AbstractActionWithPreview::init(status);
 }
 
 void LC_ActionDrawLineSnake::resetPoints(){
-    pPoints.reset(new Points{});
+    m_actionData.reset(new ActionData{});
 }
 
 /**
@@ -72,19 +74,19 @@ void LC_ActionDrawLineSnake::resetPoints(){
  * @param list  list of entities to add created line
  */
 void LC_ActionDrawLineSnake::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    auto *line = new RS_Line(container, pPoints->data);
+    auto *line = new RS_Line(m_container, m_actionData->data);
     list << line;
 }
 
 void LC_ActionDrawLineSnake::doSetStartPoint(RS_Vector start){
-    pPoints->startOffset = 0;
-    pPoints->data.startpoint = start;
-    addHistory(HA_SetStartpoint, start, start, pPoints->startOffset);
+    m_actionData->startOffset = 0;
+    m_actionData->data.startpoint = start;
+    addHistory(HA_SetStartpoint, start, start, m_actionData->startOffset);
 
     //  adjust state and direction of action based on primary direction.
     // this is needef for horizontal/vertical line actions
-    if (primaryDirection == DIRECTION_POINT){
-        if (direction == DIRECTION_POINT){
+    if (m_primaryDirection == DIRECTION_POINT){
+        if (m_direction == DIRECTION_POINT){
             setStatus(SetPoint);
         }
         else{
@@ -92,7 +94,7 @@ void LC_ActionDrawLineSnake::doSetStartPoint(RS_Vector start){
         }
     }
     else{
-        direction = primaryDirection;
+        m_direction = m_primaryDirection;
         setStatus(SetDistance);
     }
     moveRelativeZero(start);
@@ -119,16 +121,16 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]LC_MouseEv
             directionName = tr("Angle");
             break;
         case SetDistance: {
-            switch (direction) {
+            switch (m_direction) {
                 case DIRECTION_Y: {
                     // draw horizontal line segment, y-axis is fixed
-                    possibleEndPoint = restrictVertical(pPoints->data.startpoint, snap);
+                    possibleEndPoint = restrictVertical(m_actionData->data.startpoint, snap);
                     directionName = tr("Y");
                     break;
                 }
                 case DIRECTION_X: {
                     // draw vertical line segment, x-axis is fixed
-                    possibleEndPoint = restrictHorizontal(pPoints->data.startpoint, snap);
+                    possibleEndPoint = restrictHorizontal(m_actionData->data.startpoint, snap);
                     directionName = tr("X");
                     break;
                 }
@@ -150,27 +152,27 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]LC_MouseEv
     if (!directionName.isEmpty()){
         appendInfoCursorEntityCreationMessage(tr("Direction:") + directionName);
     }
-    if (showRefEntitiesOnPreview) {
-        createRefPoint(pPoints->data.startpoint, list);
+    if (m_showRefEntitiesOnPreview) {
+        createRefPoint(m_actionData->data.startpoint, list);
         createRefSelectablePoint(possibleEndPoint, list);
     }
 }
 
 RS_Vector LC_ActionDrawLineSnake::doGetRelativeZeroAfterTrigger(){
-    return pPoints->history.at(pPoints->index()).currPt; // move relative end point to last point
+    return m_actionData->history.at(m_actionData->index()).currPt; // move relative end point to last point
 }
 
 void LC_ActionDrawLineSnake::createEntities(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList){
-    auto *line = new RS_Line(pPoints->data.startpoint, potentialEndPoint);
+    auto *line = new RS_Line(m_actionData->data.startpoint, potentialEndPoint);
     entitiesList << line;
 }
 
 bool LC_ActionDrawLineSnake::isStartPointValid() const{
-    return pPoints->data.startpoint.valid;
+    return m_actionData->data.startpoint.valid;
 }
 
 const RS_Vector &LC_ActionDrawLineSnake::getStartPointForAngleSnap() const {
-    return pPoints->data.startpoint;
+    return m_actionData->data.startpoint;
 }
 
 void LC_ActionDrawLineSnake::doBack(LC_MouseEvent *e, int status){
@@ -184,7 +186,7 @@ void LC_ActionDrawLineSnake::doBack(LC_MouseEvent *e, int status){
         case SetDirection:
         case SetAngle: // skip last operations
             setStatus(SetStartPoint);
-            pPoints->data.startpoint = RS_Vector(false);
+            m_actionData->data.startpoint = RS_Vector(false);
             updateOptions();
             break;
         default:
@@ -195,27 +197,27 @@ void LC_ActionDrawLineSnake::doBack(LC_MouseEvent *e, int status){
  * Check whether line from start point to provided point is non-zero length
  */
 bool LC_ActionDrawLineSnake::isNonZeroLine(const RS_Vector &possiblePoint) const{
-    return LC_LineMath::isNonZeroLineLength( pPoints->data.startpoint, possiblePoint);
+    return LC_LineMath::isNonZeroLineLength( m_actionData->data.startpoint, possiblePoint);
 }
 
 void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetDistance:{
-            switch (direction) {
+            switch (m_direction) {
                 case DIRECTION_Y: {
                     // draw horizontal segment, fix start point y coordinate
-                    RS_Vector possiblePoint = restrictVertical(pPoints->data.startpoint, mouse);
+                    RS_Vector possiblePoint = restrictVertical(m_actionData->data.startpoint, mouse);
                     if (isNonZeroLine(possiblePoint)){
-                        pPoints->data.endpoint = possiblePoint;
+                        m_actionData->data.endpoint = possiblePoint;
                         completeLineSegment(false);
                     }
                     break;
                 }
                 case DIRECTION_X: {
                     // draw vertical segment, fix start point x coordinate
-                    RS_Vector possiblePoint = restrictHorizontal(pPoints->data.startpoint, mouse);
+                    RS_Vector possiblePoint = restrictHorizontal(m_actionData->data.startpoint, mouse);
                     if (isNonZeroLine(possiblePoint)){
-                        pPoints->data.endpoint = possiblePoint;
+                        m_actionData->data.endpoint = possiblePoint;
                         completeLineSegment(false);
                     }
                     break;
@@ -224,7 +226,7 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
                     // draw segment in given angle direction
                     RS_Vector possiblePoint = calculateAngleEndpoint(mouse);
                     if (isNonZeroLine(possiblePoint)){
-                        pPoints->data.endpoint = possiblePoint;
+                        m_actionData->data.endpoint = possiblePoint;
                         completeLineSegment(false);
                     }
                     break;
@@ -238,7 +240,7 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
         case SetPoint: {
             if (isNonZeroLine(mouse)) {
                 // refuse zero length lines
-                pPoints->data.endpoint = mouse;
+                m_actionData->data.endpoint = mouse;
                 completeLineSegment(false);
             }
             break;
@@ -257,7 +259,7 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
                 // draw segment in direction specified by angle
                 RS_Vector possiblePoint = calculateAngleEndpoint(mouse);
                 if (isNonZeroLine(possiblePoint)) {
-                    pPoints->data.endpoint = possiblePoint;
+                    m_actionData->data.endpoint = possiblePoint;
                     completeLineSegment(false);
                 }
             }
@@ -273,36 +275,36 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
  * @param close if true, line should be closed
  */
 void LC_ActionDrawLineSnake::completeLineSegment(bool close){
-    ++pPoints->startOffset;
+    ++m_actionData->startOffset;
     if (!close){
-        addHistory(HA_SetEndpoint, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
+        addHistory(HA_SetEndpoint, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
     }
     trigger();
-    pPoints->data.startpoint = pPoints->data.endpoint;
+    m_actionData->data.startpoint = m_actionData->data.endpoint;
 
-    switch (direction) {
+    switch (m_direction) {
         case DIRECTION_X: {
             // switch direction (snake)
-            direction = DIRECTION_Y;
+            m_direction = DIRECTION_Y;
             setStatus(SetDistance);
             break;
         }
         case DIRECTION_Y: {
             // switch direction (snake)
-            direction = DIRECTION_X;
+            m_direction = DIRECTION_X;
             setStatus(SetDistance);
             break;
         }
         case DIRECTION_POINT:
             // stay in free direction
-            direction = DIRECTION_POINT;
+            m_direction = DIRECTION_POINT;
             setStatus(SetPoint);
             break;
         case DIRECTION_ANGLE:
             // stay in angle mode
-            direction = DIRECTION_ANGLE;
+            m_direction = DIRECTION_ANGLE;
             // by handle status differently for relative and absolute mode
-            if (angleIsRelative){
+            if (m_angleIsRelative){
                 setStatus(SetDistance);
             }
             else {
@@ -354,18 +356,18 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(int status, const QString &c)
             bool ok = false;
             double distance = RS_Math::eval(c, &ok);
             if (ok && LC_LineMath::isMeaningful(distance)){
-                switch (direction) {
+                switch (m_direction) {
                     case DIRECTION_X: {// the value is for x coordinate adjustment
-                        RS_Vector ucsStart = toUCS(pPoints->data.startpoint);
+                        RS_Vector ucsStart = toUCS(m_actionData->data.startpoint);
                         RS_Vector ucsEndPoint = RS_Vector(ucsStart.x + distance, ucsStart.y);
-                        pPoints->data.endpoint = toWorld(ucsEndPoint);
+                        m_actionData->data.endpoint = toWorld(ucsEndPoint);
                         completeLineSegment(false);
                         break;
                     }
                     case DIRECTION_Y: {// the value is for y coordinate adjustment
-                        RS_Vector ucsStart = toUCS(pPoints->data.startpoint);
+                        RS_Vector ucsStart = toUCS(m_actionData->data.startpoint);
                         RS_Vector ucsEndPoint = RS_Vector(ucsStart.x, ucsStart.y + + distance);
-                        pPoints->data.endpoint = toWorld(ucsEndPoint);
+                        m_actionData->data.endpoint = toWorld(ucsEndPoint);
 //                        pPoints->data.endpoint.x = pPoints->data.startpoint.x;
 //                        pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
                         completeLineSegment(false);
@@ -399,7 +401,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(int status, const QString &c)
 QStringList LC_ActionDrawLineSnake::getAvailableCommands(){
     QStringList cmd;
     cmd += command("pl");
-    if (pPoints->index() + 1 < pPoints->history.size()){
+    if (m_actionData->index() + 1 < m_actionData->history.size()){
         cmd += command("redo");
     }
 
@@ -418,10 +420,10 @@ QStringList LC_ActionDrawLineSnake::getAvailableCommands(){
             cmd += command("angle");
             cmd += command("anglerel");
 
-            if (pPoints->historyIndex >= 1){
+            if (m_actionData->historyIndex >= 1){
                 cmd += command("undo");
             }
-            if (pPoints->startOffset >= 2){
+            if (m_actionData->startOffset >= 2){
                 cmd += command("close");
             }
             break;
@@ -435,17 +437,17 @@ QStringList LC_ActionDrawLineSnake::getAvailableCommands(){
 void LC_ActionDrawLineSnake::updateMouseButtonHints(){
     QString msg = "pl";
 
-    if (pPoints->startOffset >= 2){
+    if (m_actionData->startOffset >= 2){
         msg += "/";
         msg += command("close");
     }
-    if (pPoints->index() + 1 < pPoints->history.size()){
+    if (m_actionData->index() + 1 < m_actionData->history.size()){
         if (msg.size() > 0){
             msg += "/";
         }
         msg += command("redo");
     }
-    bool hasHistory = pPoints->historyIndex >= 1;
+    bool hasHistory = m_actionData->historyIndex >= 1;
     if (hasHistory){
         if (msg.size() > 0){
             msg += "/";
@@ -467,8 +469,8 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             updateMouseWidgetTRBack(tr("Specify direction (x or y) or [%1]").arg(msg));
             break;
         case SetDistance: {
-            bool toX = direction == DIRECTION_X;
-            bool toY = direction == DIRECTION_Y;
+            bool toX = m_direction == DIRECTION_X;
+            bool toY = m_direction == DIRECTION_Y;
             msg += "/";
             msg += command("p");
             msg += "/";
@@ -484,10 +486,10 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
                 msg += command("x");
                 updateMouseWidgetTRBack(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg));
             }
-            else if (direction == DIRECTION_ANGLE){
+            else if (m_direction == DIRECTION_ANGLE){
                 msg += "/";
                 msg += command("x");
-                QString angleStr = RS_Math::doubleToString(angleDegrees, 1);
+                QString angleStr = RS_Math::doubleToString(m_angleDegrees, 1);
                 updateMouseWidgetTRBack(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;
@@ -525,16 +527,16 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
 }
 
 void LC_ActionDrawLineSnake::next(){
-    addHistory(HA_Next, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
+    addHistory(HA_Next, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
     setStatus(SetDirection);
 }
 
 // in-action undo
 void LC_ActionDrawLineSnake::undo(){
     if (mayUndo()){
-        History h(pPoints->history.at(pPoints->index()));
+        History h(m_actionData->history.at(m_actionData->index()));
 
-        --pPoints->historyIndex;
+        --m_actionData->historyIndex;
         deletePreview();
 
         if (h.histAct != HA_Polyline){
@@ -549,36 +551,36 @@ void LC_ActionDrawLineSnake::undo(){
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
-                graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(true, *container, *graphicView));
-                pPoints->data.startpoint = h.prevPt;
+                switchToAction(RS2::ActionEditUndo);
+                m_actionData->data.startpoint = h.prevPt;
                 setStatus(SetDirection);
                 break;
 
             case HA_Next:
-                pPoints->data.startpoint = h.prevPt;
+                m_actionData->data.startpoint = h.prevPt;
                 setStatus(SetDirection);
                 break;
         }
 
         // get index for close from new current history
-        h = pPoints->history.at(pPoints->index());
-        pPoints->startOffset = h.startOffset;
+        h = m_actionData->history.at(m_actionData->index());
+        m_actionData->startOffset = h.startOffset;
     } else {
         commandMessage(tr("Cannot undo: Begin of history reached"));
     }
 }
 
-bool LC_ActionDrawLineSnake::mayUndo() const{return 0 <= pPoints->historyIndex;}
+bool LC_ActionDrawLineSnake::mayUndo() const{return 0 <= m_actionData->historyIndex;}
 
 void LC_ActionDrawLineSnake::redo(){
     if (mayRedo()){
-        ++pPoints->historyIndex;
-        History h(pPoints->history.at(pPoints->index()));
+        ++m_actionData->historyIndex;
+        History h(m_actionData->history.at(m_actionData->index()));
         deletePreview();
         if (h.histAct != HA_Polyline){
             moveRelativeZero(h.currPt);
-            pPoints->data.startpoint = h.currPt;
-            pPoints->startOffset = h.startOffset;
+            m_actionData->data.startpoint = h.currPt;
+            m_actionData->startOffset = h.startOffset;
         }
         switch (h.histAct) {
             case HA_SetStartpoint:
@@ -587,12 +589,12 @@ void LC_ActionDrawLineSnake::redo(){
 
             case HA_Polyline:
             case HA_SetEndpoint:
-                graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, *container, *graphicView));
+                switchToAction(RS2::ActionEditRedo);
                 setStatus(SetDirection);
                 break;
 
             case HA_Close:
-                graphicView->setCurrentAction(std::make_shared<RS_ActionEditUndo>(false, *container, *graphicView));
+                switchToAction(RS2::ActionEditRedo);
                 setStatus(SetDirection);
                 break;
 
@@ -606,21 +608,27 @@ void LC_ActionDrawLineSnake::redo(){
 }
 
 void LC_ActionDrawLineSnake::addHistory(LC_ActionDrawLineSnake::HistoryAction a, const RS_Vector &p, const RS_Vector &c, const int s){
-    if (pPoints->historyIndex < -1){
-        pPoints->historyIndex = -1;
+    if (m_actionData->historyIndex < -1){
+        m_actionData->historyIndex = -1;
     }
-    pPoints->history.erase(pPoints->history.begin() + pPoints->historyIndex + 1, pPoints->history.end());
-    pPoints->history.push_back(History(a, p, c, s));
-    pPoints->historyIndex = static_cast<int>(pPoints->history.size() - 1);
+    auto offset =m_actionData->historyIndex + 1;
+    if (offset == 0) { // MSVC-specific workaround
+        m_actionData->history.erase(m_actionData->history.begin(), m_actionData->history.end());
+    }
+    else {
+        m_actionData->history.erase(m_actionData->history.begin()+offset, m_actionData->history.end());
+    }
+    m_actionData->history.push_back(History(a, p, c, s));
+    m_actionData->historyIndex = static_cast<int>(m_actionData->history.size() - 1);
 }
 
 // closing sequence of lines
 void LC_ActionDrawLineSnake::close(){
     if (mayClose()){
-        History h(pPoints->history.at(pPoints->index(-pPoints->startOffset)));
-        if (LC_LineMath::isNonZeroLineLength(pPoints->data.startpoint, h.currPt)){
-            pPoints->data.endpoint = h.currPt;
-            addHistory(HA_Close, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
+        History h(m_actionData->history.at(m_actionData->index(-m_actionData->startOffset)));
+        if (LC_LineMath::isNonZeroLineLength(m_actionData->data.startpoint, h.currPt)){
+            m_actionData->data.endpoint = h.currPt;
+            addHistory(HA_Close, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
             completeLineSegment(true);
         }
     } else {
@@ -631,21 +639,21 @@ void LC_ActionDrawLineSnake::close(){
 // creation of polyline. This will end line drawing sequence
 void LC_ActionDrawLineSnake::polyline(){
     // fixme - add support of alternative way of polyline based on selected entities (so only drawn lines will be converted to polyline, without others found
-    RS_Entity *en = catchEntity(pPoints->data.endpoint, RS2::EntityLine, RS2::ResolveAllButTextImage);
+    RS_Entity *en = catchEntity(m_actionData->data.endpoint, RS2::EntityLine, RS2::ResolveAllButTextImage);
     if (en != nullptr){
         finishAction();
-        addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
-        auto polylineSegmentAction = std::make_shared<RS_ActionPolylineSegment>(*container, *graphicView, en);
-        graphicView->setCurrentAction(polylineSegmentAction);
+        addHistory(HA_Polyline, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
+        // fixme - sand - files - direct action creation
+        switchToAction(RS2::ActionPolylineSegment, en);
     }
 }
 
 bool LC_ActionDrawLineSnake::mayClose(){
-    return 1 < pPoints->startOffset && 0 <= pPoints->historyIndex - pPoints->startOffset;
+    return 1 < m_actionData->startOffset && 0 <= m_actionData->historyIndex - m_actionData->startOffset;
 }
 
 bool LC_ActionDrawLineSnake::mayRedo(){
-    return pPoints->history.size() > (pPoints->index() + 1);
+    return m_actionData->history.size() > (m_actionData->index() + 1);
 }
 
 bool LC_ActionDrawLineSnake::mayStart(){
@@ -653,10 +661,10 @@ bool LC_ActionDrawLineSnake::mayStart(){
 }
 
 double LC_ActionDrawLineSnake::defineActualSegmentAngle(double relativeAngleRad){
-    size_t currentIndex = pPoints->index();  // this should be start point of current line
+    size_t currentIndex = m_actionData->index();  // this should be start point of current line
     double ucsBasisAngle = relativeAngleRad;
     if (currentIndex > 0){
-        History h(pPoints->history.at(currentIndex));
+        History h(m_actionData->history.at(currentIndex));
 
         if (h.histAct == HA_SetEndpoint){ // this is start of previous line segment
             RS_Vector previousSegmentStart = h.prevPt;
@@ -673,34 +681,34 @@ double LC_ActionDrawLineSnake::defineActualSegmentAngle(double relativeAngleRad)
 }
 
 RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
-    double ucsBasisAngleToUse = angleDegrees;
-    if (alternativeActionMode){
-        ucsBasisAngleToUse = 180 - angleDegrees;
+    double ucsBasisAngleToUse = m_angleDegrees;
+    if (m_alternativeActionMode){
+        ucsBasisAngleToUse = 180 - m_angleDegrees;
     }
 
     double wcsAngle;
-    if (angleIsRelative){
+    if (m_angleIsRelative){
         double angleRadians = RS_Math::deg2rad(ucsBasisAngleToUse);
         wcsAngle = defineActualSegmentAngle(angleRadians);
     }
     else{
         wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsBasisAngleToUse);
     }
-    RS_Vector possibleEndPoint = LC_LineMath::calculateEndpointForAngleDirection(wcsAngle,pPoints->data.startpoint, snap);
+    RS_Vector possibleEndPoint = LC_LineMath::calculateEndpointForAngleDirection(wcsAngle,m_actionData->data.startpoint, snap);
     return possibleEndPoint;
 }
 
 
 void LC_ActionDrawLineSnake::calculateAngleSegment(double distance){
     double wcsAngle;
-    if (angleIsRelative){
-        double angleRadians = RS_Math::deg2rad(angleDegrees);
+    if (m_angleIsRelative){
+        double angleRadians = RS_Math::deg2rad(m_angleDegrees);
         wcsAngle = defineActualSegmentAngle(angleRadians);
     }
     else{
-        wcsAngle = toWorldAngleFromUCSBasisDegrees(angleDegrees);
+        wcsAngle = toWorldAngleFromUCSBasisDegrees(m_angleDegrees);
     }
-    pPoints->data.endpoint = pPoints->data.startpoint.relative(distance, wcsAngle);
+    m_actionData->data.endpoint = m_actionData->data.startpoint.relative(distance, wcsAngle);
 }
 
 

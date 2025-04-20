@@ -24,16 +24,19 @@
 #define LC_PRINTPREVIEWVIEW_H
 
 #include "qg_graphicview.h"
+#include "rs.h"
+
+class RS_Document;
 
 class LC_PrintPreviewView :public QG_GraphicView{
 public:
-    LC_PrintPreviewView(QWidget* parent, RS_Document* doc);
+    LC_PrintPreviewView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext);
     ~LC_PrintPreviewView() override;
 
     /**
  * \brief setDrawingMode Sets the drawing mode.
  */
-    void setDrawingMode(RS2::DrawingMode m);
+    void setDrawingMode(RS2::DrawingMode m) const;
 
 /**
  * @return Current drawing mode.

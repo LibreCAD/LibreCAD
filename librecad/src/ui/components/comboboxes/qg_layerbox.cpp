@@ -38,11 +38,11 @@
 QG_LayerBox::QG_LayerBox(QWidget* parent)
     : QComboBox(parent) {
 
-    showByBlock = false;
-    showUnchanged = false;
-    unchanged = false;
-    layerList = nullptr;
-    currentLayer = nullptr;
+    m_showByBlock = false;
+    m_showUnchanged = false;
+    m_unchanged = false;
+    m_layerList = nullptr;
+    m_currentLayer = nullptr;
 }
 
 /**
@@ -59,10 +59,10 @@ QG_LayerBox::~QG_LayerBox() {}
  */
 void QG_LayerBox::init(RS_LayerList& ll,
                        bool doShowByBlock, bool doShowUnchanged) {
-    showByBlock = doShowByBlock;
-    showUnchanged = doShowUnchanged;
+    m_showByBlock = doShowByBlock;
+    m_showUnchanged = doShowUnchanged;
     ll.sort(); // fixme !!!!!!
-    layerList = &ll;
+    m_layerList = &ll;
 
     if (doShowUnchanged) {
         addItem(tr("- Unchanged -"));
@@ -75,7 +75,7 @@ void QG_LayerBox::init(RS_LayerList& ll,
         }
     }
 
-    connect(this, SIGNAL(activated(int)),this, SLOT(slotLayerChanged(int)));
+    connect(this, &QG_LayerBox::activated ,this, &QG_LayerBox::slotLayerChanged);
     setCurrentIndex(0);
     slotLayerChanged(currentIndex());
 }
@@ -84,7 +84,7 @@ void QG_LayerBox::init(RS_LayerList& ll,
  * Sets the layer shown in the combobox to the given layer.
  */
 void QG_LayerBox::setLayer(RS_Layer& layer) {
-    currentLayer = &layer;
+    m_currentLayer = &layer;
     int i = findText(layer.getName());
     setCurrentIndex(i);
     slotLayerChanged(currentIndex());
@@ -106,12 +106,12 @@ void QG_LayerBox::setLayer(QString& layer) {
  * choose an individual color.
  */
 void QG_LayerBox::slotLayerChanged(int index) {
-    if (index==0 && showUnchanged) {
-        unchanged = true;
+    if (index==0 && m_showUnchanged) {
+        m_unchanged = true;
     }
     else {
-        unchanged = false;
+        m_unchanged = false;
     }
-    currentLayer = layerList->find(itemText(index));
-    emit layerChanged(currentLayer);
+    m_currentLayer = m_layerList->find(itemText(index));
+    emit layerChanged(m_currentLayer);
 }

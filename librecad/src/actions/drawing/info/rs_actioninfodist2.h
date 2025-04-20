@@ -27,8 +27,6 @@
 #ifndef RS_ACTIONINFODIST2_H
 #define RS_ACTIONINFODIST2_H
 
-#include <memory>
-
 #include "rs_previewactioninterface.h"
 
 /**
@@ -40,14 +38,11 @@
 class RS_ActionInfoDist2:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoDist2(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool fromPointToEntity = false);
+    RS_ActionInfoDist2(LC_ActionContext *actionContext,bool fromPointToEntity = false);
     ~RS_ActionInfoDist2() override;
     void init(int status) override;
-    bool isUseNearestPointOnEntity() const {return nearestPointShouldBeOnEntity;};
-    void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
+    bool isUseNearestPointOnEntity() const {return m_nearestPointShouldBeOnEntity;};
+    void setUseNearestPointOnEntity(bool value){m_nearestPointShouldBeOnEntity = value;}
     void finish(bool updateTB) override;;
 protected:
     /**
@@ -62,14 +57,14 @@ protected:
         FIRST_IS_ENTITY,
         FIRST_IS_POINT
     };
-    RS_Entity *entity = nullptr;
-    RS_Vector point = RS_Vector(false);
-    int selectionMode = FIRST_IS_ENTITY;
-    RS_Entity *doCatchEntity(LC_MouseEvent *e, bool preview);
-    bool nearestPointShouldBeOnEntity = true;
+    RS_Entity *m_entity = nullptr;
+    RS_Vector m_point = RS_Vector(false);
+    int m_selectionMode = FIRST_IS_ENTITY;
+    bool m_nearestPointShouldBeOnEntity = true;
+    RS_Vector m_savedRelZero = RS_Vector{false};
+    RS_Vector m_entityNearestPoint = RS_Vector{false};
 
-    RS_Vector savedRelZero = RS_Vector{false};
-    RS_Vector entityNearestPoint = RS_Vector{false};
+    RS_Entity *doCatchEntity(LC_MouseEvent *e, bool preview);
     void restoreRelZero();
     RS_Vector obtainNearestPointOnEntity(const RS_Vector &snap) const;
     RS2::CursorType doGetMouseCursor(int status) override;

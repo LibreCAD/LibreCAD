@@ -27,9 +27,9 @@
 #ifndef RS_ACTIONMODIFYSCALE_H
 #define RS_ACTIONMODIFYSCALE_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actionmodifybase.h"
 
+struct RS_ScaleData;
 /**
  * This action class can handle user events to move entities.
  *
@@ -38,8 +38,7 @@
 class RS_ActionModifyScale : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyScale(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView);
+    RS_ActionModifyScale(LC_ActionContext *actionContext);
     ~RS_ActionModifyScale() override;
 
     void init(int status) override;
@@ -62,8 +61,8 @@ protected:
         SetTargetPoint,        /**< Set the target point to scale the source point to */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ScaleActionData;
+    std::unique_ptr<ScaleActionData> m_actionData;
     // set scaling target point to support isotropic or xy-scaling
     RS_Vector getTargetPoint(LC_MouseEvent* e);
     void findFactor();
@@ -71,8 +70,8 @@ protected:
     void showPreview(RS_ScaleData &previewData);
     void determineScaleFactor(RS_ScaleData& data, const RS_Vector &reference, const RS_Vector &source, const RS_Vector &target);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;

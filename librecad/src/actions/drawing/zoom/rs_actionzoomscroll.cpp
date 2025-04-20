@@ -25,32 +25,27 @@
 **********************************************************************/
 
 #include "rs_actionzoomscroll.h"
-#include "rs_graphicview.h"
+#include "lc_graphicviewport.h"
 
-RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction,
-										 RS_EntityContainer& container,
-										 RS_GraphicView& graphicView)
-	:RS_ActionInterface("Zoom scroll", container, graphicView)
-	,direction(direction)
-	,hasOffset(false)
-{
+RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction, LC_ActionContext *actionContext)
+	:RS_ActionInterface("Zoom scroll", actionContext, RS2::ActionZoomScroll)
+	,m_direction(direction)
+	,m_hasOffset(false){
 }
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
-										 RS_EntityContainer& container,
-										 RS_GraphicView& graphicView)
-	:RS_ActionInterface("Zoom scroll", container, graphicView)
-	,hasOffset(true)
-	,offsetX(offsetX)
-	,offsetY(offsetY)
-{
+										 LC_ActionContext *actionContext)
+	:RS_ActionInterface("Zoom scroll", actionContext,RS2::ActionZoomScroll)
+	,m_hasOffset(true)
+	,m_offsetX(offsetX)
+	,m_offsetY(offsetY){
 }
 
 void RS_ActionZoomScroll::trigger() {
-    if (hasOffset) {
-        viewport->zoomPan(offsetX, offsetY);
+    if (m_hasOffset) {
+        m_viewport->zoomPan(m_offsetX, m_offsetY);
     } else {
-        viewport->zoomScroll(direction);
+        m_viewport->zoomScroll(m_direction);
     }
     finish(false);
 }

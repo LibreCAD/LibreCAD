@@ -28,8 +28,7 @@
 #ifndef RS_DIALOGFACTORY_H
 #define RS_DIALOGFACTORY_H
 
-#include <QString>
-
+class QString;
 class RS_DialogFactoryInterface;
 
 #define RS_DIALOGFACTORY RS_DialogFactory::instance()->getFactoryObject()

@@ -25,8 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionzoomin.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
+#include "lc_graphicviewport.h"
 
 /**
  * Default constructor.
@@ -34,19 +33,16 @@
  * @param direction In for zooming in, Out for zooming out.
  * @param axis Axis that are affected by the zoom (OnlyX, OnlyY or Both)
  */
-RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView,
+RS_ActionZoomIn::RS_ActionZoomIn(LC_ActionContext *actionContext,
                                  RS2::ZoomDirection direction,
                                  RS2::Axis axis,
 								 RS_Vector const* pCenter,
                                  double factor)
-        :RS_ActionInterface("Zoom in", container, graphicView)
-        ,zoom_factor(factor)
-        ,direction(direction)
-        ,axis(axis)
-		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{})
-{
-    setActionType(RS2::ActionZoomIn);
+            :RS_ActionInterface("Zoom in", actionContext, RS2::ActionZoomIn)
+        ,m_zoomFactor(factor)
+        ,m_direction(direction)
+        ,m_axis(axis)
+		,m_centerPoint(pCenter?new RS_Vector{*pCenter}:new RS_Vector{}){;
 }
 
 RS_ActionZoomIn::~RS_ActionZoomIn() = default;
@@ -57,7 +53,7 @@ void RS_ActionZoomIn::init(int status) {
 }
 
 void RS_ActionZoomIn::trigger() {
-    switch (axis) {
+    switch (m_axis) {
         // fixme - sand - review and remove this if not needed...
         case RS2::OnlyX:
     /*        if (direction==RS2::In) {
@@ -76,10 +72,10 @@ void RS_ActionZoomIn::trigger() {
             break;
 
         case RS2::Both:
-            if (direction==RS2::In) {
-                viewport->zoomIn(zoom_factor, *center);
+            if (m_direction==RS2::In) {
+                m_viewport->zoomIn(m_zoomFactor, *m_centerPoint);
             } else {
-                viewport->zoomOut(zoom_factor, *center);
+                m_viewport->zoomOut(m_zoomFactor, *m_centerPoint);
             }
             break;
     }

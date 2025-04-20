@@ -26,11 +26,6 @@
 
 #ifndef RS_ACTIONDIMDIAMETRIC_H
 #define RS_ACTIONDIMDIAMETRIC_H
-
-#include <memory>
-
-#include "rs_actiondimension.h"
-#include "rs_dimdiametric.h"
 #include "lc_actioncircledimbase.h"
 
 struct RS_DimDiametricData;
@@ -43,13 +38,11 @@ struct RS_DimDiametricData;
 class RS_ActionDimDiametric:public LC_ActionCircleDimBase {
 Q_OBJECT
 public:
-    RS_ActionDimDiametric(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimDiametric(LC_ActionContext *actionContext);
     ~RS_ActionDimDiametric() override;
 protected:
     /** Data of new dimension */
-    std::unique_ptr<RS_DimDiametricData> edata;
+    std::unique_ptr<RS_DimDiametricData> m_edata;
     void reset() override;
     RS_Dimension *createDim(RS_EntityContainer *parent) const override;
     RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) override;

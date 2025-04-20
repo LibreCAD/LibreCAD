@@ -40,16 +40,14 @@ class RS_Vector;
 class RS_ActionDrawLineParallelThrough:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineParallelThrough(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawLineParallelThrough(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineParallelThrough() override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB) override;
     int getNumber() const;
     void setNumber(int n);
-    bool isSymmetric() const {return symmetric;};
-    void setSymmetric(bool value){symmetric = value;};
+    bool isSymmetric() const {return m_symmetric;};
+    void setSymmetric(bool value){m_symmetric = value;};
 protected:
     enum Status {
         SetEntity,    /**< Choose original entity. */
@@ -58,18 +56,16 @@ protected:
     };
 
     /** Closest parallel. */
-    RS_Entity *parallel = nullptr;
-/** Number of parallels. */
-    int number = 1;
-
-    bool symmetric = false;
-/** Coordinate of the mouse. */
-    std::unique_ptr<RS_Vector> coord;
-/** Original entity. */
-    RS_Entity *entity = nullptr;
-/** Last status before entering length or number. */
-    Status lastStatus = SetEntity;
-
+    RS_Entity *m_parallel = nullptr;
+    /** Number of parallels. */
+    int m_numberToCreate = 1;
+    bool m_symmetric = false;
+    /** Coordinate of the mouse. */
+    std::unique_ptr<RS_Vector> m_coord;
+    /** Original entity. */
+    RS_Entity *m_entity = nullptr;
+    /** Last status before entering length or number. */
+    Status m_lastStatus = SetEntity;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

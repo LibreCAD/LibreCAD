@@ -20,23 +20,22 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actionsplineappendpoint.h"
+
 #include "lc_splinepoints.h"
+#include "rs_entity.h"
 #include "rs_spline.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
 
 namespace {
     // fixme - sand - think about support parabola as other splines
     const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
 }
 
-LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionSplineModifyBase("SplineAppendPoint", container, graphicView) {
-    actionType = RS2::ActionDrawSplinePointAppend;
+LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(LC_ActionContext *actionContext)
+    :LC_ActionSplineModifyBase("SplineAppendPoint",actionContext, RS2::ActionDrawSplinePointAppend) {
 }
 
 void LC_ActionSplineAppendPoint::doCompleteTrigger() {
-    moveRelativeZero(vertexPoint);
+    moveRelativeZero(m_vertexPoint);
 }
 
 void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
@@ -53,11 +52,11 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, LC_Mou
         case SetBeforeControlPoint:{
             double dist;
             mouse = getRelZeroAwarePoint(e, mouse);
-            RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, &dist);
             if (nearestPoint.valid) {
-                bool appendToStart = nearestPoint == entityToModify->getStartpoint();
+                bool appendToStart = nearestPoint == m_entityToModify->getStartpoint();
                 previewRefSelectablePoint(mouse);
-                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, mouse, appendToStart);
+                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(m_entityToModify, mouse, appendToStart);
                 if (previewUpdatedEntity != nullptr) {
                     previewEntity(previewUpdatedEntity);
                 }
@@ -66,13 +65,13 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, LC_Mou
         }
         case SetControlPoint:{
             previewRefSelectablePoint(mouse);
-            bool appendMode = directionFromStart;
+            bool appendMode = m_directionFromStart;
             if (e->isShift){
                 double dist;
-                RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
-                appendMode = nearestPoint == entityToModify->getStartpoint();
+                RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, &dist);
+                appendMode = nearestPoint == m_entityToModify->getStartpoint();
             }
-            RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, mouse, appendMode);
+            RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(m_entityToModify, mouse, appendMode);
             if (previewUpdatedEntity != nullptr) {
                 previewEntity(previewUpdatedEntity);
             }
@@ -88,8 +87,8 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, LC_MouseEv
         case SetEntity:{
             auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
-                entityToModify = entity;
-                entityToModify->setSelected(true);
+                m_entityToModify = entity;
+                m_entityToModify->setSelected(true);
                 redrawDrawing();
                 setStatus(SetBeforeControlPoint);
             }
@@ -99,9 +98,9 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, LC_MouseEv
             RS_Vector mouse = e->snapPoint;
             mouse = getRelZeroAwarePoint(e, mouse);
             double dist;
-            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            RS_Vector nearestPoint = m_entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
-                directionFromStart = nearestPoint == entityToModify->getStartpoint();
+                m_directionFromStart = nearestPoint == m_entityToModify->getStartpoint();
                 fireCoordinateEvent(mouse);
             }
             break;
@@ -110,9 +109,9 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, LC_MouseEv
             RS_Vector mouse = e->snapPoint;
             if (e->isShift){
                 double dist;
-                RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
+                RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, &dist);
                 if (nearestPoint.valid) {
-                    directionFromStart = nearestPoint == entityToModify->getStartpoint();
+                    m_directionFromStart = nearestPoint == m_entityToModify->getStartpoint();
                 }
             }
             fireCoordinateEvent(mouse);
@@ -125,13 +124,13 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, LC_MouseEv
 void LC_ActionSplineAppendPoint::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetBeforeControlPoint:{
-            vertexPoint = pos;
+            m_vertexPoint = pos;
             trigger();
             setStatus(SetControlPoint);
             break;
         }
         case SetControlPoint:{
-            vertexPoint = pos;
+            m_vertexPoint = pos;
             trigger();
             break;
         }

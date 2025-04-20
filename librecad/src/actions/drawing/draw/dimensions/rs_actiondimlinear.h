@@ -38,7 +38,7 @@ struct RS_DimLinearData;
  * @author Andrew Mustun
  */
 class RS_ActionDimLinear: public LC_ActionDimLinearBase {
-Q_OBJECT
+    Q_OBJECT
 public:
 /**
  * Varitions of this action.
@@ -50,9 +50,7 @@ public:
     };
 
 public:
-    RS_ActionDimLinear(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
+    RS_ActionDimLinear(LC_ActionContext *actionContext,
         double angle = 0.0, bool fixedAngle = false,
         RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear() override;
@@ -67,15 +65,15 @@ protected:
     /**
      * Aligned dimension data.
      */
-    std::unique_ptr<RS_DimLinearData> edata;
+    std::unique_ptr<RS_DimLinearData> m_edata;
 
-    double ucsBasisAngleDegrees = 0.0;
+    double m_ucsBasisAngleDegrees = 0.0;
     /**
      * Is the angle fixed?
      */
-    bool fixedAngle = false;
+    bool m_fixedAngle = false;
 /** Last status before entering text or angle. */
-    Status lastStatus = SetExtPoint1;
+    Status m_lastStatus = SetExtPoint1;
     void reset() override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;

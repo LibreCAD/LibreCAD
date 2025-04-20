@@ -27,20 +27,19 @@
 #include "lc_dialog.h"
 
 namespace Ui {
-class LC_DlgNewVersionAvailable;
+    class LC_DlgNewVersionAvailable;
 }
 
-class LC_DlgNewVersionAvailable : public LC_Dialog
-{
+class LC_DlgNewVersionAvailable : public LC_Dialog{
     Q_OBJECT
 public:
     explicit LC_DlgNewVersionAvailable(QWidget *parent, LC_ReleaseChecker* releaseChecker);
-    ~LC_DlgNewVersionAvailable();
+    ~LC_DlgNewVersionAvailable() override;
 protected slots:
     void onOk();
 private:
-    QString currentReleaseTag = "";
-    QString currentPreReleaseTag = "";
+    QString m_currentReleaseTag = "";
+    QString m_currentPreReleaseTag = "";
     void setup(LC_ReleaseChecker* releaseChecker);
     Ui::LC_DlgNewVersionAvailable *ui;
 };

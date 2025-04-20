@@ -30,18 +30,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawLinePoints :public LC_AbstractActionDrawLine {
     Q_OBJECT
 public:
-    LC_ActionDrawLinePoints(RS_EntityContainer &container,RS_GraphicView &graphicView, bool drawMiddle);
+    LC_ActionDrawLinePoints(LC_ActionContext *actionContext, bool drawMiddle);
     ~LC_ActionDrawLinePoints() override;
-    int getPointsCount() const {return pointsCount;};
-    void setPointsCount(int count) {pointsCount = count;};
-    int getEdgePointsMode() const{return edgePointsMode;};
+    int getPointsCount() const {return m_pointsCount;};
+    void setPointsCount(int count) {m_pointsCount = count;};
+    int getEdgePointsMode() const{return m_edgePointsMode;};
     void setEdgePointsMode(int value);
-    void setFixedDistanceMode(bool value) {fixedDistanceMode = value;};
-    bool isFixedDistanceMode() const{return fixedDistanceMode;};
-    void setWithinLineMode(bool value) {withinLineMode = value;};
-    bool isWithinLineMode() const{return withinLineMode;};
-    double getPointsDistance() const{return fixedDistance;};
-    void setPointsDistance(double val){fixedDistance = val;};
+    void setFixedDistanceMode(bool value) {m_fixedDistanceMode = value;};
+    bool isFixedDistanceMode() const{return m_fixedDistanceMode;};
+    void setWithinLineMode(bool value) {m_withinLineMode = value;};
+    bool isWithinLineMode() const{return m_withinLineMode;};
+    double getPointsDistance() const{return m_fixedDistance;};
+    void setPointsDistance(double val){m_fixedDistance = val;};
     void init(int status) override;
     QStringList getAvailableCommands() override;
 protected:
@@ -68,31 +68,31 @@ protected:
     /**
  * amount of points to create
  */
-    int pointsCount = 0;
+    int m_pointsCount = 0;
     /**
      * how to handle points on edges
      */
-    int edgePointsMode = DRAW_EDGE_BOTH;
+    int m_edgePointsMode = DRAW_EDGE_BOTH;
 
     /**
      * flag that indicates that point 1 is set
      */
-    bool point1Set = false;
+    bool m_point1Set = false;
 
     /**
      * start point for line
      */
-    RS_Vector startpoint = RS_Vector(false);
+    RS_Vector m_startpoint = RS_Vector(false);
 
     /**
      * end point of line
      */
-    RS_Vector endpoint = RS_Vector(false);
+    RS_Vector m_endpoint = RS_Vector(false);
 
     /**
      * flag that defines whether distance between points is fixed
      */
-    bool fixedDistanceMode = false;
+    bool m_fixedDistanceMode = false;
 
     /**
      * flag that is applicable if we'll draw points with fixed distance between them.
@@ -100,12 +100,12 @@ protected:
      * so less than pointsCount points will be created or (if false) if the line is rather considered as a direction vector
      * and the number of points specified by pointsCount will be always equal to pointsCount (plus edges points, of course)
      */
-    bool withinLineMode = false;
+    bool m_withinLineMode = false;
 
     /**
      * Distance between points for fixed distance mode
      */
-    double fixedDistance = false;
+    double m_fixedDistance = false;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doProceedCommand(int status, const QString &qString) override;

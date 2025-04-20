@@ -35,8 +35,7 @@ class RS_Vector;
 class LC_ActionDrawParabola4Points : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionDrawParabola4Points(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
+    LC_ActionDrawParabola4Points(LC_ActionContext *actionContext);
     ~LC_ActionDrawParabola4Points() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;
@@ -52,8 +51,8 @@ protected:
         SetAxis   //  select the axis/orientation  */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

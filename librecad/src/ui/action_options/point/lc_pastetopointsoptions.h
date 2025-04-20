@@ -23,7 +23,6 @@
 #ifndef LC_PASTETOPOINTSACTION_H
 #define LC_PASTETOPOINTSACTION_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class LC_ActionPasteToPoints;
@@ -33,30 +32,23 @@ namespace Ui {
 
 class LC_PasteToPointsOptions :public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_PasteToPointsOptions();
-    ~LC_PasteToPointsOptions();
-
+    ~LC_PasteToPointsOptions() override;
 protected slots:
     void languageChange() override;
     void onAngleEditingFinished();
     void onFactorEditingFinished();
     void onRemovePointsClicked(bool clicked);
-
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
-
 private:
     Ui::LC_PasteToPointsOptions *ui;
-    LC_ActionPasteToPoints* action = nullptr;
-
+    LC_ActionPasteToPoints* m_action = nullptr;
     void setAngleToActionAndView(QString val);
     void setFactorToActionAndView(QString val);
     void setRemovePointsToActionAndView(bool val);
 };
-
-
 
 #endif // LC_PASTETOPOINTSACTION_H

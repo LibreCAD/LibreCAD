@@ -25,30 +25,22 @@
 **********************************************************************/
 
 #include "rs_actiondrawpoint.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+
 #include "rs_point.h"
 
-RS_ActionDrawPoint::RS_ActionDrawPoint(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw Points",
-                               container, graphicView), pt(new RS_Vector{}){
-    actionType = RS2::ActionDrawPoint;
+RS_ActionDrawPoint::RS_ActionDrawPoint(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Points",actionContext, RS2::ActionDrawPoint), m_pointPosition(new RS_Vector{}){
 }
 
 RS_ActionDrawPoint::~RS_ActionDrawPoint() = default;
 
 void RS_ActionDrawPoint::doTrigger() {
-    if (pt->valid){
-        auto *point = new RS_Point(container, RS_PointData(*pt));
-        moveRelativeZero(*pt);
+    if (m_pointPosition->valid){
+        auto *point = new RS_Point(m_container, RS_PointData(*m_pointPosition));
+        moveRelativeZero(*m_pointPosition);
         undoCycleAdd(point);
     }
 }
-
 
 RS_Vector RS_ActionDrawPoint::getFreeSnapAwarePointAlt(const LC_MouseEvent *e, const RS_Vector &pos) const{
     RS_Vector mouse = (e->isControl) ?  e->graphPoint : pos;
@@ -75,7 +67,7 @@ void RS_ActionDrawPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]L
 }
 
 void RS_ActionDrawPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
-    *pt = mouse;
+    *m_pointPosition = mouse;
     trigger();
 }
 

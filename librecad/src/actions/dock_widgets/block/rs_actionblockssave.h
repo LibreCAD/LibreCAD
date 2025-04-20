@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actioninterface.h"
 
+class RS_Block;
 class RS_Insert;
 
 /**
@@ -33,14 +34,12 @@ class RS_Insert;
 class RS_ActionBlocksSave : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionBlocksSave(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-
+    RS_ActionBlocksSave(LC_ActionContext *actionContext);
 	void init(int status) override;
 	void trigger() override;
-
 private:
     void addBlock(RS_Insert* in, RS_Graphic* g);
+	RS_Graphic *createGraphicForBlock(RS_Block *activeBlock);
 };
 
 #endif

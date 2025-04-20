@@ -23,17 +23,16 @@
 #ifndef LC_VIEW_H
 #define LC_VIEW_H
 
-#include <QString>
 #include "rs_vector.h"
 #include "lc_ucs.h"
 
-class LC_View
-{
+class LC_View{
 public:
     LC_View();
-
     explicit LC_View(const QString &name);
-    QString getName()const {return name;}
+
+    LC_View* clone();
+    QString getName()const {return m_name;}
     void setName(const QString& name);
     void setCenter(RS_Vector c);
     RS_Vector getCenter() const ;
@@ -48,8 +47,8 @@ public:
     void setCameraPlottable(bool b);
     bool isCameraPlottable() const ;
     bool isHasUCS() const;
-    void setRenderMode(int i) {renderMode = i;};
-    long getRenderMode() const {return renderMode;};
+    void setRenderMode(int i) {m_renderMode = i;};
+    long getRenderMode() const {return m_renderMode;};
     void setBackClippingPlaneOffset(double d);
     double getBackClippingPlaneOffset() const ;
     void setFrontClippingPlaneOffset(double d);
@@ -62,33 +61,33 @@ public:
     int getViewMode() const;
     void setUCS(LC_UCS *pUcs);
     LC_UCS* getUCS() const;
-    bool isForPaperView() {return  flags & 1;}
+    bool isForPaperView() {return  m_flags & 1;}
     void setForPaperView(bool forPaper) {
         if (forPaper) {
-            flags |= 1;
+            m_flags |= 1;
         }
         else{
-            flags &= ~1;
+            m_flags &= ~1;
         }
     }
 
     static bool isValidName(QString &nameCandidate);
 
 protected:
-    QString name;
-    bool cameraPlottable = false;
-    int flags = 0;
-    int viewMode = 0;
-    double lensLen = 0.0;
-    double twistAngle = 0.0;
-    double backClippingPlaneOffset = 0.0;
-    double frontClippingPlaneOffset = 0.0;
-    unsigned int renderMode {0};
-    RS_Vector center{false};
-    RS_Vector size{false};
-    RS_Vector targetPoint{false};
-    RS_Vector viewDirection{false};
-    LC_UCS* ucs {nullptr};
+    QString m_name;
+    bool m_cameraPlottable = false;
+    int m_flags = 0;
+    int m_viewMode = 0;
+    double m_lensLen = 0.0;
+    double m_twistAngle = 0.0;
+    double m_backClippingPlaneOffset = 0.0;
+    double m_frontClippingPlaneOffset = 0.0;
+    unsigned int m_renderMode {0};
+    RS_Vector m_center{false};
+    RS_Vector m_size{false};
+    RS_Vector m_targetPoint{false};
+    RS_Vector m_viewDirection{false};
+    LC_UCS* m_ucs {nullptr};
 };
 
 #endif // LC_VIEW_H

@@ -24,21 +24,21 @@
 #define LC_WORKSPACELISTBUTTON_H
 
 #include <QToolButton>
-#include "qc_applicationwindow.h"
+
+class QC_ApplicationWindow;
 
 class LC_WorkspaceListButton:public QToolButton {
     Q_OBJECT
 public:
     explicit LC_WorkspaceListButton(QC_ApplicationWindow *win);
     void enableSubActions(bool value);
-
 protected:
-    QMenu *menu;
-    QList<QAction *> createdActions;
-    QC_ApplicationWindow *mainWin{nullptr};
-    QIcon wsIcon;
+    QMenu *m_menu;
+    QList<QAction *> m_createdActions;
+    QC_ApplicationWindow *m_appWin{nullptr};
+    QIcon m_wcsIcon;
 protected slots:
     void fillMenu();
-    void menuTriggered(bool checked = false);
+    void menuTriggered(bool checked = false) const;
 };
 #endif // LC_WORKSPACELISTBUTTON_H

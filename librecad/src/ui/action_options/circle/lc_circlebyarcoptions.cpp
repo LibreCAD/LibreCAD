@@ -26,31 +26,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 LC_CircleByArcOptions::LC_CircleByArcOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawCircleByArc, "Draw","CircleByArc"),
     ui(new Ui::LC_CircleByArcOptions),
-    action(nullptr)
-{
+    m_action(nullptr){
     ui->setupUi(this);
-    connect(ui->cbReplace, SIGNAL(clicked(bool)), this, SLOT(onReplaceClicked(bool)));
-    connect(ui->cbPen, SIGNAL(currentIndexChanged(int)), SLOT(onPenModeIndexChanged(int)));
-    connect(ui->cbLayer, SIGNAL(currentIndexChanged(int)), SLOT(onLayerModeIndexChanged(int)));
+    connect(ui->cbReplace, &QCheckBox::clicked, this, &LC_CircleByArcOptions::onReplaceClicked);
+    connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onPenModeIndexChanged);
+    connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onLayerModeIndexChanged);
     connect(ui->leRadiusShift, &QLineEdit::editingFinished, this, &LC_CircleByArcOptions::onRadiusShiftEditingFinished);
 }
 
 LC_CircleByArcOptions::~LC_CircleByArcOptions(){
     delete ui;
-    action = nullptr;
+    m_action = nullptr;
 }
 
 void LC_CircleByArcOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<LC_ActionDrawCircleByArc *>(a);
+    m_action = dynamic_cast<LC_ActionDrawCircleByArc *>(a);
     bool replace;
     int penMode;
     int layerMode;
     QString radiusShift;
     if (update){
-        replace = action->isReplaceArcByCircle();
-        penMode = action->getPenMode();
-        layerMode = action->getLayerMode();
-        radiusShift = fromDouble(action->getRadiusShift());
+        replace = m_action->isReplaceArcByCircle();
+        penMode = m_action->getPenMode();
+        layerMode = m_action->getLayerMode();
+        radiusShift = fromDouble(m_action->getRadiusShift());
     }
     else{
         replace = loadBool("ReplaceArc", false);
@@ -64,7 +63,6 @@ void LC_CircleByArcOptions::doSetAction(RS_ActionInterface *a, bool update){
     setRadiusShiftToModelAndView(radiusShift);
 }
 
-
 void LC_CircleByArcOptions::doSaveSettings(){
     save("ReplaceArc", ui->cbReplace->isChecked());
     save("PenMode", ui->cbPen->currentIndex());
@@ -73,13 +71,13 @@ void LC_CircleByArcOptions::doSaveSettings(){
 }
 
 void LC_CircleByArcOptions::onPenModeIndexChanged(int mode){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setPenModeToActionAndView(mode);
     }
 }
 
 void LC_CircleByArcOptions::onLayerModeIndexChanged(int mode){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setLayerModeToActionAndeView(mode);
     }
 }
@@ -89,13 +87,13 @@ void LC_CircleByArcOptions::languageChange(){
 }
 
 void LC_CircleByArcOptions::onReplaceClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setReplaceArcToActionAndView(value);
     }
 }
 
 void LC_CircleByArcOptions::setReplaceArcToActionAndView(bool value){
-    action->setReplaceArcByCircle(value);
+    m_action->setReplaceArcByCircle(value);
     ui->cbReplace->setChecked(value);
 
     ui->leRadiusShift->setEnabled(!value);
@@ -103,17 +101,17 @@ void LC_CircleByArcOptions::setReplaceArcToActionAndView(bool value){
 }
 
 void LC_CircleByArcOptions::setPenModeToActionAndView(int mode){
-    action->setPenMode(mode);
+    m_action->setPenMode(mode);
     ui->cbPen->setCurrentIndex(mode);
 }
 
 void LC_CircleByArcOptions::setLayerModeToActionAndeView(int mode){
-    action->setLayerMode(mode);
+    m_action->setLayerMode(mode);
     ui->cbLayer->setCurrentIndex(mode);
 }
 
 void LC_CircleByArcOptions::onRadiusShiftEditingFinished(){
-  if (action != nullptr){
+  if (m_action != nullptr){
       setRadiusShiftToModelAndView(ui->leRadiusShift->text());
   }
 }
@@ -121,7 +119,7 @@ void LC_CircleByArcOptions::onRadiusShiftEditingFinished(){
 void LC_CircleByArcOptions::setRadiusShiftToModelAndView(QString val){
     double len;
     if (toDouble(val, len, 0.0, false)){
-        action->setRadiusShift(len);
+        m_action->setRadiusShift(len);
         ui->leRadiusShift->setText(fromDouble(len));
     }
 }

@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWRECTANGLE1POINT_H
 #define LC_ACTIONDRAWRECTANGLE1POINT_H
 
-#include "rs_polyline.h"
 #include "lc_abstractactiondrawrectangle.h"
 
 class LC_ActionDrawRectangle1Point :public LC_AbstractActionDrawRectangle {
@@ -46,35 +45,31 @@ public:
         SNAP_BOTTOM_RIGHT // bottom-right corner
     };
 
-    LC_ActionDrawRectangle1Point(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
+    LC_ActionDrawRectangle1Point(LC_ActionContext *actionContext);
     ~LC_ActionDrawRectangle1Point() override;
 
     QStringList getAvailableCommands() override;
     void setWidth(double value);
-    double getWidth()const {return width;};
+    double getWidth()const {return m_width;};
     void setHeight(double value);
-    double getHeight() const{return height;};
+    double getHeight() const{return m_height;};
     void setSizeInner(bool value);
-    bool isSizeInner() const{return sizeIsInner;};
-    bool isBaseAngleFree() const {return angleIsFree;};
+    bool isSizeInner() const{return m_sizeIsInner;};
+    bool isBaseAngleFree() const {return m_angleIsFree;};
     void setBaseAngleFree(bool val);
 protected:
     // width of rect
-    double width = 0.0;
+    double m_width = 0.0;
     // height of rect
-    double height = 0.0;
+    double m_height = 0.0;
     // flag that indicates that width and rect are applied to external area or excluding corner radius
-    bool sizeIsInner = false;
+    bool m_sizeIsInner = false;
     // flag that indicates that base angle is set by mouse instead of settings
-    bool angleIsFree = false;
+    bool m_angleIsFree = false;
     // indicates that CTRL is pressed on trigger invocation by mouse
-    bool controlPressedOnMouseRelease = false;
-
-    RS_Vector insertionPoint = RS_Vector{false};
-
-    static const std::vector<RS_Vector> snapPoints;
-
+    bool m_controlPressedOnMouseRelease = false;
+    RS_Vector m_insertionPoint = RS_Vector{false};
+    static const std::vector<RS_Vector> m_snapPoints;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     ShapeData createPolyline(const RS_Vector &snapPoint) override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
@@ -86,13 +81,9 @@ protected:
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-
     RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
-
     void doBack(LC_MouseEvent *pEvent, int status) override;
-
     RS_Vector doGetRelativeZeroAfterTrigger() override;
-
     void doAfterTrigger() override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H

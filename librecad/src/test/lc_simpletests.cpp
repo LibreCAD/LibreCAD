@@ -122,7 +122,7 @@ void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d){
 		dumpFile.open("debug_entities.html", std::ios::app);
 		++level;
 	} else {
-		d = QC_ApplicationWindow::getAppWindow()->getDocument();
+		d = QC_ApplicationWindow::getAppWindow()->getCurrentDocument();
 		dumpFile.open("debug_entities.html");
 		level = 0;
 	}
@@ -408,7 +408,7 @@ void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d){
 void LC_SimpleTests::slotTestDumpUndo() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 
-	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
+	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getCurrentDocument();
 	if (d) {
 		std::cout << *(RS_Undo*)d;
 		std::cout << std::endl;
@@ -422,7 +422,7 @@ void LC_SimpleTests::slotTestDumpUndo() {
 void LC_SimpleTests::slotTestUpdateInserts() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 
-	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
+	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getCurrentDocument();
 	if (d) {
 		d->updateInserts();
 	}
@@ -491,9 +491,9 @@ void LC_SimpleTests::slotTestDrawFreehand() {
  */
 void LC_SimpleTests::slotTestInsertBlock() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
-    auto& appWin=QC_ApplicationWindow::getAppWindow();
+   /* auto& appWin=QC_ApplicationWindow::getAppWindow();
 
-	RS_Document* d = appWin->getDocument();
+	RS_Document* d = appWin->getCurrentDocument();
 	if (d && d->rtti()==RS2::EntityGraphic) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (graphic==NULL) {
@@ -621,11 +621,11 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		graphic->addEntity(ins);
 
 
-		RS_GraphicView* v = appWin->getGraphicView();
+		RS_GraphicView* v = appWin->getCurrentGraphicView();
 		if (v) {
 			v->redraw();
 		}
-	}
+    }*/
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
@@ -636,7 +636,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
     auto& appWin=QC_ApplicationWindow::getAppWindow();
 
-	RS_Document* d = appWin->getDocument();
+	RS_Document* d = appWin->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (!graphic) {
@@ -770,7 +770,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 			  }
 		*/
 
-		RS_GraphicView* v = appWin->getGraphicView();
+		RS_GraphicView* v = appWin->getCurrentGraphicView();
 		if (v) {
 			v->redraw();
 		}
@@ -784,7 +784,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 void LC_SimpleTests::slotTestInsertMText() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 
-	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
+	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (graphic==NULL) {
@@ -822,7 +822,7 @@ void LC_SimpleTests::slotTestInsertText() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 
 
-	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
+	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (graphic==NULL) {
@@ -933,7 +933,7 @@ void LC_SimpleTests::slotTestInsertText() {
 void LC_SimpleTests::slotTestInsertImage() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 
-	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
+	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (graphic==NULL) {
@@ -967,8 +967,8 @@ void LC_SimpleTests::slotTestUnicode() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
     auto& appWin= QC_ApplicationWindow::getAppWindow();
 
-	appWin->slotFileOpen("./fonts/unicode.cxf", RS2::FormatCXF);
-	RS_Document* d =appWin->getDocument();
+	appWin->openFile("./fonts/unicode.cxf", RS2::FormatCXF);
+	RS_Document* d =appWin->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (graphic==NULL) {
@@ -1026,7 +1026,7 @@ void LC_SimpleTests::slotTestUnicode() {
 void LC_SimpleTests::slotTestMath01() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
     auto& appWin=QC_ApplicationWindow::getAppWindow();
-	RS_Document* d = appWin->getDocument();
+	RS_Document* d = appWin->getCurrentDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
 		if (!graphic) {
@@ -1066,7 +1066,7 @@ void LC_SimpleTests::slotTestMath01() {
 		//                   RS_Vector(6.0,cos(x_0)-sin(x_0)*(6.0-x_0))));
 
 
-		RS_GraphicView* v = appWin->getGraphicView();
+		RS_GraphicView* v = appWin->getCurrentGraphicView();
 		if (v) {
 			v->redraw();
 		}

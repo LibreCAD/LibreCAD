@@ -35,11 +35,10 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
+class   RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
-    RS_ActionModifyAttributes(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+    RS_ActionModifyAttributes(LC_ActionContext *actionContext);
 protected:
     /**
     * Action States.

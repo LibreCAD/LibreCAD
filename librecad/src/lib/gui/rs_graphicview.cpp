@@ -25,30 +25,22 @@
 **
 **********************************************************************/
 
-#include<climits>
-#include<cmath>
 
-#include <QAction>
-#include <QApplication>
-#include <QMouseEvent>
-#include <QtAlgorithms>
+#include "rs_graphicview.h"
 
+#include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "lc_shortcuts_manager.h"
 #include "lc_widgetviewportrenderer.h"
-#include "rs_color.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
+#include "rs_actioninterface.h"
+#include "rs_entitycontainer.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_grid.h"
-#include "rs_line.h"
 #include "rs_linetypepattern.h"
-#include "rs_painter.h"
+#include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_snapper.h"
-#include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -63,7 +55,7 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
     , m_eventHandler{std::make_unique<RS_EventHandler>(this)}
     , m_viewport{std::make_unique<LC_GraphicViewport>()}
     , defaultSnapMode{std::make_unique<RS_SnapMode>()}
-{
+    , infoCursorOverlayPreferences{std::make_unique<LC_InfoCursorOverlayPrefs>()}{
     m_viewport->addViewportListener(this);
 }
 
@@ -76,7 +68,7 @@ void RS_GraphicView::loadSettings() {
     }
     LC_GROUP_END();
 
-    infoCursorOverlayPreferences.loadSettings();
+    infoCursorOverlayPreferences->loadSettings();
     m_viewport->loadSettings();
     m_renderer->loadSettings();
 }
@@ -103,19 +95,28 @@ void RS_GraphicView::setContainer(RS_EntityContainer *c) {
 /**
  * @return Current action or nullptr.
  */
-RS_ActionInterface *RS_GraphicView::getDefaultAction() {
-    if (m_eventHandler) {
+RS_ActionInterface *RS_GraphicView::getDefaultAction() const {
+    if (m_eventHandler!=nullptr) {
         return m_eventHandler->getDefaultAction();
     } else {
         return nullptr;
     }
 }
 
+void RS_GraphicView::hideOptions() const {
+    if (m_eventHandler != nullptr) {
+        auto defaultAction = m_eventHandler->getDefaultAction();
+        if (defaultAction != nullptr) {
+            defaultAction->hideOptions();
+        }
+    }
+}
+
 /**
  * Sets the default action of the event handler.
  */
-void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) {
-    if (m_eventHandler) {
+void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) const {
+    if (m_eventHandler !=nullptr) {
         m_eventHandler->setDefaultAction(action);
     }
 }
@@ -123,15 +124,14 @@ void RS_GraphicView::setDefaultAction(RS_ActionInterface *action) {
 /**
  * @return Current action or nullptr.
  */
-RS_ActionInterface *RS_GraphicView::getCurrentAction() {
+RS_ActionInterface *RS_GraphicView::getCurrentAction() const {
     return (nullptr != m_eventHandler) ? m_eventHandler->getCurrentAction() : nullptr;
 }
 
-QString RS_GraphicView::getCurrentActionName() {
-    if (m_eventHandler) {
+QString RS_GraphicView::getCurrentActionName() const {
+    if (m_eventHandler !=nullptr) {
         QAction* qaction = m_eventHandler->getQAction();
         if (qaction != nullptr){
-//            return qaction->text();
           // todo - sand - actually, this is bad dependency, should be refactored
           return LC_ShortcutsManager::getPlainActionToolTip(qaction);
         }
@@ -139,8 +139,8 @@ QString RS_GraphicView::getCurrentActionName() {
     return "";
 }
 
-QIcon RS_GraphicView::getCurrentActionIcon() {
-    if (m_eventHandler) {
+QIcon RS_GraphicView::getCurrentActionIcon() const {
+    if (m_eventHandler != nullptr) {
         QAction* qaction = m_eventHandler->getQAction();
         if (qaction != nullptr){
             return qaction->icon();
@@ -149,22 +149,40 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
     return {};
 }
 
+bool RS_GraphicView::setEventHandlerAction(std::shared_ptr<RS_ActionInterface> action){
+    bool actionActive = m_eventHandler->setCurrentAction(action);
+    if (actionActive) {
+        if (m_eventHandler->hasAction()) {
+            emit currentActionChanged(action.get());
+        }
+        else {
+            notifyNoActiveAction();
+        }
+    }
+    return actionActive;
+}
+
 /**
  * Sets the current action of the event handler.
  */
-void RS_GraphicView::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
-    if (m_eventHandler) {
+bool RS_GraphicView::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
+    if (m_eventHandler != nullptr) {
         m_viewport->markRelativeZero();
-        m_eventHandler->setCurrentAction(action);
+        return setEventHandlerAction(action);
     }
+
+    return false;
 }
 
 /**
  * Kills all running selection actions. Called when a selection action
  * is launched to reduce confusion.
  */
-void RS_GraphicView::killSelectActions() {
-    if (m_eventHandler) {
+// fixme - sand - files - review this method again. Why it is so special and different from killAllActions?
+// actually, selection may be performed by any inherited class of RS_ActionSelectBase...
+// leave if for now as it, yet return later.
+void RS_GraphicView::killSelectActions() const {
+    if (m_eventHandler != nullptr) {
         m_eventHandler->killSelectActions();
     }
 }
@@ -172,7 +190,7 @@ void RS_GraphicView::killSelectActions() {
 /**
  * Kills all running actions.
  */
-void RS_GraphicView::killAllActions() {
+void RS_GraphicView::killAllActions() const {
     if (m_eventHandler != nullptr && forcedActionKillAllowed) {
         m_eventHandler->killAllActions();
     }
@@ -181,7 +199,7 @@ void RS_GraphicView::killAllActions() {
 /**
  * Go back in menu or current action.
  */
-void RS_GraphicView::back() {
+void RS_GraphicView::back() const {
     if (m_eventHandler && m_eventHandler->hasAction()) {
         m_eventHandler->back();
     }
@@ -190,7 +208,7 @@ void RS_GraphicView::back() {
 /**
  * Go forward with the current action.
  */
-void RS_GraphicView::enter() {
+void RS_GraphicView::processEnterKey() {
     if (m_eventHandler && m_eventHandler->hasAction()) {
         m_eventHandler->enter();
     }
@@ -254,6 +272,10 @@ void RS_GraphicView::onUCSChanged(LC_UCS* ucs) {
     redraw();
 }
 
+void RS_GraphicView::notifyNoActiveAction(){
+    emit currentActionChanged(nullptr);
+}
+
 void RS_GraphicView::onRelativeZeroChanged(const RS_Vector &pos) {
     emit relativeZeroChanged(pos);
     redraw(RS2::RedrawOverlay);
@@ -312,6 +334,13 @@ RS_EntityContainer *RS_GraphicView::getContainer() const {
     return container;
 }
 
+void RS_GraphicView::switchToDefaultAction() {
+    killAllActions();
+    RS_Selection s(*container, m_viewport.get());
+    s.selectAll(false);
+    redraw(RS2::RedrawAll);
+}
+
 bool RS_GraphicView::isCleanUp(void) const {
     return m_bIsCleanUp;
 }
@@ -333,11 +362,6 @@ void RS_GraphicView::setTypeToSelect(RS2::EntityType mType) {
     typeToSelect = mType;
 }
 
-/*
-void RS_GraphicView::setHasNoGrid(bool noGrid) {
-    hasNoGrid = noGrid;
-}*/
-
 void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
     forcedActionKillAllowed = enabled;
 }
@@ -350,13 +374,16 @@ void RS_GraphicView::setShowEntityDescriptionOnHover(bool show) {
     showEntityDescriptionOnHover = show;
 }
 
-
 bool RS_GraphicView::getPanOnZoom() const{
     return m_panOnZoom;
 }
 
 bool RS_GraphicView::getSkipFirstZoom() const{
     return m_skipFirstZoom;
+}
+
+LC_InfoCursorOverlayPrefs* RS_GraphicView::getInfoCursorOverlayPreferences(){
+    return infoCursorOverlayPreferences.get();
 }
 
 void RS_GraphicView::resizeEvent(QResizeEvent *event) {
@@ -380,12 +407,10 @@ bool RS_GraphicView::getLineWidthScaling() const{
     return m_renderer->getLineWidthScaling();
 }
 
-LC_WidgetViewPortRenderer* RS_GraphicView::getRenderer() const
-{
+LC_WidgetViewPortRenderer* RS_GraphicView::getRenderer() const{
     return m_renderer.get();
 }
 
-void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer)
-{
+void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer){
     m_renderer = std::move(renderer);
 }

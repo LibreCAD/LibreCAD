@@ -22,41 +22,42 @@
 
 #include <QFont>
 #include "lc_ucslistmodel.h"
+
+#include "lc_ucslist.h"
+#include "lc_ucslistoptions.h"
 #include "rs_units.h"
 #include "rs_math.h"
 
-LC_UCSListModel::LC_UCSListModel(LC_UCSListOptions *modelOptions, QObject *parent):QAbstractTableModel(parent), options(modelOptions) {
-    QString icon = ":/icons/ucs_wcs.lci";
-    iconWCS = QIcon(icon);
-    // iconWCS = QIcon(":/icons/ucs_wcs.svg.p");
-    // iconUCS = QIcon(":/icons/ucs_ucs.svg");
-    iconGridOrtho = QIcon(":/icons/grid_ortho.lci");
-    iconGridISOTop = QIcon(":/icons/grid_iso_top.lci");
-    iconGridISOLeft = QIcon(":/icons/grid_iso_left.lci");
-    iconGridISORight = QIcon(":/icons/grid_iso_right.lci");
+LC_UCSListModel::LC_UCSListModel(LC_UCSListOptions *modelOptions, QObject *parent):QAbstractTableModel(parent), m_options(modelOptions) {
+    m_iconWCS = QIcon(":/icons/ucs_wcs.lci");
+    m_iconUCS = QIcon(":/icons/ucs_ucs.lci");
+    m_iconGridOrtho = QIcon(":/icons/grid_ortho.lci");
+    m_iconGridISOTop = QIcon(":/icons/grid_iso_top.lci");
+    m_iconGridISOLeft = QIcon(":/icons/grid_iso_left.lci");
+    m_iconGridISORight = QIcon(":/icons/grid_iso_right.lci");
 }
 
 LC_UCSListModel::~LC_UCSListModel() {
-    ucss.clear();
+    m_ucss.clear();
 }
 
 void LC_UCSListModel::setUCSList(LC_UCSList *ucsList, RS2::LinearFormat format, RS2::AngleFormat af,
                                  int precision,
                                  int anglePrecision, RS2::Unit drawingUnit) {
-    linearFormat = format;
-    angleFormat = af;
-    prec = precision;
-    anglePrec = anglePrecision;
-    unit = drawingUnit;
-    this->ucsList = ucsList;
+    m_linearFormat = format;
+    m_angleFormat = af;
+    m_prec = precision;
+    m_anglePrec = anglePrecision;
+    m_unit = drawingUnit;
+    this->m_ucsList = ucsList;
     beginResetModel();
 
-    ucss.clear();
+    m_ucss.clear();
     if (ucsList != nullptr) {
         for (unsigned i=0; i < ucsList->count(); ++i) {
             LC_UCS *ucs = ucsList->at(i);
             UCSItem* item = createUCSItem(ucs);
-            ucss.append(item);
+            m_ucss.append(item);
         }
     }
 
@@ -68,18 +69,18 @@ QModelIndex LC_UCSListModel::parent([[maybe_unused]]const QModelIndex &child) co
 }
 
 int LC_UCSListModel::rowCount([[maybe_unused]]const QModelIndex &parent) const {
-    return ucss.size();
+    return m_ucss.size();
 }
 
 int LC_UCSListModel::columnCount([[maybe_unused]]const QModelIndex &parent) const {
     int result = LAST;
-    if (!options->showColumnTypeIcon) {
+    if (!m_options->showColumnTypeIcon) {
         result--;
     }
-    if (!options->showColumnGridType){
+    if (!m_options->showColumnGridType){
         result--;
     }
-    if (!options->showColumnPositionAndAngle){
+    if (!m_options->showColumnPositionAndAngle){
         result--;
     }
     return result;
@@ -87,17 +88,17 @@ int LC_UCSListModel::columnCount([[maybe_unused]]const QModelIndex &parent) cons
 
 int LC_UCSListModel::translateColumn(int column) const{
     int result = column;
-    if (!options->showColumnTypeIcon){
+    if (!m_options->showColumnTypeIcon){
         if (result >= COLUMNS::ICON_TYPE){
             result++;
         }
     }
-    if (!options->showColumnGridType){
+    if (!m_options->showColumnGridType){
         if (result >= COLUMNS::ICON_ORTHO_TYPE){
             result++;
         }
     }
-    if (!options->showColumnPositionAndAngle){
+    if (!m_options->showColumnPositionAndAngle){
         if (result >= COLUMNS::UCS_DETAILS){
             result++;
         }
@@ -106,10 +107,10 @@ int LC_UCSListModel::translateColumn(int column) const{
 }
 
 QVariant LC_UCSListModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= ucss.size())
+    if (!index.isValid() || index.row() >= m_ucss.size())
         return QVariant();
 
-    UCSItem* ucs {ucss.at(index.row())};
+    UCSItem* ucs {m_ucss.at(index.row())};
     int col = translateColumn(index.column());
     switch (role) {
         case Qt::DecorationRole: {
@@ -147,7 +148,7 @@ QVariant LC_UCSListModel::data(const QModelIndex &index, int role) const {
             if (NAME == col) {
                 QFont font;
                 bool customFont = false;
-                LC_UCS* activeUCS = ucsList->getActive();
+                LC_UCS* activeUCS = m_ucsList->getActive();
                 LC_UCS* currentUCS = ucs->ucs;
                 if (activeUCS != nullptr && activeUCS == currentUCS) {
                     font.setBold(true);
@@ -168,7 +169,7 @@ QVariant LC_UCSListModel::data(const QModelIndex &index, int role) const {
             break;
         }
         case Qt::ToolTipRole:{
-            if (options->showViewInfoToolTip){
+            if (m_options->showViewInfoToolTip){
                 return ucs->toolTip;
             }
             break;
@@ -188,15 +189,15 @@ LC_UCS *LC_UCSListModel::getItemForIndex(const QModelIndex &index) const{
     LC_UCS* result = nullptr;
     if (index.isValid()){
         int row = index.row();
-        if (row < ucss.size()){
-            result = ucss.at(row)->ucs;
+        if (row < m_ucss.size()){
+            result = m_ucss.at(row)->ucs;
         }
     }
     return result;
 }
 
 void LC_UCSListModel::fillUCSsList(QList<LC_UCS *> &list) const {
-    for (auto v: ucss){
+    for (auto v: m_ucss){
         list << v->ucs;
     }
     list.removeAt(0); // remove WCS
@@ -204,9 +205,9 @@ void LC_UCSListModel::fillUCSsList(QList<LC_UCS *> &list) const {
 
 QIcon LC_UCSListModel::getTypeIcon(LC_UCS *ucs) const {
     if (ucs->isUCS()){
-        return iconUCS;
+        return m_iconUCS;
     } else {
-        return iconWCS;
+        return m_iconWCS;
     }
 }
 
@@ -215,28 +216,28 @@ QIcon LC_UCSListModel::getOrthoTypeIcon(LC_UCS *ucs) const {
         int orthoType = ucs->getOrthoType();
         switch (orthoType){
             case LC_UCS::NON_ORTHO:{
-                return iconGridOrtho;
+                return m_iconGridOrtho;
             }
             case LC_UCS::TOP:
             case LC_UCS::BOTTOM:{
-                return iconGridISOTop;
+                return m_iconGridISOTop;
             }
             case LC_UCS::LEFT:{
-                return iconGridISOLeft;
+                return m_iconGridISOLeft;
             }
             case LC_UCS::RIGHT:{
-                return iconGridISORight;
+                return m_iconGridISORight;
             }
             case LC_UCS::FRONT:
             case LC_UCS::BACK:{
                 // todo - replace icon as soon as support of these iso projections will be added
-                return iconGridISOTop;
+                return m_iconGridISOTop;
             }
             default:
-                return iconGridOrtho;
+                return m_iconGridOrtho;
         }
     } else {
-        return iconGridOrtho;
+        return m_iconGridOrtho;
     }
 }
 
@@ -262,8 +263,8 @@ QString LC_UCSListModel::getGridViewType(int orthoType){
 
 QModelIndex LC_UCSListModel::getIndexForUCS(LC_UCS *ucs) const {
     if (ucs != nullptr){
-        for (unsigned int i = 0; i < ucsList->count(); i++){
-            auto v = ucsList->at(i);
+        for (unsigned int i = 0; i < m_ucsList->count(); i++){
+            auto v = m_ucsList->at(i);
             if (v == ucs){
                 return createIndex(i, 0, ucs);
             }
@@ -273,20 +274,31 @@ QModelIndex LC_UCSListModel::getIndexForUCS(LC_UCS *ucs) const {
 }
 
 void LC_UCSListModel::markActive(LC_UCS *ucs) {
-    ucsList->tryToSetActive(ucs);
+    m_ucsList->tryToSetActive(ucs);
     QModelIndex topLeft = createIndex(0,0);
-    QModelIndex bottomRight = createIndex( ucsList->count(), columnCount(topLeft));
+    QModelIndex bottomRight = createIndex( m_ucsList->count(), columnCount(topLeft));
     emit dataChanged(topLeft, bottomRight);
 }
 
 LC_UCS *LC_UCSListModel::getWCS() {
-    return ucsList->getWCS();
+    return m_ucsList->getWCS();
+}
+
+LC_UCS* LC_UCSListModel::getActiveUCS(){
+    LC_UCS* result = nullptr;
+    if (m_ucsList != nullptr) {
+        result = m_ucsList->getActive();
+    }
+    return result;
+}
+int LC_UCSListModel::count(){
+    return m_ucss.count();
 }
 
 QString LC_UCSListModel::getUCSInfo(LC_UCS *ucs) {
-    QString originX = RS_Units::formatLinear(ucs->getOrigin().x, unit, linearFormat, prec);
-    QString originY = RS_Units::formatLinear(ucs->getOrigin().y, unit, linearFormat, prec);
-    QString angle = RS_Units::formatAngle(ucs->getXAxis().angle(), angleFormat, anglePrec);
+    QString originX = RS_Units::formatLinear(ucs->getOrigin().x, m_unit, m_linearFormat, m_prec);
+    QString originY = RS_Units::formatLinear(ucs->getOrigin().y, m_unit, m_linearFormat, m_prec);
+    QString angle = RS_Units::formatAngle(ucs->getXAxis().angle(), m_angleFormat, m_anglePrec);
     QString origin = originX.append(", "). append(originY).append(" < ").append(angle);
     return origin;
 }
@@ -306,9 +318,9 @@ LC_UCSListModel::UCSItem *LC_UCSListModel::createUCSItem(LC_UCS *ucs) {
     result->displayName = name;
 
     double angleValue = RS_Math::correctAnglePlusMinusPi(ucs->getXAxis().angle());
-    QString originX = RS_Units::formatLinear(ucs->getOrigin().x, unit, linearFormat, prec);
-    QString originY = RS_Units::formatLinear(ucs->getOrigin().y, unit, linearFormat, prec);
-    QString angle = RS_Units::formatAngle(angleValue, angleFormat, anglePrec);
+    QString originX = RS_Units::formatLinear(ucs->getOrigin().x, m_unit, m_linearFormat, m_prec);
+    QString originY = RS_Units::formatLinear(ucs->getOrigin().y, m_unit, m_linearFormat, m_prec);
+    QString angle = RS_Units::formatAngle(angleValue, m_angleFormat, m_anglePrec);
 
     QString ucsInfo;
     ucsInfo.append(originX).append(" , "). append(originY).append(" < ").append(angle);

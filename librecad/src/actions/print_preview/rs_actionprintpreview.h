@@ -41,8 +41,7 @@ class QG_PrintPreviewOptions;
 class RS_ActionPrintPreview : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPrintPreview(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    RS_ActionPrintPreview(LC_ActionContext *actionContext);
     ~RS_ActionPrintPreview() override;
 
     void init(int status) override;
@@ -86,9 +85,9 @@ protected:
         Neutral,
         Moving
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool hasOptions = false;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+    bool m_hasOptions = false;
     bool m_bPaperOffset = false;
 
     void updateMouseButtonHints() override;

@@ -26,20 +26,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 LC_LineJoinOptions::LC_LineJoinOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionModifyLineJoin, "Modify", "LineJoin"),
     ui(new Ui::LC_LineJoinOptions),
-    action(nullptr){
+    m_action(nullptr){
     ui->setupUi(this);
 
-    connect(ui->cbLine1EdgeMode, SIGNAL(currentIndexChanged(int)), SLOT(onEdgeModelLine1IndexChanged(int)));
-    connect(ui->cbLine2EdgeMode, SIGNAL(currentIndexChanged(int)), SLOT(onEdgeModelLine2IndexChanged(int)));
-    connect(ui->cbAttributesSource, SIGNAL(currentIndexChanged(int)), SLOT(onAttributesSourceIndexChanged(int)));
+    connect(ui->cbLine1EdgeMode, &QComboBox::currentIndexChanged,this, &LC_LineJoinOptions::onEdgeModelLine1IndexChanged);
+    connect(ui->cbLine2EdgeMode, &QComboBox::currentIndexChanged,this, &LC_LineJoinOptions::onEdgeModelLine2IndexChanged);
+    connect(ui->cbAttributesSource, &QComboBox::currentIndexChanged, this, &LC_LineJoinOptions::onAttributesSourceIndexChanged);
 
-    connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
-    connect(ui->cbRemoveOriginals, SIGNAL(clicked(bool)), this, SLOT(onRemoveOriginalsClicked(bool)));
+    connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_LineJoinOptions::onUsePolylineClicked);
+    connect(ui->cbRemoveOriginals, &QCheckBox::clicked, this, &LC_LineJoinOptions::onRemoveOriginalsClicked);
 }
 
 LC_LineJoinOptions::~LC_LineJoinOptions(){    
     delete ui;
-    action = nullptr; 
+    m_action = nullptr; 
 }
 
 void LC_LineJoinOptions::languageChange(){
@@ -47,7 +47,7 @@ void LC_LineJoinOptions::languageChange(){
 }
 
 void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<LC_ActionModifyLineJoin *>(a);
+    m_action = dynamic_cast<LC_ActionModifyLineJoin *>(a);
 
     int line1EdgeMode;
     int line2EdgeMode;
@@ -56,11 +56,11 @@ void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
     bool removeOriginals;
 
     if (update){
-        line1EdgeMode = action->getLine1EdgeMode();
-        line2EdgeMode = action->getLine2EdgeMode();
-        usePolyline = action->isCreatePolyline();
-        removeOriginals = action->isRemoveOriginalLines();
-        attributesSource = action->getAttributesSource();
+        line1EdgeMode = m_action->getLine1EdgeMode();
+        line2EdgeMode = m_action->getLine2EdgeMode();
+        usePolyline = m_action->isCreatePolyline();
+        removeOriginals = m_action->isRemoveOriginalLines();
+        attributesSource = m_action->getAttributesSource();
     }
     else{        
         usePolyline = loadBool("Polyline", false);
@@ -86,13 +86,13 @@ void LC_LineJoinOptions::doSaveSettings(){
 }
 
 void LC_LineJoinOptions::onUsePolylineClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setUsePolylineToActionAndView(value);
     }
 }
 
 void LC_LineJoinOptions::onRemoveOriginalsClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setRemoveOriginalsToActionAndView(value);
     }
 }
@@ -101,7 +101,7 @@ void LC_LineJoinOptions::onRemoveOriginalsClicked(bool value){
 #define EXTEND_TRIM_INDEX 0
 
 void LC_LineJoinOptions::onEdgeModelLine1IndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setEdgeModeLine1ToActionAndView(index);
         if (index == NO_CHANGE_INDEX){
             ui->cbPolyline->setEnabled(false);
@@ -115,7 +115,7 @@ void LC_LineJoinOptions::onEdgeModelLine1IndexChanged(int index){
 }
 
 void LC_LineJoinOptions::onEdgeModelLine2IndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setEdgeModeLine2ToActionAndView(index);
         if (index == NO_CHANGE_INDEX){
             ui->cbPolyline->setEnabled(false);
@@ -129,32 +129,32 @@ void LC_LineJoinOptions::onEdgeModelLine2IndexChanged(int index){
 }
 
 void LC_LineJoinOptions::onAttributesSourceIndexChanged(int index){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setAttributesSourceToActionAndView(index);
     }
 }
 
 void LC_LineJoinOptions::setEdgeModeLine1ToActionAndView(int index){
-    action->setLine1EdgeMode(index);
+    m_action->setLine1EdgeMode(index);
     ui->cbLine1EdgeMode->setCurrentIndex(index);
 }
 
 void LC_LineJoinOptions::setAttributesSourceToActionAndView(int index){
-    action->setAttributesSource(index);
+    m_action->setAttributesSource(index);
     ui->cbAttributesSource->setCurrentIndex(index);
 }
 
 void LC_LineJoinOptions::setEdgeModeLine2ToActionAndView(int index){
-    action->setLine2EdgeMode(index);
+    m_action->setLine2EdgeMode(index);
     ui->cbLine2EdgeMode->setCurrentIndex(index);
 }
 
 void LC_LineJoinOptions::setUsePolylineToActionAndView(bool value){
-    action->setCreatePolyline(value);
+    m_action->setCreatePolyline(value);
     ui->cbPolyline->setChecked(value);
 }
 
 void LC_LineJoinOptions::setRemoveOriginalsToActionAndView(bool value){
-   action->setRemoveOriginalLines(value);
+   m_action->setRemoveOriginalLines(value);
    ui->cbRemoveOriginals->setChecked(value);
 }

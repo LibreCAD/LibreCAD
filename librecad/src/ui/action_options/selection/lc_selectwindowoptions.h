@@ -23,7 +23,6 @@
 #ifndef LC_SELECTWINDOWOPTIONS_H
 #define LC_SELECTWINDOWOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionSelectWindow;
@@ -42,7 +41,7 @@ public slots:
     void onTypeToggled(bool value);
 protected:
     Ui::LC_SelectWindowOptions *ui;
-    RS_ActionSelectWindow* action = nullptr;
+    RS_ActionSelectWindow* m_action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void setSelectAllToActionAndView(bool value);

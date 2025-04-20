@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDimLinearBase:public RS_ActionDimension {
 Q_OBJECT
 public:
-    LC_ActionDimLinearBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_ActionDimLinearBase() override;
 protected:
     /**
@@ -48,7 +48,7 @@ protected:
         CONTINUE
     };
 
-    ActionMode actionMode = NORMAL;
+    ActionMode m_actionMode = NORMAL;
 
     virtual RS_Vector getExtensionPoint1() = 0;
     virtual void setExtensionPoint1(RS_Vector p) = 0;

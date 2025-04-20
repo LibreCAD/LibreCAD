@@ -25,25 +25,18 @@
 **********************************************************************/
 
 #include "rs_actioninfodist.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_preview.h"
-#include "rs_units.h"
 
-struct RS_ActionInfoDist::Points {
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
+#include "rs_debug.h"
+
+struct RS_ActionInfoDist::ActionData {
     RS_Vector point1;
     RS_Vector point2;
 };
 
-RS_ActionInfoDist::RS_ActionInfoDist(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Info Dist", container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionInfoDistPoint2Point;
+RS_ActionInfoDist::RS_ActionInfoDist(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Info Dist", actionContext, RS2::ActionInfoDistPoint2Point), m_actionData(std::make_unique<ActionData>()){
 }
 
 RS_ActionInfoDist::~RS_ActionInfoDist() = default;
@@ -55,10 +48,10 @@ void RS_ActionInfoDist::init(int status) {
 // fixme - consider displaying information in EntityInfo widget
 void RS_ActionInfoDist::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
-    if (pPoints->point1.valid && pPoints->point2.valid){
-        RS_Vector dV = pPoints->point2 - pPoints->point1;
+    if (m_actionData->point1.valid && m_actionData->point2.valid){
+        RS_Vector dV = m_actionData->point2 - m_actionData->point1;
         QStringList dists;
-        for (double a: {dV.magnitude(), dV.x, dV.y, pPoints->point1.x, pPoints->point1.y, pPoints->point2.x, pPoints->point2.y}) {
+        for (double a: {dV.magnitude(), dV.x, dV.y, m_actionData->point1.x, m_actionData->point1.y, m_actionData->point2.x, m_actionData->point2.y}) {
             dists << formatLinear(a);
         }
 
@@ -79,16 +72,16 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetPoint2: {
-            if (pPoints->point1.valid){
-                mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-                pPoints->point2 = mouse;
-                previewLine(pPoints->point1, pPoints->point2);
-                if (showRefEntitiesOnPreview) {
-                    previewRefLine(pPoints->point1, pPoints->point2);
-                    previewRefPoint(pPoints->point1);
-                    previewRefSelectablePoint(pPoints->point2);
+            if (m_actionData->point1.valid){
+                mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
+                m_actionData->point2 = mouse;
+                previewLine(m_actionData->point1, m_actionData->point2);
+                if (m_showRefEntitiesOnPreview) {
+                    previewRefLine(m_actionData->point1, m_actionData->point2);
+                    previewRefPoint(m_actionData->point1);
+                    previewRefSelectablePoint(m_actionData->point2);
                 }
-                RS_Vector &startPoint = pPoints->point1;
+                RS_Vector &startPoint = m_actionData->point1;
                 updateInfoCursor(mouse, startPoint);
             }
             break;
@@ -99,14 +92,14 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 }
 
 void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
-    if (infoCursorOverlayPrefs->enabled) {
+    if (m_infoCursorOverlayPrefs->enabled) {
         double distance = startPoint.distanceTo(mouse);
-        LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Distance:"), formatLinear(distance));
-        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
-        msg.add(tr("From:"), formatVector(startPoint));
-        msg.add(tr("To:"), formatVector(mouse));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        msg(tr("Info"))
+            .linear(tr("Distance:"), distance)
+            .wcsAngle(tr("Angle:"), startPoint.angleTo(mouse))
+            .vector(tr("From:"), startPoint)
+            .vector(tr("To:"), mouse)
+            .toInfoCursorZone2(false);
     }
 }
 
@@ -115,14 +108,14 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetPoint1:{
             fireCoordinateEvent(snap);
-            moveRelativeZero(pPoints->point1);
+            moveRelativeZero(m_actionData->point1);
             break;
         }
         case (SetPoint2):{
-            snap = getSnapAngleAwarePoint(e, pPoints->point1,  snap);
+            snap = getSnapAngleAwarePoint(e, m_actionData->point1,  snap);
             fireCoordinateEvent(snap);
             if (!e->isControl){
-                moveRelativeZero(pPoints->point2);
+                moveRelativeZero(m_actionData->point2);
             }
             break;
         }
@@ -139,13 +132,13 @@ void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]LC
 void RS_ActionInfoDist::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPoint1: {
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
-            if (pPoints->point1.valid){
-                pPoints->point2 = mouse;
+            if (m_actionData->point1.valid){
+                m_actionData->point2 = mouse;
                 deletePreview();
                 trigger();
                 setStatus(SetPoint1);

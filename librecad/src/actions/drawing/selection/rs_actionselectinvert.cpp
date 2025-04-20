@@ -24,16 +24,12 @@
 **
 **********************************************************************/
 
-
 #include "rs_actionselectinvert.h"
-#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
-RS_ActionSelectInvert::RS_ActionSelectInvert(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Invert Selection",
-                    container, graphicView) {
-	actionType=RS2::ActionSelectInvert;
+RS_ActionSelectInvert::RS_ActionSelectInvert(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Invert Selection",actionContext, RS2::ActionSelectInvert) {
+	m_actionType=RS2::ActionSelectInvert;
 }
 
 void RS_ActionSelectInvert::init(int status) {
@@ -43,7 +39,7 @@ void RS_ActionSelectInvert::init(int status) {
 }
 
 void RS_ActionSelectInvert::trigger() {
-    RS_Selection s(*container, viewport);
+    RS_Selection s(*m_container, m_viewport);
     s.invertSelection();
     updateSelectionWidget();
 }

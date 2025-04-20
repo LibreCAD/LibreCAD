@@ -19,11 +19,10 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include<cmath>
 
-#include<QPainterPath>
-#include<QPolygon>
-#include<QPointF>
+#include "rs_painter.h"
+
+#include <QPainterPath>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -32,17 +31,17 @@
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "rs_painter.h"
 #include "rs_polyline.h"
 #include "rs_spline.h"
 
+struct RS_EllipseData;
+struct RS_CircleData;
 
 namespace {
 
@@ -419,7 +418,6 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath &path){
                     arcSegment.setAngle1(baseAngle + crossPoints[i - 1]);
                     arcSegment.setAngle2(baseAngle + crossPoints[i]);
 
-                    // fixme - sand - it seems this check is redundant if i is increased by 2
                     // fixme - sand - so it seems checking that segment is visible via middle point applies an additional check and performance overhead?
                     arcSegment.updateMiddlePoint();
                     if (arcSegment.getMiddlePoint().isInWindowOrdered(wcsBoundingBox.minP(), wcsBoundingBox.maxP())) {
@@ -697,7 +695,6 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
         } else {
             QPainter::drawEllipse(QRectF{- radii, radii});
         }
-        restore();
     }
 }
 
@@ -1525,8 +1522,7 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
    return uiPosition;
 }
 
-QPointF RS_Painter::toGuiPointF(const RS_Vector& worldCoordinates) const
-{
+QPointF RS_Painter::toGuiPointF(const RS_Vector& worldCoordinates) const{
     RS_Vector uiPos = toGui(worldCoordinates);
     return {uiPos.x, uiPos.y};
 }

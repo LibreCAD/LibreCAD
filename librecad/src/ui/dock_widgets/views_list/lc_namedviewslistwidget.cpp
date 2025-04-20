@@ -20,23 +20,28 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QInputDialog>
-#include <QMessageBox>
-#include <QMenu>
-#include <QTimer>
-#include <QStyleHints>
-#include <QContextMenuEvent>
 #include "lc_namedviewslistwidget.h"
-#include "rs_graphic.h"
-#include "ui_lc_namedviewslistwidget.h"
-#include "rs_debug.h"
+
+#include <QInputDialog>
+#include <QMenu>
+#include <QMessageBox>
+
 #include "lc_dlgnamedviewslistoptions.h"
+#include "lc_graphicviewport.h"
 #include "lc_namedviewsbutton.h"
+#include "lc_namedviewslistoptions.h"
+#include "lc_namedviewsmodel.h"
+#include "lc_uiutils.h"
+#include "lc_viewslist.h"
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_settings.h"
+#include "ui_lc_namedviewslistwidget.h"
 
 LC_NamedViewsListWidget::LC_NamedViewsListWidget(const QString& title, QWidget* parent)
-    : QWidget(parent)
+    : LC_GraphicViewAwareWidget(parent)
     , ui(new Ui::LC_NamedViewsListWidget){
     ui->setupUi(this);
     setWindowTitle(title);
@@ -68,35 +73,35 @@ void LC_NamedViewsListWidget::updateButtonsState() const {
     bool enable = pModel->hasSelection();
     bool singleSelection = pModel->selectedRows().size() == 1;
     bool notPrintPreview = false;
-    if (graphicView != nullptr){
-       notPrintPreview = !graphicView->isPrintPreview();
+    if (m_graphicView != nullptr){
+       notPrintPreview = !m_graphicView->isPrintPreview();
     }
     ui->tbUpdateView->setEnabled(enable && singleSelection && notPrintPreview);
     ui->tbRestoreView->setEnabled(enable && singleSelection);
     ui->tbRenameView->setEnabled(enable && singleSelection);
     ui->tbRemoveView->setEnabled(enable);
 
-    bool hasViewsList = currentViewList != nullptr;
+    bool hasViewsList = m_currentViewList != nullptr;
     ui->tbAddView->setEnabled(hasViewsList && notPrintPreview);
-    if (namedViewsButton != nullptr) {
-        QAction *restoreAction = namedViewsButton->defaultAction();
-        restoreAction->setEnabled(hasViewsList && currentViewList->count() > 0);
+    if (m_namedViewsButton != nullptr) {
+        QAction *restoreAction = m_namedViewsButton->defaultAction();
+        restoreAction->setEnabled(hasViewsList && m_currentViewList->count() > 0);
     }
-    if (saveViewAction != nullptr){
-        saveViewAction->setEnabled(hasViewsList && notPrintPreview);
+    if (m_saveViewAction != nullptr){
+        m_saveViewAction->setEnabled(hasViewsList && notPrintPreview);
     }
 }
 
 namespace {
 // the default icon size
-    constexpr static int ICON_WIDTH = 24;
+    constexpr int ICON_WIDTH = 24;
 }
 
 void LC_NamedViewsListWidget::createModel() {
-    viewsModel  = new LC_NamedViewsModel(options, this);
+    m_viewsModel  = new LC_NamedViewsModel(m_options, this);
 
     QTableView *tableView = ui->tvTable;
-    tableView->setModel(viewsModel);
+    tableView->setModel(m_viewsModel);
     tableView->setShowGrid(true);
     tableView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -114,9 +119,10 @@ void LC_NamedViewsListWidget::createModel() {
     verticalHeader->setOffset(2);
     verticalHeader->hide();
 
-    tableView->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
-
+    tableView->setColumnWidth(m_viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
+#ifndef DONT_FORCE_WIDGETS_CSS
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
 
 
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_NamedViewsListWidget::onCustomContextMenu);
@@ -130,39 +136,40 @@ void LC_NamedViewsListWidget::createModel() {
     tableView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView *gv,
-                                             QMdiSubWindow *w) {
+void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView *gv) {
     LC_ViewList *viewsList = nullptr;
     if (gv != nullptr && gv->getGraphic() != nullptr) {
         RS_Graphic *graphic = gv->getGraphic();
         loadFormats(graphic);
         viewsList = graphic->getViewList();
-        viewport = gv->getViewPort();
+        m_viewport = gv->getViewPort();
     }
-    graphicView = gv;
-    window = w;
+    else {
+        m_viewport = nullptr;
+    }
+    m_graphicView = gv;
     setViewsList(viewsList);
 }
 
-void LC_NamedViewsListWidget::loadFormats(RS_Graphic *graphic) {
-    linearFormat = graphic->getLinearFormat();
-    angleFormat = graphic->getAngleFormat();
-    precision = graphic->getLinearPrecision();
-    anglePrecision = graphic->getAnglePrecision();
+void LC_NamedViewsListWidget::loadFormats(const RS_Graphic *graphic) {
+    m_linearFormat = graphic->getLinearFormat();
+    m_angleFormat = graphic->getAngleFormat();
+    m_precision = graphic->getLinearPrecision();
+    m_anglePrecision = graphic->getAnglePrecision();
     drawingUnit = graphic->getUnit();
 }
 
 void LC_NamedViewsListWidget::setViewsList(LC_ViewList *viewsList) {
-    currentViewList = viewsList;
+    m_currentViewList = viewsList;
     updateData(false);
-    if (nullptr != viewsList && viewsModel->count() > 0){
-        selectView(currentViewList->at(0));
+    if (nullptr != viewsList && m_viewsModel->count() > 0){
+        selectView(m_currentViewList->at(0));
     }
 }
 
 void LC_NamedViewsListWidget::reload() {
-    if (graphicView != nullptr) {
-        RS_Graphic *graphic = graphicView->getGraphic();
+    if (m_graphicView != nullptr) {
+        RS_Graphic *graphic = m_graphicView->getGraphic();
         loadFormats(graphic);
     }
     updateData(true);
@@ -174,18 +181,18 @@ void LC_NamedViewsListWidget::refresh() {
 
 void LC_NamedViewsListWidget::updateData(bool restoreSelectionIfPossible) {
     int selectedRow = getSingleSelectedRow();
-    viewsModel->setViewsList(currentViewList, linearFormat, angleFormat, precision, anglePrecision, drawingUnit);
+    m_viewsModel->setViewsList(m_currentViewList, m_linearFormat, m_angleFormat, m_precision, m_anglePrecision, drawingUnit);
     restoreSingleSelectedRow(restoreSelectionIfPossible, selectedRow);
     updateButtonsState();
-    if (options->showColumnIconType){
-        ui->tvTable->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
+    if (m_options->showColumnIconType){
+        ui->tvTable->setColumnWidth(m_viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
     }
-    emit viewListChanged(viewsModel->count());
+    emit viewListChanged(m_viewsModel->count());
 }
 
-void LC_NamedViewsListWidget::restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow) {
+void LC_NamedViewsListWidget::restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow) const {
     if (restoreSelectionIfPossible && selectedRow > 0){
-        int itemsCount = viewsModel->count();
+        int itemsCount = m_viewsModel->count();
         if (itemsCount > 0) {
             ui->tvTable->clearSelection();
             if (selectedRow >= itemsCount){
@@ -211,10 +218,10 @@ int LC_NamedViewsListWidget::getSingleSelectedRow() const {
 
 void LC_NamedViewsListWidget::invokeOptionsDialog() {
     int selectedRow = getSingleSelectedRow();
-    LC_DlgNamedViewsListOptions dlg = LC_DlgNamedViewsListOptions(options, this);
+    LC_DlgNamedViewsListOptions dlg = LC_DlgNamedViewsListOptions(m_options, this);
     int dialogResult = dlg.exec();
     if (dialogResult == QDialog::Accepted){
-        options->save();
+        m_options->save();
         updateData(false);
         restoreSingleSelectedRow(true, selectedRow);
     }
@@ -235,31 +242,31 @@ void LC_NamedViewsListWidget::invokeView() {
 }
 
 void LC_NamedViewsListWidget::removeAllViews() {
-    bool remove = false;
-    if (currentViewList->count() > 0) {
+    if (m_currentViewList->count() > 0) {
+        bool remove = false;
         int result = QMessageBox::question(this, tr("Delete View"),
                                            tr("Are you sure to delete ALL views?\n Warning: this action can NOT be undone!"),
                                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         remove = result == QMessageBox::Yes;
 
         if (remove){
-            currentViewList->clear();
+            m_currentViewList->clear();
             refresh();
         }
     }
 }
 
 void LC_NamedViewsListWidget::removeView() {
-    bool remove = false;
     QModelIndexList selectedIndexes = ui->tvTable->selectionModel()->selectedRows();
     qsizetype selectedSize = selectedIndexes.size();
     if (selectedSize > 0) {
         if (selectedSize == 1) {
             QModelIndex selectedIndex = selectedIndexes.at(0);
             if (selectedIndex.isValid()) {
-                LC_View *selectedView = viewsModel->getItemForIndex(selectedIndex);
+                LC_View *selectedView = m_viewsModel->getItemForIndex(selectedIndex);
                 if (selectedView != nullptr) {
-                    if (options->askForDeletionConfirmation) {
+                    bool remove = false;
+                    if (m_options->askForDeletionConfirmation) {
                         QString viewName = selectedView->getName();
                         int result = QMessageBox::question(this, tr("Delete View"),
                                                            tr("Are you sure to delete view\n \"%1\"?\n Warning: this action can NOT be undone!").arg(viewName),
@@ -281,12 +288,12 @@ void LC_NamedViewsListWidget::removeView() {
             for (int i=0; i < selectedSize; i++){
                 const QModelIndex &index = selectedIndexes.at(i);
                 if (index.isValid()){
-                    auto view  = viewsModel->getItemForIndex(index);
+                    auto view  = m_viewsModel->getItemForIndex(index);
                     viewsToRemove.push_back(view);
                 }
             }
 
-            if (options->askForDeletionConfirmation){
+            if (m_options->askForDeletionConfirmation){
                 QString viewsName = "";
                 for (auto v: viewsToRemove){
                     viewsName += "\n";
@@ -330,12 +337,12 @@ void LC_NamedViewsListWidget::addNewView() {
             if (text.isEmpty()) {
                 QMessageBox::warning(this, tr("View Creation"), tr("Empty name of View is not allowed"), QMessageBox::Close, QMessageBox::Close);
             } else {
-                LC_View *existingView = currentViewList->find(text);
+                LC_View *existingView = m_currentViewList->find(text);
                 if (existingView == nullptr) {
                         doCreateNewView(text);
                     tryCreate = false;
                 } else {
-                    if (options->duplicatedNameReplacesSilently) {
+                    if (m_options->duplicatedNameReplacesSilently) {
                         updateExistingView(existingView);
                         tryCreate = false;
                     } else {
@@ -363,7 +370,7 @@ void LC_NamedViewsListWidget::renameExistingView(LC_View *selectedView) {
             if (text.isEmpty()) {
                 QMessageBox::warning(this, tr("View Rename"), tr("Empty name of View is not allowed"), QMessageBox::Close, QMessageBox::Close);
             } else {
-                LC_View *existingView = currentViewList->find(text);
+                LC_View *existingView = m_currentViewList->find(text);
                 if (existingView == nullptr) {
                     renameExistingView(text, selectedView);
                     tryRename = false;
@@ -380,34 +387,34 @@ void LC_NamedViewsListWidget::renameExistingView(LC_View *selectedView) {
 }
 
 void LC_NamedViewsListWidget::loadOptions() {
-    if (options == nullptr){
-        options = new LC_NamedViewsListOptions();
+    if (m_options == nullptr){
+        m_options = new LC_NamedViewsListOptions();
     }
-    options->load();
+    m_options->load();
 }
 
-void LC_NamedViewsListWidget::doCreateNewView(QString name) {
-    auto viewToCreate = viewport->createNamedView(name);
-    currentViewList->addNew(viewToCreate);
+void LC_NamedViewsListWidget::doCreateNewView(const QString& name) {
+    auto viewToCreate = m_viewport->createNamedView(name);
+    m_currentViewList->addNew(viewToCreate);
     refresh();
 }
 
 void LC_NamedViewsListWidget::doUpdateView(LC_View *view) {
-    viewport->updateNamedView(view);
-    currentViewList->edited(view);
+    m_viewport->updateNamedView(view);
+    m_currentViewList->edited(view);
     refresh();
 }
 
-void LC_NamedViewsListWidget::onUcsListChanged() {
+void LC_NamedViewsListWidget::onUcsListChanged() const {
     updateViewsUCSNames();
 }
 
-void LC_NamedViewsListWidget::updateViewsUCSNames(){
-    if (graphicView != nullptr) {
-        RS_Graphic *graphic = graphicView->getGraphic();
+void LC_NamedViewsListWidget::updateViewsUCSNames() const {
+    if (m_graphicView != nullptr) {
+        RS_Graphic *graphic = m_graphicView->getGraphic();
         if (graphic != nullptr) {
             LC_UCSList *ucsList = graphic->getUCSList();
-            viewsModel->updateViewsUCSNames(ucsList);
+            m_viewsModel->updateViewsUCSNames(ucsList);
         }
         else{
 //            viewsModel->clear();
@@ -416,13 +423,13 @@ void LC_NamedViewsListWidget::updateViewsUCSNames(){
 }
 
 void LC_NamedViewsListWidget::onTableSelectionChanged([[maybe_unused]] const QItemSelection &selected,
-                                                      [[maybe_unused]] const QItemSelection &deselected){
+                                                      [[maybe_unused]] const QItemSelection &deselected) const {
     updateButtonsState();
 }
 
 void LC_NamedViewsListWidget::onCustomContextMenu([[maybe_unused]] const QPoint &pos){
 
-    if (currentViewList == nullptr){
+    if (m_currentViewList == nullptr){
         return;
     }
     auto *contextMenu = new QMenu(this);
@@ -440,9 +447,9 @@ void LC_NamedViewsListWidget::onCustomContextMenu([[maybe_unused]] const QPoint 
     };
 
     QModelIndex index = ui->tvTable->indexAt(pos);
-    bool notInPrintPreview = !graphicView->isPrintPreview();
+    bool notInPrintPreview = !m_graphicView->isPrintPreview();
     if (index.isValid()){
-        int selectedItemsCount = ui->tvTable->selectionModel()->selectedRows().size();
+        qsizetype selectedItemsCount = ui->tvTable->selectionModel()->selectedRows().size();
         if (selectedItemsCount > 1){
             if (notInPrintPreview) {
                 addActionFunc(tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
@@ -468,7 +475,7 @@ void LC_NamedViewsListWidget::onCustomContextMenu([[maybe_unused]] const QPoint 
         if (notInPrintPreview) {
             addActionFunc(tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
         }
-        if (currentViewList->count() > 0){
+        if (m_currentViewList->count() > 0){
             if (notInPrintPreview) {
                 contextMenu->addSeparator();
             }
@@ -479,12 +486,12 @@ void LC_NamedViewsListWidget::onCustomContextMenu([[maybe_unused]] const QPoint 
     delete contextMenu;
 }
 
-void LC_NamedViewsListWidget::slotTableClicked(QModelIndex modelIndex) {
+void LC_NamedViewsListWidget::slotTableClicked(const QModelIndex& modelIndex) {
     if (!modelIndex.isValid()) {
         return;
     }
-    if (options->restoreViewBySingleClick) {
-        LC_View *view = viewsModel->getItemForIndex(modelIndex);
+    if (m_options->restoreViewBySingleClick) {
+        LC_View *view = m_viewsModel->getItemForIndex(modelIndex);
         if (view == nullptr) {
             return;
         } else {
@@ -496,7 +503,7 @@ void LC_NamedViewsListWidget::slotTableClicked(QModelIndex modelIndex) {
 void LC_NamedViewsListWidget::onTableDoubleClicked() {
     LC_View *view = getSelectedView();
     if (view != nullptr){
-        switch (options->doubleClickPolicy){
+        switch (m_options->doubleClickPolicy){
             case LC_NamedViewsListOptions::NOTHING:{
                 break;
             }
@@ -518,18 +525,18 @@ void LC_NamedViewsListWidget::onTableDoubleClicked() {
     }
 }
 
-LC_View *LC_NamedViewsListWidget::getSelectedView() {
+LC_View *LC_NamedViewsListWidget::getSelectedView() const {
     LC_View* result = nullptr;
     QModelIndex selectedItemIndex = getSelectedItemIndex();
     if (selectedItemIndex.isValid()){
-        if (currentViewList != nullptr) {
-            result = viewsModel->getItemForIndex(selectedItemIndex);
+        if (m_currentViewList != nullptr) {
+            result = m_viewsModel->getItemForIndex(selectedItemIndex);
         }
     }
     return result;
 }
 
-QModelIndex LC_NamedViewsListWidget::getSelectedItemIndex(){
+QModelIndex LC_NamedViewsListWidget::getSelectedItemIndex() const {
     QModelIndex result;
     QModelIndexList selectedIndexes = ui->tvTable->selectionModel()->selectedRows();
     if (selectedIndexes.size() == 1){ // only one selected item is expected
@@ -538,12 +545,12 @@ QModelIndex LC_NamedViewsListWidget::getSelectedItemIndex(){
     return result;
 }
 
-void LC_NamedViewsListWidget::removeExistingView(LC_View *view) {
-    currentViewList->remove(view);
+void LC_NamedViewsListWidget::removeExistingView(LC_View *view) const {
+    m_currentViewList->remove(view);
 }
 
 void LC_NamedViewsListWidget::renameExistingView(const QString &newName, LC_View *view) {
-    currentViewList->rename(view, newName);
+    m_currentViewList->rename(view, newName);
     refresh();
 }
 
@@ -552,8 +559,8 @@ void LC_NamedViewsListWidget::updateExistingView(LC_View *view) {
 }
 
 void LC_NamedViewsListWidget::restoreView(int index) {
-    if (currentViewList != nullptr) {
-        LC_View* view = currentViewList->at(index);
+    if (m_currentViewList != nullptr) {
+        LC_View* view = m_currentViewList->at(index);
         if (view != nullptr){
             restoreView(view);
         }
@@ -565,8 +572,8 @@ void LC_NamedViewsListWidget::restoreSelectedView() {
 }
 
 void LC_NamedViewsListWidget::restoreView(const QString &name) {
-    if (currentViewList != nullptr) {
-        LC_View* view = currentViewList->find(name);
+    if (m_currentViewList != nullptr) {
+        LC_View* view = m_currentViewList->find(name);
         if (view != nullptr){
             restoreView(view);
             selectView(view);
@@ -574,8 +581,8 @@ void LC_NamedViewsListWidget::restoreView(const QString &name) {
     }
 }
 
-void LC_NamedViewsListWidget::selectView(LC_View *view) {
-    QModelIndex index = viewsModel->getIndexForView(view);
+void LC_NamedViewsListWidget::selectView(const LC_View *view) const {
+    QModelIndex index = m_viewsModel->getIndexForView(view);
     if (index.isValid()){
         ui->tvTable->clearSelection();
         ui->tvTable->selectRow(index.row());
@@ -597,36 +604,37 @@ void LC_NamedViewsListWidget::restoreView(LC_View *view) {
        }*/
    }
    else{
-       if (graphicView->isPrintPreview()){
-           auto* mdiWindow = qobject_cast<QC_MDIWindow*>(window);
-           QC_MDIWindow *parentWindow = mdiWindow->getParentWindow();
-           if (parentWindow != nullptr) {
-               QC_ApplicationWindow::getAppWindow()->activateWindow(parentWindow);
+       if (m_graphicView->isPrintPreview()){
+           auto* mdiWindow = LC_UI::findParentOfType<QC_MDIWindow>(m_graphicView);
+           if (mdiWindow != nullptr) {
+               QC_MDIWindow *parentWindow = mdiWindow->getParentWindow();
+               if (parentWindow != nullptr) {
+                   QC_ApplicationWindow::getAppWindow()->activateWindow(parentWindow);
+               }
            }
        }
-       viewport->restoreView(view);
+       m_viewport->restoreView(view);
    }
 }
 
-
-void LC_NamedViewsListWidget::fillViewsList(QList<LC_View *> &list) {
-    if (currentViewList != nullptr){
-        viewsModel->fillViewsList(list);
+void LC_NamedViewsListWidget::fillViewsList(QList<LC_View *> &list) const {
+    if (m_currentViewList != nullptr){
+        m_viewsModel->fillViewsList(list);
     }
 }
 
-QIcon LC_NamedViewsListWidget::getViewTypeIcon(LC_View *view) {
-    return viewsModel->getTypeIcon(view);
+QIcon LC_NamedViewsListWidget::getViewTypeIcon(LC_View *view) const {
+    return m_viewsModel->getTypeIcon(view);
 }
 
 QWidget *LC_NamedViewsListWidget::createSelectionWidget(QAction* saveAction, QAction* defaultAction) {
-    namedViewsButton = new LC_NamedViewsButton(this);
-    namedViewsButton->setDefaultAction(defaultAction);
-    saveViewAction = saveAction;
-    return namedViewsButton;
+    m_namedViewsButton = new LC_NamedViewsButton(this);
+    m_namedViewsButton->setDefaultAction(defaultAction);
+    m_saveViewAction = saveAction;
+    return m_namedViewsButton;
 }
 
-void LC_NamedViewsListWidget::updateWidgetSettings(){
+void LC_NamedViewsListWidget::updateWidgetSettings() const {
     LC_GROUP("Widgets"); {
         bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
         int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);

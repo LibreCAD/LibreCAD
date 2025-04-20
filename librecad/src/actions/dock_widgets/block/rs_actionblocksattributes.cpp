@@ -28,62 +28,49 @@
 
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
-#include "rs_graphic.h"
 #include "rs_block.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_debug.h"
+#include "rs_graphic.h"
 
+class RS_BlockList;
+class RS_Block;
 
-RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block Attributes", container, graphicView) {}
-
-
+RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Block Attributes",actionContext, RS2::ActionBlocksAttributes) {}
 
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 
-	if (graphic) {
-        RS_Block* block = graphic->getActiveBlock();
-        RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList && block) {
+	if (m_graphic != nullptr) {
+        RS_Block* block = m_graphic->getActiveBlock();
+        RS_BlockList* blockList = m_graphic->getBlockList();
+        if (blockList != nullptr && block != nullptr) {
             QString oldName = block->getName();
 
-            RS_BlockData d;
-            d = RS_DIALOGFACTORY->requestBlockAttributesDialog(
-                    blockList);
+            RS_BlockData d = RS_DIALOGFACTORY->requestBlockAttributesDialog(blockList);
 
             if (d.isValid()) {
-
                 QString newName = d.name;
-
                 // update window title of opened block
                 auto& appWindow = QC_ApplicationWindow::getAppWindow();
-                QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
-                if (blockWindow) {
+                if (QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block)) {
                     QString title = blockWindow->windowTitle();
                     title = title.replace(
                             "'" + oldName + "'",
                             "'" + newName + "'");
                     blockWindow->setWindowTitle(title);
                 }
-
                 blockList->rename(block, newName);
-
                 // update the name of all inserts:
-                graphic->renameInserts(oldName, newName);
-
-                graphic->addBlockNotification();
+                m_graphic->renameInserts(oldName, newName);
+                m_graphic->addBlockNotification();
             }
         }
-
     }
     finish(false);
 }
-
-
 
 void RS_ActionBlocksAttributes::init(int status) {
     RS_ActionInterface::init(status);

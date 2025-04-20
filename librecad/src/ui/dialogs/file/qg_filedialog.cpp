@@ -109,13 +109,8 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
     //    on startup, when UseQtFileOpenDialog is not set, it is set to 1 for all Linux
     //    and 0 for other OS
     //    this is because QFileDialog is case insensitive for filters and the native not
-    QSettings settings;
-    if( 0 == settings.value("Defaults/UseQtFileOpenDialog", 0).toInt()) {
-        setOption( QFileDialog::DontUseNativeDialog, false );
-    }
-    else {
-        setOption( QFileDialog::DontUseNativeDialog, true );
-    }
+
+    setOption(QFileDialog::DontUseNativeDialog,LC_GET_ONE_BOOL("Defaults", "UseQtFileOpenDialog", false) );
     setOption ( QFileDialog::HideNameFilterDetails, false );
     ftype= RS2::FormatDXFRW;
 
@@ -203,13 +198,11 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     return fn;
 }
 
-QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
+QString QG_FileDialog::getSaveFile(RS2::FormatType* type, const QString& currentName){
     setAcceptMode ( QFileDialog::AcceptSave );
     // read default settings:
 
     QString defDir = LC_GET_ONE_STR("Paths", "Save",RS_SYSTEM->getHomeDir());
-/*    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
-                                                 "Drawing Exchange DXF 2000 (*.dxf)");*/
 
     if(!defDir.endsWith("/") && !defDir.endsWith("\\"))
         defDir += QDir::separator();
@@ -230,14 +223,22 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 
     // when defFilter is added the below should use the default extension.
     // generate an untitled name
-    QString fn = tr("Untitled");
-    if(QFile::exists( defDir + fn + getExtension( ftype ) ))
-    {
+
+    QString defaultFileName = tr("Untitled");
+    if (!currentName.isEmpty()) {
+        QFileInfo currentFileInfo(currentName);
+        QString currentNameWithoutExtension = currentFileInfo.baseName();
+        defaultFileName = currentNameWithoutExtension;
+    }
+    auto extension = getExtension(ftype);
+    QString fileNameBase = defDir + defaultFileName;
+    QString fileNameGuess = fileNameBase + extension;
+    if(QFile::exists(fileNameGuess)){
         int fileCount = 1;
-        while(QFile::exists( defDir + fn + QString("%1").arg(fileCount) +
-                             getExtension(ftype)) )
+        while(QFile::exists( fileNameBase + QString("%1").arg(fileCount) + extension)) {
             ++fileCount;
-        fn += QString("%1").arg(fileCount);
+        }
+        defaultFileName += QString("%1").arg(fileCount);
     }
 
     // initialize dialog properties
@@ -246,38 +247,42 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setDirectory(defDir);
     setNameFilters(filters);
     selectNameFilter(fDxfrw2007);
-    selectFile(fn);
-    auto ext=getExtension(ftype);
+    selectFile(defaultFileName);
+    auto ext=extension;
     if(ext.size()==4){
-        if(ext[0]=='.') ext.remove(0,1);
+        if(ext[0]=='.') {
+            ext.remove(0,1);
+        }
     }
-    if(ext.size()==3) setDefaultSuffix (ext);
-
+    if(ext.size()==3) {
+        setDefaultSuffix (ext);
+    }
 
     // only return non empty string when we have a complete, user approved, file name.
-    if (exec()!=QDialog::Accepted)
+    if (exec()!=Accepted) {
         return QString("");
+    }
 
-    QStringList fl = selectedFiles();
-    if (fl.isEmpty())
+    QStringList filesList = selectedFiles();
+    if (filesList.isEmpty()) {
         return QString("");
+    }
 
-    QFileInfo fi = QFileInfo( fl[0] );
-    fn = QDir::toNativeSeparators( fi.absoluteFilePath() );
+    QFileInfo firstSelectedFile = QFileInfo( filesList[0]);
+    defaultFileName = QDir::toNativeSeparators(firstSelectedFile.absoluteFilePath() );
     ftype = getType(selectedNameFilter());
-    if (type)
+    if (type) {
         *type = ftype;
+    }
 
     // append default extension:
-    if (!hasExtension(fi.fileName(), ftype))
-        fn += getExtension(ftype);
-
+    if (!hasExtension(firstSelectedFile.fileName(), ftype)) {
+        defaultFileName += extension;
+    }
     // store new default settings:
+    LC_SET_ONE("Paths", "Save", firstSelectedFile.absolutePath());
 
-    LC_SET_ONE("Paths", "Save", fi.absolutePath());
-    //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
-
-    return fn;
+    return defaultFileName;
 }
 
 

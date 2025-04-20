@@ -26,7 +26,7 @@
 
 LC_DrawBoundingBoxOptions::LC_DrawBoundingBoxOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawBoundingBox, "Draw", "BoundingBox")
-    , ui(new Ui::LC_DrawBoundingBoxOptions){
+      , ui(new Ui::LC_DrawBoundingBoxOptions) {
     ui->setupUi(this);
     connect(ui->cbAsGroup, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onAsGroupToggled);
     connect(ui->cbCornerPointsOnly, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onCornerPointsToggled);
@@ -34,7 +34,7 @@ LC_DrawBoundingBoxOptions::LC_DrawBoundingBoxOptions()
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_DrawBoundingBoxOptions::onOffsetEditingFinished);
 }
 
-LC_DrawBoundingBoxOptions::~LC_DrawBoundingBoxOptions(){
+LC_DrawBoundingBoxOptions::~LC_DrawBoundingBoxOptions() {
     delete ui;
 }
 
@@ -45,19 +45,19 @@ void LC_DrawBoundingBoxOptions::doSaveSettings() {
     save("Offset", ui->leOffset->text());
 }
 
-void LC_DrawBoundingBoxOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionDrawBoundingBox *>(a);
+void LC_DrawBoundingBoxOptions::doSetAction(RS_ActionInterface* a, bool update) {
+    m_action = dynamic_cast<LC_ActionDrawBoundingBox*>(a);
     bool asGroup;
     bool cornerPoints;
     bool polyline;
     QString offset;
-    if (update){
-        asGroup = action->isSelectionAsGroup();
-        cornerPoints = action->isCornerPointsOnly();
-        polyline = action->isCreatePolyline();
-        offset = fromDouble(action->getOffset());
+    if (update) {
+        asGroup = m_action->isSelectionAsGroup();
+        cornerPoints = m_action->isCornerPointsOnly();
+        polyline = m_action->isCreatePolyline();
+        offset = fromDouble(m_action->getOffset());
     }
-    else{
+    else {
         asGroup = loadBool("AsGroup", true);
         cornerPoints = loadBool("CornerPoints", false);
         polyline = loadBool("Polyline", false);
@@ -80,35 +80,36 @@ void LC_DrawBoundingBoxOptions::onAsGroupToggled([[maybe_unused]] bool val) {
 void LC_DrawBoundingBoxOptions::onCornerPointsToggled([[maybe_unused]] bool val) {
     setCornerPointsOnlyToActionAndView(ui->cbCornerPointsOnly->isChecked());
 }
+
 void LC_DrawBoundingBoxOptions::onPolylineToggled([[maybe_unused]] bool val) {
     setPolylineToActionAndView(ui->cbPolyline->isChecked());
 }
 
 void LC_DrawBoundingBoxOptions::setAsGroupToActionAndView(bool group) {
-    action->setSelectionAsGroup(group);
+    m_action->setSelectionAsGroup(group);
     ui->cbAsGroup->setChecked(group);
 }
 
 void LC_DrawBoundingBoxOptions::setCornerPointsOnlyToActionAndView(bool val) {
-    action->setCornersOnly(val);
+    m_action->setCornersOnly(val);
     ui->cbCornerPointsOnly->setChecked(val);
     ui->cbPolyline->setEnabled(!val);
 }
 
 void LC_DrawBoundingBoxOptions::setPolylineToActionAndView(bool p) {
-    action->setCreatePolyline(p);
+    m_action->setCreatePolyline(p);
     ui->cbPolyline->setChecked(p);
 }
 
-void LC_DrawBoundingBoxOptions::onOffsetEditingFinished(){
-    const QString &expr = ui->leOffset->text();
+void LC_DrawBoundingBoxOptions::onOffsetEditingFinished() {
+    const QString& expr = ui->leOffset->text();
     setOffsetToActionAndView(expr);
 }
 
-void LC_DrawBoundingBoxOptions::setOffsetToActionAndView(const QString& val){
+void LC_DrawBoundingBoxOptions::setOffsetToActionAndView(const QString& val) {
     double value = 0.;
-    if (toDouble(val, value, 0.0, false)){
-        action->setOffset(value);
+    if (toDouble(val, value, 0.0, false)) {
+        m_action->setOffset(value);
         ui->leOffset->setText(fromDouble(value));
     }
 }

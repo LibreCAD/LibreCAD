@@ -23,13 +23,15 @@
 #ifndef LC_ACTIONSSHORTCUTSDIALOG_H
 #define LC_ACTIONSSHORTCUTSDIALOG_H
 
-#include <QDialog>
 #include <QFileDialog>
-#include <QItemSelection>
-#include "lc_shortcutstreemodel.h"
-#include "lc_actiongroupmanager.h"
-#include "lc_shortcutstreeview.h"
+
 #include "lc_dialog.h"
+
+class LC_ShortcutInfo;
+class QItemSelection;
+class LC_ShortcutTreeItem;
+class LC_ShortcutsTreeModel;
+class LC_ActionGroupManager;
 
 namespace Ui {
     class LC_ActionsShortcutsDialog;
@@ -56,12 +58,12 @@ protected slots:
     void onRecordButtonToggled(bool on);
 protected:
     Ui::LC_ActionsShortcutsDialog *ui;
-    LC_ShortcutsTreeModel *mappingTreeModel;
-    LC_ActionGroupManager *actionGroupManager;
-    LC_ShortcutTreeItem* currentItem = nullptr;
-    int selectedRow = -1;
-    int selectedParentRow = -1;
-    QKeySequence editingKeySequence;
+    LC_ShortcutsTreeModel *m_mappingTreeModel;
+    LC_ActionGroupManager *m_actionGroupManager;
+    LC_ShortcutTreeItem* m_currentItem = nullptr;
+    int m_selectedRow = -1;
+    int m_selectedParentRow = -1;
+    QKeySequence m_editingKeySequence;
     QString keySequenceToEditString(const QKeySequence &sequence) const;
     void initTreeView();
     void createMappingModel();
@@ -77,7 +79,6 @@ protected:
     void applyRecordedKeySequence();
     void reportSaveResult(int saveResult) const;
     void reportLoadResult(int loadResult) const;
-
     void doSelectItem(const QModelIndex &itemIndex);
 };
 

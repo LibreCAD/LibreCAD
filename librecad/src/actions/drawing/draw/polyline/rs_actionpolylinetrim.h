@@ -29,7 +29,7 @@
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
-class RS_Entity;
+class RS_Polyline;
 
 /**
  * This action class can handle user events to move entities.
@@ -39,9 +39,7 @@ class RS_Entity;
 class RS_ActionPolylineTrim:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPolylineTrim(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionPolylineTrim(LC_ActionContext *actionContext);
     void init(int status) override;
     void finish(bool updateTB) override;
 protected:
@@ -53,9 +51,9 @@ protected:
         SetSegment1,    /**< Setting first segment. */
         SetSegment2       /**< Setting second segment. */
     };
-    RS_Polyline *polylineToModify = nullptr;
-    RS_AtomicEntity *Segment1 = nullptr;
-    RS_AtomicEntity *Segment2 = nullptr;
+    RS_Polyline *m_polylineToModify = nullptr;
+    RS_AtomicEntity *m_segment1 = nullptr;
+    RS_AtomicEntity *m_segment2 = nullptr;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

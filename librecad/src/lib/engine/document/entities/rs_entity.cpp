@@ -65,6 +65,18 @@ struct RS_Entity::Impl {
     //! pen (attributes) for this entity
     RS_Pen pen{};
     std::map<QString, QString> varList;
+
+    Impl() = default;
+
+    Impl(const Impl& other):
+        pen{other.pen},
+        varList{other.varList} {
+    }
+
+    void fromOther(Impl* other) {
+        pen = other->pen;
+        varList = other->varList;
+    }
 };
 
 /**
@@ -75,38 +87,35 @@ struct RS_Entity::Impl {
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
     : parent{parent}
-    , m_pImpl{std::make_unique<Impl>()}
-{
+    , m_pImpl{std::make_unique<Impl>()}{
     init();
 }
 
 RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
-{
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
 }
 
-RS_Entity& RS_Entity::operator = (const RS_Entity& other)
-{
+RS_Entity& RS_Entity::operator = (const RS_Entity& other){
     parent = other.parent;
-    *m_pImpl = *other.m_pImpl;
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
     return *this;
 }
 
 RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
-{
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
 }
 
-RS_Entity& RS_Entity::operator = (RS_Entity&& other)
-{
+RS_Entity& RS_Entity::operator = (RS_Entity&& other){
     parent = other.parent;
-    *m_pImpl = *other.m_pImpl;
     init();
+    m_pImpl->fromOther(other.m_pImpl.get());
     return *this;
 }
 
@@ -216,14 +225,12 @@ bool RS_Entity::isSelected() const {
  */
 bool RS_Entity::isParentSelected() const{
     RS_Entity const* p = this;
-
     while(p) {
         p = p->getParent();
         if (p && p->isSelected()==true) {
             return true;
         }
     }
-
     return false;
 }
 
@@ -253,8 +260,7 @@ bool RS_Entity::isProcessed() const {
  * @param undone true: entity has become invisible.
  *               false: entity has become visible.
  */
-void RS_Entity::undoStateChanged([[maybe_unused]] bool undone)
-{
+void RS_Entity::undoStateChanged([[maybe_unused]] bool undone){
     setSelected(false);
     update();
 }
@@ -263,12 +269,12 @@ void RS_Entity::undoStateChanged([[maybe_unused]] bool undone)
  * @return true if this entity or any parent entities are undone.
  */
 bool RS_Entity::isUndone() const {
-		if (!parent) {
-                return RS_Undoable::isUndone();
-        }
-        else {
-                return RS_Undoable::isUndone() || parent->isUndone();
-        }
+    if (!parent) {
+        return RS_Undoable::isUndone();
+    }
+    else {
+        return RS_Undoable::isUndone() || parent->isUndone();
+    }
 }
 
 /**
@@ -289,7 +295,7 @@ bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const{
 }
 
 double RS_Entity::areaLineIntegral() const{
-	return 0.;
+    return 0.;
 }
 
 bool RS_Entity::isArc() const{
@@ -344,7 +350,7 @@ bool RS_Entity::isArcCircleLine() const{
  */
 bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
                                 double tolerance) const {
-	double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
+    double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
     return dist <= std::abs(tolerance);
 }
 

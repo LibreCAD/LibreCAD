@@ -23,41 +23,44 @@
 #ifndef LC_NAMEDVIEWSLISTWIDGET_H
 #define LC_NAMEDVIEWSLISTWIDGET_H
 
-#include <QWidget>
-#include <QList>
 #include <QItemSelection>
 
-#include "lc_viewslist.h"
-#include "lc_namedviewsmodel.h"
-#include "rs_graphicview.h"
-#include "qc_mdiwindow.h"
+#include "rs.h"
+#include "lc_graphicviewaware.h"
+#include "lc_graphicviewawarewidget.h"
 
+class LC_View;
+class LC_ViewList;
 class LC_NamedViewsButton;
+class LC_NamedViewsModel;
+class LC_NamedViewsListOptions;
+class LC_GraphicViewport;
+class RS_Graphic;
 
 namespace Ui {
     class LC_NamedViewsListWidget;
 }
 
-class LC_NamedViewsListWidget : public QWidget{
+class LC_NamedViewsListWidget : public LC_GraphicViewAwareWidget{
  Q_OBJECT
 public:
     explicit LC_NamedViewsListWidget(const QString& title, QWidget* parent);
-    virtual ~LC_NamedViewsListWidget();
+    ~LC_NamedViewsListWidget() override;
     void setViewsList(LC_ViewList* viewsList);
-    void setGraphicView(RS_GraphicView* gv, QMdiSubWindow* window);
+    void setGraphicView(RS_GraphicView* gv) override;
     void reload();
     void restoreView(int index);
     void restoreView(const QString &name);
     void restoreSelectedView();
-    void fillViewsList(QList<LC_View *> &list);
-    QIcon getViewTypeIcon(LC_View *view);
+    void fillViewsList(QList<LC_View *> &list) const;
+    QIcon getViewTypeIcon(LC_View *view) const;
     QWidget* createSelectionWidget(QAction* saveViewAction, QAction* defaultAction);
 signals:
     void viewListChanged(int itemsCount);
 public slots:
     void addNewView();
-    void onUcsListChanged();
-    void updateWidgetSettings();
+    void onUcsListChanged() const;
+    void updateWidgetSettings() const;
 protected slots:
     void invokeOptionsDialog();
     void updateView();
@@ -66,27 +69,27 @@ protected slots:
     void removeAllViews();
     void renameView();
     void onCustomContextMenu(const QPoint &point);
-    void slotTableClicked(QModelIndex layerIdx);
-    void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+    void slotTableClicked(const QModelIndex& layerIdx);
+    void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
     void onTableDoubleClicked();
 protected:
-    void doCreateNewView(QString name);
-    void updateViewsUCSNames();
+    void doCreateNewView(const QString& name);
+    void updateViewsUCSNames() const;
     void refresh();
 private:
     Ui::LC_NamedViewsListWidget *ui;
-    LC_ViewList* currentViewList{nullptr};
-    LC_NamedViewsModel* viewsModel{nullptr};
-    LC_NamedViewsListOptions *options {nullptr};
-    LC_NamedViewsButton *namedViewsButton {nullptr};
-    QAction* saveViewAction {nullptr};
-    QMdiSubWindow* window;
-
-    RS2::LinearFormat linearFormat;
-    RS2::AngleFormat angleFormat;
-    int precision;
-    int anglePrecision;
+    LC_ViewList* m_currentViewList{nullptr};
+    LC_NamedViewsModel* m_viewsModel{nullptr};
+    LC_NamedViewsListOptions *m_options {nullptr};
+    LC_NamedViewsButton *m_namedViewsButton {nullptr};
+    QAction* m_saveViewAction {nullptr};
+    RS2::LinearFormat m_linearFormat;
+    RS2::AngleFormat m_angleFormat;
+    int m_precision;
+    int m_anglePrecision;
     RS2::Unit drawingUnit;
+    RS_GraphicView *m_graphicView {nullptr};
+    LC_GraphicViewport *m_viewport {nullptr};
 
     void initToolbar() const;
     void updateData(bool restoreSelectionIfPossible);
@@ -94,19 +97,18 @@ private:
     void createModel();
     void restoreView(LC_View* view);
     void updateExistingView(LC_View *pView);
-    LC_View *getSelectedView();
-    void removeExistingView(LC_View *view);
-    QModelIndex getSelectedItemIndex();
+    LC_View *getSelectedView() const;
+    void removeExistingView(LC_View *view) const;
+    QModelIndex getSelectedItemIndex() const;
     void renameExistingView(const QString &newName, LC_View *view);
-    RS_GraphicView *graphicView {nullptr};
-    LC_GraphicViewport *viewport {nullptr};
+
     void doUpdateView(LC_View *view);
     void renameExistingView(LC_View *selectedView);
     void updateButtonsState() const;
-    void selectView(LC_View *view);
+    void selectView(const LC_View *view) const;
     int getSingleSelectedRow() const;
-    void restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow);
-    void loadFormats(RS_Graphic *graphic);
+    void restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow) const;
+    void loadFormats(const RS_Graphic *graphic);
 };
 
 #endif // LC_NAMEDVIEWSLISTWIDGET_H

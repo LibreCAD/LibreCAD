@@ -25,12 +25,9 @@
 **********************************************************************/
 #include "qg_mousewidget.h"
 
-#include <QVariant>
-#include <QSettings>
-
-#include "rs_settings.h"
 #include "lc_modifiersinfo.h"
 #include "lc_shortcuts_manager.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_MouseWidget as a child of 'parent', with the
@@ -49,8 +46,6 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
         int height{64};
 
         if (useClassicalStatusBar) {
-            QSettings settings;
-
             int allow_statusbar_height = LC_GET_BOOL("AllowStatusbarHeight", false);
             if (allow_statusbar_height) {
                 height = LC_GET_INT("StatusbarHeight", 64);

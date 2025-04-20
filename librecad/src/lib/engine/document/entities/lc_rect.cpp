@@ -20,12 +20,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include <cassert>
+
 #include<iostream>
-#include<limits>
+#include "lc_rect.h"
 
 #include <QDebug>
-#include "lc_rect.h"
+#include <qlogging.h>
 
 #define INTERT_TEST(s) qDebug()<<"\ntesting " #s; \
 	assert(s); \
@@ -311,4 +311,3 @@ void LC_Rect::unitTest() {
 	INTERT_TEST(!rect0.inArea({-1.1, -1.1}))
 
 }
-

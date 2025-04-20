@@ -27,9 +27,10 @@
 #ifndef RS_ACTIONMODIFYROTATE2_H
 #define RS_ACTIONMODIFYROTATE2_H
 
-#include "rs_modification.h"
+
 #include "lc_actionmodifybase.h"
 
+struct RS_Rotate2Data;
 /**
  * This action class can handle user events to rotate entities around
  * two entities.
@@ -39,10 +40,8 @@
 class RS_ActionModifyRotate2 : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyRotate2(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionModifyRotate2(LC_ActionContext *actionContext);
     ~RS_ActionModifyRotate2() override;
-
     void init(int status) override;
     void setAngle1(double d);
     double getAngle1();
@@ -62,12 +61,12 @@ protected:
         ShowDialog             /**< Showing the options dialog. */
     };
 
-    std::unique_ptr<RS_Rotate2Data> data;
+    std::unique_ptr<RS_Rotate2Data> m_actionData;
     void previewRefPointsForMultipleCopies(const RS_Vector& mouse);
     void doPerformTrigger();
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;

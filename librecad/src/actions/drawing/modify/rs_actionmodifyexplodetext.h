@@ -36,11 +36,9 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyExplodeText : public LC_ActionPreSelectionAwareBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    RS_ActionModifyExplodeText(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
+    RS_ActionModifyExplodeText(LC_ActionContext *actionContext);
     ~RS_ActionModifyExplodeText() override;
 protected:
     void updateMouseButtonHintsForSelection() override;

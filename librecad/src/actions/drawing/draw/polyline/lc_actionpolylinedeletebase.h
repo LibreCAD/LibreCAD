@@ -24,11 +24,12 @@
 #define LC_ACTIONPOLYLINEDELETEBASE_H
 
 #include "rs_previewactioninterface.h"
+class RS_Polyline;
 
 class LC_ActionPolylineDeleteBase:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    LC_ActionPolylineDeleteBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionPolylineDeleteBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_ActionPolylineDeleteBase() override = default;
 protected:
     /**
@@ -40,8 +41,8 @@ protected:
         SetVertex2     /**< Setting the node's point2. */
     };
 
-    RS_Polyline *polylineToModify = nullptr;
-    RS_Vector vertexToDelete = RS_Vector(false);
+    RS_Polyline *m_polylineToModify = nullptr;
+    RS_Vector m_vertexToDelete = RS_Vector(false);
 
     void getSelectedPolylineVertex(LC_MouseEvent *e, RS_Vector &vertex, RS_Entity *&segment);
     void finish(bool updateTB) override;

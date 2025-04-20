@@ -24,13 +24,8 @@
 **
 **********************************************************************/
 #include "qg_insertoptions.h"
-
-#include "rs_actioninterface.h"
 #include "rs_actionblocksinsert.h"
-#include "rs_settings.h"
-#include "rs_math.h"
 #include "ui_qg_insertoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_InsertOptions as a child of 'parent', with the
@@ -71,7 +66,7 @@ void QG_InsertOptions::doSaveSettings() {
 }
 
 void QG_InsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionBlocksInsert*>(a);
+    m_action = dynamic_cast<RS_ActionBlocksInsert*>(a);
 
     QString angle;
     QString factor;
@@ -80,12 +75,12 @@ void QG_InsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
     QString columnSpacing;
     QString rowSpacing;
     if (update) {
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
-        factor = fromDouble(action->getFactor());
-        columns = action->getColumns();
-        rows = action->getRows();
-        columnSpacing = fromDouble(action->getColumnSpacing());
-        rowSpacing = fromDouble(action->getRowSpacing());
+        angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
+        factor = fromDouble(m_action->getFactor());
+        columns = m_action->getColumns();
+        rows = m_action->getRows();
+        columnSpacing = fromDouble(m_action->getColumnSpacing());
+        rowSpacing = fromDouble(m_action->getRowSpacing());
     } else {
         angle = load("Angle", "0.0");
         factor = load("Factor", "1.0");
@@ -106,32 +101,35 @@ void QG_InsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
 void QG_InsertOptions::setRowSpacingToActionAndView(QString val) {
     ui->leRowSpacing->setText(val);
-    action->setRowSpacing(RS_Math::eval(val));
+    m_action->setRowSpacing(RS_Math::eval(val));
 }
 
 void QG_InsertOptions::setColumnSpacingActionAndView(QString val) {
     ui->leColumnSpacing->setText(val);
-    action->setColumnSpacing(RS_Math::eval(val));
+    m_action->setColumnSpacing(RS_Math::eval(val));
 }
 
 void QG_InsertOptions::setColumnsToActionAndView(int columns) {
-    action->setColumns(columns);
+    m_action->setColumns(columns);
     ui->sbColumns->setValue(columns);
 }
 
 void QG_InsertOptions::setRowsToActionAndView(int rows) {
     ui->sbRows->setValue(rows);
-    action->setRows(rows);
+    m_action->setRows(rows);
 }
 
 void QG_InsertOptions::setFactorToActionAndView(QString val) {
     ui->leFactor->setText(val);
-    action->setFactor(RS_Math::eval(val));
+    m_action->setFactor(RS_Math::eval(val));
 }
 
 void QG_InsertOptions::setAngleToActionAndView(QString val) {
     ui->leAngle->setText(val);
-    action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
+    double angle;
+    if (toDoubleAngleDegrees(val, angle, 0, false)) {
+        m_action->setAngle(angle);
+    }
 }
 
 void QG_InsertOptions::onAngleEditingFinished(){
@@ -139,7 +137,7 @@ void QG_InsertOptions::onAngleEditingFinished(){
 }
 
 void QG_InsertOptions::onFactorEditingFinished(){
-    setAngleToActionAndView(ui->leFactor->text());
+    setFactorToActionAndView(ui->leFactor->text());
 }
 
 void QG_InsertOptions::onColumnSpacingEditingFinished() {

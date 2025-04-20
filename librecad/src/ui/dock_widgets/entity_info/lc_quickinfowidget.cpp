@@ -28,18 +28,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #if defined(Q_OS_LINUX)
 #include <QThread>
 #endif
-#include <QUrl>
+
+#include "lc_quickinfowidget.h"
 
 #include "lc_flexlayout.h"
-#include "lc_quickinfowidget.h"
+#include "lc_graphicviewport.h"
+#include "lc_plaintextedit.h"
+#include "lc_quickinfoentitydata.h"
+#include "lc_quickinfopointsdata.h"
+#include "lc_quickinfowidgetoptions.h"
 #include "lc_quickinfowidgetoptionsdialog.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_math.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphicview.h"
 #include "rs_point.h"
 #include "rs_settings.h"
 #include "ui_lc_quickinfowidget.h"
-#include "lc_graphicviewport.h"
 
 // todo - discover generic way for reliable refresh of entity info widget if entity editing properties/attributes is performed outside of outside of widget
 // (via normal editing actions, mouse operations or custom actions)
@@ -47,9 +52,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define DEBUG_QUICK_INFO_RAW_NO
 
 LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map):
-    QWidget(parent),
-    ui(new Ui::LC_QuickInfoWidget)
-{
+    LC_GraphicViewAwareWidget(parent),
+    ui(new Ui::LC_QuickInfoWidget),
+    m_options{std::make_unique<LC_QuickInfoOptions>()},
+    m_pointsData{std::make_unique<LC_QuickInfoPointsData>()},
+    m_entityData{std::make_unique<LC_QuickInfoEntityData>()}{
     ui->setupUi(this);
 
     // support flexible layout for buttons and small size displays
@@ -79,7 +86,13 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     ui->pteInfo->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->cbPointsCoordinatesMode, &QComboBox::currentIndexChanged, this, &LC_QuickInfoWidget::onCoordinateModeIndexChanged);
     ui->pteInfo->setOpenLinks(false);
+
+#ifndef DONT_FORCE_WIDGETS_CSS
     ui->pteInfo->document()->setDefaultStyleSheet("a {text-decoration: none;} body {background-color: white;}");
+#else
+    ui->pteInfo->document()->setDefaultStyleSheet("a {text-decoration: none;}");
+
+#endif
 
     // raw content control useful for debugging, but not needed in live mode
 #ifdef DEBUG_QUICK_INFO_RAW
@@ -106,15 +119,15 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
 
     // loading options
 
-    options->load();
-    entityData.setOptions(options);
+    m_options->load();
+    m_entityData->setOptions(m_options.get());
 
-    options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
+    m_options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
 
     LC_GROUP_GUARD("Widget.QuickInfo");
     {
-        entityData.setCoordinatesMode(LC_GET_INT("EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
-        pointsData.setCoordinatesMode(LC_GET_INT("PointsCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
+        m_entityData->setCoordinatesMode(LC_GET_INT("EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
+        m_pointsData->setCoordinatesMode(LC_GET_INT("PointsCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
     }
 
     // initial message
@@ -125,7 +138,6 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
 
 LC_QuickInfoWidget::~LC_QuickInfoWidget(){
     delete ui;
-    delete options;
 }
 
 /**
@@ -139,16 +151,16 @@ void LC_QuickInfoWidget::processEntity(RS_Entity *en){
         clearEntityInfo();
     }
     else { // just delegate action processing to entity data
-        options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
-        bool updated = entityData.processEntity(en);
+        m_options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
+        bool updated = m_entityData->processEntity(en);
         if (updated){
             updateEntityInfoView();
         }
     }
  }
 
-QString LC_QuickInfoWidget::getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription) {
-    return entityData.getEntityDescription(en, shortDescription);
+QString LC_QuickInfoWidget::getEntityDescription( RS_Entity *en, RS2::EntityDescriptionLevel shortDescription) const {
+    return m_entityData->getEntityDescription(en, shortDescription);
 }
 
 /**
@@ -157,7 +169,7 @@ QString LC_QuickInfoWidget::getEntityDescription(RS_Entity *en, RS2::EntityDescr
  */
 void LC_QuickInfoWidget::processCoordinate(const RS_Vector &point){
     setWidgetMode(MODE_COORDINATE_COLLECTING);
-    pointsData.processCoordinate(point); // delegate processing
+    m_pointsData->processCoordinate(point); // delegate processing
     updateCollectedPointsView();
 }
 
@@ -165,8 +177,8 @@ void LC_QuickInfoWidget::processCoordinate(const RS_Vector &point){
  * Specifies which mode should be used for displaying coordinates that are part of entity information
  * @param mode coordinate displaying mode
  */
-void LC_QuickInfoWidget::setEntityPointsCoordinateViewMode(int mode){
-    bool updated = entityData.updateForCoordinateViewMode(mode);
+void LC_QuickInfoWidget::setEntityPointsCoordinateViewMode(int mode) const {
+    bool updated = m_entityData->updateForCoordinateViewMode(mode);
     if (updated){
         updateEntityInfoView();
     }
@@ -176,8 +188,8 @@ void LC_QuickInfoWidget::setEntityPointsCoordinateViewMode(int mode){
  * Specifies which mode should be used for displaying coordinates for collected points
  * @param mode  coordinate display mode
  */
-void LC_QuickInfoWidget::setCollectedPointsCoordinateViewMode(int mode){
-    bool updated = pointsData.updateForCoordinateViewMode(mode);
+void LC_QuickInfoWidget::setCollectedPointsCoordinateViewMode(int mode) const {
+    bool updated = m_pointsData->updateForCoordinateViewMode(mode);
     if (updated){
         updateCollectedPointsView();
     }
@@ -186,35 +198,35 @@ void LC_QuickInfoWidget::setCollectedPointsCoordinateViewMode(int mode){
 /**
  * Cleanup of collected entity information
  */
-void LC_QuickInfoWidget::clearEntityInfo(){
-    entityData.clear();
+void LC_QuickInfoWidget::clearEntityInfo() const {
+    m_entityData->clear();
     showNoDataMessage();
 }
 
 /**
  * Regenerates view data for collected points and displays them
  */
-void LC_QuickInfoWidget::updateCollectedPointsView(bool forceUpdate){
-    QString data = pointsData.generateView(options->displayDistanceAndAngle, forceUpdate);
+void LC_QuickInfoWidget::updateCollectedPointsView(bool forceUpdate) const {
+    QString data = m_pointsData->generateView(m_options->displayDistanceAndAngle, forceUpdate);
     ui->pteInfo->setHtml(data);
     ui->pteInfo1->setPlainText(data);
 }
 
-void LC_QuickInfoWidget::updateEntityInfoView(bool forceUpdate, bool updateView){
+void LC_QuickInfoWidget::updateEntityInfoView(bool forceUpdate, bool updateView) const {
     if (forceUpdate){
-        if (entityData.hasData()){
-            unsigned long entityId = entityData.getEntityId();
+        if (m_entityData->hasData()){
+            unsigned long entityId = m_entityData->getEntityId();
             RS_Entity *entity = findEntityById(entityId);
             if (entity != nullptr){
-                entityData.clear();
-                options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
-                entityData.processEntity(entity);
+                m_entityData->clear();
+                m_options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
+                m_entityData->processEntity(entity);
             }
         }
     }
     if (updateView){
-        if (entityData.hasData()){
-            QString data = entityData.generateView();
+        if (m_entityData->hasData()){
+            QString data = m_entityData->generateView();
             ui->pteInfo->setHtml(data);
 #ifdef DEBUG_QUICK_INFO_RAW
             ui->pteInfo1->setPlainText(data);
@@ -235,12 +247,12 @@ void LC_QuickInfoWidget::onSettings(){
 /**
  * Clearing currently displayed data
  */
-void LC_QuickInfoWidget::onClearAll(){
-    if (widgetMode == MODE_ENTITY_INFO){
-        entityData.clear();
+void LC_QuickInfoWidget::onClearAll() const {
+    if (m_widgetMode == MODE_ENTITY_INFO){
+        m_entityData->clear();
     }
-    else if (widgetMode == MODE_COORDINATE_COLLECTING){
-        pointsData.clear();
+    else if (m_widgetMode == MODE_COORDINATE_COLLECTING){
+        m_pointsData->clear();
     }
     showNoDataMessage();
 }
@@ -249,13 +261,13 @@ void LC_QuickInfoWidget::onClearAll(){
  * Handler for changing coordinates mode combobox
  * @param index
  */
-void LC_QuickInfoWidget::onCoordinateModeIndexChanged(int index){
+void LC_QuickInfoWidget::onCoordinateModeIndexChanged(int index) const {
     LC_GROUP_GUARD("Widget.QuickInfo");
     {
-        if (widgetMode == MODE_ENTITY_INFO) {
+        if (m_widgetMode == MODE_ENTITY_INFO) {
             setEntityPointsCoordinateViewMode(index);
             LC_SET("EntityCoordinatesMode", index);
-        } else if (widgetMode == MODE_COORDINATE_COLLECTING) {
+        } else if (m_widgetMode == MODE_COORDINATE_COLLECTING) {
             setCollectedPointsCoordinateViewMode(index);
             LC_SET("PointsCoordinatesMode", index);
         }
@@ -266,7 +278,7 @@ void LC_QuickInfoWidget::onCoordinateModeIndexChanged(int index){
  * Handler for to cmd menu item
  * @param index
  */
-void LC_QuickInfoWidget::onToCmd(int index){
+void LC_QuickInfoWidget::onToCmd(int index) const {
     processURLCommand("coord", index);
 }
 
@@ -274,7 +286,7 @@ void LC_QuickInfoWidget::onToCmd(int index){
  * Handler for setting relative zero menu handler
  * @param index
  */
-void LC_QuickInfoWidget::onSetRelZero(int index){
+void LC_QuickInfoWidget::onSetRelZero(int index) const {
     processURLCommand("zero", index);
 }
 
@@ -282,8 +294,8 @@ void LC_QuickInfoWidget::onSetRelZero(int index){
  * Handler for removing specific collected coordinate
  * @param index  index of coordinate
  */
-void LC_QuickInfoWidget::onRemoveCoordinate(int index){
-    if (pointsData.removeCoordinate(index)){
+void LC_QuickInfoWidget::onRemoveCoordinate(int index) const {
+    if (m_pointsData->removeCoordinate(index)){
         updateCollectedPointsView(true);
     }
 }
@@ -292,16 +304,16 @@ void LC_QuickInfoWidget::onRemoveCoordinate(int index){
  * Handler for insertion of coordinates into specified position
  * @param index  index to insert
  */
-void LC_QuickInfoWidget::onInsertCoordinates(int index){
-    pointsData.setPointInsertionIndex(index);
+void LC_QuickInfoWidget::onInsertCoordinates(int index) const {
+    m_pointsData->setPointInsertionIndex(index);
     onPickCoordinates();
 }
 
 /**
  *  Support method called by action to notify that adding coordinates is completed
  */
-void LC_QuickInfoWidget::endAddingCoordinates(){
-    pointsData.setPointInsertionIndex(-1);
+void LC_QuickInfoWidget::endAddingCoordinates() const {
+    m_pointsData->setPointInsertionIndex(-1);
 }
 
 #define DEBUG_MENU_LINK_
@@ -343,7 +355,7 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
                 bool ok = false;
                 int pointIndex = idx.toInt(&ok);
                 if (ok){
-                    if (widgetMode == MODE_COORDINATE_COLLECTING){
+                    if (m_widgetMode == MODE_COORDINATE_COLLECTING){
                         // specific commands for anchors on collected points view
                         QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName(tr("&To Cmd"), pointIndex));
                         connect(toCmdAction, &QAction::triggered, this,  [this, pointIndex]{ onToCmd(pointIndex); });
@@ -376,8 +388,8 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
     // generic actions
     contextMenu->addAction(tr("&Clear"), this, &LC_QuickInfoWidget::onClearAll);
     contextMenu->addAction(tr("&Select Entity"), this, &LC_QuickInfoWidget::onPickEntity);
-    if (widgetMode == MODE_ENTITY_INFO){
-        if (entityData.getEntityId() > 0){
+    if (m_widgetMode == MODE_ENTITY_INFO){
+        if (m_entityData->getEntityId() > 0){
             contextMenu->addAction(tr("&Select in Drawing"), this, &LC_QuickInfoWidget::onSelectEntity);
             contextMenu->addAction(tr("&Edit Properties"), this, &LC_QuickInfoWidget::onEditEntityProperties);
         }
@@ -389,11 +401,12 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
 
 /**
  * Utility method for creation of menu command that includes index of item
+ * @param actionName
  * @param command
  * @param idx
  * @return
  */
-QString LC_QuickInfoWidget::getCoordinateMenuName(QString actionName, int idx) const{
+QString LC_QuickInfoWidget::getCoordinateMenuName(QString actionName, int idx) {
     if (idx >= 0){
         QString index;
         index.setNum(idx+1);
@@ -425,11 +438,11 @@ void LC_QuickInfoWidget::onAnchorHighlighted(const QUrl &link){
  * Processing of anchor un-highlighting - as user moves mouse from anchor, if we've highlighted point - we'll remove it there
  */
 void LC_QuickInfoWidget::onAnchorUnHighlighted(){
-    if (hasOwnPreview){
-        RS_EntityContainer *container = graphicView->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
+    if (m_hasOwnPreview){
+        RS_EntityContainer *container = m_graphicView->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
         container->clear();
-        graphicView->redraw(RS2::RedrawOverlay);
-        hasOwnPreview = false;
+        m_graphicView->redraw(RS2::RedrawOverlay);
+        m_hasOwnPreview = false;
     }
 }
 
@@ -437,7 +450,7 @@ void LC_QuickInfoWidget::onAnchorUnHighlighted(){
  * Handler for click on anchor in text editor
  * @param link
  */
-void LC_QuickInfoWidget::onAnchorClicked(const QUrl &link){
+void LC_QuickInfoWidget::onAnchorClicked(const QUrl &link) const {
     QString path = link.fileName();
     QString query = link.query();
     int index = query.toInt();
@@ -449,16 +462,16 @@ void LC_QuickInfoWidget::onAnchorClicked(const QUrl &link){
  * @param path
  * @param index
  */
-void LC_QuickInfoWidget::processURLCommand(const QString &path, int index){
+void LC_QuickInfoWidget::processURLCommand(const QString &path, int index) const {
     if (path == "zero"){ // move relative zero to needed coordinate
         RS_Vector data = retrievePositionForModelIndex(index);
         if (data.valid){
-            graphicView->getViewPort()->moveRelativeZero(data);
+            m_graphicView->getViewPort()->moveRelativeZero(data);
         }
     }
     else if (path == "val"){ // copy value to Cmd widget
-        if (entityData.hasData()){
-            QString value = entityData.getValue(index);
+        if (m_entityData->hasData()){
+            QString value = m_entityData->getValue(index);
             RS_DIALOGFACTORY->command(value);
         }
     }
@@ -475,14 +488,14 @@ void LC_QuickInfoWidget::processURLCommand(const QString &path, int index){
  */
 RS_Vector LC_QuickInfoWidget::retrievePositionForModelIndex(int index) const{
     auto data = RS_Vector{false};
-    if (widgetMode == MODE_ENTITY_INFO){ // return entity property
-        if (entityData.hasData()){
-            data = entityData.getVectorForIndex(index);
+    if (m_widgetMode == MODE_ENTITY_INFO){ // return entity property
+        if (m_entityData->hasData()){
+            data = m_entityData->getVectorForIndex(index);
         }
     }
-    else if (widgetMode == MODE_COORDINATE_COLLECTING){ // return collected coordinate
-        if (pointsData.hasData()){
-            data = pointsData.getVectorForIndex(index);
+    else if (m_widgetMode == MODE_COORDINATE_COLLECTING){ // return collected coordinate
+        if (m_pointsData->hasData()){
+            data = m_pointsData->getVectorForIndex(index);
         }
     }
     return data;
@@ -494,14 +507,14 @@ RS_Vector LC_QuickInfoWidget::retrievePositionForModelIndex(int index) const{
  */
 QString LC_QuickInfoWidget::retrievePositionStringForModelIndex(int index) const{
     QString data;
-    if (widgetMode == MODE_ENTITY_INFO){
-        if (entityData.hasData()){
-            data = entityData.getFormattedVectorForIndex(index);
+    if (m_widgetMode == MODE_ENTITY_INFO){
+        if (m_entityData->hasData()){
+            data = m_entityData->getFormattedVectorForIndex(index);
         }
     }
-    else if (widgetMode == MODE_COORDINATE_COLLECTING){
-        if (pointsData.hasData()){
-            data = pointsData.getFormattedVectorForIndex(index);
+    else if (m_widgetMode == MODE_COORDINATE_COLLECTING){
+        if (m_pointsData->hasData()){
+            data = m_pointsData->getFormattedVectorForIndex(index);
         }
     }
     return data;
@@ -513,36 +526,36 @@ QString LC_QuickInfoWidget::retrievePositionStringForModelIndex(int index) const
  */
 void LC_QuickInfoWidget::drawPreviewPoint(const RS_Vector& vector) {
 
-    RS_EntityContainer *container = graphicView->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
+    RS_EntityContainer *container = m_graphicView->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
     container->clear();
     // Little hack for now so we don't delete the preview twice
     container->setOwner(false);
     // use pen from options
-    RS_Pen pen = options->pen;
+    RS_Pen pen = m_options->pen;
     // create preview point
     auto *entity = new RS_Point(container, vector);
     entity->setLayer(nullptr);
     entity->setSelected(false);
-    entity->reparent(document);
+    entity->reparent(m_document);
     entity->setPen(pen);
     container->addEntity(entity);
 
-    graphicView->redraw(RS2::RedrawOverlay);
-    hasOwnPreview = true;
+    m_graphicView->redraw(RS2::RedrawOverlay);
+    m_hasOwnPreview = true;
 }
 
 /**
  * Handler for changing text in text view, used for setting states for buttons
  */
-void LC_QuickInfoWidget::onTextChanged(){
+void LC_QuickInfoWidget::onTextChanged() const {
     QString text = ui->pteInfo->toPlainText();
     bool hasText = !text.isEmpty();
-    bool hasEntityData = entityData.hasData();
-    bool hasData = hasEntityData || pointsData.hasData();
+    bool hasEntityData = m_entityData->hasData();
+    bool hasData = hasEntityData || m_pointsData->hasData();
     ui->tbClear->setEnabled(hasText && hasData);
     ui->tbCopy->setEnabled(hasText && hasData);
-    ui->tbFind->setEnabled(hasText && hasEntityData && widgetMode == MODE_ENTITY_INFO);
-    ui->tbEditProperties->setEnabled(hasText && hasEntityData && widgetMode == MODE_ENTITY_INFO);
+    ui->tbFind->setEnabled(hasText && hasEntityData && m_widgetMode == MODE_ENTITY_INFO);
+    ui->tbEditProperties->setEnabled(hasText && hasEntityData && m_widgetMode == MODE_ENTITY_INFO);
 }
 
 /**
@@ -551,7 +564,7 @@ void LC_QuickInfoWidget::onTextChanged(){
  * @param mode
  */
 void LC_QuickInfoWidget::setWidgetMode(int mode){
-    widgetMode = mode;
+    m_widgetMode = mode;
 
     auto* view = qobject_cast<QListView *>(ui->cbPointsCoordinatesMode->view());
     Q_ASSERT(view != nullptr);
@@ -569,7 +582,7 @@ void LC_QuickInfoWidget::setWidgetMode(int mode){
         view->setRowHidden(3, true);
 
         // update current coordinate mode
-        ui->cbPointsCoordinatesMode->setCurrentIndex(entityData.getCoordinatesMode());
+        ui->cbPointsCoordinatesMode->setCurrentIndex(m_entityData->getCoordinatesMode());
     }
     else if (mode == MODE_COORDINATE_COLLECTING){ // show all 4 items for coordinate modes
         QStandardItem* item = model->item(2);
@@ -580,14 +593,31 @@ void LC_QuickInfoWidget::setWidgetMode(int mode){
         view->setRowHidden(2, false);
         view->setRowHidden(3, false);
         // update current coordinate mode
-        ui->cbPointsCoordinatesMode->setCurrentIndex(pointsData.getCoordinatesMode());
+        ui->cbPointsCoordinatesMode->setCurrentIndex(m_pointsData->getCoordinatesMode());
     }
+}
+
+RS_Vector LC_QuickInfoWidget::getCollectedCoordinate(int index) const {
+    return m_pointsData->getCollectedCoordinate(index);
+}
+int LC_QuickInfoWidget::getCollectedCoordinatesCount() const {
+    return m_pointsData->getCollectedCoordinatesCount();
+}
+
+bool LC_QuickInfoWidget::isDisplayPointsPathOnPreview() const {
+    return m_options->displayPointsPath;
+}
+bool LC_QuickInfoWidget::isSelectEntitiesInDefaultActionWithCTRL() const {
+    return m_options->selectEntitiesInDefaultActionByCTRL;
+}
+bool LC_QuickInfoWidget::isAutoSelectEntitiesInDefaultAction() const {
+    return m_options->autoSelectEntitiesInDefaultAction;
 }
 
 /**
  * Copies content of text view to clipboard.
  */
-void LC_QuickInfoWidget::onCopyAll(){
+void LC_QuickInfoWidget::onCopyAll() const {
     // todo - this is simplest implementation so far, just copy the text from the browser to clipboard.
     // todo - however, more sophisticated functionality may be supported if needed - for example, copy using some structured format (csv, xml etc.)
     // todo - may be it worth to add this later.
@@ -609,29 +639,29 @@ void LC_QuickInfoWidget::onCopyAll(){
 /**
  * Handler for picking entity menu item
  */
-void LC_QuickInfoWidget::onPickEntity(){
+void LC_QuickInfoWidget::onPickEntity() const {
     ui->tbSelectEntity->click();
 }
 
 /**
  * handler for pick coordinates menu item
  */
-void LC_QuickInfoWidget::onPickCoordinates(){
+void LC_QuickInfoWidget::onPickCoordinates() const {
     ui->tbCollectCoords->click();
 }
 
 /**
  * Selects entity for which info is shown in in drawing (if entity still exists)
  */
-void LC_QuickInfoWidget::onSelectEntity(){
-    if (entityData.hasData()){
+void LC_QuickInfoWidget::onSelectEntity() const {
+    if (m_entityData->hasData()){
         // try to find entity by its id.
-        unsigned long entityId = entityData.getEntityId();
+        unsigned long entityId = m_entityData->getEntityId();
         RS_Entity* e = findEntityById(entityId);
         if (e != nullptr){
             // entity found, do selection
             e->setSelected(true);
-            graphicView->redraw();
+            m_graphicView->redraw();
         }
         else{
             // if we're there - entity may be selected, or its id may be changed due to modification.
@@ -647,7 +677,7 @@ void LC_QuickInfoWidget::onSelectEntity(){
  * @return
  */
 RS_Entity* LC_QuickInfoWidget::findEntityById(unsigned long entityId) const{
-    for (RS_Entity *e: *document) {
+    for (RS_Entity *e: *m_document) {
         if (e != nullptr && e->getId() == entityId && e->isVisible()){
             return e;
         }
@@ -659,8 +689,8 @@ RS_Entity* LC_QuickInfoWidget::findEntityById(unsigned long entityId) const{
  * Performs editing of properties for entity currently shown by the widget (if entity with id still exists in the document)
  */
 void LC_QuickInfoWidget::onEditEntityProperties(){
-    if (entityData.hasData() && document != nullptr){
-        unsigned long entityId = entityData.getEntityId();
+    if (m_entityData->hasData() && m_document != nullptr){
+        unsigned long entityId = m_entityData->getEntityId();
         RS_Entity *en = findEntityById(entityId);
         if (en != nullptr){
             // entity found, do editing
@@ -668,77 +698,78 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
             en->setSelected(true);
 
             RS_Entity* newEntity = clone.get();
-            if (RS_DIALOGFACTORY->requestModifyEntityDialog(newEntity, graphicView->getViewPort())){
+            if (RS_DIALOGFACTORY->requestModifyEntityDialog(newEntity, m_graphicView->getViewPort())){
                 // properties changed, do edit
-                document->addEntity(newEntity);
+                m_document->addEntity(newEntity);
 
                 // update widget view
                 processEntity(newEntity);
                 en->setSelected(false);
                 clone->setSelected(false);
 
-                document->startUndoCycle();
-                document->addUndoable(newEntity);
+                m_document->startUndoCycle();
+                m_document->addUndoable(newEntity);
                 en->setUndoState(true);
-                document->addUndoable(en);
-                document->endUndoCycle();
+                m_document->addUndoable(en);
+                m_document->endUndoCycle();
 
                 clone.release();
-                RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
+                RS_DIALOGFACTORY->updateSelectionWidget(m_document->countSelected(), m_document->totalSelectedLength());
             }
         }
         else{ // entity not found, cleanup
             clearEntityInfo();
         }
-        graphicView->redraw();
+        m_graphicView->redraw();
     }
 }
 
 /**
  * Setup of document and graphic view for the widget
  * @param doc
- * @param v
+ * @param gv
  */
-void LC_QuickInfoWidget::setDocumentAndView(RS_Document *doc, QG_GraphicView* v){
+void LC_QuickInfoWidget::setGraphicView(RS_GraphicView* gv){
+    RS_Document *doc = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
+    // remove tracking of relative point from old view
+    if (m_graphicView != nullptr){
+        disconnect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
+    }
+
+    m_graphicView = gv;
 
     // add tracking of relative point for new view
-    if (v != nullptr){
-        connect(v, &RS_GraphicView::relativeZeroChanged, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
+    if (gv != nullptr){
+        connect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
+        viewport = gv->getViewPort();
+        doc = gv->getContainer()->getDocument();
     }
-    // remove tracking of relative point from old view
-    if (graphicView != nullptr && graphicView != v){
-        disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
-    }
-    // do setup
-    document = doc;
-    graphicView = v;
-    LC_GraphicViewport* viewport = nullptr;   // fixme - ucs - review
-    if (v != nullptr){
-        viewport = v->getViewPort();
-    }
-    entityData.setDocumentAndView(doc, viewport);
-    pointsData.setDocumentAndView(doc, viewport);
+
+    m_document = doc;
+    m_entityData->setDocumentAndView(doc, viewport);
+    m_pointsData->setDocumentAndView(doc, viewport);
     showNoDataMessage();
-    hasOwnPreview = false;
+    m_hasOwnPreview = false;
 }
 
-void LC_QuickInfoWidget::updateFormats(){
-    entityData.updateFormats();
-    pointsData.updateFormats();
+void LC_QuickInfoWidget::updateFormats() const {
+    m_entityData->updateFormats();
+    m_pointsData->updateFormats();
 }
 
 /**
  * Handler for relative zero changed signal. It's used for updating coordinates if relative zero changed
  * and coordinates mode is relative.
  */
-void LC_QuickInfoWidget::onRelativeZeroChanged([[maybe_unused]]const RS_Vector &relZero){
-    if (entityData.hasData()){
-        if (entityData.getCoordinatesMode() == LC_QuickInfoBaseData::COORD_RELATIVE){
-            updateEntityInfoView(true, widgetMode == MODE_ENTITY_INFO);
+void LC_QuickInfoWidget::onRelativeZeroChanged([[maybe_unused]]const RS_Vector &relZero) const {
+    if (m_entityData->hasData()){
+        if (m_entityData->getCoordinatesMode() == LC_QuickInfoBaseData::COORD_RELATIVE){
+            updateEntityInfoView(true, m_widgetMode == MODE_ENTITY_INFO);
         }
     }
-    if (pointsData.hasData()){
-        if (pointsData.getCoordinatesMode() == LC_QuickInfoBaseData::COORD_RELATIVE && widgetMode == MODE_COORDINATE_COLLECTING){
+    if (m_pointsData->hasData()){
+        if (m_pointsData->getCoordinatesMode() == LC_QuickInfoBaseData::COORD_RELATIVE && m_widgetMode == MODE_COORDINATE_COLLECTING){
             updateCollectedPointsView(true);
         }
     }
@@ -747,7 +778,7 @@ void LC_QuickInfoWidget::onRelativeZeroChanged([[maybe_unused]]const RS_Vector &
 /**
  * Displays standard message if no data present
  */
-void LC_QuickInfoWidget::showNoDataMessage(){
+void LC_QuickInfoWidget::showNoDataMessage() const {
     ui->pteInfo->setHtml(tr("No data - select entity of coordinates first..."));
 }
 
@@ -755,21 +786,21 @@ void LC_QuickInfoWidget::showNoDataMessage(){
  * Options editing dialog
  */
 void LC_QuickInfoWidget::invokeOptionsDialog(){
-    LC_QuickInfoWidgetOptionsDialog dlg = LC_QuickInfoWidgetOptionsDialog(this, options);
+    LC_QuickInfoWidgetOptionsDialog dlg = LC_QuickInfoWidgetOptionsDialog(this, m_options.get());
 
-    bool oldDisplayDistance = options->displayDistanceAndAngle;
+    bool oldDisplayDistance = m_options->displayDistanceAndAngle;
     int dialogResult = dlg.exec();
     if (dialogResult == QDialog::Accepted){
-        options->save();
+        m_options->save();
         // do refresh of collected points, if needed
-        if (options->displayDistanceAndAngle != oldDisplayDistance){
-            if (pointsData.hasData()){
+        if (m_options->displayDistanceAndAngle != oldDisplayDistance){
+            if (m_pointsData->hasData()){
                 updateCollectedPointsView(true);
             }
         }
         // refreshing entity info, if any
-        if (entityData.hasData()){
-            updateEntityInfoView(true, widgetMode == MODE_ENTITY_INFO);
+        if (m_entityData->hasData()){
+            updateEntityInfoView(true, m_widgetMode == MODE_ENTITY_INFO);
         }
 
         update();
@@ -782,8 +813,8 @@ void LC_QuickInfoWidget::invokeOptionsDialog(){
  * @param editedCloneId if editing includes creation of clone for original entity - id of clone
  */
 void LC_QuickInfoWidget::onEntityPropertiesEdited(unsigned long originalId, unsigned long editedCloneId){
-  if (entityData.hasData()){
-      unsigned long currentEntityId = entityData.getEntityId();
+  if (m_entityData->hasData()){
+      unsigned long currentEntityId = m_entityData->getEntityId();
       if (currentEntityId == originalId) {  // entity that is currently displayed was edited
           if (editedCloneId > 0){ // this was editing via properties dialog, so clone was created
               RS_Entity *editedEntity = findEntityById(editedCloneId);
@@ -799,7 +830,7 @@ void LC_QuickInfoWidget::onEntityPropertiesEdited(unsigned long originalId, unsi
   }
 }
 
-void LC_QuickInfoWidget::updateWidgetSettings(){
+void LC_QuickInfoWidget::updateWidgetSettings() const {
     LC_GROUP("Widgets"); {
         bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
         int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);

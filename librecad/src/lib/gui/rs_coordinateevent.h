@@ -51,7 +51,7 @@ public:
 
     bool isZero() const {return m_forZero;}
     bool isRelZero() const {return m_forRelZero;}
-
+    bool isValid() {return m_wcsPos.valid;}
 protected:
     RS_Vector m_wcsPos;
     bool m_forZero = false;

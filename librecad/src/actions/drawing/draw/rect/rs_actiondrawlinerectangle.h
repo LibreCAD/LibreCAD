@@ -38,8 +38,7 @@
 class RS_ActionDrawLineRectangle : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineRectangle(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
+    RS_ActionDrawLineRectangle(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineRectangle() override;
 protected:
     /**
@@ -50,8 +49,8 @@ protected:
         SetCorner2       /**< Setting the 2nd corner. */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

@@ -25,6 +25,8 @@
 **********************************************************************/
 #include "qg_dlgattributes.h"
 
+#include "rs_modification.h"
+
 /*
  *  Constructs a QG_DlgAttributes as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -53,10 +55,10 @@ void QG_DlgAttributes::languageChange(){
 }
 
 void QG_DlgAttributes::setData(RS_AttributesData* data, RS_LayerList& layerList) {
-    this->data = data;
+    m_attributesData = data;
 
     //pen = line->getPen();
-    wPen->setPen(data->pen, true, true, "Pen");
+    wPen->setPen(m_attributesData->pen, true, true, tr("Pen"));
 
     //RS_Graphic* graphic = line->getGraphic();
     //if (graphic) {
@@ -70,14 +72,11 @@ void QG_DlgAttributes::setData(RS_AttributesData* data, RS_LayerList& layerList)
 }
 
 void QG_DlgAttributes::updateData() {
-    data->pen = wPen->getPen();
-    data->layer = cbLayer->currentText();
-
-    data->changeColor = !wPen->isColorUnchanged();
-    data->changeLineType = !wPen->isLineTypeUnchanged();
-    data->changeWidth = !wPen->isWidthUnchanged();
-
-    data->changeLayer = !cbLayer->isUnchanged();
-
-    data->applyBlockDeep = cbBlockDeep->isChecked();
+    m_attributesData->pen = wPen->getPen();
+    m_attributesData->layer = cbLayer->currentText();
+    m_attributesData->changeColor = !wPen->isColorUnchanged();
+    m_attributesData->changeLineType = !wPen->isLineTypeUnchanged();
+    m_attributesData->changeWidth = !wPen->isWidthUnchanged();
+    m_attributesData->changeLayer = !cbLayer->isUnchanged();
+    m_attributesData->applyBlockDeep = cbBlockDeep->isChecked();
 }

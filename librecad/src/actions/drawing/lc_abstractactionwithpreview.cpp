@@ -20,26 +20,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QList>
+#include "lc_abstractactionwithpreview.h"
+
 #include <QMouseEvent>
 
-#include "lc_abstractactionwithpreview.h"
-#include "rs_commandevent.h"
-#include "rs_commands.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
+#include "lc_actioncontext.h"
+#include "lc_refarc.h"
+#include "lc_refline.h"
+#include "lc_refpoint.h"
+#include "rs_document.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
-#include "rs_preview.h"
 #include "rs_line.h"
 #include "rs_point.h"
-#include "lc_refpoint.h"
-#include "lc_refline.h"
-#include "rs_previewactioninterface.h"
-#include "lc_refarc.h"
-#include "rs_actioninterface.h"
+#include "rs_preview.h"
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
@@ -61,12 +56,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @param container
  * @param graphicView
  */
-LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(
-    const char *name,
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name, container, graphicView),
-    highlightedEntity{nullptr}{
+LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext, actionType),
+    m_highlightedEntity{nullptr}{
 }
 
 
@@ -83,7 +75,7 @@ void LC_AbstractActionWithPreview::init(int status){
         // collect selected entities
         QList<RS_Entity*> selectedEntities;
         QList<RS_Entity*> entitiesForTrigger;
-        for (RS_Entity *e: *container) {
+        for (RS_Entity *e: *m_container) {
             if (e->isSelected()){
                 selectedEntities << e;
                 // check whether specific entity is suitable for processing
@@ -94,7 +86,7 @@ void LC_AbstractActionWithPreview::init(int status){
         }
         if (!entitiesForTrigger.isEmpty()){
             showOptions(); // use this as simplest way to read settings for the action
-            if (document){
+            if (m_document){
                 // take care of undo cycle
                 if (isUndoableTrigger()){
                     undoCycleStart();
@@ -199,7 +191,7 @@ bool LC_AbstractActionWithPreview::isUnselectEntitiesOnInitTrigger(){
  */
 void LC_AbstractActionWithPreview::doTrigger() {
     if (doCheckMayTrigger()){
-        if (document){
+        if (m_document){
             if (isUndoableTrigger()){
                 undoCycleStart();
                 performTrigger();
@@ -257,9 +249,9 @@ void LC_AbstractActionWithPreview::setupAndAddTriggerEntities(const QList<RS_Ent
             // do setup
             setPenAndLayerToActive(ent);
         }
-        container->addEntity(ent);
+        m_container->addEntity(ent);
         if (undoableTrigger){
-            document->addUndoable(ent);
+            m_document->addUndoable(ent);
         }
     }
 }
@@ -351,7 +343,7 @@ void LC_AbstractActionWithPreview::onMouseRightButtonRelease(int status, LC_Mous
  */
 
 void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
-    alternativeActionMode = false;
+    m_alternativeActionMode = false;
 }
 
 /**
@@ -364,7 +356,7 @@ void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
  * @param e mouse event
  */
 void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]const LC_MouseEvent *e, [[maybe_unused]]int status){
-    alternativeActionMode = e->isShift;
+    m_alternativeActionMode = e->isShift;
 }
 
 /**
@@ -422,8 +414,8 @@ bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]LC_Mous
  */
 void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
     unHighlightEntity();
-    highlightedEntity = en;
-    highlightedEntity->setHighlighted(true);
+    m_highlightedEntity = en;
+    m_highlightedEntity->setHighlighted(true);
     redraw(RS2::RedrawDrawing);
 }
 
@@ -431,10 +423,10 @@ void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
  * Un-highlights previously highlighted and saved entity. Method is pair for highlightEntity() method.
  */
 void LC_AbstractActionWithPreview::unHighlightEntity(){
-    if(highlightedEntity){
-        highlightedEntity->setHighlighted(false);
+    if(m_highlightedEntity){
+        m_highlightedEntity->setHighlighted(false);
         redraw(RS2::RedrawDrawing);
-        highlightedEntity = nullptr;
+        m_highlightedEntity = nullptr;
     }
 }
 
@@ -472,7 +464,7 @@ void LC_AbstractActionWithPreview::onMouseMoveEvent(int status, LC_MouseEvent *e
         if (shouldDrawPreview){
             unHighlightEntity();
             drawPreviewForPoint(e, snap);
-            lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
+            m_lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
         }
         else{
             drawPreview(); // ensure that preview is refreshed if something (like angle snap mark) is there
@@ -535,7 +527,7 @@ void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, LC_Mou
  * @return true if initial pre-snap to relative zero may be triggered by the mouse event
  */
 bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]]LC_MouseEvent *e){
-    return alternativeActionMode;
+    return m_alternativeActionMode;
 }
 
 
@@ -593,9 +585,9 @@ void LC_AbstractActionWithPreview::drawPreviewForPoint(LC_MouseEvent *e, RS_Vect
  */
 void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
     deletePreview();
-    if (lastSnapPoint.valid){
+    if (m_lastSnapPoint.valid){
         if (doCheckMayDrawPreview(nullptr, getStatus())){
-            drawPreviewForPoint(nullptr, lastSnapPoint);
+            drawPreviewForPoint(nullptr, m_lastSnapPoint);
             redraw();
         }
     }
@@ -634,7 +626,7 @@ void LC_AbstractActionWithPreview::finishAction(){
     init(-1);
     updateMouseButtonHints();
     finish(true);
-    graphicView->repaint();
+    m_graphicView->repaint();
 }
 
 /**
@@ -642,7 +634,7 @@ void LC_AbstractActionWithPreview::finishAction(){
  * May be used by actions that would like to control snap mode during their operations (say, for simplicity of entities selection).
  */
 void LC_AbstractActionWithPreview::restoreSnapMode(){
-    RS_SnapMode restoredMode = RS_SnapMode::fromInt(savedSnapMode);
+    RS_SnapMode restoredMode = RS_SnapMode::fromInt(m_savedSnapMode);
     setGlobalSnapMode(restoredMode);
 }
 
@@ -652,16 +644,14 @@ void LC_AbstractActionWithPreview::restoreSnapMode(){
  */
 void LC_AbstractActionWithPreview::setGlobalSnapMode(const RS_SnapMode &mode){
     setSnapMode(mode);
-    if (actionhandler != nullptr){
-        actionhandler->slotSetSnaps(mode);
-    }
+    m_actionContext->setSnapMode(mode);
 }
 /**
  * Utility method that sets free snap mode
  */
 void LC_AbstractActionWithPreview::setFreeSnap(){
     RS_SnapMode* currentSnapMode = getSnapMode();
-    savedSnapMode = RS_SnapMode::toInt(*currentSnapMode);
+    m_savedSnapMode = RS_SnapMode::toInt(*currentSnapMode);
     currentSnapMode->clear();
     currentSnapMode->snapFree = true;
     setGlobalSnapMode(*currentSnapMode);
@@ -761,7 +751,7 @@ bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, cons
  * @return created point entity
  */
 RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Point(container, coord);
+    auto *result = new RS_Point(m_container, coord);
     list << result;
     return result;
 }
@@ -773,12 +763,12 @@ RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QLis
  * @return
  */
 void LC_AbstractActionWithPreview::createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-    auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+    auto *result = new LC_RefPoint(m_preview.get(), coord, m_refPointSize, m_refPointMode);
     list << result;
 }
 
 void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-        auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+        auto *result = new LC_RefPoint(m_preview.get(), coord, m_refPointSize, m_refPointMode);
         result->setHighlighted(true);
         list << result;
 }
@@ -791,24 +781,24 @@ void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coo
  * @return created line
  */
 RS_Line* LC_AbstractActionWithPreview::createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Line(container, startPoint, endPoint);
+    auto *result = new RS_Line(m_container, startPoint, endPoint);
     list << result;
     return result;
 }
 
 RS_Line* LC_AbstractActionWithPreview::createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Line(container, lineData);
+    auto *result = new RS_Line(m_container, lineData);
     list << result;
     return result;
 }
 
 void LC_AbstractActionWithPreview::createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
-        auto *result = new LC_RefLine(preview.get(), startPoint, endPoint);
+        auto *result = new LC_RefLine(m_preview.get(), startPoint, endPoint);
         list << result;
 }
 
 void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const{
-        auto *result = new LC_RefArc(preview.get(), data);
+        auto *result = new LC_RefArc(m_preview.get(), data);
         list << result;
 }
 

@@ -27,7 +27,6 @@
 
 class LC_GraphicViewport;
 
-
 class LC_Lattice{
 public:
     LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth);
@@ -70,13 +69,9 @@ public:
 
     const std::vector<double> &getPointsX() const;
     const std::vector<double> &getPointsY() const;
-
     void toGui(LC_GraphicViewport *viewport);
-
     void addLine(double d, double d1, double d2, double d3);
-
     void addPoint(double x, double y);
-
 protected:
     RS_Vector deltaX;
     RS_Vector deltaY;
@@ -100,19 +95,11 @@ protected:
 
     void fillHorizontalEdge(int numPointsByX, const RS_Vector &baseGridPoint, const RS_Vector &xDelta, const RS_Vector &yDelta, bool skipFirstPoint);
     void fillVerticalEdge(int numPointsByY, const RS_Vector &baseGridPoint, const RS_Vector &xDelta, const RS_Vector &yDelta, bool skipFirstPoint);
-
     void prepareDeltas(bool reverseX, bool reverseY, RS_Vector &xDeltaToUse, RS_Vector &yDeltaToUse) const;
-
     void calcDeltas(double angleX, double angleY, const RS_Vector &gridWidth);
-
     void fillAllByLine(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, const RS_Vector &xDelta, const RS_Vector &yDelta, bool fillLeftEdge, bool fillRightEdge);
-
-
     void calcLineOffsetDeltas(double angleX, double angleY, const RS_Vector &offset);
-
     void fillAllByLineExceptDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, const RS_Vector &xDelta, const RS_Vector &yDelta, bool fillLeftEdge, bool fillRightEdge);
-
-
     void fillByLinesParallelDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, const RS_Vector &xDelta, const RS_Vector &yDelta);
 };
 

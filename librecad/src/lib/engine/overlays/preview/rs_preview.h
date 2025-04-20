@@ -30,6 +30,8 @@
 
 #include "rs_entitycontainer.h"
 
+class LC_GraphicViewport;
+
 /**
  * This class supports previewing. The RS_Snapper class uses
  * an instance of RS_Preview to preview entities, ranges, 
@@ -39,11 +41,13 @@
  */
 class RS_Preview : public RS_EntityContainer {
 public:
-    RS_Preview(RS_EntityContainer* parent=nullptr);
+    RS_Preview(RS_EntityContainer* parent, LC_GraphicViewport* viewport);
     RS2::EntityType rtti() const override{
         return RS2::EntityPreview;
     }
     void addEntity(RS_Entity* entity) override;
+    void calcRectCorners(const RS_Vector& worldCorner1, const RS_Vector& worldCorner3, RS_Vector& worldCorner2,
+                         RS_Vector& worldCorner4) const;
     void addCloneOf(RS_Entity* entity, LC_GraphicViewport* view);
     void addSelectionFrom(RS_EntityContainer& container, LC_GraphicViewport* view);
     void addAllFrom(RS_EntityContainer& container, LC_GraphicViewport* view);
@@ -54,7 +58,8 @@ public:
     void clear() override;
     int getMaxAllowedEntities();
 private:
-    unsigned int maxEntities = 0;
-    QList<RS_Entity*> referenceEntities;
+    unsigned int m_maxEntities {0};
+    QList<RS_Entity*> m_referenceEntities;
+    LC_GraphicViewport* m_viewport {nullptr};
 };
 #endif

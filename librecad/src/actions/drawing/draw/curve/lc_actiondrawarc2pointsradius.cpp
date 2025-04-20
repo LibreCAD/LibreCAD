@@ -24,27 +24,26 @@
 
 #include "rs_arc.h"
 
-LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionDrawArc2PointsBase("DrawArc2PRadius",container, graphicView) {
-    actionType = RS2::ActionDrawArc2PRadius;
+LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(LC_ActionContext *actionContext)
+    :LC_ActionDrawArc2PointsBase("DrawArc2PRadius",actionContext, RS2::ActionDrawArc2PRadius) {
 }
 
 bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
-    double chordLen = startPoint.distanceTo(pos);
+    double chordLen = m_startPoint.distanceTo(pos);
     double chordHalf = chordLen * 0.5;
     
-    double chordAngle = startPoint.angleTo(pos);
+    double chordAngle = m_startPoint.angleTo(pos);
 
-    RS_Vector chordLenHalfPont = (startPoint + pos) * 0.5;
+    RS_Vector chordLenHalfPont = (m_startPoint + pos) * 0.5;
 
-    double radius = parameterLen;
+    double radius = m_parameterLen;
 
     if (chordHalf >= radius) {
         chordLen = radius * 2;
         chordHalf = radius;
-        pos = startPoint.relative(chordLen, chordAngle);
-        chordLenHalfPont = (startPoint + pos) * 0.5;
+        pos = m_startPoint.relative(chordLen, chordAngle);
+        chordLenHalfPont = (m_startPoint + pos) * 0.5;
     }
 
     double distanceFromChordCenterToCenter = 0.0;
@@ -59,18 +58,18 @@ bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, [[maybe_unus
     double chordAngleNormal = chordAngle + M_PI_2;
     double chordAngleNormalAlt = chordAngle - M_PI_2;
 
-    bool reverseArc = reversed;
+    bool reverseArc = m_reversed;
     if (alternate){
         reverseArc = !reverseArc;
     }
 
-    double angleToCenter = /*reverseArc*/ reversed ? chordAngleNormalAlt : chordAngleNormal;
+    double angleToCenter = /*reverseArc*/ m_reversed ? chordAngleNormalAlt : chordAngleNormal;
     RS_Vector center = chordLenHalfPont.relative(distanceFromChordCenterToCenter, angleToCenter);
 
     data.center = center;
     data.reversed = reverseArc;
     data.radius = radius;
-    data.angle1 = data.center.angleTo(startPoint);
+    data.angle1 = data.center.angleTo(m_startPoint);
     data.angle2 = data.center.angleTo(pos);
     return true;
 }

@@ -32,40 +32,33 @@
 class RS_Layer;
 class RS_LayerList;
 
-
 /**
  * A combobox for choosing a layer.
  */
 class QG_LayerBox: public QComboBox {
     Q_OBJECT
-
 public:
     QG_LayerBox(QWidget* parent=nullptr);
     virtual ~QG_LayerBox();
-
     RS_Layer* getLayer() {
-        return currentLayer;
+        return m_currentLayer;
     }
     void setLayer(RS_Layer& layer);
     void setLayer(QString& layer);
-
     void init(RS_LayerList& ll, bool doShowByBlock, bool doShowUnchanged);
-
 	bool isUnchanged() {
-		return unchanged;
+		return m_unchanged;
 	}
-
 private slots:
     void slotLayerChanged(int index);
-
 signals:
     void layerChanged(RS_Layer* layer);
 private:
-    RS_LayerList* layerList = nullptr;
-    RS_Layer* currentLayer = nullptr;
-    bool showByBlock = false;
-    bool showUnchanged = false;
-    bool unchanged = false;
+    RS_LayerList* m_layerList = nullptr;
+    RS_Layer* m_currentLayer = nullptr;
+    bool m_showByBlock = false;
+    bool m_showUnchanged = false;
+    bool m_unchanged = false;
 };
 
 #endif

@@ -24,18 +24,15 @@
 **
 **********************************************************************/
 
-#include <cmath>
 #include "rs_arc.h"
 
-#include "rs_line.h"
-#include "rs_linetypepattern.h"
-#include "rs_information.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "lc_quadratic.h"
-#include "rs_debug.h"
 #include "lc_rect.h"
+#include "rs_debug.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -241,8 +238,6 @@ bool RS_Arc::createFrom2PDirectionAngle(
 
     return true;
 }
-
-
 
 /**
  * Creates an arc from its startpoint, endpoint and bulge.
@@ -786,9 +781,11 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
             if(irev) {
                 setAngle2(ia);
                 setAngle1(ia2);
+                calculateBorders();
             } else {
                 setAngle1(ia);
                 setAngle2(ia2);
+                calculateBorders();
             }
             da1=fabs(remainder(getAngle1()-am,2*M_PI));
             da2=fabs(remainder(getAngle2()-am,2*M_PI));
@@ -811,6 +808,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
             } else {
                 setAngle1(ia);
             }
+            calculateBorders();
         }
     }
     LC_LOG<<"RS_Arc::prepareTrim(): line "<<__LINE__<<": angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getArcAngle(is)<<" ia2="<<ia2;

@@ -26,10 +26,8 @@
 #include "rs_entitycontainer.h"
 
 
-LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,
-                                                           RS_EntityContainer &container,
-                                                           RS_GraphicView &graphicView, RS2::ActionType actionType)
-                                                           :RS_PreviewActionInterface(name, container, graphicView,actionType){}
+LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
+                                                           :RS_PreviewActionInterface(name, actionContext,actionType){}
 
 void LC_ActionModifySelectionBase::onMouseMoveEvent(int status, LC_MouseEvent *event) {
     RS_PreviewActionInterface::onMouseMoveEvent(status, event);
@@ -40,7 +38,7 @@ void LC_ActionModifySelectionBase::mouseReleaseEvent(QMouseEvent *event){
 }
 
 int LC_ActionModifySelectionBase::countSelected() {
-    unsigned int ret=container->countSelected();
+    unsigned int ret=m_container->countSelected();
     // fixme - ensure that this is correct place for method
     if (ret==0) {
         commandMessage(tr("No entity selected!"));
@@ -50,6 +48,6 @@ int LC_ActionModifySelectionBase::countSelected() {
 
 void LC_ActionModifySelectionBase::keyPressEvent(QKeyEvent *e){
     if (e->key()==Qt::Key_Enter && countSelected() > 0){
-        selectionFinished = true;
+        m_selectionFinished = true;
     }
 }

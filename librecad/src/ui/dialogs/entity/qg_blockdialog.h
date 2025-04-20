@@ -32,27 +32,20 @@
 class RS_BlockList;
 struct RS_BlockData;
 
-class QG_BlockDialog : public LC_Dialog, public Ui::QG_BlockDialog
-{
+class QG_BlockDialog : public LC_Dialog, public Ui::QG_BlockDialog{
     Q_OBJECT
-
 public:
     QG_BlockDialog(QWidget* parent = nullptr);
 	~QG_BlockDialog() override =default;
-
-    virtual RS_BlockData getBlockData();
-
+    RS_BlockData getBlockData();
 public slots:
-    virtual void setBlockList( RS_BlockList * l );
-    virtual void validate();
-    virtual void cancel();
-
+    void setBlockList( RS_BlockList * l );
+    void validate();
+    void cancel();
 protected:
-    RS_BlockList* blockList;
-
+    RS_BlockList* m_blockList;
 protected slots:
-    virtual void languageChange();
-
+    void languageChange();
 };
 
 #endif // QG_BLOCKDIALOG_H

@@ -22,18 +22,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cmath>
-
-#include "lc_abstractactionwithpreview.h"
 #include "lc_actiondrawslicedivide.h"
+
 #include "lc_linemath.h"
 #include "lc_slicedivideoptions.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_line.h"
-#include "rs_math.h"
 #include "rs_pen.h"
-#include "rs_point.h"
 
 namespace {
     //list of entity types supported by current action
@@ -43,16 +39,38 @@ namespace {
 // todo - think about free mode for selection of tick length... not clear how to do this in convenient way yet
 // todo - think whether dividing arc/circle for fixed angle (similar to fixed length for lines is needed
 
-LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    bool forCircle)
-    :LC_AbstractActionWithPreview("Draw slice divide", container, graphicView){
+
+/**
+ * Structure that describes single tick
+ */
+struct LC_ActionDrawSliceDivide::TickData {
+    explicit TickData(
+        bool e,
+        bool v,
+        const RS_Vector &p,
+        const RS_LineData &l,
+        double ang):
+        isVisible(v),
+        edge(e),
+        snapPoint(p),
+        tickLine(l),
+        arcAngle(ang){}
+
+    ~TickData() = default;
+
+    bool isVisible{true}; // visible or not
+    bool edge{false}; // is for edge?
+    RS_Vector snapPoint; // point on entity where tick is snapped
+    RS_LineData tickLine; // line data for tick
+    double arcAngle; // angle for snapping tick
+};
+LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(LC_ActionContext *actionContext,bool forCircle)
+    :LC_AbstractActionWithPreview("Draw slice divide", actionContext){
     if (forCircle){
-        actionType = RS2::ActionDrawSliceDivideCircle;
+        m_actionType = RS2::ActionDrawSliceDivideCircle;
     }
     else {
-        actionType = RS2::ActionDrawSliceDivideLine;
+        m_actionType = RS2::ActionDrawSliceDivideLine;
     }
 }
 
@@ -64,7 +82,7 @@ bool LC_ActionDrawSliceDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEve
  * @return
  */
 EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
-    if (actionType == RS2::ActionDrawSliceDivideLine){
+    if (m_actionType == RS2::ActionDrawSliceDivideLine){
         return sliceDivideLineEntityTypeList;
     }
     else{
@@ -79,7 +97,7 @@ EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
  * @param status current status of the action
  */
 void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
-    ticksData.clear();
+    m_ticksData.clear();
     deleteSnapper();
     EntityTypeList catchEntityTypes = getCatchEntityTypeList();
     RS_Entity *en = catchModifiableAndDescribe(e, catchEntityTypes);
@@ -114,24 +132,24 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
         }
 
         // create lines for calculated ticks data
-        uint createdTicksCount = ticksData.size();
+        uint createdTicksCount = m_ticksData.size();
         if (createdTicksCount > 0){
-            bool hasTickLength = LC_LineMath::isMeaningful(tickLength);
-            bool doDrawTicks = hasTickLength || doDivideEntity;
+            bool hasTickLength = LC_LineMath::isMeaningful(m_tickLength);
+            bool doDrawTicks = hasTickLength || m_doDivideEntity;
 
             if (doDrawTicks){
                 for (uint i = 0; i < createdTicksCount; i++) {
-                    TickData tick = ticksData.at(i);
-                    if (tick.isVisible){
+                    TickData* tick = m_ticksData.at(i);
+                    if (tick->isVisible){
                         if (hasTickLength){ // create preview line for tick with non-zero length
-                            auto tickLine = new RS_Line(tick.tickLine.startpoint, tick.tickLine.endpoint);
+                            auto tickLine = new RS_Line(tick->tickLine.startpoint, tick->tickLine.endpoint);
                             list << tickLine;
                         }
-                        if (doDivideEntity) { // if tick length is zero - it is just divide mode, without ticks
+                        if (m_doDivideEntity) { // if tick length is zero - it is just divide mode, without ticks
                             // so on preview, we just indicate that we may have divide points
                             // even if tick is present - we'd better highlight division points
-                            if (showRefEntitiesOnPreview) {
-                                createRefPoint(tick.snapPoint, list);
+                            if (m_showRefEntitiesOnPreview) {
+                                createRefPoint(tick->snapPoint, list);
                             }
                         }
                     }
@@ -139,7 +157,7 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
             }
         }
     }
-    if (actionType == RS2::ActionDrawSliceDivideCircle){
+    if (m_actionType == RS2::ActionDrawSliceDivideCircle){
         // update options widget for
         updateOptionsUI(optionsMode);
     }
@@ -152,15 +170,15 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_Mouse
 bool LC_ActionDrawSliceDivide::doCheckMayTrigger(){
     bool result = false;
     if (getStatus() == SetEntity){
-        if (entity != nullptr) {
-            int entityRtti = entity->rtti();
+        if (m_entity != nullptr) {
+            int entityRtti = m_entity->rtti();
             switch (entityRtti) {
                 case RS2::EntityLine:
-                    result = actionType == RS2::ActionDrawSliceDivideLine;
+                    result = m_actionType == RS2::ActionDrawSliceDivideLine;
                     break;
                 case RS2::EntityArc:
                 case RS2::EntityCircle: {
-                    result = actionType == RS2::ActionDrawSliceDivideCircle;
+                    result = m_actionType == RS2::ActionDrawSliceDivideCircle;
                     break;
                 }
                 default:
@@ -175,14 +193,21 @@ bool LC_ActionDrawSliceDivide::isSetActivePenAndLayerOnTrigger(){
     return false; // this action will handle attributes (as if there is divide, we'll use original attributes for created entities)
 }
 
+void LC_ActionDrawSliceDivide::clearTickData() {
+    for (auto t: m_ticksData) {
+        delete t;
+    }
+    m_ticksData.clear();
+}
+
 void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    ticksData.clear();
-    int rtti = entity->rtti();
+    clearTickData();
+    int rtti = m_entity->rtti();
     RS_Entity *entityToDelete = nullptr;
     switch (rtti) {
         // handle selected entity, preparing ticks and entities that are result of dividing original entities
         case RS2::EntityLine: {
-            auto *lineEntity = dynamic_cast<RS_Line *>(entity);
+            auto *lineEntity = dynamic_cast<RS_Line *>(m_entity);
             prepareLineTicks(lineEntity);
             bool mayDivide = checkShouldDivideEntity(lineEntity, tr("Line"));
             if (mayDivide){
@@ -192,7 +217,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
             break;
         }
         case RS2::EntityArc: {
-            auto *arcEntity = dynamic_cast<RS_Arc *>(entity);
+            auto *arcEntity = dynamic_cast<RS_Arc *>(m_entity);
             prepareArcTicks(arcEntity);
             bool mayDivide = checkShouldDivideEntity(arcEntity, tr("Arc"));
             if (mayDivide){
@@ -202,7 +227,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
             break;
         }
         case RS2::EntityCircle: {
-            auto *circleEntity = dynamic_cast<RS_Circle *>(entity);
+            auto *circleEntity = dynamic_cast<RS_Circle *>(m_entity);
             prepareCircleTicks(circleEntity);
             bool mayDivide = checkShouldDivideEntity(circleEntity, tr("Circle"));
             if (mayDivide){
@@ -220,14 +245,14 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
         undoableDeleteEntity(entityToDelete);
     }
 
-    bool hasTickLength = LC_LineMath::isMeaningful(tickLength);
+    bool hasTickLength = LC_LineMath::isMeaningful(m_tickLength);
     if (hasTickLength){
         // ticks are non-zero, so we'll need to create lines for them
-        uint count = ticksData.size();
+        uint count = m_ticksData.size();
         for (uint i = 0; i < count; i++) {
-            TickData tick = ticksData.at(i);
-            if (tick.isVisible){
-                auto *line = new RS_Line(container, tick.tickLine);
+            TickData* tick = m_ticksData.at(i);
+            if (tick->isVisible){
+                auto *line = new RS_Line(m_container, tick->tickLine);
                 // for ticks, we'll always use current pen and layer
                 setPenAndLayerToActive(line);
                 list<<line;
@@ -243,7 +268,7 @@ void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int 
             RS_Entity *en = catchModifiableEntity(e, catchEntityTypes);
             if (en != nullptr && !en->isParentIgnoredOnModifications()){
                 // if we have selected entity, just perform the action
-                entity = en;
+                m_entity = en;
                 trigger();
             }
             break;
@@ -256,8 +281,8 @@ void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int 
 void LC_ActionDrawSliceDivide::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     // just perform a cleanup
-    entity = nullptr;
-    ticksData.clear();
+    m_entity = nullptr;
+    clearTickData();
     init(SetEntity);
 }
 
@@ -269,7 +294,7 @@ void LC_ActionDrawSliceDivide::doAfterTrigger(){
  */
 bool LC_ActionDrawSliceDivide::checkShouldDivideEntity(const RS_Entity *e, const QString &entityName) const{
     bool mayDivide = false;
-    if (doDivideEntity){
+    if (m_doDivideEntity){
         mayDivide = checkMayExpandEntity(e, entityName);
     }
     return mayDivide;
@@ -282,16 +307,16 @@ bool LC_ActionDrawSliceDivide::checkShouldDivideEntity(const RS_Entity *e, const
  * @param list list of entities to which created segments are added
  */
 void LC_ActionDrawSliceDivide::createLineSegments(RS_Line *pLine, QList<RS_Entity *> &list){
-    uint count = ticksData.size();
+    uint count = m_ticksData.size();
     if (count > 2){ // we always set 2 ticks for edges
         RS_Pen originalPen = pLine->getPen(false);
         RS_Layer *originalLayer = pLine->getLayer();
 
         for (uint i = 1; i < count; i++) {
-            TickData startTick = ticksData.at(i - 1);
-            TickData endTick = ticksData.at(i);
-            RS_Vector startPoint = startTick.snapPoint;
-            RS_Vector endPoint = endTick.snapPoint;
+            TickData* startTick = m_ticksData.at(i - 1);
+            TickData* endTick = m_ticksData.at(i);
+            RS_Vector startPoint = startTick->snapPoint;
+            RS_Vector endPoint = endTick->snapPoint;
             auto *line = createLine(startPoint, endPoint,list);
             line->setLayer(originalLayer);
             line->setPen(originalPen);
@@ -333,7 +358,7 @@ void LC_ActionDrawSliceDivide::createCircleSegments(RS_Circle *pCircle, QList<RS
  * @param list list of entities to add segments
  */
 void LC_ActionDrawSliceDivide::doCreateArcSegments(RS_Entity *pArc, const RS_Vector &center, double radius, bool reversed, QList<RS_Entity *> &list){
-    size_t count = ticksData.size();
+    size_t count = m_ticksData.size();
 
     if (count > 2){ // we always set 2 ticks for edges
         RS_Pen originalPen = pArc->getPen(false);
@@ -341,14 +366,14 @@ void LC_ActionDrawSliceDivide::doCreateArcSegments(RS_Entity *pArc, const RS_Vec
 
 
         for (size_t i = 1; i < count; i++) {
-            TickData startTick = ticksData.at(i - 1);
-            TickData endTick = ticksData.at(i);
-            double startAngle = startTick.arcAngle;
-            double endAngle = endTick.arcAngle;
+            TickData* startTick = m_ticksData.at(i - 1);
+            TickData* endTick = m_ticksData.at(i);
+            double startAngle = startTick->arcAngle;
+            double endAngle = endTick->arcAngle;
             if (reversed){
                 std::swap(startAngle, endAngle);
             }
-            auto *newArc = new RS_Arc(container, RS_ArcData(center, radius, startAngle, endAngle, reversed));
+            auto *newArc = new RS_Arc(m_container, RS_ArcData(center, radius, startAngle, endAngle, reversed));
             newArc->setLayer(originalLayer);
             newArc->setPen(originalPen);
             list << newArc;
@@ -389,7 +414,7 @@ void LC_ActionDrawSliceDivide::prepareArcTicks(RS_Arc *arc){
 void LC_ActionDrawSliceDivide::prepareCircleTicks(RS_Circle *circle){
     double radius = circle->getRadius();
     RS_Vector center = circle->getCenter();
-    double startPointAngle = toWorldAngleFromUCSBasisDegrees(circleStartTickAngleDegrees);
+    double startPointAngle = toWorldAngleFromUCSBasisDegrees(m_circleStartTickAngleDegrees);
 
     RS_Vector startPoint = LC_LineMath::findPointOnCircle(radius, startPointAngle, center);
 
@@ -410,7 +435,7 @@ void LC_ActionDrawSliceDivide::prepareCircleTicks(RS_Circle *circle){
  * @param arcLength angle length of arc
  */
 void LC_ActionDrawSliceDivide::prepareArcSegments(RS_Entity *e, double radius, RS_Vector &center, double startPointAngle, double arcLength){
-    int segmentsCount = tickCount + 1;
+    int segmentsCount = m_tickCount + 1;
     double segmentAngleLength = arcLength / segmentsCount;
 
     for (int i = 1; i < segmentsCount; i++) {
@@ -430,15 +455,15 @@ void LC_ActionDrawSliceDivide::prepareLineTicks(RS_Line *line){
 
     // calculate intermediate ticks
     double lineLength = line->getLength();
-    int segmentsCount = tickCount + 1;
+    int segmentsCount = m_tickCount + 1;
     double segmentLength;
 
     // todo - handle remaining part of line for fixed distance mode (and relate it to edges mode ticks somehow?)
 //    double remainingPartOfLine = 0.0;
 
-    if (fixedDistance){
+    if (m_fixedDistance){
         // for fixed distance between ticks, adjust length and ticks count
-        segmentLength = distance;
+        segmentLength = m_distance;
         segmentsCount = std::ceil(lineLength / segmentLength + 1);
     }
     else {
@@ -467,7 +492,7 @@ void LC_ActionDrawSliceDivide::prepareLineTicks(RS_Line *line){
  * @param arcAngle angle on arc, if any
  */
 void LC_ActionDrawSliceDivide::prepareStartTick(RS_Entity *ent, const RS_Vector& tickSnapPoint, double arcAngle){
-    bool visible = (tickEdgeDrawMode == DRAW_EDGE_BOTH) || (tickEdgeDrawMode == DRAW_EDGE_START);
+    bool visible = (m_tickEdgeDrawMode == DRAW_EDGE_BOTH) || (m_tickEdgeDrawMode == DRAW_EDGE_START);
     createTickData(ent, tickSnapPoint, arcAngle, true, visible);
 }
 
@@ -478,7 +503,7 @@ void LC_ActionDrawSliceDivide::prepareStartTick(RS_Entity *ent, const RS_Vector&
  * @param arcAngle angle on arc, if any
  */
 void LC_ActionDrawSliceDivide::prepareEndTick(RS_Entity *ent, const RS_Vector& tickSnapPoint, double arcAngle){
-    bool visible = (tickEdgeDrawMode == DRAW_EDGE_BOTH) || (tickEdgeDrawMode == DRAW_EDGE_END);
+    bool visible = (m_tickEdgeDrawMode == DRAW_EDGE_BOTH) || (m_tickEdgeDrawMode == DRAW_EDGE_END);
     createTickData(ent, tickSnapPoint, arcAngle, true, visible);
 }
 
@@ -505,7 +530,7 @@ void LC_ActionDrawSliceDivide::createTickData(RS_Entity *e, RS_Vector tickSnapPo
  * @param angle
  */
 void LC_ActionDrawSliceDivide::addTick(RS_Vector &tickSnapPoint, RS_LineData &lineData, bool edge, bool visible, double angle){
-    ticksData.push_back(TickData(edge, visible, tickSnapPoint, lineData, angle));
+    m_ticksData.push_back(new TickData(edge, visible, tickSnapPoint, lineData, angle));
 }
 
 /**
@@ -515,19 +540,19 @@ void LC_ActionDrawSliceDivide::addTick(RS_Vector &tickSnapPoint, RS_LineData &li
  * @param tickLineData tick line data
  */
 void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_Entity *ent, RS_LineData &tickLineData){
-    double actualTickLength = tickLength;
+    double actualTickLength = m_tickLength;
     auto const vp = ent->getNearestPointOnEntity(tickSnapPosition, false);
 
-    double tickAngleToUse = tickAngleDegrees;
-    if (alternativeActionMode){
+    double tickAngleToUse = m_tickAngleDegrees;
+    if (m_alternativeActionMode){
         // if SHIFT is pressed, we'll mirror angle specified in options
-        tickAngleToUse = 180 - tickAngleDegrees;
+        tickAngleToUse = 180 - m_tickAngleDegrees;
     }
 
     double actualTickAngle;
 
     // if angle should be related, take into consideration own angle of entity
-    if (tickAngleIsRelative){
+    if (m_tickAngleIsRelative){
         double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
         actualTickAngle = tickAngleRad + toUCSAngle(ent->getTangentDirection(vp).angle());
     }
@@ -537,13 +562,13 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
 
     // proceed offset of tick specified by options
     RS_Vector vectorOffset(0, 0, 0);
-    if (LC_LineMath::isMeaningful(tickOffset)){
-        vectorOffset = RS_Vector::polar(tickOffset, actualTickAngle);
+    if (LC_LineMath::isMeaningful(m_tickOffset)){
+        vectorOffset = RS_Vector::polar(m_tickOffset, actualTickAngle);
     }
 
     // prepare vector that will correct tick positions based on specified snap mode option for ticks
     RS_Vector vectorOffsetCorrection(0, 0, 0);
-    switch (tickSnapMode) {
+    switch (m_tickSnapMode) {
         case SNAP_START:
             // start point of tick should be in tick's snap point
             break;
@@ -567,7 +592,7 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
 void LC_ActionDrawSliceDivide::updateMouseButtonHints(){
     // todo - actually , if tick angle is 90 degrees, alternative mode is not meaningful, so it's better to adjust more
     // fine grained shift status there
-    if (actionType == RS2::ActionDrawSliceDivideLine){
+    if (m_actionType == RS2::ActionDrawSliceDivideLine){
         updateMouseWidgetTRCancel(tr("Select line"), MOD_SHIFT_MIRROR_ANGLE);
     }
     else{

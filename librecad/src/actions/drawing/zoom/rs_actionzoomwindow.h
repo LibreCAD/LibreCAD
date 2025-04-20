@@ -37,11 +37,8 @@
 class RS_ActionZoomWindow : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionZoomWindow(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView,
-                        bool keepAspectRatio=true);
+    RS_ActionZoomWindow(LC_ActionContext *actionContext,bool keepAspectRatio=true);
     ~RS_ActionZoomWindow() override;
-
     void init(int status) override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
@@ -51,9 +48,9 @@ protected:
         SetSecondCorner
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool keepAspectRatio = false;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+    bool m_keepAspectRatio = false;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

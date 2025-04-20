@@ -22,12 +22,10 @@
 
 
 #include "rs_actiondrawcircle3p.h"
+
 #include "rs_circle.h"
-#include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
 
 struct RS_ActionDrawCircle3P::Points {
 	RS_CircleData data;
@@ -45,30 +43,27 @@ struct RS_ActionDrawCircle3P::Points {
 	RS_Vector point3 = RS_Vector(false);
 };
 
-RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw circles",
-						   container, graphicView)
-        , pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawCircle3P;
+RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(LC_ActionContext *actionContext)
+        :LC_ActionDrawCircleBase("Draw circles",actionContext,RS2::ActionDrawCircle3P)
+        , m_actionData(std::make_unique<Points>()){
 }
 
 RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() = default;
 
 
 void RS_ActionDrawCircle3P::reset(){
-    pPoints.reset(new Points{});
+    m_actionData.reset(new Points{});
 }
 
 void RS_ActionDrawCircle3P::doTrigger() {
     preparePreview();
-    if (pPoints->data.isValid()){
-        auto *circle = new RS_Circle{container, pPoints->data};
+    if (m_actionData->data.isValid()){
+        auto *circle = new RS_Circle{m_container, m_actionData->data};
 
         setPenAndLayerToActive(circle);
 
-        if (moveRelPointAtCenterAfterTrigger){
-            moveRelativeZero(pPoints->data.center);
+        if (m_moveRelPointAtCenterAfterTrigger){
+            moveRelativeZero(m_actionData->data.center);
         }
 
         undoCycleAdd(circle);
@@ -80,14 +75,14 @@ void RS_ActionDrawCircle3P::doTrigger() {
 }
 
 void RS_ActionDrawCircle3P::preparePreview(){
-    pPoints->data = RS_CircleData{};
-    if (pPoints->point1.valid && pPoints->point2.valid && pPoints->point3.valid){
-        RS_Circle circle{nullptr, pPoints->data};
-        bool suc = circle.createFrom3P(pPoints->point1,
-                                       pPoints->point2,
-                                       pPoints->point3);
+    m_actionData->data = RS_CircleData{};
+    if (m_actionData->point1.valid && m_actionData->point2.valid && m_actionData->point3.valid){
+        RS_Circle circle{nullptr, m_actionData->data};
+        bool suc = circle.createFrom3P(m_actionData->point1,
+                                       m_actionData->point2,
+                                       m_actionData->point3);
         if (suc){
-            pPoints->data = circle.getData();
+            m_actionData->data = circle.getData();
         }
     }
 }
@@ -96,37 +91,37 @@ void RS_ActionDrawCircle3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint1:
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
 
         case SetPoint2: {
-            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-            pPoints->point2 = mouse;
-            RS_Vector center = (mouse + pPoints->point1) / 2;
-            double radius = pPoints->point1.distanceTo(center);
+            mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
+            m_actionData->point2 = mouse;
+            RS_Vector center = (mouse + m_actionData->point1) / 2;
+            double radius = m_actionData->point1.distanceTo(center);
             previewCircle(RS_CircleData(center, radius));
 
-            if (showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->point1);
-                previewRefLine(pPoints->point1, mouse);
+            if (m_showRefEntitiesOnPreview) {
+                previewRefPoint(m_actionData->point1);
+                previewRefLine(m_actionData->point1, mouse);
                 previewRefSelectablePoint(mouse);
             }
             break;
         }
         case SetPoint3: {
-            pPoints->point3 = mouse;
+            m_actionData->point3 = mouse;
             preparePreview();
-            if (pPoints->data.isValid()) {
-                previewToCreateCircle(pPoints->data);
-                if (showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints->data.center);
-                    previewRefPoint(pPoints->point1);
-                    previewRefPoint(pPoints->point2);
+            if (m_actionData->data.isValid()) {
+                previewToCreateCircle(m_actionData->data);
+                if (m_showRefEntitiesOnPreview) {
+                    previewRefPoint(m_actionData->data.center);
+                    previewRefPoint(m_actionData->point1);
+                    previewRefPoint(m_actionData->point2);
                     previewRefSelectablePoint(mouse);
-                    previewRefLine(pPoints->point1, pPoints->data.center);
-                    previewRefLine(pPoints->point2, pPoints->data.center);
-                    previewRefLine(mouse, pPoints->data.center);
+                    previewRefLine(m_actionData->point1, m_actionData->data.center);
+                    previewRefLine(m_actionData->point2, m_actionData->data.center);
+                    previewRefLine(mouse, m_actionData->data.center);
                 }
             }
             break;
@@ -137,7 +132,7 @@ void RS_ActionDrawCircle3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionDrawCircle3P::onMouseLeftButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
-        coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        coord = getSnapAngleAwarePoint(e, m_actionData->point1, coord);
     }
     fireCoordinateEvent(coord);
 }
@@ -150,19 +145,19 @@ void RS_ActionDrawCircle3P::onMouseRightButtonRelease(int status, [[maybe_unused
 void RS_ActionDrawCircle3P::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPoint1: {
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
-            pPoints->point2 = mouse;
+            m_actionData->point2 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetPoint3);
             break;
         }
         case SetPoint3: {
-            pPoints->point3 = mouse;
+            m_actionData->point3 = mouse;
             trigger();
             break;
         }

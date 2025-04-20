@@ -22,15 +22,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_QUICKINFOWIDGETOPTIONSDIALOG_H
 #define LC_QUICKINFOWIDGETOPTIONSDIALOG_H
 
-#include <QDialog>
+#include "lc_dialog.h"
 #include "lc_quickinfowidgetoptions.h"
 
-namespace Ui {
-class LC_QuickInfoWidgetOptionsDialog;
+namespace Ui
+{
+    class LC_QuickInfoWidgetOptionsDialog;
 }
 
-class LC_QuickInfoWidgetOptionsDialog : public QDialog
-{
+class LC_QuickInfoWidgetOptionsDialog : public LC_Dialog{
     Q_OBJECT
 
 public:
@@ -46,7 +46,7 @@ protected slots:
 
 private:
     Ui::LC_QuickInfoWidgetOptionsDialog *ui;
-    LC_QuickInfoOptions *options;
+    LC_QuickInfoOptions *m_options;
 };
 
 #endif // LC_QUICKINFOWIDGETOPTIONSDIALOG_H

@@ -54,7 +54,8 @@ void LC_ModifyScaleOptions::doSaveSettings() {
 }
 
 void LC_ModifyScaleOptions::updateUI(int mode) {
-    if (mode == 0) { // update on SetTargetPoint
+    if (mode == 0) {
+        // update on SetTargetPoint
         QString factorX = fromDouble(m_action->getFactorX());
         QString factorY = fromDouble(m_action->getFactorY());
 
@@ -64,20 +65,21 @@ void LC_ModifyScaleOptions::updateUI(int mode) {
         ui->leFactorX->setText(factorX);
         if (ui->cbIsotrpic) {
             ui->leFactorY->setText(factorX);
-        } else {
+        }
+        else {
             ui->leFactorY->setText(factorY);
         }
 
         ui->leFactorX->blockSignals(false);
         ui->leFactorY->blockSignals(false);
     }
-    else{
+    else {
         // do nothing
     }
 }
 
-void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    m_action = dynamic_cast<RS_ActionModifyScale *>(a);
+void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface* a, bool update) {
+    m_action = dynamic_cast<RS_ActionModifyScale*>(a);
     assert(m_action != nullptr);
     if (m_action == nullptr)
         return;
@@ -94,7 +96,7 @@ void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface *a, bool update) {
     bool explicitFactor = false;
     bool isotrophic = false;
 
-    if (update){
+    if (update) {
         useCurrentLayer = m_action->isUseCurrentLayer();
         useCurrentAttributes = m_action->isUseCurrentAttributes();
         keepOriginals = m_action->isKeepOriginals();
@@ -104,9 +106,9 @@ void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface *a, bool update) {
         explicitFactor = m_action->isExplicitFactor();
         isotrophic = m_action->isIsotropicScaling();
         factorX = fromDouble(m_action->getFactorX());
-        factorY= fromDouble(m_action->getFactorY());
+        factorY = fromDouble(m_action->getFactorY());
     }
-    else{
+    else {
         useCurrentLayer = loadBool("UseCurrentLayer", false);
         useCurrentAttributes = loadBool("UseCurrentAttributes", false);
         keepOriginals = loadBool("KeepOriginals", false);
@@ -116,7 +118,7 @@ void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface *a, bool update) {
         explicitFactor = loadBool("ExplicitFactor", false);
         isotrophic = loadBool("Isotropic", true);
         factorX = load("FactorX", "1.1");
-        factorY= load("FactorY", "1.1");
+        factorY = load("FactorY", "1.1");
     }
     setUseMultipleCopiesToActionAndView(useMultipleCopies);
     setCopiesNumberToActionAndView(copiesNumber);
@@ -152,7 +154,7 @@ void LC_ModifyScaleOptions::setKeepOriginalsToActionAndView(bool val) {
 }
 
 void LC_ModifyScaleOptions::setCopiesNumberToActionAndView(int number) {
-    if (number < 1){
+    if (number < 1) {
         number = 1;
     }
     m_action->setCopiesNumber(number);
@@ -162,7 +164,7 @@ void LC_ModifyScaleOptions::setCopiesNumberToActionAndView(int number) {
 void LC_ModifyScaleOptions::setIsotropicScalingFactorToActionAndView(bool val) {
     ui->cbIsotrpic->setChecked(val);
     m_action->setIsotropicScaling(val);
-    ui->leFactorY->setEnabled(!val && !ui->cbExplicitFactor->isChecked() );
+    ui->leFactorY->setEnabled(!val && !ui->cbExplicitFactor->isChecked());
 }
 
 void LC_ModifyScaleOptions::setExplicitFactorToActionAndView(bool val) {
@@ -175,7 +177,7 @@ void LC_ModifyScaleOptions::setExplicitFactorToActionAndView(bool val) {
 void LC_ModifyScaleOptions::setFactorXToActionAndView(QString val) {
     double factor = 1.;
     if (toDouble(val, factor, 0.0, false)) {
-        const QString &factorStr = fromDouble(factor);
+        const QString& factorStr = fromDouble(factor);
         ui->leFactorX->setText(factorStr);
         m_action->setFactorX(factor);
     }
@@ -184,7 +186,7 @@ void LC_ModifyScaleOptions::setFactorXToActionAndView(QString val) {
 void LC_ModifyScaleOptions::setFactorYToActionAndView(QString val) {
     double factor = 1.;
     if (toDouble(val, factor, 0.0, false)) {
-        const QString &factorStr = fromDouble(factor);
+        const QString& factorStr = fromDouble(factor);
         ui->leFactorY->setText(factorStr);
         m_action->setFactorY(factor);
     }

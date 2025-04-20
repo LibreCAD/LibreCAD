@@ -25,10 +25,10 @@
 #include <QFileDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonParseError>
 #include <QMessageBox>
 #include <QSettings>
 
-#include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
@@ -57,7 +57,9 @@ bool LC_SettingsExporter::obtainFileName(QWidget *parent, QString &fileName, boo
         QStringList files = fileDlg.selectedFiles();
         if (!files.isEmpty()) {
             fileName = files.front();
-
+            if (!fileName.endsWith(".lcs")) {
+                fileName = fileName + ".lcs";
+            }
             proceed = true;
         }
     }

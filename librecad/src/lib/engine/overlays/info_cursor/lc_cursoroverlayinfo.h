@@ -23,9 +23,9 @@
 #ifndef LC_CURSOROVERLAYINFO_H
 #define LC_CURSOROVERLAYINFO_H
 
-#include <memory>
+#include <QString>
 
-#include "rs_point.h"
+#include "rs_vector.h"
 #include "lc_overlayentity.h"
 
 struct  LC_InfoCursorOptions{
@@ -44,7 +44,6 @@ struct  LC_InfoCursorOptions{
 };
 
 class LC_InfoMessageBuilder{
-    QString msg;
 
 public:
     LC_InfoMessageBuilder() {}
@@ -65,6 +64,12 @@ public:
         }
         msg.append("\n");
     }
+
+  protected:
+    void clear() {
+        msg.clear();
+    }
+    QString msg;
 };
 
 
@@ -140,8 +145,7 @@ struct LC_InfoCursorOverlayPrefs{
     void loadSettings();
 };
 
-class LC_OverlayInfoCursor:public LC_OverlayDrawable
-{
+class LC_OverlayInfoCursor:public LC_OverlayDrawable{
 public:
     LC_OverlayInfoCursor(const RS_Vector &coord, LC_InfoCursorOptions* cursorOverlaySettings);
     void setZonesData(LC_InfoCursorData *data);

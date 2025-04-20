@@ -22,42 +22,41 @@
 **
 **********************************************************************/
 
-#include "lc_layertreeoptionsdialog.h"
-#include "ui_lc_layertreeoptionsdialog.h"
-#include "lc_layertreemodel_options.h"
-
-#include <QColorDialog>
 #include <QtWidgets>
+#include "lc_layertreeoptionsdialog.h"
+#include "lc_dialog.h"
+#include "lc_layertreemodel_options.h"
+#include <ui_lc_layertreeoptionsdialog.h>
 
 LC_LayerTreeOptionsDialog::LC_LayerTreeOptionsDialog(QWidget *parent, LC_LayerTreeModelOptions *ops) :
-    QDialog(parent)
+    ::LC_Dialog(parent, "LayerTreeOptions")
 {
     setupUi(this);
-    options = ops;
+    m_options = ops;
     init();
 }
 
 void LC_LayerTreeOptionsDialog::init(){
-   leLayerLevelSeparator->setText(options->layerLevelSeparator);
-   leDimSuffix->setText(options->dimensionalLayerNameSuffix);
-   leInfoSuffix->setText(options->informationalLayerNameSuffix);
-   leAltPosSuffix->setText(options->alternatePositionLayerNameSuffix);
+   leLayerLevelSeparator->setText(m_options->layerLevelSeparator);
+   leDimSuffix->setText(m_options->dimensionalLayerNameSuffix);
+   leInfoSuffix->setText(m_options->informationalLayerNameSuffix);
+   leAltPosSuffix->setText(m_options->alternatePositionLayerNameSuffix);
 
-   cbDragDrop->setChecked(options->dragDropEnabled);
-   cbShowIdented->setChecked(options->showIndentedName);
-   cbShowToolTip->setChecked(options->showToolTips);
-   cbRenameWithPrimary->setChecked(options->renameSecondaryLayersOnPrimaryRename);
+   cbDragDrop->setChecked(m_options->dragDropEnabled);
+   cbShowIdented->setChecked(m_options->showIndentedName);
+   cbShowToolTip->setChecked(m_options->showToolTips);
+   cbRenameWithPrimary->setChecked(m_options->renameSecondaryLayersOnPrimaryRename);
 
-   cbShowTypeIcons ->setChecked(!options->hideLayerTypeIcons);
+   cbShowTypeIcons ->setChecked(!m_options->hideLayerTypeIcons);
 
-   leDuplicatedPrefix->setText(options->copiedNamePathPrefix);
-   leDuplicatedSuffix->setText(options->copiedNamePathSuffix);
+   leDuplicatedPrefix->setText(m_options->copiedNamePathPrefix);
+   leDuplicatedSuffix->setText(m_options->copiedNamePathSuffix);
 
-   QColor itemsGrid = options->itemsGridColor;
-   QColor virtualLayerBgColor = options->virtualLayerBgColor;
-   QColor matchHighlightColor = options->matchedItemColor;
-   QColor selectedItemBgColor = options->selectedItemBgColor;
-   QColor activeLayerBgColor = options->activeLayerBgColor;
+   QColor itemsGrid = m_options->itemsGridColor;
+   QColor virtualLayerBgColor = m_options->virtualLayerBgColor;
+   QColor matchHighlightColor = m_options->matchedItemColor;
+   QColor selectedItemBgColor = m_options->selectedItemBgColor;
+   QColor activeLayerBgColor = m_options->activeLayerBgColor;
 
 
    initComboBox(cbHighlightedColor, matchHighlightColor);
@@ -66,18 +65,17 @@ void LC_LayerTreeOptionsDialog::init(){
    initComboBox(cbSelectedItemBgColor, selectedItemBgColor);
    initComboBox(cbActiveLayerBgColor, activeLayerBgColor);
 
-   sbIndentSize ->setValue(options->identSize);
+   sbIndentSize ->setValue(m_options->identSize);
 
-   wPenNormal->setPen(options->defaultPenNormal, false, false, tr("Normal Layer"));
-   wPenDimensional -> setPen(options->defaultPenDimensional, false, false,tr("Dimensional Layer"));
-   wPenInfo -> setPen(options->defaultPenInformational, false, false, tr("Informational Layer"));
-   wPenAltPos -> setPen(options->defaultPenAlternatePosition, false, false, tr("Alternative Position Layer"));
+   wPenNormal->setPen(m_options->defaultPenNormal, false, false, tr("Normal Layer"));
+   wPenDimensional -> setPen(m_options->defaultPenDimensional, false, false,tr("Dimensional Layer"));
+   wPenInfo -> setPen(m_options->defaultPenInformational, false, false, tr("Informational Layer"));
+   wPenAltPos -> setPen(m_options->defaultPenAlternatePosition, false, false, tr("Alternative Position Layer"));
 
    tabWidget-> setCurrentIndex(0);
 }
 
-void LC_LayerTreeOptionsDialog::languageChange()
-{
+void LC_LayerTreeOptionsDialog::languageChange(){
     retranslateUi(this);
 }
 
@@ -157,60 +155,60 @@ void LC_LayerTreeOptionsDialog::validate(){
         doAccept = false;
     }
 
-    options->layerLevelSeparator = layerListSeparator;
-    options->dimensionalLayerNameSuffix = dimSuffix;
-    options->informationalLayerNameSuffix = infoSuffix;
-    options->alternatePositionLayerNameSuffix = altPosSuffix;
-    options->showToolTips = showToolTip;
-    options->showIndentedName = showIndented;
-    options->dragDropEnabled = allowDragDrop;
-    options->renameSecondaryLayersOnPrimaryRename = renameWitPrimary;
-    options->hideLayerTypeIcons = !showTypeIcons;
-    options->itemsGridColor = itemsGridColor;
-    options->matchedItemColor = highlightedColor;
-    options->virtualLayerBgColor = virtualLayerBgColor;
-    options->activeLayerBgColor= activeLayerBgColor;
-    options->selectedItemBgColor = selectedItemBgColor;
-    options->identSize = indentSize;
+    m_options->layerLevelSeparator = layerListSeparator;
+    m_options->dimensionalLayerNameSuffix = dimSuffix;
+    m_options->informationalLayerNameSuffix = infoSuffix;
+    m_options->alternatePositionLayerNameSuffix = altPosSuffix;
+    m_options->showToolTips = showToolTip;
+    m_options->showIndentedName = showIndented;
+    m_options->dragDropEnabled = allowDragDrop;
+    m_options->renameSecondaryLayersOnPrimaryRename = renameWitPrimary;
+    m_options->hideLayerTypeIcons = !showTypeIcons;
+    m_options->itemsGridColor = itemsGridColor;
+    m_options->matchedItemColor = highlightedColor;
+    m_options->virtualLayerBgColor = virtualLayerBgColor;
+    m_options->activeLayerBgColor= activeLayerBgColor;
+    m_options->selectedItemBgColor = selectedItemBgColor;
+    m_options->identSize = indentSize;
 
-    options->copiedNamePathPrefix= duplicatePrefix;
-    options->copiedNamePathSuffix = duplicatedSuffix;
+    m_options->copiedNamePathPrefix= duplicatePrefix;
+    m_options->copiedNamePathSuffix = duplicatedSuffix;
 
-    options->defaultPenNormal = wPenNormal->getPen();
-    options->defaultPenDimensional= wPenDimensional->getPen();
-    options->defaultPenInformational = wPenInfo->getPen();
-    options->defaultPenAlternatePosition = wPenAltPos->getPen();
+    m_options->defaultPenNormal = wPenNormal->getPen();
+    m_options->defaultPenDimensional= wPenDimensional->getPen();
+    m_options->defaultPenInformational = wPenInfo->getPen();
+    m_options->defaultPenAlternatePosition = wPenAltPos->getPen();
 
     if (doAccept){
         accept();
     }
 }
 
-void LC_LayerTreeOptionsDialog::showInvalidColorMessage(QString name){
+void LC_LayerTreeOptionsDialog::showInvalidColorMessage(const QString& name){
     QMessageBox::warning(this, tr("Error"),
                              tr("Invalid value provide for %1 color.\n"
                                              "Please specify a different value.").arg(name),QMessageBox::Ok);
 }
 
 void LC_LayerTreeOptionsDialog::pb_highlightedColorClicked(){
-    set_color(cbHighlightedColor, options->matchedItemColor);
+    set_color(cbHighlightedColor, m_options->matchedItemColor);
 }
 void LC_LayerTreeOptionsDialog::pb_gridColorClicked(){
-    set_color(cbGridColor, options->itemsGridColor);
+    set_color(cbGridColor, m_options->itemsGridColor);
 }
 void LC_LayerTreeOptionsDialog::pb_selectedItemColorClicked(){
-    set_color(cbVirtualLayerBackgroundColor, options->itemsGridColor);
+    set_color(cbVirtualLayerBackgroundColor, m_options->itemsGridColor);
 }
 
 void LC_LayerTreeOptionsDialog::pbSelectedItemsBgColorClicked(){
-    set_color(cbSelectedItemBgColor, options->selectedItemBgColor);
+    set_color(cbSelectedItemBgColor, m_options->selectedItemBgColor);
 }
 
 void LC_LayerTreeOptionsDialog::pbActiveLayerBgColorClicked(){
-    set_color(cbActiveLayerBgColor, options->activeLayerBgColor);
+    set_color(cbActiveLayerBgColor, m_options->activeLayerBgColor);
 }
 
-void LC_LayerTreeOptionsDialog::showIndentedClicked(){
+void LC_LayerTreeOptionsDialog::showIndentedClicked() const {
     sbIndentSize->setEnabled(cbShowIdented->isChecked());
 }
 

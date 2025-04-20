@@ -25,35 +25,24 @@
 
 #include <QActionGroup>
 
-class LC_ActionGroup:public QActionGroup {
+class LC_ActionGroup : public QActionGroup {
     Q_OBJECT
-
 public:
-    LC_ActionGroup(QObject *parent, const QString &name, const QString &description, const char* icon);
-
+    LC_ActionGroup(QObject* parent, const QString& name, const QString& description, const char* icon);
     ~LC_ActionGroup() override;
-
-    const QString &getName() const;
-
-    void setName(const QString &name);
-
-    const QString &getDescription() const;
-
-    void setDescription(const QString &description);
-
-    const QIcon &getIcon() const;
-
-    void setIcon(const QIcon &icon);
-
+    const QString& getName() const;
+    void setName(const QString& name);
+    const QString& getDescription() const;
+    void setDescription(const QString& description);
+    const QIcon& getIcon() const;
+    void setIcon(const QIcon& icon);
     bool isActionMappingsMayBeConfigured() const;
-
     void setActionMappingsMayBeConfigured(bool actionMappingsMayBeConfigured);
-
 protected:
-    QString name;
-    QString description;
-    QIcon icon;
-    bool actionMappingsMayBeConfigured = true;
+    QString m_name;
+    QString m_description;
+    QIcon m_icon;
+    bool m_actionMappingsMayBeConfigured = true;
 };
 
 #endif // LC_ACTIONGROUP_H

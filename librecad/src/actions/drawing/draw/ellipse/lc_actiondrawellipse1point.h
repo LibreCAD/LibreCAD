@@ -28,9 +28,7 @@
 class LC_ActionDrawEllipse1Point:public LC_ActionDrawCircleBase{
 Q_OBJECT
 public:
-    LC_ActionDrawEllipse1Point(
-        RS_EntityContainer &container, RS_GraphicView &graphicView, bool isArc);
-
+    LC_ActionDrawEllipse1Point(LC_ActionContext *actionContext, bool isArc);
     ~LC_ActionDrawEllipse1Point() override;
     void init(int status) override;
     double getMajorRadius();
@@ -45,20 +43,17 @@ public:
     void setAngleFree(bool val);
     bool isReversed() const override;
     void setReversed(bool b) const override;
-
     QStringList getAvailableCommands() override;
-
 protected:
-    struct Points;
-
-    enum Status{
+enum Status{
         SetPoint,
         SetMajorAngle,
         SetAngle1,
         SetAngle2
     };
 
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_ActionData;
     void toSetPointStatus();
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHints() override;

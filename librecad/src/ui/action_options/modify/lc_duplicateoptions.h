@@ -32,11 +32,9 @@ namespace Ui {
 
 class LC_DuplicateOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_DuplicateOptions();
     ~LC_DuplicateOptions() override;
-
 protected slots:
     void onOffsetXEditingFinished();
     void onOffsetYEditingFinished();
@@ -49,7 +47,7 @@ protected:
     void doSaveSettings() override;
 private:
     Ui::LC_DuplicateOptions *ui;
-    LC_ActionModifyDuplicate * action = nullptr;
+    LC_ActionModifyDuplicate * m_action = nullptr;
     void setOffsetXToActionAndView(const QString &val);
     void setOffsetYToActionAndView(const QString &val);
     void setInPlaceDuplicateToActionAndView(bool inplace);

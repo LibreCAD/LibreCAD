@@ -29,7 +29,6 @@
 #define RS_CONSTRUCTIONLINE_H
 
 #include "rs_atomicentity.h"
-#include "rs_vector.h"
 
 /**
  * Holds the data that defines a construction line (a line

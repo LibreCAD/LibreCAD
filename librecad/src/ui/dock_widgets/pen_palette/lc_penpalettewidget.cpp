@@ -20,9 +20,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QCheckBox>
+#include "lc_penpalettewidget.h"
+
 #include <QKeyEvent>
-#include <QLabel>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPainter>
@@ -31,19 +31,25 @@
 #include <QStyledItemDelegate>
 #include <QTimer>
 
-#include "lc_peninforegistry.h"
-#include "lc_penitem.h"
-#include "lc_penpalettemodel.h"
-#include "lc_penpaletteoptionsdialog.h"
-#include "lc_penpalettewidget.h"
-#include "qc_applicationwindow.h"
-#include "qg_graphicview.h"
-#include "qg_pentoolbar.h"
-#include "rs_graphic.h"
-#include "rs_modification.h"
-#include "ui_lc_penpalettewidget.h"
 #include "lc_flexlayout.h"
+#include "lc_penitem.h"
+#include "lc_penpalettedata.h"
+#include "lc_penpalettemodel.h"
+#include "lc_penpaletteoptions.h"
+#include "lc_penpaletteoptionsdialog.h"
+#include "qc_applicationwindow.h"
+#include "qg_pentoolbar.h"
+#include "rs_entity.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
+#include "rs_modification.h"
 #include "rs_settings.h"
+
+
+
+class QTableView;
+
 /**
  * Delegate used to paint underline lines for table grid
  */
@@ -75,7 +81,7 @@ private:
  * @param parent
  */
 LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) :
-    QWidget(parent),
+    LC_GraphicViewAwareWidget(parent),
     Ui::LC_PenPaletteWidget(){
 
     setupUi(this);
@@ -113,13 +119,13 @@ LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) 
     options->loadFromSettings();
 
     // load pens data from storage
-    penPaletteData = new LC_PenPaletteData(options);
-    bool itemsLoaded = penPaletteData->loadItems();
+    m_penPaletteData = new LC_PenPaletteData(options);
+    bool itemsLoaded = m_penPaletteData->loadItems();
     if (!itemsLoaded){
         // todo... potentially, it is possible to show dialog there - yet probably it's better stay with default pens..
     }
 
-    penPaletteModel = new LC_PenPaletteModel(options, penPaletteData);
+    m_penPaletteModel = new LC_PenPaletteModel(options, m_penPaletteData);
 
     initPenEditor();
     initFilteringSection();
@@ -127,9 +133,9 @@ LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) 
     initToolBar();
 
     // set first pen item
-    if (penPaletteModel->rowCount(QModelIndex())>0){
-        LC_PenItem* item = penPaletteModel->getPen(0);
-        penPaletteModel->setActivePen(item);
+    if (m_penPaletteModel->rowCount(QModelIndex())>0){
+        LC_PenItem* item = m_penPaletteModel->getPen(0);
+        m_penPaletteModel->setActivePen(item);
     }
     else{
         tbRemove->setEnabled(false);
@@ -161,7 +167,7 @@ void LC_PenPaletteWidget::initToolBar() const{
  * setup of table view
  */
 void LC_PenPaletteWidget::initTableView(){
-    tableView->setModel(penPaletteModel);
+    tableView->setModel(m_penPaletteModel);
 
     QHeaderView *horizontalHeader = tableView->horizontalHeader();
     horizontalHeader->setMinimumSectionSize(24);
@@ -180,12 +186,13 @@ void LC_PenPaletteWidget::initTableView(){
     verticalHeader->setOffset(2);
     verticalHeader->hide();
 
-    tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_ICON), LC_PenPaletteModel::ICON_WIDTH);
-    tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_NAME), LC_PenPaletteModel::ICON_WIDTH * 5);
-    tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::TYPE_ICON), LC_PenPaletteModel::ICON_WIDTH);
-    tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::WIDTH_ICON), LC_PenPaletteModel::ICON_WIDTH);
-
+    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_ICON), LC_PenPaletteModel::ICON_WIDTH);
+    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_NAME), LC_PenPaletteModel::ICON_WIDTH * 5);
+    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::TYPE_ICON), LC_PenPaletteModel::ICON_WIDTH);
+    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::WIDTH_ICON), LC_PenPaletteModel::ICON_WIDTH);
+#ifndef DONT_FORCE_WIDGETS_CSS
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+#endif
 
     connect(tableView, &QTableView::clicked, this, &LC_PenPaletteWidget::onTableClicked);
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_PenPaletteWidget::onTableViewContextMenuInvoked);
@@ -193,11 +200,11 @@ void LC_PenPaletteWidget::initTableView(){
              this, &LC_PenPaletteWidget::onTableSelectionChanged);
 
 
-    connect(penPaletteModel, &LC_PenPaletteModel::modelChange, this, &LC_PenPaletteWidget::onModelChanged);
-    connect(penPaletteData, &LC_PenPaletteData::modelDataChange, this, &LC_PenPaletteWidget::onPersistentItemsChanged);
+    connect(m_penPaletteModel, &LC_PenPaletteModel::modelChange, this, &LC_PenPaletteWidget::onModelChanged);
+    connect(m_penPaletteData, &LC_PenPaletteData::modelDataChange, this, &LC_PenPaletteWidget::onPersistentItemsChanged);
 
     tableView->setContextMenuPolicy(Qt::CustomContextMenu);
-    tableView->setItemDelegate(new LC_PenPaletteGridDelegate(tableView, penPaletteModel->getOptions()));
+    tableView->setItemDelegate(new LC_PenPaletteGridDelegate(tableView, m_penPaletteModel->getOptions()));
 }
 
 /**
@@ -208,12 +215,12 @@ void LC_PenPaletteWidget::initTableView(){
  *
  */
 void LC_PenPaletteWidget::onPersistentItemsChanged(){
-    bool itemsSaved = penPaletteData ->saveItems();
+    bool itemsSaved = m_penPaletteData ->saveItems();
     while (!itemsSaved){
         bool showOptions = invokeUnableToSavePenDataDialog();
         if (showOptions){
             invokeOptionsDialog(true);
-            itemsSaved = penPaletteData ->saveItems();
+            itemsSaved = m_penPaletteData ->saveItems();
         }
         else{ // user skipped options, so we still cant' save data - yet that's to user. Will ask next time, however
             itemsSaved = true;
@@ -230,16 +237,16 @@ void LC_PenPaletteWidget::initPenEditor(){
     cbType->init(true, true);
     connect(lePenName, &QLineEdit::textChanged, this, &LC_PenPaletteWidget::onPenEditorChanged);
     connect(lePenName, &QLineEdit::returnPressed, this, &LC_PenPaletteWidget::createOrUpdatePenItem);
-    connect(cbColor, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorColorChanged(int)));
-    connect(cbWidth, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorWidthChanged(int)));
-    connect(cbType, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorLineTypeChanged(int)));
+    connect(cbColor, &QG_ColorBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorColorChanged);
+    connect(cbWidth, &QG_WidthBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorWidthChanged);
+    connect(cbType, &QG_LineTypeBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorLineTypeChanged);
 }
 /**
  * Filtering section initialization
  */
 void LC_PenPaletteWidget::initFilteringSection(){
     // restore mode for filter
-    cbHighlightMode->setChecked(penPaletteModel->getOptions()->filterIsInHighlightMode);
+    cbHighlightMode->setChecked(m_penPaletteModel->getOptions()->filterIsInHighlightMode);
     // add handlers
     connect(leFilterMask, &QLineEdit::textChanged, this, &LC_PenPaletteWidget::filterMaskChanged);
     connect(cbHighlightMode, &QCheckBox::clicked, this, &LC_PenPaletteWidget::filterMaskChanged);
@@ -251,7 +258,7 @@ void LC_PenPaletteWidget::initFilteringSection(){
  * @param pos
  */
 void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const QPoint &pos){
-    int itemsCount = penPaletteModel->rowCount(QModelIndex());
+    int itemsCount = m_penPaletteModel->rowCount(QModelIndex());
     int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
     if (itemsCount >0 && selectedItemsCount > 0){
         auto contextMenu = std::make_unique<QMenu>(this);
@@ -265,11 +272,6 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
         auto addAction = [&contextMenu, this](const std::pair<QString, MemFn>& item) {
             auto* action = contextMenu->addAction(item.first);
             connect(action, &QAction::triggered, this, item.second);
-// #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
-//             connect(action, &QAction::triggered, this, time.second);
-// #else
-//             connect(action, SIGNAL(triggered()), this, time.second);
-// #endif
         };
         auto addActions = [&addAction](std::initializer_list<std::pair<QString, MemFn>> menuEntries){
             for (const auto& menuEntry: menuEntries)
@@ -298,17 +300,9 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
  * Handles changes in the model to properly update remove button
  */
 void LC_PenPaletteWidget::onModelChanged(){
-    int count = penPaletteModel->rowCount(QModelIndex());
-    bool hasActivePen  = penPaletteModel->getActivePen() != nullptr;
+    int count = m_penPaletteModel->rowCount(QModelIndex());
+    bool hasActivePen  = m_penPaletteModel->getActivePen() != nullptr;
     tbRemove->setEnabled((count > 0) && hasActivePen);
-}
-
-/**
- * Setter for current window
- * @param mdiWindow
- */
-void LC_PenPaletteWidget::setMdiWindow(QC_MDIWindow* mdiWindow){
-    mdi_win = mdiWindow;
 }
 
 /**
@@ -322,18 +316,18 @@ void LC_PenPaletteWidget::onTableClicked(QModelIndex modelIndex){
 
     // increase clicks count. Double click should be processed additionally, as QT does not work well if both clicked and doubleClicked
     // slots are used for table view.  So on first click - we'll activate item, and start the time for potential double click processing
-    clicksCount ++;
+    m_clicksCount ++;
 
-    if (clicksCount ==1){
+    if (m_clicksCount ==1){
 
         // if we're in first call, we'll activate clicked row and pen item
 
-        LC_PenItem* pen = penPaletteModel->getPen(modelIndex.row());
+        LC_PenItem* pen = m_penPaletteModel->getPen(modelIndex.row());
         if (pen == nullptr)
             return;
 
         // just make pen active and put it into editor
-        penPaletteModel->setActivePen(pen);
+        m_penPaletteModel->setActivePen(pen);
         fillPenEditorByPenItem(pen);
 
         // invoke double click processing via one-shot timer. If double click will occur - we'll handle this on timer's call
@@ -345,12 +339,12 @@ void LC_PenPaletteWidget::onTableClicked(QModelIndex modelIndex){
 }
 
 void LC_PenPaletteWidget::doDoubleClick(){
-    if (clicksCount == 2){
+    if (m_clicksCount == 2){
         // that's actual double click, call appropriate method
         onTableRowDoubleClicked();
     }
     // hm... it seems that it was single click where timer was fired.. so clear the counter
-    clicksCount = 0;
+    m_clicksCount = 0;
 }
 
 /**
@@ -359,7 +353,7 @@ void LC_PenPaletteWidget::doDoubleClick(){
  */
 void LC_PenPaletteWidget::onTableRowDoubleClicked(){
     // execute command specified by option
-    switch (penPaletteModel->getOptions()->doubleClickOnTableMode){
+    switch (m_penPaletteModel->getOptions()->doubleClickOnTableMode){
         case LC_PenPaletteOptions::DOUBLE_CLICK_DOES_NOTHING:
             break;
         case LC_PenPaletteOptions::DOUBLE_CLICK_SELECT_ENTITIES_BY_ATTRIBUTES_PEN:
@@ -395,13 +389,13 @@ void LC_PenPaletteWidget::onTableSelectionChanged(
  * Displays options dialogs and applies changes, if necessary
  */
 void LC_PenPaletteWidget::invokeOptionsDialog(bool focusOnFile){
-    LC_PenPaletteOptions * options = penPaletteModel->getOptions();
+    LC_PenPaletteOptions * options = m_penPaletteModel->getOptions();
     LC_PenPaletteOptionsDialog dlg = LC_PenPaletteOptionsDialog(this, options, focusOnFile);
     QString oldFileName = options->pensFileName;
     int dialogResult = dlg.exec();
     if (dialogResult == QDialog::Accepted){
         options->saveToSettings();
-        penPaletteModel->update(true);
+        m_penPaletteModel->update(true);
         update();
         if (!focusOnFile){ // this is normal invocation via settings button
             QString newFileName = options->pensFileName;
@@ -430,11 +424,11 @@ void LC_PenPaletteWidget::createOrUpdatePenItem(){
         QString actualPenName = penName.trimmed();
 
         // try to find the pen with such name
-        LC_PenItem* penItem = penPaletteModel -> findPenForName(actualPenName);
+        LC_PenItem* penItem = m_penPaletteModel -> findPenForName(actualPenName);
         bool existingPen = true;
         if (penItem == nullptr){
             // no pen name found, need to create
-            penItem = penPaletteModel->createNewItem(penName);
+            penItem = m_penPaletteModel->createNewItem(penName);
             existingPen = false;
         }
 
@@ -464,10 +458,10 @@ void LC_PenPaletteWidget::createOrUpdatePenItem(){
 
         // store pen in model
         if (existingPen){
-            penPaletteModel-> itemEdited(penItem);
+            m_penPaletteModel-> itemEdited(penItem);
         }
         else{
-            penPaletteModel -> addItem(penItem);
+            m_penPaletteModel -> addItem(penItem);
         }
 
         // cleanup pen editor and make it unchanged
@@ -531,11 +525,7 @@ void LC_PenPaletteWidget::applyEditorPenToSelection(){
  */
 void LC_PenPaletteWidget::doApplyPenAttributesToSelection(RS2::LineType lineType, RS2::LineWidth width, RS_Color color, bool modifyColor){
 
-    auto graphic = mdi_win->getGraphic();
-    QG_GraphicView *graphicView = mdi_win->getGraphicView();
-    RS_Document* container = mdi_win->getDocument();
-
-    if (graphic){
+    if (m_graphicView != nullptr){
         RS_AttributesData data;
         data.pen = RS_Pen(color, width, lineType);
         data.layer = "0";
@@ -544,7 +534,8 @@ void LC_PenPaletteWidget::doApplyPenAttributesToSelection(RS2::LineType lineType
         data.changeWidth = width != RS2::WidthUnchanged;
         data.changeLayer = false;
 
-        RS_Modification m(*container, graphicView->getViewPort());
+        RS_EntityContainer container = m_graphicView->getContainer();
+        RS_Modification m(container, m_graphicView->getViewPort());
         m.changeAttributes(data, false);
     }
 }
@@ -573,7 +564,7 @@ void LC_PenPaletteWidget::fillPenEditorBySelectedEntityDrawingPen(){
 void LC_PenPaletteWidget::doFillPenEditorBySelectedEntity(bool resolvePenOnEntitySelect){
     // first we collect selected entitites
     QList<RS_Entity *> selectedEntities;
-    auto graphic = mdi_win->getGraphic();
+    auto graphic = m_graphicView->getGraphic();
     foreach (auto e, graphic->getEntityList()) {
         if (e->isSelected()){
             selectedEntities << e;
@@ -692,7 +683,7 @@ void LC_PenPaletteWidget::doSelectEntitiesByPenEditor(bool resolvePens, bool res
  */
 void LC_PenPaletteWidget::doSelectEntitiesThatMatchToPenAttributes(
     const RS2::LineType &lineType, const RS2::LineWidth &width, const RS_Color &color, bool colorCheck, bool resolvePens, bool resolveLayers) const{
-    auto graphic = mdi_win->getGraphic();
+    auto graphic = m_graphicView->getGraphic();
     int selectedCount = 0;
     int hasEntitiesOnFrozenLayers = false;
     int hasEntitiesOnLockedLayers = false;
@@ -739,7 +730,7 @@ void LC_PenPaletteWidget::doSelectEntitiesThatMatchToPenAttributes(
 
     if (selectedCount == 0){
         // no entities are actually selected
-        if (penPaletteModel->getOptions()->showNoSelectionMessage){
+        if (m_penPaletteModel->getOptions()->showNoSelectionMessage){
             // based by options, we'll let know the user that we can't select
             showNoSelectionDialog(hasEntitiesOnFrozenLayers, hasEntitiesOnLockedLayers);
         }
@@ -761,8 +752,8 @@ void LC_PenPaletteWidget::updatePenToolbarByActiveLayer(){
         return;
     QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
     if (penToolBar != nullptr){
-        if (layerList != nullptr){
-            RS_Layer* layer = layerList->getActive();
+        if (m_layerList != nullptr){
+            RS_Layer* layer = m_layerList->getActive();
             if (layer != nullptr){
                 RS_Pen layerPen = layer->getPen();
                 penToolBar->setLayerLineType(layerPen.getLineType(), true);
@@ -782,8 +773,8 @@ void LC_PenPaletteWidget::applyEditorPenToPenToolBar(){
 
     if (penToolBar != nullptr){
 
-        if (layerList != nullptr){
-            RS_Layer* layer = layerList->getActive();
+        if (m_layerList != nullptr){
+            RS_Layer* layer = m_layerList->getActive();
             if (layer != nullptr){
                 RS_Pen layerPen = layer->getPen();
                 int lineTypeIndex = cbType->currentIndex();
@@ -844,7 +835,7 @@ void LC_PenPaletteWidget::fillPenEditorByPenToolBarPen(){
  * Removes pen info item that is currently active (if any) from the model and underlying storage
  */
 void LC_PenPaletteWidget::removeActivePenItem(){
-    LC_PenItem* activePenItem = penPaletteModel->getActivePen();
+    LC_PenItem* activePenItem = m_penPaletteModel->getActivePen();
     if (activePenItem != nullptr){
         doRemovePenItem(activePenItem);
     }
@@ -860,7 +851,7 @@ void LC_PenPaletteWidget::doRemovePenItem(LC_PenItem *penItem){
     int dialogResult = invokeItemRemovalDialog(penName);
     if (dialogResult == QMessageBox::Ok){
         // remove in model
-        penPaletteModel->removeItem(penItem);
+        m_penPaletteModel->removeItem(penItem);
         updateModel();
     }
 }
@@ -877,7 +868,7 @@ void LC_PenPaletteWidget::doRemovePenItems(QList<LC_PenItem *> &penItems){
         int count = penItems.count();
         for (int i=0; i< count; i++) {
             LC_PenItem* item = penItems.at(i);
-            penPaletteModel->removeItem(item);
+            m_penPaletteModel->removeItem(item);
         }
         updateModel();
     }
@@ -909,7 +900,7 @@ void LC_PenPaletteWidget::removeSelectedPenItems(){
 void LC_PenPaletteWidget::editSelectedPenItem(){
     LC_PenItem* item = getSelectedPenItem();
     if (item != nullptr){
-        penPaletteModel->setActivePen(item);
+        m_penPaletteModel->setActivePen(item);
         fillPenEditorByPenItem(item);
     }
 }
@@ -924,9 +915,9 @@ void LC_PenPaletteWidget::applySelectedPenItemToPenToolBar(){
         QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
 
         if (penToolBar != nullptr){
-            if (layerList != nullptr){
+            if (m_layerList != nullptr){
                 // retrieve active layer
-                RS_Layer* layer = layerList->getActive();
+                RS_Layer* layer = m_layerList->getActive();
                 if (layer != nullptr){
                     RS_Pen layerPen = layer->getPen();
 
@@ -980,15 +971,15 @@ void LC_PenPaletteWidget::applySelectedPenItemToPenToolBar(){
 void LC_PenPaletteWidget::applySelectedPenItemToActiveLayer(){
     LC_PenItem *selectedPenItem = getSelectedPenItem();
     if (selectedPenItem != nullptr){
-        if (layerList != nullptr){
-            RS_Layer *layer = layerList->getActive();
+        if (m_layerList != nullptr){
+            RS_Layer *layer = m_layerList->getActive();
             if (layer != nullptr){
                 RS_Pen layerPen = layer->getPen();
 
                 RS_Pen penCopy = createPenByPenItem(layerPen, selectedPenItem);
 
                 layer->setPen(penCopy);
-                layerList->activate(layer, true);
+                m_layerList->activate(layer, true);
             }
         }
         redrawDrawing();
@@ -1005,7 +996,7 @@ LC_PenItem *LC_PenPaletteWidget::getSelectedPenItem(){
     LC_PenItem *selectedPenItem = nullptr;
     QModelIndex selectedIndex = getSelectedItemIndex();
     if (selectedIndex.isValid()){
-        selectedPenItem = penPaletteModel->getItemForIndex(selectedIndex);
+        selectedPenItem = m_penPaletteModel->getItemForIndex(selectedIndex);
     }
     return selectedPenItem;
 }
@@ -1020,7 +1011,7 @@ QList<LC_PenItem *> LC_PenPaletteWidget::getSelectedPenItems(){
     int count = selectedIndexes.size();
     for (int i = 0; i < count; i++){
         QModelIndex index = selectedIndexes.at(i);
-        LC_PenItem *selectedPenItem = penPaletteModel->getItemForIndex(index);
+        LC_PenItem *selectedPenItem = m_penPaletteModel->getItemForIndex(index);
         if (selectedPenItem != nullptr){
             result << selectedPenItem;
         }
@@ -1045,8 +1036,8 @@ QModelIndex LC_PenPaletteWidget::getSelectedItemIndex(){
  * Fills fiels of pen' editor by attributes of pen for active layer
  */
 void LC_PenPaletteWidget::fillPenEditorByActiveLayer(){
-    if (layerList != nullptr){
-        RS_Layer *layer = layerList->getActive();
+    if (m_layerList != nullptr){
+        RS_Layer *layer = m_layerList->getActive();
         if (layer != nullptr){
             RS_Pen pen = layer->getPen();
             doFillPenEditorByPen(pen);
@@ -1122,8 +1113,8 @@ RS_Pen LC_PenPaletteWidget::createPenByPenItem(RS_Pen &originalPen, LC_PenItem *
  * Applies pen attributes that are in pen editor to active layer.
  */
 void LC_PenPaletteWidget::applyEditorPenToActiveLayer(){
-    if (layerList != nullptr){
-        RS_Layer* layer = layerList->getActive();
+    if (m_layerList != nullptr){
+        RS_Layer* layer = m_layerList->getActive();
         if (layer != nullptr){
             // original pen of layer
             RS_Pen layerPen = layer->getPen();
@@ -1135,7 +1126,7 @@ void LC_PenPaletteWidget::applyEditorPenToActiveLayer(){
             layer->setPen(penCopy);
 
             // activate layer again for refreshing layers view
-            layerList->activate(layer, true);
+            m_layerList->activate(layer, true);
         }
     }
     redrawDrawing();
@@ -1150,12 +1141,12 @@ void LC_PenPaletteWidget::filterMaskChanged(){
     bool highlightMode = cbHighlightMode->isChecked();
 
     // storing filtering mode in persistent settings
-    LC_PenPaletteOptions *options = penPaletteModel->getOptions();
+    LC_PenPaletteOptions *options = m_penPaletteModel->getOptions();
     options->filterIsInHighlightMode = highlightMode;
     options->saveToSettings();
 
     // update model
-    penPaletteModel->setFilteringRegexp(mask);
+    m_penPaletteModel->setFilteringRegexp(mask);
     updateModel();
 }
 
@@ -1167,7 +1158,7 @@ void LC_PenPaletteWidget::updateModel(){
     // complete rebuild of the model and update of UI
     int yPos = tableView->verticalScrollBar()->value();
     tableView->verticalScrollBar()->setValue(yPos);
-    penPaletteModel->update(false);
+    m_penPaletteModel->update(false);
     tableView->viewport()->update();
 }
 
@@ -1177,7 +1168,7 @@ void LC_PenPaletteWidget::updateModel(){
  */
 void LC_PenPaletteWidget::fillPenEditorByPenItem(LC_PenItem *pen){
     // set flag that we're in setup of editor to disable handling of data change signals from editor's controls
-    inEditorControlsSetup = true;
+    m_inEditorControlsSetup = true;
 
     // setup editor
     QString name = pen->getName();
@@ -1188,7 +1179,7 @@ void LC_PenPaletteWidget::fillPenEditorByPenItem(LC_PenItem *pen){
     doUpdatePenEditorByPenAttributes(color, width, lineType);
 
     // allow processing of data change signals from editor controls again
-    inEditorControlsSetup = false;
+    m_inEditorControlsSetup = false;
 }
 
 /**
@@ -1248,16 +1239,16 @@ void LC_PenPaletteWidget::doUpdatePenEditorByPenAttributes(const RS_Color &color
  * @param changed flag whether pen change occurred
  */
 void LC_PenPaletteWidget::markEditingPenChanged(bool changed){
-    editorChanged = changed;
+    m_editorChanged = changed;
     if (changed){
         // first check that we're not invoked from editor setup
-        if (!inEditorControlsSetup){
+        if (!m_inEditorControlsSetup){
             QString penName = lePenName->text();
             if (!penName.isEmpty()){
                 tbEditSave->setEnabled(true);
             }
             // as user started the pen editing, remove active pen in table
-            penPaletteModel->setActivePen(nullptr);
+            m_penPaletteModel->setActivePen(nullptr);
             tableView->update();
         }
     } else {
@@ -1284,14 +1275,34 @@ void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index)
     markEditingPenChanged(true);
 }
 
+void LC_PenPaletteWidget::setGraphicView(RS_GraphicView *gv){
+    if (gv == nullptr) {
+        setLayerList(nullptr);
+        m_graphicView = nullptr;
+    }
+    else {
+        m_graphicView = gv;
+        RS_Graphic* graphic = gv->getGraphic();
+        if (graphic != nullptr) {
+            setLayerList(graphic->getLayerList());
+        }
+        else {
+            setLayerList(nullptr);
+        }
+    }
+}
+
+void LC_PenPaletteWidget::persist() {
+    m_penPaletteData ->saveItems();
+}
+
 /**
  * setter for layers list
  * @param ll
  */
 void LC_PenPaletteWidget::setLayerList(RS_LayerList *ll) {
-    layerList = ll;
+    m_layerList = ll;
 }
-
 
 /**
  * Escape releases focus.
@@ -1312,7 +1323,11 @@ void LC_PenPaletteWidget::keyPressEvent(QKeyEvent* e) {
 /**
  * Utility method that forces redraw of graphic view
  */
-void LC_PenPaletteWidget::redrawDrawing() const{mdi_win->getGraphicView()->redraw(RS2::RedrawDrawing);}
+void LC_PenPaletteWidget::redrawDrawing() const {
+    if (m_graphicView != nullptr) {
+        m_graphicView->redraw(RS2::RedrawDrawing);
+    }
+}
 
 /**
  * Confirmation dialog for single pen removal

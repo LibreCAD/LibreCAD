@@ -26,9 +26,14 @@
 #define LC_LAYERDIALOG_EX_H
 
 #include <QString>
+
+#include "rs_pen.h"
 #include "ui_lc_layerdialog_ex.h"
-#include "rs_layer.h"
-#include "lc_layertreemodel.h"
+
+class RS_LayerList;
+class RS_Layer;
+class LC_LayerTreeItem;
+class LC_LayerTreeModel;
 
 class LC_LayerDialogEx :public QDialog, public Ui::LC_LayerDialogEx
 {
@@ -42,36 +47,35 @@ public:
         MODE_ADD_CHILD_LAYER,
         MODE_ADD_SECONDARY_LAYER
     };
-    LC_LayerDialogEx(QWidget* parent, QString name, LC_LayerTreeModel* model, LC_LayerTreeItem *editedTreeItem, RS_LayerList* layerList);
+    LC_LayerDialogEx(QWidget* parent, const QString& name, LC_LayerTreeModel* model, LC_LayerTreeItem *editedTreeItem, RS_LayerList* layerList);
     ~LC_LayerDialogEx() = default;
 
     void setMode(int mode);
-    void setLayerName(QString name);
-    void setParentPath(QString name);
-    void setLayerType(int type);
-    int getEditedLayerType();
-    void disableNames();
-    void setLayer(RS_Layer *layer);
+    void setLayerName(const QString& name) const;
+    void setParentPath(const QString& name) const;
+    void setLayerType(int type) const;
+    int getEditedLayerType() const;
+    void disableNames() const;
+    void setLayer(const RS_Layer *layer) const;
     void allowChangingLayerType(bool value);
-    RS_Pen getPen();
+    RS_Pen getPen() const;
     bool isConstruction() {return cbConstructionLayer->isChecked();};
     void setConstruction(bool enable) {cbConstructionLayer->setChecked(enable);};
-    QString getLayerName();
+    QString getLayerName() const;
 public slots:
     virtual void validate();
-    void layerTypeChanged();
+    void layerTypeChanged() const;
 
 protected slots:
     virtual void languageChange();
 
 private:
     void init();
-
-    int mode;    
-    LC_LayerTreeModel* layerTreeModel;
-    LC_LayerTreeItem *editedTreeItem {nullptr};
-    RS_LayerList* layerList;
-    bool checkForDuplicatedNames(const QStringList &newLayerNamesList);
+    int m_mode;
+    LC_LayerTreeModel* m_layerTreeModel;
+    LC_LayerTreeItem *m_editedTreeItem {nullptr};
+    RS_LayerList* m_layerList;
+    bool checkForDuplicatedNames(const QStringList &newLayerNamesList) const;
 };
 
 #endif // LC_LAYERDIALOG_EX_H

@@ -27,11 +27,12 @@
 #ifndef RS_ACTIONDRAWPOLYLINE_H
 #define RS_ACTIONDRAWPOLYLINE_H
 
-#include <memory>
-
 #include "rs_arc.h"
 #include "rs_polyline.h"
 #include "rs_previewactioninterface.h"
+
+struct RS_PolylineData;
+class RS_Polyline;
 
 namespace mu {
     class Parser;
@@ -60,9 +61,8 @@ public:
         // RadAngCenp
     };
 
-    RS_ActionDrawPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    RS_ActionDrawPolyline(LC_ActionContext *actionContext);
     ~RS_ActionDrawPolyline() override;
-
     void reset();
     void init(int status) override;
     QStringList getAvailableCommands() override;
@@ -86,27 +86,11 @@ protected:
         SetNextPoint,  /*  Setting the endpoint.    */
     };
 
-    RS_Polyline*& getPolyline() const;
-    QList<RS_Vector>& getHistory() const;
-    QList<double>& getBHistory() const;
-    RS_Vector& getPoint() const;
-    RS_Vector& getStart() const;
-    RS_PolylineData& getData() const;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    double m_radius = 0.;
-    double m_angle = 0.;
-    SegmentMode m_mode{};
-    int alternateArc = false;
-    int m_reversed = 1;
-    bool m_calculatedSegment = false;
-
-    bool prepend = false;
-
     struct Points {
 
-/**
- * Line data defined so far.
- */
+        /**
+         * Line data defined so far.
+         */
         RS_PolylineData data;
         RS_ArcData arc_data;
         /**
@@ -136,7 +120,33 @@ protected:
         QString equation;
     };
 
-    std::unique_ptr<Points> pPoints;
+    RS_Polyline*& getPolyline() const;
+    QList<RS_Vector>& getHistory() const;
+    QList<double>& getBHistory() const;
+    RS_Vector& getPoint() const;
+    RS_Vector& getStart() const;
+    RS_PolylineData& getData() const;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+    double m_radius = 0.;
+    double m_angle = 0.;
+    SegmentMode m_mode{};
+    int m_alternateArc = false;
+    int m_reversed = 1;
+    bool m_calculatedSegment = false;
+    bool m_prepend = false;
+    std::unique_ptr<Points> m_actionData;
+    std::unique_ptr<mu::Parser> m_muParserObject;
+
+    double m_startPointX = 0.;
+    double m_endPointX = 0.;
+    double m_startPointY = 0.;
+    double m_endPointY = 0.;
+    bool m_shiftX = false;
+    bool m_equationSettingOn = false;
+    bool m_startPointSettingOn = false;
+    bool m_endPointSettingOn = false;
+    bool m_stepSizeSettingOn = false;
+    bool m_shiftY = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
@@ -151,18 +161,5 @@ protected:
     void setParserExpression(const QString& expression);
     bool getPlottingX(QString command, double& x);
     void doTrigger() override;
-
-    std::unique_ptr<mu::Parser> m_muParserObject;
-
-    double startPointX = 0.;
-    double endPointX = 0.;
-    double startPointY = 0.;
-    double endPointY = 0.;
-    bool shiftX = false;
-    bool equationSettingOn = false;
-    bool startPointSettingOn = false;
-    bool endPointSettingOn = false;
-    bool stepSizeSettingOn = false;
-    bool shiftY = false;
 };
 #endif

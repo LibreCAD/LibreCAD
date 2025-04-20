@@ -24,12 +24,9 @@
 **
 **********************************************************************/
 #include "qg_roundoptions.h"
-
 #include "rs_actionmodifyround.h"
-#include "rs_settings.h"
-#include "rs_math.h"
 #include "ui_qg_roundoptions.h"
-#include "rs_debug.h"
+
 
 /*
  *  Constructs a QG_RoundOptions as a child of 'parent', with the
@@ -37,10 +34,10 @@
  */
 QG_RoundOptions::QG_RoundOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyRound, "Modify", "Round")
-	, ui(new Ui::Ui_RoundOptions{}){
-	ui->setupUi(this);
- connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_RoundOptions::onRadiusEditingFinished);
- connect(ui->cbTrim, &QCheckBox::toggled, this, &QG_RoundOptions::onTrimToggled);
+      , ui(new Ui::Ui_RoundOptions{}) {
+    ui->setupUi(this);
+    connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_RoundOptions::onRadiusEditingFinished);
+    connect(ui->cbTrim, &QCheckBox::toggled, this, &QG_RoundOptions::onTrimToggled);
 }
 
 /*
@@ -62,13 +59,13 @@ void QG_RoundOptions::doSaveSettings(){
 }
 
 void QG_RoundOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionModifyRound *>(a);
+    m_action = dynamic_cast<RS_ActionModifyRound *>(a);
 
     QString radius;
     bool trim;
     if (update){
-        radius = fromDouble(action->getRadius());
-        trim = action->isTrimOn();
+        radius = fromDouble(m_action->getRadius());
+        trim = m_action->isTrimOn();
     } else {
         radius = load("Radius", "1.0");
         trim = loadBool("Trim", true);
@@ -87,13 +84,13 @@ void QG_RoundOptions::onTrimToggled(bool checked){
 
 void QG_RoundOptions::setTrimToActionAndView(bool checked){
     ui->cbTrim->setChecked(checked);
-    action->setTrim(checked);
+    m_action->setTrim(checked);
 }
 
 void QG_RoundOptions::setRadiusToActionAndView(const QString &strValue){
     double radius;
     if (toDouble(strValue, radius, 1.0, false)){
-        action->setRadius(radius);
+        m_action->setRadius(radius);
         ui->leRadius->setText(fromDouble(radius));
     }
 }

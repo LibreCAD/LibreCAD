@@ -24,14 +24,11 @@
 
 #ifndef QG_DIALOGFACTORY_H
 #define QG_DIALOGFACTORY_H
-
 #include "rs_dialogfactoryinterface.h"
-#include "lc_modifiersinfo.h"
-#include "lc_optionswidgetsholder.h"
-#include "qg_snaptoolbar.h"
-#include "lc_snapoptionswidgetsholder.h"
-#include "lc_qtstatusbarmanager.h"
 
+class LC_RelZeroCoordinatesWidget;
+class QG_SnapToolBar;
+class LC_SnapOptionsWidgetsHolder;
 class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
 class QWidget;
@@ -54,54 +51,15 @@ public:
     QG_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *);
     ~QG_DialogFactory() override;
 
-protected:
-/**
- * Links factory to a widget that can host tool options.
- */
-    void setOptionWidget(QToolBar* ow);
+
 public:
-/**
- * Links this dialog factory to a coordinate widget.
- */
-    void setCoordinateWidget(QG_CoordinateWidget* cw) override{
-        coordinateWidget = cw;
-    }
-
-    void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {
-        relZeroCoordinatesWidget = widget;
-    }
-
-
-/**
- * Links this dialog factory to a mouse widget.
- */
-    void setMouseWidget(QG_MouseWidget* mw) override{
-        mouseWidget = mw;
-    }
-
-/**
- * Links this dialog factory to a selection widget.
- */
-    void setSelectionWidget(QG_SelectionWidget* sw) override{
-        selectionWidget = sw;
-    }
-
-/**
- * Links this dialog factory to a command widget.
- */
-    void setCommandWidget(QG_CommandWidget* cw) override{
-        commandWidget = cw;
-    }
 
 /**
  * @return command widget or nullptr.
  */
     QG_CommandWidget* getCommandWidget() const{
-        return commandWidget;
+        return m_commandWidget;
     }
-
-    void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override;
-
 
 /**
  * Links the dialog factory to a main app window.
@@ -125,21 +83,15 @@ public:
         RS_BlockList* blockList = nullptr) override;
     RS_BlockData requestBlockAttributesDialog(
         RS_BlockList* blockList) override;
-    void requestEditBlockWindow(RS_BlockList* /*blockList*/) override{}
-    void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
+   void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
 //QString requestFileSaveAsDialog() override;
 //QString requestFileOpenDialog() override;
 
     QString requestImageOpenDialog() override;
 
-    void addOptionsWidget(QWidget * options) override;
-    void removeOptionsWidget(QWidget * options) override;
 protected:
 
 public:
-    void requestSnapDistOptions(double* dist, bool on) override;
-    void requestSnapMiddleOptions(int* middlePoints, bool on) override;
-    void hideSnapOptions() override;
     bool requestAttributesDialog(RS_AttributesData& data,
                                  RS_LayerList& layerList) override;
     bool requestMoveDialog(RS_MoveData& data) override;
@@ -153,8 +105,7 @@ public:
     bool requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) override;
     bool requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) override;
     bool requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) override;
-    int requestOptionsGeneralDialog() override;
-    void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
+
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;
     bool requestOptionsMakerCamDialog() override;
 
@@ -163,15 +114,7 @@ public:
                                     const QString& filter = QString(),
                                     QString* selectedFilter = 0) override;
 
-    void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) override;
-/**
- * \brief updateMouseWidget Called when an action has a mouse hint.
- * \param left mouse hint for left button
- * \param right mouse hint for right button
- */
-    void updateMouseWidget(const QString& left=QString(),
-                           const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
-    void clearMouseWidgetIcon() override;
+
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
@@ -179,30 +122,32 @@ public:
 
     static QString extToFormat(const QString& ext);
     void displayBlockName(const QString& blockName, const bool& display) override;
-    void setCurrentQAction(QAction *action) override;
+    // void setCurrentQAction(QAction *action) override;
+
+    /// fixme - sand - temporary, remove accessort later with further refactorings
+    void set_selection_widget(QG_SelectionWidget* selection_widget) {
+        m_selectionWidget = selection_widget;
+    }
+
+    void set_command_widget(QG_CommandWidget* command_widget) {
+        m_commandWidget = command_widget;
+    }
+
+    void set_rel_zero_coordinates_widget(LC_RelZeroCoordinatesWidget* rel_zero_coordinates_widget) {
+        m_relZeroCoordinatesWidget = rel_zero_coordinates_widget;
+    }
+
 
 protected:
 //! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;
-//! Pointer to the widget which can host individual tool options
-    QToolBar* optionWidget = nullptr;
-    LC_OptionsWidgetsHolder* optionWidgetHolder = nullptr;
-    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderSnapToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderOptionsToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder * lastUsedSnapOptionsWidgetHolder = nullptr;
-//! Pointer to the coordinate widget.
-    QG_CoordinateWidget* coordinateWidget = nullptr;
-//! Pointer to the mouse widget.
-    QG_MouseWidget* mouseWidget = nullptr;
-//! Pointer to the selection widget.
-    QG_SelectionWidget* selectionWidget = nullptr;
-//! Pointer to the command line widget
-    QG_CommandWidget* commandWidget = nullptr;
-    LC_QTStatusbarManager* statusBarManager = nullptr;
-    LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
-    QG_SnapToolBar* snapToolbar = nullptr;
-    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 
+//! Pointer to the selection widget.
+    QG_SelectionWidget* m_selectionWidget = nullptr;
+//! Pointer to the command line widget
+    QG_CommandWidget* m_commandWidget = nullptr;
+
+    LC_RelZeroCoordinatesWidget *m_relZeroCoordinatesWidget;
 
 };
 

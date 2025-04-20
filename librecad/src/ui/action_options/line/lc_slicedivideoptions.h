@@ -53,9 +53,8 @@ protected slots:
     void onModeClicked(bool checked);
 private:
     Ui::LC_SliceDivideOptions *ui;
-    LC_ActionDrawSliceDivide* action = nullptr;
-    bool forCircle {false};
-
+    LC_ActionDrawSliceDivide* m_action = nullptr;
+    bool m_forCircle {false};
     void doSaveSettings() override;
     void setCountToActionAndView(int val);
     void setDistanceToActionAndView(const QString &val);

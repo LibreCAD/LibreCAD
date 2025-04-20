@@ -23,21 +23,20 @@
 **********************************************************************/
 #ifndef LC_PENPALETTEDATA_H
 #define LC_PENPALETTEDATA_H
-
+#include "rs.h"
 #include <QObject>
-#include <QList>
 
-#include "lc_penitem.h"
-#include "lc_penpaletteoptions.h"
-
-
+class LC_PenInfoRegistry;
+class RS_Color;
+class LC_PenItem;
+class LC_PenPaletteOptions;
 /**
  * Internal holder of all named pens. Stores the list of them and also offers methods for persistence of pens list in file.
  * This class is used by LC_PenPaletteModel as underlying storage.
  */
-class LC_PenPaletteData:public QObject
-{
-Q_OBJECT
+
+class LC_PenPaletteData:public QObject{
+    Q_OBJECT
 public:
     explicit LC_PenPaletteData(LC_PenPaletteOptions *opts);
     ~LC_PenPaletteData() override;
@@ -90,7 +89,7 @@ private:
     /**
      * List of named pens. Ordering of items is not important there.
      */
-    QList<LC_PenItem*> persistentItems;
+    QList<LC_PenItem*> m_persistentItems;
     /**
      * Parses given string and returns pen
      * @param str
@@ -106,11 +105,11 @@ private:
     /**
      * pens info registry
      */
-    LC_PenInfoRegistry* registry = LC_PenInfoRegistry::instance();
+    LC_PenInfoRegistry* m_registry;
     /**
      *reference to options
      */
-    LC_PenPaletteOptions *options = nullptr;
+    LC_PenPaletteOptions *m_options = nullptr;
     void createDefaultPens();
     LC_PenItem *doCreateNewDefaultPenItem(QString penName, RS2::LineType lineType, RS2::LineWidth lineWidth, RS_Color color);
     void emitDataChange();

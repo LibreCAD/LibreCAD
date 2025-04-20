@@ -25,23 +25,19 @@
 **********************************************************************/
 
 #include "rs_actionblocksfreezeall.h"
+
 #include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 
-RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,
-                                                   RS_EntityContainer& container,
-                                                   RS_GraphicView& graphicView)
-    :RS_ActionInterface("Freeze all Blocks",
-                        container, graphicView) {
-
-    this->freeze = freeze;
+RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,LC_ActionContext *actionContext)
+    :RS_ActionInterface("Freeze all Blocks", actionContext, RS2::ActionBlocksFreezeAll),
+     m_freeze(freeze){
 }
 
 void RS_ActionBlocksFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionBlocksFreezeAll::trigger");
-    if (graphic) {
-        graphic->freezeAllBlocks(freeze);
+    if (m_graphic != nullptr) {
+        m_graphic->freezeAllBlocks(m_freeze);
     }
     redrawDrawing();
     finish(false);

@@ -25,56 +25,47 @@
 **********************************************************************/
 
 
-#include <QMouseEvent>
 #include "rs_actionblockscreate.h"
 
-#include "rs_creation.h"
 #include "rs_block.h"
+#include "rs_creation.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_insert.h"
-#include "rs_modification.h"
-#include "rs_coordinateevent.h"
 
+class RS_BlockList;
 /**
  * Constructor.
  */
-RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Blocks Create",
-                               container, graphicView)
-    ,referencePoint(new RS_Vector{})
-{
-    actionType=RS2::ActionBlocksCreate;
+RS_ActionBlocksCreate::RS_ActionBlocksCreate(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Blocks Create",actionContext, RS2::ActionBlocksCreate)
+    ,m_referencePoint(new RS_Vector{}){
 }
 
 RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
 
-
-void RS_ActionBlocksCreate::init(int status) {
-    RS_PreviewActionInterface::init(status);
+void RS_ActionBlocksCreate::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+    setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
+    if (m_selectionComplete) {
+        updateMouseButtonHints();
+        updateSelectionWidget();
+    }
 }
 
-void RS_ActionBlocksCreate::trigger() {
-    if (graphic) {
-        RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList) {
+void RS_ActionBlocksCreate::doTrigger([[maybe_unused]]bool keepSelected) {
+    if (m_graphic != nullptr) {
+        RS_BlockList* blockList = m_graphic->getBlockList();
+        if (blockList != nullptr) {
             RS_BlockData d =
                 RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
             if (!d.name.isEmpty()) {
-                RS_Creation creation(container, graphicView);
-                creation.createBlock(&d, *referencePoint, true);
-
-                RS_InsertData id(
-                    d.name,
-                    *referencePoint,
-                    RS_Vector(1.0,1.0),
-                    0.0,
-                    1, 1, RS_Vector(0.0,0.0)
-                );
+                RS_Creation creation(m_container, getViewPort());
+                creation.createBlock(&d, *m_referencePoint, true);
+                RS_InsertData id(d.name, *m_referencePoint, RS_Vector(1.0, 1.0), 0.0,
+                                 1, 1, RS_Vector(0.0, 0.0));
                 creation.createInsert(&id);
             }
         }
@@ -83,43 +74,22 @@ void RS_ActionBlocksCreate::trigger() {
     redrawDrawing();
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-    graphicView->killSelectActions();
+    m_graphicView->killSelectActions();
     finish(false);
 }
 
-void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
-    snapPoint(e);
-
-    switch (getStatus()) {
-        case SetReferencePoint: {
-            //data.insertionPoint = snapPoint(e);
-/*if (block) {
-          deletePreview();
-          //preview->addAllFrom(*block);
-          //preview->move(data.insertionPoint);
-  RS_Creation creation(preview, nullptr, false);
-              creation.createInsert(data);
-          drawPreview();
-  }*/
-            break;
-        }
-        default:
-            break;
-    }
+void RS_ActionBlocksCreate::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent* pEvent) {
+    fireCoordinateEventForSnap(pEvent);
 }
 
-void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEvent(snapPoint(e));
-    } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    }
+void RS_ActionBlocksCreate::onMouseRightButtonReleaseSelected([[maybe_unused]]int status,[[maybe_unused]] LC_MouseEvent* pEvent) {
+    init(getStatus()-1);
 }
 
 void RS_ActionBlocksCreate::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetReferencePoint: {
-            *referencePoint = pos;
+            *m_referencePoint = pos;
             trigger();
             break;
         }
@@ -128,8 +98,12 @@ void RS_ActionBlocksCreate::onCoordinateEvent(int status, [[maybe_unused]] bool 
     }
 }
 
-void RS_ActionBlocksCreate::updateMouseButtonHints() {
-    switch (getStatus()) {
+void RS_ActionBlocksCreate::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel(tr("Select to create block (Enter to complete)"), MOD_SHIFT_LC(tr("Select contour")));
+}
+
+void RS_ActionBlocksCreate::updateMouseButtonHintsForSelected(int status) {
+    switch (status) {
         case SetReferencePoint:
             updateMouseWidgetTRCancel(tr("Specify reference point"));
             break;
@@ -139,6 +113,6 @@ void RS_ActionBlocksCreate::updateMouseButtonHints() {
     }
 }
 
-RS2::CursorType RS_ActionBlocksCreate::doGetMouseCursor([[maybe_unused]] int status){
+RS2::CursorType RS_ActionBlocksCreate::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }

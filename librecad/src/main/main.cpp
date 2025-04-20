@@ -43,6 +43,8 @@
 #include "lc_application.h"
 #include "main.h"
 
+#include <QDir>
+
 #include "lc_iconcolorsoptions.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlginitial.h"
@@ -52,19 +54,180 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
+// fixme - sand - files - complete refactoring
 namespace
 {
-    void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
 // update splash for alpha/beta names)
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }
+
+void showFirstLoadSetupDialog(bool first_load) {
+    LC_GROUP_GUARD("Defaults");
+    {
+        QString unit = LC_GET_STR("Unit", "Invalid");
+        // show initial config dialog:
+        if (first_load){
+            RS_DEBUG->print("main: show initial config dialog..");
+            QG_DlgInitial di(nullptr);
+            QPixmap pxm(":/images/intro_librecad.png");
+            di.setPixmap(pxm);
+            if (di.exec()) {
+                unit = LC_GET_STR("Unit", "None");
+            }
+            RS_DEBUG->print("main: show initial config dialog: OK");
+        }
+    }
+}
+
+int showHelpMessage() {
+    qDebug()<<"Usage: librecad [command] <options> <dxf file>";
+    qDebug()<<"";
+    qDebug()<<"Commands:";
+    qDebug()<<"";
+    qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
+    qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
+    qDebug()<<"  dxf2svg\tRun librecad as console dxf2svg tool. Use -h for help.";
+    qDebug()<<"";
+    qDebug()<<"Options:";
+    qDebug()<<"";
+    qDebug()<<"  -h, --help\tdisplay this message";
+    qDebug()<<"  -d, --debug <level>";
+    qDebug()<<"";
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
+    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
+    exit(0);
+}
+
+void showDebugSetupHelpMessage() {
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "possible debug levels:");
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
+    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
+}
+
+void initFontList() {
+    RS_DEBUG->print("main: init fontlist..");
+    RS_FONTLIST->init();
+    RS_DEBUG->print("main: init fontlist: OK");
+}
+
+void initPatternList() {
+    RS_DEBUG->print("main: init patternlist..");
+    RS_PATTERNLIST->init();
+    RS_DEBUG->print("main: init patternlist: OK");
+}
+
+void loadTranslations() {
+    RS_DEBUG->print("main: loading translation..");
+
+    LC_GROUP("Appearance");
+    QString lang = LC_GET_STR("Language", "en");
+    QString langCmd = LC_GET_STR("LanguageCmd", "en");
+    LC_GROUP_END();
+
+    RS_SYSTEM->loadTranslation(lang, langCmd);
+    RS_DEBUG->print("main: loading translation: OK");
+}
+
+void initSystem(char** argv, LC_Application& app) {
+    RS_DEBUG->print("param 0: %s", argv[0]);
+
+    QFileInfo prgInfo( QFile::decodeName(argv[0]) );
+    QString prgDir(prgInfo.absolutePath());
+
+    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
+}
+
+void loadFilesOnStartup(QSplashScreen *splash, QC_ApplicationWindow& appWin, [[mayb_unused]]LC_Application& app, QStringList fileList) {
+    RS_DEBUG->print("main: loading files..");
+#ifdef Q_OS_MAC
+    // get the file list from LC_Application
+    fileList << app.fileList();
+#endif
+
+    // reopen files that we open during last close of application
+    // we'll reopen them if no explicit files to open are provided in command line
+
+    appWin.openFilesOnStartup(fileList, splash);
+    RS_DEBUG->print("main: loading files: OK");
+}
+
+void loadIconsStylingOptions() {
+    LC_IconColorsOptions iconColorsOptions;
+    iconColorsOptions.loadSettings();
+    iconColorsOptions.applyOptions();
+}
+
+int execApplication(LC_Application& app) {
+    RS_DEBUG->print("main: entering Qt event loop");
+    QCoreApplication::processEvents();
+
+    int return_code = app.exec();
+
+    RS_DEBUG->print("main: exited Qt event loop");
+
+    // Destroy the singleton
+    QC_ApplicationWindow::getAppWindow().reset();
+    return return_code;
+}
+
+bool setupDebugLevel(char level) {
+    switch(level){
+        case '?' : {
+            showDebugSetupHelpMessage();
+            return true;
+        }
+        case '0' + RS_Debug::D_NOTHING : {
+            RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
+            break;
+        }
+        case '0' + RS_Debug::D_CRITICAL : {
+            RS_DEBUG->setLevel(RS_Debug::D_CRITICAL);
+            break;
+        }
+        case '0' + RS_Debug::D_ERROR : {
+            RS_DEBUG->setLevel(RS_Debug::D_ERROR);
+            break;
+        }
+        case '0' + RS_Debug::D_WARNING : {
+            RS_DEBUG->setLevel(RS_Debug::D_WARNING);
+            break;
+        }
+        case '0' + RS_Debug::D_NOTICE : {
+            RS_DEBUG->setLevel(RS_Debug::D_NOTICE);
+            break;
+        }
+        case '0' + RS_Debug::D_INFORMATIONAL : {
+            RS_DEBUG->setLevel(RS_Debug::D_INFORMATIONAL);
+            break;
+        }
+        case '0' + RS_Debug::D_DEBUGGING : {
+            RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+            break;
+        }
+        default : {
+            RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+            break;
+        }
+    }
+    return false;
+}
+
 /**
  * Main. Creates Application window.
  */
  // fixme - sand - refactor and split to several specialized functions
-int main(int argc, char** argv)
-{
-
+int main(int argc, char** argv) {
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
     // Check first two arguments in order to decide if we want to run librecad
@@ -99,18 +262,13 @@ int main(int argc, char** argv)
 
     RS_Settings::init(app.organizationName(), app.applicationName());
 
-    LC_IconColorsOptions iconColorsOptions;
-    iconColorsOptions.loadSettings();
-    iconColorsOptions.applyOptions();
-
     QGuiApplication::setDesktopFileName("librecad");
 
-    QSettings settings; // fixme - direct invocation of settings
+    loadIconsStylingOptions();
 
-    bool first_load = settings.value("Startup/FirstLoad", 1).toBool();
+    bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
 
-    const QString lpDebugSwitch0("-d"),lpDebugSwitch1("--debug") ;
-    const QString help0("-h"), help1("--help");
+
     bool allowOptions=true;
     QList<int> argClean;
     for (int i=0; i<argc; i++)
@@ -121,32 +279,13 @@ int main(int argc, char** argv)
             allowOptions=false;
             continue;
         }
+        const QString help0("-h"), help1("--help");
         if (allowOptions && (help0.compare(argstr, Qt::CaseInsensitive)==0 ||
-                             help1.compare(argstr, Qt::CaseInsensitive)==0 ))
-        {
-            qDebug()<<"Usage: librecad [command] <options> <dxf file>";
-            qDebug()<<"";
-            qDebug()<<"Commands:";
-            qDebug()<<"";
-            qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
-            qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
-            qDebug()<<"  dxf2svg\tRun librecad as console dxf2svg tool. Use -h for help.";
-            qDebug()<<"";
-            qDebug()<<"Options:";
-            qDebug()<<"";
-            qDebug()<<"  -h, --help\tdisplay this message";
-            qDebug()<<"  -d, --debug <level>";
-            qDebug()<<"";
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
-            RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
-            exit(0);
+                             help1.compare(argstr, Qt::CaseInsensitive)==0 )) {
+            return showHelpMessage();
         }
+        const QString lpDebugSwitch0("-d"),lpDebugSwitch1("--debug") ;
+
         if (allowOptions&& (argstr.startsWith(lpDebugSwitch0, Qt::CaseInsensitive) ||
                              argstr.startsWith(lpDebugSwitch1, Qt::CaseInsensitive) )){
             argClean<<i;
@@ -177,105 +316,27 @@ int main(int argc, char** argv)
                 level = argstr.toStdString()[0];
             }
 
-            switch(level){
-                case '?' : {
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "possible debug levels:");
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
-                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
-                    return 0;
-                }
-                case '0' + RS_Debug::D_NOTHING : {
-                    RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
-                    break;
-                }
-                case '0' + RS_Debug::D_CRITICAL : {
-                    RS_DEBUG->setLevel(RS_Debug::D_CRITICAL);
-                    break;
-                }
-                case '0' + RS_Debug::D_ERROR : {
-                    RS_DEBUG->setLevel(RS_Debug::D_ERROR);
-                    break;
-                }
-                case '0' + RS_Debug::D_WARNING : {
-                    RS_DEBUG->setLevel(RS_Debug::D_WARNING);
-                    break;
-                }
-                case '0' + RS_Debug::D_NOTICE : {
-                    RS_DEBUG->setLevel(RS_Debug::D_NOTICE);
-                    break;
-                }
-                case '0' + RS_Debug::D_INFORMATIONAL : {
-                    RS_DEBUG->setLevel(RS_Debug::D_INFORMATIONAL);
-                    break;
-                }
-                case '0' + RS_Debug::D_DEBUGGING : {
-                    RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
-                    break;
-                }
-                default : {
-                    RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
-                    break;
-                }
+            if (!setupDebugLevel(level)) {
+                return 0;
             }
-
         }
     }
-    RS_DEBUG->print("param 0: %s", argv[0]);
+    initSystem(argv, app);
+    showFirstLoadSetupDialog(first_load);
 
-    QFileInfo prgInfo( QFile::decodeName(argv[0]) );
-    QString prgDir(prgInfo.absolutePath());
-
-    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
-
-    // parse command line arguments that might not need a launched program:
-    QStringList fileList = handleArgs(argc, argv, argClean);
-
-    QString unit = settings.value("Defaults/Unit", "Invalid").toString();
-
-    // show initial config dialog:
-    if (first_load){
-        RS_DEBUG->print("main: show initial config dialog..");
-        QG_DlgInitial di(nullptr);
-        QPixmap pxm(":/images/intro_librecad.png");
-        di.setPixmap(pxm);
-        if (di.exec()) {
-            unit = LC_GET_ONE_STR("Defaults", "Unit", "None");
-        }
-        RS_DEBUG->print("main: show initial config dialog: OK");
-    }
-
-    auto splash = std::make_unique<QSplashScreen>();
-
-    bool show_splash = settings.value("Startup/ShowSplash", 1).toBool();
+    std::unique_ptr<QSplashScreen> splash;
+    bool show_splash = LC_GET_ONE_BOOL("Startup","ShowSplash", true);
 
     if (show_splash){
+        splash = std::make_unique<QSplashScreen>();
         updateSplash(splash);
         app.processEvents();
         RS_DEBUG->print("main: splashscreen: OK");
     }
 
-    RS_DEBUG->print("main: init fontlist..");
-    RS_FONTLIST->init();
-    RS_DEBUG->print("main: init fontlist: OK");
-
-    RS_DEBUG->print("main: init patternlist..");
-    RS_PATTERNLIST->init();
-    RS_DEBUG->print("main: init patternlist: OK");
-
-    RS_DEBUG->print("main: loading translation..");
-
-    settings.beginGroup("Appearance");
-    QString lang = settings.value("Language", "en").toString();
-    QString langCmd = settings.value("LanguageCmd", "en").toString();
-    settings.endGroup();
-
-    RS_SYSTEM->loadTranslation(lang, langCmd);
-    RS_DEBUG->print("main: loading translation: OK");
+    initFontList();
+    initPatternList();
+    loadTranslations();
 
     RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
@@ -291,6 +352,7 @@ int main(int argc, char** argv)
 
     RS_DEBUG->print("main: show main window");
 
+    QSettings settings; // fixme - direct invocation of settings
     settings.beginGroup("Defaults");
     if( !settings.contains("UseQtFileOpenDialog")) {
 #ifdef Q_OS_LINUX
@@ -303,11 +365,7 @@ int main(int argc, char** argv)
     }
     settings.endGroup();
 
-//    if (!first_load) {
-//        restoreWindowGeometry(appWin, settings);
-//    }
-
-    bool maximize = settings.value("Startup/Maximize", 0).toBool();
+    bool maximize = LC_GET_ONE_BOOL("Startup","Maximize", false);
 
     if (maximize || first_load) {
         appWin.showMaximized();
@@ -320,11 +378,10 @@ int main(int argc, char** argv)
     appWin.setFocus();
     RS_DEBUG->print("main: creating main window: OK");
 
-    if (show_splash){
+    if (splash != nullptr){
         RS_DEBUG->print("main: updating splash");
         splash->raise();
-        splash->showMessage(QObject::tr("Loading..."),
-                Qt::AlignRight|Qt::AlignBottom, Qt::black);
+        splash->showMessage(QObject::tr("Loading..."), Qt::AlignRight|Qt::AlignBottom, Qt::black);
         RS_DEBUG->print("main: processing events");
         qApp->processEvents();
         RS_DEBUG->print("main: updating splash: OK");
@@ -333,78 +390,32 @@ int main(int argc, char** argv)
     // Set LC_NUMERIC so that entering numeric values uses . as the decimal separator
     setlocale(LC_NUMERIC, "C");
 
-    RS_DEBUG->print("main: loading files..");
-#ifdef Q_OS_MAC
-    // get the file list from LC_Application
-    fileList << app.fileList();
-#endif
+    // parse command line arguments that might not need a launched program:
+    QStringList fileList = handleArgs(argc, argv, argClean);
+    loadFilesOnStartup(splash.get(), appWin, app, fileList);
 
-    // reopen files that we open during last close of application
-    // we'll reopen them if no explicit files to open are provided in command line
-    bool reopenLastFiles;
-    QString lastFiles;
-    QString activeFile;
+    appWin.initCompleted();
+
+    if (splash != nullptr) {
+        splash->finish(&appWin);
+        splash.release();
+    }
+
     LC_GROUP("Startup");
     {
-        reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
-        lastFiles = LC_GET_STR("LastOpenFilesList", "");
-        activeFile = LC_GET_STR("LastOpenFilesActive", "");
+        // fixme - sand - files - add support of command line flag to suppress version check (may be useful for automation)!
         bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
-
-        if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()) {
-                foreach(const QString &filename, lastFiles.split(";")) {
-                    if (!filename.isEmpty() && QFileInfo::exists(filename))
-                        fileList << filename;
-                }
-        }
-
-        bool files_loaded = false;
-        for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it) {
-            if (show_splash) {
-                splash->showMessage(QObject::tr("Loading File %1..")
-                                        .arg(QDir::toNativeSeparators(*it)),
-                                    Qt::AlignRight | Qt::AlignBottom, Qt::black);
-                qApp->processEvents();
-            }
-            appWin.slotFileOpen(*it);
-            files_loaded = true;
-        }
-
-        if (reopenLastFiles) {
-            appWin.activateWindowWithFile(activeFile);
-        }
-        RS_DEBUG->print("main: loading files: OK");
-
-        if (!files_loaded) {
-            appWin.slotFileNewNew();
-        }
-
-        if (show_splash) {
-            splash->finish(&appWin);
-            splash.release();
-        }
-
-
         if (checkForNewVersion) {
             appWin.checkForNewVersion();
         }
+
+        if (first_load){
+            LC_SET("FirstLoad", false);
+        }
     }
     LC_GROUP_END();
-    if (first_load)
-        settings.setValue("Startup/FirstLoad", 0);
 
-    RS_DEBUG->print("main: entering Qt event loop");
-
-    QCoreApplication::processEvents();
-
-    int return_code = app.exec();
-
-    RS_DEBUG->print("main: exited Qt event loop");
-
-    // Destroy the singleton
-    QC_ApplicationWindow::getAppWindow().reset();
-
-    return return_code;
+    return execApplication(app);
 }
 
 /**
@@ -456,26 +467,6 @@ QString LCReleaseLabel()
 }
 
 namespace {
-    void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
-    {
-        settings.beginGroup("Geometry");
-        auto geometryB64 = settings.value("/WindowGeometry").toString().toUtf8();
-        auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
-        if (!geometry.isEmpty()) {
-            appWin.restoreGeometry(geometry);
-        } else {
-            // fallback
-            int windowWidth = settings.value("WindowWidth", 1024).toInt();
-            int windowHeight = settings.value("WindowHeight", 1024).toInt();
-            int windowX = settings.value("WindowX", 32).toInt();
-            int windowY = settings.value("WindowY", 32).toInt();
-            appWin.resize(windowWidth, windowHeight);
-            appWin.move(windowX, windowY);
-        }
-
-        settings.endGroup();
-    }
-
 
 // Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
 QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label);

@@ -21,10 +21,9 @@
  ******************************************************************************/
 
 #include "lc_isometricgrid.h"
-#include "rs_math.h"
+
 #include "lc_lattice.h"
-#include "rs_painter.h"
-#include "lc_graphicviewport.h"
+#include "rs_math.h"
 
 LC_IsometricGrid::LC_IsometricGrid(LC_GridSystem::LC_GridOptions *options, int iso_projection):LC_GridSystem(options) {
     if (iso_projection >= ISO_LEFT && iso_projection < ISO_LAST) {

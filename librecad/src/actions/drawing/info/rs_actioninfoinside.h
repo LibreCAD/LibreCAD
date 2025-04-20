@@ -42,8 +42,7 @@ class RS_Vector;
 class RS_ActionInfoInside : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionInfoInside(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionInfoInside(LC_ActionContext *actionContext);
     ~RS_ActionInfoInside() override;
 
     void trigger() override;
@@ -54,8 +53,8 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
 private:
-    std::unique_ptr<RS_Vector> pt;
-    std::unique_ptr<RS_EntityContainer> contour;
+    std::unique_ptr<RS_Vector> m_point;
+    std::unique_ptr<RS_EntityContainer> m_contour;
 };
 
 #endif

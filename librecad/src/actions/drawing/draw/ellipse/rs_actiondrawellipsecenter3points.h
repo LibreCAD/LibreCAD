@@ -33,8 +33,7 @@
 class RS_ActionDrawEllipseCenter3Points : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipseCenter3Points(RS_EntityContainer& container,
-                                      RS_GraphicView& graphicView);
+    RS_ActionDrawEllipseCenter3Points(LC_ActionContext *actionContext);
     ~RS_ActionDrawEllipseCenter3Points() override;
     void init(int status) override;
     bool preparePreview();
@@ -50,8 +49,8 @@ protected:
         SetPoint3=3   //  Setting the Third Point.  */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

@@ -24,24 +24,23 @@
 **
 **********************************************************************/
 
+#include "rs_actioninfoinside.h"
+
 #include <QMouseEvent>
 
-#include "rs_actioninfoinside.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
+#include "lc_actioncontext.h"
+#include "rs_entitycontainer.h"
 #include "rs_information.h"
+#include "rs_vector.h"
 
-RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
-										 RS_GraphicView& graphicView)
-	:RS_ActionInterface("Info Inside",
-                        container, graphicView)
-    , pt(std::make_unique<RS_Vector>())
-    ,contour(std::make_unique<RS_EntityContainer>()){
-    actionType=RS2::ActionInfoInside;
-    for(auto e: container){
+RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
+	:RS_ActionInterface("Info Inside", actionContext, m_actionType=RS2::ActionInfoInside)
+    , m_point(std::make_unique<RS_Vector>())
+    ,m_contour(std::make_unique<RS_EntityContainer>()){
+    auto container = actionContext->getEntityContainer();
+    for(auto e: container->getEntityList()){
         if (e->isSelected()) {
-            contour->addEntity(e);
+            m_contour->addEntity(e);
         }
     }
 }
@@ -50,7 +49,7 @@ RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
-    if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
+    if (RS_Information::isPointInsideContour(*m_point, m_contour.get(), &onContour)) {
         commandMessage(tr("Point is inside selected contour."));
     } else {
         commandMessage(tr("Point is outside selected contour."));
@@ -68,7 +67,7 @@ void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void RS_ActionInfoInside::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    *pt = snapPoint(e);
+    *m_point = snapPoint(e);
     trigger();
 }
 

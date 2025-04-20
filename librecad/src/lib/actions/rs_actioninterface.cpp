@@ -23,20 +23,23 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<QMouseEvent>
 
-#include "rs.h"
 #include "rs_actioninterface.h"
-#include "rs_commands.h"
+
+#include <QMouseEvent>
+
+#include "lc_actioncontext.h"
+#include "lc_actionoptionswidget.h"
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 #include "rs_commandevent.h"
+#include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_settings.h"
-#include "lc_actionoptionswidget.h"
 
 /**
  * Constructor.
@@ -55,16 +58,15 @@
  *               be reset to the one given here.
  */
 RS_ActionInterface::RS_ActionInterface(const char *name,
-                                       RS_EntityContainer &container,
-                                       RS_GraphicView &graphicView,
+                                       LC_ActionContext *actionContext,
                                        RS2::ActionType actionType)
-    :RS_Snapper(container, graphicView)
-    , status{0}
-    , name{name}
-    , finished{false}
-    , graphic{container.getGraphic()}
-    , document{container.getDocument()}
-    , actionType{actionType}{
+    :RS_Snapper(actionContext)
+    , m_status{0}
+    , m_name{name}
+    , m_finished{false}
+    , m_graphic{m_container->getGraphic()}
+    , m_document{m_container->getDocument()}
+    , m_actionType{actionType}{
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
 
@@ -96,18 +98,18 @@ RS_ActionInterface::~RS_ActionInterface(){
 * @todo no default implementation
  */
 RS2::ActionType RS_ActionInterface::rtti() const{
-	return actionType;
+	return m_actionType;
 }
 
 /**
  * @return name of this action
  */
 QString RS_ActionInterface::getName() {
-    return name;
+    return m_name;
 }
 
 void RS_ActionInterface::setName(const char* _name) {
-    this->name=_name;
+    m_name=_name;
 }
 
 /**
@@ -145,9 +147,9 @@ void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
 void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
     Qt::MouseButton button = e->button();
     if (button == Qt::LeftButton){
-        onMouseLeftButtonPress(status, e);
+        onMouseLeftButtonPress(m_status, e);
     } else if (button == Qt::RightButton){
-        onMouseRightButtonPress(status, e);
+        onMouseRightButtonPress(m_status, e);
     }
 }
 
@@ -158,11 +160,12 @@ void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
  * The default implementation does nothing.
  */
 void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
-    Qt::MouseButton button = e->button();
+    Qt::MouseButton button;
+    button = e->button();
     if (button == Qt::LeftButton){
-        onMouseLeftButtonRelease(status, e);
+        onMouseLeftButtonRelease(m_status, e);
     } else if (button == Qt::RightButton){
-        onMouseRightButtonRelease(status, e);
+        onMouseRightButtonRelease(m_status, e);
     }
 }
 
@@ -211,7 +214,7 @@ void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
     bool isZero = e->isZero();
 
     // delegate further processing
-    onCoordinateEvent(status, isZero, wcsPos);
+    onCoordinateEvent(m_status, isZero, wcsPos);
 }
 
 /**
@@ -280,17 +283,19 @@ QStringList RS_ActionInterface::getAvailableCommands() {
  *               step back (i.e. presses the right mouse button).
  */
 void RS_ActionInterface::setStatus(int status) {
-    this->status = status;
+    m_status = status;
     updateMouseButtonHints();
     updateMouseCursor();
-    if(status<0) finish();
+    if(status<0) {
+        finish();
+    }
 }
 
 /**
  * @return Current status of this action.
  */
 int RS_ActionInterface::getStatus() const {
-    return status;
+    return m_status;
 }
 
 /**
@@ -331,7 +336,7 @@ RS2::CursorType RS_ActionInterface::doGetMouseCursor([[maybe_unused]]int status)
  * @return true, if the action is finished and can be deleted.
  */
 bool RS_ActionInterface::isFinished() const {
-    return finished;
+    return m_finished;
 }
 
 
@@ -339,7 +344,7 @@ bool RS_ActionInterface::isFinished() const {
  * Forces a termination of the action without any cleanup.
  */
 void RS_ActionInterface::setFinished() {
-        status = -1;
+        m_status = -1;
 }
 
 
@@ -351,8 +356,8 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
 	RS_DEBUG->print("RS_ActionInterface::finish");
 	//refuse to quit the default action
 	if(rtti() != RS2::ActionDefault) {
-		status = -1;
-		finished = true;
+		m_status = -1;
+		m_finished = true;
 		hideOptions();
 		RS_Snapper::finish();
 	}
@@ -364,7 +369,7 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
  * communicate with its predecessor.
  */
 void RS_ActionInterface::setPredecessor(RS_ActionInterface* pre) {
-    predecessor = pre;
+    m_predecessor = pre;
 }
 
 /**
@@ -390,7 +395,7 @@ void RS_ActionInterface::resume() {
 void RS_ActionInterface::hideOptions() {
     if (m_optionWidget != nullptr){
         m_optionWidget->hideOptions();
-        RS_DIALOGFACTORY->removeOptionsWidget(m_optionWidget.get());
+        m_actionContext->removeOptionsWidget(m_optionWidget.get());
         m_optionWidget.release();
     }
 }
@@ -405,7 +410,7 @@ void RS_ActionInterface::updateOptions(){
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
             if (m_optionWidget->parent() == nullptr){ // first time created
-                RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
+                m_actionContext->addOptionsWidget(m_optionWidget.get());
                 m_optionWidget->setAction(this, true);
             } else {
                 m_optionWidget->setAction(this, true);
@@ -437,7 +442,7 @@ void RS_ActionInterface::showOptions() {
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
             if (m_optionWidget->parent() == nullptr){ // first time created
-                RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
+                m_actionContext->addOptionsWidget(m_optionWidget.get());
                 m_optionWidget->setAction(this);
             } else {
                 m_optionWidget->show();
@@ -451,7 +456,7 @@ LC_ActionOptionsWidget* RS_ActionInterface::createOptionsWidget(){
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){
-    this->actionType=actionType;
+    this->m_actionType=actionType;
 }
 
 /**
@@ -473,30 +478,33 @@ QString RS_ActionInterface::command(const QString& cmd) {
     return RS_COMMANDS->command(cmd);
 }
 
+void RS_ActionInterface::switchToAction(RS2::ActionType actionType, void* data) {
+    m_actionContext->setCurrentAction(actionType, data);
+}
+
 /**
  * Calls msgAvailableCommands() from the RS_COMMANDS module.
  */
 QString RS_ActionInterface::msgAvailableCommands() {
-    return RS_COMMANDS->msgAvailableCommands();
+    return RS_COMMANDS->msgAvailableCommands(); // fixme - sand - via m_actionContext
 }
 
-int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
-{
-    return (graphic != nullptr) ? graphic->getGraphicVariableInt(key, def) : def;
+int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const{
+    return (m_graphic != nullptr) ? m_graphic->getGraphicVariableInt(key, def) : def;
 }
 
 void RS_ActionInterface::updateSelectionWidget() const{
-    const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
+    const RS_EntityContainer::LC_SelectionInfo &info = m_container->getSelectionInfo();
     updateSelectionWidget(info.count, info.length);
 }
 
 void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{
-    RS_DIALOGFACTORY->updateSelectionWidget(countSelected,selectedLength);
+    m_actionContext->updateSelectionWidget(countSelected,selectedLength);
 }
 
 void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
-    if (graphicView != nullptr) {
-        graphicView->setMouseCursor(cursor);
+    if (m_graphicView != nullptr) {
+        m_graphicView->setMouseCursor(cursor);
     }
 }
 
@@ -506,10 +514,10 @@ void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
  * @param right right string (key for tr())
  */
 void RS_ActionInterface::updateMouseWidgetTRBack(const QString &msg, const LC_ModifiersInfo& modifiers){
-    if  (infoCursorOverlayPrefs->enabled) {
+    if  (m_infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(msg, modifiers);
     }
-    RS_DIALOGFACTORY->updateMouseWidget(msg,tr("Back"), modifiers);
+    m_actionContext->updateMouseWidget(msg,tr("Back"), modifiers);
 }
 
 void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, const LC_ModifiersInfo &modifiers) {
@@ -517,7 +525,7 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, c
     LC_InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
     if (prefs->showCommandPrompt){
         if (prefs->showCurrentActionName) {
-            QString actionName = graphicView->getCurrentActionName();
+            QString actionName = m_graphicView->getCurrentActionName();
             if (!actionName.isEmpty()){
                 prompt = actionName + ": " + msg;
             }
@@ -545,7 +553,7 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, c
             prompt = prompt + "\n" + modifiersStr;
         }
     }
-    infoCursorOverlayData.setZone4(prompt);
+    m_infoCursorOverlayData->setZone4(prompt);
 }
 
 /**
@@ -554,10 +562,10 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, c
  * @param right right string (key for tr())
  */
 void RS_ActionInterface::updateMouseWidgetTRCancel(const QString &msg, const LC_ModifiersInfo& modifiers){
-    if (infoCursorOverlayPrefs->enabled) {
+    if (m_infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(msg, modifiers);
     }
-    RS_DIALOGFACTORY->updateMouseWidget(msg,tr("Cancel"), modifiers);
+    m_actionContext->updateMouseWidget(msg,tr("Cancel"), modifiers);
 }
 
 /**
@@ -566,15 +574,14 @@ void RS_ActionInterface::updateMouseWidgetTRCancel(const QString &msg, const LC_
  * @param right string
  */
 void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& right, const LC_ModifiersInfo& modifiers){
-    if (infoCursorOverlayPrefs->enabled) {
+    if (m_infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(left, modifiers);
     }
-    RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
+    m_actionContext->updateMouseWidget(left, right, modifiers);
 }
 
 void RS_ActionInterface::clearMouseWidgetIcon(){
-    infoCursorOverlayData.setZone4("");
-    RS_DIALOGFACTORY->clearMouseWidgetIcon();
+    m_infoCursorOverlayData->setZone4("");
 }
 
 /**
@@ -582,11 +589,11 @@ void RS_ActionInterface::clearMouseWidgetIcon(){
  * @param msg string
  */
 void RS_ActionInterface::commandMessage(const QString &msg) const{
-    RS_DIALOGFACTORY->commandMessage(msg);
+    m_actionContext->commandMessage(msg);
 }
 
 void RS_ActionInterface::commandPrompt(const QString &msg) const{
-    RS_DIALOGFACTORY->commandPrompt(msg);
+    m_actionContext->commandPrompt(msg);
 }
 
 void RS_ActionInterface::updateSnapAngleStep() {
@@ -626,7 +633,7 @@ void RS_ActionInterface::updateSnapAngleStep() {
         default:
             snapStepDegrees = 15.0;
     }
-    snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
+    m_snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
 }
 
 bool RS_ActionInterface::isControl(const QInputEvent *e){
@@ -649,9 +656,9 @@ void RS_ActionInterface::initPrevious(int stat) {
 bool RS_ActionInterface::undoCycleAdd(RS_Entity *e, bool addToContainer) const{
     // upd. undo list:
     if (addToContainer){
-        container->addEntity(e);
+        m_container->addEntity(e);
     }
-    if (document){
+    if (m_document){
         undoCycleStart();
         undoableAdd(e);
         undoCycleEnd();
@@ -670,7 +677,7 @@ void RS_ActionInterface::undoableDeleteEntity(RS_Entity *entity){
 }
 
 void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity *entityReplacing) {
-    if (document != nullptr) {
+    if (m_document != nullptr) {
         undoCycleStart();
         undoableDeleteEntity(entityToReplace);
         undoableAdd(entityReplacing);
@@ -679,15 +686,15 @@ void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity 
 }
 
 void RS_ActionInterface::undoCycleEnd() const {
-    RS_Undoable* relZeroUndoable = viewport->getRelativeZeroUndoable();
+    RS_Undoable* relZeroUndoable = m_viewport->getRelativeZeroUndoable();
     if (relZeroUndoable != nullptr) {
-        document->addUndoable(relZeroUndoable);
+        m_document->addUndoable(relZeroUndoable);
     }
-    document->endUndoCycle();
+    m_document->endUndoCycle();
 }
 
-void RS_ActionInterface::undoCycleStart() const { document->startUndoCycle(); }
-void RS_ActionInterface::undoableAdd(RS_Undoable *e) const { document->addUndoable(e); }
+void RS_ActionInterface::undoCycleStart() const { m_document->startUndoCycle(); }
+void RS_ActionInterface::undoableAdd(RS_Undoable *e) const { m_document->addUndoable(e); }
 
 void RS_ActionInterface::setPenAndLayerToActive(RS_Entity *e) {
     e->setLayerToActive();

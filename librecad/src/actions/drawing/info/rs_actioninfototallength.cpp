@@ -25,18 +25,14 @@
 **********************************************************************/
 
 #include "rs_actioninfototallength.h"
+
+#include "lc_actioninfomessagebuilder.h"
 #include "rs_debug.h"
-#include "rs_graphic.h"
-#include "rs_units.h"
+#include "rs_entitycontainer.h"
 
-
-RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionPreSelectionAwareBase("Info Total Length",
-					container, graphicView){
-	actionType=RS2::ActionInfoTotalLength;
+RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(LC_ActionContext *actionContext)
+        :LC_ActionPreSelectionAwareBase("Info Total Length",actionContext, RS2::ActionInfoTotalLength){
 }
-
 
 void RS_ActionInfoTotalLength::drawSnapper() {
     // disable snapper;
@@ -48,7 +44,7 @@ bool RS_ActionInfoTotalLength::isAllowTriggerOnEmptySelection() {
 
 void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
-    double l=container->totalSelectedLength();
+    double l=m_container->totalSelectedLength();
 
     if (l>0.0) {
         QString len= formatLinear(l);
@@ -61,14 +57,13 @@ void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
 }
 
 void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] LC_MouseEvent *event) {
-    const RS_EntityContainer::LC_SelectionInfo &selectionInfo = container->getSelectionInfo();
+    const RS_EntityContainer::LC_SelectionInfo &selectionInfo = m_container->getSelectionInfo();
     unsigned int selectedCount = selectionInfo.count;
-    LC_InfoMessageBuilder msg;
-    msg.add(tr("Selected:"), QString::number(selectedCount));
+    auto builder = msg(tr("Selected:"), QString::number(selectedCount));
     if (selectedCount > 0) {
-        msg.add(tr("Total Length:"),formatLinear(selectionInfo.length));
+        builder.linear(tr("Total Length:"),selectionInfo.length);
     }
-    appendInfoCursorZoneMessage(msg.toString(), 2, true);
+    builder.toInfoCursorZone2(true);
 }
 
 

@@ -20,12 +20,12 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_ellipse.h"
-#include "rs_graphicview.h"
 #include "lc_actiondrawcirclebase.h"
 
-LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name,container, graphicView){}
+#include "rs_ellipse.h"
+
+LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType type)
+    :RS_PreviewActionInterface(name,actionContext, type){}
 
 LC_ActionDrawCircleBase::~LC_ActionDrawCircleBase() = default;
 
@@ -41,7 +41,7 @@ void LC_ActionDrawCircleBase::onMouseRightButtonRelease(int status, [[maybe_unus
 void LC_ActionDrawCircleBase::init(int status) {
     RS_PreviewActionInterface::init(status);
     reset(); // fixme - review implmentation in inherited actions
-    moveRelPointAtCenterAfterTrigger = true; // todo - read from options?
+    m_moveRelPointAtCenterAfterTrigger = true; // todo - read from options?
 }
 
 // fixme - resume method - re-read from options
@@ -55,7 +55,7 @@ void LC_ActionDrawCircleBase::reset(){
 }
 
 void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises, bool allPointsNotSelectable, RS_Vector mouse){
-    if (showRefEntitiesOnPreview) {
+    if (m_showRefEntitiesOnPreview) {
         RS_Vector center = ellipse->getCenter();
         RS_Vector majorP = ellipse->getMajorP();
         const RS_Vector &major1 = center - majorP;

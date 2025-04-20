@@ -131,10 +131,10 @@
         <item row="8" column="0">
          <spacer name="spacer58">
           <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Policy::Expanding</enum>
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -147,10 +147,10 @@
         <item row="8" column="1">
          <spacer name="spacer61">
           <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Policy::Expanding</enum>
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -162,8 +162,11 @@
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="lAngle2">
+          <property name="toolTip">
+           <string>in degrees</string>
+          </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;End Angle(°):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>End Angle(°):</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -179,7 +182,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>End angle of elliptic arc</string>
+           <string>End angle of elliptic arc, degrees</string>
           </property>
          </widget>
         </item>
@@ -192,14 +195,17 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Start angle of elliptic arc</string>
+           <string>Start angle of elliptic arc, degrees</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="lAngle1">
+          <property name="toolTip">
+           <string>in degrees</string>
+          </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start Angle(°):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Start Angle(°):</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -209,10 +215,10 @@
         <item row="4" column="0">
          <widget class="QLabel" name="lRotation">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;in degrees&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>in degrees</string>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotation(°):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Rotation(°):</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -228,7 +234,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Rotation angle for the major axis of ellipse</string>
+           <string>Rotation angle for the major axis of ellipse, degrees</string>
           </property>
          </widget>
         </item>
@@ -296,7 +302,7 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>

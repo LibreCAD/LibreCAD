@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWLINEFROMPOINTTOLINE_H
 
 #include "lc_abstractactionwithpreview.h"
-#include "qg_actionhandler.h"
 
 /**
  * Actions draws line from given point to selected target line. Angle between target line and created line is either user defined
@@ -34,24 +33,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * The lengths of created line may be either fixed, or be from start point to the point of intersection of created line and target line.
  */
-class LC_ActionDrawLineFromPointToLine:public LC_AbstractActionWithPreview
-{
+class LC_ActionDrawLineFromPointToLine:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
-    LC_ActionDrawLineFromPointToLine(QG_ActionHandler* a_handler, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawLineFromPointToLine(LC_ActionContext *actionContext);
     ~LC_ActionDrawLineFromPointToLine() override = default;
-    void setLineSnapMode(int val) {lineSnapMode = val;};
-    int getLineSnapMode() const{return lineSnapMode;};
-    void setOrthogonal(bool value){orthogonalMode = value;};
-    bool getOrthogonal() const{return orthogonalMode;};
-    void setAngle(double ang){angle = ang;};
-    double getAngle() const{return angle;};
-    int getSizeMode() const{return sizeMode;};
-    void setSizeMode(int mode){sizeMode = mode;};
-    void setLength(double len){length = len;};
-    double getLength() const{return length;}
-    void setEndOffset(double len){endOffset = len;};
-    double getEndOffset() const{return endOffset;}
+    void setLineSnapMode(int val) {m_lineSnapMode = val;};
+    int getLineSnapMode() const{return m_lineSnapMode;};
+    void setOrthogonal(bool value){m_orthogonalMode = value;};
+    bool getOrthogonal() const{return m_orthogonalMode;};
+    void setAngle(double ang){m_angle = ang;};
+    double getAngle() const{return m_angle;};
+    int getSizeMode() const{return m_sizeMode;};
+    void setSizeMode(int mode){m_sizeMode = mode;};
+    void setLength(double len){m_length = len;};
+    double getLength() const{return m_length;}
+    void setEndOffset(double len){m_endOffset = len;};
+    double getEndOffset() const{return m_endOffset;}
 protected:
     // action state
     enum{
@@ -86,38 +84,38 @@ protected:
     /**
      * Target line to which line will be created
      */
-    RS_Line *targetLine = nullptr;
+    RS_Line *m_targetLine = nullptr;
     /**
      * start point from which line will be created
      */
-    RS_Vector startPoint = RS_Vector(false);
+    RS_Vector m_startPoint = RS_Vector(false);
     /**
      * desired angle between target line and line that will be built. angle 0..90 - line will be closer to left corner of target line,
      * -90..0 - will be closer to right corner of target line (considering that start point is located above the target line).
      * In Alternative action mode (SHIFT pressed with mouse), alternative (mirrored) angle will be used instead of provided one
      */
-    double angle = 0.0;
+    double m_angle = 0.0;
     /**
      * controls the mode for line length calculation
      */
-    int sizeMode = SIZE_INTERSECTION;
+    int m_sizeMode = SIZE_INTERSECTION;
     /**
      * mode for snapping fixed size line relative to start point
      */
-    int lineSnapMode = SNAP_MIDDLE;
+    int m_lineSnapMode = SNAP_MIDDLE;
     /**
      * flag determines whether angle is fixed to 90 degrees
      */
-    bool orthogonalMode = false;
+    bool m_orthogonalMode = false;
     /**
      * Length of the line if it is fixed
      */
-    double length = 0.0;
+    double m_length = 0.0;
 
     /**
      * For drawing line from point to intersection point, specifies offset from intersection point
      */
-    double endOffset = 0.0;
+    double m_endOffset = 0.0;
 
     RS_Line *createLineFromPointToTarget(RS_Line *line, RS_Vector& intersection);
     int doGetStatusForInitialSnapToRelativeZero() override;

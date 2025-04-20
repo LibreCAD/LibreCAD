@@ -25,31 +25,36 @@
 **
 **********************************************************************/
 
+#include "qg_librarywidget.h"
+
 #include <QApplication>
-#include <QDateTime>
-#include <QDesktopServices>
+#include <QDir>
+#include <QFileInfo>
 #include <QImageWriter>
+#include <QKeyEvent>
 #include <QListView>
-#include <QModelIndex>
-#include <QMouseEvent>
 #include <QPushButton>
 #include <QStandardItemModel>
 #include <QStandardPaths>
 #include <QToolButton>
 #include <QTreeView>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <qabstractitemview.h>
 
+#include "lc_documentsstorage.h"
+#include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
-#include "qg_librarywidget.h"
+#include "rs_actioninterface.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
 namespace {
+    // fixme - sand - rework, use reusable class
     void writePng(const QString& pngPath, QPixmap pixmap)
     {
         QImageWriter iio;
@@ -72,13 +77,9 @@ namespace {
  *
  * @author Rallaz
  */
-QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
-    setObjectName(name);
-    actionHandler = nullptr;
-
-    QVBoxLayout *vboxLayout = new QVBoxLayout(this);
+QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent, const char* name, Qt::WindowFlags fl)
+    : LC_GraphicViewAwareWidget(parent, name, fl), actionHandler{action_handler}{
+    auto vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
     vboxLayout->setContentsMargins(2, 2, 2, 2);
     dirView = new QTreeView(this);
@@ -100,17 +101,21 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
 
     buildTree();
 
-    connect(dirView, SIGNAL(expanded(QModelIndex)), this, SLOT(expandView(QModelIndex)));
-    connect(dirView, SIGNAL(collapsed(QModelIndex)), this, SLOT(collapseView(QModelIndex)));
-    connect(dirView, SIGNAL(clicked(QModelIndex)), this, SLOT(updatePreview(QModelIndex)));
-    connect(bInsert, SIGNAL(clicked()), this, SLOT(insert()));
-    connect(bRefresh, SIGNAL(clicked()), this, SLOT(refresh()));
-    connect(bRebuild, SIGNAL(clicked()), this, SLOT(buildTree()));
+    connect(dirView, &QTreeView::expanded, this, &QG_LibraryWidget::expandView);
+    connect(dirView, &QTreeView::collapsed, this, &QG_LibraryWidget::collapseView);
+    connect(dirView, &QTreeView::clicked, this, &QG_LibraryWidget::updatePreview);
+    connect(bInsert, &QPushButton::clicked, this, &QG_LibraryWidget::insert);
+    connect(bRefresh, &QPushButton::clicked, this, &QG_LibraryWidget::refresh);
+    connect(bRebuild, &QPushButton::clicked, this, &QG_LibraryWidget::buildTree);
 
     updateWidgetSettings();
 }
 
 QG_LibraryWidget::~QG_LibraryWidget() = default;
+
+void QG_LibraryWidget::setGraphicView([[maybe_unused]]RS_GraphicView* gview) {
+    // todo - add further processing later
+}
 
 void QG_LibraryWidget::setActionHandler(QG_ActionHandler* ah) {
     actionHandler = ah;
@@ -121,14 +126,12 @@ void QG_LibraryWidget::setActionHandler(QG_ActionHandler* ah) {
  */
 void QG_LibraryWidget::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
-
-    case Qt::Key_Escape:
-        emit escape();
-        break;
-
-    default:
-        QWidget::keyPressEvent(e);
-        break;
+        case Qt::Key_Escape:
+            emit escape();
+            break;
+        default:
+            QWidget::keyPressEvent(e);
+            break;
     }
 }
 
@@ -140,8 +143,9 @@ void QG_LibraryWidget::insert() {
     QItemSelectionModel* selIconView = ivPreview->selectionModel();
     QModelIndex idx = selIconView->currentIndex();
     QStandardItem * item = iconModel->itemFromIndex ( idx );
-    if (item == nullptr)
+    if (item == nullptr) {
         return;
+    }
 
     QString dxfPath = getItemPath(item);
 
@@ -215,7 +219,9 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 //    QStringList::Iterator it;
     QDir dir(directory);
 
-	if (!dir.exists()) return;
+	if (!dir.exists()) {
+	    return;
+	}
 
     // read subdirectories of this directory:
     QStringList lDirectoryList = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name);
@@ -236,9 +242,9 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
         }
 
         // Create new item if no existing was found:
-		if (!newItem) {
-                newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
-                item->setChild(item->rowCount(), newItem);
+        if (!newItem) {
+            newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
+            item->setChild(item->rowCount(), newItem);
         }
         appendTree(newItem, directory+QDir::separator()+lDirectory);
     }
@@ -252,8 +258,9 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
  */
 void QG_LibraryWidget::expandView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item != nullptr)
+    if (item != nullptr) {
         item->setIcon(QIcon(":/icons/fileopen.lci"));
+    }
 }
 
 /**
@@ -263,8 +270,9 @@ void QG_LibraryWidget::expandView( QModelIndex idx ){
  */
 void QG_LibraryWidget::collapseView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item != nullptr)
+    if (item != nullptr) {
         item->setIcon(QIcon(":/icons/folderclosed.lci"));
+    }
 }
 
 /**
@@ -274,8 +282,9 @@ void QG_LibraryWidget::collapseView( QModelIndex idx ){
  */
 void QG_LibraryWidget::updatePreview(QModelIndex idx) {
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item == nullptr)
+    if (item == nullptr) {
         return;
+    }
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
@@ -319,7 +328,6 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
  * @return Directory (in terms of the List view) to the given item (e.g. /mechanical/screws)
  */
 QString QG_LibraryWidget::getItemDir(QStandardItem* item) {
-
     if (item == nullptr)
         return {};
 
@@ -380,7 +388,7 @@ QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile,
     }
 }
 
-
+// fixme - sand - files - generation of thumbnails should be extracted!!! Do this on general rework of the library
 
 /**
  * @return Path to the thumbnail of the given DXF file. If no thumbnail exists, one is
@@ -441,7 +449,10 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     viewport.setSize(128,128);
 
     RS_Graphic graphic;
-    if (!graphic.open(dxfPath, RS2::FormatUnknown)) {
+
+    LC_DocumentsStorage storage;
+
+    if (!storage.loadDocument(&graphic, dxfPath, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'",
                         dxfPath.toLatin1().data());

@@ -22,7 +22,10 @@
 
 #include <QStyledItemDelegate>
 #include <QPainter>
+
 #include "lc_shortcutstreeview.h"
+#include "lc_shortcutstreemodel.h"
+#include "lc_shortcuttreeitem.h"
 
 class LC_ShortcutsTreeGridDelegate:public QStyledItemDelegate {
 public:

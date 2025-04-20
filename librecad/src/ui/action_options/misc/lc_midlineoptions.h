@@ -45,7 +45,7 @@ protected:
     void setOffsetToActionAndView(const QString& val);
 private:
     Ui::LC_MidLineOptions *ui;
-    LC_ActionDrawMidLine* action = nullptr;
+    LC_ActionDrawMidLine* m_action = nullptr;
 };
 
 #endif // LC_MIDLINEOPTIONS_H

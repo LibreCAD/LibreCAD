@@ -28,8 +28,8 @@
 #ifndef RS_DIMANGULAR_H
 #define RS_DIMANGULAR_H
 
-#include "rs_dimension.h"
 #include "rs_constructionline.h"
+#include "rs_dimension.h"
 
 /**
  * Holds the data that defines a angular dimension entity.

@@ -53,7 +53,7 @@ public:
     };
 
     LC_GridSystem(LC_GridOptions* options);
-    virtual ~LC_GridSystem() = default;
+    virtual ~LC_GridSystem() ;
 
     void setOptions(std::unique_ptr<LC_GridOptions> options);
     void invalidate();

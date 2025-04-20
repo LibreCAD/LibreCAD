@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
+    <width>759</width>
     <height>560</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>7</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -101,7 +101,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -165,7 +165,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -207,7 +207,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -277,7 +277,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -322,7 +322,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -367,7 +367,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -474,7 +474,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -770,7 +770,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -808,7 +808,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -888,7 +888,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -1172,7 +1172,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../../../../res/controls/controls.qrc">
+                 <iconset>
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1287,7 +1287,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../../../../res/controls/controls.qrc">
+                 <iconset>
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1391,7 +1391,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../../../../res/controls/controls.qrc">
+                 <iconset>
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1461,7 +1461,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../../../../res/controls/controls.qrc">
+                 <iconset>
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1845,7 +1845,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -1888,7 +1888,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2058,7 +2058,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2095,7 +2095,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2250,7 +2250,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2270,7 +2270,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2512,7 +2512,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2610,7 +2610,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2772,7 +2772,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_blank_square.lci</normaloff>:/icons/point_blank_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2813,7 +2813,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_plus_circle.lci</normaloff>:/icons/point_plus_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2854,7 +2854,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_cross_square.lci</normaloff>:/icons/point_cross_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2895,7 +2895,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_tick_circle_square.lci</normaloff>:/icons/point_tick_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2936,7 +2936,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_dot_square.lci</normaloff>:/icons/point_dot_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2977,7 +2977,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_dot_circle.lci</normaloff>:/icons/point_dot_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3018,7 +3018,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_cross_circle.lci</normaloff>:/icons/point_cross_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3062,7 +3062,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_blank.lci</normaloff>:/icons/point_blank.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3094,7 +3094,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_dot.lci</normaloff>:/icons/point_dot.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3135,7 +3135,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_tick_square.lci</normaloff>:/icons/point_tick_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3176,7 +3176,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_tick_circle.lci</normaloff>:/icons/point_tick_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3217,7 +3217,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_blank_circle_square.lci</normaloff>:/icons/point_blank_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3258,7 +3258,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_tick.lci</normaloff>:/icons/point_tick.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3299,7 +3299,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_blank_circle.lci</normaloff>:/icons/point_blank_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3340,7 +3340,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_plus_circle_square.lci</normaloff>:/icons/point_plus_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3381,7 +3381,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_cross_circle_square.lci</normaloff>:/icons/point_cross_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3422,7 +3422,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_plus_square.lci</normaloff>:/icons/point_plus_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3463,7 +3463,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_plus.lci</normaloff>:/icons/point_plus.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3504,7 +3504,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_cross.lci</normaloff>:/icons/point_cross.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3545,7 +3545,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/point_dot_circle_square.lci</normaloff>:/icons/point_dot_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3605,7 +3605,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -3711,7 +3711,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
+             <iconset>
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -3960,7 +3960,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../../../res/controls/controls.qrc">
+                <iconset>
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -3980,7 +3980,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../../../res/controls/controls.qrc">
+                <iconset>
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4020,7 +4020,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../../../res/controls/controls.qrc">
+                <iconset>
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4086,7 +4086,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../../../res/controls/controls.qrc">
+                <iconset>
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4305,50 +4305,17 @@
           <string>Program Defaults</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbAutoBackup">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
             <property name="toolTip">
-             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
             </property>
             <property name="text">
-             <string>Auto save backup each</string>
+             <string>Changing view only modifies drawing</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="cbAutoSaveTime">
-            <property name="toolTip">
-             <string>Time between automatic saving of the document in minutes.</string>
-            </property>
-            <property name="suffix">
-             <string> minutes</string>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>60</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
-            <property name="text">
-             <string>Don't use native OS file open dialog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
-            <property name="toolTip">
-             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
-            </property>
-            <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QCheckBox" name="cbPersistentDialogs">
             <property name="toolTip">
              <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
@@ -4358,7 +4325,17 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="cbShowEntityIDs">
+            <property name="toolTip">
+             <string>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</string>
+            </property>
+            <property name="text">
+             <string>Show internal IDs of entities</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
            <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
             <property name="toolTip">
              <string>If checked, location of dialog will not be saved, but size will</string>
@@ -4371,17 +4348,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="cbTabCloseButton">
-            <property name="toolTip">
-             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
-            </property>
-            <property name="text">
-             <string>Show Close button on drawings tabs</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
+          <item row="4" column="1">
            <widget class="QComboBox" name="cbTabCloseButtonMode">
             <item>
              <property name="text">
@@ -4395,37 +4362,7 @@
             </item>
            </widget>
           </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
-            <property name="toolTip">
-             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
-            </property>
-            <property name="text">
-             <string>Show current command icon in options toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="cbShowEntityIDs">
-            <property name="toolTip">
-             <string>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</string>
-            </property>
-            <property name="text">
-             <string>Show internal IDs of entities</string>
-            </property>
-           </widget>
-          </item>
           <item row="8" column="0">
-           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
-            <property name="toolTip">
-             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
-            </property>
-            <property name="text">
-             <string>Changing view only modifies drawing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
            <widget class="QCheckBox" name="cbExpandToolsMenu">
             <property name="toolTip">
              <string>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </string>
@@ -4435,7 +4372,17 @@
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
+            <property name="toolTip">
+             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
+            </property>
+            <property name="text">
+             <string>Show current command icon in options toolbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
            <widget class="QCheckBox" name="cbExpandToolsMenuTillEntity">
             <property name="toolTip">
              <string>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </string>
@@ -4445,6 +4392,33 @@
             </property>
             <property name="text">
              <string>Separate menu per entity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
+            <property name="toolTip">
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
+            </property>
+            <property name="text">
+             <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cbTabCloseButton">
+            <property name="toolTip">
+             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+            </property>
+            <property name="text">
+             <string>Show Close button on drawings tabs</string>
             </property>
            </widget>
           </item>
@@ -4617,7 +4591,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../../../res/icons/icons.qrc">
+                <iconset>
                  <normaloff>:/icons/dirpos_plus.lci</normaloff>:/icons/dirpos_plus.lci</iconset>
                </property>
                <property name="checked">
@@ -4646,7 +4620,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../../../res/icons/icons.qrc">
+                <iconset>
                  <normaloff>:/icons/dirneg_plus.lci</normaloff>:/icons/dirneg_plus.lci</iconset>
                </property>
                <property name="checkable">
@@ -4682,6 +4656,133 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="groupBox_29">
+         <property name="title">
+          <string>Auto-Save Drawings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_52">
+          <item row="2" column="2">
+           <widget class="QComboBox" name="cbAutoSaveFileNamePrefix">
+            <item>
+             <property name="text">
+              <string>#</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>~</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>_</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>__</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>lcauto_</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>autosaved_</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QSpinBox" name="cbAutoSaveTime">
+            <property name="toolTip">
+             <string>Time between automatic saving of the document in minutes.</string>
+            </property>
+            <property name="suffix">
+             <string> minutes</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>60</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_38">
+            <property name="text">
+             <string>Auto-save file name prefix:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto save backup each</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Backup file name suffix:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="cbBackupFileSuffix">
+            <item>
+             <property name="text">
+              <string>~</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>$$</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>_</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>_backup</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>_bak</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>.bak</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>.backup</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>.lcb</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -5000,7 +5101,7 @@
              <string>Click to select file</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5025,7 +5126,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5083,7 +5184,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5094,7 +5195,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5108,7 +5209,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5129,7 +5230,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5184,7 +5285,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5225,7 +5326,154 @@
        <string>Renderer</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_45">
-       <item row="0" column="0">
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="groupBox_26">
+         <property name="title">
+          <string>Operations</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_49">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbTextDraftOnPanning">
+            <property name="toolTip">
+             <string>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</string>
+            </property>
+            <property name="statusTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft within paning operations</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbTextDraftInPreview">
+            <property name="toolTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft in preview</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_22">
+         <property name="toolTip">
+          <string>Defines how arcs are rendered in UI. </string>
+         </property>
+         <property name="title">
+          <string>Arcs Rendering Method</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_36">
+          <item row="1" column="0" colspan="2">
+           <widget class="QRadioButton" name="rbRenderArcInterpolate">
+            <property name="toolTip">
+             <string>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</string>
+            </property>
+            <property name="text">
+             <string>Interpolate by line segments</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QRadioButton" name="rbRenderArcQT">
+            <property name="toolTip">
+             <string>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</string>
+            </property>
+            <property name="text">
+             <string>Qt-native drawing method (unexact near endpoints)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QGroupBox" name="groupBox_23">
+            <property name="title">
+             <string>Single segment angle</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_37">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rbRenderArcMethodSagitta">
+               <property name="toolTip">
+                <string>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</string>
+               </property>
+               <property name="text">
+                <string>Determine segments by max sagitta</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="rbRenderArcMethodFixed">
+               <property name="toolTip">
+                <string>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</string>
+               </property>
+               <property name="text">
+                <string>Use fixed segment angle value</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="sbRenderArcSegmentAngle">
+               <property name="toolTip">
+                <string>Value of fixed segment's angle</string>
+               </property>
+               <property name="suffix">
+                <string> degrees</string>
+               </property>
+               <property name="prefix">
+                <string/>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>30</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QDoubleSpinBox" name="sbRenderArcMaxSagitta">
+               <property name="toolTip">
+                <string>Maximal distance betwen arc and segment interpolation line</string>
+               </property>
+               <property name="suffix">
+                <string> px</string>
+               </property>
+               <property name="minimum">
+                <double>0.050000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>20.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.050000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.900000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="rbRenderCirclesAsArcs">
+            <property name="toolTip">
+             <string>If selected, the same rendering settings will be applied also to circles.</string>
+            </property>
+            <property name="text">
+             <string>Render circles in the same way as arcs.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="2">
         <widget class="QGroupBox" name="groupBox_14">
          <property name="title">
           <string>Rendering Minimums</string>
@@ -5378,178 +5626,47 @@
          </layout>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox_30">
+         <property name="title">
+          <string>Fonts Files</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_53">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_39">
+            <property name="text">
+             <string>Amount of letters columns:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="sbFontLettersColumnCount">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="3" column="0">
-        <spacer name="verticalSpacer_15">
+        <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_22">
-         <property name="toolTip">
-          <string>Defines how arcs are rendered in UI. </string>
-         </property>
-         <property name="title">
-          <string>Arcs Rendering Method</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_36">
-          <item row="1" column="0" colspan="2">
-           <widget class="QRadioButton" name="rbRenderArcInterpolate">
-            <property name="toolTip">
-             <string>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</string>
-            </property>
-            <property name="text">
-             <string>Interpolate by line segments</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QRadioButton" name="rbRenderArcQT">
-            <property name="toolTip">
-             <string>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</string>
-            </property>
-            <property name="text">
-             <string>Qt-native drawing method (unexact near endpoints)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QGroupBox" name="groupBox_23">
-            <property name="title">
-             <string>Single segment angle</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_37">
-             <item row="0" column="0">
-              <widget class="QRadioButton" name="rbRenderArcMethodSagitta">
-               <property name="toolTip">
-                <string>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</string>
-               </property>
-               <property name="text">
-                <string>Determine segments by max sagitta</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QRadioButton" name="rbRenderArcMethodFixed">
-               <property name="toolTip">
-                <string>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</string>
-               </property>
-               <property name="text">
-                <string>Use fixed segment angle value</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSpinBox" name="sbRenderArcSegmentAngle">
-               <property name="toolTip">
-                <string>Value of fixed segment's angle</string>
-               </property>
-               <property name="suffix">
-                <string> degrees</string>
-               </property>
-               <property name="prefix">
-                <string/>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>30</number>
-               </property>
-               <property name="value">
-                <number>5</number>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QDoubleSpinBox" name="sbRenderArcMaxSagitta">
-               <property name="toolTip">
-                <string>Maximal distance betwen arc and segment interpolation line</string>
-               </property>
-               <property name="suffix">
-                <string> px</string>
-               </property>
-               <property name="minimum">
-                <double>0.050000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>20.000000000000000</double>
-               </property>
-               <property name="singleStep">
-                <double>0.050000000000000</double>
-               </property>
-               <property name="value">
-                <double>0.900000000000000</double>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="rbRenderCirclesAsArcs">
-            <property name="toolTip">
-             <string>If selected, the same rendering settings will be applied also to circles.</string>
-            </property>
-            <property name="text">
-             <string>Render circles in the same way as arcs.</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="groupBox_26">
-         <property name="title">
-          <string>Operations</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_49">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbTextDraftInPreview">
-            <property name="toolTip">
-             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </string>
-            </property>
-            <property name="text">
-             <string>Draw text as draft in preview</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbTextDraftOnPanning">
-            <property name="toolTip">
-             <string>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</string>
-            </property>
-            <property name="statusTip">
-             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </string>
-            </property>
-            <property name="text">
-             <string>Draw text as draft within paning operations</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <spacer name="verticalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -5568,11 +5685,7 @@
  <tabstops>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../../../res/controls/controls.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/controls/controls.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

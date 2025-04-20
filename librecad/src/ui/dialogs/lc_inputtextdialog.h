@@ -23,17 +23,17 @@
 #ifndef LC_INPUTTEXTDIALOG_H
 #define LC_INPUTTEXTDIALOG_H
 
-#include <QDialog>
+#include "lc_dialog.h"
 
 namespace Ui {
-class LC_InputTextDialog;
+    class LC_InputTextDialog;
 }
 
-class LC_InputTextDialog : public QDialog{
+class LC_InputTextDialog : public LC_Dialog{
     Q_OBJECT
 public:
     explicit LC_InputTextDialog(QWidget *parent = nullptr);
-    ~LC_InputTextDialog();
+    ~LC_InputTextDialog() override;
     static QString getText(QWidget *parent, const QString &title, const QString &label,
                            const QStringList &options,
                            bool allowsEditing,

@@ -64,7 +64,7 @@ protected:
     void setAlignment(QToolButton& button);
     void layoutDirectionChanged();
     bool m_isNew = false;
-    bool saveSettings = true;
+    bool m_saveSettings = true;
     RS_MText* m_entity = nullptr;
     RS_Font* m_font = nullptr;
     std::vector<QToolButton*> m_alignmentButtons;

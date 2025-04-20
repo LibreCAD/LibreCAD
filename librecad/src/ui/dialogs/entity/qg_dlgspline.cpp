@@ -25,13 +25,10 @@
 **********************************************************************/
 #include "qg_dlgspline.h"
 
-#include "rs_spline.h"
 #include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
 #include "rs_math.h"
 #include "rs_settings.h"
+#include "rs_spline.h"
 
 /*
  *  Constructs a QG_DlgSpline as a child of 'parent', with the
@@ -55,28 +52,28 @@ void QG_DlgSpline::languageChange(){
 }
 
 void QG_DlgSpline::setEntity(RS_Spline* e) {
-    spline = e;
+    m_spline = e;
 
-    RS_Graphic* graphic = spline->getGraphic();
+    RS_Graphic* graphic = m_spline->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = spline->getLayer(false);
+    RS_Layer* lay = m_spline->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(spline, lay, "Pen");
+    wPen->setPen(m_spline, lay, tr("Pen"));
 	
     QString s;
-    s.setNum(spline->getDegree());
+    s.setNum(m_spline->getDegree());
     cbDegree->setCurrentIndex( cbDegree->findText(s) );
 
-    toUIBool(spline->isClosed(), cbClosed);
+    toUIBool(m_spline->isClosed(), cbClosed);
 
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
-        lId->setText(QString("ID: %1").arg(spline->getId()));
+        lId->setText(QString("ID: %1").arg(m_spline->getId()));
     }
     else{
         lId->setVisible(false);
@@ -84,11 +81,11 @@ void QG_DlgSpline::setEntity(RS_Spline* e) {
 }
 
 void QG_DlgSpline::updateEntity() {
-    spline->setDegree(RS_Math::round(RS_Math::eval(cbDegree->currentText())));
+    m_spline->setDegree(RS_Math::round(RS_Math::eval(cbDegree->currentText())));
 
-    spline->setClosed(cbClosed->isChecked());
+    m_spline->setClosed(cbClosed->isChecked());
 
-    spline->setPen(wPen->getPen());
-    spline->setLayer(cbLayer->getLayer());
-    spline->update();
+    m_spline->setPen(wPen->getPen());
+    m_spline->setLayer(cbLayer->getLayer());
+    m_spline->update();
 }

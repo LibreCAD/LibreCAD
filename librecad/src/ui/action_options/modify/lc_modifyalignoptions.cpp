@@ -46,8 +46,8 @@ LC_ModifyAlignOptions::~LC_ModifyAlignOptions(){
 }
 
 bool LC_ModifyAlignOptions::checkActionRttiValid(RS2::ActionType actionType) {
-    forAlignAction = actionType == RS2::ActionModifyAlign;
-    return forAlignAction || (actionType == RS2::ActionModifyAlignOne);
+    m_forAlignAction = actionType == RS2::ActionModifyAlign;
+    return m_forAlignAction || (actionType == RS2::ActionModifyAlignOne);
 }
 
 QString LC_ModifyAlignOptions::getSettingsGroupName() {
@@ -55,7 +55,7 @@ QString LC_ModifyAlignOptions::getSettingsGroupName() {
 }
 
 QString LC_ModifyAlignOptions::getSettingsOptionNamePrefix() {
-    return (forAlignAction ? "Align":"AlignOne");
+    return (m_forAlignAction ? "Align":"AlignOne");
 }
 
 void LC_ModifyAlignOptions::doSaveSettings() {
@@ -64,22 +64,22 @@ void LC_ModifyAlignOptions::doSaveSettings() {
     save("HAlign", halign);
     save("VAlign", valign);
     save("AlignTo", ui->cbAlignTo->currentIndex());
-    if (forAlignAction) {
+    if (m_forAlignAction) {
         save("AsGroup", ui->cbAsGroup->isChecked());
     }
 }
 
 void LC_ModifyAlignOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionModifyAlignData *>(a);
+    m_action = dynamic_cast<LC_ActionModifyAlignData *>(a);
     int valign;
     int halign;
     int alignType;
     bool asGroup;
     if (update){
-        valign = action->getVAlign();
-        halign = action->getHAlign();
-        alignType = action->getAlignType();
-        asGroup = action->isAsGroup();
+        valign = m_action->getVAlign();
+        halign = m_action->getHAlign();
+        alignType = m_action->getAlignType();
+        asGroup = m_action->isAsGroup();
     }
     else{
         halign = loadInt("HAlign", 0);
@@ -87,10 +87,10 @@ void LC_ModifyAlignOptions::doSetAction(RS_ActionInterface *a, bool update) {
         alignType = loadInt("AlignTo", 0);
         asGroup = loadBool("AsGroup", true);
     }
-    if (forAlignAction) {
+    if (m_forAlignAction) {
         setAsGroupToActionAndView(asGroup);
     }
-    ui->cbAsGroup->setVisible(forAlignAction);
+    ui->cbAsGroup->setVisible(m_forAlignAction);
     setHAlignToActionAndView(halign);
     setVAlignToActionAndView(valign);
     setAlignTypeToActionAndView(alignType);
@@ -119,7 +119,7 @@ void LC_ModifyAlignOptions::languageChange() {
 }
 
 void LC_ModifyAlignOptions::setAlignTypeToActionAndView(int type) {
-    action->setAlignType(type);
+    m_action->setAlignType(type);
     ui->cbAlignTo->setCurrentIndex(type);
 }
 
@@ -140,7 +140,7 @@ void LC_ModifyAlignOptions::setVAlignToActionAndView(int valign) {
         default:
             ui->tbValignNone->setChecked(true);
     }
-    action->setVAlign(valign);
+    m_action->setVAlign(valign);
 }
 
 void LC_ModifyAlignOptions::setHAlignToActionAndView(int halign) {
@@ -160,34 +160,36 @@ void LC_ModifyAlignOptions::setHAlignToActionAndView(int halign) {
         default:
             ui->tbHAlignNone->setChecked(true);
     }
-    action->setHAlign(halign);
+    m_action->setHAlign(halign);
 }
 
 int LC_ModifyAlignOptions::getHAlignFromUI() {
     if (ui->tbHAlignLeft->isChecked()) {
         return LC_Align::Align::LEFT_TOP;
-    } else if (ui->tbHalignMiddle->isChecked()) {
-        return LC_Align::Align::MIDDLE;
-    } else if (ui->tbHalignRight->isChecked()) {
-        return LC_Align::Align::RIGHT_BOTTOM;
-    } else {
-        return LC_Align::Align::NONE;
     }
+    if (ui->tbHalignMiddle->isChecked()) {
+        return LC_Align::Align::MIDDLE;
+    }
+    if (ui->tbHalignRight->isChecked()) {
+        return LC_Align::Align::RIGHT_BOTTOM;
+    }
+    return LC_Align::Align::NONE;
 }
 
 int LC_ModifyAlignOptions::getVAlignFromUI() {
     if (ui->tbVAlignTop->isChecked()) {
         return LC_Align::Align::LEFT_TOP;
-    } else if (ui->tbVAlignMiddle->isChecked()) {
-        return LC_Align::Align::MIDDLE;
-    } else if (ui->tbVAlignBottom->isChecked()) {
-        return LC_Align::Align::RIGHT_BOTTOM;
-    } else {
-        return LC_Align::Align::NONE;
     }
+    if (ui->tbVAlignMiddle->isChecked()) {
+        return LC_Align::Align::MIDDLE;
+    }
+    if (ui->tbVAlignBottom->isChecked()) {
+        return LC_Align::Align::RIGHT_BOTTOM;
+    }
+    return LC_Align::Align::NONE;
 }
 
 void LC_ModifyAlignOptions::setAsGroupToActionAndView(bool group) {
-    action->setAsGroup(group);
+    m_action->setAsGroup(group);
     ui->cbAsGroup->setChecked(group);
 }

@@ -23,16 +23,12 @@
 #ifndef LC_ACTIONPASTETOPOINTS_H
 #define LC_ACTIONPASTETOPOINTS_H
 
-#include <QObject>
-#include "rs_previewactioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
 class LC_ActionPasteToPoints: public LC_ActionPreSelectionAwareBase{
     Q_OBJECT
 public:
-    LC_ActionPasteToPoints(RS_EntityContainer &container,
-                           RS_GraphicView &graphicView);
-
+    LC_ActionPasteToPoints(LC_ActionContext *actionContext);
     double getAngle() const;
     void setAngle(double angle);
     double getScaleFactor() const;
@@ -47,9 +43,9 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool selected) override;
 
-    double angle = 0.0;
-    double scaleFactor = 1.0;
-    bool removePointAfterPaste = false;
+    double m_angle = 0.0;
+    double m_scaleFactor = 1.0;
+    bool m_removePointAfterPaste = false;
 };
 
 #endif // LC_ACTIONPASTETOPOINTS_H

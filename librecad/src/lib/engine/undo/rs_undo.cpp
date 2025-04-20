@@ -26,11 +26,9 @@
 **********************************************************************/
 
 #include<iostream>
-#include<unordered_set>
-
-#include "qc_applicationwindow.h"
-#include "rs_debug.h"
 #include "rs_undo.h"
+#include <unordered_set>
+#include "rs_debug.h"
 #include "rs_undocycle.h"
 
 /**
@@ -42,8 +40,6 @@ int RS_Undo::countUndoCycles() {
     return std::distance(undoList.cbegin(), m_redoPointer);
 }
 
-
-
 /**
  * @return Number of Cycles that can be redone.
  */
@@ -53,8 +49,6 @@ int RS_Undo::countRedoCycles() {
     return std::distance(m_redoPointer, undoList.cend());
 }
 
-
-
 /**
  * @return true, when current undo cycle has at least one undoable
  */
@@ -62,8 +56,6 @@ bool RS_Undo::hasUndoable()
 {
     return  nullptr != currentCycle && !currentCycle->empty();
 }
-
-
 
 /**
  * Adds an Undo Cycle at the current position in the list.
@@ -77,19 +69,16 @@ void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle) {
     undoList.push_back(std::move(undoCycle));
     m_redoPointer = undoList.cend();
 
-    setGUIButtons();
+    updateUndoState();
 
     RS_DEBUG->print("RS_Undo::addUndoCycle: ok");
 }
-
-
 
 /**
  * Starts a new cycle for one undo step. Every undoable that is
  * added after calling this method goes into this cycle.
  */
-void RS_Undo::startUndoCycle()
-{
+void RS_Undo::startUndoCycle(){
     if (1 < ++refCount) {
         // only the first fresh top call starts a new cycle
         return;
@@ -121,7 +110,6 @@ void RS_Undo::startUndoCycle()
                 removeUndoable(undoable);
             }
         }
-
         // clean up obsolete undoCycles
         undoList.erase(m_redoPointer, undoList.cend());
         m_redoPointer = undoList.cend();
@@ -130,7 +118,6 @@ void RS_Undo::startUndoCycle()
     // alloc new undoCycle
     currentCycle = std::make_shared<RS_UndoCycle>();
 }
-
 
 /**
  * Adds an undoable to the current undo cycle.
@@ -142,18 +129,14 @@ void RS_Undo::addUndoable(RS_Undoable* u) {
         RS_DEBUG->print( RS_Debug::D_CRITICAL, "RS_Undo::%s(): invalid currentCycle, possibly missing startUndoCycle()", __func__);
         return;
     }
-
     currentCycle->addUndoable(u);
     RS_DEBUG->print("RS_Undo::%s(): end", __func__);
 }
 
-
-
 /**
  * Ends the current undo cycle.
  */
-void RS_Undo::endUndoCycle() 
-{
+void RS_Undo::endUndoCycle(){
     if (0 < refCount) {
         // compensate nested calls of start-/endUndoCycle()
         if( 0 < --refCount) {
@@ -171,10 +154,9 @@ void RS_Undo::endUndoCycle()
         addUndoCycle(currentCycle);
     }
 
+    updateUndoState();
     currentCycle.reset(); // invalidate currentCycle for next startUndoCycle()
 }
-
-
 
 /**
  * Undoes the last undo cycle.
@@ -188,11 +170,10 @@ bool RS_Undo::undo() {
     m_redoPointer = std::prev(m_redoPointer);
     std::shared_ptr<RS_UndoCycle> uc = *m_redoPointer;
 
-	setGUIButtons();
+	updateUndoState();
 	uc->changeUndoState();
 	return true;
 }
-
 
 /**
  * Redoes the undo cycle which was at last undone.
@@ -205,7 +186,7 @@ bool RS_Undo::redo() {
         std::shared_ptr<RS_UndoCycle> uc = *m_redoPointer;
         m_redoPointer = std::next(m_redoPointer);
 
-		setGUIButtons();
+		updateUndoState();
 		uc->changeUndoState();
 		return true;
 	}
@@ -218,13 +199,10 @@ bool RS_Undo::redo() {
   * enable/disable redo/undo buttons in main application window
   * Author: Dongxu Li
   **/
-void RS_Undo::setGUIButtons() const
-{
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    if (appWin==nullptr)
-        return;
-    appWin->setRedoEnable(m_redoPointer != undoList.end());
-    appWin->setUndoEnable(!undoList.empty() && m_redoPointer != undoList.cbegin());
+void RS_Undo::updateUndoState() const{   
+    bool redoAvailable = m_redoPointer != undoList.end();
+    bool undoAvailable = !undoList.empty() && m_redoPointer != undoList.cbegin();
+    fireUndoStateChanged(undoAvailable, redoAvailable);
 }
 
 /**

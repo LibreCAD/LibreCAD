@@ -25,19 +25,18 @@
 **********************************************************************/
 
 #include "rs_actionmodifyrotate2.h"
-#include "rs_coordinateevent.h"
-#include "rs_preview.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_rotate2options.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "lc_rotate2options.h"
+#include "rs_preview.h"
 
-RS_ActionModifyRotate2::RS_ActionModifyRotate2(RS_EntityContainer& container, RS_GraphicView& graphicView)
-    :LC_ActionModifyBase("Rotate Entities around two centers",container, graphicView)
-    ,data(new RS_Rotate2Data()){
-    actionType=RS2::ActionModifyRotate2;
+RS_ActionModifyRotate2::RS_ActionModifyRotate2(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Rotate Entities around two centers",actionContext, RS2::ActionModifyRotate2)
+    ,m_actionData(new RS_Rotate2Data()){
 }
 
 // fixme - The logic of Rotate2 action should be deeply reviewed... this is very old implementation, and for
@@ -53,8 +52,8 @@ void RS_ActionModifyRotate2::init(int status) {
 
 void RS_ActionModifyRotate2::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
-    RS_Modification m(*container, viewport);
-    m.rotate2(*data, selectedEntities,false, keepSelected);
+    RS_Modification m(*m_container, m_viewport);
+    m.rotate2(*m_actionData, m_selectedEntities,false, keepSelected);
     finish(false);
 }
 
@@ -66,25 +65,25 @@ void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent 
             break;
         }
         case SetReferencePoint2: {
-            if (data->center1.valid){
-                mouse = getSnapAngleAwarePoint(e, data->center1, mouse, true);
-                data->center2 = mouse;
-                RS_Modification m(*preview, viewport, false);
-                m.rotate2(*data, selectedEntities, true, false);
+            if (m_actionData->center1.valid){
+                mouse = getSnapAngleAwarePoint(e, m_actionData->center1, mouse, true);
+                m_actionData->center2 = mouse;
+                RS_Modification m(*m_preview, m_viewport, false);
+                m.rotate2(*m_actionData, m_selectedEntities, true, false);
 
-                if (showRefEntitiesOnPreview) {
-                    previewRefPoint(data->center1);
-                    previewRefLine(data->center1, mouse);
+                if (m_showRefEntitiesOnPreview) {
+                    previewRefPoint(m_actionData->center1);
+                    previewRefLine(m_actionData->center1, mouse);
                     previewRefPointsForMultipleCopies(mouse);
                 }
 
                 if (isInfoCursorForModificationEnabled()){
-                    LC_InfoMessageBuilder msg(tr("Rotating Twice"));
-                    msg.add(tr("Center 1:"), formatVector(data->center1));
-                    msg.add(tr("Angle 1:"), formatWCSAngle(data->angle1));
-                    msg.add(tr("Center 2:"), formatVector(data->center2));
-                    msg.add(tr("Angle 2:"), formatWCSAngle(data->angle2));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(tr("Rotating Twice"))
+                        .vector(tr("Center 1:"), m_actionData->center1)
+                        .wcsAngle(tr("Angle 1:"), m_actionData->angle1)
+                        .vector(tr("Center 2:"), m_actionData->center2)
+                        .wcsAngle(tr("Angle 2:"), m_actionData->angle2)
+                        .toInfoCursorZone2(false);
                 }
             }
             break;
@@ -94,18 +93,18 @@ void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent 
     }
 }
 
-void RS_ActionModifyRotate2::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyRotate2::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     switch (status){
         case SetReferencePoint2: {
-            snap = getSnapAngleAwarePoint(e, data->center1, snap, false);
+            snap = getSnapAngleAwarePoint(e, m_actionData->center1, snap, false);
             break;
         }
     }
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionModifyRotate2::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyRotate2::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint2: {
@@ -113,7 +112,7 @@ void RS_ActionModifyRotate2::mouseRightButtonReleaseEventSelected(int status, [[
             break;
         }
         case SetReferencePoint1: {
-            selectionComplete = false;
+            m_selectionComplete = false;
             break;
         }
         default:
@@ -124,13 +123,13 @@ void RS_ActionModifyRotate2::mouseRightButtonReleaseEventSelected(int status, [[
 void RS_ActionModifyRotate2::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetReferencePoint1: {
-            data->center1 = pos;
+            m_actionData->center1 = pos;
             moveRelativeZero(pos);
             setStatus(SetReferencePoint2);
             break;
         }
         case SetReferencePoint2: {
-            data->center2 = pos;
+            m_actionData->center2 = pos;
 //            setStatus(ShowDialog);
             doPerformTrigger();
             break;
@@ -142,7 +141,7 @@ void RS_ActionModifyRotate2::onCoordinateEvent(int status, [[maybe_unused]]bool 
 
 void RS_ActionModifyRotate2::doPerformTrigger() {
     if (isShowModifyActionDialog()) {
-        if (RS_DIALOGFACTORY->requestRotate2Dialog(*data)) {
+        if (RS_DIALOGFACTORY->requestRotate2Dialog(*m_actionData)) {
             updateOptions();
             trigger();
         }
@@ -177,20 +176,20 @@ RS2::CursorType RS_ActionModifyRotate2::doGetMouseCursorSelected([[maybe_unused]
 }
 
 void RS_ActionModifyRotate2::previewRefPointsForMultipleCopies( [[maybe_unused]]const RS_Vector &mouse) {
-    int numPoints = data->number;
-    if (!data->multipleCopies) {
+    int numPoints = m_actionData->number;
+    if (!m_actionData->multipleCopies) {
         numPoints = 1;
     }
     for (int i = 1; i <= numPoints; i++) {
-        double angle1ForCopy = /*data->sameAngle1ForCopies ?  data->angle1 :*/ data->angle1 * i;
-        double angle2ForCopy = data->sameAngle2ForCopies ? data->angle2 : data->angle2 * i;
-        RS_Vector center2 = data->center2;
-        center2.rotate(data->center1, angle1ForCopy);
+        double angle1ForCopy = /*m_actionData->sameAngle1ForCopies ?  m_actionData->angle1 :*/ m_actionData->angle1 * i;
+        double angle2ForCopy = m_actionData->sameAngle2ForCopies ? m_actionData->angle2 : m_actionData->angle2 * i;
+        RS_Vector center2 = m_actionData->center2;
+        center2.rotate(m_actionData->center1, angle1ForCopy);
 
         double angleSum = angle1ForCopy + angle2ForCopy;
         previewSnapAngleMark(center2, angleSum);
         if (i == 1) {
-            previewRefLine(data->center1, center2);
+            previewRefLine(m_actionData->center1, center2);
             previewRefPoint(center2);
         }
     }
@@ -201,39 +200,39 @@ LC_ActionOptionsWidget *RS_ActionModifyRotate2::createOptionsWidget() {
 }
 
 void RS_ActionModifyRotate2::setAngle2(double d) {
-    data->angle2 = toWorldAngleFromUCSBasis(d);
+    m_actionData->angle2 = toWorldAngleFromUCSBasis(d);
 }
 
 void RS_ActionModifyRotate2::setAngle1(double d) {
-    data->angle1 = toWorldAngleFromUCSBasis(d);
+    m_actionData->angle1 = toWorldAngleFromUCSBasis(d);
 }
 
 double RS_ActionModifyRotate2::getAngle1() {
-    return toUCSBasisAngle(data->angle1);
+    return toUCSBasisAngle(m_actionData->angle1);
 }
 
 double RS_ActionModifyRotate2::getAngle2() {
-    return toUCSBasisAngle(data->angle2);
+    return toUCSBasisAngle(m_actionData->angle2);
 }
 
 void RS_ActionModifyRotate2::setUseSameAngle2ForCopies(bool b) {
-    data->sameAngle2ForCopies = b;
+    m_actionData->sameAngle2ForCopies = b;
 }
 
 bool RS_ActionModifyRotate2::isUseSameAngle2ForCopies() {
-    return data->sameAngle2ForCopies;
+    return m_actionData->sameAngle2ForCopies;
 }
 
 void RS_ActionModifyRotate2::setMirrorAngles(bool b) {
-    data->mirrorAngles = b;
+    m_actionData->mirrorAngles = b;
 }
 
 bool RS_ActionModifyRotate2::isMirrorAngles() {
-    return data->mirrorAngles;
+    return m_actionData->mirrorAngles;
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyRotate2::getModifyOperationFlags() {
-    return data.get();
+    return m_actionData.get();
 }
 
 bool RS_ActionModifyRotate2::isAllowTriggerOnEmptySelection() {

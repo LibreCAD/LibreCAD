@@ -23,25 +23,23 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
-#include<QString>
+
 #include "rs_grid.h"
-#include "rs_graphicview.h"
-#include "rs_units.h"
-#include "rs_graphic.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "lc_rect.h"
-#include "rs_debug.h"
-#include "lc_lattice.h"
-#include "lc_orthogonalgrid.h"
-#include "lc_isometricgrid.h"
+
 #include "lc_graphicviewport.h"
 #include "lc_gridsystem.h"
+#include "lc_isometricgrid.h"
+#include "lc_orthogonalgrid.h"
+#include "rs_graphic.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+class RS_Graphic;
 
 namespace {
 
@@ -75,7 +73,7 @@ void RS_Grid::loadSettings(){
     LC_GROUP("Appearance");
     scaleGrid = LC_GET_BOOL("ScaleGrid", true);
     // get grid setting
-    RS_Graphic* graphic = viewport->getGraphic();
+    auto graphic = viewport->getGraphic();
     if (graphic != nullptr) {
         isometric = graphic->isIsometricGrid();
         isoViewType = graphic->getIsoView();

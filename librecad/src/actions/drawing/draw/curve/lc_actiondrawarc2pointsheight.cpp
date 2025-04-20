@@ -21,39 +21,39 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointsheight.h"
+
 #include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_information.h"
 
-LC_ActionDrawArc2PointsHeight::LC_ActionDrawArc2PointsHeight(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",container, graphicView) {
-    actionType = RS2::ActionDrawArc2PHeight;
+LC_ActionDrawArc2PointsHeight::LC_ActionDrawArc2PointsHeight(LC_ActionContext *actionContext)
+    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",actionContext, RS2::ActionDrawArc2PHeight) {
 }
 
 bool LC_ActionDrawArc2PointsHeight::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
-    double chordLen = startPoint.distanceTo(pos);
-    double arcHeight = parameterLen;
+    double chordLen = m_startPoint.distanceTo(pos);
+    double arcHeight = m_parameterLen;
 
     double radius = (arcHeight / 2) + ((chordLen * chordLen) / (8 * arcHeight));
 
 
-    RS_Circle circle1 = RS_Circle(nullptr, RS_CircleData(startPoint, radius));
+    RS_Circle circle1 = RS_Circle(nullptr, RS_CircleData(m_startPoint, radius));
     RS_Circle circle2 = RS_Circle(nullptr, RS_CircleData(pos, radius));
 
     const RS_VectorSolutions &intersections = RS_Information::getIntersection(&circle1, &circle2);
 
     RS_Vector center;
 
-    bool reverseArc = reversed;
+    bool reverseArc = m_reversed;
     if (alternate){
         reverseArc = !reverseArc;
     }
 
     if (intersections.size() == 2) {
         RS_Vector ipRight, ipLeft;
-        int pointPosition = LC_LineMath::getPointPosition(startPoint, pos, intersections[0]);
+        int pointPosition = LC_LineMath::getPointPosition(m_startPoint, pos, intersections[0]);
         if (pointPosition == LC_LineMath::PointToLinePosition::RIGHT) {
             ipRight = intersections[0];
             ipLeft = intersections[1];
@@ -64,22 +64,22 @@ bool LC_ActionDrawArc2PointsHeight::createArcData(RS_ArcData &data, [[maybe_unus
         }
         bool heightLargeThanHalfChord = arcHeight > (chordLen / 2);
 
-        if (reversed) {
+        if (m_reversed) {
             center = heightLargeThanHalfChord ? ipLeft : ipRight;
         } else {
             center = heightLargeThanHalfChord ? ipRight : ipLeft;
         }
     } else {
         RS_Vector v = RS_Vector();
-        v.setPolar(radius, startPoint.angleTo(pos));
-        center = startPoint + v;
-        pos = startPoint + v*2.0;
+        v.setPolar(radius, m_startPoint.angleTo(pos));
+        center = m_startPoint + v;
+        pos = m_startPoint + v*2.0;
     }
 
     data.center = center;
     data.reversed = reverseArc;
     data.radius = radius;
-    data.angle1 = data.center.angleTo(startPoint);
+    data.angle1 = data.center.angleTo(m_startPoint);
     data.angle2 = data.center.angleTo(pos);
     return true;
 }

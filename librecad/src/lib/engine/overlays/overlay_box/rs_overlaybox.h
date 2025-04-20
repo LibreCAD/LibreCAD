@@ -28,14 +28,16 @@
 #define RS_OVERLAYBOX_H
 
 #include "lc_overlayentity.h"
-#include "rs_atomicentity.h"
 #include "rs_color.h"
+#include "rs_vector.h"
 
 /**
  * Holds the data that defines a line.
  */
 
 struct LC_OverlayBoxOptions{
+    LC_OverlayBoxOptions() = default;
+    ~LC_OverlayBoxOptions() = default;
     RS_Color m_colorBoxLine;
     RS_Color m_colorBoxFill;
     RS_Color m_colorLineInverted;

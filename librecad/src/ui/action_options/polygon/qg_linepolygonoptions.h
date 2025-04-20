@@ -26,8 +26,6 @@
 #ifndef QG_LINEPOLYGONOPTIONS_H
 #define QG_LINEPOLYGONOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionDrawLinePolygonCenCor;
@@ -50,13 +48,13 @@ public slots:
     void onRadiusEditingFinished();
     void languageChange() override;
 protected:
-    bool sideSideAction = false;
+    bool m_sideSideAction = false;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     QString getSettingsOptionNamePrefix() override;
 private:
-    LC_ActionDrawLinePolygonBase* action = nullptr;
+    LC_ActionDrawLinePolygonBase* m_action = nullptr;
 	   std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;
     void setNumberToActionAndView(int number);
     void setPolylineToActionAndView(bool val);

@@ -24,10 +24,8 @@
 **
 **********************************************************************/
 #include "qg_dlgarc.h"
-
 #include "rs_arc.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
 #include "rs_settings.h"
 
 /*
@@ -52,27 +50,27 @@ void QG_DlgArc::languageChange(){
 }
 
 void QG_DlgArc::setEntity(RS_Arc* a) {
-    entity = a;
-    RS_Graphic* graphic = entity->getGraphic();
+    m_entity = a;
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(m_entity, lay, tr("Pen"));
 
-    toUI(entity->getCenter(), leCenterX, leCenterY);
-    toUIValue(entity->getRadius(), leRadius);
-    toUIAngleDeg(entity->getAngle1(), leAngle1);
-    toUIAngleDeg(entity->getAngle2(), leAngle2);
-    toUIBool(entity->isReversed(), cbReversed);
+    toUI(m_entity->getCenter(), leCenterX, leCenterY);
+    toUIValue(m_entity->getRadius(), leRadius);
+    toUIAngleDeg(m_entity->getAngle1(), leAngle1);
+    toUIAngleDeg(m_entity->getAngle2(), leAngle2);
+    toUIBool(m_entity->isReversed(), cbReversed);
 
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
-        lId->setText(QString("ID: %1").arg(entity->getId()));
+        lId->setText(QString("ID: %1").arg(m_entity->getId()));
     }
     else{
         lId->setVisible(false);
@@ -80,17 +78,17 @@ void QG_DlgArc::setEntity(RS_Arc* a) {
 }
 
 void QG_DlgArc:: updateEntity() {
-    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
-    entity->setRadius(toWCSValue(leRadius, entity->getRadius()));
+    m_entity->setCenter(toWCS(leCenterX, leCenterY, m_entity->getCenter()));
+    m_entity->setRadius(toWCSValue(leRadius, m_entity->getRadius()));
 
-    entity->setAngle1(toWCSAngle(leAngle1, entity->getAngle1()));
-    entity->setAngle2(toWCSAngle(leAngle2, entity->getAngle2()));
+    m_entity->setAngle1(toWCSAngle(leAngle1, m_entity->getAngle1()));
+    m_entity->setAngle2(toWCSAngle(leAngle2, m_entity->getAngle2()));
 
-    if (entity->isReversed() != cbReversed->isChecked()) {
-        entity->revertDirection();
+    if (m_entity->isReversed() != cbReversed->isChecked()) {
+        m_entity->revertDirection();
     }
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
-    entity->calculateBorders();
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
+    m_entity->calculateBorders();
 }

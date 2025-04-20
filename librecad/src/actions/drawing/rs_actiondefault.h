@@ -31,8 +31,6 @@
 #include "lc_overlayboxaction.h"
 
 
-
-
 /**
  * This action class can handle user events to select all entities.
  *
@@ -46,8 +44,7 @@ class RS_ActionDefault : public LC_OverlayBoxAction {
     using BASE_CLASS = RS_PreviewActionInterface;
 
 public:
-    RS_ActionDefault(RS_EntityContainer& container,
-                     RS_GraphicView& graphicView);
+    RS_ActionDefault(LC_ActionContext *actionContext);
     ~RS_ActionDefault() override;
 
     void finish(bool) override{}
@@ -103,10 +100,10 @@ protected:
 
 private:
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    RS2::SnapRestriction snapRestriction;
-    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+    RS2::SnapRestriction m_snapRestriction;
+    RS2::EntityType m_typeToSelect = RS2::EntityType::EntityUnknown;
 
     bool allowEntityQuickInfoForCTRL = false;
     bool allowEntityQuickInfoAuto = false;

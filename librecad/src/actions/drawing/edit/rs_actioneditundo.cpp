@@ -24,23 +24,19 @@
 **
 **********************************************************************/
 
-
 #include "rs_actioneditundo.h"
-#include "rs_dialogfactory.h"
+
+#include "rs_document.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 
 /**
  * Constructor.
  *
  * @param undo true for undo and false for redo.
  */
-RS_ActionEditUndo::RS_ActionEditUndo(bool undo,
-                                     RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Undo",
-					container, graphicView)
-		, undo(undo){
+RS_ActionEditUndo::RS_ActionEditUndo(bool undo,LC_ActionContext *actionContext)
+  :RS_ActionInterface("Edit Undo", actionContext,undo? RS2::ActionEditUndo: RS2::ActionEditRedo)
+ , m_performUndo(undo){
 }
 
 void RS_ActionEditUndo::init(int status) {
@@ -49,22 +45,22 @@ void RS_ActionEditUndo::init(int status) {
 }
 
 void RS_ActionEditUndo::trigger(){
-    if (!graphic){
+    if (!m_graphic){
         qWarning("undo: graphic is null");
         return;
     }
 
-    if (undo) {
-        if(!document->undo())
+    if (m_performUndo) {
+        if(!m_document->undo())
             commandMessage(tr("Nothing to undo!"));
     } else {
-        if(!document->redo())
+        if(!m_document->redo())
             commandMessage(tr("Nothing to redo!"));
     }
 
-    graphic->addBlockNotification();
-    graphic->setModified(true);
-    document->updateInserts();
+    m_graphic->addBlockNotification();
+    m_graphic->setModified(true);
+    m_document->updateInserts();
     redrawDrawing();
     finish(false);
     updateSelectionWidget();

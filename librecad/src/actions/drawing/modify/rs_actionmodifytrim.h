@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-
+class RS_AtomicEntity;
 /**
  * This action class can handle user events to trim entities.
  *
@@ -38,10 +38,7 @@
 class RS_ActionModifyTrim:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyTrim(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        bool both = false);
+    RS_ActionModifyTrim(LC_ActionContext *actionContext,bool both = false);
     ~RS_ActionModifyTrim() override;
     void init(int status) override;
     void finish(bool updateTB) override;
@@ -54,13 +51,13 @@ protected:
         ChooseTrimEntity /**< Choosing the entity to trim. */
     };
 
-    RS_AtomicEntity *trimEntity = nullptr;
-    RS_Entity *limitEntity = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool both = false;
-    void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
+    RS_AtomicEntity *m_trimEntity = nullptr;
+    RS_Entity *m_limitEntity = nullptr;
+    struct TrimActionData;
+    std::unique_ptr<TrimActionData> m_actionData;
+    bool m_both = false;
 
+    void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

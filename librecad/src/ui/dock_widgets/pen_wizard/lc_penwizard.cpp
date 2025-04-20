@@ -24,91 +24,78 @@
 **********************************************************************************
 */
 
-#include <QVBoxLayout>
-
-
-#include "colorwizard.h"
 #include "lc_penwizard.h"
 
 #include <QToolButton>
+#include <QVBoxLayout>
 
+#include "colorwizard.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
-#include "rs_entity.h"
-#include "rs_graphic.h"
+#include "rs_color.h"
 #include "rs_settings.h"
 
-LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
-    : QDockWidget(title, parent)
-    , color_wiz(new ColorWizard(this))
-{
-    auto frame = new QFrame(this);
+LC_PenWizard::LC_PenWizard(QWidget* parent)
+    : LC_GraphicViewAwareWidget(parent)
+      , m_colorWizard(new ColorWizard(this)) {
+    // auto frame = new QFrame(this);
     auto layout = new QVBoxLayout;
-    frame->setLayout(layout);
+    this->setLayout(layout);
 
     layout->setContentsMargins(QMargins{});
-    layout->addWidget(color_wiz);
+    layout->addWidget(m_colorWizard);
+    layout->addItem(new QSpacerItem(0, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum));
 
-    setWidget(frame);
-
-    connect(color_wiz, &ColorWizard::requestingColorChange,
-            this, &LC_PenWizard::setColorForSelected);
-    connect(color_wiz, &ColorWizard::requestingSelection,
-            this, &LC_PenWizard::selectByColor);
-    connect(color_wiz, &ColorWizard::colorDoubleClicked,
-            this, &LC_PenWizard::setActivePenColor);
-
+    connect(m_colorWizard, &ColorWizard::requestingColorChange, this, &LC_PenWizard::setColorForSelected);
+    connect(m_colorWizard, &ColorWizard::requestingSelection, this, &LC_PenWizard::selectByColor);
+    connect(m_colorWizard, &ColorWizard::colorDoubleClicked, this, &LC_PenWizard::setActivePenColor);
     updateWidgetSettings();
 }
 
-void LC_PenWizard::setColorForSelected(QColor color)
-{
-    auto graphic = mdi_win->getGraphic();
+void LC_PenWizard::setColorForSelected(QColor color) {
+    auto graphic = m_graphicView->getGraphic();
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
 
-    foreach (auto e, graphic->getEntityList())
-    {
-        if (e->isSelected())
-        {
+    foreach(auto e, graphic->getEntityList()) {
+        if (e->isSelected()) {
             e->setPen(pen);
             e->setSelected(false);
         }
     }
-    mdi_win->getGraphicView()->redraw(RS2::RedrawDrawing);
+    m_graphicView->redraw(RS2::RedrawDrawing);
 }
 
-void LC_PenWizard::selectByColor(QColor color){
-    auto graphic = mdi_win->getGraphic();
-    foreach (auto e, graphic->getEntityList())
-    {
-        if (e->getPen().getColor().name() == color.name())
-        {
+void LC_PenWizard::selectByColor(QColor color) {
+    auto graphic = m_graphicView->getGraphic();
+    foreach(auto e, graphic->getEntityList()) {
+        if (e->getPen().getColor().name() == color.name()) {
             e->setSelected(true);
         }
     }
-    mdi_win->getGraphicView()->redraw(RS2::RedrawDrawing);
+    m_graphicView->redraw(RS2::RedrawDrawing);
 }
 
-void LC_PenWizard::setActivePenColor(QColor color){
-    auto graphic = mdi_win->getGraphic();
+void LC_PenWizard::setActivePenColor(QColor color) {
+    auto graphic = m_graphicView->getGraphic();
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
     graphic->setActivePen(pen);
 }
 
-void LC_PenWizard::setMdiWindow(QC_MDIWindow* mdiWindow){
-    mdi_win = mdiWindow;
+void LC_PenWizard::setGraphicView(RS_GraphicView* mdiWindow) {
+    m_graphicView = mdiWindow;
 }
 
-void LC_PenWizard::updateWidgetSettings(){
-    LC_GROUP("Widgets"); {
+void LC_PenWizard::updateWidgetSettings() {
+    LC_GROUP("Widgets");
+    {
         bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
         int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
 
         QSize size(iconSize, iconSize);
 
-        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        QList<QToolButton*> widgets = this->findChildren<QToolButton*>();
         foreach(QToolButton *w, widgets) {
             w->setAutoRaise(flatIcons);
             w->setIconSize(size);

@@ -28,7 +28,6 @@
 #define QC_ACTIONGETENT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
  class Plugin_Entity;
  class Doc_plugin_interface;
@@ -42,13 +41,12 @@
 class QC_ActionGetEnt : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    QC_ActionGetEnt(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    QC_ActionGetEnt(LC_ActionContext* actionContext);
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
 
     void setMessage(QString msg);
-    bool isCompleted() const {return completed;}
+    bool isCompleted() const {return m_completed;}
     Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
 protected:
@@ -57,9 +55,9 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
     void updateMouseButtonHints() override;
 private:
-    bool completed;
-    QString message;
-    RS_Entity* en;
+    bool m_completed;
+    QString m_message;
+    RS_Entity* m_entity;
 };
 
 #endif

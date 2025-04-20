@@ -23,9 +23,7 @@
 #include "lc_printpreviewview.h"
 #include "lc_printpreviewviewrenderer.h"
 
-LC_PrintPreviewView::LC_PrintPreviewView(QWidget* parent, RS_Document* doc):
-    QG_GraphicView(parent, doc)
-{}
+LC_PrintPreviewView::LC_PrintPreviewView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext):QG_GraphicView(parent, doc, actionContext){};
 
 LC_PrintPreviewView::~LC_PrintPreviewView() = default;
 
@@ -33,7 +31,7 @@ void LC_PrintPreviewView::createViewRenderer() {
     setRenderer(std::make_unique<LC_PrintPreviewViewRenderer>(getViewPort(), this));
 }
 
-void LC_PrintPreviewView::setDrawingMode(RS2::DrawingMode m) {
+void LC_PrintPreviewView::setDrawingMode(RS2::DrawingMode m) const {
     auto previewRenderer = dynamic_cast<LC_PrintPreviewViewRenderer *>(getRenderer());
     if (previewRenderer != nullptr) {
         previewRenderer->setDrawingMode(m);

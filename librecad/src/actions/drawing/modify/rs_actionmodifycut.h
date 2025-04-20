@@ -38,8 +38,7 @@
 class RS_ActionModifyCut : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyCut(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionModifyCut(LC_ActionContext *actionContext);
     ~RS_ActionModifyCut() override;
     void init(int status) override;
     void finish(bool updateTB) override;
@@ -51,8 +50,8 @@ protected:
         ChooseCutEntity,      /**< Choosing the entity to cut in two. */
         SetCutCoord        /**< Choosing the cutting point. */
     };
-    RS_Entity* cutEntity = nullptr;
-    std::unique_ptr<RS_Vector> cutCoord;
+    RS_Entity* m_cutEntity = nullptr;
+    std::unique_ptr<RS_Vector> m_cutCoord;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

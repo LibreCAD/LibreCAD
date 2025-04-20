@@ -21,9 +21,9 @@
  ******************************************************************************/
 
 #include "lc_overlaysmanager.h"
-#include "rs_entitycontainer.h"
-#include "rs_graphic.h"
+
 #include "lc_overlayentitiescontainer.h"
+#include "rs_entitycontainer.h"
 
 LC_OverlaysManager::LC_OverlaysManager() {
     for (int i = 0; i < RS2::OverlayGraphics::LAST; i++){

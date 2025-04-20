@@ -28,9 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionInfo3PointsAngle :public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionInfo3PointsAngle(RS_EntityContainer &container,
-                                  RS_GraphicView &graphicView);
-
+    LC_ActionInfo3PointsAngle(LC_ActionContext *actionContext);
     ~LC_ActionInfo3PointsAngle() override;
 protected:
     enum Status{
@@ -39,9 +37,9 @@ protected:
         SetPoint3
     };
 
-    RS_Vector point1{false};
-    RS_Vector point2{false};
-    RS_Vector point3{false};
+    RS_Vector m_point1{false};
+    RS_Vector m_point2{false};
+    RS_Vector m_point3{false};
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

@@ -31,6 +31,7 @@
 #include "rs_settings.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_text.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the
@@ -40,7 +41,7 @@
  *  true to construct a modal dialog.
  */
 QG_DlgText::QG_DlgText(QWidget *parent, LC_GraphicViewport *pViewport, RS_Text* text, bool forNew)
-    :LC_EntityPropertiesDlg(parent, "TextProperties", pViewport), saveSettings(true){
+    :LC_EntityPropertiesDlg(parent, "TextProperties", pViewport), m_saveSettings(true){
     setupUi(this);
     init();
     setEntity(text, forNew);
@@ -66,7 +67,7 @@ void QG_DlgText::init() {
     cbFont->init();
     font=nullptr;
     entity = nullptr;
-    isNew = false;
+    m_isNew = false;
     leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
@@ -134,12 +135,12 @@ void QG_DlgText::updateUniCharComboBox(int) {
 
 //set saveText to false, so, settings won't be saved during destroy, feature request#3445306
 void QG_DlgText::reject() {
-    saveSettings=false;
+    m_saveSettings=false;
     QDialog::reject();
 }
 
 void QG_DlgText::destroy() {
-    if (isNew&&saveSettings) {
+    if (m_isNew&&m_saveSettings) {
         LC_GROUP_GUARD("Draw");{
             LC_SET("TextHeight", leHeight->text());
             LC_SET("TextFont", cbFont->currentText());
@@ -156,7 +157,7 @@ void QG_DlgText::destroy() {
  */
 void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
     entity = t;
-    this->isNew = isNew;
+    this->m_isNew = isNew;
 
     QString fon;
     QString height;
@@ -217,7 +218,7 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
             cbLayer->setLayer(*lay);
         }
 
-        wPen->setPen(entity, lay, "Pen");
+        wPen->setPen(entity, lay, tr("Pen"));
     }
 
     setFont(fon);
@@ -246,7 +247,7 @@ void QG_DlgText::updateEntity() {
         double wcsAngle = toWCSAngle(leAngle, entity->getAngle());
         entity->setAngle(wcsAngle);
     }
-    if (entity && !isNew) {
+    if (entity && !m_isNew) {
         entity->setPen(wPen->getPen());
         entity->setLayer(cbLayer->getLayer());
         entity->update();

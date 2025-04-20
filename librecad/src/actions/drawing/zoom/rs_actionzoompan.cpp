@@ -24,21 +24,20 @@
 **
 **********************************************************************/
 
+#include "rs_actionzoompan.h"
+
 #include <QMouseEvent>
 
-#include "rs_actionzoompan.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
+#include "lc_graphicviewport.h"
 
-RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
-                                   RS_GraphicView& graphicView)
-        :RS_ActionInterface("Zoom Panning", container, graphicView) {}
+RS_ActionZoomPan::RS_ActionZoomPan(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Zoom Panning", actionContext, RS2::ActionZoomPan) {}
 
 void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
-    x1 = y1 = x2 = y2 = -1;
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
+    m_x1 = m_y1 = m_x2 = m_y2 = -1;
     setStatus(SetPanStart);
 //    updateMouseButtonHints();
 }
@@ -48,10 +47,10 @@ void RS_ActionZoomPan::trigger() {
         graphicView->zoomPan(v2-v1);
         v1 = v2;
 }*/
-    if (getStatus()==SetPanning && (std::abs(x2-x1)>7 || std::abs(y2-y1)>7)) {
-        viewport->zoomPan(x2-x1, y2-y1);
-        x1 = x2;
-        y1 = y2;
+    if (getStatus()==SetPanning && (std::abs(m_x2-m_x1)>7 || std::abs(m_y2-m_y1)>7)) {
+        m_viewport->zoomPan(m_x2-m_x1, m_y2-m_y1);
+        m_x1 = m_x2;
+        m_y1 = m_y2;
     }
     if(getStatus()==SetPanEnd)    {
         finish(false);
@@ -60,16 +59,16 @@ void RS_ActionZoomPan::trigger() {
 
 void RS_ActionZoomPan::finish(bool updateTB) {
     RS_ActionInterface::finish(updateTB);
-    viewport->setPanning(false);
+    m_viewport->setPanning(false);
     redraw();
 }
 
 void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent *e){
     //v2 = snapPoint(e);
-    x2 = e->position().x();
-    y2 = e->position().y();
+    m_x2 = e->position().x();
+    m_y2 = e->position().y();
     if (getStatus() == SetPanning) {
-        if (std::abs(x2 - x1) > 7 || std::abs(y2 - y1) > 7) {
+        if (std::abs(m_x2 - m_x1) > 7 || std::abs(m_y2 - m_y1) > 7) {
             trigger();
         }
     }
@@ -78,10 +77,10 @@ void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent *e){
 void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::MiddleButton ||
             e->button()==Qt::LeftButton) {
-        x1 = e->position().x();
-        y1 = e->position().y();
+        m_x1 = e->position().x();
+        m_y1 = e->position().y();
         setStatus(SetPanning);
-        viewport->setPanning(true);
+        m_viewport->setPanning(true);
     }
 }
 

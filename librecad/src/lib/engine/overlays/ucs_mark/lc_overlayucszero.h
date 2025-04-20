@@ -23,9 +23,7 @@
 #ifndef LC_OVERLAYUCSZERO_H
 #define LC_OVERLAYUCSZERO_H
 
-#include <QColor>
 #include "lc_overlayentity.h"
-#include "rs_vector.h"
 #include "rs_color.h"
 
 struct LC_OverlayUCSZeroOptions{

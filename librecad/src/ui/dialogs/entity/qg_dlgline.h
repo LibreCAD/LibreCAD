@@ -38,9 +38,9 @@ public:
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
-    RS_Line* entity;
+    RS_Line* m_entity;
     void setEntity(RS_Line * l);
 };
 

@@ -37,7 +37,7 @@ public:
     explicit LC_EntityPropertiesDlg(QWidget* parent, const QString& dlgName, LC_GraphicViewport* viewport);
     virtual void updateEntity() = 0;
 protected:
-    LC_GraphicViewport* viewport;
+    LC_GraphicViewport* m_viewport;
 
     double toUCSAngle(double angle) const;
     RS_Vector toUCSVector(const RS_Vector& vect) const;

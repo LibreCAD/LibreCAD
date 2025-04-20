@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWCIRCLE2P_H
 #define RS_ACTIONDRAWCIRCLE2P_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
@@ -41,9 +40,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircle2P:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircle2P(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircle2P(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircle2P() override;
     void reset() override;
     void preparePreview();
@@ -59,15 +56,14 @@ protected:
     /**
      * Circle data defined so far.
      */
-    std::unique_ptr<RS_CircleData> data;
+    std::unique_ptr<RS_CircleData> m_circleData;
     struct Points;
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<Points> m_actionData;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

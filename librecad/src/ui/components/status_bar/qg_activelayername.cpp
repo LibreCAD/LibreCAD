@@ -25,15 +25,30 @@
 
 #include "qg_activelayername.h"
 
-QG_ActiveLayerName::QG_ActiveLayerName(QWidget *parent) :
-    QWidget(parent)
-{
-    setupUi(this);
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
 
+QG_ActiveLayerName::QG_ActiveLayerName(QWidget *parent) :
+    QWidget(parent){
+    setupUi(this);
     lActiveLayerName->setText("");
 }
 
-void QG_ActiveLayerName::activeLayerChanged(const QString& name)
-{
+void QG_ActiveLayerName::activeLayerChanged(const QString& name){
     lActiveLayerName->setText(name);
+}
+
+void QG_ActiveLayerName::setGraphicView(RS_GraphicView* gview) {
+    if (gview == nullptr) {
+        lActiveLayerName->setText("");
+    }
+    else {
+        RS_Graphic* graphic = gview->getGraphic();
+        if (graphic != nullptr) {
+            auto activeLayer = graphic->getActiveLayer();
+            QString activeLayerName = (activeLayer != nullptr) ? activeLayer->getName() : "";
+            lActiveLayerName->setText(activeLayerName);
+        }
+    }
 }

@@ -22,35 +22,33 @@
 **********************************************************************************
 */
 
+#include "lc_centralwidget.h"
 
 #include <QMdiArea>
 #include <QVBoxLayout>
-#include "lc_centralwidget.h"
 
 LC_CentralWidget::LC_CentralWidget(QWidget* parent)
     : QFrame(parent)
-    , mdi_area(new QMdiArea(this))
-{
+    , m_mdiArea(new QMdiArea(this)){
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
-    QVBoxLayout* layout = new QVBoxLayout;
+    auto* layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(mdi_area);
+    layout->addWidget(m_mdiArea);
 
-    mdi_area->setObjectName("mdi_area");
-    mdi_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdi_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdi_area->setFocusPolicy(Qt::ClickFocus);
-    mdi_area->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    mdi_area->setActivationOrder(QMdiArea::ActivationHistoryOrder);
-    mdi_area->setTabsMovable(true);
-    mdi_area->setTabsClosable(true);
+    m_mdiArea->setObjectName("mdi_area");
+    m_mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    m_mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    m_mdiArea->setFocusPolicy(Qt::ClickFocus);
+    m_mdiArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    m_mdiArea->setActivationOrder(QMdiArea::ActivationHistoryOrder);
+    m_mdiArea->setTabsMovable(true);
+    m_mdiArea->setTabsClosable(true);
 
     setLayout(layout);
 }
 
-QMdiArea* LC_CentralWidget::getMdiArea()
-{
-    return mdi_area;
+QMdiArea* LC_CentralWidget::getMdiArea() const{
+    return m_mdiArea;
 }

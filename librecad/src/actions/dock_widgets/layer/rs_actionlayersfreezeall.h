@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to edit layers.
  *
@@ -38,15 +37,13 @@
 class RS_ActionLayersFreezeAll : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionLayersFreezeAll(bool freeze,
-                             RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+    RS_ActionLayersFreezeAll(bool freeze,LC_ActionContext *actionContext);
 
 	void init(int status) override;
 	void trigger() override;
 
 private:
-    bool freeze = false;
+    bool m_freeze = false;
 };
 
 #endif

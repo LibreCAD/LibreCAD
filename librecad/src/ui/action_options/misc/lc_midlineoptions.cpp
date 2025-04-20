@@ -43,27 +43,27 @@ void LC_MidLineOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
-void LC_MidLineOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionDrawMidLine *>(a);
+void LC_MidLineOptions::doSetAction(RS_ActionInterface* a, bool update) {
+    m_action = dynamic_cast<LC_ActionDrawMidLine*>(a);
     QString offset;
-    if (update){
-        offset = fromDouble(action->getOffset());
+    if (update) {
+        offset = fromDouble(m_action->getOffset());
     }
-    else{
+    else {
         offset = load("Offset", "0.0");
     }
     setOffsetToActionAndView(offset);
 }
 
-void LC_MidLineOptions::onOffsetEditingFinished(){
-    const QString &expr = ui->leOffset->text();
+void LC_MidLineOptions::onOffsetEditingFinished() {
+    const QString& expr = ui->leOffset->text();
     setOffsetToActionAndView(expr);
 }
 
-void LC_MidLineOptions::setOffsetToActionAndView(const QString& val){
+void LC_MidLineOptions::setOffsetToActionAndView(const QString& val) {
     double value = 0.;
-    if (toDouble(val, value, 0.0, false)){
-        action->setOffset(value);
+    if (toDouble(val, value, 0.0, false)) {
+        m_action->setOffset(value);
         ui->leOffset->setText(fromDouble(value));
     }
 }

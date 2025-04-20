@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 #include "qg_dlgdimension.h"
-
 #include "rs_dimension.h"
 #include "rs_graphic.h"
 
@@ -55,27 +54,27 @@ void QG_DlgDimension::languageChange(){
 }
 
 void QG_DlgDimension::setEntity(RS_Dimension* d) {
-    entity = d;
+    m_entity = d;
 
-    RS_Graphic* graphic = entity->getGraphic();
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(m_entity, lay, tr("Pen"));
 
     wLabel->setRadialType(*d);
-    wLabel->setLabel(entity->getLabel(false));
+    wLabel->setLabel(m_entity->getLabel(false));
 }
 
 void QG_DlgDimension::updateEntity() {
-    entity->setLabel(wLabel->getLabel());
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
+    m_entity->setLabel(wLabel->getLabel());
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
 
-    entity->updateDim(true);
+    m_entity->updateDim(true);
 }

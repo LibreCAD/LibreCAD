@@ -26,18 +26,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 LC_DuplicateOptions::LC_DuplicateOptions():
     LC_ActionOptionsWidgetBase(RS2::ActionModifyDuplicate, "Modify","Duplicate"),
     ui(new Ui::LC_DuplicateOptions),
-    action(nullptr){
+    m_action(nullptr){
     ui->setupUi(this);
     connect(ui->leOffsetX, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetXEditingFinished);
     connect(ui->leOffsetY, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetYEditingFinished);
-    connect(ui->cbInPlace, SIGNAL(clicked(bool)), this, SLOT(onInPlaceClicked(bool)));
-    connect(ui->cbPen, SIGNAL(currentIndexChanged(int)), SLOT(onPenModeIndexChanged(int)));
-    connect(ui->cbLayer, SIGNAL(currentIndexChanged(int)), SLOT(onLayerModeIndexChanged(int)));
+    connect(ui->cbInPlace, &QCheckBox::clicked, this, &LC_DuplicateOptions::onInPlaceClicked);
+    connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onPenModeIndexChanged);
+    connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onLayerModeIndexChanged);
 }
 
 LC_DuplicateOptions::~LC_DuplicateOptions(){
     delete ui;
-    action = nullptr;
+    m_action = nullptr;
 }
 
 void LC_DuplicateOptions::languageChange() {
@@ -53,18 +53,18 @@ void LC_DuplicateOptions::doSaveSettings(){
 }
 
 void LC_DuplicateOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<LC_ActionModifyDuplicate *>(a);
+    m_action = dynamic_cast<LC_ActionModifyDuplicate *>(a);
     QString ofX;
     QString ofY;
     bool inplace;
     int penMode;
     int layerMode;
     if (update){
-        ofX = fromDouble(action->getOffsetX());
-        ofY = fromDouble(action->getOffsetY());
-        inplace = action->isDuplicateInPlace();
-        penMode = action->getPenMode();
-        layerMode = action->getLayerMode();
+        ofX = fromDouble(m_action->getOffsetX());
+        ofY = fromDouble(m_action->getOffsetY());
+        inplace = m_action->isDuplicateInPlace();
+        penMode = m_action->getPenMode();
+        layerMode = m_action->getLayerMode();
     }
     else{
         ofX = load("OffsetX", "0");
@@ -96,13 +96,13 @@ void LC_DuplicateOptions::onOffsetYEditingFinished(){
 }
 
 void LC_DuplicateOptions::onPenModeIndexChanged(int mode){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setPenModeToActionAndView(mode);
     }
 }
 
 void LC_DuplicateOptions::onLayerModeIndexChanged(int mode){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setLayerModeToActionAndeView(mode);
     }
 }
@@ -110,7 +110,7 @@ void LC_DuplicateOptions::onLayerModeIndexChanged(int mode){
 void LC_DuplicateOptions::setOffsetXToActionAndView(const QString &val){
     double value;
     if (toDouble(val, value, 0, false)){
-        action->setOffsetX(value);
+        m_action->setOffsetX(value);
         ui->leOffsetX->setText(fromDouble(value));
     }
 }
@@ -118,7 +118,7 @@ void LC_DuplicateOptions::setOffsetXToActionAndView(const QString &val){
 void LC_DuplicateOptions::setOffsetYToActionAndView(const QString &val){
     double value;
     if (toDouble(val, value, 0, false)){
-        action->setOffsetY(value);
+        m_action->setOffsetY(value);
         ui->leOffsetY->setText(fromDouble(value));
     }
 }
@@ -128,16 +128,16 @@ void LC_DuplicateOptions::setInPlaceDuplicateToActionAndView(bool inplace){
     ui->leOffsetY->setEnabled(!inplace);
     ui->cbPen->setEnabled(!inplace);
     ui->cbLayer->setEnabled(!inplace);
-    action->setDuplicateInPlace(inplace);
+    m_action->setDuplicateInPlace(inplace);
     ui->cbInPlace->setChecked(inplace);
 }
 
 void LC_DuplicateOptions::setPenModeToActionAndView(int mode){
-    action->setPenMode(mode);
+    m_action->setPenMode(mode);
     ui->cbPen->setCurrentIndex(mode);
 }
 
 void LC_DuplicateOptions::setLayerModeToActionAndeView(int mode){
-    action->setLayerMode(mode);
+    m_action->setLayerMode(mode);
     ui->cbLayer->setCurrentIndex(mode);
 }

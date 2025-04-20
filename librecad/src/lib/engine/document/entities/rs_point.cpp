@@ -24,13 +24,10 @@
 **
 **********************************************************************/
 #include<iostream>
-#include<cmath>
 #include "rs_point.h"
+
 #include "rs_circle.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "lc_defaults.h"
 
 RS_Point::RS_Point(RS_EntityContainer* parent,
                    const RS_PointData& d)

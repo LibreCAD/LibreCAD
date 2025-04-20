@@ -25,80 +25,88 @@
 **********************************************************************/
 
 #include "rs_actionmodifymove.h"
-#include "rs_coordinateevent.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_moveoptions.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "lc_moveoptions.h"
 
-struct RS_ActionModifyMove::Points {
+struct RS_ActionModifyMove::MoveActionData {
 	RS_MoveData data;
 	RS_Vector referencePoint;
 	RS_Vector targetPoint;
+    bool createCopy {false};
 };
 
-RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Move Entities",container, graphicView)
-        ,pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionModifyMove;
+RS_ActionModifyMove::RS_ActionModifyMove(LC_ActionContext *actionContext)
+        :LC_ActionModifyBase("Move Entities", actionContext, RS2::ActionModifyMove)
+        ,m_actionData(std::make_unique<MoveActionData>()){
 }
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 void RS_ActionModifyMove::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
-    RS_Modification m(*container, viewport);
-    m.move(pPoints->data, selectedEntities, false, keepSelected);
-    finish(false);
+    RS_Modification m(*m_container, m_viewport);
+
+    if (m_actionData->createCopy) {
+        bool oldKeepOriginals = m_actionData->data.keepOriginals;
+        m_actionData->data.keepOriginals = true;
+        m.move(m_actionData->data, m_selectedEntities, false, keepSelected);
+        m_actionData->data.keepOriginals = oldKeepOriginals;
+    }
+    else {
+        m.move(m_actionData->data, m_selectedEntities, false, keepSelected);
+        finish(false);
+        moveRelativeZero(m_actionData->targetPoint);
+    }
 }
 
 void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetReferencePoint: {
-            pPoints->referencePoint = mouse;
+            m_actionData->referencePoint = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetTargetPoint: {
-            if (pPoints->referencePoint.valid){
+            if (m_actionData->referencePoint.valid){
 
-                mouse = getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
-                pPoints->targetPoint = mouse;
+                mouse = getSnapAngleAwarePoint(e, m_actionData->referencePoint, mouse, true);
+                m_actionData->targetPoint = mouse;
 
-                const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
-                pPoints->data.offset = offset;
+                const RS_Vector &offset = m_actionData->targetPoint - m_actionData->referencePoint;
+                m_actionData->data.offset = offset;
 
-                RS_Modification m(*preview, viewport, false);
-                m.move(pPoints->data, selectedEntities, true, false);
+                RS_Modification m(*m_preview, m_viewport, false);
+                m.move(m_actionData->data, m_selectedEntities, true, false);
 
                 if (e->isShift){
-                    previewLine(pPoints->referencePoint, mouse);
+                    previewLine(m_actionData->referencePoint, mouse);
                 }
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefSelectablePoint(mouse);
-                    previewRefPoint(pPoints->referencePoint);
-                    previewRefLine(pPoints->referencePoint, mouse);
+                    previewRefPoint(m_actionData->referencePoint);
+                    previewRefLine(m_actionData->referencePoint, mouse);
 
-                    if (pPoints->data.multipleCopies) {
-                        int numCopies = pPoints->data.number;
+                    if (m_actionData->data.multipleCopies) {
+                        int numCopies = m_actionData->data.number;
                         if (numCopies > 1) {
                             for (int i = 2; i <= numCopies; i++) {
-                                previewRefPoint(pPoints->referencePoint + offset * i);
+                                previewRefPoint(m_actionData->referencePoint + offset * i);
                             }
                         }
                     }
                 }
                 if (isInfoCursorForModificationEnabled()){
-                    LC_InfoMessageBuilder msg(tr("Moving Offset"));
-                    msg.add(formatRelative(offset));
-                    msg.add(formatRelativePolar(offset));
-                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    msg(e->isControl ? tr("Copy Offset") : tr("Moving Offset"))
+                        .relative(offset)
+                        .relativePolar(offset)
+                        .toInfoCursorZone2(false);
                 }
             }
             break;
@@ -110,19 +118,20 @@ void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e)
     }
 }
 
-void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyMove::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     RS_Vector snapped = e->snapPoint;
     if (status == SetTargetPoint){
-        snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
+        snapped = getSnapAngleAwarePoint(e, m_actionData->referencePoint, snapped);
+        m_actionData->createCopy = e->isControl;
     }
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionModifyMove::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
-        if (selectionComplete) {
-            selectionComplete = false;
+        if (m_selectionComplete) {
+            m_selectionComplete = false;
         }
         else{
             initPrevious(status);
@@ -134,34 +143,33 @@ void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[may
 }
 
 void RS_ActionModifyMove::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
-    if (!selectionComplete){
+    if (!m_selectionComplete){
         return;
     }
     switch (status) {
         case SetReferencePoint: {
-            pPoints->referencePoint = pos;
-            moveRelativeZero(pPoints->referencePoint);
+            m_actionData->referencePoint = pos;
+            moveRelativeZero(m_actionData->referencePoint);
             setStatus(SetTargetPoint);
             break;
         }
         case SetTargetPoint: {
-            pPoints->targetPoint = pos;
+            m_actionData->targetPoint = pos;
             if (isShowModifyActionDialog()){
                 setStatus(ShowDialog); // todo - hm... what for?
-                if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)){
+                if (RS_DIALOGFACTORY->requestMoveDialog(m_actionData->data)){
                     updateOptions();
-                    pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                    m_actionData->data.offset = m_actionData->targetPoint - m_actionData->referencePoint;
                     trigger();
-                    moveRelativeZero(pPoints->targetPoint);
+                    moveRelativeZero(m_actionData->targetPoint);
                 }
                 else{
                     setStatus(SetTargetPoint);
                 }
             }
             else{
-                pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                m_actionData->data.offset = m_actionData->targetPoint - m_actionData->referencePoint;
                 trigger();
-                moveRelativeZero(pPoints->targetPoint);
             }
             break;
         }
@@ -176,7 +184,7 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
             updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack(tr("Specify target point"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify target point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a Copy")));
             break;
         default:
             updateMouseWidget();
@@ -197,5 +205,5 @@ LC_ActionOptionsWidget* RS_ActionModifyMove::createOptionsWidget() {
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMove::getModifyOperationFlags() {
-    return &pPoints->data;
+    return &m_actionData->data;
 }

@@ -23,7 +23,6 @@
 #ifndef LC_ELLIPSEARCOPTIONS_H
 #define LC_ELLIPSEARCOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
@@ -33,12 +32,10 @@ namespace Ui {
 class RS_ActionDrawEllipseAxis;
 
 class LC_EllipseArcOptions : public LC_ActionOptionsWidgetBase{
-Q_OBJECT
-
+    Q_OBJECT
 public:
     LC_EllipseArcOptions();
     virtual ~LC_EllipseArcOptions() override;
-
 public slots:
     void onDirectionChanged(bool);
     void languageChange() override;
@@ -46,7 +43,7 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 protected:
-    RS_ActionDrawEllipseAxis* action = nullptr;
+    RS_ActionDrawEllipseAxis* m_action = nullptr;
     std::unique_ptr<Ui::LC_EllipseArcOptions> ui;
     void setReversedToActionAndView(bool reversed);
 };

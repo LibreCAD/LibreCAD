@@ -25,9 +25,11 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include "lc_ucslistoptions.h"
-#include "lc_ucslist.h"
 #include "rs.h"
+
+class LC_UCS;
+class LC_UCSList;
+class LC_UCSListOptions;
 
 class LC_UCSListModel:public QAbstractTableModel{
     Q_OBJECT
@@ -49,17 +51,8 @@ public:
     QIcon getOrthoTypeIcon(LC_UCS *ucs) const;
     QModelIndex getIndexForUCS(LC_UCS* ucs) const;
     void markActive(LC_UCS *ucs);
-    LC_UCS* getActiveUCS(){
-        LC_UCS* result = nullptr;
-        if (ucsList != nullptr) {
-            result = ucsList->getActive();
-        }
-        return result;
-    }
-    int count(){
-        return ucss.count();
-    }
-
+    LC_UCS* getActiveUCS();
+    int count();
     LC_UCS *getWCS();
 
     /**
@@ -85,21 +78,21 @@ public:
     };
 
 protected:
-    RS2::LinearFormat linearFormat;
-    RS2::AngleFormat angleFormat;
-    int anglePrec;
-    int prec;
-    RS2::Unit unit;
-    LC_UCSList* ucsList {nullptr};
-    QList<UCSItem*> ucss;
-    QIcon iconWCS;
-    QIcon iconUCS;
-    QIcon iconGridOrtho;
-    QIcon iconGridISOTop;
-    QIcon iconGridISOLeft;
-    QIcon iconGridISORight;
+    RS2::LinearFormat m_linearFormat;
+    RS2::AngleFormat m_angleFormat;
+    int m_anglePrec;
+    int m_prec;
+    RS2::Unit m_unit;
+    LC_UCSList* m_ucsList {nullptr};
+    QList<UCSItem*> m_ucss;
+    QIcon m_iconWCS;
+    QIcon m_iconUCS;
+    QIcon m_iconGridOrtho;
+    QIcon m_iconGridISOTop;
+    QIcon m_iconGridISOLeft;
+    QIcon m_iconGridISORight;
+    LC_UCSListOptions* m_options {nullptr};
     QString getGridViewType(int orthoType);
-    LC_UCSListOptions* options {nullptr};
     UCSItem* createUCSItem(LC_UCS *view);
 };
 

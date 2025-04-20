@@ -24,16 +24,14 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_DEBUG_H
 #define RS_DEBUG_H
-
-#include "rs_vector.h"
 
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
 
+class RS_Vector;
 class QByteArray;
 class QChar;
 class QLatin1String;

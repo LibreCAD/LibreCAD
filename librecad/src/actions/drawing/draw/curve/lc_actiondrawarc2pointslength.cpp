@@ -21,21 +21,21 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointslength.h"
+
 #include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_information.h"
 
-LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",container, graphicView) {
-    actionType = RS2::ActionDrawArc2PLength;
+LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(LC_ActionContext *actionContext)
+    :LC_ActionDrawArc2PointsBase("DrawArc2Angle",actionContext, RS2::ActionDrawArc2PLength) {
 }
 
 bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
-    double chordLen = startPoint.distanceTo(pos);
-    double chordAngle = startPoint.angleTo(pos);
-    double arcLen = parameterLen;
+    double chordLen = m_startPoint.distanceTo(pos);
+    double chordAngle = m_startPoint.angleTo(pos);
+    double arcLen = m_parameterLen;
 
     if (chordLen >= arcLen) {
         if (reportErrors) {
@@ -47,21 +47,21 @@ bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unus
     double angle = determineArcAngleByLenAndChord(arcLen, chordLen);
     double radius = chordLen/(2.0 * (std::sin(angle/2.0)));
 
-    RS_Circle circle1 = RS_Circle(nullptr, RS_CircleData(startPoint, radius));
+    RS_Circle circle1 = RS_Circle(nullptr, RS_CircleData(m_startPoint, radius));
     RS_Circle circle2 = RS_Circle(nullptr, RS_CircleData(pos, radius));
 
     const RS_VectorSolutions &intersections = RS_Information::getIntersection(&circle2, &circle1, false);
 
     RS_Vector center;
 
-    bool reverseArc = reversed;
+    bool reverseArc = m_reversed;
     if (alternate){
         reverseArc = !reverseArc;
     }
 
     if (intersections.size() == 2) {
         RS_Vector ipRight, ipLeft;
-        int pointPosition = LC_LineMath::getPointPosition(startPoint, pos, intersections[0]);
+        int pointPosition = LC_LineMath::getPointPosition(m_startPoint, pos, intersections[0]);
         if (pointPosition == LC_LineMath::PointToLinePosition::RIGHT) {
             ipRight = intersections[0];
             ipLeft = intersections[1];
@@ -72,21 +72,21 @@ bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unus
         }
         bool angleLessPI = angle < M_PI;
 
-        if (reversed) {
+        if (m_reversed) {
             center = angleLessPI ? ipRight : ipLeft;
         } else {
             center = angleLessPI ? ipLeft : ipRight;
         }
     } else {
         const auto v = RS_Vector::polar(radius, chordAngle);
-        center = startPoint + v;
-        pos = startPoint + v*2.0;
+        center = m_startPoint + v;
+        pos = m_startPoint + v*2.0;
     }
 
     data.center = center;
     data.reversed = reverseArc;
     data.radius = radius;
-    data.angle1 = data.center.angleTo(startPoint);
+    data.angle1 = data.center.angleTo(m_startPoint);
     data.angle2 = data.center.angleTo(pos);
     return true;
 }

@@ -23,28 +23,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define QG_CIRCLETAN2OPTIONS_H
 
 #include<memory>
-#include<QWidget>
-
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawCircleTan2;
 
 namespace Ui {
-class Ui_CircleTan2Options;
+    class Ui_CircleTan2Options;
 }
 
 class QG_CircleTan2Options : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_CircleTan2Options();
-    ~QG_CircleTan2Options();
+    ~QG_CircleTan2Options() override;
 public slots:
     void languageChange() override;
     void onRadiusEditingFinished();
 protected:
-    RS_ActionDrawCircleTan2* action;
+    RS_ActionDrawCircleTan2* m_action;
     std::unique_ptr<Ui::Ui_CircleTan2Options> ui;
     void setRadiusToActionAndView(QString val);
     void doSaveSettings() override;

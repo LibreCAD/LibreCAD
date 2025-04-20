@@ -21,10 +21,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "rs.h"
 #include "lc_actioninfoproperties.h"
+
+#include "lc_graphicviewport.h"
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
+#include "rs_entity.h"
 
 namespace {
 
@@ -52,8 +54,8 @@ namespace {
 
 // todo - consider later relying on default action (probably with some specific flag) instead of this function...
 
-LC_ActionInfoProperties::LC_ActionInfoProperties(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Entity Info", container, graphicView, RS2::ActionInfoProperties){}
+LC_ActionInfoProperties::LC_ActionInfoProperties(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Entity Info", actionContext, RS2::ActionInfoProperties){}
 
 void LC_ActionInfoProperties::init(int status){
     RS_PreviewActionInterface::init(status);
@@ -106,13 +108,13 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
 
-    const double hoverTolerance { hoverToleranceFactor / viewport->getFactor().magnitude() };
+    const double hoverTolerance { hoverToleranceFactor / m_viewport->getFactor().magnitude() };
 
     double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
-    double screenTolerance = toGraphDX( (int)(0.01*std::min(viewport->getWidth(), viewport->getHeight())));
+    double screenTolerance = toGraphDX( (int)(0.01*std::min(m_viewport->getWidth(), m_viewport->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
 
     bool isPointOnEntity = false;

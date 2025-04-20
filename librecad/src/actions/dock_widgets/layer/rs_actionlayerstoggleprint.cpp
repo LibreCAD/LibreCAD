@@ -22,43 +22,41 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actionlayerstoggleprint.h"
+
 #include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_layer.h"
 
+class RS_LayerList;
 /**
  * whether a layer should appear on print (a construction layer doesn't appear on
  printout, and have straight lines of infinite length)
  *
  * @author Dongxu Li
  */
-RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
-    RS_Layer* layer)
-        : RS_ActionInterface("Toggle Layer Printing", container, graphicView)
-        , a_layer(layer)
+RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(LC_ActionContext *actionContext, RS_Layer* layer)
+        : RS_ActionInterface("Toggle Layer Printing", actionContext, RS2::ActionLayersTogglePrint)
+        , m_layer(layer)
 {}
 
 void RS_ActionLayersTogglePrint::trigger() {
     RS_DEBUG->print("toggle layer printing");
-    if (graphic) {
-        RS_LayerList* ll = graphic->getLayerList();
+    if (m_graphic) {
+        RS_LayerList* ll = m_graphic->getLayerList();
         unsigned cnt = 0;
         // toggle selected layers
         for (auto layer: *ll) {
             if (!layer) continue;
             if (!layer->isVisibleInLayerList()) continue;
             if (!layer->isSelectedInLayerList()) continue;
-            graphic->toggleLayerPrint(layer);
+            m_graphic->toggleLayerPrint(layer);
             deselectEntities(layer);
             cnt++;
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            graphic->toggleLayerPrint(a_layer);
-            deselectEntities(a_layer);
+            m_graphic->toggleLayerPrint(m_layer);
+            deselectEntities(m_layer);
         }
     }
     redrawDrawing();
@@ -74,7 +72,7 @@ void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer)
 {
     if (!layer) return;
 
-    for(auto e: *container){ // // fixme - sand -  iteration over all entities in container
+    for(auto e: *m_container){ // // fixme - sand -  iteration over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
             e->setSelected(false);
         }

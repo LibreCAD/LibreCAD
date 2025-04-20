@@ -44,84 +44,14 @@ QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow,  LC_SnapOption
   QG_DialogFactory(parent, ow, snapOptionsHolder)
 {}
 
-
-
-/**
- * Provides a window for editing the active block.
- */
-void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow()");
-
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
-    QC_MDIWindow* parent = appWindow->getMDIWindow();
-
-    if (!appWindow || !parent) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QC_DialogFactory::requestEditBlockWindow(): nullptr ApplicationWindow or MDIWindow");
-        return;
-    }
-
-    // If block is opened from another block the parent must be set
-    // to graphic that contain all these blocks.
-    if (parent->getDocument()->rtti() == RS2::EntityBlock) {
-        parent = parent->getParentWindow();
-    }
-
-    //get blocklist from block widget, bug#3497154
-    if (!blockList ) {
-        RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_DialogFactory::requestEditBlockWindow(): get blockList from appWindow");
-        blockList = appWindow->getBlockWidget()->getBlockList();
-    }
-
-    RS_Block* blk = blockList->getActive();
-    if (!blk) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "QC_DialogFactory::requestEditBlockWindow(): no active block is selected");
-        return;
-    }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): edit block %s", blk->getName().toLatin1().data());
-//            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
-
-    QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(blk);
-    if (blockWindow) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): activate existing window");
-        appWindow->getMdiArea()->setActiveSubWindow(blockWindow);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): create new window");
-        QC_MDIWindow* w = appWindow->slotFileNew(blk);
-        if (!w) {
-            RS_DEBUG->print(RS_Debug::D_ERROR, "QC_DialogFactory::requestEditBlockWindow(): can't create new child window");
-            return;
-        }
-
-        // the parent needs a pointer to the block window and vice versa
-        parent->addChildWindow(w);
-        QG_GraphicView *graphicView = w->getGraphicView();
-        graphicView->getViewPort()->zoomAuto(false);
-        //update grid settings, bug#3443293
-        graphicView->updateGridPoints();
-    }
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): OK");
-}
-
-
-
 /**
  * Closes the window that is editing the given block.
  */
 void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
-    RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow");
-
     auto& appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
 
-    if (!blockWindow) {
-        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: block has no opened window");
-        return;
+    if (blockWindow != nullptr) {
+        appWindow->closeWindow(blockWindow);
     }
-
-    RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: closing mdi");
-    appWindow->slotFileClosing(blockWindow);
-
-    RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: OK");
 }

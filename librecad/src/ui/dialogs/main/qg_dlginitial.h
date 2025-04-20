@@ -28,25 +28,19 @@
 
 #include "ui_qg_dlginitial.h"
 
-class QG_DlgInitial : public QDialog, public Ui::QG_DlgInitial
-{
+class QG_DlgInitial : public QDialog, public Ui::QG_DlgInitial{
     Q_OBJECT
-
 public:
     QG_DlgInitial(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgInitial()=default;
-
+    ~QG_DlgInitial() override;
 public slots:
-    virtual void setText( const QString & t );
-    virtual void setPixmap( const QPixmap & p );
-    virtual void ok();
-
+    void setText( const QString & t );
+    void setPixmap( const QPixmap & p );
+    void ok();
 protected slots:
-    virtual void languageChange();
-
+    void languageChange();
 private:
     void init();
-
 };
 
 #endif // QG_DLGINITIAL_H

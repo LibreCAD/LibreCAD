@@ -25,8 +25,8 @@
 **
 **********************************************************************/
 
-#include <random>
-#include <vector>
+
+#include "rs_information.h"
 
 #include "lc_parabola.h"
 #include "lc_quadratic.h"
@@ -34,15 +34,15 @@
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
+#include "rs_entity.h"
 #include "rs_entitycontainer.h"
-#include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
-#include "rs_vector.h"
+
+class LC_Parabola;
 
 namespace {
 

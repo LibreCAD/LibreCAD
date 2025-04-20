@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionmodifyattributes.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -32,11 +33,8 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
-RS_ActionModifyAttributes::RS_ActionModifyAttributes(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-    :LC_ActionPreSelectionAwareBase("Change Attributes",container, graphicView) {
-    actionType=RS2::ActionModifyAttributes;
+RS_ActionModifyAttributes::RS_ActionModifyAttributes(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("Change Attributes",actionContext, RS2::ActionModifyAttributes) {
 }
 
 void RS_ActionModifyAttributes::doTrigger(bool keepSelected){
@@ -50,13 +48,13 @@ void RS_ActionModifyAttributes::doTrigger(bool keepSelected){
     data.changeWidth = false;
     data.changeLayer = false;
 
-    if (graphic) {
-        graphicView->setForcedActionKillAllowed(false);
-        if (RS_DIALOGFACTORY->requestAttributesDialog(data,*graphic->getLayerList())) {
-            RS_Modification m(*container, viewport);
-            m.changeAttributes(data, selectedEntities, container, keepSelected);
+    if (m_graphic) {
+        m_graphicView->setForcedActionKillAllowed(false);
+        if (RS_DIALOGFACTORY->requestAttributesDialog(data,*m_graphic->getLayerList())) {
+            RS_Modification m(*m_container, m_viewport);
+            m.changeAttributes(data, m_selectedEntities, m_container, keepSelected);
         }
-        graphicView->setForcedActionKillAllowed(true);
+        m_graphicView->setForcedActionKillAllowed(true);
     }
 //    graphicView->killSelectActions();
 }

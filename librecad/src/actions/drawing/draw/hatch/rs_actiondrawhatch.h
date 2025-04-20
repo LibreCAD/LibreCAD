@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWHATCH_H
 #define RS_ACTIONDRAWHATCH_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
 struct RS_HatchData;
@@ -40,8 +39,7 @@ struct RS_HatchData;
 class RS_ActionDrawHatch : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 public:
-    RS_ActionDrawHatch(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionDrawHatch(LC_ActionContext *actionContext);
     ~RS_ActionDrawHatch() override;
     void init(int status) override;
     void setShowArea(bool s);
@@ -52,7 +50,7 @@ protected:
     enum Status {
         ShowDialog           /**< Showing the hatch dialog. */
     };
-    std::unique_ptr<RS_HatchData> data;
+    std::unique_ptr<RS_HatchData> m_hatchData;
     bool m_bShowArea{true};
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool keepSelected) override;

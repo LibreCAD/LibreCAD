@@ -26,13 +26,9 @@
 
 #include "qg_patternbox.h"
 
-#include <QPixmap>
-#include <QStringList>
-
+#include "rs_debug.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
-#include "rs_debug.h"
-
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -47,44 +43,39 @@ QG_PatternBox::QG_PatternBox(QWidget* parent)
  */
 QG_PatternBox::~QG_PatternBox() = default;
 
-
 /**
  * Initialisation (called manually and only once).
  */
 void QG_PatternBox::init() {
     QStringList patterns;
 
-	for (auto const& pa: *RS_PATTERNLIST)
+	for (auto const& pa: *RS_PATTERNLIST) {
 		patterns.append(pa.first);
+	}
 
     patterns.sort();
     insertItems(0, patterns);
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotPatternChanged(int)));
+    connect(this, &QG_PatternBox::activated, this, &QG_PatternBox::slotPatternChanged);
 
     setCurrentIndex(0);
     slotPatternChanged(currentIndex());
 }
 
-
-
 /**
  * Sets the currently selected width item to the given width.
  */
 void QG_PatternBox::setPattern(const QString& pName) {
-
     RS_DEBUG->print("QG_PatternBox::setPattern %s\n", pName.toLatin1().data());
-
     setCurrentIndex(findText(pName));
-
     slotPatternChanged(currentIndex());
 }
 
 std::shared_ptr<RS_Pattern> QG_PatternBox::getPattern() {
-	if (currentPattern == nullptr || currentPattern->countDeep()==0)
-		currentPattern = RS_PATTERNLIST->requestPattern(currentText());
-	return currentPattern;
+	if (m_currentPattern == nullptr || m_currentPattern->countDeep()==0) {
+		m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
+	}
+	return m_currentPattern;
 }
 
 /**
@@ -92,16 +83,12 @@ std::shared_ptr<RS_Pattern> QG_PatternBox::getPattern() {
  * sets the current pattern to the value chosen.
  */
 void QG_PatternBox::slotPatternChanged(int index) {
-
     RS_DEBUG->print("QG_PatternBox::slotPatternChanged %d\n", index);
+    m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
 
-    currentPattern = RS_PATTERNLIST->requestPattern(currentText());
-
-    if (currentPattern) {
+    if (m_currentPattern) {
         RS_DEBUG->print("Current pattern is (%d): %s\n",
-                        index, currentPattern->getFileName().toLatin1().data());
+                        index, m_currentPattern->getFileName().toLatin1().data());
     }
-
-
 	emit patternChanged();
 }

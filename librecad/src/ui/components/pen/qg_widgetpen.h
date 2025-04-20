@@ -26,34 +26,31 @@
 #ifndef QG_WIDGETPEN_H
 #define QG_WIDGETPEN_H
 
-#include "ui_qg_widgetpen.h"
 #include "rs_pen.h"
-#include "rs_layer.h"
-#include "rs_entity.h"
+#include "ui_qg_widgetpen.h"
 
-class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
-{
+class RS_Entity;
+class RS_Layer;
+
+class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen{
     Q_OBJECT
-
 public:
     QG_WidgetPen(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_WidgetPen();
 
-    virtual bool isColorUnchanged();
-    virtual bool isLineTypeUnchanged();
-    virtual bool isWidthUnchanged();
-
+    bool isColorUnchanged();
+    bool isLineTypeUnchanged();
+    bool isWidthUnchanged();
 public slots:
-    virtual void setPen( RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
+    void setPen( RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
     void setPen(RS_Pen pen, RS_Layer* layer, const QString &title);
     void setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title);
     void setPen(RS_Entity *entity, RS_Layer *layer, const QString &title);
-    virtual RS_Pen getPen();
-
+    RS_Pen getPen();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
-    bool initialized = false;
+    bool m_initialized = false;
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
 };

@@ -26,8 +26,6 @@
 #ifndef QG_TEXTOPTIONS_H
 #define QG_TEXTOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -46,7 +44,7 @@ public slots:
     void onAngleChanged();
     void languageChange() override;
 protected:
-    RS_ActionDrawText* action = nullptr;
+    RS_ActionDrawText* m_action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     std::unique_ptr<Ui::Ui_TextOptions> ui;

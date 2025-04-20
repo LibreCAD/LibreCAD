@@ -24,10 +24,7 @@
 **
 **********************************************************************/
 #include "qg_arcoptions.h"
-
 #include "rs_actiondrawarc.h"
-#include "rs_settings.h"
-#include "rs_debug.h"
 #include "ui_qg_arcoptions.h"
 
 /*
@@ -61,14 +58,14 @@ void QG_ArcOptions::doSaveSettings(){
 
 void QG_ArcOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-    action = dynamic_cast<RS_ActionDrawArc *>(a);
+    m_action = dynamic_cast<RS_ActionDrawArc *>(a);
 
     bool reversed;
     if (update){
-        reversed = action->isReversed();
+        reversed = m_action->isReversed();
     } else {
         reversed = loadBool("Reversed", false);
-        action->setReversed(reversed);
+        m_action->setReversed(reversed);
     }
     setReversedToActionAndView(reversed);
 }
@@ -79,7 +76,7 @@ bool QG_ArcOptions::checkActionRttiValid(RS2::ActionType actionType) {
 
 void QG_ArcOptions::setReversedToActionAndView(bool reversed){
     ui->rbNeg->setChecked(reversed);
-    action->setReversed(reversed);
+    m_action->setReversed(reversed);
 }
 
 /*void QG_ArcOptions::setData(RS_ArcData* d) {

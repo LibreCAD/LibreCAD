@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to add layers.
  *
@@ -38,8 +37,7 @@
 class RS_ActionLayersAdd : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionLayersAdd(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionLayersAdd(LC_ActionContext *actionContext);
 
 	void init(int status) override;
 	void trigger() override;

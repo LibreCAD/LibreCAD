@@ -23,7 +23,6 @@
 #include "lc_pastetopointsoptions.h"
 #include "lc_actionpastetopoints.h"
 #include "ui_lc_pastetopointsoptions.h"
-#include "rs_math.h"
 
 LC_PasteToPointsOptions::LC_PasteToPointsOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionPasteToPoints, "Edit", "PasteToPoints")
@@ -45,14 +44,14 @@ void LC_PasteToPointsOptions::doSaveSettings() {
 }
 
 void LC_PasteToPointsOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionPasteToPoints *>(a);
+    m_action = dynamic_cast<LC_ActionPasteToPoints *>(a);
     QString angle;
     QString factor;
     bool removePoints;
     if (update){
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
-        factor = fromDouble(action->getScaleFactor());
-        removePoints = action->isRemovePointAfterPaste();
+        angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
+        factor = fromDouble(m_action->getScaleFactor());
+        removePoints = m_action->isRemovePointAfterPaste();
     }
     else{
         angle = load("Angle", "0.0");
@@ -78,13 +77,13 @@ void LC_PasteToPointsOptions::onRemovePointsClicked(bool clicked){
 
 void LC_PasteToPointsOptions::setRemovePointsToActionAndView(bool val) {
     ui->cbRemovePoint->setChecked(val);
-    action->setRemovePointAfterPaste(val);
+    m_action->setRemovePointAfterPaste(val);
 }
 
 void LC_PasteToPointsOptions::setFactorToActionAndView(QString val) {
     double y;
     if (toDouble(val, y, 1.0, true)){
-        action->setScaleFactor(y);
+        m_action->setScaleFactor(y);
         ui->leFactor->setText(fromDouble(y));
     }
 }
@@ -92,7 +91,7 @@ void LC_PasteToPointsOptions::setFactorToActionAndView(QString val) {
 void LC_PasteToPointsOptions::setAngleToActionAndView(QString val) {
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
-        action->setAngle(RS_Math::deg2rad(angle));
+        m_action->setAngle(RS_Math::deg2rad(angle));
         ui->leAngle->setText(fromDouble(angle));
     }
 }

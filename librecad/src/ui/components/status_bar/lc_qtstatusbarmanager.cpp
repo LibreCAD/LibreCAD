@@ -21,15 +21,19 @@
  ******************************************************************************/
 
 #include "lc_qtstatusbarmanager.h"
+
+#include <QStatusBar>
+
+#include "lc_modifiersinfo.h"
 #include "lc_shortcuts_manager.h"
 #include "rs_settings.h"
 
 LC_QTStatusbarManager::LC_QTStatusbarManager(QStatusBar *sBar):QObject(sBar) {
-    statusBar = sBar;
+    m_statusBar = sBar;
 }
 
 void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]const QString &right, const LC_ModifiersInfo &modifiersInfo) const {
-    if (actionPromptEnabled && statusBar->isVisible()){
+    if (m_actionPromptEnabled && m_statusBar->isVisible()){
         QString modifiersMsg = "";
         const QString &shiftMessage = modifiersInfo.getShiftMessage();
         if (!shiftMessage.isEmpty()){
@@ -46,23 +50,23 @@ void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]c
         }
 
         QString message;
-        if (actionToolTip.isEmpty()){ // default action
+        if (m_actionToolTip.isEmpty()){ // default action
             message = modifiersMsg;
         }
         else{
-            message = actionToolTip + " | "  + infoMessage;
+            message = m_actionToolTip + " | "  + infoMessage;
             if (!modifiersMsg.isEmpty()){
                 message = message + " | "  + modifiersMsg;
             }
         }
 
-        statusBar->showMessage(message);
+        m_statusBar->showMessage(message);
     }
 }
 
 void LC_QTStatusbarManager::setCurrentQAction(QAction *a) {
-    if (actionPromptEnabled && statusBar->isVisible()) {
-        actionToolTip = LC_ShortcutsManager::getPlainActionToolTip(a);
+    if (m_actionPromptEnabled && m_statusBar->isVisible()) {
+        m_actionToolTip = LC_ShortcutsManager::getPlainActionToolTip(a);
     }
 }
 
@@ -70,14 +74,14 @@ void LC_QTStatusbarManager::loadSettings() {
     LC_GROUP_GUARD("Startup");{
         bool useClassicalStatusBar = LC_GET_BOOL("UseClassicStatusBar", false);
         if (useClassicalStatusBar) {
-            actionPromptEnabled = false;
+            m_actionPromptEnabled = false;
         } else {
-            actionPromptEnabled = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
+            m_actionPromptEnabled = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
         }
     }
 
-    if (actionPromptEnabled){
-        statusBar->showMessage("", 5); // just cleanup
+    if (m_actionPromptEnabled){
+        m_statusBar->showMessage("", 5); // just cleanup
     }
 }
 

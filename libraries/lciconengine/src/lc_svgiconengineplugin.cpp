@@ -32,7 +32,7 @@ public:
 };
 
 QIconEngine *LC_SVGIconPlugin::create(const QString &file){
-    LC_SVGIconEngine *engine = new LC_SVGIconEngine;
+    auto engine = new LC_SVGIconEngine;
     if (!file.isNull()) {
         engine->addFile(file, QSize(), QIcon::Normal, QIcon::Off);
     }

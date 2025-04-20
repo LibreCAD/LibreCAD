@@ -21,18 +21,14 @@
  ******************************************************************************/
 
 #include "lc_actionpastetopoints.h"
-#include "lc_pastetopointsoptions.h"
-#include "rs_document.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_clipboard.h"
-#include "rs_modification.h"
-#include "rs_debug.h"
 
-LC_ActionPasteToPoints::LC_ActionPasteToPoints(RS_EntityContainer &container,
-                                               RS_GraphicView &graphicView):
-    LC_ActionPreSelectionAwareBase("PasteToPoints", container, graphicView, {RS2::EntityPoint}){
-    actionType = RS2::ActionPasteToPoints;
+#include "lc_pastetopointsoptions.h"
+#include "rs_clipboard.h"
+#include "rs_entity.h"
+#include "rs_modification.h"
+
+LC_ActionPasteToPoints::LC_ActionPasteToPoints(LC_ActionContext *actionContext):
+    LC_ActionPreSelectionAwareBase("PasteToPoints", actionContext, RS2::ActionPasteToPoints, {RS2::EntityPoint}){
 }
 
 void LC_ActionPasteToPoints::init(int status) {
@@ -48,15 +44,15 @@ void LC_ActionPasteToPoints::init(int status) {
 
 void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
     undoCycleStart();
-    RS_Modification m(*container, viewport, false);
-    for (auto p: selectedEntities){
+    RS_Modification m(*m_container, m_viewport, false);
+    for (auto p: m_selectedEntities){
         RS_Vector currentPoint = p->getCenter();
-        const RS_PasteData &pasteData = RS_PasteData(currentPoint, scaleFactor , angle, false, "");
+        const RS_PasteData &pasteData = RS_PasteData(currentPoint, m_scaleFactor , m_angle, false, "");
         m.paste(pasteData);
         // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
 //        LC_ERR << "Paste: " << currentPoint;
 
-        if (removePointAfterPaste){
+        if (m_removePointAfterPaste){
             undoableDeleteEntity(p);
         }
         else{
@@ -75,27 +71,27 @@ LC_ActionOptionsWidget *LC_ActionPasteToPoints::createOptionsWidget() {
 }
 
 double LC_ActionPasteToPoints::getAngle() const {
-    return angle;
+    return m_angle;
 }
 
 void LC_ActionPasteToPoints::setAngle(double a) {
-    angle = a;
+    m_angle = a;
 }
 
 double LC_ActionPasteToPoints::getScaleFactor() const {
-    return scaleFactor;
+    return m_scaleFactor;
 }
 
 void LC_ActionPasteToPoints::setScaleFactor(double f) {
-    scaleFactor = f;
+    m_scaleFactor = f;
 }
 
 bool LC_ActionPasteToPoints::isRemovePointAfterPaste() const {
-    return removePointAfterPaste;
+    return m_removePointAfterPaste;
 }
 
 void LC_ActionPasteToPoints::setRemovePointAfterPaste(bool val) {
-    removePointAfterPaste = val;
+    m_removePointAfterPaste = val;
 }
 
 bool LC_ActionPasteToPoints::isEntityAllowedToSelect(RS_Entity *ent) const {

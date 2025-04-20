@@ -23,12 +23,13 @@
 **********************************************************************/
 #ifndef LIBRECAD_LC_PENITEM_H
 #define LIBRECAD_LC_PENITEM_H
-
-#include <QString>
 #include <QIcon>
-#include "rs_pen.h"
-#include "lc_peninforegistry.h"
 
+#include "lc_peninforegistry.h"
+#include "rs.h"
+#include "rs_color.h"
+
+class RS_Pen;
 /**
  * Named pen - holds information about pen attributes and presentation of them in UI. Used by table model
  */
@@ -36,22 +37,22 @@ class LC_PenItem {
 public:
     LC_PenItem(QString name, const RS_Pen&);
     explicit LC_PenItem(QString name);
-    QString getName()  const {return name;}
+    QString getName()  const {return m_name;}
 
     void setPen(const RS_Pen& pen);
 
-    QIcon getColorIcon() {return iconColor;};
-    QIcon getLineTypeIcon() {return iconLineType;};
-    QIcon getLineWidthIcon() {return iconLineWidth;};
+    QIcon getColorIcon() {return m_iconColor;};
+    QIcon getLineTypeIcon() {return m_iconLineType;};
+    QIcon getLineWidthIcon() {return m_iconLineWidth;};
 
-    QString getColorName() {return colorName;};
-    void setColorName(QString &value){colorName = value;};
-    QString getLineTypeName() {return lineTypeName;};
-    QString getLineWidthName() {return lineWidthName;};
+    QString getColorName() {return m_colorName;};
+    void setColorName(QString &value){m_colorName = value;};
+    QString getLineTypeName() {return m_lineTypeName;};
+    QString getLineWidthName() {return m_lineWidthName;};
     RS2::LineType getLineType();
 
-    bool isMatched() const {return matched;};
-    void setMatched(bool value) {matched = value;};
+    bool isMatched() const {return m_matched;};
+    void setMatched(bool value) {m_matched = value;};
     RS2::LineWidth getLineWidth();
 
     RS_Color getColor();
@@ -67,30 +68,30 @@ private:
     /**
      * Pen's name
      */
-    QString name;
+    QString m_name;
 
     /**
      * pens attribute (same as in RS_Pen)
      */
-    RS2::LineType lineType = RS2::LineType::LineTypeUnchanged;
-    RS2::LineWidth lineWidth = RS2::LineWidth::WidthUnchanged;
-    RS_Color color = LC_PenInfoRegistry::createUnchangedColor();
+    RS2::LineType m_lineType = RS2::LineType::LineTypeUnchanged;
+    RS2::LineWidth m_lineWidth = RS2::LineWidth::WidthUnchanged;
+    RS_Color m_color = LC_PenInfoRegistry::createUnchangedColor();
 
     /**
      * Display attributes for UI
      */
-    QIcon iconColor;
-    QIcon iconLineType;
-    QIcon iconLineWidth;
+    QIcon m_iconColor;
+    QIcon m_iconLineType;
+    QIcon m_iconLineWidth;
 
-    QString colorName;
-    QString lineTypeName;
-    QString lineWidthName;
+    QString m_colorName;
+    QString m_lineTypeName;
+    QString m_lineWidthName;
 
     /**
      * Indicates whether this pen is matched by filter or not
      */
-    bool matched{false};
+    bool m_matched{false};
 };
 
 #endif //LIBRECAD_LC_PENITEM_H

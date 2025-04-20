@@ -27,56 +27,47 @@
 #define QG_LIBRARYWIDGET_H
 
 #include <memory>
-
-#include <QWidget>
+#include "lc_graphicviewawarewidget.h"
 #include <QModelIndex>
 
 class QG_ActionHandler;
 class QListView;
-class QModelIndex;
 class QPushButton;
 class QStandardItemModel;
 class QStandardItem;
 class QTreeView;
 
-class QG_LibraryWidget : public QWidget
-{
+class QG_LibraryWidget : public LC_GraphicViewAwareWidget{
     Q_OBJECT
-
 public:
-    QG_LibraryWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
+    QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     virtual ~QG_LibraryWidget();
 
-    QPushButton* getInsertButton() const
-    {
+    QPushButton* getInsertButton() const{
         return bInsert;
     }
 
+    void setGraphicView(RS_GraphicView* gview) override;
 private:
     QPushButton *bInsert=nullptr;
-
-    virtual QString getItemDir( QStandardItem * item );
-    virtual QString getItemPath( QStandardItem * item );
-    virtual QIcon getIcon( const QString & dir, const QString & dxfFile, const QString & dxfPath );
-    virtual QString getPathToPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
-
+    QString getItemDir( QStandardItem * item );
+    QString getItemPath( QStandardItem * item );
+    QIcon getIcon( const QString & dir, const QString & dxfFile, const QString & dxfPath );
+    QString getPathToPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
 public slots:
-    virtual void setActionHandler( QG_ActionHandler * ah );
+    void setActionHandler( QG_ActionHandler * ah );
     void keyPressEvent( QKeyEvent *e ) override;
-    virtual void insert();
-    virtual void refresh();
-    virtual void scanTree();
-    virtual void buildTree();
-    virtual void appendTree( QStandardItem * item, QString directory );
-    virtual void updatePreview( QModelIndex idx );
-    virtual void expandView( QModelIndex idx );
-    virtual void collapseView( QModelIndex idx );
+    void insert();
+    void refresh();
+    void scanTree();
+    void buildTree();
+    void appendTree( QStandardItem * item, QString directory );
+    void updatePreview( QModelIndex idx );
+    void expandView( QModelIndex idx );
+    void collapseView( QModelIndex idx );
     void updateWidgetSettings();
-
 signals:
-    void escape();
-
-private:
+    void escape();private:
     QG_ActionHandler* actionHandler = nullptr;
     std::unique_ptr<QStandardItemModel> dirModel;
     std::unique_ptr<QStandardItemModel> iconModel;

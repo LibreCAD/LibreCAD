@@ -31,15 +31,11 @@
 #include <memory>
 
 #include <QWidget>
-
-#include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewportlistener.h"
-#include "lc_ucs.h"
 #include "rs.h"
 
-
+struct LC_InfoCursorOverlayPrefs;
 class QDateTime;
-class QIcon;
 class QMouseEvent;
 class QKeyEvent;
 
@@ -67,10 +63,7 @@ class LC_WidgetViewPortRenderer;
  * communicate with the LibreCAD from a GUI level.
  */
 class RS_GraphicView:public QWidget, LC_GraphicViewPortListener {
-Q_OBJECT
-
-    void onViewportRedrawNeeded() override;
-
+    Q_OBJECT
 public:
     RS_GraphicView(QWidget *parent = nullptr, Qt::WindowFlags f = {});
     virtual ~RS_GraphicView();
@@ -114,17 +107,19 @@ public:
     virtual void setMouseCursor(RS2::CursorType /*c*/) = 0;
 
     RS_EntityContainer *getContainer() const;
-
-    void setDefaultAction(RS_ActionInterface *action);
-    RS_ActionInterface *getDefaultAction();
-    void setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
-    RS_ActionInterface *getCurrentAction();
-    QString getCurrentActionName();
-    QIcon getCurrentActionIcon();
-    void killSelectActions();
-    void killAllActions();
-    void back();
-    void enter();
+    void switchToDefaultAction();
+    void setDefaultAction(RS_ActionInterface *action) const;
+    RS_ActionInterface *getDefaultAction() const;
+    void hideOptions() const;
+    // fixme - sand - complete changes in plugin and remove this function from the public interface!!!
+    bool setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
+    RS_ActionInterface *getCurrentAction() const;
+    QString getCurrentActionName() const;
+    QIcon getCurrentActionIcon() const;
+    void killSelectActions() const;
+    void killAllActions() const;
+    void back() const;
+    void processEnterKey();
     void commandEvent(RS_CommandEvent *e);
     void keyPressEvent(QKeyEvent *event) override;
     void enableCoordinateInput();
@@ -169,9 +164,7 @@ public:
     void setForcedActionKillAllowed(bool forcedActionKillAllowed);
     virtual QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription);
 
-    LC_InfoCursorOverlayPrefs*getInfoCursorOverlayPreferences(){
-        return &infoCursorOverlayPreferences;
-    }
+    LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPreferences();
 
     bool getPanOnZoom() const;
     bool getSkipFirstZoom() const;
@@ -184,16 +177,18 @@ public:
     void onViewportChanged() override;
     void onRelativeZeroChanged(const RS_Vector &pos) override;
     void onUCSChanged(LC_UCS* ucs) override;
+    void notifyNoActiveAction();
 signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);
     void previous_zoom_state(bool);
 
+    void currentActionChanged(RS_ActionInterface* action);
 protected:
     void setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer);
     LC_WidgetViewPortRenderer* getRenderer() const;
     void resizeEvent(QResizeEvent *event) override;
-
+    void onViewportRedrawNeeded() override;
 private:
     std::unique_ptr<RS_EventHandler> m_eventHandler;
     RS_EntityContainer *container = nullptr;
@@ -210,7 +205,7 @@ private:
   * actions.
   */
     RS2::SnapRestriction defaultSnapRes{};
-    LC_InfoCursorOverlayPrefs infoCursorOverlayPreferences = LC_InfoCursorOverlayPrefs();
+    std::unique_ptr<LC_InfoCursorOverlayPrefs> infoCursorOverlayPreferences;
 
     /** if true, graphicView is under cleanup */
     bool m_bIsCleanUp = false;
@@ -223,5 +218,7 @@ private:
     bool m_panOnZoom = false;
     bool m_skipFirstZoom = false;
     const RS_LineTypePattern *getPattern(RS2::LineType t);
+
+    bool setEventHandlerAction(std::shared_ptr<RS_ActionInterface>);
 };
 #endif

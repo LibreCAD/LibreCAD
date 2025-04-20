@@ -33,11 +33,9 @@ namespace Ui {
 
 class LC_DlgIconsSetup:public LC_Dialog {
     Q_OBJECT
-
 public:
     explicit LC_DlgIconsSetup(QWidget *parent = nullptr);
-    ~LC_DlgIconsSetup();
-
+    ~LC_DlgIconsSetup() override;
     void setIconsOptions(LC_IconColorsOptions *iconColorsOptions);
     void initComboBox(QComboBox *cb, const QString &text);
     void accept() override;
@@ -81,10 +79,9 @@ public slots:
     void onNormalOnMainColorChanged(const QString &value);
     void resetToDefaults();
     void applyIconColors();
-
 protected:
     Ui::LC_DlgIconsSetup *ui;
-    LC_IconColorsOptions *iconColorsOptions;
+    LC_IconColorsOptions *m_iconColorsOptions;
     void onNormalOnAccentColorChanged(const QString &value);
     void onNormalOnBackColorChanged(const QString &value);
     void onNormalOffMainColorChanged(const QString &value);

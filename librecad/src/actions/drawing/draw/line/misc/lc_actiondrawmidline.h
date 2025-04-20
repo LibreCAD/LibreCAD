@@ -23,14 +23,12 @@
 #ifndef LC_ACTIONDRAWMIDLINE_H
 #define LC_ACTIONDRAWMIDLINE_H
 
-#include <QObject>
 #include "rs_previewactioninterface.h"
 
-class LC_ActionDrawMidLine: public RS_PreviewActionInterface
-{
+class LC_ActionDrawMidLine: public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionDrawMidLine(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawMidLine(LC_ActionContext *actionContext);
     QStringList getAvailableCommands() override;
     double getOffset() const;
     void setOffset(double offset);
@@ -62,14 +60,14 @@ protected:
         RS_Vector end2;
     };
 
-    double offset = 0.0;
-    bool alternateEndpoints = false;
+    double m_offset = 0.0;
+    bool m_alternateEndpoints = false;
 
-    RS_Entity* firstEntity = nullptr;
-    RS_Entity* secondEntity = nullptr;
+    RS_Entity* m_firstEntity = nullptr;
+    RS_Entity* m_secondEntity = nullptr;
 
-    int mainStatus = 0;
-    void restoreMainStatus(){setStatus(mainStatus);}
+    int m_mainStatus = 0;
+    void restoreMainStatus(){setStatus(m_mainStatus);}
     void prepareLine(LineInfo &info, RS_Entity* ent, bool alternate);
     void doTrigger() override;
 

@@ -41,8 +41,8 @@ public slots:
 protected slots:
     virtual void languageChange();
 protected:
-    RS_Pen pen;
-    RS_Point* entity;
+    RS_Pen m_pen;
+    RS_Point* m_entity;
     void setEntity(RS_Point *p);
     void initAttributes(RS_Layer *layer, RS_LayerList &layerList);
     void setProperties();

@@ -23,18 +23,16 @@
 #ifndef LC_INFODIST2OPTIONS_H
 #define LC_INFODIST2OPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidget.h"
 
 namespace Ui {
-class LC_InfoDist2Options;
+    class LC_InfoDist2Options;
 }
 
 class RS_ActionInfoDist2;
 
 class LC_InfoDist2Options : public LC_ActionOptionsWidget{
     Q_OBJECT
-
 public:
     explicit LC_InfoDist2Options();
     ~LC_InfoDist2Options() override;
@@ -48,7 +46,7 @@ protected:
     QString getSettingsOptionNamePrefix() override;
 private:
     Ui::LC_InfoDist2Options *ui;
-    RS_ActionInfoDist2* action = nullptr;
+    RS_ActionInfoDist2* m_action = nullptr;
     void setOnEntitySnapToActionAndView(bool value);
 };
 

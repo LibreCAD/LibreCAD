@@ -29,9 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-#include "rs_graphic.h"
-#include "rs_creation.h"
-
 /**
  * This action class can handle user events for inserting library items 
  * (or any other DXF files) into the current drawing (as block/insert).
@@ -41,10 +38,8 @@
 class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionLibraryInsert(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionLibraryInsert(LC_ActionContext *actionContext);
     ~RS_ActionLibraryInsert() override;
-
     void init(int status) override;
     void reset();
     void trigger() override;
@@ -100,11 +95,11 @@ protected:
 //SetRowSpacing      /**< Setting row spacing in the command line. */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
 /** Last status before entering option. */
-    Status lastStatus = SetTargetPoint;
+    Status m_lastStatus = SetTargetPoint;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

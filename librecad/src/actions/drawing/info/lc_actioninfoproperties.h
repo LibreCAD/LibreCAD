@@ -28,10 +28,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionInfoProperties:public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionInfoProperties(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionInfoProperties(LC_ActionContext *actionContext);
     void init(int status) override;
 private:
-    RS_Entity* highlightedEntity = nullptr;
+    RS_Entity* m_highlightedEntity = nullptr;
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void clearQuickInfoWidget();
     void highlightHoveredEntity(LC_MouseEvent *event, bool resolveChildren);

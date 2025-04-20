@@ -24,16 +24,14 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#include <memory>
 #include <QObject>
 
 #include "rs.h"
-#include "rs_vector.h"
 
+class LC_CoordinatesParser;
 class RS_ActionInterface;
 class QAction;
 class QMouseEvent;
@@ -44,20 +42,17 @@ class RS_GraphicView;
 
 struct RS_SnapMode;
 
-
 /**
  * The event handler owns and manages all actions that are currently
  * active. All events going from the view to the actions come over
  * this class.
  */
-class RS_EventHandler : public QObject
-{
+class RS_EventHandler : public QObject {
     Q_OBJECT
-
 public:
     explicit RS_EventHandler(RS_GraphicView* parent = 0);
     ~RS_EventHandler() override;
-
+    void uncheckQAction();
     void setQAction(QAction* action);
     QAction* getQAction();
 
@@ -80,7 +75,7 @@ public:
     void setDefaultAction(RS_ActionInterface* action);
     RS_ActionInterface* getDefaultAction() const;
 
-    void setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
+    bool setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
     RS_ActionInterface* getCurrentAction();
     bool isValid(RS_ActionInterface* action) const;
 
@@ -94,24 +89,14 @@ public:
     void setSnapRestriction(RS2::SnapRestriction sr);
     //! return true if the current action is for selecting
     bool inSelectionMode();
-protected:
-    RS_Vector toWCS(const RS_Vector& ucs);
-    RS_Vector toUCS(const RS_Vector& wcs);
-    double toWCSAngle(double ucsAngle);
-    double toAbsUCSAngle(double ucsBasisAngle);
-    double evalAngleValue(const QString &angleStr, bool &ok2) const;
 private:
-    RS_GraphicView* graphicView;
-    QAction* q_action{nullptr};
-    std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
-    QList<std::shared_ptr<RS_ActionInterface>> currentActions;
-    bool coordinateInputEnabled{true};
-    RS_Vector relative_zero; // FIXME - sand - rework and remove, can pick relzero from view->viewport
-public slots:
-    void setRelativeZero(const RS_Vector&);
+    std::unique_ptr<LC_CoordinatesParser> m_coordinatesParser;
+    RS_GraphicView* m_graphicView;
+    QAction* m_QAction{nullptr};
+    std::shared_ptr<RS_ActionInterface> m_defaultAction{nullptr};
+    QList<std::shared_ptr<RS_ActionInterface>> m_currentActions;
+    bool m_coordinateInputEnabled{true};
     void checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction);
-
-
 };
 
 #endif

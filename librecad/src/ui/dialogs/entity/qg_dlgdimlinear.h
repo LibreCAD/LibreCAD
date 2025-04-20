@@ -29,7 +29,6 @@
 #include "ui_qg_dlgdimlinear.h"
 #include "lc_entitypropertiesdlg.h"
 
-
 class RS_DimLinear;
 
 class QG_DlgDimLinear : public LC_EntityPropertiesDlg, public Ui::QG_DlgDimLinear{
@@ -42,7 +41,7 @@ public slots:
 protected slots:
     virtual void languageChange();
 protected:
-    RS_DimLinear* entity = nullptr;
+    RS_DimLinear* m_entity = nullptr;
     void setEntity(RS_DimLinear *d);
 };
 

@@ -23,25 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #include "rs_actiondimaligned.h"
-#include "rs_commandevent.h"
-#include "rs_constructionline.h"
-#include "rs_coordinateevent.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_dimaligned.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
-#include "lc_actiondimlinearbase.h"
 
-RS_ActionDimAligned::RS_ActionDimAligned(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDimLinearBase("Draw aligned dimensions",
-                        container, graphicView){
-    actionType = RS2::ActionDimAligned;
+#include "rs_constructionline.h"
+#include "rs_dimaligned.h"
+
+RS_ActionDimAligned::RS_ActionDimAligned(LC_ActionContext *actionContext)
+    :LC_ActionDimLinearBase("Draw aligned dimensions",actionContext, RS2::ActionDimAligned){
     reset();
 }
 
@@ -51,22 +39,22 @@ RS_ActionDimAligned::~RS_ActionDimAligned() = default;
 
 void RS_ActionDimAligned::reset(){
     RS_ActionDimension::reset();
-    edata.reset(new RS_DimAlignedData(RS_Vector(false),
+    m_edata.reset(new RS_DimAlignedData(RS_Vector(false),
                                       RS_Vector(false)));
-    lastStatus = SetExtPoint1;
+    m_lastStatus = SetExtPoint1;
     updateOptions();
 }
 
 
 void RS_ActionDimAligned::preparePreview(){
-    RS_Vector dirV = RS_Vector::polar(100.,edata->extensionPoint1.angleTo(edata->extensionPoint2)+ M_PI_2);
-    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(edata->extensionPoint2,edata->extensionPoint2 + dirV));
+    RS_Vector dirV = RS_Vector::polar(100.,m_edata->extensionPoint1.angleTo(m_edata->extensionPoint2)+ M_PI_2);
+    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
 
-    data->definitionPoint =cl.getNearestPointOnEntity(data->definitionPoint);
+    m_dimensionData->definitionPoint =cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);
 }
 
 RS_Entity *RS_ActionDimAligned::createDim(RS_EntityContainer* parent){
-    auto *dim = new RS_DimAligned(parent, *data, *edata);
+    auto *dim = new RS_DimAligned(parent, *m_dimensionData, *m_edata);
     return dim;
 }
 
@@ -77,14 +65,14 @@ bool RS_ActionDimAligned::doProcessCommand(int status, const QString &c) {
             accept = true;
             setText(c);
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             enableCoordinateInput();
             break;
         }
         default:
             if (checkCommand("text", c)){
                 accept = true;
-                lastStatus = (Status) getStatus();
+                m_lastStatus = (Status) getStatus();
                 disableCoordinateInput();
                 setStatus(SetText);
             }
@@ -110,22 +98,22 @@ QStringList RS_ActionDimAligned::getAvailableCommands(){
 }
 
 RS_Vector RS_ActionDimAligned::getExtensionPoint1(){
-    return edata->extensionPoint1;
+    return m_edata->extensionPoint1;
 }
 
 RS_Vector RS_ActionDimAligned::getExtensionPoint2(){
-    return edata->extensionPoint2;
+    return m_edata->extensionPoint2;
 }
 
 double RS_ActionDimAligned::getDimAngle(){
-    return edata->extensionPoint1.angleTo(edata->extensionPoint2);
+    return m_edata->extensionPoint1.angleTo(m_edata->extensionPoint2);
 }
 
 
 void RS_ActionDimAligned::setExtensionPoint1(RS_Vector p){
-    edata->extensionPoint1 = p;
+    m_edata->extensionPoint1 = p;
 }
 
 void RS_ActionDimAligned::setExtensionPoint2(RS_Vector p){
-    edata->extensionPoint2 = p;
+    m_edata->extensionPoint2 = p;
 }

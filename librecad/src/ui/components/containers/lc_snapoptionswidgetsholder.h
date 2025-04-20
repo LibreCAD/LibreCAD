@@ -30,24 +30,22 @@ namespace Ui {
 }
 
 class LC_SnapOptionsWidgetsHolder : public QWidget{
-Q_OBJECT
-
+    Q_OBJECT
 public:
     explicit LC_SnapOptionsWidgetsHolder(QWidget *parent = nullptr);
     ~LC_SnapOptionsWidgetsHolder();
     void showSnapMiddleOptions(int* middlePoints, bool on);
     void showSnapDistOptions(double* dist, bool on);
     void hideSnapOptions();
-    void setLocatedOnLeft(bool value){widgetOnLeftWithinContainer = value;};
+    void setLocatedOnLeft(bool value){m_widgetOnLeftWithinContainer = value;};
     void updateBy(LC_SnapOptionsWidgetsHolder *pHolder);
 public slots:
     void languageChange();
 private:
-    bool widgetOnLeftWithinContainer = true;
+    bool m_widgetOnLeftWithinContainer = true;
     Ui::LC_SnapOptionsWidgetsHolder *ui;
     void hideSeparator();
     void showSeparator();
-
     void updateParent() const;
 };
 

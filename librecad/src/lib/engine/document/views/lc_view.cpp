@@ -24,110 +24,128 @@
 
 LC_View::LC_View() {}
 
-LC_View::LC_View(const QString &name):name(name) {}
+LC_View::LC_View(const QString &name):m_name(name) {}
+
+LC_View* LC_View::clone() {
+    auto* clone = new LC_View(m_name);
+    clone->m_cameraPlottable = m_cameraPlottable;
+    clone->m_flags = m_flags;
+    clone->m_viewMode = m_viewMode;
+    clone->m_lensLen = m_lensLen;
+    clone->m_twistAngle = m_twistAngle;
+    clone->m_backClippingPlaneOffset = m_backClippingPlaneOffset;
+    clone->m_frontClippingPlaneOffset = m_frontClippingPlaneOffset;
+    clone->m_renderMode = m_renderMode;
+    clone->m_center = m_center;
+    clone->m_size = m_size;
+    clone->m_targetPoint = m_targetPoint;
+    clone->m_viewDirection = m_viewDirection;
+    clone->m_ucs = m_ucs;
+    return clone;
+}
 
 void LC_View::setName(const QString &n) {
-    name = n;
+    m_name = n;
 }
 
 RS_Vector LC_View::getSize() const {
-    return size;
+    return m_size;
 }
 
 void LC_View::setSize(RS_Vector s) {
-    size = s;
+    m_size = s;
 }
 
 void LC_View::setCenter(RS_Vector s) {
-   center = s;
+   m_center = s;
 }
 
 RS_Vector LC_View::getCenter() const {
-    return center;
+    return m_center;
 }
 
 void LC_View::setTargetPoint(RS_Vector p) {
-    targetPoint = p;
+    m_targetPoint = p;
 }
 
 RS_Vector LC_View::getTargetPoint() const{
-    return targetPoint;
+    return m_targetPoint;
 }
 
 void LC_View::setCameraPlottable(bool b) {
-    cameraPlottable = b;
+    m_cameraPlottable = b;
 }
 
 bool LC_View::isCameraPlottable() const{
-    return cameraPlottable;
+    return m_cameraPlottable;
 }
 
 void LC_View::setLensLen(double d){
-   lensLen = d;
+   m_lensLen = d;
 }
 
 double LC_View::getLensLen() const {
-    return lensLen;
+    return m_lensLen;
 }
 
 void LC_View::setViewDirection(RS_Vector dir) {
-    viewDirection = dir;
+    m_viewDirection = dir;
 }
 
 const RS_Vector LC_View::getViewDirection() const {
-    return viewDirection;
+    return m_viewDirection;
 }
 
 void LC_View::setFrontClippingPlaneOffset(double d) {
-    frontClippingPlaneOffset = d;
+    m_frontClippingPlaneOffset = d;
 }
 
 double LC_View::getFrontClippingPlaneOffset() const {
-    return frontClippingPlaneOffset;
+    return m_frontClippingPlaneOffset;
 }
 
 void LC_View::setBackClippingPlaneOffset(double d) {
-     backClippingPlaneOffset = d;
+     m_backClippingPlaneOffset = d;
 }
 
 double LC_View::getBackClippingPlaneOffset() const {
-    return backClippingPlaneOffset;
+    return m_backClippingPlaneOffset;
 }
 
 bool LC_View::isHasUCS() const {
-    return ucs != nullptr;
+    return m_ucs != nullptr;
 }
 
 void LC_View::setViewMode(int i) {
-    viewMode = i;
+    m_viewMode = i;
 }
 
 int LC_View::getViewMode() const {
-    return viewMode;
+    return m_viewMode;
 }
 
 void LC_View::setFlags(int i) {
-    flags = i;
+    m_flags = i;
 }
 
 int LC_View::getFlags() const {
-    return flags;
+    return m_flags;
 }
 
 void LC_View::setTwistAngle(double d) {
-    twistAngle = d;
+    m_twistAngle = d;
 }
 
 double LC_View::getTwistAngle() const{
-    return twistAngle;
+    return m_twistAngle;
 }
 
 void LC_View::setUCS(LC_UCS *pUcs) {
-  ucs = pUcs;
+  m_ucs = pUcs;
 }
 
 LC_UCS *LC_View::getUCS() const{
-    return ucs;
+    return m_ucs;
 }
 
 bool LC_View::isValidName([[maybe_unused]]QString &nameCandidate) {

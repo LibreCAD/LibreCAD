@@ -24,11 +24,8 @@
 **
 **********************************************************************/
 #include "qg_textoptions.h"
-
 #include "rs_actiondrawtext.h"
-#include "rs_math.h"
 #include "ui_qg_textoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_TextOptions as a child of 'parent', with the
@@ -55,12 +52,12 @@ void QG_TextOptions::languageChange() {
 }
 
 void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionDrawText *>(a);
+    m_action = dynamic_cast<RS_ActionDrawText *>(a);
     QString text;
     QString angle;
     if (update) {
-        text = action->getText();
-        angle = fromDouble(action->getUcsAngleDegrees());
+        text = m_action->getText();
+        angle = fromDouble(m_action->getUcsAngleDegrees());
     } else {
         text = "";
         angle = "0.0";
@@ -82,7 +79,7 @@ void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update) {
 }
 
 void QG_TextOptions::onTextChanged() {
-    if (action) {
+    if (m_action) {
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         action->setText(
@@ -92,7 +89,7 @@ void QG_TextOptions::onTextChanged() {
         );
 //#else*/
         const QString &plainText = ui->leText->text();
-        action->setText(plainText);
+        m_action->setText(plainText);
 //#endif
     }
 }
@@ -101,7 +98,7 @@ void QG_TextOptions::onAngleChanged() {
     double angle;
     QString val = ui->leAngle->text();
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
-        action->setUcsAngleDegrees(angle);
+        m_action->setUcsAngleDegrees(angle);
     }
 }
 

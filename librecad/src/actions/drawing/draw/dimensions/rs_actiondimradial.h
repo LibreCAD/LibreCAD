@@ -27,8 +27,6 @@
 #ifndef RS_ACTIONDIMRADIAL_H
 #define RS_ACTIONDIMRADIAL_H
 
-#include "rs_actiondimension.h"
-#include "rs_dimradial.h"
 #include "lc_actioncircledimbase.h"
 
 struct RS_DimRadialData;
@@ -41,14 +39,11 @@ struct RS_DimRadialData;
 class RS_ActionDimRadial:public LC_ActionCircleDimBase {
 Q_OBJECT
 public:
-    RS_ActionDimRadial(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDimRadial(LC_ActionContext *actionContext);
     ~RS_ActionDimRadial() override;
 protected:
-
     /** Data of new dimension */
-    std::unique_ptr<RS_DimRadialData> edata;
+    std::unique_ptr<RS_DimRadialData> m_edata;
     void reset() override;
     RS_Dimension *createDim(RS_EntityContainer *parent) const override;
     RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) override;

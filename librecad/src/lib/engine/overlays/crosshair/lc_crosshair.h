@@ -25,7 +25,7 @@
 
 #include "lc_overlayentity.h"
 #include "rs_pen.h"
-#include "rs_point.h"
+#include "rs_vector.h"
 
 class LC_Crosshair:public LC_OverlayDrawable{
 public:

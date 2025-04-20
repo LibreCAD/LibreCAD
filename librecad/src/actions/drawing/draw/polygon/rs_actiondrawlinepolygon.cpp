@@ -24,29 +24,18 @@
 **
 **********************************************************************/
 #include "rs_actiondrawlinepolygon.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_creation.h"
-#include "rs_point.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
 
-RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", container, graphicView, actionType = RS2::ActionDrawLinePolygonCenCor)
-{
+RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(LC_ActionContext *actionContext)
+    :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, m_actionType = RS2::ActionDrawLinePolygonCenCor){
 }
 
 RS_ActionDrawLinePolygonCenCor::~RS_ActionDrawLinePolygonCenCor() = default;
 
 void RS_ActionDrawLinePolygonCenCor::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
     // creation.createPolygon(pPoints->point1, mouse, number);
-    polygonInfo.centerPoint = pPoints->point1;
-    polygonInfo.vertexRadius = pPoints->point1.distanceTo(snap);
-    polygonInfo.startingAngle = pPoints->point1.angleTo(snap);
+    polygonInfo.centerPoint = m_actionData->point1;
+    polygonInfo.vertexRadius = m_actionData->point1.distanceTo(snap);
+    polygonInfo.startingAngle = m_actionData->point1.angleTo(snap);
 }
 
 QString RS_ActionDrawLinePolygonCenCor::getPoint2Hint() const { return tr("Specify a corner"); }

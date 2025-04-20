@@ -1,5 +1,3 @@
-
-
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -30,13 +28,14 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
-#include <memory>
 #include <QObject>
-#include <QList>
 #include "rs.h"
-#include "lc_cursoroverlayinfo.h"
-#include "lc_graphicviewport.h"
 
+struct LC_InfoCursorData;
+class RS_Graphic;
+class LC_OverlayInfoCursor;
+struct LC_InfoCursorOverlayPrefs;
+class LC_ActionContext;
 class RS_Entity;
 class RS_GraphicView;
 class RS_Vector;
@@ -116,7 +115,7 @@ using EntityTypeList = QList<RS2::EntityType>;
 class RS_Snapper: public QObject{
     Q_OBJECT
 public:
-    RS_Snapper(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    RS_Snapper(LC_ActionContext *actionContext);
     virtual ~RS_Snapper();
     void init();
 //!
@@ -132,7 +131,7 @@ public:
      * method will return NULL.
      */
     RS_Entity *getKeyEntity() const{
-        return keyEntity;
+        return m_keyEntity;
     }
 
     /** Sets a new snap mode. */
@@ -207,16 +206,17 @@ public:
     virtual void drawSnapper();
     void drawInfoCursor();
     bool hasNonDefaultAnglesBasis();
-    LC_GraphicViewport* getViewPort() {return viewport;}
+    LC_GraphicViewport* getViewPort() {return m_viewport;}
 protected:
     void deleteSnapper();
     void deleteInfoCursor();
     double getSnapRange() const;
-    RS_EntityContainer *container = nullptr;
-    RS_GraphicView *graphicView = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
-    RS_Entity *keyEntity = nullptr;
-    RS_SnapMode snapMode{};
+    RS_EntityContainer *m_container = nullptr;
+    RS_GraphicView *m_graphicView = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
+    RS_Entity *m_keyEntity = nullptr;
+    RS_SnapMode m_snapMode{};
+    LC_ActionContext* m_actionContext {nullptr};
 
     double m_distanceBeforeSwitchToFreeSnap {5.0}; //< The distance to snap before defaulting to free snapping.
     double m_minGridCellSnapFactor = 0.25;
@@ -229,17 +229,15 @@ protected:
      * Snap to equidistant middle points
      * default to 1, i.e., equidistant to start/end points
      */
-    int middlePoints = 1;
+    int m_middlePoints = 1;
     /**
      * Snap range for catching entities. In GUI units
      */
     int m_catchEntityGuiRange = 32;
+    bool m_finished{false};
 
-
-    bool finished{false};
-
-    LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
-    LC_InfoCursorData infoCursorOverlayData = LC_InfoCursorData();
+    LC_InfoCursorOverlayPrefs* m_infoCursorOverlayPrefs = nullptr;
+    std::unique_ptr<LC_InfoCursorData> m_infoCursorOverlayData;
 
     // values cached for the efficiency
     RS2::LinearFormat m_linearFormat{};
@@ -249,7 +247,6 @@ protected:
     RS2::Unit m_unit{};
     double m_anglesBase = 0.0;
     bool m_anglesCounterClockWise = true;
-
     bool m_ignoreSnapToGridIfNoGrid = false;
 
     RS_Vector toGraph(const QMouseEvent *e) const;
@@ -311,7 +308,7 @@ private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;
     struct Indicator;
-    std::unique_ptr<Indicator> snap_indicator;
+    std::unique_ptr<Indicator> m_snapIndicator;
 };
 
 #endif

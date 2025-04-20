@@ -21,39 +21,43 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QColorDialog>
-#include <QFileDialog>
-#include <QMessageBox>
+
 #include "lc_penpaletteoptionsdialog.h"
 
+#include <QColorDialog>
 #include <QLineEdit>
+#include <QMessageBox>
 
-LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnFile) :
-    QDialog(parent)
-{
-    this->options = options;
+#include "lc_dialog.h"
+#include "lc_peninforegistry.h"
+#include "lc_penpaletteoptions.h"
 
+
+class LC_PenPaletteOptions;
+
+LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, [[maybe_unused]]bool focusOnFile) :
+    LC_Dialog(parent, "PenPaletteOptions"), m_options{options}{
     setupUi(this);
 
-    chkShowColorIcon->setChecked(options->showColorIcon);
-    chkShowColorName->setChecked(options->showColorName);
-    chkShowLineTypeIcon->setChecked(options->showTypeIcon);
-    chkShowLineTypeName->setChecked(options->showTypeName);
-    chkShowWidthIcon->setChecked(options->showWidthIcon);
-    chkShowWidthName->setChecked(options->showWidthName);
-    cbShowMessageForNoSelection->setChecked(options->showNoSelectionMessage);
-    cbFilterCaseInsensitive->setChecked(options->ignoreCaseOnMatch);
+    chkShowColorIcon->setChecked(m_options->showColorIcon);
+    chkShowColorName->setChecked(m_options->showColorName);
+    chkShowLineTypeIcon->setChecked(m_options->showTypeIcon);
+    chkShowLineTypeName->setChecked(m_options->showTypeName);
+    chkShowWidthIcon->setChecked(m_options->showWidthIcon);
+    chkShowWidthName->setChecked(m_options->showWidthName);
+    cbShowMessageForNoSelection->setChecked(m_options->showNoSelectionMessage);
+    cbFilterCaseInsensitive->setChecked(m_options->ignoreCaseOnMatch);
 
     cbDoubleClickMode->addItem(tr("Do nothing"));
     cbDoubleClickMode->addItem(tr("Select entities by attributes pen"));
     cbDoubleClickMode->addItem(tr("Select entities by drawing pen"));
 
-    cbDoubleClickMode->setCurrentIndex(options->doubleClickOnTableMode);
+    cbDoubleClickMode->setCurrentIndex(m_options->doubleClickOnTableMode);
 
-    cbShowTooltip->setChecked(options->showToolTip);
-    cbAllRowBold->setChecked(options->showEntireRowBold);
+    cbShowTooltip->setChecked(m_options->showToolTip);
+    cbAllRowBold->setChecked(m_options->showEntireRowBold);
 
-    int colorMode = options->colorNameDisplayMode;
+    int colorMode = m_options->colorNameDisplayMode;
     switch (colorMode){
         case LC_PenInfoRegistry::ColorNameDisplayMode::RGB:
             rbRGB->setChecked(true);
@@ -72,9 +76,9 @@ LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPa
     connect(tbGridColorSelect, &QToolButton::clicked, this, &LC_PenPaletteOptionsDialog::selectGridColor);
     connect(tbMatchedItemColorSelect, &QToolButton::clicked, this, &LC_PenPaletteOptionsDialog::selectMatchedItemColor);
 
-    initComboBox(cbColorActiveBg, options->activeItemBGColor);
-    initComboBox(cbColorGrid, options->itemsGridColor);
-    initComboBox(cbColorMatchedItem, options->matchedItemColor);
+    initComboBox(cbColorActiveBg, m_options->activeItemBGColor);
+    initComboBox(cbColorGrid, m_options->itemsGridColor);
+    initComboBox(cbColorMatchedItem, m_options->matchedItemColor);
 
     QObject::connect(buttonBox, &QDialogButtonBox::accepted, this, &LC_PenPaletteOptionsDialog::validate);
 }
@@ -101,15 +105,15 @@ void LC_PenPaletteOptionsDialog::initComboBox(QComboBox* cb, const QColor &color
 }
 
 void LC_PenPaletteOptionsDialog::selectActivePenBGColor(){
-    set_color(cbColorActiveBg, options->activeItemBGColor);
+    set_color(cbColorActiveBg, m_options->activeItemBGColor);
 }
 
 void LC_PenPaletteOptionsDialog::selectGridColor(){
-    set_color(cbColorGrid, options->itemsGridColor);
+    set_color(cbColorGrid, m_options->itemsGridColor);
 }
 
 void LC_PenPaletteOptionsDialog::selectMatchedItemColor(){
-    set_color(cbColorMatchedItem, options->matchedItemColor);
+    set_color(cbColorMatchedItem, m_options->matchedItemColor);
 }
 
 /**
@@ -184,24 +188,23 @@ void LC_PenPaletteOptionsDialog::validate(){
 
     // all fine, store user's input to options
     if (doAccept){
+        m_options->matchedItemColor = matchedItemColor;
+        m_options->itemsGridColor =  gridColor;
+        m_options->activeItemBGColor = activeBgColor;
 
-        options->matchedItemColor = matchedItemColor;
-        options->itemsGridColor =  gridColor;
-        options->activeItemBGColor = activeBgColor;
+        m_options->showEntireRowBold = allRowBold;
+        m_options->showToolTip = showToolTip;
+        m_options->showWidthIcon = showLineWidthIcon;
+        m_options->showWidthName = showLineWidthName;
+        m_options->showTypeIcon = showLineTypeIcon;
+        m_options->showTypeName = showLineTypeName;
+        m_options->showColorIcon = showColorIcon;
+        m_options->showColorName = showColorName;
+        m_options->ignoreCaseOnMatch = ignoreCaseOnMatch;
+        m_options->showNoSelectionMessage = showNoSelectionMessage;
 
-        options->showEntireRowBold = allRowBold;
-        options->showToolTip = showToolTip;
-        options->showWidthIcon = showLineWidthIcon;
-        options->showWidthName = showLineWidthName;
-        options->showTypeIcon = showLineTypeIcon;
-        options->showTypeName = showLineTypeName;
-        options->showColorIcon = showColorIcon;
-        options->showColorName = showColorName;
-        options->ignoreCaseOnMatch = ignoreCaseOnMatch;
-        options->showNoSelectionMessage = showNoSelectionMessage;
-
-        options->colorNameDisplayMode = colorMode;
-        options->doubleClickOnTableMode = doubleClickMode;
+        m_options->colorNameDisplayMode = colorMode;
+        m_options->doubleClickOnTableMode = doubleClickMode;
         accept();
     }
 }
@@ -213,7 +216,7 @@ void LC_PenPaletteOptionsDialog::validate(){
 void LC_PenPaletteOptionsDialog::showInvalidColorMessage(const QString &name){
     QMessageBox::warning(this, QMessageBox::tr("Error"),
                          QMessageBox::tr("Invalid value provided for %1 color.\n"
-                                         "Please specify a different value.")
-                             .arg(QMessageBox::tr(name.toStdString().c_str())),
+                             "Please specify a different value.")
+                         .arg(QMessageBox::tr(name.toStdString().c_str())),
                          QMessageBox::Ok);
 }

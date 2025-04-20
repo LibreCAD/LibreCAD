@@ -25,44 +25,39 @@
 **********************************************************************/
 
 #include "rs_actionorder.h"
-#include "rs_document.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_debug.h"
-#include "rs_graphicview.h"
 
-RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
-        RS_GraphicView& graphicView, RS2::ActionType type)
-        :LC_ActionPreSelectionAwareBase("Sort Entities",
-						   container, graphicView)
-		,targetEntity(nullptr){
-	   actionType=type;
+#include "rs_debug.h"
+#include "rs_document.h"
+#include "rs_entity.h"
+
+RS_ActionOrder::RS_ActionOrder(LC_ActionContext *actionContext, RS2::ActionType type)
+    :LC_ActionPreSelectionAwareBase("Sort Entities", actionContext, type) ,targetEntity(nullptr){
 }
 
 void RS_ActionOrder::drawSnapper() {
     // delete snapper
 }
 
-void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+void RS_ActionOrder::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     updateSelectionWidget();
-    if (actionType == RS2::ActionOrderBottom || actionType ==  RS2::ActionOrderTop){
+    if (m_actionType == RS2::ActionOrderBottom || m_actionType ==  RS2::ActionOrderTop){
         trigger();
     }
     else {
-        snapMode.restriction = RS2::RestrictNothing;
+        m_snapMode.restriction = RS2::RestrictNothing;
     }
 }
 
 void RS_ActionOrder::doTrigger(bool keepSelected) {
-    RS_PreviewActionInterface::trigger();
+    RS_PreviewActionInterface::doTrigger();
 
     // fixme - sand - review SELECTION STATE
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-    for(auto e: selectedEntities){
+    for(auto e: m_selectedEntities){
          entList.append(e);
     }
 
@@ -70,26 +65,26 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
         int index = -1;
         targetEntity->setHighlighted(false);
 
-        switch (actionType) {
+        switch (m_actionType) {
             case RS2::ActionOrderLower:
-                index = document->findEntity(targetEntity);
-                document->moveEntity(index, entList);
+                index = m_document->findEntity(targetEntity);
+                m_document->moveEntity(index, entList);
                 break;
             case RS2::ActionOrderRaise:
-                index = document->findEntity(targetEntity) + 1;
-                document->moveEntity(index, entList);
+                index = m_document->findEntity(targetEntity) + 1;
+                m_document->moveEntity(index, entList);
                 break;
             default:
                 break;
         }
         targetEntity = nullptr;
     } else {
-        switch (actionType) {
+        switch (m_actionType) {
             case RS2::ActionOrderBottom:
-                document->moveEntity(-1, entList);
+                m_document->moveEntity(-1, entList);
                 break;
             case RS2::ActionOrderTop:
-                document->moveEntity(document->count() + 1, entList);
+                m_document->moveEntity(m_document->count() + 1, entList);
                 break;
             default:
                 break;
@@ -109,7 +104,7 @@ void RS_ActionOrder::onMouseMoveEventSelected([[maybe_unused]]int status, LC_Mou
     }
 }
 
-void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
+void RS_ActionOrder::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     targetEntity = catchEntityByEvent(e);
     if (targetEntity == nullptr) {
         commandMessage(tr("No Entity found."));
@@ -118,10 +113,10 @@ void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int sta
     }
 }
 
-void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionOrder::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
      deletePreview();
-     if (selectionComplete) {
-         selectionComplete = false;
+     if (m_selectionComplete) {
+         m_selectionComplete = false;
      }
      else{
          initPrevious(status);

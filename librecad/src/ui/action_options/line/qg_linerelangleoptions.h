@@ -26,8 +26,6 @@
 #ifndef QG_LINERELANGLEOPTIONS_H
 #define QG_LINERELANGLEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -51,7 +49,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
-    RS_ActionDrawLineRelAngle* action = nullptr;
+    RS_ActionDrawLineRelAngle* m_action = nullptr;
    	std::unique_ptr<Ui::Ui_LineRelAngleOptions> ui;
     void setLengthToActionAndView(QString val);
     void setAngleToActionAndView(QString val);

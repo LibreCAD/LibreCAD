@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_dlgnewversionavailable.h"
-#include "ui_lc_dlgnewversionavailable.h"
-#include "rs_settings.h"
 #include "main.h"
+#include "rs_settings.h"
+#include "ui_lc_dlgnewversionavailable.h"
+
 
 LC_DlgNewVersionAvailable::LC_DlgNewVersionAvailable(QWidget *parent,LC_ReleaseChecker* releaseChecker)
     : LC_Dialog(parent, "NewVersion")
@@ -79,7 +80,7 @@ void LC_DlgNewVersionAvailable::setup(LC_ReleaseChecker *releaseChecker) {
         ui->lReleaseName->setText(labelText);
         QString date = latestRelease.getPublishedDate().toString(Qt::ISODate);
         ui->lReleasePublishDate->setText(date);
-        currentReleaseTag = releaseTagName;
+        m_currentReleaseTag = releaseTagName;
         hasNewVersion = true;
     }
     else{
@@ -93,7 +94,7 @@ void LC_DlgNewVersionAvailable::setup(LC_ReleaseChecker *releaseChecker) {
         ui->lPrereleaseName->setText(labelText);
         QString date = latestPreRelease.getPublishedDate().toString(Qt::ISODate);
         ui->lPreReleasePublishDate->setText(date);
-        currentPreReleaseTag = preReleaseTagName;
+        m_currentPreReleaseTag = preReleaseTagName;
         hasNewVersion = true;
     }
     else{
@@ -119,7 +120,7 @@ void LC_DlgNewVersionAvailable::onOk(){
     LC_SET("IgnorePreReleaseVersions", ui->cbIgnorePreReleases->isChecked());
 
     if (ui->cbReleaseIgnore->isChecked()){
-        LC_SET("IgnoredRelease", currentReleaseTag);
+        LC_SET("IgnoredRelease", m_currentReleaseTag);
     }
     else{
         if (!ui->cbIgnoredRelease->isChecked()){
@@ -128,7 +129,7 @@ void LC_DlgNewVersionAvailable::onOk(){
     }
 
     if (ui->cbPreReleaseIgnore->isChecked()){
-        LC_SET("IgnoredPreRelease", currentPreReleaseTag);
+        LC_SET("IgnoredPreRelease", m_currentPreReleaseTag);
     }
     else if (!ui->cbIgnoredPreRelease->isChecked()){
         LC_SET("IgnoredPreRelease", QString(""));

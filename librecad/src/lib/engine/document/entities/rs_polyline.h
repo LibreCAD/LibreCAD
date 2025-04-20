@@ -27,11 +27,7 @@
 
 #pragma once
 
-#include <memory>
-
 #include "rs_entitycontainer.h"
-
-
 /**
  * Holds the data that defines a polyline.
  */

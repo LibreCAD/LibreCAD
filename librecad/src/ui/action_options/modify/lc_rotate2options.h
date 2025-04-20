@@ -23,7 +23,6 @@
 #ifndef LC_ROTATE2OPTIONS_H
 #define LC_ROTATE2OPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionModifyRotate2;
@@ -53,7 +52,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_Rotate2Options *ui;
-    RS_ActionModifyRotate2* action = nullptr;
+    RS_ActionModifyRotate2* m_action = nullptr;
     void setUseMultipleCopiesToActionAndView(bool copies);
     void setUseCurrentLayerToActionAndView(bool val);
     void setUseCurrentAttributesToActionAndView(bool val);

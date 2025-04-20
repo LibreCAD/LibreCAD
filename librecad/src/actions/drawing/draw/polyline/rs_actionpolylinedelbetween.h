@@ -26,7 +26,6 @@
 #ifndef RS_ACTIONPOLYLINEDELBETWEEN_H
 #define RS_ACTIONPOLYLINEDELBETWEEN_H
 
-
 #include "lc_actionpolylinedeletebase.h"
 
 class RS_AtomicEntity;
@@ -37,17 +36,14 @@ class RS_AtomicEntity;
  * @author Andrew Mustun
  */
 class RS_ActionPolylineDelBetween:public LC_ActionPolylineDeleteBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    RS_ActionPolylineDelBetween(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionPolylineDelBetween(LC_ActionContext *actionContext);
     ~RS_ActionPolylineDelBetween() override;
     void init(int status) override;
     void drawSnapper() override;
 protected:
-    RS_Vector vertexToDelete2 = RS_Vector(false);
+    RS_Vector m_vertexToDelete2 = RS_Vector(false);
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void collectEntitiesToRemove(RS_Vector vector, RS_Vector vector1, QList<RS_Entity *> &list);

@@ -25,16 +25,13 @@
 **********************************************************************/
 
 #include "rs_actionselectlayer.h"
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_selection.h"
 
-RS_ActionSelectLayer::RS_ActionSelectLayer(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Select Layers", container, graphicView), en(nullptr){
-    actionType = RS2::ActionSelectLayer;
+RS_ActionSelectLayer::RS_ActionSelectLayer(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Select Layers", actionContext,RS2::ActionSelectLayer)
+    , m_entity(nullptr){
 }
 
 void RS_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
@@ -46,16 +43,16 @@ void RS_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]]int status, LC_Mouse
 }
 
 void RS_ActionSelectLayer::doTrigger() {
-    if (en){
-        RS_Selection s(*container, viewport);
-        s.selectLayer(en);
+    if (m_entity){
+        RS_Selection s(*m_container, m_viewport);
+        s.selectLayer(m_entity);
     } else {
         RS_DEBUG->print("RS_ActionSelectLayer::trigger: Entity is NULL\n");
     }
 }
 
 void RS_ActionSelectLayer::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
-    en = catchEntityByEvent(e);
+    m_entity = catchEntityByEvent(e);
     trigger();
     invalidateSnapSpot();
 }

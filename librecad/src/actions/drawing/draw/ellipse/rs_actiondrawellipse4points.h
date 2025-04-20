@@ -36,9 +36,7 @@ struct RS_EllipseData;
 class RS_ActionDrawEllipse4Points:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipse4Points(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawEllipse4Points(LC_ActionContext *actionContext);
     ~RS_ActionDrawEllipse4Points() override;
     void init(int status) override;
     bool preparePreview();
@@ -55,8 +53,8 @@ protected:
     };
 
     // 4 points on ellipse
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;

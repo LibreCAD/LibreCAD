@@ -24,14 +24,13 @@
 **
 **********************************************************************/
 
-#include <QVariant>
 #include "qg_widgetpen.h"
-#include "qevent.h"
-#include "qg_colorbox.h"
-#include "qg_widthbox.h"
-#include "qg_linetypebox.h"
+
+#include <qevent.h>
+
 #include "rs_debug.h"
 #include "rs_entity.h"
+#include "rs_layer.h"
 
 /*
  *  Constructs a QG_WidgetPen as a child of 'parent', with the
@@ -50,11 +49,11 @@ QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
 
 void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer, 
                           bool showUnchanged, const QString& title) {
-    if (!initialized) {
+    if (!m_initialized) {
         cbColor->init(showByLayer, showUnchanged);
         cbWidth->init(showByLayer, showUnchanged);
         cbLineType->init(showByLayer, showUnchanged);
-        initialized = true;
+        m_initialized = true;
     }
     if (!showUnchanged) {
        cbColor->setColor(pen.getColor());
@@ -66,7 +65,6 @@ void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer,
         bgPen->setTitle(title);
     }
 }
-
 
 void QG_WidgetPen::setPen(RS_Entity* entity, RS_Layer* layer, const QString &title){
     RS_Pen entityPen = entity->getPen(false);
@@ -92,8 +90,7 @@ void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const
         cbColor->setLayerColor(layerColor);
     }
 }
-void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, const QString &title)
-{
+void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, const QString &title){
     setPen(pen, layer, false, title);
 }
 
@@ -118,11 +115,11 @@ bool QG_WidgetPen::isLineTypeUnchanged() {
 bool QG_WidgetPen::isWidthUnchanged() {
     return cbWidth->isUnchanged();
 }
+
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_WidgetPen::~QG_WidgetPen()
-{
+QG_WidgetPen::~QG_WidgetPen() {
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -138,18 +135,16 @@ void QG_WidgetPen::languageChange(){
  *  When tabbing in to the widget, passes the focus to the 
  *  cbColor subwidget.
  */
-void QG_WidgetPen::focusInEvent(QFocusEvent *event)
-{
+void QG_WidgetPen::focusInEvent(QFocusEvent* event) {
     int reason = event->reason();
-    RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusInEvent, reason '%d'",reason);
-//	if ( reason == Qt::BacktabFocusReason )
-//	    cbLineType->setFocus();
-//	else
-//	    cbColor->setFocus();
+    RS_DEBUG->print(RS_Debug::D_ERROR, "QG_WidgetPen::focusInEvent, reason '%d'", reason);
+    //	if ( reason == Qt::BacktabFocusReason )
+    //	    cbLineType->setFocus();
+    //	else
+    //	    cbColor->setFocus();
 }
 
-void QG_WidgetPen::focusOutEvent(QFocusEvent *event)
-{
+void QG_WidgetPen::focusOutEvent(QFocusEvent *event){
     int reason = event->reason();
     RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusOutEvent, reason '%d'",reason);
 }

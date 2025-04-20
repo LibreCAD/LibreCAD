@@ -36,25 +36,18 @@ class RS_Font;
  */
 class QG_FontBox: public QComboBox {
     Q_OBJECT
-
 public:
     QG_FontBox(QWidget* parent=0);
 	virtual ~QG_FontBox()=default;
-
 	RS_Font* getFont() const;
     void setFont(const QString& fName);
-
     void init();
-
 private slots:
     void slotFontChanged(int index);
-
 signals:
     void fontChanged(RS_Font* font);
-
 private:
-    RS_Font* currentFont = nullptr;
+    RS_Font* m_currentFont = nullptr;
 };
 
 #endif
-

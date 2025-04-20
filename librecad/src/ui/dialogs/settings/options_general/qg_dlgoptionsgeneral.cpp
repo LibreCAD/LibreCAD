@@ -23,17 +23,16 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "qg_dlgoptionsgeneral.h"
+
 #include <QColorDialog>
 #include <QMessageBox>
+
+#include "dxf_format.h"
 #include "lc_defaults.h"
+#include "lc_settingsexporter.h"
 #include "main.h"
 #include "qc_applicationwindow.h"
-#include "qg_dlgoptionsgeneral.h"
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-
-#include "lc_settingsexporter.h"
 #include "qg_filedialog.h"
 #include "rs_debug.h"
 #include "rs_math.h"
@@ -47,13 +46,13 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-int QG_DlgOptionsGeneral::current_tab = 0;
+int QG_DlgOptionsGeneral::m_currentTab = 0;
 
 QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
     : LC_Dialog(parent, "OptionsGeneral"){
     setModal(false);
     setupUi(this);
-    tabWidget->setCurrentIndex(current_tab);
+    tabWidget->setCurrentIndex(m_currentTab);
     init();
     connect(variablefile_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setVariableFile);
@@ -238,8 +237,8 @@ void QG_DlgOptionsGeneral::init(){
         int axisSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
         sbAxisSize->setValue(axisSize);
 
-        originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
-        cbAllowMenusDetaching->setChecked(originalAllowsMenusTearOff);
+        m_originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
+        cbAllowMenusDetaching->setChecked(m_originalAllowsMenusTearOff);
 
         checked = LC_GET_BOOL("GridDraw", true);
         cbDrawGrid->setChecked(checked);
@@ -461,6 +460,9 @@ void QG_DlgOptionsGeneral::init(){
 
         bool checked = LC_GET_BOOL("CircleRenderAsArcs", false);
         rbRenderCirclesAsArcs->setChecked(checked);
+
+        int fontLettersColumnsCount = LC_GET_INT("FontLettersColumnsCount", 10);
+        sbFontLettersColumnCount->setValue(fontLettersColumnsCount);
     }
 
     LC_GROUP("NewDrawingDefaults");
@@ -509,8 +511,8 @@ void QG_DlgOptionsGeneral::init(){
         lePathTranslations->setText(LC_GET_STR("Translations", ""));
         lePathHatch->setText(LC_GET_STR("Patterns", ""));
         lePathFonts->setText(LC_GET_STR("Fonts", ""));
-        originalLibraryPath = LC_GET_STR("Library", "").trimmed();
-        lePathLibrary->setText(originalLibraryPath);
+        m_originalLibraryPath = LC_GET_STR("Library", "").trimmed();
+        lePathLibrary->setText(m_originalLibraryPath);
         leTemplate->setText(LC_GET_STR("Template", "").trimmed());
         variablefile_field->setText(LC_GET_STR("VariableFile", "").trimmed());
         leOtherSettingsDirectory->setText(LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed());
@@ -532,6 +534,14 @@ void QG_DlgOptionsGeneral::init(){
         // Auto save timer
         cbAutoSaveTime->setValue(LC_GET_INT("AutoSaveTime", 5));
         bool autoBackup = LC_GET_BOOL("AutoBackupDocument", true);
+
+        QString autosaveFileNamePrefix = LC_GET_STR("AutosaveFilePrefix", "#");
+        cbAutoSaveFileNamePrefix->setCurrentText(autosaveFileNamePrefix);
+
+        QString backupFileNameSuffix = LC_GET_STR("BackupFileSuffix", "#");
+        cbBackupFileSuffix->setCurrentText(backupFileNameSuffix);
+
+
         cbAutoBackup->setChecked(autoBackup);
         cbAutoSaveTime->setEnabled(autoBackup);
         cbUseQtFileOpenDialog->setChecked(LC_GET_BOOL("UseQtFileOpenDialog", true));
@@ -600,22 +610,22 @@ void QG_DlgOptionsGeneral::init(){
         left_sidebar_checkbox->setChecked(LC_GET_BOOL("EnableLeftSidebar", true));
         cad_toolbars_checkbox->setChecked(LC_GET_BOOL("EnableCADToolbars", true));
         cbOpenLastFiles->setChecked(LC_GET_BOOL("OpenLastOpenedFiles", true));
-        originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
-        cbClassicStatusBar->setChecked(originalUseClassicToolbar);
+        m_originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
+        cbClassicStatusBar->setChecked(m_originalUseClassicToolbar);
 
         cbCheckNewVersion->setChecked(LC_GET_BOOL("CheckForNewVersions", true));
         cbCheckNewVersionIgnorePreRelease->setChecked(LC_GET_BOOL("IgnorePreReleaseVersions", true));
 
         bool checked = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
         cbDuplicateActionsPromptsInStatusBar->setChecked(checked);
-        cbDuplicateActionsPromptsInStatusBar->setEnabled(!originalUseClassicToolbar);
+        cbDuplicateActionsPromptsInStatusBar->setEnabled(!m_originalUseClassicToolbar);
 
         bool useExpandedToolsMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
-        originalExpandedToolsMenu = useExpandedToolsMenu;
+        m_originalExpandedToolsMenu = useExpandedToolsMenu;
         cbExpandToolsMenu->setChecked(useExpandedToolsMenu);
 
         bool expandToolsMenuTillEntity = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
-        originalExpandedToolsMenuTillEntity = expandToolsMenuTillEntity;
+        m_originalExpandedToolsMenuTillEntity = expandToolsMenuTillEntity;
         cbExpandToolsMenuTillEntity->setChecked(expandToolsMenuTillEntity);
 
         cbExpandToolsMenuTillEntity->setEnabled(useExpandedToolsMenu);
@@ -631,7 +641,7 @@ void QG_DlgOptionsGeneral::init(){
 
     initReferencePoints();
 
-    restartNeeded = false;
+    m_restartNeeded = false;
 }
 
 void QG_DlgOptionsGeneral::initComboBox(QComboBox *cb, const QString &text){
@@ -644,7 +654,7 @@ void QG_DlgOptionsGeneral::initComboBox(QComboBox *cb, const QString &text){
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded(){
-    restartNeeded = true;
+    m_restartNeeded = true;
 }
 
 void QG_DlgOptionsGeneral::setTemplateFile(){
@@ -776,6 +786,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ArcRenderInterpolateSegmentAngle", sbRenderArcSegmentAngle->value() * 100);
             LC_SET("ArcRenderInterpolateSegmentSagitta", sbRenderArcMaxSagitta->value() * 100);
             LC_SET("CircleRenderAsArcs", rbRenderCirclesAsArcs->isChecked());
+
+            LC_SET("FontLettersColumnsCount", sbFontLettersColumnCount->value());
         }
 
         LC_GROUP("Colors"); {
@@ -831,6 +843,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("Unit", RS_Units::unitToString(RS_Units::stringToUnit(cbUnit->currentText()), false/*untr.*/));
             LC_SET("AutoSaveTime", cbAutoSaveTime->value());
             LC_SET("AutoBackupDocument", cbAutoBackup->isChecked());
+
+            QString autosaveFileNamePrefix = cbAutoSaveFileNamePrefix->currentText();
+            LC_SET("AutosaveFilePrefix", autosaveFileNamePrefix);
+
+            QString backupFileNameSuffix = cbBackupFileSuffix->currentText();
+            LC_SET("BackupFileSuffix", backupFileNameSuffix);
+
             LC_SET("UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked());
             LC_SET("WheelScrollInvertH", cbWheelScrollInvertH->isChecked());
             LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());
@@ -897,6 +916,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP_END();
         saveReferencePoints();
     }
+    // fixme - sand - files - RESTORE ! change to main windows emit!
     RS_SETTINGS->emitOptionsChanged();
     if (checkRestartNeeded()) {
         QMessageBox::warning(this, tr("Preferences"),
@@ -906,14 +926,14 @@ void QG_DlgOptionsGeneral::ok(){
 }
 
 bool QG_DlgOptionsGeneral::checkRestartNeeded(){
-    bool result = originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
-                  originalLibraryPath != lePathLibrary->text().trimmed() ||
-                  originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
+    bool result = m_originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
+                  m_originalLibraryPath != lePathLibrary->text().trimmed() ||
+                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
     return result;
 }
 
 void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index){
-    current_tab = index;
+    m_currentTab = index;
 }
 
 void QG_DlgOptionsGeneral::set_color(QComboBox *combo, QColor custom){
@@ -1170,8 +1190,8 @@ void QG_DlgOptionsGeneral::onCheckNewVersionChanged(){
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state){
     bool allowBackup = cbAutoBackup->isChecked();
     cbAutoSaveTime->setEnabled(allowBackup);
-    auto &appWindow = QC_ApplicationWindow::getAppWindow();
-    appWindow->startAutoSave(allowBackup);
+    auto &appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
+    appWindow->startAutoSaveTimer(allowBackup);
 }
 
 void QG_DlgOptionsGeneral::initReferencePoints(){
@@ -1354,13 +1374,15 @@ void QG_DlgOptionsGeneral::on_rbRelSize_toggled([[maybe_unused]] bool checked){
 }
 
 void QG_DlgOptionsGeneral::exportSettings(){
-    LC_SettingsExporter::exportSettings(this);
+    LC_SettingsExporter exporter;
+    exporter.exportSettings(this);
 }
 
 void QG_DlgOptionsGeneral::importSettings(){
-    if (LC_SettingsExporter::importSettings(this)) {
+    LC_SettingsExporter importer;
+    if (importer.importSettings(this)) {
         init();
-        QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
+        QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
         appWin.initSettings();
     }
 }

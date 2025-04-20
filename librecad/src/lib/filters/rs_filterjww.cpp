@@ -28,6 +28,9 @@
 #include <QStringConverter>
 #include "rs_filterjww.h"
 
+#include <QFile>
+#include <QFileInfo>
+
 #include "dl_attributes.h"
 #include "dl_codes.h"
 #include "dl_writer_ascii.h"

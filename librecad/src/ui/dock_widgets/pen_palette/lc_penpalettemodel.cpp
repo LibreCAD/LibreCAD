@@ -29,22 +29,25 @@
 
 #include "lc_penpalettemodel.h"
 #include "lc_peninforegistry.h"
+#include "lc_penitem.h"
+#include "lc_penpalettedata.h"
+#include "lc_penpaletteoptions.h"
 
 static int COLOR_ICON_SIZE = 24;
 
-LC_PenPaletteModel::LC_PenPaletteModel(LC_PenPaletteOptions *modelOptions, LC_PenPaletteData* data, QObject * parent) :
+LC_PenPaletteModel::LC_PenPaletteModel(LC_PenPaletteOptions* modelOptions, LC_PenPaletteData* data, QObject* parent) :
     QAbstractTableModel(parent),
-    m_filteringRegexp{std::make_unique<QRegularExpression>()}
-{
-    options = modelOptions;
-    penPaletteData = data;
+    m_filteringRegexp{std::make_unique<QRegularExpression>()},
+    m_registry{LC_PenInfoRegistry::instance()} {
+    m_options = modelOptions;
+    m_penPaletteData = data;
     update(true);
 }
 
 LC_PenPaletteModel::~LC_PenPaletteModel() = default;
 
 int LC_PenPaletteModel::rowCount ([[maybe_unused]] const QModelIndex & parent) const {
-    return displayItems.size();
+    return m_displayItems.size();
 }
 
 QModelIndex LC_PenPaletteModel::parent ( const QModelIndex & /*index*/ ) const {
@@ -52,7 +55,7 @@ QModelIndex LC_PenPaletteModel::parent ( const QModelIndex & /*index*/ ) const {
 }
 
 QModelIndex LC_PenPaletteModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
-    if (row >= displayItems.size() || row < 0)
+    if (row >= m_displayItems.size() || row < 0)
         return QModelIndex();
     return createIndex ( row, column);
 }
@@ -65,35 +68,35 @@ QModelIndex LC_PenPaletteModel::index ( int row, int column, const QModelIndex &
 void LC_PenPaletteModel::update(bool updateNames){
     beginResetModel();
     // remove all from items list
-    displayItems.clear();
+    m_displayItems.clear();
 
     // simply iterate by pens data
-    int count = penPaletteData->getItemsCount();
+    int count = m_penPaletteData->getItemsCount();
     for (int i=0; i < count; i++){
-        LC_PenItem* item = penPaletteData->getItemAt(i);
+        LC_PenItem* item = m_penPaletteData->getItemAt(i);
         QString itemName = item->getName();
 
-        if (hasRegexp){
+        if (m_hasRegexp){
             // check whether filtering is case-sensitive
-            if (options->ignoreCaseOnMatch){
+            if (m_options->ignoreCaseOnMatch){
                 itemName = itemName.toLower();
             }
             QRegularExpressionMatch match = m_filteringRegexp->match(itemName);
             bool hasRegexpMatch = match.hasMatch();
             item->setMatched(hasRegexpMatch);
 
-            if (options->filterIsInHighlightMode){
+            if (m_options->filterIsInHighlightMode){
                 // just add item into the list to display
-                displayItems << item;
+                m_displayItems << item;
             } else if (hasRegexpMatch){
                 // add it item as highlighted
-                displayItems << item;
+                m_displayItems << item;
             } else {
                 continue; // skip this item at all as it was not matched, so it will not be shown in the table
             }
         }
         else{ // just add all items to display
-            displayItems << item;
+            m_displayItems << item;
             item->setMatched(false);
         }
 
@@ -104,7 +107,7 @@ void LC_PenPaletteModel::update(bool updateNames){
     }
 
     // sort collected items alphabetically
-    std::sort(displayItems.begin(), displayItems.end(), [](const LC_PenItem *s1, const LC_PenItem *s2)-> bool{
+    std::sort(m_displayItems.begin(), m_displayItems.end(), [](const LC_PenItem *s1, const LC_PenItem *s2)-> bool{
         return s1->getName() < s2->getName();
     } );
 
@@ -121,12 +124,12 @@ void LC_PenPaletteModel::update(bool updateNames){
 void LC_PenPaletteModel::setFilteringRegexp(QString &regexp){
     QString pattern =/* QRegularExpression::wildcardToRegularExpression(*/regexp/*)*/;
     m_filteringRegexp->setPattern(pattern);
-    QRegularExpression::PatternOptions option = options->ignoreCaseOnMatch
+    QRegularExpression::PatternOptions option = m_options->ignoreCaseOnMatch
                                                     ? QRegularExpression::CaseInsensitiveOption
                                                     : QRegularExpression::NoPatternOption;
     // ensure that we'll use case-insensitive match
     m_filteringRegexp->setPatternOptions(option);
-    hasRegexp = !regexp.trimmed().isEmpty();
+    m_hasRegexp = !regexp.trimmed().isEmpty();
 }
 
 /**
@@ -137,16 +140,15 @@ void LC_PenPaletteModel::emitModelChange(){
 }
 
 
-
 /**
  * Return pen for given row
  * @param row
  * @return
  */
 LC_PenItem *LC_PenPaletteModel::getPen(int row) const {
-    if (row >= displayItems.size() || row < 0)
+    if (row >= m_displayItems.size() || row < 0)
         return nullptr;
-    return displayItems.at(row);
+    return m_displayItems.at(row);
 }
 
 /**
@@ -157,6 +159,7 @@ LC_PenItem *LC_PenPaletteModel::getPen(int row) const {
 Qt::ItemFlags LC_PenPaletteModel::flags([[maybe_unused]] const QModelIndex &index) const{
     return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
 }
+
 /**
  * Model mega-method...
  * @param index
@@ -164,10 +167,10 @@ Qt::ItemFlags LC_PenPaletteModel::flags([[maybe_unused]] const QModelIndex &inde
  * @return
  */
 QVariant LC_PenPaletteModel::data(const QModelIndex &index, int role) const{
-    if (!index.isValid() || index.row() >= displayItems.size())
+    if (!index.isValid() || index.row() >= m_displayItems.size())
         return QVariant();
 
-    LC_PenItem *item{displayItems.at(index.row())};
+    LC_PenItem *item{m_displayItems.at(index.row())};
 
     // take care of columns visibility
     int col = translateColumn(index.column());
@@ -204,23 +207,23 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, int role) const{
             break;
         case Qt::BackgroundRole: {
             // highlight pen that was active (in pen editor) by appropriate background
-            if (activePen && activePen == item){
-                return options->activeItemBGColor;
+            if (m_activePen && m_activePen == item){
+                return m_options->activeItemBGColor;
             }
             break;
         }
         case Qt::ForegroundRole: {
             if (item->isMatched()){
                 // highlighting of items that are matched by filter regexp
-                if (options->filterIsInHighlightMode){
-                    return options->matchedItemColor;
+                if (m_options->filterIsInHighlightMode){
+                    return m_options->matchedItemColor;
                 }
             }
             break;
         }
         case Qt::ToolTipRole: {
             // optional tooltip displaying
-            if (options->showToolTip){
+            if (m_options->showToolTip){
                 QString toolTip = QString(tr("Name:")).append("<b>").append(item->getName()).append("</b><br>")
                     .append(tr("Line Type:")).append("<b>").append(item->getLineTypeName()).append("</b><br>")
                     .append(tr("Line Width:")).append("<b>").append(item->getLineWidthName()).append("</b><br>");
@@ -238,8 +241,8 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, int role) const{
             // fonts - bold for active and italic for special attribute values
             QFont font;
             bool fontChanged = false;
-            if (activePen && activePen == item){
-                if (options->showEntireRowBold){
+            if (m_activePen && m_activePen == item){
+                if (m_options->showEntireRowBold){
                     font.setBold(true);
                     fontChanged = true;
                 } else {
@@ -307,33 +310,33 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, int role) const{
  */
 int LC_PenPaletteModel::translateColumn(int column) const{
     int result = column;    
-    if (!options->showColorIcon){
+    if (!m_options->showColorIcon){
        if (result >= COLUMNS::COLOR_ICON){
          result++;
        }
     }
-    if (!options->showColorName){
+    if (!m_options->showColorName){
         if (result >= COLUMNS::COLOR_NAME){
             result++;
         }
     }
-    if (!options->showWidthIcon){
+    if (!m_options->showWidthIcon){
         if (result >= COLUMNS::WIDTH_ICON){
             result++;
         }
     }
-    if (!options->showWidthName){
+    if (!m_options->showWidthName){
         if (result >= COLUMNS::WIDTH_NAME){
             result++;
         }
     }
 
-    if (!options->showTypeIcon){
+    if (!m_options->showTypeIcon){
         if (result >= COLUMNS::TYPE_ICON){
             result++;
         }
     }
-    if (!options->showTypeName){
+    if (!m_options->showTypeName){
         if (result >= COLUMNS::TYPE_NAME){
             result++;
         }
@@ -346,22 +349,22 @@ int LC_PenPaletteModel::translateColumn(int column) const{
  */
 int LC_PenPaletteModel::columnCount(const QModelIndex &) const{
     int result = COLUMNS::LAST;
-    if (!options->showColorIcon){
+    if (!m_options->showColorIcon){
         result --;
     }
-    if (!options->showColorName){
+    if (!m_options->showColorName){
         result --;
     }
-    if (!options->showTypeIcon){
+    if (!m_options->showTypeIcon){
         result --;
     }
-    if (!options->showTypeName){
+    if (!m_options->showTypeName){
         result --;
     }
-    if (!options->showWidthIcon){
+    if (!m_options->showWidthIcon){
         result --;
     }
-    if (!options->showWidthName){
+    if (!m_options->showWidthName){
         result --;
     }
     return result;
@@ -375,8 +378,8 @@ void LC_PenPaletteModel::setupItemForDisplay(LC_PenItem *newPen){
 
     // handling line type
     RS2::LineType lineType = newPen->getLineType();
-    QIcon iconLineType = registry->getLineTypeIcon(lineType);
-    QString lineTypeName = registry->getLineTypeText(lineType);
+    QIcon iconLineType = m_registry->getLineTypeIcon(lineType);
+    QString lineTypeName = m_registry->getLineTypeText(lineType);
 
     newPen->setLineTypeIcon(iconLineType);
     newPen->setLineTypeName(lineTypeName);
@@ -384,17 +387,17 @@ void LC_PenPaletteModel::setupItemForDisplay(LC_PenItem *newPen){
     // handling line width
     RS2::LineWidth lineWidth = newPen->getLineWidth();
 
-    QIcon iconLineWidth = registry->getLineWidthIcon(lineWidth);
+    QIcon iconLineWidth = m_registry->getLineWidthIcon(lineWidth);
     newPen ->setLineWidthIcon(iconLineWidth);
-    QString lineWidthName = registry->getLineWidthText(lineWidth);
+    QString lineWidthName = m_registry->getLineWidthText(lineWidth);
     newPen -> setLineWidthName(lineWidthName);
 
     // handling color
     RS_Color color = newPen->getColor();
-    QIcon iconColor = registry->getColorIcon(color, COLOR_ICON_SIZE, COLOR_ICON_SIZE);
+    QIcon iconColor = m_registry->getColorIcon(color, COLOR_ICON_SIZE, COLOR_ICON_SIZE);
     newPen->setColorIcon(iconColor);
 
-    QString colorName = registry->getColorName(color, options->colorNameDisplayMode);
+    QString colorName = m_registry->getColorName(color, m_options->colorNameDisplayMode);
     newPen->setColorName(colorName);
 }
 
@@ -404,8 +407,8 @@ void LC_PenPaletteModel::setupItemForDisplay(LC_PenItem *newPen){
  */
 void LC_PenPaletteModel::addItem(LC_PenItem *item){
     setupItemForDisplay(item);
-    penPaletteData->addItem(item);
-    activePen = item;
+    m_penPaletteData->addItem(item);
+    m_activePen = item;
     update(false);
     emitModelChange();
 }
@@ -415,7 +418,7 @@ void LC_PenPaletteModel::addItem(LC_PenItem *item){
  * @return item or null if not found
  */
 LC_PenItem *LC_PenPaletteModel::findPenForName(QString &name){
-    return penPaletteData->findItemWithName(name);
+    return m_penPaletteData->findItemWithName(name);
 }
 
 /**
@@ -424,8 +427,8 @@ LC_PenItem *LC_PenPaletteModel::findPenForName(QString &name){
  */
 void LC_PenPaletteModel::itemEdited(LC_PenItem* item){
     setupItemForDisplay(item);
-    penPaletteData->itemEdited(item);
-    activePen = item;
+    m_penPaletteData->itemEdited(item);
+    m_activePen = item;
     update(false);
     emitModelChange();
 }
@@ -434,15 +437,15 @@ void LC_PenPaletteModel::itemEdited(LC_PenItem* item){
  * @param item
  */
 void LC_PenPaletteModel::removeItem(LC_PenItem *item){
-    bool activePenRemoval = item == activePen;
-    penPaletteData->removeItem(item);
+    bool activePenRemoval = item == m_activePen;
+    m_penPaletteData->removeItem(item);
     update(false);
     if (activePenRemoval){
         // is it the last one?
-        if (displayItems.isEmpty()){
-            activePen = nullptr;
+        if (m_displayItems.isEmpty()){
+            m_activePen = nullptr;
         } else {
-            activePen = displayItems.at(0);
+            m_activePen = m_displayItems.at(0);
         }
     }
     emitModelChange();
@@ -457,8 +460,8 @@ LC_PenItem *LC_PenPaletteModel::getItemForIndex(QModelIndex index){
     LC_PenItem* result = nullptr;
     if (index.isValid()){
         int row = index.row();
-        if (row < displayItems.size()){
-            result = displayItems.at(row);
+        if (row < m_displayItems.size()){
+            result = m_displayItems.at(row);
         }
     }
     return result;
@@ -470,7 +473,7 @@ LC_PenItem *LC_PenPaletteModel::getItemForIndex(QModelIndex index){
  */
 void LC_PenPaletteModel::setActivePen(LC_PenItem *l){
     beginResetModel();
-    activePen = l;
+    m_activePen = l;
     emitModelChange();
     endResetModel();
 }
@@ -480,7 +483,7 @@ void LC_PenPaletteModel::setActivePen(LC_PenItem *l){
  * @return
  */
 LC_PenItem *LC_PenPaletteModel::getActivePen() const{
-    return activePen;
+    return m_activePen;
 }
 
 /**
@@ -489,5 +492,5 @@ LC_PenItem *LC_PenPaletteModel::getActivePen() const{
  * @return
  */
 LC_PenItem *LC_PenPaletteModel::createNewItem(QString name){
-    return penPaletteData->createNewPenItem(name);
+    return m_penPaletteData->createNewPenItem(name);
 }

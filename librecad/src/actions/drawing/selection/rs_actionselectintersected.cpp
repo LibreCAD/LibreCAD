@@ -25,13 +25,11 @@
 **********************************************************************/
 
 #include "rs_actionselectintersected.h"
+
 #include "rs_debug.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_preview.h"
 #include "rs_selection.h"
 
-struct RS_ActionSelectIntersected::Points {
+struct RS_ActionSelectIntersected::ActionData {
 	RS_Vector v1;
 	RS_Vector v2;
 };
@@ -41,30 +39,25 @@ struct RS_ActionSelectIntersected::Points {
  *
  * @param select true: select window. false: deselect window
  */
-RS_ActionSelectIntersected::RS_ActionSelectIntersected(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView,
-    bool select)
-    :RS_PreviewActionInterface("Select Intersected",
-                               container, graphicView), pPoints(std::make_unique<Points>()), select(select){
-	actionType=RS2::ActionSelectIntersected;
+RS_ActionSelectIntersected::RS_ActionSelectIntersected(LC_ActionContext *actionContext, bool select)
+    :RS_PreviewActionInterface("Select Intersected",actionContext, RS2::ActionSelectIntersected),
+    m_actionData(std::make_unique<ActionData>()), m_performSelect(select){
 }
 
 RS_ActionSelectIntersected::~RS_ActionSelectIntersected() = default;
 
-
 void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);
-    pPoints = std::make_unique<Points>();
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+    m_actionData = std::make_unique<ActionData>();
+    m_snapMode.clear();
+    m_snapMode.restriction = RS2::RestrictNothing;
 }
 
 void RS_ActionSelectIntersected::doTrigger() {
-    if (pPoints->v1.valid && pPoints->v2.valid){
-        if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-            RS_Selection s(*container, viewport);
-            s.selectIntersected(pPoints->v1, pPoints->v2, select);
+    if (m_actionData->v1.valid && m_actionData->v2.valid){
+        if (toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 10){
+            RS_Selection s(*m_container, m_viewport);
+            s.selectIntersected(m_actionData->v1, m_actionData->v2, m_performSelect);
             init(SetPoint1);
         }
     }
@@ -72,9 +65,9 @@ void RS_ActionSelectIntersected::doTrigger() {
 
 void RS_ActionSelectIntersected::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
-    if (status == SetPoint2 && pPoints->v1.valid){
-        pPoints->v2 = snap;
-        previewLine(pPoints->v1, pPoints->v2);
+    if (status == SetPoint2 && m_actionData->v1.valid){
+        m_actionData->v2 = snap;
+        previewLine(m_actionData->v1, m_actionData->v2);
         // todo - of course, ideally it will be also to highlight entities that will be selected...
         // however, calculating of intersections as it is currently is may be quite costly operation for mouse move
         // todo - review preview for selected entities after indexing
@@ -85,7 +78,7 @@ void RS_ActionSelectIntersected::onMouseMoveEvent(int status, LC_MouseEvent *e) 
 void RS_ActionSelectIntersected::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetPoint1:
-            pPoints->v1 = e->snapPoint;
+            m_actionData->v1 = e->snapPoint;
             setStatus(SetPoint2);
             break;
 
@@ -97,7 +90,7 @@ void RS_ActionSelectIntersected::onMouseLeftButtonPress(int status, LC_MouseEven
 void RS_ActionSelectIntersected::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
     if (status == SetPoint2){
-        pPoints->v2 = e->snapPoint;
+        m_actionData->v2 = e->snapPoint;
         trigger();
     }
 }

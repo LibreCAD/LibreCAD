@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWSPLINEPOINTS_H
 #define LC_ACTIONDRAWSPLINEPOINTS_H
 
-#include "rs_previewactioninterface.h"
+
 #include "rs_actiondrawspline.h"
 
 /**
@@ -33,11 +33,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Pavel Krejcir
  */
 class LC_ActionDrawSplinePoints:public RS_ActionDrawSpline {
-Q_OBJECT
+    Q_OBJECT
 public:
-    LC_ActionDrawSplinePoints(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    LC_ActionDrawSplinePoints(LC_ActionContext *actionContext);
     ~LC_ActionDrawSplinePoints() override;
     void reset();
     void init(int status) override;
@@ -48,8 +46,8 @@ public:
     //using degree=2 only
     void setDegree(int /*deg*/) override{}
 protected:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
     void redo();
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

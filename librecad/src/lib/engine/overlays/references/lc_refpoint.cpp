@@ -20,13 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_painter.h"
-#include "rs_graphicview.h"
 #include "lc_refpoint.h"
 
+#include "rs_painter.h"
+
 LC_RefPoint::LC_RefPoint(RS_EntityContainer* parent,
-                        const RS_Vector & d,
-                        double size, int mode)
+                         const RS_Vector & d,
+                         double size, int mode)
     :RS_Point(parent, RS_PointData(d)), pdmode{mode},pdsize{size}  {
     calculateBorders ();
 }

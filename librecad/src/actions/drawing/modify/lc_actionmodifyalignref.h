@@ -23,14 +23,14 @@
 #ifndef LC_ACTIONMODIFYALIGNREF_H
 #define LC_ACTIONMODIFYALIGNREF_H
 
-#include <QObject>
+
 #include "lc_actionmodifybase.h"
+#include "rs_modification.h"
 
 class LC_ActionModifyAlignRef: public LC_ActionModifyBase{
     Q_OBJECT
-
 public:
-    LC_ActionModifyAlignRef(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionModifyAlignRef(LC_ActionContext *actionContext);
     void setScale(bool val);
     bool isScale();
 protected:
@@ -41,7 +41,7 @@ protected:
         SetTargetPoint2
     };
 
-    struct Points {
+    struct ActionData {
         LC_AlignRefData data;
         RS_Vector referencePoint1;
         RS_Vector targetPoint1;
@@ -49,13 +49,13 @@ protected:
         RS_Vector targetPoint2;
     };
 
-    Points pPoints;
+    ActionData m_actionData;
 
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void updateMouseButtonHintsForSelection() override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHintsForSelected(int status) override;
     bool doProcessCommand(int status, const QString &command) override;

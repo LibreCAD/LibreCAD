@@ -24,21 +24,20 @@
 **********************************************************************************
 */
 
-
-#include <QAction>
-#include <QActionGroup>
-#include <QSettings>
-#include <QLineEdit>
-#include <QPushButton>
-
 #include "widgetcreator.h"
+
+#include <QLineEdit>
+#include <QSettings>
+
+#include "lc_actiongroup.h"
+#include "lc_actiongroupmanager.h"
 #include "ui_widgetcreator.h"
 
 WidgetCreator::WidgetCreator(
     QWidget *parent,
     LC_ActionGroupManager* agm,
     bool assigner)
-    :QFrame(parent), ui(new Ui::WidgetCreator), actionGroupManager(agm){
+    :QFrame(parent), ui(new Ui::WidgetCreator), m_actionGroupManager(agm){
 
     ui->setupUi(this);
 
@@ -51,7 +50,7 @@ WidgetCreator::WidgetCreator(
     }
 
     ui->categories_combobox->addItem(QObject::tr("All"));
-    foreach (auto ag, actionGroupManager->allGroupsList()) {
+    foreach (auto ag, m_actionGroupManager->allGroupsList()) {
        ui->categories_combobox->addItem(ag->objectName());
     }
     ui->categories_combobox->setCurrentIndex(-1);
@@ -59,7 +58,7 @@ WidgetCreator::WidgetCreator(
 
     ui->offered_actions->setSortingEnabled(true);
 
-    ui->offered_actions->fromActionMap(actionGroupManager->getActionsMap());
+    ui->offered_actions->fromActionMap(m_actionGroupManager->getActionsMap());
 
     connect(ui->add_button, &QPushButton::released, this, &WidgetCreator::addChosenAction);
     connect(ui->remove_button,  &QPushButton::released, this, &WidgetCreator::removeChosenAction);
@@ -144,7 +143,7 @@ void WidgetCreator::setLists(int index) {
     ui->chosen_actions->clear();
     ui->offered_actions->clear();
 
-    ui->offered_actions->fromActionMap(actionGroupManager->getActionsMap());
+    ui->offered_actions->fromActionMap(m_actionGroupManager->getActionsMap());
     int allIndex = ui->categories_combobox->findText(QObject::tr("All"));
     ui->categories_combobox->setCurrentIndex(allIndex);
 
@@ -155,7 +154,7 @@ void WidgetCreator::setLists(int index) {
     }
 
         foreach (auto str, s_list) {
-            QAction *action = actionGroupManager->getActionByName(str);
+            QAction *action = m_actionGroupManager->getActionByName(str);
             if (action != nullptr) {
                 ui->chosen_actions->addActionItem(action);
             }
@@ -196,19 +195,19 @@ void WidgetCreator::destroyWidget() {
 void WidgetCreator::setCategory(int index) {
     QString category = ui->categories_combobox->itemText(index);
     if (category == QObject::tr("All")) {
-        auto a_map = actionGroupManager->getActionsMap();
+        auto a_map = m_actionGroupManager->getActionsMap();
         ui->offered_actions->clear();
         ui->offered_actions->fromActionMap(a_map);
         return;
     }
 
-    if (!actionGroupManager->hasActionGroup(category)) {
+    if (!m_actionGroupManager->hasActionGroup(category)) {
         return;
     }
 
     ui->offered_actions->clear();
     auto chosen_actions = getChosenActions();
-    auto action_group = actionGroupManager->getActionGroup(category);
+    auto action_group = m_actionGroupManager->getActionGroup(category);
     if (action_group != nullptr)
         for (auto action: action_group->actions()) {
             if (!chosen_actions.contains(action->objectName()))

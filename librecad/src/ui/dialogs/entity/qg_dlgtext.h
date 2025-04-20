@@ -27,8 +27,9 @@
 #define QG_DLGTEXT_H
 
 #include "ui_qg_dlgtext.h"
-#include "rs_text.h"
 #include "lc_entitypropertiesdlg.h"
+
+class RS_Text;
 
 class QG_DlgText : public LC_EntityPropertiesDlg, public Ui::QG_DlgText{
     Q_OBJECT
@@ -69,8 +70,8 @@ protected slots:
     virtual void languageChange();
 
 protected:
-    bool isNew;
-    bool saveSettings;
+    bool m_isNew;
+    bool m_saveSettings;
     RS_Text* entity;
     RS_Font* font;
 

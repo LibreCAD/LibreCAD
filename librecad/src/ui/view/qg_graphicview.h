@@ -28,22 +28,25 @@
 #define QG_GRAPHICVIEW_H
 
 #include <mutex>
+#include <cstdlib>
 
 #include <QString>
 #include <QWidget>
 
-#include "lc_ucs_mark.h"
+#include "lc_ucslist.h"
+#include "rs.h"
 #include "rs_blocklistlistener.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
 
+struct LC_UCSMarkOptions;
 class QEnterEvent;
 class QG_ScrollBar;
 class QGridLayout;
 class QLabel;
 class QMenu;
 class QMouseEvent;
+class LC_ActionContext;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -55,12 +58,11 @@ class QMouseEvent;
 class QG_GraphicView:   public RS_GraphicView,
                         public RS_LayerListListener,
                         public RS_BlockListListener,
-                        public LC_UCSListListener
-{
-Q_OBJECT
-
+                        public LC_UCSListListener{
+    Q_OBJECT
 public:
-    explicit QG_GraphicView(QWidget *parent = nullptr,  RS_Document *doc = nullptr);
+    // fixme - sand - files - restore - what if action context is null?? As for hatch dialog?
+    explicit QG_GraphicView(QWidget *parent,  RS_Document *doc = nullptr, LC_ActionContext* actionContext = nullptr);
     ~QG_GraphicView() override;
 
     int getWidth() const override;
@@ -70,7 +72,9 @@ public:
     void adjustZoomControls() override;
     void setMouseCursor(RS2::CursorType c) override;
     void updateGridStatusWidget(QString text) override;
-    void updateGridPoints();
+protected:
+    void dragEnterEvent(QDragEnterEvent* event) override;
+public:
     void loadSettings() override;
 
     // Methods from RS_LayerListListener Interface:
@@ -82,9 +86,7 @@ public:
     }
 
     void layerToggled(RS_Layer*) override;
-
     void layerActivated(RS_Layer *) override;
-
 
     /**
      * @brief setOffset
@@ -92,12 +94,6 @@ public:
      * @param oy, offset Y
      */
     void setOffset(int ox, int oy);
-/*    *//**
-     * @brief getMousePosition() mouse position in widget coordinates
-     * @return the cursor position in widget coordinates
-     * returns the widget center, if cursor is not on the widget
-     *//*
-    RS_Vector getMousePosition() const override;*/
 
     void setAntialiasing(bool state);
     bool isDraftMode() const;
@@ -136,8 +132,10 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
     bool event(QEvent * e) override;
+    void doZoom(RS2::ZoomDirection direction, RS_Vector& center, double zoom_factor);
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
+    void switchToAction(RS2::ActionType actionType, void* data = nullptr) const;
     void autoPanStep();
     void highlightUCSLocation(LC_UCS *ucs) override;
     void ucsHighlightStep();
@@ -152,46 +150,51 @@ signals:
     void gridStatusChanged(QString);
 private:
     QString m_device;
-    QList<QAction*> recent_actions;
+    QList<QAction*> m_recent_actions;
 
     //! Horizontal scrollbar.
-    QG_ScrollBar* hScrollBar = nullptr;
+    QG_ScrollBar* m_hScrollBar = nullptr;
     //! Vertical scrollbar.
-    QG_ScrollBar* vScrollBar = nullptr;
+    QG_ScrollBar* m_vScrollBar = nullptr;
     //! Layout used to fit in the view and the scrollbars.
-    QGridLayout* layout = nullptr;
+    QGridLayout* m_layout = nullptr;
     //! CAD mouse cursor
-    std::unique_ptr<QCursor> curCad;
+    std::unique_ptr<QCursor> m_cursorCad;
     //! Delete mouse cursor
-    std::unique_ptr<QCursor> curDel;
+    std::unique_ptr<QCursor> m_cursorDel;
     //! Select mouse cursor
-    std::unique_ptr<QCursor> curSelect;
+    std::unique_ptr<QCursor> m_cursorSelect;
     //! Magnifying glass mouse cursor
-    std::unique_ptr<QCursor> curMagnifier;
+    std::unique_ptr<QCursor> m_cursorMagnifier;
     //! Hand mouse cursor
-    std::unique_ptr<QCursor> curHand;
+    std::unique_ptr<QCursor> m_cursorHand;
 
-    double scrollZoomFactor = 1.137;
+    double m_scrollZoomFactor = 1.137;
 
     //! Keep tracks of if we are currently doing a high-resolution scrolling
-    bool isSmoothScrolling;
+    bool m_isSmoothScrolling;
 
-    LC_UCSMarkOptions m_ucsMarkOptions;
+    std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
 
-    QMap<QString, QMenu*> menus;
+    QMap<QString, QMenu*> m_menus;
 
-    bool scrollbars{false};
-    bool cursor_hiding{false};
-    bool selectCursor_hiding{false};
-    bool invertZoomDirection{false};
-    bool invertHorizontalScroll {false};
-    bool invertVerticalScroll {false};
+    bool m_scrollbars{false};
+    bool m_cursor_hiding{false};
+    bool m_selectCursor_hiding{false};
+    bool m_invertZoomDirection{false};
+    bool m_invertHorizontalScroll {false};
+    bool m_invertVerticalScroll {false};
 
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
     struct UCSHighlightData;
     std::unique_ptr<UCSHighlightData> m_ucsHighlightData;
 
+    LC_ActionContext* m_actionContext {nullptr};
+
+    void showEntityPropertiesDialog(RS_Entity *entity);
+    void launchEditProperty(RS_Entity *entity);
+    void editAction(RS_Entity &entity);
     // for scroll bar adjustment
     std::mutex m_scrollbarMutex;
 

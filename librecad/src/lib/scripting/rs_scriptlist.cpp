@@ -27,6 +27,8 @@
 #include <QString>
 #include "rs_scriptlist.h"
 
+#include <QFileInfo>
+
 #include "rs_system.h"
 #include "rs_debug.h"
 

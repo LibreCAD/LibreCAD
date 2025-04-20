@@ -24,26 +24,26 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_PREVIEWACTIONINTERFACE_H
 #define RS_PREVIEWACTIONINTERFACE_H
 
-#include <memory>
-#include <QPoint>
+#include <QPointF>
 
-#include "lc_defaults.h"
-
+#include "dxf_format.h"
 #include "rs_actioninterface.h"
+#include "rs_vector.h"
 
+class RS_Point;
+class LC_OverlayDrawable;
+class LC_ActionInfoMessageBuilder;
 class LC_Highlight;
 class LC_RefEllipse;
 
 class RS_Arc;
+class RS_Circle;
 class RS_ConstructionLine;
 class RS_Ellipse;
 class RS_Line;
-class RS_Vector;
-
 struct RS_ArcData;
 struct RS_CircleData;
 struct RS_EllipseData;
@@ -58,7 +58,6 @@ struct LC_MouseEvent{
     QMouseEvent* originalEvent = nullptr;
 };
 
-
 /**
  * This is the interface that must be implemented for all
  * action classes which need a preview.
@@ -67,11 +66,7 @@ struct LC_MouseEvent{
  */
 class RS_PreviewActionInterface : public RS_ActionInterface {
 public:
-    RS_PreviewActionInterface(
-        const char *name,
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView,
-        RS2::ActionType actionType = RS2::ActionNone);
+    RS_PreviewActionInterface(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
     void init(int status) override;
     void finish(bool updateTB = true) override;
@@ -79,23 +74,24 @@ public:
     void resume() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    QStringList getAvailableCommands() override;
 protected:
+    std::unique_ptr<LC_ActionInfoMessageBuilder> m_msgBuilder;
     // fixme - sand - tmp -  move to overlay!!!
     int m_angleSnapMarkerSize = 20;
     /**
      * Preview that holds the entities to be previewed.
      */
-    std::unique_ptr<RS_Preview> preview;
-    bool hasPreview = true;//whether preview is in use
+    std::unique_ptr<RS_Preview> m_preview;
+    bool m_hasPreview = true;//whether preview is in use
 
-    std::unique_ptr<LC_Highlight> highlight;
+    std::unique_ptr<LC_Highlight> m_highlight;
 
-    double refPointSize = 2.0;
-    int refPointMode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
-    bool showRefEntitiesOnPreview = false;
-    bool highlightEntitiesOnHover = false;
-    bool highlightEntitiesRefPointsOnHover = false;
-
+    double m_refPointSize = 2.0;
+    int m_refPointMode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
+    bool m_showRefEntitiesOnPreview = false;
+    bool m_highlightEntitiesOnHover = false;
+    bool m_highlightEntitiesRefPointsOnHover = false;
     bool m_doNotAllowNonDecimalAnglesInput = false;
 
     virtual void doTrigger(){}
@@ -174,6 +170,9 @@ protected:
     RS_Entity* catchModifiableAndDescribe(LC_MouseEvent *e, const RS2::EntityType &enType);
     RS_Entity* catchModifiableAndDescribe(LC_MouseEvent *e, const EntityTypeList &enTypeList);
 
+    LC_ActionInfoMessageBuilder& msg(const QString& name, const QString& value);
+    LC_ActionInfoMessageBuilder& msg(const QString& name);
+
     QString obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level);
     void prepareEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel level);
     void appendInfoCursorZoneMessage(QString message, int zoneNumber, bool replaceContent);
@@ -199,14 +198,15 @@ protected:
     virtual void onMouseRightButtonRelease(int status, LC_MouseEvent *e);
     virtual void onMouseLeftButtonPress(int status, LC_MouseEvent *e);
     virtual void onMouseRightButtonPress(int status, LC_MouseEvent *e);
+    virtual QStringList doGetAvailableCommands(int status);
 
     bool parseToWCSAngle(const QString &c, double &wcsAngleRad);
     bool parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad);
     bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad);
     double evalAngleValue(const QString &c, bool *ok) const;
     void initFromSettings() override;
-
 private:
     LC_MouseEvent toLCMouseMoveEvent(QMouseEvent *e);
+    friend LC_ActionInfoMessageBuilder;
 };
 #endif

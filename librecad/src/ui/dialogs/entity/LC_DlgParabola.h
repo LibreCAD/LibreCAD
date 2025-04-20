@@ -24,36 +24,32 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_DlgParabola_H
 #define LC_DlgParabola_H
 
-#include<memory>
-#include <QDialog>
 #include "lc_entitypropertiesdlg.h"
 
 class LC_Parabola;
 
-namespace Ui {
-class DlgParabola;
+namespace Ui
+{
+    class DlgParabola;
 }
 
-class LC_DlgParabola : public LC_EntityPropertiesDlg{
-	Q_OBJECT
+class LC_DlgParabola : public LC_EntityPropertiesDlg {
+    Q_OBJECT
 public:
-    LC_DlgParabola(QWidget* parent, LC_GraphicViewport *pViewport, LC_Parabola *parabola);
+    LC_DlgParabola(QWidget* parent, LC_GraphicViewport* pViewport, LC_Parabola* parabola);
     ~LC_DlgParabola() override;
-
 public slots:
     void updatePoints();
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
 protected:
-
     void setEntity(LC_Parabola* b);
     LC_DlgParabola(LC_DlgParabola const&) = delete;
-    LC_DlgParabola& operator = (LC_DlgParabola const&) = delete;
-    LC_DlgParabola(LC_DlgParabola &&) = delete;
-    LC_DlgParabola& operator = (LC_DlgParabola &&) = delete;
-
-    LC_Parabola* entity = nullptr;
+    LC_DlgParabola& operator =(LC_DlgParabola const&) = delete;
+    LC_DlgParabola(LC_DlgParabola&&) = delete;
+    LC_DlgParabola& operator =(LC_DlgParabola&&) = delete;
+    LC_Parabola* m_entity = nullptr;
     std::unique_ptr<Ui::DlgParabola> ui;
 };
 

@@ -22,9 +22,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include <QFileInfo>
 
 #include "qg_dlgimage.h"
+
+#include <QFileInfo>
 
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -54,87 +55,87 @@ void QG_DlgImage::languageChange(){
 }
 
 void QG_DlgImage::setEntity(RS_Image* e) {
-    entity = e;
+    m_entity = e;
 
-    RS_Graphic* graphic = entity->getGraphic();
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
+    wPen->setPen(m_entity, lay, tr("Pen"));
 
-    toUI(entity->getInsertionPoint(), leInsertX, leInsertY);
+    toUI(m_entity->getInsertionPoint(), leInsertX, leInsertY);
 
-    toUIValue(entity->getImageWidth(), leWidth);
-    toUIValue(entity->getImageHeight(), leHeight);
+    toUIValue(m_entity->getImageWidth(), leWidth);
+    toUIValue(m_entity->getImageHeight(), leHeight);
 
-    scale = entity->getUVector().magnitude();
-    toUIValue(scale, leScale);
+    m_scale = m_entity->getUVector().magnitude();
+    toUIValue(m_scale, leScale);
 
-    double uAngle = entity->getUVector().angle();
+    double uAngle = m_entity->getUVector().angle();
     toUIAngleDeg(uAngle, leAngle);
 
-    lePath->setText(entity->getFile());
+    lePath->setText(m_entity->getFile());
 
-    leSize->setText(QString("%1 x %2").arg(entity->getWidth()).arg(entity->getHeight()));
-    toUIValue(RS_Units::scaleToDpi(scale, entity->getGraphicUnit()), leDPI);
+    leSize->setText(QString("%1 x %2").arg(m_entity->getWidth()).arg(m_entity->getHeight()));
+    toUIValue(RS_Units::scaleToDpi(m_scale, m_entity->getGraphicUnit()), leDPI);
 }
 
 
 void QG_DlgImage::changeWidth() {
-    double width = toWCSValue(leWidth, entity->getWidth());
-    scale = width / entity->getWidth();
+    double width = toWCSValue(leWidth, m_entity->getWidth());
+    m_scale = width / m_entity->getWidth();
 
-    toUIValue(entity->getHeight()*scale, leHeight);
-    toUIValue(scale, leScale);
+    toUIValue(m_entity->getHeight()*m_scale, leHeight);
+    toUIValue(m_scale, leScale);
 }
 
 void QG_DlgImage::changeHeight() {
-    double height = toWCSValue(leHeight, entity->getHeight());
-    scale = height / entity->getHeight();
+    double height = toWCSValue(leHeight, m_entity->getHeight());
+    m_scale = height / m_entity->getHeight();
 
-    toUIValue(entity->getWidth()*scale, leWidth);
-    toUIValue(scale, leScale);
+    toUIValue(m_entity->getWidth()*m_scale, leWidth);
+    toUIValue(m_scale, leScale);
 }
 void QG_DlgImage::changeScale() {
-    scale = toWCSValue(leScale, scale);
-    toUIValue(entity->getWidth()*scale, leWidth);
-    toUIValue(entity->getHeight()*scale, leHeight);
-    toUIValue(RS_Units::scaleToDpi(scale, entity->getGraphicUnit()), leDPI);
+    m_scale = toWCSValue(leScale, m_scale);
+    toUIValue(m_entity->getWidth()*m_scale, leWidth);
+    toUIValue(m_entity->getHeight()*m_scale, leHeight);
+    toUIValue(RS_Units::scaleToDpi(m_scale, m_entity->getGraphicUnit()), leDPI);
 }
 
 void QG_DlgImage::changeDPI(){
-    double oldDpi = RS_Units::scaleToDpi(scale, entity->getGraphicUnit()); // todo - what if scale was changed? Save dpi in dlg?
+    double oldDpi = RS_Units::scaleToDpi(m_scale, m_entity->getGraphicUnit()); // todo - what if scale was changed? Save dpi in dlg?
     double dpi = toWCSValue(leDPI, oldDpi);
-    scale = RS_Units::dpiToScale(dpi, entity->getGraphicUnit());
-    toUIValue(scale, leScale);
-    toUIValue(entity->getWidth()*scale, leWidth);
-    toUIValue(entity->getHeight()*scale, leHeight);
+    m_scale = RS_Units::dpiToScale(dpi, m_entity->getGraphicUnit());
+    toUIValue(m_scale, leScale);
+    toUIValue(m_entity->getWidth()*m_scale, leWidth);
+    toUIValue(m_entity->getHeight()*m_scale, leHeight);
 }
 
 void QG_DlgImage::updateEntity() {
-    entity->setInsertionPoint(toWCS(leInsertX, leInsertY, entity->getInsertionPoint()));
+    m_entity->setInsertionPoint(toWCS(leInsertX, leInsertY, m_entity->getInsertionPoint()));
 
-    double orgScale = entity->getUVector().magnitude();
-    scale /= orgScale;
-    double orgAngle = entity->getUVector().angle();
+    double orgScale = m_entity->getUVector().magnitude();
+    m_scale /= orgScale;
+    double orgAngle = m_entity->getUVector().angle();
 
     double angle = toWCSAngle(leAngle, orgAngle);
 
-    entity->scale(entity->getInsertionPoint(), RS_Vector(scale, scale));
-    entity->rotate(entity->getInsertionPoint(), angle - orgAngle);
+    m_entity->scale(m_entity->getInsertionPoint(), RS_Vector(m_scale, m_scale));
+    m_entity->rotate(m_entity->getInsertionPoint(), angle - orgAngle);
 
     if (QFileInfo(lePath->text()).isFile())
-        entity->setFile(lePath->text());
+        m_entity->setFile(lePath->text());
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
 
-    entity->update();
+    m_entity->update();
 }
 
 void QG_DlgImage::setImageFile() {

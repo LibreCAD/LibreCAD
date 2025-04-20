@@ -24,33 +24,32 @@
 **
 **********************************************************************/
 
-#include "qg_layerwidget.h"
 #include "rs_actionlayersremove.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
-RS_ActionLayersRemove::RS_ActionLayersRemove(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Remove Layer", container, graphicView) {}
+RS_ActionLayersRemove::RS_ActionLayersRemove(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Remove Layer", actionContext, RS2::ActionLayersRemove) {}
 
 
 void RS_ActionLayersRemove::trigger() {
     RS_DEBUG->print("RS_ActionLayersRemove::trigger");
 
-    if (graphic) {
-        RS_LayerList *ll = graphic->getLayerList();
+    if (m_graphic) {
+        RS_LayerList *ll = m_graphic->getLayerList();
         QStringList names =
             RS_DIALOGFACTORY->requestSelectedLayersRemovalDialog(ll);
 
         if (!names.isEmpty()) {
             for (auto name: names) {
-                graphic->removeLayer(ll->find(name));
+                m_graphic->removeLayer(ll->find(name));
             }
-            graphic->updateInserts();
-            container->calculateBorders();
-            graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+            m_graphic->updateInserts();
+            m_container->calculateBorders();
+            // m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
         }
     }
     finish(false);

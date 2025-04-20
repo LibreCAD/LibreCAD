@@ -31,35 +31,26 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "lc_graphicviewaware.h"
 #include "ui_qg_selectionwidget.h"
-
 
 class QTimer;
 
-
-class QG_SelectionWidget : public QWidget, public Ui::QG_SelectionWidget
-{
+class QG_SelectionWidget : public QWidget, public LC_GraphicViewAware, public Ui::QG_SelectionWidget{
     Q_OBJECT
-
 public:
     QG_SelectionWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
-    ~QG_SelectionWidget();
-
+    ~QG_SelectionWidget() override;
 public slots:
-    virtual void setNumber( int n );
-    virtual void setTotalLength(double l );
-    virtual void flashAuxData( const QString& header, 
-                               const QString& data, 
-                               const unsigned int& timeout, 
-                               const bool& flash);
+    void setNumber(int n);
+    void setTotalLength(double l);
+    void flashAuxData(const QString& header, const QString& data, const unsigned int& timeout, const bool& flash);
     void removeAuxData();
-
+    void setGraphicView(RS_GraphicView* gview) override;
 protected slots:
-    virtual void languageChange();
-
+    void languageChange();
 private:
-    bool auxDataMode    {false};
-    QTimer *timer       {nullptr};
-
+    bool m_auxDataMode    {false};
+    QTimer *m_timer       {nullptr};
 };
 #endif // QG_SELECTIONWIDGET_H

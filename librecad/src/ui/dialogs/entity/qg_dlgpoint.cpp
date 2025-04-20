@@ -24,10 +24,9 @@
 **
 **********************************************************************/
 #include "qg_dlgpoint.h"
-
 #include "rs_point.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
+
 
 /*
  *  Constructs a QG_DlgPoint as a child of 'parent', with the
@@ -62,12 +61,12 @@ void QG_DlgPoint::initAttributes(RS_Layer* layer, RS_LayerList& layerList){
         cbLayer->setLayer(*layer);
     }
     cbLayer->init(layerList, false, false);
-    wPen->setPen(entity, layer, "Pen");
+    wPen->setPen(m_entity, layer, tr("Pen"));
 }
 
 void QG_DlgPoint::setEntity(RS_Point* p) {
-    entity = p;
-    setAttributes(entity);
+    m_entity = p;
+    setAttributes(m_entity);
     setProperties();
 }
 
@@ -86,16 +85,16 @@ void QG_DlgPoint::setAttributes(RS_Entity* e) {
 }
 
 void QG_DlgPoint::setProperties() {
-    toUI(entity->getPos(), lePosX, lePosY);
+    toUI(m_entity->getPos(), lePosX, lePosY);
 }
 
 void QG_DlgPoint::updateAttributes() {
     const RS_Pen &rsPen = wPen->getPen();
     RS_Layer *layer = cbLayer->getLayer();
-    entity->setPen(rsPen);
-    entity->setLayer(layer);
+    m_entity->setPen(rsPen);
+    m_entity->setLayer(layer);
 }
 
 void QG_DlgPoint::updateProperties() {
-    entity->setPos(toWCS(lePosX, lePosY, entity->getPos()));
+    m_entity->setPos(toWCS(lePosX, lePosY, m_entity->getPos()));
 }

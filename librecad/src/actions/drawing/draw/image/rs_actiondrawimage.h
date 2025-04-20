@@ -26,7 +26,7 @@
 
 #ifndef RS_ACTIONDRAWIMAGE_H
 #define RS_ACTIONDRAWIMAGE_H
-#include<memory>
+
 #include "rs_previewactioninterface.h"
 
 struct RS_ImageData;
@@ -41,8 +41,7 @@ class QImage;
 class RS_ActionDrawImage : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionDrawImage(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+    RS_ActionDrawImage(LC_ActionContext *actionContext);
     ~RS_ActionDrawImage() override;
 
     void init(int status) override;
@@ -58,7 +57,7 @@ public:
     double scaleToDpi(double scale) const;
 protected:
     struct ImageData;
-    std::unique_ptr<ImageData> pImg;
+    std::unique_ptr<ImageData> m_imageData;
 /**
      * Action States.
      */
@@ -75,7 +74,7 @@ protected:
     };
 
 /** Last status before entering option. */
-    Status lastStatus = ShowDialog;
+    Status m_lastStatus = ShowDialog;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

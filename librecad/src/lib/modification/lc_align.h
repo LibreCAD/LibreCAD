@@ -23,9 +23,9 @@
 #ifndef LC_ALIGN_H
 #define LC_ALIGN_H
 
-#include <QObject>
 #include "rs_vector.h"
-#include "rs_entity.h"
+
+class RS_Entity;
 
 namespace LC_Align
 {

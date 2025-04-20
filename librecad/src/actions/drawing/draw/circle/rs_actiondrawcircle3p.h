@@ -40,9 +40,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircle3P:public LC_ActionDrawCircleBase {
 Q_OBJECT
 public:
-    RS_ActionDrawCircle3P(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircle3P(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircle3P() override;
 protected:
     /**
@@ -58,7 +56,7 @@ protected:
      * Circle data defined so far.
      */
     struct Points;
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<Points> m_actionData;
 
     void reset() override;
     void preparePreview();

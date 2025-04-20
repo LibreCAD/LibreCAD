@@ -25,34 +25,32 @@
 **********************************************************************/
 
 #include "rs_actionblocksedit.h"
+
+#include "qc_applicationwindow.h"
 #include "rs_debug.h"
-#include "rs_block.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
-RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block", container, graphicView) {}
+class RS_BlockList;
+
+RS_ActionBlocksEdit::RS_ActionBlocksEdit(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Block",actionContext, RS2::ActionBlocksEdit) {}
 
 void RS_ActionBlocksEdit::trigger() {
-
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): edit block");
-
-    if (!graphic) {
+    if (m_graphic == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_ActionBlocksEdit::trigger(): nullptr graphic");
         return;
     }
-
-    RS_BlockList *bl = graphic->getBlockList();
-
-    if (!bl) {
+    RS_BlockList *blockList = m_graphic->getBlockList();
+    if (blockList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_ActionBlocksEdit::trigger(): nullptr block list in graphic");
         return;
     }
 
 //  std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
-    RS_DIALOGFACTORY->requestEditBlockWindow(bl);
+
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    appWindow->slotEditActiveBlock();
 
     finish(false);
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): OK");

@@ -37,10 +37,7 @@
  */
 class QC_DialogFactory: public QG_DialogFactory {
 public:
-	QC_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *snapOptionsHolder);
-
-    void requestEditBlockWindow(RS_BlockList* blockList = nullptr) override;
+    QC_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *snapOptionsHolder);
     void closeEditBlockWindow(RS_Block* block = nullptr) override;
 };
-
 #endif

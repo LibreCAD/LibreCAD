@@ -22,22 +22,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWLINESNAKE_H
 #define LC_ACTIONDRAWLINESNAKE_H
 
-#include "rs_previewactioninterface.h"
-#include "rs_vector.h"
-#include "rs_line.h"
 #include "lc_abstractactiondrawline.h"
+#include "rs_line.h"
 
 class LC_ActionDrawLineSnake :public LC_AbstractActionDrawLine {
     Q_OBJECT
 public:
-    LC_ActionDrawLineSnake(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
+    LC_ActionDrawLineSnake(LC_ActionContext *actionContext, RS2::ActionType actionType);
     ~LC_ActionDrawLineSnake() override;
     void init(int status) override;
     void close();
     void next();
     void undo();
     void redo();
-    void polyline();;
+    void polyline();
     bool mayClose();
     bool mayUndo() const;
     bool mayStart() override;
@@ -98,7 +96,7 @@ private:
         int             startOffset;// offset to start point for close method
     };
 
-    struct Points
+    struct ActionData
     {
         /// Line data defined so far
         RS_LineData data = RS_LineData();
@@ -118,7 +116,7 @@ private:
     /**
      * points data
      */
-    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<ActionData> m_actionData;
     void resetPoints();
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
     void completeLineSegment(bool close);

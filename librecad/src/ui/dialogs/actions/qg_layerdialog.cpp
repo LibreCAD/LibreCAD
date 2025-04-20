@@ -27,6 +27,7 @@
 #include "qg_layerdialog.h"
 
 #include <QMessageBox>
+
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
@@ -38,51 +39,52 @@
  *  true to construct a modal dialog.
  */
 QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name)
-    : LC_Dialog(parent, "LayerProperties"){
-
+    : LC_Dialog(parent, "LayerProperties") {
     setObjectName(name);
     setupUi(this);
     init();
 }
 
+QG_LayerDialog::~QG_LayerDialog() {
+}
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LayerDialog::languageChange(){
+void QG_LayerDialog::languageChange() {
     retranslateUi(this);
 }
 
 void QG_LayerDialog::setLayer(RS_Layer* l) {
-    layer = l;
-    layerName = layer->getName();
-    leName->setText(layerName);
-    wPen->setPen(layer->getPen(), false, false, tr("Default Pen"));
+    m_layer = l;
+    m_layerName = m_layer->getName();
+    leName->setText(m_layerName);
+    wPen->setPen(m_layer->getPen(), false, false, tr("Default Pen"));
     cbConstructionLayer->setChecked(l->isConstruction());
 
-    if (layer->getName()=="0") {
+    if (m_layer->getName() == "0") {
         leName->setEnabled(false);
     }
 }
 
 void QG_LayerDialog::updateLayer() {
-    layer->setName(leName->text());
-    layer->setPen(wPen->getPen());
-    layer->setConstruction(cbConstructionLayer->isChecked());
+    m_layer->setName(leName->text());
+    m_layer->setPen(wPen->getPen());
+    m_layer->setConstruction(cbConstructionLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {
-    if (layerList &&
-        (editLayer == false || layerName != leName->text())) {
-        RS_Layer* l = layerList->find(leName->text());
+    if (m_layerList &&
+        (m_editLayer == false || m_layerName != leName->text())) {
+        RS_Layer* l = m_layerList->find(leName->text());
         if (l) {
             QMessageBox::information(parentWidget(),
                                      QMessageBox::tr("Layer Properties"),
                                      QMessageBox::tr("Layer with a name \"%1\" "
-                                                     "already exists. Please specify "
-                                                     "a different name.")
-                                         .arg(leName->text()),
+                                         "already exists. Please specify "
+                                         "a different name.")
+                                     .arg(leName->text()),
                                      QMessageBox::Ok);
             leName->setFocus();
             leName->selectAll();
@@ -94,24 +96,23 @@ void QG_LayerDialog::validate() {
         accept();
 }
 
-void QG_LayerDialog::setLayerList( RS_LayerList * ll ){
-    layerList = ll;
+void QG_LayerDialog::setLayerList(RS_LayerList* ll) {
+    m_layerList = ll;
 }
 
-void QG_LayerDialog::init(){
-	leName->setFocus();
-	layer = NULL;
-	layerList = NULL;
-	layerName = "";
-	editLayer = false;
+void QG_LayerDialog::init() {
+    leName->setFocus();
+    m_layer = NULL;
+    m_layerList = NULL;
+    m_layerName = "";
+    m_editLayer = false;
 }
 
-void QG_LayerDialog::setEditLayer( bool el ){
-	editLayer = el;
+void QG_LayerDialog::setEditLayer(bool el) {
+    m_editLayer = el;
 }
-
 
 //! @return a reference to the QLineEdit object.
-QLineEdit* QG_LayerDialog::getQLineEdit () {
-        return leName;
+QLineEdit* QG_LayerDialog::getQLineEdit() {
+    return leName;
 }

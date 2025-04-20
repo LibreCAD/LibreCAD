@@ -22,21 +22,16 @@
 **
 **********************************************************************/
 
-
 #include <iostream>
+
+#include "lc_actiondimarc.h"
 
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_preview.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_coordinateevent.h"
 
-#include "lc_actiondimarc.h"
-
-LC_ActionDimArc::LC_ActionDimArc(RS_EntityContainer &container, RS_GraphicView &graphicView):
-    RS_ActionDimension("Draw Arc Dimensions", container, graphicView){
+LC_ActionDimArc::LC_ActionDimArc(LC_ActionContext *actionContext):
+    RS_ActionDimension("Draw Arc Dimensions", actionContext, RS2::ActionDimArc){
     reset();
 }
 
@@ -44,33 +39,30 @@ LC_ActionDimArc::~LC_ActionDimArc() = default;
 
 void LC_ActionDimArc::reset(){
     RS_ActionDimension::reset();
+    m_dimArcData.radius = 0.0;
+    m_dimArcData.arcLength = 0.0;
 
-    actionType = RS2::ActionDimArc;
+    m_dimArcData.centre = RS_Vector(false);
+    m_dimArcData.endAngle = RS_Vector(false);
+    m_dimArcData.startAngle = RS_Vector(false);
 
-    dimArcData.radius = 0.0;
-    dimArcData.arcLength = 0.0;
-
-    dimArcData.centre = RS_Vector(false);
-    dimArcData.endAngle = RS_Vector(false);
-    dimArcData.startAngle = RS_Vector(false);
-
-    selectedArcEntity = nullptr;
+    m_selectedArcEntity = nullptr;
 
     updateOptions(); // fixme - check whether it's necessary there
 }
 
 void LC_ActionDimArc::doTrigger() {
-    if (selectedArcEntity == nullptr){
+    if (m_selectedArcEntity == nullptr){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: selectedArcEntity is nullptr.\n");
         return;
     }
 
-    if (!dimArcData.centre.valid){
+    if (!m_dimArcData.centre.valid){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: dimArcData.centre is not valid.\n");
         return;
     }
 
-    auto newEntity= new LC_DimArc(container, *data, dimArcData);
+    auto newEntity= new LC_DimArc(m_container, *m_dimensionData, m_dimArcData);
     setPenAndLayerToActive(newEntity);
     newEntity->update();
     undoCycleAdd(newEntity);
@@ -91,12 +83,12 @@ void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetPos: {
             snap = getFreeSnapAwarePoint(e, snap);
-            highlightSelected(selectedArcEntity);
+            highlightSelected(m_selectedArcEntity);
             setRadius(snap);
 
             // fixme - determine why DimArc is drawn on preview by preview pen, while other dimension entities - using normal pen...
 
-            LC_DimArc *temp_dimArc_entity{new LC_DimArc(preview.get(), *data, dimArcData)};
+            LC_DimArc *temp_dimArc_entity{new LC_DimArc(m_preview.get(), *m_dimensionData, m_dimArcData)};
             previewEntity(temp_dimArc_entity);
             break;
         }
@@ -108,25 +100,26 @@ void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            selectedArcEntity = catchEntityByEvent(e, RS2::ResolveAll);
+            m_selectedArcEntity = catchEntityByEvent(e, RS2::ResolveAll);
 
-            if (selectedArcEntity != nullptr){
-                if (selectedArcEntity->is(RS2::EntityArc)){
-                    dimArcData.centre = selectedArcEntity->getCenter();
-                    dimArcData.arcLength = selectedArcEntity->getLength();
+            if (m_selectedArcEntity != nullptr){
+                if (m_selectedArcEntity->is(RS2::EntityArc)){
+                    m_dimArcData.centre = m_selectedArcEntity->getCenter();
+                    m_dimArcData.arcLength = m_selectedArcEntity->getLength();
 
-                    dimArcData.startAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle1());
-                    dimArcData.endAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle2());
+                    auto selectedEntity = static_cast<RS_Arc*>(m_selectedArcEntity);
+                    m_dimArcData.startAngle = RS_Vector(selectedEntity->getAngle1());
+                    m_dimArcData.endAngle = RS_Vector(selectedEntity->getAngle2());
 
-                    data->definitionPoint = selectedArcEntity->getStartpoint();
+                    m_dimensionData->definitionPoint = m_selectedArcEntity->getStartpoint();
 
-                    if (((RS_Arc *) selectedArcEntity)->isReversed()){
-                        const RS_Vector tempAngle = RS_Vector(dimArcData.startAngle);
+                    if (static_cast<RS_Arc*>(m_selectedArcEntity)->isReversed()){
+                        const RS_Vector tempAngle = RS_Vector(m_dimArcData.startAngle);
 
-                        dimArcData.startAngle = dimArcData.endAngle;
-                        dimArcData.endAngle = tempAngle;
+                        m_dimArcData.startAngle = m_dimArcData.endAngle;
+                        m_dimArcData.endAngle = tempAngle;
 
-                        data->definitionPoint = selectedArcEntity->getEndpoint();
+                        m_dimensionData->definitionPoint = m_selectedArcEntity->getEndpoint();
                     }
 
                     setStatus(SetPos);
@@ -134,7 +127,7 @@ void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
                     RS_DEBUG->print(RS_Debug::D_ERROR,
                                     "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
 
-                    selectedArcEntity = nullptr;
+                    m_selectedArcEntity = nullptr;
                 }
             }
             break;
@@ -201,9 +194,9 @@ void LC_ActionDimArc::updateMouseButtonHints(){
 
 void LC_ActionDimArc::setRadius(const RS_Vector &selectedPosition){
     const double minimum_dimArc_gap = 0.0;
-    dimArcData.radius = selectedPosition.distanceTo(dimArcData.centre);
-    const double minimumRadius = selectedArcEntity->getRadius() + minimum_dimArc_gap;
-    if (dimArcData.radius < minimumRadius) {
-        dimArcData.radius = minimumRadius;
+    m_dimArcData.radius = selectedPosition.distanceTo(m_dimArcData.centre);
+    const double minimumRadius = m_selectedArcEntity->getRadius() + minimum_dimArc_gap;
+    if (m_dimArcData.radius < minimumRadius) {
+        m_dimArcData.radius = minimumRadius;
     }
 }

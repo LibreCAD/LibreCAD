@@ -24,8 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWLINEORTHTAN_H
 #define RS_ACTIONDRAWLINEORTHTAN_H
 
-#include <memory>
-
 #include "rs_previewactioninterface.h"
 
 class RS_Line;
@@ -38,8 +36,7 @@ class RS_Line;
 class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+    RS_ActionDrawLineOrthTan(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineOrthTan() override;
     void finish(bool updateTB) override;
 protected:
@@ -49,12 +46,10 @@ protected:
     };
 
     void clearLines();
-    /** normal to tangent. */
-    RS_Line* normal = nullptr; // the select normal line
-    /** m_tangent. */
-    std::unique_ptr<RS_Line> m_tangent; //holds the tangent line for preview
-    /** arc/circle/ellipse to generate tangent */
-    RS_Entity* circle = nullptr;
+
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

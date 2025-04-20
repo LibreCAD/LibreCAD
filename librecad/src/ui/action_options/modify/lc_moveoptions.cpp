@@ -26,8 +26,7 @@
 
 LC_MoveOptions::LC_MoveOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyMove, "Modify", "Move")
-    , ui(new Ui::LC_MoveOptions)
-{
+      , ui(new Ui::LC_MoveOptions) {
     ui->setupUi(this);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &LC_MoveOptions::cbKeepOriginalsClicked);
     connect(ui->cbMultipleCopies, &QCheckBox::clicked, this, &LC_MoveOptions::cbMultipleCopiesClicked);
@@ -44,18 +43,18 @@ void LC_MoveOptions::doSaveSettings() {
 }
 
 void LC_MoveOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = static_cast<RS_ActionModifyMove *>(a);
+    m_action = static_cast<RS_ActionModifyMove *>(a);
     bool useMultipleCopies = false;
     bool keepOriginals = false;
     bool useCurrentLayer = false;
     bool useCurrentAttributes = false;
     int copiesNumber = 1;
     if (update){
-        useCurrentLayer = action->isUseCurrentLayer();
-        useCurrentAttributes  = action->isUseCurrentAttributes();
-        copiesNumber = action->getCopiesNumber();
-        keepOriginals = action->isKeepOriginals();
-        useMultipleCopies = action->isUseMultipleCopies();
+        useCurrentLayer = m_action->isUseCurrentLayer();
+        useCurrentAttributes  = m_action->isUseCurrentAttributes();
+        copiesNumber = m_action->getCopiesNumber();
+        keepOriginals = m_action->isKeepOriginals();
+        useMultipleCopies = m_action->isUseMultipleCopies();
     }
     else{
         useCurrentLayer = loadBool("UseCurrentLayer", false);
@@ -77,28 +76,28 @@ void LC_MoveOptions::languageChange() {
 
 void LC_MoveOptions::setCopiesNumberToActionAndView(int number) {
     number = std::max(number, 1);
-    action->setCopiesNumber(number);
+    m_action->setCopiesNumber(number);
     ui->sbNumberOfCopies->setValue(number);
 }
 
 void LC_MoveOptions::setUseMultipleCopiesToActionAndView(bool copies) {
-   action->setUseMultipleCopies(copies);
+   m_action->setUseMultipleCopies(copies);
    ui->cbMultipleCopies->setChecked(copies);
    ui->sbNumberOfCopies->setEnabled(copies);
 }
 
 void LC_MoveOptions::setUseCurrentLayerToActionAndView(bool val) {
-    action->setUseCurrentLayer(val);
+    m_action->setUseCurrentLayer(val);
     ui->cbCurrentLayer->setChecked(val);
 }
 
 void LC_MoveOptions::setUseCurrentAttributesToActionAndView(bool val) {
-    action->setUseCurrentAttributes(val);
+    m_action->setUseCurrentAttributes(val);
     ui->cbCurrentAttr->setChecked(val);
 }
 
 void LC_MoveOptions::setKeepOriginalsToActionAndView(bool val) {
-    action->setKeepOriginals(val);
+    m_action->setKeepOriginals(val);
     ui->cbKeepOriginals->setChecked(val);
 }
 

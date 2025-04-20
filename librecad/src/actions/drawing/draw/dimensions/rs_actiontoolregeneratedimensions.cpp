@@ -24,17 +24,14 @@
 **
 **********************************************************************/
 #include "rs_actiontoolregeneratedimensions.h"
+
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_dimension.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 
 // fixme - review
-RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Tool Regen Dim",
-                    container, graphicView) {}
+RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Tool Regen Dim", actionContext, RS2::ActionToolRegenerateDimensions) {}
 
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);
@@ -42,11 +39,10 @@ void RS_ActionToolRegenerateDimensions::init(int status) {
 }
 
 void RS_ActionToolRegenerateDimensions::trigger() {
-
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
     int num = 0;
-    for(auto e: *container){ // fixme - iteration over all entities in container
+    for(auto e: *m_container){ // fixme - iteration over all entities in container
 
         if (RS_Information::isDimension(e->rtti()) && e->isVisible()) {
             num++;

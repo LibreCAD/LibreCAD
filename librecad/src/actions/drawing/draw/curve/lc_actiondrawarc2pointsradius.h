@@ -28,9 +28,8 @@
 class LC_ActionDrawArc2PointsRadius:public LC_ActionDrawArc2PointsBase{
     Q_OBJECT
 public:
-    LC_ActionDrawArc2PointsRadius(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawArc2PointsRadius(LC_ActionContext *actionContext);
     ~LC_ActionDrawArc2PointsRadius() override = default;
-    void onMouseMoveForNonPointsStatuses(int status, RS_Vector mouse, QMouseEvent *e);
 protected:
     bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool reverse, bool reportErrors) override;
     void doPreviewOnPoint2Custom(RS_Arc *pArc) override;

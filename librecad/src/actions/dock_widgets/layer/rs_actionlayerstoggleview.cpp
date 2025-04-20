@@ -29,36 +29,36 @@
 ****************************************************************************/
 
 #include "rs_actionlayerstoggleview.h"
+
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 
-RS_ActionLayersToggleView::RS_ActionLayersToggleView(
-                                RS_EntityContainer& container,
-                                RS_GraphicView& graphicView,
-                                RS_Layer* layer)
-    : RS_ActionInterface("Toggle Layer Visibility", container, graphicView)
-    , a_layer(layer) {}
+class RS_LayerList;
+
+RS_ActionLayersToggleView::RS_ActionLayersToggleView(LC_ActionContext *actionContext, RS_Layer* layer)
+    : RS_ActionInterface("Toggle Layer Visibility", actionContext,  RS2::ActionLayersToggleView)
+    , m_layer(layer) {}
 
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (graphic) {
-        RS_LayerList* ll = graphic->getLayerList();
+    if (m_graphic) {
+        RS_LayerList* ll = m_graphic->getLayerList();
         unsigned cnt = 0;
         // toggle selected layers
         for (auto layer: *ll) {
             if (!layer) continue;
             if (!layer->isVisibleInLayerList()) continue;
             if (!layer->isSelectedInLayerList()) continue;
-            graphic->toggleLayer(layer);
+            m_graphic->toggleLayer(layer);
             cnt++;
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            graphic->toggleLayer(a_layer);
+            m_graphic->toggleLayer(m_layer);
         }
-        graphic->updateInserts();
-        container->calculateBorders();
+        m_graphic->updateInserts();
+        m_container->calculateBorders();
     }
     finish(false);
 }

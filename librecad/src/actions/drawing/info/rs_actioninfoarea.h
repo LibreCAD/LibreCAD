@@ -41,9 +41,7 @@ class RS_InfoArea;
 class RS_ActionInfoArea:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoArea(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionInfoArea(LC_ActionContext *actionContext);
     ~RS_ActionInfoArea() override;
     void init(int status) override;
 protected:
@@ -55,9 +53,7 @@ protected:
         SetNextPoint      /**< Setting a next point. */
     };
     std::unique_ptr<RS_InfoArea> m_infoArea;
-
-    bool lastPointRequested = false;
-
+    bool m_lastPointRequested = false;
     void display(bool forPreview);//display results from current polygon
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

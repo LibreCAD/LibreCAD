@@ -18,20 +18,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include "rs_actionblockssave.h"
+
 #include <QApplication>
 
+#include "lc_documentsstorage.h"
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_filedialog.h"
-#include "rs_actionblockssave.h"
+#include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 
-
-RS_ActionBlocksSave::RS_ActionBlocksSave(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block", container, graphicView) {}
+class RS_Block;
+// fixme - sand - files - refactor action, move the logic outside as it might be reused
+RS_ActionBlocksSave::RS_ActionBlocksSave(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Edit Block", actionContext, RS2::ActionBlocksSave) {}
 
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert *in, RS_Graphic *g) {
@@ -44,47 +48,52 @@ void RS_ActionBlocksSave::addBlock(RS_Insert *in, RS_Graphic *g) {
     }
 }
 
+// fixme - sand - investigate why layers from this block are not added to graphic..
+RS_Graphic* RS_ActionBlocksSave::createGraphicForBlock(RS_Block *activeBlock){
+    auto* result = new RS_Graphic();
+    result->setOwner(false);
+    result->getBlockList()->setOwner(false);
+    result->clearLayers();
+    // g.addLayer(b->getLayer());
+    for (RS_Entity* e=activeBlock->firstEntity(RS2::ResolveNone);e;e = activeBlock->nextEntity(RS2::ResolveNone)) {
+        result->addEntity(e);
+        if (e->rtti() == RS2::EntityInsert) {
+            auto *insert = static_cast<RS_Insert *>(e);
+            result->addBlock(insert->getBlockForInsert());
+            addBlock(insert,result);
+        }
+        // g.addLayer(e->getLayer());
+    }
+    return result;
+}
+
 void RS_ActionBlocksSave::trigger() {
-    RS_DEBUG->print("save block to file");
     auto& appWindow = QC_ApplicationWindow::getAppWindow();
     if(!appWindow) {
         finish(false);
         return;
     }
-    RS_BlockList* bList = appWindow->getBlockWidget() -> getBlockList();
-    if (bList) {
-        auto b=bList->getActive();
-        if(b) {
-            RS_Graphic g(nullptr);
-            g.setOwner(false);
-            g.getBlockList()->setOwner(false);
-
-            g.clearLayers();
-//           g.addLayer(b->getLayer());
-            for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                 e;
-                 e = b->nextEntity(RS2::ResolveNone)) {
-                g.addEntity(e);
-                if (e->rtti() == RS2::EntityInsert) {
-                    auto *in = static_cast<RS_Insert *>(e);
-                    g.addBlock(in->getBlockForInsert());
-                    addBlock(in,&g);
-                }
-//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
-//                g.addLayer(e->getLayer());
-//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
+    RS_BlockList* blockList = appWindow->getBlockWidget() -> getBlockList();
+    if (blockList != nullptr) {
+        auto activeBlock= blockList->getActive();
+        if(activeBlock != nullptr) {
+            RS2::FormatType format = RS2::FormatDXFRW;
+            QG_FileDialog dlg(appWindow->getCurrentMDIWindow(), {}, QG_FileDialog::BlockFile);
+            const QString fileName = dlg.getSaveFile(&format, activeBlock->getName());
+            if (fileName.isEmpty()) {
+                // canceled, do nothing
             }
-//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<std::endl;
-//           std::cout<<"add layer name="<<qPrintable(b->getLayer()->getName())<<std::endl;
+            else {
+                QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+                RS_Graphic* graphic = createGraphicForBlock(activeBlock);
+                graphic->setModified(true);
 
-            RS2::FormatType t = RS2::FormatDXFRW;
+                LC_DocumentsStorage storage;
+                storage.saveBlockAs(graphic, fileName);
 
-            QG_FileDialog dlg(appWindow->getMDIWindow(), {}, QG_FileDialog::BlockFile);
-            const QString fn = dlg.getSaveFile(&t);
-            QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-//            g.setModified(true);
-            g.saveAs(fn, t);
-            QApplication::restoreOverrideCursor();
+                delete graphic;
+                QApplication::restoreOverrideCursor();
+            }
         } else
             commandMessage(tr("No block activated to save"));
     } else {
@@ -93,8 +102,6 @@ void RS_ActionBlocksSave::trigger() {
     }
     finish(false);
 }
-
-
 
 void RS_ActionBlocksSave::init(int status) {
     RS_ActionInterface::init(status);

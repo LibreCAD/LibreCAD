@@ -38,9 +38,7 @@
 class RS_ActionZoomPan : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionZoomPan(RS_EntityContainer& container,
-                     RS_GraphicView& graphicView);
-
+    RS_ActionZoomPan(LC_ActionContext *actionContext);
     void init(int status) override;
     void finish(bool updateTB) override;
     void trigger() override;
@@ -59,10 +57,10 @@ protected:
 
     //RS_Vector v1;
     //RS_Vector v2;
-    int x1 = 0;
-    int y1 = 0;
-    int x2 = 0;
-    int y2 = 0;
+    int m_x1 = 0;
+    int m_y1 = 0;
+    int m_x2 = 0;
+    int m_y2 = 0;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
 };

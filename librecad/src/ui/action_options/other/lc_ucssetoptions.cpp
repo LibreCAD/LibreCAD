@@ -23,7 +23,6 @@
 #include "lc_ucssetoptions.h"
 #include "lc_actionucscreate.h"
 #include "ui_lc_ucssetoptions.h"
-#include "rs_math.h"
 
 LC_UCSSetOptions::LC_UCSSetOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionUCSCreate, "UCS","Set")
@@ -38,12 +37,12 @@ LC_UCSSetOptions::~LC_UCSSetOptions(){
 }
 
 void LC_UCSSetOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionUCSCreate *>(a);
+    m_action = dynamic_cast<LC_ActionUCSCreate *>(a);
     QString angle;
     bool freeAngle = false;
     if (update){
-        freeAngle = !action->isFixedAngle();
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+        freeAngle = !m_action->isFixedAngle();
+        angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
     }
     else{
         freeAngle = loadBool("AngleIsFree", true);
@@ -60,7 +59,7 @@ void LC_UCSSetOptions::doSaveSettings() {
 
 void LC_UCSSetOptions::updateUI(int mode) {
    if (mode == 1){
-       QString angle = fromDouble(RS_Math::rad2deg(action->getCurrentAngle()));
+       QString angle = fromDouble(RS_Math::rad2deg(m_action->getCurrentAngle()));
 
        ui->leAngle->blockSignals(true);
        ui->leAngle->setText(angle);
@@ -79,13 +78,13 @@ void LC_UCSSetOptions::setAngleToActionAndView(QString val) {
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &factorStr = fromDouble(angle);
         ui->leAngle->setText(factorStr);
-        action->setAngle(RS_Math::deg2rad(angle));
+        m_action->setAngle(RS_Math::deg2rad(angle));
     }
 }
 
 void LC_UCSSetOptions::setAngleIsFreeToActionAndView(bool val) {
     ui->cbFreeAngle->setChecked(val);
-    action->setFixedAngle(!val);
+    m_action->setFixedAngle(!val);
     if (val){
         ui->leAngle->setEnabled(false);
     }

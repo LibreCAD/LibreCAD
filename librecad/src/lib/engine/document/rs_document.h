@@ -29,13 +29,13 @@
 #ifndef RS_DOCUMENT_H
 #define RS_DOCUMENT_H
 
-#include "lc_ucslist.h"
-#include "lc_viewslist.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
 #include "rs_pen.h"
 #include "rs_undo.h"
 
+class RS_GraphicView;
+class LC_UCSList;
+class LC_ViewList;
 class RS_BlockList;
 class RS_LayerList;
 
@@ -55,14 +55,9 @@ public:
     virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
     virtual LC_ViewList* getViewList() { return nullptr;}
-    virtual LC_UCSList* getUCSList() {return nullptr;}
+    virtual LC_UCSList* getUCSList() { return nullptr;}
 
     virtual void newDoc() = 0;
-    virtual bool save(bool isAutoSave = false) = 0;
-    virtual bool saveAs(const QString &filename, RS2::FormatType type, bool force) = 0;
-    virtual bool open(const QString &filename, RS2::FormatType type) = 0;
-    virtual bool loadTemplate(const QString &filename, RS2::FormatType type) = 0;
-
 
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).
@@ -88,26 +83,9 @@ public:
      * Sets the currently active drawing pen to p.
      */
     void setActivePen(const RS_Pen& p) {activePen = p;}
-
-    /**
-     * @return File name of the document currently loaded.
-     * Note, that the default file name is empty.
-     */
-    QString getFilename() const {return filename;}
-
-    /**
-     * @return Auto-save file name of the document currently loaded.
-     */
-    QString getAutoSaveFilename() const {return autosaveFilename;}
-
-    /**
-     * Sets file name for the document currently loaded.
-     */
-    void setFilename(QString fn) {filename = std::move(fn);}
-
-	/**
-	 * Sets the documents modified status to 'm'.
-	 */
+/**
+ * Sets the documents modified status to 'm'.
+ */
     virtual void setModified(bool m) {
 //std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
         modified = m;
@@ -132,12 +110,7 @@ protected:
     bool modified = false;
     /** Active pen. */
     RS_Pen activePen;
-    /** File name of the document or empty for a new document. */
-    QString filename;
-	/** Auto-save file name of document. */
-    QString autosaveFilename;
-	/** Format type */
-    RS2::FormatType formatType = RS2::FormatUnknown;
+
     //used to read/save current view
     RS_GraphicView * gv = nullptr; // fixme - sand -- REALLY BAD DEPENDANCE TO UI here, REWORK!
 

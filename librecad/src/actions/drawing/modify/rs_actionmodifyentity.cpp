@@ -24,51 +24,53 @@
 **
 **********************************************************************/
 
+#include "rs_actionmodifyentity.h"
+
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
-#include "rs_actionmodifyentity.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_entity.h"
 #include "rs_graphicview.h"
-
-RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
-        RS_GraphicView& graphicView, bool changeCursor)
-		:RS_PreviewActionInterface("Modify Entity", container, graphicView)
-		,en(nullptr){
-	  actionType=RS2::ActionModifyEntity;
-   modifyCursor = changeCursor;
+#
+RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext, RS_Entity *entity)
+		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity)
+		,m_entity(entity){
+   m_modifyCursor = entity == nullptr;
 }
 
-void RS_ActionModifyEntity::setDisplaySelected(bool highlighted){
-    if (en != nullptr) {
-        en->setSelected(highlighted);
+void RS_ActionModifyEntity::init(int status) {
+    RS_PreviewActionInterface::init(status);
+    if (m_entity != nullptr) {
+        trigger();
+        finish(false);
     }
 }
 
 void RS_ActionModifyEntity::doTrigger() {
-    if (en != nullptr) {
-        std::unique_ptr<RS_Entity> clone{en->clone()};
-        bool selected = en->isSelected();
+    if (m_entity != nullptr) {
+        std::unique_ptr<RS_Entity> clone{m_entity->clone()};
+        bool selected = m_entity->isSelected();
         // RAII style: restore the highlighted status
         std::shared_ptr<bool> scopedFlag(&selected, [this](bool* pointer) {
-            if (pointer != nullptr && en->isSelected() != *pointer) {
+            if (pointer != nullptr && m_entity->isSelected() != *pointer) {
                 setDisplaySelected(*pointer);
             }});
         // Always show the entity being edited as "Selected"
         setDisplaySelected(true);
 
-        unsigned long originalEntityId = en->getId();
+        unsigned long originalEntityId = m_entity->getId();
 
-        graphicView->setForcedActionKillAllowed(false);
-        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get(), viewport)) {
-            container->addEntity(clone.get());
+        m_graphicView->setForcedActionKillAllowed(false);
+        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get(), m_viewport)) {
+            m_container->addEntity(clone.get());
 
-            en->setSelected(false);
+            m_entity->setSelected(false);
             clone->setSelected(false);
 
-            if (document) {
-                undoCycleReplace(en, clone.get());
+            if (m_document) {
+                undoCycleReplace(m_entity, clone.get());
             }
 
             unsigned long cloneEntityId = clone->getId();
@@ -81,9 +83,15 @@ void RS_ActionModifyEntity::doTrigger() {
 
             clone.release();
         }
-        graphicView->setForcedActionKillAllowed(true);
+        m_graphicView->setForcedActionKillAllowed(true);
     } else {
         RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
+    }
+}
+
+void RS_ActionModifyEntity::setDisplaySelected(bool highlighted){
+    if (m_entity != nullptr) {
+        m_entity->setSelected(highlighted);
     }
 }
 
@@ -95,8 +103,8 @@ void RS_ActionModifyEntity::onMouseMoveEvent([[maybe_unused]]int status, LC_Mous
 }
 
 void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
-    en = catchEntityByEvent(e);
-    if (en != nullptr) {
+    m_entity = catchEntityByEvent(e);
+    if (m_entity != nullptr) {
         trigger();
     }
 }
@@ -106,7 +114,7 @@ void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused
 }
 
 RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int status){
-    if (modifyCursor) {
+    if (m_modifyCursor) {
         return RS2::SelectCursor;
     }
     else{

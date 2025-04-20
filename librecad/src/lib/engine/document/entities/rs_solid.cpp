@@ -25,17 +25,16 @@
 **
 **********************************************************************/
 
-#include<cmath>
-#include<iostream>
 
-#include <QPolygonF>
+#include<iostream>
+#include "rs_solid.h"
+
+#include <array>
 
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_painter.h"
-#include "rs_solid.h"
 
 namespace {
 /**
@@ -343,12 +342,18 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
     double currDist {RS_MAXDOUBLE};
     double tmpDist {0.0};
     int totalV {isTriangle() ? RS_SolidData::Triangle : RS_SolidData::MaxCorners};
-    for (int i = RS_SolidData::FirstCorner, next = i + 1; i <= totalV; ++i, ++next) {
+
+    // fixme - sand - check the logic of solid nearestPoint()!!!
+    // IF THERE is <=, i might be 4 and assert in MSVC implementation of stl::vector occurs... on
+    // not sure actually, how this will affect the logic, need more changes.
+    // for (int i = RS_SolidData::FirstCorner, next = i + 1; i <= totalV; ++i, ++next) {
+    for (int i = RS_SolidData::FirstCorner, next = i + 1; i < totalV; ++i, ++next) {
         //closing edge
         if (next == totalV) {
             next = RS_SolidData::FirstCorner;
         }
 
+        // fixme - stl:vector assert occured for data.corner[i]
         RS_Vector direction {data.corner[next] - data.corner[i]};
         RS_Vector vpc {coord-data.corner[i]};
         double a {direction.squared()};

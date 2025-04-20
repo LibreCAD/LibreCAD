@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONSETRELATIVEZERO_H
 #define RS_ACTIONSETRELATIVEZERO_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_Vector;
@@ -40,15 +39,13 @@ class RS_Vector;
  * @author Ulf Lehnert
  */
 class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionSetRelativeZero(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+    RS_ActionSetRelativeZero(LC_ActionContext *actionContext);
     ~RS_ActionSetRelativeZero() override;
-
     void trigger() override;
 protected:
-    std::unique_ptr<RS_Vector> pt;
+    std::unique_ptr<RS_Vector> m_position;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

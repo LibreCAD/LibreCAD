@@ -37,12 +37,10 @@
 class RS_ActionLayersEdit : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionLayersEdit(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionLayersEdit(LC_ActionContext *actionContext);
 
 	void init(int status) override;
 	void trigger() override;
-
 };
 
 #endif

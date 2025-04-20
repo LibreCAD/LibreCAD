@@ -27,24 +27,20 @@
 #include "rs_actionsetsnaprestriction.h"
 #include "rs_graphicview.h"
 
-
 /**
  * Constructor.
  *
  * @param snapRes The new snap mode used from now on.
  * @param set true: set additional snap mode / false: unset
  */
-RS_ActionSetSnapRestriction::RS_ActionSetSnapRestriction(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        RS2::SnapRestriction snapRes)
-        :RS_ActionInterface("Set Additional Snap Mode", container, graphicView) {
+RS_ActionSetSnapRestriction::RS_ActionSetSnapRestriction(LC_ActionContext *actionContext,RS2::SnapRestriction snapRes)
+        :RS_ActionInterface("Set Additional Snap Mode", actionContext) {
 
     this->snapRes = snapRes;
 }
 
 void RS_ActionSetSnapRestriction::trigger() {
-    graphicView->setSnapRestriction(snapRes);
+    m_graphicView->setSnapRestriction(snapRes);
 	
     finish(false);
 }

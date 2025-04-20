@@ -37,11 +37,9 @@ class RS_Line;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineBisector:public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionDrawLineBisector(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    explicit RS_ActionDrawLineBisector(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineBisector() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;
@@ -60,19 +58,19 @@ protected:
     };
 
     /** Closest bisector. */
-    RS_Line *bisector = nullptr;
+    RS_Line *m_bisector = nullptr;
     /** First chosen entity */
-    RS_Line *line1 = nullptr;
+    RS_Line *m_line1 = nullptr;
     /** Second chosen entity */
-    RS_Line *line2 = nullptr;
+    RS_Line *m_line2 = nullptr;
     /** Length of the bisector. */
-    double length = 0.;
+    double m_length = 0.;
     /** Number of bisectors to create. */
-    int number = 0;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    int m_numberToCreate = 0;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     /** Last status before entering length or number. */
-    Status lastStatus = SetLine1;
+    Status m_lastStatus = SetLine1;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

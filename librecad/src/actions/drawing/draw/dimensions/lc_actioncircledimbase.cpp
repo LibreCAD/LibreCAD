@@ -20,32 +20,30 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actioncircledimbase.h"
+
 #include "qg_dimoptions.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
+#include "rs_dimension.h"
 #include "rs_preview.h"
 
-
-LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType type)
-  : RS_ActionDimension(name, container,  graphicView)
-    , entity(nullptr)
-    , lastStatus(SetEntity)
-    , pos(std::make_unique<RS_Vector>()){
-    actionType = type;
+LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+  : RS_ActionDimension(name, actionContext, actionType)
+    , m_entity(nullptr)
+    , m_lastStatus(SetEntity)
+    , m_position(std::make_unique<RS_Vector>()){
 }
 
 LC_ActionCircleDimBase::~LC_ActionCircleDimBase() = default;
 
 void LC_ActionCircleDimBase::doTrigger() {
-    if (entity != nullptr) {
-        preparePreview(entity, *pos, alternateAngle);
-        auto *newEntity = createDim(container);
+    if (m_entity != nullptr) {
+        preparePreview(m_entity, *m_position, m_alternateAngle);
+        auto *newEntity = createDim(m_container);
 
         setPenAndLayerToActive(newEntity);
         newEntity->update();
         undoCycleAdd(newEntity);
-        alternateAngle = false;
+        m_alternateAngle = false;
         RS_Snapper::finish();
     } else {
         RS_DEBUG->print("RS_ActionDimDiametric::trigger: Entity is nullptr\n");
@@ -61,9 +59,9 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 if (isArc(en) || isCircle(en)) {
                     highlightHover(en);
                     moveRelativeZero(en->getCenter());
-                    if (previewShowsFullDimension) {
+                    if (m_previewShowsFullDimension) {
                         RS_Vector pointOnCircle = preparePreview(en, snap, e->isControl);
-                        auto *d = createDim(preview.get());
+                        auto *d = createDim(m_preview.get());
                         d->update();
                         previewEntity(d);
                         previewRefSelectablePoint(pointOnCircle);
@@ -73,14 +71,14 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetPos: {
-            if (entity != nullptr) {
-                highlightSelected(entity);
-                *pos = getSnapAngleAwarePoint(e, entity->getCenter(), snap, true);
-                RS_Vector pointOnCircle = preparePreview(entity, *pos, false);
+            if (m_entity != nullptr) {
+                highlightSelected(m_entity);
+                *m_position = getSnapAngleAwarePoint(e, m_entity->getCenter(), snap, true);
+                RS_Vector pointOnCircle = preparePreview(m_entity, *m_position, false);
 
-                auto *d = createDim(preview.get());
-                m_currentAngle = entity->getCenter().angleTo(pointOnCircle);
-                ucsBasisAngleDegrees = toUCSBasisAngleDegrees(m_currentAngle);
+                auto *d = createDim(m_preview.get());
+                m_currentAngle = m_entity->getCenter().angleTo(pointOnCircle);
+                m_ucsBasisAngleDegrees = toUCSBasisAngleDegrees(m_currentAngle);
                 updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);
                 d->update();
                 previewEntity(d);
@@ -99,13 +97,13 @@ void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, LC_MouseEvent 
             RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr) {
                 if (isArc(en) || isCircle(en)) {
-                    entity = en;
+                    m_entity = en;
                     const RS_Vector &center = en->getCenter();
                     moveRelativeZero(center);
                     if (!isAngleIsFree()){
-                        alternateAngle = e->isControl;
-                        if (!pos->valid){
-                            *pos = e->snapPoint;
+                        m_alternateAngle = e->isControl;
+                        if (!m_position->valid){
+                            *m_position = e->snapPoint;
                         }
                         trigger();
                         reset();
@@ -121,7 +119,7 @@ void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, LC_MouseEvent 
         }
         case SetPos: {
             RS_Vector snap = e->snapPoint;
-            snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
+            snap = getSnapAngleAwarePoint(e, m_entity->getCenter(), snap);
             fireCoordinateEvent(snap);
             break;
         }
@@ -138,7 +136,7 @@ void LC_ActionCircleDimBase::onMouseRightButtonRelease(int status, [[maybe_unuse
 void LC_ActionCircleDimBase::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
     switch (status) {
         case SetPos: {
-            *pos = coord;
+            *m_position = coord;
             trigger();
             reset();
             setStatus(SetEntity);
@@ -157,10 +155,10 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
         setText(c);
         updateOptions();
         enableCoordinateInput();
-        setStatus(lastStatus);
+        setStatus(m_lastStatus);
         accept = true;
     } else if (checkCommand("text", c)) { // command: text
-        lastStatus = (Status) status;
+        m_lastStatus = (Status) status;
         disableCoordinateInput();
         setStatus(SetText);
         accept = true;
@@ -169,10 +167,10 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
         bool ok = parseToUCSBasisAngle(c, angle);
         if (ok) {
             accept = true;
-            ucsBasisAngleDegrees = angle;
+            m_ucsBasisAngleDegrees = angle;
             m_currentAngle = toWorldAngleFromUCSBasisDegrees(angle);
-            pos->setPolar(1.0, m_currentAngle);
-            *pos += data->definitionPoint;
+            m_position->setPolar(1.0, m_currentAngle);
+            *m_position += m_dimensionData->definitionPoint;
             updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);
             trigger();
             reset();
@@ -201,7 +199,7 @@ QStringList LC_ActionCircleDimBase::getAvailableCommands() {
 void LC_ActionCircleDimBase::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel(tr("Select arc or circle entity"), angleIsFree ? MOD_NONE : MOD_CTRL(tr("Free angle")));
+            updateMouseWidgetTRCancel(tr("Select arc or circle entity"), m_angleIsFree ? MOD_NONE : MOD_CTRL(tr("Free angle")));
             break;
         case SetPos:
             updateMouseWidgetTRCancel(tr("Specify dimension line position or enter angle:"), MOD_SHIFT_ANGLE_SNAP);
@@ -216,20 +214,20 @@ void LC_ActionCircleDimBase::updateMouseButtonHints() {
 }
 
 double LC_ActionCircleDimBase::getUcsAngleDegrees() const {
-    return ucsBasisAngleDegrees;
+    return m_ucsBasisAngleDegrees;
 }
 
 void LC_ActionCircleDimBase::setUcsAngleDegrees(double ucsRelAngleDegrees) {
-    ucsBasisAngleDegrees = ucsRelAngleDegrees;
+    m_ucsBasisAngleDegrees = ucsRelAngleDegrees;
     m_currentAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
 }
 
 bool LC_ActionCircleDimBase::isAngleIsFree() const {
-    return angleIsFree;
+    return m_angleIsFree;
 }
 
 void LC_ActionCircleDimBase::setAngleIsFree(bool angleIsFree) {
-    this->angleIsFree = angleIsFree;
+    this->m_angleIsFree = angleIsFree;
 }
 
 double LC_ActionCircleDimBase::getCurrentAngle() {

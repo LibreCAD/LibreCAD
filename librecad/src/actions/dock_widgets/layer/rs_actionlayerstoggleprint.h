@@ -38,16 +38,11 @@ class RS_Layer;
 class RS_ActionLayersTogglePrint : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionLayersTogglePrint(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView,
-                               RS_Layer* layer);
-
+    RS_ActionLayersTogglePrint(LC_ActionContext *actionContext,RS_Layer* layer);
 	void init(int status) override;
 	void trigger() override;
-
 protected:
-    RS_Layer* a_layer = nullptr;
-
+    RS_Layer* m_layer = nullptr;
 private:
     void deselectEntities(RS_Layer* layer);
 };

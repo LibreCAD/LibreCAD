@@ -23,47 +23,42 @@
 #ifndef LC_SHORTCUTTREEITEM_H
 #define LC_SHORTCUTTREEITEM_H
 
-#include <QList>
 #include "lc_shortcutinfo.h"
 
-class LC_ShortcutTreeItem
-{
+class LC_ShortcutTreeItem{
 public:
     LC_ShortcutTreeItem(LC_ShortcutTreeItem* parent, QAction* action, LC_ShortcutInfo*shortcutInfo);
     LC_ShortcutTreeItem(LC_ShortcutTreeItem* parent,QIcon ic, const QString &name, const QString &desc);
-
     virtual ~LC_ShortcutTreeItem();
-
     QIcon getIcon();
     QString getName();
     LC_ShortcutInfo* getShortcutInfo();
     LC_ShortcutTreeItem* addChild(QAction* action, LC_ShortcutInfo *shortcutInfo);
-    void addChild(LC_ShortcutTreeItem* child) {childItems << child;};
-    bool isModified(){ return group? false:shortcutInfo->isModified();};
-    bool hasCollision(){ return group? false:shortcutInfo->hasCollision();};
-
+    void addChild(LC_ShortcutTreeItem* child) {m_childItems << child;};
+    bool isModified(){ return m_group? false:m_shortcutInfo->isModified();};
+    bool hasCollision(){ return m_group? false:m_shortcutInfo->hasCollision();};
     LC_ShortcutTreeItem *parent() const;
     const QList<LC_ShortcutTreeItem *> &getChildItems() const;
     LC_ShortcutTreeItem *child(int row);
     int row() const;
     int childCount() const;
     bool isMatched() const;
-    void setMatched(bool val){matched = val;};
+    void setMatched(bool val){m_matched = val;};
     bool isGroup() const;
     QString getShortcutViewString();
     void clearShortcut();
     void resetShortcutToDefault();
-protected:
+private:
     // parent item
-    LC_ShortcutTreeItem *parentItem = nullptr;
+    LC_ShortcutTreeItem *m_parentItem = nullptr;
     // children of this item
-    QList<LC_ShortcutTreeItem*> childItems;
-    LC_ShortcutInfo* shortcutInfo;
-    QIcon icon;
-    QString text;
-    QString description;
-    bool matched {false};
-    bool group {false};
+    QList<LC_ShortcutTreeItem*> m_childItems;
+    LC_ShortcutInfo* m_shortcutInfo;
+    QIcon m_icon;
+    QString m_text;
+    QString m_description;
+    bool m_matched {false};
+    bool m_group {false};
 };
 
 #endif // LC_SHORTCUTTREEITEM_H

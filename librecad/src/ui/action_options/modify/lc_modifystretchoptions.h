@@ -23,7 +23,6 @@
 #ifndef LC_MODIFYSTRETCHOPTIONS_H
 #define LC_MODIFYSTRETCHOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionModifyStretch;
@@ -33,7 +32,6 @@ namespace Ui {
 
 class LC_ModifyStretchOptions : public LC_ActionOptionsWidgetBase {
     Q_OBJECT
-
 public:
     explicit LC_ModifyStretchOptions();
     ~LC_ModifyStretchOptions() override;
@@ -45,7 +43,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_ModifyStretchOptions *ui;
-    RS_ActionModifyStretch* action = nullptr;
+    RS_ActionModifyStretch* m_action = nullptr;
     void setKeepOriginalsToActionAndView(bool val);
 };
 

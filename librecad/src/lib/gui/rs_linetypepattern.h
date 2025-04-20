@@ -29,6 +29,7 @@
 #define RS_LINETYPEPATTERN_H
 
 #include <vector>
+#include <cstddef>
 
 namespace RS2
 {

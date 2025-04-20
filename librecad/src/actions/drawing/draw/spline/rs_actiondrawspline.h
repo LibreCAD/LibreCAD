@@ -40,9 +40,7 @@ class RS_Spline;
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawSpline(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawSpline(LC_ActionContext *actionContext);
     ~RS_ActionDrawSpline() override;
     void reset();
     void init(int status) override;
@@ -61,8 +59,8 @@ protected:
         SetStartPoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

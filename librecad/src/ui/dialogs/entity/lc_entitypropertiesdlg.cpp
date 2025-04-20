@@ -22,23 +22,24 @@
 
 #include <QLineEdit>
 #include <QCheckBox>
+
+#include "lc_convert.h"
 #include "lc_entitypropertiesdlg.h"
-#include "rs_vector.h"
 #include "lc_graphicviewport.h"
 #include "rs_math.h"
-#include "lc_convert.h"
+#include "rs_vector.h"
 
 LC_EntityPropertiesDlg::LC_EntityPropertiesDlg(QWidget *parent, const QString& dlgName, LC_GraphicViewport *vp):
-    LC_Dialog(parent, dlgName), viewport{vp}{}
+    LC_Dialog(parent, dlgName), m_viewport{vp}{}
 
 RS_Vector LC_EntityPropertiesDlg::toUCSVector(const RS_Vector &vect) const{
-    RS_Vector result = viewport->toUCS(vect);
+    RS_Vector result = m_viewport->toUCS(vect);
     return result;
 }
 
 double LC_EntityPropertiesDlg::toUCSAngle(double wcsAngle) const {
-    double ucsAngle = viewport->toUCSAngle(wcsAngle);
-    double ucsBasisAngle = viewport->toBasisUCSAngle(ucsAngle);
+    double ucsAngle = m_viewport->toUCSAngle(wcsAngle);
+    double ucsBasisAngle = m_viewport->toBasisUCSAngle(ucsAngle);
     return ucsBasisAngle;
 }
 
@@ -48,8 +49,8 @@ double LC_EntityPropertiesDlg::toWCSAngle(const QString &val, double wcsDefault)
 
     double ucsAngleDeg = toDoubleAngle(val, 0.0, ucsDefaultDeg);
     double ucsAngleBasis = RS_Math::deg2rad(ucsAngleDeg);
-    double ucsAngleAbs = viewport->toAbsUCSAngle(ucsAngleBasis);
-    double wcsAngle =  viewport->toWorldAngle(ucsAngleAbs);
+    double ucsAngleAbs = m_viewport->toAbsUCSAngle(ucsAngleBasis);
+    double wcsAngle =  m_viewport->toWorldAngle(ucsAngleAbs);
     return wcsAngle;
 }
 
@@ -59,7 +60,7 @@ double LC_EntityPropertiesDlg::toWCSValue(const QString& val, double wcsDefault)
 }
 
 RS_Vector LC_EntityPropertiesDlg::toWCSVector(const RS_Vector &vect) const{
-    RS_Vector result = viewport->toWorld(vect);
+    RS_Vector result = m_viewport->toWorld(vect);
     return result;
 }
 

@@ -28,6 +28,7 @@
 #define RS_ACTIONPOLYLINEADD_H
 
 #include "rs_previewactioninterface.h"
+class RS_Polyline;
 
 /**
  * This action class can handle user events to move entities.
@@ -37,9 +38,7 @@
 class RS_ActionPolylineAdd:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPolylineAdd(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionPolylineAdd(LC_ActionContext *actionContext);
     ~RS_ActionPolylineAdd() override;
     void init(int status) override;
     void finish(bool updateTB) override;
@@ -52,16 +51,15 @@ protected:
         SetAddCoord   /**< Setting the reference point. */
     };
 
-    RS_Polyline *polylineToModify = nullptr;
-    RS_Entity *addSegment = nullptr;
-    std::unique_ptr<RS_Vector> addCoord;
+    RS_Polyline *m_polylineToModify = nullptr;
+    RS_Entity *m_addSegment = nullptr;
+    std::unique_ptr<RS_Vector> m_addCoord;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

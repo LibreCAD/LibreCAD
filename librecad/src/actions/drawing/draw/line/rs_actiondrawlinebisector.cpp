@@ -24,17 +24,12 @@
 **
 **********************************************************************/
 
-#include "qg_linebisectoroptions.h"
+
 #include "rs_actiondrawlinebisector.h"
-#include "rs_actioninterface.h"
-#include "rs_commandevent.h"
+
+#include "qg_linebisectoroptions.h"
 #include "rs_creation.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_math.h"
-#include "rs_preview.h"
 
 namespace {
 
@@ -43,38 +38,36 @@ namespace {
 }
 
 
-struct RS_ActionDrawLineBisector::Points {
+struct RS_ActionDrawLineBisector::ActionData {
 	/** Mouse pos when choosing the 1st line */
 	RS_Vector coord1;
 	/** Mouse pos when choosing the 2nd line */
 	RS_Vector coord2;
 };
 
-RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw Bisectors", container, graphicView), bisector(nullptr), line1(nullptr), line2(nullptr), length(10.), number(1),
-     pPoints(std::make_unique<Points>()), lastStatus(SetLine1){
-    actionType = RS2::ActionDrawLineBisector;
+RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw Bisectors", actionContext, RS2::ActionDrawLineBisector),
+    m_bisector(nullptr), m_line1(nullptr), m_line2(nullptr), m_length(10.), m_numberToCreate(1),
+    m_actionData(std::make_unique<ActionData>()), m_lastStatus(SetLine1){
 }
 
 RS_ActionDrawLineBisector::~RS_ActionDrawLineBisector() = default;
 
 
 void RS_ActionDrawLineBisector::setLength(double l){
-    length = l;
+    m_length = l;
 }
 
 double RS_ActionDrawLineBisector::getLength() const{
-    return length;
+    return m_length;
 }
 
 void RS_ActionDrawLineBisector::setNumber(int n){
-    number = n;
+    m_numberToCreate = n;
 }
 
 int RS_ActionDrawLineBisector::getNumber() const{
-    return number;
+    return m_numberToCreate;
 }
 
 void RS_ActionDrawLineBisector::init(int status){
@@ -90,13 +83,8 @@ void RS_ActionDrawLineBisector::setStatus(int status) {
 }
 
 void RS_ActionDrawLineBisector::doTrigger() {
-    RS_Creation creation(container, graphicView);
-    creation.createBisector(pPoints->coord1,
-                            pPoints->coord2,
-                            length,
-                            number,
-                            line1,
-                            line2);
+    RS_Creation creation(m_container, m_viewport);
+    creation.createBisector(m_actionData->coord1, m_actionData->coord2, m_length, m_numberToCreate, m_line1, m_line2);
 }
 
 void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -111,33 +99,28 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetLine2: {
-            highlightSelected(line1);
-            pPoints->coord2 = mouse;
+            highlightSelected(m_line1);
+            m_actionData->coord2 = mouse;
             RS_Entity *en = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
-            if (en == line1){
-                line2 = nullptr;
+            if (en == m_line1){
+                m_line2 = nullptr;
             } else if (en != nullptr){
-                line2 = dynamic_cast<RS_Line *>(en);
+                m_line2 = dynamic_cast<RS_Line *>(en);
 
-                RS_Creation creation(preview.get(), nullptr, false);
-                auto ent = creation.createBisector(pPoints->coord1,
-                                                   pPoints->coord2,
-                                                   length,
-                                                   number,
-                                                   line1,
-                                                   line2);
+                RS_Creation creation(m_preview.get(), nullptr, false);
+                auto ent = creation.createBisector(m_actionData->coord1, m_actionData->coord2, m_length, m_numberToCreate, m_line1, m_line2);
                 if (ent != nullptr){
-                    highlightHover(line2);
-                    if (number == 1){
+                    highlightHover(m_line2);
+                    if (m_numberToCreate == 1){
                         prepareEntityDescription(ent, RS2::EntityDescriptionLevel::DescriptionCreating);
                     }
                     else{
-                        appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
+                        appendInfoCursorZoneMessage(QString::number(m_numberToCreate) + tr(" entities will be created"), 2, false);
                     }
-                    if (showRefEntitiesOnPreview) {
-                        previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
+                    if (m_showRefEntitiesOnPreview) {
+                        previewRefPoint(m_line1->getNearestPointOnEntity(m_actionData->coord1));
                         previewRefPoint(ent->getStartpoint());
-                        RS_Vector nearest = line2->getNearestPointOnEntity(mouse, false);
+                        RS_Vector nearest = m_line2->getNearestPointOnEntity(mouse, false);
                         previewRefSelectablePoint(nearest);
                     }
                 }
@@ -146,8 +129,8 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetLength:
         case SetNumber: {
-            if (line1 != nullptr){
-                highlightSelected(line1);
+            if (m_line1 != nullptr){
+                highlightSelected(m_line1);
             }
             break;
         }
@@ -160,17 +143,17 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEve
     RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetLine1: {
-            pPoints->coord1 = mouse;
+            m_actionData->coord1 = mouse;
             RS_Entity *en = RS_Snapper::catchEntity(mouse,g_enTypeList,RS2::ResolveAll);
             if (isLine(en)){
-                line1 = dynamic_cast<RS_Line *>(en);
-                line2 = nullptr;
+                m_line1 = dynamic_cast<RS_Line *>(en);
+                m_line2 = nullptr;
                 setStatus(SetLine2);
             }
             break;
         }
         case SetLine2:
-            pPoints->coord2 = mouse;
+            m_actionData->coord2 = mouse;
             trigger();
             setStatus(SetLine1);
             break;
@@ -189,7 +172,7 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
     switch (status) {
         case SetLine1:
         case SetLine2: {
-            lastStatus = (Status) status;
+            m_lastStatus = (Status) status;
             if (checkCommand("length", c)){
                 deletePreview();
                 setStatus(SetLength);
@@ -206,12 +189,12 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
             double l = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
-                length = l;
+                m_length = l;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         case SetNumber: {
@@ -220,7 +203,7 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
             if (ok){
                 accept= true;
                 if (n > 0 && n <= 200)
-                    number = n;
+                    m_numberToCreate = n;
                 else
                     commandMessage(
                         tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
@@ -228,7 +211,7 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
                 commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
-            setStatus(lastStatus);
+            setStatus(m_lastStatus);
             break;
         }
         default:

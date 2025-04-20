@@ -69,12 +69,11 @@ public:
 	  *\brief enable/disable redo/undo buttons in main application window
 	  *\author: Dongxu Li
       **/
-	void setGUIButtons() const;
-
+	void updateUndoState() const;
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
-
     static bool test();
-
+protected:
+    virtual void fireUndoStateChanged([[maybe_unused]]bool undoAvailable, [[maybe_unused]] bool redoAvailable) const {};
 private:
 
     void addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle);
@@ -110,4 +109,3 @@ class RS_UndoStub : public RS_Undo {
 #endif
 
 #endif
-

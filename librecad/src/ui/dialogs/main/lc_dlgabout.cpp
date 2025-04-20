@@ -21,13 +21,14 @@
  ******************************************************************************/
 
 #include <boost/version.hpp>
-#include <QClipboard>
-#include <QLabel>
-#include <QPainter>
-#include <QPixmap>
 
 #include "lc_dlgabout.h"
+
+#include <QClipboard>
+#include <QPainter>
+
 #include "main.h"
+#include "qc_applicationwindow.h"
 #include "ui_lc_dlgabout.h"
 
 #if defined(Q_OS_LINUX)
@@ -68,7 +69,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
-    info = QString(
+    m_info = QString(
             tr("Version: <b>%1</b>").arg(XSTR(LC_VERSION)) + "<br/>" +
             #if defined(Q_CC_CLANG)
             tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br/>" +
@@ -81,7 +82,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
             tr("Qt Version: %1").arg(qVersion()) + "<br/>" +
             tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
         );
-    ui->lVersionInfo->setText(info);
+    ui->lVersionInfo->setText(m_info);
 
 
     ui->lLinks->setText(QString(R"(<a href="https://github.com/LibreCAD/LibreCAD/graphs/contributors">%1</a>)"
@@ -102,7 +103,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
 LC_DlgAbout::~LC_DlgAbout() = default;
 
 void LC_DlgAbout::copyInfo(){
-    QString text = info;
+    QString text = m_info;
 #if QT_VERSION >= 0x050400
     text += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
 #endif

@@ -24,12 +24,7 @@
 **
 **********************************************************************/
 #include "qg_libraryinsertoptions.h"
-
-#include "rs_actioninterface.h"
 #include "rs_actionlibraryinsert.h"
-#include "rs_debug.h"
-#include "rs_math.h"
-#include "rs_settings.h"
 #include "ui_qg_libraryinsertoptions.h"
 
 /*
@@ -38,8 +33,7 @@
  */
 QG_LibraryInsertOptions::QG_LibraryInsertOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionLibraryInsert, "LibraryInsert", "LibraryInsert")
-    , ui(std::make_unique<Ui::Ui_LibraryInsertOptions>())
-{
+      , ui(std::make_unique<Ui::Ui_LibraryInsertOptions>()) {
     ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onAngleEditingFinished);
     connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onFactorEditingFinished);
@@ -64,13 +58,13 @@ void QG_LibraryInsertOptions::doSaveSettings() {
 }
 
 void QG_LibraryInsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionLibraryInsert*>(a);
+    m_action = dynamic_cast<RS_ActionLibraryInsert*>(a);
 
     QString angle;
     QString factor;
     if (update) {
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
-        factor = fromDouble(action->getFactor());
+        angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
+        factor = fromDouble(m_action->getFactor());
     } else {
         angle = load("Angle", "0.0");
         factor = load("Factor", "1.0");
@@ -81,12 +75,12 @@ void QG_LibraryInsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
 void QG_LibraryInsertOptions::setAngleToActionAndView(QString val) {
     ui->leAngle->setText(val);
-    action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
+    m_action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
 }
 
 void QG_LibraryInsertOptions::setFactorToActionAndView(QString val) {
     ui->leFactor->setText(val);
-    action->setFactor(RS_Math::eval(val));
+    m_action->setFactor(RS_Math::eval(val));
 }
 
 void QG_LibraryInsertOptions::onAngleEditingFinished() {

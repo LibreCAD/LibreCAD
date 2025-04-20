@@ -40,9 +40,7 @@ struct RS_MTextData;
 class RS_ActionDrawMText:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawMText(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawMText(LC_ActionContext *actionContext);
     ~RS_ActionDrawMText() override;
     void init(int status) override;
     void reset();
@@ -61,10 +59,10 @@ protected:
         SetPos,               /**< Setting the position. */
         SetText               /**< Setting the text in the command line. */
     };
-    std::unique_ptr<RS_MTextData> data;
+    std::unique_ptr<RS_MTextData> m_mtextData;
     //RS_Text* text;
-    std::unique_ptr<RS_Vector> pos;
-    bool textChanged = false;
+    std::unique_ptr<RS_Vector> m_pos;
+    bool m_textChanged = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

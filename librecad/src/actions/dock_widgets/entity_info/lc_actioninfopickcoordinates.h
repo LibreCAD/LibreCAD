@@ -26,11 +26,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_abstractactionwithpreview.h"
 
-class LC_ActionInfoPickCoordinates:public LC_AbstractActionWithPreview
-{
+class LC_ActionInfoPickCoordinates:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
-    LC_ActionInfoPickCoordinates(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionInfoPickCoordinates(LC_ActionContext *actionContext);
     void init(int status) override;
     void resume() override;
 protected:
@@ -43,11 +42,11 @@ private:
     /**
      * collected points
      */
-    QVector<RS_Vector> points;
+    QVector<RS_Vector> m_points;
     /*
      * flag from options that indicates whether a line between points should be drawsn
      */
-    bool drawPointsPath = true;
+    bool m_drawPointsPath = true;
 
     void updateQuickInfoWidget(const RS_Vector &coord);
     void updateCollectedPointsByWidget();

@@ -1,17 +1,40 @@
+/*******************************************************************************
+*
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2025 LibreCAD.org
+ Copyright (C) 2025 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
 #include "lc_graphicviewport.h"
-#include "rs_line.h"
+
+#include <QDateTime>
+
+#include "lc_graphicviewportlistener.h"
+#include "lc_linemath.h"
+#include "lc_overlayentitiescontainer.h"
+#include "lc_undoablerelzero.h"
 #include "rs_debug.h"
-#include "lc_ucs.h"
-#include "rs_grid.h"
-#include "rs_entitycontainer.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "lc_linemath.h"
+#include "rs_graphic.h"
+#include "rs_grid.h"
+#include "rs_line.h"
 #include "rs_settings.h"
-#include "lc_undoablerelzero.h"
 #include "rs_units.h"
-#include "lc_graphicviewportlistener.h"
-#include "lc_overlayentitiescontainer.h"
 
 LC_GraphicViewport::LC_GraphicViewport():
     grid{std::make_unique<RS_Grid>(this)},
@@ -389,7 +412,8 @@ void LC_GraphicViewport::fireUcsChanged(LC_UCS *ucs) {
 }
 
 void LC_GraphicViewport::firePreviousZoomChanged([[maybe_unused]]bool value) {
-// fixme - ucs - complete
+// fixme - ucs - complete - restore!!!
+//     emit previous_zoom_state(true);
 }
 
 void LC_GraphicViewport::fireRelativeZeroChanged(const RS_Vector &pos){
@@ -656,7 +680,6 @@ void LC_GraphicViewport::saveView() {
     if (savedViewCount < savedViews.size()) savedViewCount++;
 
     if (savedViewCount == 1) {
-//        emit previous_zoom_state(true);
         firePreviousZoomChanged(true);
     }
 }

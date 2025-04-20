@@ -24,6 +24,8 @@
 #include <QObject>
 #include "lc_peninforegistry.h"
 
+#include "rs_color.h"
+
 /**
  * internal value used for colors storing in pen palette storage to denote "unchanged" color value
  */
@@ -32,12 +34,12 @@ static const int UNCHANGED_COLOR_INTERNAL_VALUE = -3;
 LC_PenInfoRegistry::LC_PenInfoRegistry()= default;
 
 LC_PenInfoRegistry::~LC_PenInfoRegistry(){
-    lineTypesIconMap.clear();
-    lineTypesNamesMap.clear();
-    lineWidthIconMap.clear();
-    lineWidthNamesMap.clear();
-    colorNamesMap.clear();
-    standardLCColorNamesMap.clear();
+    m_lineTypesIconMap.clear();
+    m_lineTypesNamesMap.clear();
+    m_lineWidthIconMap.clear();
+    m_lineWidthNamesMap.clear();
+    m_colorNamesMap.clear();
+    m_standardLCColorNamesMap.clear();
 }
 
 /**
@@ -46,7 +48,7 @@ LC_PenInfoRegistry::~LC_PenInfoRegistry(){
  * @return string for UI
  */
 QIcon LC_PenInfoRegistry::getLineTypeIcon(RS2::LineType lineType) const{
-    QIcon result = lineTypesIconMap[lineType];
+    QIcon result = m_lineTypesIconMap[lineType];
     return result;
 }
 
@@ -56,7 +58,7 @@ QIcon LC_PenInfoRegistry::getLineTypeIcon(RS2::LineType lineType) const{
  * @return string for UI
  */
 QIcon LC_PenInfoRegistry::getLineWidthIcon(RS2::LineWidth lineWidth) const{
-    QIcon result = lineWidthIconMap[lineWidth];
+    QIcon result = m_lineWidthIconMap[lineWidth];
     return result;
 }
 
@@ -66,7 +68,7 @@ QIcon LC_PenInfoRegistry::getLineWidthIcon(RS2::LineWidth lineWidth) const{
  * @return name to display
  */
 QString LC_PenInfoRegistry::getLineTypeText(RS2::LineType lineType) const{
-    QString result = lineTypesNamesMap[lineType];
+    QString result = m_lineTypesNamesMap[lineType];
     return result;
 }
 
@@ -76,7 +78,7 @@ QString LC_PenInfoRegistry::getLineTypeText(RS2::LineType lineType) const{
  * @return  name to display
  */
 QString LC_PenInfoRegistry::getLineWidthText(RS2::LineWidth lineWidth) const{
-    QString result = lineWidthNamesMap[lineWidth];
+    QString result = m_lineWidthNamesMap[lineWidth];
     return result;
 }
 
@@ -106,13 +108,13 @@ LC_PenInfoRegistry* LC_PenInfoRegistry::instance(){
  */
 QIcon LC_PenInfoRegistry::getColorIcon(const RS_Color &color, int iconSizeW, int iconSizeH) const{
     if (color.isByLayer()){
-        return iconByLayer;
+        return m_iconByLayer;
     }
     else if (color.isByBlock()){
-        return iconByBlock;
+        return m_iconByBlock;
     }
     else if (isUnchangedColor(color)){
-        return iconUnchanged;
+        return m_iconUnchanged;
     }
     if (color.isValid()){
         QPixmap pixmap(iconSizeW, iconSizeH);
@@ -220,12 +222,12 @@ QString LC_PenInfoRegistry::getColorName(const RS_Color &color, int colorNameMod
             // check where this is standard color first
 
             const QRgba64 &key = color.rgba64();
-            if (standardLCColorNamesMap.contains(key)){
-               return standardLCColorNamesMap.value(key, "");
+            if (m_standardLCColorNamesMap.contains(key)){
+               return m_standardLCColorNamesMap.value(key, "");
             }
             else{
                 // try to find qt name, if no such name - give up and return hex color name
-                return colorNamesMap.value(key, color.name());
+                return m_colorNamesMap.value(key, color.name());
             }
         }
         default:
@@ -241,7 +243,7 @@ QString LC_PenInfoRegistry::getColorName(const RS_Color &color, int colorNameMod
  */
 bool LC_PenInfoRegistry::hasLineType(int typeCandidate){
     RS2::LineType lineType = static_cast<RS2::LineType>(typeCandidate);
-    return lineTypesNamesMap.contains(lineType);
+    return m_lineTypesNamesMap.contains(lineType);
 }
 
 /**
@@ -251,7 +253,7 @@ bool LC_PenInfoRegistry::hasLineType(int typeCandidate){
  */
 bool LC_PenInfoRegistry::hasLineWidth(int widthCandidate){
     RS2::LineWidth lineWidth = static_cast<RS2::LineWidth>(widthCandidate);
-    return lineWidthNamesMap.contains(lineWidth);
+    return m_lineWidthNamesMap.contains(lineWidth);
 }
 
 /**
@@ -342,7 +344,7 @@ void LC_PenInfoRegistry::registerColorNames(){
         QString colorName = colorNamesList.at(i);
         QColor color(colorName);
         // todo - basically, localization of QT color names is needed for this mapping
-        colorNamesMap.insert(color.rgba64(), QObject::tr(colorName.toStdString().c_str()));
+        m_colorNamesMap.insert(color.rgba64(), QObject::tr(colorName.toStdString().c_str()));
     }
 
     // register standard LibreCAD Colors
@@ -366,7 +368,7 @@ void LC_PenInfoRegistry::registerColorNames(){
 }
 
 void LC_PenInfoRegistry::registerLCColor(QColor color, const QString colorName){
-    standardLCColorNamesMap.insert(color.rgba64(), colorName);
+    m_standardLCColorNamesMap.insert(color.rgba64(), colorName);
 }
 
 /**
@@ -378,8 +380,8 @@ void LC_PenInfoRegistry::registerLCColor(QColor color, const QString colorName){
 
 void LC_PenInfoRegistry::doRegisterLineType(const char* iconName, const QString labelKey, RS2::LineType lineType){
     QIcon icon = QIcon(iconName);
-    lineTypesIconMap.insert(lineType, icon);
-    lineTypesNamesMap.insert(lineType, labelKey);
+    m_lineTypesIconMap.insert(lineType, icon);
+    m_lineTypesNamesMap.insert(lineType, labelKey);
 }
 
 /**
@@ -390,6 +392,6 @@ void LC_PenInfoRegistry::doRegisterLineType(const char* iconName, const QString 
  */
 void LC_PenInfoRegistry::doRegisterLineWidth(const char* iconName, const QString labelKey, RS2::LineWidth lineWidth){
     QIcon icon = QIcon(iconName);
-    lineWidthIconMap.insert(lineWidth, icon);
-    lineWidthNamesMap.insert(lineWidth, labelKey);
+    m_lineWidthIconMap.insert(lineWidth, icon);
+    m_lineWidthNamesMap.insert(lineWidth, labelKey);
 }

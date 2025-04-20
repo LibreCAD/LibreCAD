@@ -29,7 +29,7 @@
 #ifndef RS_LAYERLISTLISTENER_H
 #define RS_LAYERLISTLISTENER_H
 
-#include "rs_layer.h"
+class RS_Layer;
 
 /**
  * This class is an interface for classes that are interested in

@@ -38,10 +38,9 @@ class RS_Polyline;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineFree : public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionDrawLineFree(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+    RS_ActionDrawLineFree(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineFree() override;
 protected:
     /**
@@ -51,9 +50,9 @@ protected:
         SetStartpoint,   /**< Setting the startpoint.  */
         Dragging      /**< Setting the endpoint. */
     };
-    QPointF oldMousePosition = QPointF(-100,-100);
-    std::unique_ptr<RS_Vector> vertex; // fixme - why poiner there?
-    std::unique_ptr<RS_Polyline> polyline;
+    QPointF m_oldMousePosition = QPointF(-100,-100);
+    std::unique_ptr<RS_Vector> m_vertex; // fixme - why poiner there?
+    std::unique_ptr<RS_Polyline> m_polyline;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

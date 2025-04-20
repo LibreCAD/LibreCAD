@@ -20,14 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
 #include "lc_actionlayerstoggleconstruction.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
-#include "rs_debug.h"
 
 /**
  * whether a layer is a construction layer or not
@@ -37,32 +34,31 @@
  * @author Armin Stebich
  */
 LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
+    LC_ActionContext *actionContext,
     RS_Layer* layer)
-        : RS_ActionInterface("Toggle Construction Layer", container, graphicView)
-        , a_layer(layer)
-{}
+        : RS_ActionInterface("Toggle Construction Layer", actionContext, RS2::ActionType::ActionLayersToggleConstruction)
+        , m_layer(layer){
+}
 
 
 void LC_ActionLayersToggleConstruction::trigger() {
     RS_DEBUG->print("toggle layer construction");
-    if (graphic) {
-        RS_LayerList* ll = graphic->getLayerList();
+    if (m_graphic) {
+        RS_LayerList* ll = m_graphic->getLayerList();
         unsigned cnt = 0;
         // toggle selected layers
         for (auto layer: *ll) {
             if (!layer) continue;
             if (!layer->isVisibleInLayerList()) continue;
             if (!layer->isSelectedInLayerList()) continue;
-            graphic->toggleLayerConstruction(layer);
+            m_graphic->toggleLayerConstruction(layer);
             deselectEntities(layer);
             cnt++;
         }
         // if there wasn't selected layers, toggle active layer
         if (!cnt) {
-            graphic->toggleLayerConstruction(a_layer);
-            deselectEntities(a_layer);
+            m_graphic->toggleLayerConstruction(m_layer);
+            deselectEntities(m_layer);
         }
         redrawDrawing();
     }
@@ -74,11 +70,9 @@ void LC_ActionLayersToggleConstruction::init(int status) {
     trigger();
 }
 
-void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer)
-{
+void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer){
     if (!layer) return;
-
-    for(auto e: *container){ // fixme - sand -  iteration over all entities in container
+    for(auto e: *m_container){ // fixme - sand -  iteration over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
             e->setSelected(false);
         }

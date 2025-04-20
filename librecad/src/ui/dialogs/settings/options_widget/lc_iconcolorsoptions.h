@@ -24,6 +24,7 @@
 #define LC_ICONCOLORSOPTIONS_H
 
 #include <QString>
+
 #include "lc_iconengineshared.h"
 
 class LC_IconColorsOptions {

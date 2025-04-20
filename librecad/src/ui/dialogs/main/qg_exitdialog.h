@@ -26,38 +26,30 @@
 #ifndef QG_EXITDIALOG_H
 #define QG_EXITDIALOG_H
 
-#include <memory>
-#include <QDialog>
-
+#include "lc_dialog.h"
 class QAbstractButton;
 
 namespace Ui {
-class QG_ExitDialog;
+    class QG_ExitDialog;
 }
 
-class QG_ExitDialog : public QDialog
-{
+class QG_ExitDialog : public LC_Dialog{
     Q_OBJECT
-
 public:
-    QG_ExitDialog(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-	~QG_ExitDialog();
+    QG_ExitDialog(QWidget* parent = nullptr);
+	~QG_ExitDialog() override;
 	enum ExitDialogResult {
-        Cancel, Discard, Save, SaveAll
+        Cancel, DontSave, DontSaveAll, Save, SaveAll
 	};
 
 public slots:
-    virtual void setText( const QString & text );
-    virtual void setTitle( const QString & text );
-    virtual void setForce( bool force );
-	virtual void setShowSaveAll(bool show);
-    virtual void slotSaveAll();
-    virtual void slotSave();
-    virtual void clicked(QAbstractButton * button);	
-
+    void setText( const QString & text );
+    void setTitle( const QString & text );
+    void setForce( bool force );
+	void setShowOptionsForAll(bool show);
+    void clicked(QAbstractButton * button);
 protected slots:
-    virtual void languageChange();
-
+    void languageChange();
 private:
     void init();
 	std::unique_ptr<Ui::QG_ExitDialog> ui;

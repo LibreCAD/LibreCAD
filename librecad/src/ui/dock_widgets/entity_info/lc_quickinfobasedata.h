@@ -28,11 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_vector.h"
 #include "rs.h"
 
+class QString;
 class LC_GraphicViewport;
 class RS_Document;
-
-
-class QString;
 
 class LC_QuickInfoBaseData{
     Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoBaseData)
@@ -47,8 +45,8 @@ public:
     void setDocumentAndView(RS_Document *document, LC_GraphicViewport* view);
     void updateFormats(); // fixme - sand - this method should be called as soon as settings will be updated..
 
-    int getCoordinatesMode() const{return coordinatesMode;};
-    void setCoordinatesMode(int value){coordinatesMode = value;};
+    int getCoordinatesMode() const{return m_coordinatesMode;};
+    void setCoordinatesMode(int value){m_coordinatesMode = value;};
 
     /**
      * Defines the mode for displaying coordinates
@@ -61,9 +59,9 @@ public:
     };
 
 protected:
-    RS_Document* document = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
-    int coordinatesMode = COORD_ABSOLUTE;
+    RS_Document* m_document = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
+    int m_coordinatesMode = COORD_ABSOLUTE;
 
     RS2::Unit m_unit;
     RS2::LinearFormat m_linearFormat;
@@ -79,21 +77,21 @@ protected:
     QString formatWCSVector(const RS_Vector &wcsPos) const;
     QString formatUCSVector(const RS_Vector &ucsPos) const;
     QString formatWCSDeltaVector(const RS_Vector &wcsDelta) const;
-    QString formatWCSAngle(double wcsAngle);
-    QString formatUCSAngle(double wcsAngle);
-    QString formatLinear(double length);
+    QString formatWCSAngle(double wcsAngle) const;
+    QString formatUCSAngle(double wcsAngle) const;
+    QString formatLinear(double length) const;
     QString formatDouble(const double &x) const;
     QString formatInt(const int &x) const;
-    QString createLink(QString &data, const QString &path, int index, QString title, QString &value);
-    void appendLinear(QString &result, const QString &label, double value);
-    void appendDouble(QString &result, const QString &label, double value);
-    void appendWCSAngle(QString &result, const QString &label, double value);
-    void appendRawAngle(QString &result, const QString &label, double value);
-    void appendArea(QString &result, const QString &label, double value);
-    void appendWCSAbsolute(QString &result, const QString &label, const RS_Vector& value);
-    void appendWCSAbsoluteDelta(QString &result, const QString &label, const RS_Vector& value);
-    void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value);
-    void appendInt(QString &result, const QString &label, const int& value);
+    QString createLink(QString &data, const QString &path, int index, const QString& title, const QString &value);
+    void appendLinear(QString &result, const QString &label, double value) const;
+    void appendDouble(QString &result, const QString &label, double value) const;
+    void appendWCSAngle(QString &result, const QString &label, double value) const;
+    void appendRawAngle(QString &result, const QString &label, double value) const;
+    void appendArea(QString &result, const QString &label, double value) const;
+    void appendWCSAbsolute(QString &result, const QString &label, const RS_Vector& value) const;
+    void appendWCSAbsoluteDelta(QString &result, const QString &label, const RS_Vector& value) const;
+    void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value) const;
+    void appendInt(QString &result, const QString &label, const int& value) const;
     void appendValue(QString &result, const QString &label, const QString& value);
     QString formatRawAngle(double angle) const;
 

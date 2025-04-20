@@ -28,11 +28,9 @@
  * Straightforwards storing options to settings
  */
 void LC_PenPaletteOptions:: loadFromSettings(){
-
-    LC_PenPaletteOptions defaults;
-
     LC_GROUP_GUARD("Widget.PenPalette");
     {
+        LC_PenPaletteOptions defaults;
         activeItemBGColor = QColor(LC_GET_STR("activeItemBgColor", defaults.activeItemBGColor.name()));
         matchedItemColor = QColor(LC_GET_STR("matchedItemBgColor", defaults.matchedItemColor.name()));
         itemsGridColor = QColor(LC_GET_STR("gridColor", defaults.itemsGridColor.name()));
@@ -56,7 +54,7 @@ void LC_PenPaletteOptions:: loadFromSettings(){
         colorNameDisplayMode = LC_GET_INT("colorDisplayMode", defaults.colorNameDisplayMode);
         doubleClickOnTableMode = LC_GET_INT("doubleClickOnTableMode", defaults.doubleClickOnTableMode);
 
-        QString settingsDir = LC_GET_STR("OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+        QString settingsDir = LC_GET_ONE_STR("Paths", "OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
         pensFileName = settingsDir + "/penpalette.lcpp";
     }
 }
@@ -64,9 +62,7 @@ void LC_PenPaletteOptions:: loadFromSettings(){
 /**
  * Straightforward loading from settings
  */
-void LC_PenPaletteOptions::saveToSettings(){
-    LC_PenPaletteOptions defaults;
-
+void LC_PenPaletteOptions::saveToSettings() const {
     LC_GROUP_GUARD("Widget.PenPalette");
     {
         LC_SET("activeItemBgColor", activeItemBGColor.name());

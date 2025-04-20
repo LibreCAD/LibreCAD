@@ -20,11 +20,57 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QDragEnterEvent>
-
-#include "lc_layertreewidget.h"
 #include "lc_layertreeview.h"
+
+#include <QDragEnterEvent>
+#include <QPainter>
+#include <QStyledItemDelegate>
+
+#include "lc_layertreeitem.h"
+#include "lc_layertreemodel.h"
+#include "lc_layertreemodel_options.h"
+#include "lc_layertreewidget.h"
 #include "rs_debug.h"
+
+/**
+ * Delegate for painting grid lines within tree view - rect around cells for Name column.
+ * @brief The GridDelegate class
+ */
+class LayerTreeGridDelegate:public QStyledItemDelegate {
+public:
+    explicit LayerTreeGridDelegate(LC_LayerTreeView *parent = nullptr, LC_LayerTreeModel* tm = nullptr):QStyledItemDelegate(parent){
+        if (parent){
+            treeModel = tm;
+        }
+    }
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override{
+        QStyledItemDelegate::paint(painter, option, index);
+        int col = index.column();
+
+        if (col > 0){
+            bool draw = true;
+            if (col == LC_LayerTreeModel::NAME){
+                LC_LayerTreeItem *layerItem = treeModel->getItemForIndex(index);
+                if (layerItem && (!layerItem->isVirtual())){
+                    draw = false;
+                }
+            }
+            if (draw){
+                LC_LayerTreeModelOptions* options = treeModel->getOptions();
+                QColor color = options->itemsGridColor;
+                painter->save();
+                painter->setPen(color);
+                painter->drawRect(option.rect);
+                painter->restore();
+            }
+        }
+    }
+
+private:
+    LC_LayerTreeModel* treeModel{nullptr};
+};
+
 
 LC_LayerTreeView::LC_LayerTreeView(QWidget *parent):QTreeView(parent){
 }
@@ -39,13 +85,11 @@ void LC_LayerTreeView::dragLeaveEvent(QDragLeaveEvent *event) {
      RS_DEBUG->print(RS_Debug::D_WARNING, "dragLeaveEvent");
      event->accept();
      QModelIndex dropIndex = QModelIndex();
-     auto* widget = (LC_LayerTreeWidget*)parentWidget();
+     auto* widget = static_cast<LC_LayerTreeWidget*>(parentWidget());
      widget->onDropEvent(dropIndex , LC_LayerTreeWidget::InvalidDrop);
-
 }
 
 void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
-
      RS_DEBUG->print(RS_Debug::D_WARNING, "dragEnterEvent");
 
     // we disable drag&drop here rather than on model and flags() level
@@ -56,49 +100,48 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
     }
 
     QModelIndex dropIndex = indexAt(event->position().toPoint());
-    auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
-    if( !dropIndex.isValid() )
+    auto* layerTree = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
+    if( !dropIndex.isValid()) {
         return;
-    widget->onDragEnterEvent(dropIndex);
+    }
+    layerTree->onDragEnterEvent(dropIndex);
 
     event->setDropAction( Qt::MoveAction );
     event->accept();
 }
 
-    void LC_LayerTreeView::dropEvent(QDropEvent *event){
-        RS_DEBUG->print(RS_Debug::D_WARNING, "dropEvent");
-        if (!event){
-            return;
-        }
-        event->accept();
+void LC_LayerTreeView::dropEvent(QDropEvent* event) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "dropEvent");
+    if (event == nullptr) {
+        return;
+    }
+    event->accept();
 
-        QModelIndex dropIndex = indexAt(event->position().toPoint());
-        auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
-        if (!widget){
-            return;
-        }
+    QModelIndex dropIndex = indexAt(event->position().toPoint());
+    auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
+    if (widget == nullptr) {
+        return;
+    }
 
-        int dropIndicator = dropIndicatorPosition();
+    int dropIndicator = dropIndicatorPosition();
 
-        if( !dropIndex.isValid() ){
-            // drop to empty space on viewpoint? Need to verify this case more
-            switch (dropIndicator){
-               case QAbstractItemView::OnViewport:
+    if (!dropIndex.isValid()) {
+        // drop to empty space on viewpoint? Need to verify this case more
+        switch (dropIndicator) {
+            case QAbstractItemView::OnViewport:
                 widget->onDropEvent(dropIndex, LC_LayerTreeWidget::OnViewport);
                 break;
             default:
                 widget->onDropEvent(dropIndex, LC_LayerTreeWidget::InvalidDrop);
-            }
-            return;
         }
+        return;
+    }
 
-        //bool bAbove = false; // boolean for the case when you are above an item
+    //bool bAbove = false; // boolean for the case when you are above an item
 
-        LC_LayerTreeWidget::DropIndicatorPosition position{};
-        if (!dropIndex.parent().isValid() && dropIndex.row() != -1)
-        {
-            switch (dropIndicator)
-            {
+    LC_LayerTreeWidget::DropIndicatorPosition position{};
+    if (!dropIndex.parent().isValid() && dropIndex.row() != -1) {
+        switch (dropIndicator) {
             case QAbstractItemView::AboveItem:
                 // manage a boolean for the case when you are above an item
                 //bAbove = true;
@@ -106,11 +149,11 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
                 break;
             case QAbstractItemView::BelowItem:
                 position = LC_LayerTreeWidget::BelowItem;
-                // something when being below an item
+            // something when being below an item
                 break;
             case QAbstractItemView::OnItem:
                 position = LC_LayerTreeWidget::OnItem;
-                // you're on an item, maybe add the current one as a child
+            // you're on an item, maybe add the current one as a child
                 break;
             case QAbstractItemView::OnViewport:
                 // you are not on your tree
@@ -118,12 +161,12 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
                 break;
             default:
                 break;
-            }
         }
-        widget->onDropEvent(dropIndex, position);
     }
+    widget->onDropEvent(dropIndex, position);
+}
 
-QStringList LC_LayerTreeView::saveTreeExpansionState(){
+QStringList LC_LayerTreeView::saveTreeExpansionState() const {
     QStringList treeExpansionState;
     LC_LayerTreeModel *layerTreeModel = getTreeModel();
     foreach (QModelIndex index, layerTreeModel->getPersistentIndexList()) {
@@ -131,7 +174,6 @@ QStringList LC_LayerTreeView::saveTreeExpansionState(){
             treeExpansionState << index.data(Qt::UserRole).toString();
         }
     }
-
     return treeExpansionState;
 }
 
@@ -178,8 +220,7 @@ void LC_LayerTreeView::expandChildren(const QModelIndex &index){
  * @param expandedItems
  * @param startIndex
  */
-void LC_LayerTreeView::applyExpandState(
-    QStringList &expandedItems, QModelIndex startIndex){
+void LC_LayerTreeView::applyExpandState(QStringList &expandedItems, const QModelIndex& startIndex){
     LC_LayerTreeModel* layerTreeModel = getTreeModel();
         foreach (QString item, expandedItems) {
             QModelIndexList matches = layerTreeModel->match(startIndex, Qt::UserRole, item);

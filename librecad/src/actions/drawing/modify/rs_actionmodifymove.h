@@ -39,8 +39,7 @@ struct RS_MoveData;
 class RS_ActionModifyMove : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyMove(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionModifyMove(LC_ActionContext *actionContext);
     ~RS_ActionModifyMove() override;
 protected:
     /**
@@ -51,11 +50,11 @@ protected:
         SetTargetPoint,       /**< Setting the target point. */
         ShowDialog            /**< Showing the options dialog. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct MoveActionData;
+    std::unique_ptr<MoveActionData> m_actionData;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

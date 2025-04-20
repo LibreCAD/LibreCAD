@@ -25,36 +25,24 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-#include <iosfwd>
-#include <memory>
+#include <QString>
 
 #include "lc_drawable.h"
 #include "rs_undoable.h"
 #include "rs_vector.h"
 
-class RS_Arc;
-class RS_Block;
-class RS_Circle;
-class RS_Document;
-class RS_EntityContainer;
-class RS_Graphic;
-class RS_Insert;
-class RS_Line;
-class RS_Painter;
 class RS_Pen;
-class RS_Point;
-class RS_Polyline;
-class RS_Text;
+class RS_Line;
 class RS_Layer;
+class RS_Document;
+class RS_Insert;
+class RS_Block;
+class RS_Graphic;
+class RS_EntityContainer;
 class LC_Quadratic;
-class RS_Vector;
-class RS_VectorSolutions;
-class LC_GraphicViewport;
-class QString;
 
 /**
  * Base class for an entity (line, arc, circle, ...)

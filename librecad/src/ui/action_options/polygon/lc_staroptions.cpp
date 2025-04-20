@@ -26,23 +26,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 LC_StarOptions::LC_StarOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawStar, "Draw","Star"),
     ui(new Ui::LC_StarOptions),
-    action(nullptr){
+    m_action(nullptr){
     ui->setupUi(this);
 
     ui->sbNumber->setMaximum(STAR_MIN_RAYS);
     ui->sbNumber->setMaximum(STAR_MAX_RAYS);
 
-    connect(ui->cbSymmertix, SIGNAL(clicked(bool)), this, SLOT(onSymmetricClicked(bool)));
-    connect(ui->cbRadiusInner, SIGNAL(clicked(bool)), this, SLOT(onRadiusInnerClicked(bool)));
+    connect(ui->cbSymmertix, &QCheckBox::clicked, this, &LC_StarOptions::onSymmetricClicked);
+    connect(ui->cbRadiusInner, &QCheckBox::clicked, this, &LC_StarOptions::onRadiusInnerClicked);
     connect(ui->leRadiusInner, &QLineEdit::editingFinished, this, &LC_StarOptions::onRadiusInnerEditingFinished);
-    connect(ui->cbRadiusOuter, SIGNAL(clicked(bool)), this, SLOT(onRadiusOuterClicked(bool)));
+    connect(ui->cbRadiusOuter, &QCheckBox::clicked, this, &LC_StarOptions::onRadiusOuterClicked);
     connect(ui->leRadusOuter, &QLineEdit::editingFinished, this, &LC_StarOptions::onRadiusOuterEditingFinished);
-    connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onPolylineClicked(bool)));
-    connect(ui->sbNumber, SIGNAL(valueChanged(int)), this, SLOT(onNumberChanged(int)));
+    connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_StarOptions::onPolylineClicked);
+    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &LC_StarOptions::onNumberChanged);
 }
 
 LC_StarOptions::~LC_StarOptions(){
-    action = nullptr;
+    m_action = nullptr;
     delete ui;
 }
 
@@ -51,7 +51,7 @@ void LC_StarOptions::languageChange() {
 }
 
 void LC_StarOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<LC_ActionDrawStar *>(a);
+    m_action = dynamic_cast<LC_ActionDrawStar *>(a);
 
     bool polyline;
     bool innerEnabled;
@@ -61,13 +61,13 @@ void LC_StarOptions::doSetAction(RS_ActionInterface *a, bool update){
     QString innerRadius;
     QString outerRadius;
     if (update){
-        polyline = action->isPolyline();
-        innerEnabled = action->isInnerRounded();
-        outerEnabled = action->isOuterRounded();
-        number = action ->getRaysNumber();
-        symmetric = action->isSymmetric();
-        innerRadius = fromDouble(action->getRadiusInner());
-        outerRadius = fromDouble(action->getRadiusOuter());
+        polyline = m_action->isPolyline();
+        innerEnabled = m_action->isInnerRounded();
+        outerEnabled = m_action->isOuterRounded();
+        number = m_action ->getRaysNumber();
+        symmetric = m_action->isSymmetric();
+        innerRadius = fromDouble(m_action->getRadiusInner());
+        outerRadius = fromDouble(m_action->getRadiusOuter());
     }
     else{     
         number = loadInt("Number", 5);
@@ -99,37 +99,37 @@ void LC_StarOptions::doSaveSettings(){
 }
 
 void LC_StarOptions::onSymmetricClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setSymmetricToModelAndView(value);
     }
 }
 
 void LC_StarOptions::onRadiusOuterEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setRadiusOuterToModelAndView(ui->leRadusOuter->text());
     }
 }
 
 void LC_StarOptions::onRadiusInnerEditingFinished(){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setRadiusInnerToModelAndView(ui->leRadiusInner->text());
     }
 }
 
 void LC_StarOptions::onRadiusInnerClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setRadiusInnerEnabledToModelAndView(value);
     }
 }
 
 void LC_StarOptions::onRadiusOuterClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setRadiusOuterEnabledToModelAndView(value);
     }
 }
 
 void LC_StarOptions::onNumberChanged(int value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setNumberToModelAndView(value);
     }
 }
@@ -137,7 +137,7 @@ void LC_StarOptions::onNumberChanged(int value){
 void LC_StarOptions::setRadiusOuterToModelAndView(const QString& value){
     double y;
     if (toDouble(value, y, 0.0, true)){
-        action->setRadiusOuter(y);
+        m_action->setRadiusOuter(y);
         ui->leRadusOuter->setText(fromDouble(y));
     }
 }
@@ -145,40 +145,40 @@ void LC_StarOptions::setRadiusOuterToModelAndView(const QString& value){
 void LC_StarOptions::setRadiusInnerToModelAndView(const QString& value){
     double y;
     if (toDouble(value, y, 0.0, true)){
-        action->setRadiusInner(y);
+        m_action->setRadiusInner(y);
         ui->leRadiusInner->setText(fromDouble(y));
     }
 }
 
 void LC_StarOptions::setRadiusInnerEnabledToModelAndView(bool value){
-    action->setInnerRounded(value);
+    m_action->setInnerRounded(value);
     ui->cbRadiusInner ->setChecked(value);
     ui->leRadiusInner->setEnabled(value);
 }
 
 void LC_StarOptions::setSymmetricToModelAndView(bool value){
-    action->setSymmetric(value);
+    m_action->setSymmetric(value);
     ui->cbSymmertix->setChecked(value);
 }
 
 void LC_StarOptions::onPolylineClicked(bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setUsePolylineToActionAndView(value);
     }
 }
 
 void LC_StarOptions::setRadiusOuterEnabledToModelAndView(bool value){
-    action->setOuterRounded(value);
+    m_action->setOuterRounded(value);
     ui->cbRadiusOuter->setChecked(value);
     ui->leRadusOuter->setEnabled(value);
 }
 
 void LC_StarOptions::setNumberToModelAndView(int value){
-    action->setRaysNumber(value);
+    m_action->setRaysNumber(value);
     ui->sbNumber->setValue(value);
 }
 
 void LC_StarOptions::setUsePolylineToActionAndView(bool value){
-    action->setPolyline(value);
+    m_action->setPolyline(value);
     ui->cbPolyline->setChecked(value);
 }

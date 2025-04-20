@@ -25,24 +25,22 @@
 **********************************************************************/
 
 #include "rs_actionmodifyoffset.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+
+#include "lc_actioninfomessagebuilder.h"
+#include "qg_modifyoffsetoptions.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "qg_modifyoffsetoptions.h"
-#include "rs_debug.h"
 
-RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer &container,RS_GraphicView &graphicView)
-    :LC_ActionModifyBase("Modify Offset",container, graphicView,
+RS_ActionModifyOffset::RS_ActionModifyOffset(LC_ActionContext *actionContext)
+    :LC_ActionModifyBase("Modify Offset", actionContext,RS2::ActionModifyOffset,
                          {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
                          true)
-    , data(new RS_OffsetData()){
-    actionType = RS2::ActionModifyOffset;
+    , m_offsetData(new RS_OffsetData()){
 
-    data->distance = 0.;
-    data->number = 1;
-    data->useCurrentAttributes = true;
-    data->useCurrentLayer = true;
+    m_offsetData->distance = 0.;
+    m_offsetData->number = 1;
+    m_offsetData->useCurrentAttributes = true;
+    m_offsetData->useCurrentLayer = true;
 }
 
 // fixme - support remove originals mode
@@ -57,8 +55,8 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer &container,RS_Gr
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 void RS_ActionModifyOffset::doTrigger(bool keepSelected) {
-    RS_Modification m(*container, viewport);
-    m.offset(*data, selectedEntities, false, keepSelected);
+    RS_Modification m(*m_container, m_viewport);
+    m.offset(*m_offsetData, m_selectedEntities, false, keepSelected);
     finish(false);
 }
 
@@ -66,30 +64,30 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
     RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetReferencePoint:{
-            data->coord = getRelZeroAwarePoint(e, mouse);
-            RS_Modification m(*preview, viewport, false);
-            m.offset(*data, selectedEntities, true, false);
+            m_offsetData->coord = getRelZeroAwarePoint(e, mouse);
+            RS_Modification m(*m_preview, m_viewport, false);
+            m.offset(*m_offsetData, m_selectedEntities, true, false);
             break;
         }
         case SetPosition:{
-            data->coord = referencePoint;
-            RS_Vector offset = mouse - referencePoint;
-            if (!distanceIsFixed){
-                data->distance = offset.magnitude();
+            m_offsetData->coord = m_referencePoint;
+            RS_Vector offset = mouse - m_referencePoint;
+            if (!m_distanceIsFixed){
+                m_offsetData->distance = offset.magnitude();
             }
-            RS_Modification m(*preview, viewport, false);
-            m.offset(*data, selectedEntities, true, false);
+            RS_Modification m(*m_preview, m_viewport, false);
+            m.offset(*m_offsetData, m_selectedEntities, true, false);
 
-            if (showRefEntitiesOnPreview) {
-                previewRefPoint(referencePoint);
+            if (m_showRefEntitiesOnPreview) {
+                previewRefPoint(m_referencePoint);
                 previewRefSelectablePoint(mouse);
-                previewRefLine(referencePoint, mouse);
+                previewRefLine(m_referencePoint, mouse);
             }
 
             if (isInfoCursorForModificationEnabled()){
-                LC_InfoMessageBuilder msg(tr("Offset"));
-                msg.add(tr("Distance:"), formatLinear(data->distance));
-                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                msg(tr("Offset"))
+                    .linear(tr("Distance:"), m_offsetData->distance)
+                    .toInfoCursorZone2(false);
             }
             break;
         }
@@ -98,15 +96,15 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
     }
 }
 
-void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionModifyOffset::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
-            referencePoint = getRelZeroAwarePoint(e, e->snapPoint);
-            data->coord = referencePoint;
-            if (!distanceIsFixed){
-                moveRelativeZero(referencePoint);
+            m_referencePoint = getRelZeroAwarePoint(e, e->snapPoint);
+            m_offsetData->coord = m_referencePoint;
+            if (!m_distanceIsFixed){
+                moveRelativeZero(m_referencePoint);
             }
-            if (distanceIsFixed){
+            if (m_distanceIsFixed){
                 trigger();
             }
             else{
@@ -128,15 +126,15 @@ LC_ActionOptionsWidget* RS_ActionModifyOffset::createOptionsWidget() {
 }
 
 double RS_ActionModifyOffset::getDistance() {
-    return data->distance;
+    return m_offsetData->distance;
 }
 
 void RS_ActionModifyOffset::setDistance(double distance) {
-    data->distance = distance;
+    m_offsetData->distance = distance;
 }
 
 void RS_ActionModifyOffset::setDistanceFixed(bool value) {
-    distanceIsFixed = value;
+    m_distanceIsFixed = value;
     if (!value){
         if (getStatus() == SetPosition){
             setStatus(SetReferencePoint);
@@ -148,11 +146,11 @@ bool RS_ActionModifyOffset::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void RS_ActionModifyOffset::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
-        if (selectionComplete) {
-            selectionComplete = false;
+        if (m_selectionComplete) {
+            m_selectionComplete = false;
         }
         else{
             initPrevious(status);
@@ -166,7 +164,7 @@ void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[m
 void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetReferencePoint:
-            if (distanceIsFixed){
+            if (m_distanceIsFixed){
                 updateMouseWidgetTRBack(tr("Specify direction of offset"));
             }
             else {
@@ -187,5 +185,5 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
 }
 
 LC_ModifyOperationFlags* RS_ActionModifyOffset::getModifyOperationFlags() {
-    return data.get();
+    return m_offsetData.get();
 }

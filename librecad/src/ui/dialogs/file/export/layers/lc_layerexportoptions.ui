@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - /****************************************************************************
+  -
+  - Utility base class for widgets that represents options for actions
+  -
+  - Copyright (C) 2025 LibreCAD.org
+  - Copyright (C) 2025 sand1024
+  -
+  - This program is free software; you can redistribute it and/or
+  - modify it under the terms of the GNU General Public License
+  - as published by the Free Software Foundation; either version 2
+  - of the License, or (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  -
+  - You should have received a copy of the GNU General Public License
+  - along with this program; if not, write to the Free Software
+  - Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+  - **********************************************************************/
+  -
+  -->
+
+<ui version="4.0">
+ <class>LC_LayerExportOptionsWidget</class>
+ <widget class="QWidget" name="LC_LayerExportOptionsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>860</width>
+    <height>96</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Layers Export Options</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="cbExportNamedViews">
+        <property name="toolTip">
+         <string>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</string>
+        </property>
+        <property name="text">
+         <string>Export Named Views too</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cbCreateSeparateDrawingForLayer">
+        <property name="toolTip">
+         <string>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</string>
+        </property>
+        <property name="text">
+         <string>Export each layer to own drawing file</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbStoreEntitiesInOriginalLayer">
+        <property name="toolTip">
+         <string>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">margin-left:15px</string>
+        </property>
+        <property name="text">
+         <string>Retain original layer for entities</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="cbExportUCSs">
+        <property name="toolTip">
+         <string>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</string>
+        </property>
+        <property name="text">
+         <string>Export UCSs too</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

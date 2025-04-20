@@ -22,43 +22,41 @@
 
 #ifndef SHORTCUT_H
 #define SHORTCUT_H
-#include <QObject>
-#include <QWidget>
+
 #include <QPushButton>
 
-class LC_ShortcutInfo
-{
+class LC_ShortcutInfo{
 public:
     LC_ShortcutInfo(const QString& actionName,
                     const QKeySequence& default_key)
-        :name(actionName),
-         defaultKey(default_key),
-         key(default_key){
+        : m_name(actionName),
+          m_defaultKey(default_key),
+          m_key(default_key) {
     }
 
     static const char* PROPERTY_ACTION_SHORTCUT_CONFIGURABLE;
 
-    QString getName() const {return name;};
-    bool hasNoKey() const {return key.isEmpty();};
-    bool hasKey() const {return !key.isEmpty();};
+    QString getName() const {return m_name;};
+    bool hasNoKey() const {return m_key.isEmpty();};
+    bool hasKey() const {return !m_key.isEmpty();};
     QString retrieveKey(bool useDefault)const;
     QString getKeyAsString();
-    QKeySequence getKey() const {return key;};
+    QKeySequence getKey() const {return m_key;};
     QList<QKeySequence> getKeysList() const;
     void resetToDefault();
     void setKey(QKeySequence newKey);
-    bool isModified(){return modified;}
+    bool isModified(){return m_modified;}
     void clear();
-    bool hasCollision(){return collision;};
-    void setCollision(bool val){collision = val;};
+    bool hasCollision(){return m_collision;};
+    void setCollision(bool val){m_collision = val;};
     static int translateModifiers(Qt::KeyboardModifiers state,const QString &text);
     bool hasTheSameKey(QKeySequence sequenceToTest);
 protected:
-    QString name;
-    QKeySequence defaultKey;
-    QKeySequence key;
-    bool modified = false;
-    bool collision = false;
+    QString m_name;
+    QKeySequence m_defaultKey;
+    QKeySequence m_key;
+    bool m_modified = false;
+    bool m_collision = false;
 };
 
 #endif // SHORTCUT_H

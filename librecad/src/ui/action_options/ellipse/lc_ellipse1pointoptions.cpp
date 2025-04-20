@@ -23,7 +23,6 @@
 #include "lc_ellipse1pointoptions.h"
 #include "ui_lc_ellipse1pointoptions.h"
 #include "lc_actiondrawellipse1point.h"
-#include "rs_math.h"
 
 LC_Ellipse1PointOptions::LC_Ellipse1PointOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawEllipse1Point, "Draw","Ellipse1P")
@@ -53,16 +52,16 @@ void LC_Ellipse1PointOptions::doSaveSettings() {
     save("UseAngle", ui->cbAngle->isChecked());
     save("Angle", ui->leAngle->text());
     save("FreeAngle", ui->cbFreeAngle->isChecked());
-    if (action->rtti() == RS2::ActionDrawEllipseArc1Point){
+    if (m_action->rtti() == RS2::ActionDrawEllipseArc1Point){
         save("ArcReversed", ui->rbNeg->isChecked());
     }
 }
 
 void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<LC_ActionDrawEllipse1Point*> (a);
-    assert(action != nullptr);
-    if (action == nullptr)
+    m_action = dynamic_cast<LC_ActionDrawEllipse1Point*> (a);
+    if (m_action == nullptr) {
         return;
+    }
 
     QString majorRadius;
     QString minorRadius;
@@ -70,15 +69,15 @@ void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
     bool useAngle = false;
     bool freeAngle = false;
     bool negativeDirection = false;
-    bool arcAction = action->rtti() == RS2::ActionDrawEllipseArc1Point;
+    bool arcAction = m_action->rtti() == RS2::ActionDrawEllipseArc1Point;
     if (update){
-        majorRadius = fromDouble(action->getMajorRadius());
-        minorRadius = fromDouble(action->getMinorRadius());
-        angle = fromDouble(action->getUcsMajorAngleDegrees());
-        useAngle = action->hasAngle();
-        freeAngle = action->isAngleFree();
+        majorRadius = fromDouble(m_action->getMajorRadius());
+        minorRadius = fromDouble(m_action->getMinorRadius());
+        angle = fromDouble(m_action->getUcsMajorAngleDegrees());
+        useAngle = m_action->hasAngle();
+        freeAngle = m_action->isAngleFree();
         if (arcAction){
-            negativeDirection = action->isReversed();
+            negativeDirection = m_action->isReversed();
         }
     }
     else{
@@ -112,7 +111,7 @@ void LC_Ellipse1PointOptions::languageChange() {
 void LC_Ellipse1PointOptions::setMajorRadiusToActionAndView(QString val) {
     double y;
     if (toDouble(val, y, 1, true)){
-        action->setMajorRadius(y);
+        m_action->setMajorRadius(y);
         ui->leMajorRadius->setText(fromDouble(y));
     }
 }
@@ -120,7 +119,7 @@ void LC_Ellipse1PointOptions::setMajorRadiusToActionAndView(QString val) {
 void LC_Ellipse1PointOptions::setMinorRadiusToActionAndView(QString val) {
     double y;
     if (toDouble(val, y, 1, true)){
-        action->setMinorRadius(y);
+        m_action->setMinorRadius(y);
         ui->leMinorRadius->setText(fromDouble(y));
     }
 }
@@ -128,20 +127,20 @@ void LC_Ellipse1PointOptions::setMinorRadiusToActionAndView(QString val) {
 void LC_Ellipse1PointOptions::setAngleToActionAndView(QString val) {
     double y;
     if (toDoubleAngleDegrees(val, y, 0, false)){
-        action->setUcsMajorAngleDegrees(y);
+        m_action->setUcsMajorAngleDegrees(y);
         ui->leAngle->setText(fromDouble(y));
     }
 }
 
 void LC_Ellipse1PointOptions::setAngleIsFreeToActionAndView(bool val) {
-    action->setAngleFree(val);
+    m_action->setAngleFree(val);
     ui->cbFreeAngle->setChecked(val);
     ui->leAngle->setEnabled(!val);
 }
 
 void LC_Ellipse1PointOptions::setUseAngleAngleToActionAndView(bool val) {
     ui->cbAngle->setChecked(val);
-    action->setHasAngle(val);
+    m_action->setHasAngle(val);
     ui->leAngle->setEnabled(val && !ui->cbFreeAngle->isChecked());
     ui->cbFreeAngle->setEnabled(val);
 }
@@ -168,6 +167,5 @@ void LC_Ellipse1PointOptions::onFreeAngleClicked([[maybe_unused]]bool val) {
 
 void LC_Ellipse1PointOptions::onDirectionChanged([[maybe_unused]] bool val) {
     bool negative = ui->rbNeg->isChecked();
-    action->setReversed(negative);
-    
+    m_action->setReversed(negative);
 }

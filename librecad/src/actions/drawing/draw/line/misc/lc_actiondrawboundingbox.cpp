@@ -22,21 +22,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_actiondrawboundingbox.h"
+
 #include "lc_align.h"
 #include "lc_drawboundingboxoptions.h"
+#include "lc_graphicviewport.h"
 #include "lc_linemath.h"
-#include "rs_document.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 
-LC_ActionDrawBoundingBox::LC_ActionDrawBoundingBox(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView):
-    LC_ActionPreSelectionAwareBase("DrawBoundingBox", container, graphicView, {}, false, RS2::ActionDrawBoundingBox)
-{
+LC_ActionDrawBoundingBox::LC_ActionDrawBoundingBox(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("DrawBoundingBox", actionContext, RS2::ActionDrawBoundingBox){
 }
 
 void LC_ActionDrawBoundingBox::init(int status) {
@@ -49,38 +47,38 @@ void LC_ActionDrawBoundingBox::updateMouseButtonHintsForSelection() {
 }
 
 void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
-    if (document != nullptr) {
-        RS_Graphic* graphic = graphicView->getGraphic();
+    if (m_document != nullptr) {
+        RS_Graphic* graphic = m_graphicView->getGraphic();
         RS_Layer* activeLayer = graphic->getActiveLayer();
-        RS_Pen pen = document->getActivePen();
+        RS_Pen pen = m_document->getActivePen();
         undoCycleStart();
-        if (selectionAsGroup) {
+        if (m_selectionAsGroup) {
             RS_Vector selectionMin;
             RS_Vector selectionMax;
-            LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
+            LC_Align::collectSelectionBounds(m_selectedEntities, selectionMin, selectionMax);
 
-            if (cornerPointsOnly){
-                createCornerPoints(activeLayer, pen, selectionMin-offset, selectionMax+offset);
+            if (m_cornerPointsOnly){
+                createCornerPoints(activeLayer, pen, selectionMin-m_offset, selectionMax+m_offset);
             }
             else{
-                if (createPolyline){
-                    createBoxPolyline(activeLayer, pen, selectionMin-offset, selectionMax+offset);
+                if (m_createPolyline){
+                    createBoxPolyline(activeLayer, pen, selectionMin-m_offset, selectionMax+m_offset);
                 }
                 else {
-                    createBoxLines(activeLayer, pen, selectionMin-offset, selectionMax+offset);
+                    createBoxLines(activeLayer, pen, selectionMin-m_offset, selectionMax+m_offset);
                 }
             }
         } else {
-            for (auto e: selectedEntities){
-                if (cornerPointsOnly){
-                    createCornerPoints(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
+            for (auto e: m_selectedEntities){
+                if (m_cornerPointsOnly){
+                    createCornerPoints(activeLayer, pen, e->getMin()-m_offset, e->getMax()+m_offset);
                 }
                 else{
-                    if (createPolyline) {
-                        createBoxPolyline(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
+                    if (m_createPolyline) {
+                        createBoxPolyline(activeLayer, pen, e->getMin()-m_offset, e->getMax()+m_offset);
                     }
                     else{
-                        createBoxLines(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
+                        createBoxLines(activeLayer, pen, e->getMin()-m_offset, e->getMax()+m_offset);
                     }
                 }
             }
@@ -88,19 +86,19 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
         undoCycleEnd();
     }
     // todo - sand - ucs - rework later as bounding box for entities will support ucs
-    if (viewport->hasUCS()){
-        if (LC_LineMath::isMeaningfulAngle(viewport->getXAxisAngle())){
+    if (m_viewport->hasUCS()){
+        if (LC_LineMath::isMeaningfulAngle(m_viewport->getXAxisAngle())){
             // ucs is rotated and resulting bounding box will be actually for wcs.
             // warn the user
             commandMessage(tr("Note: Bounding box was created for world coordinate system."));
         }
     }
-    selectedEntities.clear();
+    m_selectedEntities.clear();
     finish(false);
 }
 
 void LC_ActionDrawBoundingBox::createBoxPolyline(RS_Layer *activeLayer, const RS_Pen &pen, const RS_Vector &selectionMin, const RS_Vector &selectionMax) {
-    auto e = new RS_Polyline(container);
+    auto e = new RS_Polyline(m_container);
     e->setLayer(activeLayer);
     e->setPen(pen);
 
@@ -110,8 +108,8 @@ void LC_ActionDrawBoundingBox::createBoxPolyline(RS_Layer *activeLayer, const RS
     e->addVertex({selectionMax.x, selectionMax.y});
     e->addVertex({selectionMin.x, selectionMax.y});
 
-    container->addEntity(e);
-    document->addUndoable(e);
+    m_container->addEntity(e);
+    m_document->addUndoable(e);
 }
 
 void LC_ActionDrawBoundingBox::createBoxLines(RS_Layer *activeLayer, const RS_Pen &pen, const RS_Vector &selectionMin, const RS_Vector &selectionMax) {
@@ -129,18 +127,18 @@ void LC_ActionDrawBoundingBox::createCornerPoints(RS_Layer *activeLayer, const R
 }
 
 void LC_ActionDrawBoundingBox::createPoint(RS_Layer *activeLayer, const RS_Pen &pen, double x, double y) {
-    auto e = new RS_Point(container, {{x, y}});
+    auto e = new RS_Point(m_container, {{x, y}});
     e->setLayer(activeLayer);
     e->setPen(pen);
-    container->addEntity(e);
-    document->addUndoable(e);
+    m_container->addEntity(e);
+    m_document->addUndoable(e);
 }
 
 void LC_ActionDrawBoundingBox::createLine(RS_Layer *activeLayer, const RS_Pen &pen, double x1, double y1, double x2, double y2) {
-    auto e = new RS_Line(container, {{x1, y1}, {x2, y2}});
+    auto e = new RS_Line(m_container, {{x1, y1}, {x2, y2}});
     e->setLayer(activeLayer);
     e->setPen(pen);
-    container->addEntity(e);
+    m_container->addEntity(e);
     undoableAdd(e);
 }
 

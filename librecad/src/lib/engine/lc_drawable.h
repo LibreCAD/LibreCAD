@@ -30,9 +30,7 @@ class RS_Painter;
 class LC_Drawable {
 public:
     virtual ~LC_Drawable() = default;
-
     virtual void draw(RS_Painter *painter) = 0;
-
     // fixme - remove pattern offset - introduced in 6fe841c8fed4d16e68ac1512ebfa69473577c723, 11/10/2011
 
     /**

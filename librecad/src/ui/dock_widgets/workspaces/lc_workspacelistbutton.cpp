@@ -24,17 +24,19 @@
 
 #include <QMenu>
 
-LC_WorkspaceListButton::LC_WorkspaceListButton(QC_ApplicationWindow *w):QToolButton(nullptr), mainWin{w} {
+#include "qc_applicationwindow.h"
+
+LC_WorkspaceListButton::LC_WorkspaceListButton(QC_ApplicationWindow *w):QToolButton(nullptr), m_appWin{w} {
     setPopupMode(QToolButton::MenuButtonPopup);
-    menu = new QMenu();
-    connect(menu, &QMenu::aboutToShow, this, &LC_WorkspaceListButton::fillMenu);
-    setMenu(menu);
-    wsIcon = QIcon(":/icons/workspace.lci");
+    m_menu = new QMenu();
+    connect(m_menu, &QMenu::aboutToShow, this, &LC_WorkspaceListButton::fillMenu);
+    setMenu(m_menu);
+    m_wcsIcon = QIcon(":/icons/workspace.lci");
 }
 
 void LC_WorkspaceListButton::enableSubActions(bool value){
     if (value){
-        setMenu(menu);
+        setMenu(m_menu);
     }
     else{
         setMenu(nullptr);
@@ -45,41 +47,41 @@ void LC_WorkspaceListButton::enableSubActions(bool value){
 // therefore, the list of actions is reused, and not-needed actions are simply invisible.
 void LC_WorkspaceListButton::fillMenu() {
     QList<QPair<int, QString>> workspacesList;
-    mainWin->fillWorkspacesList(workspacesList);
+    m_appWin->fillWorkspacesList(workspacesList);
 
     int workspacesCount = workspacesList.count();
-    int actionsCount = createdActions.count();
+    int actionsCount = m_createdActions.count();
     if (workspacesCount <= actionsCount){
         int i;
         for (i = 0; i < workspacesCount; i++){
-            auto a = createdActions.at(i);
+            auto a = m_createdActions.at(i);
             auto w = workspacesList.at(i);
             a->setText(w.second);
-            a->setIcon(wsIcon);
+            a->setIcon(m_wcsIcon);
             a->setVisible(true);
             a->setProperty("_WSPS_IDX", QVariant(w.first));
         }
         for (;i < actionsCount; i++){
-            QAction* a = createdActions.at(i);
+            QAction* a = m_createdActions.at(i);
             a->setVisible(false);
         }
     }
     else{
         int i;
         for (i = 0;  i < actionsCount; i++){
-            auto a = createdActions.at(i);
+            auto a = m_createdActions.at(i);
             auto w = workspacesList.at(i);
             a->setText(w.second);
-            a->setIcon(wsIcon);
+            a->setIcon(m_wcsIcon);
             a->setVisible(true);
             a->setProperty("_WSPS_IDX", QVariant(w.first));
         }
         for (; i < workspacesCount; i++){
             auto w = workspacesList.at(i);
             auto name = w.second;
-            auto* a = menu->addAction(wsIcon, name);
+            auto* a = m_menu->addAction(m_wcsIcon, name);
             connect(a, &QAction::triggered, this, &LC_WorkspaceListButton::menuTriggered);
-            createdActions << a;
+            m_createdActions << a;
             a->setEnabled(true);
             a->setCheckable(false);
             a->setVisible(true);
@@ -88,13 +90,13 @@ void LC_WorkspaceListButton::fillMenu() {
     }
 }
 
-void LC_WorkspaceListButton::menuTriggered([[maybe_unused]]bool checked){
+void LC_WorkspaceListButton::menuTriggered([[maybe_unused]]bool checked) const {
     auto *action = qobject_cast<QAction*>(sender());
     if (action != nullptr) {
         QVariant variant = action->property("_WSPS_IDX");
         if (variant.isValid()){
             int id = variant.toInt();
-            mainWin->applyWorkspaceById(id);
+            m_appWin->applyWorkspaceById(id);
         }
     }
 }

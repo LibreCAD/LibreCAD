@@ -27,11 +27,7 @@
 
 #ifndef RS_ACTIONDIMANGULAR_H
 #define RS_ACTIONDIMANGULAR_H
-
-#include <vector>
-
 #include "rs_actiondimension.h"
-#include "rs_line.h"
 
 struct RS_DimAngularData;
 
@@ -43,8 +39,7 @@ struct RS_DimAngularData;
 class RS_ActionDimAngular : public RS_ActionDimension{
     Q_OBJECT
 public:
-    RS_ActionDimAngular(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionDimAngular(LC_ActionContext *actionContext);
     ~RS_ActionDimAngular() override;
     QStringList getAvailableCommands() override;
 protected:
@@ -54,16 +49,15 @@ protected:
         SetPos,        ///< Choose position
         SetText        ///< Setting text label in console
     };
-    RS_Line*     line1 = nullptr;                          ///< 1st chosen line
-
-    RS_Line*     line2 = nullptr;                          ///< 2nd chosen line
-    RS_Vector   click1;                         ///< 1st click pos
-    RS_Vector   click2;                         ///< 2nd click pos
-    RS_Vector   center;                         ///< Center of arc
-    std::unique_ptr<RS_DimAngularData> edata;   ///< Data of new dimension
-    Status      lastStatus = SetLine1;                     ///< Last status before entering text
-    std::vector<double> angles;                 ///< Array to sort line angles
-    int         quadrantOffset {0};             ///< Offset on starting determineQuadrant
+    RS_Line*     m_line1 = nullptr;                          ///< 1st chosen line
+    RS_Line*     m_line2 = nullptr;                          ///< 2nd chosen line
+    RS_Vector   m_click1;                         ///< 1st click pos
+    RS_Vector   m_click2;                         ///< 2nd click pos
+    RS_Vector   m_center;                         ///< Center of arc
+    std::unique_ptr<RS_DimAngularData> m_edata;   ///< Data of new dimension
+    Status      m_lastStatus = SetLine1;                     ///< Last status before entering text
+    std::vector<double> m_angles;                 ///< Array to sort line angles
+    int         m_quadrantOffset {0};             ///< Offset on starting determineQuadrant
 
     void reset() override;
     RS_LineData justify( RS_Line* line, const RS_Vector &click);

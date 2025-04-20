@@ -27,9 +27,7 @@
 #ifndef RS_ACTIONINFOTOTALLENGTH_H
 #define RS_ACTIONINFOTOTALLENGTH_H
 
-#include "rs_actioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
-
 
 /**
  * This action class can handle user events to delete entities.
@@ -37,13 +35,9 @@
  * @author Andrew Mustun
  */
 class RS_ActionInfoTotalLength : public LC_ActionPreSelectionAwareBase {
-Q_OBJECT
-
-
+    Q_OBJECT
 public:
-    RS_ActionInfoTotalLength(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
-
+    RS_ActionInfoTotalLength(LC_ActionContext *actionContext);
     void drawSnapper() override;
 protected:
     /**

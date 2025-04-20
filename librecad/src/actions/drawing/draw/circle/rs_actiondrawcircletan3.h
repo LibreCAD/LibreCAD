@@ -23,7 +23,6 @@
 #ifndef RS_ACTIONDRAWCIRCLETAN3_H
 #define RS_ACTIONDRAWCIRCLETAN3_H
 
-#include<vector>
 #include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
@@ -37,9 +36,7 @@ class RS_AtomicEntity;
 class RS_ActionDrawCircleTan3:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleTan3(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleTan3(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleTan3() override;
     void init(int status) override;
 //    void coordinateEvent(RS_CoordinateEvent* e) override;
@@ -55,14 +52,15 @@ protected:
         SetCircle3,   //  Setting the Third Circle.  */
         SetCenter   //  select the closest tangential Circle.  */
     };
+
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+
     void drawSnapper() override;
     bool preparePreview();
-    struct Points;
     RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
-    std::unique_ptr<Points> pPoints;
     bool getData(RS_Entity *en = nullptr);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
-
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

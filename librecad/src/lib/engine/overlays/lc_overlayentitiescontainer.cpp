@@ -21,8 +21,8 @@
  ******************************************************************************/
 
 #include "lc_overlayentitiescontainer.h"
-#include "rs_painter.h"
 #include "lc_overlayentity.h"
+#include "rs_painter.h"
 
 LC_OverlayDrawablesContainer::LC_OverlayDrawablesContainer() {}
 

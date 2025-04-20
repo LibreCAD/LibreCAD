@@ -24,7 +24,7 @@
 #include "ui_lc_inputtextdialog.h"
 
 LC_InputTextDialog::LC_InputTextDialog(QWidget *parent)
-    : QDialog(parent)
+    : LC_Dialog(parent, "InputDlg")
     , ui(new Ui::LC_InputTextDialog){
     ui->setupUi(this);
 }

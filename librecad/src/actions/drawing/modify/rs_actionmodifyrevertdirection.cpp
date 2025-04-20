@@ -25,19 +25,19 @@
 **********************************************************************/
 
 #include "rs_actionmodifyrevertdirection.h"
+
 #include "rs_debug.h"
-#include "rs_document.h"
+#include "rs_entity.h"
 #include "rs_modification.h"
 
-RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
-	:LC_ActionPreSelectionAwareBase("Revert direction", container, graphicView,{}){
-    actionType = RS2::ActionModifyRevertDirection;
+RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(LC_ActionContext *actionContext)
+	:LC_ActionPreSelectionAwareBase("Revert direction", actionContext,RS2::ActionModifyRevertDirection,{}){
 }
 
 void RS_ActionModifyRevertDirection::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
-    RS_Modification m(*container, viewport);
-    m.revertDirection(selectedEntities, keepSelected);
+    RS_Modification m(*m_container, m_viewport);
+    m.revertDirection(m_selectedEntities, keepSelected);
 }
 
 bool RS_ActionModifyRevertDirection::isShowRefPointsOnHighlight() {

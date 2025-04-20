@@ -34,7 +34,7 @@ LC_ModifyStretchOptions::LC_ModifyStretchOptions()
 
 LC_ModifyStretchOptions::~LC_ModifyStretchOptions(){
     delete ui;
-    action = nullptr;
+    m_action = nullptr;
 }
 
 void LC_ModifyStretchOptions::doSaveSettings() {
@@ -42,10 +42,10 @@ void LC_ModifyStretchOptions::doSaveSettings() {
 }
 
 void LC_ModifyStretchOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionModifyStretch *>(a);
+    m_action = dynamic_cast<RS_ActionModifyStretch *>(a);
     bool keepOriginals;
     if (update){
-        keepOriginals = !action->isRemoveOriginals();
+        keepOriginals = !m_action->isRemoveOriginals();
     }
     else{
         keepOriginals = loadBool("KeepOriginals", false);
@@ -63,5 +63,5 @@ void LC_ModifyStretchOptions::onKeepOriginalsClicked(bool val) {
 
 void LC_ModifyStretchOptions::setKeepOriginalsToActionAndView(bool val) {
     ui->cbKeepOriginals->setChecked(val);
-    action->setRemoveOriginals(!val);
+    m_action->setRemoveOriginals(!val);
 }

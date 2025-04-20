@@ -25,8 +25,11 @@
 **********************************************************************/
 
 #include <iostream>
-#include <QHash>
 #include "rs_fontlist.h"
+
+#include <QFileInfo>
+#include <QStringList>
+
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_system.h"
@@ -138,7 +141,3 @@ std::ostream& operator << (std::ostream& os, RS_FontList& l) {
 
     return os;
 }
-
-
-
-

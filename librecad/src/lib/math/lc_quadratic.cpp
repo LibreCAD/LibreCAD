@@ -24,17 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <cfloat>
 #include <numeric>
 
-#include <QDebug>
-
 #include "lc_quadratic.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
+
+#include "rs_atomicentity.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
-#include "rs_vector.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */

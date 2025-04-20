@@ -26,12 +26,10 @@
 
 
 #include "rs_actiondrawcircle2p.h"
+
 #include "rs_circle.h"
-#include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
-#include "rs_preview.h"
 
 struct RS_ActionDrawCircle2P::Points {
     /**
@@ -44,33 +42,30 @@ struct RS_ActionDrawCircle2P::Points {
     RS_Vector point2;
 };
 
-RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView)
-    :LC_ActionDrawCircleBase("Draw circles",
-                               container, graphicView)
-    , data(new RS_CircleData())
-    , pPoints(std::make_unique<Points>()){
-    actionType=RS2::ActionDrawCircle2P;
+RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(LC_ActionContext *actionContext)
+    :LC_ActionDrawCircleBase("Draw circles",actionContext, RS2::ActionDrawCircle2P)
+    , m_circleData(new RS_CircleData())
+    , m_actionData(std::make_unique<Points>()){
     reset();
 }
 
 RS_ActionDrawCircle2P::~RS_ActionDrawCircle2P() = default;
 
 void RS_ActionDrawCircle2P::reset() {
-    data.reset(new RS_CircleData{});
-    pPoints->point1 = {};
-    pPoints->point2 = {};
+    m_circleData.reset(new RS_CircleData{});
+    m_actionData->point1 = {};
+    m_actionData->point2 = {};
 }
 
 void RS_ActionDrawCircle2P::doTrigger() {
     preparePreview();
-    if (data->isValid()){
-        auto *circle = new RS_Circle(container,*data);
+    if (m_circleData->isValid()){
+        auto *circle = new RS_Circle(m_container,*m_circleData);
 
         setPenAndLayerToActive(circle);
 
-        if (moveRelPointAtCenterAfterTrigger){
-            moveRelativeZero(data->center);
+        if (m_moveRelPointAtCenterAfterTrigger){
+            moveRelativeZero(m_circleData->center);
         }
 
         undoCycleAdd(circle);
@@ -81,12 +76,12 @@ void RS_ActionDrawCircle2P::doTrigger() {
 }
 
 void RS_ActionDrawCircle2P::preparePreview() {
-    data.reset(new RS_CircleData{});
-    if (pPoints->point1.valid && pPoints->point2.valid) {
-        RS_Circle circle(nullptr, *data);
-        bool suc = circle.createFrom2P(pPoints->point1, pPoints->point2);
+    m_circleData.reset(new RS_CircleData{});
+    if (m_actionData->point1.valid && m_actionData->point2.valid) {
+        RS_Circle circle(nullptr, *m_circleData);
+        bool suc = circle.createFrom2P(m_actionData->point1, m_actionData->point2);
         if (suc) {
-            data.reset(new RS_CircleData(circle.getData()));
+            m_circleData.reset(new RS_CircleData(circle.getData()));
         }
     }
 }
@@ -95,21 +90,21 @@ void RS_ActionDrawCircle2P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint1: {
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetPoint2: {
-            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-            pPoints->point2 = mouse;
+            mouse = getSnapAngleAwarePoint(e, m_actionData->point1, mouse, true);
+            m_actionData->point2 = mouse;
             preparePreview();
-            if (data->isValid()){
-                previewToCreateCircle(*data);
-                if (showRefEntitiesOnPreview) {
-                    previewRefPoint(data->center);
-                    previewRefPoint(pPoints->point1);
-                    previewRefSelectablePoint(pPoints->point2);
-                    previewRefLine(data->center, pPoints->point1);
+            if (m_circleData->isValid()){
+                previewToCreateCircle(*m_circleData);
+                if (m_showRefEntitiesOnPreview) {
+                    previewRefPoint(m_circleData->center);
+                    previewRefPoint(m_actionData->point1);
+                    previewRefSelectablePoint(m_actionData->point2);
+                    previewRefLine(m_circleData->center, m_actionData->point1);
                 }
             }
 
@@ -123,7 +118,7 @@ void RS_ActionDrawCircle2P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionDrawCircle2P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
-        coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        coord = getSnapAngleAwarePoint(e, m_actionData->point1, coord);
     }
     fireCoordinateEvent(coord);
 }
@@ -136,13 +131,13 @@ void RS_ActionDrawCircle2P::onMouseRightButtonRelease(int status, [[maybe_unused
 void RS_ActionDrawCircle2P::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPoint1: {
-            pPoints->point1 = mouse;
+            m_actionData->point1 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
-            pPoints->point2 = mouse;
+            m_actionData->point2 = mouse;
             moveRelativeZero(mouse);
             trigger();
             break;

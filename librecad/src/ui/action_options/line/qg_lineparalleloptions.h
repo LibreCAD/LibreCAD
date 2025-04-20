@@ -26,8 +26,6 @@
 #ifndef QG_LINEPARALLELOPTIONS_H
 #define QG_LINEPARALLELOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -51,8 +49,8 @@ protected:
     void doSaveSettings() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
-    RS_ActionDrawLineParallel* action = nullptr;
-	   std::unique_ptr<Ui::Ui_LineParallelOptions> ui;
+    RS_ActionDrawLineParallel* m_action = nullptr;
+	std::unique_ptr<Ui::Ui_LineParallelOptions> ui;
     void setDistanceToActionAndView(QString val);
     void setNumberToActionAndView(int number);
 };

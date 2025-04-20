@@ -37,20 +37,21 @@
  *  true to construct a modal dialog.
  */
 QG_DlgInitial::QG_DlgInitial(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
+    : QDialog(parent, fl) {
     setModal(modal);
     setupUi(this);
 
     init();
 }
 
+QG_DlgInitial::~QG_DlgInitial() {
+}
+
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgInitial::languageChange()
-{
+void QG_DlgInitial::languageChange(){
     retranslateUi(this);
 }
 

@@ -23,15 +23,19 @@
 #include "lc_overlayboxaction.h"
 #include "rs_overlaybox.h"
 
-LC_OverlayBoxAction::LC_OverlayBoxAction(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, container, graphicView, actionType) {}
+LC_OverlayBoxAction::LC_OverlayBoxAction(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+    : RS_PreviewActionInterface(name, actionContext, actionType),
+      m_overlayBoxOptions{std::make_unique<LC_OverlayBoxOptions>()} {
+}
+
+LC_OverlayBoxAction::~LC_OverlayBoxAction() = default;
 
 void LC_OverlayBoxAction::drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2) {
-    auto* ob = new RS_OverlayBox(corner1, corner2, &overlayBoxOptions);
+    auto* ob = new RS_OverlayBox(corner1, corner2, m_overlayBoxOptions.get());
     addOverlay(ob, RS2::OverlayGraphics::OverlayEffects);
 }
 
 void LC_OverlayBoxAction::initFromSettings() {
     RS_Snapper::initFromSettings();
-    overlayBoxOptions.loadSettings();
+    m_overlayBoxOptions->loadSettings();
 }

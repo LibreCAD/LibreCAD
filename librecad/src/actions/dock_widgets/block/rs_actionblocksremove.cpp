@@ -25,42 +25,39 @@
 **********************************************************************/
 
 #include "rs_actionblocksremove.h"
+
 #include "rs_debug.h"
-#include "rs_block.h"
-#include "rs_dialogfactoryinterface.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_insert.h"
 
+class RS_BlockList;
 
-RS_ActionBlocksRemove::RS_ActionBlocksRemove(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :RS_ActionInterface("Remove Block", container, graphicView) {}
+RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
+    :RS_ActionInterface("Remove Block", actionContext, RS2::ActionBlocksRemove) {}
 
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 
-    if (!(graphic && document)) {
+    if (!(m_graphic && m_document)) {
         finish(false);
         return;
     }
 
-    RS_BlockList *bl = graphic->getBlockList();
-    QList<RS_Block *> blocks =
-        RS_DIALOGFACTORY->requestSelectedBlocksRemovalDialog(bl);
+    RS_BlockList *blockList = m_graphic->getBlockList();
+    QList<RS_Block *> blocks = RS_DIALOGFACTORY->requestSelectedBlocksRemovalDialog(blockList);
 
     if (blocks.isEmpty()) {
         finish(false);
         return;
     }
 
-// list of containers that might refer to the block via inserts:
+    // list of containers that might refer to the block via inserts:
     std::vector<RS_EntityContainer *> containerList;
-    containerList.push_back(graphic);
-    for (int bi = 0; bi < bl->count(); bi++) {
-        containerList.push_back(bl->at(bi));
+    containerList.push_back(m_graphic);
+    for (int bi = 0; bi < blockList->count(); bi++) {
+        containerList.push_back(blockList->at(bi));
     }
 
     undoCycleStart();
@@ -70,15 +67,15 @@ void RS_ActionBlocksRemove::trigger() {
             continue;
         }
         for (auto cont: containerList) {
-// remove all inserts from the graphic:
+        // remove all inserts from the graphic:
             bool done;
             do {
                 done = true;
                 for (auto e: *cont) {
                     if (e->is(RS2::EntityInsert)) {
-                        auto *ins = (RS_Insert *) e;
+                        auto *ins = static_cast<RS_Insert *>(e);
                         if (ins->getName() == block->getName() && !ins->isUndone()) {
-                            document->addUndoable(ins);
+                            m_document->addUndoable(ins);
                             ins->setUndoState(true);
                             done = false;
                             break;
@@ -88,25 +85,25 @@ void RS_ActionBlocksRemove::trigger() {
             } while (!done);
         }
 
-// clear selection and active state
+        // clear selection and active state
         block->selectedInBlockList(false);
-        if (block == bl->getActive()) {
-            bl->activate(nullptr);
+        if (block == blockList->getActive()) {
+            blockList->activate(nullptr);
         }
 
-// close all windows that are editing this block:
+        // close all windows that are editing this block:
         RS_DIALOGFACTORY->closeEditBlockWindow(block);
 
         // Now remove block from the block list, but do not delete:
         block->setUndoState(true);
-        document->addUndoable(block);
+        m_document->addUndoable(block);
     }
     undoCycleEnd();
 
-    graphic->addBlockNotification();
-    graphic->updateInserts();
+    m_graphic->addBlockNotification();
+    m_graphic->updateInserts();
     redrawDrawing();
-    bl->activate(nullptr);
+    blockList->activate(nullptr);
 
     finish(false);
     updateSelectionWidget();

@@ -29,19 +29,20 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include <QItemSelection>
-#include <QWidget>
 
+#include "lc_graphicviewawarewidget.h"
 #include "rs_blocklistlistener.h"
 
+class LC_ActionGroupManager;
 class QG_ActionHandler;
+class QItemSelection;
 class QTableView;
 class QLineEdit;
 
 class RS_Block;
 class RS_BlockList;
 class QG_BlockModel;
-
+class LC_FlexLayout;
 
 /**
  * Implementation of a model to use in QG_BlockWidget
@@ -67,13 +68,13 @@ public:
     RS_Block *getBlock( int row) const;
     QModelIndex getIndex (RS_Block * blk) const;
 
-    RS_Block* getActiveBlock() const { return activeBlock; }
-    void setActiveBlock(RS_Block* b) { activeBlock = b; }
+    RS_Block* getActiveBlock() const { return m_activeBlock; }
+    void setActiveBlock(RS_Block* b) { m_activeBlock = b; }
 private:
-    QList<RS_Block*> listBlock;
-    QIcon blockVisible;
-    QIcon blockHidden;
-    RS_Block* activeBlock {nullptr};
+    QList<RS_Block*> m_listBlock;
+    QIcon m_iconBlockVisible;
+    QIcon m_iconBlockHidden;
+    RS_Block* m_activeBlock {nullptr};
 };
 
 
@@ -81,27 +82,18 @@ private:
  * This is the Qt implementation of a widget which can view a 
  * block list.
  */
-class QG_BlockWidget: public QWidget, public RS_BlockListListener {
+class QG_BlockWidget: public LC_GraphicViewAwareWidget, public RS_BlockListListener {
     Q_OBJECT
-
 public:
-    QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
+    QG_BlockWidget(LC_ActionGroupManager* m_actionGroupManager, QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
-
-    void setBlockList(RS_BlockList* blockList) {
-        this->blockList = blockList;
-        update();
-    }
-
+    void setGraphicView(RS_GraphicView* doc) override;
     RS_BlockList* getBlockList() {
-        return blockList;
+        return m_blockList;
     }
-
     void update();
     void activateBlock(RS_Block* block);
-
     void blockAdded(RS_Block*) override;
-
     void blockEdited(RS_Block*) override{
         update();
     }
@@ -111,31 +103,28 @@ public:
     void blockToggled(RS_Block*) override{
         update();
     }
-
 signals:
     void escape();
-
 public slots:
-    void slotActivated(QModelIndex blockIdx);
-    void slotSelectionChanged(
-        const QItemSelection &selected,
-        const QItemSelection &deselected);
-    void slotUpdateBlockList();
-    void updateWidgetSettings();
+    void slotActivated(const QModelIndex &blockIdx);
+    void slotSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected) const;
+    void slotUpdateBlockList() const;
+    void updateWidgetSettings() const;
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
+    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType);
     void keyPressEvent(QKeyEvent* e) override;
-
+    void setBlockList(RS_BlockList* blockList);
+    void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
 private:
-    RS_BlockList* blockList = nullptr;
-    QLineEdit* matchBlockName = nullptr;
-    QTableView* blockView = nullptr;
-    QG_BlockModel *blockModel = nullptr;
-    RS_Block* lastBlock = nullptr;
-
-    QG_ActionHandler* actionHandler = nullptr;
-
-    void restoreSelections();
+    RS_BlockList* m_blockList = nullptr;
+    QLineEdit* m_matchBlockName = nullptr;
+    QTableView* m_blockView = nullptr;
+    QG_BlockModel *m_blockModel = nullptr;
+    RS_Block* m_lastBlock = nullptr;
+    QG_ActionHandler* m_actionHandler = nullptr;
+    LC_ActionGroupManager* m_actionGroupManager{nullptr};
+    void restoreSelections() const;
 };
 
 #endif

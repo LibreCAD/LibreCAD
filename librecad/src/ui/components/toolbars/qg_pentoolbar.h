@@ -26,12 +26,13 @@
 
 #ifndef QG_PENTOOLBAR_H
 #define QG_PENTOOLBAR_H
-
-#include <memory>
 #include <QToolBar>
 
+#include "lc_graphicviewaware.h"
 #include "rs_layerlistlistener.h"
+#include "rs_pen.h"
 
+class RS_LayerList;
 class QG_ColorBox;
 class QG_WidthBox;
 class QG_LineTypeBox;
@@ -39,15 +40,14 @@ class QG_LineTypeBox;
 /**
  * A toolbar that offers all widgets for choosing a pen.
  */
-class QG_PenToolBar: public QToolBar,
-    public RS_LayerListListener {
+class QG_PenToolBar: public QToolBar, public LC_GraphicViewAware, public RS_LayerListListener {
     Q_OBJECT
-
 public:
 	QG_PenToolBar( const QString & title, QWidget * parent = 0 );
     virtual ~QG_PenToolBar();
+    void updateByLayer(RS_Layer* l);
 
-	RS_Pen getPen() const;
+    RS_Pen getPen() const;
 
     // Methods from RS_LayerListListener Interface:
     void layerActivated(RS_Layer*) override;
@@ -62,19 +62,20 @@ public:
     void setLineType(RS2::LineType lineType);
     void emitPenChanged();
 
+    void setGraphicView(RS_GraphicView* gview) override;
 public slots:
     void slotColorChanged(const RS_Color& color);
     void slotWidthChanged(RS2::LineWidth w);
     void slotLineTypeChanged(RS2::LineType w);
-
 signals:
     void penChanged(RS_Pen);
-
 private:
-	std::unique_ptr<RS_Pen> currentPen;
-	std::unique_ptr<QG_ColorBox> colorBox;
-	std::unique_ptr<QG_WidthBox> widthBox;
-	std::unique_ptr<QG_LineTypeBox> lineTypeBox;
+    void setLayerList(RS_LayerList* ll);
+    RS_LayerList* m_layerList{nullptr};
+	std::unique_ptr<RS_Pen> m_currentPen;
+	std::unique_ptr<QG_ColorBox> m_colorBox;
+	std::unique_ptr<QG_WidthBox> m_widthBox;
+	std::unique_ptr<QG_LineTypeBox> m_lineTypeBox;
 };
 
 #endif

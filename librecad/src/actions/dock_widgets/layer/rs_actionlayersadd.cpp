@@ -24,26 +24,24 @@
 **
 **********************************************************************/
 
-#include "qg_layerwidget.h"
 #include "rs_actionlayersadd.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
-RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-        :RS_ActionInterface("Add Layer", container, graphicView) {}
+RS_ActionLayersAdd::RS_ActionLayersAdd(LC_ActionContext *actionContext)
+        :RS_ActionInterface("Add Layer", actionContext, RS2::ActionLayersAdd) {}
 
 void RS_ActionLayersAdd::trigger() {
     RS_DEBUG->print("add layer");
 
-    if (graphic) {
-        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(graphic->getLayerList());
+    if (m_graphic) {
+        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(m_graphic->getLayerList());
         if (layer != nullptr) {
-            graphic->addLayer(layer);
+            m_graphic->addLayer(layer);
         }
-        graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);
 }

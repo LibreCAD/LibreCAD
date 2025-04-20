@@ -25,52 +25,46 @@
 **********************************************************************/
 
 #include "rs_actionsnapintersectionmanual.h"
+
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_preview.h"
 
-/**
- * @param both Trim both entities.
- */
-RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
-		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Trim Entity",
-							   container, graphicView)
-	,entity1(nullptr)
-    ,entity2(nullptr)
-    ,coord(std::make_unique<RS_Vector>()){
+// fixme - sand - action type is not set!!
+RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(LC_ActionContext *actionContext)
+	:RS_PreviewActionInterface("Trim Entity", actionContext)
+	,m_entity1(nullptr)
+    ,m_entity2(nullptr)
+    ,m_coord(std::make_unique<RS_Vector>()){
 }
 
 RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
 
 void RS_ActionSnapIntersectionManual::init(int status){
     RS_ActionInterface::init(status);
-    snapMode.clear();
+    m_snapMode.clear();
 }
 
 void RS_ActionSnapIntersectionManual::trigger(){
 
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::trigger()");
 
-    if (entity2 && entity2->isAtomic() &&
-        entity1 && entity1->isAtomic()){
+    if (m_entity2 && m_entity2->isAtomic() &&
+        m_entity1 && m_entity1->isAtomic()){
 
         RS_VectorSolutions sol =
-            RS_Information::getIntersection(entity1, entity2, false);
+            RS_Information::getIntersection(m_entity1, m_entity2, false);
 
-        entity2 = nullptr;
-        entity1 = nullptr;
-        if (predecessor){
-            RS_Vector ip = sol.getClosest(*coord);
+        m_entity2 = nullptr;
+        m_entity1 = nullptr;
+        if (m_predecessor){
+            RS_Vector ip = sol.getClosest(*m_coord);
 
             if (ip.valid){
                 RS_CoordinateEvent e(ip);
-                predecessor->coordinateEvent(&e);
+                m_predecessor->coordinateEvent(&e);
             }
         }
         finish(false);
@@ -83,26 +77,26 @@ void RS_ActionSnapIntersectionManual::onMouseMoveEvent(int status, LC_MouseEvent
 
     switch (status) {
         case ChooseEntity1: {
-            entity1 = se;
+            m_entity1 = se;
             break;
         }
         case ChooseEntity2: {
-            entity2 = se;
-            *coord = mouse;
+            m_entity2 = se;
+            *m_coord = mouse;
 
             RS_VectorSolutions sol =
-                RS_Information::getIntersection(entity1, entity2, false);
+                RS_Information::getIntersection(m_entity1, m_entity2, false);
 
             //for (int i=0; i<sol.getNumber(); i++) {
             //    ip = sol.get(i);
             //    break;
             //}
 
-            RS_Vector ip = sol.getClosest(*coord);
+            RS_Vector ip = sol.getClosest(*m_coord);
 
             if (ip.valid){
                 deletePreview();
-                preview->addEntity(new RS_Circle(preview.get(),{ip, toGraphDX(4)}));
+                m_preview->addEntity(new RS_Circle(m_preview.get(),{ip, toGraphDX(4)}));
                 drawPreview();
 
                 updateCoordinateWidgetByRelZero(ip);
@@ -121,16 +115,16 @@ void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_Mo
 
     switch (status) {
         case ChooseEntity1:
-            entity1 = se;
-            if (entity1 && entity1->isAtomic()){
+            m_entity1 = se;
+            if (m_entity1 && m_entity1->isAtomic()){
                 setStatus(ChooseEntity2);
             }
             break;
 
         case ChooseEntity2:
-            entity2 = se;
-            *coord = mouse;
-            if (entity2 && entity2->isAtomic() && coord->valid){
+            m_entity2 = se;
+            *m_coord = mouse;
+            if (m_entity2 && m_entity2->isAtomic() && m_coord->valid){
                 trigger();
             }
             break;

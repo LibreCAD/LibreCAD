@@ -25,17 +25,13 @@
 **********************************************************************/
 
 #include "rs_actionselectall.h"
-#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
-RS_ActionSelectAll::RS_ActionSelectAll(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView,
-                                       bool select)
-        :RS_ActionInterface("Select All Entities",
-					container, graphicView)
-		,select(select)
+RS_ActionSelectAll::RS_ActionSelectAll(LC_ActionContext *actionContext, bool select)
+        :RS_ActionInterface("Select All Entities",actionContext, RS2::ActionSelectAll)
+		,m_select(select)
 {
-	actionType=RS2::ActionSelectAll;
+	m_actionType=RS2::ActionSelectAll;
 }
 
 void RS_ActionSelectAll::init(int status) {
@@ -45,7 +41,7 @@ void RS_ActionSelectAll::init(int status) {
 }
 
 void RS_ActionSelectAll::trigger() {
-    RS_Selection s(*container, viewport);
-    s.selectAll(select);
+    RS_Selection s(*m_container, m_viewport);
+    s.selectAll(m_select);
     updateSelectionWidget();
 }

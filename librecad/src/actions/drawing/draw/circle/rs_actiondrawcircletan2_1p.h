@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN2_1P_H
 #define RS_ACTIONDRAWCIRCLETAN2_1P_H
 
-#include "rs_previewactioninterface.h"
 #include "lc_actiondrawcirclebase.h"
 
 class RS_AtomicEntity;
@@ -37,8 +36,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleTan2_1P : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleTan2_1P(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
+    RS_ActionDrawCircleTan2_1P(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleTan2_1P() override;
     void init(int status) override;
     bool getCenters();
@@ -54,8 +52,8 @@ protected:
         SetPoint=2,   //  Setting point on the desired circle.  */
         SetCenter
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     RS_Entity* catchCircle(LC_MouseEvent* e, bool forPreview);
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

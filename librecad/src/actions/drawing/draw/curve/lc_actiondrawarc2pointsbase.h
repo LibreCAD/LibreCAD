@@ -23,14 +23,12 @@
 #ifndef LC_ACTIONDRAWARC2POINTSBASE_H
 #define LC_ACTIONDRAWARC2POINTSBASE_H
 
-#include <QObject>
-
 #include "rs_previewactioninterface.h"
 
 class LC_ActionDrawArc2PointsBase:public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionDrawArc2PointsBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawArc2PointsBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     bool isReversed() const;
     void setReversed(bool reversed);
     double getParameter() const;
@@ -42,12 +40,12 @@ protected:
         SetPoint2,
         SetParameterValue
     };
-    RS_Vector startPoint;
-    RS_Vector endPoint;
-    bool reversed = false;
-    double parameterLen = 0.0;
-    bool alternated = false;
-    int savedState = SetPoint1;
+    RS_Vector m_startPoint;
+    RS_Vector m_endPoint;
+    bool m_reversed = false;
+    double m_parameterLen = 0.0;
+    bool m_alternated = false;
+    int m_savedState = SetPoint1;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;

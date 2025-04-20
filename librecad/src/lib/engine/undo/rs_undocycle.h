@@ -32,7 +32,6 @@
 #include <iosfwd>
 #include <set>
 
-#include "rs_entity.h"
 #include "rs_undoable.h"
 
 /**

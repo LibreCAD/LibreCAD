@@ -20,20 +20,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_actionpenpick.h"
-#include "qg_pentoolbar.h"
-#include "qc_applicationwindow.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 
-LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
-    :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
-    resolveMode  = resolve;
-    if (resolve){
-        actionType = RS2::ActionPenPickResolved;
-    }
-    else{
-        actionType = RS2::ActionPenPick;
-    }
+#include "qc_applicationwindow.h"
+#include "qg_pentoolbar.h"
+#include "rs_entity.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
+
+LC_ActionPenPick::LC_ActionPenPick(LC_ActionContext *actionContext, bool resolve)
+    :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", actionContext,
+        resolve?  RS2::ActionPenPickResolved : RS2::ActionPenPick), m_resolveMode{resolve}{
 }
 
 void LC_ActionPenPick::init(int status){
@@ -68,7 +64,7 @@ void LC_ActionPenPick::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             applyPenToPenToolBar(en);
             init( getStatus() - 1);
             finish(true);
-            graphicView->back();
+            m_graphicView->back();
         }
     }
     redraw();
@@ -96,7 +92,7 @@ void LC_ActionPenPick::applyPenToPenToolBar(RS_Entity* entity){
     if (penToolBar != nullptr){
             RS_Layer *layer = entity->getLayer(true);
             if (layer != nullptr){
-                RS_Pen pen = entity->getPen(resolveMode);
+                RS_Pen pen = entity->getPen(m_resolveMode);
                 RS_Pen layerPen = layer->getPen();
                 RS2::LineType lineType = pen.getLineType();
                 RS2::LineWidth width = pen.getWidth();

@@ -27,10 +27,9 @@
 #ifndef RS_ACTIONMODIFYBEVEL_H
 #define RS_ACTIONMODIFYBEVEL_H
 
-#include<memory>
-
 #include "rs_previewactioninterface.h"
 
+class RS_AtomicEntity;
 class RS_Entity;
 
 
@@ -42,10 +41,8 @@ class RS_Entity;
 class RS_ActionModifyBevel : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyBevel(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView);
+    RS_ActionModifyBevel(LC_ActionContext *actionContext);
     ~RS_ActionModifyBevel() override;
-
     void init(int status) override;
     void finish(bool updateTB) override;
     QStringList getAvailableCommands() override;
@@ -66,12 +63,12 @@ protected:
         SetLength1,      /**< Setting length 1 in command line. */
         SetLength2       /**< Setting length 2 in command line. */
     };
-    RS_AtomicEntity* entity1 = nullptr;
-    RS_AtomicEntity* entity2 = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    RS_AtomicEntity* m_entity1 = nullptr;
+    RS_AtomicEntity* m_entity2 = nullptr;
+    struct BevelActionData;
+    std::unique_ptr<BevelActionData> m_actionData;
     /** Last status before entering angle. */
-    Status lastStatus = SetEntity1;
+    Status m_lastStatus = SetEntity1;
 
     bool isEntityAccepted(RS_Entity *en) const;
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;

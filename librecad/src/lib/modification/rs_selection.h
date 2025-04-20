@@ -26,6 +26,12 @@
 
 #ifndef RS_SELECTION_H
 #define RS_SELECTION_H
+#include <QList>
+
+namespace RS2
+{
+    enum EntityType : unsigned;
+}
 
 class QString;
 

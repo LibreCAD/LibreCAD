@@ -25,17 +25,10 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinerelangle.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "rs_creation.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_math.h"
-#include "rs_preview.h"
+
 #include "qg_linerelangleoptions.h"
-#include "rs_previewactioninterface.h"
+#include "rs_creation.h"
+#include "rs_line.h"
 
 namespace {
 
@@ -44,30 +37,25 @@ const auto g_enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::E
 }
 
 // fixme - sand - add support of options for line snap point
-RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        double ang,
-        bool fixedAngle)
-    :RS_PreviewActionInterface("Draw Lines with relative angles",container, graphicView)
-    , pos(std::make_unique<RS_Vector>())
-    , fixedAngle(fixedAngle){
-    relativeAngleRad = /*RS_Math::rad2deg(ang)*/ ang;
+RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(LC_ActionContext *actionContext,double ang,bool fixedAngle)
+    :RS_PreviewActionInterface("Draw Lines with relative angles",actionContext)
+    , m_pos(std::make_unique<RS_Vector>())
+    , m_fixedAngle(fixedAngle){
+    m_relativeAngleRad = /*RS_Math::rad2deg(ang)*/ ang;
 }
 
 RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
 
 void RS_ActionDrawLineRelAngle::setAngle(double angleDeg) {
-    relativeAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(angleDeg));
+    m_relativeAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(angleDeg));
 }
 
 double RS_ActionDrawLineRelAngle::getAngle() const {
-    return adjustRelativeAngleSignByBasis(RS_Math::rad2deg(relativeAngleRad));
+    return adjustRelativeAngleSignByBasis(RS_Math::rad2deg(m_relativeAngleRad));
 }
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
-    if( fixedAngle &&
-        RS_Math::getAngleDifference(RS_Math::deg2rad(relativeAngleRad), M_PI_2) < RS_TOLERANCE_ANGLE)
+    if( m_fixedAngle && RS_Math::getAngleDifference(m_relativeAngleRad, M_PI_2) < RS_TOLERANCE_ANGLE)
         return RS2::ActionDrawLineOrthogonal;
     else
         return RS2::ActionDrawLineRelAngle;
@@ -78,31 +66,32 @@ void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
 }
 
 void RS_ActionDrawLineRelAngle::doTrigger() {
-    RS_Creation creation(container, graphicView);
-    moveRelativeZero(*pos); // fixme - to undoable?
+    RS_Creation creation(m_container, m_viewport);
+    moveRelativeZero(*m_pos); // fixme - to undoable?
     // the created line is added to undo and the view automatically by RS_Creation
-    creation.createLineRelAngle(*pos,entity,relativeAngleRad,length);
+    creation.createLineRelAngle(*m_pos,m_entity,m_relativeAngleRad,m_length);
 }
 
 void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetEntity: {
-            entity = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
-            if (entity != nullptr){
-                highlightHover(entity);
+            m_entity = catchAndDescribe(e, g_enTypeList, RS2::ResolveAll);
+            if (m_entity != nullptr){
+                highlightHover(m_entity);
             }
             break;
         }
         case SetPos: {
-            highlightSelected(entity);
-            *pos = getRelZeroAwarePoint(e, snap);
+            highlightSelected(m_entity);
+            *m_pos = getRelZeroAwarePoint(e, snap);
+            //fixme - sand - files - MERGE REGRESSION?
             RS_Creation creation(nullptr, nullptr, false);
-            std::unique_ptr<RS_Line> lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
+            std::unique_ptr<RS_Line> lineToCreate = creation.createLineRelAngle(*m_pos, m_entity, m_relativeAngleRad, m_length);
             if (lineToCreate != nullptr){
-                previewLine(lineToCreate->getStartpoint(), lineToCreate->getEndpoint());
-                if (showRefEntitiesOnPreview) {
-                    auto const vp = entity->getNearestPointOnEntity(*pos, false);
+                previewEntityToCreate(lineToCreate.get()->clone(), true);
+                if (m_showRefEntitiesOnPreview) {
+                    auto const vp = m_entity->getNearestPointOnEntity(*m_pos, false);
                     previewRefPoint(vp);
                     previewRefPoint(lineToCreate->getEndpoint());
                 }
@@ -119,7 +108,7 @@ void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, LC_MouseEve
         case SetEntity: {
             RS_Entity *en = catchEntityByEvent(e, g_enTypeList, RS2::ResolveAll);
             if (en != nullptr){
-                entity = en;
+                m_entity = en;
                 setStatus(SetPos);
             }
             break;
@@ -143,7 +132,7 @@ void RS_ActionDrawLineRelAngle::onMouseRightButtonRelease(int status, [[maybe_un
 void RS_ActionDrawLineRelAngle::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
     switch (status) {
         case SetPos: {
-            *pos = coord;
+            *m_pos = coord;
             trigger();
             break;
         }
@@ -158,7 +147,7 @@ bool RS_ActionDrawLineRelAngle::doProcessCommand(int status, const QString &c) {
     switch (status) {
         case SetEntity:
         case SetPos: {
-            if (!fixedAngle && checkCommand("angle", c)){
+            if (!m_fixedAngle && checkCommand("angle", c)){
                 deletePreview();
                 setStatus(SetAngle);
                 accept = true;
@@ -174,7 +163,7 @@ bool RS_ActionDrawLineRelAngle::doProcessCommand(int status, const QString &c) {
             bool ok = parseToRelativeAngle(c, angle);
             if (ok){
                 accept = true;
-                relativeAngleRad = angle;
+                m_relativeAngleRad = angle;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -186,7 +175,7 @@ bool RS_ActionDrawLineRelAngle::doProcessCommand(int status, const QString &c) {
             bool ok = false;
             double l = RS_Math::eval(c, &ok);
             if (ok){
-                length = l;
+                m_length = l;
                 accept = true;
             } else {
                 commandMessage(tr("Not a valid expression"));
@@ -206,7 +195,7 @@ QStringList RS_ActionDrawLineRelAngle::getAvailableCommands(){
     switch (getStatus()) {
         case SetPos:
         case SetLength: {
-            if (!fixedAngle){
+            if (!m_fixedAngle){
                 cmd += command("angle");
             }
             cmd += command("length");

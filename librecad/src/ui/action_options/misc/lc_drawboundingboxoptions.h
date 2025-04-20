@@ -23,7 +23,6 @@
 #ifndef LC_DRAWBOUNDINGBOXOPTIONS_H
 #define LC_DRAWBOUNDINGBOXOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class LC_ActionDrawBoundingBox;
@@ -48,7 +47,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_DrawBoundingBoxOptions *ui;
-    LC_ActionDrawBoundingBox* action = nullptr;
+    LC_ActionDrawBoundingBox* m_action = nullptr;
     void setAsGroupToActionAndView(bool group);
     void setCornerPointsOnlyToActionAndView(bool val);
     void setPolylineToActionAndView(bool p);

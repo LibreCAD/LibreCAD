@@ -37,9 +37,7 @@
 class RS_ActionDrawLinePolygonCorCor:public LC_ActionDrawLinePolygonBase {
     Q_OBJECT
 public:
-    RS_ActionDrawLinePolygonCorCor(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawLinePolygonCorCor(LC_ActionContext *actionContext);
     ~RS_ActionDrawLinePolygonCorCor() override;
 protected:
  /* Status

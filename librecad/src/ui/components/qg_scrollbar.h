@@ -28,7 +28,6 @@
 #define QG_SCROLLBAR_H
 
 #include <QScrollBar>
-#include <QWheelEvent>
 
 /**
  * A small wrapper for the Qt scrollbar. This class offers a slot
@@ -70,4 +69,3 @@ private:
 };
 
 #endif
-

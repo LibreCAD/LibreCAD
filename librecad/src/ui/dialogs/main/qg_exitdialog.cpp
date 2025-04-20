@@ -37,11 +37,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_ExitDialog::QG_ExitDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
-	: QDialog(parent, fl)
-    , ui(std::make_unique<Ui::QG_ExitDialog>())
-{
-    setModal(modal);
+QG_ExitDialog::QG_ExitDialog(QWidget* parent)
+	: LC_Dialog(parent, "DlgExit")
+    , ui(std::make_unique<Ui::QG_ExitDialog>()){
 	ui->setupUi(this);
     init();
 }
@@ -52,25 +50,12 @@ QG_ExitDialog::~QG_ExitDialog() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_ExitDialog::languageChange()
-{
+void QG_ExitDialog::languageChange(){
 	ui->retranslateUi(this);
 }
-//sets additional accel, eg. Key_A for ALT+Key_A
 
-/*
-static void makeLetterAccell(QButton *btn)
-{
-    if (btn->accel().count()<1)
-        return;
-    Q3Accel *a = new Q3Accel( btn );
-    a->connectItem( a->insertItem( btn->accel() & ~(Qt::MODIFIER_MASK|Qt::UNICODE_ACCEL) ),
-                    btn, SLOT(animateClick()) );
-} */
-
-void QG_ExitDialog::init()
-{
-    QG_ExitDialog::setShowSaveAll(false);
+void QG_ExitDialog::init(){
+    QG_ExitDialog::setShowOptionsForAll(false);
 	//set dlg icon
     QMessageBox mb({}, "", "");
 	ui->l_icon->setPixmap( mb.iconPixmap());
@@ -79,14 +64,17 @@ void QG_ExitDialog::init()
 void QG_ExitDialog::clicked(QAbstractButton * button){
 	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton ( button );
     switch (bt){
-    case QDialogButtonBox::Discard:
-        done(Discard);
+    case QDialogButtonBox::No:
+        done(DontSave);
         break;
-    case QDialogButtonBox::Save:
-        slotSave();
+    case QDialogButtonBox::NoToAll:
+        done(DontSaveAll);
         break;
-    case QDialogButtonBox::SaveAll:
-        slotSaveAll();
+    case QDialogButtonBox::Yes:
+        done(Save);
+        break;
+    case QDialogButtonBox::YesToAll:
+        done(SaveAll);
         break;
     default:
         done(Cancel);
@@ -95,10 +83,6 @@ void QG_ExitDialog::clicked(QAbstractButton * button){
 
 void QG_ExitDialog::setText(const QString& text) {
 	ui->lQuestion->setText(text);
-/* RVT_PORT
-    resize(lQuestion->sizeHint().width()+32,
-           lQuestion->sizeHint().height() + layButtons->sizeHint().height()+32);
-           */
 }
 
 void QG_ExitDialog::setTitle(const QString& text) {
@@ -110,17 +94,21 @@ void QG_ExitDialog::setForce(bool force) {
      bCancel->setDisabled(force);
 }
 
-void QG_ExitDialog::setShowSaveAll(bool show)
-{
-	ui->buttonBox->button(QDialogButtonBox::SaveAll)->setVisible(show);
-    QString discard = show ? tr("Discard All") : tr("Discard");
-    ui->buttonBox->button(QDialogButtonBox::Discard)->setText(discard);
-}
+void QG_ExitDialog::setShowOptionsForAll(bool show){
 
-void QG_ExitDialog::slotSaveAll() {
-    done(SaveAll);
-}
+    auto yesToAll = ui->buttonBox->button(QDialogButtonBox::YesToAll);
+    yesToAll->setVisible(show);
+    ui->buttonBox->button(QDialogButtonBox::NoToAll)->setVisible(show);
 
-void QG_ExitDialog::slotSave() {
-    done(Save);
+    QPushButton* defaultButton;
+    if (show) {
+        defaultButton = yesToAll;
+    }
+    else {
+        defaultButton = ui->buttonBox->button(QDialogButtonBox::Yes);
+    }
+
+    defaultButton->setAutoDefault(true);
+    defaultButton->setDefault(true);
+    defaultButton->setFocus();
 }

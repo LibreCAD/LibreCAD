@@ -28,9 +28,8 @@
 #define RS_SOLID_H
 
 #include <array>
-#include "rs_atomicentity.h"
-#include "rs_vector.h"
 
+#include "rs_atomicentity.h"
 
 /**
  * Holds the data that defines a solid.

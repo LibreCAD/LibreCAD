@@ -24,25 +24,22 @@
 **
 **********************************************************************/
 
-#include<cmath>
 
-#include <QString>
+
 #include <QFileInfo>
 
-#include "lc_hyperbola.h"
-#include "lc_parabola.h"
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
-#include "rs_constructionline.h"
 #include "rs_creation.h"
+#include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_information.h"
 #include "rs_insert.h"
@@ -50,8 +47,8 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_units.h"
-#include "lc_graphicviewport.h"
 
+// fixme - sand - refactor - review this class completely
 namespace {
 
 /**
@@ -93,15 +90,14 @@ RS_LineData fromLineCoordinate(const RS_Vector& line)
  *        it can also be a polyline, text, ...
  */
 RS_Creation::RS_Creation(RS_EntityContainer* container,
-                         RS_GraphicView* graphicView,
+                         LC_GraphicViewport* viewport,
                          bool handleUndo):
-    container(container)
-    , graphic(container?container->getGraphic():nullptr)
-    , document(container?container->getDocument():nullptr)
-    , graphicView(graphicView)
-    , m_viewport{graphicView != nullptr ?graphicView->getViewPort() : nullptr}
-    , handleUndo(handleUndo)
-{
+    m_container{container}
+  ,m_graphic{container?container->getGraphic():nullptr}
+  ,m_document{container?container->getDocument():nullptr}
+  ,m_viewport{viewport}
+  ,handleUndo(handleUndo){
+    // assert(viewport != nullptr);
 }
 
 /**
@@ -165,17 +161,17 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
 
     switch (e->rtti()) {
         case RS2::EntityLine:
-            return createParallelLine(coord, distance, number, (RS_Line*)e, symmetric);
+            return createParallelLine(coord, distance, number, static_cast<RS_Line*>(e), symmetric);
 
         case RS2::EntityArc:
-            return createParallelArc(coord, distance, number, (RS_Arc*)e);
+            return createParallelArc(coord, distance, number, static_cast<RS_Arc*>(e));
 
         case RS2::EntityCircle:
-            return createParallelCircle(coord, distance, number, (RS_Circle*)e);
+            return createParallelCircle(coord, distance, number, static_cast<RS_Circle*>(e));
 
         case RS2::EntityParabola:
         case RS2::EntitySplinePoints:
-            return createParallelSplinePoints(coord, distance, number, (LC_SplinePoints*)e);
+            return createParallelSplinePoints(coord, distance, number, static_cast<LC_SplinePoints*>(e));
 
         default:
             break;
@@ -211,7 +207,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
     RS_LineData parallelData;
     RS_Line* ret = nullptr;
 
-    LC_UndoSection undo( document,m_viewport, handleUndo);
+    LC_UndoSection undo( m_document,m_viewport, handleUndo);
     for (int num=1; num<=number; ++num) {
 
         // calculate 1st parallel:
@@ -243,7 +239,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                 dataToSkip = parallel1.getData();
             }
 
-            auto *newLine = new RS_Line{container, parallelData};
+            auto *newLine = new RS_Line{m_container, parallelData};
             if (!ret){
                 ret = newLine;
             }
@@ -252,7 +248,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
             setupAndAddEntity(newLine);
 
             if (symmetric){
-                auto *symmetricLine = new RS_Line{container, dataToSkip};
+                auto *symmetricLine = new RS_Line{m_container, dataToSkip};
                 setupAndAddEntity(symmetricLine);
             }
         }
@@ -321,8 +317,8 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             //    parallelData = parallel2.getData();
             //}
 
-            LC_UndoSection undo( document, m_viewport,handleUndo);
-            auto* newArc = new RS_Arc(container, parallelData);
+            LC_UndoSection undo( m_document, m_viewport,handleUndo);
+            auto* newArc = new RS_Arc(m_container, parallelData);
             if (!ret) {
                 ret = newArc;
             }
@@ -393,8 +389,8 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             //    parallelData = parallel2.getData();
             //}
 
-            LC_UndoSection undo( document, m_viewport,handleUndo);
-            auto newCircle = new RS_Circle(container, parallelData);
+            LC_UndoSection undo( m_document, m_viewport,handleUndo);
+            auto newCircle = new RS_Circle(m_container, parallelData);
             if (!ret) {
                 ret = newCircle;
             }
@@ -426,13 +422,13 @@ LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
 
     LC_SplinePoints *psp = nullptr, *ret = nullptr;
 
-    LC_UndoSection undo( document, m_viewport,handleUndo);
+    LC_UndoSection undo( m_document, m_viewport,handleUndo);
     for(int i = 1; i <= number; ++i)
     {
         psp = (LC_SplinePoints*)e->clone();
         psp->offset(coord, i*distance);
 
-        psp->setParent(container);
+        psp->setParent(m_container);
         if(!ret) ret = psp;
         setupAndAddEntity(psp);
     }
@@ -485,7 +481,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     }
     RS_Line* ret = nullptr;
 
-    LC_UndoSection undo( document, m_viewport, handleUndo);
+    LC_UndoSection undo( m_document, m_viewport, handleUndo);
     for (int n=1; n <= num; ++n) {
 
         double angle = angle1 +
@@ -493,7 +489,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 
         RS_Vector const& v = RS_Vector::polar(length, angle);
 
-        auto* newLine = new RS_Line{container, inters, inters + v};
+        auto* newLine = new RS_Line{m_container, inters, inters + v};
         if (ret == nullptr) {
             ret = newLine;
         }
@@ -642,7 +638,16 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
     if(!tangentPoint0.valid)
         return {};
     RS_Vector const& vp=normal->getNearestPointOnEntity(tangentPoint0, false);
-    return std::make_unique<RS_Line>(container, vp, tangentPoint0);
+    return std::make_unique<RS_Line>(m_container, vp, tangentPoint0);
+    // fixme - sand - files - merge - UNDO??? Previously it was in undo cycle. Why this is changed - yet that's ok,
+    // the action should handle
+    /*if(!t0.valid) return ret;
+    RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
+    LC_UndoSection undo( m_document,m_viewport, handleUndo);
+    ret = new RS_Line{m_container, vp, t0};
+    ret->setLayerToActive();
+    ret->setPenToActive();
+    return ret;*/
 }
 
 /**
@@ -686,8 +691,8 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     altTangentPoint = (sol[0] == vp2 ) ? sol[1] : sol[0];
 
     // create the closest tangent:
-    LC_UndoSection undo( document,m_viewport, handleUndo);
-    ret = new RS_Line{container, d};
+    LC_UndoSection undo( m_document,m_viewport, handleUndo);
+    ret = new RS_Line{m_container, d};
     setupAndAddEntity(ret);
 
     return ret;
@@ -779,12 +784,9 @@ std::unique_ptr<RS_Line> RS_Creation::createLineRelAngle(const RS_Vector& coord,
     }
 
     const RS_Vector vp = entity->getNearestPointOnEntity(coord, false);
-
     double const a1 = angle + entity->getTangentDirection(vp).angle();
-
     RS_Vector const v1 = RS_Vector::polar(length, a1);
-
-    auto ret = std::make_unique<RS_Line>(container, coord, coord+v1);
+    auto ret = std::make_unique<RS_Line>(m_container, coord, coord+v1);
     bool addedToUndo = setupAndAddEntity(ret.get());
     if (addedToUndo) {
         ret.release();
@@ -814,21 +816,21 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
     double const r = center.distanceTo(corner);
     double const angle0 = center.angleTo(corner);
     double const da = 2.*M_PI/number;
-    LC_UndoSection undo( document,m_viewport, handleUndo);
+    LC_UndoSection undo( m_document,m_viewport, handleUndo);
     for (int i=0; i < number; ++i) {
         RS_Vector const& c0 = center +
                 RS_Vector::polar(r, angle0 + i*da);
         RS_Vector const& c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-        auto* line = new RS_Line{container, c0, c1};
+        auto* line = new RS_Line{m_container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
         if (!ret) ret = line;
 
-        if (container) {
-            container->addEntity(line);
+        if (m_container) {
+            m_container->addEntity(line);
         }
         undo.addUndoable(line);
     }
@@ -855,7 +857,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 
     RS_Line* ret = nullptr;
 
-    LC_UndoSection undo( document,m_viewport, handleUndo);
+    LC_UndoSection undo( m_document,m_viewport, handleUndo);
     double const len = corner1.distanceTo(corner2);
     double const da = 2.*M_PI/number;
     double const r = 0.5*len/std::sin(0.5*da);
@@ -874,14 +876,14 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
         RS_Vector const c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-        auto* line = new RS_Line{container, c0, c1};
+        auto* line = new RS_Line{m_container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
         if (!ret) ret = line;
 
-        if (container) {
-            container->addEntity(line);
+        if (m_container) {
+            m_container->addEntity(line);
         }
         undo.addUndoable(line);
     }
@@ -906,7 +908,7 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
 
     RS_Line* ret = nullptr;
 
-    LC_UndoSection undo( document, m_viewport,handleUndo);
+    LC_UndoSection undo( m_document, m_viewport,handleUndo);
     RS_Vector corner(0, 0);
     double angle = 2.*M_PI/number/2.0;
     corner.x = tangent.x + (center.y - tangent.y) * tan(angle);
@@ -922,14 +924,14 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
         RS_Vector const& c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-        auto* line = new RS_Line{container, c0, c1};
+        auto* line = new RS_Line{m_container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
         if (!ret) ret = line;
 
-        if (container) {
-            container->addEntity(line);
+        if (m_container) {
+            m_container->addEntity(line);
         }
         undo.addUndoable(line);
     }
@@ -943,33 +945,24 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
      * @param data Insert data (position, block name, ..)
      */
 RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
-
     RS_DEBUG->print("RS_Creation::createInsert");
-
-    LC_UndoSection undo( document, m_viewport,handleUndo);
-    auto ins = new RS_Insert(container, *pdata);
+    LC_UndoSection undo( m_document, m_viewport,handleUndo);
+    auto ins = new RS_Insert(m_container, *pdata);
     // inserts are also on layers
     setupAndAddEntity(ins);
-
     RS_DEBUG->print("RS_Creation::createInsert: OK");
-
     return ins;
 }
-
-
 /**
      * Creates an image with the given data.
      */
 RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
-
-    LC_UndoSection undo( document, m_viewport,handleUndo);
-    auto* img = new RS_Image(container, *data);
+    LC_UndoSection undo( m_document, m_viewport,handleUndo);
+    auto* img = new RS_Image(m_container, *data);
     img->update();
     setupAndAddEntity(img);
-
     return img;
 }
-
 
 /**
      * Creates a new block from the currently selected entitiies.
@@ -983,18 +976,18 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                                    const bool remove) {
 
     // start undo cycle for the container if we're deleting the existing entities
-    LC_UndoSection undo(document, m_viewport,remove);
+    LC_UndoSection undo(m_document, m_viewport,remove);
     RS_Block* block;
     // Block cannot contain blocks.
-    if (container->rtti() == RS2::EntityBlock) {
-        block = new RS_Block(container->getParent(), RS_BlockData(*data));
+    if (m_container->rtti() == RS2::EntityBlock) {
+        block = new RS_Block(m_container->getParent(), RS_BlockData(*data));
     } else {
-        block = new RS_Block(container, RS_BlockData(*data));
+        block = new RS_Block(m_container, RS_BlockData(*data));
     }
 
     // copy entities into a block
-    for(auto e: *container){ // fixme - iterating all entities for selection
-        if (e && e->isSelected()) {
+    for(auto e: *m_container){ // fixme - iterating all entities for selection
+        if (e!= nullptr && e->isSelected()) {
 
             // delete / redraw entity in graphic view:
             if (remove) { // fixme - what's this? same logic there?
@@ -1017,14 +1010,12 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
         }
     }
 
-    if (graphic) {
-        graphic->addBlock(block);
+    if (m_graphic != nullptr) {
+        m_graphic->addBlock(block);
     }
 
     return block;
 }
-
-
 
 /**
      * Inserts a library item from the given path into the drawing.
@@ -1033,28 +1024,19 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert");
 
-    RS_Graphic g;
-    if (!g.open(data.file, RS2::FormatUnknown)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Creation::createLibraryInsert: Cannot open file: %s", data.file.toStdString().c_str());
+    RS_Graphic* insertGraphic = data.graphic;
+    if (insertGraphic == nullptr) {
         return nullptr;
     }
 
     // unit conversion:
-    if (graphic) {
-        double uf = RS_Units::convert(1.0, g.getUnit(),
-                                      graphic->getUnit());
-        g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
+    if (m_graphic != nullptr) {
+        double uf = RS_Units::convert(1.0, insertGraphic->getUnit(),m_graphic->getUnit());
+        insertGraphic->scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
     }
-
-    //g.scale(RS_Vector(data.factor, data.factor));
-    //g.rotate(data.angle);
-
-    QString s;
-    s = QFileInfo(data.file).completeBaseName();
-
-    RS_Modification m(*container, m_viewport);
-    m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,s),&g);
+    QString insertFileName = QFileInfo(data.file).completeBaseName();
+    RS_Modification m(*m_container, m_viewport);
+    m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,insertFileName),insertGraphic);
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
 
@@ -1062,21 +1044,36 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 }
 
 bool RS_Creation::setupAndAddEntity(RS_Entity* en) const{
-    if (en == nullptr)
-        return false;
+    // this check is overkill - plus, if null is there - it's severe error of the developer.
+    //
+    // Returning false may lead to indefinite behavior.
+    //
+    // It's better to have a crash during the development with clear indication that something is wrong,
+    // than try to find some subtle effects based on the user-provided report
+    // if something may crash - it should fail as fast as possible.
+    //
+    // and MOREOVER!
+    // this is just a private method of this class.
+    // HOW IT MIGHT BE THAT CREATED ENTITY IS NULL????
+
+
+    assert(en != nullptr);
+
+    /*if (en == nullptr)
+        return false;*/
     en->setLayerToActive();
     en->setPenToActive();
 
-    if (container) {
-        container->addEntity(en);
+    if (m_container) {
+        m_container->addEntity(en);
     }
-    if (graphicView) {
-        graphicView->redraw();
-    }
-    if (m_viewport != nullptr) {
-        LC_UndoSection undo(document, m_viewport, handleUndo);
+    // why in general it could be null there? it's better to check in constructor once  and
+    // prohibit passing null during creation of RS_Creation.
+     if (m_viewport != nullptr) {
+        // fixme - sand - P.S. again, having undo semantic mixed with creation logic is just a mess...
+        LC_UndoSection undo(m_document, m_viewport, handleUndo);
         undo.addUndoable(en);
-        return true;
-    }
-    return false;
+        return true;// fixme - sand - what if handle undo is false? in this sense, true is not correct...
+     }
+     return false;
 }

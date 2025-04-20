@@ -34,7 +34,7 @@
  * File Open / Save dialogs.
  */
 class QG_FileDialog : public QFileDialog {
-
+    Q_OBJECT
 public:
     enum FileType{
         DrawingFile=0,
@@ -46,7 +46,7 @@ public:
     QG_FileDialog(QWidget* parent=nullptr, Qt::WindowFlags f={}, FileType type = DrawingFile);
 
     QString getOpenFile(RS2::FormatType* type=nullptr);
-    QString getSaveFile(RS2::FormatType* type=nullptr);
+    QString getSaveFile(RS2::FormatType* type=nullptr, const QString& currentName = "");
 
     static QString getOpenFileName(QWidget* parent, RS2::FormatType* type=nullptr);
     static QString getSaveFileName(QWidget* parent, RS2::FormatType* type=nullptr);
@@ -68,7 +68,6 @@ private:
     QString fCxf;
     QString fJww;
     QString name;
-
 };
 
 #endif

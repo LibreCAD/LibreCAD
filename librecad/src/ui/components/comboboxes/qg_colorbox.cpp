@@ -24,34 +24,30 @@
 **
 **********************************************************************/
 
-#include <vector>
-#include <tuple>
+#include "qg_colorbox.h"
 
 #include <QColorDialog>
 #include <QPainter>
-#include <QPixmap>
-
-#include "qg_colorbox.h"
 
 #include "rs_color.h"
 #include "rs_settings.h"
 
-namespace {
-
-constexpr size_t Max_Custom_Colors = 3;
-const QString customColorName = QObject::tr("/CustomColor%1");
-const QString customItemText = QObject::tr("Custom Picked");
-const QString userColorText = QObject::tr("User Color");
+namespace
+{
+    constexpr size_t Max_Custom_Colors = 3;
+    const QString customColorName = QObject::tr("/CustomColor%1");
+    const QString customItemText = QObject::tr("Custom Picked");
+    const QString userColorText = QObject::tr("User Color");
 
     // find total difference in colors
-int getDictionaryDistance(const RS_Color& lhs, const RS_Color& rhs) {
-      return std::abs(lhs.red() - rhs.red())
+    int getDictionaryDistance(const RS_Color& lhs, const RS_Color& rhs) {
+        return std::abs(lhs.red() - rhs.red())
             + std::abs(lhs.green() - rhs.green())
             + std::abs(lhs.blue() - rhs.blue());
-}
+    }
 
-	void addColors(QG_ColorBox& colorBox, const std::vector<std::pair<Qt::GlobalColor, QString>> & colors){
-        for(const auto& color: colors)
+    void addColors(QG_ColorBox& colorBox, const std::vector<std::pair<Qt::GlobalColor, QString>>& colors) {
+        for (const auto& color : colors)
             colorBox.addColor(color.first, color.second);
     }
 }
@@ -62,8 +58,7 @@ int getDictionaryDistance(const RS_Color& lhs, const RS_Color& rhs) {
  */
 QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
     :QComboBox(parent)
-    ,currentColor(std::make_unique<RS_Color>())
-{
+    ,m_currentColor(std::make_unique<RS_Color>()){
     setObjectName(name);
     setEditable ( false );
 }
@@ -77,9 +72,8 @@ QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
 QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged,
                          QWidget* parent, const char* name)
     : QComboBox(parent)
-    ,currentColor(new RS_Color())
-    ,unchanged(false)
-{
+    ,m_currentColor(new RS_Color())
+    ,m_unchanged(false){
 
     setObjectName(name);
     setEditable ( false );
@@ -96,8 +90,8 @@ QG_ColorBox::~QG_ColorBox() = default;
  * @param showByLayer true: Show attribute ByLayer, ByBlock.
  */
 void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
-    this->showByLayer = showByLayer;
-    this->showUnchanged = showUnchanged;
+    this->m_showByLayer = showByLayer;
+    this->m_showUnchanged = showUnchanged;
 
     if (showUnchanged) {
         addItem(QIcon(":/colors/color00.png"), tr("Unchanged"));
@@ -113,7 +107,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     //static colors starts here
     QString red(tr("Red"));
     addColor(Qt::red,red);
-    colorIndexStart=findText(red); // keep the starting point of static colors
+    m_colorIndexStart=findText(red); // keep the starting point of static colors
     addColors(*this, {
         {Qt::darkRed, tr("Dark Red")},
     });
@@ -145,8 +139,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     // add custom colors from settings
     readCustomColorSettings();
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotColorChanged(int)));
+    connect(this, &QG_ColorBox::activated,this, &QG_ColorBox::slotColorChanged);
 
     if (showUnchanged || showByLayer ) {
         setCurrentIndex(0);
@@ -175,7 +168,7 @@ void QG_ColorBox::writeCustomColorSettings(){
     LC_GROUP_GUARD("ColorBox");
     {
         int customIndex = 0;
-        for (int cIndex = colorIndexStart; cIndex < count(); cIndex++) {
+        for (int cIndex = m_colorIndexStart; cIndex < count(); cIndex++) {
             if (itemText(cIndex) == customItemText) {
                 auto itemColor = itemData(cIndex).value<QColor>();
                 QString colorName = customColorName.arg(customIndex++);
@@ -189,7 +182,7 @@ void QG_ColorBox::writeCustomColorSettings(){
  * Sets the color shown in the combobox to the given color.
  */
 void QG_ColorBox::setColor(const RS_Color& color){
-    *currentColor = color;
+    *m_currentColor = color;
     int lastItem = count()-1;
     if (itemText(lastItem) == userColorText){ // we had user color already in combobox, remove it first
         removeItem(lastItem);
@@ -197,14 +190,13 @@ void QG_ColorBox::setColor(const RS_Color& color){
 
     int cIndex = 0;
 
-    if (color.isByLayer() && showByLayer){
-        cIndex= 0 + showUnchanged; // take care for unchanged, which will be "0" item
+    if (color.isByLayer() && m_showByLayer){
+        cIndex= 0 + m_showUnchanged; // take care for unchanged, which will be "0" item
     }
-    else if (color.isByBlock() && showByLayer){
-        cIndex= 1 + showUnchanged;  // take care for unchanged, which will be "0" item
+    else if (color.isByBlock() && m_showByLayer){
+        cIndex= 1 + m_showUnchanged;  // take care for unchanged, which will be "0" item
     }
-    else
-    {
+    else{
         cIndex = findColor(color);
         if ( cIndex == count()) {
             // if we were not able to find any suitable color - we'll add it as the last one in the list
@@ -219,7 +211,9 @@ void QG_ColorBox::setColor(const RS_Color& color){
 
     setCurrentIndex(cIndex);
 
-    if (currentIndex() != 0) slotColorChanged(currentIndex());
+    if (currentIndex() != 0) {
+        slotColorChanged(currentIndex());
+    }
 }
 
 /**
@@ -235,8 +229,7 @@ void QG_ColorBox::addColor(QColor color, QString text){
 }
 
 int QG_ColorBox::findColor(const RS_Color& color){
-    for (int cIndex = colorIndexStart; cIndex < count(); cIndex++)
-    {
+    for (int cIndex = m_colorIndexStart; cIndex < count(); cIndex++) {
         //searching for the color, allowing difference up to 2
         if (getDictionaryDistance(QColor{itemData(cIndex).value<QColor>()}, color) <= 3)
             return cIndex;
@@ -246,16 +239,18 @@ int QG_ColorBox::findColor(const RS_Color& color){
 
 int QG_ColorBox::addCustomColor(const RS_Color& color){
     int current = findColor(color);
-    if (current < count())
+    if (current < count()) {
         return current;
-    std::vector<int> customIndices;
-    for (int cIndex = colorIndexStart; cIndex < count(); cIndex++)
-    {
-        if (itemText(cIndex) == customItemText)
-            customIndices.push_back(cIndex);
     }
-    if (customIndices.size() > Max_Custom_Colors)
+    std::vector<int> customIndices;
+    for (int cIndex = m_colorIndexStart; cIndex < count(); cIndex++) {
+        if (itemText(cIndex) == customItemText) {
+            customIndices.push_back(cIndex);
+        }
+    }
+    if (customIndices.size() > Max_Custom_Colors) {
         removeItem(customIndices.front());
+    }
     addColor(color.toQColor(), customItemText);
 
     // save custom colors to settings
@@ -269,7 +264,9 @@ int QG_ColorBox::addCustomColor(const RS_Color& color){
  * to the given color.
  */
 void QG_ColorBox::setLayerColor(const RS_Color& color) {
-    if (! showByLayer ) return;
+    if (!m_showByLayer) {
+        return;
+    }
     QPixmap pixmap;
     pixmap = QPixmap(":/colors/color00.png");
     int w = pixmap.width();
@@ -294,64 +291,59 @@ void QG_ColorBox::setLayerColor(const RS_Color& color) {
  * choose an individual color.
  */
 void QG_ColorBox::slotColorChanged(int index) {
-    currentColor->resetFlags();
-    if (showUnchanged) {
+    m_currentColor->resetFlags();
+    if (m_showUnchanged) {
         if (index==0) {
-            unchanged = true;
+            m_unchanged = true;
         }
         else {
-            unchanged = false;
+            m_unchanged = false;
         }
     }
 
-    if (showByLayer) {
-        switch (index-(int)showUnchanged) {
+    if (m_showByLayer) {
+        switch (index-(int)m_showUnchanged) {
         case 0:
-            *currentColor = RS_Color(RS2::FlagByLayer);
+            *m_currentColor = RS_Color(RS2::FlagByLayer);
             break;
         case 1:
-            *currentColor = RS_Color(RS2::FlagByBlock);
+            *m_currentColor = RS_Color(RS2::FlagByBlock);
             break;
         default:
             break;
         }
     }
 
-    if (itemText(index) == tr("Custom"))
-    {
-       RS_Color selectedColor = QColorDialog::getColor(*currentColor, this);
-       if (selectedColor.isValid()) {
-            *currentColor = selectedColor;
+    if (itemText(index) == tr("Custom")) {
+        RS_Color selectedColor = QColorDialog::getColor(*m_currentColor, this);
+        if (selectedColor.isValid()) {
+            *m_currentColor = selectedColor;
             int current = addCustomColor(selectedColor);
             if (current < count())
                 setCurrentIndex(current);
-       }
+        }
     }
-    else if (index >= colorIndexStart)
-    {
-        if(index < count() )
-        {
-            QVariant q0=itemData(index);
-            if(q0.isValid())
-            {
-                *currentColor=itemData(index).value<QColor>();
+    else if (index >= m_colorIndexStart) {
+        if (index < count()) {
+            QVariant q0 = itemData(index);
+            if (q0.isValid()) {
+                *m_currentColor = itemData(index).value<QColor>();
             }
-            else
-            {
-                *currentColor=Qt::black; //default to black color
+            else {
+                *m_currentColor = Qt::black; //default to black color
             }
         }
     }
 
-    emit colorChanged(*currentColor);
+    emit colorChanged(*m_currentColor);
 }
 
 RS_Color QG_ColorBox::getColor() const{
-    return *currentColor;
+    return *m_currentColor;
 }
 
 bool QG_ColorBox::isUnchanged() const{
-    return unchanged;
+    return m_unchanged;
 }
 
 int QG_ColorBox::addTemporaryCustomColor(const RS_Color& color)

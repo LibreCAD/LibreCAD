@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONPENAPPLY_H
 #define LC_ACTIONPENAPPLY_H
 
-#include "rs_pen.h"
 #include "rs_previewactioninterface.h"
 
 /**
@@ -37,14 +36,14 @@ public:
         SelectEntity,
         ApplyToEntity
     };
-    LC_ActionPenApply(RS_EntityContainer& container,RS_GraphicView& graphicView, bool copy);
+    LC_ActionPenApply(LC_ActionContext *actionContext, bool copy);
     void init(int status) override;
     void finish(bool updateTB) override;
 private:
     // entity that might be used as source for pen applying
-    RS_Entity* srcEntity;
+    RS_Entity* m_srcEntity {nullptr};
     // controls whether pen should be copied from source entity or applied from pen toolbar
-    bool copyMode;
+    bool m_copyMode;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

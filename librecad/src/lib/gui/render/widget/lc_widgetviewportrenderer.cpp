@@ -19,12 +19,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include "lc_widgetviewportrenderer.h"
 
-#include <memory>
+#include <QPixmap>
 
 #include "lc_graphicviewport.h"
-#include "lc_widgetviewportrenderer.h"
-#include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_math.h"
 #include "rs_painter.h"

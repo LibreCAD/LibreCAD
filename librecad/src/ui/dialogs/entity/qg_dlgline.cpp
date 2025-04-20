@@ -52,25 +52,25 @@ void QG_DlgLine::languageChange(){
 }
 
 void QG_DlgLine::setEntity(RS_Line* l) {
-    entity = l;
+    m_entity = l;
 
 
-    RS_Graphic* graphic = entity->getGraphic();
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(true);
+    RS_Layer* lay = m_entity->getLayer(true);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
-    toUI(entity->getStartpoint(), leStartX, leStartY);
-    toUI(entity->getEndpoint(), leEndX, leEndY);
+    wPen->setPen(m_entity, lay, tr("Pen"));
+    toUI(m_entity->getStartpoint(), leStartX, leStartY);
+    toUI(m_entity->getEndpoint(), leEndX, leEndY);
 
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
-        lId->setText(QString("ID: %1").arg(entity->getId()));
+        lId->setText(QString("ID: %1").arg(m_entity->getId()));
     }
     else{
         lId->setVisible(false);
@@ -78,9 +78,9 @@ void QG_DlgLine::setEntity(RS_Line* l) {
 }
 
 void QG_DlgLine::updateEntity() {
-    entity->setStartpoint(toWCS(leStartX, leStartY, entity->getStartpoint()));
-    entity->setEndpoint(toWCS(leEndX, leEndY, entity->getEndpoint()));
+    m_entity->setStartpoint(toWCS(leStartX, leStartY, m_entity->getStartpoint()));
+    m_entity->setEndpoint(toWCS(leEndX, leEndY, m_entity->getEndpoint()));
 
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
 }

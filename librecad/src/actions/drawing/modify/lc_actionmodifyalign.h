@@ -23,13 +23,12 @@
 #ifndef LC_ACTIONMODIFYALIGN_H
 #define LC_ACTIONMODIFYALIGN_H
 
-#include <QObject>
 #include "lc_actionpreselectionawarebase.h"
 #include "lc_align.h"
 
 class LC_ActionModifyAlignData {
-
 public:
+    virtual ~LC_ActionModifyAlignData() = default;
     int getHAlign() const {return hAlign;}
     void setHAlign(int h) { hAlign = h;}
     int getVAlign() const {return vAlign;}
@@ -48,25 +47,24 @@ protected:
 
 class LC_ActionModifyAlign:public LC_ActionPreSelectionAwareBase, public LC_ActionModifyAlignData {
     Q_OBJECT
-
 public:
-    LC_ActionModifyAlign(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionModifyAlign(LC_ActionContext *actionContext);
     void setAlignType(int a) override;
     void init(int status) override;
 protected:
-    RS_Vector alignMin = RS_Vector(false);
-    RS_Vector alignMax = RS_Vector(false);
+    RS_Vector m_alignMin = RS_Vector(false);
+    RS_Vector m_alignMax = RS_Vector(false);
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
     RS_Vector createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly);
     RS_Vector getReferencePoint(const RS_Vector &min, const RS_Vector &max);
-    void selectionCompleted(bool singleEntity, bool fromInit) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger(bool selected) override;
     void previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef);

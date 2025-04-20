@@ -31,6 +31,7 @@
 #include "document_interface.h"
 #include "rs_graphic.h"
 
+class LC_ActionContext;
 class Doc_plugin_interface;
 
 class convLTW
@@ -75,7 +76,7 @@ private:
 class Doc_plugin_interface : public Document_Interface
 {
 public:
-    Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent);
+    Doc_plugin_interface(LC_ActionContext* actionContext, QWidget* parent);
     void updateView() override;
     void addPoint(QPointF *start) override;
     void addLine(QPointF *start, QPointF *end) override;
@@ -135,6 +136,7 @@ private:
     RS_Graphic *docGr;
     RS_GraphicView *gView;
     QWidget* main_window;
+    LC_ActionContext* m_actionContext;
 };
 
 /*void addArc(QPointF *start);			->Without start

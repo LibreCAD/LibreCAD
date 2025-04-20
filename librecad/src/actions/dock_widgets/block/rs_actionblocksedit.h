@@ -37,8 +37,7 @@
 class RS_ActionBlocksEdit : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionBlocksEdit(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionBlocksEdit(LC_ActionContext *actionContext);
 
 	void init(int status) override;
 	void trigger() override;

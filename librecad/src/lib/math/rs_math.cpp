@@ -26,15 +26,12 @@
 
 #include <cmath>
 
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 
 #include <muParser.h>
 
 #include <QString>
-#include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QDebug>
 

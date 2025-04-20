@@ -25,15 +25,12 @@
 **********************************************************************/
 
 #include "rs_actionlockrelativezero.h"
-#include "rs_graphicview.h"
 
-RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
-    bool on)
-    :RS_ActionInterface("(Un-)lock the relative Zero",
-                    container, graphicView)
-        ,on(on){
+#include "lc_graphicviewport.h"
+
+RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(LC_ActionContext *actionContext, bool on)
+    :RS_ActionInterface("(Un-)lock the relative Zero", actionContext, RS2::ActionLockRelativeZero)
+        ,m_modeOn(on){
 }
 
 void RS_ActionLockRelativeZero::init(int status) {
@@ -43,5 +40,5 @@ void RS_ActionLockRelativeZero::init(int status) {
 }
 
 void RS_ActionLockRelativeZero::trigger() {
-    viewport->lockRelativeZero(on);
+    m_viewport->lockRelativeZero(m_modeOn);
 }

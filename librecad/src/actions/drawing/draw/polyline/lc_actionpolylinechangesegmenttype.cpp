@@ -21,31 +21,30 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinechangesegmenttype.h"
-#include "rs_arc.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
 
-LC_ActionPolylineChangeSegmentType::LC_ActionPolylineChangeSegmentType(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("PolylineChangeSegment",container,graphicView) {
-    actionType = RS2::ActionPolylineChangeSegmentType;
+#include "rs_arc.h"
+#include "rs_pen.h"
+#include "rs_polyline.h"
+
+LC_ActionPolylineChangeSegmentType::LC_ActionPolylineChangeSegmentType(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("PolylineChangeSegment",actionContext, RS2::ActionPolylineChangeSegmentType) {
 }
 
 LC_ActionPolylineChangeSegmentType::~LC_ActionPolylineChangeSegmentType() {
-
 }
 
 void LC_ActionPolylineChangeSegmentType::doTrigger() {
     // todo - move to RS_Modification?
     auto* createdPolyline =  createModifiedPolyline();
     if (createdPolyline != nullptr) {
-        createdPolyline->setLayer(polyline->getLayer());
-        createdPolyline->setPen(polyline->getPen(false));
+        createdPolyline->setLayer(m_polyline->getLayer());
+        createdPolyline->setPen(m_polyline->getPen(false));
 
-        container->addEntity(createdPolyline);
+        m_container->addEntity(createdPolyline);
 
-        undoCycleReplace(polyline, createdPolyline);
-        polyline = createdPolyline;
-        polylineSegment = nullptr;
+        undoCycleReplace(m_polyline, createdPolyline);
+        m_polyline = createdPolyline;
+        m_polylineSegment = nullptr;
         setStatus(SetSegment);
     }
     else {
@@ -67,13 +66,13 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
             auto entity = catchAndDescribe(e, RS2::ResolveAllButTextImage);
             bool segmentFound = false;
             if (entity != nullptr && entity->isAtomic()){
-                if (polyline == entity->getParent()){
+                if (m_polyline == entity->getParent()){
                     int rtti = entity->rtti();
                     switch (rtti){
                         case RS2::EntityArc:{
                             segmentFound = true;
                             highlightHover(entity);
-                            if (showRefEntitiesOnPreview) {
+                            if (m_showRefEntitiesOnPreview) {
                                 previewLine(entity->getStartpoint(), entity->getEndpoint());
                             }
                             break;
@@ -91,19 +90,19 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
                 }
             }
             if (!segmentFound){
-                highlightHover(polyline);
+                highlightHover(m_polyline);
             }
             break;
         }
         case SetArcPoint:{
             auto arc = RS_Arc(nullptr, RS_ArcData());
-            bool suc = arc.createFrom3P(polylineSegment->getStartpoint(), mouse,polylineSegment->getEndpoint());
-            previewRefLine(polylineSegment->getStartpoint(), polylineSegment->getEndpoint());
+            bool suc = arc.createFrom3P(m_polylineSegment->getStartpoint(), mouse,m_polylineSegment->getEndpoint());
+            previewRefLine(m_polylineSegment->getStartpoint(), m_polylineSegment->getEndpoint());
             if (suc){
                 previewRefSelectablePoint(mouse);
                 previewRefPoint(arc.getCenter());
-                previewRefPoint(polylineSegment->getStartpoint());
-                previewRefPoint(polylineSegment->getEndpoint());
+                previewRefPoint(m_polylineSegment->getStartpoint());
+                previewRefPoint(m_polylineSegment->getEndpoint());
                 previewArc(arc.getData());
             }
             break;
@@ -114,10 +113,10 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
 }
 
 RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
-    auto* result = new RS_Polyline(container);
+    auto* result = new RS_Polyline(m_container);
 
-    for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity; entity = polyline->nextEntity(RS2::ResolveAll)) {
-        if (polylineSegment == entity){
+    for (RS_Entity *entity = m_polyline->firstEntity(RS2::ResolveAll); entity; entity = m_polyline->nextEntity(RS2::ResolveAll)) {
+        if (m_polylineSegment == entity){
             int status = getStatus();
             switch (status){
                 case SetSegment: { // arc to line
@@ -126,7 +125,7 @@ RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
                 }
                 case SetArcPoint: { // line to arc
                     auto arc = RS_Arc(nullptr, RS_ArcData());
-                    bool suc = arc.createFrom3P(polylineSegment->getStartpoint(), arcPoint,polylineSegment->getEndpoint());
+                    bool suc = arc.createFrom3P(m_polylineSegment->getStartpoint(), m_arcPoint,m_polylineSegment->getEndpoint());
                     if (suc){
                         double bulge = arc.getBulge();
                         result->addVertex(entity->getStartpoint(), bulge);
@@ -152,8 +151,8 @@ RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
         }
     }
 
-    result->addVertex(polyline->getEndpoint());
-    result->setClosed(polyline->isClosed());
+    result->addVertex(m_polyline->getEndpoint());
+    result->setClosed(m_polyline->isClosed());
     return result;
 }
 
@@ -162,7 +161,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC
         case SetEntity: {
             auto entity = catchEntityByEvent(e, RS2::EntityPolyline);
             if (entity != nullptr){
-                polyline = static_cast<RS_Polyline *>(entity);
+                m_polyline = static_cast<RS_Polyline *>(entity);
                 setStatus(SetSegment);
             }
             break;
@@ -170,16 +169,16 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC
         case SetSegment:{
             auto entity = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
             if (entity != nullptr && entity->isAtomic()){
-                if (polyline == entity->getParent()){
+                if (m_polyline == entity->getParent()){
                     int rtti = entity->rtti();
                     switch (rtti){
                         case RS2::EntityArc:{
-                            polylineSegment = entity;
+                            m_polylineSegment = entity;
                             trigger();
                             break;
                         }
                         case RS2::EntityLine:{
-                            polylineSegment = entity;
+                            m_polylineSegment = entity;
                             setStatus(SetArcPoint);
                             break;
                         }
@@ -191,7 +190,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC
             break;
         }
         case SetArcPoint:{
-            arcPoint = e->snapPoint;
+            m_arcPoint = e->snapPoint;
             trigger();
             break;
         }
@@ -203,7 +202,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC
 
 void LC_ActionPolylineChangeSegmentType::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     if (status == SetArcPoint){
-        arcPoint = pos;
+        m_arcPoint = pos;
         trigger();
     }
 }

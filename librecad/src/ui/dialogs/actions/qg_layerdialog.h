@@ -31,15 +31,11 @@
 
 class RS_Layer;
 class RS_LayerList;
-
-class QG_LayerDialog : public LC_Dialog, public Ui::QG_LayerDialog
-{
+class QG_LayerDialog : public LC_Dialog, public Ui::QG_LayerDialog{
     Q_OBJECT
-
 public:
     QG_LayerDialog(QWidget* parent = nullptr, QString name = 0);
-	~QG_LayerDialog()=default;
-
+	~QG_LayerDialog() override;
 public slots:
     virtual void setLayer( RS_Layer * l );
     virtual void updateLayer();
@@ -48,19 +44,15 @@ public slots:
     virtual void setEditLayer( bool el );
     //! @return a reference to the QLineEdit object.
     virtual QLineEdit* getQLineEdit ();
-
 protected:
-    RS_Layer* layer;
-    RS_LayerList* layerList;
-    QString layerName;
-    bool editLayer;
-
+    RS_Layer* m_layer;
+    RS_LayerList* m_layerList;
+    QString m_layerName;
+    bool m_editLayer;
 protected slots:
     virtual void languageChange();
-
 private:
     void init();
-
 };
 
 #endif // QG_LAYERDIALOG_H

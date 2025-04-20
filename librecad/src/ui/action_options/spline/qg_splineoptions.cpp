@@ -23,12 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_splineoptions.h"
 
+#include "qg_splineoptions.h"
 #include "rs_actiondrawspline.h"
-#include "rs_settings.h"
 #include "ui_qg_splineoptions.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_SplineOptions as a child of 'parent', with the
@@ -36,10 +34,10 @@
  */
 QG_SplineOptions::QG_SplineOptions()
     :LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "Spline"),
-    action(nullptr), ui(new Ui::Ui_SplineOptions{}){
+    m_action(nullptr), ui(new Ui::Ui_SplineOptions{}){
     ui->setupUi(this);
 
-    connect(ui->cbDegree, SIGNAL(currentIndexChanged(int)), SLOT(onDegreeIndexChanged(int)));
+    connect(ui->cbDegree, &QComboBox::currentIndexChanged, this, &QG_SplineOptions::onDegreeIndexChanged);
     connect(ui->cbClosed, &QCheckBox::clicked,  this, &QG_SplineOptions::onClosedClicked);
     connect(ui->bUndo, &QToolButton::clicked,  this, &QG_SplineOptions::undo);
 }
@@ -54,7 +52,7 @@ bool QG_SplineOptions::checkActionRttiValid(RS2::ActionType actionType){
 }
 
 void QG_SplineOptions::doSaveSettings(){
-    bool drawSplineAction = action->rtti() == RS2::ActionDrawSpline;
+    bool drawSplineAction = m_action->rtti() == RS2::ActionDrawSpline;
     if (drawSplineAction){
         save("Degree", ui->cbDegree->currentText().toInt());
     }
@@ -62,15 +60,15 @@ void QG_SplineOptions::doSaveSettings(){
 }
 
 void QG_SplineOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionDrawSpline *>(a);
+    m_action = dynamic_cast<RS_ActionDrawSpline *>(a);
     int degree = 3;
     bool closed;
 
     bool drawSplineAction = a->rtti() == RS2::ActionDrawSpline;
 
     if (update){
-        degree = action->getDegree();
-        closed = action->isClosed();
+        degree = m_action->getDegree();
+        closed = m_action->isClosed();
     } else {
         degree = loadInt("Degree", 3);
         closed = loadBool("Closed", false);
@@ -88,7 +86,7 @@ void QG_SplineOptions::onClosedClicked(bool value){
 }
 
 void QG_SplineOptions::undo(){
-    if (action) action->undo();
+    if (m_action) m_action->undo();
 }
 
 void QG_SplineOptions::onDegreeIndexChanged(int index){
@@ -97,12 +95,12 @@ void QG_SplineOptions::onDegreeIndexChanged(int index){
 
 void QG_SplineOptions::setClosedToActionAndView(bool closed){
     ui->cbClosed->setChecked(closed);
-    action->setClosed(closed);
+    m_action->setClosed(closed);
 }
 
 void QG_SplineOptions::setDegreeToActionAndView(int degree){
     ui->cbDegree->setCurrentIndex(degree-1);
-    action->setDegree(degree);
+    m_action->setDegree(degree);
 }
 
 /*

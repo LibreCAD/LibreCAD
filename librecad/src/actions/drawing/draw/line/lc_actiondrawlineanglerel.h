@@ -23,15 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWLINEANGLEREL_H
 #define LC_ACTIONDRAWLINEANGLEREL_H
 
-#include "rs_previewactioninterface.h"
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
+#include "rs_line.h"
 
 class LC_ActionDrawLineAngleRel :public LC_AbstractActionWithPreview {
     Q_OBJECT
-
 public:
-
     /**
      * Snapping for angle tick line
      */
@@ -49,74 +46,71 @@ public:
         SetTickLength
     };
 
-    LC_ActionDrawLineAngleRel(RS_EntityContainer& container, RS_GraphicView& graphicView, double angle = 0.0, bool fixedAngle = false);
-
+    LC_ActionDrawLineAngleRel(LC_ActionContext *actionContext, double angle = 0.0, bool fixedAngle = false);
     ~LC_ActionDrawLineAngleRel() override;
+    void setLineSnapMode(int mode) {  m_lineSnapMode = mode;};
+    int getLineSnapMode() const{return m_lineSnapMode;};
+    void setTickSnapMode(int mode) {m_tickSnapMode = mode;};
+    int getTickSnapMode() const {return m_tickSnapMode;};
+    void setTickAngle(double a){ m_tickAngleDegrees = a;};
+    double getTickAngle() const {return m_tickAngleDegrees;};
+    void setTickLength(double len){m_tickLength = len;};
+    double getTickLength() const {return m_tickLength;};
+    void setTickOffset(double o){m_tickOffset = o;};
+    double getTickOffset() const {return m_tickOffset;};
+    void setSnapDistance(double d){m_snapDistance = d;};
+    double getSnapDistance() const {return m_snapDistance;};
 
-    void setLineSnapMode(int mode) {  lineSnapMode = mode;};
-    int getLineSnapMode() const{return lineSnapMode;};
-    void setTickSnapMode(int mode) {tickSnapMode = mode;};
-    int getTickSnapMode() const {return tickSnapMode;};
-    void setTickAngle(double a){ tickAngleDegrees = a;};
-    double getTickAngle() const {return tickAngleDegrees;};
-    void setTickLength(double len){tickLength = len;};
-    double getTickLength() const {return tickLength;};
-    void setTickOffset(double o){tickOffset = o;};
-    double getTickOffset() const {return tickOffset;};
-    void setSnapDistance(double d){snapDistance = d;};
-    double getSnapDistance() const {return snapDistance;};
-
-    bool isAngleRelative() const{return relativeAngle;};
-    void setAngleIsRelative(bool value){relativeAngle = value;};
-    bool isLengthFree() const{return lengthIsFree;};
-    void setLengthIsFree(bool value){lengthIsFree = value;};
-    bool isDivideLine() const{return divideLine;};
-    void setDivideLine(bool value){divideLine = value;};
-
+    bool isAngleRelative() const{return m_relativeAngle;};
+    void setAngleIsRelative(bool value){m_relativeAngle = value;};
+    bool isLengthFree() const{return m_lengthIsFree;};
+    void setLengthIsFree(bool value){m_lengthIsFree = value;};
+    bool isDivideLine() const{return m_divideLine;};
+    void setDivideLine(bool value){m_divideLine = value;};
 private:
     /**
      * Controls in which point of original line snap is performed
      */
-    int lineSnapMode = LINE_SNAP_START;
+    int m_lineSnapMode = LINE_SNAP_START;
 
     /**
      * controls how to snap tick line
      */
-    int tickSnapMode = TICK_SNAP_END;
+    int m_tickSnapMode = TICK_SNAP_END;
     /*
      * angle used for drawing line (absolute or relative).
      * Alternative action mode uses alternative angle (mirrored original) instead of original one
      */
-    double tickAngleDegrees = 0;
+    double m_tickAngleDegrees = 0;
     /**
      * Length of tick if it is fixed
      */
-    double tickLength = 50;
+    double m_tickLength = 50;
     /**
      * offset of tick line
      */
-    double tickOffset = 0;
+    double m_tickOffset = 0;
     /**
      * indicates whether original line should be divided in point of intersection
      */
-    bool divideLine = false;
+    bool m_divideLine = false;
 
     /**
      * Distance (offset) from original line snap-point to which intersection line will be shifted
      */
-    double snapDistance = 0;
+    double m_snapDistance = 0;
 
     /**
      * indicates that angle specified by options is relative (i.e between original line and drawn line).
      * If flag is false, absolute angle (from line tick and x axis) will be used.
      */
-    bool relativeAngle = false;
+    bool m_relativeAngle = false;
 
     /**
      * Flag indicates that the user will specify length of tick line in interactive mode by mouse
      * instead of relying on fixed value of length
      */
-    bool lengthIsFree = false;
+    bool m_lengthIsFree = false;
 
     struct TickData{
         RS_Line* line {nullptr};
@@ -129,7 +123,7 @@ private:
     /**
      * describes data needed for drawing tick angle
      */
-    TickData* tickData = nullptr;
+    TickData* m_tickData = nullptr;
 
     RS_Vector obtainLineSnapPointForMode(RS_Line* targetLine, RS_Vector& snap) const;
     TickData* prepareLineData(RS_Line* targetLine, const RS_Vector& tickSnapPosition, const RS_Vector& tickEndPosition, bool alternateAngle);

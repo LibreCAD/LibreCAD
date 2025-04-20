@@ -19,23 +19,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "rs_layer.h"
-#include "qg_pentoolbar.h"
-#include "qc_applicationwindow.h"
-#include "rs_graphic.h"
+
 #include "lc_actionpensyncactivebylayer.h"
 
-LC_ActionPenSyncActiveByLayer::LC_ActionPenSyncActiveByLayer(RS_EntityContainer &container, RS_GraphicView &graphicView)
-   :RS_ActionInterface("PenSyncByLayer", container, graphicView){
+#include "qc_applicationwindow.h"
+#include "qg_pentoolbar.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
+
+LC_ActionPenSyncActiveByLayer::LC_ActionPenSyncActiveByLayer(LC_ActionContext *actionContext)
+   :RS_ActionInterface("PenSyncByLayer", actionContext, RS2::ActionPenSyncFromLayer){
 }
 
 void LC_ActionPenSyncActiveByLayer::init(int status){
     RS_ActionInterface::init(status);
     if (status >=0){
-        QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+        auto penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
         if (penToolBar != nullptr){
-            if (graphic != nullptr){
-                RS_Layer *layer = graphic->getActiveLayer();
+            if (m_graphic != nullptr){
+                RS_Layer *layer = m_graphic->getActiveLayer();
                 if (layer != nullptr){
                     RS_Pen layerPen = layer->getPen();
                     penToolBar->setLayerLineType(layerPen.getLineType(), true);

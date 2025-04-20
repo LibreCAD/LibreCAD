@@ -120,7 +120,7 @@ void LC_DlgIconsSetup::saveColor(LC_IconColorsOptions *options, LC_SVGIconEngine
 }
 
 void LC_DlgIconsSetup::setIconsOptions(LC_IconColorsOptions *options){
-    iconColorsOptions = options;
+    m_iconColorsOptions = options;
 
     initCombobox(options, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, ui->cbGenericMain);
     initCombobox(options, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, ui->cbGenericAccent);
@@ -165,37 +165,37 @@ void LC_DlgIconsSetup::initComboBox(QComboBox *cb, const QString &text) {
 }
 
 void LC_DlgIconsSetup::accept(){
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, ui->cbGenericMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, ui->cbGenericAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, ui->cbBackGeneric);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, ui->cbGenericMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, ui->cbGenericAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, ui->cbBackGeneric);
 
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbActiveOnMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbActiveOffMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbActiveOnAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbActiveOffAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbActiveOnBack);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbActiveOffBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbActiveOnMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbActiveOffMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbActiveOnAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbActiveOffAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbActiveOnBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbActiveOffBack);
 
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbNormalOnMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbNormalOffMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbNormalOnAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbNormalOffAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbNormalOnBack);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbNormalOffBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbNormalOnMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbNormalOffMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbNormalOnAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbNormalOffAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbNormalOnBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbNormalOffBack);
 
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbSelectedOnMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbSelectedOffMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbSelectedOnAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbSelectedOffAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbSelectedOnBack);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbSelectedOffBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbSelectedOnMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbSelectedOffMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbSelectedOnAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbSelectedOffAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbSelectedOnBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbSelectedOffBack);
 
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbDisabledOnMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbDisabledOffMain);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbDisabledOnAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbDisabledOffAccent);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbDisabledOnBack);
-    saveColor(iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbDisabledOffBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, ui->cbDisabledOnMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, ui->cbDisabledOffMain);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, ui->cbDisabledOnAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, ui->cbDisabledOffAccent);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, ui->cbDisabledOnBack);
+    saveColor(m_iconColorsOptions, LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, ui->cbDisabledOffBack);
     LC_Dialog::accept();
 }
 
@@ -206,14 +206,14 @@ void LC_DlgIconsSetup::onPbGenericMainClicked(){
     }
 }
 
-void LC_DlgIconsSetup::onPbGenericAccentClicked(){    
+void LC_DlgIconsSetup::onPbGenericAccentClicked(){
     QString colorName = set_color(ui->cbGenericAccent);
     if (!colorName.isEmpty()) {
         onGenericAccentColorChanged(colorName);
     }
 }
 
-void LC_DlgIconsSetup::onPbGenericBackClicked(){    
+void LC_DlgIconsSetup::onPbGenericBackClicked(){
     QString colorName = set_color(ui->cbBackGeneric);
     if (!colorName.isEmpty()) {
         onGenericBackColorChanged(colorName);
@@ -227,21 +227,21 @@ void LC_DlgIconsSetup::onPbActiveOnMainClicked(){
     }
 }
 
-void LC_DlgIconsSetup::onPbActiveOnAccentClicked(){    
+void LC_DlgIconsSetup::onPbActiveOnAccentClicked(){
     QString colorName = set_color(ui->cbActiveOnAccent);
     if (!colorName.isEmpty()) {
         onActiveOnAccentColorChanged(colorName);
     }
 }
 
-void LC_DlgIconsSetup::onPbActiveOnBackClicked(){    
+void LC_DlgIconsSetup::onPbActiveOnBackClicked(){
     QString colorName = set_color(ui->cbActiveOnBack);
     if (!colorName.isEmpty()) {
         onActiveOnBackColorChanged(colorName);
     }
 }
 
-void LC_DlgIconsSetup::onPbActiveOffMainClicked(){    
+void LC_DlgIconsSetup::onPbActiveOffMainClicked(){
     QString colorName = set_color(ui->cbActiveOffMain);
     if (!colorName.isEmpty()) {
         onActiveOffMainColorChanged(colorName);
@@ -255,7 +255,7 @@ void LC_DlgIconsSetup::onPbActiveOffAccentClicked(){
     }
 }
 
-void LC_DlgIconsSetup::onPbActiveOffBackClicked(){    
+void LC_DlgIconsSetup::onPbActiveOffBackClicked(){
     QString colorName = set_color(ui->cbActiveOffBack);
     if (!colorName.isEmpty()) {
         onActiveOffBackColorChanged(colorName);
@@ -389,137 +389,137 @@ void LC_DlgIconsSetup::onPbDisabledOffBackClicked(){
 }
 
 void LC_DlgIconsSetup::onGenericMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onGenericAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onGenericBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onActiveOnMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onActiveOnAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onActiveOnBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onActiveOffMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onActiveOffAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onActiveOffBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onNormalOnMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onNormalOnAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onNormalOnBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onNormalOffMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onNormalOffAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onNormalOffBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Normal, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onSelectedOnMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onSelectedOnAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onSelectedOnBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onSelectedOffMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onSelectedOffAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onSelectedOffBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Selected, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onDisabledOnMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onDisabledOnAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onDisabledOnBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onDisabledOffMainColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Main, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onDisabledOffAccentColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Accent, value);
     applyIconColors();
 }
 
 void LC_DlgIconsSetup::onDisabledOffBackColorChanged(const QString &value){
-    iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
+    m_iconColorsOptions->setColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::Background, value);
     applyIconColors();
 }
 
@@ -540,14 +540,14 @@ QString LC_DlgIconsSetup::set_color(QComboBox *combo) {
 }
 
 void LC_DlgIconsSetup::resetToDefaults(){
-    iconColorsOptions->resetToDefaults();
-    setIconsOptions(iconColorsOptions);
+    m_iconColorsOptions->resetToDefaults();
+    setIconsOptions(m_iconColorsOptions);
 }
 
 void LC_DlgIconsSetup::applyIconColors(){
-    iconColorsOptions->applyOptions();
+    m_iconColorsOptions->applyOptions();
     QPixmapCache::clear();
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow(); //      fixme - sand - files - remove static
     if (appWindow != nullptr) {
         appWindow->fireIconsRefresh();
     }

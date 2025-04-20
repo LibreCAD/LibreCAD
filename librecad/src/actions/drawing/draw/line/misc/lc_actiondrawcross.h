@@ -23,40 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWCROSS_H
 #define LC_ACTIONDRAWCROSS_H
 
-#include <QMouseEvent>
-#include "rs_coordinateevent.h"
-#include "rs_entity.h"
-#include "rs_snapper.h"
-#include "rs_previewactioninterface.h"
-#include "rs_line.h"
 #include "lc_abstractactionwithpreview.h"
 
-/**
- * Structure that contains information about cross lines
- */
-struct LC_CrossData {
-    LC_CrossData() :
-        horizontal(),
-        vertical(),
-        centerPoint()
-    {}
-
-    LC_CrossData(const RS_Vector& horPoint1,
-                 const RS_Vector& horPoint2,
-                 const RS_Vector& vertPoint1,
-                 const RS_Vector& vertPoint2,
-                 const RS_Vector& center) :
-        horizontal( horPoint1, horPoint2),
-        vertical( vertPoint1, vertPoint2),
-        centerPoint(center){}
-
-    // horizontal line
-    RS_LineData horizontal;
-    // vertical line
-    RS_LineData vertical;
-    // center point
-    RS_Vector centerPoint;
-};
+struct LC_CrossData;
 
 /**
  * Action that draws cross positioned in center of selected circle, arc or ellipse
@@ -65,20 +34,18 @@ struct LC_CrossData {
 class LC_ActionDrawCross:public LC_AbstractActionWithPreview {
 Q_OBJECT
 public:
-    LC_ActionDrawCross(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    LC_ActionDrawCross(LC_ActionContext *actionContext);
     ~LC_ActionDrawCross() override;
 
-    double getLenX() const {return lenX;};
-    double getLenY() const {return lenY;};
-    double getCrossAngle() const{return ucsBasisAngleDegrees;};
-    int getCrossMode() const{return crossSizeMode;};
+    double getLenX() const {return m_lenX;};
+    double getLenY() const {return m_lenY;};
+    double getCrossAngle() const{return m_ucsBasisAngleDegrees;};
+    int getCrossMode() const{return m_crossSizeMode;};
 
-    void setXLength(double d) {lenX = d;};
-    void setYLength(double d) {lenY = d;};
-    void setCrossAngle(double d) { ucsBasisAngleDegrees = d;};
-    void setCrossMode(int i) {crossSizeMode = i;};
+    void setXLength(double d) {m_lenX = d;};
+    void setYLength(double d) {m_lenY = d;};
+    void setCrossAngle(double d) { m_ucsBasisAngleDegrees = d;};
+    void setCrossMode(int i) {m_crossSizeMode = i;};
 protected:
     enum Status {
         SetEntity      /**< Choose the circle / arc. */
@@ -94,9 +61,9 @@ protected:
     };
 
     /** Chosen entity */
-    RS_Entity *entity = nullptr;
+    RS_Entity *m_entity = nullptr;
     //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc,
+    const EntityTypeList m_circleType = EntityTypeList{RS2::EntityArc,
                                                      RS2::EntityCircle,
                                                      RS2::EntityEllipse/*,
                                                      RS2::EntitySplinePoints*/};
@@ -104,19 +71,19 @@ protected:
     /**
      * Mode that controls how the circle should be drawn
      */
-    int crossSizeMode = CROSS_SIZE_EXTEND;
+    int m_crossSizeMode = CROSS_SIZE_EXTEND;
     /*
      * length value for axis x
      */
-    double lenX = 0.0;
+    double m_lenX = 0.0;
     /*
      * length value for axis x
      */
-    double lenY = 0.0;
+    double m_lenY = 0.0;
     /**
      * Angle between axis x and horizontal cross line
      */
-    double ucsBasisAngleDegrees = 0.0;
+    double m_ucsBasisAngleDegrees = 0.0;
 
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;

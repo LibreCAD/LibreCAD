@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_MODIFYSCALEOPTIONS_H
 #define LC_MODIFYSCALEOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionModifyScale;
@@ -34,7 +33,6 @@ namespace Ui {
 
 class LC_ModifyScaleOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_ModifyScaleOptions();
 public slots:

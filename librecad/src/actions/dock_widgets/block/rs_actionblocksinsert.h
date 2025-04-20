@@ -25,10 +25,12 @@
 **********************************************************************/
 #ifndef RS_ACTIONBLOCKSINSERT_H
 #define RS_ACTIONBLOCKSINSERT_H
+
 #include "rs_previewactioninterface.h"
-#include "rs_insert.h"
+
 class RS_Block;
 struct RS_InsertData;
+
 /**
  * This action class can handle user events for inserting blocks into the
  * current drawing.
@@ -38,9 +40,7 @@ struct RS_InsertData;
 class RS_ActionBlocksInsert:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionBlocksInsert(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionBlocksInsert(LC_ActionContext *actionContext);
     ~RS_ActionBlocksInsert() override;
     void init(int status) override;
     void reset();
@@ -73,18 +73,17 @@ protected:
         SetRowSpacing /**< Setting row spacing in the command line. */
     };
 
-    RS_Block *block = nullptr;
-    std::unique_ptr<RS_InsertData> data;
+    RS_Block *m_block = nullptr;
+    std::unique_ptr<RS_InsertData> m_data;
     /** Last status before entering option. */
-    Status lastStatus = SetUndefined;
+    Status m_lastStatus = SetUndefined;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

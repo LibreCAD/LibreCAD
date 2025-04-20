@@ -19,20 +19,18 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <QKeyEvent>
+
 #include "rs_actionselectbase.h"
+
+#include <QKeyEvent>
+
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
 #include "rs_selection.h"
 
-RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-                                         QList<RS2::EntityType> entityTypeList,
-                                         RS2::ActionType actionType)
-        :LC_OverlayBoxAction(name, container, graphicView, actionType),
-        catchForSelectionEntityTypes(std::move(entityTypeList)){
+RS_ActionSelectBase::RS_ActionSelectBase(const char* name,LC_ActionContext *actionContext, RS2::ActionType actionType, QList<RS2::EntityType> entityTypeList)
+        :LC_OverlayBoxAction(name, actionContext, actionType),
+        m_catchForSelectionEntityTypes(std::move(entityTypeList)){
 }
 
 /**
@@ -40,7 +38,7 @@ RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
  * action and finishing this one when the enter key is pressed.
  */
 void RS_ActionSelectBase::keyReleaseEvent(QKeyEvent* e) {
-    if (e->key()==Qt::Key_Return && predecessor) {
+    if (e->key()==Qt::Key_Return && m_predecessor) {
         finish(false);
     }
 }
@@ -53,7 +51,7 @@ void RS_ActionSelectBase::keyPressEvent(QKeyEvent *e){
             break;
         }
         case Qt::Key_Enter:{
-            if (container->countSelected() > 0){
+            if (m_container->countSelected() > 0){
                 selectionFinishedByKey(e, false);
             }
             break;
@@ -85,13 +83,13 @@ bool RS_ActionSelectBase::selectEntity(RS_Entity* entityToSelect, bool selectCon
 }
 
 void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unused]]bool selectContour) const {
-    RS_Selection s(*container, viewport);
+    RS_Selection s(*m_container, m_viewport);
     s.selectSingle(entityToSelect);
 }
 
 RS_Entity* RS_ActionSelectBase::selectionMouseMove(LC_MouseEvent *event) {
     RS_Entity* result = nullptr;
-    auto ent = catchAndDescribe(event, catchForSelectionEntityTypes, RS2::ResolveNone);
+    auto ent = catchAndDescribe(event, m_catchForSelectionEntityTypes, RS2::ResolveNone);
     if (ent != nullptr){
         bool selectionAllowed = isEntityAllowedToSelect(ent);
         if (selectionAllowed){
@@ -104,10 +102,10 @@ RS_Entity* RS_ActionSelectBase::selectionMouseMove(LC_MouseEvent *event) {
 }
 
 bool RS_ActionSelectBase::isShowRefPointsOnHighlight() {
-    return highlightEntitiesRefPointsOnHover;
+    return m_highlightEntitiesRefPointsOnHover;
 }
 
 void RS_ActionSelectBase::deselectAll(){
-    RS_Selection s(*container, viewport);
+    RS_Selection s(*m_container, m_viewport);
     s.selectAll(false);
 }

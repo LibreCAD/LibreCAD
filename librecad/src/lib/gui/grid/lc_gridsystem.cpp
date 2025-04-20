@@ -20,14 +20,12 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs.h"
-#include "rs_math.h"
-#include "rs_vector.h"
 #include "lc_gridsystem.h"
-#include "rs_painter.h"
-#include "rs_pen.h"
+
 #include "lc_graphicviewport.h"
 #include "lc_lattice.h"
+#include "rs_painter.h"
+#include "rs_pen.h"
 
 namespace {
 //maximum number grid points to draw, for performance consideration
@@ -39,9 +37,10 @@ namespace {
 LC_GridSystem::LC_GridSystem(LC_GridSystem::LC_GridOptions *options):
     gridOptions{std::make_unique<LC_GridSystem::LC_GridOptions>(options != nullptr ? *options: LC_GridSystem::LC_GridOptions{})}
 , gridLattice{std::make_unique<LC_Lattice>()}
-, metaGridLattice{std::make_unique<LC_Lattice>()}
-{
+, metaGridLattice{std::make_unique<LC_Lattice>()}{
 }
+
+LC_GridSystem::~LC_GridSystem() = default;
 
 void LC_GridSystem::createGrid(
     LC_GraphicViewport* view,

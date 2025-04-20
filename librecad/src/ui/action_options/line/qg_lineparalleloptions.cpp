@@ -24,12 +24,8 @@
 **
 **********************************************************************/
 #include "qg_lineparalleloptions.h"
-
 #include "rs_actiondrawlineparallel.h"
-#include "rs_settings.h"
-#include "rs_math.h"
 #include "ui_qg_lineparalleloptions.h"
-
 
 /*
  *  Constructs a QG_LineParallelOptions as a child of 'parent', with the
@@ -68,12 +64,12 @@ void QG_LineParallelOptions::doSaveSettings() {
 }
 
 void QG_LineParallelOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionDrawLineParallel *>(a);
+    m_action = dynamic_cast<RS_ActionDrawLineParallel *>(a);
     QString distance;
     int copiesNumber;
     if (update) {
-        distance = fromDouble(action->getDistance());
-        copiesNumber = action->getNumber();
+        distance = fromDouble(m_action->getDistance());
+        copiesNumber = m_action->getNumber();
     } else {
         distance = load("Distance", "1.0");
         copiesNumber = loadInt("Number", 1);
@@ -94,12 +90,12 @@ void QG_LineParallelOptions::onDistEditingFinished() {
 void QG_LineParallelOptions::setDistanceToActionAndView(QString val) {
     double distance;
     if (toDouble(val, distance, 1.0, false)) {
-        action->setDistance(distance);
+        m_action->setDistance(distance);
         ui->leDist->setText(fromDouble(distance));
     }
 }
 
 void QG_LineParallelOptions::setNumberToActionAndView(int number) {
-    action->setNumber(number);
+    m_action->setNumber(number);
     ui->sbNumber->setValue(number);
 }

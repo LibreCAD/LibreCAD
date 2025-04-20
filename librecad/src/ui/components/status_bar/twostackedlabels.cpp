@@ -30,23 +30,23 @@
 
 TwoStackedLabels::TwoStackedLabels(QWidget* parent)
     : QFrame(parent)
-    , top_label(new QLabel(this))
-    , bottom_label(new QLabel(this))
+    , m_topLabel(new QLabel(this))
+    , m_bottomLabel(new QLabel(this))
 {
     QVBoxLayout* layout = new QVBoxLayout;
-    layout->addWidget(top_label);
-    layout->addWidget(bottom_label);
+    layout->addWidget(m_topLabel);
+    layout->addWidget(m_bottomLabel);
     layout->setContentsMargins(4,0,4,0);
     layout->setSpacing(0);
     setLayout(layout);
 }
 
 void TwoStackedLabels::setTopLabel(const QString& status){
-    top_label->setText(status);
+    m_topLabel->setText(status);
 }
 
 void TwoStackedLabels::setBottomLabel(const QString& status){
-    bottom_label->setText(status);
+    m_bottomLabel->setText(status);
 }
 
 void TwoStackedLabels::mouseReleaseEvent(QMouseEvent *e) {
@@ -57,9 +57,9 @@ void TwoStackedLabels::mouseReleaseEvent(QMouseEvent *e) {
 }
 
 void TwoStackedLabels::setTopLabelToolTip(const QString &tooltip) {
-  top_label->setToolTip(tooltip);
+  m_topLabel->setToolTip(tooltip);
 }
 
 void TwoStackedLabels::setBottomLabelToolTips(const QString &tooltip) {
-    bottom_label->setToolTip(tooltip);
+    m_bottomLabel->setToolTip(tooltip);
 }

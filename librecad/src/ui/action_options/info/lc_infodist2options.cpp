@@ -33,15 +33,15 @@ LC_InfoDist2Options::LC_InfoDist2Options()
 
 LC_InfoDist2Options::~LC_InfoDist2Options(){
     delete ui;
-    action = nullptr;
+    m_action = nullptr;
 }
 
 void LC_InfoDist2Options::doSetAction(RS_ActionInterface *a, bool update){
-    action = dynamic_cast<RS_ActionInfoDist2 *>(a);
+    m_action = dynamic_cast<RS_ActionInfoDist2 *>(a);
 
     bool onEntity;
     if (update){
-        onEntity = action->isUseNearestPointOnEntity();
+        onEntity = m_action->isUseNearestPointOnEntity();
     } else {
         onEntity = loadBool("NearestIsOnEntity", true);
     }
@@ -57,13 +57,13 @@ void LC_InfoDist2Options::doSaveSettings(){
 }
 
 void LC_InfoDist2Options::onOnEntityClicked([[maybe_unused]]bool value){
-    if (action != nullptr){
+    if (m_action != nullptr){
         setOnEntitySnapToActionAndView(ui->cbOnEntity->isChecked());
     }
 }
 
 void LC_InfoDist2Options::setOnEntitySnapToActionAndView(bool value){
-    action->setUseNearestPointOnEntity(value);
+    m_action->setUseNearestPointOnEntity(value);
     ui->cbOnEntity->setChecked(value);
 }
 
@@ -71,6 +71,6 @@ void LC_InfoDist2Options::languageChange(){
     ui->retranslateUi(this);
 }
 
-bool LC_InfoDist2Options::checkActionRttiValid(RS2::ActionType actionType){
-        return actionType ==RS2::ActionInfoDistEntity2Point || actionType == RS2::ActionInfoDistPoint2Entity;
+bool LC_InfoDist2Options::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType == RS2::ActionInfoDistEntity2Point || actionType == RS2::ActionInfoDistPoint2Entity;
 }

@@ -28,7 +28,7 @@
 #ifndef RS_LEADER_H
 #define RS_LEADER_H
 
-#include "rs_entity.h"
+
 #include "rs_entitycontainer.h"
 
 

@@ -38,13 +38,9 @@
 class RS_ActionSetSnapRestriction : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    RS_ActionSetSnapRestriction(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView,
-                         RS2::SnapRestriction snapRes);
-
+    RS_ActionSetSnapRestriction(LC_ActionContext *actionContext,RS2::SnapRestriction snapRes);
 	void init(int status) override;
 	void trigger() override;
-
 protected:
     RS2::SnapRestriction snapRes = RS2::RestrictNothing;
 };

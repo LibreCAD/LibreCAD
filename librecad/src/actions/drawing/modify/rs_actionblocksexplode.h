@@ -37,10 +37,9 @@
  * @author Andrew Mustun
  */
 class RS_ActionBlocksExplode : public LC_ActionPreSelectionAwareBase {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionBlocksExplode(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionBlocksExplode(LC_ActionContext *actionContext);
 protected:
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
     void updateMouseButtonHintsForSelection() override;

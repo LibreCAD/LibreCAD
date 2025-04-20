@@ -27,14 +27,7 @@
 
 #ifndef RS_DIALOGFACTORYINTERFACE_H
 #define RS_DIALOGFACTORYINTERFACE_H
-
-#include "rs.h"
 #include "rs_block.h"
-#include "lc_modifiersinfo.h"
-#include "lc_actiongroupmanager.h"
-#include "lc_relzerocoordinateswidget.h"
-#include "lc_qtstatusbarmanager.h"
-#include <QString>
 
 class QWidget;
 class QG_CommandWidget;
@@ -194,11 +187,7 @@ public:
      */
     virtual RS_BlockData requestBlockAttributesDialog([[maybe_unused]]RS_BlockList* blockList) { return RS_BlockData();};
 
-    /**
-     * This virtual method must be overwritten and should provide
-     * a way to edit a block.
-     */
-    virtual void requestEditBlockWindow([[maybe_unused]]RS_BlockList* blockList) { };
+
     virtual void closeEditBlockWindow([[maybe_unused]]RS_Block* block) {};
 
     /**
@@ -234,21 +223,7 @@ public:
      */
     virtual QString requestImageOpenDialog() { return "";};
 
-    virtual void addOptionsWidget([[maybe_unused]]QWidget * options) { };
-    virtual void removeOptionsWidget([[maybe_unused]]QWidget * options) { };
-
-    /**
-     * This virtual method must be overwritten and must present
-     * a widget for snap point with distance options.
-     *
-     * @param dist Distance which can be directly changed
-     *             by the presented widget.
-     * @param on true: switch widget on, false: off
-     */
-    virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) { };
-    virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) { };
-    virtual void hideSnapOptions() {};
-
+    
     /**
      * This virtual method must be overwritten and must present
      * a widget for entity attributes.
@@ -345,13 +320,6 @@ public:
      */
     virtual bool requestHatchDialog([[maybe_unused]]RS_Hatch *hatch, [[maybe_unused]]LC_GraphicViewport *viewport) { return false;};
 
-    /**
-     * This virtual method must be overwritten and must present
-     * a dialog for general application options.
-     */
-    virtual int requestOptionsGeneralDialog()  {return 0;};
-
-    virtual void requestKeyboardShortcutsDialog([[maybe_unused]]LC_ActionGroupManager *pManager) {  };
 
     /**
      * This virtual method must be overwritten and must present
@@ -376,32 +344,10 @@ public:
                                             [[maybe_unused]]const QString& filter = QString(),
                                             [[maybe_unused]]QString* selectedFilter = nullptr) { return "";};
 
-    /**
-     * This virtual method must be overwritten if the graphic view has
-     * a component that is interested in the current mouse position.
-     * The implementation will be called every time the mouse position
-     * changes.
-     *
-     * @param abs Absolute coordinate of the mouse cursor or the
-     *            point it snaps to.
-     * @param rel Relative coordinate.
-     */
-    virtual void updateCoordinateWidget([[maybe_unused]]const RS_Vector& abs,
-                                        [[maybe_unused]]const RS_Vector& rel,
-                                        [[maybe_unused]]bool updateFormat=false) {};
 
-    /**
-     * This virtual method must be overwritten if the graphic view has
-     * a component that is interested in the current mouse button hints.
-     * The implementation will be called typically by actions to inform
-     * the user about the current functionality of the mouse buttons.
-     *
-     * @param left Help text for the left mouse button.
-     * @param right Help text for the right mouse button.
-	 */
-    virtual void updateMouseWidget([[maybe_unused]]const QString& = QString(),
-                                   [[maybe_unused]]const QString& = QString(),
-                                   [[maybe_unused]]const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()){};
+
+
+
 //    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**
@@ -430,14 +376,6 @@ public:
     virtual void command([[maybe_unused]]const QString& message) {};
     virtual void commandPrompt([[maybe_unused]]const QString& message) {};
 
-    virtual void setMouseWidget([[maybe_unused]]QG_MouseWidget*) {};
-    virtual void setCoordinateWidget([[maybe_unused]]QG_CoordinateWidget* ){};
-    virtual void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget* ){};
-    virtual void setSelectionWidget([[maybe_unused]]QG_SelectionWidget* ) {};
-    virtual void setCommandWidget([[maybe_unused]]QG_CommandWidget* ) {};
-    virtual void clearMouseWidgetIcon() {};
-    virtual void setStatusBarManager([[maybe_unused]]LC_QTStatusbarManager *statusBarManager){};
-    virtual void setCurrentQAction([[maybe_unused]]QAction *action){};
 };
 
 

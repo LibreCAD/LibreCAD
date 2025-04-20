@@ -39,9 +39,7 @@ struct RS_TextData;
 class RS_ActionDrawText : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawText(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawText(LC_ActionContext *actionContext);
     ~RS_ActionDrawText() override;
     void init(int status) override;
     void reset();
@@ -63,12 +61,12 @@ protected:
         SetText               /**< Setting the text in the command line. */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    std::unique_ptr<RS_TextData> data;
-    double ucsBasicAngleDegrees = 0.0;
-    bool textChanged = false;
-    bool snappedToRelZero = false;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
+    std::unique_ptr<RS_TextData> m_textData;
+    double m_ucsBasicAngleDegrees = 0.0;
+    bool m_textChanged = false;
+    bool m_snappedToRelZero = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

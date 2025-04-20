@@ -21,26 +21,34 @@
  ******************************************************************************/
 
 #include <QActionGroup>
-
 #include "lc_actionfactorybase.h"
+
+#include "lc_actiongroup.h"
+#include "lc_actiongroupmanager.h"
 #include "lc_shortcutinfo.h"
+#include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
-#include "rs_dialogfactory.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
-    QObject(parent), main_window(parent),action_handler(a_handler){
+    QObject(parent), LC_AppWindowAware(parent),m_actionHandler(a_handler){
 }
 
-QAction *LC_ActionFactoryBase::createAction_MW(const char *name, const char *slot, const QString& text,
+QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_ApplicationWindow::*slotPtr)(), void (QC_ApplicationWindow::*slotBoolPtr)(bool),const QString& text,
                                            const char *iconName, const char *themeIconName,
                                            QActionGroup *parent, QMap<QString, QAction *> &a_map, bool useToggled) const {
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
-    if (slot != nullptr) {
+    if (slotPtr != nullptr) {
         if (useToggled) {
-            connect(action, SIGNAL(toggled(bool)), main_window, slot);
+            connect(action, &QAction::toggled, m_appWin, slotPtr);
         } else {
-            connect(action, SIGNAL(triggered(bool)), main_window, slot);
+            connect(action, &QAction::triggered, m_appWin, slotPtr);
         }
+    }else if (slotBoolPtr != nullptr) {
+            if (useToggled) {
+                connect(action, &QAction::toggled, m_appWin, slotBoolPtr);
+            } else {
+                connect(action, &QAction::triggered, m_appWin, slotBoolPtr);
+            }
     }
     return action;
 }
@@ -52,11 +60,12 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
     // LC_ERR <<  " ** original action handler" << this->action_handler;
     // well, a bit crazy hacky code to let the lambda properly capture action handler... without local var, class member is not captured
-    QG_ActionHandler* capturedHandler = action_handler;
+    QG_ActionHandler* capturedHandler = m_actionHandler;
     connect(action, &QAction::triggered, capturedHandler, [ capturedHandler, actionType](bool){ // fixme - sand - simplify by using data() on QAction and sender()
         // LC_ERR << " ++ captured action handler "<<   capturedHandler;
         capturedHandler->setCurrentAction(actionType);
     });
+    LC_ActionGroupManager::associateQActionWithActionType(action, actionType);
     return action;
 }
 
@@ -65,7 +74,7 @@ QAction *LC_ActionFactoryBase::justCreateAction(QMap<QString, QAction *> &a_map,
     auto* action = new QAction(text, parent);
     if (iconName != nullptr) {
         QIcon icon = QIcon(iconName);
-        if (using_theme && themeIconName != nullptr)
+        if (m_usingTheme && themeIconName != nullptr)
             action->setIcon(QIcon::fromTheme(themeIconName, icon));
         else
             action->setIcon(icon);
@@ -90,7 +99,7 @@ void LC_ActionFactoryBase::createActionHandlerActions(QMap<QString, QAction *> &
 
 void LC_ActionFactoryBase::createMainWindowActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList, bool useToggled) const {
     for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
-        createAction_MW(a.key, a.slot, a.text, a.iconName, a.themeIconName, group, map, useToggled);
+        createAction_MW(a.key, a.slotPtr, a.slotPtrBool, a.text, a.iconName, a.themeIconName, group, map, useToggled);
     }
 }
 
@@ -102,6 +111,30 @@ void LC_ActionFactoryBase::makeActionsShortcutsNonEditable(const QMap<QString, Q
             if (action != nullptr){
                 action ->setProperty(LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE, false);
             }
+        }
+    }
+}
+
+void LC_ActionFactoryBase::addActionsToMainWindow(const QMap<QString, QAction *> &map) const{
+   // add actions to the main window to ensure that shortcuts for them will be invoked - even if the action is not visible.
+   // without this, pressing shortcut for the action that is not visible does not activate the action
+   for (const auto &a: map) {
+       m_appWin->addAction(a);
+   }
+}
+
+void LC_ActionFactoryBase::createActionGroups(const std::vector<ActionGroupInfo>& actionGroups,LC_ActionGroupManager* actionGroupManager) const {
+    for (const ActionGroupInfo& groupInfo : actionGroups) {
+        auto group = new LC_ActionGroup(actionGroupManager, groupInfo.name, groupInfo.description, groupInfo.iconName);
+        actionGroupManager->addActionGroup(groupInfo.name, group, groupInfo.isToolGroup);
+    }
+}
+
+void  LC_ActionFactoryBase::fillActionsList(QList<QAction *> &list, const std::vector<const char *> &actionNames, const QMap<QString, QAction*> &map) const {
+    for (const char* actionName: actionNames){
+        if (map.contains(actionName)) {
+            auto action = map.value(actionName);
+            list << action;
         }
     }
 }

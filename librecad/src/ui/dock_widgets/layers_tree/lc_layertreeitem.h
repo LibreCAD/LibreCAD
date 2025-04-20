@@ -24,9 +24,8 @@
 #define LC_LAYERTREEITEM_H
 
 #include <QVariant>
-#include "rs_layer.h"
 
-
+class RS_Layer;
 class LC_LayerTreeItem;
 
 /**
@@ -36,8 +35,7 @@ class LC_LayerTreeItem;
 class LC_LayerTreeItemAcceptor{
 public:
     virtual ~LC_LayerTreeItemAcceptor()= default;
-    virtual bool acceptLayerTreeItem([[maybe_unused]] LC_LayerTreeItem* item) const
-    {
+    virtual bool acceptLayerTreeItem([[maybe_unused]] LC_LayerTreeItem* item) const {
         return true;
     }
 };
@@ -46,8 +44,7 @@ public:
  * Tree Item used to maintain hierarchical structure of layers.
  * May hold reference to the layer - if no layer there, it's just a "virtual layer" used as layers group
  */
-class LC_LayerTreeItem
-{
+class LC_LayerTreeItem{
 public:
 
     static constexpr int NOT_DEFINED_LAYER_TYPE = -1;
@@ -63,88 +60,89 @@ public:
 
     explicit LC_LayerTreeItem(LC_LayerTreeItem *parent = nullptr);
 
-    LC_LayerTreeItem(QString &name, RS_Layer *actualLayer , LC_LayerTreeItem *parent = nullptr);
+    LC_LayerTreeItem(const QString &name, RS_Layer *actualLayer , LC_LayerTreeItem *parent = nullptr);
     ~LC_LayerTreeItem();
 
     void appendChild(LC_LayerTreeItem *child);
 
-    LC_LayerTreeItem *child(int row);
+    LC_LayerTreeItem *child(int row) const;
     int childCount() const;
     int childCountAll() const;
     int row() const;
-    LC_LayerTreeItem *parent();
+    LC_LayerTreeItem *parent() const;
     void sortChildren();
     bool isVirtual() const;
-    bool isVisible();
-    bool isLocked();
-    bool isPrint();
-    bool isConstruction();
+    bool isVisible() const;
+    bool isLocked() const;
+    bool isPrint() const;
+    bool isConstruction() const;
+    bool isNotFrozen() const;
     QString getName();
-    QString getDisplayName() const {return displayName;};
-    void setDisplayName(QString &newName){displayName = newName;};
-    RS_Layer* getLayer();
+    QString getDisplayName() const {return m_displayName;};
+    void setDisplayName(QString &newName){m_displayName = newName;};
+    RS_Layer* getLayer() const;
     void updateCalculatedFlagsForDescendentVirtualLayers();
-    LC_LayerTreeItem* createLayerChild(QString &childName, RS_Layer* childLayer);
-    LC_LayerTreeItem* getOrCreateVirtualChild(QString &targetChildName);
-    int getIndent() const { return indent;};
+    LC_LayerTreeItem* createLayerChild(const QString &childName, RS_Layer* childLayer);
+    LC_LayerTreeItem* getOrCreateVirtualChild(const QString &targetChildName);
+    int getIndent() const { return m_indent;};
     void collectLayers(QList<RS_Layer*> &result, LC_LayerTreeItemAcceptor* acceptor, bool acceptSelf=false);
     void collectDescendantChildren(QList<LC_LayerTreeItem*> &result, LC_LayerTreeItemAcceptor* acceptor, bool includeSelf = false);
     void markAsActivePath();
     void rebuildActivePath(RS_Layer* layerToBeActive);
     bool isPartOfActivePath() const;
-    int getLayerType() const {return layerType;};
+    int getLayerType() const {return m_layerType;};
     void setLayerType(int value);
-    LC_LayerTreeItem* getPrimaryItem();
+    LC_LayerTreeItem* getPrimaryItem() const;
     void setPrimaryItem(LC_LayerTreeItem* item);
-    LC_LayerTreeItem* findPrimaryLayerChild(QString &childNameToFind);
-    void setMatched(bool enabled) {matched = enabled;};
-    bool isMatched() const {return matched;};
-    bool isActiveLayer() const {return activeLayer;};
-    void setActiveLayer(bool value){activeLayer = value;};
+    LC_LayerTreeItem* findPrimaryLayerChild(const QString &childNameToFind) const;
+    void setMatched(bool enabled) {m_matched = enabled;};
+    bool isMatched() const {return m_matched;};
+    bool isActiveLayer() const {return m_activeLayer;};
+    void setActiveLayer(bool value){m_activeLayer = value;};
     void invalidate();
     bool isInValid() const;
-    bool hasChildOfType(int type);
-    bool hasChildWithName(QString& nameToFind, int layerTypeToFind);
+    bool hasChildOfType(int type) const;
+    bool hasChildWithName(const QString& nameToFind, int layerTypeToFind) const;
     void collectPathToParent(QList<LC_LayerTreeItem*> &result, bool includeSelf);
-    bool isDescendantOf(LC_LayerTreeItem* item);
-    bool isZero() const {return zero_layer;}
-    void markAsZero(){zero_layer = true;}
-    QString getFullName(){return fullName;};
-    void setFullName(QString &name){fullName = name;};
+    bool isDescendantOf(const LC_LayerTreeItem* item) const;
+    bool isZero() const {return m_zero_layer;}
+    void markAsZero(){m_zero_layer = true;}
+    QString getFullName(){return m_fullName;};
+    void setFullName(QString &name){m_fullName = name;};
 private:
 
     LC_LayerTreeItem* findItemWithLayer(RS_Layer* source);
     // children of this item
-    QList<LC_LayerTreeItem*> childItems;
+    QList<LC_LayerTreeItem*> m_childItems;
     // parent item
-    LC_LayerTreeItem *parentItem = nullptr;
+    LC_LayerTreeItem *m_parentItem = nullptr;
     // reference to primary item - used by secondary (informational, dimensional, alternative pos) layers
-    LC_LayerTreeItem *primaryItem {nullptr};
+    LC_LayerTreeItem *m_primaryItem {nullptr};
     // actual layer, if any
-    RS_Layer* layer {nullptr};
+    RS_Layer* m_layer {nullptr};
     // part of raw parsed name
     QString name;
     // name used to display in UI
-    QString displayName;
+    QString m_displayName;
     // full path to the item
-    QString fullName;
+    QString m_fullName;
     // flat that containing layer is "0"
-    bool zero_layer {false};
+    bool m_zero_layer {false};
     // several calculated fields used for virtual layers
-    bool virtualVisible {false};
-    bool virtualLocked {false};
-    bool virtualPrint{false};
-    bool virtualConstruction{false};
+    bool m_virtualVisible {false};
+    bool m_virtualLocked {false};
+    bool m_virtualPrint{false};
+    bool m_virtualConstruction{false};
     // current indent of the item
-    int indent {0};
+    int m_indent {0};
     // flag that this item is part of the path from root to active layer
-    bool partOfActivePath {false};
+    bool m_partOfActivePath {false};
     // type of layer
-    int layerType {NORMAL};
+    int m_layerType {NORMAL};
     // flag that indicates that item matched filtering condition
-    bool matched {false};
+    bool m_matched {false};
     // flag that indicates that this is active layer
-    bool activeLayer {false};
+    bool m_activeLayer {false};
 };
 
 
@@ -166,7 +164,7 @@ private:
 class QG_LayerTreeItemAcceptorVisible: public virtual LC_LayerTreeItemAcceptor{
 public:
     bool acceptLayerTreeItem(LC_LayerTreeItem* item) const override{
-        bool result = !item->getLayer()->isFrozen();
+        bool result = item->isNotFrozen();
         return result;
     }
 };

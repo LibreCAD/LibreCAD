@@ -37,13 +37,12 @@
 class RS_ActionModifyStretch : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionModifyStretch(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
+    RS_ActionModifyStretch(LC_ActionContext *actionContext);
     ~RS_ActionModifyStretch() override;
 
     void init(int status) override;
-    bool isRemoveOriginals() const {return removeOriginals;};
-    void setRemoveOriginals(bool val){removeOriginals = val;};
+    bool isRemoveOriginals() const {return m_removeOriginals;};
+    void setRemoveOriginals(bool val){m_removeOriginals = val;};
 protected:
     /**
      * Action States.
@@ -54,9 +53,9 @@ protected:
         SetReferencePoint,    /**< Setting the reference point. */
         SetTargetPoint        /**< Setting the target point. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool removeOriginals = true;
+    struct StretchActionData;
+    std::unique_ptr<StretchActionData> m_actionData;
+    bool m_removeOriginals = true;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

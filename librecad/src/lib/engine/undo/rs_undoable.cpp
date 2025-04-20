@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include "rs_undoable.h"
-#include "rs_undocycle.h"
+
 
 /**
  * The undoable thing gets activated if it was undone and 
@@ -54,4 +54,3 @@ void RS_Undoable::setUndoState(bool undone) {
 bool RS_Undoable::isUndone() const {
     return getFlag(RS2::FlagUndone);
 }
-

@@ -20,22 +20,22 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_polyline.h"
-#include "rs_graphicview.h"
 #include "lc_actionpolylinedeletebase.h"
 
-LC_ActionPolylineDeleteBase::LC_ActionPolylineDeleteBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView)
-   :RS_PreviewActionInterface(name,container, graphicView){
+#include "rs_polyline.h"
+
+LC_ActionPolylineDeleteBase::LC_ActionPolylineDeleteBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType)
+   :RS_PreviewActionInterface(name, actionContext, actionType){
 }
 
 void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(LC_MouseEvent *e, RS_Vector &vertex, RS_Entity *&segment){
-    bool oldSnapOnEntity = snapMode.snapOnEntity;
-    snapMode.snapOnEntity = true;
+    bool oldSnapOnEntity = m_snapMode.snapOnEntity;
+    m_snapMode.snapOnEntity = true;
     RS_Vector snap = e->snapPoint;
-    snapMode.snapOnEntity = oldSnapOnEntity;
+    m_snapMode.snapOnEntity = oldSnapOnEntity;
     deletePreview();
     auto polyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e, RS2::EntityPolyline));
-    if (polyline == polylineToModify){
+    if (polyline == m_polylineToModify){
         RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
         segment = RS_Snapper::catchEntity(coordinate, RS2::ResolveAll);
         vertex  = segment->getNearestEndpoint(coordinate);
@@ -58,8 +58,8 @@ void LC_ActionPolylineDeleteBase::finish(bool updateTB){
 }
 
 void LC_ActionPolylineDeleteBase::clean(){
-    if (polylineToModify){
-        polylineToModify->setSelected(false);
+    if (m_polylineToModify){
+        m_polylineToModify->setSelected(false);
     }
     deletePreview();
     redraw();

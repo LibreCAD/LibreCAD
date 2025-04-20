@@ -22,9 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_atomicentity.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
-#include "rs_units.h"
 
 RS_AtomicEntity::RS_AtomicEntity(RS_EntityContainer* parent) : RS_Entity(parent) {}
 

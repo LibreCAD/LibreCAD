@@ -8,18 +8,13 @@ class QMdiArea;
 /**
  * a QMdiArea in a QFrame (for QMainWindow.setCentralWidget)
  */
-class LC_CentralWidget : public QFrame
-{
+class LC_CentralWidget : public QFrame{
     Q_OBJECT
-
 public:
-
     LC_CentralWidget(QWidget* parent);
-    QMdiArea* getMdiArea();
-
+    QMdiArea* getMdiArea() const;
 protected:
-
-    QMdiArea* mdi_area = nullptr;
+    QMdiArea* m_mdiArea = nullptr;
 };
 
 #endif // LC_CENTRALWIDGET_H

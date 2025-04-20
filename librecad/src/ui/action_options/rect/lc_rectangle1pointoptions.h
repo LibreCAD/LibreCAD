@@ -60,7 +60,7 @@ protected:
     void doSaveSettings() override;
 private:
     Ui::LC_Rectangle1PointOptions *ui;
-    LC_ActionDrawRectangle1Point *action = nullptr;
+    LC_ActionDrawRectangle1Point *m_action = nullptr;
     void setAngleToActionAndView(const QString &val);
     void setLenYToActionAnView(const QString& value);
     void setLenXToActionAnView(const QString& value);

@@ -38,9 +38,9 @@ public:
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
-    RS_Spline* spline = nullptr;
+    RS_Spline* m_spline = nullptr;
     void setEntity(RS_Spline *e);
 };
 

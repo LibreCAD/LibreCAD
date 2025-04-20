@@ -27,9 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionDrawRectangle2Points :public LC_AbstractActionDrawRectangle {
     Q_OBJECT
-
 public:
-
     enum
     {
         SNAP_CORNER, // corner of rectangle
@@ -38,27 +36,26 @@ public:
         SNAP_MIDDLE // middle of rectangle
     };
 
-    LC_ActionDrawRectangle2Points(RS_EntityContainer& container, RS_GraphicView& graphicView);
+    LC_ActionDrawRectangle2Points(LC_ActionContext *actionContext);
     ~LC_ActionDrawRectangle2Points() override;
-
     QStringList getAvailableCommands() override;
     void init(int status) override;
-    int getSecondPointSnapMode() const{return secondPointSnapMode;};
+    int getSecondPointSnapMode() const{return m_secondPointSnapMode;};
     void setSecondPointSnapMode(int value);
 protected:
     /**
      * position of corner 1
      */
-    RS_Vector corner1 = RS_Vector(false);
+    RS_Vector m_corner1 = RS_Vector(false);
     /*
      * flag that indicates that corner 1 is already set
      */
-    bool corner1Set = false;
+    bool m_corner1Set = false;
 
     /**
      * mode that indicates how snap second point
      */
-    int secondPointSnapMode = SNAP_CORNER;
+    int m_secondPointSnapMode = SNAP_CORNER;
 
     ShapeData createPolyline(const RS_Vector &snapPoint) override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;

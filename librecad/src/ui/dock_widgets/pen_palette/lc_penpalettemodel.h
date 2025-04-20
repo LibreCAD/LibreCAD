@@ -24,16 +24,13 @@
 #ifndef LC_PENPALETTEMODEL_H
 #define LC_PENPALETTEMODEL_H
 
-#include <memory>
-
 #include <QAbstractTableModel>
-#include <QIcon>
 
-#include "lc_penitem.h"
-#include "lc_peninforegistry.h"
-#include "lc_penpaletteoptions.h"
-#include "lc_penpalettedata.h"
 
+class LC_PenInfoRegistry;
+class LC_PenPaletteOptions;
+class LC_PenItem;
+class LC_PenPaletteData;
 class QRegularExpression;
 
 /**
@@ -76,7 +73,7 @@ public:
     int translateColumn(int column) const;
 
     void update(bool updateNames);
-    LC_PenPaletteOptions* getOptions(){return options;};
+    LC_PenPaletteOptions* getOptions(){return m_options;};
 
     LC_PenItem *createNewItem(QString qString);
     void addItem(LC_PenItem *item);
@@ -93,19 +90,19 @@ private:
     /**
      * List of items that will be displayed in the table - may exclude some pens if filter by name is applied
      */
-    QList<LC_PenItem*> displayItems;
+    QList<LC_PenItem*> m_displayItems;
     /**
      * Underlying pen data holder
      */
-    LC_PenPaletteData *penPaletteData = nullptr;
+    LC_PenPaletteData *m_penPaletteData = nullptr;
     /**
      * Pen item that is currently active in table view
      */
-    LC_PenItem* activePen {nullptr};
+    LC_PenItem* m_activePen {nullptr};
     /**
      * Options that controls model and widget
      */
-    LC_PenPaletteOptions* options {nullptr};
+    LC_PenPaletteOptions* m_options {nullptr};
     /**
      * regexp string that is used for items filtering/highlighting
      */
@@ -113,15 +110,13 @@ private:
     /**
      * Flag that indicates regexp presence
      */
-    bool hasRegexp{false};
+    bool m_hasRegexp{false};
     /**
      * Reference for registry of meta information for line widths, colors and line types
      */
-    LC_PenInfoRegistry* registry = LC_PenInfoRegistry::instance();
+    LC_PenInfoRegistry* m_registry;
     void setupItemForDisplay(LC_PenItem *penItem);
-
     void emitModelChange();
-
 };
 
 #endif // LC_PENPALETTEMODEL_H

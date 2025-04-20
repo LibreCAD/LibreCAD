@@ -24,32 +24,34 @@
 #define LC_ANGLESBASISWIDGET_H
 
 #include <QWidget>
+#include "lc_graphicviewaware.h"
 
-namespace Ui {
-class LC_AnglesBasisWidget;
+namespace Ui{
+    class LC_AnglesBasisWidget;
 }
 
 class RS_Graphic;
 
-class LC_AnglesBasisWidget : public QWidget{
+class LC_AnglesBasisWidget : public QWidget, public LC_GraphicViewAware{
     Q_OBJECT
 public:
     explicit LC_AnglesBasisWidget(QWidget *parent, const char* name);
     ~LC_AnglesBasisWidget();
     void update(QString angle, bool counterclockwise);
     void update(RS_Graphic* graphic);
+    void setGraphicView(RS_GraphicView* gview) override;
 signals:
     void clicked();
 public slots:
     void onIconsRefreshed();
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
-    QIcon iconClockwise;
-    QIcon iconCounterClockwise;
-    bool counterclockwise  = false;
+    QIcon m_iconClockwise;
+    QIcon m_iconCounterClockwise;
+    bool m_counterclockwise  = false;
 private:
     Ui::LC_AnglesBasisWidget *ui;
-    int iconSize = 24;
+    int m_iconSize = 24;
 };
 
 #endif // LC_ANGLESBASISWIDGET_H

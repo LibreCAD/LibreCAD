@@ -28,7 +28,10 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
+#include <QString>
 #include <memory>
+
+#include "rs_preview.h"
 #include "rs_vector.h"
 
 class RS_Document;
@@ -58,6 +61,7 @@ struct RS_LibraryInsertData {
     RS_Vector insertionPoint;
     double factor = 0.;
     double angle = 0.;
+    RS_Graphic * graphic;
 };
 
 
@@ -71,8 +75,9 @@ struct RS_LibraryInsertData {
 class RS_Creation {
 public:
     RS_Creation(RS_EntityContainer* container,
-                RS_GraphicView* graphicView=nullptr,
+                LC_GraphicViewport* viewport = nullptr,
                 bool handleUndo=true);
+
     ~RS_Creation()=default;
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
@@ -152,18 +157,17 @@ public:
     RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 private:
-    /**
-     * @brief setupAndAddEntity - returns true, if ownership is taken by undo cycles
-     * @param en
-     * @return
-     */
-    bool setupAndAddEntity(RS_Entity* en) const;
-    RS_EntityContainer* container = nullptr;
-    RS_Graphic* graphic = nullptr;
-    RS_Document* document = nullptr;
-    RS_GraphicView* graphicView = nullptr;
-    LC_GraphicViewport*  m_viewport = nullptr;
+    RS_EntityContainer* m_container{nullptr};
+    RS_Graphic* m_graphic{nullptr};
+    RS_Document* m_document{nullptr};
+    LC_GraphicViewport*  m_viewport{nullptr};
     bool handleUndo = false;
+    /**
+    * @brief setupAndAddEntity - returns true, if ownership is taken by undo cycles
+    * @param en
+    * @return
+    */
+    bool setupAndAddEntity(RS_Entity* en) const;
 };
 
 #endif

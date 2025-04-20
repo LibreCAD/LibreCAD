@@ -24,40 +24,31 @@
 #ifndef LC_PENPALETTEWIDGET_H
 #define LC_PENPALETTEWIDGET_H
 
-#include <QDockWidget>
-#include <QWidget>
-
-#include "lc_penitem.h"
-#include "lc_penpalettemodel.h"
-#include "qc_mdiwindow.h"
-#include "rs_layerlist.h"
+#include "lc_graphicviewawarewidget.h"
 #include "rs_pen.h"
 #include "ui_lc_penpalettewidget.h"
 
+class LC_PenPaletteData;
+class LC_PenPaletteModel;
+class LC_PenItem;
+class RS_LayerList;
 /**
  * Central widget for Pens Palette
  */
-class LC_PenPaletteWidget :public QWidget, public Ui::LC_PenPaletteWidget{
+class LC_PenPaletteWidget :public LC_GraphicViewAwareWidget, public Ui::LC_PenPaletteWidget{
     Q_OBJECT
-
 public:
     explicit LC_PenPaletteWidget(const QString& title, QWidget* parent);
-    virtual ~LC_PenPaletteWidget() = default ;
-
-    void setMdiWindow(QC_MDIWindow* mdiWindow);
-    void setLayerList(RS_LayerList *ll);
-
+    ~LC_PenPaletteWidget() override = default ;
+    void setGraphicView(RS_GraphicView *gview) override;
+    void persist();
 signals:
     void escape();
-
 public slots:
     void onTableClicked(QModelIndex modelIndex);
-    void onTableSelectionChanged(
-        const QItemSelection &selected,
-        const QItemSelection &deselected);
+    void onTableSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected);
     void onPenEditorChanged();
     void keyPressEvent(QKeyEvent* e) override;
-
     void fillPenEditorBySelectedEntityAttributesPen();
     void fillPenEditorBySelectedEntityDrawingPen();
     void fillPenEditorByPenToolBarPen();
@@ -89,15 +80,16 @@ public slots:
     void doDoubleClick();
     void updatePenToolbarByActiveLayer();
     void updateWidgetSettings();
-private:
+
+protected:
     // mouse click counter used for handling both single click and double-click on table view
-    int clicksCount {0};
-     QC_MDIWindow* mdi_win = nullptr;
-     LC_PenPaletteModel* penPaletteModel= nullptr;
-    LC_PenPaletteData* penPaletteData = nullptr;
-    RS_LayerList* layerList = nullptr;
-    bool inEditorControlsSetup = false;
-    bool editorChanged = false;
+    int m_clicksCount {0};
+    RS_GraphicView* m_graphicView{nullptr};
+    LC_PenPaletteModel* m_penPaletteModel{nullptr};
+    LC_PenPaletteData* m_penPaletteData{nullptr};
+    RS_LayerList* m_layerList{nullptr};
+    bool m_inEditorControlsSetup = false;
+    bool m_editorChanged = false;
     void initTableView();
     void initFilteringSection();
     void fillPenEditorByPenItem(LC_PenItem *pen);
@@ -128,7 +120,6 @@ private:
     void onTableRowDoubleClicked();
     void onPersistentItemsChanged();
     bool invokeUnableToSavePenDataDialog();
+    void setLayerList(RS_LayerList *ll);
 };
-
-
 #endif // LC_PENPALETTEWIDGET_H

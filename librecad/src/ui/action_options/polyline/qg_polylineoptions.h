@@ -26,8 +26,6 @@
 #ifndef QG_POLYLINEOPTIONS_H
 #define QG_POLYLINEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
@@ -41,7 +39,7 @@ class QG_PolylineOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 public:
     QG_PolylineOptions();
-    ~QG_PolylineOptions();
+    ~QG_PolylineOptions() override;
 public slots:
     virtual void close(); // fixme - rename
     virtual void undo();
@@ -56,12 +54,12 @@ public slots:
     void tbTanAngleClicked();
     void tbArcAngleClicked();
 protected:
-    RS_ActionDrawPolyline* action = nullptr;
+    RS_ActionDrawPolyline* m_action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
-	   std::unique_ptr<Ui::Ui_PolylineOptions> ui;
+	std::unique_ptr<Ui::Ui_PolylineOptions> ui;
     void setReversedToActionAndView(bool reversed);
     void setAngleToActionAndView(const QString &strVal);
     void setRadiusToActionAndView(const QString &strVal);

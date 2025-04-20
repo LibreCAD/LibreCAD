@@ -27,37 +27,25 @@
 **********************************************************************/
 
 #include "lc_actiondrawlinepolygon3.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_creation.h"
-#include "rs_point.h"
-#include "rs_coordinateevent.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
-#include "rs_actioninterface.h"
-#include "lc_actiondrawlinepolygonbase.h"
 
-LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", container, graphicView, actionType=RS2::ActionDrawLinePolygonCenTan){
+LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(LC_ActionContext *actionContext)
+        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", actionContext, m_actionType=RS2::ActionDrawLinePolygonCenTan){
 }
 
 LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;
 
 void LC_ActionDrawLinePolygonCenTan::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
     //  creation.createPolygon3(pPoints->point1, mouse, number);
-    double angle = 2.*M_PI/number/2.0;
+    double angle = 2.*M_PI/m_edgesNumber/2.0;
     double tangensAngle = tan(angle);
 
     RS_Vector vertex(0, 0);
-    vertex.x = snap.x + (pPoints->point1.y - snap.y) * tangensAngle;
-    vertex.y = snap.y + (snap.x - pPoints->point1.x) * tangensAngle;
+    vertex.x = snap.x + (m_actionData->point1.y - snap.y) * tangensAngle;
+    vertex.y = snap.y + (snap.x - m_actionData->point1.x) * tangensAngle;
 
-    polygonInfo.vertexRadius = pPoints->point1.distanceTo(vertex);
-    polygonInfo.startingAngle = pPoints->point1.angleTo(vertex);
-    polygonInfo.centerPoint = pPoints->point1;
+    polygonInfo.vertexRadius = m_actionData->point1.distanceTo(vertex);
+    polygonInfo.startingAngle = m_actionData->point1.angleTo(vertex);
+    polygonInfo.centerPoint = m_actionData->point1;
 }
 
 QString LC_ActionDrawLinePolygonCenTan::getPoint2Hint() const { return tr("Specify a tangent"); }

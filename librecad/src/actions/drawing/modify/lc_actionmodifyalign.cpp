@@ -20,18 +20,20 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 #include "lc_actionmodifyalign.h"
-#include "lc_modifyalignoptions.h"
-#include "rs_graphicview.h"
-#include "rs_document.h"
-#include "lc_align.h"
 
-LC_ActionModifyAlign::LC_ActionModifyAlign(RS_EntityContainer &container, RS_GraphicView &graphicView)
-    :LC_ActionPreSelectionAwareBase("ModifyAlign", container, graphicView) {
-    actionType = RS2::ActionModifyAlign;
+#include "lc_actioninfomessagebuilder.h"
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
+#include "lc_modifyalignoptions.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
+
+LC_ActionModifyAlign::LC_ActionModifyAlign(LC_ActionContext *actionContext)
+    :LC_ActionPreSelectionAwareBase("ModifyAlign", actionContext, RS2::ActionModifyAlign) {
 }
 
 void LC_ActionModifyAlign::init(int status) {
-    if (viewport->hasUCS()){
+    if (m_viewport->hasUCS()){
         commandMessage(tr("Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active."));
         finish();
     }
@@ -41,7 +43,7 @@ void LC_ActionModifyAlign::init(int status) {
     }
 }
 
-void LC_ActionModifyAlign::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+void LC_ActionModifyAlign::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     updateSelectionWidget();
@@ -49,9 +51,9 @@ void LC_ActionModifyAlign::selectionCompleted([[maybe_unused]]bool singleEntity,
 
 void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     QList<RS_Entity *> entitiesToCreate;
-    createAlignedEntities(entitiesToCreate, alignMin, alignMax, false);
+    createAlignedEntities(entitiesToCreate, m_alignMin, m_alignMax, false);
     if (!entitiesToCreate.isEmpty()) {
-        if (document) {
+        if (m_document) {
             undoCycleStart();
 
             for (auto e: entitiesToCreate) {
@@ -59,18 +61,18 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
                 // todo - this is a place to think about regarding usability and consistency. Other Modify actions does not clear "selected" status.
                 // todo - however, from the usability point of view - if the user would like to continue aligning operation, not cleared selection is not convenient.
                 e->setSelected(false);
-                container->addEntity(e);
+                m_container->addEntity(e);
                 undoableAdd(e);
             }
 
-            for (auto e: selectedEntities) {
+            for (auto e: m_selectedEntities) {
                 undoableDeleteEntity(e);
             }
 
             undoCycleEnd();
 
-            selectedEntities.clear();
-            selectionComplete = false;
+            m_selectedEntities.clear();
+            m_selectionComplete = false;
         }
     }
 }
@@ -103,8 +105,8 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
             break;
         }
         case LC_Align::DRAWING: {
-            min = container->getMin();
-            max = container->getMax();
+            min = m_container->getMin();
+            max = m_container->getMax();
             break;
         }
         default:
@@ -125,28 +127,27 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
         for (auto ent: entitiesList) {
             previewEntity(ent);
         }
-        if (showRefEntitiesOnPreview) {
+        if (m_showRefEntitiesOnPreview) {
             previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
         }
 
         // info cursor
-        if (infoCursorOverlayPrefs->enabled){
-            QString msg = tr("Align to ");
+        if (m_infoCursorOverlayPrefs->enabled){
+            QString message = tr("Align to ");
             switch (alignType) {
                 case LC_Align::ENTITY:{
-                    msg.append(tr("Entity"));
+                    message.append(tr("Entity"));
                     break;
                 }
                 case LC_Align::POSITION:{
-                    msg.append(tr("Position"));
+                    message.append(tr("Position"));
                     break;
                 }
                 case LC_Align::DRAWING:{
-                    msg.append(tr("Drawing"));
+                    message.append(tr("Drawing"));
                     break;
                 }
             }
-            LC_InfoMessageBuilder builder(msg);
 
             QString ref = tr("Reference: ");
             if (drawVertical){
@@ -160,13 +161,14 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
                 ref.append(formatLinear(horizontalRef));
             }
 
-            builder.add(ref);
+            auto builder = msg(message).
+                string(ref);
             if (groupOffset.valid) {
-                builder.add(tr("Offset:"));
-                builder.add(formatRelative(groupOffset));
-                builder.add(formatRelativePolar(groupOffset));
+                builder.string(tr("Offset:"))
+                       .relative(groupOffset)
+                       .relativePolar(groupOffset);
             }
-            appendInfoCursorZoneMessage(builder.toString(), 2, false);
+            builder.toInfoCursorZone2(false);
         }
     }
 }
@@ -174,8 +176,8 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
 void LC_ActionModifyAlign::previewRefLines(bool drawVertical, [[maybe_unused]]double verticalRef, bool drawHorizontal, [[maybe_unused]]double horizontalRef) {
     // NOTE:
     // AS Action so far do not support UCS, coordinates below will be in WCS despite used methods.
-    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
-    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
+    RS_Vector wcsLeftBottom = m_viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = m_viewport->getUCSViewRightTop();
     if (drawVertical) {
         previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
@@ -184,7 +186,7 @@ void LC_ActionModifyAlign::previewRefLines(bool drawVertical, [[maybe_unused]]do
     }
 }
 
-void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
+void LC_ActionModifyAlign::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
     bool mayTrigger = true;
     switch (alignType) {
@@ -192,8 +194,8 @@ void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]i
             RS2::ResolveLevel resolveLevel = e->isControl ? RS2::ResolveAll : RS2::ResolveNone;
             RS_Entity *entity  = catchEntity(snap, resolveLevel);
             if (entity != nullptr) {
-                alignMin = entity->getMin();
-                alignMax = entity->getMax();
+                m_alignMin = entity->getMin();
+                m_alignMax = entity->getMax();
             } else {
                 mayTrigger = false;
             }
@@ -201,13 +203,13 @@ void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]i
         }
         case LC_Align::POSITION: {
             snap = getRelZeroAwarePoint(e, snap);
-            alignMin = snap;
-            alignMax = snap;
+            m_alignMin = snap;
+            m_alignMax = snap;
             break;
         }
         case LC_Align::DRAWING: {
-            alignMin = container->getMin();
-            alignMax = container->getMax();
+            m_alignMin = m_container->getMin();
+            m_alignMax = m_container->getMax();
             break;
         }
         default:
@@ -220,8 +222,8 @@ void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]i
 
 void LC_ActionModifyAlign::onCoordinateEvent([[maybe_unused]]int status, bool isZero, const RS_Vector &pos) {
     if (alignType == LC_Align::POSITION && !isZero) {
-        alignMin = pos;
-        alignMax = pos;
+        m_alignMin = pos;
+        m_alignMax = pos;
         trigger();
     }
     else{
@@ -229,10 +231,10 @@ void LC_ActionModifyAlign::onCoordinateEvent([[maybe_unused]]int status, bool is
     }
 }
 
-void LC_ActionModifyAlign::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
+void LC_ActionModifyAlign::onMouseRightButtonReleaseSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     deletePreview();
-    if (selectionComplete) {
-        selectionComplete = false;
+    if (m_selectionComplete) {
+        m_selectionComplete = false;
     } else {
         initPrevious(status);
     }
@@ -281,23 +283,23 @@ RS_Vector LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &list, 
     RS_Vector targetPoint = getReferencePoint(min, max);
     bool updateAttributes = !previewOnly;
 
-    if (asGroup || selectedEntities.size() == 1) {
+    if (asGroup || m_selectedEntities.size() == 1) {
         RS_Vector selectionMin;
         RS_Vector selectionMax;
 
-        LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
+        LC_Align::collectSelectionBounds(m_selectedEntities, selectionMin, selectionMax);
         RS_Vector selectionRefPoint = getReferencePoint(selectionMin, selectionMax);
         RS_Vector offset = targetPoint - selectionRefPoint;
 
         result = offset;
         result.valid = true;
 
-        for (auto e: selectedEntities) {
+        for (auto e: m_selectedEntities) {
             RS_Entity* clone = LC_Align::createCloneMovedToOffset(e, offset, updateAttributes);
             list << clone;
         }
     } else {
-        for (auto e: selectedEntities) {
+        for (auto e: m_selectedEntities) {
             RS_Entity *clone = LC_Align::createCloneMovedToTarget(e, targetPoint, updateAttributes, hAlign, vAlign);
             list << clone;
         }

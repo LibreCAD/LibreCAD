@@ -20,20 +20,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "rs_dimaligned.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
-#include "rs_dimlinear.h"
-#include "rs_debug.h"
-#include "rs_preview.h"
-#include "rs_coordinateevent.h"
-#include "rs_constructionline.h"
 #include "lc_actiondimlinearbase.h"
-#include "rs_settings.h"
-#include "rs_actiondimension.h"
 
-LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView):
-   RS_ActionDimension(name, container,  graphicView){
+#include "rs_constructionline.h"
+#include "rs_debug.h"
+#include "rs_dimaligned.h"
+#include "rs_dimension.h"
+#include "rs_dimlinear.h"
+#include "rs_entity.h"
+#include "rs_preview.h"
+
+LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType):
+   RS_ActionDimension(name, actionContext, actionType){
 }
 
 LC_ActionDimLinearBase::~LC_ActionDimLinearBase() = default;
@@ -47,7 +45,7 @@ namespace {
 
 void LC_ActionDimLinearBase::doTrigger() {
     preparePreview();
-    auto *dim = createDim(container);
+    auto *dim = createDim(m_container);
     setPenAndLayerToActive(dim);
     dim->update();
     undoCycleAdd(dim);
@@ -67,20 +65,20 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (extPoint1.valid){
                 mouse = getSnapAngleAwarePoint(e, extPoint1, mouse, true);
 
-                data->definitionPoint = mouse;
+                m_dimensionData->definitionPoint = mouse;
                 setExtensionPoint2(mouse);
 
-                if (showRefEntitiesOnPreview) {
+                if (m_showRefEntitiesOnPreview) {
                     previewRefLine(extPoint1, mouse);
                     previewRefSelectablePoint(mouse);
                 }
-                if (previewShowsFullDimension) {
+                if (m_previewShowsFullDimension) {
                     preparePreview();
-                    RS_Entity *dim = createDim(preview.get());
+                    RS_Entity *dim = createDim(m_preview.get());
                     dim->update();
                     previewEntity(dim);
                 }
-                else if (showRefEntitiesOnPreview) {
+                else if (m_showRefEntitiesOnPreview) {
                     previewRefLine(extPoint1, mouse);
                 }
                 else{
@@ -96,9 +94,9 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 // less restrictive snap
                 mouse = getFreeSnapAwarePoint(e, mouse);
                 mouse = adjustByAdjacentDim(mouse, true);
-                data->definitionPoint = mouse;
+                m_dimensionData->definitionPoint = mouse;
                 preparePreview();
-                RS_Entity* dim = createDim(preview.get());
+                RS_Entity* dim = createDim(m_preview.get());
                 dim->update();
                 previewEntity(dim);
 #ifdef DEBUG_DIM_SNAP
@@ -150,7 +148,7 @@ void LC_ActionDimLinearBase::onCoordinateEvent(int status, [[maybe_unused]] bool
             break;
         }
         case SetDefPoint: {
-            data->definitionPoint = pos;
+            m_dimensionData->definitionPoint = pos;
             trigger();
             reset();
             setStatus(SetExtPoint1);
@@ -214,7 +212,7 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
     RS_Vector endSnapPoint = getAdjacentDimDimSnapPoint(ownDimP2, snapRange);
     if (endSnapPoint.valid){
         result = dimTangentLine.getNearestPointOnEntity(endSnapPoint);
-        if (forPreview && showRefEntitiesOnPreview){
+        if (forPreview && m_showRefEntitiesOnPreview){
             previewRefPoint(endSnapPoint);
         }
     }
@@ -224,7 +222,7 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
         RS_Vector startSnapPoint = getAdjacentDimDimSnapPoint(ownDimP1, snapRange);
         if (startSnapPoint.valid){
             result = dimTangentLine.getNearestPointOnEntity(startSnapPoint);
-            if (forPreview && showRefEntitiesOnPreview){
+            if (forPreview && m_showRefEntitiesOnPreview){
                 previewRefPoint(startSnapPoint);
             }
         }

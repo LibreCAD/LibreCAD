@@ -23,12 +23,8 @@
 **
 **********************************************************************/
 #include "qg_dlgpolyline.h"
-
 #include "rs_polyline.h"
 #include "rs_graphic.h"
-/*#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"*/
 
 /*
  *  Constructs a QG_DlgPolyline as a child of 'parent', with the
@@ -37,8 +33,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgPolyline::
-QG_DlgPolyline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Polyline* polyline)
+QG_DlgPolyline::QG_DlgPolyline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Polyline* polyline)
     :LC_EntityPropertiesDlg(parent, "PolylineProperties", pViewport) {
     setupUi(this);
     setEntity(polyline);
@@ -60,25 +55,26 @@ void QG_DlgPolyline::languageChange(){
 }
 
 void QG_DlgPolyline::setEntity(RS_Polyline* e) {
-    entity = e;
+    m_entity = e;
 
 
-    RS_Graphic* graphic = entity->getGraphic();
+    RS_Graphic* graphic = m_entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = entity->getLayer(false);
+    RS_Layer* lay = m_entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(entity, lay, "Pen");
-    toUIBool(entity->isClosed(), cbClosed);
+    wPen->setPen(m_entity, lay, tr("Pen"));
+    toUIBool(m_entity->isClosed(), cbClosed);
 }
 
 void QG_DlgPolyline::updateEntity() {
-    entity->setClosed(cbClosed->isChecked(),0);
-    entity->setPen(wPen->getPen());
-    entity->setLayer(cbLayer->getLayer());
-    entity->update();
+    m_entity->setClosed(cbClosed->isChecked(),0);
+    m_entity->setPen(wPen->getPen());
+    m_entity->setLayer(cbLayer->getLayer());
+    m_entity->update();
+    m_entity->calculateBorders();
 }

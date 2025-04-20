@@ -23,7 +23,6 @@
 #ifndef LC_ELLIPSE1POINTOPTIONS_H
 #define LC_ELLIPSE1POINTOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
@@ -34,11 +33,9 @@ class LC_ActionDrawEllipse1Point;
 
 class LC_Ellipse1PointOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     LC_Ellipse1PointOptions();
-    ~LC_Ellipse1PointOptions();
-
+    ~LC_Ellipse1PointOptions() override;
 protected slots:
     void languageChange() override;
     void onAngleEditingFinished();
@@ -47,20 +44,16 @@ protected slots:
     void onUseAngleClicked(bool val);
     void onFreeAngleClicked(bool val);
     void onDirectionChanged(bool val);
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
-    LC_ActionDrawEllipse1Point* action = nullptr;
+    LC_ActionDrawEllipse1Point* m_action = nullptr;
     Ui::LC_Ellipse1PointOptions *ui;
-
     void setMajorRadiusToActionAndView(QString val);
     void setMinorRadiusToActionAndView(QString val);
     void setAngleToActionAndView(QString val);
     void setAngleIsFreeToActionAndView(bool val);
     void setUseAngleAngleToActionAndView(bool val);
-
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 };
 

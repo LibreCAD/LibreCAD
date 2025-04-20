@@ -20,9 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QVariant>
 #include "qg_snapmiddleoptions.h"
-
 #include "ui_qg_snapmiddleoptions.h"
 
 /*
@@ -35,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 QG_SnapMiddleOptions::QG_SnapMiddleOptions(QWidget* parent)
     : QWidget(parent)
-    , middlePoints(nullptr)
+    , m_middlePoints(nullptr)
     , ui(new Ui::Ui_SnapMiddleOptions{}){
     ui->setupUi(this);
 }
@@ -54,11 +52,11 @@ void QG_SnapMiddleOptions::languageChange(){
 }
 
 void QG_SnapMiddleOptions::saveSettings() {
-    LC_SET_ONE("Snap", "MiddlePoints", *middlePoints);
+    LC_SET_ONE("Snap", "MiddlePoints", *m_middlePoints);
 }
 
-void QG_SnapMiddleOptions::useMiddlePointsValue( int* i) {
-    middlePoints = i;
+void QG_SnapMiddleOptions::useMiddlePointsValue(int* i) {
+    m_middlePoints = i;
     LC_GROUP_GUARD("Snap");
     {
         int points = LC_GET_INT("MiddlePoints", 1);
@@ -67,15 +65,14 @@ void QG_SnapMiddleOptions::useMiddlePointsValue( int* i) {
             LC_SET("MiddlePoints", points);
         }
 
-
         ui->sbMiddlePoints->setValue(points);
-        *middlePoints = points;
+        *m_middlePoints = points;
     }
 }
 
-void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i){
-    if (middlePoints) {
-        *middlePoints = i;
+void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i) {
+    if (m_middlePoints) {
+        *m_middlePoints = i;
         saveSettings();
     }
 }
@@ -89,5 +86,5 @@ void QG_SnapMiddleOptions::doShow() {
 }
 
 int *QG_SnapMiddleOptions::getMiddlePointsValue() {
-    return middlePoints;
+    return m_middlePoints;
 }

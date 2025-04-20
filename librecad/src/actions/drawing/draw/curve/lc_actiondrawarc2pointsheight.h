@@ -23,13 +23,13 @@
 #ifndef LC_ACTIONDRAWARC2POINTSHEIGHT_H
 #define LC_ACTIONDRAWARC2POINTSHEIGHT_H
 
-#include <QObject>
+
 #include "lc_actiondrawarc2pointsbase.h"
 
 class LC_ActionDrawArc2PointsHeight: public LC_ActionDrawArc2PointsBase{
     Q_OBJECT
 public:
-    LC_ActionDrawArc2PointsHeight(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawArc2PointsHeight(LC_ActionContext *actionContext);
     ~LC_ActionDrawArc2PointsHeight() override = default;
 protected:
     bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool reverse, bool reportErrors) override;

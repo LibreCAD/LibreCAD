@@ -23,19 +23,17 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<iostream>
+
+#include "rs_dimension.h"
 
 #include <QRegularExpression>
 
 #include "muParser.h"
-
-#include "rs_color.h"
-#include "rs_debug.h"
-#include "rs_dimension.h"
-#include "rs_filterdxfrw.h" //for int <-> rs_color conversion
+#include "rs_filterdxfrw.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_pen.h"
 #include "rs_solid.h"
 #include "rs_units.h"
 

@@ -19,21 +19,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-
-#include <cmath>
-
 #include "lc_actiondrawparabolaFD.h"
 
 #include "lc_parabola.h"
-#include "rs_coordinateevent.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_constructionline.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
-#include "rs_constructionline.h"
 
-struct LC_ActionDrawParabolaFD::Points {
+struct LC_ActionDrawParabolaFD::ActionData {
     RS_Vector focus, startPoint, endPoint, projection;
     RS_Vector axis, vertex;
     RS_Line* directrix = nullptr;
@@ -98,25 +91,20 @@ struct LC_ActionDrawParabolaFD::Points {
  * Constructor.
  *
  */
-LC_ActionDrawParabolaFD::LC_ActionDrawParabolaFD(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw parabola by focus and directrix", container,
-                               graphicView,
-                               RS2::ActionDrawParabolaFD)
-    , pPoints(std::make_unique<Points>())
-{
+LC_ActionDrawParabolaFD::LC_ActionDrawParabolaFD(LC_ActionContext *actionContext)
+    :RS_PreviewActionInterface("Draw parabola by focus and directrix", actionContext,RS2::ActionDrawParabolaFD)
+    , m_actionData(std::make_unique<ActionData>()){
 }
 
 LC_ActionDrawParabolaFD::~LC_ActionDrawParabolaFD() = default;
 
 void LC_ActionDrawParabolaFD::init(int status) {
     RS_PreviewActionInterface::init(status);
-    if (pPoints->directrix != nullptr) {
+    if (m_actionData->directrix != nullptr) {
         switch(status) {
             case SetFocus:
             case SetDirectrix: {
-                pPoints->directrix = nullptr;
+                m_actionData->directrix = nullptr;
                 break;
             }
             default:
@@ -126,8 +114,8 @@ void LC_ActionDrawParabolaFD::init(int status) {
 }
 
 void LC_ActionDrawParabolaFD::doTrigger() {
-    if(pPoints->data.valid){
-        auto* en = new LC_Parabola{container, pPoints->data};
+    if(m_actionData->data.valid){
+        auto* en = new LC_Parabola{m_container, m_actionData->data};
         undoCycleAdd(en);
     }
     init(SetFocus);
@@ -147,33 +135,33 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 highlightHover(entity);
             }
             else{
-                mouse = getSnapAngleAwarePoint(e, pPoints->focus, mouse, true);
-                if (showRefEntitiesOnPreview) {
-                    previewRefLine(pPoints->focus, mouse);
+                mouse = getSnapAngleAwarePoint(e, m_actionData->focus, mouse, true);
+                if (m_showRefEntitiesOnPreview) {
+                    previewRefLine(m_actionData->focus, mouse);
                 }
             }
-            if (showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->focus);
+            if (m_showRefEntitiesOnPreview) {
+                previewRefPoint(m_actionData->focus);
             }
             break;
         }
         case SetStartPoint: {
-            pPoints->setStart(mouse);
-            if (showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->focus);
-                previewRefPoint(pPoints->vertex);
-                previewRefLine(pPoints->focus, pPoints->vertex);
+            m_actionData->setStart(mouse);
+            if (m_showRefEntitiesOnPreview) {
+                previewRefPoint(m_actionData->focus);
+                previewRefPoint(m_actionData->vertex);
+                previewRefLine(m_actionData->focus, m_actionData->vertex);
 
-                RS_Vector rotatedAxis = pPoints->axis;
+                RS_Vector rotatedAxis = m_actionData->axis;
                 rotatedAxis = rotatedAxis.rotate(M_PI/2);
-                RS_ConstructionLine tmpLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(pPoints->vertex, pPoints->vertex  + rotatedAxis));
+                RS_ConstructionLine tmpLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(m_actionData->vertex, m_actionData->vertex  + rotatedAxis));
                 RS_Vector projection = tmpLine.getNearestPointOnEntity(mouse, false);
 
                 previewRefPoint(projection);
-                previewRefLine(pPoints->vertex, projection);
+                previewRefLine(m_actionData->vertex, projection);
             }
             LC_Parabola* parabola = preparePreview();
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 if (parabola != nullptr) {
                     RS_Vector startPoint = parabola->getStartpoint();
                     previewRefSelectablePoint(startPoint);
@@ -182,24 +170,24 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetEndPoint: {
-            if (showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->focus);
-                previewRefPoint(pPoints->vertex);
-                previewRefLine(pPoints->focus, pPoints->vertex);
+            if (m_showRefEntitiesOnPreview) {
+                previewRefPoint(m_actionData->focus);
+                previewRefPoint(m_actionData->vertex);
+                previewRefLine(m_actionData->focus, m_actionData->vertex);
 
-                RS_Vector rotatedAxis = pPoints->axis;
+                RS_Vector rotatedAxis = m_actionData->axis;
                 rotatedAxis = rotatedAxis.rotate(M_PI/2);
-                RS_ConstructionLine tmpLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(pPoints->vertex, pPoints->vertex  + rotatedAxis));
+                RS_ConstructionLine tmpLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(m_actionData->vertex, m_actionData->vertex  + rotatedAxis));
 
-                RS_Vector projectionStart = tmpLine.getNearestPointOnEntity(pPoints->startPoint, false);
+                RS_Vector projectionStart = tmpLine.getNearestPointOnEntity(m_actionData->startPoint, false);
                 RS_Vector projectionEnd = tmpLine.getNearestPointOnEntity(mouse, false);
                 previewRefPoint(projectionStart);
                 previewRefSelectablePoint(projectionEnd);
                 previewRefLine(projectionStart, projectionEnd);
             }
-            pPoints->setEnd(mouse);
+            m_actionData->setEnd(mouse);
             LC_Parabola *parabola = preparePreview();
-            if (showRefEntitiesOnPreview) {
+            if (m_showRefEntitiesOnPreview) {
                 if (parabola != nullptr) {
                     RS_Vector startPoint = parabola->getStartpoint();
                     RS_Vector endPoint = parabola->getEndpoint();
@@ -212,14 +200,14 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         default:
             break;
     }
-    if (pPoints->directrix != nullptr){
-        highlightSelected(pPoints->directrix);
+    if (m_actionData->directrix != nullptr){
+        highlightSelected(m_actionData->directrix);
     }
 }
 
 LC_Parabola* LC_ActionDrawParabolaFD::preparePreview(){
-    if (pPoints->data.valid) {
-        auto* pl = new LC_Parabola{preview.get(), pPoints->data};
+    if (m_actionData->data.valid) {
+        auto* pl = new LC_Parabola{m_preview.get(), m_actionData->data};
         previewEntity(pl);
         return pl;
     }
@@ -231,14 +219,14 @@ void LC_ActionDrawParabolaFD::onMouseLeftButtonRelease(int status, LC_MouseEvent
         case SetDirectrix:{
             RS_Entity* entity = catchEntityByEvent(e, RS2::EntityLine);
             if (entity != nullptr) {
-                if (pPoints->setDirectrix(*dynamic_cast<RS_Line *>(entity))) {
+                if (m_actionData->setDirectrix(*dynamic_cast<RS_Line *>(entity))) {
                     setStatus(status+1);
                 }
             }
             else{
                 RS_Vector mouse = e->graphPoint;  // tmp - should we use free or normal snap there?
-                mouse = getSnapAngleAwarePoint(e, pPoints->focus, mouse);
-                if (pPoints->setDirectrix(mouse)) {
+                mouse = getSnapAngleAwarePoint(e, m_actionData->focus, mouse);
+                if (m_actionData->setDirectrix(mouse)) {
                     setStatus(status+1);
                 }
             }
@@ -259,15 +247,15 @@ void LC_ActionDrawParabolaFD::onCoordinateEvent(int status, [[maybe_unused]]bool
     moveRelativeZero(mouse);
     switch (status) {
         case SetFocus:
-            pPoints->focus = mouse;
+            m_actionData->focus = mouse;
             setStatus(getStatus()+1);
             break;
         case SetStartPoint:
-            pPoints->setStart(mouse);
+            m_actionData->setStart(mouse);
             setStatus(status+1);
             break;
         case SetEndPoint:
-            if(pPoints->setEnd(mouse))
+            if(m_actionData->setEnd(mouse))
                 trigger();
             break;
         default:

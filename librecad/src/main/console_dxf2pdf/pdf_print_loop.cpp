@@ -33,7 +33,7 @@
 #include "lc_printviewportrenderer.h"
 #include "pdf_print_loop.h"
 
-
+#include "lc_documentsstorage.h"
 static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, PdfPrintParams&);
 static void setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
@@ -164,8 +164,9 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
     const QString& dxfFile){
     *doc = new RS_Graphic();
-
-    if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
+    LC_DocumentsStorage storage;
+    if (!storage.loadDocument((*doc)->getGraphic(), dxfFile, RS2::FormatUnknown)) {
+    // if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
         qDebug() << "ERROR: Failed to open document" << dxfFile;
         delete *doc;
         return false;

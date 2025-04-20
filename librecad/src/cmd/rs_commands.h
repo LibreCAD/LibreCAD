@@ -68,7 +68,7 @@ public:
 
     static QString msgAvailableCommands();
 
-    static QString getALiasFile();
+    static QString getAliasFile();
     void updateAlias();
 
     ~RS_Commands()=delete;

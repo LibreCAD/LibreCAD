@@ -25,15 +25,13 @@
 **********************************************************************/
 #include<cmath>
 
-#include <QComboBox>
+#include "qg_printpreviewoptions.h"
+
 #include <QLineEdit>
 #include <QPushButton>
 
-#include "qg_printpreviewoptions.h"
 #include "rs_actionprintpreview.h"
 #include "rs_debug.h"
-#include "rs_math.h"
-#include "rs_settings.h"
 #include "ui_qg_printpreviewoptions.h"
 
 namespace {
@@ -52,7 +50,7 @@ namespace {
  */
 QG_PrintPreviewOptions::QG_PrintPreviewOptions()
     :LC_ActionOptionsWidgetBase(RS2::ActionFilePrintPreview, "PrintPreview", "")
-    , defaultScalesStartIndex{0}
+    , m_defaultScalesStartIndex{0}
     , ui(new Ui::Ui_PrintPreviewOptions{})
 {
     ui->setupUi(this);
@@ -113,17 +111,17 @@ void QG_PrintPreviewOptions::doSaveSettings() {
 }
 
 void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionPrintPreview*>(a);
+    m_action = dynamic_cast<RS_ActionPrintPreview*>(a);
 
     bool paperScaleFixed;
     bool blackAndWhiteMode;
     bool scaleLineWidth;
 
     if (update) {
-        paperScaleFixed = action->isPaperScaleFixed();
-        double printScaleFactor = action->getScale();
-        scaleLineWidth = action->isLineWidthScaling();
-        blackAndWhiteMode = action->isBlackWhite();
+        paperScaleFixed = m_action->isPaperScaleFixed();
+        double printScaleFactor = m_action->getScale();
+        scaleLineWidth = m_action->isLineWidthScaling();
+        blackAndWhiteMode = m_action->isBlackWhite();
 
         setScaleFixedToUI(paperScaleFixed);
         setScaleLineToUI(scaleLineWidth);
@@ -132,6 +130,8 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
         updatePageNumbers();
     } else {
+
+        // fixme - sand - files - review this. Switch between previews should retain different print scales in different documents.
         paperScaleFixed = loadBool("PrintScaleFixed", false);
         scaleLineWidth = loadBool("ScaleLineWidth", false);
         blackAndWhiteMode = loadBool("BlackWhiteSet", false);
@@ -145,7 +145,7 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
         scale(scaleFactorStr, true);
     }
-    setPaperOrientation(action->isPortrait());
+    setPaperOrientation(m_action->isPortrait());
 }
 
 QStringList QG_PrintPreviewOptions::readCustomRatios(bool metric) {
@@ -163,10 +163,10 @@ QStringList QG_PrintPreviewOptions::readCustomRatios(bool metric) {
 void QG_PrintPreviewOptions::saveCustomRatios() {
     bool metric = !isUseImperialScales();
     int existingScalesCount = ui->cbScale->count();
-    int max = defaultScalesStartIndex + MAX_CUSTOM_RATIOS;
+    int max = m_defaultScalesStartIndex + MAX_CUSTOM_RATIOS;
     max = std::min(max, existingScalesCount);
     int propertyIndex = 0;
-    for (int i = defaultScalesStartIndex; i<max;i++){
+    for (int i = m_defaultScalesStartIndex; i<max;i++){
         const char *prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
         QString ratio = ui->cbScale->itemText(i);
         save(QString(prefix).arg(propertyIndex), ratio);
@@ -182,7 +182,7 @@ void QG_PrintPreviewOptions::initializeScaleBoxItems() {
                                       "2:1", "4:1", "16:1", "32:1", "64:1", "128:1", "256:1"};
 
         addScalesToCombobox(imperialScales);
-        defaultScalesStartIndex = ui->cbScale->count();
+        m_defaultScalesStartIndex = ui->cbScale->count();
 
         QStringList customScales = readCustomRatios(false);
         addScalesToCombobox(customScales);
@@ -193,7 +193,7 @@ void QG_PrintPreviewOptions::initializeScaleBoxItems() {
             "75:1","100:1","125:1","150:1","175:1","200:1","250:1","500:1","750:1","1000:1"};
 
         addScalesToCombobox(metricScales);
-        defaultScalesStartIndex = ui->cbScale->count();
+        m_defaultScalesStartIndex = ui->cbScale->count();
 
         QStringList customScales = readCustomRatios(true);
         addScalesToCombobox(customScales);
@@ -220,20 +220,20 @@ bool QG_PrintPreviewOptions::addScaleToScaleCombobox(const QString& scaleString)
 }
 
 void QG_PrintPreviewOptions::onCenterClicked() {
-   action->center();
+   m_action->center();
 }
 
 void QG_PrintPreviewOptions::onZoomToPageClicked() {
-    action->zoomToPage();
+    m_action->zoomToPage();
 }
 
 void QG_PrintPreviewOptions::onTiledPrintClicked(){
     bool enabled = ui->cbTiledPrint->isChecked();
     ui->wTiledPrint->setVisible(enabled);
     if (!enabled){
-        if (action != nullptr) {
+        if (m_action != nullptr) {
             if (ui->cFixed) {
-                action->calcPagesNum(false);
+                m_action->calcPagesNum(false);
             } else {
                 fitPage();
             }
@@ -242,19 +242,19 @@ void QG_PrintPreviewOptions::onTiledPrintClicked(){
 }
 
 void QG_PrintPreviewOptions::onSettingsClicked(){
-    action->invokeSettingsDialog();
+    m_action->invokeSettingsDialog();
 }
 
 void QG_PrintPreviewOptions::onPortraitClicked(){
     bool portrait = ui->tbPortait->isChecked();
     setPaperOrientation(portrait);
-    action->setPaperOrientation(portrait);
+    m_action->setPaperOrientation(portrait);
 }
 
 void QG_PrintPreviewOptions::onLandscapeClicked(){
     bool portrait = !ui->tbLandscape->isChecked();
     setPaperOrientation(portrait);
-    action->setPaperOrientation(portrait);
+    m_action->setPaperOrientation(portrait);
 }
 
 void QG_PrintPreviewOptions::setPaperOrientation(bool isPortait){
@@ -267,16 +267,16 @@ void QG_PrintPreviewOptions::setPaperOrientation(bool isPortait){
 }
 
 void QG_PrintPreviewOptions::onVerticalPagesValueChanges(int value) {
-    action->setPagesNumVertical(value);
+    m_action->setPagesNumVertical(value);
 }
 
 void QG_PrintPreviewOptions::onHorizontalPagesValueChanges(int value) {
-    action->setPagesNumHorizontal(value);
+    m_action->setPagesNumHorizontal(value);
 }
 
 void QG_PrintPreviewOptions::onScaleLineClicked(bool state) {
     setScaleLineToUI(state);
-    action->setLineWidthScaling(state);
+    m_action->setLineWidthScaling(state);
 }
 
 void QG_PrintPreviewOptions::setScaleLineToUI(bool state) {
@@ -289,7 +289,7 @@ void QG_PrintPreviewOptions::onBlackWhiteClicked(bool on) {
     if(ui->bBlackWhite->isChecked() != on) {
         ui->bBlackWhite->setChecked(on);
     }
-    action->setBlackWhite(on);
+    m_action->setBlackWhite(on);
 }
 
 void QG_PrintPreviewOptions::onFitClicked() {
@@ -299,13 +299,13 @@ void QG_PrintPreviewOptions::onFitClicked() {
 }
 
 void QG_PrintPreviewOptions::fitPage() {
-    action->fit();
-    updateScaleBox(action->getScale());
+    m_action->fit();
+    updateScaleBox(m_action->getScale());
 }
 
 /** print scale fixed to saved value **/
 void QG_PrintPreviewOptions::onScaleFixedClicked(bool fixed){
-    action->setPaperScaleFixed(fixed);
+    m_action->setPaperScaleFixed(fixed);
     setScaleFixedToUI(fixed);
 }
 
@@ -320,8 +320,8 @@ void QG_PrintPreviewOptions::setScaleFixedToUI(bool fixed) {
 }
 
 void QG_PrintPreviewOptions::onCalcPagesNumClicked() {
-    if (action != nullptr) {
-        action->calcPagesNum(true);
+    if (m_action != nullptr) {
+        m_action->calcPagesNum(true);
     }
 }
 
@@ -339,12 +339,12 @@ void QG_PrintPreviewOptions::scale(const QString &newScale, bool force) {
     }
     bool parseOk;
     double factor = parseScaleString(scaleToUse, parseOk);
-    if (action != nullptr) {
+    if (m_action != nullptr) {
         if (!parseOk) {
-            action->printWarning(tr("Invalid scale provided"));
+            m_action->printWarning(tr("Invalid scale provided"));
         } else {
-            if (std::abs(factor - action->getScale()) > PRINT_SCALE_STEP) {
-                if (action->setScale(factor, true)) {
+            if (std::abs(factor - m_action->getScale()) > PRINT_SCALE_STEP) {
+                if (m_action->setScale(factor, true)) {
                     updateScaleBox(factor);
                 }
             }
@@ -397,11 +397,11 @@ double QG_PrintPreviewOptions::parseScaleString(const QString &scaleText, bool &
 
     factor = std::abs(factor); // do we need negative factor at all?
     if (factor > MAX_PRINT_SCALE){
-        action->printWarning(tr("Paper scale factor larger than max print ratio"));
+        m_action->printWarning(tr("Paper scale factor larger than max print ratio"));
         factor = MAX_PRINT_SCALE;
     }
     else if (factor < MIN_PRINT_SCALE){
-        action->printWarning(tr("Paper scale factor smaller than min print ratio"));
+        m_action->printWarning(tr("Paper scale factor smaller than min print ratio"));
         factor = MIN_PRINT_SCALE;
     }
     return factor;
@@ -435,9 +435,9 @@ void QG_PrintPreviewOptions::updateScaleBox(double factor){
             newScaleText = QString("1:%1").arg(1. / factor);
         }
 
-        if (existingScalesCount > defaultScalesStartIndex) {
-            scaleIndex = defaultScalesStartIndex;
-            ui->cbScale->insertItem(defaultScalesStartIndex, newScaleText, QVariant(factor));
+        if (existingScalesCount > m_defaultScalesStartIndex) {
+            scaleIndex = m_defaultScalesStartIndex;
+            ui->cbScale->insertItem(m_defaultScalesStartIndex, newScaleText, QVariant(factor));
         } else {
             ui->cbScale->addItem(newScaleText, QVariant(factor));
             scaleIndex = existingScalesCount;
@@ -446,7 +446,7 @@ void QG_PrintPreviewOptions::updateScaleBox(double factor){
         ui->cbScale->setCurrentIndex(scaleIndex);
         ui->cbScale->blockSignals(false);
 
-        int maxItems = defaultScalesStartIndex + MAX_CUSTOM_RATIOS;
+        int maxItems = m_defaultScalesStartIndex + MAX_CUSTOM_RATIOS;
         existingScalesCount = ui->cbScale->count();
         if (existingScalesCount > maxItems){
             for (int i = existingScalesCount; i>=maxItems;i--){
@@ -458,7 +458,7 @@ void QG_PrintPreviewOptions::updateScaleBox(double factor){
 }
 
 bool QG_PrintPreviewOptions::isUseImperialScales() {
-    RS2::Unit u = action->getUnit();
+    RS2::Unit u = m_action->getUnit();
     bool result = u == RS2::Inch || u == RS2::Foot || u == RS2::Microinch || u ==  RS2::Mil || u == RS2::Yard;
     return result;
 }
@@ -466,7 +466,7 @@ bool QG_PrintPreviewOptions::isUseImperialScales() {
 void QG_PrintPreviewOptions::updateUI(int mode) {
     switch (mode){
         case MODE_UPDATE_ORIENTATION: {
-            setPaperOrientation(action->isPortrait());
+            setPaperOrientation(m_action->isPortrait());
             break;
         }
         case MODE_UPDATE_PAGE_NUMBERS:{
@@ -481,8 +481,8 @@ void QG_PrintPreviewOptions::updateUI(int mode) {
 void QG_PrintPreviewOptions::updatePageNumbers() {
     ui->sbPagessHorizontal->blockSignals(true);
     ui->sbPagesVertical->blockSignals(true);
-    ui->sbPagessHorizontal->setValue(action->getPagesNumHorizontal());
-    ui->sbPagesVertical->setValue(action->getPagesNumVertical());
+    ui->sbPagessHorizontal->setValue(m_action->getPagesNumHorizontal());
+    ui->sbPagesVertical->setValue(m_action->getPagesNumVertical());
     ui->sbPagessHorizontal->blockSignals(false);
     ui->sbPagesVertical->blockSignals(false);
 }

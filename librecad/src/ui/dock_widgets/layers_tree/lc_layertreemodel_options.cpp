@@ -22,8 +22,9 @@
 **
 **********************************************************************/
 
-#include "lc_layertreeitem.h"
 #include "lc_layertreemodel_options.h"
+
+#include "lc_layertreeitem.h"
 #include "rs_settings.h"
 
 /**
@@ -80,11 +81,9 @@ void LC_LayerTreeModelOptions::save() const{
 }
 
 void LC_LayerTreeModelOptions::load(){
-
-    LC_LayerTreeModelOptions defaults;
-
     LC_GROUP_GUARD("Widget.LayerTree");
     {
+        LC_LayerTreeModelOptions defaults;
         activeLayerBgColor = QColor(LC_GET_STR("activeLayerBgColor", defaults.activeLayerBgColor.name()));
         selectedItemBgColor = QColor(LC_GET_STR("selectedItemBgColor", defaults.selectedItemBgColor.name()));
         virtualLayerBgColor = QColor(LC_GET_STR("virtualLayerBgColor", defaults.virtualLayerBgColor.name()));

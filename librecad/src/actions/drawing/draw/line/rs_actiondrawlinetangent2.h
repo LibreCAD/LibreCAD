@@ -38,9 +38,7 @@
 class RS_ActionDrawLineTangent2:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawLineTangent2(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawLineTangent2(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineTangent2() override;
     void init(int status) override;
     void finish(bool updateTB) override;
@@ -53,8 +51,8 @@ protected:
 
     void cleanup();
     void preparePreview(int status, LC_MouseEvent *e);
-    struct Points;
-    std::unique_ptr<Points> m_pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

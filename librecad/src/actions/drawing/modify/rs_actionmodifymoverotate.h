@@ -41,17 +41,15 @@ struct RS_MoveRotateData;
 class RS_ActionModifyMoveRotate : public LC_ActionModifyBase {
     Q_OBJECT
 public:
-    RS_ActionModifyMoveRotate(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+    RS_ActionModifyMoveRotate(LC_ActionContext *actionContext);
     ~RS_ActionModifyMoveRotate() override;
-
     QStringList getAvailableCommands() override;
     void setAngle(double a);
     double getAngle() const;
     void setUseSameAngleForCopies(bool b);
     bool isUseSameAngleForCopies();
     void setAngleIsFree(bool b);
-    bool isAngleFree(){return !angleIsFixed;};
+    bool isAngleFree(){return !m_angleIsFixed;};
 protected:
     /**
  * Action States.
@@ -62,21 +60,14 @@ protected:
         SetAngle,              /**< Setting angle in command line. */
         ShowDialog           /**< Showing the options dialog. */
     };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct MoveRotateActionData;
+    std::unique_ptr<MoveRotateActionData> m_actionData;
 /** Last status before entering angle. */
-    Status lastStatus = SetReferencePoint;
-    bool angleIsFixed = true;
-/**
- * Commands
- */
-    QString cmdAngle;
-    QString cmdAngle2;
-    QString cmdAngle3;
-
+    Status m_lastStatus = SetReferencePoint;
+    bool m_angleIsFixed = true;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
+    void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;

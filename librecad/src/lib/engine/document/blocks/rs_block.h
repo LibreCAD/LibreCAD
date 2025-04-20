@@ -34,30 +34,24 @@
  * Holds the data that defines a block.
  */
 struct RS_BlockData {
-	RS_BlockData() = default;
-
-	RS_BlockData(const QString& name,
-	           const RS_Vector& basePoint,
-			   bool frozen);
-
-	bool isValid() const;
-
-	/**
-	 * Block name. Acts as an id.
-	 */
-	QString name;
-	/**
-	 * Base point of the Block. Usually 0/0 since blocks can be moved around
-	 * using the insertion point of Insert entities.
-	 */
-	RS_Vector basePoint;
-
-	bool frozen {false};              //!< Frozen flag
+    RS_BlockData() = default;
+    RS_BlockData(const QString& name,
+                 const RS_Vector& basePoint,
+                 bool frozen);
+    bool isValid() const;
+/**
+ * Block name. Acts as an id.
+ */
+    QString name;
+/**
+ * Base point of the Block. Usually 0/0 since blocks can be moved around
+ * using the insertion point of Insert entities.
+ */
+    RS_Vector basePoint;
+    bool frozen {false};              //!< Frozen flag
     mutable bool visibleInBlockList {true};   //!< Visible in block list
     mutable bool selectedInBlockList {false}; //!< selected in block list
 };
-
-
 
 /**
  * A block is a group of entities. A block unlike an other entity
@@ -73,9 +67,7 @@ struct RS_BlockData {
  * @author Andrew Mustun
  */
 class RS_Block : public RS_Document {
-
-	friend class RS_BlockList;
-
+   friend class RS_BlockList;
 public:
     /**
      * @param parent The graphic this block belongs to.
@@ -93,16 +85,12 @@ public:
     /**
      * @return Name of this block (the name is an Id for this block).
      */
-    QString getName() const {
-		return data.name;
-    }
+    QString getName() const {return data.name;}
 
     /**
      * @return base point of this block.
      */
-    RS_Vector getBasePoint() const {
-        return data.basePoint;
-    }
+    RS_Vector   getBasePoint() const {return data.basePoint;}
 
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;
@@ -112,28 +100,6 @@ public:
      */
     void newDoc() override {
         // do nothing
-    }
-
-    /**
-     * Reimplementation from RS_Document. Saves the parent graphic document.
-     */
-    bool save(bool isAutoSave = false) override;
-
-    /**
-     * Reimplementation from RS_Document. Does nothing.
-     */
-    bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;
-
-    /**
-     * Reimplementation from RS_Document. Does nothing.
-     */
-    bool open(const QString& , RS2::FormatType) override {
-        // do nothing
-        return false;
-    }
-    bool loadTemplate(const QString& , RS2::FormatType) override {
-        // do nothing
-        return false;
     }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Block& b);
@@ -159,7 +125,7 @@ public:
      * Freezes the block if it's not frozen, thaws the block otherwise
      */
     void toggle() {
-		data.frozen = !data.frozen;
+        data.frozen = !data.frozen;
     }
 
     /**
@@ -168,7 +134,7 @@ public:
      * @param freeze true: freeze, false: defreeze
      */
     void freeze(bool freeze) {
-		data.frozen = freeze;
+        data.frozen = freeze;
     }
 	
     /**
@@ -218,8 +184,8 @@ public:
     QStringList findNestedInsert(const QString& bName);
 
 protected:
-	//! Block data
-	RS_BlockData data;
+//! Block data
+    RS_BlockData data;
 };
 
 

@@ -29,7 +29,7 @@
 class LC_ActionDrawArc2PointsLength: public LC_ActionDrawArc2PointsBase{
     Q_OBJECT
 public:
-    LC_ActionDrawArc2PointsLength(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionDrawArc2PointsLength(LC_ActionContext *actionContext);
     ~LC_ActionDrawArc2PointsLength() override = default;
 protected:
     bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool reverse, bool reportErrors) override;

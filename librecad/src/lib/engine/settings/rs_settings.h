@@ -28,14 +28,10 @@
 #ifndef RS_SETTINGS_H
 #define RS_SETTINGS_H
 
-#include <map>
-#include <memory>
-
-#include <QString>
 #include <QObject>
 #include <QVariant>
-#include "rs_pen.h"
 
+class RS_Pen;
 class QSettings;
 
 // ---------------------------------------------------------------------------
@@ -112,7 +108,7 @@ public:
         QString m_group;
     };
 
-    virtual ~RS_Settings();
+    ~RS_Settings() override;
 
 /**
     * @return Instance to the unique settings object.
@@ -164,8 +160,7 @@ public:
     static void writePen(QString name, RS_Pen const &pen);
     static RS_Pen readPen(QString name, RS_Pen &defaultPen);
 
-    QSettings* getSettings() const
-    {
+    QSettings* getSettings() const {
         return settings;
     }
 

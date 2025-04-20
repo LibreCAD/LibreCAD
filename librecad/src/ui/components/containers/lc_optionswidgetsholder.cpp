@@ -21,10 +21,10 @@
  ******************************************************************************/
 
 #include "lc_optionswidgetsholder.h"
-#include "ui_lc_optionswidgetsholder.h"
-#include "rs_debug.h"
-#include "rs_settings.h"
+
 #include "lc_shortcuts_manager.h"
+#include "rs_settings.h"
+#include "ui_lc_optionswidgetsholder.h"
 
 LC_OptionsWidgetsHolder::LC_OptionsWidgetsHolder(QWidget *parent)
     : QWidget(parent)
@@ -45,7 +45,7 @@ LC_SnapOptionsWidgetsHolder *LC_OptionsWidgetsHolder::getSnapOptionsHolder() {
 
 void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
     if (optionsWidget != nullptr) {
-        if (hasActionIcon) {
+        if (m_hasActionIcon) {
             ui->vCurrentActionLine->setVisible(true);
         }
         ui->wOptionsWidgetsContainer->layout()->addWidget(optionsWidget);
@@ -78,21 +78,21 @@ void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) {
 
 void LC_OptionsWidgetsHolder::clearActionIcon() {
    auto i  = QIcon();
-   hasActionIcon = false;
+   m_hasActionIcon = false;
    doSetIcon(i,"");
 }
 
 void LC_OptionsWidgetsHolder::setCurrentQAction(QAction *a) {
     QIcon icon;
     QString text="";
-    if (LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)){
+    if (a != nullptr && LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)){
         icon = a->icon();
         text = LC_ShortcutsManager::getPlainActionToolTip(a);
-        hasActionIcon = true;
+        m_hasActionIcon = true;
     }
     else{
         icon  = QIcon();
-        hasActionIcon = false;
+        m_hasActionIcon = false;
     }
     doSetIcon(icon, text);
 }

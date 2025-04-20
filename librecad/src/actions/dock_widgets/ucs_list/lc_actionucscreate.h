@@ -30,9 +30,8 @@ class LC_ActionUCSCreate:public RS_PreviewActionInterface{
 Q_OBJECT
 
 public:
-    LC_ActionUCSCreate(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    LC_ActionUCSCreate(LC_ActionContext *actionContext);
     ~LC_ActionUCSCreate() override;
-
     double getAngle() const {return m_angle;};
     void setAngle(double mAngle) {m_angle = mAngle;};
     bool isFixedAngle() const {return m_fixedAngle;};
@@ -48,21 +47,18 @@ protected:
         SetAngle
     };
 
-
     RS_Vector m_originPoint = RS_Vector(false);
     RS_Vector m_xAxisPoint = RS_Vector(false);
     double m_angle = 0.0;
     double m_currentAngle = 0.0;
     bool m_fixedAngle = false;
     bool m_parentIsWCS = true;
-
     LC_UCSMarkOptions m_ucsMarkOptions;
 
     void doTrigger() override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void showUCSMark(RS_Vector &point, double angle);
     void initFromSettings() override;
-
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

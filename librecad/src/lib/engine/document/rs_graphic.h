@@ -38,21 +38,27 @@ class QString;
 class LC_View;
 class QG_LayerWidget;
 
+class LC_GraphicModificationListener {
+public:
+    virtual void graphicModified(const RS_Graphic* g, bool modified) = 0;
+    virtual void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) = 0;
+};
+
 /**
  * A graphic document which can contain entities layers and blocks.
  *
  * @author Andrew Mustun
  */
+// fixme - sand - refactor and extract entities, so it should be more natual to DXF.
+// Paper-related things should be layouts, ui viewports should be also exposed explicitly ...
+// At least "active" one, so viewport will be accessible via document, not via graphic view.
 class RS_Graphic : public RS_Document {
 public:
     RS_Graphic(RS_EntityContainer* parent=nullptr);
     virtual ~RS_Graphic();
 
     /** @return RS2::EntityGraphic */
-    RS2::EntityType rtti() const override
-    {
-        return RS2::EntityGraphic;
-    }
+    RS2::EntityType rtti() const override {return RS2::EntityGraphic;}
 
     virtual unsigned countLayerEntities(RS_Layer* layer) const;
 
@@ -60,14 +66,8 @@ public:
     RS_BlockList* getBlockList() override {return &blockList;}
     LC_ViewList* getViewList() override {return &namedViewsList;}
     LC_UCSList* getUCSList() override {return &ucsList;}
-
     void newDoc() override;
-    bool save(bool isAutoSave = false) override;
-    bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;
-    bool open(const QString& filename, RS2::FormatType type) override;
-    bool loadTemplate(const QString &filename, RS2::FormatType type) override;
-
-        // Wrappers for Layer functions:
+    // Wrappers for Layer functions:
     void clearLayers() {layerList.clear();}
     unsigned countLayers() const {return layerList.count();}
     RS_Layer* layerAt(unsigned i) {return layerList.at(i);}
@@ -76,8 +76,8 @@ public:
     RS_Layer* getActiveLayer() const {return layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {layerList.add(layer);}
     void addEntity(RS_Entity* entity) override;
-    virtual void removeLayer(RS_Layer* layer);
-    virtual void editLayer(RS_Layer* layer, const RS_Layer& source) {layerList.edit(layer, source);}
+    void removeLayer(RS_Layer* layer);
+    void editLayer(RS_Layer* layer, const RS_Layer& source) {layerList.edit(layer, source);}
     RS_Layer* findLayer(const QString& name) {return layerList.find(name);}
     void toggleLayer(const QString& name) {layerList.toggle(name);}
     void toggleLayer(RS_Layer* layer) {layerList.toggle(layer);}
@@ -93,27 +93,15 @@ public:
     void removeViewListListener(LC_ViewListListener* listener) { namedViewsList.removeListener(listener);}
 
     // Wrapper for block functions:
-    void clearBlocks()
-    {
-        blockList.clear();
-    }
-    unsigned countBlocks() const
-    {
-        return blockList.count();
-    }
+    void clearBlocks() {blockList.clear();}
+    unsigned countBlocks() {return blockList.count();}
     RS_Block* blockAt(unsigned i) {return blockList.at(i);}
     void activateBlock(const QString& name) {blockList.activate(name);}
     void activateBlock(RS_Block* block) {blockList.activate(block);}
-    RS_Block* getActiveBlock() const
-    {
-        return blockList.getActive();
-    }
-    virtual bool addBlock(RS_Block* block, bool notify=true)
-    {
-        return blockList.add(block, notify);
-    }
-    virtual void addBlockNotification() {blockList.addNotification();}
-    virtual void removeBlock(RS_Block* block) {blockList.remove(block);}
+    RS_Block* getActiveBlock() const {return blockList.getActive();}
+    bool addBlock(RS_Block* block, bool notify=true) {return blockList.add(block, notify);}
+    void addBlockNotification() {blockList.addNotification();}
+    void removeBlock(RS_Block* block) {blockList.remove(block);}
     RS_Block* findBlock(const QString& name) {return blockList.find(name);}
     QString newBlockName() {return blockList.newName();}
     void toggleBlock(const QString& name) {blockList.toggle(name);}
@@ -140,8 +128,7 @@ public:
     bool getVariableBool(const QString& key, bool def) const;
     double getVariableDouble(const QString& key, double def) const;
 
-    RS_VariableDict getVariableDictObject() const
-    {
+    RS_VariableDict getVariableDictObject() const{
         return variableDict;
     }
 
@@ -184,41 +171,19 @@ public:
      * @retval true The document has been modified since it was last saved.
      * @retval false The document has not been modified since it was last saved.
      */
-    bool isModified() const override {
-        return modified
-               || layerList.isModified()
-               || blockList.isModified()
-               || namedViewsList.isModified()
-               || ucsList.isModified()
-    ;}
-
+    bool isModified() const override;
     /**
      * Sets the documents modified status to 'm'.
      */
-    void setModified(bool m) override{
-        modified = m;
-        // if (!m) {
-            layerList.setModified(m);
-            blockList.setModified(m);
-            namedViewsList.setModified(m);
-            ucsList.setModified(m);
-        // }
-    }
+    void setModified(bool m) override;
+    void markSaved(const QDateTime &lastSaveTime);
 
-    virtual QDateTime getModifyTime() const
-    {
-        return modifiedTime;
-    }
+    QDateTime getLastSaveTime(){return lastSaveTime;}
+    void setLastSaveTime(const QDateTime &time) { lastSaveTime = time;}
 
     //if set to true, will refuse to modify paper scale
-    void setPaperScaleFixed(bool fixed)
-    {
-        paperScaleFixed=fixed;
-    }
-    bool getPaperScaleFixed() const
-    {
-        return paperScaleFixed;
-    }
+    void setPaperScaleFixed(bool fixed){paperScaleFixed=fixed;}
+    bool getPaperScaleFixed() const{return paperScaleFixed;}
 
     /**
      * Paper margins in millimeters
@@ -230,22 +195,10 @@ public:
         if (bottom >= 0.0) marginBottom = bottom;
     }
 
-    double getMarginLeft() const
-    {
-        return marginLeft;
-    }
-    double getMarginTop() const
-    {
-        return marginTop;
-    }
-    double getMarginRight() const
-    {
-        return marginRight;
-    }
-    double getMarginBottom() const
-    {
-        return marginBottom;
-    }
+    double getMarginLeft() const{return marginLeft;}
+    double getMarginTop() const{return marginTop;}
+    double getMarginRight() const{ return marginRight;}
+    double getMarginBottom() const{return marginBottom;}
 
     /**
      * Paper margins in graphic units
@@ -265,19 +218,10 @@ public:
     int getPagesNumVert() const {return pagesNumV;}
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
     int clean();
-    LC_View *findNamedView(QString viewName) const
-    {
-        return namedViewsList.find(viewName);
-    }
-    LC_UCS *findNamedUCS(QString ucsName) const
-    {
-        return ucsList.find(ucsName);
-    }
-    void addNamedView(LC_View *view)
-    {
-        namedViewsList.add(view);
-    }
-    void addUCS(LC_UCS *ucs) {ucsList.add(ucs);}
+    LC_View *findNamedView(QString viewName) {return namedViewsList.find(viewName);};
+    LC_UCS *findNamedUCS(QString ucsName) {return ucsList.find(ucsName);};
+    void addNamedView(LC_View *view) {namedViewsList.add(view);};
+    void addUCS(LC_UCS *ucs) {ucsList.add(ucs);};
 
     double getAnglesBase() const;
     void setAnglesBase(double baseAngle);
@@ -285,11 +229,40 @@ public:
     void setAnglesCounterClockwise(bool on);
     QString formatAngle(double angle) const;
     QString formatLinear(double linear) const;
+
+    RS2::FormatType getFormatType() const;
+
+    void setFormatType(RS2::FormatType formatType);
+
+    /**
+    * @return File name of the document currently loaded.
+    * Note, that the default file name is empty.
+    */
+    QString getFilename() const {return filename;}
+
+    /**
+     * @return Auto-save file name of the document currently loaded.
+     */
+    QString getAutoSaveFileName() const {return autosaveFilename;}
+
+    /**
+     * Sets file name for the document currently loaded.
+     */
+    void setFilename(QString fn) {filename = std::move(fn);}
+
+    const QString &getAutosaveFilename() const;
+
+    void setAutosaveFileName(const QString &autosaveFilename);
+
+    void setModificationListener(LC_GraphicModificationListener * listener) {m_modificationListener = listener;}
+
+protected:
+    void fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const override;
 private:
-    bool BackupDrawingFile(const QString &filename);
-    QDateTime modifiedTime;
+    QDateTime lastSaveTime;
     QString currentFileName; //keep a copy of filename for the modifiedTime
 
+    // fixme - sand - files - change to unique_ptrs?
     RS_LayerList layerList{};
     RS_BlockList blockList{true};
     RS_VariableDict variableDict;
@@ -297,6 +270,9 @@ private:
     LC_UCSList ucsList;
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
+
+    /** Format type */
+    RS2::FormatType formatType = RS2::FormatUnknown;
 
     // Paper margins in millimeters
     double marginLeft = 0.;
@@ -307,5 +283,12 @@ private:
     // Number of pages drawing occupies
     int pagesNumH = 1;
     int pagesNumV = 1;
+
+    /** File name of the document or empty for a new document. */
+    QString filename;
+    /** Auto-save file name of document. */
+    QString autosaveFilename;
+
+    LC_GraphicModificationListener* m_modificationListener = nullptr;
 };
 #endif

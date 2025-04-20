@@ -30,6 +30,9 @@
 
 #include "rs_filterdxfrw.h"
 
+#include <QFile>
+#include <QFileInfo>
+
 #include "lc_parabola.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -1575,7 +1578,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         version = 1021;
         exactColor = true;
     }
-
+    /**
+     * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using unicode file names!!! Due to that, blocks/files may be saved incorrectly if name is localized
+     */
     dxfW = new dxfRW(QFile::encodeName(file));
     // fixme - sand - save to binary format enabling/disabling!!
     bool binary = false;
@@ -2250,13 +2255,13 @@ void RS_FilterDXFRW::writeVports(){
         vp.gridSpacing.y = 10;
     }
     RS_GraphicView *gv = graphic->getGraphicView();
-	if (gv ) {
-     LC_GraphicViewport *viewport = gv->getViewPort();
-     RS_Vector fac = viewport->getFactor();
-        vp.height = gv->getHeight()/fac.y;
-        vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
-        vp.center.x = ( gv->getWidth() - viewport->getOffsetX() )/ (fac.x * 2.0);
-        vp.center.y = ( gv->getHeight() - viewport->getOffsetY() )/ (fac.y * 2.0);
+    if (gv) {
+        LC_GraphicViewport *viewport = gv->getViewPort();
+        RS_Vector fac = viewport->getFactor();
+        vp.height = gv->getHeight() / fac.y;
+        vp.ratio = (double) gv->getWidth() / (double) gv->getHeight();
+        vp.center.x = (gv->getWidth() - viewport->getOffsetX()) / (fac.x * 2.0);
+        vp.center.y = (gv->getHeight() - viewport->getOffsetY()) / (fac.y * 2.0);
     }
     dxfW->writeVport(&vp);
 }

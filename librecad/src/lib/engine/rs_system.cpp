@@ -25,25 +25,26 @@
 **
 **********************************************************************/
 
-#include <QApplication>
-#include <QFileInfo>
-#include <QMap>
-#include <QRegularExpression>
-#include <QStringConverter>
-#include <QTranslator>
-#include "rs_settings.h"
 #include "rs_system.h"
-#include "rs.h"
-#include "rs_debug.h"
 
+#include <QCoreApplication>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QRegularExpression>
 #include <QStandardPaths>
+#include <QTranslator>
 
+#include "rs_debug.h"
+#include "rs_locale.h"
+#include "rs_settings.h"
+
+class QString;
 
 RS_System* RS_System::instance() {
     static RS_System* uniqueInstance = new RS_System();
     return uniqueInstance;
 }
-
 
 /**
  * Initializes the system.
@@ -577,7 +578,7 @@ QStringList RS_System::getFileList(const QString& subDirectory,
  * all possible LibreCAD directories.
  */
 QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
-    QStringList dirList;
+        QStringList dirList;
 
     QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
 
@@ -642,11 +643,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     {
         LC_GROUP_GUARD( "Paths");
         {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             auto option = Qt::SkipEmptyParts;
-#else
-            auto option = QString::SkipEmptyParts;
-#endif
+
             if (subDirectory == "fonts") {
                 QString savedFonts = LC_GET_STR("Fonts", "");
                 RS_DEBUG->print("saved fonts: %s\n", savedFonts.toUtf8().constData());
@@ -983,4 +981,22 @@ QByteArray RS_System::localeToISO(const QByteArray& locale) {
         return "ISO8859-1";
     }
     return l;
+}
+
+QString RS_System::getHomeDir() {
+    return QDir::homePath();
+}
+
+/**
+ * @return Users home directory.
+ */
+QString RS_System::getTempDir() {
+    return QDir::tempPath();
+}
+
+/**
+ * @return Current directory.
+ */
+QString RS_System::getCurrentDir() {
+    return QDir::currentPath();
 }

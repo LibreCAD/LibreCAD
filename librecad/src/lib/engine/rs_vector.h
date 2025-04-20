@@ -27,9 +27,9 @@
 
 #ifndef RS_VECTOR_H
 #define RS_VECTOR_H
-
-#include <vector>
+#include <cstddef>
 #include <iosfwd>
+#include <vector>
 
 class QPointF;
 

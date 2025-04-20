@@ -22,16 +22,19 @@
 
 #include <QMouseEvent>
 #include "lc_anglesbasiswidget.h"
-#include "ui_lc_anglesbasiswidget.h"
+
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "ui_lc_anglesbasiswidget.h"
+
 
 LC_AnglesBasisWidget::LC_AnglesBasisWidget(QWidget *parent,const char* name)
     : QWidget(parent)
     , ui(new Ui::LC_AnglesBasisWidget){
     setObjectName(name);
     ui->setupUi(this);
-    iconClockwise = QIcon(":/icons/dirneg_plus.lci");
-    iconCounterClockwise = QIcon(":/icons/dirpos_plus.lci");
+    m_iconClockwise = QIcon(":/icons/dirneg_plus.lci");
+    m_iconCounterClockwise = QIcon(":/icons/dirpos_plus.lci");
 }
 
 LC_AnglesBasisWidget::~LC_AnglesBasisWidget(){
@@ -56,23 +59,32 @@ void LC_AnglesBasisWidget::update(RS_Graphic *graphic) {
     }
 }
 
+void LC_AnglesBasisWidget::setGraphicView(RS_GraphicView* gv) {
+    if (gv != nullptr) {
+        RS_Graphic *graphic = gv->getGraphic();
+        if (graphic != nullptr) {
+            update(graphic);
+        }
+    }
+}
+
 void LC_AnglesBasisWidget::update(QString angle, bool counterclockwise) {
     QIcon icon;
     QString tooltip;
     if (counterclockwise){
-        icon = iconCounterClockwise;
+        icon = m_iconCounterClockwise;
         tooltip = tr("Positive angles direction is counterclockwise.");
     }
     else{
-        icon = iconClockwise;
+        icon = m_iconClockwise;
         tooltip = tr("Positive angles direction is clockwise.");
     }
-    this->counterclockwise = counterclockwise;
+    this->m_counterclockwise = counterclockwise;
     ui->lblBaseAngle->setText(angle);
-    ui->lblPositiveDirection->setPixmap(icon.pixmap(iconSize));
+    ui->lblPositiveDirection->setPixmap(icon.pixmap(m_iconSize));
     ui->lblPositiveDirection->setToolTip(tooltip);
 }
 
 void LC_AnglesBasisWidget::onIconsRefreshed(){
-    ui->lblPositiveDirection->setPixmap(counterclockwise ? iconCounterClockwise.pixmap(iconSize) : iconClockwise.pixmap(iconSize));
+    ui->lblPositiveDirection->setPixmap(m_counterclockwise ? m_iconCounterClockwise.pixmap(m_iconSize) : m_iconClockwise.pixmap(m_iconSize));
 }

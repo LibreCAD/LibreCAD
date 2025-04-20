@@ -21,17 +21,18 @@
  ******************************************************************************/
 
 #include "lc_shortcutstreemodel.h"
-#include "lc_shortcuttreeitem.h"
+
 #include "lc_actiongroup.h"
-#include "rs_debug.h"
+#include "lc_actiongroupmanager.h"
+#include "lc_shortcuttreeitem.h"
 
 LC_ShortcutsTreeModel::LC_ShortcutsTreeModel(QObject *parent):QAbstractItemModel(parent) {
-    filteringRegexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+    m_filteringRegexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
 }
 
 LC_ShortcutsTreeModel::~LC_ShortcutsTreeModel() {
-    delete rootItem;
-    qDeleteAll(shortcuts);
+    delete m_rootItem;
+    qDeleteAll(m_shortcuts);
 }
 
 void LC_ShortcutsTreeModel::rebuildModel(LC_ActionGroupManager *pManager){
@@ -56,13 +57,13 @@ void LC_ShortcutsTreeModel::rebuildModel(LC_ActionGroupManager *pManager){
 
                 QString actionName = action->objectName();
                 bool hasRegexpMatch = false;
-                if (filterForConflicts) {
-                } else if (hasRegexp) {
+                if (m_filterForConflicts) {
+                } else if (m_hasRegexp) {
                     int pos = 0;
                     QString actionText = action->text().remove("&").toLower();
-                    hasRegexpMatch = filteringRegexp.match(actionText, pos).hasMatch();
+                    hasRegexpMatch = m_filteringRegexp.match(actionText, pos).hasMatch();
 
-                    if (regexpHighlightMode) {
+                    if (m_regexpHighlightMode) {
                         // we'll highlight it later based on the flag
                     } else { // in filtering mode, skip if no match
                         if (hasRegexpMatch) {
@@ -74,12 +75,12 @@ void LC_ShortcutsTreeModel::rebuildModel(LC_ActionGroupManager *pManager){
                     }
                 }
 
-                auto *shortcutInfo = shortcuts[actionName];
+                auto *shortcutInfo = m_shortcuts[actionName];
                 if (shortcutInfo == nullptr) {
                     shortcutInfo = new LC_ShortcutInfo(actionName, action->shortcut());
-                    shortcuts[actionName] = shortcutInfo;
+                    m_shortcuts[actionName] = shortcutInfo;
                 }
-                if (filterForConflicts) {
+                if (m_filterForConflicts) {
                     if (shortcutInfo->hasCollision()) {
 //                        LC_ERR << shortcutInfo->getName();
                     }
@@ -98,7 +99,7 @@ void LC_ShortcutsTreeModel::rebuildModel(LC_ActionGroupManager *pManager){
         }
     }
 
-    delete rootItem;
+    delete m_rootItem;
     setRootItem(root);
     endResetModel();
     dataChanged(QModelIndex(), QModelIndex());
@@ -115,7 +116,7 @@ int LC_ShortcutsTreeModel::columnCount([[maybe_unused]]const QModelIndex &parent
 int LC_ShortcutsTreeModel::rowCount(const QModelIndex &parent) const {
     LC_ShortcutTreeItem *parentItem;
     if (!parent.isValid())
-        parentItem = rootItem;
+        parentItem = m_rootItem;
     else
         parentItem = getItemForIndex(parent);
 
@@ -214,7 +215,7 @@ QModelIndex LC_ShortcutsTreeModel::parent(const QModelIndex &index) const {
         LC_ShortcutTreeItem *childItem = getItemForIndex(index);
         if (childItem != nullptr) {
             LC_ShortcutTreeItem *parentItem = childItem->parent();
-            if (parentItem != rootItem) {
+            if (parentItem != m_rootItem) {
                 return createIndex(parentItem->row(), 0, parentItem);
             }
         }
@@ -229,7 +230,7 @@ QModelIndex LC_ShortcutsTreeModel::index(int row, int column, const QModelIndex 
     LC_ShortcutTreeItem *parentItem;
 
     if (!parent.isValid())
-        parentItem = rootItem;
+        parentItem = m_rootItem;
     else
         parentItem = getItemForIndex(parent);
 
@@ -249,18 +250,18 @@ LC_ShortcutTreeItem* LC_ShortcutsTreeModel::getItemForIndex(const QModelIndex &i
 }
 
 void LC_ShortcutsTreeModel::setFilteringRegexp(QString &regexp, bool highlightMode) {
-    filteringRegexp.setPattern(regexp);
+    m_filteringRegexp.setPattern(regexp);
     //filteringRegexp.setPatternSyntax(QRegExp::WildcardUnix);
-    hasRegexp = !regexp.trimmed().isEmpty();
-    regexpHighlightMode = highlightMode;
+    m_hasRegexp = !regexp.trimmed().isEmpty();
+    m_regexpHighlightMode = highlightMode;
 }
 
 void LC_ShortcutsTreeModel::setRootItem(LC_ShortcutTreeItem *rootItem) {
-    LC_ShortcutsTreeModel::rootItem = rootItem;
+    LC_ShortcutsTreeModel::m_rootItem = rootItem;
 }
 
 void LC_ShortcutsTreeModel::resetAllToDefault() {
-    for (LC_ShortcutInfo* shortcut:shortcuts){
+    for (LC_ShortcutInfo* shortcut:m_shortcuts){
         shortcut->resetToDefault();
         shortcut->setCollision(false);
     }
@@ -269,12 +270,12 @@ void LC_ShortcutsTreeModel::resetAllToDefault() {
 
 bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
     bool hasCollisions = false;
-    for (auto currentShortcut: shortcuts){
+    for (auto currentShortcut: m_shortcuts){
         currentShortcut->setCollision(false);
     }
     if (shortcutInfo != nullptr) { // simple check, for this shortcut only
         QKeySequence keyToTest = shortcutInfo->getKey();
-        for (auto *shortcut: shortcuts) {
+        for (auto *shortcut: m_shortcuts) {
             if (shortcut != shortcutInfo) {
                 if (shortcut->hasTheSameKey(keyToTest)) {
                     shortcut->setCollision(true);
@@ -285,12 +286,12 @@ bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
         shortcutInfo->setCollision(hasCollisions);
     }
     else { // checking for all possible duplicates
-        for (auto currentShortcut: shortcuts){
+        for (auto currentShortcut: m_shortcuts){
             if (currentShortcut->hasCollision()){
                 continue;
             }
             QKeySequence keyToTest = currentShortcut->getKey();
-            for (auto anotherShortcut: shortcuts){
+            for (auto anotherShortcut: m_shortcuts){
                 if (anotherShortcut != currentShortcut){
                     if (anotherShortcut->hasTheSameKey(keyToTest)){
                         hasCollisions = true;
@@ -306,15 +307,15 @@ bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
 }
 
 const QMap<QString, LC_ShortcutInfo *> &LC_ShortcutsTreeModel::getShortcuts() const {
-    return shortcuts;
+    return m_shortcuts;
 }
 
 void LC_ShortcutsTreeModel::setFilterForConflicts(bool filter) {
-    filterForConflicts = filter;
+    m_filterForConflicts = filter;
 }
 
 void LC_ShortcutsTreeModel::collectShortcuts(QList<LC_ShortcutInfo *> &items, bool includeEmpty) {
-    for (auto shortcut : shortcuts){
+    for (auto shortcut : m_shortcuts){
         if (shortcut->hasKey() || includeEmpty){
             items << shortcut;
         }
@@ -330,12 +331,12 @@ void LC_ShortcutsTreeModel::collectShortcuts(QList<LC_ShortcutInfo *> &items, bo
  */
 void LC_ShortcutsTreeModel::applyShortcuts(const QMap<QString, QKeySequence> &map, bool replace) {
     if (replace){
-        for (auto shortcut: shortcuts){
+        for (auto shortcut: m_shortcuts){
             shortcut->clear();
         }
     }
     for (auto [key, value] : map.asKeyValueRange()) {
-        LC_ShortcutInfo* existingShortcut = shortcuts[key];
+        LC_ShortcutInfo* existingShortcut = m_shortcuts[key];
         if (existingShortcut != nullptr){
             existingShortcut->setKey(value);
         }
@@ -347,7 +348,7 @@ void LC_ShortcutsTreeModel::applyShortcuts(const QMap<QString, QKeySequence> &ma
 }
 
 bool LC_ShortcutsTreeModel::isModified() {
-    for (auto shortcut: shortcuts){
+    for (auto shortcut: m_shortcuts){
         if (shortcut->isModified()){
             return true;
         }

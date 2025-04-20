@@ -23,17 +23,15 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "rs_actionselectwindow.h"
 
 #include <QMouseEvent>
 
-#include "rs_actionselectwindow.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_overlaybox.h"
-#include "rs_preview.h"
-#include "rs_selection.h"
+#include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 #include "lc_selectwindowoptions.h"
+#include "rs_debug.h"
+#include "rs_selection.h"
 
 struct RS_ActionSelectWindow::Points {
     RS_Vector v1;
@@ -45,30 +43,21 @@ struct RS_ActionSelectWindow::Points {
  *
  * @param select true: select window. false: invertSelectionOperation window
  */
-RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView,
-                                             bool select)
-    : LC_OverlayBoxAction("Select Window",
-                                container, graphicView)
-    , pPoints(std::make_unique<Points>())
-    , select(select){
-    actionType=RS2::ActionSelectWindow;
+RS_ActionSelectWindow::RS_ActionSelectWindow(LC_ActionContext *actionContext,bool select)
+    : LC_OverlayBoxAction("Select Window",actionContext, RS2::ActionSelectWindow)
+    , m_actionData(std::make_unique<Points>())
+    , m_select(select){
 }
 
-RS_ActionSelectWindow::RS_ActionSelectWindow(
-        enum RS2::EntityType typeToSelect,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        bool select)
-    : LC_OverlayBoxAction("Select Window",container, graphicView)
-    , pPoints(std::make_unique<Points>())
-    , select(select){
-    actionType=RS2::ActionSelectWindow;
+RS_ActionSelectWindow::RS_ActionSelectWindow(enum RS2::EntityType typeToSelect,LC_ActionContext *actionContext,bool select)
+    : LC_OverlayBoxAction("Select Window",actionContext, RS2::ActionSelectWindow)
+    , m_actionData(std::make_unique<Points>())
+    , m_select(select){
     if (typeToSelect == RS2::EntityUnknown){
         setSelectAllEntityTypes(true);
     }
     else{
-        entityTypesToSelect.append(typeToSelect);
+        m_entityTypesToSelect.append(typeToSelect);
         setSelectAllEntityTypes(false);
     }
 }
@@ -78,34 +67,34 @@ RS_ActionSelectWindow::~RS_ActionSelectWindow() = default;
 
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
-    pPoints = std::make_unique<Points>();
-    selectIntersecting = false;
+    m_actionData = std::make_unique<Points>();
+    m_selectIntersecting = false;
     //snapMode.clear();
     //snapMode.restriction = RS2::RestrictNothing;
 }
 
 void RS_ActionSelectWindow::doTrigger() {
-    if (pPoints->v1.valid && pPoints->v2.valid){
-        if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
+    if (m_actionData->v1.valid && m_actionData->v2.valid){
+        if (toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 10){
             // restore selection box to ucs
-            RS_Vector ucsP1 = toUCS(pPoints->v1);
-            RS_Vector ucsP2 = toUCS(pPoints->v2);
+            RS_Vector ucsP1 = toUCS(m_actionData->v1);
+            RS_Vector ucsP2 = toUCS(m_actionData->v2);
 
-            bool cross = (ucsP1.x > ucsP2.x) || selectIntersecting;
-            RS_Selection s(*container, viewport);
-            bool doSelect = select;
-            if (invertSelectionOperation){
+            bool selectIntersecting = (ucsP1.x > ucsP2.x) || m_selectIntersecting;
+            RS_Selection s(*m_container, m_viewport);
+            bool doSelect = m_select;
+            if (m_invertSelectionOperation){
                 doSelect = !doSelect;
             }
             // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
             RS_Vector wcsP1, wcsP2;
-            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+            m_viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
 
-            if (selectAllEntityTypes) {
-                s.selectWindow(RS2::EntityType::EntityUnknown, wcsP1, wcsP2, doSelect, cross);
+            if (m_selectAllEntityTypes) {
+                s.selectWindow(RS2::EntityType::EntityUnknown, wcsP1, wcsP2, doSelect, selectIntersecting);
             }
             else{
-                s.selectWindow(entityTypesToSelect, wcsP1, wcsP2, doSelect, cross);
+                s.selectWindow(m_entityTypesToSelect, wcsP1, wcsP2, doSelect, selectIntersecting);
             }
             init(SetCorner1);
         }
@@ -115,19 +104,19 @@ void RS_ActionSelectWindow::doTrigger() {
 void RS_ActionSelectWindow::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector snapped = e->graphPoint;
     updateCoordinateWidgetByRelZero(snapped);
-    if (getStatus()==SetCorner2 && pPoints->v1.valid) {
-        pPoints->v2 = snapped;
-        drawOverlayBox(pPoints->v1, pPoints->v2);
+    if (getStatus()==SetCorner2 && m_actionData->v1.valid) {
+        m_actionData->v2 = snapped;
+        drawOverlayBox(m_actionData->v1, m_actionData->v2);
         if (isInfoCursorForModificationEnabled()) {
             // restore selection box to ucs
-            RS_Vector ucsP1 = toUCS(pPoints->v1);
-            RS_Vector ucsP2 = toUCS(pPoints->v2);
+            RS_Vector ucsP1 = toUCS(m_actionData->v1);
+            RS_Vector ucsP2 = toUCS(m_actionData->v2);
             bool cross = (ucsP1.x > ucsP2.x) || e->isControl;
-            bool deselect = e->isShift ? select : !select;
+            bool deselect = e->isShift ? m_select : !m_select;
             QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
             msg.append(tr(" entities "));
             msg.append(cross? tr("that intersect with box") : tr("that are within box"));
-            infoCursorOverlayData.setZone2(msg);
+            m_infoCursorOverlayData->setZone2(msg);
             const RS_Vector pos = e->graphPoint;
             forceUpdateInfoCursor(pos);
         }
@@ -138,7 +127,7 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
-            pPoints->v1 = toGraph(e);
+            m_actionData->v1 = toGraph(e);
             setStatus(SetCorner2);
             break;
         default:
@@ -147,15 +136,15 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     }
 
     RS_DEBUG->print("RS_ActionSelectWindow::mousePressEvent(): %f %f",
-                    pPoints->v1.x, pPoints->v1.y);
+                    m_actionData->v1.x, m_actionData->v1.y);
 }
 
 void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
-        pPoints->v2 = e->graphPoint;
-        selectIntersecting = e->isControl;
-        invertSelectionOperation = e->isShift;
+        m_actionData->v2 = e->graphPoint;
+        m_selectIntersecting = e->isControl;
+        m_invertSelectionOperation = e->isShift;
         trigger();
     }
 }
@@ -174,7 +163,7 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Click and drag for the selection window"));
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(select ? tr("De-select entities") : tr("Select entities"), select ? tr("Select Intersecting") : tr("De-select intersecting")));
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(m_select ? tr("De-select entities") : tr("Select entities"), m_select ? tr("Select Intersecting") : tr("De-select intersecting")));
             break;
         default:
             updateMouseWidget();
@@ -186,7 +175,7 @@ RS2::CursorType RS_ActionSelectWindow::doGetMouseCursor([[maybe_unused]] int sta
 }
 
 QList<RS2::EntityType> RS_ActionSelectWindow::getEntityTypesToSelect(){
-    return entityTypesToSelect;
+    return m_entityTypesToSelect;
 }
 
 LC_ActionOptionsWidget *RS_ActionSelectWindow::createOptionsWidget() {
@@ -194,13 +183,13 @@ LC_ActionOptionsWidget *RS_ActionSelectWindow::createOptionsWidget() {
 }
 
 bool RS_ActionSelectWindow::isSelectAllEntityTypes() {
-    return selectAllEntityTypes;
+    return m_selectAllEntityTypes;
 }
 
 void RS_ActionSelectWindow::setSelectAllEntityTypes(bool val){
-    selectAllEntityTypes  = val;
+    m_selectAllEntityTypes  = val;
 }
 
 void RS_ActionSelectWindow::setEntityTypesToSelect(QList<RS2::EntityType> types) {
-    entityTypesToSelect = types;
+    m_entityTypesToSelect = types;
 }

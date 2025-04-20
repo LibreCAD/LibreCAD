@@ -47,8 +47,7 @@ protected:
     void doSaveSettings() override;
 private:
     Ui::LC_LineJoinOptions *ui;
-    LC_ActionModifyLineJoin *action = nullptr;
-
+    LC_ActionModifyLineJoin *m_action = nullptr;
     void setEdgeModeLine1ToActionAndView(int index);
     void setEdgeModeLine2ToActionAndView(int index);
     void setUsePolylineToActionAndView(bool value);

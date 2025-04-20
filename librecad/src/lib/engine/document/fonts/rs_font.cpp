@@ -27,17 +27,20 @@
 #include <iostream>
 
 #include <QRegularExpression>
-#include <QStringConverter>
 #include <QTextStream>
+#include "rs_font.h"
+
+#include <QFileInfo>
 
 #include "rs_arc.h"
 #include "rs_debug.h"
-#include "rs_font.h"
 #include "rs_fontchar.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
 #include "rs_system.h"
+
+class RS_FontChar;
 
 namespace {
 
@@ -307,6 +310,15 @@ void RS_Font::readCXF(const QString& path) {
     }
 }
 
+QString letterNameToHexUnicodeCode(QString originalName) {
+    QString uCode;
+    uCode.setNum(originalName.at(0).unicode(), 16);
+    while (uCode.length()<4) {
+        uCode="0"+uCode;
+    }
+    return QString("[%1] %2").arg(uCode).arg(originalName.at(0));
+}
+
 void RS_Font::readLFF(const QString& path) {
     QFile f(path);
     encoding = "UTF-8";
@@ -364,6 +376,10 @@ void RS_Font::readLFF(const QString& path) {
                 continue;
             }
 
+            // fixme - sand - restore char name encoding later (as name is renamed anyway later at RS_FilterLFF::fileImport
+            // QString letterName = letterNameToHexUnicodeCode(ch);
+            QString letterName = ch;
+
             QStringList fontData;
             do {
                 line = ts.readLine();
@@ -371,8 +387,8 @@ void RS_Font::readLFF(const QString& path) {
                 fontData.push_back(line);
             } while(true);
             if (!fontData.isEmpty()                             // valid data
-                && !rawLffFontList.contains( ch)) {    // ignore duplicates
-                rawLffFontList[ch] = fontData;
+                && !rawLffFontList.contains( letterName)) {    // ignore duplicates
+                rawLffFontList[letterName] = fontData;
             }
         }
     }
@@ -496,3 +512,9 @@ std::ostream& operator << (std::ostream& os, const RS_Font& f) {
     return os;
 }
 
+unsigned RS_Font::countLetters() const {
+    return letterList.count();
+}
+RS_Block* RS_Font::letterAt(unsigned i) {
+    return letterList.at(i);
+}

@@ -26,7 +26,6 @@
 #ifndef QG_SNAPDISTOPTIONS_H
 #define QG_SNAPDISTOPTIONS_H
 
-#include<memory>
 #include<QWidget>
 
 namespace Ui {
@@ -42,7 +41,7 @@ public:
     void doShow();
     double *getDistanceValue();
 protected:
-    double* dist;
+    double* m_dist;
 protected slots:
     virtual void languageChange();
     void onDistEditingFinished();

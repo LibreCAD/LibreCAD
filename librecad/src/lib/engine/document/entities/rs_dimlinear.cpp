@@ -25,16 +25,15 @@
 **********************************************************************/
 
 #include<iostream>
-#include<cmath>
 #include "rs_dimlinear.h"
-#include "rs_line.h"
+
 #include "rs_constructionline.h"
-#include "rs_graphic.h"
-#include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
+#include "rs_line.h"
+#include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-
 
 RS_DimLinearData::RS_DimLinearData():
     extensionPoint1(false),
@@ -50,6 +49,9 @@ RS_DimLinearData::RS_DimLinearData(const RS_Vector& _extensionPoint1,
     ,extensionPoint2(_extensionPoint2)
     ,angle(_angle)
     ,oblique(_oblique){
+}
+
+RS_DimLinearData::~RS_DimLinearData() {
 }
 
 std::ostream& operator << (std::ostream& os,
@@ -86,7 +88,7 @@ RS_Entity* RS_DimLinear::clone() const {
 
 RS_VectorSolutions RS_DimLinear::getRefPoints() const{
 		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
-												data.definitionPoint, data.middleOfText});
+	  								  data.definitionPoint, data.middleOfText});
 }
 
 void RS_DimLinear::setAngle(double a) {

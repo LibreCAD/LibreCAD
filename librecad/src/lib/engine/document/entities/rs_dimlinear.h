@@ -51,6 +51,8 @@ struct RS_DimLinearData {
                      const RS_Vector& extensionPoint2,
 					 double angle, double oblique);
 
+    ~RS_DimLinearData();
+
     /** Definition point. Startpoint of the first definition line. */
     RS_Vector extensionPoint1;
     /** Definition point. Startpoint of the second definition line. */

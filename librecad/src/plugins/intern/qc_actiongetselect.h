@@ -27,7 +27,6 @@
 #ifndef QC_ACTIONGETSELECT_H
 #define QC_ACTIONGETSELECT_H
 
-#include <memory>
 #include "rs_actioninterface.h"
 
 class Doc_plugin_interface;
@@ -43,18 +42,14 @@ class QString;
 class QC_ActionGetSelect : public RS_ActionInterface {
     Q_OBJECT
 public:
-    QC_ActionGetSelect(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-
-    QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-
+    QC_ActionGetSelect(LC_ActionContext* actionContext );
+    QC_ActionGetSelect(RS2::EntityType typeToSelect,LC_ActionContext* actionContext);
     ~QC_ActionGetSelect() override;
     void init(int status) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void setMessage(QString msg);
-    bool isCompleted() const{return completed;}
+    bool isCompleted() const{return m_completed;}
     void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
     void unselectEntities();
 protected:
@@ -68,8 +63,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
 private:
-    bool completed = false;
-    std::unique_ptr<QString> message;
-    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    bool m_completed = false;
+    std::unique_ptr<QString> m_message;
+    RS2::EntityType m_entityTypeToSelect = RS2::EntityType::EntityUnknown;
 };
 #endif

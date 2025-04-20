@@ -50,7 +50,7 @@ public slots:
     void languageChange() override;
 protected:
     Ui::LC_Rectangle2PointsOptions *ui = nullptr;
-    LC_ActionDrawRectangle2Points *action = nullptr;
+    LC_ActionDrawRectangle2Points *m_action = nullptr;
     void doSetAction( RS_ActionInterface * a, bool update) override;
     void doSaveSettings() override;
     void setAngleToActionAndView(const QString &val);

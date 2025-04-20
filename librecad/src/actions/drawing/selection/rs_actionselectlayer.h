@@ -35,10 +35,9 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectLayer : public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionSelectLayer(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView);
+    RS_ActionSelectLayer(LC_ActionContext *actionContext);
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
@@ -47,7 +46,7 @@ protected:
     void updateMouseButtonHints() override;
     void doTrigger() override;
 private:
-    RS_Entity* en = nullptr;
+    RS_Entity* m_entity = nullptr;
 };
 
 #endif

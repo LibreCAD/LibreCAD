@@ -5,11 +5,8 @@
 #include "lc_dialog.h"
 #include "lc_iconcolorsoptions.h"
 
-class LC_WidgetOptionsDialog
-        : public LC_Dialog
-        , public Ui::LC_WidgetOptionsDialog{
+class LC_WidgetOptionsDialog: public LC_Dialog, public Ui::LC_WidgetOptionsDialog{
     Q_OBJECT
-
 public:
     QString selectFolder(QString title);
     void updateUIByOptions();
@@ -31,8 +28,8 @@ public slots:
     void onRemoveStylePressed();
     void onStyleChanged(const QString& val);
 protected:
-    QString currentIconsStyleName;
-    LC_IconColorsOptions iconColorsOptions;
+    QString m_currentIconsStyleName;
+    LC_IconColorsOptions m_iconColorsOptions;
     QString set_color(QComboBox *combo);
 
     bool setupStylesCombobox();

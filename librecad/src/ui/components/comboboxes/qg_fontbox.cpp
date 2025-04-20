@@ -24,14 +24,11 @@
 **
 **********************************************************************/
 
-#include <QDebug>
 #include "qg_fontbox.h"
 
+#include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_fontlist.h"
-
-#include "rs_debug.h"
-
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -39,7 +36,6 @@
  */
 QG_FontBox::QG_FontBox(QWidget* parent)
         : QComboBox(parent) {}
-
 /**
  * Initialisation (called from constructor or manually but only
  * once).
@@ -58,30 +54,23 @@ void QG_FontBox::init() {
 	}
     addItems(fonts);
 
-    connect(this, SIGNAL(activated(int)),
-            this, SLOT(slotFontChanged(int)));
+    connect(this, &QG_FontBox::activated,this, &QG_FontBox::slotFontChanged);
 
     setCurrentIndex(0);
     slotFontChanged(currentIndex());
 }
 
-
-
 /**
  * Sets the currently selected width item to the given width.
  */
 void QG_FontBox::setFont(const QString& fName) {
-
     RS_DEBUG->print("QG_FontBox::setFont %s\n", fName.toLatin1().data());
-
     setItemText(currentIndex(),fName);
-
     slotFontChanged(currentIndex());
 }
 
-
 RS_Font* QG_FontBox::getFont() const{
-	return currentFont;
+	return m_currentFont;
 }
 
 /**
@@ -89,17 +78,11 @@ RS_Font* QG_FontBox::getFont() const{
  * sets the current font to the value chosen.
  */
 void QG_FontBox::slotFontChanged(int index) {
-
     RS_DEBUG->print("QG_FontBox::slotFontChanged %d\n", index);
-
-    currentFont = RS_FONTLIST->requestFont(currentText());
-
-	if (currentFont) {
+    m_currentFont = RS_FONTLIST->requestFont(currentText());
+	if (m_currentFont) {
         RS_DEBUG->print("Current font is (%d): %s\n",
-                        index, currentFont->getFileName().toLatin1().data());
+                        index, m_currentFont->getFileName().toLatin1().data());
     }
-
-    emit fontChanged(currentFont);
+    emit fontChanged(m_currentFont);
 }
-
-

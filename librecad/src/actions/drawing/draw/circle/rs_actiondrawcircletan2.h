@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN2_H
 #define RS_ACTIONDRAWCIRCLETAN2_H
 
-
 #include "lc_actiondrawcirclebase.h"
 
 class RS_AtomicEntity;
@@ -37,9 +36,7 @@ struct RS_CircleData;
 class RS_ActionDrawCircleTan2:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawCircleTan2(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+    RS_ActionDrawCircleTan2(LC_ActionContext *actionContext);
     ~RS_ActionDrawCircleTan2() override;
     void init(int status) override;
     bool getCenters(RS_Entity* secondEntityCandidate = nullptr);
@@ -60,8 +57,8 @@ protected:
         SetCenter   //  select the closest tangential Circle.  */
     };
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 
     RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity * circle);

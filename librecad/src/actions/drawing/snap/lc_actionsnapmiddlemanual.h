@@ -27,7 +27,6 @@
 #pragma once
 
 #include <memory>
-
 #include "rs_previewactioninterface.h"
 
 class RS_Pen;
@@ -48,15 +47,9 @@ class RS_Pen;
 class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionSnapMiddleManual( RS_EntityContainer& container,
-                               RS_GraphicView& graphicView, RS_Pen input_currentAppPen);
-
+    LC_ActionSnapMiddleManual(LC_ActionContext *actionContext);
     ~LC_ActionSnapMiddleManual() override;
-    void init(int status = SetPercentage)   override;
-    void commandEvent    (RS_CommandEvent*    e) override;
-    QStringList getAvailableCommands() override;
-signals:
-    void signalUnsetSnapMiddleManual();
+    void init(int status)   override;
 protected:
     /* Action states */
     enum Status
@@ -65,12 +58,15 @@ protected:
         SetStartPoint,   /* Setting the startpoint */
         SetEndPoint      /* Setting the endpoint   */
     };
-    struct Points;
-    std::unique_ptr<Points> m_pPoints;
+    struct SnapMiddleManualData;
+    std::unique_ptr<SnapMiddleManualData> m_actionData;
 
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    bool doProcessCommand(int status, const QString& command) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
+    void fireUnsetMiddleManual();
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    QStringList doGetAvailableCommands(int status) override;
 };
