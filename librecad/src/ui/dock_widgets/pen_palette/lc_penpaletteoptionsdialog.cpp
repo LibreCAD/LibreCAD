@@ -32,6 +32,7 @@
 #include "lc_peninforegistry.h"
 #include "lc_penpaletteoptions.h"
 
+
 class LC_PenPaletteOptions;
 
 LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, [[maybe_unused]]bool focusOnFile) :
