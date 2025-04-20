@@ -35,16 +35,16 @@ mkdir -p appdir/usr/share/metainfo
 mkdir -p appdir/usr/share/doc/librecad
 mkdir -p appdir/usr/share/icons/hicolor/256x256/apps
 mkdir -p appdir/usr/share/icons/hicolor/scalable/apps
-mkdir -p appdir/usr/share/librecad
+mkdir -p appdir/usr/share/librecad/qm
 
 # strip binaries
 strip unix/librecad
-strip unix/resources/plugins/*.so
+strip unix/resources/plugins/*/*.so
 
 # copy executables and binary resources
 cp unix/librecad appdir/usr/bin/
-cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
-cp -r unix/resources/qm appdir/usr/share/librecad/
+cp unix/resources/plugins/*/*.so appdir/usr/lib/librecad/
+cp -r unix/*.qm appdir/usr/share/librecad/qm/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
 cp desktop/org.librecad.librecad.appdata.xml appdir/usr/share/metainfo/
