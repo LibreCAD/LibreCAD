@@ -21,8 +21,9 @@
  ******************************************************************************/
 #include "lc_applicationwindowinitializer.h"
 
+#include <QCoreApplication>
 #include <QMdiArea>
-#include <qcoreapplication.h>
+#include <QMdiSubWindow>
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
@@ -158,7 +159,7 @@ void LC_ApplicationWindowInitializer::initCentralWidget(){
         m_appWin->setupCADAreaTabbar();
     }
 
-    connect(m_appWin->m_mdiAreaCAD, &QMdiArea::subWindowActivated,m_appWin, &QC_ApplicationWindow::slotWindowActivated);
+    connect(m_appWin->m_mdiAreaCAD, &QMdiArea::subWindowActivated, m_appWin, &QC_ApplicationWindow::slotWindowActivated);
 
     // This event filter allows sending key events to the command widget, therefore, no
     // need to activate the command widget before typing commands.
