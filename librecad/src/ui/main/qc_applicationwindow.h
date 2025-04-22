@@ -32,49 +32,49 @@
 
 #include "lc_mdiapplicationwindow.h"
 
-class QSplashScreen;
-class LC_LastOpenFilesOpener;
-class LC_SnapManager;
 class LC_ActionFactory;
-class LC_QTStatusbarManager;
-class LC_UCSStateWidget;
-class TwoStackedLabels;
-class QG_ActiveLayerName;
-class QG_SelectionWidget;
-class LC_RelZeroCoordinatesWidget;
-class QG_MouseWidget;
-class QG_CoordinateWidget;
-class LC_UCSListWidget;
-class LC_NamedViewsListWidget;
-class LC_PenWizard;
-class QG_CommandWidget;
+class LC_ActionGroupManager;
+class LC_ActionOptionsManager;
+class LC_AnglesBasisWidget;
+class LC_AppWindowDialogsInvoker;
+class LC_CreatorInvoker;
+class LC_CustomStyleHelper;
+class LC_DefaultActionContext;
+class LC_GridViewInvoker;
+class LC_InfoCursorSettingsManager;
+class LC_LastOpenFilesOpener;
 class LC_LayerTreeWidget;
-class QG_LayerWidget;
-class QG_RecentFiles;
+class LC_MenuFactory;
+class LC_NamedViewsListWidget;
+class LC_PenPaletteWidget;
+class LC_PenWizard;
+class LC_PluginInvoker;
+class LC_QTStatusbarManager;
+class LC_QuickInfoWidget;
+class LC_RelZeroCoordinatesWidget;
+class LC_ReleaseChecker;
+class LC_SnapManager;
+class LC_UCSListWidget;
+class LC_UCSStateWidget;
+class LC_WorkspacesInvoker;
 class QC_DialogFactory;
 class QG_ActionHandler;
-class LC_CustomStyleHelper;
-class LC_InfoCursorSettingsManager;
-class LC_GridViewInvoker;
-class LC_ActionOptionsManager;
-class LC_DefaultActionContext;
-class LC_ReleaseChecker;
-class LC_MenuFactory;
-class LC_WorkspacesInvoker;
-class LC_AppWindowDialogsInvoker;
-class LC_PluginInvoker;
-class LC_CreatorInvoker;
-class LC_ActionGroupManager;
-class QG_LibraryWidget;
-class RS_Block;
-class LC_AnglesBasisWidget;
-class LC_QuickInfoWidget;
-class LC_PenPaletteWidget;
-class QG_SnapToolBar;
+class QG_ActiveLayerName;
 class QG_BlockWidget;
+class QG_CommandWidget;
+class QG_CoordinateWidget;
+class QG_LayerWidget;
+class QG_LibraryWidget;
+class QG_MouseWidget;
 class QG_PenToolBar;
-class RS_Pen;
+class QG_RecentFiles;
+class QG_SelectionWidget;
+class QG_SnapToolBar;
+class QSplashScreen;
 class RS_ActionInterface;
+class RS_Block;
+class RS_Pen;
+class TwoStackedLabels;
 
 
 struct DockAreas
@@ -327,6 +327,10 @@ protected:
     void setupMDIWindowTitleByFile(QC_MDIWindow *w, const QString& drawingFileFullPath, bool draftMode, bool forPreview);
 
     bool tryCloseAllBeforeExist();
+
+    void enableWidgets(bool enable);
+    void doRestoreNamedView(int i) const;
+
 #ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
@@ -410,9 +414,6 @@ protected:
 
     QStringList openedFiles;
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
-
-    void enableWidgets(bool enable);
-    void doRestoreNamedView(int i) const;
 
 
     friend class LC_WidgetFactory;

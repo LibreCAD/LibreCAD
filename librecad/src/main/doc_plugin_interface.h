@@ -68,9 +68,9 @@ public:
     virtual void scale(QPointF center, QPointF factor, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
     virtual QString intColor2str(int color);
 private:
-    RS_Entity* entity;
-    bool hasContainer;
-    Doc_plugin_interface* dpi;
+    RS_Entity* entity = nullptr;
+    bool hasContainer = false;
+    Doc_plugin_interface* dpi = nullptr;
 };
 
 class Doc_plugin_interface : public Document_Interface

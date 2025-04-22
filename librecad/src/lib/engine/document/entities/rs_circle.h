@@ -29,10 +29,7 @@
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
-// #include <iosfwd>
-// #include <vector>
-//
-// #include "rs_atomicentity.h"
+#include "rs_vector.h"
 #include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;

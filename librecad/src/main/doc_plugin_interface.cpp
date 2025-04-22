@@ -25,19 +25,19 @@
 **********************************************************************/
 
 #include <QEventLoop>
-#include <QList>
-#include <QInputDialog>
 #include <QFileInfo>
+#include <QInputDialog>
+#include <QList>
 
 #include "doc_plugin_interface.h"
-
-#include "lc_actioncontext.h"
-#include "lc_documentsstorage.h"
 #include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
+#include "lc_actioncontext.h"
+#include "lc_documentsstorage.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
+#include "qc_applicationwindow.h"
 #include "rs_actioninterface.h"
 #include "rs_arc.h"
 #include "rs_block.h"
@@ -1239,8 +1239,7 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
 
 bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
     bool status = false;
-    LC_ActionContext* actionContext = nullptr; // fixme - sand - files - restore!
-    auto a = std::make_shared<QC_ActionGetSelect>(actionContext);
+    auto a = std::make_shared<QC_ActionGetSelect>(m_actionContext);
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);

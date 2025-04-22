@@ -23,17 +23,18 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
 #include <iostream>
-#include "rs_hatch.h"
+#include <set>
 
 #include <QPainterPath>
-#include <set>
 
 #include "lc_looputils.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
+#include "rs_hatch.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
@@ -89,12 +90,16 @@ namespace{
     }
 }
 
-RS_HatchData::RS_HatchData(bool _solid,
-						   double _scale,
-						   double _angle,
-						   const QString& _pattern):
-	solid(_solid),scale(_scale),angle(_angle),pattern(_pattern){
-	//std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
+RS_HatchData::RS_HatchData(bool solid,
+                           double scale,
+                           double angle,
+                           QString pattern):
+    solid{solid}
+    , scale{scale}
+    , angle{angle}
+    , pattern{std::move(pattern)}
+{
+    //LC_LOG << "RS_HatchData: " << pattern.latin1() << "\n";
 }
 
 std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
@@ -108,11 +113,6 @@ std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
                    const RS_HatchData& d)
     : RS_EntityContainer(parent), data(d){
-
-    hatch = nullptr;
-    updateRunning = false;
-    needOptimization = true;
-    updateError = HATCH_UNDEFINED;
 }
 
 /**
@@ -621,7 +621,8 @@ void RS_Hatch::debugOutPath(const QPainterPath &tmpPath) const {
 }
 
 //must be called after update()
-double RS_Hatch::getTotalArea() {
+double RS_Hatch::getTotalArea() const
+{
     if (m_area + RS_Math::ulp(m_area) < RS_MAXDOUBLE)
         return m_area;
     try {
@@ -634,7 +635,8 @@ double RS_Hatch::getTotalArea() {
 }
 
 // #define DEBUG_TOTAL_AREA_
-double RS_Hatch::getTotalAreaImpl() {
+double RS_Hatch::getTotalAreaImpl() const
+{
     auto loops = getLoops();
 #ifdef DEBUG_TOTAL_AREA
     LC_ERR<<__func__<<"(): loops.size()="<<loops.size();

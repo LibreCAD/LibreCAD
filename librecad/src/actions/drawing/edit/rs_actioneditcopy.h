@@ -42,7 +42,7 @@ public:
     RS_ActionEditCopyPaste(LC_ActionContext *actionContext, RS2::ActionType actionType);
     ~RS_ActionEditCopyPaste() override;
     void init(int status) override;
-    void onSelectionCompleted(bool singleEntity, bool fromInit);
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
 protected:
     /**
   * Action States.
