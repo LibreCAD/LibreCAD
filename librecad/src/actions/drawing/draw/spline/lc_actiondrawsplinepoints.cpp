@@ -29,6 +29,7 @@
 
 #include "lc_splinepoints.h"
 #include "rs_debug.h"
+#include "rs_document.h"
 
 struct LC_ActionDrawSplinePoints::ActionData {
 	/**
@@ -68,11 +69,12 @@ void LC_ActionDrawSplinePoints::init(int status){
 void LC_ActionDrawSplinePoints::doTrigger() {
     if (m_actionData->spline.get() != nullptr) {
         setPenAndLayerToActive(m_actionData->spline.get());
-        m_actionData->spline->update();
-        RS_Entity *s = m_actionData->spline->clone();
-        undoCycleAdd(s);
+        auto spline = std::make_unique<LC_SplinePoints>(m_container, m_actionData->spline->getData());
+        setPenAndLayerToActive(spline.get());
+        undoCycleAdd(spline.get());
 
-        RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %lu", s->getId());
+        LC_LOG<<"RS_ActionDrawSplinePoints::trigger(): spline added: "<<spline->getId();
+        spline.release();
         reset();
     }
 }

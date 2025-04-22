@@ -685,7 +685,6 @@ void RS_MText::move(const RS_Vector &offset) {
 }
 
 void RS_MText::rotate(const RS_Vector &center, double angle) {
-    RS_Vector oldInsertionPoint{data.insertionPoint};
     RS_EntityContainer::rotate(center, angle);
     data.insertionPoint.rotate(center, angle);
 

@@ -36,7 +36,7 @@
 // fixme - sand -  expand actions options widget to support all possible settings (like angle, radius, start angle, end/total angle, chordlen)
 RS_ActionDrawArc::RS_ActionDrawArc(LC_ActionContext *actionContext,RS2::ActionType ownActionType)
     :LC_ActionDrawCircleBase("Draw arcs",actionContext, ownActionType), m_arcData(std::make_unique<RS_ArcData>()){
-    reset();
+    RS_ActionDrawArc::reset();
 }
 
 RS_ActionDrawArc::~RS_ActionDrawArc() = default;
@@ -62,7 +62,7 @@ void RS_ActionDrawArc::doTrigger() {
     if (m_alternateArcDirection){
         m_arcData->reversed = !m_arcData->reversed;
     }
-    auto arc = new RS_Arc(m_container,*m_arcData);
+    auto arc = new RS_Arc(m_container, *m_arcData);
     setPenAndLayerToActive(arc);
     moveRelativeZero(arc->getCenter());
     undoCycleAdd(arc);

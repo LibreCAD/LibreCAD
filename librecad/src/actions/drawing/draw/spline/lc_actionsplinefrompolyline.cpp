@@ -204,9 +204,7 @@ void LC_ActionSplineFromPolyline::fillControlPointsListFromPolyline(const RS_Pol
     controlPoints.reserve(polyline->count() * (m_segmentMiddlePoints + 1) + 1);
     controlPoints.push_back(polyline->getStartpoint());
 
-    int index = 0;
     for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity; entity = polyline->nextEntity(RS2::ResolveAll)) {
-        index++;
         if (!entity->isAtomic()){
             continue;
         }
