@@ -30,6 +30,5 @@ RS2::EntityType LC_RefArc::rtti() const{
 
 RS_Entity *LC_RefArc::clone() const{
     auto* a = new LC_RefArc(*this);
-    a->initId();
     return a;
 }

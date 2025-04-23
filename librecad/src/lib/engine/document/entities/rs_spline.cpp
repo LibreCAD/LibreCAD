@@ -68,7 +68,6 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
 RS_Entity* RS_Spline::clone() const{
     auto* l = new RS_Spline(*this);
     l->setOwner(isOwner());
-    l->initId();
     l->detach();
     return l;
 }

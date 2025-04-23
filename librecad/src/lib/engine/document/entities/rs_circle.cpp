@@ -82,7 +82,6 @@ RS_Circle::RS_Circle(RS_EntityContainer* parent,
 
 RS_Entity* RS_Circle::clone() const {
     RS_Circle* c = new RS_Circle(*this);
-    c->initId();
     return c;
 }
 

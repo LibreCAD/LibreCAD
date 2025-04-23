@@ -58,7 +58,6 @@ RS_Entity* RS_Block::clone() const {
     auto blk = new RS_Block(*this);
     blk->setOwner(isOwner());
     blk->detach();
-    blk->initId();
     return blk;
 }
 

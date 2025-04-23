@@ -56,7 +56,6 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent,
 RS_Entity* RS_Leader::clone() const{
     auto* p = new RS_Leader(*this);
     p->setOwner(isOwner());
-    p->initId();
     p->detach();
     p->empty = empty;
     return p;

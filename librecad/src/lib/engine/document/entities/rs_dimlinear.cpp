@@ -81,7 +81,6 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
 RS_Entity* RS_DimLinear::clone() const {
     auto* d = new RS_DimLinear(*this);
     d->setOwner(isOwner());
-    d->initId();
     d->detach();
     return d;
 }

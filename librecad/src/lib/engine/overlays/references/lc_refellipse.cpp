@@ -30,6 +30,5 @@ RS2::EntityType LC_RefEllipse::rtti() const{
 
 RS_Entity *LC_RefEllipse::clone() const{
     auto* a = new LC_RefEllipse(*this);
-    a->initId();
     return a;
 }

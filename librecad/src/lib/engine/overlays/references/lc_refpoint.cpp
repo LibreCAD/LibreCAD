@@ -33,7 +33,6 @@ LC_RefPoint::LC_RefPoint(RS_EntityContainer* parent,
 
 RS_Entity* LC_RefPoint::clone() const {
     auto* p = new LC_RefPoint(*this);
-    p->initId();
     return p;
 }
 

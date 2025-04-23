@@ -835,8 +835,6 @@ void RS_Painter::drawSplinePointsWCS(const 	std::vector<RS_Vector> &wcsControlPo
                    [this](const RS_Vector& wcsPoint) {
                        return toGui(wcsPoint);
     });
-    PainterGuard guard(*this);
-    setPen(getPen());
     drawSplinePointsUI(uiControlPoints, closed);
 }
 

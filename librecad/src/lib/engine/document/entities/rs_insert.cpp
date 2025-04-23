@@ -122,7 +122,6 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
 RS_Entity* RS_Insert::clone() const{
 	auto i = new RS_Insert(*this);
 	i->setOwner(isOwner());
-	i->initId();
 	i->detach();
 	return i;
 }
@@ -202,7 +201,6 @@ void RS_Insert::update() {
                     } else {
                         ne = e->clone();
                     }
-                    ne->initId();
                     ne->setUpdateEnabled(false);
                 // if entity layer are 0 set to insert layer to allow "1 layer control" bug ID #3602152
                     RS_Layer *l= ne->getLayer();//special fontchar block don't have

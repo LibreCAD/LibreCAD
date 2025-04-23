@@ -35,7 +35,7 @@ class QString;
 class RS_EntityContainer;
 class RS_GraphicView;
 class RS_LayerList;
-class LC_LayersExportOptions;
+struct LC_LayersExportOptions;
 
 /*
     This action class exports the current selected layers as a drawing file, 

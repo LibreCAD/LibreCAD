@@ -236,7 +236,6 @@ RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
 
 RS_Entity* RS_Ellipse::clone() const {
 	auto* e = new RS_Ellipse(*this);
-	e->initId();
 	return e;
 }
 

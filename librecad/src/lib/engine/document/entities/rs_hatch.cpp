@@ -143,10 +143,8 @@ RS_Entity* RS_Hatch::clone() const{
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone()");
     auto* t = new RS_Hatch(*this);
     t->setOwner(isOwner());
-    t->initId();
     t->detach();
     t->update();
-//    t->hatch = nullptr;
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone(): OK");
     return t;
 }

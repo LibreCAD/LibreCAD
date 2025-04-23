@@ -107,12 +107,14 @@ RS_Entity& RS_Entity::operator = (const RS_Entity& other){
 
 RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
+{
     init();
     m_pImpl->fromOther(other.m_pImpl.get());
 }
 
-RS_Entity& RS_Entity::operator = (RS_Entity&& other){
+RS_Entity& RS_Entity::operator = (RS_Entity&& other)
+{
     parent = other.parent;
     init();
     m_pImpl->fromOther(other.m_pImpl.get());

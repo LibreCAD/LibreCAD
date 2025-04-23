@@ -339,7 +339,6 @@ LC_Parabola::LC_Parabola(RS_EntityContainer* parent, const LC_ParabolaData& d):
 RS_Entity* LC_Parabola::clone() const
 {
     auto* e = new LC_Parabola(*this);
-    e->initId();
     return e;
 }
 
