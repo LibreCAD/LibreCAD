@@ -51,15 +51,6 @@
 #include "rs_vector.h"
 #include "lc_quadratic.h"
 
-namespace {
-// fixme - renderperf - that should be cached as it is set once
-// Whether the entity is a member of cross hatch filling curves
-bool isHatchMember(const RS_Entity* entity) {
-    if (entity == nullptr || entity->getParent() == nullptr)
-        return false;
-    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
-}
-}
 
 struct RS_Entity::Impl {
     //! pen (attributes) for this entity
@@ -154,7 +145,7 @@ void RS_Entity::init() {
  */
 void RS_Entity::initId() {
     static unsigned long long idCounter=0;
-    id = idCounter++;
+    id = ++idCounter;
 }
 
 RS_Entity *RS_Entity::cloneProxy() const {

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 #include<iostream>
-#include "rs_image.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -32,6 +31,7 @@
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
+#include "rs_image.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
@@ -54,22 +54,21 @@ namespace
 
         QFileInfo dxfFileInfo(currentDocumentFileName);
         QFileInfo fileInfo(imageFile);
-        QString result;
         if (fileInfo.exists()) {  // file exists as input file path
             QDir dxfDir(dxfFileInfo.canonicalPath());
             imageFile = dxfDir.relativeFilePath(imageFile);
-            result = fileInfo.canonicalFilePath();
+            return fileInfo.canonicalFilePath();
         }
         else { // test a relative file path from the dxf file folder
             fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
             if (fileInfo.exists()) {
-                result = fileInfo.canonicalFilePath();
+                return fileInfo.canonicalFilePath();
             }
             else { // search the current folder of the dxf for the dxf file name
-                result = dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
+                return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
             }
         }
-        return result;
+        return {};
     }
 }
 
@@ -104,8 +103,8 @@ std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
 RS_Image::RS_Image(RS_EntityContainer* parent,
                    const RS_ImageData& d)
     :RS_AtomicEntity(parent), data(d) {
-    update();
-    calculateBorders();
+    RS_Image::update();
+    RS_Image::calculateBorders();
 }
 
 RS_Entity* RS_Image::clone() const {
@@ -133,7 +132,7 @@ void RS_Image::update() {
     img = std::make_shared<QImage>(filePathName);
     if (!img->isNull()) {
         data.size = RS_Vector(img->width(), img->height());
-        calculateBorders(); // image update need this.
+        RS_Image::calculateBorders(); // image update need this.
     } else {
         LC_LOG(RS_Debug::D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file<<"("<<filePathName<<")";
     }

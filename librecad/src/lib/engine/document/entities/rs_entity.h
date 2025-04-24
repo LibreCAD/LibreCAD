@@ -596,12 +596,12 @@ protected:
     RS_Vector maxV;
     //! Pointer to layer
     RS_Layer *layer = nullptr;
-    //! Entity id
-    unsigned long long id = 0;
     //! auto updating enabled?
     bool updateEnabled = false;
 
 private:
+    //! Entity id
+    unsigned long long id = 0;
     // pImp to delay pulling in Qt headers
     struct Impl;
     const std::unique_ptr<Impl> m_pImpl;
