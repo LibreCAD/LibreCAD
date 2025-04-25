@@ -24,7 +24,6 @@
 #include "lc_actiondimordinaterebase.h"
 
 #include "lc_graphicviewport.h"
-#include "lc_ucs.h"
 #include "rs_entity.h"
 #include "lc_dimordinate.h"
 
@@ -35,14 +34,6 @@ LC_ActionDimOrdinateRebase::LC_ActionDimOrdinateRebase(LC_ActionContext* actionC
 }
 
 
-/*
-void LC_ActionDimOrdinateRebase::onSelectionCompleted([[maybe_unused]] bool singleEntity, bool fromInit) {
-    setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
-    updateMouseButtonHints();
-    updateSelectionWidget();
-}
-*/
-
 void LC_ActionDimOrdinateRebase::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select Ordinate dimension to rebase (Enter - to complete)", MOD_CTRL(tr("Select and rebase")));
 }
@@ -51,7 +42,7 @@ bool LC_ActionDimOrdinateRebase::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void LC_ActionDimOrdinateRebase::doTrigger(bool keepSelected) {
+void LC_ActionDimOrdinateRebase::doTrigger([[maybe_unused]]bool keepSelected) {
     if (m_document != nullptr) {
         undoCycleStart();
         double horizontalDirection = 0;

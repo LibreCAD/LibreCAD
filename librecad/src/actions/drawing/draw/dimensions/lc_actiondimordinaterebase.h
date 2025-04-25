@@ -29,7 +29,6 @@ class LC_ActionDimOrdinateRebase: public LC_ActionPreSelectionAwareBase{
      Q_OBJECT
 public:
     explicit LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext);
-    // void onSelectionCompleted(bool singleEntity, bool fromInit);
     ~LC_ActionDimOrdinateRebase() override = default;
 protected:
     void updateMouseButtonHintsForSelection() override;

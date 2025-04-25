@@ -25,7 +25,7 @@
 **********************************************************************/
 
 
-#include <QApplication>>
+#include <QApplication>
 #include <QClipboard>
 #include <QFile>
 #include <QKeyEvent>
