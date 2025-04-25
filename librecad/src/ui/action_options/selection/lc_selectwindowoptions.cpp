@@ -213,6 +213,16 @@ void LC_SelectWindowOptions::onTypeToggled([[maybe_unused]]bool value) {
     if (ui->cbWipeout->isChecked()){
 //            entityTypes << RS2::EntityText;
     }
+    if (ui->cbDimension->isChecked()) {
+        entityTypes << RS2::EntityDimRadial;
+        entityTypes << RS2::EntityDimArc;
+        entityTypes << RS2::EntityDimDiametric;
+        entityTypes << RS2::EntityDimLeader;
+        entityTypes << RS2::EntityDimLinear;
+        entityTypes << RS2::EntityDimOrdinate;
+        entityTypes << RS2::EntityDimAngular;
+        entityTypes << RS2::EntityDimAligned;
+    }
     m_action->setEntityTypesToSelect(entityTypes);
   /*  if (entityTypes.isEmpty()){
         setSelectAllToActionAndView(true);
