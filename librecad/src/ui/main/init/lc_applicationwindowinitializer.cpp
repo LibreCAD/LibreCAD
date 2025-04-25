@@ -22,8 +22,7 @@
 #include "lc_applicationwindowinitializer.h"
 
 #include <QMdiArea>
-#include <QMdiSubWindow>
-#include <QCoreApplication>
+#include <qcoreapplication.h>
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
@@ -54,8 +53,6 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_settings.h"
-
-
 
 LC_ApplicationWindowInitializer::LC_ApplicationWindowInitializer(QC_ApplicationWindow *appWindow)
     : LC_AppWindowAware{appWindow}

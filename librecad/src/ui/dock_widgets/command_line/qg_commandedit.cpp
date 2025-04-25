@@ -31,11 +31,6 @@
 #include <QKeyEvent>
 #include <QRegularExpression>
 
-#if  defined(Q_OS_MACOS)
-#include <QGuiApplication>
-#endif
-
-
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"

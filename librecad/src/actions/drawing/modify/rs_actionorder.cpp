@@ -51,6 +51,8 @@ void RS_ActionOrder::onSelectionCompleted([[maybe_unused]]bool singleEntity, boo
 }
 
 void RS_ActionOrder::doTrigger(bool keepSelected) {
+    RS_PreviewActionInterface::doTrigger();
+
     // fixme - sand - review SELECTION STATE
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 

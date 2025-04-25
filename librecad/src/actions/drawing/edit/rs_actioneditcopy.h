@@ -36,12 +36,13 @@
  *
  * @author Andrew Mustun
  */
-class   RS_ActionEditCopyPaste :public LC_ActionPreSelectionAwareBase {
+class RS_ActionEditCopyPaste :public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
     RS_ActionEditCopyPaste(LC_ActionContext *actionContext, RS2::ActionType actionType);
     ~RS_ActionEditCopyPaste() override;
     void init(int status) override;
+    void onSelectionCompleted(bool singleEntity, bool fromInit);
 protected:
     /**
   * Action States.
@@ -54,7 +55,7 @@ protected:
     std::unique_ptr<RS_Vector> m_referencePoint;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger(bool keepSelected) override;
-    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
+    // void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
