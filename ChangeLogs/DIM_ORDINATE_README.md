@@ -2,7 +2,7 @@ This PR adds support of Ordinate dimension.
 
 #### Generic support of the Ordinate Dimension
 
-Demo: 
+Demo: https://youtu.be/56kGlFMSZlg
 
 Common functionality related to Ordinate Dimension was added: 
 
