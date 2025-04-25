@@ -62,7 +62,7 @@ public:
     void initLanguageList();
     void initAllLanguagesList();
 
-    bool checkInit();
+    bool checkInit() const;
     bool createPaths(const QString& p);
 
     /**
@@ -81,12 +81,13 @@ public:
     /**
      * @return Application Data directory.
      */
-    QString getAppDataDir();
+    QString getAppDataDir() const;
 
     /**
      * @return A list of absolute paths to all font files found.
      */
-    QStringList getFontList() {
+    QStringList getFontList() const
+    {
         QStringList ret = getFileList("fonts", "cxf");
         return ret;
     }
@@ -140,23 +141,24 @@ public:
     /**
      * @return The application name.
      */
-    QString getAppName() {
+    QString getAppName() const {
         return appName;
     }
 
     /**
      * @return The application version.
      */
-    QString getAppVersion() {
+    QString getAppVersion() const {
         return appVersion;
     }
 
-    QStringList getFileList(const QString& subDirectory,
-                            const QString& fileExtension);
+    QStringList getFileList (const QString& subDirectory,
+                            const QString& fileExtension) const;
 
-    QStringList getDirectoryList(const QString& subDirectory);
+    QStringList getDirectoryList(const QString&
+		   subDirectory) const;
 
-    QStringList getLanguageList() {
+    QStringList getLanguageList() const {
         return languageList;
     }
 

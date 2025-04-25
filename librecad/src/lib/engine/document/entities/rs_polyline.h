@@ -26,6 +26,7 @@
 
 
 #pragma once
+#ifndef RS_Polyline_INCLUDE_H
 
 #include "rs_entitycontainer.h"
 /**
@@ -143,3 +144,5 @@ private:
     RS_Entity *m_closingEntity = nullptr;
     double m_nextBulge = 0.;
 };
+
+#endif // RS_Polyline_INCLUDE_H

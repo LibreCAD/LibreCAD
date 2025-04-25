@@ -66,7 +66,6 @@ RS_Line::RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd)
 
 RS_Entity* RS_Line::clone() const {
 	RS_Line* l = new RS_Line(*this);
-	l->initId();
 	return l;
 }
 

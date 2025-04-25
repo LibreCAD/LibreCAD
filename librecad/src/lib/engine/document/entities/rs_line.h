@@ -25,6 +25,8 @@
 **********************************************************************/
 #pragma once
 
+#ifndef RS_Line_INCLUDE_H
+#define RS_Line_INCLUDE_H
 #include "lc_cachedlengthentity.h"
 class LC_Quadratic;
 
@@ -214,3 +216,4 @@ private:
     RS_Vector highlightedVertex;
 
 };
+#endif // RS_Line_INCLUDE_H

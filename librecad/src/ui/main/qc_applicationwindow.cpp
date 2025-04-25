@@ -600,7 +600,7 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
 
     // kill active actions in previous windows.that will prevent the situation described by issue #1762 with
     // non-finished action started on previous window and action that is active with UI still checked  after window switch
-    doForEachSubWindowGraphicView([this](QG_GraphicView *graphicView,[[maybe_unused]] QC_MDIWindow *sw){
+    doForEachSubWindowGraphicView([](QG_GraphicView *graphicView,[[maybe_unused]] QC_MDIWindow *sw){
         RS_ActionInterface *ai = graphicView->getCurrentAction();
         if (ai != nullptr) {
             ai->hideOptions();
@@ -1418,7 +1418,7 @@ void QC_ApplicationWindow::slotViewAntialiasing(bool toggle) {
  * Updates all grids of all graphic views.
  */
 void QC_ApplicationWindow::updateGrids() {
-    doForEachSubWindowGraphicView([this](QG_GraphicView *gv, [[maybe_unused]] QC_MDIWindow *w){
+    doForEachSubWindowGraphicView([](QG_GraphicView *gv, [[maybe_unused]] QC_MDIWindow *w){
             gv->loadSettings();
             gv->redraw(RS2::RedrawGrid);
     });

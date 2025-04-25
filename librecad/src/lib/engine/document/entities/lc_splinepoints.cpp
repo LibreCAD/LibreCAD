@@ -578,7 +578,6 @@ LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
 RS_Entity* LC_SplinePoints::clone() const
 {
     LC_SplinePoints* l = new LC_SplinePoints(*this);
-	l->initId();
 	return l;
 }
 
@@ -3314,7 +3313,6 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos){
 		newData.controlPoints.insert(newData.controlPoints.begin(), vPoint);
 
 		ret = new LC_SplinePoints(parent, newData);
-		ret->initId();
 
 		data.cut = true;
 	}

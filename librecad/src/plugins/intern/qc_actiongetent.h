@@ -27,7 +27,7 @@
 #ifndef QC_ACTIONGETENT_H
 #define QC_ACTIONGETENT_H
 
-#include "rs_previewactioninterface.h"
+#include "rs_actioninterface.h"
 
  class Plugin_Entity;
  class Doc_plugin_interface;
@@ -55,9 +55,9 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
     void updateMouseButtonHints() override;
 private:
-    bool m_completed;
+    bool m_completed = false;
     QString m_message;
-    RS_Entity* m_entity;
+    RS_Entity* m_entity = nullptr;
 };
 
 #endif

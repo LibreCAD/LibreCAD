@@ -30,6 +30,5 @@ RS2::EntityType LC_RefLine::rtti() const{
 
 RS_Entity *LC_RefLine::clone() const{
     auto* l = new LC_RefLine(*this);
-    l->initId();
     return l;
 }

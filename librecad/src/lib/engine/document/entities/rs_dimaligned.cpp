@@ -87,8 +87,6 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
 RS_Entity* RS_DimAligned::clone() const{
 	auto d = new RS_DimAligned(*this);
 	d->setOwner(isOwner());
-	d->initId();
-	d->detach();
 	return d;
 }
 

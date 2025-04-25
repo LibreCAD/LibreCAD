@@ -26,7 +26,7 @@
 namespace LC_UI{
    template <class T> T* findParentOfType(QWidget * widget);
 
-   template <class T> T* LC_UI::findParentOfType(QWidget* widget) {
+   template <class T> T* findParentOfType(QWidget* widget) {
         while (widget != nullptr) {
             T* candidate = qobject_cast<T*>(widget);
             if (candidate != nullptr) {

@@ -693,7 +693,6 @@ void LoopOptimizer::AddContainer(const RS_EntityContainer& contour)
             AddContainer(*container);
         } else if (entity->isEdge()){
             auto edge = static_cast<RS_AtomicEntity*>(entity->clone());
-            edge->initId();
             edge->reparent(nullptr);
             edge->calculateBorders();
             m_data->AddEdge(edge);

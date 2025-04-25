@@ -131,7 +131,6 @@ RS_Entity *RS_EntityContainer::clone() const {
                     ec->isOwner());
 
     ec->detach();
-    ec->initId();
 
     return ec;
 }
@@ -155,7 +154,6 @@ RS_Entity *RS_EntityContainer::cloneProxy() const {
                     ec->isOwner());
 
     ec->detach();
-    ec->initId();
 
     return ec;
 }

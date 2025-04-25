@@ -28,6 +28,8 @@
 #ifndef RS_HATCH_H
 #define RS_HATCH_H
 
+#include <QString>
+
 #include "rs_entitycontainer.h"
 
 /**
@@ -47,7 +49,7 @@ struct RS_HatchData {
 	RS_HatchData(bool solid,
 				 double scale,
 				 double angle,
-				 const QString& pattern);
+                 QString pattern);
 
 
     bool solid = false;
@@ -109,27 +111,30 @@ public:
             data.solid = solid;
     }
 
-    QString getPattern() {
+    QString getPattern() const
+    {
             return data.pattern;
     }
     void setPattern(const QString& pattern) {
             data.pattern = pattern;
     }
 
-    double getScale() {
+    double getScale() const
+    {
             return data.scale;
     }
     void setScale(double scale) {
             data.scale = scale;
     }
 
-    double getAngle() {
+    double getAngle() const
+    {
             return data.angle;
     }
     void setAngle(double angle) {
             data.angle = angle;
     }
-    double getTotalArea();
+    double getTotalArea() const;
 
     void calculateBorders() override;
     void update() override;
@@ -158,22 +163,23 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Hatch& p);
 
 private:
-    double getTotalAreaImpl();
+    double getTotalAreaImpl() const;
     RS_EntityContainer trimPattern(const RS_EntityContainer& patternEntities) const;
-    RS_HatchData data;
-    RS_EntityContainer* hatch = nullptr;
-    double m_area = RS_MAXDOUBLE;
-    int  updateError = 0;
-    bool updateRunning = false;
-    bool needOptimization = false;
-    bool m_updated=false;
-    std::shared_ptr<RS_EntityContainer> m_orderedLoops;
 
     void drawSolidFill(RS_Painter *painter);
 
     void debugOutPath(const QPainterPath &tmpPath) const;
 
     QPainterPath createSolidFillPath( RS_Painter *painter) const;
+
+    RS_HatchData data;
+    RS_EntityContainer* hatch = nullptr;
+    mutable double m_area = RS_MAXDOUBLE;
+    RS_HatchError updateError = HATCH_UNDEFINED;
+    bool updateRunning = false;
+    bool needOptimization = true;
+    bool m_updated=false;
+    std::shared_ptr<RS_EntityContainer> m_orderedLoops;
 };
 
 #endif

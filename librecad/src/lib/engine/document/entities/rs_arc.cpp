@@ -117,7 +117,6 @@ RS_Arc::RS_Arc(RS_EntityContainer* parent,
 
 RS_Entity* RS_Arc::clone() const {
 	RS_Arc* a = new RS_Arc(*this);
-	a->initId();
 	return a;
 }
 

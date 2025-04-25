@@ -830,14 +830,11 @@ void RS_Painter::debugOutPath(const QPainterPath &tmpPath) const {
 }
 
 void RS_Painter::drawSplinePointsWCS(const 	std::vector<RS_Vector> &wcsControlPoints, bool closed){
-    int controlPointsCount = wcsControlPoints.size()/*data.controlPoints.size()*/;
-    // fixme - sand - render - eliminate creation of intermediate vector...
-    std::vector<RS_Vector> uiControlPoints = std::vector<RS_Vector>(wcsControlPoints);
-    for (int i = 0; i < controlPointsCount; i++){
-        double x, y;
-        toGui(wcsControlPoints[i], x,y);
-        uiControlPoints[i] = RS_Vector(x,y);
-    }
+    std::vector<RS_Vector> uiControlPoints;
+    std::transform(wcsControlPoints.cbegin(), wcsControlPoints.cend(), std::back_inserter(uiControlPoints),
+                   [this](const RS_Vector& wcsPoint) {
+                       return toGui(wcsPoint);
+    });
     drawSplinePointsUI(uiControlPoints, closed);
 }
 
@@ -1503,7 +1500,7 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
     uiPosition.scale(m_viewPortFactor).move(m_viewPortOffset);
     uiPosition.y = viewPortHeight - uiPosition.y;
 
-    // TODO: remove this
+#ifdef DEBUG_RENDERING_TOGUI
     {
         using namespace RS_Math;
         double uiX=0., uiY=0.;
@@ -1518,6 +1515,7 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
             assert(!"toGui() failure");
         }
     }
+#endif
 
    return uiPosition;
 }

@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
-#include "qg_commandedit.h"
 
+#include <QApplication>>
 #include <QClipboard>
 #include <QFile>
 #include <QKeyEvent>
 #include <QRegularExpression>
 
+#include "qg_commandedit.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"

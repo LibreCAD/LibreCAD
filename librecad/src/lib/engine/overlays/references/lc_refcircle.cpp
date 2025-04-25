@@ -32,6 +32,5 @@ RS2::EntityType LC_RefCircle::rtti() const{
 
 RS_Entity *LC_RefCircle::clone() const{
     auto* a = new LC_RefCircle(*this);
-    a->initId();
     return a;
 }

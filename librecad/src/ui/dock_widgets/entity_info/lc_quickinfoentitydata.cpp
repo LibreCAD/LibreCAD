@@ -54,7 +54,7 @@ LC_QuickInfoEntityData::LC_QuickInfoEntityData(): LC_QuickInfoBaseData(),
 }
 
 LC_QuickInfoEntityData::~LC_QuickInfoEntityData(){
-    clear();
+    LC_QuickInfoEntityData::clear();
 }
 
 // FIXME - sand - check add length property where its reasonable! (polyline, splines, etc)
@@ -114,145 +114,136 @@ QString LC_QuickInfoEntityData::prepareGenericEntityDescription(const RS_Entity*
 
 QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel level) {
 
-    bool shouldUpdate;
     unsigned long thisEntityId = en->getId();
-    if (thisEntityId == 0){ // no special value for empty id, yet according to implementation, it seems that 0 should not be used
-        shouldUpdate = true;
-    } else if (thisEntityId == m_entityIdForDescription){ // same entity... so we'll try to optimize a bit mouse move there.
-        shouldUpdate = false;
-        return m_cachedEntityDescription; 
-    } else {
-        shouldUpdate = true;
+        // no special value for empty id, yet according to implementation, it seems that 0 should not be used
+    if (thisEntityId != 0 && thisEntityId == m_entityIdForDescription){ // same entity... so we'll try to optimize a bit mouse move there.
+        return m_cachedEntityDescription;
     }
-    if (shouldUpdate){
-        m_cachedEntityDescription = "";
-        QString entityInfo;
-        m_entityIdForDescription = thisEntityId;
+    m_cachedEntityDescription = "";
+    m_entityIdForDescription = thisEntityId;
 
-        // just processing of entity based on type
-        int rtti = en->rtti();
-        switch (rtti) {
-            case RS2::EntityLine: {
-                auto *line = reinterpret_cast<RS_Line *>(en);
-                m_cachedEntityDescription = prepareLineDescription(line, level);
-                break;
-            }
-        case RS2::EntityCircle: {
-                auto *circle = reinterpret_cast<RS_Circle *>(en);
-                m_cachedEntityDescription = prepareCircleDescription(circle, level);
-                break;
-            }
-            case RS2::EntityArc: {
-                auto *arc = reinterpret_cast<RS_Arc *>(en);
-                m_cachedEntityDescription = prepareArcDescription(arc, level);
-                break;
-            }
-            case RS2::EntityEllipse: {
-                auto *ellipse = reinterpret_cast<RS_Ellipse *>(en);
-                m_cachedEntityDescription = prepareEllipseDescription(ellipse, level);
-                break;
-            }
-            case RS2::EntityPoint: {
-                auto *point = reinterpret_cast<RS_Point *>(en);
-                m_cachedEntityDescription = preparePointDescription(point, level);
-                break;
-            }
-            case RS2::EntityPolyline: {
-                auto *pline = reinterpret_cast<RS_Polyline *>(en);
-                m_cachedEntityDescription = preparePolylineDescription(pline, level);
-                break;
-            }
-            case RS2::EntityInsert: {
-                auto *pinsert = reinterpret_cast<RS_Insert *>(en);
-                m_cachedEntityDescription = prepareInsertDescription(pinsert, level);
-                break;
-            }
-            case RS2::EntityMText: {
-                auto *pmtext = reinterpret_cast<RS_MText *> (en);
-                m_cachedEntityDescription = prepareMTextDescription(pmtext, level);
-                break;
-            }
-            case RS2::EntityText: {
-                auto *ptext = reinterpret_cast<RS_Text *> (en);
-                m_cachedEntityDescription = prepareTextDescription(ptext, level);
-                break;
-            }
-            case RS2::EntityDimAligned:  {
-                auto *dim = reinterpret_cast<RS_DimAligned *> (en);
-                m_cachedEntityDescription = prepareDimAlignedDescription(dim, level);
-                break;
-            }
-            case RS2::EntityDimLinear: {
-                auto *dim = reinterpret_cast<RS_DimLinear *> (en);
-                m_cachedEntityDescription = prepareDimLinearDescription(dim, level);
-                break;
-            }
-            case RS2::EntityDimOrdinate: {
-                auto *dim = reinterpret_cast<LC_DimOrdinate *> (en);
-                m_cachedEntityDescription = prepareDimOrdinateDescription(dim, level);
-                break;
-            }
-            case RS2::EntityDimRadial: {
-                auto *dimrad = reinterpret_cast<RS_DimRadial *> (en);
-                m_cachedEntityDescription = prepareDimRadialDescription(dimrad, level);
-                break;
-            }
-            case RS2::EntityDimDiametric: {
-                auto *dimdia = reinterpret_cast<RS_DimDiametric *> (en);
-                m_cachedEntityDescription = prepareDimDiametricDescription(dimdia, level);
-                break;
-            }
-            case RS2::EntityDimAngular:{
-                auto *dimang = reinterpret_cast<RS_DimAngular *> (en);
-                m_cachedEntityDescription = prepareDimAngularDescription(dimang, level);
-                break;
-            }
-            case RS2::EntityDimArc:  {
-                auto *dimarc = reinterpret_cast<LC_DimArc *> (en);
-                m_cachedEntityDescription = prepareDimArcDescription(dimarc, level);
-                break;
-            }
-            case RS2::EntityDimLeader:{
-                auto *leader = reinterpret_cast<RS_Leader *> (en);
-                m_cachedEntityDescription = prepareDimLeaderDescription(leader, level);
-                break;
-            }
-            case RS2::EntityHatch:{
-                auto *hatch = reinterpret_cast<RS_Hatch *> (en);
-                m_cachedEntityDescription = prepareHatchDescription(hatch, level);
-                break;
-            }
-            case RS2::EntityImage:  {
-                auto *pimage = reinterpret_cast<RS_Image *> (en);
-                m_cachedEntityDescription = prepareImageDescription(pimage, level);
-                break;
-            }
-            case RS2::EntitySpline: {
-                auto *pspline = reinterpret_cast<RS_Spline *> (en);
-                m_cachedEntityDescription = prepareSplineDescription(pspline, level);
-                break;
-            }
-            case RS2::EntitySplinePoints: {
-                auto *psplinepoints = reinterpret_cast<LC_SplinePoints *> (en);
-                m_cachedEntityDescription = prepareSplinePointsDescription(psplinepoints, level);
-                break;
-            }
-            case RS2::EntityParabola: {
-                auto *parabola = reinterpret_cast<LC_Parabola *> (en);
-                m_cachedEntityDescription = prepareParabolaDescription(parabola, level);
-                break;
-            }
-            case RS2::EntitySolid:
-                m_cachedEntityDescription = prepareGenericEntityDescription(en, tr("SOLID"), level);
-                break;
-            case RS2::EntityConstructionLine:
-                m_cachedEntityDescription = prepareGenericEntityDescription(en, tr("CONSTRUCTION"), level);
-                break;
-            default:
-                m_entityName = tr("UNKNOWN");
-                m_cachedEntityDescription = prepareGenericEntityDescription(en, m_entityName, level);
-                break;
-        }
+    // just processing of entity based on type
+    switch (en->rtti()) {
+    case RS2::EntityLine: {
+        auto *line = reinterpret_cast<RS_Line *>(en);
+        m_cachedEntityDescription = prepareLineDescription(line, level);
+        break;
+    }
+    case RS2::EntityCircle: {
+        auto *circle = reinterpret_cast<RS_Circle *>(en);
+        m_cachedEntityDescription = prepareCircleDescription(circle, level);
+        break;
+    }
+    case RS2::EntityArc: {
+        auto *arc = reinterpret_cast<RS_Arc *>(en);
+        m_cachedEntityDescription = prepareArcDescription(arc, level);
+        break;
+    }
+    case RS2::EntityEllipse: {
+        auto *ellipse = reinterpret_cast<RS_Ellipse *>(en);
+        m_cachedEntityDescription = prepareEllipseDescription(ellipse, level);
+        break;
+    }
+    case RS2::EntityPoint: {
+        auto *point = reinterpret_cast<RS_Point *>(en);
+        m_cachedEntityDescription = preparePointDescription(point, level);
+        break;
+    }
+    case RS2::EntityPolyline: {
+        auto *pline = reinterpret_cast<RS_Polyline *>(en);
+        m_cachedEntityDescription = preparePolylineDescription(pline, level);
+        break;
+    }
+    case RS2::EntityInsert: {
+        auto *pinsert = reinterpret_cast<RS_Insert *>(en);
+        m_cachedEntityDescription = prepareInsertDescription(pinsert, level);
+        break;
+    }
+    case RS2::EntityMText: {
+        auto *pmtext = reinterpret_cast<RS_MText *> (en);
+        m_cachedEntityDescription = prepareMTextDescription(pmtext, level);
+        break;
+    }
+    case RS2::EntityText: {
+        auto *ptext = reinterpret_cast<RS_Text *> (en);
+        m_cachedEntityDescription = prepareTextDescription(ptext, level);
+        break;
+    }
+    case RS2::EntityDimAligned:  {
+        auto *dim = reinterpret_cast<RS_DimAligned *> (en);
+        m_cachedEntityDescription = prepareDimAlignedDescription(dim, level);
+        break;
+    }
+    case RS2::EntityDimLinear: {
+        auto *dim = reinterpret_cast<RS_DimLinear *> (en);
+        m_cachedEntityDescription = prepareDimLinearDescription(dim, level);
+        break;
+    }
+    case RS2::EntityDimOrdinate: {
+        auto *dim = reinterpret_cast<LC_DimOrdinate *> (en);
+        m_cachedEntityDescription = prepareDimOrdinateDescription(dim, level);
+        break;
+    }
+    case RS2::EntityDimRadial: {
+        auto *dimrad = reinterpret_cast<RS_DimRadial *> (en);
+        m_cachedEntityDescription = prepareDimRadialDescription(dimrad, level);
+        break;
+    }
+    case RS2::EntityDimDiametric: {
+        auto *dimdia = reinterpret_cast<RS_DimDiametric *> (en);
+        m_cachedEntityDescription = prepareDimDiametricDescription(dimdia, level);
+        break;
+    }
+    case RS2::EntityDimAngular:{
+        auto *dimang = reinterpret_cast<RS_DimAngular *> (en);
+        m_cachedEntityDescription = prepareDimAngularDescription(dimang, level);
+        break;
+    }
+    case RS2::EntityDimArc:  {
+        auto *dimarc = reinterpret_cast<LC_DimArc *> (en);
+        m_cachedEntityDescription = prepareDimArcDescription(dimarc, level);
+        break;
+    }
+    case RS2::EntityDimLeader:{
+        auto *leader = reinterpret_cast<RS_Leader *> (en);
+        m_cachedEntityDescription = prepareDimLeaderDescription(leader, level);
+        break;
+    }
+    case RS2::EntityHatch:{
+        auto *hatch = reinterpret_cast<RS_Hatch *> (en);
+        m_cachedEntityDescription = prepareHatchDescription(hatch, level);
+        break;
+    }
+    case RS2::EntityImage:  {
+        auto *pimage = reinterpret_cast<RS_Image *> (en);
+        m_cachedEntityDescription = prepareImageDescription(pimage, level);
+        break;
+    }
+    case RS2::EntitySpline: {
+        auto *pspline = reinterpret_cast<RS_Spline *> (en);
+        m_cachedEntityDescription = prepareSplineDescription(pspline, level);
+        break;
+    }
+    case RS2::EntitySplinePoints: {
+        auto *psplinepoints = reinterpret_cast<LC_SplinePoints *> (en);
+        m_cachedEntityDescription = prepareSplinePointsDescription(psplinepoints, level);
+        break;
+    }
+    case RS2::EntityParabola: {
+        auto *parabola = reinterpret_cast<LC_Parabola *> (en);
+        m_cachedEntityDescription = prepareParabolaDescription(parabola, level);
+        break;
+    }
+    case RS2::EntitySolid:
+        m_cachedEntityDescription = prepareGenericEntityDescription(en, tr("SOLID"), level);
+        break;
+    case RS2::EntityConstructionLine:
+        m_cachedEntityDescription = prepareGenericEntityDescription(en, tr("CONSTRUCTION"), level);
+        break;
+    default:
+        m_entityName = tr("UNKNOWN");
+        m_cachedEntityDescription = prepareGenericEntityDescription(en, m_entityName, level);
+        break;
     }
     return m_cachedEntityDescription;
 }
@@ -264,145 +255,138 @@ QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity *en, RS2::EntityD
  * @return true it view should be updated, false otherwise
  */
 bool LC_QuickInfoEntityData::processEntity(RS_Entity *en){
-    bool shouldUpdate;
-    if (m_entityId == 0){ // no special value for empty id, yet according to implementation, it seems that 0 should not be used
-        shouldUpdate = true;
-    } else if (en->getId() == m_entityId){ // same entity... so we'll try to optimize a bit mouse move there.
-        shouldUpdate = false;
-    } else {
-        shouldUpdate = true;
+        // no special value for empty id, yet according to implementation, it seems that 0 should not be used
+    if (m_entityId != 0 && en->getId() == m_entityId){ // same entity... so we'll try to optimize a bit mouse move there.
+        return false;
     }
-    if (shouldUpdate){
-        clear();
+    clear();
 
-        // collecting some generic common properties of all entities
-        collectGenericProperties(en);
+    // collecting some generic common properties of all entities
+    collectGenericProperties(en);
 
-        // just processing of entity based on type
-        int rtti = en->rtti();
-        switch (rtti) {
-            case RS2::EntityLine: {
-                auto *line = reinterpret_cast<RS_Line *>(en);
-                collectLineProperties(line);
-                break;
-            }
-            case RS2::EntityCircle: {
-                auto *circle = reinterpret_cast<RS_Circle *>(en);
-                collectCircleProperties(circle);
-                break;
-            }
-            case RS2::EntityArc: {
-                auto *arc = reinterpret_cast<RS_Arc *>(en);
-                collectArcProperties(arc);
-                break;
-            }
-            case RS2::EntityEllipse: {
-                auto *ellipse = reinterpret_cast<RS_Ellipse *>(en);
-                collectEllipseProperties(ellipse);
-                break;
-            }
-            case RS2::EntityPoint: {
-                auto *point = reinterpret_cast<RS_Point *>(en);
-                collectPointProperties(point);
-                break;
-            }
-            case RS2::EntityPolyline: {
-                auto *pline = reinterpret_cast<RS_Polyline *>(en);
-                collectPolylineProperties(pline);
-                break;
-            }
-            case RS2::EntityInsert: {
-                auto *pinsert = reinterpret_cast<RS_Insert *>(en);
-                collectInsertProperties(pinsert);
-                break;
-            }
-            case RS2::EntityMText: {         /**< Multi-line Text */
-                auto *pmtext = reinterpret_cast<RS_MText *> (en);
-                collectMTextProperties(pmtext);
-                break;
-            }
-            case RS2::EntityText: {        /**< Single-line Text */
-                auto *ptext = reinterpret_cast<RS_Text *> (en);
-                collectTextProperties(ptext);
-                break;
-            }
-            case RS2::EntityDimAligned:  {
-                auto *dim = reinterpret_cast<RS_DimAligned *> (en);
-                collectDimAlignedProperties(dim);
-                break;
-            }
-            case RS2::EntityDimLinear: {
-                auto *dim = reinterpret_cast<RS_DimLinear *> (en);
-                collectDimLinearProperties(dim);
-                break;
-            }
-            case RS2::EntityDimOrdinate: {
-                auto *dim = reinterpret_cast<LC_DimOrdinate *> (en);
-                collectDimOrdinateProperties(dim);
-                break;
-            }
-            case RS2::EntityDimRadial: {
-                auto *dimrad = reinterpret_cast<RS_DimRadial *> (en);
-                collectDimRadialProperties(dimrad);
-                break;
-            }
-            case RS2::EntityDimDiametric: {
-                auto *dimdia = reinterpret_cast<RS_DimDiametric *> (en);
-                collectDimDiametricProperties(dimdia);
-                break;
-            }
-            case RS2::EntityDimAngular:{
-                auto *dimang = reinterpret_cast<RS_DimAngular *> (en);
-                collectDimAngularProperties(dimang);
-                break;
-            }
-            case RS2::EntityDimArc:  {
-                auto *dimarc = reinterpret_cast<LC_DimArc *> (en);
-                collectDimArcProperties(dimarc);
-                break;
-            }
-            case RS2::EntityDimLeader:{
-                auto *leader = reinterpret_cast<RS_Leader *> (en);
-                collectDimLeaderProperties(leader);
-                break;
-            }
-            case RS2::EntityHatch:{
-                auto *hatch = reinterpret_cast<RS_Hatch *> (en);
-                collectHatchProperties(hatch);
-                break;
-            }
-            case RS2::EntityImage:  {
-               auto *pimage = reinterpret_cast<RS_Image *> (en);
-               collectImageProperties(pimage);
-               break;
-            }
-            case RS2::EntitySpline: {
-                auto *pspline = reinterpret_cast<RS_Spline *> (en);
-                collectSplineProperties(pspline);
-                break;
-            }
-            case RS2::EntitySplinePoints: {
-                auto *psplinepoints = reinterpret_cast<LC_SplinePoints *> (en);
-                collectSplinePointsProperties(psplinepoints);
-                break;
-            }
-            case RS2::EntityParabola: {
-                auto *parabola = reinterpret_cast<LC_Parabola *> (en);
-                collectParabolaProperties(parabola);
-                break;
-            }
-            case RS2::EntitySolid:
-                m_entityName = tr("SOLID");
-                break;
-            case RS2::EntityConstructionLine:
-                m_entityName = tr("CONSTRUCTION");
-                break;
-            default:
-                m_entityName = tr("UNKNOWN");
-                break;
-        }
+    // just processing of entity based on type
+    switch (en->rtti()) {
+    case RS2::EntityLine: {
+        auto *line = reinterpret_cast<RS_Line *>(en);
+        collectLineProperties(line);
+        break;
     }
-    return shouldUpdate;
+    case RS2::EntityCircle: {
+        auto *circle = reinterpret_cast<RS_Circle *>(en);
+        collectCircleProperties(circle);
+        break;
+    }
+    case RS2::EntityArc: {
+        auto *arc = reinterpret_cast<RS_Arc *>(en);
+        collectArcProperties(arc);
+        break;
+    }
+    case RS2::EntityEllipse: {
+        auto *ellipse = reinterpret_cast<RS_Ellipse *>(en);
+        collectEllipseProperties(ellipse);
+        break;
+    }
+    case RS2::EntityPoint: {
+        auto *point = reinterpret_cast<RS_Point *>(en);
+        collectPointProperties(point);
+        break;
+    }
+    case RS2::EntityPolyline: {
+        auto *pline = reinterpret_cast<RS_Polyline *>(en);
+        collectPolylineProperties(pline);
+        break;
+    }
+    case RS2::EntityInsert: {
+        auto *pinsert = reinterpret_cast<RS_Insert *>(en);
+        collectInsertProperties(pinsert);
+        break;
+    }
+    case RS2::EntityMText: {         /**< Multi-line Text */
+        auto *pmtext = reinterpret_cast<RS_MText *> (en);
+        collectMTextProperties(pmtext);
+        break;
+    }
+    case RS2::EntityText: {        /**< Single-line Text */
+        auto *ptext = reinterpret_cast<RS_Text *> (en);
+        collectTextProperties(ptext);
+        break;
+    }
+    case RS2::EntityDimAligned:  {
+        auto *dim = reinterpret_cast<RS_DimAligned *> (en);
+        collectDimAlignedProperties(dim);
+        break;
+    }
+    case RS2::EntityDimLinear: {
+        auto *dim = reinterpret_cast<RS_DimLinear *> (en);
+        collectDimLinearProperties(dim);
+        break;
+    }
+    case RS2::EntityDimOrdinate: {
+        auto *dim = reinterpret_cast<LC_DimOrdinate *> (en);
+        collectDimOrdinateProperties(dim);
+        break;
+    }
+    case RS2::EntityDimRadial: {
+        auto *dimrad = reinterpret_cast<RS_DimRadial *> (en);
+        collectDimRadialProperties(dimrad);
+        break;
+    }
+    case RS2::EntityDimDiametric: {
+        auto *dimdia = reinterpret_cast<RS_DimDiametric *> (en);
+        collectDimDiametricProperties(dimdia);
+        break;
+    }
+    case RS2::EntityDimAngular:{
+        auto *dimang = reinterpret_cast<RS_DimAngular *> (en);
+        collectDimAngularProperties(dimang);
+        break;
+    }
+    case RS2::EntityDimArc:  {
+        auto *dimarc = reinterpret_cast<LC_DimArc *> (en);
+        collectDimArcProperties(dimarc);
+        break;
+    }
+    case RS2::EntityDimLeader:{
+        auto *leader = reinterpret_cast<RS_Leader *> (en);
+        collectDimLeaderProperties(leader);
+        break;
+    }
+    case RS2::EntityHatch:{
+        auto *hatch = reinterpret_cast<RS_Hatch *> (en);
+        collectHatchProperties(hatch);
+        break;
+    }
+    case RS2::EntityImage:  {
+        auto *pimage = reinterpret_cast<RS_Image *> (en);
+        collectImageProperties(pimage);
+        break;
+    }
+    case RS2::EntitySpline: {
+        auto *pspline = reinterpret_cast<RS_Spline *> (en);
+        collectSplineProperties(pspline);
+        break;
+    }
+    case RS2::EntitySplinePoints: {
+        auto *psplinepoints = reinterpret_cast<LC_SplinePoints *> (en);
+        collectSplinePointsProperties(psplinepoints);
+        break;
+    }
+    case RS2::EntityParabola: {
+        auto *parabola = reinterpret_cast<LC_Parabola *> (en);
+        collectParabolaProperties(parabola);
+        break;
+    }
+    case RS2::EntitySolid:
+        m_entityName = tr("SOLID");
+        break;
+    case RS2::EntityConstructionLine:
+        m_entityName = tr("CONSTRUCTION");
+        break;
+    default:
+        m_entityName = tr("UNKNOWN");
+        break;
+    }
+    return true;
 }
 
 /**
@@ -1413,7 +1397,7 @@ QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear *
     QString result = prepareGenericEntityDescription(dim, tr("DIMLINEAR"), level);
     appendWCSAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
     appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint2());
-    appendWCSAbsolute(result, tr("Text Middle Point "), dim->getData().middleOfText);
+    appendWCSAbsolute(result, tr("Text Middle Point"), dim->getData().middleOfText);
     appendWCSAngle(result, tr("Angle"), dim->getAngle());
     appendWCSAngle(result, tr("Oblique"), dim->getOblique());
     return result;
@@ -1552,7 +1536,7 @@ void LC_QuickInfoEntityData::addAreaProperty(const QString& name, double value){
 RS_Vector LC_QuickInfoEntityData::getVectorForIndex(int index) const{
     auto result = RS_Vector(false);
     size_t size = m_properties.size();
-    if (index < size){
+    if (size_t(index) < size){
         auto *property = static_cast<VectorPropertyInfo*>(m_properties.at(index));
         result = property->data;
     }

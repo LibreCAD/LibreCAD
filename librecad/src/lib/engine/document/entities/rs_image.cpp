@@ -111,7 +111,6 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
 RS_Entity* RS_Image::clone() const {
     auto* i = new RS_Image(*this);
     i->setHandle(getHandle());
-    i->initId();
     i->update();
     return i;
 }

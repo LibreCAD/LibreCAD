@@ -21,6 +21,8 @@
  * ********************************************************************************
  */
 
+#ifndef LC_FontFileViewer_INCUDE_H
+#define LC_FontFileViewer_INCUDE_H
 #include "lc_fontfileviewer.h"
 
 #include "rs_block.h"
@@ -80,3 +82,5 @@ void LC_FontFileViewer::drawFontChars() {
         }
     }
 }
+
+#endif // LC_FontFileViewer_INCUDE_H

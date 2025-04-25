@@ -83,7 +83,6 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
 RS_Entity* RS_Polyline::clone() const {
     RS_Polyline* p = new RS_Polyline(*this);
     p->setOwner(isOwner());
-    p->initId();
     p->detach();
     return p;
 }

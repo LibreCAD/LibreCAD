@@ -236,7 +236,6 @@ RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
 
 RS_Entity* RS_Ellipse::clone() const {
 	auto* e = new RS_Ellipse(*this);
-	e->initId();
 	return e;
 }
 
@@ -1337,8 +1336,10 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
                                   const RS_VectorSolutions& trimSol) {
 //special trimming for ellipse arc
         RS_DEBUG->print("RS_Ellipse::prepareTrim()");
-    if( ! trimSol.hasValid() ) return (RS_Vector(false));
-    if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
+    if(!trimSol.hasValid())
+            return RS_Vector{false};
+    if(trimSol.getNumber() == 1)
+        return trimSol.front();
     double am=getEllipseAngle(trimCoord);
 	std::vector<double> ias;
     double ia(0.),ia2(0.);
@@ -1541,7 +1542,7 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
     RS_Vector majorp = center + getMajorP();
     RS_Vector startpoint,endpoint;
     bool isArc = isEllipticArc();
-    if( isArc)  {
+    if (isArc)  {
         startpoint = getStartpoint();
         endpoint = getEndpoint();
     }

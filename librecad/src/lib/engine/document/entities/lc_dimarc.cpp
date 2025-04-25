@@ -82,7 +82,6 @@ RS_Entity* LC_DimArc::clone() const {
     LC_DimArc* cloned_dimArc_entity{new LC_DimArc(*this)};
 
     cloned_dimArc_entity->setOwner(isOwner());
-    cloned_dimArc_entity->initId();
     cloned_dimArc_entity->detach();
     cloned_dimArc_entity->update();
 

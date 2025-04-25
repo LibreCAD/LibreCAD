@@ -59,7 +59,7 @@ public:
     ~RS_Entity() override;
 
     void init();
-    virtual void initId();
+    void initId();
     virtual RS_Entity *clone() const = 0;
     virtual RS_Entity *cloneProxy() const;
 

@@ -491,10 +491,11 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
  * Checks if the system has been initialized and prints a warning
  * otherwise to stderr.
  */
-bool RS_System::checkInit() {
+bool RS_System::checkInit() const
+{
     if (!initialized) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_System::checkInit: System not initialized.\n"
+                        "RS_Syste.m::checkInit: System not initialized.\n"
                         "Use RS_SYSTEM->init(appname, appdirname) to do so.");
     }
     return initialized;
@@ -508,8 +509,8 @@ bool RS_System::checkInit() {
  */
 bool RS_System::createPaths(const QString& directory) {
     QDir dir;
-    dir.cd( QDir::homePath());
-    dir.mkpath( directory);
+    dir.cd(QDir::homePath());
+    dir.mkpath(directory);
     return true;
 }
 
@@ -522,7 +523,8 @@ bool RS_System::createPaths(const QString& directory) {
  *
  * @return Application data directory.
  */
-QString RS_System::getAppDataDir() {
+QString RS_System::getAppDataDir() const
+{
     QString appData =
             QStandardPaths::writableLocation( QStandardPaths::AppDataLocation);
     QDir dir( appData);
@@ -542,7 +544,8 @@ QString RS_System::getAppDataDir() {
  * @return List of the absolute paths of the files found.
  */
 QStringList RS_System::getFileList(const QString& subDirectory,
-                                   const QString& fileExtension) {
+                                   const QString& fileExtension) const
+{
     checkInit();
 
     RS_DEBUG->print( "RS_System::getFileList: subdirectory %s ", subDirectory.toLatin1().data());
@@ -577,7 +580,8 @@ QStringList RS_System::getFileList(const QString& subDirectory,
  * @return List of all directories in subdirectory 'subDirectory' in
  * all possible LibreCAD directories.
  */
-QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
+QStringList RS_System::getDirectoryList(const QString& _subDirectory) const
+{
         QStringList dirList;
 
     QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
@@ -720,14 +724,15 @@ QString RS_System::symbolToLanguage(const QString& symb) {
     QString territory = RS_Locale::countryToString(loc.country());
 #endif
 
-if (symb.contains( QRegularExpression( "^en"))) {
-        ret = RS_Locale::languageToString( loc.language());
+    static QRegularExpression englishLang{"^en"};
+    if (symb.contains(englishLang)) {
+        ret = RS_Locale::languageToString(loc.language());
         if( symb.contains('_') ) {
             ret += " (" + territory + ')';
         }
     }
     else {
-        ret = RS_Locale::languageToString( loc.language()) + ' ' + loc.nativeLanguageName();
+        ret = RS_Locale::languageToString(loc.language()) + ' ' + loc.nativeLanguageName();
         if( symb.contains( '_') ) {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
             ret += " (" + territory + ' ' + loc.nativeTerritoryName() + ')';

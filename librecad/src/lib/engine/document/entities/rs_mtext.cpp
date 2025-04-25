@@ -47,7 +47,6 @@ RS_MText::LC_TextLine *RS_MText::LC_TextLine::clone() const {
         ec->entities = entities;
     }
     ec->detach();
-    ec->initId();
     ec->setTextSize(textSize);
     ec->setLeftBottomCorner(leftBottomCorner);
     ec->setBaselineStart(baselineStart);
@@ -126,7 +125,6 @@ RS_MText::RS_MText(RS_EntityContainer *parent, const RS_MTextData &d)
 RS_Entity *RS_MText::clone() const {
     auto *t = new RS_MText(*this);
     t->setOwner(isOwner());
-    t->initId();
     t->detach();
     return t;
 }
@@ -685,7 +683,6 @@ void RS_MText::move(const RS_Vector &offset) {
 }
 
 void RS_MText::rotate(const RS_Vector &center, double angle) {
-    RS_Vector oldInsertionPoint{data.insertionPoint};
     RS_EntityContainer::rotate(center, angle);
     data.insertionPoint.rotate(center, angle);
 
