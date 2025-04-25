@@ -32,7 +32,9 @@
 #include "rs_document.h"
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
+#include "lc_dimstyleslist.h"
 
+class LC_DimStylesList;
 class QString;
 
 class LC_View;
@@ -66,6 +68,8 @@ public:
     RS_BlockList* getBlockList() override {return &blockList;}
     LC_ViewList* getViewList() override {return &namedViewsList;}
     LC_UCSList* getUCSList() override {return &ucsList;}
+    LC_DimStylesList* getDimStyleList() override {return &dimstyleList;}
+    void addDimStyle(LC_DimStyle* style) {dimstyleList.addDimStyle(style);}
     void newDoc() override;
     // Wrappers for Layer functions:
     void clearLayers() {layerList.clear();}
@@ -73,7 +77,7 @@ public:
     RS_Layer* layerAt(unsigned i) {return layerList.at(i);}
     void activateLayer(const QString& name, bool notify = false) {layerList.activate(name, notify);}
     void activateLayer(RS_Layer* layer, bool notify = false) {layerList.activate(layer, notify);}
-    RS_Layer* getActiveLayer() const {return layerList.getActive();}
+    RS_Layer*   getActiveLayer() const {return layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {layerList.add(layer);}
     void addEntity(RS_Entity* entity) override;
     void removeLayer(RS_Layer* layer);
@@ -268,6 +272,7 @@ private:
     RS_VariableDict variableDict;
     LC_ViewList namedViewsList;
     LC_UCSList ucsList;
+    LC_DimStylesList dimstyleList;
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
 

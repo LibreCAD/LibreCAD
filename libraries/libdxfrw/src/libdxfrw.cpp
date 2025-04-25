@@ -1220,7 +1220,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writer->writeDouble(11, ent->getTextPoint().x);
         writer->writeDouble(21, ent->getTextPoint().y);
         writer->writeDouble(31, ent->getTextPoint().z);
-        if ( !(ent->type & 32))
+        if ( !(ent->type & 32)) // fixme - sand - ordinate type support !!!??
             ent->type = ent->type +32;
         writer->writeInt16(70, ent->type);
         if ( !(ent->getText().empty()) )
@@ -1231,8 +1231,11 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         if ( ent->getTextLineFactor() != 1)
             writer->writeDouble(41, ent->getTextLineFactor());
         writer->writeUtf8String(3, ent->getStyle());
-        if ( ent->getTextLineFactor() != 0)
+        if ( ent->getTextLineFactor() != 0) // fixme - sand - double value equality??
             writer->writeDouble(53, ent->getDir());
+        if ( ent->getHDir() != 0)
+            writer->writeDouble(51, ent->getHDir());
+
         writer->writeDouble(210, ent->getExtrusion().x);
         writer->writeDouble(220, ent->getExtrusion().y);
         writer->writeDouble(230, ent->getExtrusion().z);

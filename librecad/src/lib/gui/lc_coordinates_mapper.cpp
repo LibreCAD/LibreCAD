@@ -169,12 +169,41 @@ RS_Vector LC_CoordinatesMapper::restrictVertical(const RS_Vector &baseWCSPoint, 
 
 void LC_CoordinatesMapper::ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vector&wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const{
     if (m_hasUcs) {
+/* This implementation does not work, too aggressive clipping of entities
         LC_Rect ucsRect{toUCS(wcsMin), toUCS(wcsMax)};
         ucsRect.merge(toUCS({wcsMin.x, wcsMax.y}));
         ucsRect.merge(toUCS({wcsMax.x, wcsMin.y}));
 
         ucsMin = ucsRect.minP();
         ucsMax = ucsRect.maxP();
+ */
+        // this implementation works properly and
+        RS_Vector ucsCorner1 = toUCS(wcsMin);
+        RS_Vector ucsCorner3 = toUCS(wcsMax);
+        RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
+        RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
+
+        double minX, maxX;
+        double minY, maxY;
+
+        maxX = std::max(ucsCorner1.x, ucsCorner3.x);
+        maxX = std::max(ucsCorner2.x, maxX);
+        maxX = std::max(ucsCorner4.x, maxX);
+
+        minX = std::min(ucsCorner1.x, ucsCorner3.x);
+        minX = std::min(ucsCorner2.x, minX);
+        minX = std::min(ucsCorner4.x, minX);
+
+        maxY = std::max(ucsCorner1.y, ucsCorner3.y);
+        maxY = std::max(ucsCorner2.y, maxY);
+        maxY = std::max(ucsCorner4.y, maxY);
+
+        minY = std::min(ucsCorner1.y, ucsCorner3.y);
+        minY = std::min(ucsCorner2.y, minY);
+        minY = std::min(ucsCorner4.y, minY);
+
+        ucsMin = RS_Vector(minX, minY);
+        ucsMax = RS_Vector(maxX, maxY);
     }
     else{
         ucsMin = wcsMin;
@@ -185,12 +214,46 @@ void LC_CoordinatesMapper::ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vect
 
 void LC_CoordinatesMapper::worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector&ucsMax, RS_Vector& worldMin, RS_Vector& worldMax) const{
     if (m_hasUcs) {
+/* This does not work right, too aggressive clipping of entities
         LC_Rect worldRect{toWorld(ucsMin), toWorld(ucsMax)};
-        worldRect.merge(toWorld({ucsMin.x, ucsMax.y}));
-        worldRect.merge(toWorld({ucsMax.x, ucsMin.y}));
+                worldRect.merge(toWorld({ucsMin.x, ucsMax.y}));
+                worldRect.merge(toWorld({ucsMax.x, ucsMin.y}));
 
-        worldMin = worldRect.minP();
-        worldMax = worldRect.maxP();
+                worldMin = worldRect.minP();
+                worldMax = worldRect.maxP();
+*/
+ // This implementation is correct
+        RS_Vector ucsCorner1 = ucsMin;
+        RS_Vector ucsCorner3 = ucsMax;
+        RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
+        RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
+
+        RS_Vector worldCorner1 = toWorld(ucsCorner1);
+        RS_Vector worldCorner2 = toWorld(ucsCorner2);
+        RS_Vector worldCorner3 = toWorld(ucsCorner3);
+        RS_Vector worldCorner4 = toWorld(ucsCorner4);
+
+        double minX, maxX;
+        double minY, maxY;
+
+        maxX = std::max(worldCorner1.x, worldCorner3.x);
+        maxX = std::max(worldCorner2.x, maxX);
+        maxX = std::max(worldCorner4.x, maxX);
+
+        minX = std::min(worldCorner1.x, worldCorner3.x);
+        minX = std::min(worldCorner2.x, minX);
+        minX = std::min(worldCorner4.x, minX);
+
+        maxY = std::max(worldCorner1.y, worldCorner3.y);
+        maxY = std::max(worldCorner2.y, maxY);
+        maxY = std::max(worldCorner4.y, maxY);
+
+        minY = std::min(worldCorner1.y, worldCorner3.y);
+        minY = std::min(worldCorner2.y, minY);
+        minY = std::min(worldCorner4.y, minY);
+
+        worldMin = RS_Vector(minX, minY);
+        worldMax = RS_Vector(maxX, maxY);
     }
     else{
         worldMin = ucsMin;

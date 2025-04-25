@@ -77,20 +77,18 @@ public:
      * @see getData()
      */
     RS_DimRadialData getEData() const {
-        return edata;
+        return m_dimRadialData;
     }
 
 	RS_VectorSolutions getRefPoints() const override;
-
 	QString getMeasuredLabel() override;
 
-	void updateDim(bool autoText=false) override;
 
     RS_Vector getDefinitionPoint() {
-        return edata.definitionPoint;
+        return m_dimRadialData.definitionPoint;
     }
     double getLeader() {
-        return edata.leader;
+        return m_dimRadialData.leader;
     }
 
 	void move(const RS_Vector& offset) override;
@@ -102,10 +100,10 @@ public:
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimRadial& d);
-
 protected:
     /** Extended data. */
-    RS_DimRadialData edata;
+    RS_DimRadialData m_dimRadialData;
+    void doUpdateDim() override;
 };
 
 #endif

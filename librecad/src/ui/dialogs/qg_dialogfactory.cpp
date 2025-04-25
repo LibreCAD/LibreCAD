@@ -36,6 +36,8 @@
 #include <QRegularExpression>
 
 #include "LC_DlgParabola.h"
+#include "lc_dimordinate.h"
+#include "lc_dlgdimordinate.h"
 #include "lc_dlgsplinepoints.h"
 #include "lc_parabola.h"
 #include "qc_applicationwindow.h"
@@ -780,6 +782,10 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
     }
     case RS2::EntityDimLinear: {
         editDialog = new QG_DlgDimLinear(parent, viewport, dynamic_cast<RS_DimLinear *>(entity));
+        break;
+    }
+    case RS2::EntityDimOrdinate: {
+        editDialog = new LC_DlgDimOrdinate(parent, viewport, dynamic_cast<LC_DimOrdinate *>(entity));
         break;
     }
     case RS2::EntityMText: {

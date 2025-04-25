@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <iostream>
 #include "rs_dimradial.h"
 
@@ -68,7 +67,7 @@ std::ostream& operator << (std::ostream& os,
 RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent,
                            const RS_DimensionData& d,
                            const RS_DimRadialData& ed)
-        : RS_Dimension(parent, d), edata(ed) {}
+        : RS_Dimension(parent, d), m_dimRadialData(ed) {}
 
 RS_Entity* RS_DimRadial::clone() const {
 	RS_DimRadial* d = new RS_DimRadial(*this);
@@ -86,7 +85,7 @@ RS_Entity* RS_DimRadial::clone() const {
 QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
-    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+    double dist = m_dimGenericData.definitionPoint.distanceTo(m_dimRadialData.definitionPoint) * getGeneralFactor();
 
     // fixme - try to read settings once during action lifecycle
     if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true) ) {
@@ -116,12 +115,12 @@ QString RS_DimRadial::getMeasuredLabel() {
     return ret;
 }
 
-RS_VectorSolutions RS_DimRadial::getRefPoints() const
-{
-		return RS_VectorSolutions({edata.definitionPoint,
-												data.definitionPoint, data.middleOfText});
+RS_VectorSolutions RS_DimRadial::getRefPoints() const {
+    return RS_VectorSolutions({
+        m_dimRadialData.definitionPoint,
+        m_dimGenericData.definitionPoint, m_dimGenericData.middleOfText
+    });
 }
-
 
 /**
  * Updates the sub entities of this dimension. Called when the
@@ -129,42 +128,38 @@ RS_VectorSolutions RS_DimRadial::getRefPoints() const
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimRadial::updateDim(bool autoText)
-{
-
+void RS_DimRadial::doUpdateDim() {
     RS_DEBUG->print("RS_DimRadial::update");
 
     clear();
 
     if (isUndone()) return;
 
-    const RS_Vector p1 = data.definitionPoint;
-    const RS_Vector p2 = edata.definitionPoint;
+    const RS_Vector p1 = m_dimGenericData.definitionPoint;
+    const RS_Vector p2 = m_dimRadialData.definitionPoint;
 
     const RS_Pen pen(getDimensionLineColor(), getDimensionLineWidth(), RS2::LineByBlock);
 
-    const RS_MTextData textData = RS_MTextData( RS_Vector(0.0,0.0), 
-                                                getTextHeight() * getGeneralScale(), 
-                                                30.0, 
-                                                RS_MTextData::VAMiddle, 
-                                                RS_MTextData::HACenter, 
-                                                RS_MTextData::LeftToRight, 
-                                                RS_MTextData::Exact, 
-                                                1.0, 
-                                                getLabel(), 
-                                                getTextStyle(), 
-                                                0.0);
+    const RS_MTextData textData = RS_MTextData(RS_Vector(0.0, 0.0),
+                                               getTextHeight() * getGeneralScale(),
+                                               30.0,
+                                               RS_MTextData::VAMiddle,
+                                               RS_MTextData::HACenter,
+                                               RS_MTextData::LeftToRight,
+                                               RS_MTextData::Exact,
+                                               1.0,
+                                               getLabel(),
+                                               getTextStyle(),
+                                               0.0);
 
     RS_MText* text = new RS_MText(this, textData);
 
-    const double textWidth   = text->getSize().x;
-    const double arrow_size  = getArrowSize() * getGeneralScale();
+    const double textWidth = text->getSize().x;
+    const double arrow_size = getArrowSize() * getGeneralScale();
     const double line_length = p1.distanceTo(p2);
-    const double line_angle  = p1.angleTo(p2);
-    if (line_length < ((arrow_size * 2.0) + textWidth))
-    {
+    const double line_angle = p1.angleTo(p2);
+    if (line_length < ((arrow_size * 2.0) + textWidth)) {
         const RS_Vector p1b = p1 + RS_Vector::polar(line_length, line_angle);
-
 
         // Create dimension line 1:
         RS_Line* dimensionLine_1 = new RS_Line{this, p1, p1b};
@@ -176,74 +171,61 @@ void RS_DimRadial::updateDim(bool autoText)
 
         const RS_Vector p3 = p1 + RS_Vector::polar(extended_line_length, line_angle);
 
-        updateCreateDimensionLine(p1b, p3, true, false, autoText);
+        updateCreateDimensionLine(p1b, p3, true, false, m_dimGenericData.autoText);
     }
-    else
-    {
+    else {
         const RS_Vector p3 = p1 + RS_Vector::polar(line_length, line_angle);
 
-        updateCreateDimensionLine(p1, p3, false, true, autoText);
+        updateCreateDimensionLine(p1, p3, false, true, m_dimGenericData.autoText);
     }
 
     calculateBorders();
 }
 
-
-
 void RS_DimRadial::move(const RS_Vector& offset) {
     RS_Dimension::move(offset);
 
-    edata.definitionPoint.move(offset);
+    m_dimRadialData.definitionPoint.move(offset);
     update();
 }
-
-
 
 void RS_DimRadial::rotate(const RS_Vector& center, double angle) {
     rotate(center,RS_Vector(angle));
 }
 
-
 void RS_DimRadial::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_Dimension::rotate(center, angleVector);
-
-    edata.definitionPoint.rotate(center, angleVector);
+    m_dimRadialData.definitionPoint.rotate(center, angleVector);
     update();
 }
-
-
 
 void RS_DimRadial::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, factor);
 
-    edata.definitionPoint.scale(center, factor);
-    edata.leader*=factor.x;
+    m_dimRadialData.definitionPoint.scale(center, factor);
+    m_dimRadialData.leader*=factor.x;
     update();
 }
-
-
 
 void RS_DimRadial::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Dimension::mirror(axisPoint1, axisPoint2);
 
-    edata.definitionPoint.mirror(axisPoint1, axisPoint2);
+    m_dimRadialData.definitionPoint.mirror(axisPoint1, axisPoint2);
     update();
 }
 
-
 void RS_DimRadial::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
+    if (ref.distanceTo(m_dimRadialData.definitionPoint) < 1.0e-4) {
+        double d = m_dimGenericData.definitionPoint.distanceTo(m_dimRadialData.definitionPoint);
+        double a = m_dimGenericData.definitionPoint.angleTo(m_dimRadialData.definitionPoint + offset);
 
-    if (ref.distanceTo(edata.definitionPoint)<1.0e-4) {
-				double d = data.definitionPoint.distanceTo(edata.definitionPoint);
-				double a = data.definitionPoint.angleTo(edata.definitionPoint + offset);
-
-				RS_Vector v = RS_Vector::polar(d, a);
-		edata.definitionPoint = data.definitionPoint + v;
-                updateDim(true);
+        RS_Vector v = RS_Vector::polar(d, a);
+        m_dimRadialData.definitionPoint = m_dimGenericData.definitionPoint + v;
+        updateDim(true);
     }
-        else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
-        data.middleOfText.move(offset);
-                updateDim(false);
+    else if (ref.distanceTo(m_dimGenericData.middleOfText) < 1.0e-4) {
+        m_dimGenericData.middleOfText.move(offset);
+        updateDim(false);
     }
 }
 

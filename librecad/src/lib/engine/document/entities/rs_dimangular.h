@@ -128,25 +128,25 @@ public:
      * @see getData()
      */
     RS_DimAngularData getEData() const {
-        return edata;
+        return m_dimAngularData;
     }
 
     QString getMeasuredLabel() override;
     RS_Vector getCenter() const override;
 
-    void updateDim(bool autoText = false) override;
+
 
     RS_Vector getDefinitionPoint1() {
-        return edata.definitionPoint1;
+        return m_dimAngularData.definitionPoint1;
     }
     RS_Vector getDefinitionPoint2() {
-        return edata.definitionPoint2;
+        return m_dimAngularData.definitionPoint2;
     }
     RS_Vector getDefinitionPoint3() {
-        return edata.definitionPoint3;
+        return m_dimAngularData.definitionPoint3;
     }
     RS_Vector getDefinitionPoint4() {
-        return edata.definitionPoint4;
+        return m_dimAngularData.definitionPoint4;
     }
 
     void update() override;
@@ -158,7 +158,8 @@ public:
 
 protected:
     /** Extended data. */
-    RS_DimAngularData   edata;
+    RS_DimAngularData   m_dimAngularData;
+    void doUpdateDim() override;
 
 private:
     void calcDimension(void);

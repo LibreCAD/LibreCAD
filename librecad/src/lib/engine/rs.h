@@ -156,6 +156,7 @@ namespace RS2 {
         EntityDimAngular,   /**< Angular Dimension */
         EntityDimArc,       /**< Arc Dimension */
         EntityDimLeader,    /**< Leader Dimension */
+        EntityDimOrdinate,
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
@@ -358,6 +359,7 @@ namespace RS2 {
         ActionDimLeader,
         ActionDimBaseline,
         ActionDimContinue,
+        ActionDimOrdinate,
 
         ActionModifyAttributes,
         ActionModifyDelete,
@@ -474,6 +476,9 @@ namespace RS2 {
 
 
         ActionUCSCreate,
+        ActionUCSSetByDimOrdinate,
+        ActionDimOrdinateSelectSameOrigin,
+        ActionDimOrdinateRebase,
 
         /** Needed to loop through all actions */
         ActionLast

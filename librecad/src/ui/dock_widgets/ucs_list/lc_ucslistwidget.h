@@ -73,6 +73,7 @@ protected slots:
     void removeUCS();
     void removeAllUCSs();
     void editUCS();
+    void setUCSByDimOrdinate();
     void onCustomContextMenu(const QPoint &point);
     void slotTableClicked(QModelIndex layerIdx);
     void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);

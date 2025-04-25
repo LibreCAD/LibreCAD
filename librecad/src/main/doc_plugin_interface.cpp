@@ -363,6 +363,9 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
     case RS2::EntityDimLinear:
         data->insert(DPI::ETYPE, DPI::DIMLINEAR);
         break;
+    case RS2::EntityDimOrdinate:
+        data->insert(DPI::ETYPE, DPI::DIMORDINATE);
+        break;
     case RS2::EntityDimRadial:
         data->insert(DPI::ETYPE, DPI::DIMRADIAL);
         break;
@@ -627,6 +630,8 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     case RS2::EntityDimAligned:
         break;
     case RS2::EntityDimLinear:
+        break;
+    case RS2::EntityDimOrdinate:
         break;
     case RS2::EntityDimRadial:
         break;

@@ -32,9 +32,9 @@ namespace {
 std::tuple<QString, QString, RS2::LineWidth> g_boxItems[] = {
     {":linetypes/width00.lci", QObject::tr("-Unchanged-"),
      RS2::WidthUnchanged /*utilitytypefornotchangedlinewidthduringediting*/},
-    {":linetypes/width00.lci", QObject::tr("ByLayer"),
+    {":linetypes/width00.lci", QObject::tr("By Layer"),
      RS2::WidthByLayer /**<Linewidthdefinedbylayernotentity.*/},
-    {":linetypes/width00.lci", QObject::tr("ByBlock"),
+    {":linetypes/width00.lci", QObject::tr("By Block"),
      RS2::WidthByBlock /**<Linewidthdefinedbyblocknotentity.*/},
     {":linetypes/width01.lci", QObject::tr("Default"),
      RS2::WidthDefault /**<Linewidthdefaultstothepredefinedlinewidth.*/},

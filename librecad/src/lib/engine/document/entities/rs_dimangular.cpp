@@ -119,7 +119,7 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
                              const RS_DimensionData& d,
                              const RS_DimAngularData& ed) :
     RS_Dimension( parent, d),
-    edata( ed)
+    m_dimAngularData( ed)
 {
     calcDimension();
     calculateBorders();
@@ -293,8 +293,7 @@ void RS_DimAngular::arrow(const RS_Vector& point,
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimAngular::updateDim([[maybe_unused]] bool autoText /*= false*/)
-{
+void RS_DimAngular::doUpdateDim(){
     RS_DEBUG->print("RS_DimAngular::update");
 
     clear();
@@ -398,10 +397,10 @@ void RS_DimAngular::move(const RS_Vector& offset)
 {
     RS_Dimension::move( offset);
 
-    edata.definitionPoint1.move( offset);
-    edata.definitionPoint2.move( offset);
-    edata.definitionPoint3.move( offset);
-    edata.definitionPoint4.move( offset);
+    m_dimAngularData.definitionPoint1.move( offset);
+    m_dimAngularData.definitionPoint2.move( offset);
+    m_dimAngularData.definitionPoint3.move( offset);
+    m_dimAngularData.definitionPoint4.move( offset);
     update();
 }
 
@@ -414,10 +413,10 @@ void RS_DimAngular::rotate(const RS_Vector& center, const RS_Vector& angleVector
 {
     RS_Dimension::rotate( center, angleVector);
 
-    edata.definitionPoint1.rotate( center, angleVector);
-    edata.definitionPoint2.rotate( center, angleVector);
-    edata.definitionPoint3.rotate( center, angleVector);
-    edata.definitionPoint4.rotate( center, angleVector);
+    m_dimAngularData.definitionPoint1.rotate( center, angleVector);
+    m_dimAngularData.definitionPoint2.rotate( center, angleVector);
+    m_dimAngularData.definitionPoint3.rotate( center, angleVector);
+    m_dimAngularData.definitionPoint4.rotate( center, angleVector);
     update();
 }
 
@@ -425,10 +424,10 @@ void RS_DimAngular::scale(const RS_Vector& center, const RS_Vector& factor)
 {
     RS_Dimension::scale( center, factor);
 
-    edata.definitionPoint1.scale( center, factor);
-    edata.definitionPoint2.scale( center, factor);
-    edata.definitionPoint3.scale( center, factor);
-    edata.definitionPoint4.scale( center, factor);
+    m_dimAngularData.definitionPoint1.scale( center, factor);
+    m_dimAngularData.definitionPoint2.scale( center, factor);
+    m_dimAngularData.definitionPoint3.scale( center, factor);
+    m_dimAngularData.definitionPoint4.scale( center, factor);
     update();
 }
 
@@ -436,10 +435,10 @@ void RS_DimAngular::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoi
 {
     RS_Dimension::mirror( axisPoint1, axisPoint2);
 
-    edata.definitionPoint1.mirror( axisPoint1, axisPoint2);
-    edata.definitionPoint2.mirror( axisPoint1, axisPoint2);
-    edata.definitionPoint3.mirror( axisPoint1, axisPoint2);
-    edata.definitionPoint4.mirror( axisPoint1, axisPoint2);
+    m_dimAngularData.definitionPoint1.mirror( axisPoint1, axisPoint2);
+    m_dimAngularData.definitionPoint2.mirror( axisPoint1, axisPoint2);
+    m_dimAngularData.definitionPoint3.mirror( axisPoint1, axisPoint2);
+    m_dimAngularData.definitionPoint4.mirror( axisPoint1, axisPoint2);
     update();
 }
 
@@ -452,23 +451,23 @@ void RS_DimAngular::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoi
 void RS_DimAngular::calcDimension(void)
 {
     // get unit vectors for definition points
-    dimDir1s = RS_Vector::polar( 1.0, RS_Math::correctAngle( edata.definitionPoint2.angleTo( edata.definitionPoint1)));
-    dimDir1e = RS_Vector::polar( 1.0, RS_Math::correctAngle( edata.definitionPoint1.angleTo( edata.definitionPoint2)));
-    dimDir2s = RS_Vector::polar( 1.0, RS_Math::correctAngle( data.definitionPoint.angleTo( edata.definitionPoint3)));
-    dimDir2e = RS_Vector::polar( 1.0, RS_Math::correctAngle( edata.definitionPoint3.angleTo( data.definitionPoint)));
+    dimDir1s = RS_Vector::polar( 1.0, RS_Math::correctAngle( m_dimAngularData.definitionPoint2.angleTo( m_dimAngularData.definitionPoint1)));
+    dimDir1e = RS_Vector::polar( 1.0, RS_Math::correctAngle( m_dimAngularData.definitionPoint1.angleTo( m_dimAngularData.definitionPoint2)));
+    dimDir2s = RS_Vector::polar( 1.0, RS_Math::correctAngle( m_dimGenericData.definitionPoint.angleTo( m_dimAngularData.definitionPoint3)));
+    dimDir2e = RS_Vector::polar( 1.0, RS_Math::correctAngle( m_dimAngularData.definitionPoint3.angleTo( m_dimGenericData.definitionPoint)));
 
     // create the two dimension definition lines
     dimLine1 = RS_ConstructionLine( nullptr,
-                                    RS_ConstructionLineData( edata.definitionPoint2,
-                                                             edata.definitionPoint1));
+                                    RS_ConstructionLineData( m_dimAngularData.definitionPoint2,
+                                                             m_dimAngularData.definitionPoint1));
     dimLine2 = RS_ConstructionLine( nullptr,
-                                    RS_ConstructionLineData( data.definitionPoint,
-                                                             edata.definitionPoint3));
+                                    RS_ConstructionLineData( m_dimGenericData.definitionPoint,
+                                                             m_dimAngularData.definitionPoint3));
 
     RS_VectorSolutions vs {RS_Information::getIntersection( &dimLine1, &dimLine2, false)};
     dimCenter = vs.get(0);
-    dimRadius = dimCenter.distanceTo( edata.definitionPoint4);
-    dimDirRad = RS_Vector::polar( 1.0, RS_Math::correctAngle( dimCenter.angleTo( edata.definitionPoint4)));
+    dimRadius = dimCenter.distanceTo( m_dimAngularData.definitionPoint4);
+    dimDirRad = RS_Vector::polar( 1.0, RS_Math::correctAngle( dimCenter.angleTo( m_dimAngularData.definitionPoint4)));
 
     fixDimension();
 
@@ -489,38 +488,38 @@ void RS_DimAngular::calcDimension(void)
 void RS_DimAngular::fixDimension(void)
 {
     if( ! RS_Math::isAngleBetween( dimDirRad.angle(), dimDir2s.angle(), dimDir1s.angle(), false)) {
-        double distance0 {data.definitionPoint.distanceTo( dimCenter)};
-        double distance1 {edata.definitionPoint1.distanceTo( dimCenter)};
-        double distance2 {edata.definitionPoint2.distanceTo( dimCenter)};
-        double distance3 {edata.definitionPoint3.distanceTo( dimCenter)};
+        double distance0 {m_dimGenericData.definitionPoint.distanceTo( dimCenter)};
+        double distance1 {m_dimAngularData.definitionPoint1.distanceTo( dimCenter)};
+        double distance2 {m_dimAngularData.definitionPoint2.distanceTo( dimCenter)};
+        double distance3 {m_dimAngularData.definitionPoint3.distanceTo( dimCenter)};
         double  angle0 {0.0};
         double  angle1 {0.0};
         double  angle2 {0.0};
         double  angle3 {0.0};
         if( RS_TOLERANCE >= distance0) {
-            angle3 = (edata.definitionPoint3 - dimCenter).angle();
+            angle3 = (m_dimAngularData.definitionPoint3 - dimCenter).angle();
             angle0 = angle3;
         }
         else if( RS_TOLERANCE >= distance3) {
-            angle0 = (data.definitionPoint - dimCenter).angle();
+            angle0 = (m_dimGenericData.definitionPoint - dimCenter).angle();
             angle3 = angle0;
         }
         else {
-            angle0 = (data.definitionPoint - dimCenter).angle();
-            angle3 = (edata.definitionPoint3 - dimCenter).angle();
+            angle0 = (m_dimGenericData.definitionPoint - dimCenter).angle();
+            angle3 = (m_dimAngularData.definitionPoint3 - dimCenter).angle();
         }
 
         if( RS_TOLERANCE >= distance1) {
-            angle2 = (edata.definitionPoint2- dimCenter).angle();
+            angle2 = (m_dimAngularData.definitionPoint2- dimCenter).angle();
             angle1 = angle2;
         }
         else if( RS_TOLERANCE >= distance2) {
-            angle1 = (edata.definitionPoint1 - dimCenter).angle();
+            angle1 = (m_dimAngularData.definitionPoint1 - dimCenter).angle();
             angle2 = angle1;
         }
         else {
-            angle1 = (edata.definitionPoint1 - dimCenter).angle();
-            angle2 = (edata.definitionPoint2 - dimCenter).angle();
+            angle1 = (m_dimAngularData.definitionPoint1 - dimCenter).angle();
+            angle2 = (m_dimAngularData.definitionPoint2 - dimCenter).angle();
         }
 
         if( angle2 == angle1

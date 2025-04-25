@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quickinfoentitydata.h"
 
 #include "lc_dimarc.h"
+#include "lc_dimordinate.h"
 #include "lc_parabola.h"
 #include "lc_peninforegistry.h"
 #include "lc_quickinfowidgetoptions.h"
@@ -186,6 +187,11 @@ QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity *en, RS2::EntityD
                 m_cachedEntityDescription = prepareDimLinearDescription(dim, level);
                 break;
             }
+            case RS2::EntityDimOrdinate: {
+                auto *dim = reinterpret_cast<LC_DimOrdinate *> (en);
+                m_cachedEntityDescription = prepareDimOrdinateDescription(dim, level);
+                break;
+            }
             case RS2::EntityDimRadial: {
                 auto *dimrad = reinterpret_cast<RS_DimRadial *> (en);
                 m_cachedEntityDescription = prepareDimRadialDescription(dimrad, level);
@@ -328,6 +334,11 @@ bool LC_QuickInfoEntityData::processEntity(RS_Entity *en){
             case RS2::EntityDimLinear: {
                 auto *dim = reinterpret_cast<RS_DimLinear *> (en);
                 collectDimLinearProperties(dim);
+                break;
+            }
+            case RS2::EntityDimOrdinate: {
+                auto *dim = reinterpret_cast<LC_DimOrdinate *> (en);
+                collectDimOrdinateProperties(dim);
                 break;
             }
             case RS2::EntityDimRadial: {
@@ -1402,8 +1413,20 @@ QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear *
     QString result = prepareGenericEntityDescription(dim, tr("DIMLINEAR"), level);
     appendWCSAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
     appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint2());
+    appendWCSAbsolute(result, tr("Text Middle Point "), dim->getData().middleOfText);
     appendWCSAngle(result, tr("Angle"), dim->getAngle());
     appendWCSAngle(result, tr("Oblique"), dim->getOblique());
+    return result;
+}
+
+QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level) {
+    QString result = prepareGenericEntityDescription(dim, tr("DIMORDINATE"), level);
+    appendValue(result, tr("Ordinate"), dim->isForXDirection() ? "X":"Y");
+    appendWCSAbsolute(result, tr("Origin Point"), dim->getData().definitionPoint);
+    appendWCSAngle(result, tr("Horizontal Direction"), dim->getHDir());
+    appendWCSAbsolute(result, tr("Feature Point"), dim->getFeaturePoint());
+    appendWCSAbsolute(result, tr("Leader End Point"), dim->getLeaderEndPoint());
+    appendWCSAbsolute(result, tr("Text Middle Point "), dim->getData().middleOfText);
     return result;
 }
 
@@ -1417,6 +1440,16 @@ void LC_QuickInfoEntityData::collectDimLinearProperties(const RS_DimLinear *dim)
     addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint2());
     addAngleProperty(tr("Angle"), dim->getAngle());
     addAngleProperty(tr("Oblique"), dim->getOblique());
+}
+
+void LC_QuickInfoEntityData::collectDimOrdinateProperties(LC_DimOrdinate* dim) {
+    m_entityName = tr("DIMORDINATE");
+    addVectorProperty(tr("Origin Point"), dim->getDefinitionPoint());
+    addAngleProperty(tr("Horizontal Direction"), dim->getHDir());
+    addProperty(tr("Ordinate"), dim->isForXDirection() ? "X":"Y", PropertyType::OTHER);
+    addVectorProperty(tr("Feature Point"), dim->getFeaturePoint());
+    addVectorProperty(tr("Leader End Point"), dim->getLeaderEndPoint());
+    addVectorProperty(tr("Text Middle Point"), dim->getData().middleOfText);
 }
 
 QString LC_QuickInfoEntityData::prepareDimAlignedDescription(const RS_DimAligned *dim, RS2::EntityDescriptionLevel level) {

@@ -34,6 +34,7 @@
 #include "drw_interface.h"
 #include "libdxfrw.h"
 
+class LC_DimStyle;
 class RS_Point;
 class RS_Line;
 class RS_Circle;
@@ -240,6 +241,7 @@ private:
     QHash<int, RS_EntityContainer*> blockHash;
     /** Pointer to entity container to store possible orphan entities like paper space */
     RS_EntityContainer* dummyContainer;
+    LC_DimStyle *createDimStyle(const DRW_Dimstyle &s);
 };
 
 #endif

@@ -62,6 +62,8 @@
 #include "rs_math.h"
 #include "dxf_format.h"
 #include "lc_defaults.h"
+#include "lc_dimordinate.h"
+#include "lc_dimstyle.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -287,9 +289,9 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
  */
 void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
     RS_DEBUG->print("RS_FilterDXFRW::addLayer");
-    QString dimstyle = graphic->getVariableString("$DIMSTYLE", "standard");
+    QString dimStyleName = graphic->getVariableString("$DIMSTYLE", "standard");
 
-    if (QString::compare(data.name.c_str(), dimstyle, Qt::CaseInsensitive) == 0) {
+    if (QString::compare(data.name.c_str(), dimStyleName, Qt::CaseInsensitive) == 0) {
         if( isLibDxfRw && libDxfRwVersion < LIBDXFRW_VERSION( 0, 6, 2)) {
             graphic->addVariable("$DIMDEC", graphic->getVariableInt("$DIMDEC",
                                             graphic->getVariableInt("$LUPREC", 4)), 70);
@@ -301,6 +303,10 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
             graphic->addVariable("$DIMADEC", data.dimadec, 70);
         }
     }
+
+    LC_DimStyle* dimStyle = createDimStyle(data);
+    graphic->addDimStyle(dimStyle);
+
 }
 
 
@@ -1047,15 +1053,15 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(t);
 
+    bool customTextLocation = data->type >= 128;
+
     // data needed to add the actual dimension entity
     return RS_DimensionData(defP, midP,
                             valign, halign,
                             lss,
                             data->getTextLineFactor(),
-                            t, sty, data->getDir());
+                            t, sty, data->getDir(), data->getHDir(), !customTextLocation);
 }
-
-
 
 /**
  * Implementation of the method which handles
@@ -1078,8 +1084,6 @@ void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data) {
     entity->update();
     currentContainer->addEntity(entity);
 }
-
-
 
 /**
  * Implementation of the method which handles
@@ -1172,8 +1176,6 @@ void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data) {
     currentContainer->addEntity(entity);
 }
 
-
-
 /**
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
@@ -1198,12 +1200,24 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
     currentContainer->addEntity(entity);
 }
 
-
-
-void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* /*data*/) {
+void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
-}
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data);
 
+    RS_Vector featurePoint{data->getFirstLine().x, data->getFirstLine().y};
+    RS_Vector leaderEndPoint{data->getSecondLine().x, data->getSecondLine().y};
+
+    bool ordinateTypeForX = false;
+    int type = data->type;
+    if (type & 64) {
+        ordinateTypeForX = true;
+    }
+    LC_DimOrdinateData d(featurePoint, leaderEndPoint, ordinateTypeForX);
+    auto* entity = new LC_DimOrdinate(currentContainer, dimensionData, d);
+    setEntityAttributes(entity, data);
+    entity->update();
+    currentContainer->addEntity(entity);
+}
 
 /**
  * Implementation of the method which handles leader entities.
@@ -1219,10 +1233,7 @@ void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
 
     leader->update();
     currentContainer->addEntity(leader);
-
 }
-
-
 
 /**
  * Implementation of the method which handles hatch entities.
@@ -1642,6 +1653,7 @@ void RS_FilterDXFRW::prepareBlocks() {
         if ( !(e->getFlag(RS2::FlagUndone)) ) {
             switch (e->rtti()) {
             case RS2::EntityDimLinear:
+            case RS2::EntityDimOrdinate:
             case RS2::EntityDimAligned:
             case RS2::EntityDimAngular:
             case RS2::EntityDimRadial:
@@ -2369,6 +2381,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeText((RS_Text*)e);
         break;
     case RS2::EntityDimLinear:
+    case RS2::EntityDimOrdinate:
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
     case RS2::EntityDimRadial:
@@ -2908,61 +2921,83 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
         attachmentPoint+=6;
     }
 
+
     switch (d->rtti()) {
-    case RS2::EntityDimAligned: {
-        RS_DimAligned* da = (RS_DimAligned*)d;
-        DRW_DimAligned * dd = new DRW_DimAligned();
-        dim = dd ;
-        dim->type = 1 +32;
-        dd->setDef1Point(DRW_Coord (da->getExtensionPoint1().x, da->getExtensionPoint1().y, 0.0));
-        dd->setDef2Point(DRW_Coord (da->getExtensionPoint2().x, da->getExtensionPoint2().y, 0.0));
-        break; }
-    case RS2::EntityDimDiametric: {
-        RS_DimDiametric* dr = (RS_DimDiametric*)d;
-        DRW_DimDiametric * dd = new DRW_DimDiametric();
-        dim = dd ;
-        dim->type = 3+32;
-        dd->setDiameter1Point(DRW_Coord (dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
-        dd->setLeaderLength(dr->getLeader());
-        break; }
-    case RS2::EntityDimRadial: {
-        RS_DimRadial* dr = (RS_DimRadial*)d;
-        DRW_DimRadial * dd = new DRW_DimRadial();
-        dim = dd ;
-        dim->type = 4+32;
-        dd->setDiameterPoint(DRW_Coord (dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
-        dd->setLeaderLength(dr->getLeader());
-        break; }
-    case RS2::EntityDimAngular: {
-		RS_DimAngular* da = static_cast<RS_DimAngular*>(d);
-		if (da->getDefinitionPoint3() == da->getData().definitionPoint) {
-            DRW_DimAngular3p * dd = new DRW_DimAngular3p();
-            dim = dd ;
-            dim->type = 5+32;
-            dd->setFirstLine(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //13
-            dd->setSecondLine(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //14
-            dd->SetVertexPoint(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //15
-            dd->setDimPoint(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //10
-        } else {
-            DRW_DimAngular * dd = new DRW_DimAngular();
-            dim = dd ;
-            dim->type = 2+32;
-            dd->setFirstLine1(DRW_Coord (da->getDefinitionPoint1().x, da->getDefinitionPoint1().y, 0.0)); //13
-            dd->setFirstLine2(DRW_Coord (da->getDefinitionPoint2().x, da->getDefinitionPoint2().y, 0.0)); //14
-            dd->setSecondLine1(DRW_Coord (da->getDefinitionPoint3().x, da->getDefinitionPoint3().y, 0.0)); //15
-            dd->setDimPoint(DRW_Coord (da->getDefinitionPoint4().x, da->getDefinitionPoint4().y, 0.0)); //16
+        case RS2::EntityDimAligned: {
+            RS_DimAligned* da = static_cast<RS_DimAligned*>(d);
+            DRW_DimAligned* dd = new DRW_DimAligned();
+            dim = dd;
+            dim->type = 1 + 32;
+            dd->setDef1Point(DRW_Coord(da->getExtensionPoint1().x, da->getExtensionPoint1().y, 0.0));
+            dd->setDef2Point(DRW_Coord(da->getExtensionPoint2().x, da->getExtensionPoint2().y, 0.0));
+            break;
         }
-        break; }
-    default: { //default to DimLinear
-        RS_DimLinear* dl = (RS_DimLinear*)d;
-        DRW_DimLinear * dd = new DRW_DimLinear();
-        dim = dd ;
-        dim->type = 0+32;
-        dd->setDef1Point(DRW_Coord (dl->getExtensionPoint1().x, dl->getExtensionPoint1().y, 0.0));
-        dd->setDef2Point(DRW_Coord (dl->getExtensionPoint2().x, dl->getExtensionPoint2().y, 0.0));
-        dd->setAngle( RS_Math::rad2deg(dl->getAngle()) );
-        dd->setOblique(dl->getOblique());
-        break; }
+        case RS2::EntityDimDiametric: {
+            RS_DimDiametric* dr = static_cast<RS_DimDiametric*>(d);
+            DRW_DimDiametric* dd = new DRW_DimDiametric();
+            dim = dd;
+            dim->type = 3 + 32;
+            dd->setDiameter1Point(DRW_Coord(dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
+            dd->setLeaderLength(dr->getLeader());
+            break;
+        }
+        case RS2::EntityDimRadial: {
+            RS_DimRadial* dr = static_cast<RS_DimRadial*>(d);
+            DRW_DimRadial* dd = new DRW_DimRadial();
+            dim = dd;
+            dim->type = 4 + 32;
+            dd->setDiameterPoint(DRW_Coord(dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
+            dd->setLeaderLength(dr->getLeader());
+            break;
+        }
+        case RS2::EntityDimAngular: {
+            RS_DimAngular* da = static_cast<RS_DimAngular*>(d);
+            if (da->getDefinitionPoint3() == da->getData().definitionPoint) {
+                DRW_DimAngular3p* dd = new DRW_DimAngular3p();
+                dim = dd;
+                dim->type = 5 + 32;
+                dd->setFirstLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //13
+                dd->setSecondLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //14
+                dd->SetVertexPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //15
+                dd->setDimPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //10
+            }
+            else {
+                DRW_DimAngular* dd = new DRW_DimAngular();
+                dim = dd;
+                dim->type = 2 + 32;
+                dd->setFirstLine1(DRW_Coord(da->getDefinitionPoint1().x, da->getDefinitionPoint1().y, 0.0)); //13
+                dd->setFirstLine2(DRW_Coord(da->getDefinitionPoint2().x, da->getDefinitionPoint2().y, 0.0)); //14
+                dd->setSecondLine1(DRW_Coord(da->getDefinitionPoint3().x, da->getDefinitionPoint3().y, 0.0)); //15
+                dd->setDimPoint(DRW_Coord(da->getDefinitionPoint4().x, da->getDefinitionPoint4().y, 0.0)); //16
+            }
+            break;
+        }
+        case RS2::EntityDimOrdinate: {
+            LC_DimOrdinate* da = static_cast<LC_DimOrdinate*>(d);
+            DRW_DimOrdinate* dd = new DRW_DimOrdinate();
+            dim = dd;
+            dd->type = 6 + 32;
+            auto dimOridinateData = da->getEData();
+            if (dimOridinateData.ordinateForX) {
+                dd->type = 6 + 64;
+            }
+            dd->setOriginPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0));
+            dd->setSecondLine(DRW_Coord(da->getLeaderEndPoint().x, da->getLeaderEndPoint().y, 0.0));
+            dd->setFirstLine(DRW_Coord(da->getFeaturePoint().x, da->getFeaturePoint().y, 0.0));
+            break;
+        }
+        default: {
+            //default to DimLinear
+            auto dl = static_cast<RS_DimLinear*>(d);
+            auto dd = new DRW_DimLinear();
+            dim = dd;
+            dim->type = 0 + 32;
+            dd->setDef1Point(DRW_Coord(dl->getExtensionPoint1().x, dl->getExtensionPoint1().y, 0.0));
+            dd->setDef2Point(DRW_Coord(dl->getExtensionPoint2().x, dl->getExtensionPoint2().y, 0.0));
+            dd->setAngle(RS_Math::rad2deg(dl->getAngle()));
+            dd->setOblique(dl->getOblique());
+            break;
+        }
     }
     getEntityAttributes(dim, d);
     dim->setDefPoint(DRW_Coord(d->getDefinitionPoint().x, d->getDefinitionPoint().y, 0));
@@ -2972,6 +3007,10 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     dim->setTextLineStyle(d->getLineSpacingStyle());
     dim->setText (toDxfString(d->getText()).toUtf8().data());
     dim->setTextLineFactor(d->getLineSpacingFactor());
+    dim->setHDir(d->getHDir());
+    if (d->hasUserDefinedTextLocation()) {
+        dim->type = dim->type + 128;
+    }
     if (!blkName.isEmpty()) {
         dim->setName(blkName.toStdString());
     }
@@ -4318,6 +4357,88 @@ void RS_FilterDXFRW::printDwgError(int le){
     default:
         break;
     }
+}
+
+
+LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
+    auto* result = new LC_DimStyle();
+    QString name = QString::fromUtf8(s.name.c_str());
+    result->setName(name);
+
+    result->setDimpost(QString::fromUtf8(s.dimpost.c_str()));
+    result->setDimapost(QString::fromUtf8(s.dimapost.c_str()));
+
+    result->setDimblk(QString::fromUtf8(s.dimblk.c_str()));
+    result->setDimblk1(QString::fromUtf8(s.dimblk1.c_str()));
+    result->setDimblk2(QString::fromUtf8(s.dimblk2.c_str()));
+
+    result->setDimscale(s.dimscale);
+    result->setDimasz(s.dimasz);
+    result->setDimexo(s.dimexo);
+    result->setDimdli(s.dimdli);
+    result->setDimexe(s.dimexe);
+    result->setDimrnd(s.dimrnd);
+    result->setDimdle(s.dimdle);
+    result->setDimtp(s.dimtp);
+    result->setDimtm(s.dimtm);
+    result->setDimfxl(s.dimfxl);
+    result->setDimtxt(s.dimtxt);
+    result->setDimcen(s.dimcen);
+    result->setDimtsz(s.dimtsz);
+    result->setDimaltf(s.dimaltf);
+    result->setDimlfac(s.dimlfac);
+    result->setDimtvp(s.dimtvp);
+    result->setDimtfac(s.dimtfac);
+    result->setDimgap(s.dimgap);
+    result->setDimaltrnd(s.dimaltrnd);
+    result->setDimtol(s.dimtol);
+    result->setDimlim(s.dimlim);
+    result->setDimtih(s.dimtih);
+    result->setDimtoh(s.dimtoh);
+    result->setDimse1(s.dimse1);
+    result->setDimse2(s.dimse2);
+    result->setDimtad(s.dimtad);
+    result->setDimzin(s.dimzin);
+    result->setDimazin(s.dimazin);
+    result->setDimalt(s.dimalt);
+    result->setDimaltd(s.dimaltd);
+    result->setDimtofl(s.dimtofl);
+    result->setDimsah(s.dimsah);
+    result->setDimtix(s.dimtix);
+    result->setDimsoxd(s.dimsoxd);
+    result->setDimclrd(s.dimclrd);
+    result->setDimclre(s.dimclre);
+    result->setDimclrt(s.dimclrt);
+    result->setDimadec(s.dimadec);
+    result->setDimunit(s.dimunit);
+    result->setDimdec(s.dimdec);
+    result->setDimtdec(s.dimtdec);
+    result->setDimalt(s.dimaltu);
+    result->setDimalttd(s.dimalttd);
+    result->setDimaunit(s.dimaunit);
+    result->setDimfrac(s.dimfrac);
+    result->setDimlunit(s.dimlunit);
+    result->setDimdsep(s.dimdsep);
+    result->setDimtmove(s.dimtmove);
+    result->setDimjust(s.dimjust);
+    result->setDimsd1(s.dimsd1);
+    result->setDimsd2(s.dimsd2);
+    result->setDimtolj(s.dimtolj);
+    result->setDimtzin(s.dimtzin);
+    result->setDimaltz(s.dimaltz);
+    result->setDimaltttz(s.dimaltttz);
+    result->setDimfit(s.dimfit);
+    result->setDimupt(s.dimupt);
+    result->setDimatfit(s.dimatfit);
+    result->setDimfxlon(s.dimfxlon);
+
+    result->setDimtxsty(QString::fromUtf8(s.dimtxsty.c_str()));
+    result->setDimldrblk(QString::fromUtf8(s.dimldrblk.c_str()));
+
+    result->setDimlwd(s.dimlwd);
+    result->setDimlwe(s.dimlwe);
+
+    return result;
 }
 
 #endif

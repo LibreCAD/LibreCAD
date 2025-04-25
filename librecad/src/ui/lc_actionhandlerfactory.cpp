@@ -25,6 +25,8 @@
 
 #include "lc_actioncontext.h"
 #include "lc_actiondimarc.h"
+#include "lc_actiondimordinate.h"
+#include "lc_actiondimordinaterebase.h"
 #include "lc_actiondrawarc2pointsangle.h"
 #include "lc_actiondrawarc2pointsheight.h"
 #include "lc_actiondrawarc2pointslength.h"
@@ -74,6 +76,7 @@
 #include "lc_actionpolylinearcstolines.h"
 #include "lc_actionpolylinechangesegmenttype.h"
 #include "lc_actionremovesplinepoints.h"
+#include "lc_actionselectdimordinatesameorigin.h"
 #include "lc_actionselectpoints.h"
 #include "lc_actionsnapmiddlemanual.h"
 #include "lc_actionsplineaddpoint.h"
@@ -81,6 +84,7 @@
 #include "lc_actionsplineexplode.h"
 #include "lc_actionsplinefrompolyline.h"
 #include "lc_actionsplineremovebetween.h"
+#include "lc_actionucsbydimordinate.h"
 #include "lc_actionucscreate.h"
 #include "rs_actionblocksadd.h"
 #include "rs_actionblocksattributes.h"
@@ -641,6 +645,9 @@ namespace InnerFactory{
             case RS2::ActionDimLinear: {
                 return new RS_ActionDimLinear(ctx);
             }
+            case RS2::ActionDimOrdinate: {
+                return new LC_ActionDimOrdinate(ctx);
+            }
             case RS2::ActionDimLinearHor: {
                 return new RS_ActionDimLinear(ctx, 0.0, true, RS2::ActionDimLinearHor);
             }
@@ -914,6 +921,9 @@ namespace InnerFactory{
             case RS2::ActionUCSCreate: {
                 return new LC_ActionUCSCreate(ctx);
             }
+            case RS2::ActionUCSSetByDimOrdinate: {
+                return new LC_ActionUCSByDimOrdinate(ctx);
+            }
             case RS2::ActionFileExportMakerCam: {
                 return new LC_ActionFileExportMakerCam(ctx);
             }
@@ -938,6 +948,12 @@ namespace InnerFactory{
                 [[fallthrough]];
             case RS2::ActionLayerEntityToggleLock: {
                 return new LC_ActionLayerToggle(ctx, actionType);
+            }
+            case RS2::ActionDimOrdinateSelectSameOrigin: {
+                return new LC_ActionSelectDimOrdinateSameOrigin(ctx);
+            }
+            case RS2::ActionDimOrdinateRebase: {
+                return new LC_ActionDimOrdinateRebase(ctx);
             }
             default:
                 RS_DEBUG->print(RS_Debug::D_WARNING,

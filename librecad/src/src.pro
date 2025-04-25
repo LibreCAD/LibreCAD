@@ -115,6 +115,7 @@ INCLUDEPATH += \
     lib/engine/document/entities \
     lib/engine/document/fonts \
     lib/engine/document/layers \
+    lib/engine/document/dimstyles \
     lib/engine/document/patterns \
     lib/engine/document/ucs \
     lib/engine/document/variables \
@@ -278,12 +279,16 @@ HEADERS += \
     actions/dock_widgets/layer/lc_actionentitylayerbase.h \
     actions/dock_widgets/layer/lc_actionentitylayertoggle.h \
     actions/dock_widgets/layer/lc_actionlayerscmd.h \
+    actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.h \
     actions/dock_widgets/ucs_list/lc_actionucscreate.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
+    actions/drawing/draw/dimensions/lc_actiondimordinate.h \
+    actions/drawing/draw/dimensions/lc_actiondimordinaterebase.h \
+    actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.h \
     actions/drawing/draw/line/misc/lc_actiondrawmidline.h \
     actions/drawing/draw/line/misc/lc_actiondrawboundingbox.h \
     actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.h \
@@ -305,8 +310,11 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalign.h \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
+    actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
-    lib/actions/lc_overlayboxaction.h \
+    lib/actions/lc_overlayboxaction.h \    
+    lib/engine/document/entities/lc_mleader.h \
+    lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/ucs/lc_ucslist.h \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h \
     lib/engine/overlays/highlight/lc_highlight.h \
@@ -352,7 +360,8 @@ HEADERS += \
     lib/engine/document/entities/rs_dimdiametric.h \
     lib/engine/document/entities/rs_dimension.h \
     lib/engine/document/entities/rs_dimlinear.h \
-    lib/engine/document/entities//rs_dimradial.h \
+    lib/engine/document/entities/lc_dimordinate.h \
+    lib/engine/document/entities/rs_dimradial.h \
     lib/engine/document/entities/lc_dimarc.h \
     lib/engine/document/rs_document.h \
     lib/engine/document/entities/rs_ellipse.h \
@@ -369,10 +378,12 @@ HEADERS += \
     lib/engine/document/entities/rs_image.h \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
-    lib/engine/document/layers/rs_layerlistlistener.h \
+    lib/engine/document/layers/rs_layerlistlistener.h \    
     lib/engine/document/entities/rs_leader.h \
     lib/engine/document/entities/rs_line.h \
     lib/engine/document/entities/rs_mtext.h \
+    lib/engine/document/dimstyles/lc_dimstyle.h \
+    lib/engine/document/dimstyles/lc_dimstyleslist.h \
     lib/engine/overlays/rs_overlayline.h \
     lib/engine/overlays/overlay_box/rs_overlaybox.h \
     lib/engine/document/patterns/rs_pattern.h \
@@ -522,12 +533,16 @@ SOURCES += \
     actions/dock_widgets/layer/lc_actionentitylayerbase.cpp \
     actions/dock_widgets/layer/lc_actionentitylayertoggle.cpp \
     actions/dock_widgets/layer/lc_actionlayerscmd.cpp \
+    actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp \
     actions/dock_widgets/ucs_list/lc_actionucscreate.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
+    actions/drawing/draw/dimensions/lc_actiondimordinate.cpp \
+    actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp \
+    actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp \
     actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp \
     actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp \
     actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp \
@@ -542,8 +557,11 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
-    lib/actions/lc_overlayboxaction.cpp \
+    lib/actions/lc_overlayboxaction.cpp \    
+    lib/engine/document/entities/lc_mleader.cpp \
+    lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
@@ -567,6 +585,7 @@ SOURCES += \
     lib/actions/lc_actioncontext.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
+    ui/dialogs/entity/lc_dlgdimordinate.cpp \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
@@ -636,8 +655,11 @@ SOURCES += \
     lib/engine/document/entities/rs_dimdiametric.cpp \
     lib/engine/document/entities/rs_dimension.cpp \
     lib/engine/document/entities/rs_dimlinear.cpp \
+    lib/engine/document/entities/lc_dimordinate.cpp \
     lib/engine/document/entities/rs_dimradial.cpp \
     lib/engine/document/entities/lc_dimarc.cpp \
+    lib/engine/document/dimstyles/lc_dimstyle.cpp \
+    lib/engine/document/dimstyles/lc_dimstyleslist.cpp \
     lib/engine/document/rs_document.cpp \
     lib/engine/document/entities/rs_ellipse.cpp \
     lib/engine/document/entities/rs_entity.cpp \
@@ -1196,6 +1218,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dialogs/entity/qg_dlgcircle.h \
     ui/dialogs/entity/qg_dlgdimension.h \
     ui/dialogs/entity/qg_dlgdimlinear.h \
+    ui/dialogs/entity/lc_dlgdimordinate.h \
     ui/dialogs/entity/qg_dlgellipse.h \
     ui/dialogs/entity/qg_dlghatch.h \
     ui/dialogs/entity/qg_dlgimage.h \
@@ -1561,6 +1584,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/actions/modify/qg_dlgscale.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
        ui/dialogs/entity/LC_DlgParabola.ui \
+       ui/dialogs/entity/lc_dlgdimordinate.ui \
        ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
        ui/dialogs/entity/qg_dimensionlabeleditor.ui \

@@ -747,6 +747,8 @@ RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vec
 
 bool RS_Polyline::isFont() const
 {
-    const RS_EntityContainer* parent = getParent();
-    return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
+    // fixme - sand - temporary disabled elliptic arcs until painting for them is fixed and save is solved
+    // const RS_EntityContainer* parent = getParent();
+    // return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
+    return false;
 }

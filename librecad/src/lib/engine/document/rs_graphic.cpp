@@ -37,6 +37,7 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_dimstyleslist.h"
 
 namespace {
 // default paper size A4: 210x297 mm
