@@ -45,7 +45,7 @@ public:
 protected:
     int* m_middlePoints = nullptr;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
     void on_sbMiddlePoints_valueChanged(int arg1);
 private:
     void saveSettings();

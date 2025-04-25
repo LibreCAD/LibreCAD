@@ -67,7 +67,7 @@ public slots:
      void insertChar();
     void reject() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 
 protected:
     bool m_isNew;

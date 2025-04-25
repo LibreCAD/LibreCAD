@@ -40,7 +40,7 @@ public:
 public slots:
     void validate();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     Ui::LC_DlgUCSListOptions *ui;
     LC_UCSListOptions* m_options;

@@ -41,8 +41,6 @@ namespace Ui {
     class LC_UCSListWidget;
 }
 
-
-
 class LC_UCSListWidget : public LC_GraphicViewAwareWidget, LC_UCSListListener{
     Q_OBJECT
 public:

@@ -59,7 +59,7 @@ public slots:
      void insertChar();
      void reject() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
     void setAlignment(QToolButton& button);
     void layoutDirectionChanged();

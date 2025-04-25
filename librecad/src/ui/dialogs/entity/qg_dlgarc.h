@@ -39,7 +39,7 @@ public:
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+   virtual void languageChange();
 protected:
     RS_Arc* m_entity = nullptr;
     void setEntity(RS_Arc* a);

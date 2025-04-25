@@ -77,7 +77,7 @@ public:
         RS_EntityContainer *parent,
         const RS_DimensionData &d,
         const RS_DimLinearData &ed);
-    virtual ~RS_DimLinear() = default;
+    ~RS_DimLinear() override = default;
     RS_Entity *clone() const override;
 
     /**	@return RS2::EntityDimLinear */

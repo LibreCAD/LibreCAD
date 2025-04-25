@@ -44,7 +44,7 @@ class QG_PenToolBar: public QToolBar, public LC_GraphicViewAware, public RS_Laye
     Q_OBJECT
 public:
 	QG_PenToolBar( const QString & title, QWidget * parent = 0 );
-    virtual ~QG_PenToolBar();
+    ~QG_PenToolBar() override;
     void updateByLayer(RS_Layer* l);
 
     RS_Pen getPen() const;

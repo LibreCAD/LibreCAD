@@ -41,9 +41,9 @@ public:
     QG_PolylineOptions();
     ~QG_PolylineOptions() override;
 public slots:
-    virtual void close(); // fixme - rename
-    virtual void undo();
-    virtual void setModeToActionAndView(int m );
+    void close(); // fixme - rename
+    void undo();
+    void setModeToActionAndView(int m );
     void onAngleEditingFinished();
     void onRadiusEditingFinished();
     void onNegToggled(bool checked);

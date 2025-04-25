@@ -41,7 +41,7 @@ class QG_LibraryWidget : public LC_GraphicViewAwareWidget{
     Q_OBJECT
 public:
     QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
-    virtual ~QG_LibraryWidget();
+    ~QG_LibraryWidget() override;
 
     QPushButton* getInsertButton() const{
         return bInsert;

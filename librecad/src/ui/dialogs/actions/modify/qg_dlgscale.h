@@ -41,7 +41,7 @@ public slots:
     void setData( RS_ScaleData * d );
     void updateData();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private slots:
     void onIsotropicToggled(bool checked);
     void onFactorXChanged(const QString &arg1);
