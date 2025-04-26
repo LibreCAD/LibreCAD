@@ -29,7 +29,6 @@
 
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
 
-#include "qc_applicationwindow.h"
 
 #include <QCloseEvent>
 #include <QMdiArea>
@@ -70,6 +69,7 @@
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
+#include "qc_applicationwindow.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"
@@ -1586,14 +1586,17 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
     QMainWindow::keyPressEvent(e);
 }
 
-void QC_ApplicationWindow::relayAction(QAction *q_action) {
-    auto view = getCurrentMDIWindow()->getGraphicView();
-    if (!view) {
+void QC_ApplicationWindow::relayAction(QAction *q_action)
+{
+    // author: ravas
+    QC_MDIWindow* mdiWindow = getCurrentMDIWindow();
+    if (mdiWindow == nullptr || mdiWindow->getGraphicView() == nullptr) {
         // when switching back to LibreCAD from another program
         // occasionally no drawings are activated
         qWarning("relayAction: graphicView is nullptr");
         return;
     }
+    QG_GraphicView* view = mdiWindow->getGraphicView();
 
     // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
     // probably there could be the list of ignored actions in the future
