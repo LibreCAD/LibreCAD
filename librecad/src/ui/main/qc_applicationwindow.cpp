@@ -1591,35 +1591,32 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
 }
 
 void QC_ApplicationWindow::relayAction(QAction *q_action) {
-    auto currentMDIWindow = getCurrentMDIWindow();
-    if (currentMDIWindow != nullptr) {
+    auto view = getCurrentGraphicView();
+    if (view == nullptr) {
         // this is possible if there are not open windows at all
-        auto view = currentMDIWindow->getGraphicView();
-        if (!view) {
-            // when switching back to LibreCAD from another program
-            // occasionally no drawings are activated
-            qWarning("relayAction: graphicView is nullptr");
-            return;
-        }
+        // when switching back to LibreCAD from another program
+        // occasionally no drawings are activated
+        qWarning("relayAction: graphicView is nullptr");
+        return;
+    }
+    // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
+    // probably there could be the list of ignored actions in the future
+    bool setAsCurrentActionInView = true;
+    if (getAction("LockRelativeZero") == q_action) {
+        // other actions may be added later
+        setAsCurrentActionInView = false;
+    }
+    if (setAsCurrentActionInView) {
+        QG_GraphicView* graphicView = dynamic_cast<QG_GraphicView*>(view);
+        graphicView->setCurrentQAction(q_action);
+    }
 
-        // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
-        // probably there could be the list of ignored actions in the future
-        bool setAsCurrentActionInView = true;
-        if (getAction("LockRelativeZero") == q_action){
-            // other actions may be added later
-            setAsCurrentActionInView = false;
-        }
-        if (setAsCurrentActionInView) {
-            view->setCurrentQAction(q_action);
-        }
-
-        fireCurrentActionIconChanged(q_action);
-        if (q_action != nullptr) {
-            const QString commands(q_action->data().toString());
-            if (!commands.isEmpty()) {
-                const QString title(q_action->text().remove("&"));
-                m_commandWidget->appendHistory(title + " : " + commands);
-            }
+    fireCurrentActionIconChanged(q_action);
+    if (q_action != nullptr) {
+        const QString commands(q_action->data().toString());
+        if (!commands.isEmpty()) {
+            const QString title(q_action->text().remove("&"));
+            m_commandWidget->appendHistory(title + " : " + commands);
         }
     }
 }
