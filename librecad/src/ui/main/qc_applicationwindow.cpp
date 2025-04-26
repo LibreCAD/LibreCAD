@@ -29,7 +29,6 @@
 
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
 
-#include "qc_applicationwindow.h"
 
 #include <QCloseEvent>
 #include <QMdiArea>
@@ -70,6 +69,7 @@
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
+#include "qc_applicationwindow.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"

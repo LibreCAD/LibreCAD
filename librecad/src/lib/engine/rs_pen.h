@@ -42,9 +42,9 @@
 class RS_Pen : public RS_Flags {
 public:
     /**
-     * Creates a default pen (black, solid, width 0).
+     * Creates a default pen (color, width, type) by layer
      */
-    RS_Pen() = default;
+    RS_Pen();
 
     /**
      * Creates a pen with the given attributes.

@@ -1947,7 +1947,7 @@ void RS_EntityContainer::revertDirection() {
     }
 
     // revert each entity itself
-    for (RS_Entity *entity: entities)
+    for (RS_Entity *entity: std::as_const(entities))
         entity->revertDirection();
 }
 

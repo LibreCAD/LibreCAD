@@ -51,6 +51,7 @@ public:
     int getDegree();
     virtual void setClosed(bool c);
     virtual bool isClosed();
+
 protected:
     /**
       * Action States.
@@ -59,8 +60,8 @@ protected:
         SetStartPoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
     };
-    struct ActionData;
-    std::unique_ptr<ActionData> m_actionData;
+
+private:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
@@ -71,5 +72,8 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
 
     void doTrigger() override;
+
+    struct ActionData;
+    std::unique_ptr<ActionData> m_actionData;
 };
 #endif

@@ -24,21 +24,22 @@
 **
 **********************************************************************/
 
-#include "rs_actioninfoinside.h"
 
 #include <QMouseEvent>
 
 #include "lc_actioncontext.h"
+#include "rs_actioninfoinside.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
 #include "rs_vector.h"
 
 RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
-	:RS_ActionInterface("Info Inside", actionContext, m_actionType=RS2::ActionInfoInside)
+    :RS_ActionInterface("Info Inside", actionContext, RS2::ActionInfoInside)
     , m_point(std::make_unique<RS_Vector>())
-    ,m_contour(std::make_unique<RS_EntityContainer>()){
-    auto container = actionContext->getEntityContainer();
-    for(auto e: container->getEntityList()){
+    , m_contour(std::make_unique<RS_EntityContainer>())
+{
+    RS_EntityContainer* container = actionContext->getEntityContainer();
+    for(auto* e: container->getEntityList()){
         if (e->isSelected()) {
             m_contour->addEntity(e);
         }

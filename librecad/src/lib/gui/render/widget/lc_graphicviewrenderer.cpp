@@ -142,7 +142,8 @@ void LC_GraphicViewRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
         if (viewport->isPanning()) {
             switch (entityType) {
                 case RS2::EntityMText:
-                case RS2::EntityText: {
+                case RS2::EntityText:
+                {
                     if (m_drawTextsAsDraftForPanning) {
                         setPenForDraftEntity(painter, e, false);
                         e->drawDraft(painter);
@@ -158,6 +159,7 @@ void LC_GraphicViewRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
                     break;
                 }
                 default:
+                {
                     // normal painting
                     // set pen (color):
                     if (m_scaleLineWidth) {
@@ -166,13 +168,14 @@ void LC_GraphicViewRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
                         setPenForDraftEntity(painter, e, false);
                     }
                     justDrawEntity(painter, e);
+                }
                     break;
             }
         }
         else {
             // normal painting
             // set pen (color):
-            if (m_scaleLineWidth) {
+            if (getLineWidthScaling()) {
                 setPenForEntity(painter, e, false);
             } else {
                 setPenForDraftEntity(painter, e, false);

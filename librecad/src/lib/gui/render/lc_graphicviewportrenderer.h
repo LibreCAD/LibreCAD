@@ -48,7 +48,7 @@ class LC_GraphicViewportRenderer{
     virtual void loadSettings();
     void render();
     virtual void renderEntity(RS_Painter* painter, RS_Entity* entity)  = 0;
-    void renderEntityAsChild(RS_Painter *painter, RS_Entity *e) ;
+    void renderEntityAsChild(RS_Painter *painter, RS_Entity *e);
     void justDrawEntity(RS_Painter *painter, RS_Entity *e);
     void setBackground(const RS_Color &bg);
     const LC_Rect &getBoundingClipRect() const {return renderBoundingClipRect;}
