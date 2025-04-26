@@ -82,37 +82,11 @@ RS_Entity* RS_DimDiametric::clone() const {
  * measurement of this dimension.
  */
 QString RS_DimDiametric::getMeasuredLabel() {
-
     // Definitive dimension line:
- 	double dist = m_dimGenericData.definitionPoint.distanceTo(m_dimDiametricData.definitionPoint) * getGeneralFactor();
-
-  // fixme - same code as in rs_dimaligned, dim linear - review usage and try to read it once during action lifecycle
-    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)) {
-        dist = RS_Units::convert(dist);
-    }
-
-    RS_Graphic* graphic = getGraphic();
-
-    QString ret;
-    if (graphic) {
-        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
-        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
-        int dimzin = getGraphicVariableInt("$DIMZIN", 1);
-        RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
-        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
-        if (format == RS2::Decimal)
-            ret = stripZerosLinear(ret, dimzin);
-        //verify if units are decimal and comma separator
-        if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
-            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
-                ret.replace(QChar('.'), QChar(','));
-        }
-    }
-    else {
-        ret = QString("%1").arg(dist);
-    }
-
-    return ret;
+ 	double distance = m_dimGenericData.definitionPoint.distanceTo(m_dimDiametricData.definitionPoint) * getGeneralFactor();
+    double dist = prepareLabelLinearDistance(distance);
+    QString measuredLabel =  createLinearMeasuredLabel(dist);
+    return measuredLabel;
 }
 
 RS_VectorSolutions RS_DimDiametric::getRefPoints() const {
@@ -130,16 +104,9 @@ RS_VectorSolutions RS_DimDiametric::getRefPoints() const {
  */
 void RS_DimDiametric::doUpdateDim() {
     RS_DEBUG->print("RS_DimDiametric::update");
-
-    clear();
-
-    if (isUndone()) {
-        return;
-    }
     // dimension line:
-    updateCreateDimensionLine(m_dimGenericData.definitionPoint, m_dimDiametricData.definitionPoint,
+    createDimensionLine(m_dimGenericData.definitionPoint, m_dimDiametricData.definitionPoint,
                               true, true, m_dimGenericData.autoText);
-    calculateBorders();
 }
 
 void RS_DimDiametric::move(const RS_Vector& offset) {

@@ -98,7 +98,7 @@ QString LC_DimArc::getMeasuredLabel() {
         const int dimdec{getGraphicVariableInt(QStringLiteral("$DIMDEC"), 4)};
         const int dimzin{getGraphicVariableInt(QStringLiteral("$DIMZIN"), 1)};
 
-        RS2::LinearFormat format = currentGraphic->getLinearFormat(dimlunit);
+        RS2::LinearFormat format = currentGraphic->convertLinearFormatDXF2LC(dimlunit);
 
         measuredLabel = RS_Units::formatLinear(m_dimArcData.arcLength, getGraphicUnit(), format, dimdec);
 

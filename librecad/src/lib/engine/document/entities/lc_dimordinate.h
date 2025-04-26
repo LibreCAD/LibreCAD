@@ -27,24 +27,23 @@
 #include "rs_dimension.h"
 
 struct LC_DimOrdinateData {
-
-
     LC_DimOrdinateData(const RS_Vector& feature_point, const RS_Vector& leader_end_point, bool ordinateX)
         : featurePoint{feature_point},
           leaderEndPoint{leader_end_point},
           ordinateForX{ordinateX} {
     }
+
     ~LC_DimOrdinateData();
 
-    RS_Vector featurePoint {false};
-    RS_Vector leaderEndPoint {false};
+    RS_Vector featurePoint{false};
+    RS_Vector leaderEndPoint{false};
 
-    bool ordinateForX {false};
+    bool ordinateForX{false};
 };
 
-std::ostream& operator << (std::ostream& os, const LC_DimOrdinateData& dd);
+std::ostream& operator <<(std::ostream& os, const LC_DimOrdinateData& dd);
 
-class LC_DimOrdinate:public RS_Dimension{
+class LC_DimOrdinate : public RS_Dimension {
 public:
     LC_DimOrdinate(RS_EntityContainer* parent,
                    const RS_DimensionData& d,
@@ -53,9 +52,11 @@ public:
     ~LC_DimOrdinate() override = default;
 
     RS_Entity* clone() const override;
-    RS2::EntityType rtti() const override{
+
+    RS2::EntityType rtti() const override {
         return RS2::EntityDimOrdinate;
     }
+
     LC_DimOrdinateData getEData() const {
         return m_dimOrdinateData;
     }
@@ -80,15 +81,12 @@ public:
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
-    friend std::ostream& operator << (std::ostream& os,
-                                      const LC_DimOrdinate& d);
-
-    void addDimComponentEntity(RS_Entity* line, RS_Pen &defaultPen);
-    void addDimComponentLine(RS_Vector start, RS_Vector end, RS_Pen& defaultPen);
+    friend std::ostream& operator <<(std::ostream& os, const LC_DimOrdinate& d);
     void adjustExtensionLineIfFixLength(RS_Line* extLine1, RS_Line* extLine2, bool addDimExe) const;
     QString getMeasuredLabel() override;
-
 protected:
+    void determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint, RS_Vector& kneeOne,
+                                 RS_Vector& kneeTwo, RS_Vector& textOffsetV);
     void doUpdateDim() override;
 private:
     LC_DimOrdinateData m_dimOrdinateData;

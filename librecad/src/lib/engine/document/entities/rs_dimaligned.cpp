@@ -37,8 +37,8 @@
 
 RS_DimAlignedData::RS_DimAlignedData():
     extensionPoint1(false),
-    extensionPoint2(false)
-{}
+    extensionPoint2(false) {
+}
 
 /**
  * Constructor with initialisation.
@@ -54,8 +54,7 @@ RS_DimAlignedData::RS_DimAlignedData(const RS_Vector& _extensionPoint1,
     ,extensionPoint2(_extensionPoint2){
 }
 
-std::ostream& operator << (std::ostream& os,
-                           const RS_DimAlignedData& dd) {
+std::ostream& operator << (std::ostream& os,const RS_DimAlignedData& dd) {
     os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
     return os;
 }
@@ -71,22 +70,13 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
                              const RS_DimensionData& d,
                              const RS_DimAlignedData& ed)
     : RS_Dimension(parent, d), m_dimAlignedData(ed) {
-
-    calculateBorders();
+    RS_DimAligned::calculateBorders();
 }
-
-/**
- * Sets a new text. The entities representing the
- * text are updated.
- */
-//void RS_DimAligned::setText(const QString& t) {
-//    data.text = t;
-//    update();
-//}
 
 RS_Entity* RS_DimAligned::clone() const{
 	auto d = new RS_DimAligned(*this);
 	d->setOwner(isOwner());
+    d->detach();
 	return d;
 }
 
@@ -102,33 +92,11 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const {
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {
-	double dist = m_dimAlignedData.extensionPoint1.distanceTo(m_dimAlignedData.extensionPoint2) * getGeneralFactor();
-    // fixme - refactor to single time initialization
-    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)) {
-        dist = RS_Units::convert(dist);
-    }
+	double distance = m_dimAlignedData.extensionPoint1.distanceTo(m_dimAlignedData.extensionPoint2);
 
-    RS_Graphic* graphic = getGraphic();
-    QString ret;
-    if (graphic) {
-        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
-        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
-        int dimzin = getGraphicVariableInt("$DIMZIN", 1);
-        RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
-
-        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
-        if (format == RS2::Decimal)
-            ret = stripZerosLinear(ret, dimzin);
-        //verify if units are decimal and comma separator
-        if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
-            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
-                ret.replace(QChar('.'), QChar(','));
-        }
-    }
-    else {
-        ret = QString("%1").arg(dist);
-    }
-    return ret;
+    double dist = prepareLabelLinearDistance(distance);
+    QString distanceLabel =  createLinearMeasuredLabel(dist);
+    return distanceLabel;
 }
 
 RS_DimAlignedData const& RS_DimAligned::getEData() const {
@@ -150,19 +118,10 @@ RS_Vector const& RS_DimAligned::getExtensionPoint2() const {
  * @param autoText Automatically reposition the text label
  */
 void RS_DimAligned::doUpdateDim() {
-
     RS_DEBUG->print("RS_DimAligned::update");
 
-    clear();
-    if (isUndone()) {
-        return;
-    }
-
-    // general scale (DIMSCALE)
     double dimscale = getGeneralScale();
-    // distance from entities (DIMEXO)
     double dimexo = getExtensionLineOffset()*dimscale;
-    // definition line definition (DIMEXE)
     double dimexe = getExtensionLineExtension()*dimscale;
     // text height (DIMTXT)
     //double dimtxt = getTextHeight();
@@ -176,46 +135,25 @@ void RS_DimAligned::doUpdateDim() {
 
     if (getFixedLengthOn()){
         double dimfxl = getFixedLength()*dimscale;
-        if (extLength-dimexo > dimfxl)
+        if (extLength-dimexo > dimfxl) {
             dimexo =  extLength - dimfxl;
+        }
     }
 
-    RS_Vector v1 = RS_Vector::polar(dimexo, extAngle);
-    RS_Vector v2 = RS_Vector::polar(dimexe, extAngle);
-    RS_Vector e1 = RS_Vector::polar(1.0, extAngle);
+    RS_Vector extLineOffsetVector = RS_Vector::polar(dimexo, extAngle);
+    RS_Vector extLineExtensionVector = RS_Vector::polar(dimexe, extAngle);
+    RS_Vector extLineDirectionVector = RS_Vector::polar(1.0, extAngle);
 
-    RS_Pen pen(getExtensionLineColor(),
-               getExtensionLineWidth(),
-               RS2::LineByBlock);
+    auto extensionLineLengthVector = extLineDirectionVector*extLength;
+    auto dimLineStart = m_dimAlignedData.extensionPoint1 + extensionLineLengthVector;
+    auto dimLineEnd = m_dimAlignedData.extensionPoint2 + extensionLineLengthVector;
 
-    // Extension line 1:
-    RS_Line* line = new RS_Line{this,
-                                m_dimAlignedData.extensionPoint1 + v1,
-                                m_dimAlignedData.extensionPoint1 + e1*extLength + v2};
-    //line->setLayerToActive();
-    //line->setPenToActive();
-//    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setPen(pen);
-    line->setLayer(nullptr);
-    addEntity(line);
-
-    // Extension line 2:
-    line = new RS_Line{this,
-                       m_dimAlignedData.extensionPoint2 + v1,
-                       m_dimAlignedData.extensionPoint2 + e1*extLength + v2};
-    //line->setLayerToActive();
-    //line->setPenToActive();
-//    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setPen(pen);
-    line->setLayer(nullptr);
-    addEntity(line);
+    // Extension lines
+    addDimExtensionLine(m_dimAlignedData.extensionPoint1 + extLineOffsetVector, dimLineStart + extLineExtensionVector);
+    addDimExtensionLine(m_dimAlignedData.extensionPoint2 + extLineOffsetVector, dimLineEnd + extLineExtensionVector);
 
     // Dimension line:
-    updateCreateDimensionLine(m_dimAlignedData.extensionPoint1 + e1*extLength,
-                              m_dimAlignedData.extensionPoint2 + e1*extLength,
-                              true, true, m_dimGenericData.autoText);
-
-    calculateBorders();
+    createDimensionLine(dimLineStart,dimLineEnd,true, true, m_dimGenericData.autoText);
 }
 
 void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
@@ -291,12 +229,10 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
         double ang1 = m_dimAlignedData.extensionPoint1.angleTo(m_dimAlignedData.extensionPoint2)
                       + M_PI_2;
 
-        if (m_dimAlignedData.extensionPoint1.isInWindow(firstCorner,
-                                             secondCorner)) {
+        if (m_dimAlignedData.extensionPoint1.isInWindow(firstCorner,secondCorner)) {
             m_dimAlignedData.extensionPoint1.move(offset);
         }
-        if (m_dimAlignedData.extensionPoint2.isInWindow(firstCorner,
-                                             secondCorner)) {
+        if (m_dimAlignedData.extensionPoint2.isInWindow(firstCorner,secondCorner)) {
             m_dimAlignedData.extensionPoint2.move(offset);
         }
 

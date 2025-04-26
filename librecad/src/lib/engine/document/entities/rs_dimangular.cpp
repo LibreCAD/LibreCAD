@@ -88,13 +88,15 @@ LC_DimAngularVars::LC_DimAngularVars(const double _dimscale,
                                      const double _dimexe,
                                      const double _dimtxt,
                                      const double _dimgap,
-                                     const double _arrowSize) :
+                                     const double _arrowSize,
+                                     const double _tickSize) :
     dimscale( _dimscale),
     dimexo( _dimexo * _dimscale),
     dimexe( _dimexe * _dimscale),
     dimtxt( _dimtxt * _dimscale),
     dimgap( _dimgap * _dimscale),
-    arrowSize( _arrowSize * _dimscale)
+    arrowSize( _arrowSize * _dimscale),
+    m_tickSize( _tickSize * _dimscale)
 {
 }
 
@@ -148,26 +150,23 @@ QString RS_DimAngular::getMeasuredLabel()
     RS2::AngleFormat format {RS_Units::numberToAngleFormat( dimaunit)};
     QString strLabel( RS_Units::formatAngle( dimAngle, format, dimadec));
 
-    if (RS2::DegreesMinutesSeconds != format
-        && RS2::Surveyors != format) {
+    if (RS2::DegreesMinutesSeconds != format  && RS2::Surveyors != format) {
         strLabel = stripZerosAngle( strLabel, dimazin);
     }
 
     //verify if units are decimal and comma separator
     if (RS2::DegreesMinutesSeconds != dimaunit) {
-        if (',' == getGraphicVariableInt( QStringLiteral( "$DIMDSEP"), 0)) {
+        if (',' == getDimDecimalFormatSeparatorChar()) {
             strLabel.replace( QChar('.'), QChar(','));
         }
     }
-
     return strLabel;
 }
 
 /**
  * @return Center of the measured dimension.
  */
-RS_Vector RS_DimAngular::getCenter() const
-{
+RS_Vector RS_DimAngular::getCenter() const{
     return dimCenter;
 }
 
@@ -185,8 +184,7 @@ void RS_DimAngular::extensionLine(const RS_ConstructionLine& dimLine,
                                   const RS_Vector& dimPoint,
                                   const RS_Vector& dirStart,
                                   const RS_Vector& dirEnd,
-                                  const LC_DimAngularVars& av,
-                                  const RS_Pen& pen)
+                                  const LC_DimAngularVars& av)
 {
     double diffLine {RS_Vector::posInLine( dimLine.getStartpoint(), dimLine.getEndpoint(), dimPoint)};
     double diffCenter {RS_Vector::posInLine( dimLine.getStartpoint(), dimCenter, dimPoint)};
@@ -195,33 +193,14 @@ void RS_DimAngular::extensionLine(const RS_ConstructionLine& dimLine,
         // dimension ends on entity, nothing to extend
         return;
     }
-
     if( 0.0 > diffLine && 0.0 > diffCenter) {
-        RS_Line* line {new RS_Line( this,
-                                    dimLine.getStartpoint(),
-                                    dimPoint - dirStart * av.exe())};
-
-        line->setPen( pen);
-        line->setLayer( nullptr);
-        addEntity( line);
+        addDimExtensionLine(dimLine.getStartpoint(),dimPoint - dirStart * av.exe());
     }
     else if( 1.0 < diffLine && 0.0 < diffCenter) {
-        RS_Line* line {new RS_Line( this,
-                                    dimLine.getEndpoint(),
-                                    dimPoint - dirEnd * av.exe())};
-
-        line->setPen( pen);
-        line->setLayer( nullptr);
-        addEntity( line);
+        addDimExtensionLine(dimLine.getEndpoint(),dimPoint - dirEnd * av.exe());
     }
     else if( 0.0 > diffLine && 1.0 < diffCenter) {
-        RS_Line* line {new RS_Line( this,
-                                    dimCenter - dirStart * av.exo(),
-                                    dimPoint + dirEnd * av.exe())};
-
-        line->setPen( pen);
-        line->setLayer( nullptr);
-        addEntity( line);
+        addDimExtensionLine(dimCenter - dirStart * av.exo(),dimPoint + dirEnd * av.exe());
     }
 }
 
@@ -239,30 +218,29 @@ void RS_DimAngular::arrow(const RS_Vector& point,
                           const double angle,
                           const double direction,
                           const bool outsideArrows,
-                          const LC_DimAngularVars& av,
-                          const RS_Pen& pen)
-{
-    if ((getTickSize() * getGeneralScale()) < 0.01)
-    {
-        double arrowAngle {0.0};
+                          const LC_DimAngularVars& av) {
+    const double scaledTickSize = av.tickSize();
+    if (scaledTickSize < 0.01) {
+        double arrowAngle{0.0};
 
         if (outsideArrows) {
             // for outside arrows use tangent angle on endpoints
             // because for small radius the arrows looked inclined
-            arrowAngle = angle + std::copysign( M_PI_2, direction);
+            arrowAngle = angle + std::copysign(M_PI_2, direction);
         }
-        else
-        {
+        else {
             // compute the angle from center to the endpoint of the arrow on the arc
-            double endAngle {0.0};
+            double endAngle{0.0};
 
-            if (RS_TOLERANCE_ANGLE < dimRadius) endAngle = av.arrow() / dimRadius;
+            if (RS_TOLERANCE_ANGLE < dimRadius) {
+                endAngle = av.arrow() / dimRadius;
+            }
 
             // compute the endpoint of the arrow on the arc
             RS_Vector arrowEnd;
             arrowEnd.setPolar(dimRadius, angle + std::copysign(endAngle, direction));
-            arrowEnd  += dimCenter;
-            arrowAngle = arrowEnd.angleTo( point);
+            arrowEnd += dimCenter;
+            arrowAngle = arrowEnd.angleTo(point);
         }
 
         RS_SolidData sd;
@@ -270,20 +248,13 @@ void RS_DimAngular::arrow(const RS_Vector& point,
 
         arrow = new RS_Solid(this, sd);
         arrow->shapeArrow(point, arrowAngle, av.arrow());
-        arrow->setPen( pen);
-        arrow->setLayer(nullptr);
-        addEntity(arrow);
+        addDimComponentEntity(arrow, getPenExtensionLine());
     }
-    else
-    {
-        RS_Line* tick;
-        RS_Vector tickVector = RS_Vector::polar( getTickSize() * getGeneralScale(), 
-                                                 (dimAngleL1 + dimAngleL2) / 2.0);
+    else {
+        RS_Vector tickVector = RS_Vector::polar(scaledTickSize,
+                                                (dimAngleL1 + dimAngleL2) / 2.0);
 
-        tick = new RS_Line(this, point - tickVector, point + tickVector);
-        tick->setPen(pen);
-        tick->setLayer(nullptr);
-        addEntity(tick);
+        addDimComponentLine(point - tickVector, point + tickVector, getPenExtensionLine());
     }
 }
 
@@ -295,14 +266,7 @@ void RS_DimAngular::arrow(const RS_Vector& point,
  */
 void RS_DimAngular::doUpdateDim(){
     RS_DEBUG->print("RS_DimAngular::update");
-
-    clear();
-
-    if (isUndone()) {
-        return;
-    }
-
-    if ( ! dimCenter.valid) {
+    if (!dimCenter.valid) {
         return;
     }
 
@@ -311,39 +275,34 @@ void RS_DimAngular::doUpdateDim(){
                             getExtensionLineExtension(),
                             getTextHeight(),
                             getDimensionLineGap(),
-                            getArrowSize());
+                            getArrowSize(),
+                            getTickSize());
 
     // create new lines with offsets for extension lines
-    RS_ConstructionLine line1( nullptr,
-                               RS_ConstructionLineData( dimLine1.getStartpoint() - dimDir1s * av.exo(),
-                                                        dimLine1.getEndpoint() - dimDir1e * av.exo()));
-    RS_ConstructionLine line2( nullptr,
-                               RS_ConstructionLineData( dimLine2.getStartpoint() - dimDir2s * av.exo(),
-                                                        dimLine2.getEndpoint() - dimDir2e * av.exo()));
+    RS_ConstructionLine line1(dimLine1.getStartpoint() - dimDir1s * av.exo(),
+                              dimLine1.getEndpoint() - dimDir1e * av.exo());
+
+    RS_ConstructionLine line2(dimLine2.getStartpoint() - dimDir2s * av.exo(),
+                              dimLine2.getEndpoint() - dimDir2e * av.exo());
 
     RS_Vector p1 {dimCenter + dimDir1e * dimRadius};
     RS_Vector p2 {dimCenter + dimDir2e * dimRadius};
-    RS_Pen pen( getExtensionLineColor(), getExtensionLineWidth(), RS2::LineByBlock);
 
-    extensionLine( line1, p1, dimDir1s, dimDir1e, av, pen);
-    extensionLine( line2, p2, dimDir2s, dimDir2e, av, pen);
+    extensionLine( line1, p1, dimDir1s, dimDir1e, av);
+    extensionLine( line2, p2, dimDir2s, dimDir2e, av);
 
+    RS_ArcData arcData( dimCenter, dimRadius, dimAngleL1, dimAngleL2, false);
     // Create dimension line (arc)
-    RS_Arc* arc {new RS_Arc( this, RS_ArcData( dimCenter, dimRadius, dimAngleL1, dimAngleL2, false))};
-    pen.setWidth( getDimensionLineWidth());
-    pen.setColor( getDimensionLineColor());
-    arc->setPen( pen);
-    arc->setLayer( nullptr);
-    addEntity( arc);
+    RS_Arc* arc = addDimArc(arcData);
 
     // do we have to put the arrows outside of the arc?
     bool outsideArrows {arc->getLength() < 3.0 * av.arrow()};
 
-    arrow( p1, dimAngleL1, +1.0, outsideArrows, av, pen);
-    arrow( p2, dimAngleL2, -1.0, outsideArrows, av, pen);
+    arrow( p1, dimAngleL1, +1.0, outsideArrows, av);
+    arrow( p2, dimAngleL2, -1.0, outsideArrows, av);
 
     // text label
-    RS_MTextData textData;
+
     RS_Vector textPos {arc->getMiddlePoint()};
 
     RS_Vector distV;
@@ -366,25 +325,7 @@ void RS_DimAngular::doUpdateDim(){
     // move text away from dimension line:
     textPos += distV;
 
-    textData = RS_MTextData( textPos,
-                             av.txt(), 30.0,
-                             RS_MTextData::VABottom,
-                             RS_MTextData::HACenter,
-                             RS_MTextData::LeftToRight,
-                             RS_MTextData::Exact,
-                             1.0,
-                             getLabel(),
-                             getTextStyle(),
-                             textAngle);
-
-    RS_MText* text {new RS_MText( this, textData)};
-
-    // move text to the side:
-    text->setPen( RS_Pen( getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
-    text->setLayer( nullptr);
-    addEntity( text);
-
-    calculateBorders();
+    createDimText(textPos, av.txt(), textAngle);
 }
 
 void RS_DimAngular::update()
@@ -485,8 +426,7 @@ void RS_DimAngular::calcDimension(void)
  * LibreCAD takes care on correct orientation and line order in RS_ActionDimAngular
  * but angular dimensions, created in other CAD software, may fail and must be fixed here
  */
-void RS_DimAngular::fixDimension(void)
-{
+void RS_DimAngular::fixDimension(void){
     if( ! RS_Math::isAngleBetween( dimDirRad.angle(), dimDir2s.angle(), dimDir1s.angle(), false)) {
         double distance0 {m_dimGenericData.definitionPoint.distanceTo( dimCenter)};
         double distance1 {m_dimAngularData.definitionPoint1.distanceTo( dimCenter)};
@@ -566,22 +506,20 @@ void RS_DimAngular::fixDimension(void)
 /**
  * Dumps the point's data to stdout.
  */
-std::ostream& operator << (std::ostream& os, const RS_DimAngular& d)
-{
+std::ostream& operator <<(std::ostream& os, const RS_DimAngular& d) {
     os << " DimAngular: "
-       << d.getData() << std::endl
-       << d.getEData() << std::endl;
+        << d.getData() << std::endl
+        << d.getEData() << std::endl;
 
     return os;
 }
 
-std::ostream& operator << (std::ostream& os, const RS_DimAngularData& dd)
-{
+std::ostream& operator <<(std::ostream& os, const RS_DimAngularData& dd) {
     os << "(" << dd.definitionPoint1
-       << "," << dd.definitionPoint2
-       << "," << dd.definitionPoint3
-       << "," << dd.definitionPoint3
-       << ")";
+        << "," << dd.definitionPoint2
+        << "," << dd.definitionPoint3
+        << "," << dd.definitionPoint3
+        << ")";
 
     return os;
 }

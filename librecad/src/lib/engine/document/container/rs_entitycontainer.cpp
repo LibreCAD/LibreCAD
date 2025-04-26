@@ -727,7 +727,6 @@ void RS_EntityContainer::calculateBorders() {
     }
     if (minV.y > maxV.y || minV.y > RS_MAXDOUBLE || maxV.y > RS_MAXDOUBLE
         || minV.y < RS_MINDOUBLE || maxV.y < RS_MINDOUBLE) {
-
         minV.y = 0.0;
         maxV.y = 0.0;
     }
@@ -764,7 +763,7 @@ void RS_EntityContainer::forcedCalculateBorders() {
         //RS_Layer* layer = e->getLayer();
 
         if (e->isContainer()) {
-            auto container = static_cast<RS_EntityContainer*>(e);
+            auto container = dynamic_cast<RS_EntityContainer*>(e);
             container->forcedCalculateBorders();
         } else {
             e->calculateBorders();
@@ -799,21 +798,18 @@ void RS_EntityContainer::forcedCalculateBorders() {
  * @param autoText Automatically reposition the text label bool autoText=true
  */
 void RS_EntityContainer::updateDimensions(bool autoText) {
-
     RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
-
-    //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e;
-    //        e=nextEntity(RS2::ResolveNone)) {
 
     for (RS_Entity *e: entities) {
         if (RS_Information::isDimension(e->rtti())) {
+            auto dimension = static_cast<RS_Dimension*>(e);
             // update and reposition label:
-            ((RS_Dimension *) e)->updateDim(autoText);
+            dimension->updateDim(autoText);
         } else if (e->rtti() == RS2::EntityDimLeader)
             e->update();
         else if (e->isContainer()) {
-            ((RS_EntityContainer *) e)->updateDimensions(autoText);
+            auto container = static_cast<RS_EntityContainer*>(e);
+            container->updateDimensions(autoText);
         }
     }
 
@@ -857,37 +853,27 @@ void RS_EntityContainer::updateInserts() {
  * Renames all inserts with name 'oldName' to 'newName'. This is
  *   called after a block was rename to update the inserts.
  */
-void RS_EntityContainer::renameInserts(
-    const QString &oldName,
-    const QString &newName) {
+void RS_EntityContainer::renameInserts(const QString &oldName,const QString &newName) {
     RS_DEBUG->print("RS_EntityContainer::renameInserts()");
-
-    //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e;
-    //        e=nextEntity(RS2::ResolveNone)) {
-
     for (RS_Entity *e: std::as_const(entities)) {
         if (e->rtti() == RS2::EntityInsert) {
-            auto *i = static_cast<RS_Insert*>(e);
+            auto *i = dynamic_cast<RS_Insert*>(e);
             if (i->getName() == oldName) {
                 i->setName(newName);
             }
         }
         if (e->isContainer()) {
-            auto container = static_cast<RS_EntityContainer*>(e);
+            auto container = dynamic_cast<RS_EntityContainer*>(e);
             container->renameInserts(oldName, newName);
         }
     }
-
     RS_DEBUG->print("RS_EntityContainer::renameInserts() OK");
-
 }
 
 /**
  * Updates all Spline entities in this container.
  */
 void RS_EntityContainer::updateSplines() {
-
     RS_DEBUG->print("RS_EntityContainer::updateSplines()");
 
     for (RS_Entity *e: entities) {
@@ -898,7 +884,6 @@ void RS_EntityContainer::updateSplines() {
             static_cast<RS_EntityContainer *>(e)->updateSplines();
         }
     }
-
     RS_DEBUG->print("RS_EntityContainer::updateSplines() OK");
 }
 
@@ -1013,7 +998,9 @@ RS_Entity *RS_EntityContainer::firstEntity(RS2::ResolveLevel level) const {
  */
 RS_Entity *RS_EntityContainer::lastEntity(RS2::ResolveLevel level) const {
     RS_Entity *e = nullptr;
-    if (!entities.size()) return nullptr;
+    if (entities.empty()) {
+        return nullptr;
+    }
     entIdx = entities.size() - 1;
     switch (level) {
         case RS2::ResolveNone:
@@ -1626,7 +1613,8 @@ double RS_EntityContainer::getDistanceToPoint(
     RS_Entity *subEntity = nullptr;
 
     for (auto e: entities) {
-        if (e->isVisible() && (e->getLayer() == nullptr || !e->getLayer()->isLocked())) {
+        auto entityLayer = e->getLayer();
+        if (e->isVisible() && (entityLayer == nullptr || !entityLayer->isLocked())) {
             RS_DEBUG->print("entity: getDistanceToPoint");
             RS_DEBUG->print("entity: %d", e->rtti());
             // bug#426, need to ignore Images to find nearest intersections
@@ -1658,7 +1646,7 @@ double RS_EntityContainer::getDistanceToPoint(
         }
     }
 
-    if (entity) {
+    if (entity != nullptr) {
         *entity = closestEntity;
     }
     RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint: OK");

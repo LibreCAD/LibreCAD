@@ -130,48 +130,12 @@ std::ostream& operator<<(std::ostream& os, const LC_DimOrdinate& d) {
     return os;
 }
 
-void LC_DimOrdinate::addDimComponentEntity(RS_Entity* line, RS_Pen &defaultPen) {
-    line->setPen(defaultPen);
-    line->setLayer(nullptr);
-    addEntity(line);
-}
-
-void LC_DimOrdinate::addDimComponentLine(RS_Vector start, RS_Vector end, RS_Pen &defaultPen) {
-    auto line = new RS_Line(this, {start, end});
-    line->setPen(defaultPen);
-    line->setLayer(nullptr);
-    addEntity(line);
-}
-
-void LC_DimOrdinate::doUpdateDim() {
-    RS_DEBUG->print("RS_DimLinear::update");
-    clear();
-    if (isUndone()) {
-        return;
-    }
-
-    // general scale (DIMSCALE)
-    double dimscale = getGeneralScale();
-    // distance from entities (DIMEXO)
-    double dimexo = getExtensionLineOffset()*dimscale;
-
-    RS_Vector textOffsetV;   // normal vector in direction of text offset
-
-    RS_Vector featurePoint = m_dimOrdinateData.featurePoint;
-    RS_Vector leaderEndPoint = m_dimOrdinateData.leaderEndPoint;
-
+void LC_DimOrdinate::determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint,
+                                             RS_Vector& kneeOne, RS_Vector& kneeTwo, RS_Vector& textOffsetV) {
     bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
-
-    if (xAxisRotatedInUCS) {
-        leaderEndPoint.rotate(featurePoint, -m_dimGenericData.horizontalAxisDirection);
-    }
-
     bool inXDirection = m_dimOrdinateData.ordinateForX;
     double legSize = getArrowSize()*2; // fixme - sand - play with factors, settings?
     double doubleLeg = legSize*2; // fixme - sand - play with factors, settings?
-    // vertical, measuring X
-    RS_Vector kneeOne;
-    RS_Vector kneeTwo;
     double featurePointY = featurePoint.y;
     double featurePointX = featurePoint.x;
     double leaderPointX = leaderEndPoint.x;
@@ -228,29 +192,49 @@ void LC_DimOrdinate::doUpdateDim() {
     }
 
     if (xAxisRotatedInUCS) {
-          kneeOne = kneeOne.rotate(featurePoint, m_dimGenericData.horizontalAxisDirection);
-          kneeTwo = kneeTwo.rotate(featurePoint, m_dimGenericData.horizontalAxisDirection);
+        kneeOne = kneeOne.rotate(featurePoint, m_dimGenericData.horizontalAxisDirection);
+        kneeTwo = kneeTwo.rotate(featurePoint, m_dimGenericData.horizontalAxisDirection);
+    }
+}
+
+void LC_DimOrdinate::doUpdateDim() {
+    RS_DEBUG->print("RS_DimLinear::update");
+    clear();
+    if (isUndone()) {
+        return;
     }
 
-    RS_Line* line;
+    // general scale (DIMSCALE)
+    double dimscale = getGeneralScale();
+    // distance from entities (DIMEXO)
+    double dimexo = getExtensionLineOffset()*dimscale;
 
-    RS_Pen defaultPen(getDimensionLineColor(),
-           getDimensionLineWidth(),
-           RS2::LineByBlock);
+    RS_Vector featurePoint = m_dimOrdinateData.featurePoint;
+    RS_Vector leaderEndPoint = m_dimOrdinateData.leaderEndPoint;
+
+    bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
+
+    if (xAxisRotatedInUCS) {
+        leaderEndPoint.rotate(featurePoint, -m_dimGenericData.horizontalAxisDirection);
+    }
+
+    RS_Vector kneeOne;
+    RS_Vector kneeTwo;
+    RS_Vector textOffsetV;   // normal vector in direction of text offset
+    determineKneesPositions(featurePoint, leaderEndPoint, kneeOne, kneeTwo, textOffsetV);
+
     if (featurePoint.distanceTo(kneeOne) > dimexo) {
         auto startPoint = featurePoint + textOffsetV*dimexo;
         if (xAxisRotatedInUCS) {
             startPoint = startPoint.rotate(featurePoint, m_dimGenericData.horizontalAxisDirection);
         }
-
-        line = new RS_Line(this, {startPoint, kneeOne});
         // RS_Line* dummy;
         // adjustExtensionLineFixLength(line, dummy, false);
-        addDimComponentEntity(line, defaultPen);
+        addDimDimensionLine(startPoint, kneeOne);
     }
 
-    addDimComponentLine(kneeOne, kneeTwo, defaultPen);
-    addDimComponentLine(kneeTwo,m_dimOrdinateData.leaderEndPoint, defaultPen);
+    addDimDimensionLine(kneeOne, kneeTwo);
+    addDimDimensionLine(kneeTwo,m_dimOrdinateData.leaderEndPoint);
 
     double textHeight = getTextHeight() * dimscale;
     double dimgap = getDimensionLineGap();
@@ -259,6 +243,7 @@ void LC_DimOrdinate::doUpdateDim() {
     double textWidth = 0;
     double textAngle = RS_Math::makeAngleReadable(0, true, &corrected);
 
+    bool inXDirection = m_dimOrdinateData.ordinateForX;
     if (inXDirection) {
         textAngle = M_PI_2;
     }
@@ -268,21 +253,8 @@ void LC_DimOrdinate::doUpdateDim() {
 
     textAngle += m_dimGenericData.horizontalAxisDirection;
 
-    RS_MTextData textData = RS_MTextData({0,0},
-                            textHeight, 30.0,
-                            RS_MTextData::VAMiddle,
-                            RS_MTextData::HACenter,
-                            RS_MTextData::LeftToRight,
-                            RS_MTextData::Exact,
-                            1.0,
-                            getLabel(),
-                            getTextStyle(),
-                            textAngle);
+    auto* mtext = createDimText({0,0},textHeight,textAngle);
 
-    auto mtext = new RS_MText(this, textData);
-    RS_Pen textPen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine);
-    addDimComponentEntity(mtext, textPen);
-    mtext->update();
     textWidth = mtext->getUsedTextWidth();
     textHeight = mtext->getUsedTextHeight();
 
@@ -309,8 +281,6 @@ void LC_DimOrdinate::doUpdateDim() {
         textPos = middlePos;
     }
     mtext->move(textPos);
-
-
     calculateBorders();
 }
 
@@ -339,6 +309,7 @@ void LC_DimOrdinate::adjustExtensionLineIfFixLength([[maybe_unused]]RS_Line* ext
     }*/
 }
 
+
 QString LC_DimOrdinate::getMeasuredLabel() {
 
     bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
@@ -348,7 +319,7 @@ QString LC_DimOrdinate::getMeasuredLabel() {
         featurePoint.rotate(m_dimGenericData.definitionPoint, -m_dimGenericData.horizontalAxisDirection);
     }
 
-    RS_Vector delta = ( featurePoint - m_dimGenericData.definitionPoint) * getGeneralFactor();
+    RS_Vector delta = ( featurePoint - m_dimGenericData.definitionPoint);
 
     double distance;
     if (m_dimOrdinateData.ordinateForX) {
@@ -357,31 +328,8 @@ QString LC_DimOrdinate::getMeasuredLabel() {
     else {
         distance = delta.y;
     }
-    double dist = distance;
-    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)) {
-        dist = RS_Units::convert(dist);
-    }
 
-    // fixme - sand - dim - review for all dims, move formatting to the base class
-    RS_Graphic* graphic = getGraphic();
-    QString ret;
-    if (graphic) {
-        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
-        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
-        int dimzin = getGraphicVariableInt("$DIMZIN", 1);
-        RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
-
-        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
-        if (format == RS2::Decimal)
-            ret = stripZerosLinear(ret, dimzin);
-        //verify if units are decimal and comma separator
-        if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
-            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
-                ret.replace(QChar('.'), QChar(','));
-        }
-    }
-    else {
-        ret = QString("%1").arg(dist);
-    }
-    return ret;
+    double dist = prepareLabelLinearDistance(distance);
+    QString measuredLabel =  createLinearMeasuredLabel(dist);
+    return measuredLabel;
 }

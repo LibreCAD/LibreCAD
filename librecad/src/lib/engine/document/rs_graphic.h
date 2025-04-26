@@ -139,7 +139,7 @@ public:
     void setVariableDictObject(RS_VariableDict inputVariableDict) {variableDict = inputVariableDict;}
 
     RS2::LinearFormat getLinearFormat() const;
-    RS2::LinearFormat getLinearFormat(int f) const;
+    RS2::LinearFormat convertLinearFormatDXF2LC(int f) const;
     int getLinearPrecision() const;
     RS2::AngleFormat getAngleFormat() const;
     int getAnglePrecision() const;

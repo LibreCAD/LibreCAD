@@ -595,7 +595,7 @@ protected:
     //! maximum coordinates
     RS_Vector maxV;
     //! Pointer to layer
-    RS_Layer *layer = nullptr;
+    RS_Layer *m_layer = nullptr;
     //! Entity id
     unsigned long long id = 0;
     //! auto updating enabled?

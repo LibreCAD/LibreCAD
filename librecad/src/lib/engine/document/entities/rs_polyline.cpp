@@ -322,15 +322,15 @@ void RS_Polyline::setLayer(const QString& name) {
     RS_Entity::setLayer(name);
     // set layer for sub-entities
     for (auto *e : entities) {
-        e->setLayer(layer);
+        e->setLayer(m_layer);
     }
 }
 
 void RS_Polyline::setLayer(RS_Layer* l) {
-    layer = l;
+    m_layer = l;
     // set layer for sub-entities
     for (auto *e : entities) {
-        e->setLayer(layer);
+        e->setLayer(m_layer);
     }
 }
 
