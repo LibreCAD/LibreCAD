@@ -5,6 +5,7 @@
 /\.*
 !/CMakeLists.txt
 !/.github
+!/librecad/src/lib/debug/
 
 # Apple generated directories
 build/
