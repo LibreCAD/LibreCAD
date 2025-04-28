@@ -133,7 +133,7 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         // Don't set this pen, let drawing routines decide entity->setPenToActive();
         if (refEntity) {
             m_referenceEntities.append(entity);
-            if (autoUpdateBorders) {
+            if (getAutoUpdateBorders()) {
                 adjustBorders(entity);
             }
         }
@@ -239,7 +239,7 @@ void RS_Preview::draw(RS_Painter* painter) {
 // fixme - ucs - achieve view - store as field? This temporary for compilation...
     bool drawTextsAsDraftsForPreview = false;
 
-    for (auto e: std::as_const(entities)) {
+    for (auto e: std::as_const(*this)) {
         int type = e->rtti();
         switch (type) {
             case RS2::EntityMText:

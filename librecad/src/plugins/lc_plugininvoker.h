@@ -22,6 +22,8 @@
 #ifndef LC_PLUGININVOKER_H
 #define LC_PLUGININVOKER_H
 
+#include <QObject>
+
 #include "lc_actioncontext.h"
 
 class QC_PluginInterface;
@@ -37,9 +39,9 @@ public:
 public slots:
     void execPlug();
 private:
-    QC_ApplicationWindow* m_appWindow;
+    QC_ApplicationWindow* m_appWindow = nullptr;
     QList<QC_PluginInterface*> m_loadedPluginList;
-    LC_ActionContext* m_actionContext;
+    LC_ActionContext* m_actionContext = nullptr;
 };
 
 #endif // LC_PLUGININVOKER_H

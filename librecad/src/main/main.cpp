@@ -181,11 +181,12 @@ int execApplication(LC_Application& app) {
     return return_code;
 }
 
+//
 bool setupDebugLevel(char level) {
     switch(level){
         case '?' : {
             showDebugSetupHelpMessage();
-            return true;
+            return false;
         }
         case '0' + RS_Debug::D_NOTHING : {
             RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
@@ -220,7 +221,7 @@ bool setupDebugLevel(char level) {
             break;
         }
     }
-    return false;
+    return true;
 }
 
 /**

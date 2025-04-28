@@ -129,10 +129,10 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
 
 RS_Entity* RS_DimAngular::clone() const
 {
-    RS_DimAngular *d {new RS_DimAngular(*this)};
+    auto *d  = new RS_DimAngular(getParent(), getData(), getEData());
 
     d->setOwner( isOwner());
-    d->initId();
+    d->init();
     d->detach();
 
     return d;

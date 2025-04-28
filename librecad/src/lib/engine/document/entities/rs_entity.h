@@ -83,9 +83,7 @@ public:
     /**
      * @return Unique Id of this entity.
      */
-    unsigned long int getId() const{
-        return id;
-    }
+    unsigned long long getId() const;
 
     /**
      * This method must be overwritten in subclasses and return the
@@ -180,7 +178,7 @@ public:
     virtual void setProcessed(bool on);
     bool isInWindow(RS_Vector v1, RS_Vector v2) const;
 
-    virtual bool hasEndpointsWithinWindow(const RS_Vector & /*v1*/, const RS_Vector & /*v2*/){
+    virtual bool hasEndpointsWithinWindow(const RS_Vector & /*v1*/, const RS_Vector & /*v2*/) const {
         return false;
     }
 
@@ -600,11 +598,11 @@ protected:
     bool updateEnabled = false;
 
 private:
-    //! Entity id
-    unsigned long long id = 0;
+    //! Entity m_id
+    unsigned long long m_id = 0;
     // pImp to delay pulling in Qt headers
     struct Impl;
-    const std::unique_ptr<Impl> m_pImpl;
+    std::unique_ptr<Impl> m_pImpl;
 };
 
 #endif

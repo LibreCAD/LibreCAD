@@ -57,58 +57,69 @@ struct RS_Entity::Impl {
     RS_Pen pen{};
     std::map<QString, QString> varList;
 
-    Impl() = default;
-
-    Impl(const Impl& other):
-        pen{other.pen},
-        varList{other.varList} {
-    }
-
     void fromOther(Impl* other) {
-        pen = other->pen;
-        varList = other->varList;
+        if (other != nullptr) {
+            pen = other->pen;
+            varList = other->varList;
+        }
     }
 };
 
 /**
- * Default constructor.
  * @param parent The parent entity of this entity.
  *               E.g. a line might have a graphic entity or
  *               a polyline entity as parent.
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
     : parent{parent}
-    , m_pImpl{std::make_unique<Impl>()}{
+    , m_pImpl{std::make_unique<Impl>()}
+{
     init();
 }
 
 RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
+    , minV {other.minV}
+    , maxV {other.maxV}
+    , layer {other.layer}
+    , updateEnabled {other.updateEnabled}
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
+{
     init();
-    m_pImpl->fromOther(other.m_pImpl.get());
 }
 
-RS_Entity& RS_Entity::operator = (const RS_Entity& other){
+RS_Entity& RS_Entity::operator = (const RS_Entity& other)
+{
     parent = other.parent;
-    init();
+    minV  = other.minV;
+    maxV  = other.maxV;
+    layer  = other.layer;
+    updateEnabled = other.updateEnabled;
     m_pImpl->fromOther(other.m_pImpl.get());
+    init();
     return *this;
 }
 
 RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
+    , minV {other.minV}
+    , maxV {other.maxV}
+    , layer {other.layer}
+    , updateEnabled {other.updateEnabled}
+    , m_pImpl{std::move(other.m_pImpl)}
 {
     init();
-    m_pImpl->fromOther(other.m_pImpl.get());
 }
 
 RS_Entity& RS_Entity::operator = (RS_Entity&& other)
 {
     parent = other.parent;
+    minV  = other.minV;
+    maxV  = other.maxV;
+    layer  = other.layer;
+    updateEnabled = other.updateEnabled;
+    m_pImpl = std::move(other.m_pImpl);
     init();
-    m_pImpl->fromOther(other.m_pImpl.get());
     return *this;
 }
 
@@ -131,7 +142,13 @@ RS_Entity::~RS_Entity() = default;
 /**
  * Initialisation. Called from all constructors.
  */
+#include "rs_math.h"
 void RS_Entity::init() {
+    if (m_pImpl == nullptr) {
+
+        std::cout<<__func__<<" "<<RS_Math::findGCD(15, 21)<<std::endl;
+        m_pImpl = std::make_unique<Impl>();
+    }
     resetBorders();
     setFlag(RS2::FlagVisible);
     updateEnabled = true;
@@ -141,11 +158,11 @@ void RS_Entity::init() {
 }
 
 /**
- * Gives this entity a new unique id.
+ * Gives this entity a new unique m_id.
  */
 void RS_Entity::initId() {
     static unsigned long long idCounter=0;
-    id = ++idCounter;
+    m_id = ++idCounter;
 }
 
 RS_Entity *RS_Entity::cloneProxy() const {
@@ -1042,7 +1059,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     //os << "Warning: Virtual entity!\n";
     //return os;
 
-    os << " {Entity id: " << e.id;
+    os << " {Entity id: " << e.m_id;
     if (e.parent) {
         os << " | parent id: " << e.parent->getId() << "\n";
     } else {
@@ -1120,3 +1137,10 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
 bool RS_Entity::isParentIgnoredOnModifications() const {
      return parent != nullptr && parent->ignoredOnModification();
 }
+
+
+unsigned long long RS_Entity::getId() const
+{
+    return m_pImpl != nullptr ? m_id : 0ULL;
+}
+

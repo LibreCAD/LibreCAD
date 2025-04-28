@@ -78,11 +78,11 @@ struct RS_DimensionData : public RS_Flags {
     /** Middle point of dimension text */
     RS_Vector middleOfText;
     /** Vertical alignment */
-    RS_MTextData::VAlign valign;
+    RS_MTextData::VAlign valign = RS_MTextData::VABottom;
     /** Horizontal alignment */
-    RS_MTextData::HAlign halign;
+    RS_MTextData::HAlign halign = RS_MTextData::HALeft;
     /** Line spacing style */
-    RS_MTextData::MTextLineSpacingStyle lineSpacingStyle;
+    RS_MTextData::MTextLineSpacingStyle lineSpacingStyle = RS_MTextData::Exact;
     /** Line spacing factor */
     double lineSpacingFactor = 0.;
     /**

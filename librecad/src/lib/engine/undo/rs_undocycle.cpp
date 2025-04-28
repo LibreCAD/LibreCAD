@@ -89,7 +89,7 @@ std::ostream& operator << (std::ostream& os,
 	os << "   Undoable ids: ";
 	for (auto u: uc.undoables) {
 		if (u->undoRtti()==RS2::UndoableEntity) {
-			auto e = reinterpret_cast<RS_Entity*>(u);
+            auto e = static_cast<RS_Entity*>(u);
 			os << e->getId() << (u->isUndone() ? "*" : "") << " ";
 		} else {
 			os << "|";

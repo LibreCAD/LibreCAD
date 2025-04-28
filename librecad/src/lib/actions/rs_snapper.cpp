@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include "rs_snapper.h"
 
 #include <QMouseEvent>
 
@@ -39,7 +38,9 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
+#include "rs_math.h"
 #include "rs_pen.h"
+#include "rs_snapper.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_vector.h"
@@ -70,17 +71,7 @@ namespace {
   * @returns A reference to itself.
   */
 RS_SnapMode const & RS_SnapMode::clear(){
-    snapIntersection    = false;
-    snapOnEntity        = false;
-    snapCenter          = false;
-    snapDistance        = false;
-    snapMiddle          = false;
-    snapEndpoint        = false;
-    snapGrid            = false;
-    snapFree            = false;
-    snapAngle           = false;
-
-    restriction = RS2::RestrictNothing;
+    *this = RS_SnapMode{};
 
     return *this;
 }
@@ -218,7 +209,8 @@ RS_Snapper::RS_Snapper(LC_ActionContext *actionContext)
     ,m_actionContext(actionContext)
     ,m_infoCursorOverlayData{std::make_unique<LC_InfoCursorData>()}
     ,pImpData(new ImpData),
-    m_snapIndicator(new Indicator){
+    m_snapIndicator(new Indicator)
+{
     m_viewport = m_graphicView->getViewPort();
     m_infoCursorOverlayPrefs = m_graphicView->getInfoCursorOverlayPreferences();
 }
@@ -556,8 +548,7 @@ RS_Vector RS_Snapper::snapFree(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapEndpoint(const RS_Vector& coord) {
-    RS_Vector vec(false);
-    vec = m_container->getNearestEndpoint(coord,nullptr/*, &keyEntity*/);
+    RS_Vector vec = m_container->getNearestEndpoint(coord, nullptr/*, &keyEntity*/);
     return vec;
 }
 
@@ -595,8 +586,7 @@ RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapCenter(const RS_Vector& coord) {
-    RS_Vector vec{};
-    vec = m_container->getNearestCenter(coord, nullptr);
+    RS_Vector vec = m_container->getNearestCenter(coord, nullptr);
     return vec;
 }
 

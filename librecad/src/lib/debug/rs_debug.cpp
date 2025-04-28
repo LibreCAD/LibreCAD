@@ -193,7 +193,7 @@ RS_Debug *RS_Debug::instance() {
  * Constructor setting the default debug level.
  */
 RS_Debug::RS_Debug()  :
-    debugLevel{ D_DEBUGGING}
+    m_debugLevel{ D_DEBUGGING}
 {}
 
 RS_Debug::~RS_Debug() {
@@ -210,10 +210,12 @@ RS_Debug::~RS_Debug() {
 /**
  * Sets the debugging level.
  */
-void RS_Debug::setLevel(RS_DebugLevel level) {
-    if (debugLevel == level)
+void RS_Debug::setLevel(RS_DebugLevel level)
+{
+
+    if (m_debugLevel == level)
         return;
-    debugLevel = level;
+    m_debugLevel = level;
     print(D_NOTHING, "RS_DEBUG::setLevel(%d)", level);
     print(D_CRITICAL, "RS_DEBUG: Critical");
     print(D_ERROR, "RS_DEBUG: Errors");
@@ -226,13 +228,13 @@ void RS_Debug::setLevel(RS_DebugLevel level) {
 /**
  * Gets the current debugging level.
  */
-RS_Debug::RS_DebugLevel RS_Debug::getLevel() { return debugLevel; }
+RS_Debug::RS_DebugLevel RS_Debug::getLevel() { return m_debugLevel; }
 
 /**
  * Prints the given message to stdout.
  */
 void RS_Debug::print(const char *format...) {
-    if (debugLevel == D_DEBUGGING) {
+    if (m_debugLevel == D_DEBUGGING) {
         va_list ap;
         va_start(ap, format);
         vfprintf(s_logStream, format, ap);
@@ -250,7 +252,7 @@ void RS_Debug::print(const char *format...) {
  */
 void RS_Debug::print(RS_DebugLevel level, const char *format...) {
 
-    if (debugLevel >= level) {
+    if (m_debugLevel >= level) {
         va_list ap;
         va_start(ap, format);
         vfprintf(s_logStream, format, ap);

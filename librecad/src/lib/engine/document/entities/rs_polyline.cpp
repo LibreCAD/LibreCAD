@@ -321,7 +321,7 @@ void RS_Polyline::setEndpoint(RS_Vector const& v) {
 void RS_Polyline::setLayer(const QString& name) {
     RS_Entity::setLayer(name);
     // set layer for sub-entities
-    for (auto *e : entities) {
+    for(RS_Entity* e : *this) {
         e->setLayer(m_layer);
     }
 }
@@ -329,7 +329,7 @@ void RS_Polyline::setLayer(const QString& name) {
 void RS_Polyline::setLayer(RS_Layer* l) {
     m_layer = l;
     // set layer for sub-entities
-    for (auto *e : entities) {
+    for(RS_Entity* e : *this) {
         e->setLayer(m_layer);
     }
 }

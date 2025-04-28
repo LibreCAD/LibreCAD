@@ -87,8 +87,8 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
  * Bypass for key press events from the tab key.
  */
 bool QG_CommandEdit::event(QEvent* e) {
-    if (e->type()==QEvent::KeyPress) {
-        QKeyEvent* k = reinterpret_cast<QKeyEvent*>(e);
+    if (e != nullptr && e->type()==QEvent::KeyPress) {
+        QKeyEvent* k = static_cast<QKeyEvent*>(e);
         switch(k->key()) {
         case Qt::Key_Tab:
             emit tabPressed();

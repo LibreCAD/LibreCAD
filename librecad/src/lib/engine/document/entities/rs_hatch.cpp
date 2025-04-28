@@ -122,7 +122,7 @@ bool RS_Hatch::validate() {
     bool ret = true;
 
     // loops:
-        foreach(auto* l, entities){
+        for(RS_Entity* l: *this){
 
             auto* loop = dynamic_cast<RS_EntityContainer*>(l);
             if (loop != nullptr) {
@@ -442,10 +442,10 @@ RS_EntityContainer RS_Hatch::trimPattern(const RS_EntityContainer& patternEntiti
         // getting all intersections of this pattern line with the contour:
         QList<RS_Vector> is;
 
-        foreach(const auto& loop, entities){
+        for(const RS_Entity* loop: *this){
 
             if (loop->isContainer()) {
-                for(auto p: * static_cast<RS_EntityContainer*>(loop)){
+                for(auto p: * static_cast<const RS_EntityContainer*>(loop)){
 
                     RS_VectorSolutions sol =
                         RS_Information::getIntersection(e, p, true);
@@ -547,7 +547,7 @@ RS_EntityContainer RS_Hatch::trimPattern(const RS_EntityContainer& patternEntiti
  */
 void RS_Hatch::activateContour(bool on) {
     RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
-        foreach(auto* e, entities){
+        for(RS_Entity* e: *this){
             if (!e->isUndone()) {
                 if (!e->getFlag(RS2::FlagTemp)) {
                     RS_DEBUG->print("RS_Hatch::activateContour: set visible");
@@ -572,7 +572,7 @@ void RS_Hatch::draw(RS_Painter* painter) {
         drawSolidFill(painter);
     }
     else{
-        foreach (auto se, entities){
+        for(RS_Entity* se: *this){
             painter->drawEntity(se);
         }
     }

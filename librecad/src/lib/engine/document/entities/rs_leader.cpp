@@ -67,7 +67,7 @@ RS_Entity* RS_Leader::clone() const{
 void RS_Leader::update() {
 
     // find and delete arrow:
-    for(auto e: entities){
+    for(RS_Entity* e: *this){
         if (e->rtti()==RS2::EntitySolid) {
             removeEntity(e);
             break;
@@ -100,14 +100,12 @@ void RS_Leader::update() {
 RS_VectorSolutions RS_Leader::getRefPoints() const {
     RS_VectorSolutions result = RS_VectorSolutions();
     result.clear();
-    int count = entities.size();
+    size_t count = size();
     if (count > 1) {
-        auto startEntity = entities[0];
+        RS_Entity* startEntity = first();
         result.push_back(startEntity->getStartpoint());
-        for (int i = 0; i < count-1; i++) {
-            auto e = entities[i];
-            result.push_back(e->getEndpoint());
-        }
+        for(RS_Entity* edge: *this)
+            result.push_back(edge->getEndpoint());
     }
     return result;
 }

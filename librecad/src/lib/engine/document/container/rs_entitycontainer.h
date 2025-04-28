@@ -40,11 +40,11 @@
 class RS_EntityContainer : public RS_Entity {
 
 public:
-    typedef RS_Entity * value_type;
+    using value_type = RS_Entity * ;
 
     struct RefInfo{
         RS_Vector ref;
-        RS_Entity* entity;
+        RS_Entity* entity = nullptr;
     };
 
     struct LC_SelectionInfo{
@@ -53,6 +53,10 @@ public:
     };
 
     RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
+    RS_EntityContainer(const RS_EntityContainer& other);
+    RS_EntityContainer& operator = (const RS_EntityContainer& other);
+    RS_EntityContainer(RS_EntityContainer&& other);
+    RS_EntityContainer& operator = (RS_EntityContainer&& other);
     //RS_EntityContainer(const RS_EntityContainer& ec);
 
     ~RS_EntityContainer() override;
@@ -130,6 +134,10 @@ public:
     }
     unsigned count() const override;
     unsigned countDeep() const override;
+    size_t size() const
+    {
+        return m_entities.size();
+    }
 //virtual unsigned long int countLayerEntities(RS_Layer* layer);
 /** \brief countSelected number of selected
 * @param deep count sub-containers, if true
@@ -144,8 +152,11 @@ public:
      * Enables / disables automatic update of borders on entity removals
      * and additions. By default this is turned on.
      */
-    virtual void setAutoUpdateBorders(bool enable) {
-        autoUpdateBorders = enable;
+    void setAutoUpdateBorders(bool enable) {
+        m_autoUpdateBorders = enable;
+    }
+    bool getAutoUpdateBorders() const {
+        return m_autoUpdateBorders;
     }
     virtual void adjustBorders(RS_Entity* entity);
     void calculateBorders() override;
@@ -200,7 +211,7 @@ public:
 
     virtual bool optimizeContours();
 
-    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
@@ -237,7 +248,12 @@ public:
     bool ignoredOnModification() const;
 
     void push_back(RS_Entity* entity) {
-        entities.push_back(entity);
+        m_entities.push_back(entity);
+    }
+    void pop_back()
+    {
+        if (!isEmpty())
+            m_entities.pop_back();
     }
 
 /**
@@ -259,7 +275,7 @@ public:
 
     const QList<RS_Entity*>& getEntityList();
 
-    inline RS_Entity* unsafeEntityAt(int index) const {return entities.at(index);}
+    inline RS_Entity* unsafeEntityAt(int index) const {return m_entities.at(index);}
 
     void drawAsChild(RS_Painter *painter) override;
 
@@ -274,17 +290,10 @@ protected:
      */
     virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
-    /** entities in the container */
-    QList<RS_Entity *> entities;
 
     /** sub container used only temporarily for iteration. */
     mutable RS_EntityContainer* subContainer = nullptr;
 
-    /**
-     * Automatically update the borders of the container when entities
-     * are added or removed.
-     */
-    bool autoUpdateBorders = true;
 
 private:
 /**
@@ -292,6 +301,14 @@ private:
  * @return true when entity of this container won't be considered for snapping points
  */
     bool ignoredSnap() const;
+
+    /** m_entities in the container */
+    QList<RS_Entity *> m_entities;
+    /**
+     * Automatically update the borders of the container when entities
+     * are added or removed.
+     */
+    bool m_autoUpdateBorders = true;
     mutable int entIdx = 0;
     bool autoDelete = false;
 

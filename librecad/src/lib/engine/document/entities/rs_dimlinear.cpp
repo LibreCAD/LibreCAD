@@ -79,7 +79,7 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_DimLinear::clone() const {
-    auto* d = new RS_DimLinear(*this);
+    auto* d = new RS_DimLinear(getParent(), getData(), getEData());
     d->setOwner(isOwner());
     d->detach();
     return d;
@@ -119,7 +119,7 @@ QString RS_DimLinear::getMeasuredLabel() {
     return distanceLabel;
 }
 
-bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
+bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const{
         return (m_dimLinearData.extensionPoint1.isInWindow(v1, v2) ||
                 m_dimLinearData.extensionPoint2.isInWindow(v1, v2));
 }

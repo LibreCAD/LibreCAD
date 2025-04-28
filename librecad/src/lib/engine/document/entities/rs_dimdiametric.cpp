@@ -71,7 +71,7 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_DimDiametric::clone() const {
-	auto* d = new RS_DimDiametric(*this);
+    auto* d = new RS_DimDiametric(getParent(), getData(), getEData());
 	d->setOwner(isOwner());
 	d->detach();
 	return d;
