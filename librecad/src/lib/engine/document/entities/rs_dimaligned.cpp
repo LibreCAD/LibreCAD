@@ -250,7 +250,8 @@ void RS_DimAligned::updateDimPoint(){
     data.definitionPoint += edata.extensionPoint2 - tmpP1;
 }
 
-bool RS_DimAligned::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
+bool RS_DimAligned::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const
+{
     return (edata.extensionPoint1.isInWindow(v1, v2) ||
             edata.extensionPoint2.isInWindow(v1, v2));
 }

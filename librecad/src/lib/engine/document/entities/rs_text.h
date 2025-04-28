@@ -233,7 +233,7 @@ public:
      void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
      void scale(const RS_Vector& center, const RS_Vector& factor) override;
      void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-     bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
+     bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
     virtual void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
                          const RS_Vector& offset) override;

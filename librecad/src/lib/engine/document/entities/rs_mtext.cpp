@@ -761,7 +761,8 @@ void RS_MText::mirror(const RS_Vector &axisPoint1,
 }
 
 bool RS_MText::hasEndpointsWithinWindow(const RS_Vector & /*v1*/,
-                                        const RS_Vector & /*v2*/) {
+                                        const RS_Vector & /*v2*/) const
+{
     return false;
 }
 

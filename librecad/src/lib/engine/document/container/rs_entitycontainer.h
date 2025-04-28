@@ -211,7 +211,7 @@ public:
 
     virtual bool optimizeContours();
 
-    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;

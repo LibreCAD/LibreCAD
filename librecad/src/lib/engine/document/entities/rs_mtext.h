@@ -206,7 +206,7 @@ public:
   virtual void mirror(const RS_Vector &axisPoint1,
                       const RS_Vector &axisPoint2) override;
   virtual bool hasEndpointsWithinWindow(const RS_Vector &v1,
-                                         const RS_Vector &v2) override;
+                                         const RS_Vector &v2) const override;
    virtual void stretch(const RS_Vector &firstCorner,
                        const RS_Vector &secondCorner,
                        const RS_Vector &offset) override;

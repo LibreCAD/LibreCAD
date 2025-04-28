@@ -123,7 +123,7 @@ public:
         data.endpoint.y = val;
         calculateBorders();
     }
-    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
 
     /**
      * @return The length of the line.

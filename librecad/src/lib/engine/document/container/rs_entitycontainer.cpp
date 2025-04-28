@@ -1639,8 +1639,6 @@ RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(
     double *dist) const
 {
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
-    double curDist;                 // currently measured distance
-    RefInfo result;
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
     RS_Entity *closestPointEntity = nullptr;
@@ -1648,6 +1646,7 @@ RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(
     for (RS_Entity* en: *this) { // fixme - sand - iteration of ver all entities
 
         if (en->isVisible() && en->isSelected() && !en->isParentSelected()) {
+            double curDist = 0.;                 // currently measured distance
             point = en->getNearestSelectedRef(coord, &curDist);
             if (point.valid && curDist < minDist) {
                 closestPoint = point;
@@ -1660,8 +1659,7 @@ RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(
         }
     }
 
-    result.ref = closestPoint;
-    result.entity = closestPointEntity;
+    RefInfo result {closestPoint, closestPointEntity};
 
     return result;
 }
@@ -1777,7 +1775,7 @@ bool RS_EntityContainer::optimizeContours() {
 
     /** accept all full circles **/
     QList<RS_Entity *> enList;
-        foreach(auto e1, m_entities) {
+        for(RS_Entity* e1: *this) {
             if (!e1->isEdge() || e1->isContainer()) {
                 enList << e1;
                 continue;
@@ -1875,7 +1873,7 @@ bool RS_EntityContainer::optimizeContours() {
 
 
     // add new sorted entities:
-    for (auto en: tmp) {
+    for (RS_Entity* en: tmp) {
         en->setProcessed(false);
         addEntity(en->clone());
         en->reparent(this);
@@ -1892,13 +1890,11 @@ bool RS_EntityContainer::optimizeContours() {
     return closed;
 }
 
-bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector &v1, const RS_Vector &v2) {
-    for (auto e: m_entities) {
-        if (e->hasEndpointsWithinWindow(v1, v2)) {
-            return true;
-        }
-    }
-    return false;
+bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector &v1, const RS_Vector &v2) const
+{
+    return std::any_of(cbegin(), cend(), [&v1, &v2](const RS_Entity* entity) {
+        return entity->hasEndpointsWithinWindow(v1, v2);
+    });
 }
 
 void RS_EntityContainer::move(const RS_Vector &offset) {

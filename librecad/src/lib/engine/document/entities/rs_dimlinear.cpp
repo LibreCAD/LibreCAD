@@ -143,7 +143,8 @@ QString RS_DimLinear::getMeasuredLabel() {
     return ret;
 }
 
-bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
+bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const
+{
         return (edata.extensionPoint1.isInWindow(v1, v2) ||
                 edata.extensionPoint2.isInWindow(v1, v2));
 }

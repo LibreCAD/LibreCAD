@@ -178,7 +178,7 @@ public:
     virtual void setProcessed(bool on);
     bool isInWindow(RS_Vector v1, RS_Vector v2) const;
 
-    virtual bool hasEndpointsWithinWindow(const RS_Vector & /*v1*/, const RS_Vector & /*v2*/){
+    virtual bool hasEndpointsWithinWindow(const RS_Vector & /*v1*/, const RS_Vector & /*v2*/) const {
         return false;
     }
 

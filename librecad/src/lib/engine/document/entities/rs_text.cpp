@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include<iostream>
+
 #include "rs_text.h"
 
 #include "rs_debug.h"
@@ -415,7 +416,7 @@ void RS_Text::updateBaselinePoints() {
 }
 
 RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-    if (dist) {
+    if (dist != nullptr) {
         *dist = data.insertionPoint.distanceTo(coord);
     }
     return data.insertionPoint;
@@ -484,7 +485,7 @@ void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
     data.angle = vec.angle();
 
-    bool corr;
+    bool corr = false;
     data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
 
     if (corr) {
@@ -500,7 +501,7 @@ void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
             data.secondPoint = tmp;
         }
     } else {
-        RS_Vector minP = RS_Vector(getMin().x, getMax().y);
+        RS_Vector minP{getMin().x, getMax().y};
         minP = minP.mirror(axisPoint1, axisPoint2);
         double mirrAngle = axisPoint1.angleTo(axisPoint2)*2.0;
         data.insertionPoint.move(minP - getMin());
@@ -511,7 +512,8 @@ void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     update();
 }
 
-bool RS_Text::hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) {
+bool RS_Text::hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) const
+{
     return false;
 }
 
