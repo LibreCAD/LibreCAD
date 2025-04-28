@@ -135,8 +135,6 @@ public:
      */
     void update() override;
     void updateDim(bool autoText=false);
-    void createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd,
-                  bool arrow1=true, bool arrow2=true, bool autoText=false);
 
     RS_Vector getDefinitionPoint() {return m_dimGenericData.definitionPoint;}
     RS_Vector getMiddleOfText() {return m_dimGenericData.middleOfText;}
@@ -186,9 +184,9 @@ public:
 private:
     static RS_VectorSolutions getIntersectionsLineContainer(const RS_Line* l, const RS_EntityContainer* c,
                                                             bool infiniteLine = false);
-    void updateCreateHorizontalTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1 = true,
+    void createHorizontalTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1 = true,
                                                  bool arrow2 = true, bool autoText = false);
-    void updateCreateAlignedTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1 = true,
+    void createAlignedTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1 = true,
                                               bool arrow2 = true, bool autoText = false);
 protected:
     /** Data common to all dimension entities. */
@@ -196,7 +194,7 @@ protected:
 
     virtual void doUpdateDim() = 0;
 
-    RS_Pen getPenDimText();
+    RS_Pen getPenForText();
     RS_Pen getPenExtensionLine();
     RS_Pen getPenDimensionLine();
     RS_MText* createDimText(RS_Vector textPos, double textHeight, double textAngle);
@@ -209,6 +207,8 @@ protected:
     RS_Arc* addDimArc(RS_ArcData& arcData);
     QString createLinearMeasuredLabel(double dist);
     double prepareLabelLinearDistance(double distance);
+    void createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd,
+              bool arrow1=true, bool arrow2=true, bool autoText=false);
 };
 
 #endif

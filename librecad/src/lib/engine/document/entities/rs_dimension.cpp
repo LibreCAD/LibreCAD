@@ -225,8 +225,9 @@ QString RS_Dimension::getLabel(bool resolve) {
         // Issue #1953: support expressions of measured
         // {<>*<>} for the squared value
         // {sqrt(<>)} for the square root
-        if (okay)
+        if (okay) {
             ret = functionalText(m_dimGenericData.text, measured);
+        }
         ret = ret.replace(QString("<>"), getMeasuredLabel());
     }
 
@@ -294,7 +295,7 @@ RS_VectorSolutions RS_Dimension::getIntersectionsLineContainer(
     return RS_VectorSolutions(solutions_sorted);
 }
 
-RS_Pen RS_Dimension::getPenDimText() {
+RS_Pen RS_Dimension::getPenForText() {
     RS_Pen result(getTextColor(), RS2::WidthByBlock, RS2::SolidLine);
     return result;
 }
@@ -316,7 +317,7 @@ RS_MText* RS_Dimension::createDimText(RS_Vector textPos, double textHeight, doub
 
 RS_MText* RS_Dimension::addDimText(RS_MTextData &textData) {
     auto mtext = new RS_MText(this, textData);
-    addDimComponentEntity(mtext, getPenDimText());
+    addDimComponentEntity(mtext, getPenForText());
     mtext->update();
     return mtext;
 }
@@ -341,7 +342,7 @@ RS_MTextData RS_Dimension::createDimTextData(RS_Vector textPos, double textHeigh
  *
  * @param forceAutoText Automatically reposition the text label.
  */
-void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
+void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
                                                            const RS_Vector& p2, bool arrow1, bool arrow2,
                                                            bool forceAutoText) {
 
@@ -533,7 +534,7 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
  *
  * @param forceAutoText Automatically reposition the text label.
  */
-void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
+void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
                                                         const RS_Vector& p2, bool arrow1, bool arrow2,
                                                         bool forceAutoText) {
     double dimscale = getGeneralScale();
@@ -648,10 +649,10 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
  */
 void RS_Dimension::createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd, bool arrow1, bool arrow2, bool forceAutoText) {
     if (getInsideHorizontalText()) {
-        updateCreateHorizontalTextDimensionLine(dimLineStart, dimLineEnd, arrow1, arrow2, forceAutoText);
+        createHorizontalTextDimensionLine(dimLineStart, dimLineEnd, arrow1, arrow2, forceAutoText);
     }
     else {
-        updateCreateAlignedTextDimensionLine(dimLineStart, dimLineEnd, arrow1, arrow2, forceAutoText);
+        createAlignedTextDimensionLine(dimLineStart, dimLineEnd, arrow1, arrow2, forceAutoText);
     }
 }
 
@@ -939,6 +940,10 @@ void RS_Dimension::update() {
 
 void RS_Dimension::updateDim(bool autoText) {
     m_dimGenericData.autoText = autoText;
+    clear();
+    if (isUndone()) {
+        return;
+    }
     doUpdateDim();
 }
 

@@ -2035,6 +2035,7 @@ bool RS_EntityContainer::ignoredOnModification() const
         case RS2::EntityDimAligned:   /**< Aligned Dimension */
         case RS2::EntityDimLinear:    /**< Linear Dimension */
         case RS2::EntityDimOrdinate:
+        case RS2::EntityTolerance:
         case RS2::EntityDimRadial:    /**< Radial Dimension */
         case RS2::EntityDimDiametric: /**< Diametric Dimension */
         case RS2::EntityDimAngular:   /**< Angular Dimension */

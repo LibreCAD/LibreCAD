@@ -30,7 +30,6 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_text.h"
-#include "rs_units.h"
 
 LC_DimOrdinateData::~LC_DimOrdinateData() = default;
 
@@ -42,13 +41,12 @@ std::ostream& operator << (std::ostream& os,
 
 LC_DimOrdinate::LC_DimOrdinate(RS_EntityContainer* parent, const RS_DimensionData& d, const LC_DimOrdinateData& ed):
    RS_Dimension{parent, d}, m_dimOrdinateData{ed}{
-   calculateBorders();
+   RS_EntityContainer::calculateBorders();
 }
 
 RS_Entity* LC_DimOrdinate::clone() const {
     auto* d = new LC_DimOrdinate(*this);
     d->setOwner(isOwner());
-    d->initId();
     d->detach();
     return d;
 }

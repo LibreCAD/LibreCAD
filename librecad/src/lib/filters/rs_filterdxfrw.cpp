@@ -64,6 +64,7 @@
 #include "lc_defaults.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
+#include "lc_tolerance.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -658,6 +659,27 @@ void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
         entity = new RS_Solid(currentContainer, RS_SolidData(v1, v2, v3,v4));
 
     setEntityAttributes(entity, &data);
+    currentContainer->addEntity(entity);
+}
+
+void RS_FilterDXFRW::addTolerance(const DRW_Tolerance& data) {
+    RS_Vector insertionPoint{data.insertionPoint.x, data.insertionPoint.y};
+    RS_Vector axisDirectionVector{data.xAxisDirectionVector.x, data.xAxisDirectionVector.y};
+
+    QString text = toNativeString(QString::fromUtf8(data.text.c_str()));
+
+
+    QString sty = QString::fromUtf8(data.dimStyleName.c_str());
+    if (sty.isEmpty()) {
+        sty = dimStyle;
+    }
+
+    LC_ToleranceData tolData = LC_ToleranceData(insertionPoint, axisDirectionVector,
+                                               text, sty);
+
+    LC_Tolerance* entity = new LC_Tolerance{currentContainer, tolData};
+    setEntityAttributes(entity, &data);
+    entity->update();
     currentContainer->addEntity(entity);
 }
 

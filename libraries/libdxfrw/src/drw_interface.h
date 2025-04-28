@@ -125,6 +125,8 @@ public:
     /** Called for every Text entity. */
     virtual void addText(const DRW_Text& data) = 0;
 
+    virtual void addTolerance(const DRW_Tolerance& tol) = 0;
+
     /**
      * Called for every aligned dimension entity. 
      */

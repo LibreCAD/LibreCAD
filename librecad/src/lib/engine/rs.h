@@ -157,6 +157,7 @@ namespace RS2 {
         EntityDimArc,       /**< Arc Dimension */
         EntityDimLeader,    /**< Leader Dimension */
         EntityDimOrdinate,
+        EntityTolerance,
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */

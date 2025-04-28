@@ -327,6 +327,7 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 	case RS2::EntityDimDiametric:
 	case RS2::EntityDimAngular:
 	case RS2::EntityDimArc:
+	case RS2::EntityTolerance:
 		return true;
 	default:
 		return false;

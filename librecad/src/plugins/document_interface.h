@@ -78,6 +78,7 @@ namespace DPI {
         DIMDIAMETRIC,
         DIMANGULAR,
         DIMORDINATE,
+        TOLERANCE,
         UNKNOWN
     };
 

@@ -80,16 +80,17 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-
-    friend std::ostream& operator <<(std::ostream& os, const LC_DimOrdinate& d);
-    void adjustExtensionLineIfFixLength(RS_Line* extLine1, RS_Line* extLine2, bool addDimExe) const;
     QString getMeasuredLabel() override;
+    friend std::ostream& operator <<(std::ostream& os, const LC_DimOrdinate& d);
 protected:
     void determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint, RS_Vector& kneeOne,
                                  RS_Vector& kneeTwo, RS_Vector& textOffsetV);
     void doUpdateDim() override;
+    void adjustExtensionLineIfFixLength(RS_Line* extLine1, RS_Line* extLine2, bool addDimExe) const;
 private:
     LC_DimOrdinateData m_dimOrdinateData;
 };
+
+
 
 #endif // LC_DIMORIDINAL_H
