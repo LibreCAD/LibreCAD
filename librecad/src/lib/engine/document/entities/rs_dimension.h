@@ -40,7 +40,7 @@ struct RS_DimensionData : public RS_Flags {
     /**
 	 * Default constructor
      */
-	RS_DimensionData();
+    RS_DimensionData() = default;
 
     /**
      * Constructor with initialisation.
@@ -73,11 +73,11 @@ struct RS_DimensionData : public RS_Flags {
     /** Middle point of dimension text */
     RS_Vector middleOfText;
     /** Vertical alignment */
-    RS_MTextData::VAlign valign;
+    RS_MTextData::VAlign valign = RS_MTextData::VABottom;
     /** Horizontal alignment */
-    RS_MTextData::HAlign halign;
+    RS_MTextData::HAlign halign = RS_MTextData::HALeft;
     /** Line spacing style */
-    RS_MTextData::MTextLineSpacingStyle lineSpacingStyle;
+    RS_MTextData::MTextLineSpacingStyle lineSpacingStyle = RS_MTextData::Exact;
     /** Line spacing factor */
     double lineSpacingFactor = 0.;
     /**
@@ -103,7 +103,7 @@ std::ostream& operator << (std::ostream& os,
 class RS_Dimension : public RS_EntityContainer {
 public:
     RS_Dimension(RS_EntityContainer* parent,
-                 const RS_DimensionData& d);
+                 RS_DimensionData d);
 
     RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
     RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;

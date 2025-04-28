@@ -102,17 +102,17 @@ public:
         return RS2::EntityInsert;
     }
 
-    /** @return Copy of data that defines the insert. **/
+    /** @return Copy of m_data that defines the insert. **/
     RS_InsertData getData() const{
-        return data;
+        return m_data;
     }
 
         /**
-         * Reimplementation of reparent. Invalidates block cache pointer.
+         * Reimplementation of reparent. Invalidates m_block cache pointer.
          */
     void reparent(RS_EntityContainer* parent)  override{
                 RS_Entity::reparent(parent);
-                block = nullptr;
+                m_block = nullptr;
     }
 
 	RS_Block* getBlockForInsert() const;
@@ -120,58 +120,58 @@ public:
     void update() override;
 
     QString getName() const {
-        return data.name;
+        return m_data.name;
     }
 
     void setName(const QString& newName) {
-        data.name = newName;
+        m_data.name = newName;
         update();
     }
 
     RS_Vector getInsertionPoint() const {
-        return data.insertionPoint;
+        return m_data.insertionPoint;
     }
     void setInsertionPoint(const RS_Vector& i) {
-        data.insertionPoint = i;
+        m_data.insertionPoint = i;
     }
 
     RS_Vector getScale() const {
-        return data.scaleFactor;
+        return m_data.scaleFactor;
     }
 
     void setScale(const RS_Vector& s) {
-        data.scaleFactor = s;
+        m_data.scaleFactor = s;
     }
 
     double getAngle() const {
-        return data.angle;
+        return m_data.angle;
     }
     void setAngle(double a) {
-        data.angle = a;
+        m_data.angle = a;
     }
 
     int getCols() const {
-        return data.cols;
+        return m_data.cols;
     }
 
     void setCols(int c) {
-        data.cols = c;
+        m_data.cols = c;
     }
 
     int getRows() const {
-        return data.rows;
+        return m_data.rows;
     }
 
     void setRows(int r) {
-        data.rows = r;
+        m_data.rows = r;
     }
 
     RS_Vector getSpacing() const {
-        return data.spacing;
+        return m_data.spacing;
     }
 
     void setSpacing(const RS_Vector& s) {
-        data.spacing = s;
+        m_data.spacing = s;
     }
 
     bool isVisible() const override;
@@ -192,8 +192,8 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Insert& i);
 
 protected:
-    RS_InsertData data{};
-    mutable RS_Block* block = nullptr;
+    RS_InsertData m_data{};
+    mutable RS_Block* m_block = nullptr;
 };
 
 

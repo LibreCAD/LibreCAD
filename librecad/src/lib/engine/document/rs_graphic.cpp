@@ -152,13 +152,13 @@ RS_Graphic::~RS_Graphic() = default;
 
 
 /**
- * Counts the entities on the given layer.
+ * Counts the m_entities on the given layer.
  */
 unsigned RS_Graphic::countLayerEntities(RS_Layer *layer) const
 {
     unsigned c = 0;
     if (layer) {
-        for (RS_Entity *t: entities) {
+        for (RS_Entity *t: *this) {
             if (t->getLayer() &&
                 t->getLayer()->getName() == layer->getName()) {
                 c += t->countDeep();
@@ -169,7 +169,7 @@ unsigned RS_Graphic::countLayerEntities(RS_Layer *layer) const
 }
 
 /**
- * Removes the given layer and undoes all entities on it.
+ * Removes the given layer and undoes all m_entities on it.
  */
 void RS_Graphic::removeLayer(RS_Layer* layer) {
     if (layer != nullptr) {
@@ -177,7 +177,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
         if (layerName != "0") {
             std::vector<RS_Entity *> toRemove;
             //find entities on layer
-            for (RS_Entity *e: entities) {
+            for(RS_Entity *e: *this) {
                 if (e->getLayer() &&
                     e->getLayer()->getName() == layerName) {
                     toRemove.push_back(e);
@@ -727,7 +727,7 @@ int RS_Graphic::clean() {
 
     forcedCalculateBorders();
 
-    for(RS_Entity *e: std::as_const(entities)) {
+    for(RS_Entity *e: std::as_const(*this)) {
         if (e != nullptr) {
             if (!validRange(e->getMin(), e->getMax())) {
                 // fixme - sand - files restore, the issue with

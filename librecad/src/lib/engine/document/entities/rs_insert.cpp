@@ -105,16 +105,16 @@ std::ostream& operator << (std::ostream& os,
 	   return os;
    }
 /**
- * @param parent The graphic this block belongs to.
+ * @param parent The graphic this m_block belongs to.
  */
 RS_Insert::RS_Insert(RS_EntityContainer* parent,
                      const RS_InsertData& d)
-        : RS_EntityContainer(parent), data(d) {
+        : RS_EntityContainer(parent)
+       , m_data(d)
+{
 
-		block = nullptr;
-
-    if (data.updateMode!=RS2::NoUpdate) {
-        update();
+    if (m_data.updateMode!=RS2::NoUpdate) {
+        RS_Insert::update();
         //calculateBorders();
     }
 }
@@ -132,14 +132,14 @@ RS_Entity* RS_Insert::clone() const{
  */
 void RS_Insert::update() {
 
-        RS_DEBUG->print("RS_Insert::update");
-        RS_DEBUG->print("RS_Insert::update: name: %s", data.name.toLatin1().data());
-//        RS_DEBUG->print("RS_Insert::update: insertionPoint: %f/%f",
-//                data.insertionPoint.x, data.insertionPoint.y);
+    RS_DEBUG->print("RS_Insert::update");
+    RS_DEBUG->print("RS_Insert::update: name: %s", m_data.name.toLatin1().data());
+    //        RS_DEBUG->print("RS_Insert::update: insertionPoint: %f/%f",
+    //                data.insertionPoint.x, data.insertionPoint.y);
 
-        if (updateEnabled==false) {
-                return;
-        }
+    if (updateEnabled==false) {
+        return;
+    }
 
     clear();
 
@@ -154,24 +154,24 @@ void RS_Insert::update() {
         return;
     }
 
-    if (std::abs(data.scaleFactor.x)<MIN_Scale_Factor || std::abs(data.scaleFactor.y)<MIN_Scale_Factor) {
+    if (std::abs(m_data.scaleFactor.x)<MIN_Scale_Factor || std::abs(m_data.scaleFactor.y)<MIN_Scale_Factor) {
         RS_DEBUG->print("RS_Insert::update: scale factor is 0");
         return;
     }
 
     RS_DEBUG->print("RS_Insert::update: cols: %d, rows: %d",
-                    data.cols, data.rows);
+                    m_data.cols, m_data.rows);
     RS_DEBUG->print("RS_Insert::update: block has %d entities",
                     blk->count());
         for(auto* e: *blk){
-            for (int c=0; c<data.cols; ++c) {
+            for (int c=0; c<m_data.cols; ++c) {
 //            RS_DEBUG->print("RS_Insert::update: col %d", c);
-                for (int r=0; r<data.rows; ++r) {
+                for (int r=0; r<m_data.rows; ++r) {
 //                i_en_counts++;
 //                RS_DEBUG->print("RS_Insert::update: row %d", r);
 
                     if (e->rtti()==RS2::EntityInsert &&
-                            data.updateMode!=RS2::PreviewUpdate) {
+                            m_data.updateMode!=RS2::PreviewUpdate) {
 
 //                                        RS_DEBUG->print("RS_Insert::update: updating sub-insert");
                         e->update();
@@ -180,7 +180,7 @@ void RS_Insert::update() {
 //                                RS_DEBUG->print("RS_Insert::update: cloning entity");
 
                     RS_Entity* ne = nullptr;
-                    if ( (data.scaleFactor.x - data.scaleFactor.y)>MIN_Scale_Factor) {
+                    if ( (m_data.scaleFactor.x - m_data.scaleFactor.y)>MIN_Scale_Factor) {
                         if (e->rtti()== RS2::EntityArc) {
                             auto a= static_cast<RS_Arc*>(e);
                             ne = new RS_Ellipse{this,
@@ -213,24 +213,24 @@ void RS_Insert::update() {
 
                 // Move:
 //                                RS_DEBUG->print("RS_Insert::update: move 1");
-                    if (std::abs(data.scaleFactor.x)>MIN_Scale_Factor &&
-                            std::abs(data.scaleFactor.y)>MIN_Scale_Factor) {
-                        ne->move(data.insertionPoint +
-                                 RS_Vector(data.spacing.x/data.scaleFactor.x*c,
-                                           data.spacing.y/data.scaleFactor.y*r));
+                    if (std::abs(m_data.scaleFactor.x)>MIN_Scale_Factor &&
+                            std::abs(m_data.scaleFactor.y)>MIN_Scale_Factor) {
+                        ne->move(m_data.insertionPoint +
+                                 RS_Vector(m_data.spacing.x/m_data.scaleFactor.x*c,
+                                           m_data.spacing.y/m_data.scaleFactor.y*r));
                     }
                     else {
-                        ne->move(data.insertionPoint);
+                        ne->move(m_data.insertionPoint);
                     }
                 // Move because of block base point:
 //                                RS_DEBUG->print("RS_Insert::update: move 2");
                     ne->move(blk->getBasePoint()*(-1));
                 // Scale:
 //                                RS_DEBUG->print("RS_Insert::update: scale");
-                    ne->scale(data.insertionPoint, data.scaleFactor);
+                    ne->scale(m_data.insertionPoint, m_data.scaleFactor);
                 // Rotate:
 //                                RS_DEBUG->print("RS_Insert::update: rotate");
-                    ne->rotate(data.insertionPoint, data.angle);
+                    ne->rotate(m_data.insertionPoint, m_data.angle);
 
                    // RS_DEBUG->print(RS_Debug::D_ERROR, "ne: angle: %lg\n", data.angle);
                 // Select:
@@ -246,7 +246,7 @@ void RS_Insert::update() {
                     ne->setUpdateEnabled(true);
 
                 // insert must be updated even in preview mode
-                    if (data.updateMode != RS2::PreviewUpdate
+                    if (m_data.updateMode != RS2::PreviewUpdate
                             || ne->rtti() == RS2::EntityInsert) {
                         //RS_DEBUG->print("RS_Insert::update: updating new entity");
                         ne->update();
@@ -264,34 +264,32 @@ void RS_Insert::update() {
 }
 
 /**
- * @return Pointer to the block associated with this Insert or
- *   nullptr if the block couldn't be found. Blocks are requested
+ * @return Pointer to the m_block associated with this Insert or
+ *   nullptr if the m_block couldn't be found. Blocks are requested
  *   from the blockSource if one was supplied and otherwise from
  *   the closest parent graphic.
  */
 RS_Block* RS_Insert::getBlockForInsert() const{
-    if (block != nullptr) {
-        return block;
+    if (m_block != nullptr) {
+        return m_block;
     }
 
-    RS_BlockList* blkList;
+    RS_BlockList* blkList = nullptr;
 
-    if (!data.blockSource) {
+    if (!m_data.blockSource) {
         if (getGraphic()) {
             blkList = getGraphic()->getBlockList();
-        } else {
-            blkList = nullptr;
         }
     } else {
-        blkList = data.blockSource;
+        blkList = m_data.blockSource;
     }
 
     RS_Block* blk = nullptr;
     if (blkList != nullptr) {
-        blk = blkList->find(data.name);
+        blk = blkList->find(m_data.name);
     }
 
-    block = blk;
+    m_block = blk;
 
     return blk;
 }
@@ -318,7 +316,7 @@ bool RS_Insert::isVisible() const{
 }
 
 RS_VectorSolutions RS_Insert::getRefPoints() const{
-	return RS_VectorSolutions{data.insertionPoint};
+    return RS_VectorSolutions{m_data.insertionPoint};
 }
 
 RS_Vector RS_Insert::getNearestRef(const RS_Vector& coord,
@@ -328,52 +326,52 @@ RS_Vector RS_Insert::getNearestRef(const RS_Vector& coord,
 
 void RS_Insert::move(const RS_Vector& offset) {
     RS_DEBUG->print("RS_Insert::move: offset: %f/%f", offset.x, offset.y);
-    RS_DEBUG->print("RS_Insert::move1: insertionPoint: %f/%f", data.insertionPoint.x, data.insertionPoint.y);
-    data.insertionPoint.move(offset);
-    RS_DEBUG->print("RS_Insert::move2: insertionPoint: %f/%f", data.insertionPoint.x, data.insertionPoint.y);
+    RS_DEBUG->print("RS_Insert::move1: insertionPoint: %f/%f", m_data.insertionPoint.x, m_data.insertionPoint.y);
+    m_data.insertionPoint.move(offset);
+    RS_DEBUG->print("RS_Insert::move2: insertionPoint: %f/%f", m_data.insertionPoint.x, m_data.insertionPoint.y);
     update();
 }
 
 void RS_Insert::rotate(const RS_Vector& center, double angle) {
     RS_DEBUG->print("RS_Insert::rotate1: insertionPoint: %f/%f / center: %f/%f",
-                    data.insertionPoint.x, data.insertionPoint.y,
+                    m_data.insertionPoint.x, m_data.insertionPoint.y,
                     center.x, center.y);
-    data.insertionPoint.rotate(center, angle);
-    data.angle = RS_Math::correctAngle(data.angle + angle);
-    RS_DEBUG->print("RS_Insert::rotate2: insertionPoint: %f/%f", data.insertionPoint.x, data.insertionPoint.y);
+    m_data.insertionPoint.rotate(center, angle);
+    m_data.angle = RS_Math::correctAngle(m_data.angle + angle);
+    RS_DEBUG->print("RS_Insert::rotate2: insertionPoint: %f/%f", m_data.insertionPoint.x, m_data.insertionPoint.y);
     update();
 }
 
 void RS_Insert::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_DEBUG->print("RS_Insert::rotate1: insertionPoint: %f/%f "
                     "/ center: %f/%f",
-                    data.insertionPoint.x, data.insertionPoint.y,
+                    m_data.insertionPoint.x, m_data.insertionPoint.y,
                     center.x, center.y);
-    data.insertionPoint.rotate(center, angleVector);
-    data.angle = RS_Math::correctAngle(data.angle + angleVector.angle());
+    m_data.insertionPoint.rotate(center, angleVector);
+    m_data.angle = RS_Math::correctAngle(m_data.angle + angleVector.angle());
     RS_DEBUG->print("RS_Insert::rotate2: insertionPoint: %f/%f",
-                    data.insertionPoint.x, data.insertionPoint.y);
+                    m_data.insertionPoint.x, m_data.insertionPoint.y);
     update();
 }
 
 void RS_Insert::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_DEBUG->print("RS_Insert::scale1: insertionPoint: %f/%f",
-                    data.insertionPoint.x, data.insertionPoint.y);
-    data.insertionPoint.scale(center, factor);
-    data.scaleFactor.scale(RS_Vector(0.0, 0.0), factor);
-    data.spacing.scale(RS_Vector(0.0, 0.0), factor);
+                    m_data.insertionPoint.x, m_data.insertionPoint.y);
+    m_data.insertionPoint.scale(center, factor);
+    m_data.scaleFactor.scale(RS_Vector(0.0, 0.0), factor);
+    m_data.spacing.scale(RS_Vector(0.0, 0.0), factor);
     RS_DEBUG->print("RS_Insert::scale2: insertionPoint: %f/%f",
-                    data.insertionPoint.x, data.insertionPoint.y);
+                    m_data.insertionPoint.x, m_data.insertionPoint.y);
     update();
 
 }
 
 void RS_Insert::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    data.insertionPoint.mirror(axisPoint1, axisPoint2);
-    RS_Vector vec = RS_Vector::polar(1.0, data.angle);
+    m_data.insertionPoint.mirror(axisPoint1, axisPoint2);
+    RS_Vector vec = RS_Vector::polar(1.0, m_data.angle);
     vec.mirror(RS_Vector(0.0, 0.0), axisPoint2 - axisPoint1);
-    data.angle = RS_Math::correctAngle(vec.angle() - M_PI);
-    data.scaleFactor.x *= -1;
+    m_data.angle = RS_Math::correctAngle(vec.angle() - M_PI);
+    m_data.scaleFactor.x *= -1;
     update();
 }
 

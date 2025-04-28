@@ -127,7 +127,7 @@ m0 x + m1 y + m2 =0
 
 
 
-protected:
+private:
     RS_ConstructionLineData data{};
 };
 

@@ -37,7 +37,7 @@ struct RS_DimAlignedData {
 	/**
 	 * Default constructor
 	 */
-	RS_DimAlignedData();
+    RS_DimAlignedData() = default;;
 	/**
 	 * Constructor with initialisation.
 	 *
@@ -105,7 +105,12 @@ public:
         std::ostream &os,
         const RS_DimAligned &d);
     void getDimPoints(RS_Vector &dimP1, RS_Vector &dimP2);
-protected:
+
+    double getDistanceToPoint(const RS_Vector& coord,
+                              RS_Entity** entity,
+                              RS2::ResolveLevel level=RS2::ResolveNone,
+                              double solidDist = RS_MAXDOUBLE) const override;
+private:
     /** Extended data. */
     RS_DimAlignedData edata;
 };

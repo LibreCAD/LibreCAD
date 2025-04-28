@@ -452,7 +452,6 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
 }
 
 RS_BoundData RS_Modification::getBoundingRect(std::vector<RS_Entity *> &selected)  {
-    RS_Vector selectionCenter;
     RS_Vector min = RS_Vector(10e10, 10e10,0);
     RS_Vector max = RS_Vector(-10e10, -10e10,0);
     for (auto e: selected) {

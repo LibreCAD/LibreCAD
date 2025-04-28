@@ -140,7 +140,7 @@ LC_ActionOptionsWidget *LC_ActionSplineFromPolyline::createOptionsWidget() {
 }
 
 RS_Entity* LC_ActionSplineFromPolyline::createSplineForPolyline(RS_Entity *p) {
-    auto* polyline = reinterpret_cast<RS_Polyline *>(p);
+    auto* polyline = static_cast<RS_Polyline *>(p);
     bool closed = polyline->isClosed();
     if (m_vertexesAreFitPoints && m_splineDegree == 2){
         LC_SplinePointsData data = LC_SplinePointsData(closed, false);

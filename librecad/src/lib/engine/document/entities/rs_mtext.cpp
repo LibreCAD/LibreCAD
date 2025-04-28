@@ -40,11 +40,12 @@
 RS_MText::LC_TextLine *RS_MText::LC_TextLine::clone() const {
     auto *ec = new LC_TextLine(getParent(), isOwner());
     if (isOwner()) {
-        for (const auto *entity: entities)
+        for (const RS_Entity *entity: *this)
             if (entity != nullptr)
-                ec->entities.push_back(entity->clone());
+                ec->push_back(entity->clone());
     } else {
-        ec->entities = entities;
+        ec->clear();
+        std::copy(cbegin(), cend(), std::back_inserter(*ec));
     }
     ec->detach();
     ec->setTextSize(textSize);
@@ -140,7 +141,7 @@ public:
 RS_Entity *RS_MText::cloneProxy() const {
     auto* proxy = new RS_EntityContainer();
     proxy->setOwner(true);
-    for (RS_Entity *entity: std::as_const(entities)) {
+    for (RS_Entity *entity: std::as_const(*this)) {
         auto line = dynamic_cast<LC_TextLine*>(entity);
         if (line != nullptr && line->count() > 0) {
             const RS_Vector &start = line->getBaselineStart();
@@ -469,7 +470,7 @@ void RS_MText::alignVertically(){
             LC_ERR<<__func__<<"(): line "<<__LINE__<<": invalid Invalid RS_MText::VAlign="<<data.valign;
             break;
     }
-    for (RS_Entity *e: std::as_const(entities)) {
+    for (RS_Entity *e: std::as_const(*this)) {
         auto line = dynamic_cast<LC_TextLine *> (e);
         if (line != nullptr) {
             RS_Vector corner =  RS_Vector(line->getMin().rotate(data.insertionPoint, data.angle));
@@ -486,7 +487,7 @@ void RS_MText::alignVertically(){
 }
 
 void RS_MText::rotateLinesRefs() const {
-    for (RS_Entity *e: std::as_const(entities)) {
+    for (RS_Entity *e: std::as_const(*this)) {
         auto line = dynamic_cast<LC_TextLine *> (e);
         if (line != nullptr) {
             RS_Vector corner = line->getLeftBottomCorner();
@@ -673,7 +674,7 @@ void RS_MText::move(const RS_Vector &offset) {
     RS_EntityContainer::move(offset);
     data.insertionPoint.move(offset);
     //    update();
-    for (RS_Entity* e: std::as_const(entities)) {
+    for (RS_Entity* e: std::as_const(*this)) {
         auto line = dynamic_cast<LC_TextLine *> (e);
         if (line != nullptr) {
             line->moveBaseline(offset);
@@ -689,7 +690,7 @@ void RS_MText::rotate(const RS_Vector &center, double angle) {
 //    update();
 //    calculateBorders();
 
-    for (RS_Entity *e: std::as_const(entities)) {
+    for (RS_Entity *e: std::as_const(*this)) {
         auto line = dynamic_cast<LC_TextLine *> (e);
         if (line != nullptr) {
             RS_Vector corner = line->getLeftBottomCorner();
@@ -799,7 +800,7 @@ void RS_MText::draw(RS_Painter *painter) {
         return;
     }
 
-    for (RS_Entity *entity: std::as_const(entities)) {
+    for (RS_Entity *entity: std::as_const(*this)) {
         painter->drawAsChild(entity);
 
 #ifdef DEBUG_LINE_POINTS
@@ -816,7 +817,7 @@ void RS_MText::drawDraft(RS_Painter *painter) {
 #ifdef DEBUG_LINE_POINTS
     painter->drawRect(painter->toGui(getMin()), painter->toGui(getMax()));
 #endif
-    for (RS_Entity *entity: std::as_const(entities)) {
+    for (RS_Entity *entity: std::as_const(*this)) {
         auto line = dynamic_cast<LC_TextLine*>(entity);
         if (line != nullptr && line->count() > 0) {
             painter->drawLineWCS(line->getBaselineStart(), line->getBaselineEnd());

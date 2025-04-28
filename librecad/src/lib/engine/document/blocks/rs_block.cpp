@@ -145,7 +145,7 @@ QStringList RS_Block::findNestedInsert(const QString& bName) {
 
     QStringList bnChain;
 
-    for (RS_Entity* e: entities) {
+    for (RS_Entity* e: *this) {
         if (e->rtti()==RS2::EntityInsert) {
             RS_Insert* i = ((RS_Insert*)e);
             QString iName = i->getName();

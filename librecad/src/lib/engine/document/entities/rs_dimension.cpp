@@ -98,17 +98,6 @@ QString functionalText(const QString& dimText, double dimValue) {
 }
 }
 
-RS_DimensionData::RS_DimensionData():
-    definitionPoint(false),
-    middleOfText(false),
-    valign(RS_MTextData::VABottom),
-    halign(RS_MTextData::HALeft),
-    lineSpacingStyle(RS_MTextData::Exact),
-    lineSpacingFactor(0.0),
-    text(""),
-    style(""),
-    angle(0.0)
-{}
 
 /**
  * Constructor with initialisation.
@@ -167,8 +156,10 @@ std::ostream& operator << (std::ostream& os,
  * Constructor.
  */
 RS_Dimension::RS_Dimension(RS_EntityContainer* parent,
-                           const RS_DimensionData& d)
-        : RS_EntityContainer(parent), data(d) {
+                           RS_DimensionData d)
+        : RS_EntityContainer(parent)
+    , data(std::move(d))
+{
 }
 
 RS_Vector RS_Dimension::getNearestRef( const RS_Vector& coord,
@@ -639,7 +630,7 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
         //display ticks
         // Arrows:
 
-        RS_Line* tick;
+        RS_Line* tick = nullptr;
         RS_Vector tickVector = RS_Vector::polar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
 
         if (arrow1) {
