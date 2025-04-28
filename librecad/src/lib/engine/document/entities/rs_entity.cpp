@@ -81,7 +81,7 @@ RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
     , minV {other.minV}
     , maxV {other.maxV}
-    , layer {other.layer}
+    , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
 {
@@ -93,7 +93,7 @@ RS_Entity& RS_Entity::operator = (const RS_Entity& other)
     parent = other.parent;
     minV  = other.minV;
     maxV  = other.maxV;
-    layer  = other.layer;
+    m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl->fromOther(other.m_pImpl.get());
     init();
@@ -104,7 +104,7 @@ RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
     , minV {other.minV}
     , maxV {other.maxV}
-    , layer {other.layer}
+    , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::move(other.m_pImpl)}
 {
@@ -116,7 +116,7 @@ RS_Entity& RS_Entity::operator = (RS_Entity&& other)
     parent = other.parent;
     minV  = other.minV;
     maxV  = other.maxV;
-    layer  = other.layer;
+    m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl = std::move(other.m_pImpl);
     init();
@@ -1143,4 +1143,3 @@ unsigned long long RS_Entity::getId() const
 {
     return m_pImpl != nullptr ? m_id : 0ULL;
 }
-

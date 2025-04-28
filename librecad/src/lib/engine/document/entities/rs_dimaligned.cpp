@@ -36,10 +36,6 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 
-RS_DimAlignedData::RS_DimAlignedData():
-    extensionPoint1(false),
-    extensionPoint2(false) {
-}
 
 /**
  * Constructor with initialisation.
@@ -71,21 +67,14 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
                              const RS_DimensionData& d,
                              const RS_DimAlignedData& ed)
     : RS_Dimension(parent, d), m_dimAlignedData(ed) {
-    RS_DimAligned::calculateBorders();
-    : RS_Dimension(parent, d), edata(ed)
-{
-
     updateDimensions();
     RS_DimAligned::updateDim();
     calculateBorders();
 }
 
 RS_Entity* RS_DimAligned::clone() const{
-	auto d = new RS_DimAligned(*this);
-    RS_DimAligned* d = new RS_DimAligned(getParent(), getData(), getEData());
+    auto d = new RS_DimAligned(getParent(), getData(), getEData());
 	d->setOwner(isOwner());
-    d->detach();
-    d->init();
 	return d;
 }
 

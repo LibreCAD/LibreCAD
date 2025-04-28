@@ -1051,10 +1051,10 @@ RS_Entity *RS_EntityContainer::firstEntity(RS2::ResolveLevel level) const {
  */
 RS_Entity *RS_EntityContainer::lastEntity(RS2::ResolveLevel level) const {
     RS_Entity *e = nullptr;
-    if (entities.empty()) {
+    if (m_entities.empty()) {
         return nullptr;
     }
-    entIdx = entities.size() - 1;
+    entIdx = m_entities.size() - 1;
     switch (level) {
         case RS2::ResolveNone:
             if (!m_entities.isEmpty())
