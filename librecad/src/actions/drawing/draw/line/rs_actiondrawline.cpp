@@ -31,36 +31,26 @@
 #include "qg_lineoptions.h"
 #include "rs_debug.h"
 #include "rs_line.h"
+#include "rs_actioneditundo.h"
+#include "qg_graphicview.h"
 
 struct RS_ActionDrawLine::History
 {
-    explicit History(RS_ActionDrawLine::HistoryAction a,
-                     const RS_Vector& p,
-                     const RS_Vector& c,
-                     const int s) :
-        histAct( a),
-        prevPt( p),
-        currPt( c),
-        startOffset( s) {}
+    History() = default;
 
-    explicit History(const History& h) :
-        histAct( h.histAct),
-        prevPt( h.prevPt),
-        currPt( h.currPt),
-        startOffset( h.startOffset) {}
+    explicit History(RS_ActionDrawLine::HistoryAction action,
+                     const RS_Vector& previous,
+                     const RS_Vector& current,
+                     const int start) :
+        historicAction( action),
+        previousPoint( previous),
+        currentPoint( current),
+        startOffset( start) {}
 
-    History& operator=(const History& rho) {
-        histAct     = rho.histAct;
-        prevPt      = rho.prevPt;
-        currPt      = rho.currPt;
-        startOffset = rho.startOffset;
-        return *this;
-    }
-
-    RS_ActionDrawLine::HistoryAction    histAct;    ///< action to undo/redo
-    RS_Vector       prevPt;     ///< previous coordinate
-    RS_Vector       currPt;     ///< current coordinate
-    int             startOffset;///< offset to start point for close method
+    RS_ActionDrawLine::HistoryAction    historicAction = HA_SetStartpoint;    ///< action to undo/redo
+    RS_Vector       previousPoint;     ///< previous coordinate
+    RS_Vector       currentPoint;     ///< current coordinate
+    int             startOffset = 0;///< offset to start point for close method
 };
 
 struct RS_ActionDrawLine::ActionData
@@ -77,17 +67,18 @@ struct RS_ActionDrawLine::ActionData
 
     /// wrapper for historyIndex to avoid 'signedness' warnings where std::vector-methods expect size_t
     /// also, offset helps in close method to find starting point
-    size_t index(const int offset = 0);
+    size_t index(int offset = 0);
 };
 
-size_t RS_ActionDrawLine::ActionData::index(const int offset /*= 0*/)
+size_t RS_ActionDrawLine::ActionData::index(int offset /*= 0*/)
 {
     return static_cast<size_t>( std::max( 0, historyIndex + offset));
 }
 
 RS_ActionDrawLine::RS_ActionDrawLine(LC_ActionContext *actionContext) :
     RS_PreviewActionInterface( "Draw lines", actionContext, RS2::ActionDrawLine),
-    m_actionData( new ActionData{}){
+    m_actionData(std::make_unique<ActionData>())
+{
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
 }
 
@@ -95,7 +86,7 @@ RS_ActionDrawLine::~RS_ActionDrawLine() = default;
 
 void RS_ActionDrawLine::reset(){
     RS_DEBUG->print("RS_ActionDrawLine::reset");
-    m_actionData.reset(new ActionData{});
+    m_actionData = std::make_unique<ActionData>();
 }
 
 void RS_ActionDrawLine::init(int status){
@@ -109,9 +100,9 @@ void RS_ActionDrawLine::init(int status){
 void RS_ActionDrawLine::doTrigger() {
     auto* line = new RS_Line(m_container, m_actionData->data);
     setPenAndLayerToActive(line);
-    moveRelativeZero(m_actionData->history.at(m_actionData->index()).currPt);
+    moveRelativeZero(m_actionData->history.at(m_actionData->index()).currentPoint);
     undoCycleAdd(line);
-    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",line->getId());
+    LC_LOG<<"RS_ActionDrawLine::trigger(): line added: "<<line->getId();
 }
 
 void RS_ActionDrawLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -175,6 +166,7 @@ void RS_ActionDrawLine::onCoordinateEvent(int status, [[maybe_unused]] bool isZe
             setStatus(SetEndpoint);
             moveRelativeZero(mouse);
             updateMouseButtonHints();
+            static_cast<QG_LineOptions*>(m_optionWidget.get())->enableButtons();
             break;
         }
         case SetEndpoint: {
@@ -187,6 +179,7 @@ void RS_ActionDrawLine::onCoordinateEvent(int status, [[maybe_unused]] bool isZe
                 m_actionData->data.startpoint = m_actionData->data.endpoint;
                 if (m_actionData->history.size() >= 2) {
                     updateMouseButtonHints();
+                    static_cast<QG_LineOptions*>(m_optionWidget.get())->enableButtons();
                 }
             }
             break;
@@ -304,8 +297,8 @@ void RS_ActionDrawLine::close(){
     }
     if (1 < m_actionData->startOffset  && 0 <= m_actionData->historyIndex - m_actionData->startOffset) {
         History h(m_actionData->history.at( m_actionData->index( -m_actionData->startOffset)));
-        if ((m_actionData->data.startpoint - h.currPt).squared() > RS_TOLERANCE2) {
-            m_actionData->data.endpoint = h.currPt;
+        if ((m_actionData->data.startpoint - h.currentPoint).squared() > RS_TOLERANCE2) {
+            m_actionData->data.endpoint = h.currentPoint;
             addHistory( HA_Close, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
             trigger();
             setStatus(SetStartpoint);
@@ -322,46 +315,53 @@ void RS_ActionDrawLine::next(){
     setStatus(SetStartpoint);
 }
 
-void RS_ActionDrawLine::addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s){
-    if (m_actionData->historyIndex < -1) {
-        m_actionData->historyIndex = -1;
-    }
+void RS_ActionDrawLine::addHistory(RS_ActionDrawLine::HistoryAction action, const RS_Vector& previous, const RS_Vector& current, const int start)
+{
+    m_actionData->historyIndex = std::max(m_actionData->historyIndex, -1);
 
-    auto offset = m_actionData->historyIndex + 1;
-    if (offset == 0) {
-        // this is for MSVC implementation of vector, it does not like 0 offset
-        m_actionData->history.erase(m_actionData->history.begin(), m_actionData->history.end());
-    }
-    else {
-        m_actionData->history.erase(m_actionData->history.begin() + offset, m_actionData->history.end());
-    }
+    size_t offset = m_actionData->historyIndex + 1;
+    assert(offset <= m_actionData->history.size());
+    m_actionData->history.resize(offset);
 
-    m_actionData->history.push_back( History( a, p, c, s));
+    m_actionData->history.emplace_back(action, previous, current, start);
     m_actionData->historyIndex = static_cast<int>(m_actionData->history.size() - 1);
 }
 
+
+bool RS_ActionDrawLine::canUndo() const
+{
+    return m_actionData != nullptr && 0 <= m_actionData->historyIndex;
+}
+
+bool RS_ActionDrawLine::canRedo() const
+{
+    return m_actionData->history.size() > m_actionData->index() + 1;
+}
+
 void RS_ActionDrawLine::undo(){
-    if (0 <= m_actionData->historyIndex) {
+    if (m_actionData != nullptr && 0 <= m_actionData->historyIndex) {
         History h( m_actionData->history.at( m_actionData->index()));
 
         --m_actionData->historyIndex;
         deletePreview();
-        moveRelativeZero(h.prevPt);
+        moveRelativeZero(h.previousPoint);
 
-        switch (h.histAct) {
+        switch (h.historicAction) {
             case HA_SetStartpoint: {
                 setStatus(SetStartpoint);
                 break;
             }
             case HA_SetEndpoint:
             case HA_Close: {
-                switchToAction(RS2::ActionEditUndo);
-                m_actionData->data.startpoint = h.prevPt;
+                m_document->undo();
+                m_graphicView->redraw(RS2::RedrawDrawing);
+                //switchToAction(RS2::ActionEditUndo);
+                m_actionData->data.startpoint = h.previousPoint;
                 setStatus(SetEndpoint);
                 break;
             }
             case HA_Next: {
-                m_actionData->data.startpoint = h.prevPt;
+                m_actionData->data.startpoint = h.previousPoint;
                 setStatus(SetEndpoint);
                 break;
             }
@@ -381,10 +381,10 @@ void RS_ActionDrawLine::redo(){
         ++m_actionData->historyIndex;
         History h( m_actionData->history.at( m_actionData->index()));
         deletePreview();
-        moveRelativeZero(h.currPt);
-        m_actionData->data.startpoint = h.currPt;
+        moveRelativeZero(h.currentPoint);
+        m_actionData->data.startpoint = h.currentPoint;
         m_actionData->startOffset = h.startOffset;
-        switch (h.histAct) {
+        switch (h.historicAction) {
             case HA_SetStartpoint: {
                 setStatus(SetEndpoint);
                 break;

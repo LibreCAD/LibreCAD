@@ -81,7 +81,7 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         case SetRadius: {
             if (m_arcData->center.valid){
-                if (m_actionType == RS2::ActionDrawArc) {
+                if (rtti() == RS2::ActionDrawArc) {
                     mouse = getFreeSnapAwarePoint(e, mouse);
                 }
                 else{
@@ -240,7 +240,7 @@ void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     bool shouldFireCoordinateEvent = true;
     switch (status) {
         case SetRadius: {
-            if (m_actionType == RS2::ActionDrawArc) {
+        if (rtti() == RS2::ActionDrawArc) {
                 mouse = getFreeSnapAwarePoint(e, mouse);
             }
             else{

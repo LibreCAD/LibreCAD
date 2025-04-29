@@ -49,6 +49,9 @@ public:
     void next();
     void undo();
     void redo();
+
+    bool canUndo() const;
+    bool canRedo() const;
 protected:
     /// Action States
     enum Status {
@@ -69,7 +72,7 @@ protected:
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
 
-    void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
+    void addHistory(RS_ActionDrawLine::HistoryAction action, const RS_Vector& previous, const RS_Vector& current, int start);
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;

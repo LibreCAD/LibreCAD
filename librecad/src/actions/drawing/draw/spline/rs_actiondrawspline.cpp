@@ -51,8 +51,10 @@ struct RS_ActionDrawSpline::ActionData {
 //QList<double> bHistory;
 };
 
-RS_ActionDrawSpline::RS_ActionDrawSpline(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Draw splines",actionContext, RS2::ActionDrawSpline), m_actionData(std::make_unique<ActionData>()){
+RS_ActionDrawSpline::RS_ActionDrawSpline(LC_ActionContext *actionContext, RS2::ActionType actionType)
+    :RS_PreviewActionInterface("Draw splines",actionContext, actionType)
+    , m_actionData(std::make_unique<ActionData>())
+{
     reset();
 }
 
