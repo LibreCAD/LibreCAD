@@ -310,6 +310,10 @@ bool LC_LineMath::isMeaningfulAngle(double value){
     return std::abs(value) >= RS_TOLERANCE_ANGLE;
 }
 
+bool LC_LineMath::isSameAngle(double angle1, double angle2) {
+    return std::abs(angle1 - angle2) < RS_TOLERANCE_ANGLE;
+}
+
 /**
  * Return true if distance between two points is meaningful and so these are
  * different points

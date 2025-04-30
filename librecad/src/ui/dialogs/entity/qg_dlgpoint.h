@@ -39,7 +39,7 @@ public:
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
     RS_Pen m_pen;
     RS_Point* m_entity;

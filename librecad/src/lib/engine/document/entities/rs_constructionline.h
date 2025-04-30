@@ -56,8 +56,9 @@ struct RS_ConstructionLineData {
 class RS_ConstructionLine : public RS_AtomicEntity {
 public:
     RS_ConstructionLine() = default;
-    RS_ConstructionLine(RS_EntityContainer* parent,
-                        const RS_ConstructionLineData& d);
+    RS_ConstructionLine(RS_EntityContainer* parent, const RS_ConstructionLineData& d);
+
+    RS_ConstructionLine(const RS_Vector& point1, const RS_Vector& point2);
 
      RS_Entity* clone() const override;
 

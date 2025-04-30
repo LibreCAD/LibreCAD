@@ -322,10 +322,12 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 	switch(type){
 	case RS2::EntityDimAligned:
 	case RS2::EntityDimLinear:
+	case RS2::EntityDimOrdinate:
 	case RS2::EntityDimRadial:
 	case RS2::EntityDimDiametric:
 	case RS2::EntityDimAngular:
 	case RS2::EntityDimArc:
+	case RS2::EntityTolerance:
 		return true;
 	default:
 		return false;

@@ -81,7 +81,7 @@ RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
     , minV {other.minV}
     , maxV {other.maxV}
-    , layer {other.layer}
+    , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
 {
@@ -93,7 +93,7 @@ RS_Entity& RS_Entity::operator = (const RS_Entity& other)
     parent = other.parent;
     minV  = other.minV;
     maxV  = other.maxV;
-    layer  = other.layer;
+    m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl->fromOther(other.m_pImpl.get());
     init();
@@ -104,7 +104,7 @@ RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
     , minV {other.minV}
     , maxV {other.maxV}
-    , layer {other.layer}
+    , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::move(other.m_pImpl)}
 {
@@ -116,7 +116,7 @@ RS_Entity& RS_Entity::operator = (RS_Entity&& other)
     parent = other.parent;
     minV  = other.minV;
     maxV  = other.maxV;
-    layer  = other.layer;
+    m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl = std::move(other.m_pImpl);
     init();
@@ -408,8 +408,8 @@ bool RS_Entity::isVisible() const {
     if (isDocument() && (rtti() == RS2::EntityBlock || rtti() == RS2::EntityInsert)) {
         return true;
     }
-    if (layer != nullptr) {
-        return !layer->isFrozen();
+    if (m_layer != nullptr) {
+        return !m_layer->isFrozen();
     } else {
         /*RS_EntityContainer* parent = getParent();
 if (parent && parent->isUndone()) {
@@ -709,7 +709,7 @@ RS2::Unit RS_Entity::getGraphicUnit() const
 RS_Layer* RS_Entity::getLayerResolved() const {
     // we have no layer but a parent that might have one.
     // return parent's layer instead:
-    if (layer == nullptr /*|| layer->getName()=="ByBlock"*/) {
+    if (m_layer == nullptr /*|| layer->getName()=="ByBlock"*/) {
         if (parent != nullptr) {
             return parent->getLayerResolved();
         } else {
@@ -717,7 +717,7 @@ RS_Layer* RS_Entity::getLayerResolved() const {
         }
     }
     else{
-        return layer;
+        return m_layer;
     }
 }
 
@@ -737,7 +737,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
     if (resolve) {
         // we have no layer but a parent that might have one.
         // return parent's layer instead:
-        if (layer == nullptr /*|| layer->getName()=="ByBlock"*/) {
+        if (m_layer == nullptr /*|| layer->getName()=="ByBlock"*/) {
             if (parent != nullptr) {
                 return parent->getLayer(true);
             } else {
@@ -747,7 +747,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
     }
 
 // return our layer. might still be nullptr:
-    return layer;
+    return m_layer;
 }
 
 /**
@@ -756,9 +756,9 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
 void RS_Entity::setLayer(const QString& name) {
     RS_Graphic* graphic = getGraphic();
     if (graphic) {
-        layer = graphic->findLayer(name);
+        m_layer = graphic->findLayer(name);
     } else {
-        layer = nullptr;
+        m_layer = nullptr;
     }
 }
 
@@ -766,7 +766,7 @@ void RS_Entity::setLayer(const QString& name) {
  * Sets the layer of this entity to the layer given.
  */
 void RS_Entity::setLayer(RS_Layer* l) {
-    layer = l;
+    m_layer = l;
 }
 
 /**
@@ -778,9 +778,9 @@ void RS_Entity::setLayerToActive() {
     RS_Graphic* graphic = getGraphic();
 
     if (graphic) {
-        layer = graphic->getActiveLayer();
+        m_layer = graphic->getActiveLayer();
     } else {
-        layer = nullptr;
+        m_layer = nullptr;
     }
 }
 
@@ -1011,12 +1011,12 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
     /*if (isHatchMember(this))
         return false;*/
 
-    return (layer != nullptr) && layer->isConstruction();
+    return (m_layer != nullptr) && m_layer->isConstruction();
 }
 
 //! whether printing is enabled or disabled for the entity's layer
 bool RS_Entity::isPrint(void) const{
-    return nullptr == layer || layer->isPrint();
+    return nullptr == m_layer || m_layer->isPrint();
 }
 
 bool RS_Entity::trimmable() const{
@@ -1071,11 +1071,11 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     os << (e.getFlag(RS2::FlagSelected) ? " RS2::FlagSelected" : "");
     os << "\n";
 
-    if (!e.layer) {
+    if (!e.m_layer) {
         os << " layer: nullptr ";
     } else {
-        os << " layer: " << e.layer->getName().toLatin1().data() << " ";
-        os << " layer address: " << e.layer << " ";
+        os << " layer: " << e.m_layer->getName().toLatin1().data() << " ";
+        os << " layer address: " << e.m_layer << " ";
     }
 
     os << e.m_pImpl->pen << "\n";
@@ -1143,4 +1143,3 @@ unsigned long long RS_Entity::getId() const
 {
     return m_pImpl != nullptr ? m_id : 0ULL;
 }
-

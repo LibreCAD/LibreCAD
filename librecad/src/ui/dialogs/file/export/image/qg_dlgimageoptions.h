@@ -45,7 +45,7 @@ public slots:
     void sameBordersChanged();
     void borderChanged();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     RS_Vector m_graphicSize;
     bool m_updateEnabled;

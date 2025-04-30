@@ -43,7 +43,7 @@ public:
 protected:
     double* m_dist;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
     void onDistEditingFinished();
 private:
     void saveSettings();

@@ -39,7 +39,7 @@ class QG_LayerBox: public QComboBox {
     Q_OBJECT
 public:
     QG_LayerBox(QWidget* parent=nullptr);
-    virtual ~QG_LayerBox();
+    ~QG_LayerBox() override;
     RS_Layer* getLayer() {
         return m_currentLayer;
     }

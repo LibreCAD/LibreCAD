@@ -111,6 +111,7 @@ private:
     bool processLWPolyline();
     bool processPolyline();
     bool processVertex(DRW_Polyline* pl);
+    bool processTolerance();
     bool processText();
     bool processMText();
     bool processHatch();

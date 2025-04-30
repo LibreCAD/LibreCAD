@@ -730,7 +730,7 @@ RS_DimensionData RS_FilterJWW::convDimensionData(
                                                         valign, halign,
                                                         lss,
                                                         data.lineSpacingFactor,
-                                                        t, sty, data.angle);
+                                                        t, sty, data.angle, 0.0, true);
 }
 
 
@@ -2126,7 +2126,7 @@ void RS_FilterJWW::writeDimension(DL_WriterA& dw, RS_Dimension* d,
                                                                                  0.0);
 
                 jww.writeDimAligned(dw, dimData, dimAlignedData, attrib);
-        } else if (d->rtti()==RS2::EntityDimLinear) {
+        } else if (d->rtti()==RS2::EntityDimLinear) { // fixme - support of dim ordinate?
                 RS_DimLinear* dl = (RS_DimLinear*)d;
 
                 DL_DimLinearData dimLinearData(dl->getExtensionPoint1().x,

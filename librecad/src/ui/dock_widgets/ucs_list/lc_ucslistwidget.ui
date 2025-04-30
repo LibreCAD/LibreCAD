@@ -91,6 +91,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="tbSetUCSByDimOrdinate">
+       <property name="toolTip">
+        <string>Set UCS by ordinate dimension</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/ucs_set_by_dimordinate.lci</normaloff>:/icons/ucs_set_by_dimordinate.lci</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="tbRename">
        <property name="toolTip">
         <string>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</string>
@@ -195,7 +209,6 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

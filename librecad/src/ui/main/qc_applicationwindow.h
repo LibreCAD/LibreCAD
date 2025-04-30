@@ -29,7 +29,7 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-
+#include "lc_actioncontext.h"
 #include "lc_mdiapplicationwindow.h"
 
 class LC_ActionFactory;
@@ -302,6 +302,8 @@ public:
     void changeDrawingOptions(int tabIndex);
     void closeWindow(QC_MDIWindow* w) override;
     QG_LibraryWidget* getLibraryWidget(){return m_libraryWidget;}
+
+    LC_ActionContext* getActionContext();
 protected:
     void closeEvent(QCloseEvent*) override;
     bool isAcceptableDragNDropFileName(const QString& fileName);

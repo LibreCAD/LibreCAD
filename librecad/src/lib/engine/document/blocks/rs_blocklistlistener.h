@@ -67,7 +67,6 @@ public:
      * Called when block list is modified.
      */
     virtual void blockListModified(bool) {}
-}
-;
+};
 
 #endif

@@ -41,11 +41,11 @@ public:
     ~QG_DlgMirror();
 
 public slots:
-    virtual void setData( RS_MirrorData * d );
-    virtual void updateData();
+    void setData( RS_MirrorData * d );
+    void updateData();
 
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 
 private:
     RS_MirrorData* data = nullptr;

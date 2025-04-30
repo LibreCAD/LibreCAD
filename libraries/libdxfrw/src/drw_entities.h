@@ -75,7 +75,7 @@ namespace DRW {
 //        SURFACE, //encrypted proprietary data can be four types
 //        TABLE,
         TEXT,
-//        TOLERANCE,
+        TOLERANCE,
         TRACE,
         UNDERLAY,
         VERTEX,
@@ -520,6 +520,40 @@ public: //only for read dwg
     dwgHandle seqendH; //RLZ: on implement attrib remove this handle from obj list (see pline/vertex code)
 };
 
+//! Class to handle insert entries
+/*!
+*  Class to handle insert entries
+*/
+class DRW_Tolerance : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_Tolerance():DRW_Entity() {
+        eType = DRW::TOLERANCE;
+        extPoint.z = 1;
+        extPoint.x = extPoint.y = 0;
+        dimStyleName = "STANDARD";
+    }
+    DRW_Tolerance(const DRW_Tolerance& p):DRW_Entity(p) {
+        this->eType = DRW::TOLERANCE;
+        this->text = p.text;
+        this->dimStyleName = p.dimStyleName;
+        this->insertionPoint = p.insertionPoint;
+        this->xAxisDirectionVector = p.xAxisDirectionVector;
+        this->extPoint = p.extPoint;
+    }
+    void applyExtrusion() override {}
+protected:
+    bool parseCode(int code, dxfReader *reader) override;
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    UTF8STRING text;           /*  String representing the visual representation of the tolerance, code 1*/
+    UTF8STRING dimStyleName;    /*!< block name, code 3 */
+    DRW_Coord insertionPoint;       /*!< insertion point, code 10,20,30 */
+    DRW_Coord xAxisDirectionVector;   /*X-axis direction vector (in WCS), code 11,21,31*/
+    DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
+};
+
 //! Class to handle lwpolyline entity
 /*!
 *  Class to handle lwpolyline entity
@@ -550,7 +584,7 @@ public:
     }
 	// TODO rule of 5
 
-     void applyExtrusion() override;
+    void applyExtrusion() override;
     void addVertex (DRW_Vertex2D v) {
 		std::shared_ptr<DRW_Vertex2D> vert = std::make_shared<DRW_Vertex2D>(v);
         vertlist.push_back(vert);
@@ -992,6 +1026,7 @@ public:
         defPoint.z = extPoint.x = extPoint.y = 0;
         textPoint.z = rot = 0;
         clonePoint.x = clonePoint.y = clonePoint.z = 0;
+        hdir = 0;
     }
 
     DRW_Dimension(const DRW_Dimension& d): DRW_Entity(d) {
@@ -1015,7 +1050,7 @@ public:
         arcPoint = d.arcPoint;
         circlePoint = d.circlePoint;
         length = d.length;
-        //RLZ needed a def value for this: hdir = ???
+        hdir = d.hdir;
     }
     virtual ~DRW_Dimension() {}
 
@@ -1049,6 +1084,8 @@ public:
     std::string getName(){return name;}                   /*!< Name of the block that contains the entities, code 2 */
     void setName(const std::string s) {name = s;}
 //    int getType(){ return type;}                      /*!< Dimension type, code 70 */
+    double getHDir() const {return hdir;}
+    void setHDir(const double h) {hdir = h;}
 
 protected:
     DRW_Coord getPt2() const {return clonePoint;}
@@ -1081,7 +1118,7 @@ private:
     double rot;                /*!< rotation angle of the dimension text, code 53 */
     DRW_Coord extPoint;        /*!<  extrusion normal vector, code 210, 220 & 230 */
 
-    double hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
+    double     hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
     DRW_Coord clonePoint;      /*!< Insertion point for clones (Baseline & Continue), code 12, 22 & 32 (OCS) */
     DRW_Coord def1;            /*!< Definition point 1for linear & angular, code 13, 23 & 33 (WCS) */
     DRW_Coord def2;            /*!< Definition point 2, code 14, 24 & 34 (WCS) */

@@ -37,6 +37,7 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_dimstyleslist.h"
 
 namespace {
 // default paper size A4: 210x297 mm
@@ -433,13 +434,14 @@ RS2::Unit RS_Graphic::getUnit() const {
 RS2::LinearFormat RS_Graphic::getLinearFormat() const{
     // fixme - sand - add caching
     int lunits = getVariableInt("$LUNITS", 2);
-    return getLinearFormat(lunits);
+    return convertLinearFormatDXF2LC(lunits);
 }
 
 /**
  * @return The linear format type used by the variable "$LUNITS" & "$DIMLUNIT".
  */
-RS2::LinearFormat RS_Graphic::getLinearFormat(int f) const{
+// fixme - sand - move to generic utils!
+RS2::LinearFormat RS_Graphic::convertLinearFormatDXF2LC(int f) const{
     switch (f) {
         case 1:
             return RS2::Scientific;

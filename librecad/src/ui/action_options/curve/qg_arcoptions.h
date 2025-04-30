@@ -40,7 +40,7 @@ class QG_ArcOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 public:
     QG_ArcOptions();
-    virtual ~QG_ArcOptions() override;
+    ~QG_ArcOptions() override;
 public slots:
     void onDirectionChanged(bool);
     void languageChange() override;

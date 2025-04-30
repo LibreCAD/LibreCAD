@@ -77,7 +77,7 @@ public:
         RS_EntityContainer *parent,
         const RS_DimensionData &d,
         const RS_DimLinearData &ed);
-    virtual ~RS_DimLinear() = default;
+    ~RS_DimLinear() override = default;
     RS_Entity *clone() const override;
 
     /**	@return RS2::EntityDimLinear */
@@ -90,29 +90,28 @@ public:
      * @see getData()
      */
     RS_DimLinearData getEData() const{
-        return edata;
+        return m_dimLinearData;
     }
 
     RS_VectorSolutions getRefPoints() const override;
     QString getMeasuredLabel() override;
-    void updateDim(bool autoText = false) override;
 
     RS_Vector getExtensionPoint1() const{
-        return edata.extensionPoint1;
+        return m_dimLinearData.extensionPoint1;
     }
 
     RS_Vector getExtensionPoint2() const{
-        return edata.extensionPoint2;
+        return m_dimLinearData.extensionPoint2;
     }
 
     double getAngle() const{
-        return edata.angle;
+        return m_dimLinearData.angle;
     }
 
     void setAngle(double a);
 
     double getOblique() const{
-        return edata.oblique;
+        return m_dimLinearData.oblique;
     }
 
     void move(const RS_Vector &offset) override;
@@ -132,7 +131,9 @@ public:
     void getDimPoints(RS_Vector &dimP1, RS_Vector &dimP2);
 protected:
     /** Extended data. */
-    RS_DimLinearData edata;
+    RS_DimLinearData m_dimLinearData;
+
+    void doUpdateDim();
 };
 
 #endif
