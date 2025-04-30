@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QMessageBox>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QRegularExpression>
 
 #include "lc_graphicviewport.h"
 #include "lc_printpreviewview.h"
@@ -70,6 +71,27 @@ const std::map<RS2::PaperFormat, QPageSize::PageSizeId> paperToPage = {
      {RS2::Arch_E, QPageSize::ArchE},
      }
 };
+
+/**
+ * @brief setFileNameColor - get the printing output file name and black/white or color mode
+ * @returns QString - the PDF file name to export to
+ * @param printer - a QPrinter
+ * @param graphic - the graphic to print
+ */
+QString setFileNameColor(QPrinter& printer, RS_Graphic& graphic)
+{
+    QString pdfFileName = graphic.getFilename();
+    if (pdfFileName.isEmpty()) {
+        pdfFileName = graphic.getAutoSaveFileName();
+    }
+    static QRegularExpression reSuffix{R"(\.dxf$)", QRegularExpression::CaseInsensitiveOption};
+    pdfFileName.replace(reSuffix, ".pdf");
+
+    // color or black/white mode
+    LC_GROUP_GUARD("Print");
+    printer.setColorMode((QPrinter::ColorMode) LC_GET_INT("ColorMode", (int) QPrinter::Color));
+    return pdfFileName;
+}
 }
 
 QPageSize::PageSizeId LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper){
@@ -93,8 +115,8 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     printer.setFullPage(true);
 
     bool landscape = false;
-    RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
-    QPageSize::PageSizeId paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
+    RS2::PaperFormat paperformat = graphic->getPaperFormat(&landscape);
+    QPageSize::PageSizeId paperSizeName = LC_Printing::rsToQtPaperFormat(paperformat);
     RS_Vector paperSize = graphic->getPaperSize();
     RS2::Unit unit = graphic->getUnit();
     if (paperSizeName == QPageSize::Custom) {
@@ -113,12 +135,8 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
                            graphic->getMarginBottom()};
     printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
-    QString strDefaultFile("");
-    LC_GROUP("Print");
-    strDefaultFile = LC_GET_STR("FileName", "");
-    printer.setOutputFileName(strDefaultFile);
-    printer.setColorMode((QPrinter::ColorMode) LC_GET_INT("ColorMode", (int) QPrinter::Color));
-    LC_GROUP_END();
+    // Issue #2130: populate the output file name for
+    QString defaultFile = setFileNameColor(printer, *graphic);
 
     // printer setup:
     bool bStartPrinting = false;
@@ -133,37 +151,19 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         layout.setUnits(QPageLayout::Millimeter);
         layout.setMinimumMargins({});
         RS_Vector s=RS_Units::convert(paperSize, unit, RS2::Millimeter);
-        if(landscape) s=s.flipXY();
-        layout.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter}, paperMargins);
+        if(landscape)
+            s=s.flipXY();
+        layout.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter}, paperMargins);
         printer.setPageLayout(layout);
-        QFileInfo infDefaultFile(strDefaultFile);
-        QFileDialog fileDlg(&mdiWindow, QObject::tr("Export as PDF"));
-        QString defFilter("PDF files (*.pdf)");
-        QStringList filters;
-
-        filters << defFilter
-                << "Any files (*)";
-
-        fileDlg.setNameFilters(filters);
-        fileDlg.setFileMode(QFileDialog::AnyFile);
-        fileDlg.selectNameFilter(defFilter);
-        fileDlg.setAcceptMode(QFileDialog::AcceptSave);
-        fileDlg.setDefaultSuffix("pdf");
-        fileDlg.setDirectory(infDefaultFile.dir().path());
-        // bug#509 setting default file name restricts selection
-        //        strPdfFileName = infDefaultFile.baseName();
-        //        if( strPdfFileName.isEmpty())
-        //            strPdfFileName = "unnamed";
-        //fileDlg.selectFile(strPdfFileName);
-
-        if (QDialog::Accepted == fileDlg.exec()) {
-            QStringList files = fileDlg.selectedFiles();
-            if (!files.isEmpty()) {
-                if (!files[0].endsWith(R"(.pdf)", Qt::CaseInsensitive)) files[0] = files[0] + ".pdf";
-                printer.setOutputFileName(files[0]);
-                bStartPrinting = true;
-            }
-        }
+        QString pdfFie = QFileDialog::getSaveFileName(
+            &mdiWindow,
+            QObject::tr("Export to PDF"),
+            defaultFile,
+            QObject::tr("PDF files (*.pdf);;All files (*.*)"));
+        if (pdfFie.isEmpty())
+            pdfFie = defaultFile;
+        printer.setOutputFileName(pdfFie);
+        bStartPrinting = true;
     } else {
         printer.setOutputFileName(""); // uncheck 'Print to file' checkbox
         printer.setOutputFormat(QPrinter::NativeFormat);
@@ -216,7 +216,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
                                            "\tmargins: %11, %12, %13, %14\n")
                 .arg(paperSize.x)
                 .arg(paperSize.y)
-                .arg(RS_Units::paperFormatToString(pf))
+                .arg(RS_Units::paperFormatToString(paperformat))
                 .arg(RS_Units::convert(paperMargins.left(), RS2::Millimeter, unit))
                 .arg(RS_Units::convert(paperMargins.top(), RS2::Millimeter, unit))
                 .arg(RS_Units::convert(paperMargins.right(), RS2::Millimeter, unit))
