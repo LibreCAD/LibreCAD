@@ -171,7 +171,7 @@ RS_Entity *RS_EntityContainer::clone() const {
 
     auto *ec = new RS_EntityContainer(getParent(), isOwner());
     if (isOwner()) {
-        for (const auto *entity: std::as_const(m_entities)) {
+        for (const RS_Entity *entity: std::as_const(m_entities)) {
             if (entity != nullptr) {
                 ec->m_entities.push_back(entity->clone());
             }
@@ -194,7 +194,7 @@ RS_Entity *RS_EntityContainer::cloneProxy() const {
 
     auto *ec = new RS_EntityContainer(getParent(), isOwner());
     if (isOwner()) {
-        for (const auto *entity: std::as_const(m_entities)) {
+        for (const RS_Entity *entity: std::as_const(m_entities)) {
             if (entity != nullptr) {
                 ec->m_entities.push_back(entity->cloneProxy());
             }
@@ -234,7 +234,7 @@ void RS_EntityContainer::detach() {
     setOwner(autoDel);
 
     // point to new deep copies:
-    for(auto e: tmp) {
+    for(RS_Entity* e: tmp) {
         push_back(e);
         e->reparent(this);
     }
@@ -245,7 +245,7 @@ void RS_EntityContainer::reparent(RS_EntityContainer *parent) {
 
     // All sub-entities:
 
-    for (auto e: std::as_const(m_entities)) {
+    for (RS_Entity* e: *this) {
         e->reparent(parent);
     }
 }
@@ -268,14 +268,14 @@ void RS_EntityContainer::setVisible(bool v) {
 double RS_EntityContainer::getLength() const {
     double ret = 0.0;
 
-    for (auto e: std::as_const(m_entities)) {
+    for (RS_Entity* e: *this) {
         if (e->isVisible()) {
-            double l = e->getLength();
-            if (l < 0.0) {
+            double length = e->getLength();
+            if (std::signbit(length)) {
                 ret = -1.0;
                 break;
             } else {
-                ret += l;
+                ret += length;
             }
         }
     }
@@ -291,15 +291,14 @@ bool RS_EntityContainer::setSelected(bool select) {
     if (RS_Entity::setSelected(select)) {
 
         // All sub-entity's select:
-        for (auto e: m_entities) {
+        for (RS_Entity* e: *this) {
             if (e->isVisible()) {
                 e->setSelected(select);
             }
         }
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 /**
@@ -307,22 +306,12 @@ bool RS_EntityContainer::setSelected(bool select) {
  */
 bool RS_EntityContainer::toggleSelected() {
     // Toggle this entity's select:
-    if (RS_Entity::toggleSelected()) {
-
-        // Toggle all sub-entity's select:
-        /*for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-                e;
-                e=nextEntity(RS2::ResolveNone)) {
-            e->toggleSelected();
-    }*/
-        return true;
-    } else {
-        return false;
-    }
+    return RS_Entity::toggleSelected();
 }
 
-void RS_EntityContainer::setHighlighted(bool on) {
-    for (auto e: m_entities) {
+void RS_EntityContainer::setHighlighted(bool on)
+{
+    for (RS_Entity* e: *this) {
         e->setHighlighted(on);
     }
     RS_Entity::setHighlighted(on);
@@ -339,12 +328,10 @@ void RS_EntityContainer::setHighlighted(bool on) {
  // Such method is needed for better support UCS with rotation and more precise selection of m_entities.
 void RS_EntityContainer::selectWindow(
     enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
-    bool select, bool cross) {
-
-    bool included;
-
-    for (auto e: m_entities) {
-        included = false;
+    bool select, bool cross)
+{
+    for (RS_Entity* e: *this) {
+        bool included = false;
         if (e->isVisible()) {
             if (e->isInWindow(v1, v2)) {
                 //e->setSelected(select);
@@ -357,13 +344,13 @@ void RS_EntityContainer::selectWindow(
                 if (e->isContainer()) {
                     auto *ec = (RS_EntityContainer *) e;
                     for (RS_Entity *se = ec->firstEntity(RS2::ResolveAll);
-                         se && included == false;
+                         se && !included;
                          se = ec->nextEntity(RS2::ResolveAll)) {
 
                         if (se->rtti() == RS2::EntitySolid) {
-                            included = dynamic_cast<RS_Solid *>(se)->isInCrossWindow(v1, v2);
+                            included = static_cast<RS_Solid *>(se)->isInCrossWindow(v1, v2);
                         } else {
-                            for (auto line: l) {
+                            for (RS_Entity* line: l) {
                                 sol = RS_Information::getIntersection(
                                     se, line, true);
                                 if (sol.hasValid()) {
@@ -374,9 +361,9 @@ void RS_EntityContainer::selectWindow(
                         }
                     }
                 } else if (e->rtti() == RS2::EntitySolid) {
-                    included = dynamic_cast<RS_Solid *>(e)->isInCrossWindow(v1, v2);
+                    included = static_cast<RS_Solid *>(e)->isInCrossWindow(v1, v2);
                 } else {
-                    for (auto line: l) {
+                    for (RS_Entity* line: l) {
                         sol = RS_Information::getIntersection(e, line, true);
                         if (sol.hasValid()) {
                             included = true;
@@ -407,15 +394,14 @@ void RS_EntityContainer::selectWindow(
  */
 void RS_EntityContainer::selectWindow(
     const QList<RS2::EntityType> &typesToSelect, RS_Vector v1, RS_Vector v2,
-    bool select, bool cross) {
+    bool select, bool cross)
+{
 
-    bool included;
-
-    for (auto e: m_entities) {
+    for (RS_Entity* e: *this) {
         if (!typesToSelect.contains(e->rtti())){
             continue;
         }
-        included = false;
+        bool included = false;
         if (e->isVisible()) {
             if (e->isInWindow(v1, v2)) {
                 //e->setSelected(select);
@@ -507,7 +493,7 @@ void RS_EntityContainer::addEntity(RS_Entity *entity) {
  * borders of this entity-container if m_autoUpdateBorders is true.
  */
 void RS_EntityContainer::appendEntity(RS_Entity *entity) {
-    if (!entity)
+    if (entity == nullptr)
         return;
     m_entities.append(entity);
     if (m_autoUpdateBorders)
@@ -519,7 +505,8 @@ void RS_EntityContainer::appendEntity(RS_Entity *entity) {
  * borders of this entity-container if m_autoUpdateBorders is true.
  */
 void RS_EntityContainer::prependEntity(RS_Entity *entity) {
-    if (!entity) return;
+    if (entity == nullptr)
+        return;
     m_entities.prepend(entity);
     if (m_autoUpdateBorders)
         adjustBorders(entity);
@@ -530,9 +517,10 @@ void RS_EntityContainer::prependEntity(RS_Entity *entity) {
  * the borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> &entList) {
-    if (entList.isEmpty()) return;
+    if (entList.isEmpty())
+        return;
     int ci = 0; //current index for insert without invert order
-    bool ret, into = false;
+    bool into = false;
     RS_Entity *mid = nullptr;
     if (index < 1) {
         ci = 0;
@@ -545,7 +533,7 @@ void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> &entList) {
 
     for (int i = 0; i < entList.size(); ++i) {
         RS_Entity *e = entList.at(i);
-        ret = m_entities.removeOne(e);
+        bool ret = m_entities.removeOne(e);
         //if e not exist in entities list remove from entList
         if (!ret) {
             entList.removeAt(i);
@@ -565,7 +553,8 @@ void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> &entList) {
  * the borders of this entity-container if m_autoUpdateBorders is true.
  */
 void RS_EntityContainer::insertEntity(int index, RS_Entity *entity) {
-    if (!entity) return;
+    if (entity == nullptr)
+        return;
 
     m_entities.insert(index, entity);
 
@@ -650,20 +639,20 @@ unsigned int RS_EntityContainer::countDeep() const {
  * Counts the selected m_entities in this container.
  */
 unsigned RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> const &types) {
-    unsigned c = 0;
+    unsigned count = 0;
     std::set<RS2::EntityType> type{types.cbegin(), types.cend()};
 
-    for (RS_Entity *t: m_entities) {
+    for (RS_Entity *entity: *this) {
 
-        if (t->isSelected())
-            if (!types.size() || type.count(t->rtti()))
-                c++;
+        if (entity->isSelected())
+            if (!types.size() || type.count(entity->rtti()))
+                count++;
 
-        if (t->isContainer()) 
-            c += dynamic_cast<RS_EntityContainer *>(t)->countSelected(deep); // fixme - hm... - what about entity types there? and deep flag?
+        if (entity->isContainer())
+            count += dynamic_cast<RS_EntityContainer *>(entity)->countSelected(deep); // fixme - hm... - what about entity types there? and deep flag?
     }
 
-    return c;
+    return count;
 }
 
 void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool deep, QList<RS2::EntityType> const &types) {    
@@ -689,7 +678,7 @@ RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool
 
     std::set<RS2::EntityType> type{types.cbegin(), types.cend()};
 
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
         if (e != nullptr) {
             if (e->isSelected()) {
                 if (types.empty() || type.count(e->rtti())) {
@@ -712,7 +701,7 @@ RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool
  */
 double RS_EntityContainer::totalSelectedLength() {
     double ret(0.0);
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
 
         if (e->isVisible() && e->isSelected()) {
             double l = e->getLength();
@@ -756,7 +745,7 @@ void RS_EntityContainer::calculateBorders() {
     RS_DEBUG->print("RS_EntityContainer::calculateBorders");
 
     resetBorders();
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
 
         RS_Layer *layer = e->getLayer();
 
@@ -812,7 +801,7 @@ void RS_EntityContainer::forcedCalculateBorders() {
     //RS_DEBUG->print("RS_EntityContainer::calculateBorders");
 
     resetBorders();
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
 
         //RS_Layer* layer = e->getLayer();
 
@@ -859,7 +848,7 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
     //        e;
     //        e=nextEntity(RS2::ResolveNone)) {
 
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
         if (RS_Information::isDimension(e->rtti())) {
             // update and reposition label:
             ((RS_Dimension *) e)->updateDim(autoText);
@@ -943,7 +932,7 @@ void RS_EntityContainer::updateSplines() {
 
     RS_DEBUG->print("RS_EntityContainer::updateSplines()");
 
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti() == RS2::EntitySpline  /*&& e->getParent()==this*/) {
             e->update();
@@ -960,7 +949,7 @@ void RS_EntityContainer::updateSplines() {
  * Updates the sub m_entities of this container.
  */
 void RS_EntityContainer::update() {
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: *this) {
         e->update();
     }
 }
@@ -1359,7 +1348,6 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(
     const RS_Vector &coord,
     double *dist) const
 {
-
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist = 0.;                 // currently measured distance
     RS_Vector closestPoint(false);  // closest found endpoint
@@ -1512,16 +1500,10 @@ RS_Vector RS_EntityContainer::getNearestDist(
     const RS_Vector &coord,
     double *dist) const {
 
-    RS_Vector point(false);
-    RS_Entity *closestEntity;
+    RS_Entity *closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveNone);
 
-    closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveNone);
-
-    if (closestEntity) {
-        point = closestEntity->getNearestDist(distance, coord, dist);
-    }
-
-    return point;
+    return (closestEntity != nullptr) ?  closestEntity->getNearestDist(distance, coord, dist)
+                                      : RS_Vector{false};
 }
 
 /**
@@ -1529,16 +1511,11 @@ RS_Vector RS_EntityContainer::getNearestDist(
  */
 RS_Vector RS_EntityContainer::getNearestIntersection(
     const RS_Vector &coord,
-    double *dist) {
-
+    double *dist)
+{
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
-    double curDist = RS_MAXDOUBLE;  // currently measured distance
     RS_Vector closestPoint(false);  // closest found endpoint
-    RS_Vector point;                // endpoint found
-    RS_VectorSolutions sol;
-    RS_Entity *closestEntity;
-
-    closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
+    RS_Entity* closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
 
     if (closestEntity) {
         for (RS_Entity *en = firstEntity(RS2::ResolveAllButTextImage);
@@ -1551,11 +1528,12 @@ RS_Vector RS_EntityContainer::getNearestIntersection(
                 continue;
             }
 
-            sol = RS_Information::getIntersection(closestEntity,
+            RS_VectorSolutions sol = RS_Information::getIntersection(closestEntity,
                                                   en,
                                                   true);
 
-            point = sol.getClosest(coord, &curDist, nullptr);
+            double curDist = RS_MAXDOUBLE;  // currently measured distance
+            RS_Vector point = sol.getClosest(coord, &curDist, nullptr);
             if (sol.getNumber() > 0 && curDist < minDist) {
                 closestPoint = point;
                 minDist = curDist;
@@ -1573,26 +1551,21 @@ RS_Vector RS_EntityContainer::getNearestIntersection(
 RS_Vector RS_EntityContainer::getNearestVirtualIntersection(
     const RS_Vector &coord,
     const double &angle,
-    double *dist) {
+    double *dist)
+{
 
-    RS_Vector point;                // endpoint found
-    RS_VectorSolutions sol;
-    RS_Entity *closestEntity;
-    RS_Vector second_coord;
+    RS_Entity* closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
 
-    second_coord.set(angle);
-    closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
-
-    if (closestEntity) {
+    if (closestEntity != nullptr) {
+        RS_Vector second_coord{angle};
         RS_ConstructionLineData data(coord, coord + second_coord);
-        auto line = new RS_ConstructionLine(this, data);
+        auto line = RS_ConstructionLine(nullptr, data);
 
-        sol = RS_Information::getIntersection(closestEntity, line, true);
+        RS_VectorSolutions sol = RS_Information::getIntersection(closestEntity, &line, true);
         if (sol.getVector().empty()) {
             return coord;
         } else {
-            point = sol.getClosest(coord, dist, nullptr);
-            return point;
+            return sol.getClosest(coord, dist, nullptr);
         }
     } else {
         return coord;
@@ -1609,7 +1582,7 @@ RS_Vector RS_EntityContainer::getNearestRef(
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    for (auto en: m_entities) {
+    for (RS_Entity* en: *this) {
 
         if (en->isVisible()) {
             point = en->getNearestRef(coord, &curDist);
@@ -1629,7 +1602,8 @@ RS_Vector RS_EntityContainer::getNearestRef(
 
 RS_Vector RS_EntityContainer::getNearestSelectedRef(
     const RS_Vector &coord,
-    double *dist) const {
+    double *dist) const
+{
     RefInfo info = getNearestSelectedRefInfo(coord, dist);
     return info.ref;
 }
@@ -1640,14 +1614,13 @@ RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(
 {
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     RS_Vector closestPoint(false);  // closest found endpoint
-    RS_Vector point;                // endpoint found
     RS_Entity *closestPointEntity = nullptr;
 
     for (RS_Entity* en: *this) { // fixme - sand - iteration of ver all entities
 
         if (en->isVisible() && en->isSelected() && !en->isParentSelected()) {
             double curDist = 0.;                 // currently measured distance
-            point = en->getNearestSelectedRef(coord, &curDist);
+            RS_Vector point = en->getNearestSelectedRef(coord, &curDist);
             if (point.valid && curDist < minDist) {
                 closestPoint = point;
                 closestPointEntity = en;
@@ -1739,12 +1712,12 @@ RS_Entity *RS_EntityContainer::getNearestEntity(
 
     double d = getDistanceToPoint(coord, &e, level, solidDist);
 
-    if (e && e->isVisible() == false) {
+    if (e != nullptr && e->isVisible() == false) {
         e = nullptr;
     }
 
     // if d is negative, use the default distance (used for points inside solids)
-    if (dist) {
+    if (dist != nullptr) {
         *dist = d;
     }
     RS_DEBUG->print("RS_EntityContainer::getNearestEntity: OK");
@@ -1899,7 +1872,7 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector &v1, const RS_
 
 void RS_EntityContainer::move(const RS_Vector &offset) {
     moveBorders(offset);
-    for (auto *e: m_entities) {
+    for (RS_Entity *e: *this) {
         e->move(offset);
         adjustBorders(e);
     }
@@ -1914,7 +1887,7 @@ void RS_EntityContainer::rotate(const RS_Vector &center, double angle) {
 void RS_EntityContainer::rotate(const RS_Vector &center, const RS_Vector &angleVector) {
     resetBorders();
 
-    for (auto *e: m_entities) {
+    for (RS_Entity *e: *this) {
         e->rotate(center, angleVector);
         adjustBorders(e);
     }
@@ -1925,7 +1898,7 @@ void RS_EntityContainer::rotate(const RS_Vector &center, const RS_Vector &angleV
 void RS_EntityContainer::scale(const RS_Vector &center, const RS_Vector &factor) {
     if (std::abs(factor.x) > RS_TOLERANCE && std::abs(factor.y) > RS_TOLERANCE) {
         scaleBorders(center, factor);
-        for (auto *e: m_entities) {
+        for (RS_Entity* e: *this) {
             e->scale(center, factor);
             adjustBorders(e);
         }
@@ -1938,7 +1911,7 @@ void RS_EntityContainer::mirror(const RS_Vector &axisPoint1, const RS_Vector &ax
     if (axisPoint1.distanceTo(axisPoint2) > RS_TOLERANCE) {
 
         resetBorders();
-        for (auto *e: m_entities) {
+        for (RS_Entity *e: *this) {
             e->mirror(axisPoint1, axisPoint2);
             adjustBorders(e);
         }
@@ -1946,7 +1919,7 @@ void RS_EntityContainer::mirror(const RS_Vector &axisPoint1, const RS_Vector &ax
 }
 
 RS_Entity &RS_EntityContainer::shear(double k) {
-    for (auto *e: *this)
+    for (RS_Entity *e: *this)
         e->shear(k);
     calculateBorders();
     return *this;
@@ -1964,7 +1937,7 @@ void RS_EntityContainer::stretch(
         move(offset);
     } else {
 
-        for (auto *e: m_entities) {
+        for (RS_Entity *e: *this) {
             e->stretch(firstCorner, secondCorner, offset);
         }
     }
@@ -1979,7 +1952,7 @@ void RS_EntityContainer::moveRef(
     const RS_Vector &offset) {
 
     resetBorders();
-    for (auto *e: m_entities) {
+    for (RS_Entity *e: *this) {
         e->moveRef(ref, offset);
         adjustBorders(e);
     }
@@ -1993,7 +1966,7 @@ void RS_EntityContainer::moveSelectedRef(
     const RS_Vector &offset) {
 
     resetBorders();
-    for (auto *e: m_entities) {
+    for (RS_Entity *e: *this) {
         e->moveSelectedRef(ref, offset);
         adjustBorders(e);
     }
@@ -2223,7 +2196,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
 
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
-    for(auto* e1: m_entities){
+    for(RS_Entity* e1: *this){
         if (e1 != nullptr && e1->isContainer())
         {
             if (e1->isContainer()){
