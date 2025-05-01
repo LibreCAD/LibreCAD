@@ -1231,26 +1231,25 @@ void QG_GraphicView::paintEvent(QPaintEvent *){
 void QG_GraphicView::loadSettings() {
     RS_GraphicView::loadSettings();
 
-    LC_GROUP("Appearance");
     {
+    LC_GROUP_GUARD("Appearance");
         int zoomFactor1000 = LC_GET_INT("ScrollZoomFactor", 1137);
         m_scrollZoomFactor = zoomFactor1000 / 1000.0;
 
         m_ucsHighlightData->m_maxBlinkNumber = LC_GET_INT("UCSHighlightBlinkCount",10)*2; // one blink includes both for visible and invisible phase
         m_ucsHighlightData->m_timerInterval =  LC_GET_INT("UCSHighlightBlinkDelay",250);
     }
-    LC_GROUP_END();
 
-    LC_GROUP("Defaults");
     {
+    LC_GROUP_GUARD("Defaults");
         m_invertZoomDirection = LC_GET_ONE_BOOL("Defaults", "InvertZoomDirection");
         m_invertHorizontalScroll = LC_GET_BOOL("WheelScrollInvertH");
         m_invertVerticalScroll = LC_GET_BOOL("WheelScrollInvertV");
     }
-    LC_GROUP_END();
 
-    LC_GROUP("Appearance");
     {
+        LC_GROUP("Appearance");
+
         m_cursor_hiding = LC_GET_BOOL("cursor_hiding", false);
         bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
         bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
@@ -1522,7 +1521,7 @@ void QG_GraphicView::highlightUCSLocation(LC_UCS *ucs){
     double AXIS_SIZE = viewport->toUcsDX(20); // fixme - ucs - or toUcsX?
     viewport->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
 
-    double uiOriginPointX, uiOriginPointY;
+    double uiOriginPointX=0., uiOriginPointY=0.;
     viewport->toUI(origin, uiOriginPointX, uiOriginPointY);
 
     double ucsXAxisAngleInUCS = viewport->toUCSAngle(angle);
