@@ -54,7 +54,6 @@ void LC_ActionDimOrdinate::doTrigger() {
     LC_DimOrdinate* dim  = createDim(m_actionData->m_leaderEndPoint, m_actionData->ctrlPressed, m_document);
 
     setPenAndLayerToActive(dim);
-    dim->update();
     undoCycleAdd(dim);
 
     m_actionData->ctrlPressed = false;

@@ -3208,7 +3208,8 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
             bool resolvePen;
             bool resolveLayer;
 
-            switch (ec->rtti()) {
+            auto containerType = ec->rtti();
+            switch (containerType) {
                 case RS2::EntityMText:
                 case RS2::EntityText:
                 case RS2::EntityHatch:
@@ -3224,24 +3225,17 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
                     rl = RS2::ResolveNone;
                     break;
 
-                case RS2::EntityDimAligned:
-                case RS2::EntityDimLinear:
-                case RS2::EntityDimOrdinate:
-                case RS2::EntityTolerance:
-                case RS2::EntityDimRadial:
-                case RS2::EntityDimDiametric:
-                case RS2::EntityDimAngular:
-                case RS2::EntityDimLeader:
-                case RS2::EntityDimArc:
-                    rl = RS2::ResolveNone;
-                    resolveLayer = true;
-                    resolvePen = false;
-                    break;
-
                 default:
-                    rl = RS2::ResolveAll;
-                    resolveLayer = true;
-                    resolvePen = false;
+                    if (RS2::isDimensionalEntity(containerType)) {
+                        rl = RS2::ResolveNone;
+                        resolveLayer = true;
+                        resolvePen = false;
+                    }
+                    else {
+                        rl = RS2::ResolveAll;
+                        resolveLayer = true;
+                        resolvePen = false;
+                    }
                     break;
             }
 

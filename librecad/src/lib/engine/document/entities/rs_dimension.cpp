@@ -28,16 +28,29 @@
 
 #include <QRegularExpression>
 
+#include "lc_arrow_box.h"
+#include "lc_arrow_circle.h"
+#include "lc_arrow_datum.h"
+#include "lc_arrow_dot.h"
+#include "lc_arrow_headclosed.h"
+#include "lc_arrow_headclosed_blank.h"
+#include "lc_arrow_headopen.h"
+#include "lc_arrow_integral.h"
+#include "lc_arrow_none.h"
+#include "lc_arrow_tick.h"
 #include "muParser.h"
 #include "rs_arc.h"
 #include "rs_filterdxfrw.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_painter.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_solid.h"
 #include "rs_units.h"
+
+class LC_ArrowHeadOpen;
 
 namespace
 {
@@ -551,15 +564,20 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
 
     // arrow angles:
     double arrowAngle1, arrowAngle2;
+    double dimAngle1 = p1.angleTo(p2);
+
+    RS_Vector arrowOffsetVector = RS_Vector::polar(arrowSize, dimAngle1);
+    RS_Vector dimP1 = p1 + arrowOffsetVector;
+    RS_Vector dimP2 = p2 - arrowOffsetVector;
 
     RS_Pen dimensionPen = getPenDimensionLine();
 
-    // Create dimension line:
-    auto* dimensionLine = addDimComponentLine(p1, p2, dimensionPen);
+   // Create dimension line:
+    auto* dimensionLine = addDimComponentLine(dimP1, dimP2, dimensionPen);
 
     // Text label:
     RS_Vector textPos;
-    double dimAngle1 = dimensionLine->getAngle1();
+
     bool corrected = false;
     double textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
 
@@ -615,16 +633,36 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
 
         if (arrow1) {
             // arrow 1
-            arrow = new RS_Solid(this, sd);
-            arrow->shapeArrow(p1, arrowAngle1, arrowSize);
-            addDimComponentEntity(arrow, dimensionPen);
+            // arrow = new RS_Solid(this, sd);
+            // arrow->shapeArrow(p1, arrowAngle1, arrowSize);
+
+            // auto arrowH1 = new LC_ArrowHeadClosed(this, dimP1, arrowAngle1, arrowSize, 0.165, false);
+            // auto  arrowH1 = new LC_ArrowBox(this, dimP1, arrowAngle1, arrowSize, false);
+            // auto arrowH1 = new LC_ArrowCircle(this, dimP1, arrowAngle1, arrowSize, LC_ArrowCircle::origin_indicator2);
+            // auto arrowH1 = new LC_ArrowCircle(this, dimP1, arrowAngle1, arrowSize, LC_ArrowCircle::origin_indicator);
+            // auto arrowH1 = new LC_ArrowCircle(this, dimP1, arrowAngle1, arrowSize, LC_ArrowCircle::dot);
+            // auto arrowH1 = new LC_ArrowCircle(this, dimP1, arrowAngle1, arrowSize, LC_ArrowCircle::dot_blank);
+            // auto arrowH1 = new LC_ArrowDot(this, dimP1, arrowAngle1, arrowSize, LC_ArrowDot::small);
+            auto arrowH1 = new LC_ArrowTick(this, dimP1, arrowAngle1, arrowSize, true);
+            addDimComponentEntity(arrowH1, dimensionPen);
         }
 
         if (arrow2) {
             // arrow 2:
-            arrow = new RS_Solid(this, sd);
-            arrow->shapeArrow(p2,arrowAngle2, arrowSize);
-            addDimComponentEntity(arrow, dimensionPen);
+            // arrow = new RS_Solid(this, sd);
+            // arrow->shapeArrow(p2,arrowAngle2, arrowSize);
+
+            // auto arrowH2 = new LC_ArrowDatum(this, dimP2, arrowAngle2, arrowSize, false);
+            // auto  arrowH2 = new LC_ArrowHeadOpen(this, dimP2, arrowAngle2, arrowSize, 0.165);
+            // auto arrowH2 = new LC_ArrowHeadClosedBlank(this, dimP2, arrowAngle2, arrowSize, 0.165);
+            // auto arrowH2 = new LC_ArrowHeadClosedBlank(this, dimP2, arrowAngle2, arrowSize, 0.165);
+            // auto arrowH2 = new LC_ArrowCircle(this, dimP2, arrowAngle2, arrowSize, LC_ArrowCircle::dot);
+            // auto arrowH2 = new LC_ArrowDot(this, dimP2, arrowAngle2, arrowSize, LC_ArrowDot::blank);
+            // auto arrowH2 = new LC_ArrowTick(this, dimP2, arrowAngle2, arrowSize, false);
+            // auto arrowH2 = new LC_ArrowNone(this, dimP2, arrowAngle2, arrowSize);
+            auto arrowH2 = new LC_ArrowIntegral(this, dimP2, arrowAngle2, arrowSize);
+            addDimComponentEntity(arrowH2, dimensionPen);
+            // addDimComponentEntity(arrow, dimensionPen);
         }
     }
     else {

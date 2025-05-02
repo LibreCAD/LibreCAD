@@ -4,21 +4,21 @@ project(LibreCAD VERSION 2.2.2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #LOCAL
-#set(CMAKE_VERBOSE_MAKEFILE ON)
-#set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
-#
-#set(BOOST_DIR "c:\\Local\\boost_1_84_0")
-#set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
-#
-#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-#
-#set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-#set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
-#set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
-#set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
-#set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
-#set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
-#set (CMAKE_INSTALL_PREFIX "Z:/LC_BUILD_PROD")
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
+
+set(BOOST_DIR "c:\\Local\\boost_1_84_0")
+set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
+
+set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+
+set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
+set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
+set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
+set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
+set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
+set (CMAKE_INSTALL_PREFIX "Z:/LC_BUILD_PROD")
 #
 
 
@@ -78,6 +78,7 @@ include_directories(librecad/src/lib/engine/document/views)
 include_directories(librecad/src/lib/engine/document/fonts)
 include_directories(librecad/src/lib/engine/document/patterns)
 include_directories(librecad/src/lib/engine/document/entities)
+include_directories(librecad/src/lib/engine/document/entities/support)
 include_directories(librecad/src/lib/engine/document/container)
 include_directories(librecad/src/lib/engine/document/variables)
 include_directories(librecad/src/lib/engine/document/ucs)
@@ -119,6 +120,7 @@ include_directories(librecad/src/lib/scripting)
 include_directories(librecad/res/icons)
 include_directories(librecad/res/images)
 include_directories(librecad/res/controls)
+include_directories(librecad/res/gdt)
 
 include_directories(libraries/jwwlib/src)
 include_directories(libraries/lciconengine)
@@ -250,6 +252,7 @@ set(SOURCES
 		librecad/res/images/images.qrc
 		librecad/res/controls/controls.qrc
         librecad/res/icons/icons.qrc
+        librecad/res/gdt/gdt.qrc
         libraries/jwwlib/src/dl_attributes.h
         libraries/jwwlib/src/dl_codes.h
         libraries/jwwlib/src/dl_creationinterface.h
@@ -336,6 +339,8 @@ set(SOURCES
         librecad/src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp
         librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinate.h
         librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.cpp
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.h
 		librecad/src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp
@@ -636,6 +641,32 @@ set(SOURCES
 		librecad/src/lib/engine/document/entities/lc_rect.h
 		librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
 		librecad/src/lib/engine/document/entities/lc_splinepoints.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_box.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_box.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_none.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_none.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_circle.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_circle.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_datum.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_datum.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headclosed.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headclosed.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headclosed_blank.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headclosed_blank.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headclosed2.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headclosed2.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headopen.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_headopen.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_tick.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_tick.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_dot.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_dot.cpp
+        librecad/src/lib/engine/document/entities/support/lc_dimarrowblock.h
+        librecad/src/lib/engine/document/entities/support/lc_dimarrowblock.cpp
+        librecad/src/lib/engine/document/entities/support/lc_dimarrowblockpoly.h
+        librecad/src/lib/engine/document/entities/support/lc_dimarrowblockpoly.cpp
+        librecad/src/lib/engine/document/entities/support/lc_arrow_integral.h
+        librecad/src/lib/engine/document/entities/support/lc_arrow_integral.cpp
 		librecad/src/lib/engine/utils/lc_rtree.cpp
 		librecad/src/lib/engine/utils/lc_rtree.h
 		librecad/src/lib/engine/undo/lc_undosection.cpp
@@ -707,6 +738,8 @@ set(SOURCES
         librecad/src/lib/engine/document/dimstyles/lc_dimstyle.cpp
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.h
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.cpp
+        librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.h
+        librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.h
 		librecad/src/lib/engine/document/entities/rs_line.cpp
@@ -851,6 +884,8 @@ set(SOURCES
         librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.cpp
         librecad/src/ui/dialogs/entity/lc_dlgdimordinate.h
         librecad/src/ui/dialogs/entity/lc_dlgdimordinate.cpp
+        librecad/src/ui/dialogs/entity/lc_dlgtolerance.h
+        librecad/src/ui/dialogs/entity/lc_dlgtolerance.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.h
 		librecad/src/ui/components/status_bar/qg_activelayername.cpp

@@ -2079,30 +2079,13 @@ double RS_EntityContainer::areaLineIntegral() const {
     return std::abs(contourArea) + closedArea - subArea;
 }
 
-bool RS_EntityContainer::ignoredOnModification() const
-{
-    switch (rtti()) {
-        // commented out Insert to allow snapping on block, bug#523
-        // case RS2::EntityInsert:         /**Insert*/
-// fixme - check whether it's safe to allow spline... actually, it's enabled to allow snap to entity for spline, yet probably there might some other side effects?
-//        case RS2::EntitySpline:
-        case RS2::EntityMText:        /**< Text 15*/
-        case RS2::EntityText:         /**< Text 15*/
-        case RS2::EntityDimAligned:   /**< Aligned Dimension */
-        case RS2::EntityDimLinear:    /**< Linear Dimension */
-        case RS2::EntityDimOrdinate:
-        case RS2::EntityTolerance:
-        case RS2::EntityDimRadial:    /**< Radial Dimension */
-        case RS2::EntityDimDiametric: /**< Diametric Dimension */
-        case RS2::EntityDimAngular:   /**< Angular Dimension */
-        case RS2::EntityDimLeader:    /**< Leader Dimension */
-        case RS2::EntityDimArc:       /**< Arc Dimension */
-        case RS2::EntityHatch:
-            return true;
-        default:
-//            return false;
-            // we have to check parent too - otherwise, it will be possible to snap, say to lines in letter entities of dimensions
-            return isParentIgnoredOnModifications();
+bool RS_EntityContainer::ignoredOnModification() const {
+    RS2::EntityType ownType = rtti();
+    if (RS2::isDimensionalEntity(ownType) || RS2::isTextEntity(ownType) || ownType == RS2::EntityHatch){
+        return true;
+    }
+    else {
+        return isParentIgnoredOnModifications();
     }
 }
 

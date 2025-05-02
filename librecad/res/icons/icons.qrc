@@ -350,5 +350,6 @@
         <file alias="ucs_set_by_dimordinate.lci">ucs_set_by_dimordinate.svg</file>
         <file alias="dim_ordinate_by_origin.lci">dim_ordinate_by_origin.svg</file>
         <file alias="dim_ordinate_rebase.lci">dim_ordinate_rebase.svg</file>
+        <file alias="gdt_featurecontrolframe.lci">gdt_featurecontrolframe.svg</file>
     </qresource>
 </RCC>

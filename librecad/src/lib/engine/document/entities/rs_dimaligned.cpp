@@ -162,7 +162,6 @@ void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
     dimP2 = m_dimAlignedData.extensionPoint2 + e1*extLength;
 }
 
-
 double RS_DimAligned::getDistanceToPoint(const RS_Vector& coord,
                           RS_Entity** entity,
                           RS2::ResolveLevel level,

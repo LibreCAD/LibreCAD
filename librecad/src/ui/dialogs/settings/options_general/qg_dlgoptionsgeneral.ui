@@ -101,7 +101,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -165,7 +165,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -207,7 +207,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -277,7 +277,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -322,7 +322,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -367,7 +367,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -474,7 +474,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -770,7 +770,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -808,7 +808,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -888,7 +888,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -1172,7 +1172,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1287,7 +1287,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1391,7 +1391,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1461,7 +1461,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1845,7 +1845,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -1888,7 +1888,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2058,7 +2058,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2095,7 +2095,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2250,7 +2250,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2270,7 +2270,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2512,7 +2512,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2610,7 +2610,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2772,7 +2772,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank_square.lci</normaloff>:/icons/point_blank_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2813,7 +2813,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus_circle.lci</normaloff>:/icons/point_plus_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2854,7 +2854,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross_square.lci</normaloff>:/icons/point_cross_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2895,7 +2895,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick_circle_square.lci</normaloff>:/icons/point_tick_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2936,7 +2936,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot_square.lci</normaloff>:/icons/point_dot_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2977,7 +2977,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot_circle.lci</normaloff>:/icons/point_dot_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3018,7 +3018,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross_circle.lci</normaloff>:/icons/point_cross_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3062,7 +3062,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank.lci</normaloff>:/icons/point_blank.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3094,7 +3094,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot.lci</normaloff>:/icons/point_dot.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3135,7 +3135,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick_square.lci</normaloff>:/icons/point_tick_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3176,7 +3176,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick_circle.lci</normaloff>:/icons/point_tick_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3217,7 +3217,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank_circle_square.lci</normaloff>:/icons/point_blank_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3258,7 +3258,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick.lci</normaloff>:/icons/point_tick.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3299,7 +3299,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank_circle.lci</normaloff>:/icons/point_blank_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3340,7 +3340,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus_circle_square.lci</normaloff>:/icons/point_plus_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3381,7 +3381,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross_circle_square.lci</normaloff>:/icons/point_cross_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3422,7 +3422,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus_square.lci</normaloff>:/icons/point_plus_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3463,7 +3463,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus.lci</normaloff>:/icons/point_plus.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3504,7 +3504,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross.lci</normaloff>:/icons/point_cross.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3545,7 +3545,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot_circle_square.lci</normaloff>:/icons/point_dot_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3605,7 +3605,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -3711,7 +3711,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -3960,7 +3960,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -3980,7 +3980,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4020,7 +4020,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4086,7 +4086,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4591,7 +4591,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/icons/icons.qrc">
                  <normaloff>:/icons/dirpos_plus.lci</normaloff>:/icons/dirpos_plus.lci</iconset>
                </property>
                <property name="checked">
@@ -4620,7 +4620,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/icons/icons.qrc">
                  <normaloff>:/icons/dirneg_plus.lci</normaloff>:/icons/dirneg_plus.lci</iconset>
                </property>
                <property name="checkable">
@@ -5101,7 +5101,7 @@
              <string>Click to select file</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5126,7 +5126,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5184,7 +5184,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5195,7 +5195,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5209,7 +5209,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5230,7 +5230,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5285,7 +5285,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5428,7 +5428,7 @@
                 <number>1</number>
                </property>
                <property name="maximum">
-                <number>30</number>
+                <number>60</number>
                </property>
                <property name="value">
                 <number>5</number>
@@ -5685,7 +5685,11 @@
  <tabstops>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../../../res/controls/controls.qrc"/>
+  <include location="../../../../../res/controls/controls.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

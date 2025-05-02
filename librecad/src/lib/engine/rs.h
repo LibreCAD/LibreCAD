@@ -155,9 +155,9 @@ namespace RS2 {
         EntityDimDiametric, /**< Diametric Dimension */
         EntityDimAngular,   /**< Angular Dimension */
         EntityDimArc,       /**< Arc Dimension */
-        EntityDimLeader,    /**< Leader Dimension */
         EntityDimOrdinate,
         EntityTolerance,
+        EntityDimLeader,    /**< Leader Dimension */
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
@@ -173,7 +173,17 @@ namespace RS2 {
         EntityRefArc,
         EntityRefCircle,
         EntityRefEllipse,
+        EntityDimArrowBlock
     };
+
+
+    inline bool isDimensionalEntity(EntityType type)  {
+        return (type >= EntityDimAligned) && (type <= EntityDimLeader);
+    }
+
+    inline bool isTextEntity(EntityType type) {
+        return (type == EntityText) || (type == EntityMText);
+    }
 
 
     /**
@@ -480,6 +490,7 @@ namespace RS2 {
         ActionUCSSetByDimOrdinate,
         ActionDimOrdinateSelectSameOrigin,
         ActionDimOrdinateRebase,
+        ActionGTDFeatureControlFrame,
 
         /** Needed to loop through all actions */
         ActionLast

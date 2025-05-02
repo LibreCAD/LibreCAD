@@ -37,6 +37,7 @@
 #include "lc_actiondrawcross.h"
 #include "lc_actiondrawdimbaseline.h"
 #include "lc_actiondrawellipse1point.h"
+#include "lc_actiondrawgdtfeaturecontrolframe.h"
 #include "lc_actiondrawlineanglerel.h"
 #include "lc_actiondrawlinefrompointtoline.h"
 #include "lc_actiondrawlinepoints.h"
@@ -647,6 +648,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDimOrdinate: {
                 return new LC_ActionDimOrdinate(ctx);
+            }
+            case RS2::ActionGTDFeatureControlFrame: {
+                return new LC_ActionDrawGDTFeatureControlFrame(ctx);
             }
             case RS2::ActionDimLinearHor: {
                 return new RS_ActionDimLinear(ctx, 0.0, true, RS2::ActionDimLinearHor);

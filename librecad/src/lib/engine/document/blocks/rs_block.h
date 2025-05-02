@@ -66,7 +66,7 @@ struct RS_BlockData {
  *
  * @author Andrew Mustun
  */
-class RS_Block : public RS_Document {
+class   RS_Block : public RS_Document {
    friend class RS_BlockList;
 public:
     /**

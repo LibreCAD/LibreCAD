@@ -350,7 +350,8 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimContinue",       RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"},
         {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
         {"DimOrdinateForBase",RS2::ActionDimOrdinateSelectSameOrigin,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
-        {"DimOrdinateReBase",RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"}
+        {"DimOrdinateReBase", RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
+        {"GTDFeatureFrame",   RS2::ActionGTDFeatureControlFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"}
     });
 }
 
@@ -931,7 +932,8 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimLeader",
                         "DimOrdinate",
                         "DimOrdinateForBase",
-                        "DimOrdinateReBase"
+                        "DimOrdinateReBase",
+                        "GTDFeatureFrame"
                     }, map);
 
     fillActionsList(other_drawing_actions, {

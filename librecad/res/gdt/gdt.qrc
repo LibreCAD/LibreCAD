@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/gdt/chars">
+        <file alias="angularity.lci">angularity.svg</file>
+        <file alias="circular_runout.lci">circular_runout.svg</file>
+        <file alias="circularity.lci">circularity.svg</file>
+        <file alias="concentricity.lci">concentricity.svg</file>
+        <file alias="cylindricity.lci">cylindricity.svg</file>
+        <file alias="flatness.lci">flatness.svg</file>
+        <file alias="parallelism.lci">parallelism.svg</file>
+        <file alias="perpendicularity.lci">perpendicularity.svg</file>
+        <file alias="position.lci">position.svg</file>
+        <file alias="profileofaline.lci">profileofaline.svg</file>
+        <file alias="profileofasurface.lci">profileofasurface.svg</file>
+        <file alias="straightness.lci">straightness.svg</file>
+        <file alias="symmetry.lci">symmetry.svg</file>
+        <file alias="totalrunout.lci">totalrunout.svg</file>
+    </qresource>
+    <qresource prefix="/gdt/modifiers">
+        <file alias="continuousfeature.lci">continuousfeature.svg</file>
+        <file alias="freestate.lci">freestate.svg</file>
+        <file alias="leastmaterialcondition.lci">leastmaterialcondition.svg</file>
+        <file alias="maximummaterialcondition.lci">maximummaterialcondition.svg</file>
+        <file alias="projectedtolerancezone.lci">projectedtolerancezone.svg</file>
+        <file alias="regardlessoffeaturesize.lci">regardlessoffeaturesize.svg</file>
+        <file alias="statisticaltolerance.lci">statisticaltolerance.svg</file>
+        <file alias="tangentplane.lci">tangentplane.svg</file>
+        <file alias="unilateral.lci">unilateral.svg</file>
+    </qresource>
+    <qresource prefix="/gtd/other">
+        <file alias="diameter-symbol.lci">diameter-symbol.svg</file>
+    </qresource>
+</RCC>

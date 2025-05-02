@@ -68,7 +68,7 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent, const RS_DimensionData& d
 RS_Entity* RS_DimRadial::clone() const {
     auto* d = new RS_DimRadial(getParent(), getData(), getEData());
 	d->setOwner(isOwner());
-	d->detach();
+	 // d->detach();
 	return d;
 }
 

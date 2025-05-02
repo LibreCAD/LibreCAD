@@ -110,9 +110,10 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
 
     const double hoverTolerance { hoverToleranceFactor / m_viewport->getFactor().magnitude() };
 
-    double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
-                                     ? minimumHoverTolerance
-                                     : hoverTolerance;
+    auto entityType = entity->rtti();
+    double hoverTolerance_adjusted = ((entityType != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
+                                         ? minimumHoverTolerance
+                                         : hoverTolerance;
 
     double screenTolerance = toGraphDX( (int)(0.01*std::min(m_viewport->getWidth(), m_viewport->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
@@ -120,8 +121,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
     bool isPointOnEntity = false;
 
     RS_Vector currentMousePosition = event->graphPoint;
-    if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
-        || (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText)) {
+    if (RS2::isDimensionalEntity(entityType) || RS2::isTextEntity(entityType)) {
         double nearestDistanceTo_pointOnEntity = 0.;
         entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
         if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) {
