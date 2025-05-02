@@ -625,7 +625,7 @@ void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, double ui
     int stepsCount = 0;
     if (arcRenderInterpolationAngleFixed){
         // this is fixes amount of steps - based on line segment angle
-        stepsCount = int(angularLengthRad / arcRenderInterpolationAngleValue)/* + 2*/;
+        stepsCount = int(angularLengthRad / arcRenderInterpolationAngleValue) + 2;
     }
     else {
         // acos(x) loses significant digits, if x is close to 0
