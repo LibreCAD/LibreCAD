@@ -319,5 +319,5 @@ void QG_CommandWidget::dockingButtonTriggered(bool /*docked*/){
     auto* cmd_dockwidget = QC_ApplicationWindow::getAppWindow()->findChild<QDockWidget*>("command_dockwidget");
     cmd_dockwidget->setFloating(!cmd_dockwidget->isFloating());
     m_docking->setText(cmd_dockwidget->isFloating() ? tr("Dock") : tr("Float"));
-    setWindowTitle(cmd_dockwidget->isFloating() ? tr("Command line") : tr("Cmd"));
+    setWindowTitle(cmd_dockwidget->isFloating() ? tr("Command Line") : tr("Cmd"));
 }
