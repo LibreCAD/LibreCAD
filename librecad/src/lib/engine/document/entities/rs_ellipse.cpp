@@ -252,7 +252,7 @@ void RS_Ellipse::calculateBorders() {
         data.angle1 = 0;
         data.angle2 = 0;
     }
-    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
+    data.isArc = !isnormal(data.angle1) && !isnormal(data.angle2);
 
     LC_Rect boundingBox = isEllipticArc() ? LC_Rect{ getStartpoint(), getEndpoint() } : LC_Rect{};
 
