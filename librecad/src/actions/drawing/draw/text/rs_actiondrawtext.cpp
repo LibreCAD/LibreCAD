@@ -201,6 +201,7 @@ void RS_ActionDrawText::onCoordinateEvent(int status, [[maybe_unused]]bool isZer
 
 // fixme - sand - cmd - expand by other attributes (angle?, height?)
 bool RS_ActionDrawText::doProcessCommand(int status, const QString &c) {
+    LC_ERR<<"processing command: ( "<<c<<" )";
     bool accept = true;
     switch (status) {
         case SetPos: {

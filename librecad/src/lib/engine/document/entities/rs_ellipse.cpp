@@ -252,7 +252,7 @@ void RS_Ellipse::calculateBorders() {
         data.angle1 = 0;
         data.angle2 = 0;
     }
-    data.isArc = !isnormal(data.angle1) && !isnormal(data.angle2);
+    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
 
     LC_Rect boundingBox = isEllipticArc() ? LC_Rect{ getStartpoint(), getEndpoint() } : LC_Rect{};
 
@@ -422,11 +422,11 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const{
     x2=RS_Math::correctAngle(x2);
 //    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if(x2 < x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
-    double ret;
+    double ret = 0.;
 //    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if( x2 >= M_PI) {
         // the complete elliptic integral
-        ret=  (static_cast< int>((x2+RS_TOLERANCE_ANGLE)/M_PI) -
+        ret=  (static_cast<int>((x2+RS_TOLERANCE_ANGLE)/M_PI) -
                (static_cast<int>((x1+RS_TOLERANCE_ANGLE)/M_PI)
                 ))*2;
 //        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";
