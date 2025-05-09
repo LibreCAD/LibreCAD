@@ -415,7 +415,7 @@ void RS_Ellipse::updateLength() {
 **/
 double RS_Ellipse::getEllipseLength(double x1, double x2) const{
     double a(getMajorRadius()),k(getRatio());
-    k= 1-k*k;//elliptic modulus, or eccentricity
+    k= std::sqrt(1-k*k);//elliptic modulus, or eccentricity
 //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
 //    if(isReversed())  std::swap(x1,x2);
     x1=RS_Math::correctAngle(x1);
