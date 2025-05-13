@@ -55,7 +55,8 @@ void QG_LineOptions::doSaveSettings(){
 }
 
 void QG_LineOptions::doSetAction(RS_ActionInterface *a, [[maybe_unused]]bool update){
-		m_action = dynamic_cast<RS_ActionDrawLine*>(a);
+    m_action = dynamic_cast<RS_ActionDrawLine*>(a);
+    enableButtons();
 }
 
 void QG_LineOptions::close() {
@@ -67,6 +68,7 @@ void QG_LineOptions::close() {
 void QG_LineOptions::undo() {
     if (m_action) {
         m_action->undo();
+        enableButtons();
     }
 }
 
@@ -74,5 +76,15 @@ void QG_LineOptions::undo() {
 void QG_LineOptions::redo() {
     if (m_action) {
         m_action->redo();
+        enableButtons();
+    }
+}
+
+void QG_LineOptions::enableButtons()
+{
+
+    if (m_action) {
+        ui->bUndo->setEnabled(m_action->canUndo());
+        ui->bRedo->setEnabled(m_action->canRedo());
     }
 }

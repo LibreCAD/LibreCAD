@@ -415,18 +415,18 @@ void RS_Ellipse::updateLength() {
 **/
 double RS_Ellipse::getEllipseLength(double x1, double x2) const{
     double a(getMajorRadius()),k(getRatio());
-    k= 1-k*k;//elliptic modulus, or eccentricity
+    k= std::sqrt(1-k*k);//elliptic modulus, or eccentricity
 //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
 //    if(isReversed())  std::swap(x1,x2);
     x1=RS_Math::correctAngle(x1);
     x2=RS_Math::correctAngle(x2);
 //    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if(x2 < x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
-    double ret;
+    double ret = 0.;
 //    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if( x2 >= M_PI) {
         // the complete elliptic integral
-        ret=  (static_cast< int>((x2+RS_TOLERANCE_ANGLE)/M_PI) -
+        ret=  (static_cast<int>((x2+RS_TOLERANCE_ANGLE)/M_PI) -
                (static_cast<int>((x1+RS_TOLERANCE_ANGLE)/M_PI)
                 ))*2;
 //        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";

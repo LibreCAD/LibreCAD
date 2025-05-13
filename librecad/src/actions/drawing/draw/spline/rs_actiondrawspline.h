@@ -40,7 +40,7 @@ class RS_Spline;
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDrawSpline(LC_ActionContext *actionContext);
+    RS_ActionDrawSpline(LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionDrawSpline);
     ~RS_ActionDrawSpline() override;
     void reset();
     void init(int status) override;

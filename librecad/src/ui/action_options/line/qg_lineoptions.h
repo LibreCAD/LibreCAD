@@ -40,6 +40,8 @@ class QG_LineOptions : public LC_ActionOptionsWidgetBase{
 public:
     QG_LineOptions();
     ~QG_LineOptions() override;
+
+    void enableButtons();
 public slots:
     void close(); // fixme - rename
     void undo();

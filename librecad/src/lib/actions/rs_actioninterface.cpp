@@ -395,8 +395,6 @@ void RS_ActionInterface::resume() {
 void RS_ActionInterface::hideOptions() {
     if (m_optionWidget != nullptr){
         m_optionWidget->hideOptions();
-        m_actionContext->removeOptionsWidget(m_optionWidget.get());
-        m_optionWidget.release();
     }
 }
 
@@ -434,10 +432,7 @@ void RS_ActionInterface::updateOptionsUI(int mode){
  */
 void RS_ActionInterface::showOptions() {
     if (m_optionWidget == nullptr){
-        LC_ActionOptionsWidget* widget = createOptionsWidget();
-        if (widget != nullptr){
-            m_optionWidget.reset(widget);
-        }
+        m_optionWidget.reset(createOptionsWidget());
     }
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){

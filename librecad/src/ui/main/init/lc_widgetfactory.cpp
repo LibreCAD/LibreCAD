@@ -251,7 +251,7 @@ QDockWidget*  LC_WidgetFactory::createLibraryWidget(QG_ActionHandler *action_han
 }
 
 QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *action_handler){
-    auto dock = createDockWidget(tr("Command line"), "command_dockwidget", tr("Cmd"));
+    auto dock = createDockWidget(tr("Command Line"), "command_dockwidget", tr("Cmd"));
 
     auto widget = new QG_CommandWidget(action_handler, dock, "Command");
     widget->setActionHandler(action_handler);
@@ -280,7 +280,7 @@ void LC_WidgetFactory::modifyCommandTitleBar(Qt::DockWidgetArea area) const {
     auto *commandWidget = static_cast<QG_CommandWidget *>(cmdDockWidget->widget());
     QAction *dockingAction = commandWidget->getDockingAction();
     bool docked = area & Qt::AllDockWidgetAreas;
-    cmdDockWidget->setWindowTitle(docked ? tr("Cmd") : tr("Command line"));
+    cmdDockWidget->setWindowTitle(docked ? tr("Cmd") : tr("Command Line"));
     dockingAction->setText(docked ? tr("Float") : tr("Dock", "Dock the command widget to the main window"));
     QDockWidget::DockWidgetFeatures features =
         QDockWidget::DockWidgetClosable

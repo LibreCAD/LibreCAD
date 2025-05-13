@@ -889,7 +889,7 @@ void RS_Snapper::hideSnapOptions() {
  */
 void RS_Snapper::deleteSnapper(){
 //    LC_ERR<<"Delete Snapper";
-    if (!m_graphicView->isCleanUp()) {
+    if (m_graphicView != nullptr && !m_graphicView->isCleanUp()) {
         m_viewport->clearOverlayDrawablesContainer(RS2::Snapper);
         m_graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
     }
@@ -897,7 +897,7 @@ void RS_Snapper::deleteSnapper(){
 
 void RS_Snapper::deleteInfoCursor(){
 //    LC_ERR<<"Delete Info Cursor";
-    if (!m_graphicView->isCleanUp()) {
+    if (m_graphicView != nullptr && !m_graphicView->isCleanUp()) {
         m_viewport->clearOverlayDrawablesContainer(RS2::InfoCursor);
         m_graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
     }

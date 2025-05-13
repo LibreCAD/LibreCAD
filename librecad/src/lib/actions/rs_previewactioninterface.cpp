@@ -156,6 +156,7 @@ void RS_PreviewActionInterface::drawPreview(){
    // remove reference entities from preview container and put them into overlay container directly.
    // the reason for this - painter for them should use different pen than one for ordinary preview entities
 
+   m_preview->calculateBorders();
    container->addEntity(m_preview.get());
    m_preview->addReferenceEntitiesToContainer(container);
    m_graphicView->redraw(RS2::RedrawOverlay);
