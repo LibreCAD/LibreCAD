@@ -117,6 +117,7 @@ public:
     RS_Vector snapGrid(const RS_Vector& coord) const;
     void applyUCS(LC_UCS* ucsToSet);
     LC_UCS* getCurrentUCS() const;
+    void fillCurrentUCSInfo(RS_Vector& origin, double& xAxisDirection) const;
 
     double toGuiX(double ucxX) const {return ucxX * factor.x + offsetX;}
     double toGuiY(double ucsY) const {return -ucsY * factor.y + m_height - offsetY;}

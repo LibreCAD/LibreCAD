@@ -42,7 +42,7 @@ public slots:
     void updatePoints();
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
     void setEntity(LC_Parabola* b);
     LC_DlgParabola(LC_DlgParabola const&) = delete;

@@ -34,9 +34,11 @@
 #include "lc_ucslistoptions.h"
 #include "lc_ucsstatewidget.h"
 #include "qc_applicationwindow.h"
+#include "rs_actioninterface.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_settings.h"
+#include "qc_applicationwindow.h"
 #include "ui_lc_ucslistwidget.h"
 
 LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
@@ -65,6 +67,7 @@ void LC_UCSListWidget::initToolbar() const {
     connect(ui->tbUpdate, &QToolButton::clicked, this, &LC_UCSListWidget::saveCurrentUCS);
     connect(ui->tbRemove, &QToolButton::clicked, this, &LC_UCSListWidget::removeUCS);
     connect(ui->tbRename, &QToolButton::clicked, this, &LC_UCSListWidget::editUCS);
+    connect(ui->tbSetUCSByDimOrdinate, &QToolButton::clicked, this, &LC_UCSListWidget::setUCSByDimOrdinate);
 }
 
 void LC_UCSListWidget::updateButtonsState() const {
@@ -89,6 +92,7 @@ void LC_UCSListWidget::updateButtonsState() const {
     ui->tbPreview->setEnabled(enable && singleSelection);
     ui->tbRename->setEnabled(enable && singleSelection && isUCS);
     ui->tbRemove->setEnabled(enable && isUCS);
+    ui->tbSetUCSByDimOrdinate->setEnabled(m_graphicView != nullptr);
 
     bool hasUCSList = m_currentUCSList != nullptr;
     ui->tbAdd->setEnabled(hasUCSList && notPrintPreview);
@@ -387,6 +391,13 @@ void LC_UCSListWidget::removeUCS() {
                 refresh();
             }
         }
+    }
+}
+
+void LC_UCSListWidget::setUCSByDimOrdinate() {
+    if (m_graphicView != nullptr) {
+        auto actionContext = QC_ApplicationWindow::getAppWindow()->getActionContext();
+        actionContext->setCurrentAction(RS2::ActionUCSSetByDimOrdinate, nullptr);
     }
 }
 

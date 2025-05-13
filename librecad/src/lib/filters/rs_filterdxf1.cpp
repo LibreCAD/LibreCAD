@@ -1179,13 +1179,18 @@ bool RS_FilterDXF1::readFromBuffer() {
 					
                     //double dist;
 
+                    bool customTextLocation = false;
+
                     // Remove Bit values:
                     if(typ>=128) {
                         typ-=128;   // Location of Text
+                        customTextLocation = true;
 					}
                     if(typ>= 64) {
                         typ-= 64;   // Ordinate
 					}
+
+
 
                     switch(typ) {
                         // Horiz. / vert.:
@@ -1202,7 +1207,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         1.0,
                                         dimText,
                                         "ISO-25",
-                                        0.0
+                                        0.0,
+                                        0.0,
+                                        customTextLocation
                                     ),
                                     RS_DimLinearData(
                                         RS_Vector(v13, v23),
@@ -1238,7 +1245,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         1.0,
                                         dimText,
                                         "ISO-25",
-                                        0.0
+                                        0.0,
+                                        0.0,
+                                        customTextLocation
                                     ),
                                     RS_DimAlignedData(
                                         RS_Vector(v13, v23),
@@ -1301,7 +1310,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                             1.0,
                                             dimText,
                                             "ISO-25",
-                                            0.0
+                                            0.0,
+                                            0.0,
+                                            customTextLocation
                                         ),
                                         RS_DimAngularData(
                                             RS_Vector(v13, v23),
@@ -1343,7 +1354,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         1.0,
                                         dimText,
                                         "ISO-25",
-                                        0.0
+                                        0.0,
+                                        0.0,
+                                        customTextLocation
                                     ),
                                     RS_DimRadialData(
                                         RS_Vector(v10, v20) + v2,

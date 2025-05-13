@@ -37,7 +37,7 @@ public:
 public slots:
     void validate();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     void selectActivePenBGColor();
     void set_color(QComboBox *combo, QColor &custom);

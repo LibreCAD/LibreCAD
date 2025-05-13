@@ -74,6 +74,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>Prefix character</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -94,6 +97,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>User-specified dimension's label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -103,6 +109,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Suffix symbol</string>
      </property>
      <item>
       <property name="text">
@@ -161,6 +170,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>Tolerance - Upper Limit</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -187,6 +199,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Tolerance - Lower Limit</string>
      </property>
     </widget>
    </item>
@@ -375,7 +390,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

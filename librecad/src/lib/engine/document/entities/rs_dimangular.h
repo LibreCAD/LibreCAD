@@ -69,7 +69,9 @@ struct LC_DimAngularVars
                                const double _dimexe,
                                const double _dimtxt,
                                const double _dimgap,
-                               const double _arrowSize);
+                               const double _arrowSize,
+                               const double _tickSize);
+
     explicit LC_DimAngularVars(const LC_DimAngularVars& av);
 
     double scale(void) const {
@@ -91,6 +93,10 @@ struct LC_DimAngularVars
         return arrowSize;
     }
 
+    double tickSize() const {
+        return m_tickSize;
+    }
+
 private:
     double dimscale     {1.0};  ///< general scale (DIMSCALE)
     double dimexo       {0.0};  ///< distance from entities (DIMEXO)
@@ -98,6 +104,7 @@ private:
     double dimtxt       {0.0};  ///< text height (DIMTXT)
     double dimgap       {0.0};  ///< text distance to line (DIMGAP)
     double arrowSize    {0.0};  ///< arrow length
+    double m_tickSize     {0.0};
 };
 
 std::ostream& operator << (std::ostream& os, const LC_DimAngularVars& dd);
@@ -128,25 +135,25 @@ public:
      * @see getData()
      */
     RS_DimAngularData getEData() const {
-        return edata;
+        return m_dimAngularData;
     }
 
     QString getMeasuredLabel() override;
     RS_Vector getCenter() const override;
 
-    void updateDim(bool autoText = false) override;
+
 
     RS_Vector getDefinitionPoint1() {
-        return edata.definitionPoint1;
+        return m_dimAngularData.definitionPoint1;
     }
     RS_Vector getDefinitionPoint2() {
-        return edata.definitionPoint2;
+        return m_dimAngularData.definitionPoint2;
     }
     RS_Vector getDefinitionPoint3() {
-        return edata.definitionPoint3;
+        return m_dimAngularData.definitionPoint3;
     }
     RS_Vector getDefinitionPoint4() {
-        return edata.definitionPoint4;
+        return m_dimAngularData.definitionPoint4;
     }
 
     void update() override;
@@ -158,7 +165,8 @@ public:
 
 protected:
     /** Extended data. */
-    RS_DimAngularData   edata;
+    RS_DimAngularData   m_dimAngularData;
+    void doUpdateDim() override;
 
 private:
     void calcDimension(void);
@@ -167,14 +175,12 @@ private:
                        const RS_Vector& dimPoint,
                        const RS_Vector& dirStart,
                        const RS_Vector& dirEnd,
-                       const LC_DimAngularVars& av,
-                       const RS_Pen& pen);
+                       const LC_DimAngularVars& av);
     void arrow(const RS_Vector& point,
                const double angle,
                const double direction,
                const bool outsideArrows,
-               const LC_DimAngularVars& av,
-               const RS_Pen& pen);
+               const LC_DimAngularVars& av);
 
     RS_Vector   dimDir1s;
     RS_Vector   dimDir1e;

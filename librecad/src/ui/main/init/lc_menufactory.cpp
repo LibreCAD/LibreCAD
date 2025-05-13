@@ -409,6 +409,7 @@ void LC_MenuFactory::prepareWorkspaceMenuComponents(){
     m_menuView->addSeparator();
     m_menuView->QWidget::addAction(m_actionGroupManager->getActionByName("UCSCreate"));
     m_menuView->QWidget::addAction(m_actionGroupManager->getActionByName("UCSSetWCS"));
+    m_menuView->QWidget::addAction(m_actionGroupManager->getActionByName("UCSSetByDimOrdinate"));
     m_menuView->QWidget::addAction(ucsToggleViewAction);
 
     m_menuDockWidgets->addSeparator();

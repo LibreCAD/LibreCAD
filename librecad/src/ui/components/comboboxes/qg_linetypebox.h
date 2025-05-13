@@ -39,7 +39,7 @@ public:
     QG_LineTypeBox(QWidget* parent=nullptr);
     QG_LineTypeBox(bool showByLayer, bool showUnchanged, 
         QWidget* parent=nullptr, const char* name=nullptr);
-    virtual ~QG_LineTypeBox();
+    ~QG_LineTypeBox() override;
 
     RS2::LineType getLineType() const {
         return m_currentLineType;

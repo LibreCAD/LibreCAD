@@ -34,6 +34,7 @@
 #include "drw_interface.h"
 #include "libdxfrw.h"
 
+class LC_DimStyle;
 class RS_Point;
 class RS_Line;
 class RS_Circle;
@@ -110,6 +111,7 @@ public:
     void addKnot(const DRW_Entity&) override{}
     void addInsert(const DRW_Insert& data) override;
     void addTrace(const DRW_Trace& data) override;
+    void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
     void addMText(const DRW_MText& data) override;
     RS_DimensionData convDimensionData(const DRW_Dimension* data);
@@ -240,6 +242,7 @@ private:
     QHash<int, RS_EntityContainer*> blockHash;
     /** Pointer to entity container to store possible orphan entities like paper space */
     RS_EntityContainer* dummyContainer;
+    LC_DimStyle *createDimStyle(const DRW_Dimstyle &s);
 };
 
 #endif

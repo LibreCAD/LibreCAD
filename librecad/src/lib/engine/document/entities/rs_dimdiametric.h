@@ -76,20 +76,18 @@ public:
      * @see getData()
      */
     RS_DimDiametricData getEData() const {
-        return edata;
+        return m_dimDiametricData;
     }
 
 	RS_VectorSolutions getRefPoints() const override;
 
 	QString getMeasuredLabel() override;
 
-	void updateDim(bool autoText=false) override;
-
     RS_Vector getDefinitionPoint() {
-        return edata.definitionPoint;
+        return m_dimDiametricData.definitionPoint;
     }
     double getLeader() {
-        return edata.leader;
+        return m_dimDiametricData.leader;
     }
 	void move(const RS_Vector& offset) override;
 	void rotate(const RS_Vector& center, double angle) override;
@@ -104,7 +102,9 @@ public:
 
 protected:
     /** Extended data. */
-    RS_DimDiametricData edata;
+    RS_DimDiametricData m_dimDiametricData;
+
+    void doUpdateDim() override;
 };
 
 #endif

@@ -59,6 +59,10 @@ RS_ConstructionLine::RS_ConstructionLine(RS_EntityContainer* parent,
     calculateBorders();
 }
 
+RS_ConstructionLine::RS_ConstructionLine(const RS_Vector& point1, const RS_Vector& point2)
+    :RS_AtomicEntity(nullptr), data(point1, point2){
+}
+
 RS_Entity* RS_ConstructionLine::clone() const {
     RS_ConstructionLine* c = new RS_ConstructionLine(*this);
     return c;

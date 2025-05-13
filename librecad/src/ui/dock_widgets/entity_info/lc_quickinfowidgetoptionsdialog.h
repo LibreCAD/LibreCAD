@@ -42,7 +42,7 @@ public slots:
     void onDefaultActionAutoClicked();
 
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 
 private:
     Ui::LC_QuickInfoWidgetOptionsDialog *ui;

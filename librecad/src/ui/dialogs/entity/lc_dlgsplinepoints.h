@@ -18,7 +18,7 @@ public slots:
     void updateEntity() override;
     void updatePoints();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
     void setEntity(LC_SplinePoints* b);
     LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;

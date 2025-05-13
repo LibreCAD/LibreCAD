@@ -39,11 +39,11 @@ public:
     ~QG_DlgRotate();
 
 public slots:
-    virtual void setData(RS_RotateData* d );
-    virtual void updateData();
+    void setData(RS_RotateData* d );
+    void updateData();
 
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 
 private:
     bool useCurrentAttributes = false;

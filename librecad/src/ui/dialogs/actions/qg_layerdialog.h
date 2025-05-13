@@ -37,20 +37,20 @@ public:
     QG_LayerDialog(QWidget* parent = nullptr, QString name = 0);
 	~QG_LayerDialog() override;
 public slots:
-    virtual void setLayer( RS_Layer * l );
-    virtual void updateLayer();
-    virtual void validate();
-    virtual void setLayerList( RS_LayerList * ll );
-    virtual void setEditLayer( bool el );
+    void setLayer( RS_Layer * l );
+    void updateLayer();
+    void validate();
+    void setLayerList( RS_LayerList * ll );
+    void setEditLayer( bool el );
     //! @return a reference to the QLineEdit object.
-    virtual QLineEdit* getQLineEdit ();
+    QLineEdit* getQLineEdit ();
 protected:
     RS_Layer* m_layer;
     RS_LayerList* m_layerList;
     QString m_layerName;
     bool m_editLayer;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     void init();
 };

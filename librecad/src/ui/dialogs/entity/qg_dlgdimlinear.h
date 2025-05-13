@@ -39,7 +39,7 @@ public:
 public slots:
     void updateEntity() override;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 protected:
     RS_DimLinear* m_entity = nullptr;
     void setEntity(RS_DimLinear *d);

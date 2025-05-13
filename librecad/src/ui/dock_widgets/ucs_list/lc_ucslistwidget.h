@@ -41,8 +41,6 @@ namespace Ui {
     class LC_UCSListWidget;
 }
 
-
-
 class LC_UCSListWidget : public LC_GraphicViewAwareWidget, LC_UCSListListener{
     Q_OBJECT
 public:
@@ -73,6 +71,7 @@ protected slots:
     void removeUCS();
     void removeAllUCSs();
     void editUCS();
+    void setUCSByDimOrdinate();
     void onCustomContextMenu(const QPoint &point);
     void slotTableClicked(QModelIndex layerIdx);
     void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);

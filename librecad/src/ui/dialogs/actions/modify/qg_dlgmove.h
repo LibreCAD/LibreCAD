@@ -40,11 +40,11 @@ public:
     ~QG_DlgMove();
 
 public slots:
-    virtual void setData( RS_MoveData * d );
-    virtual void updateData();
+    void setData( RS_MoveData * d );
+    void updateData();
     void cbMultipleCopiesClicked(bool val);
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     RS_MoveData* data = nullptr;
     void init();

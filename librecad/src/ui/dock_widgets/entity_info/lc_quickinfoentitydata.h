@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_mtext.h" // fixme - sand - files - extract enums to rs.h
 #include "rs_text.h"
 
+class LC_DimOrdinate;
 class LC_PenInfoRegistry;
 class RS_DimAligned;
 class RS_DimLinear;
@@ -155,6 +156,7 @@ protected:
     void collectDimDiametricProperties(RS_DimDiametric *dim);
     void collectDimRadialProperties(RS_DimRadial *dim);
     void collectDimLinearProperties(const RS_DimLinear *dim);
+    void collectDimOrdinateProperties(LC_DimOrdinate* dim);
     void collectDimAlignedProperties(const RS_DimAligned *dim);
     static QString getHAlignStr(RS_TextData::HAlign align);
     static QString getVAlignStr(RS_TextData::VAlign align);
@@ -196,6 +198,7 @@ protected:
     QString prepareDimDiametricDescription(RS_DimDiametric *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimRadialDescription(RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimLinearDescription(const RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimOrdinateDescription(const LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimAlignedDescription(const RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
 };
 

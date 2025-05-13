@@ -36,7 +36,7 @@ class QG_CommandEdit: public QLineEdit {
     Q_OBJECT
 public:
     QG_CommandEdit(QWidget* parent=nullptr);
-    virtual ~QG_CommandEdit() = default;
+    ~QG_CommandEdit() override = default;
     void readCommandFile(const QString& path);
     bool m_keycode_mode = false;
 protected:

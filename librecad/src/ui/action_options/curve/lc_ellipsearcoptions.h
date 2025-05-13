@@ -35,7 +35,7 @@ class LC_EllipseArcOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 public:
     LC_EllipseArcOptions();
-    virtual ~LC_EllipseArcOptions() override;
+    ~LC_EllipseArcOptions() override;
 public slots:
     void onDirectionChanged(bool);
     void languageChange() override;
