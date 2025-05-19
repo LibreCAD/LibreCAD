@@ -148,7 +148,7 @@ void initSystem(char** argv, LC_Application& app) {
     RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
 }
 
-void loadFilesOnStartup(QSplashScreen *splash, QC_ApplicationWindow& appWin, [[mayb_unused]]LC_Application& app, QStringList fileList) {
+void loadFilesOnStartup(QSplashScreen *splash, QC_ApplicationWindow& appWin, [[maybe_unused]]LC_Application& app, QStringList fileList) {
     RS_DEBUG->print("main: loading files..");
 #ifdef Q_OS_MAC
     // get the file list from LC_Application
