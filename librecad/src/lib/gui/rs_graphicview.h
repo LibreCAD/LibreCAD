@@ -178,6 +178,7 @@ public:
     void onRelativeZeroChanged(const RS_Vector &pos) override;
     void onUCSChanged(LC_UCS* ucs) override;
     void notifyNoActiveAction();
+    void notifyActiveAction(RS_ActionInterface* action);
 signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);

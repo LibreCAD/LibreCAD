@@ -153,7 +153,7 @@ bool RS_GraphicView::setEventHandlerAction(std::shared_ptr<RS_ActionInterface> a
     bool actionActive = m_eventHandler->setCurrentAction(action);
     if (actionActive) {
         if (m_eventHandler->hasAction()) {
-            emit currentActionChanged(action.get());
+            notifyActiveAction(action.get());
         }
         else {
             notifyNoActiveAction();
@@ -274,6 +274,10 @@ void RS_GraphicView::onUCSChanged(LC_UCS* ucs) {
 
 void RS_GraphicView::notifyNoActiveAction(){
     emit currentActionChanged(nullptr);
+}
+
+void RS_GraphicView::notifyActiveAction(RS_ActionInterface* action) {
+    emit currentActionChanged(action);
 }
 
 void RS_GraphicView::onRelativeZeroChanged(const RS_Vector &pos) {
