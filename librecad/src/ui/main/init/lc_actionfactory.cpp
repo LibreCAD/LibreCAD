@@ -102,6 +102,7 @@ void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC
     createActionHandlerActions(map, group,{
      {"EntityLayerActivate",     RS2::ActionLayerEntityActivate,          tr("Activate Entity's Layer"),           ":/icons/select_entity.lci"},
      {"EntityLayerView",         RS2::ActionLayerEntityToggleView,        tr("Hide Entity's Layer"),  ":/icons/not_visible.lci"},
+     {"EntityLayerHideOthers",   RS2::ActionLayerEntityHideOthers,        tr("Hide Other Layers than Entity's"),  ":/icons/not_visible_all.lci"},
      {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Lock Entity's Layer"),        ":/icons/locked.lci"},
      {"EntityLayerConstruction", RS2::ActionLayerEntityToggleConstruction,tr("Toggle Entity's Layer Construction"),":/icons/construction_layer.lci"},
      {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,           tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
@@ -567,7 +568,9 @@ void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> 
         {"WidgetOptions", &QC_ApplicationWindow::widgetOptionsDialog, tr("Widget Options")},
         {"ShortcutsOptions", &QC_ApplicationWindow::slotOptionsShortcuts, tr("Keyboard Shortcuts"), ":/icons/shortcuts_settings.lci"},
         {"DeviceOptions", &QC_ApplicationWindow::showDeviceOptions, tr("Device Options")},
-        {"ReloadStyleSheet", &QC_ApplicationWindow::reloadStyleSheet, tr("Reload Style Sheet")}
+        {"ReloadStyleSheet", &QC_ApplicationWindow::reloadStyleSheet, tr("Reload Style Sheet")},
+
+        {"DimStyleEditTmp",&QC_ApplicationWindow::tmpDimStyleManager, tr("Dimension Style Manager "), ":/icons/dim_style_manager.lci"}
     });
 }
 
@@ -718,7 +721,7 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_Acti
         commandLineShortcuts << QKeySequence(Qt::Key_Space);
 
     std::vector<LC_ShortcutInfo> shortcutsList = {
-        {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
+        {"ModifyRevertDirection", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R)},
         {"ModifyDuplicate",QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)},
         {"OrderBottom", QKeySequence(Qt::Key_End)},
         {"OrderLower", QKeySequence(Qt::Key_PageDown)},
@@ -1033,6 +1036,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
     fillActionsList(entity_layer_actions,{
                         "EntityLayerActivate",
                         "EntityLayerView",
+                        "EntityLayerHideOthers",
                         "EntityLayerLock",
                         "EntityLayerConstruction",
                         "EntityLayerPrint"

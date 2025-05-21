@@ -449,6 +449,7 @@ namespace RS2 {
 
         ActionLayerEntityActivate,
         ActionLayerEntityToggleView,
+        ActionLayerEntityHideOthers,
         ActionLayerEntityTogglePrint,
         ActionLayerEntityToggleConstruction,
         ActionLayerEntityToggleLock,

@@ -349,7 +349,7 @@ namespace InnerFactory{
             case RS2::ActionZoomWindow: {
                 return new RS_ActionZoomWindow(ctx);
             }
-            case RS2::ActionZoomPan: {
+            case RS2::ActionZoomPan:{
                 return new RS_ActionZoomPan(ctx);
             }
             case RS2::ActionZoomPrevious: {
@@ -949,6 +949,8 @@ namespace InnerFactory{
             case RS2::ActionLayerEntityToggleConstruction:
                 [[fallthrough]];
             case RS2::ActionLayerEntityTogglePrint:
+                [[fallthrough]];
+            case RS2::ActionLayerEntityHideOthers:
                 [[fallthrough]];
             case RS2::ActionLayerEntityToggleLock: {
                 return new LC_ActionLayerToggle(ctx, actionType);
