@@ -262,12 +262,12 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
     int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
     if (itemsCount >0 && selectedItemsCount > 0){
         auto contextMenu = std::make_unique<QMenu>(this);
-        QLabel *caption = new QLabel(tr("Pens Menu"), this);
+        /*QLabel *caption = new QLabel(tr("Pens Menu"), this);
         QPalette palette;
         palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
         palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
         caption->setPalette(palette);
-        caption->setAlignment(Qt::AlignCenter);
+        caption->setAlignment(Qt::AlignCenter);*/
         typedef void (LC_PenPaletteWidget::*MemFn)();
         auto addAction = [&contextMenu, this](const std::pair<QString, MemFn>& item) {
             auto* action = contextMenu->addAction(item.first);
