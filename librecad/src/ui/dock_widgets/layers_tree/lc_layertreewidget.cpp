@@ -623,13 +623,12 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
 
     if (m_actionHandler){
         auto *contextMenu = new QMenu(this);
-        auto *caption = new QLabel(tr("Layer Menu"), this);
+        /*auto *caption = new QLabel(tr("Layer Menu"), this);
         QPalette palette;
         palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
         palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
         caption->setPalette(palette);
-        caption->setAlignment(Qt::AlignCenter);
-
+        caption->setAlignment(Qt::AlignCenter);*/
 
         // Actions for all layers:
 
