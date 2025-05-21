@@ -70,6 +70,8 @@
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
 #include "qc_applicationwindow.h"
+
+#include "lc_dlgdimstylemanager.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"
@@ -1179,7 +1181,7 @@ bool QC_ApplicationWindow::doCloseAllFiles(){
                         policy = QC_MDIWindow::SaveOnClosePolicy::DONT_SAVE;
                         break;
                     case QG_ExitDialog::DontSave:
-                        w->setSaveOnClosePolicy(QC_MDIWindow::SaveOnClosePolicy::SAVE);
+                        w->setSaveOnClosePolicy(QC_MDIWindow::SaveOnClosePolicy::DONT_SAVE);
                         break;
                     case QG_ExitDialog::SaveAll:
                         policy = QC_MDIWindow::SaveOnClosePolicy::SAVE;
@@ -1607,7 +1609,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         setAsCurrentActionInView = false;
     }
     if (setAsCurrentActionInView) {
-        QG_GraphicView* graphicView = dynamic_cast<QG_GraphicView*>(view);
+        auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
         graphicView->setCurrentQAction(q_action);
     }
 
@@ -1655,6 +1657,15 @@ void QC_ApplicationWindow::widgetOptionsDialog() {
 bool QC_ApplicationWindow::loadStyleSheet(const QString &path) {
    return m_styleHelper->loadStyleSheet(path);
 }
+// fixme - sand - dimstyle - REMOVE TMP CODE!!
+void QC_ApplicationWindow::tmpDimStyleManager() {
+    RS_Graphic* graphic = getCurrentGraphicView()->getGraphic();
+    LC_DimStyle* defaultDimStyle = graphic->getDefaultDimStyle();
+
+    LC_DlgDimStyleManager dlg(this);
+    dlg.setDimStyle(defaultDimStyle);
+    dlg.exec();
+}
 
 void QC_ApplicationWindow::reloadStyleSheet() {
     m_styleHelper->reloadStyleSheet();
@@ -1670,7 +1681,7 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void QC_ApplicationWindow::onViewCurrentActionChanged(const RS_ActionInterface* action){
-    if (action != nullptr) {
+        if (action != nullptr) {
         RS2::ActionType actionType = action->rtti();
         auto qAction = m_actionGroupManager->getActionByType(actionType);
         relayAction(qAction);
