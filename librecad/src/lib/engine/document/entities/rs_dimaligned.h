@@ -82,7 +82,6 @@ public:
     RS_DimAlignedData const &getEData() const;
     RS_VectorSolutions getRefPoints() const override;
     QString getMeasuredLabel() override;
-    void updateDim(bool autoText = false) override;
     RS_Vector const &getExtensionPoint1() const;
     RS_Vector const &getExtensionPoint2() const;
     /**
@@ -112,7 +111,8 @@ public:
                               double solidDist = RS_MAXDOUBLE) const override;
 private:
     /** Extended data. */
-    RS_DimAlignedData edata;
+    RS_DimAlignedData m_dimAlignedData;
+    void doUpdateDim() override;
 };
 
 #endif

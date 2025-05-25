@@ -1220,7 +1220,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writer->writeDouble(11, ent->getTextPoint().x);
         writer->writeDouble(21, ent->getTextPoint().y);
         writer->writeDouble(31, ent->getTextPoint().z);
-        if ( !(ent->type & 32))
+        if ( !(ent->type & 32)) // fixme - sand - ordinate type support !!!??
             ent->type = ent->type +32;
         writer->writeInt16(70, ent->type);
         if ( !(ent->getText().empty()) )
@@ -1231,8 +1231,11 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         if ( ent->getTextLineFactor() != 1)
             writer->writeDouble(41, ent->getTextLineFactor());
         writer->writeUtf8String(3, ent->getStyle());
-        if ( ent->getTextLineFactor() != 0)
+        if ( ent->getTextLineFactor() != 0) // fixme - sand - double value equality??
             writer->writeDouble(53, ent->getDir());
+        if ( ent->getHDir() != 0)
+            writer->writeDouble(51, ent->getHDir());
+
         writer->writeDouble(210, ent->getExtrusion().x);
         writer->writeDouble(220, ent->getExtrusion().y);
         writer->writeDouble(230, ent->getExtrusion().z);
@@ -2500,44 +2503,46 @@ bool dxfRW::processEntities(bool isblock) {
         if (nextentity == "ENDSEC" || nextentity == "ENDBLK") {
             return true;  //found ENDSEC or ENDBLK terminate
         }
-        else if (nextentity == "POINT") {
-            processed = processPoint();
-        } else if (nextentity == "LINE") {
+        if (nextentity == "LINE") {
             processed = processLine();
-        } else if (nextentity == "CIRCLE") {
+        }  else if (nextentity == "CIRCLE") {
             processed = processCircle();
         } else if (nextentity == "ARC") {
             processed = processArc();
-        } else if (nextentity == "ELLIPSE") {
-            processed = processEllipse();
-        } else if (nextentity == "TRACE") {
-            processed = processTrace();
-        } else if (nextentity == "SOLID") {
-            processed = processSolid();
-        } else if (nextentity == "INSERT") {
-            processed = processInsert();
+        } else if (nextentity == "POINT") {
+            processed = processPoint();
         } else if (nextentity == "LWPOLYLINE") {
             processed = processLWPolyline();
         } else if (nextentity == "POLYLINE") {
             processed = processPolyline();
-        } else if (nextentity == "TEXT") {
+        }else if (nextentity == "TEXT") {
             processed = processText();
         } else if (nextentity == "MTEXT") {
             processed = processMText();
         } else if (nextentity == "HATCH") {
             processed = processHatch();
-        } else if (nextentity == "SPLINE") {
+        } else if (nextentity == "DIMENSION") {
+            processed = processDimension();
+        } else if (nextentity == "INSERT") {
+            processed = processInsert();
+        } else if (nextentity == "TOLERANCE") {
+            processed = processTolerance();
+        } else if (nextentity == "SOLID") {
+            processed = processSolid();
+        }else if (nextentity == "SPLINE") {
             processed = processSpline();
-        } else if (nextentity == "3DFACE") {
-            processed = process3dface();
+        }else if (nextentity == "LEADER") {
+            processed = processLeader();
+        } else if (nextentity == "ELLIPSE") {
+            processed = processEllipse();
         } else if (nextentity == "VIEWPORT") {
             processed = processViewport();
         } else if (nextentity == "IMAGE") {
             processed = processImage();
-        } else if (nextentity == "DIMENSION") {
-            processed = processDimension();
-        } else if (nextentity == "LEADER") {
-            processed = processLeader();
+        } else if (nextentity == "TRACE") {
+            processed = processTrace();
+        } else if (nextentity == "3DFACE") {
+            processed = process3dface();
         } else if (nextentity == "RAY") {
             processed = processRay();
         } else if (nextentity == "XLINE") {
@@ -2886,6 +2891,27 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
 
         if (!v->parseCode(code, reader)) { //the members of v are reinitialized here
             return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processTolerance() {
+    DRW_DBG("dxfRW::processTolerance\n");
+    int code;
+    DRW_Tolerance tol;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addTolerance(tol);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!tol.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
         }
     }
 

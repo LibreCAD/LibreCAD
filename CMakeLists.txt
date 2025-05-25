@@ -61,10 +61,10 @@ file(GLOB_RECURSE AUTO_EXCLUDED_SOURCES
         "${PROJECT_SOURCE_DIR}/librecad/src/lib/scripting/*.*"
 )
 
-include(CMakePrintHelpers)
-cmake_print_variables(AUTO_EXCLUDED_SOURCES)
-cmake_print_variables(CMAKE_AUTOMOC)
-cmake_print_variables(PROJECT_SOURCE_DIR)
+#include(CMakePrintHelpers)
+#cmake_print_variables(AUTO_EXCLUDED_SOURCES)
+#cmake_print_variables(CMAKE_AUTOMOC)
+#cmake_print_variables(PROJECT_SOURCE_DIR)
 
 include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
 
@@ -73,6 +73,7 @@ include_directories(librecad/src/lib/math)
 include_directories(librecad/src/lib/engine/document)
 include_directories(librecad/src/lib/engine/document/blocks)
 include_directories(librecad/src/lib/engine/document/layers)
+include_directories(librecad/src/lib/engine/document/dimstyles)
 include_directories(librecad/src/lib/engine/document/views)
 include_directories(librecad/src/lib/engine/document/fonts)
 include_directories(librecad/src/lib/engine/document/patterns)
@@ -331,8 +332,10 @@ set(SOURCES
         libraries/muparser/src/muParserError.cpp
         libraries/muparser/src/muParserInt.cpp
         libraries/muparser/src/muParserTokenReader.cpp
-		librecad/src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp
-		librecad/src/actions/drawing/draw/dimensions/lc_actiondimarc.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimarc.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinate.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.h
 		librecad/src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp
@@ -387,6 +390,10 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/dimensions/rs_actiondimlinear.h
 		librecad/src/actions/drawing/draw/dimensions/rs_actiondimradial.cpp
 		librecad/src/actions/drawing/draw/dimensions/rs_actiondimradial.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinaterebase.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp
 		librecad/src/actions/drawing/draw/curve/rs_actiondrawarc.cpp
 		librecad/src/actions/drawing/draw/curve/rs_actiondrawarc.h
 		librecad/src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp
@@ -564,6 +571,8 @@ set(SOURCES
 #        librecad/src/actions/not_used/rs_actionselect.h
 		librecad/src/actions/drawing/selection/rs_actionselectall.cpp
 		librecad/src/actions/drawing/selection/rs_actionselectall.h
+        librecad/src/actions/drawing/selection/lc_actionsingleentityselectbase.h
+        librecad/src/actions/drawing/selection/lc_actionsingleentityselectbase.cpp
         librecad/src/lib/actions/rs_actionselectbase.cpp
         librecad/src/lib/actions/rs_actionselectbase.h
         librecad/src/lib/actions/lc_actioninfomessagebuilder.h
@@ -660,6 +669,10 @@ set(SOURCES
 		librecad/src/lib/engine/document/entities/rs_dimension.h
 		librecad/src/lib/engine/document/entities/rs_dimlinear.cpp
 		librecad/src/lib/engine/document/entities/rs_dimlinear.h
+        librecad/src/lib/engine/document/entities/lc_dimordinate.h
+        librecad/src/lib/engine/document/entities/lc_dimordinate.cpp
+        librecad/src/lib/engine/document/entities/lc_tolerance.h
+        librecad/src/lib/engine/document/entities/lc_tolerance.cpp
 		librecad/src/lib/engine/document/entities/rs_dimradial.cpp
 		librecad/src/lib/engine/document/entities/rs_dimradial.h
 		librecad/src/lib/engine/document/rs_document.cpp
@@ -690,6 +703,10 @@ set(SOURCES
 		librecad/src/lib/engine/document/layers/rs_layerlist.cpp
 		librecad/src/lib/engine/document/layers/rs_layerlist.h
 		librecad/src/lib/engine/document/layers/rs_layerlistlistener.h
+        librecad/src/lib/engine/document/dimstyles/lc_dimstyle.h
+        librecad/src/lib/engine/document/dimstyles/lc_dimstyle.cpp
+        librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.h
+        librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.h
 		librecad/src/lib/engine/document/entities/rs_line.cpp
@@ -830,8 +847,10 @@ set(SOURCES
         librecad/src/plugins/intern/qc_actiongetselect.h
         librecad/src/plugins/document_interface.h
         librecad/src/plugins/qc_plugininterface.h
-		librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.cpp
-		librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.h
+        librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.h
+        librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.cpp
+        librecad/src/ui/dialogs/entity/lc_dlgdimordinate.h
+        librecad/src/ui/dialogs/entity/lc_dlgdimordinate.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.h
 		librecad/src/ui/components/status_bar/qg_activelayername.cpp
@@ -1376,6 +1395,8 @@ set(SOURCES
 		librecad/src/lib/engine/document/ucs/lc_ucslist.cpp
 		librecad/src/actions/dock_widgets/ucs_list/lc_actionucscreate.h
 		librecad/src/actions/dock_widgets/ucs_list/lc_actionucscreate.cpp
+        librecad/src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.h
+        librecad/src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp
 		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.h
 		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp
 		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.h

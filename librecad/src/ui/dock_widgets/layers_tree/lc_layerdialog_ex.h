@@ -63,11 +63,11 @@ public:
     void setConstruction(bool enable) {cbConstructionLayer->setChecked(enable);};
     QString getLayerName() const;
 public slots:
-    virtual void validate();
+    void validate();
     void layerTypeChanged() const;
 
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 
 private:
     void init();

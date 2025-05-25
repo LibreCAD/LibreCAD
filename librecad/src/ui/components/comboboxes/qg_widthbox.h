@@ -39,7 +39,7 @@ public:
 	QG_WidthBox(QWidget* parent=nullptr, const char* name=nullptr);
     QG_WidthBox(bool showByLayer, bool showUnchanged,
 				QWidget* parent=nullptr, const char* name=nullptr);
-    virtual ~QG_WidthBox()=default;
+    ~QG_WidthBox() override =default;
     RS2::LineWidth getWidth() const;
     void setWidth(RS2::LineWidth w);
     void setLayerWidth(RS2::LineWidth w);

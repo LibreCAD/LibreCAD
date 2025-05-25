@@ -593,7 +593,7 @@ protected:
     //! maximum coordinates
     RS_Vector maxV;
     //! Pointer to layer
-    RS_Layer *layer = nullptr;
+    RS_Layer *m_layer = nullptr;
     //! auto updating enabled?
     bool updateEnabled = false;
 

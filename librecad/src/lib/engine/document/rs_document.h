@@ -33,6 +33,7 @@
 #include "rs_pen.h"
 #include "rs_undo.h"
 
+class LC_DimStylesList;
 class RS_GraphicView;
 class LC_UCSList;
 class LC_ViewList;
@@ -54,6 +55,7 @@ public:
 
     virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
+    virtual LC_DimStylesList* getDimStyleList() = 0;
     virtual LC_ViewList* getViewList() { return nullptr;}
     virtual LC_UCSList* getUCSList() { return nullptr;}
 

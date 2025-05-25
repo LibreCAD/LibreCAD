@@ -45,7 +45,7 @@ public slots:
    void showIndentedClicked() const;
    void validate();
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:    
     LC_LayerTreeModelOptions* m_options;
     void init();

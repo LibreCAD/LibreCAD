@@ -913,6 +913,17 @@ void LC_GraphicViewport::applyUCSAfterLoad(){
     }
 }
 
+void LC_GraphicViewport::fillCurrentUCSInfo(RS_Vector& origin, double& xAsixDirection) const {
+    if (hasUCS()) {
+        origin = getUcsOrigin();
+        xAsixDirection = -getXAxisAngle();
+    }
+    else {
+        origin = RS_Vector(0, 0, 0);
+        xAsixDirection = 0;
+    }
+}
+
 LC_UCS* LC_GraphicViewport::getCurrentUCS() const{
     LC_UCS* result = nullptr;
     if (hasUCS()){

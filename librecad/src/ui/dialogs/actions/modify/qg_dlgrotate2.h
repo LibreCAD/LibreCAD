@@ -36,17 +36,17 @@ class QG_DlgRotate2 : public QDialog, public Ui::QG_DlgRotate2
 
 public:
     QG_DlgRotate2(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    virtual ~QG_DlgRotate2();
+    ~QG_DlgRotate2() override;
 
 public slots:
-    virtual void setData( RS_Rotate2Data * d );
-    virtual void updateData();
+    void setData( RS_Rotate2Data * d );
+    void updateData();
 
 protected:
     int newVariable = 0;
 
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 
 private:
     QString angle2;

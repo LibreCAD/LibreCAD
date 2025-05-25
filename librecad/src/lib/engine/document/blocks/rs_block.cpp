@@ -61,6 +61,8 @@ RS_Entity* RS_Block::clone() const {
     return blk;
 }
 
+
+
 RS_LayerList* RS_Block::getLayerList() {
     RS_Graphic* g = getGraphic();
     return (g != nullptr) ? g->getLayerList() : nullptr;
@@ -69,6 +71,11 @@ RS_LayerList* RS_Block::getLayerList() {
 RS_BlockList* RS_Block::getBlockList() {
     RS_Graphic* g = getGraphic();
     return (g != nullptr) ? g->getBlockList() : nullptr;
+}
+
+LC_DimStylesList* RS_Block::getDimStyleList() {
+    RS_Graphic* g = getGraphic();
+    return (g != nullptr) ? g->getDimStyleList() : nullptr;
 }
 
 // bool RS_Block::save(bool isAutoSave) {

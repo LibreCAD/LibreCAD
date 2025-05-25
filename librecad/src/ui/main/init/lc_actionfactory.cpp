@@ -337,17 +337,20 @@ void LC_ActionFactory::createDrawOtherActions(QMap<QString, QAction *> &map, QAc
 
 void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActionHandlerActions(map, group,{
-        {"DimAligned",   RS2::ActionDimAligned,   tr("&Aligned"),    ":/icons/dim_aligned.lci"},
-        {"DimLinear",    RS2::ActionDimLinear,    tr("&Linear"),     ":/icons/dim_linear.lci"},
-        {"DimLinearHor", RS2::ActionDimLinearHor, tr("&Horizontal"), ":/icons/dim_horizontal.lci"},
-        {"DimLinearVer", RS2::ActionDimLinearVer, tr("&Vertical"),   ":/icons/dim_vertical.lci"},
-        {"DimRadial",    RS2::ActionDimRadial,    tr("&Radial"),     ":/icons/dim_radial.lci"},
-        {"DimDiametric", RS2::ActionDimDiametric, tr("&Diametric"),  ":/icons/dim_diametric.lci"},
-        {"DimAngular",   RS2::ActionDimAngular,   tr("&Angular"),    ":/icons/dim_angular.lci"},
-        {"DimArc",       RS2::ActionDimArc,       tr("&Arc"),        ":/icons/dim_arc.lci"},
-        {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.lci"},
-        {"DimBaseline",  RS2::ActionDimBaseline,  tr("&Baseline"),   ":/icons/dim_baseline.lci"},
-        {"DimContinue",  RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"}
+        {"DimAligned",        RS2::ActionDimAligned,   tr("&Aligned"),    ":/icons/dim_aligned.lci"},
+        {"DimLinear",         RS2::ActionDimLinear,    tr("&Linear"),     ":/icons/dim_linear.lci"},
+        {"DimLinearHor",      RS2::ActionDimLinearHor, tr("&Horizontal"), ":/icons/dim_horizontal.lci"},
+        {"DimLinearVer",      RS2::ActionDimLinearVer, tr("&Vertical"),   ":/icons/dim_vertical.lci"},
+        {"DimRadial",         RS2::ActionDimRadial,    tr("&Radial"),     ":/icons/dim_radial.lci"},
+        {"DimDiametric",      RS2::ActionDimDiametric, tr("&Diametric"),  ":/icons/dim_diametric.lci"},
+        {"DimAngular",        RS2::ActionDimAngular,   tr("&Angular"),    ":/icons/dim_angular.lci"},
+        {"DimArc",            RS2::ActionDimArc,       tr("&Arc"),        ":/icons/dim_arc.lci"},
+        {"DimLeader",         RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.lci"},
+        {"DimBaseline",       RS2::ActionDimBaseline,  tr("&Baseline"),   ":/icons/dim_baseline.lci"},
+        {"DimContinue",       RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"},
+        {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
+        {"DimOrdinateForBase",RS2::ActionDimOrdinateSelectSameOrigin,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
+        {"DimOrdinateReBase",RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"}
     });
 }
 
@@ -447,7 +450,8 @@ void LC_ActionFactory::createUCSActions(QMap<QString, QAction *> &map, QActionGr
     });
 
     createActionHandlerActions(map, group, {
-        {"UCSCreate",   RS2::ActionUCSCreate,   tr("Create UCS"),  ":/icons/ucs_add.lci"}
+        {"UCSCreate",   RS2::ActionUCSCreate,   tr("Create UCS"),  ":/icons/ucs_add.lci"},
+        {"UCSSetByDimOrdinate",   RS2::ActionUCSSetByDimOrdinate,   tr("Set UCS By Ordinate Dimension"),  ":/icons/ucs_set_by_dimordinate.lci"}
     });
 }
 
@@ -924,7 +928,10 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimDiametric",
                         "DimAngular",
                         "DimArc",
-                        "DimLeader"
+                        "DimLeader",
+                        "DimOrdinate",
+                        "DimOrdinateForBase",
+                        "DimOrdinateReBase"
                     }, map);
 
     fillActionsList(other_drawing_actions, {
@@ -1056,7 +1063,8 @@ void LC_ActionFactory::prepareActionsToDisableInPrintPreview(QList<QAction*>& ac
         "ViewGridIsoTop",
         "ViewGridIsoRight",
         "UCSSetWCS",
-        "UCSCreate"
+        "UCSCreate",
+        "UCSSetByDimOrdinate",
     }, map);
 
     actionsList.append(line_actions);
@@ -1075,4 +1083,6 @@ void LC_ActionFactory::prepareActionsToDisableInPrintPreview(QList<QAction*>& ac
     actionsList.append(info_actions);
     actionsList.append(block_actions);
     actionsList.append(pen_actions);
+    actionsList.append(layer_actions);
+    actionsList.append(entity_layer_actions);
 }

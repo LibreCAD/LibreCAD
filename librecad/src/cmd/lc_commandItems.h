@@ -631,6 +631,17 @@ const LC_CommandItem g_commandList[] = {
             {{"dl", QObject::tr("dl", "dimension - linear")}},
             RS2::ActionDimLinear
         },
+        // dimension ordinate
+        {
+            {{"dimord", QObject::tr("dimord", "dimension - ordinate")}},
+            {{"do", QObject::tr("do", "dimension - ordinate")}},
+            RS2::ActionDimOrdinate
+        },
+        {
+                {{"dimordrebase", QObject::tr("dimordrebase", "dimension - ordinate")}},
+                {{"dor", QObject::tr("dor", "dimension - ordinate")}},
+                RS2::ActionDimOrdinateRebase
+            },
         // dimension horizontal
         {
             {{"dimhorizontal", QObject::tr("dimhorizontal", "dimension - horizontal")}},

@@ -52,7 +52,9 @@ void RS_ActionDimension::reset(){
                                               1.0,
                                               "",
                                               "Standard",
-                                              0.0);
+                                              0.0,
+                                              0.0,
+                                              true);
     m_diameter = false;
 }
 
@@ -68,6 +70,7 @@ bool RS_ActionDimension::isDimensionAction(RS2::ActionType type){
     switch (type) {
         case RS2::ActionDimAligned:
         case RS2::ActionDimLinear:
+        case RS2::ActionDimOrdinate:
         case RS2::ActionDimLinearVer:
         case RS2::ActionDimLinearHor:
         case RS2::ActionDimAngular:
@@ -83,30 +86,32 @@ bool RS_ActionDimension::isDimensionAction(RS2::ActionType type){
 }
 
 QString RS_ActionDimension::getText() const{
-    if (!m_dimensionData->text.isEmpty()){
+    if (!m_dimensionData->text.isEmpty()) {
         return m_dimensionData->text;
     }
 
     QString l = m_label;
 
     if (l.isEmpty() &&
-        (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())){
+        (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
         l = "<>";
     }
 
-    if (m_diameter){
+    if (m_diameter) {
         if (rtti() == RS2::ActionDimRadial && !l.startsWith(g_radialPrefix))
             l = g_radialPrefix + l;
         else if (l.at(0) != QChar(0x2205))
             l = QChar(0x2205) + l;
-    } else if (l.startsWith({QChar(0x2205)})){
+    }
+    else if (l.startsWith({QChar(0x2205)})) {
         l = l.mid(1);
-    } else if (l.startsWith(g_radialPrefix)){
+    }
+    else if (l.startsWith(g_radialPrefix)) {
         l = l.mid(g_radialPrefix.length());
     }
 
-    if (!m_tol1.isEmpty() || !m_tol2.isEmpty()){
-        l += QString("\\S%1\\%2;").arg(m_tol1,m_tol2);
+    if (!m_tol1.isEmpty() || !m_tol2.isEmpty()) {
+        l += QString("\\S%1\\%2;").arg(m_tol1, m_tol2);
     }
 
     return l;

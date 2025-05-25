@@ -43,9 +43,9 @@ public:
 
     void enableButtons();
 public slots:
-    virtual void close(); // fixme - rename
-    virtual void undo();
-    virtual void redo();
+    void close(); // fixme - rename
+    void undo();
+    void redo();
     void languageChange() override;
 protected:
     RS_ActionDrawLine* m_action = nullptr;

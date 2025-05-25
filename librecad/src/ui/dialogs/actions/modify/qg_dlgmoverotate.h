@@ -41,11 +41,11 @@ public:
     ~QG_DlgMoveRotate();
 
 public slots:
-    virtual void setData( RS_MoveRotateData * d );
-    virtual void updateData();
+    void setData( RS_MoveRotateData * d );
+    void updateData();
 
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;

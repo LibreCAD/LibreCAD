@@ -322,15 +322,15 @@ void RS_Polyline::setLayer(const QString& name) {
     RS_Entity::setLayer(name);
     // set layer for sub-entities
     for(RS_Entity* e : *this) {
-        e->setLayer(layer);
+        e->setLayer(m_layer);
     }
 }
 
 void RS_Polyline::setLayer(RS_Layer* l) {
-    layer = l;
+    m_layer = l;
     // set layer for sub-entities
     for(RS_Entity* e : *this) {
-        e->setLayer(layer);
+        e->setLayer(m_layer);
     }
 }
 
@@ -746,6 +746,8 @@ RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vec
 
 bool RS_Polyline::isFont() const
 {
-    const RS_EntityContainer* parent = getParent();
-    return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
+    // fixme - sand - temporary disabled elliptic arcs until painting for them is fixed and save is solved
+    // const RS_EntityContainer* parent = getParent();
+    // return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
+    return false;
 }

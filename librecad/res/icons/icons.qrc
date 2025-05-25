@@ -346,5 +346,9 @@
         <file alias="workspace_save.lci">workspace_save.svg</file>
         <file alias="workspace.lci">workspace.svg</file>
         <file alias="workspace_remove.lci">workspace_remove.svg</file>
+        <file alias="dim_ordinate.lci">dim_ordinate.svg</file>
+        <file alias="ucs_set_by_dimordinate.lci">ucs_set_by_dimordinate.svg</file>
+        <file alias="dim_ordinate_by_origin.lci">dim_ordinate_by_origin.svg</file>
+        <file alias="dim_ordinate_rebase.lci">dim_ordinate_rebase.svg</file>
     </qresource>
 </RCC>

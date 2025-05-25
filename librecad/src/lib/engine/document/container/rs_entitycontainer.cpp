@@ -324,7 +324,7 @@ void RS_EntityContainer::setHighlighted(bool on)
  *
  * @param select True to select, False to invertSelectionOperation the entities.
  */
- // todo - sand - ucs - add method for selecting m_entities within rect that is rotated in wcs
+ // todo - sand - ucs - add method for selecting entities within rect that is rotated in wcs
  // Such method is needed for better support UCS with rotation and more precise selection of m_entities.
 void RS_EntityContainer::selectWindow(
     enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
@@ -388,9 +388,9 @@ void RS_EntityContainer::selectWindow(
     }
 }
 /**
- * Selects all m_entities within the given area with given types.
+ * Selects all entities within the given area with given types.
  *
- * @param select True to select, False to invertSelectionOperation the m_entities.
+ * @param select True to select, False to invertSelectionOperation the entities.
  */
 void RS_EntityContainer::selectWindow(
     const QList<RS2::EntityType> &typesToSelect, RS_Vector v1, RS_Vector v2,
@@ -460,7 +460,7 @@ void RS_EntityContainer::selectWindow(
 
 /**
  * Adds a entity to this container and updates the borders of this
- * entity-container if m_autoUpdateBorders is true.
+ * entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::addEntity(RS_Entity *entity) {
     /*
@@ -489,8 +489,8 @@ void RS_EntityContainer::addEntity(RS_Entity *entity) {
 }
 
 /**
- * Insert a entity at the end of m_entities list and updates the
- * borders of this entity-container if m_autoUpdateBorders is true.
+ * Insert a entity at the end of entities list and updates the
+ * borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::appendEntity(RS_Entity *entity) {
     if (entity == nullptr)
@@ -501,8 +501,8 @@ void RS_EntityContainer::appendEntity(RS_Entity *entity) {
 }
 
 /**
- * Insert a entity at the start of m_entities list and updates the
- * borders of this entity-container if m_autoUpdateBorders is true.
+ * Insert a entity at the start of entities list and updates the
+ * borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::prependEntity(RS_Entity *entity) {
     if (entity == nullptr)
@@ -550,7 +550,7 @@ void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> &entList) {
 
 /**
  * Inserts a entity to this container at the given position and updates
- * the borders of this entity-container if m_autoUpdateBorders is true.
+ * the borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::insertEntity(int index, RS_Entity *entity) {
     if (entity == nullptr)
@@ -586,7 +586,7 @@ void RS_EntityContainer::replaceEntity(int index, RS_Entity* entity) {
 
 /**
  * Removes an entity from this container and updates the borders of
- * this entity-container if m_autoUpdateBorders is true.
+ * this entity-container if autoUpdateBorders is true.
  */
 bool RS_EntityContainer::removeEntity(RS_Entity *entity) {
     //RLZ TODO: in Q3PtrList if 'entity' is nullptr remove the current item-> at.(entIdx)
@@ -604,7 +604,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity *entity) {
 }
 
 /**
- * Erases all m_entities in this container and resets the borders..
+ * Erases all entities in this container and resets the borders..
  */
 void RS_EntityContainer::clear() {
     if (autoDelete) {
@@ -636,7 +636,7 @@ unsigned int RS_EntityContainer::countDeep() const {
 
 
 /**
- * Counts the selected m_entities in this container.
+ * Counts the selected entities in this container.
  */
 unsigned RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> const &types) {
     unsigned count = 0;
@@ -672,7 +672,7 @@ void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool 
         }
     }
 }
-// fixme - sand - avoid usage in actions as it enumerates all m_entities. Rework or rely on m_entities list!!!!
+// fixme - sand - avoid usage in actions as it enumerates all entities. Rework or rely on entities list!!!!
 RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool deep, */const QList<RS2::EntityType> &types) {
     LC_SelectionInfo result;
 
@@ -697,7 +697,7 @@ RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool
 
 // fixme - sand - avoid usage in actions as it enumerates all entities. Rework or rely on entities list!!!!
 /**
- * Counts the selected m_entities in this container.
+ * Counts the selected entities in this container.
  */
 double RS_EntityContainer::totalSelectedLength() {
     double ret(0.0);
@@ -769,7 +769,6 @@ void RS_EntityContainer::calculateBorders() {
     }
     if (minV.y > maxV.y || minV.y > RS_MAXDOUBLE || maxV.y > RS_MAXDOUBLE
         || minV.y < RS_MINDOUBLE || maxV.y < RS_MINDOUBLE) {
-
         minV.y = 0.0;
         maxV.y = 0.0;
     }
@@ -795,7 +794,7 @@ void RS_EntityContainer::calculateBorders() {
 
 /**
  * Recalculates the borders of this entity container including
- * invisible m_entities.
+ * invisible entities.
  */
 void RS_EntityContainer::forcedCalculateBorders() {
     //RS_DEBUG->print("RS_EntityContainer::calculateBorders");
@@ -835,13 +834,12 @@ void RS_EntityContainer::forcedCalculateBorders() {
 }
 
 /**
- * Updates all Dimension m_entities in this container and / or
+ * Updates all Dimension entities in this container and / or
  * reposition their labels.
  *
  * @param autoText Automatically reposition the text label bool autoText=true
  */
 void RS_EntityContainer::updateDimensions(bool autoText) {
-
     RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
 
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
@@ -850,12 +848,14 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
 
     for (RS_Entity *e: *this) {
         if (RS_Information::isDimension(e->rtti())) {
+            auto dimension = static_cast<RS_Dimension*>(e);
             // update and reposition label:
-            ((RS_Dimension *) e)->updateDim(autoText);
+            dimension->updateDim(autoText);
         } else if (e->rtti() == RS2::EntityDimLeader)
             e->update();
         else if (e->isContainer()) {
-            ((RS_EntityContainer *) e)->updateDimensions(autoText);
+            auto container = static_cast<RS_EntityContainer*>(e);
+            container->updateDimensions(autoText);
         }
     }
 
@@ -863,7 +863,7 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
 }
 
 /**
- * Updates all Insert m_entities in this container.
+ * Updates all Insert entities in this container.
  */
 void RS_EntityContainer::updateInserts() {
 
@@ -899,15 +899,8 @@ void RS_EntityContainer::updateInserts() {
  * Renames all inserts with name 'oldName' to 'newName'. This is
  *   called after a block was rename to update the inserts.
  */
-void RS_EntityContainer::renameInserts(
-    const QString &oldName,
-    const QString &newName) {
+void RS_EntityContainer::renameInserts(const QString &oldName,const QString &newName) {
     RS_DEBUG->print("RS_EntityContainer::renameInserts()");
-
-    //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e;
-    //        e=nextEntity(RS2::ResolveNone)) {
-
     for (RS_Entity *e: std::as_const(m_entities)) {
         if (e->rtti() == RS2::EntityInsert) {
             auto *i = static_cast<RS_Insert*>(e);
@@ -920,16 +913,13 @@ void RS_EntityContainer::renameInserts(
             container->renameInserts(oldName, newName);
         }
     }
-
     RS_DEBUG->print("RS_EntityContainer::renameInserts() OK");
-
 }
 
 /**
- * Updates all Spline m_entities in this container.
+ * Updates all Spline entities in this container.
  */
 void RS_EntityContainer::updateSplines() {
-
     RS_DEBUG->print("RS_EntityContainer::updateSplines()");
 
     for (RS_Entity *e: *this) {
@@ -940,13 +930,12 @@ void RS_EntityContainer::updateSplines() {
             static_cast<RS_EntityContainer *>(e)->updateSplines();
         }
     }
-
     RS_DEBUG->print("RS_EntityContainer::updateSplines() OK");
 }
 
 
 /**
- * Updates the sub m_entities of this container.
+ * Updates the sub entities of this container.
  */
 void RS_EntityContainer::update() {
     for (RS_Entity *e: *this) {
@@ -1055,7 +1044,9 @@ RS_Entity *RS_EntityContainer::firstEntity(RS2::ResolveLevel level) const {
  */
 RS_Entity *RS_EntityContainer::lastEntity(RS2::ResolveLevel level) const {
     RS_Entity *e = nullptr;
-    if (!m_entities.size()) return nullptr;
+    if (m_entities.empty()) {
+        return nullptr;
+    }
     entIdx = m_entities.size() - 1;
     switch (level) {
         case RS2::ResolveNone:
@@ -1654,7 +1645,8 @@ double RS_EntityContainer::getDistanceToPoint(
     RS_Entity *subEntity = nullptr;
 
     for (RS_Entity* e: *this) {
-        if (e->isVisible() && (e->getLayer() == nullptr || !e->getLayer()->isLocked())) {
+        auto entityLayer = e->getLayer();
+        if (e->isVisible() && (entityLayer == nullptr || !entityLayer->isLocked())) {
             RS_DEBUG->print("entity: getDistanceToPoint");
             RS_DEBUG->print("entity: %d", e->rtti());
             // bug#426, need to ignore Images to find nearest intersections
@@ -1686,7 +1678,7 @@ double RS_EntityContainer::getDistanceToPoint(
         }
     }
 
-    if (entity) {
+    if (entity != nullptr) {
         *entity = closestEntity;
     }
     RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint: OK");
@@ -1726,9 +1718,9 @@ RS_Entity *RS_EntityContainer::getNearestEntity(
 }
 
 /**
- * Rearranges the atomic m_entities in this container in a way that connected
- * m_entities are stored in the right order and direction.
- * Non-recoursive. Only affects atomic m_entities in this container.
+ * Rearranges the atomic entities in this container in a way that connected
+ * entities are stored in the right order and direction.
+ * Non-recoursive. Only affects atomic entities in this container.
  *
  * @retval true all contours were closed
  * @retval false at least one contour is not closed
@@ -2075,6 +2067,8 @@ bool RS_EntityContainer::ignoredOnModification() const
         case RS2::EntityText:         /**< Text 15*/
         case RS2::EntityDimAligned:   /**< Aligned Dimension */
         case RS2::EntityDimLinear:    /**< Linear Dimension */
+        case RS2::EntityDimOrdinate:
+        case RS2::EntityTolerance:
         case RS2::EntityDimRadial:    /**< Radial Dimension */
         case RS2::EntityDimDiametric: /**< Diametric Dimension */
         case RS2::EntityDimAngular:   /**< Angular Dimension */

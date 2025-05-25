@@ -64,32 +64,30 @@ public:
     }
 
     LC_DimArcData getData() const {
-        return dimArcData;
+        return m_dimArcData;
     }
 
     double getRadius() const override {
-        return dimArcData.radius;
+        return m_dimArcData.radius;
     }
 
     double getArcLength() const {
-        return dimArcData.arcLength;
+        return m_dimArcData.arcLength;
     }
 
     double getStartAngle() const {
-        return dimArcData.startAngle.angle();
+        return m_dimArcData.startAngle.angle();
     }
 
     double getEndAngle() const {
-        return dimArcData.endAngle.angle();
+        return m_dimArcData.endAngle.angle();
     }
 
     RS_Vector getCenter() const override {
-        return dimArcData.centre;
+        return m_dimArcData.centre;
     }
 
     QString getMeasuredLabel() override;
-
-    void updateDim(bool autoText = false) override;
 
     void update() override;
 
@@ -99,7 +97,8 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 protected:
-    LC_DimArcData dimArcData;
+    LC_DimArcData m_dimArcData;
+    void doUpdateDim() override;
 private:
     RS_Vector arrowStartPoint;
     RS_Vector arrowEndPoint;

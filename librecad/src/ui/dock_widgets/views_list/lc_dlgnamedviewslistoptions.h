@@ -39,7 +39,7 @@ public:
 public slots:
     void validate() const;
 protected slots:
-    virtual void languageChange();
+    void languageChange();
 private:
     Ui::LC_DlgNamedViewsListOptions *ui;
     LC_NamedViewsListOptions* m_options;
