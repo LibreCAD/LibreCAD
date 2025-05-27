@@ -73,7 +73,7 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                 // use QStringList to avoid "\n" in translation strings
                 QStringList info { QObject::tr("DWG support is not complete!"),
                                    "",
-                                   QObject::tr("If this file fails to open try an older DWG format"),
+                                   QObject::tr("If this file fails to open try and older DWG format"),
                                    QObject::tr("or try to find a converter to make it a DXF file.") };
 
                 QMessageBox::information( qApp->activeWindow(),
