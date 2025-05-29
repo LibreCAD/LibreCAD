@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.0-alpha"
+LC_VERSION="2.2.1-alpha"
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -71,7 +71,7 @@ win32 {
     !isEmpty( MSYSGIT_DIR ) {
         LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${LC_VERSION}")
     } else {
-        LC_VERSION="2.2.0."$$system($$_PRO_FILE_PWD_/../../scripts/dailybuildnumber.bat)
+        LC_VERSION="2.2.1."$$system($$_PRO_FILE_PWD_/../../scripts/dailybuildnumber.bat)
         VERSION=$${LC_VERSION}
     }
 

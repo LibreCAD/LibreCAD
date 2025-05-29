@@ -70,7 +70,7 @@
 
   VIProductVersion "${SCMREVISION}"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "LibreCAD"
-  VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "2.2.0"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "2.2.1"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Hypertherm"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "GPL v2.0"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "LibreCAD for ProNest"

@@ -4,7 +4,7 @@ def LibreCadExePath()
 }
 def Build()
 {
-	bat "%WORKSPACE%\\BuildLibreCAD.bat"
+	bat "\"%WORKSPACE%\\BuildLibreCAD.bat\""
 }
 def CopyProNestFileToWindowsFolder(fileName)
 {

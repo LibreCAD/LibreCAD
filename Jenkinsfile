@@ -123,7 +123,7 @@ pipeline
 		VERSION_BUILD = getVersionBuild()
 		INSTALLER_TYPE = getInstallerType()
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
-		VERSION_FULL = "2.2.0.${VERSION_BUILD}"
+		VERSION_FULL = "2.2.1.${VERSION_BUILD}"
 		TARGET_PLATFORM = '32-bit'
 		BUILD_DISPLAY_NAME = getDisplayName()
 	}

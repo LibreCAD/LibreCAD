@@ -86,7 +86,7 @@ echo ;CAUTION! >%LC_SCMREV_NSH%
 echo ;this file is created by postprocess-win.bat during build process >>%LC_SCMREV_NSH%
 echo ;changes will be overwritten, use custom.nsh for local settings >>%LC_SCMREV_NSH%
 echo. >>%LC_SCMREV_NSH%
-echo !define SCMREVISION "2.2.0.%diff%" >>%LC_SCMREV_NSH%
+echo !define SCMREVISION "2.2.1.%diff%" >>%LC_SCMREV_NSH%
 echo. >>%LC_SCMREV_NSH%
 
 if exist %LC_NSISDIR%\custom-*.ns? (
