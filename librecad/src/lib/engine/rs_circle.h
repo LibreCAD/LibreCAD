@@ -121,7 +121,15 @@ public:
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
 **/
-	static std::vector<RS_Circle> solveAppolloniusSingle(const std::vector<RS_Circle>& circles);
+    static std::vector<RS_Circle> solveAolloniusSingle(const std::vector<RS_Circle>& circles);
+    /**
+     * @brief solveApolloniusHyperbola a more generic solution based on hyperbola intersections.
+     *        this algorithm is likely worse in precision compared with solveAolloniusSingle().
+     *        Provided as a backup when solveAolloniusSingle() fails.
+     * @param circles - the three input circles
+     * @return candidates circles
+     */
+    static std::vector<RS_Circle> solveApolloniusHyperbola(const std::vector<RS_Circle>& circles);
 
 	std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
     bool testTan3(const std::vector<RS_AtomicEntity*>& circles) const;

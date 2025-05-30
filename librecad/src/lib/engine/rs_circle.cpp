@@ -44,6 +44,22 @@ namespace {
 // tangent condition tolerance
 // two circles are considered tangent, if the distance is within this factor of the radii
 constexpr double Tangent_Tolerance_Factor = 1e-6;
+
+/**
+ * @brief isCollinearXY whether the 2x3 matrix has degenerate columns
+ * @param mat - a 2x3 linear equation to solve an Appollonius
+ * @return  true, if the matrix is degenerate, i.e. the 3 input circle centers have identical
+ *                x or y-coordinates
+ */
+bool identicalXOrY(const std::vector<std::vector<double>>& mat) {
+    // matrix must be 2x3 in dimension
+    assert(mat.size() >= 2 && mat.front().size() >= 3);
+    const auto isDegenerateCol = [&mat] (size_t column) {
+        return std::abs(std::max(std::abs(mat[0][column]), std::abs(mat[1][column]))) <= RS_TOLERANCE;
+    };
+    // first(x) or second(y) column
+    return isDegenerateCol(0) || isDegenerateCol(1);
+}
 }
 
 RS_CircleData::RS_CircleData(RS_Vector const& center, double radius):
@@ -335,7 +351,7 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
     if(circles.size()!=3)
         return ret;
 	 std::vector<RS_Circle> cs;
-	 for(auto c: circles){
+     for(RS_AtomicEntity* c: circles){
 		 cs.emplace_back(RS_Circle(nullptr, {c->getCenter(),c->getRadius()}));
 	 }
     unsigned short flags=0;
@@ -348,7 +364,9 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
             }
         }
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "flags=%d\n",flags);
-		auto list=solveAppolloniusSingle(cs);
+        std::vector<RS_Circle> list = solveAolloniusSingle(cs);
+        if (list.empty())
+            list = solveApolloniusHyperbola(cs);
         if(list.size()>=1){
             for(RS_Circle& c0: list){
                 bool addNew=true;
@@ -358,7 +376,8 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
                         break;
                     }
                 }
-				if(addNew) ret.push_back(c0);
+                if(addNew)
+                    ret.push_back(c0);
             }
         }
 
@@ -398,19 +417,19 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles) const
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
 **/
-std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Circle>& circles)
+std::vector<RS_Circle> RS_Circle::solveAolloniusSingle(const std::vector<RS_Circle>& circles)
 {
 //          std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //          for(int i=0;i<circles.size();i++){
 //std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<circles[i].getRadius()<<std::endl;
 //          }
-	std::vector<RS_Circle> ret;
 
 	std::vector<RS_Vector> centers;
-	std::vector<double> radii;
+    std::vector<double> radii;
 
-	for(auto c: circles){
-		if(c.getCenter().valid==false) return ret;
+    for(const RS_Circle& c: circles){
+        if(!c.getCenter().valid)
+            return {};
 		centers.push_back(c.getCenter());
 		radii.push_back(c.getRadius());
 	}
@@ -418,28 +437,17 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 //    std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<radii.at(i)<<std::endl;
 //              }
 /** form the linear equation to solve center in radius **/
-	std::vector<std::vector<double> > mat(2,std::vector<double>(3,0.));
+    std::vector<std::vector<double> > mat(2, std::vector<double>(3,0.));
     mat[0][0]=centers[2].x - centers[0].x;
     mat[0][1]=centers[2].y - centers[0].y;
     mat[1][0]=centers[2].x - centers[1].x;
     mat[1][1]=centers[2].y - centers[1].y;
-    if(std::abs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE2){
-//        DEBUG_HEADER
-//        std::cout<<"The provided circles are in a line, not common tangent circle"<<std::endl;
-        size_t i0=0;
-        if( centers[0].distanceTo(centers[1]) <= RS_TOLERANCE ||  centers[0].distanceTo(centers[2]) <= RS_TOLERANCE) i0 = 1;
-        LC_Quadratic lc0(& (circles[i0]), & (circles[(i0+1)%3]));
-        LC_Quadratic lc1(& (circles[i0]), & (circles[(i0+2)%3]));
-		auto c0 = LC_Quadratic::getIntersection(lc0, lc1);
-//        qDebug()<<"c0.size()="<<c0.size();
-        for(size_t i=0; i<c0.size(); i++){
-            const double dc =  c0[i].distanceTo(centers[i0]);
-            ret.push_back(RS_Circle(nullptr, {c0[i], std::abs(dc - radii[i0])}));
-            if( dc > radii[i0]) {
-				ret.push_back(RS_Circle(nullptr, {c0[i], dc + radii[i0]}));
-            }
-        }
-        return ret;
+
+    // Issue #2160: this algebraic algorithm fails when input circle centers are identical in
+    // x-coordinates or y-coordinates
+    LC_LOG<<__func__<<"(): identicalXOrY="<<identicalXOrY(mat);
+    if(identicalXOrY(mat) || std::abs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE15) {
+        return {};
     }
     // r^0 term
     mat[0][2]=0.5*(centers[2].squared()-centers[0].squared()+radii[0]*radii[0]-radii[2]*radii[2]);
@@ -451,7 +459,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 //    std::vector<std::vector<double> > sm(2,std::vector<double>(2,0.));
 	std::vector<double> sm(2,0.);
     if(RS_Math::linearSolver(mat,sm)==false){
-        return ret;
+        return {};
     }
 
     RS_Vector vp(sm[0],sm[1]);
@@ -465,7 +473,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 //        std::cout<<"eqs Q:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
 //    }
     if(RS_Math::linearSolver(mat,sm)==false){
-        return ret;
+        return {};
     }
     RS_Vector vq(sm[0],sm[1]);
 //      std::cout<<"vq="<<vq<<std::endl;
@@ -473,21 +481,52 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     RS_Vector dcp=vp-centers[0];
     double a=vq.squared()-1.;
     if(std::abs(a)<RS_TOLERANCE*1e-4) {
-        return ret;
+        return {};
     }
     std::vector<double> ce(0,0.);
     ce.push_back(2.*(dcp.dotP(vq)-radii[0])/a);
     ce.push_back((dcp.squared()-radii[0]*radii[0])/a);
-    std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
-    for(size_t i=0; i < vr.size();i++){
-        if(vr.at(i)<RS_TOLERANCE) continue;
-        ret.emplace_back(RS_Circle(nullptr, {vp+vq*vr.at(i),std::abs(vr.at(i))}));
+    std::vector<double> vr=RS_Math::quadraticSolver(ce);
+    std::vector<RS_Circle> ret;
+    for(double dist: vr) {
+        if(dist >= RS_TOLERANCE)
+            ret.emplace_back(RS_Circle(nullptr, {vp+vq*dist, std::abs(dist)}));
     }
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
 
     return ret;
 }
+
+std::vector<RS_Circle> RS_Circle::solveApolloniusHyperbola(const std::vector<RS_Circle>& circles)
+{
+    assert(circles.size() == 3);
+    std::vector<RS_Vector> centers;
+    std::vector<double> radii;
+
+    for(const RS_Circle& c: circles){
+        if(!c.getCenter().valid)
+            return {};
+        centers.push_back(c.getCenter());
+        radii.push_back(c.getRadius());
+    }
+
+    size_t i0 = ( centers[0] == centers[1]||  centers[0] == centers[2]) ? 1 : 0;
+
+    std::vector<RS_Circle> ret;
+    LC_Quadratic lc0(& (circles[i0]), & (circles[(i0+1)%3]));
+    LC_Quadratic lc1(& (circles[i0]), & (circles[(i0+2)%3]));
+    RS_VectorSolutions c0 = LC_Quadratic::getIntersection(lc0, lc1);
+    for(size_t i=0; i<c0.size(); i++){
+        const double dc =  c0[i].distanceTo(centers[i0]);
+        ret.push_back(RS_Circle(nullptr, {c0[i], std::abs(dc - radii[i0])}));
+        if( dc > radii[i0]) {
+            ret.push_back(RS_Circle(nullptr, {c0[i], dc + radii[i0]}));
+        }
+    }
+    return ret;
+}
+
 
 RS_VectorSolutions RS_Circle::getRefPoints() const
 {
