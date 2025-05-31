@@ -53,6 +53,7 @@ protected slots:
     void onResetAllClicked();
     void showConflicts();
     void onClearClicked();
+    bool obtainFileName(QString& fileName, bool forRead);
     void onImportClicked();
     void onExportClicked();
     void onRecordButtonToggled(bool on);
@@ -73,7 +74,6 @@ protected:
     void editItem(LC_ShortcutTreeItem *item);
     bool keySequenceIsValid(const QKeySequence &sequence) const;
     void rebuildModel(bool restoreSelection);
-    static QFlags<QFileDialog::Option> getFileDialogOptions();
     static void showIOInfoDialog(bool forImport, bool ok, const QString &message);
     bool checkHasCollisions(LC_ShortcutInfo *shortcutInfo);
     void applyRecordedKeySequence();

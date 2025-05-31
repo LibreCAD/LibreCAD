@@ -146,7 +146,8 @@ QToolBar *LC_ToolbarFactory::createCreatorsToolbar(const QSizePolicy &tbPolicy) 
 QToolBar *LC_ToolbarFactory::createPreferencesToolbar(const QSizePolicy &tbPolicy) const {
     return createGenericToolbar(tr("Preferences"), "Preferences", tbPolicy, {
                                     "OptionsGeneral",
-                                    "OptionsDrawing"
+                                    "OptionsDrawing",
+                                    "DimStyleEditTmp"
                                 }, 1);
 }
 
@@ -158,6 +159,7 @@ QToolBar * LC_ToolbarFactory::createEntityLayersToolbar(const QSizePolicy  &tbPo
     QToolButton *btn = new QToolButton;
     btn->setDefaultAction(m_agm->getActionByName("EntityLayerView"));
     btn->setPopupMode(QToolButton::ToolButtonPopupMode::MenuButtonPopup);
+    btn->addAction(m_agm->getActionByName("EntityLayerHideOthers"));
     btn->addAction(m_agm->getActionByName("EntityLayerLock"));
     btn->addAction(m_agm->getActionByName("EntityLayerConstruction"));
     btn->addAction(m_agm->getActionByName("EntityLayerPrint"));
@@ -290,7 +292,7 @@ QToolBar *LC_ToolbarFactory::createCategoriesToolbar() {
 
     toolButton(toolbar, tr("Lines"), ":/icons/line.lci", m_actionFactory->line_actions);
     toolButton(toolbar, tr("Points"), ":/icons/points.lci", m_actionFactory->point_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", m_actionFactory->circle_actions);
+    toolButton(toolbar, tr("Circles"), ":/icons/circle.lci", m_actionFactory->circle_actions);
     toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", m_actionFactory->curve_actions);
     toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", m_actionFactory->spline_actions);
     toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", m_actionFactory->shape_actions);
