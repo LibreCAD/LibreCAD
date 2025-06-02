@@ -1179,7 +1179,7 @@ bool QC_ApplicationWindow::doCloseAllFiles(){
                         policy = QC_MDIWindow::SaveOnClosePolicy::DONT_SAVE;
                         break;
                     case QG_ExitDialog::DontSave:
-                        w->setSaveOnClosePolicy(QC_MDIWindow::SaveOnClosePolicy::SAVE);
+                        w->setSaveOnClosePolicy(QC_MDIWindow::SaveOnClosePolicy::DONT_SAVE);
                         break;
                     case QG_ExitDialog::SaveAll:
                         policy = QC_MDIWindow::SaveOnClosePolicy::SAVE;
