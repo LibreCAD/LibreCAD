@@ -460,7 +460,8 @@ void RS_ActionInterface::setActionType(RS2::ActionType actionType){
 // fixme - check for type and string literal
 bool RS_ActionInterface::checkCommand(const QString& cmd, const QString& str,
                                       RS2::ActionType action) {
-    return RS_COMMANDS->checkCommand(cmd, str, action);
+    return (getAvailableCommands().contains(str) && cmd == str)
+        || RS_COMMANDS->checkCommand(cmd, str, action);
 }
 
 /**

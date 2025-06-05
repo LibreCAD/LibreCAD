@@ -60,6 +60,7 @@ LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints() = default;
 void LC_ActionDrawSplinePoints::reset(){
     m_actionData->spline.reset();
     m_actionData->undoBuffer.clear();
+    setStatus(SetStartPoint);
 }
 
 void LC_ActionDrawSplinePoints::init(int status){
@@ -122,7 +123,7 @@ void LC_ActionDrawSplinePoints::onCoordinateEvent(int status, [[maybe_unused]] b
         case SetStartPoint: {
             m_actionData->undoBuffer.clear();
             if (m_actionData->spline.get() == nullptr){
-                m_actionData->spline.reset(new LC_SplinePoints(m_container, m_actionData->data));
+                m_actionData->spline = std::make_unique<LC_SplinePoints>(m_container, m_actionData->data);
                 m_actionData->spline->addPoint(mouse);
 
                 if (m_showRefEntitiesOnPreview) {
@@ -166,6 +167,14 @@ bool LC_ActionDrawSplinePoints::doProcessCommand(int status, const QString &c) {
                 updateMouseButtonHints();
                 accept = true;
             }
+            else if (checkCommand("close", c)) {
+                setClosed(!isClosed());
+                accept = true;
+            }
+            else if (checkCommand("kill", c)) {
+                trigger();
+                accept = true;
+            }
             break;
         }
         default:
@@ -182,13 +191,14 @@ QStringList LC_ActionDrawSplinePoints::getAvailableCommands(){
             break;
         case SetNextPoint:
             if (!m_actionData->data.splinePoints.empty()){
-                cmd += command("undo");
+                cmd += "undo";
             }
             if (!m_actionData->undoBuffer.empty()){
-                cmd += command("redo");
+                cmd += "redo";
             }
-            if (m_actionData->data.splinePoints.size() > 2){
-                cmd += command("close");
+            if (m_actionData->spline->getData().splinePoints.size() > 2){
+                cmd += "close";
+                cmd += "kill";
             }
             break;
         default:

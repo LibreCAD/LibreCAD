@@ -28,6 +28,7 @@
 #define RS_ACTIONINTERFACE_H
 
 #include "lc_modifiersinfo.h"
+#include "rs.h"
 #include "rs_math.h"
 #include "rs_snapper.h"
 
