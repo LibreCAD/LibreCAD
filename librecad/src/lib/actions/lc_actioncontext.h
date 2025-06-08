@@ -38,10 +38,9 @@ class LC_ActionOptionsWidget;
 class RS_ActionInterface;
 
 class LC_ActionContext{
-
-protected:
-    ~LC_ActionContext() = default;
 public:
+    LC_ActionContext() = default;
+    virtual ~LC_ActionContext() = default;
     virtual void addOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widget){}
     virtual void removeOptionsWidget([[maybe_unused]]LC_ActionOptionsWidget * widget){}
     virtual void requestSnapDistOptions([[maybe_unused]]double* dist, [[maybe_unused]]bool on) {}
