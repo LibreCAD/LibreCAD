@@ -359,10 +359,14 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
 
         clones << cl;
 
-        if (graphic != nullptr) {
-            en->setUndoState(true);
-            graphic->addUndoable(en);
-        }
+        // if (graphic != nullptr) {
+            // en->setUndoState(true);
+            // graphic->addUndoable(en);
+            // undo.addUndoable(en);
+        // }
+        en->setUndoState(true);
+        undo.addUndoable(en);
+
     }
 
     for (auto block: blocks) {
@@ -375,9 +379,10 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
 
     for (auto cl: clones) {
         cont->addEntity(cl);
-        if (graphic != nullptr) {
-            graphic->addUndoable(cl);
-        }
+        // if (graphic != nullptr) {
+            // graphic->addUndoable(cl);
+        // }
+        undo.addUndoable(cl);
     }
 
     if (graphic != nullptr) {
