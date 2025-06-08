@@ -23,6 +23,8 @@
 
 #include "lc_tabproxywidget.h"
 
+#include "rs_debug.h"
+
 LC_TabProxyWidget::LC_TabProxyWidget() {
 }
 
@@ -82,8 +84,22 @@ void LC_TabProxyWidget::setTargetWidget(QWidget* targetWidget) {
 }
 
 bool LC_TabProxyWidget::eventFilter(QObject* o, QEvent* e) {
-    if ((o == m_targetWidget) && (e->type() == QEvent::Resize)) {
-        updateSizeConstraints();
+    if (o == m_targetWidget) {
+        if (e->type() == QEvent::Resize) {
+            updateSizeConstraints();
+        }
+        /*if (e->type() == QEvent::MouseMove) {
+            // LC_ERR << "Mouse MOve";
+        }
+        if (e->type() == QEvent::NativeGesture) {
+            // LC_ERR << "Native Guesture";
+        }
+        if (e->type() == QEvent::Wheel) {
+            // LC_ERR << "Wheel";
+        }
+        else {
+            // LC_ERR << e->type();
+        }*/
     }
     return QWidget::eventFilter(o, e);
 }

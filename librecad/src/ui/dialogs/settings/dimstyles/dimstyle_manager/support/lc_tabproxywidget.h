@@ -38,6 +38,7 @@ public:
     LC_TabProxyWidget(QWidget* optTargetWidget = nullptr)
         : _layout(new QStackedLayout(this)), m_targetWidget(nullptr) {
         setTargetWidget(optTargetWidget);
+        setFocusPolicy(Qt::ClickFocus);
     }
 
     ~LC_TabProxyWidget() override { setTargetWidget(nullptr); }
