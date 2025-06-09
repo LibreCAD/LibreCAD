@@ -787,7 +787,8 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
     w = createNewDrawingWindow(nullptr, "");
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
-    if (fileName.isEmpty()) {
+    bool noFile = fileName.isEmpty();
+    if (noFile) {
         ret = true;
     } else {
         // loads the template file in the new view:
@@ -799,7 +800,7 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
         doActivate(w);
         doArrangeWindows(RS2::CurrentMode);
         autoZoomAfterLoad(w->getGraphicView());
-        if (!fileName.isEmpty()) {
+        if (!noFile) {
             QString message = tr("New document from template: ") + fileName;
             notificationMessage(message, 2000);
         }
@@ -808,6 +809,10 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
         }
         auto graphic = w->getGraphic();
         if (graphic != nullptr) {
+            if (noFile) {
+                // indicate that loading is completed so we could update default dim style from vars
+                graphic->onLoadingCompleted();
+            }
             emit(gridChanged(graphic->isGridOn()));
         }
     }
@@ -1028,7 +1033,8 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
 
 void QC_ApplicationWindow::changeDrawingOptions(int tabToShow){
     auto graphicView = getCurrentGraphicView();
-    RS_Graphic* graphic = graphicView->getGraphic();
+    RS_Graphic* graphic = graphicView->getGraphic(true);
+
     int dialogResult = m_dlgHelpr->requestOptionsDrawingDialog(*graphic, tabToShow);
     if (dialogResult == QDialog::Accepted) {
         updateCoordinateWidgetFormat();
@@ -1660,10 +1666,9 @@ bool QC_ApplicationWindow::loadStyleSheet(const QString &path) {
 // fixme - sand - dimstyle - REMOVE TMP CODE!!
 void QC_ApplicationWindow::tmpDimStyleManager() {
     RS_Graphic* graphic = getCurrentGraphicView()->getGraphic();
-    LC_DimStyle* defaultDimStyle = graphic->getDefaultDimStyle();
+    LC_DimStyle* defaultDimStyle = graphic->getFallBackDimStyleFromVars();
 
-    LC_DlgDimStyleManager dlg(this);
-    dlg.setDimStyle(defaultDimStyle);
+    LC_DlgDimStyleManager dlg(this, defaultDimStyle,graphic);
     dlg.exec();
 }
 
