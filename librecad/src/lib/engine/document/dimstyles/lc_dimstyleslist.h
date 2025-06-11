@@ -24,15 +24,16 @@
 #define LC_DIMSTYLESLIST_H
 
 #include <QList>
-#include "lc_dimstyle.h"
+class LC_DimStyle;
 
 class LC_DimStylesList{
 public:
     LC_DimStylesList();
-    LC_DimStyle* findByName(const QString& name);
+    LC_DimStyle* findByName(const QString& name) const;
     void addDimStyle(LC_DimStyle* style);
     void deleteDimStyle(QString &name);
     int size(){return stylesList.size();}
+    const QList<LC_DimStyle*> getStylesList(){return stylesList;}
 protected:
     QList<LC_DimStyle*> stylesList;
 };

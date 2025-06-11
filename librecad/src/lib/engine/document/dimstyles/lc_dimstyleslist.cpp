@@ -22,9 +22,11 @@
 
 #include "lc_dimstyleslist.h"
 
+#include "lc_dimstyle.h"
+
 LC_DimStylesList::LC_DimStylesList() {}
 
-LC_DimStyle *LC_DimStylesList::findByName(const QString &name) {
+LC_DimStyle *LC_DimStylesList::findByName(const QString &name) const {
     for (auto v: stylesList){
         if (v->getName() == name){
             return v;
