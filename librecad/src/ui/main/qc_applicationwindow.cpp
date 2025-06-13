@@ -894,9 +894,12 @@ void QC_ApplicationWindow::slotEditActiveBlock(){
     }
 
     //get blocklist from block widget, bug#3497154
-    if (blockList == nullptr) {
+    if (blockList != nullptr) {
         blockList = m_blockWidget->getBlockList();
     }
+
+    if (blockList == nullptr)
+        return;
 
     RS_Block* activeBlock = blockList->getActive();
     if (activeBlock == nullptr) {
