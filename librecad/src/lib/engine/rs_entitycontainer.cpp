@@ -1690,8 +1690,9 @@ bool RS_EntityContainer::optimizeContours() {
     // add new sorted entities:
     for(auto en: tmp){
         en->setProcessed(false);
-        addEntity(en->clone());
-        en->reparent(this);
+        auto* clone = en->clone();
+        addEntity(clone);
+        clone->reparent(this);
     }
     //    std::cout<<"RS_EntityContainer::optimizeContours: 6"<<std::endl;
 

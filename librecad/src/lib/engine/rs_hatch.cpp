@@ -50,6 +50,8 @@
 namespace
 {
 
+constexpr bool g_debugPatternTrimming = false;
+
 // angular distance corrected for direction and range [0, 2 pi]
 double angularDist(double a, double startAngle, bool reversed) {
     return reversed?
@@ -454,7 +456,11 @@ RS_EntityContainer RS_Hatch::trimPattern(const RS_EntityContainer& patternEntiti
                     for (const RS_Vector& vp: sol) {
                         if (vp.valid) {
                             is.append(vp);
-                            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "  pattern line intersection: %f/%f", vp.x, vp.y);
+                            if constexpr (g_debugPatternTrimming) {
+                                trimmed.addEntity(new RS_Line{&trimmed, {vp - RS_Vector{2.5, 0.}, vp + RS_Vector{2.5, 0.}}});
+                                trimmed.addEntity(new RS_Line{&trimmed, {vp - RS_Vector{0., 2.5, 0.}, vp + RS_Vector{0., 2.5, 0.}}});
+                                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "  pattern line intersection: %f/%f", vp.x, vp.y);
+                            }
                         }
                     }
                 }
