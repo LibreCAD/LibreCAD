@@ -161,8 +161,9 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
                 ref.append(formatLinear(horizontalRef));
             }
 
-            auto builder = msg(message).
-                string(ref);
+            auto builder = msgStart()
+                .string(message)
+                .string(ref);
             if (groupOffset.valid) {
                 builder.string(tr("Offset:"))
                        .relative(groupOffset)
