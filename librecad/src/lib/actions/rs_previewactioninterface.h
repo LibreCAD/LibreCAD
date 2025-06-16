@@ -172,6 +172,7 @@ protected:
 
     LC_ActionInfoMessageBuilder& msg(const QString& name, const QString& value);
     LC_ActionInfoMessageBuilder& msg(const QString& name);
+    LC_ActionInfoMessageBuilder& msgStart();
 
     QString obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level);
     void prepareEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel level);

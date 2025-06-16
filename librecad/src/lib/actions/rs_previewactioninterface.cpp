@@ -542,6 +542,11 @@ LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msg(const QString& name)
     return *m_msgBuilder;
 }
 
+LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msgStart() {
+    m_msgBuilder->cleanup();
+    return *m_msgBuilder;
+}
+
 RS_Entity* RS_PreviewActionInterface::catchAndDescribe( const RS_Vector &pos,RS2::ResolveLevel level){
     auto entity = catchEntity(pos, level);
     if (entity != nullptr) {

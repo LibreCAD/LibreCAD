@@ -101,7 +101,8 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe
                     }
 
                     if (isInfoCursorForModificationEnabled()){
-                        auto builder = msg(tr("Lines Join"));
+                        auto builder = msgStart()
+                        .string(tr("Lines Join"));
                         if (lineJoinData->parallelLines) {
                             builder.add(tr("Lines are parallel"));
                         }
