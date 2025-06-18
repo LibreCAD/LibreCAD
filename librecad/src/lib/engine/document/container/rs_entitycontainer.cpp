@@ -507,11 +507,13 @@ void RS_EntityContainer::addEntity(RS_Entity *entity) {
  * borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::appendEntity(RS_Entity *entity) {
-    if (!entity)
+    if (entity == nullptr) {
         return;
+    }
     m_entities.append(entity);
-    if (m_autoUpdateBorders)
+    if (m_autoUpdateBorders) {
         adjustBorders(entity);
+    }
 }
 
 /**
@@ -519,10 +521,13 @@ void RS_EntityContainer::appendEntity(RS_Entity *entity) {
  * borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::prependEntity(RS_Entity *entity) {
-    if (!entity) return;
+    if (entity == nullptr) {
+        return;
+    }
     m_entities.prepend(entity);
-    if (m_autoUpdateBorders)
+    if (m_autoUpdateBorders) {
         adjustBorders(entity);
+    }
 }
 
 /**
@@ -530,7 +535,9 @@ void RS_EntityContainer::prependEntity(RS_Entity *entity) {
  * the borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> &entList) {
-    if (entList.isEmpty()) return;
+    if (entList.isEmpty()) {
+        return;
+    }
     int ci = 0; //current index for insert without invert order
     bool ret, into = false;
     RS_Entity *mid = nullptr;
@@ -659,7 +666,7 @@ unsigned RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> con
             if (!types.size() || type.count(t->rtti()))
                 c++;
 
-        if (t->isContainer()) 
+        if (t->isContainer())
             c += dynamic_cast<RS_EntityContainer *>(t)->countSelected(deep); // fixme - hm... - what about entity types there? and deep flag?
     }
 

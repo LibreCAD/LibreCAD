@@ -123,6 +123,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void mouseMoveEvent(QMouseEvent* e) override;
+    virtual bool proceedEvent(QEvent* event);
     void tabletEvent(QTabletEvent* e) override;
     void leaveEvent(QEvent*) override;
     void enterEvent(QEnterEvent*) override;
@@ -145,6 +146,7 @@ protected:
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
+    void deleteActionContext();
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);

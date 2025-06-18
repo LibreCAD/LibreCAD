@@ -320,7 +320,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
         setContainer(doc);
         doc->setGraphicView(this);
         actionContext->setDocumentAndView(doc, this);
-        setDefaultAction(new RS_ActionDefault(actionContext));
+            setDefaultAction(new RS_ActionDefault(actionContext));
     }
 
     m_actionContext = actionContext;
@@ -503,7 +503,7 @@ void QG_GraphicView::resizeEvent(QResizeEvent* e) {
 }
 
 
-void QG_GraphicView::switchToAction(RS2::ActionType actionType, void* data ) const {
+void QG_GraphicView::switchToAction(RS2::ActionType actionType, void* data) const {
     m_actionContext->setCurrentAction(actionType, data);
 }
 
@@ -632,6 +632,7 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
 }
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
+    // LC_ERR << "OWN MOUSE MOVE";
     if (isAutoPan(event)) {
         startAutoPanTimer(event);
         event->accept();
@@ -643,7 +644,20 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
     getEventHandler()->mouseMoveEvent(event);
 }
 
-bool QG_GraphicView::event(QEvent *event){
+bool QG_GraphicView::proceedEvent(QEvent* event) {
+    // skip events without a default action
+    // Hatch preview in qg_dlghatch doesn't have its default action
+    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr){
+        return QWidget::event(event);
+    }
+    else {
+        // LC_ERR<< "Event Skipped";
+    }
+    return true;
+}
+
+    bool QG_GraphicView::event(QEvent *event){
+
     if (event->type() == QEvent::NativeGesture) {
         auto *nge = static_cast<QNativeGestureEvent *>(event);
 
@@ -657,15 +671,9 @@ bool QG_GraphicView::event(QEvent *event){
             RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
             doZoom(direction, mouse, factor);
         }
-
         return true;
     }
-    // skip events without a default action
-    // Hatch preview in qg_dlghatch doesn't have its default action
-    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr){
-        return QWidget::event(event);
-    }
-    return true;
+    return proceedEvent(event);
 }
 
 void QG_GraphicView::doZoom(RS2::ZoomDirection direction, RS_Vector& center, double zoom_factor) {
@@ -816,12 +824,13 @@ void QG_GraphicView::focusInEvent(QFocusEvent* e) {
  * shift or ctrl is pressed.
  */
 void QG_GraphicView::wheelEvent(QWheelEvent *e) {
+    // LC_ERR << "OWN WHEEL";
     //RS_DEBUG->print("wheel: %d", e->delta());
 
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-    if (getContainer()==nullptr) {
+        if (getContainer()==nullptr) {
         return;
     }
 
@@ -1455,6 +1464,10 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const{
     }
 
     return cadArea_actual.inArea(mouseCoord) && !cadArea_unprobed.inArea(mouseCoord);
+}
+
+void QG_GraphicView::deleteActionContext() {
+    delete m_actionContext;
 }
 
 /*

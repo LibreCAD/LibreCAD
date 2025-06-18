@@ -28,6 +28,8 @@
 
 #include "ui_qg_dlgoptionsdrawing.h"
 #include "lc_dialog.h"
+#include "lc_dimstylepreviewgraphicview.h"
+#include "lc_dimstyleslistmodel.h"
 
 class RS_Graphic;
 class RS_Vector;
@@ -35,16 +37,22 @@ class RS_Vector;
 class QG_DlgOptionsDrawing : public LC_Dialog, public Ui::QG_DlgOptionsDrawing{
     Q_OBJECT
 public:
-    QG_DlgOptionsDrawing(QWidget* parent = nullptr);
+    explicit QG_DlgOptionsDrawing(QWidget* parent = nullptr);
 	~QG_DlgOptionsDrawing() override;
     void showInitialTab(int tabIndex);
     void setGraphic( RS_Graphic * g );
+    static void fillLinearUnitsCombobox(QComboBox* combobox);
+    static void fillAngleUnitsCombobox(QComboBox* combobox);
+    static void updateLengthPrecisionCombobox(RS2::LinearFormat unit, QComboBox* p);
+    static void updateAnglePrecisionCombobox(RS2::AngleFormat format, QComboBox* p);
+    static RS2::AngleFormat angleFormatFromUI(int current_index);
+    static RS2::LinearFormat linearFormatFromUI(int currentIndex);
 protected slots:
     void languageChange();
     void validate();
     void updateLengthPrecision();
     void updateAnglePrecision();
-    void updatePreview();
+    void updateUnitsPreview();
     void updatePaperSize();
     void updateUnitLabels();
     void updateDimLengthPrecision();
@@ -56,19 +64,54 @@ protected slots:
     void onRelSizeToggled(bool checked);
     void disableXSpacing(bool checked);
     void enableXSpacing(bool checked);
+
+    void onDimStyleNew(bool checked);
+    void onDimStyleEdit(bool checked=false);
+    void onDimStyleRename(bool checked);
+    void onDimStyleRemove(bool checked);
+    void onDimStyleExport(bool checked);
+    void onDimStyleImport(bool checked);
+    void onDimStyleSetDefault(bool checked);
+    void onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
+    void updateDimStylePreview(LC_DimStyle* dimStyle, LC_StylesListModel* model) const;
+    void onDimSelectionChanged(
+        const QItemSelection& selection,
+        const QItemSelection& before);
+    void onDimStyleCurrentActivated(const QModelIndex &index);
+    void onDimStylesListMenuRequested(const QPoint &pos);
+    void onDimStyleDoubleClick();
 protected:
+    void setupPointsTab();
+    void setupSplinesTab();
+    void setupGridTab();
+    void setupPaperTab();
+    LC_StylesListModel* getDimStylesModel();
+    void doCreateDimStyle(const QString &newStyleName, LC_StylesListModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType);
+    void connectPaperTab();
+    void connectUnitTab();
+    void connectGridTab();
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
-    void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
-    void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
     void updateLPtSzUnits();
+    QString askForUniqueDimStyleName(const QString &caption, const QString& prompt, const QString &defaultText);
 private:
     std::unique_ptr<QStringList> m_listPrec1;
     RS_Graphic* m_graphic;
     QGraphicsScene* m_paperScene;
     std::unique_ptr<RS_Vector> m_spacing;
+    LC_DimStylePreviewGraphicView* m_previewView;
     void init();
-    void initVariables();
+    void collectStylesUsage(RS_Graphic* rs_graphic, QMap<QString, int>& map);
+    void setupDimStylesTab(RS_Graphic* g);
+    void setupVariablesTab();
+    void tmp_ValidateDimsOld();
+    bool validateDimensions();
+    bool validatePointsTab();
+    void validateSplinesTab();
+    void validateGridTab();
+    void validatePaperTab();
+    void validateUnitsTab();
+    QModelIndex getSelectedDimStyleIndex();
 };
 
 #endif // QG_DLGOPTIONSDRAWING_H

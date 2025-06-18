@@ -30,10 +30,34 @@
 class LC_DimStyle{
    public:
     LC_DimStyle();
+    void init();
+    LC_DimStyle(const QString &name);
 
     static QString STANDARD_DIM_STYLE;
 
-    class Text: public RS_Flags {
+    class ModificationAware: public RS_Flags {
+    public:
+        enum CheckFlagMode {
+           ALL,
+           SET,
+           UNSET
+        };
+        bool checkModifyState(unsigned f);
+        CheckFlagMode modifyCheckMode() const {return m_checkModificationMode;}
+        void setModifyCheckMode(CheckFlagMode mode) {m_checkModificationMode = mode;}
+    protected:
+        void checkModified(int newValue, int currentValue, unsigned flag);
+        void checkModified(short newValue, short currentValue, unsigned flag);
+        void checkModified(const QString &newValue, const QString& currentValue, unsigned flag);
+        void checkModified(bool newValue, bool currentValue, unsigned flag);
+        void checkModified(double newValue, double currentValue, unsigned flag);
+        void checkModified(RS_Color newValue, RS_Color currentValue, unsigned int flag);
+        void copyFlags(ModificationAware* c);
+    private:
+        CheckFlagMode m_checkModificationMode{SET};
+    };
+
+    class Text: public ModificationAware {
     public:
         enum Fields: unsigned{
             $DIMATFIT = 1 << 0,
@@ -271,7 +295,7 @@ class LC_DimStyle{
         TextMovementPolicy DIMTMOVE{DIM_LINE_WITH_TEXT}; /*!< code 279 V2000+ */
     };
 
-    class DimensionLine: public RS_Flags {
+    class DimensionLine: public ModificationAware {
     public:
         enum Fields: unsigned{
             $DIMCLRD = 1 << 0,
@@ -353,7 +377,7 @@ class LC_DimStyle{
         /** Sets the distance around the dimension text when the dimension line breaks to accommodate dimension text.
            Also sets the gap between annotation and a hook line created with the LEADER command. If you enter a
            negative value, DIMGAP places a box around the dimension text.
-          
+
            Initial value:	0.0900 (imperial) or 0.6250 (metric)
            The value of DIMGAP is also used as the minimum length of each segment of the dimension line.
            To locate the components of a linear dimension within the extension lines, enough space must be available
@@ -407,7 +431,7 @@ class LC_DimStyle{
         DrawPolicyForOutsideText DIMTOFL{DRAW_EVEN_IF_ARROWHEADS_ARE_OUTSIDE};              /*!< code 172 */
     };
 
-    class ExtensionLine: public RS_Flags {
+    class ExtensionLine: public ModificationAware {
     public:
         enum Fields: unsigned{
             $DIMCLRE = 1 << 0,
@@ -533,7 +557,7 @@ class LC_DimStyle{
         ExtensionLineAndArrowSuppressionPolicy DIMSE2{DONT_SUPPRESS};                /*!< code 76 */
     };
 
-    class Arrowhead : public RS_Flags{
+    class Arrowhead : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMASZ = 1 << 0,
@@ -622,7 +646,7 @@ class LC_DimStyle{
         double DIMTSZ{0};            /*!< code 142 */
     };
 
-    class ZerosSuppression : public RS_Flags{
+    class ZerosSuppression : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMZIN = 1 << 0,
@@ -756,7 +780,7 @@ class LC_DimStyle{
         int DIMTZIN{TRAILING_IN_DECIMAL}; /*!< code 284 R13+ */
     };
 
-    class Scaling : public RS_Flags{
+    class Scaling : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMLFAC = 1 << 0,
@@ -803,7 +827,7 @@ class LC_DimStyle{
         double DIMSCALE{1.0}; /*!< code 40 */
     };
 
-    class LinearRoundOff : public RS_Flags{
+    class LinearRoundOff : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMALTRND = 1 << 0,
@@ -835,7 +859,7 @@ class LC_DimStyle{
         double DIMRND {0};            /*!< code 45 */
     };
 
-    class Fractions : public RS_Flags{
+    class Fractions : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMFRAC = 1 << 0,
@@ -865,7 +889,7 @@ class LC_DimStyle{
         FractionStylePolicy DIMFRAC{HORIZONTAL}; /*!< code 276 V2000+ */
     };
 
-    class LinearFormat : public RS_Flags{
+    class LinearFormat : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMALT = 1 << 0,
@@ -972,7 +996,7 @@ class LC_DimStyle{
            5 Fractional(always displayed stacked)
            6  Microsoft Windows Desktop(decimal formatusing Control Panel settingsfor decimal separator
            and number grouping symbols)
-         */  
+         */
         RS2::LinearFormat DIMALTU = RS2::Decimal;/*RS_Graphic::convertLinearFormatDXF2LC(2)*/;              /*!< code 273 R13+ */
 
         /** Specifies a text prefix or suffix (or both) to the alternate dimension measurement for
@@ -1029,7 +1053,7 @@ class LC_DimStyle{
         TextPattern* alternativePrefixSuffix {nullptr};
     };
 
-    class AngularFormat: public RS_Flags {
+    class AngularFormat: public ModificationAware {
     public:
         enum Fields: unsigned{
             $DIMADEC = 1 << 0,
@@ -1068,7 +1092,7 @@ class LC_DimStyle{
         RS2::AngleFormat DIMAUNIT =  RS2::DegreesDecimal; /* RS_Units::numberToAngleFormat(0)*/;             /*!< code 275 R13+ */
     };
 
-    class LatteralTolerance: public RS_Flags {
+    class LatteralTolerance: public ModificationAware {
     public:
         enum Fields: unsigned{
             $DIMALTTD = 1 << 0,
@@ -1174,7 +1198,7 @@ class LC_DimStyle{
         double DIMTP {0.0};             /*!< code 47 */
     };
 
-    class Leader : public RS_Flags{
+    class Leader : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMLDRBLK = 1 << 0,
@@ -1195,7 +1219,7 @@ class LC_DimStyle{
         QString DIMLDRBLK{""};     /*!< code 341 V2000+ */
     };
 
-    class MLeader : public RS_Flags{
+    class MLeader : public ModificationAware{
     public:
         enum Fields: unsigned{
             $MLEADERSCALE = 1 << 0,
@@ -1227,7 +1251,7 @@ class LC_DimStyle{
         double MLEADERSCALE{1.0}; // fixme code
     };
 
-    class Radial : public RS_Flags{
+    class Radial : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMCEN = 1 << 0,
@@ -1275,7 +1299,7 @@ class LC_DimStyle{
         double DIMJOGANG {45}; // DIMJOGANG // fixme - code
     };
 
-    class Arc : public RS_Flags{
+    class Arc : public ModificationAware{
     public:
         enum Fields: unsigned{
             $DIMARCSYM = 1 << 0,
@@ -1307,9 +1331,13 @@ class LC_DimStyle{
     void fillByDefaults();
     void merge(const LC_DimStyle* src);
     void copyTo(LC_DimStyle* copy);
+    void resetFlags();
     LC_DimStyle* getCopy();
     const QString& getName() const;
     void setName(const QString& name);
+    static QString getDimStyleNameSuffixForType(RS2::EntityType dimType);
+    static void parseStyleName(const QString& fullName, QString& baseName, RS2::EntityType& dimensionType);
+    RS2::EntityType getDimensionType();
 
     AngularFormat* angularFormat() const {return m_angularUnitFormattingStyle.get();}
     Arrowhead* arrowhead() const {return m_arrowheadStyle.get();}
@@ -1327,6 +1355,11 @@ class LC_DimStyle{
     Fractions* fractions() const {return m_unitFractionsStyle.get();}
     ZerosSuppression* zerosSuppression() const {return m_unitZeroSuppressionStyle.get();}
 
+    void setModifyCheckMode(ModificationAware::CheckFlagMode mode);
+
+    bool isFromVars(){return m_fromVars;}
+    void setFromVars(bool v){m_fromVars = true;}
+
     /*
     int getDimunit() const;
     void setDimunit(int dimunit);
@@ -1335,9 +1368,37 @@ class LC_DimStyle{
     void setDimfit(int dimfit);*/
 
 protected:
+        /* handle are code 105 */
          QString name;
         /* handle are code 105 */
         int dimunit;              /*!< code 270 R13+ (obsolete 2000+, use dimlunit & dimfrac) */
+        int dimfit; /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
+
+        // Displays the unit type (imperial/standard or ISO-25/metric) used by dimensions in the drawing.
+        // Initial value:	Standard (imperial) or ISO-25 (metric)
+        // This system variable has the same name as a command. Use the SETVAR command to access this system variable.
+        // The DIMSTYLE system variable is read-only; to change the current dimension style, use the DIMSTYLE command.
+        int dimstyle;
+
+private:
+    QString m_name{""};
+    bool m_fromVars = false;
+    std::unique_ptr<AngularFormat> m_angularUnitFormattingStyle;
+    std::unique_ptr<Arrowhead> m_arrowheadStyle;
+    std::unique_ptr<Arc> m_arcStyle;
+    std::unique_ptr<DimensionLine> m_dimensionLineStyle;
+    std::unique_ptr<ExtensionLine> m_extensionLineStyle;
+    std::unique_ptr<Leader> m_leaderStyle;
+    std::unique_ptr<LatteralTolerance> m_latteralToleranceStyle;
+    std::unique_ptr<MLeader> m_mleaderStyle;
+    std::unique_ptr<Radial> m_radialStyle;
+    std::unique_ptr<LinearRoundOff> m_roundOffStyle;
+    std::unique_ptr<Scaling> m_scalingStyle;
+    std::unique_ptr<Text> m_textStyle;
+    std::unique_ptr<LinearFormat> m_unitFormattingStyle;
+    std::unique_ptr<Fractions> m_unitFractionsStyle;
+    std::unique_ptr<ZerosSuppression> m_unitZeroSuppressionStyle;
+};
         int dimfit; /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
 
         // Displays the unit type (imperial/standard or ISO-25/metric) used by dimensions in the drawing.

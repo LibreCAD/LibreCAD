@@ -122,6 +122,7 @@ private:
     bool processImage();
     bool processImageDef();
     bool processDimension();
+    bool processArcDimension();
     bool processLeader();
     bool processPlotSettings();
 

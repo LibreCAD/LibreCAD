@@ -253,6 +253,7 @@ void RS_GraphicView::zoomAuto(bool axis){
     m_viewport->zoomAuto(axis);
 }
 
+
 void RS_GraphicView::onViewportChanged() {
     adjustOffsetControls();
     adjustZoomControls();
@@ -326,11 +327,15 @@ RS_EventHandler *RS_GraphicView::getEventHandler() const {
     return m_eventHandler.get();
 }
 
-RS_Graphic *RS_GraphicView::getGraphic() const {
-    if (container && container->rtti() == RS2::EntityGraphic) {
-        return static_cast<RS_Graphic *>(container);
+RS_Graphic *RS_GraphicView::getGraphic(bool resolve) const {
+    if (container != nullptr){
+        if (resolve) {
+            return container->getGraphic();
+        }
+        if (container->rtti() == RS2::EntityGraphic) {
+            return static_cast<RS_Graphic *>(container);
+        }
     }
-
     return nullptr;
 }
 

@@ -29,6 +29,7 @@
 #include "rs_graphic.h"
 
 #include "dxf_format.h"
+#include "lc_defaultdimstylesupport.h"
 #include "lc_defaults.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -38,6 +39,7 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "lc_dimstyleslist.h"
+#include "rs_dimension.h"
 
 namespace {
 // default paper size A4: 210x297 mm
@@ -95,7 +97,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         marginBottom(0.0),
         pagesNumH(1),
         pagesNumV(1)
-        , autosaveFilename{ "Unnamed"} {
+        , autosaveFilename{ "Unnamed"}{
 
     LC_GROUP_GUARD("Defaults");
     {
@@ -151,6 +153,12 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
  */
 RS_Graphic::~RS_Graphic() = default;
 
+void RS_Graphic::onLoadingCompleted() {
+    auto fallBackDimStyleFromVars = dimstyleList.getFallbackDimStyleFromVars();
+    fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)
+    LC_DimStyleToVariablesMapper dimStyleToVariablesMapper;
+    dimStyleToVariablesMapper.fromDictionary(fallBackDimStyleFromVars, getVariableDictObjectRef(), getUnit());
+}
 
 /**
  * Counts the m_entities on the given layer.
@@ -441,7 +449,7 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() const{
  * @return The linear format type used by the variable "$LUNITS" & "$DIMLUNIT".
  */
 // fixme - sand - move to generic utils!
-RS2::LinearFormat RS_Graphic::convertLinearFormatDXF2LC(int f) const{
+RS2::LinearFormat RS_Graphic::convertLinearFormatDXF2LC(int f){
     switch (f) {
         case 1:
             return RS2::Scientific;
@@ -849,4 +857,56 @@ void RS_Graphic::fireUndoStateChanged(bool undoAvailable, bool redoAvailable) co
     if (m_modificationListener != nullptr) {
         m_modificationListener->undoStateChanged(this, undoAvailable, redoAvailable);
     }
+}
+
+LC_DimStyle* RS_Graphic::getDimStyleByName(const QString& name, RS2::EntityType dimType) const {
+    return dimstyleList.resolveByName(name, dimType);
+}
+
+LC_DimStyle* RS_Graphic::getFallBackDimStyleFromVars() const {
+    return dimstyleList.getFallbackDimStyleFromVars();
+}
+
+QString RS_Graphic::getDefaultDimStyleName() {
+    return getVariableString("$DIMSTYLE", "Standard");
+}
+
+void RS_Graphic::setDefaultDimStyleName(QString name) {
+    addVariable("$DIMSTYLE", name, 2);
+}
+
+LC_DimStyle* RS_Graphic::getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType) {
+    LC_DimStyle* result = nullptr;
+    if (dimStyleName != nullptr && !dimStyleName.isEmpty()) { // try to get style by explicit name, if any
+        result = getDimStyleByName(dimStyleName, dimType);
+        if (result != nullptr) {
+            return result;
+        }
+    }
+
+    // try to find a style that is set as default
+    QString defaultStyleName = getDefaultDimStyleName();
+    if (defaultStyleName != nullptr && !defaultStyleName.isEmpty()) {
+        result =  getDimStyleByName(defaultStyleName, dimType);
+        if (result != nullptr) {
+            return result;
+        }
+    }
+    // nothing found, get default dim style from vars
+    return getFallBackDimStyleFromVars();
+}
+
+void RS_Graphic::updateFallbackDimStyle(LC_DimStyle* style) {
+    if (style != nullptr) {
+        LC_DimStyle* fallBackStyle = getFallBackDimStyleFromVars();
+        style->copyTo(fallBackStyle);
+
+        LC_DimStyleToVariablesMapper mapper;
+        mapper.toDictionary(fallBackStyle, getVariableDictObjectRef());
+    }
+}
+
+void RS_Graphic::replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles) {
+    setDefaultDimStyleName(defaultStyleName);
+    dimstyleList.replaceStyles(styles);
 }

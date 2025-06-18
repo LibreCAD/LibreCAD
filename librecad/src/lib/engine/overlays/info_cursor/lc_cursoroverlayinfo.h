@@ -48,15 +48,18 @@ class LC_InfoMessageBuilder{
 public:
     LC_InfoMessageBuilder() {}
 
-    explicit LC_InfoMessageBuilder(const QString &m):msg(m) {
+    explicit LC_InfoMessageBuilder(const QString& m) : msg(m) {
         msg.append("\n");
     }
 
-    QString toString(){
+    QString toString() {
         return msg;
     }
 
-    void add(QString label, QString value = ""){
+    void add(QString label, QString value = "") {
+        if (msg.contains(label)) {
+            value = "0";
+        }
         msg.append(label);
         if (!value.isEmpty()) {
             msg.append(" ");
@@ -65,10 +68,10 @@ public:
         msg.append("\n");
     }
 
-  protected:
-    void clear() {
-        msg.clear();
+    void cleanup() {
+        msg = "";
     }
+  protected:
     QString msg;
 };
 

@@ -335,8 +335,11 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? m_currentActions.last() : m_defaultAction;
     // Suspend current action:
-    predecessor->suspend();
-    predecessor->hideOptions();
+    if (predecessor != nullptr) {
+        predecessor->suspend();
+        predecessor->hideOptions();
+    }
+
 
     // Set current action:
     m_currentActions.push_back(action);
@@ -513,7 +516,7 @@ QAction* RS_EventHandler::getQAction(){
 void RS_EventHandler::setQAction(QAction *action) {
 //    LC_ERR << __func__ << "()";
     debugActions();
-    if (m_QAction != nullptr && m_QAction != action) {
+    if (m_QAction != nullptr && action != nullptr && m_QAction != action) {
         auto property = action->property("RS2:actionType");
         if (property.isValid()) {
             int rtti = property.toInt();

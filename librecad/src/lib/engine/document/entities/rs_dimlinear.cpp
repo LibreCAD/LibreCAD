@@ -94,36 +94,6 @@ void RS_DimLinear::setAngle(double a) {
 	m_dimLinearData.angle = RS_Math::correctAngle(a);
 }
 
-
-/**
- * @return Automatically created label for the default
- * measurement of this dimension.
- */
-QString RS_DimLinear::getMeasuredLabel() {
-    // direction of dimension line
-    RS_Vector dirDim = RS_Vector::polar(100.0, m_dimLinearData.angle);
-
-    // construction line for dimension line
-    RS_ConstructionLine dimLine(nullptr,
-                                RS_ConstructionLineData(m_dimGenericData.definitionPoint,
-                                                        m_dimGenericData.definitionPoint + dirDim));
-
-    RS_Vector dimP1 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint1);
-    RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
-
-    // Definitive dimension line:
-    double distance = dimP1.distanceTo(dimP2);
-
-    double dist = prepareLabelLinearDistance(distance);
-    QString distanceLabel =  createLinearMeasuredLabel(dist);
-    return distanceLabel;
-}
-
-bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const{
-        return (m_dimLinearData.extensionPoint1.isInWindow(v1, v2) ||
-                m_dimLinearData.extensionPoint2.isInWindow(v1, v2));
-}
-
 /**
  * Updates the sub entities of this dimension. Called when the
  * text or the position, alignment, .. changes.
@@ -145,8 +115,20 @@ void RS_DimLinear::doUpdateDim() {
     RS_Vector dimP1 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint1);
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
 
+    auto extLineStyle = m_dimStyleTransient->extensionLine();
+    bool dontSuppressExt1 = extLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool dontSuppressExt2 = extLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+
+    auto dimLineStyle = m_dimStyleTransient->dimensionLine();
+
+    bool dontSuppressDim1 = dimLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool arrow1 = dontSuppressExt1 && dontSuppressDim1;
+    bool dontSuppressDim2 = dimLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool arrow2 = dontSuppressExt2 && dontSuppressDim2;
+
+
     // Definitive dimension line:
-    createDimensionLine(dimP1, dimP2, true, true, m_dimGenericData.autoText);
+    createDimensionLine(dimP1, dimP2, arrow1, arrow2, dontSuppressDim1, dontSuppressDim2, m_dimGenericData.autoText);
 
     double extAngle1, extAngle2;
 
@@ -194,8 +176,43 @@ void RS_DimLinear::doUpdateDim() {
     }
 
     // extension lines:
-    addDimExtensionLine(m_dimLinearData.extensionPoint1+vDimexo1, dimP1+vDimexe1);
-    addDimExtensionLine(m_dimLinearData.extensionPoint2+vDimexo2, dimP2+vDimexe2);
+
+    if (dontSuppressExt1) {
+        addDimExtensionLine(m_dimLinearData.extensionPoint1+vDimexo1, dimP1+vDimexe1, true);
+    }
+
+    if (dontSuppressExt2) {
+        addDimExtensionLine(m_dimLinearData.extensionPoint2+vDimexo2, dimP2+vDimexe2, false);
+    }
+}
+
+/**
+ * @return Automatically created label for the default
+ * measurement of this dimension.
+ */
+QString RS_DimLinear::getMeasuredLabel() {
+    // direction of dimension line
+    RS_Vector dirDim = RS_Vector::polar(100.0, m_dimLinearData.angle);
+
+    // construction line for dimension line
+    RS_ConstructionLine dimLine(nullptr,
+                                RS_ConstructionLineData(m_dimGenericData.definitionPoint,
+                                                        m_dimGenericData.definitionPoint + dirDim));
+
+    RS_Vector dimP1 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint1);
+    RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
+
+    // Definitive dimension line:
+    double distance = dimP1.distanceTo(dimP2);
+
+    double dist = prepareLabelLinearDistance(distance);
+    QString distanceLabel =  createLinearMeasuredLabel(dist);
+    return distanceLabel;
+}
+
+bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const{
+        return (m_dimLinearData.extensionPoint1.isInWindow(v1, v2) ||
+                m_dimLinearData.extensionPoint2.isInWindow(v1, v2));
 }
 
 void RS_DimLinear::move(const RS_Vector& offset) {

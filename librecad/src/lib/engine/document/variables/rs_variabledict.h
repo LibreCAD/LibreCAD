@@ -67,6 +67,8 @@ public:
 
 	void remove(const QString& key);
 
+    bool has(const QString& key) {return variables.contains(key);};
+
 	QHash<QString, RS_Variable> const& getVariableDict() const {
         return variables;
     }

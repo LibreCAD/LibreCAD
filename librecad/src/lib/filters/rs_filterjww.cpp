@@ -889,7 +889,7 @@ void RS_FilterJWW::addDimAngular3P(const DL_DimensionData& data,
 void RS_FilterJWW::addLeader(const DL_LeaderData& data) {
         RS_DEBUG->print("RS_FilterJWW::addDimLeader");
         //RS_DEBUG->print("RS_FilterJWW::addPolyline()");
-        RS_LeaderData d(data.arrowHeadFlag==1);
+        RS_LeaderData d(data.arrowHeadFlag==1, "");
         leader = new RS_Leader(currentContainer, d);
         setEntityAttributes(leader, attributes);
 

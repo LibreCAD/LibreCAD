@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>887</width>
     <height>551</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -1245,7 +1245,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -1790,6 +1790,169 @@
           </size>
          </property>
         </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Dimensions</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_22">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Styles</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_23">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QToolButton" name="tbDimNew">
+              <property name="toolTip">
+               <string>New style creation</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/add.lci</normaloff>:/icons/add.lci</iconset>
+              </property>
+              <property name="autoRaise">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimRemove">
+              <property name="toolTip">
+               <string>Remove Style</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/remove.lci</normaloff>:/icons/remove.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimEdit">
+              <property name="toolTip">
+               <string>Edit Style</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/attributes.lci</normaloff>:/icons/attributes.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimRename">
+              <property name="toolTip">
+               <string>Rename Style</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/rename_active_block.lci</normaloff>:/icons/rename_active_block.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimDefault">
+              <property name="toolTip">
+               <string>Marks style as default one. Default style will be used during creation of dimensions.</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/dim_default.lci</normaloff>:/icons/dim_default.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_10">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimExport">
+              <property name="toolTip">
+               <string>Export</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/export.lci</normaloff>:/icons/export.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimImport">
+              <property name="toolTip">
+               <string>Import</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/import.lci</normaloff>:/icons/import.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QListView" name="lvDimStyles"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="gbDimStylesPreview">
+         <property name="title">
+          <string>Preview</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -3201,7 +3364,6 @@
   <tabstop>rbAbsSize</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>

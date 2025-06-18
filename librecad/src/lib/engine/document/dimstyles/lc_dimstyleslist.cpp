@@ -24,10 +24,17 @@
 
 #include "lc_dimstyle.h"
 
-LC_DimStylesList::LC_DimStylesList() {}
+LC_DimStylesList::LC_DimStylesList() {
+    m_fallbackDimStyleFromVars = std::make_unique<LC_DimStyle>();
+    m_fallbackDimStyleFromVars->setFromVars(true);
+}
+
+LC_DimStylesList::~LC_DimStylesList() {
+    qDeleteAll(m_stylesList);
+}
 
 LC_DimStyle *LC_DimStylesList::findByName(const QString &name) const {
-    for (auto v: stylesList){
+    for (auto v: m_stylesList){
         if (v->getName() == name){
             return v;
         }
@@ -35,11 +42,54 @@ LC_DimStyle *LC_DimStylesList::findByName(const QString &name) const {
     return nullptr;
 }
 
+LC_DimStyle* LC_DimStylesList::resolveByName(const QString& name, RS2::EntityType dimType) const {
+    QString nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(dimType);
+    if (nameSuffix.isEmpty()) {
+        return findByName(name);
+    }
+
+    QString nameForType = name + nameSuffix;
+    LC_DimStyle* res = findByName(nameForType);
+    if (res == nullptr) {
+        if (dimType == RS2::EntityDimAligned) {
+            // fall back to style for linear
+            nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(RS2::EntityDimLinear);
+            nameForType = name + nameSuffix;
+            res = findByName(nameForType);
+            if (res != nullptr) {
+                return res;
+            }
+        }
+        else if (dimType == RS2::EntityTolerance) {
+            // fall back to style for leader
+            nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(RS2::EntityDimLeader);
+            nameForType = name + nameSuffix;
+            res = findByName(nameForType);
+            if (res != nullptr) {
+                return res;
+            }
+        }
+        return findByName(name);
+    }
+    return res;
+}
+
+
 void LC_DimStylesList::addDimStyle(LC_DimStyle *style) {
     // fixme - sand - dims - check for duplicated name?
-    stylesList.append(style);
+    m_stylesList.append(style);
 }
 
 void LC_DimStylesList::deleteDimStyle([[maybe_unused]]QString &name) {
 
+}
+
+void LC_DimStylesList::clear() {
+    m_stylesList.clear();
+}
+
+void LC_DimStylesList::replaceStyles(const QList<LC_DimStyle*>& list) {
+    qDeleteAll(m_stylesList);
+    m_stylesList.clear();
+    m_stylesList.append(list);
 }

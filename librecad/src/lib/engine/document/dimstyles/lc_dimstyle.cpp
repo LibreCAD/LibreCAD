@@ -29,27 +29,36 @@
 
 QString LC_DimStyle::STANDARD_DIM_STYLE = "Standard";
 
-LC_DimStyle::LC_DimStyle():
-    m_angularUnitFormattingStyle{std::make_unique<AngularFormat>()},
-    m_arrowheadStyle{std::make_unique<Arrowhead>()},
-    m_arcStyle{std::make_unique<Arc>()},
-    m_dimensionLineStyle{std::make_unique<DimensionLine>()},
-    m_extensionLineStyle{std::make_unique<ExtensionLine>()},
-    m_leaderStyle{std::make_unique<Leader>()},
-    m_latteralToleranceStyle{std::make_unique<LatteralTolerance>()},
-    m_mleaderStyle{std::make_unique<MLeader>()},
-    m_radialStyle{std::make_unique<Radial>()},
-    m_roundOffStyle{std::make_unique<LinearRoundOff>()},
-    m_scalingStyle{std::make_unique<Scaling>()},
-    m_textStyle{std::make_unique<Text>()},
-    m_unitFormattingStyle{std::make_unique<LinearFormat>()},
-    m_unitFractionsStyle{std::make_unique<Fractions>()},
-    m_unitZeroSuppressionStyle{std::make_unique<ZerosSuppression>()} {
+LC_DimStyle::LC_DimStyle(const QString& name): m_name{name} {
+    init();
+}
+
+
+LC_DimStyle::LC_DimStyle() : m_name{STANDARD_DIM_STYLE} {
+    init();
+}
+
+void LC_DimStyle::init() {
+    m_angularUnitFormattingStyle = std::make_unique<AngularFormat>();
+    m_arrowheadStyle = std::make_unique<Arrowhead>();
+    m_arcStyle = std::make_unique<Arc>();
+    m_dimensionLineStyle = std::make_unique<DimensionLine>();
+    m_extensionLineStyle = std::make_unique<ExtensionLine>();
+    m_leaderStyle = std::make_unique<Leader>();
+    m_latteralToleranceStyle = std::make_unique<LatteralTolerance>();
+    m_mleaderStyle = std::make_unique<MLeader>();
+    m_radialStyle = std::make_unique<Radial>();
+    m_roundOffStyle = std::make_unique<LinearRoundOff>();
+    m_scalingStyle = std::make_unique<Scaling>();
+    m_textStyle = std::make_unique<Text>();
+    m_unitFormattingStyle = std::make_unique<LinearFormat>();
+    m_unitFractionsStyle = std::make_unique<Fractions>();
+    m_unitZeroSuppressionStyle = std::make_unique<ZerosSuppression>();
     fillByDefaults();
 }
 
-void LC_DimStyle::fillByDefaults(){
-    name = "";
+
+void LC_DimStyle::fillByDefaults() {
     m_angularUnitFormattingStyle->fillByDefaults();
     m_arrowheadStyle->fillByDefaults();
     m_arcStyle->fillByDefaults();
@@ -67,7 +76,7 @@ void LC_DimStyle::fillByDefaults(){
     m_unitZeroSuppressionStyle->fillByDefaults();
 }
 
-void LC_DimStyle::merge(const LC_DimStyle* src){
+void LC_DimStyle::merge(const LC_DimStyle* src) {
     m_angularUnitFormattingStyle->merge(src->angularFormat());
     m_arrowheadStyle->merge(src->arrowhead());
     m_arcStyle->merge(src->arc());
@@ -83,6 +92,24 @@ void LC_DimStyle::merge(const LC_DimStyle* src){
     m_unitFormattingStyle->merge(src->linearFormat());
     m_unitFractionsStyle->merge(src->fractions());
     m_unitZeroSuppressionStyle->merge(src->zerosSuppression());
+}
+
+void LC_DimStyle::setModifyCheckMode(ModificationAware::CheckFlagMode mode) {
+    m_angularUnitFormattingStyle->setModifyCheckMode(mode);
+    m_arrowheadStyle->setModifyCheckMode(mode);
+    m_arcStyle->setModifyCheckMode(mode);
+    m_dimensionLineStyle->setModifyCheckMode(mode);
+    m_extensionLineStyle->setModifyCheckMode(mode);
+    m_leaderStyle->setModifyCheckMode(mode);
+    m_latteralToleranceStyle->setModifyCheckMode(mode);
+    m_mleaderStyle->setModifyCheckMode(mode);
+    m_radialStyle->setModifyCheckMode(mode);
+    m_roundOffStyle->setModifyCheckMode(mode);
+    m_scalingStyle->setModifyCheckMode(mode);
+    m_textStyle->setModifyCheckMode(mode);
+    m_unitFormattingStyle->setModifyCheckMode(mode);
+    m_unitFractionsStyle->setModifyCheckMode(mode);
+    m_unitZeroSuppressionStyle->setModifyCheckMode(mode);
 }
 
 void LC_DimStyle::ZerosSuppression::setLinearFlag(LinearSuppressionPolicy dimzin, bool set) {
@@ -131,6 +158,7 @@ void LC_DimStyle::ZerosSuppression::setAltToleranceFlag(ToleranceSuppressionPoli
 }
 
 void LC_DimStyle::copyTo(LC_DimStyle* copy) {
+    copy->m_name = m_name;
     m_angularUnitFormattingStyle->copyTo(copy->angularFormat());
     m_arrowheadStyle->copyTo(copy->arrowhead());
     m_arcStyle->copyTo(copy->arc());
@@ -148,14 +176,34 @@ void LC_DimStyle::copyTo(LC_DimStyle* copy) {
     m_unitZeroSuppressionStyle->copyTo(copy->zerosSuppression());
 }
 
+void LC_DimStyle::resetFlags() {
+    m_angularUnitFormattingStyle->resetFlags();
+    m_arrowheadStyle->resetFlags();
+    m_arcStyle->resetFlags();
+    m_dimensionLineStyle->resetFlags();
+    m_extensionLineStyle->resetFlags();
+    m_leaderStyle->resetFlags();
+    m_latteralToleranceStyle->resetFlags();
+    m_mleaderStyle->resetFlags();
+    m_radialStyle->resetFlags();
+    m_roundOffStyle->resetFlags();
+    m_scalingStyle->resetFlags();
+    m_textStyle->resetFlags();
+    m_unitFormattingStyle->resetFlags();
+    m_unitFractionsStyle->resetFlags();
+    m_unitZeroSuppressionStyle->resetFlags();
+}
+
 LC_DimStyle* LC_DimStyle::getCopy() {
     auto copy = new LC_DimStyle();
     copyTo(copy);
+    copy->m_name = m_name;
+    copy->m_fromVars = m_fromVars;
     return copy;
 }
 
-const QString &LC_DimStyle::getName() const {
-    return name;
+const QString& LC_DimStyle::getName() const {
+    return m_name;
 }
 
 void LC_DimStyle::Text::fillByDefaults() {
@@ -177,6 +225,7 @@ void LC_DimStyle::Text::fillByDefaults() {
 }
 
 void LC_DimStyle::Text::copyTo(Text* c) {
+    copyFlags(c);
     c->DIMATFIT = DIMATFIT;
     c->DIMTFILL = DIMTFILL;
     c->DIMTFILLCLR = DIMTFILLCLR;
@@ -195,49 +244,49 @@ void LC_DimStyle::Text::copyTo(Text* c) {
 }
 
 void LC_DimStyle::Text::merge(const Text* parent) {
-    if (isNotSet($DIMATFIT)) {
+    if (checkModifyState($DIMATFIT)) {
         setUnsufficientSpacePolicy(parent->unsufficientSpacePolicy());
     }
-    if (isNotSet($DIMTFILL)) {
+    if (checkModifyState($DIMTFILL)) {
         setBackgroundFillMode(parent->backgroundFillMode());
     }
-    if (isNotSet($DIMTFILLCLR)) {
+    if (checkModifyState($DIMTFILLCLR)) {
         setExplicitBackgroundFillColor(parent->explicitBackgroundFillColor());
     }
-    if (isNotSet($DIMTAD)) {
+    if (checkModifyState($DIMTAD)) {
         setVerticalPositioning(parent->verticalPositioning());
     }
-    if (isNotSet($DIMJUST)) {
+    if (checkModifyState($DIMJUST)) {
         setHorizontalPositioning(parent->horizontalPositioning());
     }
-    if (isNotSet($DIMCLRT)) {
+    if (checkModifyState($DIMCLRT)) {
         setColor(parent->color());
     }
-    if (isNotSet($DIMTIX)) {
+    if (checkModifyState($DIMTIX)) {
         setExtLinesRelativePlacement(parent->extLinesRelativePlacement());
     }
-    if (isNotSet($DIMTIH)) {
+    if (checkModifyState($DIMTIH)) {
         setOrientationInside(parent->orientationInside());
     }
-    if (isNotSet($DIMTOH)) {
+    if (checkModifyState($DIMTOH)) {
         setOrientationOutside(parent->orientationOutside());
     }
-    if (isNotSet($DIMTVP)) {
+    if (checkModifyState($DIMTVP)) {
         setVerticalDistanceToDimLine(parent->verticalDistanceToDimLine());
     }
-    if (isNotSet($DIMTXSTY)) {
+    if (checkModifyState($DIMTXSTY)) {
         setStyle(parent->style());
     }
-    if (isNotSet($DIMTXT)) {
+    if (checkModifyState($DIMTXT)) {
         setHeight(parent->height());
     }
-    if (isNotSet($DIMTXTDIRECTION)) {
+    if (checkModifyState($DIMTXTDIRECTION)) {
         setReadingDirection(parent->readingDirection());
     }
-    if (isNotSet($DIMUPT)) {
+    if (checkModifyState($DIMUPT)) {
         setCursorControlPolicy(parent->cursorControlPolicy());
     }
-    if (isNotSet($DIMTMOVE)) {
+    if (checkModifyState($DIMTMOVE)) {
         setPositionMovementPolicy(parent->positionMovementPolicy());
     }
 }
@@ -256,6 +305,7 @@ void LC_DimStyle::DimensionLine::fillByDefaults() {
 }
 
 void LC_DimStyle::DimensionLine::copyTo(DimensionLine* c) {
+    copyFlags(c);
     c->DIMCLRD = DIMCLRD;
     c->DIMDLE = DIMDLE;
     c->DIMDLI = DIMDLI;
@@ -269,95 +319,83 @@ void LC_DimStyle::DimensionLine::copyTo(DimensionLine* c) {
 }
 
 void LC_DimStyle::DimensionLine::merge(const DimensionLine* parent) {
-    if (isNotSet($DIMCLRD)) {
+    if (checkModifyState($DIMCLRD)) {
         setColor(parent->color());
     }
-    if (isNotSet($DIMDLE)) {
+    if (checkModifyState($DIMDLE)) {
         setDistanceBeyondExtLinesForObliqueStroke(parent->distanceBeyondExtLinesForObliqueStroke());
     }
-    if (isNotSet($DIMDLI)) {
+    if (checkModifyState($DIMDLI)) {
         setBaselineDimLinesSpacing(parent->baseLineDimLinesSpacing());
     }
-    if (isNotSet($DIMGAP)) {
+    if (checkModifyState($DIMGAP)) {
         setLineGap(parent->lineGap());
     }
-    if (isNotSet($DIMLTYPE)) {
+    if (checkModifyState($DIMLTYPE)) {
         setLineType(parent->lineType());
     }
-    if (isNotSet($DIMLWD)) {
+    if (checkModifyState($DIMLWD)) {
         setLineWidth(parent->lineWidth());
     }
-    if (isNotSet($DIMSD1)) {
+    if (checkModifyState($DIMSD1)) {
         setFirstLineSuppression(parent->firstLineSuppression());
     }
-    if (isNotSet($DIMSD2)) {
+    if (checkModifyState($DIMSD2)) {
         setSecondLineSuppression(parent->secondLineSuppression());
     }
-    if (isNotSet($DIMTOFL)) {
+    if (checkModifyState($DIMTOFL)) {
         setDrawPolicyForOutsideText(parent->drawPolicyForOutsideText());
     }
 }
 
 void LC_DimStyle::DimensionLine::setLineGap(double dimgap) {
-    if (dimgap != DIMGAP) {
-        setFlag($DIMGAP);
-    }
+    checkModified(dimgap, DIMGAP, $DIMGAP);
     DIMGAP = dimgap;
 }
+
 void LC_DimStyle::DimensionLine::setColor(RS_Color dimclrd) {
-    if (dimclrd != DIMCLRD) {
-        setFlag($DIMCLRD);
-    }
+    checkModified(dimclrd, DIMCLRD, $DIMCLRD);
     DIMCLRD = dimclrd;
 }
+
 void LC_DimStyle::DimensionLine::setLineWidth(RS2::LineWidth dimlwd) {
-    if (dimlwd != DIMLWD) {
-        setFlag($DIMLWD);
-    }
+    checkModified(dimlwd, DIMLWD, $DIMLWD);
     DIMLWD = dimlwd;
 }
+
 void LC_DimStyle::DimensionLine::setDistanceBeyondExtLinesForObliqueStroke(double dimdle) {
-    if (dimdle != DIMDLE) {
-        setFlag($DIMDLE);
-    }
+    checkModified(dimdle, DIMDLE, $DIMDLE);
     DIMDLE = dimdle;
 }
+
 void LC_DimStyle::DimensionLine::setBaselineDimLinesSpacing(double dimdli) {
-    if (dimdli != DIMDLI) {
-        setFlag($DIMDLI);
-    }
+    checkModified(dimdli, DIMDLI, $DIMDLI);
     DIMDLI = dimdli;
 }
+
 void LC_DimStyle::DimensionLine::setFirstLineSuppression(DimLineAndArrowSuppressionPolicy dimsd1) {
-    if (dimsd1 != DIMSD1) {
-        setFlag($DIMSD1);
-    }
+    checkModified(dimsd1, DIMSD1, $DIMSD1);
     DIMSD1 = dimsd1;
 }
+
 void LC_DimStyle::DimensionLine::setSecondLineSuppression(DimLineAndArrowSuppressionPolicy dimsd2) {
-    if (dimsd2 != DIMSD2) {
-        setFlag($DIMSD2);
-    }
+    checkModified(dimsd2, DIMSD2, $DIMSD2);
     DIMSD2 = dimsd2;
 }
+
 void LC_DimStyle::DimensionLine::setDrawPolicyForOutsideText(DrawPolicyForOutsideText dimtofl) {
-    if (dimtofl != DIMTOFL) {
-        setFlag($DIMTOFL);
-    }
+    checkModified(dimtofl, DIMTOFL, $DIMTOFL);
     DIMTOFL = dimtofl;
 }
+
 void LC_DimStyle::DimensionLine::setLineType(QString dimltype) {
-    if (dimltype != DIMLTYPE) {
-        setFlag($DIMLTYPE);
-    }
+    checkModified(dimltype, DIMLTYPE, $DIMLTYPE);
     DIMLTYPE = dimltype;
     DIMLTYPE_LineType = RS_FilterDXFRW::nameToLineType(dimltype);
 }
 
 void LC_DimStyle::DimensionLine::setLineType(RS2::LineType lineType) {
-    if (DIMLTYPE_LineType != lineType) {
-        setFlag($DIMLTYPE);
-    }
+    checkModified(lineType, DIMLTYPE_LineType, $DIMLTYPE);
     DIMLTYPE_LineType = lineType;
     DIMLTYPE = RS_FilterDXFRW::lineTypeToName(lineType);
 }
@@ -378,6 +416,7 @@ void LC_DimStyle::ExtensionLine::fillByDefaults() {
 }
 
 void LC_DimStyle::ExtensionLine::copyTo(ExtensionLine* c) {
+    copyFlags(c);
     c->DIMCLRE = DIMCLRE;
     c->DIMEXE = DIMEXE;
     c->DIMEXO = DIMEXO;
@@ -393,98 +432,80 @@ void LC_DimStyle::ExtensionLine::copyTo(ExtensionLine* c) {
 }
 
 void LC_DimStyle::ExtensionLine::merge(const ExtensionLine* parent) {
-    if (isNotSet($DIMCLRE)) {
+    if (checkModifyState($DIMCLRE)) {
         setColor(parent->color());
     }
-    if (isNotSet($DIMEXE)) {
+    if (checkModifyState($DIMEXE)) {
         setDistanceBeyondDimLine(parent->distanceBeyondDimLine());
     }
-    if (isNotSet($DIMEXO)) {
+    if (checkModifyState($DIMEXO)) {
         setDistanceFromOriginPoint(parent->distanceFromOriginPoint());
     }
-    if (isNotSet($DIMFXL)) {
+    if (checkModifyState($DIMFXL)) {
         setFixedLength(parent->fixedLength());
     }
-    if (isNotSet($DIMFXLON)) {
+    if (checkModifyState($DIMFXLON)) {
         setHasFixedLength(parent->hasFixedLength());
     }
-    if (isNotSet($DIMLTEX1)) {
+    if (checkModifyState($DIMLTEX1)) {
         setLineTypeFirst(parent->lineTypeFirst());
     }
-    if (isNotSet($DIMLTEX2)) {
+    if (checkModifyState($DIMLTEX2)) {
         setLineTypeSecond(parent->lineTypeSecond());
     }
-    if (isNotSet($DIMLWE)) {
+    if (checkModifyState($DIMLWE)) {
         setLineWidth(parent->lineWidth());
     }
-    if (isNotSet($DIMSE1)) {
+    if (checkModifyState($DIMSE1)) {
         setSuppressionFirst(parent->firstLineSuppression());
     }
-    if (isNotSet($DIMSE2)) {
+    if (checkModifyState($DIMSE2)) {
         setSuppressionSecondRaw(parent->secondLineSuppression());
     }
 }
 
 void LC_DimStyle::ExtensionLine::setColor(RS_Color dimclre) {
-    if (dimclre != DIMCLRE) {
-        setFlag($DIMCLRE);
-    }
+    checkModified(dimclre, DIMCLRE, $DIMCLRE);
     DIMCLRE = dimclre;
 }
 
 void LC_DimStyle::ExtensionLine::setDistanceBeyondDimLine(double dimexe) {
-    if (dimexe != DIMEXE) {
-        setFlag($DIMEXE);
-    }
+    checkModified(dimexe, DIMEXE, $DIMEXE);
     DIMEXE = dimexe;
 }
 
 void LC_DimStyle::ExtensionLine::setDistanceFromOriginPoint(double dimexo) {
-    if (dimexo != DIMEXO) {
-        setFlag($DIMEXO);
-    }
+    checkModified(dimexo, DIMEXO, $DIMEXO);
     DIMEXO = dimexo;
 }
 
 void LC_DimStyle::ExtensionLine::setFixedLength(double dimfxl) {
-    if (dimfxl != DIMFXL) {
-        setFlag($DIMFXL);
-    }
+    checkModified(dimfxl, DIMFXL, $DIMFXL);
     DIMFXL = dimfxl;
 }
 
 void LC_DimStyle::ExtensionLine::setHasFixedLength(bool dimfxlon) {
-    if (dimfxlon != DIMFXLON) {
-        setFlag($DIMFXLON);
-    }
+    checkModified(dimfxlon, DIMFXLON, $DIMFXLON);
     DIMFXLON = dimfxlon;
 }
 
 void LC_DimStyle::ExtensionLine::setLineWidth(RS2::LineWidth dimlwe) {
-    if (dimlwe != DIMLWE) {
-        setFlag($DIMLWE);
-    }
+    checkModified(dimlwe, DIMLWE, $DIMLWE);
     DIMLWE = dimlwe;
 }
 
 void LC_DimStyle::ExtensionLine::setLineTypeFirst(const QString& dimltex1) {
-    if (dimltex1 != DIMLTEX1) {
-        setFlag($DIMLTEX1);
-    }
+    checkModified(dimltex1, DIMLTEX1, $DIMLTEX1);
     DIMLTEX1 = dimltex1;
 }
 
 void LC_DimStyle::ExtensionLine::setLineTypeSecond(const QString& dimltex2) {
-    if (dimltex2 != DIMLTEX2) {
-        setFlag($DIMLTEX2);
-    }
+    checkModified(dimltex2, DIMLTEX2, $DIMLTEX2);
     DIMLTEX2 = dimltex2;
 }
 
 void LC_DimStyle::ExtensionLine::setLineTypeFirst(RS2::LineType lineType) {
-    if (DIMLTEX1_linetype != lineType) {
-        setFlag($DIMLTEX1);
-    }
+    checkModified(lineType, DIMLTEX1_linetype, $DIMLTEX1);
     DIMLTEX1_linetype = lineType;
     DIMLTEX1 = RS_FilterDXFRW::lineTypeToName(lineType);
 }
@@ -498,19 +519,14 @@ void LC_DimStyle::ExtensionLine::setLineTypeSecond(RS2::LineType lineType) {
 }
 
 void LC_DimStyle::ExtensionLine::setSuppressionFirst(ExtensionLineAndArrowSuppressionPolicy dimse1) {
-    if (dimse1 != DIMSE1) {
-        setFlag($DIMSE1);
-    }
+    checkModified(dimse1, DIMSE1, $DIMSE1);
     DIMSE1 = dimse1;
 }
 
 void LC_DimStyle::ExtensionLine::setSuppressionSecond(ExtensionLineAndArrowSuppressionPolicy dimse2) {
-    if (dimse2 != DIMSE2) {
-        setFlag($DIMSE2);
-    }
+    checkModified(dimse2, DIMSE2, $DIMSE2);
     DIMSE2 = dimse2;
 }
-
 
 void LC_DimStyle::Arrowhead::fillByDefaults() {
     DIMASZ = 2.5;
@@ -523,6 +539,7 @@ void LC_DimStyle::Arrowhead::fillByDefaults() {
 }
 
 void LC_DimStyle::Arrowhead::copyTo(Arrowhead* c) {
+    copyFlags(c);
     c->DIMASZ = DIMASZ;
     c->DIMBLK = DIMBLK;
     c->DIMBLK1 = DIMBLK1;
@@ -533,25 +550,25 @@ void LC_DimStyle::Arrowhead::copyTo(Arrowhead* c) {
 }
 
 void LC_DimStyle::Arrowhead::merge(const Arrowhead* parent) {
-    if (isNotSet($DIMASZ)) {
+    if (checkModifyState($DIMASZ)) {
         setSize(parent->size());
     }
-    if (isNotSet($DIMBLK)) {
+    if (checkModifyState($DIMBLK)) {
         setUseSeparateArrowHeads(parent->isUseSeparateArrowHeads());
     }
-    if (isNotSet($DIMBLK1)) {
+    if (checkModifyState($DIMBLK1)) {
         setArrowHeadBlockNameFirst(parent->arrowHeadBlockNameFirst());
     }
-    if (isNotSet($DIMBLK2)) {
+    if (checkModifyState($DIMBLK2)) {
         setArrowHeadBlockNameSecond(parent->arrowHeadBlockNameSecond());
     }
-    if (isNotSet($DIMSAH)) {
+    if (checkModifyState($DIMSAH)) {
         setUseSeparateArrowHeads(parent->isUseSeparateArrowHeads());
     }
-    if (isNotSet($DIMSOXD)) {
+    if (checkModifyState($DIMSOXD)) {
         setSuppressions(parent->suppression());
     }
-    if (isNotSet($DIMTSZ)) {
+    if (checkModifyState($DIMTSZ)) {
         setTickSize(parent->tickSize());
     }
 }
@@ -573,43 +590,37 @@ QString LC_DimStyle::Arrowhead::obtainSecondArrowName() {
     }
 }
 
-void  LC_DimStyle::Arrowhead::setSuppressions(ArrowHeadSuppressionPolicy dimsoxd) {
-    if (dimsoxd != DIMSOXD) {
-        setFlag($DIMSOXD);
-    }
+void LC_DimStyle::Arrowhead::setSuppressions(ArrowHeadSuppressionPolicy dimsoxd) {
+    checkModified(dimsoxd, DIMSOXD, $DIMSOXD);
     DIMSOXD = dimsoxd;
 }
-void  LC_DimStyle::Arrowhead::setSize(double dimasz) {
-    if (dimasz != DIMASZ) {
-        setFlag($DIMASZ);
-    }
+
+void LC_DimStyle::Arrowhead::setSize(double dimasz) {
+    checkModified(dimasz, DIMASZ, $DIMASZ);
     DIMASZ = dimasz;
 }
-void  LC_DimStyle::Arrowhead::setSameBlockName(const QString &dimblk) {
-    if (dimblk != DIMBLK) {
-        setFlag($DIMBLK);
-    }
+
+void LC_DimStyle::Arrowhead::setSameBlockName(const QString& dimblk) {
+    checkModified(dimblk, DIMBLK, $DIMBLK);
     DIMBLK = dimblk;
 }
-void  LC_DimStyle::Arrowhead::setArrowHeadBlockNameFirst(const QString &dimblk1) {
-    if (dimblk1 != DIMBLK1) {
-        setFlag($DIMBLK1);
-    }
+
+void LC_DimStyle::Arrowhead::setArrowHeadBlockNameFirst(const QString& dimblk1) {
+    checkModified(dimblk1, DIMBLK1, $DIMBLK1);
     DIMBLK1 = dimblk1;
 }
-void  LC_DimStyle::Arrowhead::setArrowHeadBlockNameSecond(const QString &dimblk2) {
-    if (dimblk2 != DIMBLK2) {
-        setFlag($DIMBLK2);
-    }
+
+void LC_DimStyle::Arrowhead::setArrowHeadBlockNameSecond(const QString& dimblk2) {
+    checkModified(dimblk2, DIMBLK2, $DIMBLK2);
     DIMBLK2 = dimblk2;
 }
-void  LC_DimStyle::Arrowhead::setUseSeparateArrowHeads(bool dimsah) {
-    if (dimsah != DIMSAH) {
-        setFlag($DIMSAH);
-    }
-    DIMSAH =  dimsah;
+
+void LC_DimStyle::Arrowhead::setUseSeparateArrowHeads(bool dimsah) {
+    checkModified(dimsah, DIMSAH, $DIMSAH);
+    DIMSAH = dimsah;
 }
-void  LC_DimStyle::Arrowhead::setTickSize(double dimtsz) {
+
+void LC_DimStyle::Arrowhead::setTickSize(double dimtsz) {
     DIMTSZ = dimtsz;
 }
 
@@ -622,6 +633,7 @@ void LC_DimStyle::ZerosSuppression::fillByDefaults() {
 }
 
 void LC_DimStyle::ZerosSuppression::copyTo(ZerosSuppression* c) {
+    copyFlags(c);
     c->DIMZIN = DIMZIN;
     c->DIMAZIN = DIMAZIN;
     c->DIMALTTZ = DIMALTTZ;
@@ -630,83 +642,75 @@ void LC_DimStyle::ZerosSuppression::copyTo(ZerosSuppression* c) {
 }
 
 void LC_DimStyle::ZerosSuppression::merge(const ZerosSuppression* parent) {
-    if (isNotSet($DIMZIN)) {
+    if (checkModifyState($DIMZIN)) {
         setLinearRaw(parent->linearRaw());
     }
-    if (isNotSet($DIMAZIN)) {
+    if (checkModifyState($DIMAZIN)) {
         setAngularRaw(parent->angularRaw());
     }
-    if (isNotSet($DIMALTZ)) {
+    if (checkModifyState($DIMALTZ)) {
         setAltLinearRaw(parent->altLinearRaw());
     }
-    if (isNotSet($DIMALTTZ)) {
+    if (checkModifyState($DIMALTTZ)) {
         setAltToleranceRaw(parent->altToleranceRaw());
     }
-    if (isNotSet($DIMTZIN)) {
+    if (checkModifyState($DIMTZIN)) {
         setToleranceRaw(parent->toleranceRaw());
     }
 }
+
 void LC_DimStyle::ZerosSuppression::setToleranceRaw(int dimtzin) {
-    if (dimtzin != DIMTZIN) {
-        setFlag($DIMTZIN);
-    }
+    checkModified(dimtzin, DIMTZIN, $DIMTZIN);
     DIMTZIN = dimtzin;
 }
+
 void LC_DimStyle::ZerosSuppression::setLinearRaw(int dimzin) {
-    if (dimzin != DIMZIN) {
-        setFlag($DIMZIN);
-    }
+    checkModified(dimzin, DIMZIN, $DIMZIN);
     DIMZIN = dimzin;
 }
+
 void LC_DimStyle::ZerosSuppression::setAngularRaw(int dimazin) {
-    if (dimazin != DIMAZIN) {
-        setFlag($DIMAZIN);
-    }
+    checkModified(dimazin, DIMAZIN, $DIMAZIN);
     DIMAZIN = dimazin;
 }
+
 void LC_DimStyle::ZerosSuppression::setAltLinearRaw(int dimaltz) {
-    if (dimaltz != DIMALTZ) {
-        setFlag($DIMALTZ);
-    }
+    checkModified(dimaltz, DIMALTZ, $DIMALTZ);
     DIMALTZ = dimaltz;
 }
-void LC_DimStyle::ZerosSuppression:: setAltToleranceRaw(int dimalttz) {
-    if (dimalttz != DIMALTTZ) {
-        setFlag($DIMALTTZ);
-    }
+
+void LC_DimStyle::ZerosSuppression::setAltToleranceRaw(int dimalttz) {
+    checkModified(dimalttz, DIMALTTZ, $DIMALTTZ);
     DIMALTTZ = dimalttz;
 }
 
 void LC_DimStyle::LinearRoundOff::fillByDefaults() {
     DIMALTRND = 0;
-    DIMRND  = 0;
+    DIMRND = 0;
 }
 
 void LC_DimStyle::LinearRoundOff::copyTo(LinearRoundOff* c) {
+    copyFlags(c);
     c->DIMALTRND = DIMALTRND;
-    c->DIMRND  = DIMRND;
+    c->DIMRND = DIMRND;
 }
 
 void LC_DimStyle::LinearRoundOff::merge(const LinearRoundOff* parent) {
-    if (isNotSet($DIMALTRND)) {
+    if (checkModifyState($DIMALTRND)) {
         setAltRoundToValue(parent->altRoundTo());
     }
-    if (isNotSet($DIMRND)) {
+    if (checkModifyState($DIMRND)) {
         setRoundToValue(parent->roundTo());
     }
 }
 
 void LC_DimStyle::LinearRoundOff::setRoundToValue(double dimrnd) {
-    if (dimrnd != DIMRND) {
-        setFlag($DIMRND);
-    }
+    checkModified(dimrnd, DIMRND, $DIMRND);
     DIMRND = dimrnd;
 }
 
 void LC_DimStyle::LinearRoundOff::setAltRoundToValue(double dimaltrnd) {
-    if (dimaltrnd != DIMALTRND) {
-        setFlag($DIMALTRND);
-    }
+    checkModified(dimaltrnd, DIMALTRND, $DIMALTRND);
     DIMALTRND = dimaltrnd;
 }
 
@@ -716,29 +720,27 @@ void LC_DimStyle::Scaling::fillByDefaults() {
 }
 
 void LC_DimStyle::Scaling::copyTo(Scaling* c) {
+    copyFlags(c);
     c->DIMLFAC = DIMLFAC;
     c->DIMSCALE = DIMSCALE;
 }
 
 void LC_DimStyle::Scaling::merge(const Scaling* parent) {
-    if (isNotSet($DIMLFAC)) {
+    if (checkModifyState($DIMLFAC)) {
         setLinearFactor(parent->linearFactor());
     }
-    if (isNotSet($DIMSCALE)) {
+    if (checkModifyState($DIMSCALE)) {
         setScale(parent->scale());
     }
 }
 
 void LC_DimStyle::Scaling::setLinearFactor(double dimlfac) {
-    if (dimlfac != DIMLFAC) {
-        setFlag($DIMLFAC);
-    }
+    checkModified(dimlfac, DIMLFAC, $DIMLFAC);
     DIMLFAC = dimlfac;
 };
+
 void LC_DimStyle::Scaling::setScale(double dimscale) {
-    if (dimscale != DIMSCALE) {
-        setFlag($DIMSCALE);
-    }
+    checkModified(dimscale, DIMSCALE, $DIMSCALE);
     DIMSCALE = dimscale;
 };
 
@@ -747,19 +749,18 @@ void LC_DimStyle::Fractions::fillByDefaults() {
 }
 
 void LC_DimStyle::Fractions::copyTo(Fractions* c) {
+    copyFlags(c);
     c->DIMFRAC = DIMFRAC;
 }
 
 void LC_DimStyle::Fractions::merge(const Fractions* parent) {
-    if (isNotSet($DIMFRAC)) {
+    if (checkModifyState($DIMFRAC)) {
         setStyle(parent->style());
     }
 }
 
 void LC_DimStyle::Fractions::setStyle(FractionStylePolicy dimfrac) {
-    if (dimfrac != DIMFRAC) {
-        setFlag($DIMFRAC);
-    }
+    checkModified(dimfrac, DIMFRAC, $DIMFRAC);
     DIMFRAC = dimfrac;
 }
 
@@ -781,6 +782,7 @@ void LC_DimStyle::LinearFormat::fillByDefaults() {
 }
 
 void LC_DimStyle::LinearFormat::copyTo(LinearFormat* c) {
+    copyFlags(c);
     c->DIMALT = DIMALT;
     c->DIMALTD = DIMALTD;
     c->DIMALTF = DIMALTF;
@@ -793,97 +795,87 @@ void LC_DimStyle::LinearFormat::copyTo(LinearFormat* c) {
 }
 
 void LC_DimStyle::LinearFormat::merge(const LinearFormat* parent) {
-    if (isNotSet($DIMALT)) {
+    if (checkModifyState($DIMALT)) {
         setAlternateUnits(parent->alternateUnits());
     }
-    if (isNotSet($DIMALTD)) {
+    if (checkModifyState($DIMALTD)) {
         setAlternateUnits(parent->alternateUnits());
     }
-    if (isNotSet($DIMALTF)) {
+    if (checkModifyState($DIMALTF)) {
         setAltDecimalPlaces(parent->altDecimalPlaces());
     }
-    if (isNotSet($DIMAPOST)) {
+    if (checkModifyState($DIMAPOST)) {
         setAltPrefixOrSuffix(parent->altPrefixOrSuffix());
     }
-    if (isNotSet($DIMDEC)) {
+    if (checkModifyState($DIMDEC)) {
         setDecimalPlaces(parent->decimalPlaces());
     }
-    if (isNotSet($DIMSEP)) {
+    if (checkModifyState($DIMSEP)) {
         setDecimalFormatSeparatorChar(parent->decimalFormatSeparatorChar());
     }
-    if (isNotSet($DIMLUNIT)) {
+    if (checkModifyState($DIMLUNIT)) {
         setFormat(parent->format());
     }
-    if (isNotSet($DIMPOST)) {
+    if (checkModifyState($DIMPOST)) {
         setPrefixOrSuffix(parent->prefixOrSuffix());
     }
 }
 
 void LC_DimStyle::LinearFormat::setAltUnitsMultiplier(double dimaltf) {
-    if (dimaltf != DIMALTF) {
-        setFlag($DIMALTF);
-    }
+    checkModified(dimaltf, DIMALTF, $DIMALTF);
     DIMALTF = dimaltf;
 }
+
 void LC_DimStyle::LinearFormat::setAlternateUnits(AlternateUnitsPolicy dimalt) {
-    if (dimalt != DIMALT) {
-        setFlag($DIMALT);
-    }
+    checkModified(dimalt, DIMALT, $DIMALT);
     DIMALT = dimalt;
 }
-void LC_DimStyle::LinearFormat::setAltPrefixOrSuffix(const QString &dimapost) {
-    if (dimapost != DIMAPOST) {
-        setFlag($DIMAPOST);
-    }
+
+void LC_DimStyle::LinearFormat::setAltPrefixOrSuffix(const QString& dimapost) {
+    checkModified(dimapost, DIMAPOST, $DIMAPOST);
     DIMAPOST = dimapost;
 }
-void LC_DimStyle::LinearFormat::setAltFormat( RS2::LinearFormat dimaltu) {
-    if (dimaltu != DIMALTU) {
-        setFlag($DIMALTU);
-    }
+
+void LC_DimStyle::LinearFormat::setAltFormat(RS2::LinearFormat dimaltu) {
+    checkModified(dimaltu, DIMALTU, $DIMALTU);
     DIMALTU = dimaltu;
 }
 
 void LC_DimStyle::LinearFormat::setDecimalPlaces(int dimdec) {
-    if (dimdec != DIMDEC) {
-        setFlag($DIMDEC);
-    }
+    checkModified(dimdec, DIMDEC, $DIMDEC);
     DIMDEC = dimdec;
 }
 
 void LC_DimStyle::LinearFormat::setAltDecimalPlaces(int dimaltd) {
-    if (dimaltd != DIMALTD) {
-        setFlag($DIMALTD);
-    }
+    checkModified(dimaltd, DIMALTD, $DIMALTD);
     DIMALTD = dimaltd;
 }
+
 void LC_DimStyle::LinearFormat::setDecimalFormatSeparatorChar(int dimsep) {
-    if (dimsep != DIMDSEP) {
-        setFlag($DIMSEP);
-    }
+    checkModified(dimsep, DIMDSEP, $DIMSEP);
     DIMDSEP = dimsep;
 }
-void LC_DimStyle::LinearFormat::setPrefixOrSuffix(const QString &dimpost) {
-    if (dimpost != DIMPOST) {
-        setFlag($DIMPOST);
-    }
+
+void LC_DimStyle::LinearFormat::setPrefixOrSuffix(const QString& dimpost) {
+    checkModified(dimpost, DIMPOST, $DIMPOST);
     DIMPOST = dimpost;
 }
-void LC_DimStyle::LinearFormat::setFormat(RS2::LinearFormat  dimlunit) {
-    if (dimlunit != DIMLUNIT) {
-        setFlag($DIMLUNIT);
-    }
+
+void LC_DimStyle::LinearFormat::setFormat(RS2::LinearFormat dimlunit) {
+    checkModified(dimlunit, DIMLUNIT, $DIMLUNIT);
     DIMLUNIT = dimlunit;
 }
 
-LC_DimStyle::LinearFormat::TextPattern::TextPattern(bool primary, const QString& text, LinearFormat* linearFormat):separator{primary? "<>" : "[]"},
+LC_DimStyle::LinearFormat::TextPattern::TextPattern(bool primary, const QString& text, LinearFormat* linearFormat) :
+    separator{primary ? "<>" : "[]"},
     format{linearFormat},
-    forAltUnit{!primary}{
+    forAltUnit{!primary} {
     parse(text);
 }
 
 QString LC_DimStyle::LinearFormat::TextPattern::update() {
-    completeString = QString("").append(prefix).append(separator).append(suffix).append(suffixEndsWithLineFeed?  "\\X" : "");
+    completeString = QString("").append(prefix).append(separator).append(suffix).append(
+        suffixEndsWithLineFeed ? "\\X" : "");
     if (forAltUnit) {
         format->setAltPrefixOrSuffix(completeString);
     }
@@ -902,7 +894,7 @@ void LC_DimStyle::LinearFormat::TextPattern::parse(const QString& val) {
         int pos = val.indexOf(separator);
         if (pos > 0) {
             prefix = val.left(pos);
-            suffix = val.mid(pos+2);
+            suffix = val.mid(pos + 2);
             if (suffix.endsWith("\\X")) {
                 suffix = suffix.left(suffix.length() - 1);
                 suffixEndsWithLineFeed = true;
@@ -939,10 +931,10 @@ void LC_DimStyle::LinearFormat::TextPattern::setSuffixEndsWithNewLineFeed(bool s
 }
 
 LC_DimStyle::LinearFormat::TextPattern* LC_DimStyle::LinearFormat::getPrimaryPrefixOrSuffix() {
-   if (primaryPrefixSuffix == nullptr) {
-       primaryPrefixSuffix = new TextPattern(true, DIMPOST, this);
-   }
-   return primaryPrefixSuffix;
+    if (primaryPrefixSuffix == nullptr) {
+        primaryPrefixSuffix = new TextPattern(true, DIMPOST, this);
+    }
+    return primaryPrefixSuffix;
 }
 
 LC_DimStyle::LinearFormat::TextPattern* LC_DimStyle::LinearFormat::getAlternativePrefixOrSuffix() {
@@ -954,33 +946,31 @@ LC_DimStyle::LinearFormat::TextPattern* LC_DimStyle::LinearFormat::getAlternativ
 
 void LC_DimStyle::AngularFormat::fillByDefaults() {
     DIMADEC = 0;
-    DIMAUNIT =  RS2::DegreesDecimal;
+    DIMAUNIT = RS2::DegreesDecimal;
 }
 
 void LC_DimStyle::AngularFormat::copyTo(AngularFormat* c) {
+    copyFlags(c);
     c->DIMADEC = DIMADEC;
     c->DIMAUNIT = DIMAUNIT;
 }
 
 void LC_DimStyle::AngularFormat::merge(const AngularFormat* parent) {
-    if (isNotSet($DIMADEC)) {
+    if (checkModifyState($DIMADEC)) {
         setDecimalPlaces(parent->decimalPlaces());
     }
-    if (isNotSet($DIMAUNIT)) {
+    if (checkModifyState($DIMAUNIT)) {
         setFormat(parent->format());
     }
 }
 
-void  LC_DimStyle::AngularFormat::setDecimalPlaces(int dimadec) {
-    if (dimadec != 0) {
-        setFlag($DIMADEC);
-    }
+void LC_DimStyle::AngularFormat::setDecimalPlaces(int dimadec) {
+    checkModified(dimadec, DIMADEC, $DIMADEC);
     DIMADEC = dimadec;
 }
-void  LC_DimStyle::AngularFormat::setFormat( RS2::AngleFormat dimaunit) {
-    if (dimaunit != DIMAUNIT) {
-        setFlag($DIMAUNIT);
-    }
+
+void LC_DimStyle::AngularFormat::setFormat(RS2::AngleFormat dimaunit) {
+    checkModified(dimaunit, DIMAUNIT, $DIMAUNIT);
     DIMAUNIT = dimaunit;
 }
 
@@ -996,6 +986,7 @@ void LC_DimStyle::LatteralTolerance::fillByDefaults() {
 }
 
 void LC_DimStyle::LatteralTolerance::copyTo(LatteralTolerance* c) {
+    copyFlags(c);
     c->DIMALTTD = DIMALTTD;
     c->DIMLIM = DIMLIM;
     c->DIMTDEC = DIMTDEC;
@@ -1007,78 +998,69 @@ void LC_DimStyle::LatteralTolerance::copyTo(LatteralTolerance* c) {
 }
 
 void LC_DimStyle::LatteralTolerance::merge(const LatteralTolerance* parent) {
-    if (isNotSet($DIMALTTD)) {
+    if (checkModifyState($DIMALTTD)) {
         setDecimalPlacesAltDim(parent->decimalPlacesAltDim());
     }
-    if (isNotSet($DIMLIM)) {
+    if (checkModifyState($DIMLIM)) {
         setLimitsAreGeneratedAsDefaultText(parent->isLimitsGeneratedAsDefaultText());
     }
-    if (isNotSet($DIMTDEC)) {
+    if (checkModifyState($DIMTDEC)) {
         setDecimalPlaces(parent->decimalPlaces());
     }
-    if (isNotSet($DIMTFAC)) {
+    if (checkModifyState($DIMTFAC)) {
         setHeightScaleFactorToDimText(parent->heightScaleFactorToDimText());
     }
-    if (isNotSet($DIMTM)) {
+    if (checkModifyState($DIMTM)) {
         setLowerToleranceLimit(parent->lowerToleranceLimit());
     }
-    if (isNotSet($DIMTOL)) {
+    if (checkModifyState($DIMTOL)) {
         setAppendTolerancesToDimText(parent->isAppendTolerancesToDimText());
     }
-    if (isNotSet($DIMTOLJ)) {
+    if (checkModifyState($DIMTOLJ)) {
         setVerticalJustification(parent->verticalJustification());
     }
-    if (isNotSet($DIMTP)) {
+    if (checkModifyState($DIMTP)) {
         setUpperToleranceLimit(parent->upperToleranceLimit());
     }
 }
 
-void  LC_DimStyle::LatteralTolerance::setDecimalPlacesAltDim(int dimalttd) {
-    if (dimalttd != DIMALTTD) {
-        setFlag($DIMALTTD);
-    }
+void LC_DimStyle::LatteralTolerance::setDecimalPlacesAltDim(int dimalttd) {
+    checkModified(dimalttd, DIMALTTD, $DIMALTTD);
     DIMALTTD = dimalttd;
 }
-void  LC_DimStyle::LatteralTolerance::setLimitsAreGeneratedAsDefaultText(bool dimlim) {
-    if (dimlim != DIMLIM) {
-        setFlag($DIMLIM);
-    }
+
+void LC_DimStyle::LatteralTolerance::setLimitsAreGeneratedAsDefaultText(bool dimlim) {
+    checkModified(dimlim, DIMLIM, $DIMLIM);
     DIMLIM = dimlim;
 }
-void  LC_DimStyle::LatteralTolerance::setDecimalPlaces(int dimtdec) {
-    if (dimtdec != DIMTDEC) {
-        setFlag($DIMTDEC);
-    }
+
+void LC_DimStyle::LatteralTolerance::setDecimalPlaces(int dimtdec) {
+    checkModified(dimtdec, DIMTDEC, $DIMTDEC);
     DIMTDEC = dimtdec;
 }
-void  LC_DimStyle::LatteralTolerance::setHeightScaleFactorToDimText(double dimtfac) {
-    if (dimtfac != DIMTFAC) {
-        setFlag($DIMTFAC);
-    }
+
+void LC_DimStyle::LatteralTolerance::setHeightScaleFactorToDimText(double dimtfac) {
+    checkModified(dimtfac, DIMTFAC, $DIMTFAC);
     DIMTFAC = dimtfac;
 };
-void  LC_DimStyle::LatteralTolerance::setLowerToleranceLimit(double dimtm) {
-    if (dimtm != DIMTM) {
-        setFlag($DIMTM);
-    }
+
+void LC_DimStyle::LatteralTolerance::setLowerToleranceLimit(double dimtm) {
+    checkModified(dimtm, DIMTM, $DIMTM);
     DIMTM = dimtm;
 }
-void  LC_DimStyle::LatteralTolerance::setAppendTolerancesToDimText(bool dimtol) {
-    if (dimtol != DIMTOL) {
-        setFlag($DIMTOL);
-    }
+
+void LC_DimStyle::LatteralTolerance::setAppendTolerancesToDimText(bool dimtol) {
+    checkModified(dimtol, DIMTOL, $DIMTOL);
     DIMTOL = dimtol;
 }
-void  LC_DimStyle::LatteralTolerance::setUpperToleranceLimit(double dimtp) {
-    if (dimtp != DIMTP) {
-        setFlag($DIMTP);
-    }
+
+void LC_DimStyle::LatteralTolerance::setUpperToleranceLimit(double dimtp) {
+    checkModified(dimtp, DIMTP, $DIMTP);
     DIMTP = dimtp;
 }
-void  LC_DimStyle::LatteralTolerance::setVerticalJustification(VerticalJustificationToDimText dimtolj) {
-    if (dimtolj != DIMTOLJ) {
-        setFlag($DIMTOLJ);
-    }
+
+void LC_DimStyle::LatteralTolerance::setVerticalJustification(VerticalJustificationToDimText dimtolj) {
+    checkModified(dimtolj, DIMTOLJ, $DIMTOLJ);
     DIMTOLJ = dimtolj;
 }
 
@@ -1087,19 +1069,18 @@ void LC_DimStyle::Leader::fillByDefaults() {
 }
 
 void LC_DimStyle::Leader::copyTo(Leader* c) {
+    copyFlags(c);
     c->DIMLDRBLK = DIMLDRBLK;
 }
 
 void LC_DimStyle::Leader::merge(const Leader* parent) {
-    if (isNotSet($DIMLDRBLK)) {
+    if (checkModifyState($DIMLDRBLK)) {
         setArrowBlockName(parent->arrowBlockName());
     }
 }
 
-void  LC_DimStyle::Leader::setArrowBlockName(const QString &dimldrblk) {
-    if (dimldrblk != DIMLDRBLK) {
-        setFlag($DIMLDRBLK);
-    }
+void LC_DimStyle::Leader::setArrowBlockName(const QString& dimldrblk) {
+    checkModified(dimldrblk, DIMLDRBLK, $DIMLDRBLK);
     DIMLDRBLK = dimldrblk;
 }
 
@@ -1108,19 +1089,18 @@ void LC_DimStyle::MLeader::fillByDefaults() {
 }
 
 void LC_DimStyle::MLeader::copyTo(MLeader* c) {
+    copyFlags(c);
     c->MLEADERSCALE = MLEADERSCALE;
 }
 
 void LC_DimStyle::MLeader::merge(const MLeader* parent) {
-    if (isNotSet($MLEADERSCALE)) {
+    if (checkModifyState($MLEADERSCALE)) {
         setScale(parent->scale());
     }
 }
 
 void LC_DimStyle::MLeader::setScale(double mleaderscale) {
-    if (mleaderscale != MLEADERSCALE) {
-        setFlag($MLEADERSCALE);
-    }
+    checkModified(mleaderscale, MLEADERSCALE, $MLEADERSCALE);
     MLEADERSCALE = mleaderscale;
 }
 
@@ -1130,20 +1110,19 @@ void LC_DimStyle::Radial::fillByDefaults() {
 }
 
 void LC_DimStyle::Radial::copyTo(Radial* c) {
+    copyFlags(c);
     c->DIMCEN = DIMCEN;
     c->DIMJOGANG = DIMJOGANG;
 }
 
 void LC_DimStyle::Radial::merge(const Radial* parent) {
-    if (isNotSet($DIMCEN)) {
+    if (checkModifyState($DIMCEN)) {
         setCenterMarkOrLineSize(parent->centerCenterMarkOrLineSize());
     }
 }
 
 void LC_DimStyle::Radial::setCenterMarkOrLineSize(double dimcen) {
-    if (dimcen != DIMCEN) {
-        setFlag($DIMCEN);
-    }
+    checkModified(dimcen, DIMCEN, $DIMCEN);
     DIMCEN = dimcen;
 }
 
@@ -1152,19 +1131,18 @@ void LC_DimStyle::Arc::fillByDefaults() {
 }
 
 void LC_DimStyle::Arc::copyTo(Arc* c) {
+    copyFlags(c);
     c->DIMARCSYM = DIMARCSYM;
 }
 
 void LC_DimStyle::Arc::merge(const Arc* parent) {
-    if (isNotSet($DIMARCSYM)) {
+    if (checkModifyState($DIMARCSYM)) {
         setArcSymbolDisplay(parent->arcSymbolDisplay());
     }
 }
 
 void LC_DimStyle::Arc::setArcSymbolDisplay(DimArcSymbolMode dimarcsym) {
-    if (dimarcsym != DIMARCSYM) {
-        setFlag($DIMARCSYM);
-    }
+    checkModified(dimarcsym, DIMARCSYM, $DIMARCSYM);
     DIMARCSYM = dimarcsym;
 }
 
@@ -1206,40 +1184,39 @@ void LC_DimStyle::ExtensionLine::setSuppressionSecondRaw(int dimse2) {
     DIMSE2 = int2SuppressionPolicy(dimse2);
 }
 
-LC_DimStyle::ExtensionLine::ExtensionLineAndArrowSuppressionPolicy LC_DimStyle::ExtensionLine:: int2SuppressionPolicy(int dimsoxd) {
+LC_DimStyle::ExtensionLine::ExtensionLineAndArrowSuppressionPolicy
+    LC_DimStyle::ExtensionLine::int2SuppressionPolicy(int dimsoxd) {
     switch (dimsoxd) {
         case 0: {
-            return  DONT_SUPPRESS;
+            return DONT_SUPPRESS;
         }
         case 1: {
-            return  SUPPRESS;
+            return SUPPRESS;
         }
         default: {
-            return  DONT_SUPPRESS;
+            return DONT_SUPPRESS;
         }
     }
 }
 
 void LC_DimStyle::Arrowhead::setSuppressionsRaw(int dimsoxd) {
     switch (dimsoxd) {
-         case 0: {
-             DIMSOXD =  DONT_SUPPRESS;
-             break;
-         }
+        case 0: {
+            DIMSOXD = DONT_SUPPRESS;
+            break;
+        }
         case 1: {
-            DIMSOXD =  SUPPRESS;
+            DIMSOXD = SUPPRESS;
             break;
         }
         default: {
-            DIMSOXD =  DONT_SUPPRESS;
+            DIMSOXD = DONT_SUPPRESS;
         }
     }
 }
 
 void LC_DimStyle::Radial::setTransverseSegmentAngleInJoggedRadius(double dimjogang) {
-    if (dimjogang != DIMJOGANG) {
-        setFlag($DIMJOGANG);
-    }
+    checkModified(dimjogang, DIMJOGANG, $DIMJOGANG);
     DIMJOGANG = dimjogang;
 }
 
@@ -1257,8 +1234,8 @@ LC_DimStyle::Radial::CenterMarkDrawingMode LC_DimStyle::Radial::drawingMode() co
     }
 }
 
-void LC_DimStyle::setName(const QString &name) {
-    LC_DimStyle::name = name;
+void LC_DimStyle::setName(const QString& name) {
+    m_name = name;
 }
 
 void LC_DimStyle::Text::setUnsufficientSpacePolicyRaw(int dimatfit) {
@@ -1313,7 +1290,7 @@ void LC_DimStyle::Text::setCursorControlPolicyRaw(int dimupt) {
     CursorControlPolicy _dimupt;
     switch (dimupt) {
         case 0: {
-            _dimupt =  DIM_LINE_LOCATION_ONLY;
+            _dimupt = DIM_LINE_LOCATION_ONLY;
             break;
         }
         case 1: {
@@ -1432,7 +1409,7 @@ void LC_DimStyle::Text::setOrientationInsideRaw(int dimtih) {
     TextOrientationPolicy _dimtih;
     switch (dimtih) {
         case 0: {
-            _dimtih =  ALIGN_WITH_DIM_LINE;
+            _dimtih = ALIGN_WITH_DIM_LINE;
             break;
         }
         case 1: {
@@ -1539,11 +1516,11 @@ void LC_DimStyle::Fractions::setStyleRaw(int dimfrac) {
 }
 
 void LC_DimStyle::LinearFormat::setAltFormatRaw(int dimaltu) {
-     RS2::LinearFormat _dimaltu = dxfInt2LinearFormat(dimaltu);
+    RS2::LinearFormat _dimaltu = dxfInt2LinearFormat(dimaltu);
     setAltFormat(_dimaltu);
 }
 
-RS2::LinearFormat LC_DimStyle::LinearFormat::dxfInt2LinearFormat(int f){
+RS2::LinearFormat LC_DimStyle::LinearFormat::dxfInt2LinearFormat(int f) {
     switch (f) {
         case 1:
             return RS2::Scientific;
@@ -1562,7 +1539,7 @@ RS2::LinearFormat LC_DimStyle::LinearFormat::dxfInt2LinearFormat(int f){
     }
 }
 
-int LC_DimStyle::LinearFormat::linearFormat2dxf(RS2::LinearFormat f){
+int LC_DimStyle::LinearFormat::linearFormat2dxf(RS2::LinearFormat f) {
     switch (f) {
         case RS2::Scientific:
             return 1;
@@ -1581,7 +1558,6 @@ int LC_DimStyle::LinearFormat::linearFormat2dxf(RS2::LinearFormat f){
     }
 }
 
-
 void LC_DimStyle::LinearFormat::setAlternateUnitsRaw(int dimalt) {
     AlternateUnitsPolicy _dimalt;
     switch (dimalt) {
@@ -1590,7 +1566,7 @@ void LC_DimStyle::LinearFormat::setAlternateUnitsRaw(int dimalt) {
             break;
         }
         case 1: {
-            _dimalt =  ENABLE;
+            _dimalt = ENABLE;
             break;
         }
         default:
@@ -1661,7 +1637,7 @@ void LC_DimStyle::Text::setReadingDirectionRaw(int dimtxtdirection) {
             _dimtxtdirection = LEFT_TO_RIGHT;
             break;
         }
-        case 1:{
+        case 1: {
             _dimtxtdirection = RIGHT_TO_LEFT;
             break;
         }
@@ -1672,109 +1648,193 @@ void LC_DimStyle::Text::setReadingDirectionRaw(int dimtxtdirection) {
     setReadingDirection(_dimtxtdirection);
 }
 
-
-
 void LC_DimStyle::Text::setExplicitBackgroundFillColor(const RS_Color& dimtfillclr) {
-    if (dimtfillclr != DIMTFILLCLR) {
-        setFlag($DIMTFILLCLR);
-    }
+    checkModified(dimtfillclr, DIMTFILLCLR, $DIMTFILLCLR);
     DIMTFILLCLR = dimtfillclr;
 }
 
 void LC_DimStyle::Text::setUnsufficientSpacePolicy(TextAndArrowUnsufficientSpaceArrangementPolicy dimatfit) {
-    if (dimatfit != DIMATFIT) {
-        setFlag($DIMATFIT);
-    }
+    checkModified(dimatfit, DIMATFIT, $DIMATFIT);
     DIMATFIT = dimatfit;
 }
 
 void LC_DimStyle::Text::setExtLinesRelativePlacement(PlacementRelatedToExtLinesPolicy dimtix) {
-    if (DIMTIX != dimtix) {
-        setFlag($DIMTIX);
-    }
+    checkModified(dimtix, DIMTIX, $DIMTIX);
     DIMTIX = dimtix;
 }
 
 void LC_DimStyle::Text::setBackgroundFillMode(BackgroundColorPolicy dimtfill) {
-    if (dimtfill != DIMTFILL) {
-        setFlag($DIMTFILL);
-    }
+    checkModified(dimtfill, DIMTFILL, $DIMTFILL);
     DIMTFILL = dimtfill;
 }
 
 void LC_DimStyle::Text::setHorizontalPositioning(HorizontalPositionPolicy dimjust) {
-    if (dimjust != DIMJUST) {
-        setFlag($DIMJUST);
-    }
+    checkModified(dimjust, DIMJUST, $DIMJUST);
     DIMJUST = dimjust;
 }
 
 void LC_DimStyle::Text::setVerticalPositioning(VerticalPositionPolicy dimtad) {
-    if (dimtad != DIMTAD) {
-        setFlag($DIMTAD);
-    }
+    checkModified(dimtad, DIMTAD, $DIMTAD);
     DIMTAD = dimtad;
 }
 
 void LC_DimStyle::Text::setVerticalDistanceToDimLine(double dimtvp) {
-    if (dimtvp != DIMTVP) {
-        setFlag($DIMTVP);
-    }
+    checkModified(dimtvp, DIMTVP, $DIMTVP);
     DIMTVP = dimtvp;
 }
 
 void LC_DimStyle::Text::setOrientationInside(TextOrientationPolicy dimtih) {
-    if (dimtih != DIMTIH) {
-        setFlag($DIMTIH);
-    }
+    checkModified(dimtih, DIMTIH, $DIMTIH);
     DIMTIH = dimtih;
 }
 
 void LC_DimStyle::Text::setOrientationOutside(TextOrientationPolicy dimtoh) {
-    if (dimtoh != DIMTOH) {
-        setFlag($DIMTOH);
-    }
+    checkModified(dimtoh, DIMTOH, $DIMTOH);
     DIMTOH = dimtoh;
 }
 
 void LC_DimStyle::Text::setStyle(const QString& dimtxsty) {
-    if (dimtxsty != DIMTXSTY) {
-        setFlag($DIMTXSTY);
-    }
+    checkModified(dimtxsty, DIMTXSTY, $DIMTXSTY);
     DIMTXSTY = dimtxsty;
 }
 
 void LC_DimStyle::Text::setColor(const RS_Color& dimclrt) {
-    if (dimclrt != DIMCLRT) {
-        setFlag($DIMCLRT);
-    }
+    checkModified(dimclrt, DIMCLRT, $DIMCLRT);
     DIMCLRT = dimclrt;
 }
 
 void LC_DimStyle::Text::setHeight(double dimtxt) {
-    if (dimtxt != DIMTXT) {
-        setFlag($DIMTXT);
-    }
+    checkModified(dimtxt, DIMTXT, $DIMTXT);
     DIMTXT = dimtxt;
 }
 
 void LC_DimStyle::Text::setReadingDirection(TextDirection dimtxtdirection) {
-    if (dimtxtdirection != DIMTXTDIRECTION) {
-        setFlag($DIMTXTDIRECTION);
-    }
+    checkModified(dimtxtdirection, DIMTXTDIRECTION, $DIMTXTDIRECTION);
     DIMTXTDIRECTION = dimtxtdirection;
 }
 
 void LC_DimStyle::Text::setPositionMovementPolicy(TextMovementPolicy dimtmove) {
-    if (dimtmove != DIMTMOVE) {
-        setFlag($DIMTMOVE);
-    }
+    checkModified(dimtmove, DIMTMOVE, $DIMTMOVE);
     DIMTMOVE = dimtmove;
 }
 
 void LC_DimStyle::Text::setCursorControlPolicy(CursorControlPolicy dimupt) {
-    if (dimupt != DIMUPT) {
-        setFlag($DIMUPT);
-    }
+    checkModified(dimupt, DIMUPT, $DIMUPT);
     DIMUPT = dimupt;
+}
+
+QString LC_DimStyle::getDimStyleNameSuffixForType(RS2::EntityType dimType) {
+    switch (dimType) {
+        case RS2::EntityDimLinear:
+            // fixme - sand - is there difference between 0 and 1? ACAD uses only 1 but supports both
+            return "$0";
+        case RS2::EntityDimAligned:
+            return "$1";
+        case RS2::EntityDimAngular:
+            return "$2";
+        case RS2::EntityDimDiametric:
+            return "$3";
+        case RS2::EntityDimRadial:
+            return "$4";
+        case RS2::EntityDimOrdinate:
+            return "$5";
+        case RS2::EntityTolerance: // fixme - sand - are 6 and 7 the same? Acad uses only 7
+            return "$6";
+        case RS2::EntityDimLeader:
+            return "$7";
+        default:
+            return "";
+    }
+}
+
+void LC_DimStyle::parseStyleName(const QString& fullName, QString& baseName, RS2::EntityType& dimensionType) {
+    qsizetype pos = fullName.indexOf("$");
+    if (pos > 0) {
+        baseName = fullName.left(pos);
+        QString suffix = fullName.mid(pos + 1);
+        if (suffix == "0" || suffix == "1") {
+            dimensionType = RS2::EntityDimLinear;
+        }
+        else if (suffix == "2") {
+            dimensionType = RS2::EntityDimAngular;
+        }
+        else if (suffix == "3") {
+            dimensionType = RS2::EntityDimDiametric;
+        }
+        else if (suffix == "4") {
+            dimensionType = RS2::EntityDimRadial;
+        }
+        else if (suffix == "5") {
+            dimensionType = RS2::EntityDimOrdinate;
+        }
+        else if (suffix == "6" || suffix == "7") {
+            dimensionType = RS2::EntityDimLeader;
+        }
+    }
+    else {
+        baseName = fullName;
+        dimensionType = RS2::EntityUnknown;
+    }
+}
+
+RS2::EntityType LC_DimStyle::getDimensionType() {
+    RS2::EntityType type;
+    QString baseName;
+    parseStyleName(m_name, baseName, type);
+    return type;
+}
+
+bool LC_DimStyle::ModificationAware::checkModifyState(unsigned f) {
+    switch (m_checkModificationMode) {
+        case ALL:
+            return true;
+        case SET:
+            return isSet(f);
+        case UNSET:
+            return isNotSet(f);
+        default:
+            return true;
+    }
+}
+
+void LC_DimStyle::ModificationAware::checkModified(RS_Color newValue, RS_Color currentValue, unsigned flag) {
+    if (newValue != currentValue) {
+        setFlag(flag);
+    }
+}
+
+
+void LC_DimStyle::ModificationAware::checkModified(double newValue, double currentValue, unsigned flag) {
+    if (newValue != currentValue) {
+        setFlag(flag);
+    }
+}
+
+void LC_DimStyle::ModificationAware::checkModified(int newValue, int currentValue, unsigned flag) {
+    if (newValue != currentValue) {
+        setFlag(flag);
+    }
+}
+
+void LC_DimStyle::ModificationAware::checkModified(short newValue, short currentValue, unsigned flag) {
+    if (newValue != currentValue) {
+        setFlag(flag);
+    }
+}
+
+void LC_DimStyle::ModificationAware::checkModified(bool newValue, bool currentValue, unsigned flag) {
+    if (newValue != currentValue) {
+        setFlag(flag);
+    }
+}
+
+void LC_DimStyle::ModificationAware::checkModified(const QString& newValue, const QString& currentValue,
+                                                   unsigned flag) {
+    if (newValue != currentValue) {
+        setFlag(flag);
+    }
+}
+
+void    LC_DimStyle::ModificationAware::copyFlags(ModificationAware* c) {
+    c->setFlags(getFlags());
 }

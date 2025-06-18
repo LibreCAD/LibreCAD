@@ -2457,6 +2457,25 @@ bool DRW_Dimension::parseCode(int code, dxfReader *reader){
     return true;
 }
 
+bool DRW_ArcDimension::parseCode(int code, dxfReader* reader) {
+    switch (code) {
+        default:
+            DRW_DBG(code);
+            return DRW_Dimension::parseCode(code, reader);
+    }
+}
+
+
+bool DRW_ArcDimension::parseDwg(DRW::Version version, dwgBuffer* buf, dwgBuffer* sBuf, duint32 bs) {
+    // fixme - DRW_ArcDimension not implemented
+    return DRW_Dimension::parseDwg(version, buf, sBuf, bs);
+}
+
+bool DRW_ArcDimension::parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs) {
+    // fixme - DRW_ArcDimension not implemented
+    return DRW_Dimension::parseDwg(version, buf, bs);
+}
+
 bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
 {
     DRW_UNUSED( version);

@@ -41,27 +41,25 @@ struct LC_InfoCursorOptions::Impl {
     LC_InfoCursorOptions::ZoneSetup zones[4] = {{Qt::green, 10}, {Qt::cyan, 10}, {Qt::magenta, 10}, {Qt::gray, 10}};
 };
 
-LC_InfoCursorOptions::LC_InfoCursorOptions():
-    m_pImpl{std::make_unique<Impl>()}
-{}
+LC_InfoCursorOptions::LC_InfoCursorOptions() :
+    m_pImpl{std::make_unique<Impl>()} {
+}
 
 LC_InfoCursorOptions::~LC_InfoCursorOptions() = default;
 
-const LC_InfoCursorOptions::ZoneSetup& LC_InfoCursorOptions::zone(int index) const
-{
+const LC_InfoCursorOptions::ZoneSetup& LC_InfoCursorOptions::zone(int index) const {
     return m_pImpl->zones[index];
 }
 
-LC_InfoCursorOptions::ZoneSetup& LC_InfoCursorOptions::zone(int index)
-{
+LC_InfoCursorOptions::ZoneSetup& LC_InfoCursorOptions::zone(int index) {
     return m_pImpl->zones[index];
 }
 
-void LC_InfoCursorOptions::setFontSize(int size){
+void LC_InfoCursorOptions::setFontSize(int size) {
     fontSize = size;
     // todo - potentally, later we may use different font sizes for different zones?
 
-    for(ZoneSetup& zone: m_pImpl->zones)
+    for (ZoneSetup& zone : m_pImpl->zones)
         zone.fontSize = size;
 }
 

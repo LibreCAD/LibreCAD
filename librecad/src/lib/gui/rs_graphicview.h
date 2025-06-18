@@ -73,7 +73,7 @@ public:
  * connected to this view is a graphic and valid.
  * NULL otherwise.
  */
-    RS_Graphic *getGraphic() const;
+    RS_Graphic *getGraphic(bool resolve = false) const;
     LC_GraphicViewport* getViewPort() const
     {
         return m_viewport.get();

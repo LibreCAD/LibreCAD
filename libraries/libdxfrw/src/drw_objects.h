@@ -193,6 +193,14 @@ public:
     int dimtoh;               /*!< code 74 */
     int dimse1;               /*!< code 75 */
     int dimse2;               /*!< code 76 */
+
+    UTF8STRING dimltext1;     /*!< code 6, code 343 V2000+ */ // fixme - code!
+    UTF8STRING dimltext2;    /*!< code 7, code 344 V2000+ */  // fixme - code!
+    UTF8STRING dimltype;    /*!< code 7, code 344 V2000+ */  // fixme - code!
+    int dimtfillclr;              /*!< code 176 */ // fixme - code!
+    int dimtxtdirection; // fixme - code!
+    double mleaderscale; // fixme - code!
+
     int dimtad;               /*!< code 77 */
     int dimzin;               /*!< code 78 */
     int dimazin;              /*!< code 79 V2000+ */

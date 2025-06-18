@@ -2563,6 +2563,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processRay();
         } else if (nextentity == "XLINE") {
             processed = processXline();
+        } else if (nextentity == "ARC_DIMENSION") {
+            processed = processArcDimension();
         } else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_ENTITIES); //end of file without ENDSEC
@@ -3042,6 +3044,27 @@ bool dxfRW::processImage() {
     return setError(DRW::BAD_READ_ENTITIES);
 }
 
+bool dxfRW::processArcDimension() {
+    DRW_DBG("dxfRW::processArcDimension");
+    int code;
+    DRW_ArcDimension dim;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            // fixme - sand - restore ARCDimension
+            // iface->addArcDimension(&dim);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!dim.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
 
 bool dxfRW::processDimension() {
     DRW_DBG("dxfRW::processDimension");

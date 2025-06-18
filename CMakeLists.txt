@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.28)
 project(LibreCAD VERSION 2.2.2)
+#
+#if (POLICY CMP0167)
+#	cmake_policy (SET CMP0167 NEW)
+#endif ()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -7,7 +11,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
 
+set(Boost_DEBUG ON)
+
 set(BOOST_DIR "c:\\Local\\boost_1_84_0")
+set(BOOST_ROOT "c:\\Local\\boost_1_84_0")
+set(Boost_DIR "c:\\Local\\boost_1_84_0")
+#set(Boost_DIR "c:\\Local\\boost_1_84_0\\tools\\boost_install")
+#set(Boost_DIR "c:\\Local\\boost_1_84_0\\tools\\cmake\\config\\")
+#set(BOOST_DIR "	c:\\Local\\boost_1_84_0\\tools\\cmake\\config\\")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
 set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
@@ -74,6 +85,8 @@ include_directories(librecad/src/lib/engine/document)
 include_directories(librecad/src/lib/engine/document/blocks)
 include_directories(librecad/src/lib/engine/document/layers)
 include_directories(librecad/src/lib/engine/document/dimstyles)
+include_directories(librecad/src/lib/engine/document/dimstyles/builder)
+include_directories(librecad/src/lib/engine/document/dimstyles/export)
 include_directories(librecad/src/lib/engine/document/views)
 include_directories(librecad/src/lib/engine/document/fonts)
 include_directories(librecad/src/lib/engine/document/patterns)
@@ -117,10 +130,12 @@ include_directories(librecad/src/lib/modification)
 include_directories(librecad/src/lib/printing)
 include_directories(librecad/src/lib/scripting)
 
+include_directories(librecad/res/arrows)
 include_directories(librecad/res/icons)
 include_directories(librecad/res/images)
 include_directories(librecad/res/controls)
 include_directories(librecad/res/gdt)
+include_directories(librecad/res/dxf)
 
 include_directories(libraries/jwwlib/src)
 include_directories(libraries/lciconengine)
@@ -178,6 +193,9 @@ include_directories(librecad/src/ui/dialogs/settings/options_device)
 include_directories(librecad/src/ui/dialogs/settings/options_general)
 include_directories(librecad/src/ui/dialogs/settings/options_drawing)
 include_directories(librecad/src/ui/dialogs/settings/options_widget)
+include_directories(librecad/src/ui/dialogs/settings/dimstyles)
+include_directories(librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager)
+include_directories(librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support)
 include_directories(librecad/src/ui/dialogs/settings/shortcuts)
 include_directories(librecad/src/ui/dialogs/settings)
 include_directories(librecad/src/ui/dialogs/entity)
@@ -249,10 +267,12 @@ include_directories(librecad/src/plugins/intern)
 include_directories(librecad/src/test)
 
 set(SOURCES
+        librecad/res/arrows/arrows.qrc
 		librecad/res/images/images.qrc
 		librecad/res/controls/controls.qrc
         librecad/res/icons/icons.qrc
         librecad/res/gdt/gdt.qrc
+        librecad/res/dxf/dxf.qrc
         libraries/jwwlib/src/dl_attributes.h
         libraries/jwwlib/src/dl_codes.h
         libraries/jwwlib/src/dl_creationinterface.h
@@ -738,8 +758,16 @@ set(SOURCES
         librecad/src/lib/engine/document/dimstyles/lc_dimstyle.cpp
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.h
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.cpp
-        librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.h
-        librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp
+        librecad/src/lib/engine/document/dimstyles/builder/lc_dimarrowregistry.h
+        librecad/src/lib/engine/document/dimstyles/builder/lc_dimarrowregistry.cpp
+        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.h
+        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.cpp
+        librecad/src/lib/engine/document/dimstyles/builder/lc_defaultdimstylesupport.h
+        librecad/src/lib/engine/document/dimstyles/builder/lc_defaultdimstylesupport.cpp
+        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.h
+        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.cpp
+        librecad/src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.h
+        librecad/src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.h
 		librecad/src/lib/engine/document/entities/rs_line.cpp
@@ -787,6 +815,8 @@ set(SOURCES
         librecad/src/lib/engine/rs_vector.h
         librecad/src/lib/fileio/rs_fileio.cpp
         librecad/src/lib/fileio/rs_fileio.h
+        librecad/src/lib/fileio/lc_filenameselectionservice.h
+        librecad/src/lib/fileio/lc_filenameselectionservice.cpp
         librecad/src/lib/filters/rs_filtercxf.cpp
         librecad/src/lib/filters/rs_filterdxf1.cpp
         librecad/src/lib/filters/rs_filterdxf1.h
@@ -944,8 +974,16 @@ set(SOURCES
 		librecad/src/ui/dialogs/actions/modify/qg_dlgmoverotate.h
 		librecad/src/ui/dialogs/entity/qg_dlgmtext.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgmtext.h
-		librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp
-		librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.h
+		librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.h
+		librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp
+        librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_tabproxywidget.h
+        librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_tabproxywidget.cpp
+        librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewgraphicview.h
+        librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewgraphicview.cpp
+        librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp
+        librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.h
+        librecad/src/ui/dialogs/settings/dimstyles/lc_dimstyleslistmodel.h
+        librecad/src/ui/dialogs/settings/dimstyles/lc_dimstyleslistmodel.cpp
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.h
         librecad/src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp
@@ -1524,6 +1562,11 @@ set(SOURCES
 		librecad/src/ui/main/support/lc_infocursorsettingsmanager.cpp
 		librecad/src/ui/main/support/lc_customstylehelper.h
 		librecad/src/ui/main/support/lc_customstylehelper.cpp
+        librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.h
+        librecad/src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.cpp
+        librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.h
+        librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp
+        librecad/src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp
 )
 
 #qt_standard_project_setup()

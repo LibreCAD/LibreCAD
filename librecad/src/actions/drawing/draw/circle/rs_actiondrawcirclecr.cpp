@@ -55,11 +55,12 @@ void RS_ActionDrawCircleCR::doTrigger() {
     setPenAndLayerToActive(circle);
 
     switch (getStatus()) {
-        case SetCenter: // FIXME _ SAND _ _ REVIEW!!!!!
-            m_container->addEntity(circle);
+        case SetCenter:
             moveRelativeZero(circle->getCenter());
             break;
         case SetRadius:
+            break;
+        default:
             break;
     }
 
