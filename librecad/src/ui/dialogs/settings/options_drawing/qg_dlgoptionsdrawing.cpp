@@ -298,11 +298,11 @@ void QG_DlgOptionsDrawing::onDimStylesListMenuRequested(const QPoint& pos) {
 
         addActionFunc("add", tr("&Create Style"), &QG_DlgOptionsDrawing::onDimStyleNew);
         contextMenu->addSeparator();
-        addActionFunc("dim_default", tr("&Edit Style"), &QG_DlgOptionsDrawing::onDimStyleEdit);
+        addActionFunc("attributes", tr("&Edit Style"), &QG_DlgOptionsDrawing::onDimStyleEdit);
         if (!item->isFromVariables()) {
             if (item->usageCount() == 0) {
                 if (item->isBaseStyle()) {
-                    addActionFunc("attributes", tr("&Rename Style"), &QG_DlgOptionsDrawing::onDimStyleRename);
+                    addActionFunc("rename_active_block", tr("&Rename Style"), &QG_DlgOptionsDrawing::onDimStyleRename);
                 }
                 addActionFunc("remove", tr("&Delete Style"), &QG_DlgOptionsDrawing::onDimStyleRemove);
             }
