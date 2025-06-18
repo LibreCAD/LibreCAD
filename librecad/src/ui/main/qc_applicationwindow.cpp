@@ -71,7 +71,6 @@
 #include "lc_workspacesinvoker.h"
 #include "qc_applicationwindow.h"
 
-#include "lc_dlgdimstylemanager.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"
