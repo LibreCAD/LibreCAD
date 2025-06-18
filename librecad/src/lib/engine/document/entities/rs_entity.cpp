@@ -461,7 +461,7 @@ void RS_Entity::setTransparent(bool on) {
 }
 
 RS_Vector RS_Entity::getStartpoint() const {
-	return {};
+    return RS_Vector{false};
 }
 
 RS_Vector RS_Entity::getEndpoint() const {

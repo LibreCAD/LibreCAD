@@ -888,7 +888,6 @@ void QC_ApplicationWindow::slotFileOpen() {
 }
 
 void QC_ApplicationWindow::slotEditActiveBlock(){
-    RS_BlockList* blockList = nullptr; // originally was passed from action's graphic view
     QC_MDIWindow* parent = getCurrentMDIWindow();
     if (parent == nullptr) {
         return;
@@ -901,9 +900,10 @@ void QC_ApplicationWindow::slotEditActiveBlock(){
     }
 
     //get blocklist from block widget, bug#3497154
-    if (blockList == nullptr) {
-        blockList = m_blockWidget->getBlockList();
-    }
+    RS_BlockList* blockList = m_blockWidget->getBlockList();
+
+    if (blockList == nullptr)
+        return;
 
     RS_Block* activeBlock = blockList->getActive();
     if (activeBlock == nullptr) {
