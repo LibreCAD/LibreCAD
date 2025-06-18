@@ -202,25 +202,6 @@ private:
 protected:
     /** Data common to all dimension entities. */
     RS_DimensionData m_dimGenericData;
-
-    virtual void doUpdateDim() = 0;
-
-    RS_Pen getPenForText();
-    RS_Pen getPenExtensionLine();
-    RS_Pen getPenDimensionLine();
-    RS_MText* createDimText(RS_Vector textPos, double textHeight, double textAngle);
-    void addDimComponentEntity(RS_Entity* en, const RS_Pen &pen);
-    RS_MText* addDimText(RS_MTextData &textData);
-    RS_MTextData createDimTextData(RS_Vector textPos, double textHeight, double textAngle);
-    RS_Line* addDimExtensionLine(RS_Vector start, RS_Vector end);
-    RS_Line* addDimDimensionLine(RS_Vector start, RS_Vector end);
-    RS_Line* addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen& pen);
-    RS_Arc* addDimArc(RS_ArcData& arcData);
-    QString createLinearMeasuredLabel(double dist);
-    double prepareLabelLinearDistance(double distance);
-    void createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd,
-              bool arrow1=true, bool arrow2=true, bool autoText=false);
-    RS_DimensionData m_dimGenericData;
     LC_DimStyle* m_dimStyleTransient = nullptr;
 
     virtual void doUpdateDim() = 0;
