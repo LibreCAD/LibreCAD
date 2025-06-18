@@ -147,11 +147,25 @@ void RS_DimAligned::doUpdateDim() {
     auto dimLineEnd = m_dimAlignedData.extensionPoint2 + extensionLineLengthVector;
 
     // Extension lines
-    addDimExtensionLine(m_dimAlignedData.extensionPoint1 + extLineOffsetVector, dimLineStart + extLineExtensionVector);
-    addDimExtensionLine(m_dimAlignedData.extensionPoint2 + extLineOffsetVector, dimLineEnd + extLineExtensionVector);
+    auto extensionLineStyle = m_dimStyleTransient->extensionLine();
+    bool dontSuppressExt1 = extensionLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    if (dontSuppressExt1) {
+        addDimExtensionLine(m_dimAlignedData.extensionPoint1 + extLineOffsetVector, dimLineStart + extLineExtensionVector, true);
+    }
+    bool dontSuppressExt2 = extensionLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    if (dontSuppressExt2) {
+        addDimExtensionLine(m_dimAlignedData.extensionPoint2 + extLineOffsetVector, dimLineEnd + extLineExtensionVector, false);
+    }
 
     // Dimension line:
-    createDimensionLine(dimLineStart,dimLineEnd,true, true, m_dimGenericData.autoText);
+    auto dimLineStyle = m_dimStyleTransient->dimensionLine();
+
+    bool donSuppressDim1 = dimLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool arrow1 = dontSuppressExt1 && donSuppressDim1;
+    bool donSuppressDim2 = dimLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool arrow2 = dontSuppressExt2 && donSuppressDim2;
+
+    createDimensionLine(dimLineStart,dimLineEnd,arrow1, arrow2, donSuppressDim1, dontSuppressExt2, m_dimGenericData.autoText);
 }
 
 void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
@@ -161,7 +175,6 @@ void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
     dimP1 = m_dimAlignedData.extensionPoint1 + e1*extLength;
     dimP2 = m_dimAlignedData.extensionPoint2 + e1*extLength;
 }
-
 
 double RS_DimAligned::getDistanceToPoint(const RS_Vector& coord,
                           RS_Entity** entity,

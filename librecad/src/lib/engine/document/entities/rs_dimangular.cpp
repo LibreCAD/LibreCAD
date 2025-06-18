@@ -132,7 +132,8 @@ RS_Entity* RS_DimAngular::clone() const
     auto *d  = new RS_DimAngular(getParent(), getData(), getEData());
 
     d->setOwner( isOwner());
-    d->init();
+    // d->init(false);
+    d->initId();
     d->detach();
 
     return d;
@@ -194,13 +195,13 @@ void RS_DimAngular::extensionLine(const RS_ConstructionLine& dimLine,
         return;
     }
     if( 0.0 > diffLine && 0.0 > diffCenter) {
-        addDimExtensionLine(dimLine.getStartpoint(),dimPoint - dirStart * av.exe());
+        addDimExtensionLine(dimLine.getStartpoint(),dimPoint - dirStart * av.exe(), true);
     }
     else if( 1.0 < diffLine && 0.0 < diffCenter) {
-        addDimExtensionLine(dimLine.getEndpoint(),dimPoint - dirEnd * av.exe());
+        addDimExtensionLine(dimLine.getEndpoint(),dimPoint - dirEnd * av.exe(), true);
     }
     else if( 0.0 > diffLine && 1.0 < diffCenter) {
-        addDimExtensionLine(dimCenter - dirStart * av.exo(),dimPoint + dirEnd * av.exe());
+        addDimExtensionLine(dimCenter - dirStart * av.exo(),dimPoint + dirEnd * av.exe(), true);
     }
 }
 
@@ -248,13 +249,13 @@ void RS_DimAngular::arrow(const RS_Vector& point,
 
         arrow = new RS_Solid(this, sd);
         arrow->shapeArrow(point, arrowAngle, av.arrow());
-        addDimComponentEntity(arrow, getPenExtensionLine());
+        addDimComponentEntity(arrow, getPenExtensionLine(true));
     }
     else {
         RS_Vector tickVector = RS_Vector::polar(scaledTickSize,
                                                 (dimAngleL1 + dimAngleL2) / 2.0);
 
-        addDimComponentLine(point - tickVector, point + tickVector, getPenExtensionLine());
+        addDimComponentLine(point - tickVector, point + tickVector, getPenExtensionLine(true));
     }
 }
 
@@ -270,11 +271,20 @@ void RS_DimAngular::doUpdateDim(){
         return;
     }
 
-    LC_DimAngularVars   av( getGeneralScale(),
+    double dimscale = getGeneralScale();
+
+    double dimgap = getDimensionLineGap() * dimscale;
+
+    bool drawFrameAroundText = std::signbit(dimgap);
+    if (drawFrameAroundText) {
+        dimgap = -dimgap;
+    }
+
+    LC_DimAngularVars   av( dimscale,
                             getExtensionLineOffset(),
                             getExtensionLineExtension(),
                             getTextHeight(),
-                            getDimensionLineGap(),
+                            dimgap,
                             getArrowSize(),
                             getTickSize());
 
@@ -325,7 +335,11 @@ void RS_DimAngular::doUpdateDim(){
     // move text away from dimension line:
     textPos += distV;
 
-    createDimText(textPos, av.txt(), textAngle);
+    auto text = createDimText(textPos, av.txt(), textAngle);
+    if (drawFrameAroundText) {
+        addBoundsAroundText(dimgap, text);
+    }
+
 }
 
 void RS_DimAngular::update()

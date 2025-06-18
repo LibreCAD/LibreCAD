@@ -39,7 +39,7 @@
  * Constructor.
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent)
-		:RS_EntityContainer(parent)
+		:RS_Dimension(parent, RS_DimensionData())
 {
 }
 
@@ -50,7 +50,7 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent)
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent,
                      const RS_LeaderData& d)
-    :RS_EntityContainer(parent), data(d) {
+    :RS_Dimension(parent,RS_DimensionData()), data(d) {
 }
 
 RS_Entity* RS_Leader::clone() const{
@@ -59,6 +59,10 @@ RS_Entity* RS_Leader::clone() const{
     p->detach();
     p->empty = empty;
     return p;
+}
+
+void RS_Leader::doUpdateDim() {
+    // fixme - sand - rework leader!
 }
 
 /**

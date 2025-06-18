@@ -47,6 +47,9 @@ public:
     {
         return uiLineHeight <getMinRenderableTextHeightInPx();
     }
+
+    LC_AnglesBaseMarkOptions* anglesBaseOptions() {return &m_anglesBaseOptions;};
+    LC_OverlayUCSZeroOptions* absZeroOptions() {return &m_absZeroOptions;};
 protected:
     bool m_inOverlayDrawing = false;
     bool m_isHiDpi = false;

@@ -70,6 +70,7 @@ public:
 		setDouble(v);
 	}
 
+
 	void setString(const QString& str) {
 		contents.s = str;
 		type = RS2::VariableString;
@@ -107,6 +108,8 @@ public:
 		return code;
 	}
 
+    QString toString();
+
     //friend std::ostream& operator << (std::ostream& os, RS_Variable& v);
 
 private:
@@ -114,5 +117,20 @@ private:
 	RS2::VariableType type = RS2::VariableVoid;
 	int code = 0;
 };
+
+inline QString RS_Variable::toString() {
+    switch (type) {
+        case RS2::VariableString:
+            return contents.s;
+        case RS2::VariableInt:
+            return QString::number(contents.i);
+        case RS2::VariableDouble:
+            return QString::number(contents.d);
+        case RS2::VariableVector:
+            return QString::number(contents.v.x) + " " + QString::number(contents.v.y);
+        default:
+            return "";
+    }
+}
 
 #endif

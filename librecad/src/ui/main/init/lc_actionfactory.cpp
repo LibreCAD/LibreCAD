@@ -102,6 +102,7 @@ void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC
     createActionHandlerActions(map, group,{
      {"EntityLayerActivate",     RS2::ActionLayerEntityActivate,          tr("Activate Entity's Layer"),           ":/icons/select_entity.lci"},
      {"EntityLayerView",         RS2::ActionLayerEntityToggleView,        tr("Hide Entity's Layer"),  ":/icons/not_visible.lci"},
+     {"EntityLayerHideOthers",   RS2::ActionLayerEntityHideOthers,        tr("Hide Other Layers than Entity's"),  ":/icons/not_visible_all.lci"},
      {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Lock Entity's Layer"),        ":/icons/locked.lci"},
      {"EntityLayerConstruction", RS2::ActionLayerEntityToggleConstruction,tr("Toggle Entity's Layer Construction"),":/icons/construction_layer.lci"},
      {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,           tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
@@ -350,7 +351,8 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimContinue",       RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"},
         {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
         {"DimOrdinateForBase",RS2::ActionDimOrdinateSelectSameOrigin,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
-        {"DimOrdinateReBase",RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"}
+        {"DimOrdinateReBase", RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
+        {"GTDFeatureFrame",   RS2::ActionGTDFeatureControlFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"}
     });
 }
 
@@ -536,8 +538,8 @@ void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &m
         {"LayersToggleView",         RS2::ActionLayersToggleView,         tr("&Toggle Layer Visibility"),   ":/icons/visible.lci"},
         {"LayersTogglePrint",        RS2::ActionLayersTogglePrint,        tr("Toggle Layer &Print"),        ":/icons/print.lci"},
         {"LayersToggleConstruction", RS2::ActionLayersToggleConstruction, tr("Toggle &Construction Layer"), ":/icons/construction_layer.lci"},
-        {"LayersExportSelected",     RS2::ActionLayersExportSelected,     tr("&Export Selected Layer(s)")},
-        {"LayersExportVisible",      RS2::ActionLayersExportVisible,      tr("Export &Visible Layer(s)")}
+        {"LayersExportSelected",     RS2::ActionLayersExportSelected,     tr("&Export Selected Layer(s)"),  ":/icons/layer_export_selected.lci"},
+        {"LayersExportVisible",      RS2::ActionLayersExportVisible,      tr("Export &Visible Layer(s)"),   ":/icons/layer_export_visible.lci"}
     });
 }
 
@@ -717,7 +719,7 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_Acti
         commandLineShortcuts << QKeySequence(Qt::Key_Space);
 
     std::vector<LC_ShortcutInfo> shortcutsList = {
-        {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
+        {"ModifyRevertDirection", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R)},
         {"ModifyDuplicate",QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)},
         {"OrderBottom", QKeySequence(Qt::Key_End)},
         {"OrderLower", QKeySequence(Qt::Key_PageDown)},
@@ -931,7 +933,8 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimLeader",
                         "DimOrdinate",
                         "DimOrdinateForBase",
-                        "DimOrdinateReBase"
+                        "DimOrdinateReBase",
+                        "GTDFeatureFrame"
                     }, map);
 
     fillActionsList(other_drawing_actions, {
@@ -1031,6 +1034,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
     fillActionsList(entity_layer_actions,{
                         "EntityLayerActivate",
                         "EntityLayerView",
+                        "EntityLayerHideOthers",
                         "EntityLayerLock",
                         "EntityLayerConstruction",
                         "EntityLayerPrint"

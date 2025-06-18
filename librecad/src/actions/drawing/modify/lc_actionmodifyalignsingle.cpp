@@ -150,7 +150,8 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             if (isInfoCursorForModificationEnabled()){
                 QString message = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
 
-                auto builder = msg(message);
+                auto builder = msgStart()
+                    .string(message);
                 if (entity != nullptr){
                     builder.string(tr("Offset:"))
                            .relative(offset)

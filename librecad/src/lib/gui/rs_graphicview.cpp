@@ -153,7 +153,7 @@ bool RS_GraphicView::setEventHandlerAction(std::shared_ptr<RS_ActionInterface> a
     bool actionActive = m_eventHandler->setCurrentAction(action);
     if (actionActive) {
         if (m_eventHandler->hasAction()) {
-            emit currentActionChanged(action.get());
+            notifyActiveAction(action.get());
         }
         else {
             notifyNoActiveAction();
@@ -253,6 +253,7 @@ void RS_GraphicView::zoomAuto(bool axis){
     m_viewport->zoomAuto(axis);
 }
 
+
 void RS_GraphicView::onViewportChanged() {
     adjustOffsetControls();
     adjustZoomControls();
@@ -274,6 +275,10 @@ void RS_GraphicView::onUCSChanged(LC_UCS* ucs) {
 
 void RS_GraphicView::notifyNoActiveAction(){
     emit currentActionChanged(nullptr);
+}
+
+void RS_GraphicView::notifyActiveAction(RS_ActionInterface* action) {
+    emit currentActionChanged(action);
 }
 
 void RS_GraphicView::onRelativeZeroChanged(const RS_Vector &pos) {
@@ -322,11 +327,15 @@ RS_EventHandler *RS_GraphicView::getEventHandler() const {
     return m_eventHandler.get();
 }
 
-RS_Graphic *RS_GraphicView::getGraphic() const {
-    if (container && container->rtti() == RS2::EntityGraphic) {
-        return static_cast<RS_Graphic *>(container);
+RS_Graphic *RS_GraphicView::getGraphic(bool resolve) const {
+    if (container != nullptr){
+        if (resolve) {
+            return container->getGraphic();
+        }
+        if (container->rtti() == RS2::EntityGraphic) {
+            return static_cast<RS_Graphic *>(container);
+        }
     }
-
     return nullptr;
 }
 

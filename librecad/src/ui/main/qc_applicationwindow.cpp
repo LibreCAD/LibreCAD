@@ -70,6 +70,8 @@
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
 #include "qc_applicationwindow.h"
+
+#include "lc_dlgdimstylemanager.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"
@@ -785,7 +787,8 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
     w = createNewDrawingWindow(nullptr, "");
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
-    if (fileName.isEmpty()) {
+    bool noFile = fileName.isEmpty();
+    if (noFile) {
         ret = true;
     } else {
         // loads the template file in the new view:
@@ -797,7 +800,7 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
         doActivate(w);
         doArrangeWindows(RS2::CurrentMode);
         autoZoomAfterLoad(w->getGraphicView());
-        if (!fileName.isEmpty()) {
+        if (!noFile) {
             QString message = tr("New document from template: ") + fileName;
             notificationMessage(message, 2000);
         }
@@ -806,6 +809,10 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
         }
         auto graphic = w->getGraphic();
         if (graphic != nullptr) {
+            if (noFile) {
+                // indicate that loading is completed so we could update default dim style from vars
+                graphic->onLoadingCompleted();
+            }
             emit(gridChanged(graphic->isGridOn()));
         }
     }
@@ -1026,7 +1033,8 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
 
 void QC_ApplicationWindow::changeDrawingOptions(int tabToShow){
     auto graphicView = getCurrentGraphicView();
-    RS_Graphic* graphic = graphicView->getGraphic();
+    RS_Graphic* graphic = graphicView->getGraphic(true);
+
     int dialogResult = m_dlgHelpr->requestOptionsDrawingDialog(*graphic, tabToShow);
     if (dialogResult == QDialog::Accepted) {
         updateCoordinateWidgetFormat();
@@ -1607,7 +1615,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         setAsCurrentActionInView = false;
     }
     if (setAsCurrentActionInView) {
-        QG_GraphicView* graphicView = dynamic_cast<QG_GraphicView*>(view);
+        auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
         graphicView->setCurrentQAction(q_action);
     }
 
@@ -1670,7 +1678,7 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void QC_ApplicationWindow::onViewCurrentActionChanged(const RS_ActionInterface* action){
-    if (action != nullptr) {
+   if (action != nullptr) {
         RS2::ActionType actionType = action->rtti();
         auto qAction = m_actionGroupManager->getActionByType(actionType);
         relayAction(qAction);

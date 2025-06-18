@@ -28,7 +28,7 @@
 #ifndef RS_LEADER_H
 #define RS_LEADER_H
 
-
+#include "rs_dimension.h"
 #include "rs_entitycontainer.h"
 
 
@@ -37,7 +37,7 @@
  */
 struct RS_LeaderData {
 	RS_LeaderData() = default;
-    RS_LeaderData(bool arrowHeadFlag) : arrowHead{arrowHeadFlag} {
+    RS_LeaderData(bool arrowHeadFlag, const QString& styleName) : arrowHead{arrowHeadFlag}, m_styleName{styleName} {
 	}
 
 	friend std::ostream& operator << (std::ostream& os,
@@ -45,6 +45,7 @@ struct RS_LeaderData {
 
 	/** true: leader has an arrow head. false: no arrow. */
     bool arrowHead = false;
+    QString m_styleName;
 };
 
 
@@ -54,7 +55,7 @@ struct RS_LeaderData {
  *
  * @author Andrew Mustun
  */
-class RS_Leader : public RS_EntityContainer {
+class RS_Leader : public /*RS_EntityContainer*/ RS_Dimension {
 public:
     RS_Leader(RS_EntityContainer* parent=nullptr);
 	RS_Leader(RS_EntityContainer* parent,
@@ -86,8 +87,8 @@ public:
 	//		return -1.0;
 	//	}
 
-
-	void move(const RS_Vector& offset) override;
+    QString getMeasuredLabel() override {return "";} // fixme - sand - review
+    void move(const RS_Vector& offset) override;
 	void rotate(const RS_Vector& center, double angle) override;
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
@@ -103,6 +104,7 @@ public:
 protected:
     RS_LeaderData data;
     bool empty = true;
+    void doUpdateDim() override;
 };
 
 #endif

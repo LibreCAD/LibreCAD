@@ -169,7 +169,10 @@ void RS_Insert::update() {
                 for (int r=0; r<m_data.rows; ++r) {
 //                i_en_counts++;
 //                RS_DEBUG->print("RS_Insert::update: row %d", r);
-
+                    // fixme - sand - this is quick fix for #2177 - yet it's necessary to check why undone entity is in block?
+                    if (e->isUndone()) {
+                        continue;
+                    }
                     if (e->rtti()==RS2::EntityInsert &&
                             m_data.updateMode!=RS2::PreviewUpdate) {
 

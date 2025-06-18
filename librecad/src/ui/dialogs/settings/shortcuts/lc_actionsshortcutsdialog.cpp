@@ -26,6 +26,7 @@
 #include <QScrollBar>
 
 #include "lc_actiongroupmanager.h"
+#include "lc_filenameselectionservice.h"
 #include "lc_shortcutsstorage.h"
 #include "lc_shortcutstreemodel.h"
 #include "lc_shortcuttreeitem.h"
@@ -141,12 +142,19 @@ void LC_ActionsShortcutsDialog::onClearClicked() {
     }
 }
 
-void LC_ActionsShortcutsDialog::onImportClicked() {
-    QFileDialog::Options options = getFileDialogOptions();
-
+bool LC_ActionsShortcutsDialog::obtainFileName(QString& fileName, bool forRead) {
     const QString &dir = m_actionGroupManager->getShortcutsMappingsFolder();
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select file to save mapping"), dir, "LibreCAD Shortcuts (*.lcs)", nullptr,options);
+    QString defFileName = dir + "/shortcuts.lcs";
+    return LC_FileNameSelectionService::doObtainFileName(this, fileName, forRead, "lcs",
+        "shortcuts", tr("Import shortcuts mapping"),  tr("Export shortcuts mapping"),
+        tr("LibreCAD Shortcuts file (*.%1)"));
+}
 
+void LC_ActionsShortcutsDialog::onImportClicked() {
+    QString fileName;
+    if (!obtainFileName(fileName, true)) {
+        return;
+    }
     QMap<QString, QKeySequence> shortcutsMap;
     int loadResult = m_actionGroupManager->loadShortcuts(fileName, &shortcutsMap);
 
@@ -161,10 +169,10 @@ void LC_ActionsShortcutsDialog::onImportClicked() {
 }
 
 void LC_ActionsShortcutsDialog::onExportClicked() {
-    QFileDialog::Options options = getFileDialogOptions();
-
-    const QString &dir = m_actionGroupManager->getShortcutsMappingsFolder();
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Select file to save mapping"), dir, "LibreCAD Shortcuts (*.lcs)", nullptr, options);
+    QString fileName;
+    if (!obtainFileName(fileName, true)) {
+        return;
+    }
 
     QList<LC_ShortcutInfo*> shortcutsList;
     m_mappingTreeModel->collectShortcuts(shortcutsList);
@@ -270,12 +278,6 @@ void LC_ActionsShortcutsDialog::showIOInfoDialog(bool forImport,bool ok, const Q
     msgBox.exec();
 }
 
-QFileDialog::Options LC_ActionsShortcutsDialog::getFileDialogOptions() {
-    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults", "UseQtFileOpenDialog");
-    QFileDialog::Options options;
-    options.setFlag(QFileDialog::DontUseNativeDialog, useQtFileDialog);
-    return options;
-}
 
 void LC_ActionsShortcutsDialog::selectItem(LC_ShortcutTreeItem *item, int row, int parentRow) {
     if (item == nullptr || item->isGroup()){

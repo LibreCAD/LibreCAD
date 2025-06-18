@@ -73,7 +73,7 @@ public:
  * connected to this view is a graphic and valid.
  * NULL otherwise.
  */
-    RS_Graphic *getGraphic() const;
+    RS_Graphic *getGraphic(bool resolve = false) const;
     LC_GraphicViewport* getViewPort() const
     {
         return m_viewport.get();
@@ -178,6 +178,7 @@ public:
     void onRelativeZeroChanged(const RS_Vector &pos) override;
     void onUCSChanged(LC_UCS* ucs) override;
     void notifyNoActiveAction();
+    void notifyActiveAction(RS_ActionInterface* action);
 signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);

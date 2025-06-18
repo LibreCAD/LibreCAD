@@ -24,8 +24,10 @@
 #ifndef RS_GRAPHIC_H
 #define RS_GRAPHIC_H
 
+#include <memory>
 #include <QDateTime>
 
+#include "lc_dimstyle.h"
 #include "lc_ucslist.h"
 #include "lc_viewslist.h"
 #include "rs_blocklist.h"
@@ -34,6 +36,8 @@
 #include "rs_variabledict.h"
 #include "lc_dimstyleslist.h"
 
+class RS_Dimension;
+class LC_DimStyleToVariablesMapper;
 class LC_DimStylesList;
 class QString;
 
@@ -42,6 +46,7 @@ class QG_LayerWidget;
 
 class LC_GraphicModificationListener {
 public:
+    virtual ~LC_GraphicModificationListener() = default;
     virtual void graphicModified(const RS_Graphic* g, bool modified) = 0;
     virtual void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) = 0;
 };
@@ -57,8 +62,9 @@ public:
 class RS_Graphic : public RS_Document {
 public:
     RS_Graphic(RS_EntityContainer* parent=nullptr);
-    virtual ~RS_Graphic();
+    ~RS_Graphic() override;
 
+    virtual void onLoadingCompleted();
     /** @return RS2::EntityGraphic */
     RS2::EntityType rtti() const override {return RS2::EntityGraphic;}
 
@@ -132,14 +138,19 @@ public:
     bool getVariableBool(const QString& key, bool def) const;
     double getVariableDouble(const QString& key, double def) const;
 
+    void setVariableDictObject(RS_VariableDict inputVariableDict) {variableDict = inputVariableDict;}
+
     RS_VariableDict getVariableDictObject() const{
         return variableDict;
     }
 
-    void setVariableDictObject(RS_VariableDict inputVariableDict) {variableDict = inputVariableDict;}
+    RS_VariableDict* getVariableDictObjectRef() {
+        return &variableDict;
+    }
 
     RS2::LinearFormat getLinearFormat() const;
-    RS2::LinearFormat convertLinearFormatDXF2LC(int f) const;
+
+    static RS2::LinearFormat convertLinearFormatDXF2LC(int f);
     int getLinearPrecision() const;
     RS2::AngleFormat getAngleFormat() const;
     int getAnglePrecision() const;
@@ -260,6 +271,14 @@ public:
 
     void setModificationListener(LC_GraphicModificationListener * listener) {m_modificationListener = listener;}
 
+    LC_DimStyle* getFallBackDimStyleFromVars() const;
+    LC_DimStyle* getDimStyleByName(const QString &name, RS2::EntityType dimType = RS2::EntityUnknown) const;
+    void addDimStyle(LC_DimStyle* style) {dimstyleList.addDimStyle(style);}
+    QString getDefaultDimStyleName();
+    void setDefaultDimStyleName(QString name);
+    virtual LC_DimStyle* getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType = RS2::EntityUnknown);
+    void updateFallbackDimStyle(LC_DimStyle* get_copy);
+    void replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles);
 protected:
     void fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const override;
 private:
@@ -273,6 +292,7 @@ private:
     LC_ViewList namedViewsList;
     LC_UCSList ucsList;
     LC_DimStylesList dimstyleList;
+
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
 

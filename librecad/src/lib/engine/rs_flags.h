@@ -52,7 +52,8 @@ struct RS_Flags {
 	void toggleFlag(unsigned f);
 
 	bool getFlag(unsigned f) const;
-
+    bool isSet(unsigned f) const;
+    bool isNotSet(unsigned f) const;
 private:
 	unsigned flags = 0;
 };

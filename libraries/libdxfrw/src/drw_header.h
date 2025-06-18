@@ -100,6 +100,10 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader);
+    void writeVar(dxfWriter* writer, std::string name, double defaultValue, int varCode = 40);
+    void writeVar(dxfWriter* writer, std::string name, int defaultValue, int varCode = 70);
+    void writeVar(dxfWriter* writer, DRW::Version ver, std::string name, std::string defaultValue="", int varCode = 1);
+    void writeDimVars(dxfWriter* writer, DRW::Version ver);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
 private:
     bool getDouble(std::string key, double *varDouble);

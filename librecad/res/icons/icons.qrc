@@ -350,5 +350,13 @@
         <file alias="ucs_set_by_dimordinate.lci">ucs_set_by_dimordinate.svg</file>
         <file alias="dim_ordinate_by_origin.lci">dim_ordinate_by_origin.svg</file>
         <file alias="dim_ordinate_rebase.lci">dim_ordinate_rebase.svg</file>
+        <file alias="gdt_featurecontrolframe.lci">gdt_featurecontrolframe.svg</file>
+        <file alias="dim_style_manager.lci">dim_style_manager.svg</file>
+        <file alias="dim_default.lci">dim_default.svg</file>
+        <file alias="ucs_save.lci">ucs_save.svg</file>
+        <file alias="nview_update.lci">nview_update.svg</file>
+        <file alias="layer_export_selected.lci">layer_export_selected.svg</file>
+        <file alias="layer_export_visible.lci">layer_export_visible.svg</file>
+        <file alias="layer_export_single.lci">layer_export_single.svg</file>
     </qresource>
 </RCC>

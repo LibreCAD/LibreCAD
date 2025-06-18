@@ -110,3 +110,7 @@ void LC_DefaultActionContext::setCurrentAction(RS2::ActionType action, void* dat
 RS_ActionInterface* LC_DefaultActionContext::getCurrentAction() {
     return m_actionHandler->getCurrentAction();
 }
+
+void LC_DefaultActionContext::deleteActionHandler() {
+    delete m_actionHandler;
+}

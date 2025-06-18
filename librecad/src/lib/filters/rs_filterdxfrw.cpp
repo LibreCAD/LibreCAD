@@ -200,7 +200,19 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         if (RS_Debug::D_DEBUGGING == RS_DEBUG->getLevel()) {
             dxfR.setDebug(DRW::DebugLevel::Debug);
         }
-        bool success = dxfR.read(this, true);
+        bool success {false};
+        if (file.startsWith(":")) { // load content from resources. It SHOULD be present in resource!
+            QFile resourceFile(file);
+            if (resourceFile.open(QIODevice::ReadOnly)) {
+                QByteArray contentString = resourceFile.readAll();
+                resourceFile.close();
+                std::string content = contentString.toStdString();
+                success = dxfR.readAscii(this, true, content);
+            }
+        }
+        else {
+            success = dxfR.read(this, true);
+        }
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
         //graphic->setAutoUpdateBorders(true);
 
@@ -1246,7 +1258,7 @@ void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data) {
  */
 void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimLeader");
-    RS_LeaderData d(data->arrow!=0);
+    RS_LeaderData d(data->arrow!=0, QString::fromUtf8(data->style.c_str()));
     RS_Leader* leader = new RS_Leader(currentContainer, d);
     setEntityAttributes(leader, data);
 
@@ -4387,78 +4399,110 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     QString name = QString::fromUtf8(s.name.c_str());
     result->setName(name);
 
-    result->setDimpost(QString::fromUtf8(s.dimpost.c_str()));
-    result->setDimapost(QString::fromUtf8(s.dimapost.c_str()));
+    auto arrowStyle = result->arrowhead();
 
-    result->setDimblk(QString::fromUtf8(s.dimblk.c_str()));
-    result->setDimblk1(QString::fromUtf8(s.dimblk1.c_str()));
-    result->setDimblk2(QString::fromUtf8(s.dimblk2.c_str()));
+    arrowStyle->setSameBlockName(QString::fromUtf8(s.dimblk.c_str()));
+    arrowStyle->setArrowHeadBlockNameFirst(QString::fromUtf8(s.dimblk1.c_str()));
+    arrowStyle->setArrowHeadBlockNameSecond(QString::fromUtf8(s.dimblk2.c_str()));
+    arrowStyle->setSize(s.dimasz);
+    arrowStyle->setTickSize(s.dimtsz);
+    arrowStyle->setUseSeparateArrowHeads(s.dimsah);
+    arrowStyle->setSuppressionsRaw(s.dimsoxd);
 
-    result->setDimscale(s.dimscale);
-    result->setDimasz(s.dimasz);
-    result->setDimexo(s.dimexo);
-    result->setDimdli(s.dimdli);
-    result->setDimexe(s.dimexe);
-    result->setDimrnd(s.dimrnd);
-    result->setDimdle(s.dimdle);
-    result->setDimtp(s.dimtp);
-    result->setDimtm(s.dimtm);
-    result->setDimfxl(s.dimfxl);
-    result->setDimtxt(s.dimtxt);
-    result->setDimcen(s.dimcen);
-    result->setDimtsz(s.dimtsz);
-    result->setDimaltf(s.dimaltf);
-    result->setDimlfac(s.dimlfac);
-    result->setDimtvp(s.dimtvp);
-    result->setDimtfac(s.dimtfac);
-    result->setDimgap(s.dimgap);
-    result->setDimaltrnd(s.dimaltrnd);
-    result->setDimtol(s.dimtol);
-    result->setDimlim(s.dimlim);
-    result->setDimtih(s.dimtih);
-    result->setDimtoh(s.dimtoh);
-    result->setDimse1(s.dimse1);
-    result->setDimse2(s.dimse2);
-    result->setDimtad(s.dimtad);
-    result->setDimzin(s.dimzin);
-    result->setDimazin(s.dimazin);
-    result->setDimalt(s.dimalt);
-    result->setDimaltd(s.dimaltd);
-    result->setDimtofl(s.dimtofl);
-    result->setDimsah(s.dimsah);
-    result->setDimtix(s.dimtix);
-    result->setDimsoxd(s.dimsoxd);
-    result->setDimclrd(s.dimclrd);
-    result->setDimclre(s.dimclre);
-    result->setDimclrt(s.dimclrt);
-    result->setDimadec(s.dimadec);
-    result->setDimunit(s.dimunit);
-    result->setDimdec(s.dimdec);
-    result->setDimtdec(s.dimtdec);
-    result->setDimalt(s.dimaltu);
-    result->setDimalttd(s.dimalttd);
-    result->setDimaunit(s.dimaunit);
-    result->setDimfrac(s.dimfrac);
-    result->setDimlunit(s.dimlunit);
-    result->setDimdsep(s.dimdsep);
-    result->setDimtmove(s.dimtmove);
-    result->setDimjust(s.dimjust);
-    result->setDimsd1(s.dimsd1);
-    result->setDimsd2(s.dimsd2);
-    result->setDimtolj(s.dimtolj);
-    result->setDimtzin(s.dimtzin);
-    result->setDimaltz(s.dimaltz);
-    result->setDimaltttz(s.dimaltttz);
-    result->setDimfit(s.dimfit);
-    result->setDimupt(s.dimupt);
-    result->setDimatfit(s.dimatfit);
-    result->setDimfxlon(s.dimfxlon);
+    auto scaleStyle = result->scaling();
+    scaleStyle->setScale(s.dimscale);
+    scaleStyle->setLinearFactor(s.dimlfac);
 
-    result->setDimtxsty(QString::fromUtf8(s.dimtxsty.c_str()));
-    result->setDimldrblk(QString::fromUtf8(s.dimldrblk.c_str()));
+    auto extLineStyle = result->extensionLine();
+    extLineStyle->setDistanceFromOriginPoint(s.dimexo);
+    extLineStyle->setDistanceBeyondDimLine(s.dimexe);
+    extLineStyle->setFixedLength(s.dimfxl);
+    extLineStyle->setHasFixedLength(s.dimfxlon);
+    extLineStyle->setLineWidthRaw(s.dimlwe);
+    extLineStyle->setColor(s.dimclre);
+    extLineStyle->setSuppressionFirstRaw(s.dimse1);
+    extLineStyle->setSuppressionSecondRaw(s.dimse2);
+    extLineStyle->setLineTypeFirst(QString::fromUtf8(s.dimltext1.c_str()));
+    extLineStyle->setLineTypeFirst(QString::fromUtf8(s.dimltext1.c_str()));
 
-    result->setDimlwd(s.dimlwd);
-    result->setDimlwe(s.dimlwe);
+    auto dimLineStyle = result->dimensionLine();
+    dimLineStyle->setLineWidthRaw(s.dimlwd);
+    dimLineStyle->setDistanceBeyondExtLinesForObliqueStroke(s.dimdle);
+    dimLineStyle->setBaselineDimLinesSpacing(s.dimdli);
+    dimLineStyle->setLineGap(s.dimgap);
+    dimLineStyle->setColor(s.dimclrd);
+    dimLineStyle->setFirstLineSuppressionRaw(s.dimsd1);
+    dimLineStyle->setSecondLineSuppressionRaw(s.dimsd2);
+    dimLineStyle->setDrawPolicyForOutsideTextRaw(s.dimtofl);
+    dimLineStyle->setLineType(QString::fromUtf8(s.dimltype.c_str()));
+
+    auto textStyle = result->text();
+    textStyle->setHeight(s.dimtxt);
+    textStyle->setStyle(QString::fromUtf8(s.dimtxsty.c_str()));
+    textStyle->setOrientationOutsideRaw(s.dimtoh);
+    textStyle->setOrientationInsideRaw(s.dimtih);
+    textStyle->setHorizontalPositioningRaw(s.dimjust);
+    textStyle->setColor(s.dimclrt);
+    textStyle->setVerticalPositioningRaw(s.dimtad);
+    textStyle->setExtLinesRelativePlacementRaw(s.dimtix);
+    textStyle->setBackgroundFillModeRaw(s.dimfit);
+    textStyle->setExplicitBackgroundFillColor(s.dimtfillclr);
+    textStyle->setReadingDirectionRaw(s.dimtxtdirection);
+    textStyle->setVerticalDistanceToDimLine(s.dimtvp);
+    textStyle->setCursorControlPolicyRaw(s.dimupt);
+    textStyle->setPositionMovementPolicyRaw(s.dimtmove);
+    textStyle->setUnsufficientSpacePolicyRaw(s.dimatfit);
+
+    auto zerosSuppression = result->zerosSuppression();
+    zerosSuppression->setLinearRaw(s.dimzin);
+    zerosSuppression->setAngularRaw(s.dimazin);
+    zerosSuppression->setToleranceRaw(s.dimtzin);
+    zerosSuppression->setAltLinearRaw(s.dimaltz);
+    zerosSuppression->setAltToleranceRaw(s.dimaltttz);
+
+    auto linearFormat = result->linearFormat();
+    linearFormat->setFormatRaw(s.dimlunit);
+    linearFormat->setDecimalFormatSeparatorChar(s.dimdsep);
+    linearFormat->setDecimalPlaces(s.dimdec);
+    linearFormat->setPrefixOrSuffix(QString::fromUtf8(s.dimpost.c_str()));
+    linearFormat->setAlternateUnitsRaw(s.dimalt);
+    linearFormat->setAltFormatRaw(s.dimaltu);
+    linearFormat->setAltDecimalPlaces(s.dimaltd);
+    linearFormat->setAltUnitsMultiplier(s.dimaltf);
+    linearFormat->setAltPrefixOrSuffix(QString::fromUtf8(s.dimapost.c_str()));
+
+    auto angularFormat = result->angularFormat();
+    angularFormat->setFormatRaw(s.dimaunit);
+    angularFormat->setDecimalPlaces(s.dimadec);
+
+    auto linearRoundOff = result->roundOff();
+    linearRoundOff->setRoundToValue(s.dimrnd);
+    linearRoundOff->setAltRoundToValue(s.dimaltrnd);
+
+    auto fractionStyle = result->fractions();
+    fractionStyle->setStyleRaw(s.dimfrac);
+
+    auto radialStyle = result->radial();
+    radialStyle->setCenterMarkOrLineSize(s.dimcen);
+
+    auto toleranceStyle = result->latteralTolerance();
+
+    toleranceStyle->setDecimalPlaces(s.dimtdec);
+    toleranceStyle->setDecimalPlacesAltDim(s.dimalttd);
+    toleranceStyle->setAppendTolerancesToDimText(s.dimtol);
+    toleranceStyle->setVerticalJustificationRaw(s.dimtolj);
+    toleranceStyle->setLowerToleranceLimit(s.dimtm);
+    toleranceStyle->setUpperToleranceLimit(s.dimtp);
+    toleranceStyle->setHeightScaleFactorToDimText(s.dimtfac);
+    toleranceStyle->setLimitsAreGeneratedAsDefaultText(s.dimlim);
+
+    // result->setDimunit(s.dimunit); // $DIMLUNIT
+
+    auto leaderStyle = result->leader();
+    leaderStyle->setArrowBlockName(QString::fromUtf8(s.dimldrblk.c_str()));
+
+    auto mleaderStyle = result->mleader();
+    mleaderStyle->setScale(s.mleaderscale);
 
     return result;
 }

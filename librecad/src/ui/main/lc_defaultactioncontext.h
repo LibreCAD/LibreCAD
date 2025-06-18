@@ -75,6 +75,8 @@ public:
     void setSnapMode(const RS_SnapMode& mode) override;
     void setCurrentAction(RS2::ActionType, void* data) override;
     RS_ActionInterface* getCurrentAction() override;
+protected:
+    void deleteActionHandler();
 private:
     LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
     QG_CoordinateWidget* m_coordinateWidget{nullptr};

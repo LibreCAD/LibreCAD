@@ -63,13 +63,29 @@ void dxfRW::setDebug(DRW::DebugLevel lvl){
     }
 }
 
-bool dxfRW::read(DRW_Interface *interface_, bool ext){
-    drw_assert(fileName.empty() == false);
-    applyExt = ext;
-    std::ifstream filestr;
+bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content) {
     if (nullptr == interface_) {
         return setError(DRW::BAD_UNKNOWN);
     }
+    applyExt = ext;
+    std::istringstream filestr(content);
+    iface = interface_;
+
+    reader = new dxfReaderAscii(&filestr);
+    bool isOk {processDxf()};
+    version = (DRW::Version) reader->getVersion();
+    delete reader;
+    reader = nullptr;
+    return isOk;
+}
+
+bool dxfRW::read(DRW_Interface *interface_, bool ext){
+    drw_assert(fileName.empty() == false);
+    if (nullptr == interface_) {
+        return setError(DRW::BAD_UNKNOWN);
+    }
+    applyExt = ext;
+    std::ifstream filestr;
     DRW_DBG("dxfRW::read 1def\n");
     filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr.is_open()
@@ -1243,7 +1259,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         switch (ent->eType) {
         case DRW::DIMALIGNED:
         case DRW::DIMLINEAR: {
-            DRW_DimAligned * dd = (DRW_DimAligned*)ent;
+            auto * dd = static_cast<DRW_DimAligned*>(ent);
             writer->writeString(100, "AcDbAlignedDimension");
             DRW_Coord crd = dd->getClonepoint();
             if (crd.x != 0 || crd.y != 0 || crd.z != 0) {
@@ -1258,7 +1274,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(24, dd->getDef2Point().y);
             writer->writeDouble(34, dd->getDef2Point().z);
             if (ent->eType == DRW::DIMLINEAR) {
-                DRW_DimLinear * dl = (DRW_DimLinear*)ent;
+                auto dl = static_cast<DRW_DimLinear*>(ent);
                 if (dl->getAngle() != 0)
                     writer->writeDouble(50, dl->getAngle());
                 if (dl->getOblique() != 0)
@@ -1267,7 +1283,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             }
             break; }
         case DRW::DIMRADIAL: {
-            DRW_DimRadial * dd = (DRW_DimRadial*)ent;
+            auto * dd = static_cast<DRW_DimRadial*>(ent);
             writer->writeString(100, "AcDbRadialDimension");
             writer->writeDouble(15, dd->getDiameterPoint().x);
             writer->writeDouble(25, dd->getDiameterPoint().y);
@@ -1275,7 +1291,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(40, dd->getLeaderLength());
             break; }
         case DRW::DIMDIAMETRIC: {
-            DRW_DimDiametric * dd = (DRW_DimDiametric*)ent;
+            auto * dd = static_cast<DRW_DimDiametric*>(ent);
             writer->writeString(100, "AcDbDiametricDimension");
             writer->writeDouble(15, dd->getDiameter1Point().x);
             writer->writeDouble(25, dd->getDiameter1Point().y);
@@ -1283,7 +1299,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(40, dd->getLeaderLength());
             break; }
         case DRW::DIMANGULAR: {
-            DRW_DimAngular * dd = (DRW_DimAngular*)ent;
+            auto * dd = static_cast<DRW_DimAngular*>(ent);
             writer->writeString(100, "AcDb2LineAngularDimension");
             writer->writeDouble(13, dd->getFirstLine1().x);
             writer->writeDouble(23, dd->getFirstLine1().y);
@@ -1299,7 +1315,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(36, dd->getDimPoint().z);
             break; }
         case DRW::DIMANGULAR3P: {
-            DRW_DimAngular3p * dd = (DRW_DimAngular3p*)ent;
+            auto * dd = static_cast<DRW_DimAngular3p*>(ent);
             writer->writeDouble(13, dd->getFirstLine().x);
             writer->writeDouble(23, dd->getFirstLine().y);
             writer->writeDouble(33, dd->getFirstLine().z);
@@ -1311,7 +1327,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(35, dd->getVertexPoint().z);
             break; }
         case DRW::DIMORDINATE: {
-            DRW_DimOrdinate * dd = (DRW_DimOrdinate*)ent;
+            auto * dd = static_cast<DRW_DimOrdinate*>(ent);
             writer->writeString(100, "AcDbOrdinateDimension");
             writer->writeDouble(13, dd->getFirstLine().x);
             writer->writeDouble(23, dd->getFirstLine().y);
@@ -2547,6 +2563,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processRay();
         } else if (nextentity == "XLINE") {
             processed = processXline();
+        } else if (nextentity == "ARC_DIMENSION") {
+            processed = processArcDimension();
         } else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_ENTITIES); //end of file without ENDSEC
@@ -3026,6 +3044,27 @@ bool dxfRW::processImage() {
     return setError(DRW::BAD_READ_ENTITIES);
 }
 
+bool dxfRW::processArcDimension() {
+    DRW_DBG("dxfRW::processArcDimension");
+    int code;
+    DRW_ArcDimension dim;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            // fixme - sand - restore ARCDimension
+            // iface->addArcDimension(&dim);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!dim.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
 
 bool dxfRW::processDimension() {
     DRW_DBG("dxfRW::processDimension");

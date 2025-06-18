@@ -74,7 +74,7 @@ RS_Entity::RS_Entity(RS_EntityContainer *parent)
     : parent{parent}
     , m_pImpl{std::make_unique<Impl>()}
 {
-    init();
+    init(true);
 }
 
 RS_Entity::RS_Entity(const RS_Entity& other):
@@ -85,7 +85,7 @@ RS_Entity::RS_Entity(const RS_Entity& other):
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
 {
-    init();
+    init(false);
 }
 
 RS_Entity& RS_Entity::operator = (const RS_Entity& other)
@@ -96,7 +96,8 @@ RS_Entity& RS_Entity::operator = (const RS_Entity& other)
     m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl->fromOther(other.m_pImpl.get());
-    init();
+    // init(false);
+    initId();
     return *this;
 }
 
@@ -108,7 +109,7 @@ RS_Entity::RS_Entity(RS_Entity&& other):
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::move(other.m_pImpl)}
 {
-    init();
+    initId();
 }
 
 RS_Entity& RS_Entity::operator = (RS_Entity&& other)
@@ -119,7 +120,7 @@ RS_Entity& RS_Entity::operator = (RS_Entity&& other)
     m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl = std::move(other.m_pImpl);
-    init();
+    initId();
     return *this;
 }
 
@@ -143,7 +144,7 @@ RS_Entity::~RS_Entity() = default;
  * Initialisation. Called from all constructors.
  */
 #include "rs_math.h"
-void RS_Entity::init() {
+void RS_Entity::init(bool setPenAndLayerToActive) {
     if (m_pImpl == nullptr) {
 
         std::cout<<__func__<<" "<<RS_Math::findGCD(15, 21)<<std::endl;
@@ -152,8 +153,10 @@ void RS_Entity::init() {
     resetBorders();
     setFlag(RS2::FlagVisible);
     updateEnabled = true;
-    setLayerToActive();
-    setPenToActive();
+    if (setPenAndLayerToActive) {
+        setLayerToActive();
+        setPenToActive();
+    }
     initId();
 }
 

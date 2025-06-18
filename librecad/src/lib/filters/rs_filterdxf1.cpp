@@ -1405,7 +1405,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             d->update();
                             graphic->addEntity(d);
 							*/
-							RS_LeaderData data(true);
+							RS_LeaderData data(true, "");
 							RS_Leader* d = 
 								new RS_Leader(graphic, data);
 							d->addVertex(RS_Vector(v14, v24));

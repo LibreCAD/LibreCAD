@@ -246,7 +246,9 @@ void QG_ActionHandler::slotLockRelativeZero(bool on){
 
 void QG_ActionHandler::setDocumentAndView(RS_Document *doc, RS_GraphicView *graphicView){
     m_actionContext->setDocumentAndView(doc, graphicView);
-    m_snapManager->setGraphicView(graphicView);
+    if (m_snapManager != nullptr) {
+        m_snapManager->setGraphicView(graphicView);
+    }
     view = graphicView;
     document = doc;
 }

@@ -39,6 +39,7 @@ public:
      * @return true for success
      */
     bool read(DRW_Interface *interface_, bool ext);
+    bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
     void setBinary(bool b) {binFile = b;}
 
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
@@ -121,6 +122,7 @@ private:
     bool processImage();
     bool processImageDef();
     bool processDimension();
+    bool processArcDimension();
     bool processLeader();
     bool processPlotSettings();
 

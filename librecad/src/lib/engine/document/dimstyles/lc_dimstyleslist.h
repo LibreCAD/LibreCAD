@@ -23,18 +23,28 @@
 #ifndef LC_DIMSTYLESLIST_H
 #define LC_DIMSTYLESLIST_H
 
+#include <memory>
 #include <QList>
-#include "lc_dimstyle.h"
+#include "rs.h"
+
+class LC_DimStyle;
 
 class LC_DimStylesList{
 public:
     LC_DimStylesList();
-    LC_DimStyle* findByName(const QString& name);
+    virtual ~LC_DimStylesList();
+    LC_DimStyle* findByName(const QString& name) const;
+    LC_DimStyle* resolveByName(const QString& name, RS2::EntityType dimType) const;
     void addDimStyle(LC_DimStyle* style);
     void deleteDimStyle(QString &name);
-    int size(){return stylesList.size();}
+    int size() const {return m_stylesList.size();}
+    void clear();
+    const QList<LC_DimStyle*>* getStylesList(){return &m_stylesList;}
+    LC_DimStyle* getFallbackDimStyleFromVars() const {return m_fallbackDimStyleFromVars.get();}
+    void replaceStyles(const QList<LC_DimStyle*>& list);
 protected:
-    QList<LC_DimStyle*> stylesList;
+    QList<LC_DimStyle*> m_stylesList;
+    std::unique_ptr<LC_DimStyle> m_fallbackDimStyleFromVars;
 };
 
 #endif // LC_DIMSTYLESLIST_H

@@ -65,11 +65,15 @@ RS_EventHandler::~RS_EventHandler() {
 }
 
 void RS_EventHandler::uncheckQAction(){
-    if (!hasAction()){
-        if (m_QAction != nullptr) {
-            m_QAction->setChecked(false);
-            m_QAction = nullptr;
-        }
+    if (m_QAction != nullptr) {
+        m_QAction->setChecked(false);
+        m_QAction = nullptr;
+    }
+    if (hasAction()){
+        auto lastAction = m_currentActions.last();
+        m_graphicView->notifyActiveAction(lastAction.get()); // ugly fix to properly restore previous action icon etc.
+    }
+    else {
         m_graphicView->notifyNoActiveAction();
     }
 }
@@ -331,8 +335,11 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? m_currentActions.last() : m_defaultAction;
     // Suspend current action:
-    predecessor->suspend();
-    predecessor->hideOptions();
+    if (predecessor != nullptr) {
+        predecessor->suspend();
+        predecessor->hideOptions();
+    }
+
 
     // Set current action:
     m_currentActions.push_back(action);
@@ -447,8 +454,9 @@ void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
     if (hasAction()) {
-        m_currentActions.last()->resume();
-        m_currentActions.last()->showOptions();
+        auto lastAction = m_currentActions.last();
+        lastAction->resume();
+        lastAction->showOptions();
     } else {
         if (m_defaultAction) {
             m_defaultAction->resume();
@@ -508,8 +516,17 @@ QAction* RS_EventHandler::getQAction(){
 void RS_EventHandler::setQAction(QAction *action) {
 //    LC_ERR << __func__ << "()";
     debugActions();
-    if (m_QAction != nullptr && m_QAction != action) {
-        killAllActions();
+    if (m_QAction != nullptr && action != nullptr && m_QAction != action) {
+        auto property = action->property("RS2:actionType");
+        if (property.isValid()) {
+            int rtti = property.toInt();
+             if (rtti != RS2::ActionZoomPan && rtti != RS2::ActionSetRelativeZero) {
+                 killAllActions();
+             }
+        }
+        else {
+            killAllActions();
+        }
     }
     m_QAction = action;
 }

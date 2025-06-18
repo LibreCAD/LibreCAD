@@ -119,7 +119,8 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                                 }
                             }
                             if (isInfoCursorForModificationEnabled()){
-                                auto builder = msg(tr("Trim"))
+                                auto builder = msgStart().
+                                    string(rtti() == RS2::ActionModifyTrim2 ? tr("Trim Two") :tr("Trim"))
                                     .vector(tr("Intersection:"), trimResult.intersection1);
                                 if (trimResult.intersection2.valid) {
                                     builder.vector(tr("Intersection 2:"), trimResult.intersection2);
