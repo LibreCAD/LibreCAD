@@ -1663,14 +1663,6 @@ void QC_ApplicationWindow::widgetOptionsDialog() {
 bool QC_ApplicationWindow::loadStyleSheet(const QString &path) {
    return m_styleHelper->loadStyleSheet(path);
 }
-// fixme - sand - dimstyle - REMOVE TMP CODE!!
-void QC_ApplicationWindow::tmpDimStyleManager() {
-    RS_Graphic* graphic = getCurrentGraphicView()->getGraphic();
-    LC_DimStyle* defaultDimStyle = graphic->getFallBackDimStyleFromVars();
-
-    LC_DlgDimStyleManager dlg(this, defaultDimStyle,graphic);
-    dlg.exec();
-}
 
 void QC_ApplicationWindow::reloadStyleSheet() {
     m_styleHelper->reloadStyleSheet();

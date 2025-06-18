@@ -122,11 +122,11 @@ void RS_DimRadial::doUpdateDim() {
 
         const double extended_line_length = line_length + doubleArrowSize + textWidth;
         const RS_Vector p3 = p1 + RS_Vector::polar(extended_line_length, line_angle);
-        createDimensionLine(p1b, p3, true, false, m_dimGenericData.autoText);
+        createDimensionLine(p1b, p3, true, false, true, false, m_dimGenericData.autoText);
     }
     else {
         const RS_Vector p3 = p1 + RS_Vector::polar(line_length, line_angle);
-        createDimensionLine(p1, p3, false, true, m_dimGenericData.autoText);
+        createDimensionLine(p1, p3, false, true, false, true, m_dimGenericData.autoText);
     }
 }
 

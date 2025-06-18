@@ -146,8 +146,7 @@ QToolBar *LC_ToolbarFactory::createCreatorsToolbar(const QSizePolicy &tbPolicy) 
 QToolBar *LC_ToolbarFactory::createPreferencesToolbar(const QSizePolicy &tbPolicy) const {
     return createGenericToolbar(tr("Preferences"), "Preferences", tbPolicy, {
                                     "OptionsGeneral",
-                                    "OptionsDrawing",
-                                    "DimStyleEditTmp"
+                                    "OptionsDrawing"
                                 }, 1);
 }
 

@@ -24,6 +24,7 @@
 #ifndef LC_DIMSTYLEPREVIEWGRAPHICVIEW_H
 #define LC_DIMSTYLEPREVIEWGRAPHICVIEW_H
 
+#include "lc_dimstyleitem.h"
 #include "qg_graphicview.h"
 
 class LC_DimStyle;
@@ -31,10 +32,18 @@ class LC_DimStyle;
 class LC_DimStylePreviewGraphicView: public QG_GraphicView{
 public:
     void updateDims();
+    void refresh();
     void setDimStyle(LC_DimStyle *dimStyle);
-    static LC_DimStylePreviewGraphicView* init(QWidget* parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic);
+    void zoomPan();
+    void addDimStyle(LC_DimStyle* dim_style);
+    static LC_DimStylePreviewGraphicView* init(QWidget* parent,RS_Graphic* originalGraphic, RS2::EntityType dimensionType);
 protected:
-    LC_DimStylePreviewGraphicView(QWidget* parent);
+    LC_DimStylePreviewGraphicView(QWidget* parent,LC_ActionContext* actionContext);
     ~LC_DimStylePreviewGraphicView() override;
+    bool proceedEvent(QEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseDoubleClickEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void hideNonRelevantLayers(RS2::EntityType dimType);
 };
 #endif // LC_DIMSTYLEPREVIEWGRAPHICVIEW_H

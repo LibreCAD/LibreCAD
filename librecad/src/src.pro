@@ -288,7 +288,6 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
     actions/drawing/draw/dimensions/lc_actiondimordinate.h \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.h \
-    actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.h \
     actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.h \
     actions/drawing/draw/line/misc/lc_actiondrawmidline.h \
     actions/drawing/draw/line/misc/lc_actiondrawboundingbox.h \
@@ -313,24 +312,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
     actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
-    lib/actions/lc_overlayboxaction.h \     \
-    lib/engine/document/dimstyles/lc_dimarrowregistry.h \
-    lib/engine/document/entities/lc_dimarrowblock.h \
-    lib/engine/document/entities/support/lc_arrow_box.h \
-    lib/engine/document/entities/support/lc_arrow_circle.h \
-    lib/engine/document/entities/support/lc_arrow_datum.h \
-    lib/engine/document/entities/support/lc_arrow_dot.h \
-    lib/engine/document/entities/support/lc_arrow_headclosed.h \
-    lib/engine/document/entities/support/lc_arrow_headclosed2.h \
-    lib/engine/document/entities/support/lc_arrow_headclosed_blank.h \
-    lib/engine/document/entities/support/lc_arrow_headopen.h \
-    lib/engine/document/entities/support/lc_arrow_integral.h \
-    lib/engine/document/entities/support/lc_arrow_none.h \
-    lib/engine/document/entities/support/lc_arrow_origin.h \
-    lib/engine/document/entities/support/lc_arrow_tick.h \
-    lib/engine/document/entities/support/lc_dimarrowblockpoly.h \
-    lib/engine/utils/lc_toleranceutils.h \
-    ui/dialogs/entity/lc_dlgtolerance.h
+    lib/actions/lc_overlayboxaction.h \    
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/ucs/lc_ucslist.h \
@@ -560,7 +542,6 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinate.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp \
-    actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.cpp \
     actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp \
     actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp \
     actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp \
@@ -578,24 +559,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
-    lib/actions/lc_overlayboxaction.cpp \     \
-    lib/engine/document/dimstyles/lc_dimarrowregistry.cpp \
-    lib/engine/document/entities/lc_dimarrowblock.cpp \
-    lib/engine/document/entities/support/lc_arrow_box.cpp \
-    lib/engine/document/entities/support/lc_arrow_circle.cpp \
-    lib/engine/document/entities/support/lc_arrow_datum.cpp \
-    lib/engine/document/entities/support/lc_arrow_dot.cpp \
-    lib/engine/document/entities/support/lc_arrow_headclosed.cpp \
-    lib/engine/document/entities/support/lc_arrow_headclosed2.cpp \
-    lib/engine/document/entities/support/lc_arrow_headclosed_blank.cpp \
-    lib/engine/document/entities/support/lc_arrow_headopen.cpp \
-    lib/engine/document/entities/support/lc_arrow_integral.cpp \
-    lib/engine/document/entities/support/lc_arrow_none.cpp \
-    lib/engine/document/entities/support/lc_arrow_origin.cpp \
-    lib/engine/document/entities/support/lc_arrow_tick.cpp \
-    lib/engine/document/entities/support/lc_dimarrowblockpoly.cpp \
-    lib/engine/utils/lc_toleranceutils.cpp \
-    ui/dialogs/entity/lc_dlgtolerance.cpp
+    lib/actions/lc_overlayboxaction.cpp \    
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
@@ -1622,7 +1586,6 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/LC_DlgParabola.ui \
        ui/dialogs/entity/lc_dlgdimordinate.ui \
        ui/dialogs/entity/lc_dlgsplinepoints.ui \
-       ui/dialogs/entity/lc_dlgtolerance.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
        ui/dialogs/entity/qg_dimensionlabeleditor.ui \
        ui/dialogs/entity/qg_dlgarc.ui \

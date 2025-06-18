@@ -1369,8 +1369,6 @@ class LC_DimStyle{
 
 protected:
         /* handle are code 105 */
-         QString name;
-        /* handle are code 105 */
         int dimunit;              /*!< code 270 R13+ (obsolete 2000+, use dimlunit & dimfrac) */
         int dimfit; /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
 
@@ -1383,32 +1381,6 @@ protected:
 private:
     QString m_name{""};
     bool m_fromVars = false;
-    std::unique_ptr<AngularFormat> m_angularUnitFormattingStyle;
-    std::unique_ptr<Arrowhead> m_arrowheadStyle;
-    std::unique_ptr<Arc> m_arcStyle;
-    std::unique_ptr<DimensionLine> m_dimensionLineStyle;
-    std::unique_ptr<ExtensionLine> m_extensionLineStyle;
-    std::unique_ptr<Leader> m_leaderStyle;
-    std::unique_ptr<LatteralTolerance> m_latteralToleranceStyle;
-    std::unique_ptr<MLeader> m_mleaderStyle;
-    std::unique_ptr<Radial> m_radialStyle;
-    std::unique_ptr<LinearRoundOff> m_roundOffStyle;
-    std::unique_ptr<Scaling> m_scalingStyle;
-    std::unique_ptr<Text> m_textStyle;
-    std::unique_ptr<LinearFormat> m_unitFormattingStyle;
-    std::unique_ptr<Fractions> m_unitFractionsStyle;
-    std::unique_ptr<ZerosSuppression> m_unitZeroSuppressionStyle;
-};
-        int dimfit; /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
-
-        // Displays the unit type (imperial/standard or ISO-25/metric) used by dimensions in the drawing.
-        // Initial value:	Standard (imperial) or ISO-25 (metric)
-        // This system variable has the same name as a command. Use the SETVAR command to access this system variable.
-        // The DIMSTYLE system variable is read-only; to change the current dimension style, use the DIMSTYLE command.
-        int dimstyle;
-
-private:
-    QString m_name;
     std::unique_ptr<AngularFormat> m_angularUnitFormattingStyle;
     std::unique_ptr<Arrowhead> m_arrowheadStyle;
     std::unique_ptr<Arc> m_arcStyle;

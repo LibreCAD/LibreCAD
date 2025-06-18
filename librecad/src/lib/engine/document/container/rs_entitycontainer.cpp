@@ -666,7 +666,7 @@ unsigned RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> con
             if (!types.size() || type.count(t->rtti()))
                 c++;
 
-        if (t->isContainer())
+        if (t->isContainer()) 
             c += dynamic_cast<RS_EntityContainer *>(t)->countSelected(deep); // fixme - hm... - what about entity types there? and deep flag?
     }
 

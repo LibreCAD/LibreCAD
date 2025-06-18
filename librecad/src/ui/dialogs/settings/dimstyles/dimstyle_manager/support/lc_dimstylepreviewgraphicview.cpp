@@ -23,57 +23,84 @@
 
 #include "lc_dimstylepreviewgraphicview.h"
 
-#include <boost/geometry/strategies/strategy_transform.hpp>
+#include <QMouseEvent>
 
+#include "lc_defaultactioncontext.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+#include "rs_actioninterface.h"
 #include "rs_dimension.h"
+#include "rs_eventhandler.h"
 #include "rs_fileio.h"
 #include "rs_graphic.h"
-
-LC_DimStylePreviewGraphicView::LC_DimStylePreviewGraphicView(QWidget* parent):
-  QG_GraphicView(parent, nullptr, nullptr){
-}
-
-LC_DimStylePreviewGraphicView::~LC_DimStylePreviewGraphicView() = default;
+#include "rs_layer.h"
 
 class LC_PreviewGraphic: public RS_Graphic {
 public:
-    explicit LC_PreviewGraphic(LC_DimStyle* dimStyle):RS_Graphic(), m_fixedDimStyle{dimStyle} {
+    explicit LC_PreviewGraphic():RS_Graphic(){
     };
 
     void setDimStyle(LC_DimStyle* dimStyle) {
-        m_fixedDimStyle = dimStyle;
+        QString styleName = dimStyle->getName();
+        RS2::EntityType styleType;
+        LC_DimStyle::parseStyleName(styleName, m_currentStyleBaseName, styleType);
+        getDimStyleList()->addDimStyle(dimStyle);
     }
 
-    void onLoadingCompleted() override {};
+    void onLoadingCompleted() override {}
+    void clearDimStyles() {getDimStyleList()->clear();}
 
-    LC_DimStyle* getResolvedDimStyle(RS_Dimension* dimension) override{
-        return m_fixedDimStyle;
-    }
+    LC_DimStyle* getResolvedDimStyle(const QString& dimStyleName, RS2::EntityType dimType) override {
+        return RS_Graphic::getResolvedDimStyle(m_currentStyleBaseName, dimType);
+    };
 private:
-     LC_DimStyle* m_fixedDimStyle {nullptr}; // ignore style in super class, to avoid reset() and deleting passed object
+    RS2::EntityType m_dimType {RS2::EntityUnknown};
+    QString m_currentStyleBaseName;
 };
 
-LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic) {
+class LC_PreviewActionContext: public LC_DefaultActionContext {
+    public:
+    explicit LC_PreviewActionContext(QG_ActionHandler* actionHandler)
+        : LC_DefaultActionContext{actionHandler} {
+    }
+
+    ~LC_PreviewActionContext() override {deleteActionHandler();}
+};
+
+
+LC_DimStylePreviewGraphicView::LC_DimStylePreviewGraphicView(QWidget* parent, LC_ActionContext* actionContext):
+  QG_GraphicView(parent, nullptr, actionContext){
+}
+
+LC_DimStylePreviewGraphicView::~LC_DimStylePreviewGraphicView() {
+    deleteActionContext();
+};
+
+LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent,RS_Graphic* originalGraphic, RS2::EntityType dimensionType) {
     LC_DimStylePreviewGraphicView* result = nullptr;
-    auto graphic = new LC_PreviewGraphic(dimStyle);
+    auto graphic = new LC_PreviewGraphic();
     graphic->newDoc();
 
-    // copy blocks to preview graphics for arrows
+    // copy blocks to preview graphics for arrows. Can't determine which blocks are for arrows, so force to copy all available ones
     auto srcBlockLock = originalGraphic->getBlockList();
     auto blockList = graphic->getBlockList();
     int blocksCount = srcBlockLock->count();
     if (blocksCount > 0) {
         for (RS_Block* block: *srcBlockLock) {
-            RS_Block* blockClone = static_cast<RS_Block*>(block->clone());
+            auto* blockClone = static_cast<RS_Block*>(block->clone());
             blockList->add(blockClone, false);
         }
     }
 
     bool loaded = RS_FileIO::instance()->fileImport(*graphic, ":/dxf/dim_sample.dxf", RS2::FormatUnknown);
     if (loaded) {
-        result = new LC_DimStylePreviewGraphicView(parent);
+        auto* actionHandler = new QG_ActionHandler(nullptr);
+        auto* actionContext = new LC_DefaultActionContext(actionHandler);
+        actionHandler->setActionContext(actionContext);
+        result = new LC_DimStylePreviewGraphicView(parent, actionContext);
+        actionHandler->setDocumentAndView(graphic->getDocument(), result);
         result->setContainer(graphic);
         auto viewport = result->getViewPort();
         viewport->setBorders(15,15,15,15);
@@ -82,16 +109,62 @@ LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* pare
         result->loadSettings();
         result->setDraftMode(false);
         result->setDraftLinesMode(false);
+        result->hideNonRelevantLayers(dimensionType);
 
         auto* renderer = dynamic_cast<LC_GraphicViewRenderer*>(result->getRenderer());
         renderer->absZeroOptions()->m_extendAxisLines = false;
-
         result->zoomAuto();
     }
     else {
         // how it could be???
     }
     return result;
+}
+
+void LC_DimStylePreviewGraphicView::hideNonRelevantLayers(RS2::EntityType dimType) {
+    if (dimType == RS2::EntityUnknown) {
+        auto layersList = getGraphic(false)->getLayerList();
+        for (auto layer: *layersList) {
+            layer->freeze(false);
+        }
+    }
+    else {
+        QString layerToShow;
+        switch (dimType) {
+            case RS2::EntityDimLinear:
+            case RS2::EntityDimAligned:
+                layerToShow = "DIM$LINEAR";
+                break;
+            case RS2::EntityDimAngular:
+                layerToShow = "DIM$ANGULAR";
+                break;
+            case RS2::EntityDimRadial:
+                layerToShow = "DIM$RADIAL";
+                break;
+            case RS2::EntityDimDiametric:
+                layerToShow = "DIM$DIAMETRIC";
+                break;
+            case RS2::EntityDimOrdinate:
+                layerToShow = "DIM$ORDINATE";
+                break;
+            case RS2::EntityDimLeader:
+            case RS2::EntityTolerance:
+                layerToShow = "DIM$LEADER";
+                break;
+            default:
+                break;
+        }
+        auto layersList = getGraphic(false)->getLayerList();
+        for (auto layer: *layersList) {
+            QString layerName = layer->getName();
+            bool layerInvisible = layerName != "0" && layerName != layerToShow;
+            layer->freeze(layerInvisible);
+        }
+    }
+}
+
+bool LC_DimStylePreviewGraphicView::proceedEvent(QEvent* event) {
+    return QWidget::event(event);
 }
 
 void LC_DimStylePreviewGraphicView::updateDims() {
@@ -101,10 +174,64 @@ void LC_DimStylePreviewGraphicView::updateDims() {
     repaint();
 }
 
-void LC_DimStylePreviewGraphicView::setDimStyle(LC_DimStyle* dimStyle) {
-    auto* graphic = dynamic_cast<LC_PreviewGraphic*>(getGraphic());
-    graphic->setDimStyle(dimStyle);
-    graphic->updateDimensions(true);
+void LC_DimStylePreviewGraphicView::refresh() {
     redraw(RS2::RedrawDrawing);
     repaint();
+}
+
+void LC_DimStylePreviewGraphicView::addDimStyle(LC_DimStyle* dimStyle) {
+    auto* graphic = dynamic_cast<LC_PreviewGraphic*>(getGraphic());
+    graphic->addDimStyle(dimStyle);
+}
+
+void LC_DimStylePreviewGraphicView::setDimStyle(LC_DimStyle* dimStyle) {
+    auto* graphic = dynamic_cast<LC_PreviewGraphic*>(getGraphic());
+    graphic->clearDimStyles();
+    graphic->setDimStyle(dimStyle);
+    RS2::EntityType dimType = dimStyle->getDimensionType();
+    hideNonRelevantLayers(dimType);
+}
+
+void LC_DimStylePreviewGraphicView::zoomPan() {
+    switchToAction(RS2::ActionZoomPan);
+}
+
+void LC_DimStylePreviewGraphicView::mousePressEvent(QMouseEvent* event){
+    // pan zoom with middle mouse button
+    if (event->button()==Qt::MiddleButton){
+        switchToAction(RS2::ActionZoomPan);
+        getCurrentAction()->mousePressEvent(event);
+    }
+    else {
+        getEventHandler()->mousePressEvent(event);
+    }
+}
+
+void LC_DimStylePreviewGraphicView::mouseDoubleClickEvent(QMouseEvent* e){
+    switch(e->button()){
+        case Qt::MiddleButton:
+            switchToAction(RS2::ActionZoomAuto);
+            break;
+        default:
+            break;
+    }
+    e->accept();
+}
+
+void LC_DimStylePreviewGraphicView::mouseReleaseEvent(QMouseEvent* event){
+    event->accept();
+
+    switch (event->button()) {
+    case Qt::RightButton: {
+        back();
+        break;
+    }
+    case Qt::XButton1:
+        processEnterKey();
+        emit xbutton1_released();
+        break;
+    default:
+        getEventHandler()->mouseReleaseEvent(event);
+        break;
+    }
 }

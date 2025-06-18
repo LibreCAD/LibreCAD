@@ -568,9 +568,7 @@ void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> 
         {"WidgetOptions", &QC_ApplicationWindow::widgetOptionsDialog, tr("Widget Options")},
         {"ShortcutsOptions", &QC_ApplicationWindow::slotOptionsShortcuts, tr("Keyboard Shortcuts"), ":/icons/shortcuts_settings.lci"},
         {"DeviceOptions", &QC_ApplicationWindow::showDeviceOptions, tr("Device Options")},
-        {"ReloadStyleSheet", &QC_ApplicationWindow::reloadStyleSheet, tr("Reload Style Sheet")},
-
-        {"DimStyleEditTmp",&QC_ApplicationWindow::tmpDimStyleManager, tr("Dimension Style Manager "), ":/icons/dim_style_manager.lci"}
+        {"ReloadStyleSheet", &QC_ApplicationWindow::reloadStyleSheet, tr("Reload Style Sheet")}
     });
 }
 

@@ -290,7 +290,7 @@ void LC_MenuFactory::createSettingsMenu(QMenuBar *menu_bar, QList<QMenu *> &topM
                              "DeviceOptions",
                              "ReloadStyleSheet",
                              "",
-                             "OptionsDrawing"
+                             "OptionsDrawing",
                          });
 
     topMenuMenus << m_menuSettings;
