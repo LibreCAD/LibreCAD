@@ -755,12 +755,18 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
 
         QPainterPath loopPath;
         QPointF uiStart;
+        bool hasStart = false;
         for(auto* e: *static_cast<RS_EntityContainer*>(loop)){
             if (e==nullptr)
                 continue;
 
             if (loopPath.isEmpty()) {
-                uiStart = toUiPointF(e->getStartpoint());
+                RS_Vector startPoint = e->getStartpoint();
+                // Issue #2202: complete circles/ellipses have no start point defined
+                // getStartpoint() should return RS_Vector{false}
+                hasStart = startPoint.valid;
+                if (hasStart)
+                    uiStart = toUiPointF(startPoint);
                 loopPath.moveTo(uiStart);
             }
 
@@ -784,6 +790,7 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
                 auto* circle = static_cast<RS_Circle*>(e);
                 QPointF uiCenter = toUiPointF(circle->getCenter());
                 double radius=toGuiDX(circle->getRadius());
+                loopPath.moveTo(uiCenter);
                 loopPath.addEllipse(uiCenter, radius, radius);
             }
                 break;
@@ -815,7 +822,9 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops)  {
                 break;
             }
         }
-        loopPath.lineTo(uiStart);
+        // Issue #2202: circles/ellipses have no start point defined
+        if (hasStart)
+            loopPath.lineTo(uiStart);
         path.addPath(loopPath);
     }
     return path;
