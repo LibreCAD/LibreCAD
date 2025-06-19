@@ -144,7 +144,6 @@ protected slots:
     void onTolAltPrecisionIndexChanged(int index);
     void cbTolAlternateZerosSuppressionToggled(bool val);
 private:
-
     void setDimStyle(LC_DimStyle *dimStyle);
     void createPreviewGraphicView(RS2::EntityType dimensionType);
     void initPreview(RS2::EntityType dimensionType);

@@ -31,12 +31,15 @@
 #include "lc_dimstylepreviewgraphicview.h"
 #include "lc_dimstyleslistmodel.h"
 
+class LC_DimStyleTreeModel;
 class RS_Graphic;
 class RS_Vector;
 
 class QG_DlgOptionsDrawing : public LC_Dialog, public Ui::QG_DlgOptionsDrawing{
     Q_OBJECT
 public:
+    void connectPointsTab();
+    void connectLegacyDimsTab();
     explicit QG_DlgOptionsDrawing(QWidget* parent = nullptr);
 	~QG_DlgOptionsDrawing() override;
     void showInitialTab(int tabIndex);
@@ -66,27 +69,30 @@ protected slots:
     void enableXSpacing(bool checked);
 
     void onDimStyleNew(bool checked);
+    void expansStylesTree();
     void onDimStyleEdit(bool checked=false);
     void onDimStyleRename(bool checked);
     void onDimStyleRemove(bool checked);
     void onDimStyleExport(bool checked);
     void onDimStyleImport(bool checked);
     void onDimStyleSetDefault(bool checked);
+    void updateActionButtons(LC_DimStyleItem* item);
     void onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
-    void updateDimStylePreview(LC_DimStyle* dimStyle, LC_StylesListModel* model) const;
     void onDimSelectionChanged(
         const QItemSelection& selection,
         const QItemSelection& before);
     void onDimStyleCurrentActivated(const QModelIndex &index);
     void onDimStylesListMenuRequested(const QPoint &pos);
     void onDimStyleDoubleClick();
+    void reject() override;
 protected:
     void setupPointsTab();
     void setupSplinesTab();
     void setupGridTab();
     void setupPaperTab();
-    LC_StylesListModel* getDimStylesModel();
-    void doCreateDimStyle(const QString &newStyleName, LC_StylesListModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType);
+    void setupLegacyDimsTab(RS2::LinearFormat& linearFormat, int lunits, int luprec, int aunits, int auprec);
+    LC_DimStyleTreeModel* getDimStylesModel();
+    void doCreateDimStyle(const QString &newStyleName, LC_DimStyleTreeModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType);
     void connectPaperTab();
     void connectUnitTab();
     void connectGridTab();
@@ -94,12 +100,15 @@ protected:
     void showEvent(QShowEvent* event) override;
     void updateLPtSzUnits();
     QString askForUniqueDimStyleName(const QString &caption, const QString& prompt, const QString &defaultText);
+    void updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimStyleTreeModel* model) const;
 private:
     std::unique_ptr<QStringList> m_listPrec1;
     RS_Graphic* m_graphic;
     QGraphicsScene* m_paperScene;
     std::unique_ptr<RS_Vector> m_spacing;
     LC_DimStylePreviewGraphicView* m_previewView;
+    bool m_hasImportantMoficationsToAskOnCancel = false;
+
     void init();
     void collectStylesUsage(RS_Graphic* rs_graphic, QMap<QString, int>& map);
     void setupDimStylesTab(RS_Graphic* g);
@@ -112,6 +121,8 @@ private:
     void validatePaperTab();
     void validateUnitsTab();
     QModelIndex getSelectedDimStyleIndex();
+
+
 };
 
 #endif // QG_DLGOPTIONSDRAWING_H

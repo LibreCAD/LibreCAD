@@ -30,14 +30,14 @@ namespace RS2
     enum EntityType : unsigned;
 }
 
-LC_DimStyleItem::LC_DimStyleItem() {}
-
-LC_DimStyleItem::~LC_DimStyleItem() {
-    qDeleteAll(m_childItems);
+LC_DimStyleItem::LC_DimStyleItem() : m_dimType{} {
 }
+
+LC_DimStyleItem::~LC_DimStyleItem() {}
 
 void LC_DimStyleItem::appendChild(LC_DimStyleItem *item){
     m_childItems.append(item);
+    item->setParentItem(this);
 }
 
 LC_DimStyleItem *LC_DimStyleItem::child(int row) const {
@@ -98,4 +98,93 @@ QString LC_DimStyleItem::composeDisplayName(QString baseName, RS2::EntityType en
             break;
     }
     return result;
+}
+
+int LC_DimStyleItem::row() const {
+    if (m_parentItem != nullptr) {
+        return m_parentItem->m_childItems.indexOf(const_cast<LC_DimStyleItem*>(this));
+    }
+    return 0;
+}
+
+LC_DimStyleItem* LC_DimStyleItem::findByName(const QString& name) const {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        if (child->dimStyle()->getName() == name) {
+            return child;
+        }
+        LC_DimStyleItem* foundChild = child->findByName(name);
+        if (foundChild != nullptr) {
+            return foundChild;
+        }
+    }
+    return nullptr;
+}
+
+LC_DimStyleItem* LC_DimStyleItem::findBaseStyleItem(const QString& baseStyleName) const {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        if (child->baseName() == baseStyleName) {
+            return child;
+        }
+    }
+    return nullptr;
+}
+
+LC_DimStyleItem* LC_DimStyleItem::findCurrent() const {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        if (child->isCurrent()) {
+            return child;
+        }
+        LC_DimStyleItem* foundChild = child->findCurrent();
+        if (foundChild != nullptr) {
+            return foundChild;
+        }
+    }
+    return nullptr;
+}
+
+void LC_DimStyleItem::cleanup() {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        child->cleanup();
+        delete child;
+    }
+    m_childItems.clear();
+}
+
+void LC_DimStyleItem::removeChild(LC_DimStyleItem* item) {
+    m_childItems.removeAll(item);
+}
+
+void LC_DimStyleItem::collectChildren(QList<LC_DimStyleItem*>& items) {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        items.push_back(child);
+        child->collectChildren(items);
+    }
+}
+
+void LC_DimStyleItem::setNewBaseName(const QString& newBaseName) {
+    if (m_dimType == RS2::EntityUnknown) {
+        m_dimStyle->setName(newBaseName);
+    }
+    else {
+        QString suffix = LC_DimStyle::getDimStyleNameSuffixForType(m_dimType);
+        QString newName = newBaseName + suffix;
+        m_dimStyle->setName(newName);
+    }
+    m_baseName = newBaseName;
+    m_displayName = composeDisplayName(m_baseName, m_dimType);
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        child->setNewBaseName(newBaseName);
+    }
 }

@@ -813,6 +813,7 @@ bool RS_Graphic::isModified() const{
            || blockList.isModified()
            || namedViewsList.isModified()
            || ucsList.isModified()
+           || dimstyleList.isModified()
         ;}
 
 /**
@@ -825,6 +826,7 @@ void RS_Graphic::setModified(bool m) {
         blockList.setModified(m);
         namedViewsList.setModified(m);
         ucsList.setModified(m);
+        dimstyleList.setModified(m);
     }
     if (m_modificationListener != nullptr) {
         m_modificationListener->graphicModified(this, m);

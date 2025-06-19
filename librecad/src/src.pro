@@ -312,7 +312,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
     actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
-    lib/actions/lc_overlayboxaction.h \    
+    lib/actions/lc_overlayboxaction.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/ucs/lc_ucslist.h \
@@ -378,7 +378,7 @@ HEADERS += \
     lib/engine/document/entities/rs_image.h \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
-    lib/engine/document/layers/rs_layerlistlistener.h \    
+    lib/engine/document/layers/rs_layerlistlistener.h \
     lib/engine/document/entities/rs_leader.h \
     lib/engine/document/entities/rs_line.h \
     lib/engine/document/entities/rs_mtext.h \
@@ -430,6 +430,7 @@ HEADERS += \
     ui/dialogs/file/export/image/lc_exporttoimageservice.h \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
+    ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
     ui/dialogs/file/export/layers/lc_layerexportoptions.h \
     ui/dock_widgets/lc_dockwidget.h \
@@ -559,7 +560,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
-    lib/actions/lc_overlayboxaction.cpp \    
+    lib/actions/lc_overlayboxaction.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
@@ -589,6 +590,7 @@ SOURCES += \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
+    ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
     ui/dialogs/file/export/layers/lc_layerexportoptions.cpp \
     #ui/dock_widgets/library_widget/lc_librarywidget.cpp \

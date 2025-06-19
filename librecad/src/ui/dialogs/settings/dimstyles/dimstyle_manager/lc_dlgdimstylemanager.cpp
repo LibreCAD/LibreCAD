@@ -50,6 +50,7 @@ LC_DlgDimStyleManager::LC_DlgDimStyleManager(QWidget* parent,LC_DimStyle* dimSty
     init(dimensionType);
     setDimStyle(dimStyle);
     initPreview(dimensionType);
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 LC_DlgDimStyleManager::~LC_DlgDimStyleManager() {
@@ -1785,6 +1786,9 @@ void LC_DlgDimStyleManager::hideFieldsReservedForTheFuture() {
     ui->leAlternateSubUnitSuffix->setVisible(false);
     ui->lblAltSubUnitFactor->setVisible(false);
     ui->lblAltSubUnitSuffix->setVisible(false);
+
+    ui->gbLinearJog->setVisible(false);
+    ui->gbRadiusJog->setVisible(false);
 }
 
 void LC_DlgDimStyleManager::adjustUIForDimensionType(RS2::EntityType dimensionType) {

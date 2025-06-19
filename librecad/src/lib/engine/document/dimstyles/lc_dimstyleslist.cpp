@@ -78,18 +78,22 @@ LC_DimStyle* LC_DimStylesList::resolveByName(const QString& name, RS2::EntityTyp
 void LC_DimStylesList::addDimStyle(LC_DimStyle *style) {
     // fixme - sand - dims - check for duplicated name?
     m_stylesList.append(style);
+    setModified(true);
 }
 
 void LC_DimStylesList::deleteDimStyle([[maybe_unused]]QString &name) {
-
+    // fixme - sand - is it actually needed?
+   setModified(true);
 }
 
 void LC_DimStylesList::clear() {
     m_stylesList.clear();
+    setModified(true);
 }
 
 void LC_DimStylesList::replaceStyles(const QList<LC_DimStyle*>& list) {
     qDeleteAll(m_stylesList);
     m_stylesList.clear();
     m_stylesList.append(list);
+    setModified(true);
 }

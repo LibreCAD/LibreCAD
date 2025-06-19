@@ -1358,7 +1358,7 @@ class LC_DimStyle{
     void setModifyCheckMode(ModificationAware::CheckFlagMode mode);
 
     bool isFromVars(){return m_fromVars;}
-    void setFromVars(bool v){m_fromVars = true;}
+    void setFromVars(bool v){m_fromVars = v;}
 
     /*
     int getDimunit() const;

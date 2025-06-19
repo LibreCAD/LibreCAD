@@ -39,6 +39,7 @@
 #include "lc_dimstylepreviewpanel.h"
 #include "lc_dimstylesexporter.h"
 #include "lc_dimstyleslistmodel.h"
+#include "lc_dimstylestreemodel.h"
 #include "lc_dlgdimstylemanager.h"
 #include "lc_dlgnewdimstyle.h"
 #include "lc_inputtextdialog.h"
@@ -51,6 +52,8 @@
 #include "rs_units.h"
 #include "rs_vector.h"
 
+#define $ENABLE_LEGACY_DIMENSIONS_TAB // fixme - sand - temporary, remove later
+
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -58,6 +61,16 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
+
+void QG_DlgOptionsDrawing::connectPointsTab() {
+    connect(rbRelSize, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onRelSizeToggled);
+}
+
+void QG_DlgOptionsDrawing::connectLegacyDimsTab() {
+    connect(cbDimLUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
+    connect(cbDimAUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
+    connect(cbDimFxLon, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::onDimFxLonToggled);
+}
 
 QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
     : LC_Dialog(parent, "OptionsDrawing")
@@ -70,10 +83,13 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
     connectUnitTab();
     connectGridTab();
 
-    connect(cbDimLUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
-    connect(cbDimAUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
-    connect(cbDimFxLon, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::onDimFxLonToggled);
-    connect(rbRelSize, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onRelSizeToggled);
+#ifdef ENABLE_LEGACY_DIMENSIONS_TAB
+    connectLegacyDimsTab();
+#else
+    tabWidget->removeTab(3);
+#endif
+
+    connectPointsTab();
 
     tabWidget->setCurrentIndex(0);
     init();
@@ -157,9 +173,10 @@ void QG_DlgOptionsDrawing::init() {
 
     fillLinearUnitsCombobox(cbLengthFormat);
     fillAngleUnitsCombobox(cbAngleFormat);
-
+#ifdef ENABLE_LEGACY_DIMENSIONS_TAB
     fillLinearUnitsCombobox(cbDimLUnit);
     fillAngleUnitsCombobox(cbDimAUnit);
+#endif
 
     // Paper format:
     for (RS2::PaperFormat i = RS2::FirstPaperFormat; RS2::NPageFormat > i; i = static_cast<RS2::PaperFormat>(i + 1)) {
@@ -168,8 +185,9 @@ void QG_DlgOptionsDrawing::init() {
     // Paper preview:
     gvPaperPreview->setScene(m_paperScene);
     gvPaperPreview->setBackgroundBrush(this->palette().color(QPalette::Window));
-
+#ifdef ENABLE_LEGACY_DIMENSIONS_TAB
     cbDimTxSty->init();
+#endif
 }
 
 #define TO_MM(v) RS_Units::convert(2.5, RS2::Millimeter, unit)
@@ -189,8 +207,6 @@ void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
 
     layout->addWidget(previewToolbar);
     layout->addWidget(m_previewView, 10);
-
-
 
     QString defaultDimStyleName = g->getDefaultDimStyleName();
     LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
@@ -219,8 +235,10 @@ void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
         items << item;
     }
 
-    auto* model = new LC_StylesListModel(this, items);
+    auto* model = new LC_DimStyleTreeModel(this, items);
     lvDimStyles->setModel(model);
+
+    expansStylesTree();
 
     connect(tbDimNew, &QToolButton::clicked, this, &QG_DlgOptionsDrawing::onDimStyleNew);
     connect(tbDimEdit, &QToolButton::clicked, this, &QG_DlgOptionsDrawing::onDimStyleEdit);
@@ -269,8 +287,24 @@ void QG_DlgOptionsDrawing::onDimStyleDoubleClick() {
     onDimStyleEdit(false);
 }
 
-LC_StylesListModel* QG_DlgOptionsDrawing::getDimStylesModel() {
-    return dynamic_cast<LC_StylesListModel*>(lvDimStyles->model());
+void QG_DlgOptionsDrawing::reject() {
+    if (m_hasImportantMoficationsToAskOnCancel) {
+        int response = QMessageBox::warning(
+                   this,
+                   tr("Drawing Options"),
+                   QObject::tr("Settings were changed. Are you sure you'd like to skip saving changes (so the will not be saved)?"),
+                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No
+                   );
+
+        if (response != QMessageBox::Yes) {
+            return;
+        }
+    }
+    LC_Dialog::reject();
+}
+
+LC_DimStyleTreeModel* QG_DlgOptionsDrawing::getDimStylesModel() {
+    return dynamic_cast<LC_DimStyleTreeModel*>(lvDimStyles->model());
 }
 
 void QG_DlgOptionsDrawing::onDimStylesListMenuRequested(const QPoint& pos) {
@@ -292,7 +326,7 @@ void QG_DlgOptionsDrawing::onDimStylesListMenuRequested(const QPoint& pos) {
     if (index.isValid()) {
         auto* model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(index);
-        if (!item->isCurrent()) {
+        if (!item->isCurrent() && item->isBaseStyle()) {
             addActionFunc("dim_default", tr("&Set as Default"), &QG_DlgOptionsDrawing::onDimStyleSetDefault);
         }
 
@@ -361,7 +395,9 @@ void QG_DlgOptionsDrawing::onDimStyleNew(bool checked) {
 
     QString newStyleName  = "";
     LC_DlgNewDimStyle dlgNewDimStyle(this);
-    dlgNewDimStyle.setup(defaultItem, *model->getStyleItems());
+    QList<LC_DimStyleItem*> styleItems;
+    model->collectAllStyleItems(styleItems);
+    dlgNewDimStyle.setup(defaultItem, styleItems);
     if (dlgNewDimStyle.exec() == Accepted) {
         newStyleName = dlgNewDimStyle.getStyleName();
         auto styleItemBaseOn = dlgNewDimStyle.getBaseDimStyle();
@@ -371,14 +407,20 @@ void QG_DlgOptionsDrawing::onDimStyleNew(bool checked) {
     }
 }
 
-void QG_DlgOptionsDrawing::doCreateDimStyle(const QString &newStyleName, LC_StylesListModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType) {
+void QG_DlgOptionsDrawing::expansStylesTree() {
+    lvDimStyles->expandAll();
+    lvDimStyles->setItemsExpandable(false);
+}
+
+void QG_DlgOptionsDrawing::doCreateDimStyle(const QString &newStyleName, LC_DimStyleTreeModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType) {
     auto originalStyle = styleItemBasedOn->dimStyle();
     LC_DimStyle* styleCopyToEdit = originalStyle->getCopy();
     styleCopyToEdit->setName(newStyleName);
+    styleCopyToEdit->setFromVars(false);
     LC_DlgDimStyleManager dimStyleManager(this, styleCopyToEdit, m_graphic, newDimType);
 
     QList<LC_DimStyleItem*> itemsMatchedStyle;
-    model->collectItemsForStyle(styleCopyToEdit, &itemsMatchedStyle);
+    model->collectAllItemsForStyle(styleCopyToEdit, &itemsMatchedStyle);
     for (auto dsi: itemsMatchedStyle) {
         auto styleToAdd = dsi->dimStyle();
         if (styleToAdd->getName() != newStyleName) {
@@ -390,7 +432,9 @@ void QG_DlgOptionsDrawing::doCreateDimStyle(const QString &newStyleName, LC_Styl
     if (dimStyleManager.exec() == QDialog::Accepted) {
         auto item = new LC_DimStyleItem(styleCopyToEdit, 0, false);
         model->addItem(item);
+        expansStylesTree();
         updateDimStylePreview(originalStyle, model);
+        m_hasImportantMoficationsToAskOnCancel = true;
     }
     else {
         delete styleCopyToEdit;
@@ -441,7 +485,7 @@ void QG_DlgOptionsDrawing::onDimStyleEdit(bool checked) {
         dimStyleManager.setWindowTitle(tr("Dimension style editing - ") + LC_DimStyleItem::getDisplayDimStyleName(originalStyleToEdit));
         if (dimStyleManager.exec() == QDialog::Accepted) {
             styleCopyToEdit->copyTo(originalStyleToEdit);
-            // originalStyle->merge(styleCopyToEdit);
+            m_hasImportantMoficationsToAskOnCancel = true;
             updateDimStylePreview(originalStyleToEdit, model);
         };
         delete styleCopyToEdit;
@@ -449,12 +493,7 @@ void QG_DlgOptionsDrawing::onDimStyleEdit(bool checked) {
 }
 
 QModelIndex QG_DlgOptionsDrawing::getSelectedDimStyleIndex() {
-    QModelIndex result;
-    QModelIndexList selectedIndexes = lvDimStyles->selectionModel()->selectedIndexes();
-    if (selectedIndexes.size() == 1){ // only one selected item is expected
-        result = selectedIndexes.at(0);
-    }
-    return result;
+    return lvDimStyles->selectionModel()->currentIndex();
 }
 
 void QG_DlgOptionsDrawing::onDimStyleRename(bool checked) {
@@ -462,16 +501,17 @@ void QG_DlgOptionsDrawing::onDimStyleRename(bool checked) {
     if (selectedItemIndex.isValid()) {
         auto* model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(selectedItemIndex);
-        if (item->usageCount()  == 0 && !item->isFromVariables()) {
+        if (item->usageCount() == 0 && !item->isFromVariables() && item->isBaseStyle()) {
             auto style = item->dimStyle();
             QString originalStyleName = style->getName();
             QString styleName = askForUniqueDimStyleName(tr("Rename Dimension Style"),
             tr("Enter new unique name of dimension style (was \"%1\"):").arg(originalStyleName), originalStyleName);
-            if (!styleName.isEmpty()) {// FIXME _ SAND _ RENAME FOR HIERARCHY
-               style->setName(styleName);
-               item->updateNameAndType();
+            if (!styleName.isEmpty()) {
+               item->setNewBaseName(styleName);
             }
             model->emitDataChanged();
+            expansStylesTree();
+            m_hasImportantMoficationsToAskOnCancel = true;
         }
     }
 }
@@ -490,6 +530,8 @@ void QG_DlgOptionsDrawing::onDimStyleRemove(bool checked) {
 
             if (msgBox.exec() == QMessageBox::Yes) {
                 model->removeItem(item);
+                expansStylesTree();
+                m_hasImportantMoficationsToAskOnCancel = true;
             }
         }
     }
@@ -499,8 +541,9 @@ void QG_DlgOptionsDrawing::onDimStyleExport(bool checked) {
     LC_DimStylesExporter exporter;
     // here we export styles from the dialog, not from the document!!!
     auto model = getDimStylesModel();
-    auto dimStyleItems = model->getStyleItems();
-    exporter.exportStyles(this, *dimStyleItems, m_graphic->getFilename());
+    QList<LC_DimStyleItem*> dimStyleItems;
+    model->collectAllStyleItems(dimStyleItems);
+    exporter.exportStyles(this, dimStyleItems, m_graphic->getFilename());
 }
 
 void QG_DlgOptionsDrawing::onDimStyleImport(bool checked) {
@@ -509,6 +552,7 @@ void QG_DlgOptionsDrawing::onDimStyleImport(bool checked) {
     if (exporter.importStyles(this, items)) {
         auto model = getDimStylesModel();
         model->mergeWith(items);
+        items.clear();
         QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
         LC_DimStyleItem* itemToRefresh{nullptr};
         if (selectedItemIndex.isValid()) {
@@ -517,6 +561,7 @@ void QG_DlgOptionsDrawing::onDimStyleImport(bool checked) {
         else{
             itemToRefresh = model->getStandardItem();
         }
+        m_hasImportantMoficationsToAskOnCancel= true;
         updateDimStylePreview(itemToRefresh->dimStyle(), model);
     }
 }
@@ -526,26 +571,30 @@ void QG_DlgOptionsDrawing::onDimStyleSetDefault(bool checked) {
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
         model->setDefaultItem(selectedItemIndex);
+        expansStylesTree();
     }
+}
+
+void QG_DlgOptionsDrawing::updateActionButtons(LC_DimStyleItem* item) {
+    tbDimDefault->setEnabled(!item->isCurrent() && item->isBaseStyle());
+    tbDimRemove->setEnabled(!item->isFromVariables() && item->usageCount ()== 0);
+    // fixme - sand - dims - should we allow renaming if there are usages?
+    tbDimRename->setEnabled(!item->isFromVariables() && item->usageCount() == 0 && item->isBaseStyle());
 }
 
 void QG_DlgOptionsDrawing::onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous){
     if (current.isValid()) {
         auto model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(current);
-
-        tbDimDefault->setEnabled(!item->isCurrent());
-        tbDimRemove->setEnabled(!item->isFromVariables() && item->usageCount ()== 0);
-        // fixme - sand - dims - should we allow renaming if there are usages?
-        tbDimRename->setEnabled(!item->isFromVariables() && item->usageCount() == 0 && item->isBaseStyle());
+        updateActionButtons(item);
         updateDimStylePreview(item->dimStyle(), model);
     }
 }
 
-void QG_DlgOptionsDrawing::updateDimStylePreview(LC_DimStyle* dimStyle, LC_StylesListModel* model) const {
+void QG_DlgOptionsDrawing::updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimStyleTreeModel* model) const {
     m_previewView->setDimStyle(dimStyle);
     QList<LC_DimStyleItem*> itemsMatchedStyle;
-    model->collectItemsForStyle(dimStyle, &itemsMatchedStyle);
+    model->collectAllItemsForStyle(dimStyle, &itemsMatchedStyle);
     QString dimStyleName = dimStyle->getName();
     for (auto dsi: itemsMatchedStyle) {
         auto styleToAdd = dsi->dimStyle();
@@ -558,11 +607,11 @@ void QG_DlgOptionsDrawing::updateDimStylePreview(LC_DimStyle* dimStyle, LC_Style
 }
 
 void QG_DlgOptionsDrawing::onDimSelectionChanged(const QItemSelection& selection, const QItemSelection& before) {
-    LC_ERR << "SElection Changed";
+    LC_ERR << "SElection Changed"; // fixme - clean!
 }
 
 void QG_DlgOptionsDrawing::onDimStyleCurrentActivated(const QModelIndex& index) {
-    LC_ERR << "Activated";
+    LC_ERR << "Activated";// fixme - clean!
 }
 
 void QG_DlgOptionsDrawing::setupPointsTab() {
@@ -777,6 +826,110 @@ void QG_DlgOptionsDrawing::setupPaperTab() {
     sbPagesNumV->setValue(m_graphic->getPagesNumVert());
 }
 
+void QG_DlgOptionsDrawing::setupLegacyDimsTab(RS2::LinearFormat& linearFormat, int lunits, int luprec, int aunits, int auprec) {
+    // dimension text height:
+    auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+
+    // dimension general factor:
+    double dimfactor = m_graphic->getVariableDouble("$DIMLFAC", 1.0);
+    cbDimFactor->setEditText(QString("%1").arg(dimfactor));
+
+    // dimension general scale:
+    double dimscale = m_graphic->getVariableDouble("$DIMSCALE", 1.0);
+    cbDimScale->setEditText(QString("%1").arg(dimscale));
+
+    double dimtxt = m_graphic->getVariableDouble("$DIMTXT", TO_MM(2.5));
+    cbDimTextHeight->setEditText(QString("%1").arg(dimtxt));
+
+    // dimension extension line extension:
+    double dimexe = m_graphic->getVariableDouble("$DIMEXE", TO_MM(1.25));
+    cbDimExe->setEditText(QString("%1").arg(dimexe));
+
+    // dimension extension line offset:
+    double dimexo = m_graphic->getVariableDouble("$DIMEXO", TO_MM(0.625));
+    cbDimExo->setEditText(QString("%1").arg(dimexo));
+
+    // dimension line gap:
+    double dimgap = m_graphic->getVariableDouble("$DIMGAP", TO_MM(0.625));
+    cbDimGap->setEditText(QString("%1").arg(dimgap));
+
+    // dimension arrow size:
+    double dimasz = m_graphic->getVariableDouble("$DIMASZ", TO_MM(2.5));
+    cbDimAsz->setEditText(QString("%1").arg(dimasz));
+
+    // dimension tick size:
+    double dimtsz = m_graphic->getVariableDouble("$DIMTSZ", 0.);
+    cbDimTsz->setEditText(QString("%1").arg(dimtsz));
+    // dimension alignment:
+    int dimtih = m_graphic->getVariableInt("$DIMTIH", 0);
+    cbDimTih->setCurrentIndex(dimtih);
+    //RLZ todo add more options for dimensions
+    cbDimClrT->init(true, false);
+    cbDimClrE->init(true, false);
+    cbDimClrD->init(true, false);
+    cbDimLwD->init(true, false);
+    cbDimLwE->init(true, false);
+    // fixed extension length:
+    double dimfxl = m_graphic->getVariableDouble("$DIMFXL",TO_MM(1.0));
+    cbDimFxL->setValue(dimfxl);
+    int dimfxlon = m_graphic->getVariableInt("$DIMFXLON", 0);
+    if (dimfxlon > 0) {
+        cbDimFxL->setEnabled(true);
+        cbDimFxLon->setChecked(true);
+    } else {
+        cbDimFxL->setEnabled(false);
+        cbDimFxLon->setChecked(false);
+    }
+    int dimlwd = m_graphic->getVariableInt("$DIMLWD", -2); //default ByBlock
+    //    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<dimlwd;
+    RS2::LineWidth lineWidth = RS2::intToLineWidth(dimlwd);
+    cbDimLwD->setWidth(lineWidth);
+    int dimlwe = m_graphic->getVariableInt("$DIMLWE", -2); //default ByBlock
+    cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
+    //    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLwe="<<dimlwe;
+
+
+    // Dimensions / length format:
+    int dimlunit = m_graphic->getVariableInt("$DIMLUNIT", lunits);
+    cbDimLUnit->setCurrentIndex(dimlunit - 1);
+
+    // Dimensions length precision:
+    int dimdec = m_graphic->getVariableInt("$DIMDEC", luprec);
+
+    linearFormat = linearFormatFromUI(cbDimLUnit->currentIndex());
+    updateLengthPrecisionCombobox(linearFormat, cbDimDec);
+    cbDimDec->setCurrentIndex(dimdec);
+    // Dimensions length zeros:
+    int dimzin = m_graphic->getVariableInt("$DIMZIN", 1);
+    cbDimZin->setLinear();
+    cbDimZin->setData(dimzin);
+
+    // Dimensions / angle format:
+    int dimaunit = m_graphic->getVariableInt("$DIMAUNIT", aunits);
+    cbDimAUnit->setCurrentIndex(dimaunit);
+
+    // Dimensions angle precision:
+    int dimadec = m_graphic->getVariableInt("$DIMADEC", auprec);
+    updateAnglePrecisionCombobox(angleFormatFromUI(dimaunit), cbDimADec);
+    cbDimADec->setCurrentIndex(dimadec);
+    // Dimensions angle zeros:
+    int dimazin = m_graphic->getVariableInt("$DIMAZIN", 0);
+    //    cbDimAZin->setCurrentIndex(dimazin);
+    cbDimAZin->setData(dimazin);
+
+    int dimclrd = m_graphic->getVariableInt("$DIMCLRD", 0);
+    int dimclre = m_graphic->getVariableInt("$DIMCLRE", 0);
+    int dimclrt = m_graphic->getVariableInt("$DIMCLRT", 0);
+    cbDimClrD->setColor(RS_FilterDXFRW::numberToColor(dimclrd));
+    cbDimClrE->setColor(RS_FilterDXFRW::numberToColor(dimclre));
+    cbDimClrT->setColor(RS_FilterDXFRW::numberToColor(dimclrt));
+
+    QString dimtxsty = m_graphic->getVariableString("$DIMTXSTY", "standard");
+    cbDimTxSty->setFont(dimtxsty);
+    int dimdsep = m_graphic->getVariableInt("$DIMDSEP", 0);
+    (dimdsep == 44) ? cbDimDSep->setCurrentIndex(1) : cbDimDSep->setCurrentIndex(0);
+}
+
 /**
  * Sets the graphic and updates the GUI to match the drawing.
  */
@@ -821,112 +974,11 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     rbAngleBasePositive->setChecked(anglesAreCounterClockwise);
     rbAngleBaseNegative->setChecked(!anglesAreCounterClockwise);
 
-
     setupGridTab();
 
-    // dimension text height:
-    auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
-
-    // dimension general factor:
-    double dimfactor = m_graphic->getVariableDouble("$DIMLFAC", 1.0);
-    cbDimFactor->setEditText(QString("%1").arg(dimfactor));
-
-    // dimension general scale:
-    double dimscale = m_graphic->getVariableDouble("$DIMSCALE", 1.0);
-    cbDimScale->setEditText(QString("%1").arg(dimscale));
-
-    double dimtxt = m_graphic->getVariableDouble("$DIMTXT", TO_MM(2.5));
-    cbDimTextHeight->setEditText(QString("%1").arg(dimtxt));
-
-    // dimension extension line extension:
-    double dimexe = m_graphic->getVariableDouble("$DIMEXE", TO_MM(1.25));
-    cbDimExe->setEditText(QString("%1").arg(dimexe));
-
-    // dimension extension line offset:
-    double dimexo = m_graphic->getVariableDouble("$DIMEXO", TO_MM(0.625));
-    cbDimExo->setEditText(QString("%1").arg(dimexo));
-
-    // dimension line gap:
-    double dimgap = m_graphic->getVariableDouble("$DIMGAP", TO_MM(0.625));
-    cbDimGap->setEditText(QString("%1").arg(dimgap));
-
-    // dimension arrow size:
-    double dimasz = m_graphic->getVariableDouble("$DIMASZ", TO_MM(2.5));
-    cbDimAsz->setEditText(QString("%1").arg(dimasz));
-
-    // dimension tick size:
-    double dimtsz = m_graphic->getVariableDouble("$DIMTSZ", 0.);
-    cbDimTsz->setEditText(QString("%1").arg(dimtsz));
-    // dimension alignment:
-    int dimtih = m_graphic->getVariableInt("$DIMTIH", 0);
-    cbDimTih->setCurrentIndex(dimtih);
-//RLZ todo add more options for dimensions
-    cbDimClrT->init(true, false);
-    cbDimClrE->init(true, false);
-    cbDimClrD->init(true, false);
-    cbDimLwD->init(true, false);
-    cbDimLwE->init(true, false);
-    // fixed extension length:
-    double dimfxl = m_graphic->getVariableDouble("$DIMFXL",TO_MM(1.0));
-    cbDimFxL->setValue(dimfxl);
-    int dimfxlon = m_graphic->getVariableInt("$DIMFXLON", 0);
-    if (dimfxlon > 0) {
-        cbDimFxL->setEnabled(true);
-        cbDimFxLon->setChecked(true);
-    } else {
-        cbDimFxL->setEnabled(false);
-        cbDimFxLon->setChecked(false);
-    }
-    int dimlwd = m_graphic->getVariableInt("$DIMLWD", -2); //default ByBlock
-//    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<dimlwd;
-    RS2::LineWidth lineWidth = RS2::intToLineWidth(dimlwd);
-    cbDimLwD->setWidth(lineWidth);
-    int dimlwe = m_graphic->getVariableInt("$DIMLWE", -2); //default ByBlock
-    cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
-//    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLwe="<<dimlwe;
-
-
-    // Dimensions / length format:
-    int dimlunit = m_graphic->getVariableInt("$DIMLUNIT", lunits);
-    cbDimLUnit->setCurrentIndex(dimlunit - 1);
-
-    // Dimensions length precision:
-    int dimdec = m_graphic->getVariableInt("$DIMDEC", luprec);
-
-    linearFormat = linearFormatFromUI(cbDimLUnit->currentIndex());
-    updateLengthPrecisionCombobox(linearFormat, cbDimDec);
-    cbDimDec->setCurrentIndex(dimdec);
-    // Dimensions length zeros:
-    int dimzin = m_graphic->getVariableInt("$DIMZIN", 1);
-    cbDimZin->setLinear();
-    cbDimZin->setData(dimzin);
-
-    // Dimensions / angle format:
-    int dimaunit = m_graphic->getVariableInt("$DIMAUNIT", aunits);
-    cbDimAUnit->setCurrentIndex(dimaunit);
-
-    // Dimensions angle precision:
-    int dimadec = m_graphic->getVariableInt("$DIMADEC", auprec);
-    updateAnglePrecisionCombobox(angleFormatFromUI(dimaunit), cbDimADec);
-    cbDimADec->setCurrentIndex(dimadec);
-    // Dimensions angle zeros:
-    int dimazin = m_graphic->getVariableInt("$DIMAZIN", 0);
-//    cbDimAZin->setCurrentIndex(dimazin);
-    cbDimAZin->setData(dimazin);
-
-    int dimclrd = m_graphic->getVariableInt("$DIMCLRD", 0);
-    int dimclre = m_graphic->getVariableInt("$DIMCLRE", 0);
-    int dimclrt = m_graphic->getVariableInt("$DIMCLRT", 0);
-    cbDimClrD->setColor(RS_FilterDXFRW::numberToColor(dimclrd));
-    cbDimClrE->setColor(RS_FilterDXFRW::numberToColor(dimclre));
-    cbDimClrT->setColor(RS_FilterDXFRW::numberToColor(dimclrt));
-
-    QString dimtxsty = m_graphic->getVariableString("$DIMTXSTY", "standard");
-    cbDimTxSty->setFont(dimtxsty);
-    int dimdsep = m_graphic->getVariableInt("$DIMDSEP", 0);
-    (dimdsep == 44) ? cbDimDSep->setCurrentIndex(1) : cbDimDSep->setCurrentIndex(0);
-
-
+#ifdef ENABLE_LEGACY_DIMENSIONS_TAB
+    setupLegacyDimsTab(linearFormat, lunits, luprec, aunits, auprec);
+#endif
 
     // encoding:
     /*
@@ -1083,12 +1135,13 @@ void QG_DlgOptionsDrawing::tmp_ValidateDimsOld() {
 }
 
 bool QG_DlgOptionsDrawing::validateDimensions() {
-    LC_StylesListModel* model = getDimStylesModel();
-    QList<LC_DimStyleItem*>* items = model->getStyleItems();
+    LC_DimStyleTreeModel* model = getDimStylesModel();
+    QList<LC_DimStyleItem*> items;
+    model->collectAllStyleItems(items);
 
     QList<LC_DimStyle*> newDimStyles;
     QString currentDimStyleName;
-    for (LC_DimStyleItem* item: *items) {
+    for (LC_DimStyleItem* item: items) {
         auto editedStyle = item->dimStyle();
         if (item->isFromVariables()) {
             m_graphic->updateFallbackDimStyle(editedStyle);
@@ -1304,11 +1357,11 @@ void QG_DlgOptionsDrawing::validate() {
 
         // update all dimension and spline entities in the graphic to match the new settings:
         // update text position when text height or text gap changed
-
+#ifdef ENABLE_LEGACY_DIMENSIONS_TAB
         tmp_ValidateDimsOld();
+#endif
         validateDimensions();
         validatePointsTab();
-
 
         // indicate graphic is modified and requires save
         m_graphic->setModified(true);
@@ -1322,6 +1375,27 @@ void QG_DlgOptionsDrawing::validate() {
 void QG_DlgOptionsDrawing::updateLengthPrecision() {
     RS2::LinearFormat linearFormat = linearFormatFromUI(cbLengthFormat->currentIndex());
     updateLengthPrecisionCombobox(linearFormat, cbLengthPrecision);
+
+    switch (linearFormat) {
+        case RS2::Engineering:
+        case RS2::Architectural: {
+            cbUnit->setCurrentIndex(RS2::Inch);
+            break;
+        }
+        case RS2::ArchitecturalMetric: {
+            cbUnit->setCurrentIndex(RS2::Meter);
+            break;
+        }
+        case RS2::Decimal: {
+            auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+            if (unit == RS2::Foot || unit == RS2::Inch || unit == RS2::Microinch || unit == RS2::Mil || unit == RS2::Mile || unit == RS2::Yard) {
+                cbUnit->setCurrentIndex(RS2::Millimeter);
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 /**

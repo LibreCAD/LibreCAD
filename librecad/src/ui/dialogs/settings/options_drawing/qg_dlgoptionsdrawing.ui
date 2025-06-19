@@ -27,9 +27,9 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="tab1">
+     <widget class="QWidget" name="tabPaper">
       <attribute name="title">
        <string>&amp;Paper</string>
       </attribute>
@@ -348,7 +348,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab2">
+     <widget class="QWidget" name="tabUnits">
       <attribute name="title">
        <string>&amp;Units</string>
       </attribute>
@@ -718,7 +718,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab3">
+     <widget class="QWidget" name="tabGrid">
       <attribute name="title">
        <string>&amp;Grid</string>
       </attribute>
@@ -1044,7 +1044,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab4">
+     <widget class="QWidget" name="tabDimsOld">
       <attribute name="title">
        <string>&amp;Dimensions</string>
       </attribute>
@@ -1793,7 +1793,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tabDims">
       <attribute name="title">
        <string>Dimensions</string>
       </attribute>
@@ -1810,6 +1810,22 @@
           <string>Styles</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_23">
+          <item row="1" column="0">
+           <widget class="QTreeView" name="lvDimStyles">
+            <property name="uniformRowHeights">
+             <bool>true</bool>
+            </property>
+            <property name="itemsExpandable">
+             <bool>true</bool>
+            </property>
+            <property name="expandsOnDoubleClick">
+             <bool>false</bool>
+            </property>
+            <attribute name="headerVisible">
+             <bool>false</bool>
+            </attribute>
+           </widget>
+          </item>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
@@ -1941,9 +1957,6 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="0">
-           <widget class="QListView" name="lvDimStyles"/>
-          </item>
          </layout>
         </widget>
        </item>
@@ -1956,7 +1969,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab5">
+     <widget class="QWidget" name="tabSplines">
       <attribute name="title">
        <string>&amp;Splines and Lines</string>
       </attribute>
@@ -2125,7 +2138,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab6">
+     <widget class="QWidget" name="tabPoints">
       <attribute name="title">
        <string>&amp;Points</string>
       </attribute>
@@ -3208,7 +3221,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tabVars">
       <attribute name="title">
        <string>Variables</string>
       </attribute>
@@ -3304,18 +3317,27 @@
   <tabstop>lePaperHeight</tabstop>
   <tabstop>rbLandscape</tabstop>
   <tabstop>rbPortrait</tabstop>
-  <tabstop>leMarginTop</tabstop>
   <tabstop>leMarginLeft</tabstop>
+  <tabstop>leMarginTop</tabstop>
   <tabstop>leMarginRight</tabstop>
   <tabstop>leMarginBottom</tabstop>
   <tabstop>sbPagesNumH</tabstop>
   <tabstop>sbPagesNumV</tabstop>
-  <tabstop>gvPaperPreview</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>cbLengthFormat</tabstop>
   <tabstop>cbLengthPrecision</tabstop>
   <tabstop>cbAngleFormat</tabstop>
   <tabstop>cbAnglePrecision</tabstop>
+  <tabstop>leAngleBaseZero</tabstop>
+  <tabstop>rbAngleBasePositive</tabstop>
+  <tabstop>rbAngleBaseNegative</tabstop>
+  <tabstop>cbGridOn</tabstop>
+  <tabstop>rbOrthogonalGrid</tabstop>
+  <tabstop>rbIsoLeft</tabstop>
+  <tabstop>rbIsoTop</tabstop>
+  <tabstop>rbIsoRight</tabstop>
+  <tabstop>cbXSpacing</tabstop>
+  <tabstop>cbYSpacing</tabstop>
   <tabstop>cbDimScale</tabstop>
   <tabstop>cbDimFactor</tabstop>
   <tabstop>cbDimTextHeight</tabstop>
@@ -3324,7 +3346,6 @@
   <tabstop>cbDimClrT</tabstop>
   <tabstop>cbDimExo</tabstop>
   <tabstop>cbDimExe</tabstop>
-  <tabstop>cbDimFxLon</tabstop>
   <tabstop>cbDimFxL</tabstop>
   <tabstop>cbDimClrE</tabstop>
   <tabstop>cbDimLwE</tabstop>
@@ -3339,6 +3360,18 @@
   <tabstop>cbDimAUnit</tabstop>
   <tabstop>cbDimADec</tabstop>
   <tabstop>cbDimAZin</tabstop>
+  <tabstop>tbDimNew</tabstop>
+  <tabstop>cbDimFxLon</tabstop>
+  <tabstop>tbDimRemove</tabstop>
+  <tabstop>tbDimEdit</tabstop>
+  <tabstop>tbDimRename</tabstop>
+  <tabstop>tbDimDefault</tabstop>
+  <tabstop>tbDimExport</tabstop>
+  <tabstop>tbDimImport</tabstop>
+  <tabstop>lvDimStyles</tabstop>
+  <tabstop>cbSplineSegs</tabstop>
+  <tabstop>cbLineCap</tabstop>
+  <tabstop>cbLineJoin</tabstop>
   <tabstop>bDot</tabstop>
   <tabstop>bBlank</tabstop>
   <tabstop>bPlus</tabstop>
@@ -3362,6 +3395,7 @@
   <tabstop>lePointSize</tabstop>
   <tabstop>rbRelSize</tabstop>
   <tabstop>rbAbsSize</tabstop>
+  <tabstop>tabVariables</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../../res/icons/icons.qrc"/>
@@ -3374,8 +3408,8 @@
    <slot>validate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>492</y>
+     <x>270</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -3390,8 +3424,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>492</y>
+     <x>270</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

@@ -52,10 +52,14 @@ void LC_DlgNewDimStyle::onUsedForChanged(int index) {
     if (!forAllDimensions) {
         int currentBasedOnIdx = ui->cbBasedOnStyle->currentIndex();
         auto dimStyleItem = m_dimItemsListModel->getItemAtRow(currentBasedOnIdx);
-        auto majorDimStyleItem = dimStyleItem->parentItem();
-        if (majorDimStyleItem != nullptr) { // this is style for specific dim type
-            int newIndex = m_dimItemsListModel->getItemIndex(majorDimStyleItem);
-            ui->cbBasedOnStyle->setCurrentIndex(newIndex);
+        if (!dimStyleItem->isBaseStyle()) {
+            auto majorDimStyleItem = dimStyleItem->parentItem();
+            if (majorDimStyleItem != nullptr) { // this is style for specific dim type
+                int newIndex = m_dimItemsListModel->getItemIndex(majorDimStyleItem);
+                ui->cbBasedOnStyle->blockSignals(true);
+                ui->cbBasedOnStyle->setCurrentIndex(newIndex);
+                ui->cbBasedOnStyle->blockSignals(false);
+            }
         }
     }
     switch (index) {
@@ -95,6 +99,7 @@ void LC_DlgNewDimStyle::onBasedOnChanged(int index) {
     if (!nameWasEntered) {
         QString newStyleName = "Copy of " + baseDimStyle->displayName();
         ui->leStyleName->setText(newStyleName);
+        ui->leStyleName->selectAll();
     }
 }
 
@@ -105,6 +110,7 @@ void LC_DlgNewDimStyle::onStyleNameTextChanged(const QString&) {
 void LC_DlgNewDimStyle::setup(LC_DimStyleItem* initialStyle, QList<LC_DimStyleItem*>& items) {
     QList<LC_DimStyleItem*> sortedItems;
     sortedItems.append(items);
+    // fixme - sand - sort items by base name!
     m_dimItemsListModel = new LC_StylesListModel(this, sortedItems, false);
     m_dimItemsListModel->sort(0, Qt::SortOrder::AscendingOrder);
     ui->cbBasedOnStyle->setModel(m_dimItemsListModel);

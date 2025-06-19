@@ -54,6 +54,7 @@ public:
     bool isFromVariables() const { return m_dimStyle->isFromVars(); }
     int usageCount() const { return m_usageCount; }
     LC_DimStyleItem* parentItem() const;
+    void setParentItem(LC_DimStyleItem* root) {m_parentItem = root;}
     void setCurrent(bool value) { m_current = value; }
     LC_DimStyle* dimStyle() const { return m_dimStyle; }
     void setName(const QString& name) { m_displayName = name; }
@@ -61,6 +62,15 @@ public:
     bool isBaseStyle() const { return m_dimType == RS2::EntityUnknown; }
     QString baseName() const { return m_baseName; }
     void updateNameAndType();
+    int row() const;
+
+    LC_DimStyleItem* findByName(const QString& name) const;
+    LC_DimStyleItem* findBaseStyleItem(const QString& baseStyleName) const;
+    LC_DimStyleItem* findCurrent() const;
+    void cleanup();
+    void removeChild(LC_DimStyleItem* item);
+    void collectChildren(QList<LC_DimStyleItem*>& items);
+    void setNewBaseName(const QString& newBaseName);
     static QString composeDisplayName(QString baseName, RS2::EntityType entityType);
     static QString getDisplayDimStyleName(LC_DimStyle* style);
 private:

@@ -61,7 +61,6 @@ QVariant LC_StylesListModel::data(const QModelIndex& index, int role) const {
         default:
             return QVariant();
     }
-
 }
 
 void LC_StylesListModel::addItem(LC_DimStyleItem* item) {

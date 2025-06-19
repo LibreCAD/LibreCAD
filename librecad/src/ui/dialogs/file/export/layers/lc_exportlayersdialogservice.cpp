@@ -175,7 +175,7 @@ bool LC_ExportLayersService::selectExportFile(LC_LayersExportOptions& options, L
             /* Confirm if the user wants to overwrite an existing file. */
             if (QFileInfo::exists(fileInfo.filePath)) {
                 int replaceFileResponse = QMessageBox::warning(
-                    nullptr,
+                    QApplication::activeWindow(),
                     tr("Export Layers"),
                     QObject::tr(R"(File "%1" already exists. Do you want to replace it?)").arg(fileInfo.fileName),
                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel

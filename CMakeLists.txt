@@ -984,6 +984,8 @@ set(SOURCES
         librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.h
         librecad/src/ui/dialogs/settings/dimstyles/lc_dimstyleslistmodel.h
         librecad/src/ui/dialogs/settings/dimstyles/lc_dimstyleslistmodel.cpp
+        librecad/src/ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.h
+        librecad/src/ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.cpp
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.h
         librecad/src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
+    <width>948</width>
     <height>716</height>
    </rect>
   </property>
@@ -16,11 +16,17 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -29,6 +35,12 @@
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Dimension Lines</string>
          </property>
@@ -384,8 +396,8 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>400</width>
-           <height>500</height>
+           <width>500</width>
+           <height>0</height>
           </size>
          </property>
          <property name="title">
@@ -401,7 +413,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="4" column="0">
-        <widget class="QGroupBox" name="groupBox_8">
+        <widget class="QGroupBox" name="gbLinearJog">
          <property name="title">
           <string>Linear jog dimension</string>
          </property>
@@ -427,7 +439,7 @@
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QGroupBox" name="groupBox_7">
+        <widget class="QGroupBox" name="gbRadiusJog">
          <property name="title">
           <string>Radius jog dimension</string>
          </property>
@@ -451,6 +463,12 @@
        </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_3">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Arrowheads</string>
          </property>
@@ -686,6 +704,12 @@
       <layout class="QGridLayout" name="gridLayout_14">
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_9">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Text Appearance</string>
          </property>
@@ -965,6 +989,12 @@
        </item>
        <item row="0" column="1" rowspan="4">
         <widget class="QGroupBox" name="gbPreviewText">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Preview</string>
          </property>
@@ -1044,6 +1074,12 @@
        </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_13">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="toolTip">
           <string>Sets the placement of dimension text when it is moved from the default position, that is, the position defined by the dimension style. (DIMTMOVE system variable)</string>
          </property>
@@ -1106,6 +1142,12 @@
        </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_12">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Fit Options</string>
          </property>
@@ -1185,6 +1227,12 @@
        </item>
        <item row="0" column="1" rowspan="5">
         <widget class="QGroupBox" name="gbPreviewFit">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Preview</string>
          </property>
@@ -1278,6 +1326,12 @@
        </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_17">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Linear Dimensions</string>
          </property>
@@ -1544,6 +1598,12 @@
        </item>
        <item row="0" column="1" rowspan="3">
         <widget class="QGroupBox" name="gbPreviewPrimary">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Preview</string>
          </property>
@@ -1558,6 +1618,12 @@
       <layout class="QGridLayout" name="gridLayout_31">
        <item row="0" column="1" rowspan="3">
         <widget class="QGroupBox" name="gbPreviewAlt">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Preview</string>
          </property>
@@ -1575,6 +1641,12 @@
        </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="gbAltUnits">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Alternate units</string>
          </property>
@@ -1812,6 +1884,12 @@
       <layout class="QGridLayout" name="gridLayout_16">
        <item row="1" column="0">
         <widget class="QGroupBox" name="dsbTolScalingHeight">
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Linear Dimensions</string>
          </property>
@@ -2108,6 +2186,12 @@
        </item>
        <item row="1" column="1" rowspan="3">
         <widget class="QGroupBox" name="gbPreviewTolerance">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Preview</string>
          </property>
@@ -2151,6 +2235,117 @@
    <header>qg_linetypebox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>cbDimLineColor</tabstop>
+  <tabstop>cbDimLineWidth</tabstop>
+  <tabstop>dsbDimLineExtendBeyond</tabstop>
+  <tabstop>dsbBaselineSpacing</tabstop>
+  <tabstop>cbDimLineSuppress1</tabstop>
+  <tabstop>cbDimLineSuppress2</tabstop>
+  <tabstop>cbExtLineColor</tabstop>
+  <tabstop>cbExtLineWidth</tabstop>
+  <tabstop>bsbExtLineBeyondDimLine</tabstop>
+  <tabstop>dsbExtLineOffsetFromOrigin</tabstop>
+  <tabstop>cbExtLineFixedLengthOn</tabstop>
+  <tabstop>bsbExtLineFixedLength</tabstop>
+  <tabstop>cbExtLineSuppress1</tabstop>
+  <tabstop>cbExtLineSuppress2</tabstop>
+  <tabstop>dsbTickSize</tabstop>
+  <tabstop>cbArrowheadTheSame</tabstop>
+  <tabstop>cbArrowheadFirst</tabstop>
+  <tabstop>cbArrowheadSecond</tabstop>
+  <tabstop>cbArrowheadLeader</tabstop>
+  <tabstop>dsbArrowheadArrowSize</tabstop>
+  <tabstop>dsbLinegap</tabstop>
+  <tabstop>rbCentermarkNone</tabstop>
+  <tabstop>rbCentermarkMark</tabstop>
+  <tabstop>rbCentermarkLine</tabstop>
+  <tabstop>bsbCentermarkSize</tabstop>
+  <tabstop>rbDimarcSymPreceeding</tabstop>
+  <tabstop>rbDimarcSymAbove</tabstop>
+  <tabstop>rbDimarcSymNone</tabstop>
+  <tabstop>bsbJogHeightFactor</tabstop>
+  <tabstop>dsbJogAngle</tabstop>
+  <tabstop>cbTextColor</tabstop>
+  <tabstop>cbTextFillByBackground</tabstop>
+  <tabstop>cbTextFillColor</tabstop>
+  <tabstop>dcbTextHeight</tabstop>
+  <tabstop>dcbTextFractionHeightScale</tabstop>
+  <tabstop>cbTextDrawFrameAroundText</tabstop>
+  <tabstop>cbTextPlacementVertical</tabstop>
+  <tabstop>cbTextPlacementHorizontal</tabstop>
+  <tabstop>cbTextPlacementReadingDirection</tabstop>
+  <tabstop>dsbTextOffsetFromDimLine</tabstop>
+  <tabstop>rbTextAlignmentHorizontal</tabstop>
+  <tabstop>rbTextAlignmentAligned</tabstop>
+  <tabstop>rbTextAlignmentIsoStandard</tabstop>
+  <tabstop>rbFitEither</tabstop>
+  <tabstop>rbFirArrows</tabstop>
+  <tabstop>rbFitText</tabstop>
+  <tabstop>rbFitBoth</tabstop>
+  <tabstop>rbFitAlways</tabstop>
+  <tabstop>cbFitSuppressArrows</tabstop>
+  <tabstop>rbTextPlacementBeside</tabstop>
+  <tabstop>rbTextPlacementOverWoLeader</tabstop>
+  <tabstop>rbTextPlacementOverWLeader</tabstop>
+  <tabstop>rbFitScaleToLayout</tabstop>
+  <tabstop>rbFitScaleExplicit</tabstop>
+  <tabstop>dsbFitScaleExplicit</tabstop>
+  <tabstop>cbFitFineManually</tabstop>
+  <tabstop>cbFitFineDrawDimLineBetwenExt</tabstop>
+  <tabstop>cbLinearDimUnitFormat</tabstop>
+  <tabstop>cbLinearDimPrecision</tabstop>
+  <tabstop>cbLinearDimDecimalSeparator</tabstop>
+  <tabstop>cbAlternateUnitsDisplay</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>cbLinearDimFractionFormat</tabstop>
+  <tabstop>dsbLinearDimRoundOff</tabstop>
+  <tabstop>leLinearDimPrefix</tabstop>
+  <tabstop>leLinearDimSuffix</tabstop>
+  <tabstop>dsbLinearScaleFactor</tabstop>
+  <tabstop>cbLinearScaleApplyToLayoutDimsOnly</tabstop>
+  <tabstop>cbZerosLeading</tabstop>
+  <tabstop>cbZerosTrailing</tabstop>
+  <tabstop>cbZeros0Inch</tabstop>
+  <tabstop>cbZeros0Feet</tabstop>
+  <tabstop>bsbLinearZerosSuppressionSubUnitFactor</tabstop>
+  <tabstop>leLinearZerosSuppressionSubUnitSuffix</tabstop>
+  <tabstop>cbAngularFormat</tabstop>
+  <tabstop>cbAngularPrecision</tabstop>
+  <tabstop>cbAngularZerosLeading</tabstop>
+  <tabstop>cbAngularZerosTrailing</tabstop>
+  <tabstop>cbAlternateLinearFormat</tabstop>
+  <tabstop>cbAlternateLinearPrecision</tabstop>
+  <tabstop>dsbAlternateMutliplier</tabstop>
+  <tabstop>bsbAlternateRoundTo</tabstop>
+  <tabstop>leAlternatePrefix</tabstop>
+  <tabstop>leAlternateSuffix</tabstop>
+  <tabstop>cbAltZerosLeading</tabstop>
+  <tabstop>cbAltZerosTrailing</tabstop>
+  <tabstop>cbAltZeros0Feet</tabstop>
+  <tabstop>cbAltZeros0Inches</tabstop>
+  <tabstop>dbsAlternateSubUnitFactor</tabstop>
+  <tabstop>leAlternateSubUnitSuffix</tabstop>
+  <tabstop>rbAlternatePlacementAfter</tabstop>
+  <tabstop>rbAlternatePlacementBelow</tabstop>
+  <tabstop>cbTolMethod</tabstop>
+  <tabstop>cbTolPrecision</tabstop>
+  <tabstop>dsbTolUpperLimit</tabstop>
+  <tabstop>dsbTolLowerLimit</tabstop>
+  <tabstop>dsbTolHeightScale</tabstop>
+  <tabstop>cbTolVerticalPosition</tabstop>
+  <tabstop>rbTolMeasurementAlignDecimal</tabstop>
+  <tabstop>rbTolMeasurementAlignOperational</tabstop>
+  <tabstop>cbTolZerosLeading</tabstop>
+  <tabstop>cbTolZerosTrailing</tabstop>
+  <tabstop>cbTolZeros0Feet</tabstop>
+  <tabstop>cbTolZeros0Inches</tabstop>
+  <tabstop>cbTolAltPrecision</tabstop>
+  <tabstop>cbTolAltZerosLeading</tabstop>
+  <tabstop>cbTolAltZerosTrailing</tabstop>
+  <tabstop>cbTolAltZeros0Feet</tabstop>
+  <tabstop>cbTolAltZeros0Inches</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -2160,8 +2355,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>706</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -2176,8 +2371,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>706</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
