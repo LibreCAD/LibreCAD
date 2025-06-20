@@ -55,17 +55,6 @@ plugs:
     #interface: content
     #default-provider: kf5-5-113-qt-5-15-11-core22
     #target: $SNAP/kf5
-  #kf6-core24-sdk:
-  kf-qt-latest:
-    interface: content
-    content: kde-qt6-core22
-    default-provider: kde-qt6-core22
-    target: kf6
-  kf-qt-ext-latest:
-    interface: content
-    content: kf6-core22
-    default-provider: kf6-core22
-    target: kf6
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
