@@ -101,6 +101,7 @@ private:
     bool scaleGrid = true;
     RS_Vector userGrid;
     int minGridSpacing;
+    int m_metaGridEvery{10};
 	LC_GridSystem *gridSystem {nullptr};
     RS_Vector prepareGridWidth();
 };

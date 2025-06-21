@@ -222,6 +222,9 @@ void QG_DlgOptionsGeneral::init(){
         int gridType = LC_GET_INT("GridType", 0);
         cbGridType->setCurrentIndex(gridType);
 
+        int metaGridEvery = LC_GET_INT("MetaGridEvery", 10);
+        sbGridMetaMajorEvery->setValue(metaGridEvery);
+
         // preview:
         initComboBox(cbMaxPreview, LC_GET_STR("MaxPreview", "100"));
 
@@ -708,11 +711,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("metaGridLinesLineType", wMetaGridLinesLineType->getLineType());
             LC_SET("metaGridPointsLineWidth", sbMetaGridPointsWidth->value());
             LC_SET("metaGridLinesLineWidth", sbMetaGridLinesWidth->value());
+            LC_SET("MetaGridEvery", sbGridMetaMajorEvery->value());
             LC_SET("GridLinesLineType", wGridLinesLineType->getLineType());
             LC_SET("GridLinesLineWidth", sbGridLinesLineWidth->value());
             LC_SET("GridRenderSimple", cbSimpleGridRendring->isChecked());
             LC_SET("GridDisableWithinPan", cbDisableGridOnPanning->isChecked());
             LC_SET("GridDrawIsoVerticalForTop", cbDrawVerticalForIsoTop->isChecked());
+
             double zoomFactor = sbDefaultZoomFactor->value();
             int zoomFactor1000 = (int) (zoomFactor * 1000.0);
             LC_SET("ScrollZoomFactor", zoomFactor1000);

@@ -109,6 +109,8 @@ void RS_Grid::loadSettings(){
 
     bool disableGridOnPanning = LC_GET_BOOL("GridDisableWithinPan", false);
     bool drawIsoVerticalForTop = LC_GET_BOOL("GridDrawIsoVerticalForTop", true);
+
+    m_metaGridEvery = LC_GET_INT("MetaGridEvery", 10);
     LC_GROUP_END();
 
     LC_GROUP("Colors");
@@ -338,8 +340,9 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
     }
 
     // std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
-    metaGridWidth.x = gridWidth.x * 10;
-    metaGridWidth.y = gridWidth.y * 10;
+    int metaGridStep = m_metaGridEvery;
+    metaGridWidth.x = gridWidth.x * metaGridStep;
+    metaGridWidth.y = gridWidth.y * metaGridStep;
 
     // RS_DEBUG->print("RS_Grid::update: 004");
     return gridWidth;
