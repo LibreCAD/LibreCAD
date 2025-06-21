@@ -221,6 +221,8 @@ void LC_DimOrdinate::doUpdateDim() {
     RS_Vector textOffsetV;   // normal vector in direction of text offset
     determineKneesPositions(featurePoint, leaderEndPoint, kneeOne, kneeTwo, textOffsetV);
 
+    auto linePen = getPenExtensionLine(true);
+
     if (featurePoint.distanceTo(kneeOne) > dimexo) {
         auto startPoint = featurePoint + textOffsetV*dimexo;
         if (xAxisRotatedInUCS) {
@@ -228,11 +230,11 @@ void LC_DimOrdinate::doUpdateDim() {
         }
         // RS_Line* dummy;
         // adjustExtensionLineFixLength(line, dummy, false);
-        addDimDimensionLine(startPoint, kneeOne);
+        addDimComponentLine(startPoint, kneeOne, linePen);
     }
 
-    addDimDimensionLine(kneeOne, kneeTwo);
-    addDimDimensionLine(kneeTwo,m_dimOrdinateData.leaderEndPoint);
+    addDimComponentLine(kneeOne, kneeTwo, linePen);
+    addDimComponentLine(kneeTwo,m_dimOrdinateData.leaderEndPoint, linePen);
 
     double textHeight = getTextHeight() * dimscale;
     double dimgap = getDimensionLineGap();
