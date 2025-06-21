@@ -49,6 +49,9 @@ LC_DlgNewDimStyle::~LC_DlgNewDimStyle(){
 void LC_DlgNewDimStyle::onUsedForChanged(int index) {
     bool forAllDimensions = index == 0;
     ui->leStyleName->setEnabled(forAllDimensions);
+    if (forAllDimensions) {
+        ui->leStyleName->selectAll();
+    }
     if (!forAllDimensions) {
         int currentBasedOnIdx = ui->cbBasedOnStyle->currentIndex();
         auto dimStyleItem = m_dimItemsListModel->getItemAtRow(currentBasedOnIdx);
@@ -116,6 +119,7 @@ void LC_DlgNewDimStyle::setup(LC_DimStyleItem* initialStyle, QList<LC_DimStyleIt
     ui->cbBasedOnStyle->setModel(m_dimItemsListModel);
     int initialIndex = m_dimItemsListModel->getItemIndex(initialStyle);
     ui->cbBasedOnStyle->setCurrentIndex(initialIndex);
+    ui->leStyleName->selectAll();
 }
 
 QString LC_DlgNewDimStyle::getStyleName() const {
