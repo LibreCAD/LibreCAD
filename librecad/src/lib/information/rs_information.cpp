@@ -491,12 +491,13 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         }
     }
 
+    auto parentOne = e1->getParent();
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-    if ( e1->getParent() && e1->getParent() == e2->getParent()) {
-        if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
+    if ( parentOne != nullptr && parentOne == e2->getParent()) {
+        if ( parentOne->rtti()==RS2::EntitySpline ) {
             //do not calculate intersections from neighboring lines of a spline
-            if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
+            if ( parentOne->areNeighborsEntities(e1,e2)) {
                 return ret;
             }
         }

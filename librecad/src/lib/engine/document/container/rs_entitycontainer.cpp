@@ -1332,6 +1332,14 @@ int RS_EntityContainer::findEntity(RS_Entity const *const entity) {
     return entIdx;
 }
 
+int RS_EntityContainer::findEntityIndex(RS_Entity const *const entity) {
+    return m_entities.indexOf(const_cast<RS_Entity *>(entity));
+}
+
+bool  RS_EntityContainer::areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2) {
+   return abs(m_entities.indexOf(e1) - m_entities.indexOf(e2)) <= 1;
+}
+
 /**
  * @return The point which is closest to 'coord'
  * (one of the vertices)
@@ -1510,13 +1518,8 @@ RS_Vector RS_EntityContainer::getNearestIntersection(
     RS_Entity* closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
 
     if (closestEntity) {
-        for (RS_Entity *en = firstEntity(RS2::ResolveAllButTextImage);
-             en;
-             en = nextEntity(RS2::ResolveAllButTextImage)) {
-            if (
-                !en->isVisible()
-                || en->getParent()->ignoredSnap()
-                ) {
+        for (RS_Entity *en = firstEntity(RS2::ResolveAllButTextImage);en;en = nextEntity(RS2::ResolveAllButTextImage)) {
+            if (!en->isVisible()|| en->getParent()->ignoredSnap()) {
                 continue;
             }
 
