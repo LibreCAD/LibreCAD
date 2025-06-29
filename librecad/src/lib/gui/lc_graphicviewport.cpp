@@ -294,26 +294,24 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
     }
 
 // Get zoom in X and zoom in Y:
-    int width = getWidth();
     if (v2.x - v1.x > 1.0e-6) {
-        zoomX = width / (v2.x - v1.x);
+        zoomX = getWidth() / (v2.x - v1.x);
     }
-    int height = getHeight();
     if (v2.y - v1.y > 1.0e-6) {
-        zoomY = height / (v2.y - v1.y);
+        zoomY = getHeight() / (v2.y - v1.y);
     }
 
 // Take smaller zoom:
     if (keepAspectRatio) {
         if (zoomX < zoomY) {
-            if (width != 0) {
-                zoomX = zoomY = ((double) (width - 2 * zoomBorder)) /
-                                (double) width * zoomX;
+            if (getWidth() != 0) {
+                zoomX = zoomY = double(getWidth() - 2 * zoomBorder) /
+                                getWidth() * zoomX;
             }
         } else {
-            if (height != 0) {
-                zoomX = zoomY = ((double) (height - 2 * zoomBorder)) /
-                                (double) height * zoomY;
+            if (getHeight() != 0) {
+                zoomX = zoomY = double(getHeight() - 2 * zoomBorder) /
+                                getHeight() * zoomY;
             }
         }
     }
@@ -322,10 +320,10 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
     zoomY = std::abs(zoomY);
 
 // Borders in pixel after zoom
-    int pixLeft = (int) (v1.x * zoomX);
-    int pixTop = (int) (v2.y * zoomY);
-    int pixRight = (int) (v2.x * zoomX);
-    int pixBottom = (int) (v1.y * zoomY);
+    int pixLeft = int(v1.x * zoomX);
+    int pixTop = int(v2.y * zoomY);
+    int pixRight = int(v2.x * zoomX);
+    int pixBottom = int(v1.y * zoomY);
     if (pixLeft == INT_MIN || pixLeft == INT_MAX ||
         pixRight == INT_MIN || pixRight == INT_MAX ||
         pixTop == INT_MIN || pixTop == INT_MAX ||
@@ -336,8 +334,8 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
     saveView();
 
 // Set new offset for zero point:
-    offsetX = -pixLeft + (width - pixRight + pixLeft) / 2;
-    offsetY = -pixTop + (height - pixBottom + pixTop) / 2;
+    offsetX = (getWidth() - (v1.x + v2.x) * zoomX) / 2;
+    offsetY = (getHeight() - (v1.y + v2.y) * zoomY) / 2;
     factor.x = zoomX;
     factor.y = zoomY;
 

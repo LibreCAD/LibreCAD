@@ -44,6 +44,7 @@
 #include "lc_graphicviewrenderer.h"
 #include "lc_overlayentitiescontainer.h"
 #include "lc_quickinfowidget.h"
+#include "lc_rect.h"
 #include "lc_ucs_mark.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockwidget.h"
@@ -111,6 +112,11 @@ constexpr int g_hotspotXY=-1;
             && vpMin.y < vpMax.y
             && vpMin.x + 1e6 >= vpMax.x
             && vpMin.y + 1e6 >= vpMax.y;
+    }
+
+    LC_Rect getGuiRect(const LC_Rect& modelRect, const RS_Vector& model2GuiFactor)
+    {
+        return {};
     }
 }
 
@@ -1049,7 +1055,9 @@ void QG_GraphicView::adjustOffsetControls(){
     if (getContainer()==nullptr || m_hScrollBar==nullptr || m_vScrollBar==nullptr) {
         return;
     }
+    LC_LOG<<__func__<<"(): begin";
 
+    getContainer()->forcedCalculateBorders();
     RS_Vector vpMin = getContainer()->getMin();
     RS_Vector vpMax = getContainer()->getMax();
 
@@ -1059,21 +1067,19 @@ void QG_GraphicView::adjustOffsetControls(){
         vpMax = RS_Vector(100,100);
     }
 
-    RS_Vector factor = getViewPort()->getFactor();
+    int ox = getViewPort()->getOffsetX();
+    int oy = getViewPort()->getOffsetY();
 
-    int minVal = (int)(-getWidth()*0.75
-                        + std::min(vpMin.x, 0.)*factor.x);
-    int maxVal = (int)(-getWidth()*0.25
-                        + std::max(vpMax.x, 0.)*factor.x);
+    int minVal = int(-1.25 * getWidth() - ox);
+    int maxVal = int( 0.25 * getWidth() - ox);
 
+    LC_LOG<<__func__<<"(): x scrollbar range["<<minVal<<", "<<maxVal<<"]: "<<getViewPort()->getOffsetX();
     if (minVal<=maxVal) {
         m_hScrollBar->setRange(minVal, maxVal);
     }
 
-    minVal = (int)(+getHeight()*0.25
-                    - std::max(vpMax.y, 0.)*factor.y);
-    maxVal = (int)(+getHeight()*0.75
-                    - std::min(vpMin.y, 0.)*factor.y);
+    minVal = int(0.75 * getHeight() - oy);
+    maxVal = int(0.25 * getHeight() - oy);
 
     if (minVal<=maxVal) {
         m_vScrollBar->setRange(minVal, maxVal);
@@ -1082,10 +1088,9 @@ void QG_GraphicView::adjustOffsetControls(){
     m_hScrollBar->setPageStep(getWidth());
     m_vScrollBar->setPageStep(getHeight());
 
-    int ox = getViewPort()->getOffsetX();
-    int oy = getViewPort()->getOffsetY();
     m_hScrollBar->setValue(-ox);
     m_vScrollBar->setValue(oy);
+    LC_LOG<<__func__<<"(): y scrollbar range["<<minVal<<", "<<maxVal<<"]: "<<oy;
 
     slotHScrolled(-ox);
     slotVScrolled(oy);
@@ -1098,6 +1103,7 @@ void QG_GraphicView::adjustOffsetControls(){
     //        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
     //                        vScrollBar->minimum(), vScrollBar->maximum(),
     //                        vScrollBar->pageStep(), oy);
+    LC_LOG<<__func__<<"(): end";
 
 }
 
