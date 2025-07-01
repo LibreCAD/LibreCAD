@@ -27,7 +27,7 @@ LC_ViewList::LC_ViewList() {
 }
 
 void LC_ViewList::clear() {
-    m_namedViews.clear();
+    m_namedViews.clear(); // fixme - sand - shouldn't we delete items there???
     setModified(false);
 }
 
