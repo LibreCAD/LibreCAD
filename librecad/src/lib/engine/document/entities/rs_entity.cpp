@@ -79,47 +79,47 @@ RS_Entity::RS_Entity(RS_EntityContainer *parent)
 
 RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
-    , minV {other.minV}
-    , maxV {other.maxV}
     , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
 {
     init();
+    minV = other.minV;
+    maxV = other.maxV;
 }
 
 RS_Entity& RS_Entity::operator = (const RS_Entity& other)
 {
     parent = other.parent;
-    minV  = other.minV;
-    maxV  = other.maxV;
-    m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl->fromOther(other.m_pImpl.get());
     init();
+    m_layer  = other.m_layer;
+    minV  = other.minV;
+    maxV  = other.maxV;
     return *this;
 }
 
 RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
-    , minV {other.minV}
-    , maxV {other.maxV}
     , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
     , m_pImpl{std::move(other.m_pImpl)}
 {
     init();
+    minV  = other.minV;
+    maxV  = other.maxV;
 }
 
 RS_Entity& RS_Entity::operator = (RS_Entity&& other)
 {
     parent = other.parent;
-    minV  = other.minV;
-    maxV  = other.maxV;
     m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl = std::move(other.m_pImpl);
     init();
+    minV  = other.minV;
+    maxV  = other.maxV;
     return *this;
 }
 
