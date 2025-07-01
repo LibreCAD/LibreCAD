@@ -158,6 +158,36 @@ void RS_Graphic::onLoadingCompleted() {
     fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)
     LC_DimStyleToVariablesMapper dimStyleToVariablesMapper;
     dimStyleToVariablesMapper.fromDictionary(fallBackDimStyleFromVars, getVariableDictObjectRef(), getUnit());
+
+    if (dimstyleList.isEmpty()) { // add content of vars to dimstyle list, to ensure that we have at least one style there
+        dimstyleList.addDimStyle(fallBackDimStyleFromVars->getCopy());
+    }
+    else {
+        // some programs (like AutoCAD) may store in DXF not all fields for the dim style definition, but only
+        // modified ones.
+        // For example, for dimension specific styles (like linear, ordinal, etc) only variables with values that
+        // are different to values in the base style is store.
+        // Therefore, for dimension type-specific styles, we perform a merge of non-set variables with values
+        // from base style.
+        auto dimStylesList = dimstyleList.getStylesList();
+        for (auto dimStyle: *dimStylesList) {
+            QString baseName;
+            RS2::EntityType dimensionType;
+            LC_DimStyle::parseStyleName(dimStyle->getName(), baseName, dimensionType);
+            if (dimensionType != RS2::EntityUnknown) {
+                // update unset properties of dimension-specific style by values from the
+                // base style
+                auto* baseStyle = dimstyleList.findByName(baseName);
+                if (baseStyle != nullptr) {
+                    // merge with check mode for unset values, so resulting style will have
+                    // set vars from type-specific style, and ones that are unset in it - will come from
+                    // base style
+                    dimStyle->mergeWith(baseStyle, LC_DimStyle::ModificationAware::UNSET,
+                        LC_DimStyle::ModificationAware::SET);
+                }
+            }
+        }
+    }
 }
 
 /**

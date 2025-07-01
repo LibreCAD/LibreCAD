@@ -94,6 +94,12 @@ void LC_DimStyle::merge(const LC_DimStyle* src) {
     m_unitZeroSuppressionStyle->merge(src->zerosSuppression());
 }
 
+void LC_DimStyle::mergeWith(const LC_DimStyle* src, ModificationAware::CheckFlagMode mergeMode, ModificationAware::CheckFlagMode nextMode) {
+    setModifyCheckMode(mergeMode);
+    merge(src);
+    setModifyCheckMode(nextMode);
+}
+
 void LC_DimStyle::setModifyCheckMode(ModificationAware::CheckFlagMode mode) {
     m_angularUnitFormattingStyle->setModifyCheckMode(mode);
     m_arrowheadStyle->setModifyCheckMode(mode);
@@ -1723,6 +1729,10 @@ void LC_DimStyle::Text::setCursorControlPolicy(CursorControlPolicy dimupt) {
     DIMUPT = dimupt;
 }
 
+QString LC_DimStyle::getStyleNameForBaseAndType(const QString& baseName, RS2::EntityType dimType) {
+   return baseName + getDimStyleNameSuffixForType(dimType);
+}
+
 QString LC_DimStyle::getDimStyleNameSuffixForType(RS2::EntityType dimType) {
     switch (dimType) {
         case RS2::EntityDimLinear:
@@ -1798,39 +1808,39 @@ bool LC_DimStyle::ModificationAware::checkModifyState(unsigned f) {
 }
 
 void LC_DimStyle::ModificationAware::checkModified(RS_Color newValue, RS_Color currentValue, unsigned flag) {
-    if (newValue != currentValue) {
+    if (newValue != currentValue || m_checkModificationMode == ALL) {
         setFlag(flag);
     }
 }
 
 
 void LC_DimStyle::ModificationAware::checkModified(double newValue, double currentValue, unsigned flag) {
-    if (newValue != currentValue) {
+    if (newValue != currentValue || m_checkModificationMode == ALL) {
         setFlag(flag);
     }
 }
 
 void LC_DimStyle::ModificationAware::checkModified(int newValue, int currentValue, unsigned flag) {
-    if (newValue != currentValue) {
+    if (newValue != currentValue || m_checkModificationMode == ALL) {
         setFlag(flag);
     }
 }
 
 void LC_DimStyle::ModificationAware::checkModified(short newValue, short currentValue, unsigned flag) {
-    if (newValue != currentValue) {
+    if (newValue != currentValue || m_checkModificationMode == ALL) {
         setFlag(flag);
     }
 }
 
 void LC_DimStyle::ModificationAware::checkModified(bool newValue, bool currentValue, unsigned flag) {
-    if (newValue != currentValue) {
+    if (newValue != currentValue || m_checkModificationMode == ALL) {
         setFlag(flag);
     }
 }
 
 void LC_DimStyle::ModificationAware::checkModified(const QString& newValue, const QString& currentValue,
                                                    unsigned flag) {
-    if (newValue != currentValue) {
+    if (newValue != currentValue || m_checkModificationMode == ALL) {
         setFlag(flag);
     }
 }

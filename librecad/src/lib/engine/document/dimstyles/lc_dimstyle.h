@@ -1330,6 +1330,7 @@ class LC_DimStyle{
 
     void fillByDefaults();
     void merge(const LC_DimStyle* src);
+    void mergeWith(const LC_DimStyle* src, ModificationAware::CheckFlagMode mergeMode, ModificationAware::CheckFlagMode nextMode);
     void copyTo(LC_DimStyle* copy);
     void resetFlags();
     LC_DimStyle* getCopy();
@@ -1337,6 +1338,7 @@ class LC_DimStyle{
     void setName(const QString& name);
     static QString getDimStyleNameSuffixForType(RS2::EntityType dimType);
     static void parseStyleName(const QString& fullName, QString& baseName, RS2::EntityType& dimensionType);
+    static QString getStyleNameForBaseAndType(const QString& baseName, RS2::EntityType dimType);
     RS2::EntityType getDimensionType();
 
     AngularFormat* angularFormat() const {return m_angularUnitFormattingStyle.get();}
