@@ -1349,7 +1349,7 @@ void LC_DlgDimStyleManager::setArrowComboboxValue(QComboBox* arrowComboBox, cons
         existingItemIndex = 0;
     }
     else {
-        existingItemIndex = arrowComboBox->findData(QVariant(arrowBlockName));
+        existingItemIndex = arrowComboBox->findData(QVariant(arrowBlockName.toUpper()));
     }
     if (existingItemIndex == -1) {
         // this is custom block from the drawing, so we'll need to add another item into combobox for it

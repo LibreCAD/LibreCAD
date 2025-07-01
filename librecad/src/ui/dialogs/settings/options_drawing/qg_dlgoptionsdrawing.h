@@ -78,10 +78,7 @@ protected slots:
     void onDimStyleSetDefault(bool checked);
     void updateActionButtons(LC_DimStyleItem* item);
     void onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onDimSelectionChanged(
-        const QItemSelection& selection,
-        const QItemSelection& before);
-    void onDimStyleCurrentActivated(const QModelIndex &index);
+
     void onDimStylesListMenuRequested(const QPoint &pos);
     void onDimStyleDoubleClick();
     void reject() override;
@@ -110,6 +107,7 @@ private:
     bool m_hasImportantMoficationsToAskOnCancel = false;
 
     void init();
+    void prepareDimStyleItems(RS_Graphic* g, QList<LC_DimStyleItem*> &items);
     void collectStylesUsage(RS_Graphic* rs_graphic, QMap<QString, int>& map);
     void setupDimStylesTab(RS_Graphic* g);
     void setupVariablesTab();

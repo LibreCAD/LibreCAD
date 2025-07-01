@@ -120,6 +120,7 @@ void LC_DlgNewDimStyle::setup(LC_DimStyleItem* initialStyle, QList<LC_DimStyleIt
     int initialIndex = m_dimItemsListModel->getItemIndex(initialStyle);
     ui->cbBasedOnStyle->setCurrentIndex(initialIndex);
     ui->leStyleName->selectAll();
+    ui->leStyleName->setFocus();
 }
 
 QString LC_DlgNewDimStyle::getStyleName() const {
@@ -128,8 +129,7 @@ QString LC_DlgNewDimStyle::getStyleName() const {
             return ui->leStyleName->text();
         default: {
             QString baseStyleName = baseDimStyle->dimStyle()->getName();
-            QString suffix = LC_DimStyle::getDimStyleNameSuffixForType(dimType);
-            QString resultingName = baseStyleName + suffix;
+            QString resultingName = LC_DimStyle::getStyleNameForBaseAndType(baseStyleName, dimType);
             return resultingName;
         }
     }

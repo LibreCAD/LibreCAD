@@ -52,11 +52,13 @@ public:
     void cleanup();
     void collectAllStyleItems(QList<LC_DimStyleItem*>& items);
     void mergeWith(const QList<LC_DimStyle*>& list);
+    int itemsCount();
 private:
     void addToParent(LC_DimStyleItem* item);
     void buildTree(const QList<LC_DimStyleItem*>& list);
     std::unique_ptr<LC_DimStyleItem> m_rootItem;
     bool m_showUsageCount {true};
+    int m_itemsCount{0};
 };
 
 #endif // LC_DIMSTYLETREEMODEL_H

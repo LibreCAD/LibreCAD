@@ -192,8 +192,23 @@ void QG_DlgOptionsDrawing::init() {
 
 #define TO_MM(v) RS_Units::convert(2.5, RS2::Millimeter, unit)
 
+void QG_DlgOptionsDrawing::prepareDimStyleItems(RS_Graphic* g, QList<LC_DimStyleItem*> &items) {
+    QString defaultDimStyleName = g->getDefaultDimStyleName();
+    LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
+    QMap<QString, int> usages;
+    auto dimStylesList = g->getDimStyleList();
+    auto dimStyles = dimStylesList->getStylesList();
+    collectStylesUsage(g, usages);
+
+    for (const auto dimStyle : *dimStyles) {
+        LC_DimStyle* ds = dimStyle->getCopy();
+        int usageCount = usages.value(dimStyle->getName(), 0);
+        auto item = new LC_DimStyleItem(ds, usageCount, styleThatIsDefault == dimStyle);
+        items << item;
+    }
+}
+
 void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
-    auto fallBackDimStyle = g->getFallBackDimStyleFromVars();
     m_previewView = LC_DimStylePreviewGraphicView::init(this, m_graphic, RS2::EntityUnknown);
 
     auto* layout = new QVBoxLayout(gbDimStylesPreview);
@@ -208,32 +223,8 @@ void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
     layout->addWidget(previewToolbar);
     layout->addWidget(m_previewView, 10);
 
-    QString defaultDimStyleName = g->getDefaultDimStyleName();
-    LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
-
-    QMap<QString, int> usages;
-    collectStylesUsage(g, usages);
-
-    int usageCount = usages.value(LC_DimStyle::STANDARD_DIM_STYLE, 0);
-
-    auto varsItem = new LC_DimStyleItem(fallBackDimStyle, usageCount,
-                                        styleThatIsDefault == nullptr || defaultDimStyleName ==
-                                        LC_DimStyle::STANDARD_DIM_STYLE);
-
     QList<LC_DimStyleItem*> items;
-    items << varsItem;
-
-    auto dimStylesList = g->getDimStyleList();
-    auto dimStyles = dimStylesList->getStylesList();
-    for (const auto dimStyle : *dimStyles) {
-        if (dimStyle == fallBackDimStyle) {
-            continue;
-        }
-        LC_DimStyle* ds = dimStyle->getCopy();
-        usageCount = usages.value(dimStyle->getName(), 0);
-        auto item = new LC_DimStyleItem(ds, usageCount, styleThatIsDefault == dimStyle);
-        items << item;
-    }
+    prepareDimStyleItems(g, items);
 
     auto* model = new LC_DimStyleTreeModel(this, items);
     lvDimStyles->setModel(model);
@@ -268,17 +259,25 @@ void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
     connect(lvDimStyles, &QListView::customContextMenuRequested, this,
             &QG_DlgOptionsDrawing::onDimStylesListMenuRequested);
     connect(lvDimStyles, &QListView::doubleClicked, this, &QG_DlgOptionsDrawing::onDimStyleDoubleClick);
-    connect(lvDimStyles, &QListView::activated, this, &QG_DlgOptionsDrawing::onDimStyleCurrentActivated);
 }
 
 void QG_DlgOptionsDrawing::collectStylesUsage(RS_Graphic* graphic, QMap<QString, int>& map) {
     for (RS_Entity* e : graphic->getEntityList()) {
-        if (!e->isUndone() && RS2::isDimensionalEntity(e->rtti())) {
+        auto entityType = e->rtti();
+        if (!e->isUndone() && RS2::isDimensionalEntity(entityType)) {
             auto* dim = dynamic_cast<RS_Dimension*>(e);
             QString styleName = dim->getStyle();
-            int value = map.value(styleName, 0);
-            value++;
-            map[styleName] = value;
+            QString nameForType = LC_DimStyle::getStyleNameForBaseAndType(styleName, RS2::EntityDimLinear);
+            if (graphic->getDimStyleByName(nameForType) == nullptr) { // put usage to the base style if so child style for type
+                int value = map.value(styleName, 0);
+                value++;
+                map[styleName] = value;
+            }
+            else {
+                int value = map.value(nameForType, 0);
+                value++;
+                map[nameForType] = value;
+            }
         }
     }
 }
@@ -333,14 +332,14 @@ void QG_DlgOptionsDrawing::onDimStylesListMenuRequested(const QPoint& pos) {
         addActionFunc("add", tr("&Create Style"), &QG_DlgOptionsDrawing::onDimStyleNew);
         contextMenu->addSeparator();
         addActionFunc("attributes", tr("&Edit Style"), &QG_DlgOptionsDrawing::onDimStyleEdit);
-        if (!item->isFromVariables()) {
-            if (item->usageCount() == 0) {
-                if (item->isBaseStyle()) {
-                    addActionFunc("rename_active_block", tr("&Rename Style"), &QG_DlgOptionsDrawing::onDimStyleRename);
-                }
-                addActionFunc("remove", tr("&Delete Style"), &QG_DlgOptionsDrawing::onDimStyleRemove);
+
+        if (item->isNotUsedInDrawing()) {
+            if (item->isBaseStyle()) {
+                addActionFunc("rename_active_block", tr("&Rename Style"), &QG_DlgOptionsDrawing::onDimStyleRename);
             }
+            addActionFunc("remove", tr("&Delete Style"), &QG_DlgOptionsDrawing::onDimStyleRemove);
         }
+
         contextMenu->addSeparator();
         addActionFunc("export", tr("E&xport Styles"), &QG_DlgOptionsDrawing::onDimStyleExport);
         addActionFunc("import", tr("&Import Styles"), &QG_DlgOptionsDrawing::onDimStyleImport);
@@ -501,7 +500,7 @@ void QG_DlgOptionsDrawing::onDimStyleRename(bool checked) {
     if (selectedItemIndex.isValid()) {
         auto* model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(selectedItemIndex);
-        if (item->usageCount() == 0 && !item->isFromVariables() && item->isBaseStyle()) {
+        if (item->isBaseStyle() && item->isNotUsedInDrawing()) {
             auto style = item->dimStyle();
             QString originalStyleName = style->getName();
             QString styleName = askForUniqueDimStyleName(tr("Rename Dimension Style"),
@@ -521,14 +520,45 @@ void QG_DlgOptionsDrawing::onDimStyleRemove(bool checked) {
     if (selectedItemIndex.isValid()) {
         auto* model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(selectedItemIndex);
-        if (item->usageCount()  == 0 && !item->isFromVariables()) {
-            QString styleName = item->dimStyle()->getName();
-            QMessageBox msgBox(QMessageBox::Warning,
-               tr("Removing Dimension Style"),
-               tr("Are you sure you want to remove the dimension style \"%1\"?").arg(styleName),
-               QMessageBox::Yes | QMessageBox::No);
+        int itemsCount = model->itemsCount();
+        if (itemsCount == 1) {
+            QMessageBox msgBox(QMessageBox::Critical,
+                              tr("Removing Dimension Style"),
+                              tr("Can't delete last dimension style. At least one should be present! "),
+                              QMessageBox::Ok);
+            return;
+        }
 
-            if (msgBox.exec() == QMessageBox::Yes) {
+        if (item->usageCount() == 0) {
+            QString styleName = item->dimStyle()->getName();
+            bool allowRemoval = false;
+
+            if (item->childCount() > 0) {
+                bool hasUsedChildren = item->hasUsedChildren();
+                if (hasUsedChildren) {
+                    QMessageBox msgBox(QMessageBox::Critical,
+                              tr("Removing Dimension Style"),
+                              tr("Can't delete dimension style as it's children is used in drawing. Only unused style may be deleted."),
+                              QMessageBox::Ok);
+                    allowRemoval = false;
+                }
+                else {
+                    QMessageBox msgBox(QMessageBox::Warning,
+                                       tr("Removing Dimension Style"),
+                                       tr("Are you sure you want to remove the dimension style \"%1\" together with child styles?").arg(styleName),
+                                       QMessageBox::Yes | QMessageBox::No);
+                    allowRemoval = msgBox.exec() == QMessageBox::Yes;
+                }
+            }
+            else {
+                QMessageBox msgBox(QMessageBox::Warning,
+                                   tr("Removing Dimension Style"),
+                                   tr("Are you sure you want to remove the dimension style \"%1\"?").arg(styleName),
+                                   QMessageBox::Yes | QMessageBox::No);
+                allowRemoval = msgBox.exec() == QMessageBox::Yes;
+            }
+
+            if (allowRemoval) {
                 model->removeItem(item);
                 expansStylesTree();
                 m_hasImportantMoficationsToAskOnCancel = true;
@@ -576,10 +606,13 @@ void QG_DlgOptionsDrawing::onDimStyleSetDefault(bool checked) {
 }
 
 void QG_DlgOptionsDrawing::updateActionButtons(LC_DimStyleItem* item) {
+    auto model = getDimStylesModel();
+    int itemsCount = model->itemsCount();
     tbDimDefault->setEnabled(!item->isCurrent() && item->isBaseStyle());
-    tbDimRemove->setEnabled(!item->isFromVariables() && item->usageCount ()== 0);
+    bool notUsed = item->isNotUsedInDrawing();
+    tbDimRemove->setEnabled(itemsCount > 1 && notUsed);
     // fixme - sand - dims - should we allow renaming if there are usages?
-    tbDimRename->setEnabled(!item->isFromVariables() && item->usageCount() == 0 && item->isBaseStyle());
+    tbDimRename->setEnabled(item->isBaseStyle() && notUsed);
 }
 
 void QG_DlgOptionsDrawing::onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous){
@@ -604,14 +637,6 @@ void QG_DlgOptionsDrawing::updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimSt
     }
     m_previewView->updateDims();
     m_previewView->refresh();
-}
-
-void QG_DlgOptionsDrawing::onDimSelectionChanged(const QItemSelection& selection, const QItemSelection& before) {
-    LC_ERR << "SElection Changed"; // fixme - clean!
-}
-
-void QG_DlgOptionsDrawing::onDimStyleCurrentActivated(const QModelIndex& index) {
-    LC_ERR << "Activated";// fixme - clean!
 }
 
 void QG_DlgOptionsDrawing::setupPointsTab() {
@@ -1143,14 +1168,10 @@ bool QG_DlgOptionsDrawing::validateDimensions() {
     QString currentDimStyleName;
     for (LC_DimStyleItem* item: items) {
         auto editedStyle = item->dimStyle();
-        if (item->isFromVariables()) {
-            m_graphic->updateFallbackDimStyle(editedStyle);
-        }
-        else {
-            newDimStyles.push_back(editedStyle->getCopy());
-        }
+        newDimStyles.push_back(editedStyle->getCopy());
         if (item->isCurrent()) {
            currentDimStyleName = editedStyle->getName();
+           m_graphic->updateFallbackDimStyle(editedStyle);
         }
     }
 

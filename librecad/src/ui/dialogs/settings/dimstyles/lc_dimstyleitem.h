@@ -73,6 +73,8 @@ public:
     void setNewBaseName(const QString& newBaseName);
     static QString composeDisplayName(QString baseName, RS2::EntityType entityType);
     static QString getDisplayDimStyleName(LC_DimStyle* style);
+    bool hasUsedChildren();
+    bool isNotUsedInDrawing();
 private:
     LC_DimStyle* m_dimStyle{nullptr};
     int m_usageCount{0};

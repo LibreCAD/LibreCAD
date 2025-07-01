@@ -117,21 +117,6 @@ LC_DimStyleItem* LC_DimStyleTreeModel::findByName(const QString& name) {
     return m_rootItem->findByName(name);
 }
 
-void LC_DimStyleTreeModel::addItem(LC_DimStyleItem* item) {
-    if (item->isBaseStyle()) {
-        m_rootItem->appendChild(item);
-    }
-    else {
-        LC_DimStyleItem* baseItem = m_rootItem->findBaseStyleItem(item->baseName());
-        if (baseItem == nullptr) {
-            m_rootItem->appendChild(item);
-        }
-        else {
-            baseItem->appendChild(item);
-        }
-    }
-    emitDataChanged();
-}
 
 void LC_DimStyleTreeModel::collectItemsForBaseStyleItem(QList<LC_DimStyleItem*>* list, LC_DimStyleItem* baseItem) {
     if (baseItem != nullptr) {
@@ -166,6 +151,7 @@ void LC_DimStyleTreeModel::emitDataChanged() {
 void LC_DimStyleTreeModel::removeItem(LC_DimStyleItem* item) {
     item->parentItem()->removeChild(item);
     delete item;
+    m_itemsCount--;
     emitDataChanged();
 }
 
@@ -185,6 +171,7 @@ void LC_DimStyleTreeModel::setDefaultItem(const QModelIndex& index) {
 
 void LC_DimStyleTreeModel::cleanup() {
     m_rootItem->cleanup();
+    m_itemsCount = 0;
 }
 
 void LC_DimStyleTreeModel::collectAllStyleItems(QList<LC_DimStyleItem*>& items) {
@@ -213,6 +200,22 @@ void LC_DimStyleTreeModel::mergeWith(const QList<LC_DimStyle*>& list) {
     emitDataChanged();
 }
 
+int LC_DimStyleTreeModel::itemsCount() {
+    return m_itemsCount;
+}
+
+void LC_DimStyleTreeModel::addItem(LC_DimStyleItem* item) {
+    if (item->isBaseStyle()) {
+        m_rootItem->appendChild(item);
+        m_itemsCount++;
+    }
+    else {
+        addToParent(item);
+    }
+    emitDataChanged();
+}
+
+
 void LC_DimStyleTreeModel::addToParent(LC_DimStyleItem* item) {
     QString baseName = item->baseName();
     LC_DimStyleItem* baseItem = m_rootItem->findBaseStyleItem(baseName);
@@ -222,6 +225,7 @@ void LC_DimStyleTreeModel::addToParent(LC_DimStyleItem* item) {
     else {
         m_rootItem->appendChild(item);
     }
+    m_itemsCount++;
 }
 
 void LC_DimStyleTreeModel::buildTree(const QList<LC_DimStyleItem*>& list) {
@@ -234,6 +238,7 @@ void LC_DimStyleTreeModel::buildTree(const QList<LC_DimStyleItem*>& list) {
         LC_DimStyleItem* item = i.next();
         if (item->isBaseStyle()) {
             m_rootItem->appendChild(item);
+            m_itemsCount++;
             i.remove();
         }
     }

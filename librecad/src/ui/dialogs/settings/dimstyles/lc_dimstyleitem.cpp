@@ -66,6 +66,21 @@ QString LC_DimStyleItem::getDisplayDimStyleName(LC_DimStyle* style) {
     return composeDisplayName(baseName, entityType);
 }
 
+bool LC_DimStyleItem::hasUsedChildren() {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        if (child->usageCount() > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool LC_DimStyleItem::isNotUsedInDrawing() {
+    return m_usageCount == 0 && !hasUsedChildren();
+}
+
 QString LC_DimStyleItem::composeDisplayName(QString baseName, RS2::EntityType entityType) {
     QString result = baseName;
     QString suffix = "";
@@ -176,8 +191,7 @@ void LC_DimStyleItem::setNewBaseName(const QString& newBaseName) {
         m_dimStyle->setName(newBaseName);
     }
     else {
-        QString suffix = LC_DimStyle::getDimStyleNameSuffixForType(m_dimType);
-        QString newName = newBaseName + suffix;
+        QString newName = LC_DimStyle::getStyleNameForBaseAndType(newBaseName, m_dimType);
         m_dimStyle->setName(newName);
     }
     m_baseName = newBaseName;
