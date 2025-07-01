@@ -103,6 +103,7 @@ public:
 class DRW_ObjControl : public DRW_TableEntry {
 public:
     DRW_ObjControl() { reset();}
+    ~DRW_ObjControl() override = default;
 
     // hmm-- is DRW_TableEntry::reset() intended to be virtual??
     void reset(){

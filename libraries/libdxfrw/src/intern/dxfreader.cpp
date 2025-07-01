@@ -111,6 +111,7 @@ int dxfReader::getHandleString(){
     return res;
 }
 
+
 bool dxfReaderBinary::readCode(int *code) {
     unsigned short *int16p;
     char buffer[2];
@@ -285,4 +286,3 @@ bool dxfReaderAscii::readBool() {
     } else
         return false;
 }
-

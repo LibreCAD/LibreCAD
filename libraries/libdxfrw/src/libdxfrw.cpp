@@ -37,20 +37,31 @@
 dxfRW::dxfRW(const char* name){
     DRW_DBGSL(DRW_dbg::Level::None);
     fileName = name;
-    reader = NULL;
-    writer = NULL;
+    reader = nullptr;
+    writer = nullptr;
     applyExt = false;
     elParts = 128; //parts number when convert ellipse to polyline
 }
 dxfRW::~dxfRW(){
-    if (reader != NULL)
-        delete reader;
-    if (writer != NULL)
-        delete writer;
-    for (std::vector<DRW_ImageDef*>::iterator it=imageDef.begin(); it!=imageDef.end(); ++it)
+    delete reader;
+    delete writer;
+    for (auto it=imageDef.begin(); it!=imageDef.end(); ++it)
         delete *it;
 
+    for (auto it=ltypemap.begin(); it!=ltypemap.end(); ++it)
+        delete it->second;
+
+    for (auto it=blockRecordmap.begin(); it!=blockRecordmap.end(); ++it)
+        delete it->second;
+
+    for (auto it=textStyles.begin(); it!=textStyles.end(); ++it)
+        delete it->second;
+
+    blockRecordmap.clear();
+    textStyleMap.clear();
     imageDef.clear();
+    ltypemap.clear();
+    textStyles.clear();
 }
 
 void dxfRW::setDebug(DRW::DebugLevel lvl){
@@ -1339,6 +1350,8 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         default:
             break;
         }
+
+        // writeDimStyleOverride();
     } else  {
         //RLZ: todo not supported by acad 12 saved as unnamed block
     }
@@ -2169,6 +2182,10 @@ bool dxfRW::processTables() {
     int code;
     std::string sectionstr;
     bool more = true;
+
+    std::vector<DRW_Dimstyle> dimstyles;
+
+
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
@@ -2189,7 +2206,7 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "LAYER") {
                         processLayer();
                     } else if (sectionstr == "STYLE") {
-                        processTextStyle();
+                        processTextStyle(textStyles);
                     } else if (sectionstr == "VPORT") {
                         processVports();
                     } else if (sectionstr == "VIEW") {
@@ -2199,13 +2216,51 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "APPID") {
                         processAppId();
                     } else if (sectionstr == "DIMSTYLE") {
-                        processDimStyle();
+                        processDimStyle(dimstyles);
                     } else if (sectionstr == "BLOCK_RECORD") {
-//                        processBlockRecord();
+                        processBlockRecord(blockRecordmap );
                     }
                 }
             } else if (sectionstr == "ENDSEC") {
+                for (auto it=dimstyles.begin(); it!=dimstyles.end(); ++it) {
+                    it->resolveRefs(blockRecordmap, textStyles);
+                    iface->addDimStyle(*it);
+                }
+
                 return true;  //found ENDSEC terminate
+            }
+        }
+    }
+
+    return setError(DRW::BAD_READ_TABLES);
+}
+
+bool dxfRW::processBlockRecord(std::unordered_map<duint32, DRW_Block_Record*> &blocksRecordsMap) {
+    DRW_DBG("dxfRW::processBlockRecord");
+    int code;
+    std::string sectionstr;
+    bool reading = false;
+    auto blockRecord = new DRW_Block_Record();
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            if (reading) {
+                duint32 handle = blockRecord->handle;
+                blocksRecordsMap[handle] = blockRecord;
+            }
+            sectionstr = reader->getString();
+            DRW_DBG(sectionstr); DRW_DBG("\n");
+            if (sectionstr == "BLOCK_RECORD") {
+                reading = true;
+                blockRecord = new DRW_Block_Record();
+                blockRecord->reset();
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading) {
+            if (!blockRecord->parseCode(code, reader)) {
+                delete blockRecord;
+                return setError( DRW::BAD_CODE_PARSED);
             }
         }
     }
@@ -2332,7 +2387,7 @@ bool dxfRW::processLayer() {
     return setError(DRW::BAD_READ_TABLES);
 }
 
-bool dxfRW::processDimStyle() {
+bool dxfRW::processDimStyle(std::vector<DRW_Dimstyle> & styles) {
     DRW_DBG("dxfRW::processDimStyle");
     int code;
     std::string sectionstr;
@@ -2341,8 +2396,9 @@ bool dxfRW::processDimStyle() {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
-            if (reading)
-                iface->addDimStyle(dimSty);
+            if (reading) {
+                styles.push_back(dimSty);
+            }
             sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "DIMSTYLE") {
@@ -2361,27 +2417,29 @@ bool dxfRW::processDimStyle() {
     return setError(DRW::BAD_READ_TABLES);
 }
 
-bool dxfRW::processTextStyle(){
+bool dxfRW::processTextStyle(std::unordered_map<duint32, DRW_Textstyle*> &textStyles){
     DRW_DBG("dxfRW::processTextStyle");
     int code;
     std::string sectionstr;
     bool reading = false;
-    DRW_Textstyle TxtSty;
+    auto* textStyle = new DRW_Textstyle;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
-            if (reading)
-                iface->addTextStyle(TxtSty);
+            if (reading) {
+                textStyles[textStyle->handle] = textStyle;
+                iface->addTextStyle(*textStyle);
+            }
             sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "STYLE") {
                 reading = true;
-                TxtSty.reset();
+                textStyle = new DRW_Textstyle();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
         } else if (reading) {
-            if (!TxtSty.parseCode(code, reader)) {
+            if (!textStyle->parseCode(code, reader)) {
                 return setError( DRW::BAD_CODE_PARSED);
             }
         }
@@ -3079,32 +3137,33 @@ bool dxfRW::processDimension() {
             switch (type) {
             case 0: {
                 DRW_DimLinear d(dim);
-                iface->addDimLinear(&d);
+                iface->addDimLinear(&d,blockRecordmap);
                 break; }
             case 1: {
                 DRW_DimAligned d(dim);
-                iface->addDimAlign(&d);
+                iface->addDimAlign(&d,blockRecordmap);
                 break; }
             case 2:  {
                 DRW_DimAngular d(dim);
-                iface->addDimAngular(&d);
+                iface->addDimAngular(&d,blockRecordmap);
                 break;}
             case 3: {
                 DRW_DimDiametric d(dim);
-                iface->addDimDiametric(&d);
+                iface->addDimDiametric(&d,blockRecordmap);
                 break; }
             case 4: {
                 DRW_DimRadial d(dim);
-                iface->addDimRadial(&d);
+                iface->addDimRadial(&d,blockRecordmap);
                 break; }
             case 5: {
                 DRW_DimAngular3p d(dim);
-                iface->addDimAngular3P(&d);
+                iface->addDimAngular3P(&d,blockRecordmap);
                 break; }
             case 6: {
                 DRW_DimOrdinate d(dim);
-                iface->addDimOrdinate(&d);
-                break; }
+                iface->addDimOrdinate(&d,blockRecordmap);
+                break;
+            }
             }
             return true;  //found new entity or ENDSEC, terminate
         }
@@ -3126,7 +3185,7 @@ bool dxfRW::processLeader() {
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            iface->addLeader(&leader);
+            iface->addLeader(&leader,blockRecordmap);
             return true;  //found new entity or ENDSEC, terminate
         }
 

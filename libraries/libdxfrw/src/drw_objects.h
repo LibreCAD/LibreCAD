@@ -20,6 +20,8 @@
 #include <map>
 #include "drw_base.h"
 
+class DRW_Textstyle;
+class DRW_Block_Record;
 class dxfReader;
 class dxfWriter;
 class dwgBuffer;
@@ -130,6 +132,7 @@ class DRW_Dimstyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Dimstyle() { reset();}
+    ~DRW_Dimstyle() override = default;
 
     void reset(){
         tType = DRW::DIMSTYLE;
@@ -158,9 +161,20 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
+    void resolveBlockName(std::unordered_map<duint32, DRW_Block_Record*>& blockRecords, const std::string &unresolvedKey,
+                          const std::string &resolvedKey, int code);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool resolveRefs(std::unordered_map<duint32, DRW_Block_Record*>& blockRecords,
+          std::unordered_map<unsigned int, DRW_Textstyle*>& text_styles);
 
 public:
+    DRW_Variant* get(const std::string& key) const;
+    void add(const std::string& key, int code, int value);
+    void add(const std::string& key, int code, double value);
+    void add(const std::string& key, int code, UTF8STRING value);
+
+    std::unordered_map<std::string,DRW_Variant*> vars;
+
     //V12
     UTF8STRING dimpost;       /*!< code 3 */
     UTF8STRING dimapost;      /*!< code 4 */
@@ -194,11 +208,14 @@ public:
     int dimse1;               /*!< code 75 */
     int dimse2;               /*!< code 76 */
 
-    UTF8STRING dimltext1;     /*!< code 6, code 343 V2000+ */ // fixme - code!
-    UTF8STRING dimltext2;    /*!< code 7, code 344 V2000+ */  // fixme - code!
-    UTF8STRING dimltype;    /*!< code 7, code 344 V2000+ */  // fixme - code!
-    int dimtfillclr;              /*!< code 176 */ // fixme - code!
-    int dimtxtdirection; // fixme - code!
+    UTF8STRING dimltext1;        /*!< code  347, code 343 V2000+ */
+    UTF8STRING dimltext2;       /*!< code  349, code 344 V2000+ */
+    UTF8STRING dimltype;        /*!< code 346 V2000+ */
+
+    int dimtfillclr;           /*!< code 70 */
+    int dimtfill;              /*!< code 69 */
+    int dimtxtdirection;       /*!< code 292 */
+
     double mleaderscale; // fixme - code!
 
     int dimtad;               /*!< code 77 */
@@ -236,7 +253,7 @@ public:
     int dimatfit;             /*!< code 289 V2000+ */
     int dimfxlon;             /*!< code 290 V2007+ */
     UTF8STRING dimtxsty;      /*!< code 340 R13+ */
-    UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
+    UTF8STRING dimldrblk;     /*!< code 341 V2000+ */ // fixme - or 345?
     int dimlwd;               /*!< code 371 V2000+ */
     int dimlwe;               /*!< code 372 V2000+ */
 };
@@ -252,6 +269,7 @@ class DRW_LType : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_LType() { reset();}
+    ~DRW_LType() override = default;
 
     void reset(){
         tType = DRW::LTYPE;
@@ -288,6 +306,7 @@ class DRW_Layer : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Layer() { reset();}
+    ~DRW_Layer() override = default;
 
     void reset() {
         tType = DRW::LAYER;
@@ -324,6 +343,8 @@ class DRW_Block_Record : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Block_Record() { reset();}
+    ~DRW_Block_Record() override = default;
+
     void reset() {
         tType = DRW::BLOCK_RECORD;
         flags = 0;
@@ -346,6 +367,8 @@ private:
     duint32 firstEH; //handle of first entity, only in pre-2004
     duint32 lastEH;  //handle of last entity, only in pre-2004
     std::vector<duint32>entMap;
+    // fixme - sand - expand by other attributes
+    // https://help.autodesk.com/view/ACD/2025/ENU/?guid=GUID-A1FD1934-7EF5-4D35-A4B0-F8AE54A9A20A
 };
 
 //! Class to handle text style entries
@@ -357,6 +380,7 @@ class DRW_Textstyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Textstyle() { reset();}
+    ~DRW_Textstyle() override = default;
 
     void reset(){
         tType = DRW::STYLE;
@@ -394,6 +418,8 @@ public:
     int orthoType;
 
     DRW_UCS() { reset();}
+    ~DRW_UCS() override = default;
+
     void reset(){
         origin.x = origin.y = origin.z = 0.0;
         xAxisDirection.x = xAxisDirection.y = xAxisDirection.z = 0.0;
@@ -412,6 +438,7 @@ class DRW_View:public DRW_TableEntry{
     SETOBJFRIENDS
 public:
     DRW_View() { reset();}
+    ~DRW_View() override = default;
 
     void reset(){
         size.x = size.y = size.z = 0.0;
@@ -483,6 +510,7 @@ class DRW_Vport : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Vport() { reset();}
+    ~DRW_Vport() override = default;
 
     void reset(){
         tType = DRW::VPORT;
@@ -554,6 +582,8 @@ public:
         reset();
     }
 
+    ~DRW_ImageDef() override = default;
+
     void reset(){
         tType = DRW::IMAGEDEF;
         imgVersion = 0;
@@ -590,6 +620,8 @@ public:
         reset();
     }
 
+    ~DRW_PlotSettings() override = default;
+
     void reset(){
         tType = DRW::PLOTSETTINGS;
         marginLeft = 0.0;
@@ -620,6 +652,7 @@ class DRW_AppId : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_AppId() { reset();}
+    ~DRW_AppId() override = default;
 
     void reset(){
         tType = DRW::APPID;

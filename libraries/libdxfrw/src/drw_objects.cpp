@@ -197,228 +197,380 @@ DRW_DBG("\n***************************** parsing table entry *******************
     return buf->isGood();
 }
 
+DRW_Variant* DRW_Dimstyle::get(const std::string& key) const {
+    auto pair = vars.find(key);
+    if (pair == vars.end()) {
+        return nullptr;
+    }
+    return pair->second;
+}
+
+void DRW_Dimstyle::add(const std::string& key, int code,  int value) {
+    vars[key] = new DRW_Variant(code, value);
+}
+
+void DRW_Dimstyle::add(const std::string& key, int code, double value) {
+    vars[key] = new DRW_Variant(code, value);
+}
+
+void DRW_Dimstyle::add(const std::string& key, int code, std::string value) {
+    vars[key] = new DRW_Variant(code, value);
+}
+
 //! Class to handle dimstyle entries
 /*!
 *  Class to handle ldim style symbol table entries
 *  @author Rallaz
 */
+
 bool DRW_Dimstyle::parseCode(int code, dxfReader *reader){
+    int refHandle;
     switch (code) {
     case 105:
         handle = reader->getHandleString();
         break;
     case 3:
         dimpost = reader->getUtf8String();
+        add("$DIMPOST", code, dimpost);
         break;
     case 4:
         dimapost = reader->getUtf8String();
+        add("$DIMAPOST", code, dimapost);
         break;
     case 5:
         dimblk = reader->getUtf8String();
+        add("$DIMBLK", code, dimblk);
         break;
     case 6:
         dimblk1 = reader->getUtf8String();
+        add("$DIMBLK1", code, dimblk1);
         break;
     case 7:
         dimblk2 = reader->getUtf8String();
+        add("$DIMBLK2", code, dimblk2);
         break;
     case 40:
         dimscale = reader->getDouble();
+        add("$DIMSCALE", code, code);
         break;
     case 41:
         dimasz = reader->getDouble();
+        add("$DIMASZ", code, dimasz);
         break;
     case 42:
         dimexo = reader->getDouble();
+        add("$DIMEXO", code, dimexo);
         break;
     case 43:
         dimdli = reader->getDouble();
+        add("$DIMDLI", code, dimdli);
         break;
     case 44:
         dimexe = reader->getDouble();
+        add("$DIMEXE", code, dimexe);
         break;
     case 45:
         dimrnd = reader->getDouble();
+        add("$DIMRND", code, dimrnd);
         break;
     case 46:
         dimdle = reader->getDouble();
+        add("$DIMDLE", code, dimdle);
         break;
     case 47:
         dimtp = reader->getDouble();
+        add("$DIMTP", code, dimtp);
         break;
     case 48:
         dimtm = reader->getDouble();
+        add("$DIMTM", code, dimtm);
         break;
     case 49:
         dimfxl = reader->getDouble();
+        add("$DIMFXL", code, dimfxl);
         break;
     case 140:
         dimtxt = reader->getDouble();
+        add("$DIMTXT", code, dimtxt);
         break;
     case 141:
         dimcen = reader->getDouble();
+        add("$DIMCEN", code, dimcen);
         break;
     case 142:
         dimtsz = reader->getDouble();
+        add("$DIMTSZ", code, dimtsz);
         break;
     case 143:
         dimaltf = reader->getDouble();
+        add("$DIMALTF", code, dimaltf);
         break;
     case 144:
         dimlfac = reader->getDouble();
+        add("$DIMLFAC", code, dimlfac);
         break;
     case 145:
         dimtvp = reader->getDouble();
+        add("$DIMTVP", code, dimtvp);
         break;
     case 146:
         dimtfac = reader->getDouble();
+        add("$DIMTFAC", code, dimtfac);
         break;
     case 147:
         dimgap = reader->getDouble();
+        add("$DIMGAP", code, dimgap);
         break;
     case 148:
         dimaltrnd = reader->getDouble();
+        add("$DIMALTRND", code, dimaltrnd);
+        break;
+    case 69:
+        dimtfill = reader->getInt32();
+        add("$DIMTFILL", code, dimtfill);
+        break;
+    case 70:
+        dimtfillclr = reader->getInt32();
+        add("$DIMTFILLCLR", code, dimtfillclr);
         break;
     case 71:
         dimtol = reader->getInt32();
+        add("$DIMTOL", code, dimtol);
         break;
     case 72:
         dimlim = reader->getInt32();
+        add("$DIMLIM", code, dimlim);
         break;
     case 73:
         dimtih = reader->getInt32();
+        add("$DIMTIH", code, dimtih);
         break;
     case 74:
         dimtoh = reader->getInt32();
+        add("$DIMTOH", code, dimtoh);
         break;
     case 75:
         dimse1 = reader->getInt32();
+        add("$DIMSE1", code, dimse1);
         break;
     case 76:
         dimse2 = reader->getInt32();
+        add("$DIMSE2", code, dimse2);
         break;
     case 77:
         dimtad = reader->getInt32();
+        add("$DIMTAD", code, dimtad);
         break;
     case 78:
         dimzin = reader->getInt32();
+        add("$DIMZIN", code, dimzin);
         break;
     case 79:
         dimazin = reader->getInt32();
+        add("$DIMAZIN", code, dimazin);
         break;
     case 170:
         dimalt = reader->getInt32();
+        add("$DIMALT", code, dimalt);
         break;
     case 171:
         dimaltd = reader->getInt32();
+        add("$DIMALTD", code, dimaltd);
         break;
     case 172:
         dimtofl = reader->getInt32();
+        add("$DIMTOFL", code, dimtofl);
         break;
     case 173:
         dimsah = reader->getInt32();
+        add("$DIMSAH", code, dimsah);
         break;
     case 174:
         dimtix = reader->getInt32();
+        add("$DIMTIX", code, dimtix);
         break;
     case 175:
         dimsoxd = reader->getInt32();
+        add("$DIMSOXD", code, dimsoxd);
         break;
     case 176:
         dimclrd = reader->getInt32();
+        add("$DIMCLRD", code, dimclrd);
         break;
     case 177:
         dimclre = reader->getInt32();
+        add("$DIMCLRE", code, dimclre);
         break;
     case 178:
         dimclrt = reader->getInt32();
+        add("$DIMCLRT", code, dimclrt);
         break;
     case 179:
         dimadec = reader->getInt32();
+        add("$DIMADEC", code, dimadec);
         break;
     case 270:
         dimunit = reader->getInt32();
+        add("$DIMUNIT", code, dimunit);
         break;
     case 271:
         dimdec = reader->getInt32();
+        add("$DIMDEC", code, dimdec);
         break;
     case 272:
         dimtdec = reader->getInt32();
+        add("$DIMTDEC", code, dimtdec);
         break;
     case 273:
         dimaltu = reader->getInt32();
+        add("$DIMALTU", code, dimaltu);
         break;
     case 274:
         dimalttd = reader->getInt32();
+        add("$DIMALTTD", code, dimalttd);
         break;
     case 275:
         dimaunit = reader->getInt32();
+        add("$DIMAUNIT", code, dimaunit);
         break;
     case 276:
         dimfrac = reader->getInt32();
+        add("$DIMFRAC", code, dimfrac);
         break;
     case 277:
         dimlunit = reader->getInt32();
+        add("$DIMLUNIT", code, dimlunit);
         break;
     case 278:
         dimdsep = reader->getInt32();
+        add("$DIMDSEP", code, dimdsep);
         break;
     case 279:
         dimtmove = reader->getInt32();
+        add("$DIMTMOVE", code, dimtmove);
         break;
     case 280:
         dimjust = reader->getInt32();
+        add("$DIMJUST", code, dimjust);
         break;
     case 281:
         dimsd1 = reader->getInt32();
+        add("$DIMSD1", code, dimsd1);
         break;
     case 282:
         dimsd2 = reader->getInt32();
+        add("$DIMSD2", code, dimsd2);
         break;
     case 283:
         dimtolj = reader->getInt32();
+        add("$DIMTOLJ", code, dimtolj);
         break;
     case 284:
         dimtzin = reader->getInt32();
+        add("$DIMTZIN", code, dimtzin);
         break;
     case 285:
         dimaltz = reader->getInt32();
+        add("$DIMALTZ", code, dimaltz);
         break;
     case 286:
         dimaltttz = reader->getInt32();
+        add("$DIMALTTZ", code, dimaltttz);
         break;
     case 287:
         dimfit = reader->getInt32();
+        add("$DIMFIT", code, dimfit);
         break;
     case 288:
         dimupt = reader->getInt32();
+        add("$DIMUPT", code, dimupt);
         break;
     case 289:
         dimatfit = reader->getInt32();
+        add("$DIMATFIT", code, dimatfit);
         break;
     case 290:
         dimfxlon = reader->getInt32();
+        add("$DIMFXLON", code, dimfxlon);
+        break;
+    case 292:
+        dimtxtdirection = reader->getInt32();
+        add("$DIMTXTDIRECTION", code, dimtxtdirection);
         break;
     case 340:
         dimtxsty = reader->getUtf8String();
+        add("$DIMTXSTY", code, dimtxsty);
         break;
     case 341:
-        dimldrblk = reader->getUtf8String();
+        refHandle = reader->getHandleString();
+        add("_$DIMLDRBLK", code, refHandle);
         break;
     case 342:
-        dimblk = reader->getUtf8String();
+        // dimblk = reader->getHandleString();
+        refHandle = reader->getHandleString();
+        add("_$DIMBLK", code, refHandle);
         break;
     case 343:
-        dimblk1 = reader->getUtf8String();
+        // dimblk1 = reader->getHandleString();
+        refHandle = reader->getHandleString();
+        add("_$DIMBLK1", code, refHandle);
         break;
     case 344:
-        dimblk2 = reader->getUtf8String();
+        refHandle = reader->getHandleString();
+        add("_$DIMBLK2", code, refHandle);
+        break;
+   // case 345: // codes///
+   // fixme - may this code be used for DIMLDRBLK?
+   //      dimblk2 = reader->getUtf8String();
+   //      add("$DIMBLK2", code, dimblk2);
+   //      break;
+   case 346:
+        dimltype = reader->getUtf8String();
+        add("$DIMLTYPE", code, dimltype);
+        break;
+    case 347:
+        dimltext1 = reader->getUtf8String();
+        add("$DIMLTEX1", code, dimltext1);
+        break;
+    case 348:
+        dimltext2 = reader->getUtf8String();
+        add("$DIMLTEX2", code, dimltext1);
+        break;
+    case 371:
+        dimlwd = reader->getInt32();
+        add("$DIMLWD", code, dimlwd);
+        break;
+     case 372:
+        dimlwe = reader->getInt32();
+        add("$DIMLWE", code, dimlwe);
         break;
     default:
         return DRW_TableEntry::parseCode(code, reader);
     }
 
     return true;
+}
+
+void DRW_Dimstyle::resolveBlockName(std::unordered_map<duint32, DRW_Block_Record*>& blockRecords, const std::string &unresolvedKey, const std::string &resolvedKey, int code) {
+    auto var = get(unresolvedKey);
+    if (var != nullptr) {
+        duint32 blockHandle = var->i_val();
+        auto it = blockRecords.find(blockHandle);
+        if (it != blockRecords.end()) {
+            DRW_Block_Record* blockRecord = it->second;
+            std::string name = blockRecord->name;
+            add(resolvedKey, code, name);
+        }
+    }
+}
+
+bool DRW_Dimstyle::resolveRefs(std::unordered_map<duint32, DRW_Block_Record*>& blockRecords,
+                               std::unordered_map<unsigned int, DRW_Textstyle*>& text_styles) {
+    resolveBlockName(blockRecords, "_$DIMLDRBLK", "$DIMLDRBLK", 341);
+    resolveBlockName(blockRecords, "_$DIMBLK", "$DIMBLK", 342);
+    resolveBlockName(blockRecords, "_$DIMBLK1", "$DIMBLK1", 343);
+    resolveBlockName(blockRecords, "_$DIMBLK2", "$DIMBLK2", 344);
+    return false;
 }
 
 bool DRW_Dimstyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

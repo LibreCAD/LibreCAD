@@ -32,6 +32,7 @@
 #include "rs_color.h"
 #include "rs_dimension.h"
 #include "drw_interface.h"
+#include "lc_extentitydata.h"
 #include "libdxfrw.h"
 
 class LC_DimStyle;
@@ -114,15 +115,14 @@ public:
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
     void addMText(const DRW_MText& data) override;
-    RS_DimensionData convDimensionData(const DRW_Dimension* data);
-    void addDimAlign(const DRW_DimAligned *data) override;
-    void addDimLinear(const DRW_DimLinear *data) override;
-    void addDimRadial(const DRW_DimRadial *data) override;
-    void addDimDiametric(const DRW_DimDiametric *data) override;
-    void addDimAngular(const DRW_DimAngular *data) override;
-    void addDimAngular3P(const DRW_DimAngular3p *data) override;
-    void addDimOrdinate(const DRW_DimOrdinate *data) override;
-    void addLeader(const DRW_Leader *data) override;
+    void addDimAlign(const DRW_DimAligned *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addDimLinear(const DRW_DimLinear *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addDimRadial(const DRW_DimRadial *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addDimDiametric(const DRW_DimDiametric *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addDimAngular(const DRW_DimAngular *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addDimAngular3P(const DRW_DimAngular3p *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addDimOrdinate(const DRW_DimOrdinate *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
+    void addLeader(const DRW_Leader *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) override;
     void addHatch(const DRW_Hatch* data) override;
     void addViewport(const DRW_Viewport& /*data*/) override{}
     void addImage(const DRW_Image* data) override;
@@ -202,12 +202,18 @@ public:
     static bool isVariableTwoDimensional(const QString& var);
 
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
-
+protected:
+    void parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* result);
+    bool resolveBlockName(duint32 handle, QString& block_name, const std::unordered_map<unsigned int, DRW_Block_Record*>& blockRecordsMap) const;
+    LC_DimStyle* parseDimStyleOverride(LC_ExtEntityData* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) const;
+    RS_DimensionData convDimensionData(const DRW_Dimension* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords);
+    LC_ExtEntityData* extractEntityExtData(const std::vector<std::shared_ptr<DRW_Variant>>& extData);
 private:
     void prepareBlocks();
     void writeEntity(RS_Entity* e);
 #ifdef DWGSUPPORT
     void printDwgError(int le);
+    QString strVal(DRW_Variant* var);
     QString printDwgVersion(int v);
 #endif
 
@@ -242,6 +248,7 @@ private:
     QHash<int, RS_EntityContainer*> blockHash;
     /** Pointer to entity container to store possible orphan entities like paper space */
     RS_EntityContainer* dummyContainer;
+    void applyDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector);
     LC_DimStyle *createDimStyle(const DRW_Dimstyle &s);
 };
 

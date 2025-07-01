@@ -32,6 +32,7 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include <stack>
 
 #include "lc_parabola.h"
 #include "rs_arc.h"
@@ -64,6 +65,7 @@
 #include "lc_defaults.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
+#include "lc_extentitydata.h"
 #include "lc_tolerance.h"
 
 #ifdef DWGSUPPORT
@@ -316,6 +318,8 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
             graphic->addVariable("$DIMADEC", data.dimadec, 70);
         }
     }
+
+
 
     LC_DimStyle* dimStyle = createDimStyle(data);
     graphic->addDimStyle(dimStyle);
@@ -1036,7 +1040,7 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
  * Implementation of the method which handles
  * dimensions (DIMENSION).
  */
-RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
+RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
 
     DRW_Coord crd = data->getDefPoint();
     RS_Vector defP(crd.x, crd.y);
@@ -1089,22 +1093,469 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
 
     bool customTextLocation = data->type >= 128;
 
+    LC_DimStyle*  dimStyleOverride =  nullptr;
+
+    if (!data->extData.empty()) {
+        LC_ExtEntityData* extData = extractEntityExtData(data->extData);
+        if (extData != nullptr) {
+            dimStyleOverride = parseDimStyleOverride(extData, blockRecords);
+            delete extData;
+        }
+    }
+
     // data needed to add the actual dimension entity
     return RS_DimensionData(defP, midP,
                             valign, halign,
                             lss,
                             data->getTextLineFactor(),
-                            t, sty, data->getDir(), data->getHDir(), !customTextLocation);
+                            t, sty, data->getDir(), data->getHDir(), !customTextLocation, dimStyleOverride);
+}
+
+// this methos is quite generic and may be used for parsing any entity's ext data
+// fixme - sand - nesting of tags is not supported so far in code, yet it's supported by DXF !!!!
+LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::shared_ptr<DRW_Variant>> &extData) {
+    auto* result = new LC_ExtEntityData();
+    LC_ExtDataAppData* currentAppData = nullptr;
+    LC_ExtDataGroup* currentGroup = nullptr;
+
+    int currentValType = -1;
+    std::stack<LC_ExtDataTag*> tagStack;
+    bool expectType = false;
+    int listLevel = 0;
+    bool inTagsList = false;
+    for (auto v: extData) {
+        int code = v->code();
+        switch (code) {
+            case 1001: { // application name
+                QString applicationName = v->c_str();
+                currentAppData = result->addAppData(applicationName);
+                break;
+            }
+            case 1000: { // group name
+                QString groupName = v->c_str();
+                currentGroup = currentAppData->addGroup(groupName);
+                break;
+            }
+            case 1002: { // control braces
+                QString ctrlString = v->c_str();
+                if (ctrlString == "{") { // fixme - sand - add support of lists nesting!!!
+                    listLevel ++;
+                    inTagsList = true;
+                    expectType = false; // for later "not", as actually we do expect it
+                }
+                else { // end of list
+                    listLevel --;
+                    inTagsList = false;
+                }
+                break;
+            }
+            case 1003:
+            case 1004:
+            case 1005:{
+                QString val = v->c_str();
+                if (currentGroup != nullptr) {
+                    currentGroup->add(currentValType, val);
+                }
+                break;
+            }
+            case 1010:
+            case 1011:
+            case 1012:
+            case 1013: {
+                if (currentGroup != nullptr) {
+                    auto coord = v->coord();
+                    if (coord != nullptr) {
+                        currentGroup->add(currentValType, RS_Vector(coord->x, coord->y, coord->z));
+                    }
+                }
+                break;
+            }
+
+            case 1070: // integer
+            case 1071:{// long
+                int val = v->i_val();
+                if (expectType) {
+                    // code of var
+                    currentValType = val;
+                }
+                else {
+                    // int field
+                    if (currentGroup != nullptr) {
+                        currentGroup->add(currentValType, val);
+                    }
+                }
+                break;
+            }
+            case 1040: // real
+            case 1041: // distance
+            case 1042: { // scale factor
+                double val = v->d_val();
+                if (currentGroup != nullptr) {
+                    currentGroup->add(currentValType, val);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+        if (inTagsList) {
+            expectType = !expectType;
+        }
+    }
+
+    return result;
+}
+
+
+LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityData, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) const {
+    if (extEntityData != nullptr) {
+        auto dimStyleGroup = extEntityData->getGroupByName("ACAD", "DSTYLE");
+        if (dimStyleGroup != nullptr) {
+            auto dimStyleVariables = dimStyleGroup->getTagsList();
+            if (dimStyleVariables->empty()) {
+                return nullptr;
+            }
+            auto* result = new LC_DimStyle();
+            auto arrowhead = result->arrowhead();
+            auto linearFormat = result->linearFormat();
+            auto extensionLine = result->extensionLine();
+            auto dimensionLine = result->dimensionLine();
+            auto text = result->text();
+            auto tolerance = result->latteralTolerance();
+            auto zerosSuppression = result->zerosSuppression();
+
+            result->setModifyCheckMode(LC_DimStyle::ModificationAware::ALL);
+            int count = dimStyleVariables->size();
+            for (int i = 0; i < count; i++) {
+                LC_ExtDataTag* tag = dimStyleVariables->at(i);
+                RS_Variable* var = tag->var();
+                int code = var->getCode();
+
+
+                switch (code) {
+                    case 105:
+                        // handle = reader->getHandleString();
+                        break;
+                    case 3: // "$DIMPOST"
+                        linearFormat->setPrefixOrSuffix(var->getString());
+                        break;
+                    case 4: // "$DIMAPOST"
+                        linearFormat->setAltPrefixOrSuffix(var->getString());
+                        break;
+                    case 5: // $DIMBLK
+                        arrowhead->setSameBlockName(var->getString());
+                        break;
+                    case 6: // "$DIMBLK1"
+                        arrowhead->setArrowHeadBlockNameFirst(var->getString());
+                        break;
+                    case 7: // "$DIMBLK2"
+                        arrowhead->setArrowHeadBlockNameSecond(var->getString());
+                        break;
+                    case 40: // "$DIMSCALE"
+                        result->scaling()->setScale(var->getDouble());
+                        break;
+                    case 41: // "$DIMASZ"
+                        arrowhead->setSize(var->getDouble());
+                        break;
+                    case 42: // "$DIMEXO"
+                        extensionLine->setDistanceFromOriginPoint(var->getDouble());
+                        break;
+                    case 43: //"$DIMDLI"
+                        dimensionLine->setBaselineDimLinesSpacing(var->getDouble());
+                        break;
+                    case 44: //"$DIMEXE"
+                        extensionLine->setDistanceBeyondDimLine(var->getDouble());
+                        break;
+                    case 45: //$DIMRND
+                        result->roundOff()->setRoundToValue(var->getDouble());
+                        break;
+                    case 46: //$DIMDLE
+                        dimensionLine->setDistanceBeyondExtLinesForObliqueStroke(var->getDouble());
+                        break;
+                    case 47: //"$DIMTP"
+                        tolerance->setUpperToleranceLimit(var->getDouble());
+                        break;
+                    case 48: //"$DIMTM"
+                        tolerance->setLowerToleranceLimit(var->getDouble());
+                        break;
+                    case 49: //"$DIMFXL"
+                        extensionLine->setFixedLength(var->getDouble());
+                        break;
+                    case 140:// "$DIMTXT"
+                        text->setHeight(var->getDouble());
+                        break;
+                    case 141: // "$DIMCEN"
+                        result->radial()->setCenterMarkOrLineSize(var->getDouble());
+                        break;
+                    case 142: //"$DIMTSZ"
+                        arrowhead->setTickSize(var->getDouble());
+                        break;
+                    case 143: //"$DIMALTF"
+                        linearFormat->setAltUnitsMultiplier(var->getDouble());
+                        break;
+                    case 144: //"$DIMLFAC"
+                        result->scaling()->setLinearFactor(var->getDouble());
+                        break;
+                    case 145: //"$DIMTVP"
+                        text->setVerticalDistanceToDimLine(var->getDouble());
+                        break;
+                    case 146: //"$DIMTFAC"
+                        tolerance->setHeightScaleFactorToDimText(var->getDouble());
+                        break;
+                    case 147: //"$DIMGAP"
+                        dimensionLine->setLineGap(var->getDouble());
+                        break;
+                    case 148: //"$DIMALTRND"
+                        result->roundOff()->setAltRoundToValue(var->getDouble());
+                        break;
+                    case 69: // "$DIMTFILL"
+                        text->setBackgroundFillModeRaw(var->getInt());
+                        break;
+                    case 70: {
+                        //"$DIMTFILLCLR"
+                        RS_Color fillClr = numberToColor(var->getInt());
+                        text->setExplicitBackgroundFillColor(fillClr);
+                        break;
+                    }
+                    case 71: // "$DIMTOL"
+                        tolerance->setAppendTolerancesToDimText(var->getInt() == 1); // fixme - review
+                        break;
+                    case 72: //"$DIMLIM"
+                        tolerance->setLimitsAreGeneratedAsDefaultText(var->getInt() == 1); // fixme - review
+                        break;
+                    case 73: //"$DIMTIH"
+                        text->setOrientationInsideRaw(var->getInt());
+                        break;
+                    case 74: //"$DIMTOH"
+                        text->setOrientationOutsideRaw(var->getInt());
+                        break;
+                    case 75: //"$DIMSE1"
+                        extensionLine->setSuppressionFirstRaw(var->getInt());
+                        break;
+                    case 76: //"$DIMSE2"
+                        extensionLine->setSuppressionSecondRaw(var->getInt());
+                        break;
+                    case 77: //"$DIMTAD"
+                        text->setVerticalPositioningRaw(var->getInt());
+                        break;
+                    case 78: // "$DIMZIN"
+                        zerosSuppression->setLinearRaw(var->getInt());
+                        break;
+                    case 79: //"$DIMAZIN"
+                        zerosSuppression->setAngularRaw(var->getInt());
+                        break;
+                    case 170: //"$DIMALT"
+                        linearFormat->setAlternateUnitsRaw(var->getInt());
+                        break;
+                    case 171: //"$DIMALTD"
+                        linearFormat->setAltDecimalPlaces(var->getInt());
+                        break;
+                    case 172: //"$DIMTOFL"
+                        dimensionLine->setDrawPolicyForOutsideTextRaw(var->getInt());
+                        break;
+                    case 173: //"$DIMSAH"
+                        arrowhead->setUseSeparateArrowHeads(var->getInt()); // fixme - check value
+                        break;
+                    case 174: // "$DIMTIX"
+                        text->setExtLinesRelativePlacementRaw(var->getInt());
+                        break;
+                    case 175: //"$DIMSOXD"
+                        arrowhead->setSuppressionsRaw(var->getInt()); // fixme - check value
+                        break;
+                    case 176: { //"$DIMCLRD"
+                        RS_Color color = numberToColor(var->getInt());
+                        dimensionLine->setColor(color);
+                        break;
+                    }
+                    case 177: { //"$DIMCLRE"
+                        RS_Color color = numberToColor(var->getInt());
+                        extensionLine->setColor(color);
+                        break;
+                    }
+                    case 178: { //"$DIMCLRT"
+                        RS_Color color = numberToColor(var->getInt());
+                        text->setColor(color);
+                        break;
+                    }
+                    case 179: //"$DIMADEC"
+                        result->angularFormat()->setDecimalPlaces(var->getInt());
+                        break;
+                    case 270: // fixme - sand - obsolete DIMUNIT
+                        // result->linearFormat()->setUDecimalPlaces(var->getInt());
+                        // dimunit = reader->getInt32();
+                        // add("$DIMUNIT", code, dimunit);
+                        break;
+                    case 271: //"$DIMDEC"
+                        linearFormat->setDecimalPlaces(var->getInt());
+                        break;
+                    case 272://"$DIMTDEC"
+                        tolerance->setDecimalPlaces(var->getInt());
+                        break;
+                    case 273: //"$DIMALTU"
+                        linearFormat->setAltFormatRaw(var->getInt());
+                        break;
+                    case 274: // "$DIMALTTD"
+                        tolerance->setDecimalPlacesAltDim(var->getInt());
+                        break;
+                    case 275: //"$DIMAUNIT"
+                        result->angularFormat()->setFormatRaw(var->getInt());
+                        break;
+                    case 276: // "$DIMFRAC"
+                        result->fractions()->setStyleRaw(var->getInt());
+                        break;
+                    case 277: // "$DIMLUNIT"
+                        linearFormat->setFormatRaw(var->getInt());
+                        break;
+                    case 278: //"$DIMDSEP"
+                        linearFormat->setDecimalFormatSeparatorChar(var->getInt());
+                        break;
+                    case 279: // "$DIMTMOVE"
+                        text->setPositionMovementPolicyRaw(var->getInt());
+                        break;
+                    case 280: // "$DIMJUST"
+                        text->setHorizontalPositioningRaw(var->getInt());
+                        break;
+                    case 281: // "$DIMSD1"
+                        dimensionLine->setFirstLineSuppressionRaw(var->getInt());
+                        break;
+                    case 282: // "$DIMSD2"
+                        dimensionLine->setSecondLineSuppressionRaw(var->getInt());
+                        break;
+                    case 283: // "$DIMTOLJ"
+                        tolerance->setVerticalJustificationRaw(var->getInt());
+                        break;
+                    case 284:// "$DIMTZIN"
+                        zerosSuppression->setToleranceRaw(var->getInt());
+                        break;
+                    case 285: // "$DIMALTZ"
+                        zerosSuppression->setAltLinearRaw(var->getInt());
+                        break;
+                    case 286: //"$DIMALTTZ"
+                        zerosSuppression->setAltToleranceRaw(var->getInt());
+                        break;
+                    case 287: // fixme - DIMFIT
+                        // dimfit = reader->getInt32();
+                        // add("$DIMFIT", code, dimfit);
+                        break;
+                    case 288: // "$DIMUPT"
+                        text->setCursorControlPolicyRaw(var->getInt());
+                        break;
+                    case 289: //"$DIMATFIT"
+                        text->setUnsufficientSpacePolicyRaw(var->getInt());
+                        break;
+                    case 290: // "$DIMFXLON"
+                        extensionLine->setHasFixedLength(var->getInt()); // fixme - check
+                        break;
+                    case 292: // "$DIMTXTDIRECTION"
+                        text->setReadingDirectionRaw(var->getInt());
+                        break;
+                    case 340: // "$DIMTXSTY"
+                        text->setStyle(var->getString()); // fixme - ref to style?
+                        break;
+                    case 341: {
+                        // "_$DIMLDRBLK"
+                        QString refHandleStr = var->getString();
+                        bool ok;
+                        int refHandle = refHandleStr.toInt(&ok, 16);
+                        if (ok) {
+                            QString blockName;
+                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            if (ok) {
+                                result->leader()->setArrowBlockName(blockName);
+                            }
+                        }
+                        break;
+                    }
+                    case 342: {// "_$DIMBLK"
+                        QString refHandleStr = var->getString();
+                        bool ok;
+                        int refHandle = refHandleStr.toInt(&ok, 16);
+                        if (ok) {
+                            QString blockName;
+                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            if (ok) {
+                                arrowhead->setSameBlockName(blockName);
+                            }
+                        }
+                        break;
+                    }
+                    case 343: {
+                        // "_$DIMBLK1"
+                        QString refHandleStr = var->getString();
+                        bool ok;
+                        int refHandle = refHandleStr.toInt(&ok, 16);
+                        if (ok) {
+                            QString blockName;
+                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            if (ok) {
+                                arrowhead->setArrowHeadBlockNameFirst(blockName);
+                            }
+                        }
+                        break;
+                    }
+                    case 344: {
+                        // "_$DIMBLK2"
+                        QString refHandleStr = var->getString();
+                        bool ok;
+                        int refHandle = refHandleStr.toInt(&ok, 16);
+                        if (ok) {
+                            QString blockName;
+                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            if (ok) {
+                                arrowhead->setArrowHeadBlockNameSecond(blockName);
+                            }
+                        }
+                        break;
+                    }
+                    // case 345: // codes///
+                    // fixme - may this code be used for DIMLDRBLK?
+                    //      dimblk2 = reader->getUtf8String();
+                    //      add("$DIMBLK2", code, dimblk2);
+                    //      break;
+                    case 346: // "$DIMLTYPE"
+                        dimensionLine->setLineType(var->getString());
+                        break;
+                    case 347: // "$DIMLTEX1"
+                        extensionLine->setLineTypeFirst(var->getString());
+                        break;
+                    case 348: //"$DIMLTEX2"
+                        extensionLine->setLineTypeSecond(var->getString());
+                        break;
+                    case 371: // "$DIMLWD"
+                        dimensionLine->setLineWidthRaw(var->getInt());
+                        break;
+                    case 372: //"$DIMLWE"
+                        extensionLine->setLineWidthRaw(var->getInt());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // workaround for AutoCAD - it seems that later versions ignores DIMSAH and consider blocks for arrowhead to be
+            // different if individual arrows are different. So we set the flag manually
+            // fixme - check wether given conition is enough for properly setting the flag
+            result->setModifyCheckMode(LC_DimStyle::ModificationAware::SET);
+            if (!arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMSAH) ) {
+                if(arrowhead->sameBlockName().isEmpty() && (arrowhead->arrowHeadBlockNameFirst() != arrowhead->arrowHeadBlockNameSecond())) {
+                    arrowhead->setUseSeparateArrowHeads(true);
+                }
+            }
+
+            return result;
+        }
+    }
+    return nullptr;
 }
 
 /**
  * Implementation of the method which handles
  * aligned dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data) {
+void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimAligned");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
 
     RS_Vector ext1(data->getDef1Point().x, data->getDef1Point().y);
     RS_Vector ext2(data->getDef2Point().x, data->getDef2Point().y);
@@ -1123,10 +1574,10 @@ void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data) {
  * Implementation of the method which handles
  * linear dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimLinear(const DRW_DimLinear *data) {
+void RS_FilterDXFRW::addDimLinear(const DRW_DimLinear *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimLinear");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
 
     RS_Vector dxt1(data->getDef1Point().x, data->getDef1Point().y);
     RS_Vector dxt2(data->getDef2Point().x, data->getDef2Point().y);
@@ -1147,10 +1598,10 @@ void RS_FilterDXFRW::addDimLinear(const DRW_DimLinear *data) {
  * Implementation of the method which handles
  * radial dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial* data) {
+void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimRadial");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
     RS_Vector dp(data->getDiameterPoint().x, data->getDiameterPoint().y);
 
     RS_DimRadialData d(dp, data->getLeaderLength());
@@ -1169,10 +1620,10 @@ void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial* data) {
  * Implementation of the method which handles
  * diametric dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric* data) {
+void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimDiametric");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
     RS_Vector dp(data->getDiameter1Point().x, data->getDiameter1Point().y);
 
     RS_DimDiametricData d(dp, data->getLeaderLength());
@@ -1191,10 +1642,10 @@ void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric* data) {
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data) {
+void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimAngular");
 
-    RS_DimensionData dimensionData = convDimensionData(data);
+    RS_DimensionData dimensionData = convDimensionData(data, blockRecords);
     RS_Vector dp1(data->getFirstLine1().x, data->getFirstLine1().y);
     RS_Vector dp2(data->getFirstLine2().x, data->getFirstLine2().y);
     RS_Vector dp3(data->getSecondLine1().x, data->getSecondLine1().y);
@@ -1214,10 +1665,10 @@ void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data) {
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
+void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimAngular3P");
 
-    RS_DimensionData dimensionData = convDimensionData(data);
+    RS_DimensionData dimensionData = convDimensionData(data, blockRecords);
     RS_Vector dp1(data->getFirstLine().x, data->getFirstLine().y);
     RS_Vector dp2(data->getSecondLine().x, data->getSecondLine().y);
     RS_Vector dp3(data->getVertexPoint().x, data->getVertexPoint().y);
@@ -1234,9 +1685,9 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
     currentContainer->addEntity(entity);
 }
 
-void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data) {
+void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
 
     RS_Vector featurePoint{data->getFirstLine().x, data->getFirstLine().y};
     RS_Vector leaderEndPoint{data->getSecondLine().x, data->getSecondLine().y};
@@ -1256,7 +1707,7 @@ void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data) {
 /**
  * Implementation of the method which handles leader entities.
  */
-void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
+void RS_FilterDXFRW::addLeader(const DRW_Leader *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimLeader");
     RS_LeaderData d(data->arrow!=0, QString::fromUtf8(data->style.c_str()));
     RS_Leader* leader = new RS_Leader(currentContainer, d);
@@ -4393,6 +4844,9 @@ void RS_FilterDXFRW::printDwgError(int le){
     }
 }
 
+QString RS_FilterDXFRW::strVal(DRW_Variant* var) {
+    return QString::fromUtf8(var->c_str());
+}
 
 LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     auto* result = new LC_DimStyle();
@@ -4401,110 +4855,513 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
 
     auto arrowStyle = result->arrowhead();
 
-    arrowStyle->setSameBlockName(QString::fromUtf8(s.dimblk.c_str()));
-    arrowStyle->setArrowHeadBlockNameFirst(QString::fromUtf8(s.dimblk1.c_str()));
-    arrowStyle->setArrowHeadBlockNameSecond(QString::fromUtf8(s.dimblk2.c_str()));
-    arrowStyle->setSize(s.dimasz);
-    arrowStyle->setTickSize(s.dimtsz);
-    arrowStyle->setUseSeparateArrowHeads(s.dimsah);
-    arrowStyle->setSuppressionsRaw(s.dimsoxd);
+    DRW_Variant* var = s.get("$DIMBLK");
+    if (var != nullptr) {// fixme - resolve via table?
+        arrowStyle->setSameBlockName(strVal(var));
+    }
+    var = s.get("$DIMBLK1");
+    if (var != nullptr) {// fixme - resolve via table?
+        arrowStyle->setArrowHeadBlockNameFirst(strVal(var));
+    }
+    var = s.get("$DIMBLK2");
+    if (var != nullptr) {// fixme - resolve via table?
+        arrowStyle->setArrowHeadBlockNameSecond(strVal(var));
+    }
+    var = s.get("$DIMASZ");
+    if (var != nullptr) {
+        arrowStyle->setSize(var->d_val());
+    }
+    var = s.get("$DIMTSZ");
+    if (var != nullptr) {
+        arrowStyle->setTickSize(var->d_val());
+    }
+    var = s.get("$DIMSAH");
+    if (var != nullptr) {
+        arrowStyle->setUseSeparateArrowHeads(var->i_val());
+    }
+    var = s.get("$DIMSOXD");
+    if (var != nullptr) {
+        arrowStyle->setSuppressionsRaw(var->i_val());
+    }
+
+    // arrowStyle->setSameBlockName(QString::fromUtf8(s.dimblk.c_str()));
+    // arrowStyle->setArrowHeadBlockNameFirst(QString::fromUtf8(s.dimblk1.c_str()));
+    // arrowStyle->setArrowHeadBlockNameSecond(QString::fromUtf8(s.dimblk2.c_str()));
+    // arrowStyle->setSize(s.dimasz);
+    // arrowStyle->setTickSize(s.dimtsz);
+    // arrowStyle->setUseSeparateArrowHeads(s.dimsah);
+    // arrowStyle->setSuppressionsRaw(s.dimsoxd);
 
     auto scaleStyle = result->scaling();
-    scaleStyle->setScale(s.dimscale);
-    scaleStyle->setLinearFactor(s.dimlfac);
+    var = s.get("$DIMSCALE");
+    if (var != nullptr) {
+        scaleStyle->setScale(var->d_val());
+    }
+    var = s.get("$DIMLFAC");
+    if (var != nullptr) {
+        scaleStyle->setLinearFactor(var->d_val());
+    }
+
+    // scaleStyle->setScale(s.dimscale);
+    // scaleStyle->setLinearFactor(s.dimlfac);
 
     auto extLineStyle = result->extensionLine();
-    extLineStyle->setDistanceFromOriginPoint(s.dimexo);
-    extLineStyle->setDistanceBeyondDimLine(s.dimexe);
-    extLineStyle->setFixedLength(s.dimfxl);
-    extLineStyle->setHasFixedLength(s.dimfxlon);
-    extLineStyle->setLineWidthRaw(s.dimlwe);
-    extLineStyle->setColor(s.dimclre);
-    extLineStyle->setSuppressionFirstRaw(s.dimse1);
-    extLineStyle->setSuppressionSecondRaw(s.dimse2);
-    extLineStyle->setLineTypeFirst(QString::fromUtf8(s.dimltext1.c_str()));
-    extLineStyle->setLineTypeFirst(QString::fromUtf8(s.dimltext1.c_str()));
+
+    var = s.get("$DIMEXO");
+    if (var != nullptr) {
+        extLineStyle->setDistanceFromOriginPoint(var->d_val());
+    }
+    var = s.get("$DIMEXE");
+    if (var != nullptr) {
+        extLineStyle->setDistanceBeyondDimLine(var->d_val());
+    }
+    var = s.get("$DIMFXL");
+    if (var != nullptr) {
+        extLineStyle->setFixedLength(var->d_val());
+    }
+    var = s.get("$DIMFXLON");
+    if (var != nullptr) {
+        extLineStyle->setHasFixedLength(var->i_val()  == 1);
+    }
+    var = s.get("$DIMLWE");
+    if (var != nullptr) {
+        extLineStyle->setLineWidthRaw(var->i_val());
+    }
+    var = s.get("$DIMCLRE");
+    if (var != nullptr) {
+        extLineStyle->setColor(numberToColor(var->i_val()));
+    }
+    var = s.get("$DIMSE1");
+    if (var != nullptr) {
+        extLineStyle->setSuppressionFirstRaw(var->i_val());
+    }
+    var = s.get("$DIMSE2");
+    if (var != nullptr) {
+        extLineStyle->setSuppressionSecondRaw(var->i_val());
+    }
+    var = s.get("$DIMLTEXT1");
+    if (var != nullptr) { // fixme - resolve via table?
+        extLineStyle->setLineTypeFirst(strVal(var));
+    }
+    var = s.get("$DIMLTEXT2");
+    if (var != nullptr) {// fixme - resolve via table?
+        extLineStyle->setLineTypeSecond(strVal(var));
+    }
+
+    // extLineStyle->setDistanceFromOriginPoint(s.dimexo);
+    // extLineStyle->setDistanceBeyondDimLine(s.dimexe);
+    // extLineStyle->setFixedLength(s.dimfxl);
+    // extLineStyle->setHasFixedLength(s.dimfxlon);
+    // extLineStyle->setLineWidthRaw(s.dimlwe);
+    // extLineStyle->setColor(s.dimclre);
+    // extLineStyle->setSuppressionFirstRaw(s.dimse1);
+    // extLineStyle->setSuppressionSecondRaw(s.dimse2);
+    // extLineStyle->setLineTypeFirst(QString::fromUtf8(s.dimltext1.c_str()));
+    // extLineStyle->setLineTypeSecond(QString::fromUtf8(s.dimltext2.c_str()));
 
     auto dimLineStyle = result->dimensionLine();
-    dimLineStyle->setLineWidthRaw(s.dimlwd);
-    dimLineStyle->setDistanceBeyondExtLinesForObliqueStroke(s.dimdle);
-    dimLineStyle->setBaselineDimLinesSpacing(s.dimdli);
-    dimLineStyle->setLineGap(s.dimgap);
-    dimLineStyle->setColor(s.dimclrd);
-    dimLineStyle->setFirstLineSuppressionRaw(s.dimsd1);
-    dimLineStyle->setSecondLineSuppressionRaw(s.dimsd2);
-    dimLineStyle->setDrawPolicyForOutsideTextRaw(s.dimtofl);
-    dimLineStyle->setLineType(QString::fromUtf8(s.dimltype.c_str()));
+    var = s.get("$DIMLWD");
+    if (var != nullptr) {
+        dimLineStyle->setLineWidthRaw(var->i_val());
+    }
+    var = s.get("$DIMDLE");
+    if (var != nullptr) {
+        dimLineStyle->setDistanceBeyondExtLinesForObliqueStroke(var->d_val());
+    }
+    var = s.get("$DIMDLI");
+    if (var != nullptr) {
+        dimLineStyle->setBaselineDimLinesSpacing(var->d_val());
+    }
+    var = s.get("$DIMGAP");
+    if (var != nullptr) {
+        dimLineStyle->setLineGap(var->d_val());
+    }
+    var = s.get("$DIMCLRD");
+    if (var != nullptr) {
+        dimLineStyle->setColor(numberToColor(var->i_val()));
+    }
+    var = s.get("$DIMSD1");
+    if (var != nullptr) {
+        dimLineStyle->setFirstLineSuppressionRaw(var->i_val());
+    }
+    var = s.get("$DIMSD2");
+    if (var != nullptr) {
+        dimLineStyle->setSecondLineSuppressionRaw(var->i_val());
+    }
+    var = s.get("$DIMTOFL");
+    if (var != nullptr) {
+        dimLineStyle->setDrawPolicyForOutsideTextRaw(var->i_val());
+    }
+    var = s.get("$DIMLTYPE");
+    if (var != nullptr) { // fixme - resolve via table?
+        dimLineStyle->setLineType(strVal(var));
+    }
+
+    // dimLineStyle->setLineWidthRaw(s.dimlwd);
+    // dimLineStyle->setDistanceBeyondExtLinesForObliqueStroke(s.dimdle);
+    // dimLineStyle->setBaselineDimLinesSpacing(s.dimdli);
+    // dimLineStyle->setLineGap(s.dimgap);
+    // dimLineStyle->setColor(s.dimclrd);
+    // dimLineStyle->setFirstLineSuppressionRaw(s.dimsd1);
+    // dimLineStyle->setSecondLineSuppressionRaw(s.dimsd2);
+    // dimLineStyle->setDrawPolicyForOutsideTextRaw(s.dimtofl);
+    // dimLineStyle->setLineType(QString::fromUtf8(s.dimltype.c_str()));
 
     auto textStyle = result->text();
-    textStyle->setHeight(s.dimtxt);
-    textStyle->setStyle(QString::fromUtf8(s.dimtxsty.c_str()));
-    textStyle->setOrientationOutsideRaw(s.dimtoh);
-    textStyle->setOrientationInsideRaw(s.dimtih);
-    textStyle->setHorizontalPositioningRaw(s.dimjust);
-    textStyle->setColor(s.dimclrt);
-    textStyle->setVerticalPositioningRaw(s.dimtad);
-    textStyle->setExtLinesRelativePlacementRaw(s.dimtix);
-    textStyle->setBackgroundFillModeRaw(s.dimfit);
-    textStyle->setExplicitBackgroundFillColor(s.dimtfillclr);
-    textStyle->setReadingDirectionRaw(s.dimtxtdirection);
-    textStyle->setVerticalDistanceToDimLine(s.dimtvp);
-    textStyle->setCursorControlPolicyRaw(s.dimupt);
-    textStyle->setPositionMovementPolicyRaw(s.dimtmove);
-    textStyle->setUnsufficientSpacePolicyRaw(s.dimatfit);
+    var = s.get("$DIMTXT");
+    if (var != nullptr) {
+        textStyle->setHeight(var->d_val());
+    }
+    var = s.get("$DIMTXSTY");
+    if (var != nullptr) {
+        textStyle->setStyle(strVal(var)); // fixme - resolve via table?
+    }
+    var = s.get("$DIMTOH");
+    if (var != nullptr) {
+        textStyle->setOrientationOutsideRaw(var->i_val());
+    }
+    var = s.get("$DIMTIH");
+    if (var != nullptr) {
+        textStyle->setOrientationInsideRaw(var->i_val());
+    }
+    var = s.get("$DIMJUST");
+    if (var != nullptr) {
+        textStyle->setHorizontalPositioningRaw(var->i_val());
+    }
+    var = s.get("$DIMCLRT");
+    if (var != nullptr) {
+        textStyle->setColor(numberToColor(var->i_val()));
+    }
+    var = s.get("$DIMTAD");
+    if (var != nullptr) {
+        textStyle->setVerticalPositioningRaw(var->i_val());
+    }
+    var = s.get("$DIMTIX");
+    if (var != nullptr) {
+        textStyle->setExtLinesRelativePlacementRaw(var->i_val());
+    }
+    var = s.get("$DIMTFILL");
+    if (var != nullptr) {
+        textStyle->setBackgroundFillModeRaw(var->i_val());
+    }
+    var = s.get("$DIMTFILLCLR");
+    if (var != nullptr) {
+        textStyle->setExplicitBackgroundFillColor(numberToColor(var->i_val()));
+    }
+    var = s.get("$DIMTXTDIRECTION");
+    if (var != nullptr) {
+        textStyle->setReadingDirectionRaw(var->i_val());
+    }
+    var = s.get("$DIMTVP");
+    if (var != nullptr) {
+        textStyle->setVerticalDistanceToDimLine(var->d_val());
+    }
+    var = s.get("$DIMUPT");
+    if (var != nullptr) {
+        textStyle->setCursorControlPolicyRaw(var->i_val());
+    }
+    var = s.get("$DIMTMOVE");
+    if (var != nullptr) {
+        textStyle->setPositionMovementPolicyRaw(var->i_val());
+    }
+    var = s.get("$DIMATFIT");
+    if (var != nullptr) {
+        textStyle->setUnsufficientSpacePolicyRaw(var->i_val());
+    }
+    // textStyle->setHeight(s.dimtxt);
+    // textStyle->setStyle(QString::fromUtf8(s.dimtxsty.c_str()));
+    // textStyle->setOrientationOutsideRaw(s.dimtoh);
+    // textStyle->setOrientationInsideRaw(s.dimtih);
+    // textStyle->setHorizontalPositioningRaw(s.dimjust);
+    // textStyle->setColor(s.dimclrt);
+    // textStyle->setVerticalPositioningRaw(s.dimtad);
+    // textStyle->setExtLinesRelativePlacementRaw(s.dimtix);
+    // textStyle->setBackgroundFillModeRaw(s.dimtfill);
+    // textStyle->setExplicitBackgroundFillColor(s.dimtfillclr);
+    // textStyle->setReadingDirectionRaw(s.dimtxtdirection);
+    // textStyle->setVerticalDistanceToDimLine(s.dimtvp);
+    // textStyle->setCursorControlPolicyRaw(s.dimupt);
+    // textStyle->setPositionMovementPolicyRaw(s.dimtmove);
+    // textStyle->setUnsufficientSpacePolicyRaw(s.dimatfit);
 
     auto zerosSuppression = result->zerosSuppression();
-    zerosSuppression->setLinearRaw(s.dimzin);
-    zerosSuppression->setAngularRaw(s.dimazin);
-    zerosSuppression->setToleranceRaw(s.dimtzin);
-    zerosSuppression->setAltLinearRaw(s.dimaltz);
-    zerosSuppression->setAltToleranceRaw(s.dimaltttz);
+
+    var = s.get("$DIMZIN");
+    if (var != nullptr) {
+        zerosSuppression->setLinearRaw(var->i_val());
+    }
+    var = s.get("$DIMAZIN");
+    if (var != nullptr) {
+        zerosSuppression->setAngularRaw(var->i_val());
+    }
+    var = s.get("$DIMTZIN");
+    if (var != nullptr) {
+        zerosSuppression->setToleranceRaw(var->i_val());
+    }
+    var = s.get("$DIMALTZ");
+    if (var != nullptr) {
+        zerosSuppression->setAltLinearRaw(var->i_val());
+    }
+    var = s.get("$DIMALTTZ");
+    if (var != nullptr) {
+        zerosSuppression->setAltToleranceRaw(var->i_val());
+    }
+    // zerosSuppression->setLinearRaw(s.dimzin);
+    // zerosSuppression->setAngularRaw(s.dimazin);
+    // zerosSuppression->setToleranceRaw(s.dimtzin);
+    // zerosSuppression->setAltLinearRaw(s.dimaltz);
+    // zerosSuppression->setAltToleranceRaw(s.dimaltttz);
 
     auto linearFormat = result->linearFormat();
-    linearFormat->setFormatRaw(s.dimlunit);
-    linearFormat->setDecimalFormatSeparatorChar(s.dimdsep);
-    linearFormat->setDecimalPlaces(s.dimdec);
-    linearFormat->setPrefixOrSuffix(QString::fromUtf8(s.dimpost.c_str()));
-    linearFormat->setAlternateUnitsRaw(s.dimalt);
-    linearFormat->setAltFormatRaw(s.dimaltu);
-    linearFormat->setAltDecimalPlaces(s.dimaltd);
-    linearFormat->setAltUnitsMultiplier(s.dimaltf);
-    linearFormat->setAltPrefixOrSuffix(QString::fromUtf8(s.dimapost.c_str()));
+
+    var = s.get("$DIMLUNIT");
+    if (var != nullptr) {
+        linearFormat->setFormatRaw(var->i_val());
+    }
+    var = s.get("$DIMDSEP");
+    if (var != nullptr) {
+        linearFormat->setDecimalFormatSeparatorChar(var->i_val());
+    }
+    var = s.get("$DIMDEC");
+    if (var != nullptr) {
+        linearFormat->setDecimalPlaces(var->i_val());
+    }
+    var = s.get("$DIMPOST");
+    if (var != nullptr) {
+        linearFormat->setPrefixOrSuffix(strVal(var));
+    }
+    var = s.get("$DIMALT");
+    if (var != nullptr) {
+        linearFormat->setAlternateUnitsRaw(var->i_val());
+    }
+    var = s.get("$DIMALTU");
+    if (var != nullptr) {
+        linearFormat->setAltFormatRaw(var->i_val());
+    }
+    var = s.get("$DIMALTD");
+    if (var != nullptr) {
+        linearFormat->setAltDecimalPlaces(var->i_val());
+    }
+    var = s.get("$DIMALTF");
+    if (var != nullptr) {
+        linearFormat->setAltUnitsMultiplier(var->i_val());
+    }
+    var = s.get("$DIMAPOST");
+    if (var != nullptr) {
+        linearFormat->setAltPrefixOrSuffix(strVal(var));
+    }
+    // linearFormat->setFormatRaw(s.dimlunit);
+    // linearFormat->setDecimalFormatSeparatorChar(s.dimdsep);
+    // linearFormat->setDecimalPlaces(s.dimdec);
+    // linearFormat->setPrefixOrSuffix(QString::fromUtf8(s.dimpost.c_str()));
+    // linearFormat->setAlternateUnitsRaw(s.dimalt);
+    // linearFormat->setAltFormatRaw(s.dimaltu);
+    // linearFormat->setAltDecimalPlaces(s.dimaltd);
+    // linearFormat->setAltUnitsMultiplier(s.dimaltf);
+    // linearFormat->setAltPrefixOrSuffix(QString::fromUtf8(s.dimapost.c_str()));
 
     auto angularFormat = result->angularFormat();
-    angularFormat->setFormatRaw(s.dimaunit);
-    angularFormat->setDecimalPlaces(s.dimadec);
+    var = s.get("$DIMAUNIT");
+    if (var != nullptr) {
+        angularFormat->setFormatRaw(var->i_val());
+    }
+    var = s.get("$DIMADEC");
+    if (var != nullptr) {
+        angularFormat->setDecimalPlaces(var->i_val());
+    }
+
+    // angularFormat->setFormatRaw(s.dimaunit);
+    // angularFormat->setDecimalPlaces(s.dimadec);
 
     auto linearRoundOff = result->roundOff();
-    linearRoundOff->setRoundToValue(s.dimrnd);
-    linearRoundOff->setAltRoundToValue(s.dimaltrnd);
+    var = s.get("$DIMRND");
+    if (var != nullptr) {
+        linearRoundOff->setRoundToValue(var->d_val());
+    }
+    var = s.get("$DIMALTRND");
+    if (var != nullptr) {
+        linearRoundOff->setAltRoundToValue(var->d_val());
+    }
+    // linearRoundOff->setRoundToValue(s.dimrnd);
+    // linearRoundOff->setAltRoundToValue(s.dimaltrnd);
 
     auto fractionStyle = result->fractions();
-    fractionStyle->setStyleRaw(s.dimfrac);
+    var = s.get("$DIMFRAC");
+    if (var != nullptr) {
+        fractionStyle->setStyleRaw(var->i_val());
+    }
+    // fractionStyle->setStyleRaw(s.dimfrac);
 
     auto radialStyle = result->radial();
-    radialStyle->setCenterMarkOrLineSize(s.dimcen);
+    var = s.get("$DIMCEN");
+    if (var != nullptr) {
+        radialStyle->setCenterMarkOrLineSize(var->i_val());
+    }
+
+    // radialStyle->setCenterMarkOrLineSize(s.dimcen);
+
 
     auto toleranceStyle = result->latteralTolerance();
 
-    toleranceStyle->setDecimalPlaces(s.dimtdec);
-    toleranceStyle->setDecimalPlacesAltDim(s.dimalttd);
-    toleranceStyle->setAppendTolerancesToDimText(s.dimtol);
-    toleranceStyle->setVerticalJustificationRaw(s.dimtolj);
-    toleranceStyle->setLowerToleranceLimit(s.dimtm);
-    toleranceStyle->setUpperToleranceLimit(s.dimtp);
-    toleranceStyle->setHeightScaleFactorToDimText(s.dimtfac);
-    toleranceStyle->setLimitsAreGeneratedAsDefaultText(s.dimlim);
+    var = s.get("$DIMTDEC");
+    if (var != nullptr) {
+        toleranceStyle->setDecimalPlaces(var->i_val());
+    }
+    var = s.get("$DIMALTTD");
+    if (var != nullptr) {
+        toleranceStyle->setDecimalPlacesAltDim(var->i_val());
+    }
+    var = s.get("$DIMTOL");
+    if (var != nullptr) {
+        toleranceStyle->setVerticalJustificationRaw(var->i_val()); // fixme - review
+    }
+    var = s.get("$DIMTOLJ");
+    if (var != nullptr) {
+        toleranceStyle->setVerticalJustificationRaw(var->i_val());
+    }
+    var = s.get("$DIMTM");
+    if (var != nullptr) {
+        toleranceStyle->setLowerToleranceLimit(var->d_val()); // fixme - review
+    }
+    var = s.get("$DIMTP");
+    if (var != nullptr) {
+        toleranceStyle->setUpperToleranceLimit(var->d_val());
+    }
+    var = s.get("$DIMTFAC");
+    if (var != nullptr) {
+        toleranceStyle->setHeightScaleFactorToDimText(var->d_val());
+    }
+    var = s.get("$DIMLIM");
+    if (var != nullptr) {
+        toleranceStyle->setLimitsAreGeneratedAsDefaultText(var->i_val()); // fixme - review
+    }
+
+    // toleranceStyle->setDecimalPlaces(s.dimtdec);
+    // toleranceStyle->setDecimalPlacesAltDim(s.dimalttd);
+    // toleranceStyle->setAppendTolerancesToDimText(s.dimtol);
+    // toleranceStyle->setVerticalJustificationRaw(s.dimtolj);
+    // toleranceStyle->setLowerToleranceLimit(s.dimtm);
+    // toleranceStyle->setUpperToleranceLimit(s.dimtp);
+    // toleranceStyle->setHeightScaleFactorToDimText(s.dimtfac);
+    // toleranceStyle->setLimitsAreGeneratedAsDefaultText(s.dimlim);
 
     // result->setDimunit(s.dimunit); // $DIMLUNIT
 
     auto leaderStyle = result->leader();
-    leaderStyle->setArrowBlockName(QString::fromUtf8(s.dimldrblk.c_str()));
+    var = s.get("$DIMLDRBLK");
+    if (var != nullptr) {
+        leaderStyle->setArrowBlockName(strVal(var));
+    }
+    // leaderStyle->setArrowBlockName(QString::fromUtf8(s.dimldrblk.c_str()));
 
     auto mleaderStyle = result->mleader();
-    mleaderStyle->setScale(s.mleaderscale);
+    var = s.get("$MLEADERSCALE");
+    if (var != nullptr) {
+        mleaderStyle->setScale(var->d_val());
+    }
+    // mleaderStyle->setScale(s.mleaderscale);
 
+    parseDimStyleExtData(s, result);
     return result;
+}
+
+bool RS_FilterDXFRW::resolveBlockName(duint32 blockHandle, QString& blockName,
+    const std::unordered_map<unsigned int, DRW_Block_Record*>& blockRecords) const {
+    auto it = blockRecords.find(blockHandle);
+    if (it != blockRecords.end()) {
+        DRW_Block_Record* blockRecord = it->second;
+        blockName = QString(blockRecord->name.c_str());
+        return true;
+    }
+    return false;
+}
+
+void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* result) {
+    std::vector<DRW_Variant> tagData;
+    int currentValType = 0;
+    QString applicationName = "";
+    bool expectType = false;
+    // https://help.autodesk.com/view/OARX/2024/ENU/?guid=GUID-3F0380A5-1C15-464D-BC66-2C5F094BCFB9
+    // https://documentation.help/AutoCAD-DXF/WS1a9193826455f5ff18cb41610ec0a2e719-7943.htm
+    for (auto v: s.extData) {
+        int code = v->code();
+        switch (code) {
+            case 1001: { // application name
+                if (!applicationName.isEmpty()) {
+                    applyDimStyleExtData(result, applicationName, tagData);
+                    tagData.clear();
+                }
+                applicationName = v->c_str();
+                expectType = false; // for later "not", as actually we do expect it
+                break;
+            }
+            case 1002: { // control name
+                break;
+            }
+            case 1070: // integer
+            case 1071:{// long
+                int val = v->i_val();
+                if (expectType) {
+                    // code of var
+                    currentValType = val;
+                }
+                else {
+                    // it fields
+                    auto intVar = DRW_Variant(currentValType, val);
+                    tagData.push_back(intVar);
+                }
+                break;
+            }
+            case 1040: // real
+            case 1041: // distance
+            case 1042: { // scale factor
+                double val = v->d_val();
+                auto doubleVar = DRW_Variant(currentValType, val);
+                tagData.push_back(doubleVar);
+                break;
+            }
+            default:
+                break;
+        }
+        expectType = !expectType;
+    }
+    if (!applicationName.isEmpty()) { // process last app name setion
+        applyDimStyleExtData(result, applicationName, tagData);
+        tagData.clear();
+    }
+}
+
+void RS_FilterDXFRW::applyDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector) {
+    if (vector.empty()) {
+        return;
+    }
+    const DRW_Variant* var = &vector.at(0);
+    int code = var->code();
+
+    if (appName == "ACAD_DSTYLE_DIMJAG") {
+        if (code == 388) {
+            double val = var->d_val();
+            // fixme - decide where to store it. this is "Jog Height Factor"
+            // dimStyle->dimensionLine()->set
+        }
+
+        // code 388, float
+    }
+    else if (appName == "ACAD_DSTYLE_DIMTALN") {
+        // code 392, int
+        if (code == 392) {
+            int val = var->i_val();
+            dimStyle->latteralTolerance()->setVerticalJustificationRaw(val);
+            // fixme - decide where to store it. This is "Dimension Break" in acad.
+        }
+    }
+    else if (appName == "ACAD_DSTYLE_DIMBREAK") {
+        // code 391, float
+        if (code == 391) {
+            double val = var->d_val();
+            // fixme - decide where to store it. This is "Dimension Break" in acad.
+        }
+    }
 }
 
 #endif

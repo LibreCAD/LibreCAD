@@ -1162,6 +1162,7 @@ bool DRW_Tolerance::parseCode(int code, dxfReader* reader) {
         default:
             return DRW_Entity::parseCode(code, reader);
     }
+    return true;
 }
 
 bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer* buf, duint32 bs) {

@@ -84,6 +84,7 @@ private:
     /// used by read() to parse the content of the file
     bool processDxf();
     bool processHeader();
+    bool processBlockRecord(std::unordered_map<duint32, DRW_Block_Record*> &blocksRecordsMap);
     bool processTables();
     bool processBlocks();
     bool processBlock();
@@ -92,8 +93,8 @@ private:
 
     bool processLType();
     bool processLayer();
-    bool processDimStyle();
-    bool processTextStyle();
+    bool processDimStyle(std::vector<DRW_Dimstyle> &styles);
+    bool processTextStyle(std::unordered_map<duint32, DRW_Textstyle*>& textStyles);
     bool processVports();
     bool processView();
     bool processUCS();
@@ -157,11 +158,14 @@ private:
     bool writingBlock;
     int elParts;  /*!< parts number when convert ellipse to polyline */
     std::unordered_map<std::string,int> blockMap;
+    std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
+    std::unordered_map<duint32, DRW_Textstyle*> textStyles;
     std::unordered_map<std::string,int> textStyleMap;
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 
     int currHandle;
 
+    std::unordered_map<duint32, DRW_LType*> ltypemap;
 
 };
 
