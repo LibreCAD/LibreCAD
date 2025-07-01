@@ -39,6 +39,7 @@
 #include "lc_arrow_none.h"
 #include "lc_arrow_tick.h"
 #include "lc_dimarrowregistry.h"
+#include "lc_linemath.h"
 #include "muParser.h"
 #include "rs_arc.h"
 #include "rs_block.h"
@@ -127,7 +128,8 @@ RS_DimensionData::RS_DimensionData():
     style(""),
     angle(0.0),
     horizontalAxisDirection(0.0),
-    autoText{true}{
+    autoText{true},
+    m_dimStyleOverride{nullptr}{
 }
 
 /**
@@ -156,7 +158,8 @@ RS_DimensionData::RS_DimensionData(const RS_Vector& _definitionPoint,
                                    QString _style,
                                    double _angle,
                                    double hdir,
-                                   bool autoTextLocation):
+                                   bool autoTextLocation,
+                                   LC_DimStyle* dimStyleOverride):
     definitionPoint(_definitionPoint)
     , middleOfText(_middleOfText)
     , valign(_valign)
@@ -167,7 +170,8 @@ RS_DimensionData::RS_DimensionData(const RS_Vector& _definitionPoint,
     , style(_style)
     , angle(_angle)
     , horizontalAxisDirection(hdir)
-    , autoText{autoTextLocation} {
+    , autoText{autoTextLocation},
+     m_dimStyleOverride{dimStyleOverride}{
 }
 
 std::ostream& operator <<(std::ostream& os,
@@ -645,6 +649,10 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
     double distance = p1.distanceTo(p2);
     // arrow size:
     double arrowSize = getArrowSize() * dimscale;
+    double dimtsz = getTickSize() * dimscale;
+    if (dimtsz > 0.01) {
+        arrowSize = dimtsz;
+    }
 
     // do we have to put the arrows outside of the line?
     bool outsideArrows = (distance < arrowSize * 2.5);
@@ -718,30 +726,52 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
 
     LC_DimArrowRegistry dimArrowRegistry;
     auto arrowStyle = m_dimStyleTransient->arrowhead();
-    double dimtsz = getTickSize() * dimscale;
+    bool firstArrowIsObliqueOrArch = false;
+    bool secondArrowIsObliqueOrArch = false;
     if (dimtsz < 0.01) {
         //display arrow
         if (arrow1) {
-            auto arrow = dimArrowRegistry.createArrowBlock(this, arrowStyle->obtainFirstArrowName(), dimP1, arrowAngle1, arrowSize);
+            auto firstArrowName = arrowStyle->obtainFirstArrowName();
+            auto arrow = dimArrowRegistry.createArrowBlock(this, firstArrowName, p1, arrowAngle1, arrowSize);
             addArrow(arrow, dimensionPen);
+            firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
         }
 
         if (arrow2) {
-            auto arrow = dimArrowRegistry.createArrowBlock(this, arrowStyle->obtainSecondArrowName(), dimP2, arrowAngle2, arrowSize);
+            auto secondArrowName = arrowStyle->obtainSecondArrowName();
+            auto arrow = dimArrowRegistry.createArrowBlock(this, secondArrowName, p2, arrowAngle2, arrowSize);
             addArrow(arrow, dimensionPen);
+            secondArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(secondArrowName);
         }
     }
     else {
-        //display ticks
-        // Arrows:
-        RS_Vector tickVector = RS_Vector::polar(dimtsz, arrowAngle1 + M_PI * 0.25); //tick is 45 degree away
-
         if (arrow1) { // tick 1
-            addDimComponentLine(p1 - tickVector, p1 + tickVector, dimensionPen);
+            auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p1, arrowAngle1, arrowSize);
+            addArrow(arrow, dimensionPen);
+            firstArrowIsObliqueOrArch = true;
+        }
+        if (arrow2) { // tick 2:
+            auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p2, arrowAngle2, arrowSize);
+            addArrow(arrow, dimensionPen);
+            secondArrowIsObliqueOrArch = true;
+        }
+    }
+
+    // draw extent dim line for oblique arrow type, if any
+    RS_Vector extOffsetVector{false};
+    double obliqueExtent = m_dimStyleTransient->dimensionLine()->distanceBeyondExtLinesForObliqueStroke();
+    if (LC_LineMath::isMeaningful(obliqueExtent)) {
+        obliqueExtent = obliqueExtent * dimscale;
+        if (firstArrowIsObliqueOrArch) {
+            extOffsetVector = RS_Vector::polar(obliqueExtent, dimAngle1);
+            addDimComponentLine(p1,  p1 - extOffsetVector, dimensionPen);
         }
 
-        if (arrow2) { // tick 2:
-            addDimComponentLine(p2 - tickVector, p2 + tickVector, dimensionPen);
+        if (secondArrowIsObliqueOrArch) {
+            if (!extOffsetVector.valid) {
+                extOffsetVector = RS_Vector::polar(obliqueExtent, dimAngle1);
+            }
+            addDimComponentLine(p2,  p2 + extOffsetVector, dimensionPen);
         }
     }
 }
@@ -830,7 +860,8 @@ double RS_Dimension::getTextHeight() {
  * @return Dimension labels alignment text true= horizontal, false= aligned. - $DIMTIH
  */
 bool RS_Dimension::getInsideHorizontalText() {
-    return m_dimStyleTransient->text()->orientationInside() == Qt::Horizontal;
+    auto orientationPolicy = m_dimStyleTransient->text()->orientationInside();
+    return orientationPolicy == LC_DimStyle::Text::TextOrientationPolicy::DRAW_HORIZONTALLY;
 
     // int v = getGraphicVariableInt("$DIMTIH", 1);
     // if (v > 0) {
@@ -1084,7 +1115,15 @@ void RS_Dimension::update() {
 
 void RS_Dimension::resolveDimStyleAndUpdateDim() {
     auto dimStyleName = getStyle();
-    m_dimStyleTransient = getGraphic()->getResolvedDimStyle(dimStyleName, rtti());
+    auto globalDimStyle = getGraphic()->getResolvedDimStyle(dimStyleName, rtti());
+    auto dimStyleOverride = getDimStyleOverride();
+    if (dimStyleOverride == nullptr) {
+        m_dimStyleTransient = globalDimStyle;
+    }
+    else {
+        m_dimStyleTransient = dimStyleOverride->getCopy();
+        m_dimStyleTransient->mergeWith(globalDimStyle, LC_DimStyle::ModificationAware::UNSET, LC_DimStyle::ModificationAware::UNSET);
+    }
     if (m_dimStyleTransient != nullptr) { // it migth be null during reading of file of example
         doUpdateDim();
     }

@@ -73,7 +73,8 @@ struct RS_DimensionData : public RS_Flags {
                      QString style,
                      double angle,
                      double hdir,
-                     bool autoTextLocation);
+                     bool autoTextLocation,
+                     LC_DimStyle* dimStyleOverride);
 
     /** Definition point */
     RS_Vector definitionPoint;
@@ -103,6 +104,8 @@ struct RS_DimensionData : public RS_Flags {
     double horizontalAxisDirection = 0.0;
 
     bool autoText = true;
+
+    LC_DimStyle* m_dimStyleOverride = nullptr;
 };
 
 std::ostream& operator << (std::ostream& os,
@@ -187,6 +190,16 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     RS_Entity& shear([[maybe_unused]] double k) override { return *this; } // TODO
+
+    LC_DimStyle* getDimStyleOverride() const {
+        return m_dimGenericData.m_dimStyleOverride;
+    }
+
+    void setDimStyleOverride(LC_DimStyle* dimStyleOverride) {
+        m_dimGenericData.m_dimStyleOverride = dimStyleOverride;
+    }
+
+
 private:
     static RS_VectorSolutions getIntersectionsLineContainer(const RS_Line* l, const RS_EntityContainer* c,
                                                             bool infiniteLine = false);
@@ -202,6 +215,7 @@ private:
 protected:
     /** Data common to all dimension entities. */
     RS_DimensionData m_dimGenericData;
+    // dim style used during updateDim()
     LC_DimStyle* m_dimStyleTransient = nullptr;
 
     virtual void doUpdateDim() = 0;
