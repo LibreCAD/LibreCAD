@@ -54,7 +54,8 @@ void RS_ActionDimension::reset(){
                                               "Standard",
                                               0.0,
                                               0.0,
-                                              true);
+                                              true,
+                                              nullptr);
     m_diameter = false;
 }
 
