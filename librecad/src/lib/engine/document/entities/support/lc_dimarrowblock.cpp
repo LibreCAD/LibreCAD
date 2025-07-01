@@ -103,6 +103,15 @@ RS_Vector LC_DimArrow::getNearestDist([[maybe_unused]] double distance,
 void LC_DimArrow::doCalculateBorders() {
 }
 
+void LC_DimArrow::setDimLinePoint(const RS_Vector& pos) {
+    m_dimLinePoint = pos;
+}
+
+void LC_DimArrow::positionDimLinePointFromZero(const RS_Vector &angleVector) {
+    m_dimLinePoint.move(m_position);
+    m_dimLinePoint.rotate(m_position, angleVector);
+}
+
 void LC_DimArrow::calculateBorders() {
     resetBorders();
     minV = RS_Vector::minimum(minV, m_position);

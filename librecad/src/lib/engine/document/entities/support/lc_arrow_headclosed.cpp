@@ -56,9 +56,11 @@ void LC_ArrowHeadClosed::createVertexes() {
     double arrowSide{arrowSize / cos1};
     double halfArrowHeight = sin1 * arrowSide;
 
-    setVertex(0, 0, - halfArrowHeight);
-    setVertex(1,arrowSize, 0);
-    setVertex(2, 0, halfArrowHeight);
+    setVertex(0, -arrowSize, - halfArrowHeight);
+    setVertex(1,0, 0);
+    setVertex(2, -arrowSize, halfArrowHeight);
+
+
 
     positionFromZero();
     calculateBorders();

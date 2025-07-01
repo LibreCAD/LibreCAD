@@ -69,18 +69,23 @@ public:
         ArrowType type = _CUSTOM;
         QString blockName;
         QString name;
+
+        static QString ARROW_TYPE_OBLIQUE;
+        static QString ARROW_TYPE_ARCHTICK;
     };
 
     LC_DimArrowRegistry();
     bool getArrowInfoByBlockName(const QString& blockName, ArrowInfo &found) const;
     bool getArrowInfoByType(ArrowType type, ArrowInfo & found) const;
-    RS_Entity* createArrowBlock(RS_EntityContainer* container, const QString& blockName, RS_Vector& point, double directionAngle, double arrowSize);
+    RS_Entity* createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize);
 
     static void fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTypes);
+
+    bool isObliqueOrArchArrow(const QString& blockName);
 protected:
-    RS_Entity* createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, RS_Vector point, double directionAngle, double
+    RS_Entity* createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, const RS_Vector &point, double directionAngle, double
                                        arrowSize);
-    RS_Entity* createCustomArrowBlock(RS_EntityContainer* container, QString blockName, RS_Vector point, double direction_angle, double arrowSize);
+    RS_Entity* createCustomArrowBlock(RS_EntityContainer* container, QString blockName, const RS_Vector &point, double direction_angle, double arrowSize);
 private:
     static std::vector<ArrowInfo> m_defaultArrowsInfo;
     static void init();

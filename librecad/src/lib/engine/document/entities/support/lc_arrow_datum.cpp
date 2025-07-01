@@ -47,9 +47,9 @@ void LC_ArrowDatum::createVertexes(double size) {
 
     double halfSize = size * 0.5;
 
-    setVertex(0,{size, halfSize});
-    setVertex(1, {size,-halfSize});
-    setVertex(2, {0, 0});
+    setVertex(0,{0, halfSize});
+    setVertex(1, {0,-halfSize});
+    setVertex(2, {-size, 0});
 
     positionFromZero();
     calculateBorders();

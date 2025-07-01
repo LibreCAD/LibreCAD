@@ -34,14 +34,16 @@ RS_Entity* LC_ArrowNone::clone() const {
 }
 
 void LC_ArrowNone::draw(RS_Painter* painter) {
-    painter->drawLineWCS(vertexAt(0), vertexAt(1));
+    painter->drawLineWCS(getDimLinePoint(), getPosition());
 }
 
 void LC_ArrowNone::createVertexes(double size) {
     initVertexes(2);
 
-    setVertex(0, {0,0}); // dimline end point
-    setVertex(1,{size,0}); // center point
+    setVertex(0, {-size,0}); // dimline end point
+    setVertex(1,{0,0}); // center point
+
+    setDimLinePoint({-size,0});
     positionFromZero();
     calculateBorders();
 }

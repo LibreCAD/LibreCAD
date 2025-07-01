@@ -54,6 +54,7 @@ public:
     void setAngle(double angle){m_angle = angle;}
     double getArrowSize() const{return m_arrowSize;}
     RS_Vector getPosition() const{return m_position;}
+    RS_Vector getDimLinePoint () const {return m_dimLinePoint;}
 protected:
     void setDistPtr(double* dist, double value) const;
     virtual void doMove(const RS_Vector& offset);
@@ -61,11 +62,13 @@ protected:
     virtual void doScale(const RS_Vector& center, const RS_Vector& factor);
     virtual void doMirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     virtual void doCalculateBorders();
+    void setDimLinePoint(const RS_Vector& pos);
+    void positionDimLinePointFromZero(const RS_Vector &angleVector);
 private:
-    double m_angle;
-    RS_Vector m_position;
-    double m_arrowSize;
-
+    double m_angle {0.0};
+    RS_Vector m_position {};
+    double m_arrowSize {0.0};
+    RS_Vector m_dimLinePoint {};
 };
 
 #endif // LC_DIMARROWBLOCK_H

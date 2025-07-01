@@ -35,7 +35,7 @@ RS_Entity* LC_ArrowIntegral::clone() const {
 }
 
 void LC_ArrowIntegral::draw(RS_Painter* painter) {
-    painter->drawLineWCS(getPosition(), vertexAt(3));
+    painter->drawLineWCS(getPosition(), getDimLinePoint());
     painter->drawPolygonWCS(getVertexes());
 }
 
@@ -45,17 +45,19 @@ void LC_ArrowIntegral::createVertexes(double size) {
     double halfSize = size*0.5;
 
     // right leg
-    setVertex(0,{size+halfSize,halfSize}); // rightmost topmost
-    setVertex(1,{size+halfSize*0.5,halfSize*0.8659});
-    setVertex(2,{size+halfSize*0.134 ,halfSize*0.4992});
+    setVertex(0,{halfSize,halfSize}); // rightmost topmost
+    setVertex(1,{halfSize*0.5,halfSize*0.8659});
+    setVertex(2,{halfSize*0.134 ,halfSize*0.4992});
 
     // center point
-    setVertex(3,{size,0});
+    setVertex(3,{0,0});
 
     // left Leg
-    setVertex(4,{size-halfSize*0.134 ,-halfSize*0.4992});
-    setVertex(5,{size-halfSize*0.5,-halfSize*0.8659});
-    setVertex(6,{halfSize,-halfSize});
+    setVertex(4,{-halfSize*0.134 ,-halfSize*0.4992});
+    setVertex(5,{-halfSize*0.5,-halfSize*0.8659});
+    setVertex(6,{-halfSize,-halfSize});
+
+    setDimLinePoint({-size,0});
 
     positionFromZero();
     calculateBorders();

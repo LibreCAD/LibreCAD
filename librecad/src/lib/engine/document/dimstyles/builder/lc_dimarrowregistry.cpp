@@ -42,11 +42,15 @@
 #include "rs_vector.h"
 
 
+
 LC_DimArrowRegistry::LC_DimArrowRegistry() {
     init();
 }
 
 std::vector<LC_DimArrowRegistry::ArrowInfo> LC_DimArrowRegistry::m_defaultArrowsInfo;
+
+QString LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE = "_OBLIQUE";
+QString LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_ARCHTICK = "_ARCHTICK";
 
 bool LC_DimArrowRegistry::getArrowInfoByBlockName(const QString& blockName, ArrowInfo& found) const {
     QString nameToFind = blockName.toUpper();
@@ -69,11 +73,11 @@ bool LC_DimArrowRegistry::getArrowInfoByType(const ArrowType type, ArrowInfo& fo
     return false;
 }
 
-RS_Entity* LC_DimArrowRegistry::createArrowBlock(RS_EntityContainer* container, const QString& blockName, RS_Vector& point, double directionAngle, double arrowSize) {
+RS_Entity* LC_DimArrowRegistry::createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize) {
     auto graphic = container->getGraphic();
     if (graphic != nullptr) {
         RS_BlockList* blocksList = graphic->getBlockList();
-        auto customBlock = blocksList->find(blockName);
+        auto customBlock = blocksList->findCaseInsensitive(blockName);
         if (customBlock != nullptr) {
             return createCustomArrowBlock(container, blockName, point, directionAngle, arrowSize);
         }
@@ -87,7 +91,7 @@ RS_Entity* LC_DimArrowRegistry::createArrowBlock(RS_EntityContainer* container, 
 
 }
 
-RS_Entity* LC_DimArrowRegistry::createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, RS_Vector point,
+RS_Entity* LC_DimArrowRegistry::createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, const RS_Vector &point,
                                                         double directionAngle, double arrowSize) {
     switch (type) {
         case (closed_filled): {
@@ -157,10 +161,10 @@ RS_Entity* LC_DimArrowRegistry::createDefaultArrowBlock(RS_EntityContainer* cont
 }
 
 RS_Entity* LC_DimArrowRegistry::createCustomArrowBlock(RS_EntityContainer* container, QString blockName,
-    RS_Vector point, double direction_angle, double arrowSize) {
+    const RS_Vector &point, double direction_angle, double arrowSize) {
 
     auto insertData = new RS_InsertData(blockName, point, RS_Vector(arrowSize, arrowSize), direction_angle,
-                                   1, 1, RS_Vector(1.0, 1.0), nullptr, RS2::Update);
+                                   1, 1, RS_Vector(0, 0), nullptr, RS2::Update);
 
     auto ins = new RS_Insert(container, *insertData);
     return ins;
@@ -181,14 +185,14 @@ void LC_DimArrowRegistry::init() {
             {"_CLOSED", closed, tr("Closed")},
             {"_SMALL", dot_small_blank, tr("Dot Small Blank")},
             {"_NONE", none, tr("None")},
-            {"_OBLIQUE", oblique, tr("Oblique")},
+            {ArrowInfo::ARROW_TYPE_OBLIQUE, oblique, tr("Oblique")},
             {"_BOXFILLED", box_filled, tr("Box Filled")},
             {"_BOXBLANK", box, tr("Box Blank")},
             {"_CLOSEDBLANK", closed_blank, tr("Closed Blank")},
             {"_DATUMFILLED", datum_triangle_filled, tr("Datum Filled")},
             {"_DATUMBLANK", datum_triangle, tr("Datum Blank")},
             {"_INTEGRAL", integral, tr("Integral")},
-            {"_ARCHTICK", architectural_tick, tr("Architecture Tick")}
+            {ArrowInfo::ARROW_TYPE_ARCHTICK, architectural_tick, tr("Architecture Tick")}
         };
     }
 }
@@ -203,4 +207,8 @@ void LC_DimArrowRegistry::fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTyp
         ArrowInfo arrowType(blockName, at.type, at.name);
         arrowTypes.push_back(arrowType);
     }
+}
+
+bool LC_DimArrowRegistry::isObliqueOrArchArrow(const QString& blockName) {
+    return blockName == ArrowInfo::ARROW_TYPE_OBLIQUE || blockName == ArrowInfo::ARROW_TYPE_ARCHTICK;
 }

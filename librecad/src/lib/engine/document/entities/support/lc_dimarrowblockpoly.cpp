@@ -101,11 +101,13 @@ RS_Vector LC_DimArrowPoly::getNearestPointOnEntity(const RS_Vector& coord, bool 
 
 void LC_DimArrowPoly::positionFromZero() {
     RS_Vector angleVector(getAngle());
+    positionDimLinePointFromZero(angleVector);
     auto position = getPosition();
     for (auto& vertex : m_vertices) {
         vertex.move(position);
         vertex.rotate(position, angleVector);
     }
+
     calculateBorders();
 }
 

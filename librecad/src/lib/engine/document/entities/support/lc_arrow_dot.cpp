@@ -57,13 +57,13 @@ void LC_ArrowDot::createVertexes(double size) {
 
     double radius = (m_subType == blank) ? size * 0.25 : size * 0.1;
 
-    setVertex(0, {0,0}); // dimline end
-    setVertex(1, {size-radius,0}); // connection line
-    setVertex(2, {size,0}); // center
+    setVertex(0, {-size,0}); // dimline end
+    setVertex(1, {-radius,0}); // connection line
+    setVertex(2, {0,0}); // center
     // just boundary points used for nearest point only
-    setVertex(3, {radius+radius,radius});
-    setVertex(4, {radius+radius,-radius});
-    setVertex(5, {radius+size,0});
+    setVertex(3, {-size + radius+radius,radius});
+    setVertex(4, {-size +radius+radius,-radius});
+    setVertex(5, {radius,0});
 
     positionFromZero();
     calculateBorders();

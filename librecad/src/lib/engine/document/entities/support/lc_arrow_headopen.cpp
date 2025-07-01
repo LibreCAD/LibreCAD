@@ -36,21 +36,23 @@ RS_Entity* LC_ArrowHeadOpen::clone() const {
 
 void LC_ArrowHeadOpen::draw(RS_Painter* painter) {
     painter->drawPolygonWCS(getVertexes());
-    painter->drawLineWCS(getPosition(), vertexAt(1));
+    painter->drawLineWCS(getDimLinePoint(), getPosition());
 }
 
-void LC_ArrowHeadOpen::createVertexes(double arrowSize) {
+void LC_ArrowHeadOpen::createVertexes(double size) {
     initVertexes(3);
 
     double cos1 = cos(m_ownAngle);
     double sin1 = sin(m_ownAngle);
 
-    double arrowSide{arrowSize / cos1};
+    double arrowSide{size / cos1};
     double halfArrowHeight = sin1 * arrowSide;
 
-    setVertex(0, 0, - halfArrowHeight); // bottom leg end
-    setVertex(1,arrowSize, 0);  // corner
-    setVertex(2, 0, halfArrowHeight); // upper leg end
+    setVertex(0, -size, - halfArrowHeight); // bottom leg end
+    setVertex(1,0, 0);  // corner
+    setVertex(2, -size, halfArrowHeight); // upper leg end
+
+    setDimLinePoint({-size,0});
 
     positionFromZero();
     calculateBorders();

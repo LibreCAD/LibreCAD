@@ -68,13 +68,13 @@ void LC_ArrowCircle::createVertexes(double size) {
 
     double halfSize = size / 2.0;
 
-    setVertex(0, {0,0}); // dimline end
-    setVertex(1, {halfSize,0}); // connection line
-    setVertex(2, {size,0}); // center
+    setVertex(0, {-size,0}); // dimline end
+    setVertex(1, {-halfSize,0}); // connection line
+    setVertex(2, {0,0}); // center
     // just boundary points used for nearest point only
-    setVertex(3, {halfSize+halfSize,halfSize});
-    setVertex(4, {halfSize+halfSize,-halfSize});
-    setVertex(5, {halfSize+size,0});
+    setVertex(3, {0,halfSize});
+    setVertex(4, {0,-halfSize});
+    setVertex(5, {halfSize,0});
 
     positionFromZero();
     calculateBorders();

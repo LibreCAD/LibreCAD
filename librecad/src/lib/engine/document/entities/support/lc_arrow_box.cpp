@@ -42,7 +42,7 @@ void LC_ArrowBox::draw(RS_Painter* painter) {
         painter->drawPolygonWCS(vertexAt(1), vertexAt(2), vertexAt(3), vertexAt(4), vertexAt(1));
     }
 
-    painter->drawLineWCS(vertexAt(0), getPosition());
+    painter->drawLineWCS(getDimLinePoint(), getPosition());
 }
 
 void LC_ArrowBox::createVertexes(double size) {
@@ -51,10 +51,12 @@ void LC_ArrowBox::createVertexes(double size) {
 
     setVertex(0, {halfSize,0});
 
-    setVertex(1,{halfSize, halfSize});
-    setVertex(2, {halfSize, -halfSize});
-    setVertex(3, {halfSize+size, -halfSize});
-    setVertex(4, {halfSize+size, halfSize});
+    setVertex(1,{-halfSize, halfSize});
+    setVertex(2, {-halfSize, -halfSize});
+    setVertex(3, {halfSize, -halfSize});
+    setVertex(4, {halfSize, halfSize});
+
+    setDimLinePoint({-size,0});
 
     positionFromZero();
     calculateBorders();

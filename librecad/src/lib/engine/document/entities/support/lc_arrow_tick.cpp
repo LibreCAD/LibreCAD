@@ -35,7 +35,7 @@ RS_Entity* LC_ArrowTick::clone() const {
 }
 
 void LC_ArrowTick::draw(RS_Painter* painter) {
-    painter->drawLineWCS(vertexAt(0), vertexAt(1));
+    painter->drawLineWCS(getDimLinePoint(), vertexAt(1));
 
     if (m_architectural) {
         painter->drawLineWCSScaled(vertexAt(2), vertexAt(3), 2);
@@ -52,9 +52,11 @@ void LC_ArrowTick::createVertexes(double size) {
     double halfSize = size * 0.5;
 
     setVertex(0, {0,0}); // dimline end point
-    setVertex(1,{size,0}); // center point
-    setVertex(2, {size-halfSize, -halfSize}); //corner
-    setVertex(3, {size+halfSize, halfSize}); // corner
+    setVertex(1,{0,0}); // center point
+    setVertex(2, {-halfSize, -halfSize}); //corner
+    setVertex(3, {halfSize, halfSize}); // corner
+
+    setDimLinePoint({-size,0});
 
     positionFromZero();
     calculateBorders();
