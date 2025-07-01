@@ -95,6 +95,7 @@ public:
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;
     LC_DimStylesList* getDimStyleList() override;
+    LC_TextStyleList* getTextStyleList() override;
 
     /**
      * Reimplementation from RS_Document. Does nothing.

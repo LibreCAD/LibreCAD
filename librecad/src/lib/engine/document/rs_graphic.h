@@ -35,6 +35,7 @@
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
 #include "lc_dimstyleslist.h"
+#include "lc_textstylelist.h"
 
 class RS_Dimension;
 class LC_DimStyleToVariablesMapper;
@@ -75,6 +76,7 @@ public:
     LC_ViewList* getViewList() override {return &namedViewsList;}
     LC_UCSList* getUCSList() override {return &ucsList;}
     LC_DimStylesList* getDimStyleList() override {return &dimstyleList;}
+    LC_TextStyleList* getTextStyleList() override {return &textStyleList;}
     void addDimStyle(LC_DimStyle* style) {dimstyleList.addDimStyle(style);}
     void newDoc() override;
     // Wrappers for Layer functions:
@@ -223,7 +225,6 @@ public:
     double getMarginTopInUnits();
     double getMarginRightInUnits();
     double getMarginBottomInUnits();
-
     /**
      * Number of pages drawing occupies
      */
@@ -291,6 +292,7 @@ private:
     LC_ViewList namedViewsList;
     LC_UCSList ucsList;
     LC_DimStylesList dimstyleList;
+    LC_TextStyleList textStyleList;
 
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;

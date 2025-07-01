@@ -78,6 +78,11 @@ LC_DimStylesList* RS_Block::getDimStyleList() {
     return (g != nullptr) ? g->getDimStyleList() : nullptr;
 }
 
+LC_TextStyleList* RS_Block::getTextStyleList() {
+    RS_Graphic* g = getGraphic();
+    return (g != nullptr) ? g->getTextStyleList() : nullptr;
+}
+
 // bool RS_Block::save(bool isAutoSave) {
 //     RS_Graphic* g = getGraphic();
 //     if (g) {
