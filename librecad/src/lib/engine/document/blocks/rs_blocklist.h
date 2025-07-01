@@ -75,6 +75,7 @@ public:
     bool rename(RS_Block* block, const QString& name);
     //virtual void editBlock(RS_Block* block, const RS_Block& source);
     RS_Block* find(const QString& name);
+    RS_Block* findCaseInsensitive(const QString& name) const;
     QString newName(const QString& suggestion = "");
     void toggle(const QString& name);
     void toggle(RS_Block* block);
