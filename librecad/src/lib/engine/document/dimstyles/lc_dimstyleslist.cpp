@@ -53,8 +53,7 @@ LC_DimStyle* LC_DimStylesList::resolveByName(const QString& name, RS2::EntityTyp
     if (res == nullptr) {
         if (dimType == RS2::EntityDimAligned) {
             // fall back to style for linear
-            nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(RS2::EntityDimLinear);
-            nameForType = name + nameSuffix;
+            nameForType = LC_DimStyle::getStyleNameForBaseAndType(name, RS2::EntityDimLinear);
             res = findByName(nameForType);
             if (res != nullptr) {
                 return res;
@@ -62,8 +61,7 @@ LC_DimStyle* LC_DimStylesList::resolveByName(const QString& name, RS2::EntityTyp
         }
         else if (dimType == RS2::EntityTolerance) {
             // fall back to style for leader
-            nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(RS2::EntityDimLeader);
-            nameForType = name + nameSuffix;
+            nameForType = LC_DimStyle::getStyleNameForBaseAndType(name, RS2::EntityDimLeader);
             res = findByName(nameForType);
             if (res != nullptr) {
                 return res;

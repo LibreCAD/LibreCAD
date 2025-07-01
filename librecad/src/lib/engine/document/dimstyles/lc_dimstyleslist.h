@@ -42,7 +42,8 @@ public:
     const QList<LC_DimStyle*>* getStylesList(){return &m_stylesList;}
     LC_DimStyle* getFallbackDimStyleFromVars() const {return m_fallbackDimStyleFromVars.get();}
     void replaceStyles(const QList<LC_DimStyle*>& list);
-    void setModified(bool m) {m_modified = m;};
+    void setModified(bool m) {m_modified = m;}
+    bool isEmpty() {return m_stylesList.isEmpty();}
     virtual bool isModified() const { return m_modified;}
 protected:
     /** Flag set if the layer list was modified and not yet saved. */
