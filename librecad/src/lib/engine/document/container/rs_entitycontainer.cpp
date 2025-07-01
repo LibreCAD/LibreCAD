@@ -1990,7 +1990,7 @@ void RS_EntityContainer::revertDirection() {
  void RS_EntityContainer::draw(RS_Painter *painter) {
     for(RS_Entity *e: *this){
         if (e!=nullptr && e->getId() != 0)
-        painter->drawEntity(e);
+            painter->drawEntity(e);
     }
 }
 
