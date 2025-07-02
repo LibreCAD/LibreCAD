@@ -207,7 +207,7 @@ std::enable_if_t<std::is_floating_point_v<FT>, bool> less(FT a, FT b)
 template<typename FT>
 std::enable_if_t<std::is_floating_point_v<FT>, bool> inBetween(FT x, FT a, FT b)
 {
-    return RS_Math::less<FT>(x, std::max(a, b)) && RS_Math::less<FT>(std::min(a, b), x);
+    return RS_Math::less<FT>(x, std::max<FT>(a, b)) && RS_Math::less<FT>(std::min<FT>(a, b), x);
 }
 
 QString doubleToString(double value, double prec);
