@@ -27,6 +27,7 @@
 #ifndef RS_MATH_H
 #define RS_MATH_H
 
+#include <algorithm>
 #include <cmath>
 #include <vector>
 
@@ -191,7 +192,7 @@ std::enable_if_t<std::is_floating_point_v<FT>, FT> ulp(FT x)
 template<typename FT>
 std::enable_if_t<std::is_floating_point_v<FT>, bool> less(FT a, FT b)
 {
-    return a <= b + 2 * ulp<FT>(b);
+    return a <= b + 2 * RS_Math::ulp<FT>(b);
 }
 
 /**
@@ -206,7 +207,7 @@ std::enable_if_t<std::is_floating_point_v<FT>, bool> less(FT a, FT b)
 template<typename FT>
 std::enable_if_t<std::is_floating_point_v<FT>, bool> inBetween(FT x, FT a, FT b)
 {
-    return less<FT>(x, std::max(a, b)) && less<FT>(std::min(a, b), x);
+    return RS_Math::less<FT>(x, std::max(a, b)) && RS_Math::less<FT>(std::min(a, b), x);
 }
 
 QString doubleToString(double value, double prec);
