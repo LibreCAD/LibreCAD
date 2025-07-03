@@ -54,6 +54,8 @@ LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
             this, &LC_PenWizard::selectByColor);
     connect(color_wiz, &ColorWizard::colorDoubleClicked,
             this, &LC_PenWizard::setActivePenColor);
+    // a temporary workaround for Issue #2214: right dock area size may be over the screen size
+    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 }
 
 void LC_PenWizard::setColorForSelected(QColor color)

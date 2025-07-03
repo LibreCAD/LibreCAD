@@ -127,7 +127,15 @@ void printMargins(const QMarginsF &margins, QString name)
 {
     LC_ERR << name << " margins(mm): " << margins.left() << ": " << margins.top() << " : "
            << margins.right() << " : " << margins.bottom();
-};
+}
+
+// show pen wizard by user settings
+// Workaround for issue #2214: right dock area size may be over the screen size
+bool usePenWizard()
+{
+    auto guard= RS_SETTINGS->beginGroupGuard("/CustomToolbars");
+    return RS_SETTINGS->readNumEntry("/UsePenWizard", 0) == 1;
+}
 }
 
 /**
@@ -163,6 +171,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     connect(this, &QC_ApplicationWindow::windowsChanged,
             pen_wiz, &LC_PenWizard::setEnabled);
     addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
+    pen_wiz->setVisible(usePenWizard());
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     QStatusBar* status_bar = statusBar();
