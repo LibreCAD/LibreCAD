@@ -72,6 +72,8 @@ struct LC_ContainerTraverser::Data {
         if (entity == nullptr || !entity->isContainer())
             return false;
         switch(level) {
+        case RS2::ResolveNone:
+            return false;
         case RS2::ResolveAllButInserts:
             return entity->rtti() != RS2::EntityInsert;
         case RS2::ResolveAllButTextImage:
@@ -82,6 +84,7 @@ struct LC_ContainerTraverser::Data {
             if (isText(*entity))
                 return false;
             [[fallthrough]];
+        case RS2::ResolveAll:
         default:
             return true;
         }
