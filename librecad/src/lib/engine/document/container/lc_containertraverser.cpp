@@ -163,13 +163,13 @@ RS_Entity* LC_ContainerTraverser::get()
 
     RS_Entity* current = container->entityAt(currentIndex());
     // advance the index, pointing to the next candidate
+    ++ii;
     if (current->isContainer() && m_pImp->canResolve(current)) {
         m_pImp->indices.emplace_back(static_cast<RS_EntityContainer*>(current), 0);
-        current = get();
+        return get();
     }
     m_pImp->previous[0] = m_pImp->previous[1];
     m_pImp->previous[1] = current;
-    ++ii;
     return current;
 }
 
