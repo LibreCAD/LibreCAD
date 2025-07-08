@@ -26,6 +26,7 @@
 #define LC_ContainerTraverser_H
 
 #include <memory>
+#include <vector>
 
 class RS_AtomicEntity;
 class RS_Entity;

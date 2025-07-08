@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-#include "qg_librarywidget.h"
 
 #include <QApplication>
 #include <QDir>
@@ -39,8 +38,10 @@
 #include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <qabstractitemview.h>
+#include <QAbstractItemView>
 
+#include "qg_librarywidget.h"
+#include "lc_containertraverser.h"
 #include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
@@ -467,7 +468,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     renderer.loadSettings();
     renderer.setupPainter(&painter);
 
-    for (RS_Entity *e = graphic.firstEntity(RS2::ResolveAll); e; e = graphic.nextEntity(RS2::ResolveAll)) {
+    for(RS_Entity* e: lc::LC_ContainerTraverser{graphic, RS2::ResolveAll}.entities()) {
         if (e != nullptr && e->rtti() != RS2::EntityHatch) {
             RS_Pen pen = e->getPen();
             pen.setColor(Qt::black);

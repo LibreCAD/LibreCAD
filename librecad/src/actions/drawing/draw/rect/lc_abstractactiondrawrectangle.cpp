@@ -20,7 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_abstractactiondrawrectangle.h"
-
+#include "lc_containertraverser.h"
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_linemath.h"
@@ -87,8 +87,7 @@ void LC_AbstractActionDrawRectangle::doAddPolylineToListOfEntities(RS_Polyline *
     else {
         // iterate over entities of polyline
         int index = -1;
-        for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
-            entity = polyline->nextEntity(RS2::ResolveAll)) {
+        for(RS_Entity* entity: lc::LC_ContainerTraverser{*polyline, RS2::ResolveAll}.entities()) {
             index++;
             if (entity != nullptr){
                 if (shouldInspectForNonCompleteShape){

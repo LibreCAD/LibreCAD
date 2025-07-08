@@ -21,6 +21,8 @@
  ******************************************************************************/
 #include <iostream>
 
+#include "lc_containertraverser.h"
+
 #include "rs_actiondrawhatch.h"
 
 #include "rs_debug.h"
@@ -92,8 +94,8 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
                 e->setSelected(false);
         }
         // fixme - sand -  iteration over all entities in container
-        for (auto e=m_container->firstEntity(RS2::ResolveAll); e != nullptr;
-             e=m_container->nextEntity(RS2::ResolveAll)) {
+        std::vector<RS_Entity*> entities = lc::LC_ContainerTraverser{*m_container, RS2::ResolveAll}.entities();
+        for (RS_Entity* e: entities) {
             if (e->isSelected() && !hatchAble(e))
                 e->setSelected(false);
         }
@@ -101,8 +103,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
         // fixme - sand -  iteration over all entities in container
         // look for selected contours:
         bool haveContour = false;
-        for (auto e=m_container->firstEntity(RS2::ResolveAll); e != nullptr;
-             e=m_container->nextEntity(RS2::ResolveAll)) {
+        for (RS_Entity* e: entities) {
             if (e->isSelected()) {
                 haveContour = true;
             }
@@ -120,8 +121,8 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
         loop->setPen(RS_Pen(RS2::FlagInvalid));
 
         // add selected contour:
-        for (auto e=m_container->firstEntity(RS2::ResolveAll); e;
-             e=m_container->nextEntity(RS2::ResolveAll)) {
+        entities = lc::LC_ContainerTraverser{*m_container, RS2::ResolveAll}.entities();
+        for (RS_Entity* e: entities) {
 
             if (e->isSelected()){
                 e->setSelected(false);

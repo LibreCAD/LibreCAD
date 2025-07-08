@@ -23,9 +23,6 @@
 **********************************************************************************
 **/
 
-#include <utility>
-#include <vector>
-
 #include "lc_containertraverser.h"
 
 #include "rs.h"
@@ -118,6 +115,8 @@ std::vector<RS_Entity*> LC_ContainerTraverser::entities()
 void LC_ContainerTraverser::collect(std::vector<RS_Entity*>& items, const RS_EntityContainer* container) const
 {
     for (RS_Entity* entity: std::as_const(*container)) {
+        if (entity == nullptr)
+            continue;
         if (entity->isContainer() && m_pImp->canResolve(container)) {
             collect(items, static_cast<RS_EntityContainer*>(entity));
         } else {
@@ -131,15 +130,16 @@ RS_Entity* LC_ContainerTraverser::first()
     m_pImp->indices = std::vector<Node>{{m_pImp->container, 0}};
     return get();
 }
+
 RS_Entity* LC_ContainerTraverser::next()
 {
     return get();
 }
+
 RS_Entity* LC_ContainerTraverser::prev()
 {
     return m_pImp->previous[0];
 }
-
 
 RS_Entity* LC_ContainerTraverser::last()
 {

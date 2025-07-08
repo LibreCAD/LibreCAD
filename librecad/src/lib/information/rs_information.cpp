@@ -28,6 +28,7 @@
 
 #include "rs_information.h"
 
+#include "lc_containertraverser.h"
 #include "lc_parabola.h"
 #include "lc_quadratic.h"
 #include "lc_rect.h"
@@ -1002,10 +1003,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
             *onContour = false;
         }
 
-        for (RS_Entity* e = contour->firstEntity(RS2::ResolveAll);
-				e;
-                e = contour->nextEntity(RS2::ResolveAll)) {
-
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*contour, RS2::ResolveAll}.entities()) {
             // intersection(s) from ray with contour entity:
             sol = RS_Information::getIntersection(&ray, e, true);
 
