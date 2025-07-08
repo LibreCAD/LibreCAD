@@ -1299,7 +1299,8 @@ RS_Entity *RS_EntityContainer::prevEntity(RS2::ResolveLevel level) const {
 /**
  * @return Entity at the given index or nullptr if the index is out of range.
  */
-RS_Entity *RS_EntityContainer::entityAt(int index) {
+RS_Entity *RS_EntityContainer::entityAt(int index) const
+{
     if (m_entities.size() > index && index >= 0)
         return m_entities.at(index);
     else
