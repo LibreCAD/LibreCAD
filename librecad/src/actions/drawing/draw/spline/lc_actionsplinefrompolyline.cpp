@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_actionsplinefrompolyline.h"
+#include "lc_containertraverser.h"
 
 #include "lc_splinefrompolylineoptions.h"
 #include "lc_splinepoints.h"
@@ -203,8 +204,7 @@ RS_Entity* LC_ActionSplineFromPolyline::createSplineForPolyline(RS_Entity *p) {
 void LC_ActionSplineFromPolyline::fillControlPointsListFromPolyline(const RS_Polyline *polyline, std::vector<RS_Vector> &controlPoints) const {
     controlPoints.reserve(polyline->count() * (m_segmentMiddlePoints + 1) + 1);
     controlPoints.push_back(polyline->getStartpoint());
-
-    for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity; entity = polyline->nextEntity(RS2::ResolveAll)) {
+    for(RS_Entity* entity: lc::LC_ContainerTraverser{*polyline, RS2::ResolveAll}.entities()) {
         if (!entity->isAtomic()){
             continue;
         }

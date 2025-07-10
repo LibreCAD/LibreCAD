@@ -23,6 +23,7 @@
 #include "lc_actiondrawlinepolygonbase.h"
 
 #include "lc_actioninfomessagebuilder.h"
+#include "lc_containertraverser.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_linemath.h"
 #include "qg_linepolygonoptions.h"
@@ -60,8 +61,7 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
                 undoableAdd(polyline);
             }
             else{
-                for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
-                     entity = polyline->nextEntity(RS2::ResolveAll)) {
+                for(RS_Entity* entity: lc::LC_ContainerTraverser{*polyline, RS2::ResolveAll}.entities()) {
                     if (entity != nullptr){
                         auto *clone = entity->clone(); // use clone for safe deletion of polyline
                         clone->setPen(pen);

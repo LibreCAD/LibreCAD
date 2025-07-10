@@ -34,6 +34,7 @@
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
 #include "lc_actioncontext.h"
+#include "lc_containertraverser.h"
 #include "lc_documentsstorage.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
@@ -676,15 +677,16 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
     data->append(Plug_VertexData(QPointF(ae->getStartpoint().x,
                                          ae->getStartpoint().y),bulge));
 
-	for (v=l->firstEntity(RS2::ResolveNone); v; v=nextEntity) {
-		nextEntity = l->nextEntity(RS2::ResolveNone);
+    lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
+    for (v=traverser.first(); v != nullptr; v=traverser.next()) {
+        nextEntity = traverser.next();
         bulge = 0.0;
         if (!v->isAtomic()) {
             continue;
         }
         ae = (RS_AtomicEntity*)v;
 
-        if (nextEntity) {
+        if (nextEntity != nullptr) {
             if (nextEntity->rtti()==RS2::EntityArc) {
                 bulge = ((RS_Arc*)nextEntity)->getBulge();
             }

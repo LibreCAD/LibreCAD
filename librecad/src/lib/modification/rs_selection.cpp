@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "rs_selection.h"
 
+#include "lc_containertraverser.h"
 #include "lc_graphicviewport.h"
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
@@ -154,10 +155,9 @@ void RS_Selection::selectIntersected(const RS_Vector &v1, const RS_Vector &v2, b
 
             // select containers / groups:
             if (e->isContainer()){
-                auto *ec = (RS_EntityContainer *) e;
+                auto *ec = static_cast<RS_EntityContainer*>(e);
 
-                for (RS_Entity *e2 = ec->firstEntity(RS2::ResolveAll); e2;
-                     e2 = ec->nextEntity(RS2::ResolveAll)) {
+                for(RS_Entity* e2: lc::LC_ContainerTraverser{*ec, RS2::ResolveAll}.entities()) {
 
                     RS_VectorSolutions sol =
                         RS_Information::getIntersection(&line, e2, true);

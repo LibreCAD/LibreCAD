@@ -312,7 +312,8 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
     actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
-    lib/actions/lc_overlayboxaction.h \    
+    lib/actions/lc_overlayboxaction.h \
+    lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/ucs/lc_ucslist.h \
@@ -559,7 +560,8 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
-    lib/actions/lc_overlayboxaction.cpp \    
+    lib/actions/lc_overlayboxaction.cpp \
+    lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \

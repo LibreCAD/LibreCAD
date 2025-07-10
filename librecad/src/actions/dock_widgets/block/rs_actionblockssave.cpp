@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QApplication>
 
 #include "lc_documentsstorage.h"
+#include "lc_containertraverser.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_blockwidget.h"
@@ -55,7 +56,8 @@ RS_Graphic* RS_ActionBlocksSave::createGraphicForBlock(RS_Block *activeBlock){
     result->getBlockList()->setOwner(false);
     result->clearLayers();
     // g.addLayer(b->getLayer());
-    for (RS_Entity* e=activeBlock->firstEntity(RS2::ResolveNone);e;e = activeBlock->nextEntity(RS2::ResolveNone)) {
+
+    for (RS_Entity* e : lc::LC_ContainerTraverser{*activeBlock, RS2::ResolveNone}.entities()) {
         result->addEntity(e);
         if (e->rtti() == RS2::EntityInsert) {
             auto *insert = static_cast<RS_Insert *>(e);

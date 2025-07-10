@@ -28,11 +28,12 @@
 #include <QStringList>
 #include <QStringConverter>
 
-#include "rs_filterdxfrw.h"
 
 #include <QFile>
 #include <QFileInfo>
 
+#include "rs_filterdxfrw.h"
+#include "lc_containertraverser.h"
 #include "lc_parabola.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -1286,8 +1287,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
             for (auto const& vert: pline->vertlist)
                 polyline.addVertex(RS_Vector{vert->x, vert->y}, vert->bulge);
 
-            for (RS_Entity* e=polyline.firstEntity(); e;
-                 e=polyline.nextEntity()) {
+            for(RS_Entity* e: lc::LC_ContainerTraverser{polyline, RS2::ResolveNone}.entities()) {
                 RS_Entity* tmp = e->clone();
                 tmp->reparent(hatchLoop);
                 tmp->setLayer(nullptr);
@@ -1439,8 +1439,7 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     }
 
     // Also link images in subcontainers (e.g. inserts):
-    for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-            e; e=graphic->nextEntity(RS2::ResolveNone)) {
+    for(RS_Entity* e: lc::LC_ContainerTraverser{*graphic, RS2::ResolveNone}.entities()) {
         if (e->rtti()==RS2::EntityImage) {
             RS_Image* img = (RS_Image*)e;
             if (img->getHandle()==handle) {
@@ -1454,8 +1453,7 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     // update images in blocks:
     for (unsigned i=0; i<graphic->countBlocks(); ++i) {
         RS_Block* b = graphic->blockAt(i);
-        for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                e; e=b->nextEntity(RS2::ResolveNone)) {
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*b, RS2::ResolveNone}.entities()) {
             if (e->rtti()==RS2::EntityImage) {
                 RS_Image* img = (RS_Image*)e;
                 if (img->getHandle()==handle) {
@@ -1670,9 +1668,8 @@ void RS_FilterDXFRW::prepareBlocks() {
         }
     }
     //Add a name to each dimension, in dxfR12 also for hatches
-    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-		 e ; e = graphic->nextEntity(RS2::ResolveNone)) {
-        if ( !(e->getFlag(RS2::FlagUndone)) ) {
+    for(RS_Entity* e: lc::LC_ContainerTraverser{*graphic, RS2::ResolveNone}.entities()) {
+        if (!(e->getFlag(RS2::FlagUndone)) ) {
             switch (e->rtti()) {
             case RS2::EntityDimLinear:
             case RS2::EntityDimOrdinate:
@@ -1739,8 +1736,7 @@ void RS_FilterDXFRW::writeBlocks() {
         block.flags = 1;//flag for unnamed block
         dxfW->writeBlock(&block);
         RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
-        for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
-             e; e=ct->nextEntity(RS2::ResolveNone)) {
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*ct, RS2::ResolveNone}.entities()) {
             if ( !(e->getFlag(RS2::FlagUndone)) ) {
                 writeEntity(e);
             }
@@ -1760,8 +1756,7 @@ void RS_FilterDXFRW::writeBlocks() {
             block.basePoint.y = blk->getBasePoint().y;
             block.basePoint.z = blk->getBasePoint().z;
             dxfW->writeBlock(&block);
-            for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                 e; e=blk->nextEntity(RS2::ResolveNone)) {
+            for(RS_Entity* e: lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
                 if ( !(e->getFlag(RS2::FlagUndone)) ) {
                     writeEntity(e);
                 }
@@ -2215,8 +2210,7 @@ void RS_FilterDXFRW::writeTextstyles(){
     QHash<QString, QString> styles;
     QString sty;
     //Find fonts used by text entities in drawing
-    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-		 e ; e = graphic->nextEntity(RS2::ResolveNone)) {
+    for(RS_Entity* e: lc::LC_ContainerTraverser{*graphic, RS2::ResolveNone}.entities()) {
         if ( !(e->getFlag(RS2::FlagUndone)) ) {
             switch (e->rtti()) {
             case RS2::EntityMText:
@@ -2237,9 +2231,8 @@ void RS_FilterDXFRW::writeTextstyles(){
     RS_Block *blk;
     for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
-        for (RS_Entity *e = blk->firstEntity(RS2::ResolveNone);
-			 e ; e = blk->nextEntity(RS2::ResolveNone)) {
-            if ( !(e->getFlag(RS2::FlagUndone)) ) {
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
+            if (!(e->getFlag(RS2::FlagUndone)) ) {
                 switch (e->rtti()) {
                 case RS2::EntityMText:
                     sty = ((RS_MText*)e)->getStyle();
@@ -2353,8 +2346,7 @@ void RS_FilterDXFRW::writeAppId(){
 }
 
 void RS_FilterDXFRW::writeEntities(){
-    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-		 e ; e = graphic->nextEntity(RS2::ResolveNone)) {
+    for(RS_Entity* e: lc::LC_ContainerTraverser{*graphic, RS2::ResolveNone}.entities()) {
         if ( !(e->getFlag(RS2::FlagUndone)) ) {
             writeEntity(e);
         }
@@ -2502,20 +2494,19 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
 	RS_AtomicEntity* ae = nullptr;
     double bulge=0.0;
 
-    for (RS_Entity* e=l->firstEntity(RS2::ResolveNone);
-         e; e=nextEntity) {
-
+    lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
+    for (RS_Entity* e=traverser.first(); e != nullptr; e=traverser.next()) {
         currEntity = e;
-        nextEntity = l->nextEntity(RS2::ResolveNone);
+        nextEntity = traverser.next();
 
         if (!e->isAtomic()) {
             continue;
         }
-        ae = (RS_AtomicEntity*)e;
+        ae = static_cast<RS_AtomicEntity*>(e);
 
         // Write vertex:
             if (e->rtti()==RS2::EntityArc) {
-                bulge = ((RS_Arc*)e)->getBulge();
+                bulge = static_cast<RS_Arc*>(e)->getBulge();
             } else
                 bulge = 0.0;
             pol.addVertex( DRW_Vertex2D(ae->getStartpoint().x,
@@ -2526,7 +2517,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     } else {
         ae = (RS_AtomicEntity*)currEntity;
         if (ae->rtti()==RS2::EntityArc) {
-            bulge = ((RS_Arc*)ae)->getBulge();
+            bulge = static_cast<RS_Arc*>(ae)->getBulge();
         }
         pol.addVertex( DRW_Vertex2D(ae->getEndpoint().x,
                                   ae->getEndpoint().y, bulge));
@@ -2545,12 +2536,10 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     RS_Entity* nextEntity = 0;
 	RS_AtomicEntity* ae = nullptr;
     double bulge=0.0;
-
-    for (RS_Entity* e=p->firstEntity(RS2::ResolveNone);
-         e; e=nextEntity) {
-
+    lc::LC_ContainerTraverser traverser{*p, RS2::ResolveNone};
+    for (RS_Entity* e=traverser.first(); e != nullptr; e=traverser.next()) {
         currEntity = e;
-        nextEntity = p->nextEntity(RS2::ResolveNone);
+        nextEntity = traverser.next();
 
         if (!e->isAtomic()) {
             continue;
@@ -2596,9 +2585,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     // version 12 do not support Spline write as polyline
     if (version==1009) {
         DRW_Polyline pol;
-        RS_Entity* e;
-        for (e=s->firstEntity(RS2::ResolveNone);
-             e; e=s->nextEntity(RS2::ResolveNone)) {
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
             pol.addVertex( DRW_Vertex(e->getStartpoint().x,
                                       e->getStartpoint().y, 0.0, 0.0));
         }
@@ -3061,8 +3048,7 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     leader.textwidth = 10;
     leader.vertnum = l->count();
 	RS_Line* li =nullptr;
-    for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-            v;   v=l->nextEntity(RS2::ResolveNone)) {
+    for(RS_Entity* v: lc::LC_ContainerTraverser{*l, RS2::ResolveNone}.entities()){
         if (v->rtti()==RS2::EntityLine) {
             li = (RS_Line*)v;
 			leader.vertexlist.push_back(std::make_shared<DRW_Coord>(li->getStartpoint().x, li->getStartpoint().y, 0.0));
@@ -3100,10 +3086,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
     bool writeIt = true;
     if (h->countLoops()>0) {
         // check if all of the loops contain entities:
-        for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                l;
-                l=h->nextEntity(RS2::ResolveNone)) {
-
+        for(RS_Entity* l: lc::LC_ContainerTraverser{*h, RS2::ResolveNone}.entities()){
             if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
                 if (l->count()==0) {
                     writeIt = false;
@@ -3140,10 +3123,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
 			std::shared_ptr<DRW_HatchLoop> lData = std::make_shared<DRW_HatchLoop>(0);
 
-            for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
-                 ed;
-                 ed=loop->nextEntity(RS2::ResolveNone)) {
-
+            for(RS_Entity* ed: lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()){
                 // Write hatch loop edges:
                 if (ed->rtti()==RS2::EntityLine) {
                     RS_Line* ln = (RS_Line*)ed;

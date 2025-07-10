@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actionmodifybreakdivide.h"
 
 #include "lc_actioninfomessagebuilder.h"
+#include "lc_containertraverser.h"
 #include "lc_linemath.h"
 #include "lc_modifybreakdivideoptions.h"
 #include "rs_arc.h"
@@ -587,8 +588,7 @@ QVector<RS_Vector> LC_ActionModifyBreakDivide::collectAllIntersectionsWithEntity
                 // additional handling for containers
                 auto *ec = (RS_EntityContainer *) e;
 
-                for (RS_Entity *e2 = ec->firstEntity(RS2::ResolveAll); e2;
-                     e2 = ec->nextEntity(RS2::ResolveAll)) {
+                for(RS_Entity* e2: lc::LC_ContainerTraverser{*ec, RS2::ResolveAll}.entities()) {
                     sol = RS_Information::getIntersection(entity, e2, true);
                     addPointsFromSolutionToList(sol, result);
                 }

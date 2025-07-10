@@ -30,12 +30,13 @@
 #include <QStringList>
 #include <QDate>
 
-#include "rs_filterlff.h"
 
 #include <QFile>
 
+#include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_line.h"
+#include "rs_filterlff.h"
 #include "rs_font.h"
 #include "rs_utility.h"
 #include "rs_system.h"
@@ -205,10 +206,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                 ts << QString("\n%1\n").arg(blk->getName());
 
                 // iterate through entities of this letter:
-                for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                     e;
-                     e=blk->nextEntity(RS2::ResolveNone)) {
-
+                for(RS_Entity* e: lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
                     if (!e->isUndone()) {
 
                         // lines:
@@ -241,9 +239,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                             RS_Polyline* p = (RS_Polyline*)e;
                             ts << clearZeros(p->getStartpoint().x, 5) << ',';
                             ts << clearZeros(p->getStartpoint().y, 5);
-                            for (RS_Entity* e2=p->firstEntity(RS2::ResolveNone);
-                                 e2;
-                                 e2=p->nextEntity(RS2::ResolveNone)) {
+                            for(RS_Entity* e2: lc::LC_ContainerTraverser{*p, RS2::ResolveNone}.entities()) {
                                 if (e2->rtti()==RS2::EntityLine){
                                     RS_Line* l = (RS_Line*)e2;
                                     ts << ';' << clearZeros(l->getEndpoint().x, 5) << ',';
