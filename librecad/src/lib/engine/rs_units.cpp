@@ -634,7 +634,11 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
     if (!isAbsInRange(length))
         return "<Invalid length>";
 
-
+    // Issue #2218: negative number support
+    if (std::signbit(length)) {
+        QString sign = std::signbit(length + RS_TOLERANCE) ? QString{"- "} : QString{};
+        return sign + formatFractional(std::abs(length), RS2::Inch, prec, false);
+    }
     // number of complete inches (num' 7/128")
     unsigned num = (unsigned) std::abs(length);
 
