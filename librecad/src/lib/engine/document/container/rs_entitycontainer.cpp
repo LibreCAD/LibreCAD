@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
-#include <QList>
+#include <cmath>
 #include <iostream>
-#include "rs_entitycontainer.h"
-
-#include <QObject>
 #include <set>
+
+#include <QList>
+#include <QObject>
+#include "rs_entitycontainer.h"
 
 #include "lc_looputils.h"
 #include "qg_dialogfactory.h"
