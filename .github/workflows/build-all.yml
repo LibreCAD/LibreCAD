@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -25,16 +25,13 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -qq install \
           libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo apt-get -qq install clang clang-tools
           sudo rm -rf /usr/local/lib/android
-
-      - name: Install Clang
-        run: |
-          sudo apt-get -qq install clang-10 clang-tools-10
 
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-10 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
@@ -190,7 +187,7 @@ jobs:
           retention-days: 2
 
   BuildWindows:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout code
         uses: actions/checkout@main
