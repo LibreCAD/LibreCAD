@@ -28,6 +28,7 @@
 
 #include <QStringList>
 
+#include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_debug.h"
@@ -209,9 +210,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
 
                 // iterate through entities of this letter:
-                for (RS_Entity* e=blk->firstEntity(RS2::ResolveAll);
-                        e;
-                        e=blk->nextEntity(RS2::ResolveAll)) {
+                for(RS_Entity* e: lc::LC_ContainerTraverser{*blk, RS2::ResolveAll}.entities()) {
 
                     if (!e->isUndone()) {
 

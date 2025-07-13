@@ -27,10 +27,9 @@
 
 #include <iostream>
 
-#include "rs_polyline.h"
-
 #include <QObject>
 
+#include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -41,6 +40,7 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
+#include "rs_polyline.h"
 
 RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
                                  const RS_Vector& _endpoint,
@@ -370,17 +370,22 @@ void RS_Polyline::setClosed(bool cl) {
  * Sets the polylines start and endpoint to match the first and last vertex.
  */
 void RS_Polyline::updateEndpoints() {
+    using namespace lc;
+    LC_ContainerTraverser traverser{*this, RS2::ResolveNone};
     RS_Entity* e1 = firstEntity();
-    if (e1 && e1->isAtomic()) {
+    if (e1 != nullptr && e1->isAtomic()) {
         RS_Vector const& v = e1->getStartpoint();
         setStartpoint(v);
     }
 
-    RS_Entity const* e2 = last();
+    // last two entities
+    LC_ContainerTraverser revTraverser{*this, RS2::ResolveNone, LC_ContainerTraverser::Direction::Backword};
+
+    RS_Entity const* e2 = revTraverser.first();
     if (isClosed()) {
-        e2 = prevEntity();
+        e2 = revTraverser.next();
     }
-    if (e2 && e2->isAtomic()) {
+    if (e2 != nullptr && e2->isAtomic()) {
         RS_Vector const& v = e2->getEndpoint();
         setEndpoint(v);
     }
@@ -724,7 +729,7 @@ RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vec
         return entityAt(0)->getEndpoint();
     }
     bool breakOnNextVertex = false;
-    for (RS_Entity *entity = firstEntity(RS2::ResolveAll); entity; entity = nextEntity(RS2::ResolveAll)) {
+    for (RS_Entity *entity: lc::LC_ContainerTraverser{*this, RS2::ResolveAll}.entities()) {
         RS_Vector segmentEndPoint = entity->getEndpoint();
         if (breakOnNextVertex){
             return segmentEndPoint;

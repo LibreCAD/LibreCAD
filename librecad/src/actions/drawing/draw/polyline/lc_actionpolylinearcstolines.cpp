@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinearcstolines.h"
+#include "lc_containertraverser.h"
 
 #include "rs_pen.h"
 #include "rs_polyline.h"
@@ -80,8 +81,7 @@ RS_Polyline *LC_ActionPolylineArcsToLines::createPolyline(RS_Polyline *original)
     auto* clone = new RS_Polyline(m_container);
 
     clone->addVertex(original->getStartpoint());
-
-    for (RS_Entity *entity = original->firstEntity(RS2::ResolveAll); entity; entity = original->nextEntity(RS2::ResolveAll)) {
+    for(RS_Entity* entity: lc::LC_ContainerTraverser{*original, RS2::ResolveAll}.entities()) {
         clone->addVertex(entity->getEndpoint());
     }
 
@@ -90,8 +90,9 @@ RS_Polyline *LC_ActionPolylineArcsToLines::createPolyline(RS_Polyline *original)
 }
 
 bool LC_ActionPolylineArcsToLines::hasArcsSegments(RS_Polyline *p) {
-    for (RS_Entity *entity = p->firstEntity(RS2::ResolveAll); entity; entity = p->nextEntity(RS2::ResolveAll)) {
-        int rtti = entity->rtti();
+    lc::LC_ContainerTraverser traverser{*p, RS2::ResolveAll};
+    for(RS_Entity* entity = traverser.first(); entity != nullptr; entity = traverser.next()) {
+        RS2::EntityType rtti = entity->rtti();
         if (rtti == RS2::EntityArc){
             return true;
         }

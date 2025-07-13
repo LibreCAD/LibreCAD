@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinechangesegmenttype.h"
+#include "lc_containertraverser.h"
 
 #include "rs_arc.h"
 #include "rs_pen.h"
@@ -115,7 +116,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
 RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
     auto* result = new RS_Polyline(m_container);
 
-    for (RS_Entity *entity = m_polyline->firstEntity(RS2::ResolveAll); entity; entity = m_polyline->nextEntity(RS2::ResolveAll)) {
+    for(RS_Entity* entity: lc::LC_ContainerTraverser{*m_polyline, RS2::ResolveAll}.entities()) {
         if (m_polylineSegment == entity){
             int status = getStatus();
             switch (status){
