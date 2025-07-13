@@ -34,17 +34,17 @@
 namespace {
 struct Node
 {
-    Node(const RS_EntityContainer* container, size_t index):
+    Node(const RS_EntityContainer* container, int index):
         container{container}
         , index{index}
     {}
 
     bool isValid() const
     {
-        return container != nullptr && index + 1 <= container->count();
+        return container != nullptr && index >= 0 && size_t(index) + 1 <= container->count();
     }
     const RS_EntityContainer* container = nullptr;
-    size_t index = 0;
+    int index = 0;
 };
 
 bool isText(const RS_Entity& entity)
@@ -65,7 +65,7 @@ namespace lc {
 struct LC_ContainerTraverser::Data {
     Data(const RS_EntityContainer& container, RS2::ResolveLevel level):
         container{&container}
-        , indices{{&container, size_t(0)}}
+        , indices{{&container, 0}}
         , level{level}
     {
     }
@@ -177,8 +177,8 @@ RS_Entity* LC_ContainerTraverser::get()
     if (m_pImp->indices.empty())
         return nullptr;
     auto& [container, ii] = m_pImp->indices.back();
-    if (ii >= container->count()) {
-        // exhausted  the current
+    if (ii < 0 || size_t(ii) >= container->count()) {
+        // exhausted the current
         m_pImp->indices.pop_back();
         return get();
     }
