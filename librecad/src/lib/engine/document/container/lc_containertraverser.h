@@ -68,8 +68,8 @@ public:
     // The direction of traversing
     enum class Direction: short
     {
-        Forward = 0,
-        Backword = 1
+        Forward = 0, // traversing forwards
+        Backword = 1 // traversing backwards
     };
 
     LC_ContainerTraverser(const RS_EntityContainer& container,
@@ -80,24 +80,29 @@ public:
 
     /**
      * @brief first() - intended to replace RS_Container::firstEntity()
+     *                  traverse to the first node, as defined by the direction
      * @return - the first entity in the container
      */
     RS_Entity* first();
 
     /**
      * @brief last() - intended to replace RS_Container::lastEntity()
-     * @return - the last entity
+     *                 calling this method does NOT modify the traverser position
+     *                 and the value of the next()
+     * @return - the last entity, as defined by the traverser
      */
     RS_Entity* last();
 
     /**
      * @brief next() - intended to replace RS_Container::nextEntity()
+     *                 traverse one step
      * @return - the next entity
      */
     RS_Entity* next();
 
     /**
      * @brief prev -  intended to replace RS_Container::prevEntity()
+     *                calling this method does NOT modify the traverser position
      * @return the previous entity traversed
      */
     RS_Entity* prev();
@@ -105,6 +110,7 @@ public:
     /**
      * @brief entities - collect entities in the current container according to
      *                   the resolving level. The order is by DFS traversing
+     *                   Calling this method does not modify the traverser position
      * @return std::vector<RS_Entity*> - collected entities in the container
      */
     std::vector<RS_Entity*> entities();

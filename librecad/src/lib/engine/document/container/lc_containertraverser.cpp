@@ -39,6 +39,10 @@ struct Node
         , index{index}
     {}
 
+    bool isValid() const
+    {
+        return container != nullptr && index + 1 <= container->count();
+    }
     const RS_EntityContainer* container = nullptr;
     size_t index = 0;
 };
@@ -119,6 +123,7 @@ void LC_ContainerTraverser::collect(std::vector<RS_Entity*>& items, const RS_Ent
     for (RS_Entity* entity: std::as_const(*container)) {
         if (entity == nullptr)
             continue;
+
         if (entity->isContainer() && m_pImp->canResolve(container)) {
             collect(items, static_cast<RS_EntityContainer*>(entity));
         } else {
@@ -148,10 +153,9 @@ RS_Entity* LC_ContainerTraverser::prev()
 
     // revert the indices
     for (Node& node: revTraverser.m_pImp->indices) {
-        if (node.index + 1 <= node.container->count())
+        if (node.isValid())
             node.index = node.container->count() - 1 - node.index;
     }
-    size_t& index = revTraverser.m_pImp->indices.back().index;
 
     // the previous.
     // The index always points to the next
