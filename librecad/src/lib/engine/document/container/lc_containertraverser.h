@@ -34,6 +34,7 @@ class RS_EntityContainer;
 namespace RS2 {
     enum ResolveLevel: unsigned short;
 }
+
 namespace lc {
 
 /**
@@ -52,8 +53,10 @@ namespace lc {
  *   The recommended way:
  *     LC_ContainerTraverser traverser{container, level};
  *     for(auto* entity=traverser.first(); entity; entity=traverser.next());
+ *
  *   or,
  *     for(auto* entity: LC_ContainerTraverser{container, level}.entities());
+ *
  *   The difference between those two new methods is whether to generate a list
  *   of container entities before looping through them. The difference is only
  *   important, if traverse must be customized based on the current entity.
@@ -68,9 +71,11 @@ public:
         Forward = 0,
         Backword = 1
     };
+
     LC_ContainerTraverser(const RS_EntityContainer& container,
                           RS2::ResolveLevel level,
                           LC_ContainerTraverser::Direction direction = Direction::Forward);
+
     ~LC_ContainerTraverser();
 
     /**
@@ -78,32 +83,40 @@ public:
      * @return - the first entity in the container
      */
     RS_Entity* first();
+
     /**
      * @brief last() - intended to replace RS_Container::lastEntity()
      * @return - the last entity
      */
     RS_Entity* last();
+
     /**
      * @brief next() - intended to replace RS_Container::nextEntity()
      * @return - the next entity
      */
     RS_Entity* next();
+
     /**
-     * @brief prev - the entity traversed before the current one
-     *               This is NOT the same as RS_Container::prevEntity()
+     * @brief prev -  intended to replace RS_Container::prevEntity()
      * @return the previous entity traversed
      */
     RS_Entity* prev();
+
+    /**
+     * @brief entities - collect entities in the current container according to
+     *                   the resolving level. The order is by DFS traversing
+     * @return std::vector<RS_Entity*> - collected entities in the container
+     */
     std::vector<RS_Entity*> entities();
 
-
 private:
-    // One traverse by one step
+    // traverse by one step
     RS_Entity* get();
     // Collect entities in the container by the DFS order
     void collect(std::vector<RS_Entity*>& items, const RS_EntityContainer* container) const;
     // for forward/backward support
     size_t currentIndex() const;
+
     struct Data;
     std::unique_ptr<LC_ContainerTraverser::Data> m_pImp;
     LC_ContainerTraverser::Direction m_direction = Direction::Forward;

@@ -89,8 +89,7 @@ struct LC_ContainerTraverser::Data {
             return true;
         }
     }
-    const RS_EntityContainer* container;
-    RS_Entity* previous[2] = {};
+    const RS_EntityContainer* container = nullptr;
     std::vector<Node> indices;
     RS2::ResolveLevel level;
 };
@@ -141,7 +140,26 @@ RS_Entity* LC_ContainerTraverser::next()
 
 RS_Entity* LC_ContainerTraverser::prev()
 {
-    return m_pImp->previous[0];
+    // create a traverser with reverted direction
+    // so the next traversed node is the previous of the current traverser
+    LC_ContainerTraverser revTraverser{*m_pImp->container, m_pImp->level, LC_ContainerTraverser::Direction::Backword};
+    revTraverser.m_direction = (m_direction == Direction::Forward) ?
+                                   Direction::Backword : Direction::Backword;
+
+    // revert the indices
+    for (Node& node: revTraverser.m_pImp->indices) {
+        if (node.index + 1 <= node.container->count())
+            node.index = node.container->count() - 1 - node.index;
+    }
+    size_t& index = revTraverser.m_pImp->indices.back().index;
+
+    // the previous.
+    // The index always points to the next
+    [[maybe_unused]] RS_Entity* next = revTraverser.get();
+    // current
+    [[maybe_unused]] RS_Entity* current = revTraverser.get();
+    // previous
+    return revTraverser.get();
 }
 
 RS_Entity* LC_ContainerTraverser::last()
@@ -168,8 +186,6 @@ RS_Entity* LC_ContainerTraverser::get()
         m_pImp->indices.emplace_back(static_cast<RS_EntityContainer*>(current), 0);
         return get();
     }
-    m_pImp->previous[0] = m_pImp->previous[1];
-    m_pImp->previous[1] = current;
     return current;
 }
 
