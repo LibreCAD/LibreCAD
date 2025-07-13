@@ -32,13 +32,16 @@
 
 
 namespace {
-struct Node
+
+// ParentNode used to track containers during traversing
+struct ParentNode
 {
-    Node(const RS_EntityContainer* container, int index):
+    ParentNode(const RS_EntityContainer* container, int index):
         container{container}
         , index{index}
     {}
 
+    // Whether the index is valid within the current parent node
     bool isValid() const
     {
         return container != nullptr && index >= 0 && size_t(index) + 1 <= container->count();
@@ -62,6 +65,7 @@ bool isText(const RS_Entity& entity)
 
 namespace lc {
 
+// pImp struct
 struct LC_ContainerTraverser::Data {
     Data(const RS_EntityContainer& container, RS2::ResolveLevel level):
         container{&container}
@@ -81,21 +85,17 @@ struct LC_ContainerTraverser::Data {
         case RS2::ResolveAllButInserts:
             return entity->rtti() != RS2::EntityInsert;
         case RS2::ResolveAllButTextImage:
-            if (entity->rtti() == RS2::EntityImage)
-                return false;
-            [[fallthrough]];
+            return (entity->rtti() != RS2::EntityImage) && isText(*entity);
         case RS2::ResolveAllButTexts:
-            if (isText(*entity))
-                return false;
-            [[fallthrough]];
+            return !isText(*entity);
         case RS2::ResolveAll:
         default:
             return true;
         }
     }
     const RS_EntityContainer* container = nullptr;
-    std::vector<Node> indices;
-    RS2::ResolveLevel level;
+    std::vector<ParentNode> indices;
+    RS2::ResolveLevel level = RS2::ResolveNone;
 };
 
 LC_ContainerTraverser::LC_ContainerTraverser(const RS_EntityContainer& container,
@@ -111,15 +111,16 @@ LC_ContainerTraverser::~LC_ContainerTraverser() = default;
 std::vector<RS_Entity*> LC_ContainerTraverser::entities()
 {
     std::vector<RS_Entity*> ret;
-    // DFS
-    if (m_pImp->container->empty())
-        return {};
+    // collecting entities by the DFS order
     collect(ret, m_pImp->container);
     return ret;
 }
 
 void LC_ContainerTraverser::collect(std::vector<RS_Entity*>& items, const RS_EntityContainer* container) const
 {
+    if (container == nullptr)
+        return;
+
     for (RS_Entity* entity: std::as_const(*container)) {
         if (entity == nullptr)
             continue;
@@ -134,7 +135,7 @@ void LC_ContainerTraverser::collect(std::vector<RS_Entity*>& items, const RS_Ent
 
 RS_Entity* LC_ContainerTraverser::first()
 {
-    m_pImp->indices = std::vector<Node>{{m_pImp->container, 0}};
+    m_pImp->indices = std::vector<ParentNode>{{m_pImp->container, 0}};
     return get();
 }
 
@@ -152,7 +153,7 @@ RS_Entity* LC_ContainerTraverser::prev()
                                    Direction::Backword : Direction::Backword;
 
     // revert the indices
-    for (Node& node: revTraverser.m_pImp->indices) {
+    for (ParentNode& node: revTraverser.m_pImp->indices) {
         if (node.isValid())
             node.index = node.container->count() - 1 - node.index;
     }
