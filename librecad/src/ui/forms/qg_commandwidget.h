@@ -29,6 +29,7 @@
 #include "ui_qg_commandwidget.h"
 class QG_ActionHandler;
 class QAction;
+class QShortcut;
 
 class QG_CommandWidget : public QWidget, public Ui::QG_CommandWidget
 {
@@ -68,6 +69,7 @@ private slots:
 private:
     QG_ActionHandler* actionHandler = nullptr;
     QAction* m_docking = nullptr;
+    QShortcut* m_globalShortcut = nullptr;
 };
 
 #endif // QG_COMMANDWIDGET_H
