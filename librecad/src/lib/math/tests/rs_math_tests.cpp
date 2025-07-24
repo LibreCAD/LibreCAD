@@ -63,21 +63,21 @@ TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
 
     SECTION("Simple fraction") {
         result = RS_Math::derationalize("1/2");
-        REQUIRE(result.toDouble() == Approx(0.5));
+        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(0.5, 2));
     }
 
     SECTION("Mixed number") {
         result = RS_Math::derationalize("2-1/4");
-        REQUIRE(result.toDouble() == Approx(2.25));
+        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(2.25, 2));
     }
 
     SECTION("Invalid rational") {
         result = RS_Math::derationalize("1/0");
-        REQUIRE(result == "1/0");
+        REQUIRE_THAT(result == "1/0");
     }
 
     SECTION("Decimal input") {
         result = RS_Math::derationalize("3.14");
-        REQUIRE(result.toDouble() == Approx(3.14));
+        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(3.14));
     }
 }
