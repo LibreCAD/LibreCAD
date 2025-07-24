@@ -1608,13 +1608,13 @@ if(BUILD_TESTS)
 
     # Define test executable
     add_executable(librecad_tests
-        src/lib/math/tests/rs_math_tests.cpp
-        src/lib/math/rs_math.cpp
+        ${PROJECT_SOURCE_DIR}/librecad/src/lib/math/tests/rs_math_tests.cpp
+        ${PROJECT_SOURCE_DIR}/librecad/src/lib/math/rs_math.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories(librecad_tests PRIVATE
-        ${CMAKE_SOURCE_DIR}/src/lib/engine
+        ${PROJECT_SOURCE_DIR}/librecad/src/lib/math
     )
 
     # Link Catch2 and other required libraries (e.g., Boost, Qt)
