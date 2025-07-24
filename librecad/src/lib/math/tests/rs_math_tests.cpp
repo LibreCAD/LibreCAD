@@ -26,6 +26,8 @@
 **********************************************************************/
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <QString>
+
 #include "rs_math.h"
 
 TEST_CASE("RS_Math::eval tests", "[rs_math]") {
