@@ -59,30 +59,25 @@ TEST_CASE("RS_Math::eval tests", "[rs_math]") {
 }
 
 TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
-    bool ok;
     QString result;
 
     SECTION("Simple fraction") {
-        result = RS_Math::derationalize("1/2", &ok);
-        REQUIRE(ok == true);
+        result = RS_Math::derationalize("1/2");
         REQUIRE(result.toDouble() == Approx(0.5));
     }
 
     SECTION("Mixed number") {
-        result = RS_Math::derationalize("2-1/4", &ok);
-        REQUIRE(ok == true);
+        result = RS_Math::derationalize("2-1/4");
         REQUIRE(result.toDouble() == Approx(2.25));
     }
 
     SECTION("Invalid rational") {
-        result = RS_Math::derationalize("1/0", &ok);
-        REQUIRE(ok == false);
+        result = RS_Math::derationalize("1/0");
         REQUIRE(result == "1/0");
     }
 
     SECTION("Decimal input") {
-        result = RS_Math::derationalize("3.14", &ok);
-        REQUIRE(ok == true);
+        result = RS_Math::derationalize("3.14");
         REQUIRE(result.toDouble() == Approx(3.14));
     }
 }
