@@ -73,7 +73,7 @@ TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
 
     SECTION("Invalid rational") {
         result = RS_Math::derationalize("1/0");
-        REQUIRE_THAT(result == "1/0");
+        REQUIRE(result == "1/0");
     }
 
     SECTION("Decimal input") {
