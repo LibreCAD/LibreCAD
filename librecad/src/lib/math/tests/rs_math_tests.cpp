@@ -78,6 +78,6 @@ TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
 
     SECTION("Decimal input") {
         result = RS_Math::derationalize("3.14");
-        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(3.14));
+        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(3.14, 2));
     }
 }
