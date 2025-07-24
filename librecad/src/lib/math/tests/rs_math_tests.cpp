@@ -28,6 +28,7 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include <QString>
 
+#include "rs_debug.h"
 #include "rs_math.h"
 
 TEST_CASE("RS_Math::eval tests", "[rs_math]") {
