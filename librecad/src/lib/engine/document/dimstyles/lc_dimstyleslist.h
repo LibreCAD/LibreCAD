@@ -34,11 +34,14 @@ public:
     LC_DimStylesList();
     virtual ~LC_DimStylesList();
     LC_DimStyle* findByName(const QString& name) const;
+    LC_DimStyle* findByBaseNameAndType(const QString &name, RS2::EntityType dimType) const;
+    LC_DimStyle* resolveByBaseName(const QString& name, RS2::EntityType dimType) const;
     LC_DimStyle* resolveByName(const QString& name, RS2::EntityType dimType) const;
     void addDimStyle(LC_DimStyle* style);
     void deleteDimStyle(QString &name);
     int size() const {return m_stylesList.size();}
     void clear();
+    void mergeStyles();
     const QList<LC_DimStyle*>* getStylesList(){return &m_stylesList;}
     LC_DimStyle* getFallbackDimStyleFromVars() const {return m_fallbackDimStyleFromVars.get();}
     void replaceStyles(const QList<LC_DimStyle*>& list);
