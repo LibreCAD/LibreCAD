@@ -1607,7 +1607,7 @@ if(BUILD_TESTS)
     add_subdirectory(externals/Catch2)
 
     # Define test executable
-    add_executable(librecad_tests
+    qt_add_executable(librecad_tests
         ${PROJECT_SOURCE_DIR}/librecad/src/lib/math/tests/rs_math_tests.cpp
         ${SOURCES}
     )
