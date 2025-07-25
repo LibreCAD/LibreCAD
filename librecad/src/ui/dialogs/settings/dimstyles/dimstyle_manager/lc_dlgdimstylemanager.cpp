@@ -42,14 +42,43 @@
 #define CUSTOM_BLOCK_NAME "_CUSTOM"
 #define CUSTOM_SELECT_BLOCK_NAME "_CUSTOM_SELECT"
 
-LC_DlgDimStyleManager::LC_DlgDimStyleManager(QWidget* parent,LC_DimStyle* dimStyle, RS_Graphic* originalGraphic, RS2::EntityType dimensionType)
+/**
+ *
+ * @param parent Used for editing shared dimstyle
+ * @param dimStyle
+ * @param originalGraphic
+ * @param dimensionType
+ */
+LC_DlgDimStyleManager::LC_DlgDimStyleManager(QWidget* parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic,
+                                             RS2::EntityType dimensionType)
     : LC_Dialog(parent, "DimStyleManager")
-      , ui(new Ui::LC_DlgDimStyleManager), m_originalGraphic{originalGraphic} {
+      , ui(new Ui::LC_DlgDimStyleManager), m_originalGraphic{originalGraphic}, m_editMode{DIMSTYLE_EDITING} {
     ui->setupUi(this);
     initBlocksList();
     init(dimensionType);
     setDimStyle(dimStyle);
     initPreview(dimensionType);
+    ui->tabWidget->setCurrentIndex(0);
+}
+
+/**
+ *
+ * @param parent Used for editing style override
+ * @param dimStyle
+ * @param originalGraphic
+ * @param entity
+ * @param baseStyleName
+ */
+LC_DlgDimStyleManager::LC_DlgDimStyleManager(QWidget* parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic,
+                                             RS_Dimension* entity, const QString& baseStyleName)
+    : LC_Dialog(parent, "DimStyleManager")
+      , ui(new Ui::LC_DlgDimStyleManager), m_originalGraphic{originalGraphic}, m_editMode{OVERRIDE_EDITING},
+      m_baseStyleName{baseStyleName} {
+    ui->setupUi(this);
+    initBlocksList();
+    init(entity->rtti());
+    setDimStyle(dimStyle);
+    initPreview(entity);
     ui->tabWidget->setCurrentIndex(0);
 }
 
@@ -103,7 +132,7 @@ void LC_DlgDimStyleManager::connectArrowsTab() {
     connect(ui->cbArrowheadLeader, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onArrowheadLeaderChanged);
 
     connect(ui->dsbArrowheadArrowSize, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onArrowheadArrowSizeChanged);
-    connect(ui->dsbLinegap, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onArrowheadLineGapChanged);
+    connect(ui->dsbDimBreakSize, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onDimBreakChanged);
 
     connect(ui->rbCentermarkNone, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onCenterMarkTypeToggled);
     connect(ui->rbCentermarkMark, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onCenterMarkTypeToggled);
@@ -132,6 +161,8 @@ void LC_DlgDimStyleManager::connectTextTab() {
     connect(ui->dcbTextFractionHeightScale, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTextFractionHeightChanged);
 
     connect(ui->cbTextDrawFrameAroundText, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTextDrawFrameAround);
+
+    connect(ui->dsbTextGapFromDimLine, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTextLineGapChanged);
 
     connect(ui->cbTextPlacementVertical, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTextPlacementVerticalChanged);
     connect(ui->cbTextPlacementHorizontal, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTextPlacementHorizontalChanged);
@@ -168,6 +199,8 @@ void LC_DlgDimStyleManager::connectFitTab() {
 void LC_DlgDimStyleManager::connectPrimaryUnitTab() {
     connect(ui->cbLinearDimUnitFormat, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimUnitFormatIndexChanged);
     connect(ui->cbLinearDimPrecision, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimPrecisionIndexChanged);
+
+    connect(ui->cbLinearDimFractionFormat, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimFractionIndexChanged);
     connect(ui->cbLinearDimDecimalSeparator, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimUnitDecimalSeparatorIndexChanged);
 
     connect(ui->dsbLinearDimRoundOff, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onLinearDimRoundOffChanged);
@@ -176,7 +209,6 @@ void LC_DlgDimStyleManager::connectPrimaryUnitTab() {
 
     connect(ui->dsbLinearScaleFactor, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onLinearScaleFactorChanged);
     connect(ui->cbLinearScaleApplyToLayoutDimsOnly, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearScaleApplyToLayoutDimsOnlyToggled);
-
 
     connect(ui->cbZerosLeading, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearZerosSuppressionToggled);
     connect(ui->cbZerosTrailing, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearZerosSuppressionToggled);
@@ -228,9 +260,8 @@ void LC_DlgDimStyleManager::connectToleranceTab() {
 
     connect(ui->cbTolVerticalPosition, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTolVerticalPositionIndexChanged);
 
-    connect(ui->rbTolMeasurementAlignDecimal, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTolMeasurementAlignToggled);
-    connect(ui->rbTolMeasurementAlignOperational, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTolMeasurementAlignToggled);
-
+    connect(ui->rbTolAjustAlignDecimal, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTolMeasurementAlignToggled);
+    connect(ui->rbTolAjustAlignOpSymbols, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTolMeasurementAlignToggled);
 
     connect(ui->cbTolZerosLeading, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTolLinearZerosSuppressionToggled);
     connect(ui->cbTolZerosTrailing, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTolLinearZerosSuppressionToggled);
@@ -430,6 +461,11 @@ void LC_DlgDimStyleManager::onArrowheadArrowSizeChanged(double d) {
     refreshPreview();
 }
 
+void LC_DlgDimStyleManager::onDimBreakChanged(double d) {
+    // m_dimStyle->arrowhead()->setSize(d);
+    // fixme - complete later if we'll support dim breaks
+    refreshPreview();
+}
 
 void LC_DlgDimStyleManager::onArrowheadTickSizeChanged(double d) {
     m_dimStyle->arrowhead()->setTickSize(d);
@@ -437,8 +473,7 @@ void LC_DlgDimStyleManager::onArrowheadTickSizeChanged(double d) {
     refreshPreview();
 }
 
-
-void LC_DlgDimStyleManager::onArrowheadLineGapChanged(double d) const {
+void LC_DlgDimStyleManager::onTextLineGapChanged(double d) const {
     if (ui->cbTextDrawFrameAroundText->isChecked()) {
         m_dimStyle->dimensionLine()->setLineGap(-d);
     }
@@ -479,13 +514,13 @@ void LC_DlgDimStyleManager::onCenterMarkSizeChanged(double d) const {
 void LC_DlgDimStyleManager::onDimarkSymbolToggled(bool val) const {
     auto dimarc = m_dimStyle->arc();
     if (ui->rbDimarcSymAbove->isChecked()) {
-        dimarc->setArcSymbolDisplay(LC_DimStyle::Arc::ABOVE);
+        dimarc->setArcSymbolPosition(LC_DimStyle::Arc::ABOVE);
     }
     else if (ui->rbDimarcSymPreceeding->isChecked()) {
-        dimarc->setArcSymbolDisplay(LC_DimStyle::Arc::BEFORE);
+        dimarc->setArcSymbolPosition(LC_DimStyle::Arc::BEFORE);
     }
     else if (ui->rbDimarcSymNone->isChecked()) {
-        dimarc->setArcSymbolDisplay(LC_DimStyle::Arc::NONE);
+        dimarc->setArcSymbolPosition(LC_DimStyle::Arc::NONE);
     }
     refreshPreview();
 }
@@ -538,7 +573,7 @@ void LC_DlgDimStyleManager::onTextHeightChanged(double d) {
 }
 
 void LC_DlgDimStyleManager::onTextFractionHeightChanged(double d) {
-    // fixme - sand - dim - where to store?
+    m_dimStyle->latteralTolerance()->setHeightScaleFactorToDimText(d);
     refreshPreview();
 }
 
@@ -633,7 +668,6 @@ void LC_DlgDimStyleManager::onFitSuppressArrowsToggled(bool d) {
     refreshPreview();
 }
 
-
 void LC_DlgDimStyleManager::onTextPlacementToggled(bool d) {
     auto text = m_dimStyle->text();
     if (ui->rbTextPlacementBeside->isChecked()) {
@@ -666,7 +700,6 @@ void LC_DlgDimStyleManager::onFitScaleToggled(bool d) {
     refreshPreview();
 }
 
-
 void LC_DlgDimStyleManager::onFitFineManuallyToggled(bool d) {
     auto text = m_dimStyle->text();
     if (ui->cbFitFineManually->isChecked()) {
@@ -698,6 +731,11 @@ void LC_DlgDimStyleManager::onLinearDimPrecisionIndexChanged(int index) {
     auto linear = m_dimStyle->linearFormat();
     linear->setDecimalPlaces(index);
     refreshPreview();
+}
+
+void LC_DlgDimStyleManager::onLinearDimFractionIndexChanged(int index) {
+    auto fractions = m_dimStyle->fractions();
+    fractions->setStyleRaw(index);
 }
 
 void LC_DlgDimStyleManager::onLinearDimUnitDecimalSeparatorIndexChanged(int index) {
@@ -916,17 +954,17 @@ void LC_DlgDimStyleManager::uiUpdateToleranceControls(bool enable, bool showLowe
     ui->dsbTolLowerLimit->setEnabled(enable & showLowerLimit);
     ui->dsbTolHeightScale->setEnabled(enable);
     ui->cbTolVerticalPosition->setEnabled(enable & showVerticalPosition);
-    ui->gbTolMeasurementScale->setEnabled(enable);
+    ui->gbTolAdjustment->setEnabled(enable);
     ui->gbTolZeros->setEnabled(enable);
     ui->grpTolAltUnit->setEnabled(enable);
 }
 
 void LC_DlgDimStyleManager::onTolMethodChangedIndexChanged(int index) {
-
     bool enable = true;
     auto tol = m_dimStyle->latteralTolerance();
     bool showLowerLimit = true;
     bool showVerticalPosition = false;
+    bool additionallyHideToleranceAdjustment = false;
 
     bool drawFrame = false;
 
@@ -942,7 +980,8 @@ void LC_DlgDimStyleManager::onTolMethodChangedIndexChanged(int index) {
             tol->setLimitsAreGeneratedAsDefaultText(false);
             tol->setLowerToleranceLimit(0.0);
             showLowerLimit = false;
-            showVerticalPosition = true;
+            showVerticalPosition = false;
+            additionallyHideToleranceAdjustment = true;
             break;
         }
         case 2: { //Deviation
@@ -973,19 +1012,14 @@ void LC_DlgDimStyleManager::onTolMethodChangedIndexChanged(int index) {
         default:
             break;
     }
-    /*bool frameChecked = ui->cbTextDrawFrameAroundText->isChecked();
-    if (frameChecked) {
-        if (!drawFrame) {
-            ui->cbTextDrawFrameAroundText->setChecked(drawFrame);
-        }
-    }*/
 
     ui->cbTextDrawFrameAroundText->setChecked(drawFrame);
     uiUpdateToleranceControls(enable,showLowerLimit, showVerticalPosition);
+    if (additionallyHideToleranceAdjustment) {
+        ui->gbTolAdjustment->setEnabled(false);
+    }
     refreshPreview();
 }
-
-
 
 void LC_DlgDimStyleManager::onTolPrecisionIndexChanged(int index) {
     auto tol = m_dimStyle->latteralTolerance();
@@ -1018,12 +1052,12 @@ void LC_DlgDimStyleManager::onTolVerticalPositionIndexChanged(int index) {
 }
 
 void LC_DlgDimStyleManager::onTolMeasurementAlignToggled(bool val) {
-    // fixme - complete!!!
-    if (ui->rbTolMeasurementAlignDecimal->isChecked()) {
-
+    auto tol = m_dimStyle->latteralTolerance();
+    if (ui->rbTolAjustAlignDecimal->isChecked()) {
+        tol->setAdjustment(LC_DimStyle::LatteralTolerance::ALIGN_DECIMAL_SEPARATORS);
     }
-    else if (ui->rbTolMeasurementAlignOperational ->isChecked()) {
-
+    else if (ui->rbTolAjustAlignOpSymbols ->isChecked()) {
+        tol->setAdjustment(LC_DimStyle::LatteralTolerance::ALIGN_OPERATIONAL_SYMBOLS);
     }
     refreshPreview();
 }
@@ -1063,21 +1097,21 @@ void LC_DlgDimStyleManager::cbTolAlternateZerosSuppressionToggled(bool val) {
     zerosSuppression->clearAltTolerance();
     // linear
     if (ui->cbTolAltZerosLeading->isChecked()) {
-        zerosSuppression->setToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::SUPPRESS_LEADING_ZEROS, true);
+        zerosSuppression->setAltToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::SUPPRESS_LEADING_ZEROS, true);
     }
     if (ui->cbTolZerosTrailing->isChecked()) {
-        zerosSuppression->setToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::SUPPRESS_TRAILING_ZEROS, true);
+        zerosSuppression->setAltToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::SUPPRESS_TRAILING_ZEROS, true);
     }
     //imperial:
     if (ui->cbTolZeros0Feet->isChecked()) {
         if (!ui->cbTolZeros0Inches->isChecked())
-            zerosSuppression->setToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::TOL_INCLUDE_ZERO_INCHES_AND_SUPPRESS_ZERO_FEET, true);
+            zerosSuppression->setAltToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::TOL_INCLUDE_ZERO_INCHES_AND_SUPPRESS_ZERO_FEET, true);
     }
     else {
         if (ui->cbTolZeros0Inches->isChecked())
-            zerosSuppression->setToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::TOL_INCLUDE_ZERO_FEET_AND_SUPPRESS_ZERO_INCHES, true);
+            zerosSuppression->setAltToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::TOL_INCLUDE_ZERO_FEET_AND_SUPPRESS_ZERO_INCHES, true);
         else
-            zerosSuppression->setToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES, true);
+            zerosSuppression->setAltToleranceFlag(LC_DimStyle::ZerosSuppression::ToleranceSuppressionPolicy::TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES, true);
     }
     refreshPreview();
 }
@@ -1129,17 +1163,14 @@ void LC_DlgDimStyleManager::fillLinesTab(LC_DimStyle* dimStyle, const LC_DimStyl
     ui->cbExtLineSuppress2->setChecked(extLine->secondLineSuppression() == LC_DimStyle::ExtensionLine::SUPPRESS);
 }
 
-void LC_DlgDimStyleManager::setDimGapForLineAndText(LC_DimStyle::DimensionLine* dimLine) {
-    double lineGap = dimLine->lineGap();
-
+void LC_DlgDimStyleManager::setDimGap(LC_DimStyle::DimensionLine* dimLine, double lineGap) {
     bool drawFrame = std::signbit(lineGap); // draw is line gap less than zero
     double val = lineGap;
     if (drawFrame) {
         val = -lineGap;
     }
 
-    ui->dsbLinegap->setValue(val);
-    ui->dsbTextOffsetFromDimLine->setValue(val);
+    ui->dsbTextGapFromDimLine->setValue(val);
 }
 
 void LC_DlgDimStyleManager::fillArrowsTab(LC_DimStyle* dimStyle, LC_DimStyle::DimensionLine* dimLine) {
@@ -1169,7 +1200,6 @@ void LC_DlgDimStyleManager::fillArrowsTab(LC_DimStyle* dimStyle, LC_DimStyle::Di
     ui->dsbTickSize->setValue(tickSize);
     uiUpdateArrowsControlsByTickSize(tickSize);
 
-    setDimGapForLineAndText(dimLine);
 
     auto radial = dimStyle->radial();
     switch (radial->drawingMode()) {
@@ -1194,7 +1224,7 @@ void LC_DlgDimStyleManager::fillArrowsTab(LC_DimStyle* dimStyle, LC_DimStyle::Di
 
     auto arc = dimStyle->arc();
 
-    switch (arc->arcSymbolDisplay()) {
+    switch (arc->arcSymbolPosition()) {
         case (LC_DimStyle::Arc::NONE): {
             ui->rbDimarcSymNone->setChecked(true);
             break;
@@ -1250,9 +1280,11 @@ void LC_DlgDimStyleManager::uiUpdateLinearFormat(RS2::LinearFormat format) {
         case RS2::ArchitecturalMetric:
         case RS2::Engineering:
             ui->cbLinearDimFractionFormat->setEnabled(false);
+            ui->dcbTextFractionHeightScale->setEnabled(false);
             break;
         default:
             ui->cbLinearDimFractionFormat->setEnabled(true);
+            ui->dcbTextFractionHeightScale->setEnabled(true);
             break;
     }
     ui->cbLinearDimDecimalSeparator->setEnabled(format == RS2::Decimal);
@@ -1320,8 +1352,11 @@ void LC_DlgDimStyleManager::fillTextTab(LC_DimStyle* dimStyle) {
     // ui->dsbTextOffsetFromDimLine->setValue(dimline->lineGap());
 
     auto dimline = dimStyle->dimensionLine();
-    bool drawFrame = std::signbit(dimline->lineGap()); // draw is line gap less than zero
+    double lineGap = dimline->lineGap();
+    bool drawFrame = std::signbit(lineGap); // draw is line gap less than zero
     ui->cbTextDrawFrameAroundText->setChecked(drawFrame);
+
+    setDimGap(dimline, lineGap);
 
     switch (text->orientationInside()) {
         case (LC_DimStyle::Text::DRAW_HORIZONTALLY): {
@@ -1665,9 +1700,10 @@ void LC_DlgDimStyleManager::fillToleranceTab(LC_DimStyle* dimStyle) {
     ui->dsbTolHeightScale->setValue(tolerance->heightScaleFactorToDimText());
     ui->cbTolVerticalPosition->setCurrentIndex(tolerance->verticalJustification());
 
-    // fixme - where they are stored?
-    ui->rbTolMeasurementAlignDecimal->setChecked(false);
-    ui->rbTolMeasurementAlignOperational->setChecked(false);
+    bool alignDecimals = tolerance->adjustment() == LC_DimStyle::LatteralTolerance::ALIGN_DECIMAL_SEPARATORS;
+
+    ui->rbTolAjustAlignDecimal->setChecked(alignDecimals);
+    ui->rbTolAjustAlignOpSymbols->setChecked(!alignDecimals);
 
     auto zerosSuppression = dimStyle->zerosSuppression();
 
@@ -1789,6 +1825,8 @@ void LC_DlgDimStyleManager::hideFieldsReservedForTheFuture() {
 
     ui->gbLinearJog->setVisible(false);
     ui->gbRadiusJog->setVisible(false);
+
+    ui->gbSymbolsDimBreak->setVisible(false);
 }
 
 void LC_DlgDimStyleManager::adjustUIForDimensionType(RS2::EntityType dimensionType) {
@@ -1804,8 +1842,7 @@ void LC_DlgDimStyleManager::addPreviewProxy(QWidget* proxyMe, QGroupBox* preview
     layout->addWidget(new LC_TabProxyWidget(proxyMe));
 }
 
-void LC_DlgDimStyleManager::initPreview(RS2::EntityType dimensionType) {
-    createPreviewGraphicView(dimensionType);
+void LC_DlgDimStyleManager::setupPreview() {
     auto  previewGroup = new QWidget(this);
     auto* layout = new QVBoxLayout(previewGroup);
     layout->setContentsMargins(0,0,0,0);
@@ -1824,6 +1861,23 @@ void LC_DlgDimStyleManager::initPreview(RS2::EntityType dimensionType) {
     addPreviewProxy(previewGroup, ui->gbPreviewPrimary);
     addPreviewProxy(previewGroup, ui->gbPreviewAlt);
     addPreviewProxy(previewGroup, ui->gbPreviewTolerance);
+    m_previewView->zoomAuto();
+}
+
+void LC_DlgDimStyleManager::initPreview(RS2::EntityType dimensionType) {
+    createPreviewGraphicView(dimensionType);
+    setupPreview();
+}
+
+void LC_DlgDimStyleManager::initPreview(RS_Dimension* entity) {
+    createPreviewGraphicView(entity);
+    setupPreview();
+}
+
+void LC_DlgDimStyleManager::createPreviewGraphicView(RS_Dimension* entity) {
+    m_previewView = LC_DimStylePreviewGraphicView::init(this, m_originalGraphic, entity);
+    m_previewView->setDimStyle(m_dimStyle);
+    m_previewView->setFocusPolicy(Qt::ClickFocus);
 }
 
 void LC_DlgDimStyleManager::createPreviewGraphicView(RS2::EntityType dimensionType) {
@@ -1837,10 +1891,48 @@ void LC_DlgDimStyleManager::languageChange() {
 }
 
 void LC_DlgDimStyleManager::refreshPreview() const {
+    if (m_editMode == OVERRIDE_EDITING) {
+        m_previewView->setEntityDimStyle(m_dimStyle, true, m_baseStyleName);
+    }
     m_previewView->updateDims();
 }
 
 void LC_DlgDimStyleManager::resizeEvent(QResizeEvent* resize_event) {
     m_previewView->zoomAuto();
     LC_Dialog::resizeEvent(resize_event);
+}
+
+void LC_DlgDimStyleManager::setReadOnly() {
+    ui->buttonBox->setStandardButtons(QDialogButtonBox::Cancel);
+
+    disableContainer(ui->gbLinesDimLines);
+    disableContainer(ui->gbLinesExtLines);
+    disableContainer(ui->gbSymbolsArrowheads);
+    disableContainer(ui->gbSymbolsDimBreak);
+    disableContainer(ui->gbSymbolsCentermarks);
+    disableContainer(ui->gbSymbolsArcLength);
+    disableContainer(ui->gbLinearJog );
+    disableContainer(ui->gbRadiusJog );
+    disableContainer(ui->gbRadiusJog );
+    disableContainer(ui->gbTextAppearance);
+    disableContainer(ui->gbTextPlacement);
+    disableContainer(ui->gbTextAlignment);
+    disableContainer(ui->bgFitOptions);
+    disableContainer(ui->bgFitTextPlacement);
+    disableContainer(ui->gbFitScale);
+    disableContainer(ui->gbFitFineTune);
+    disableContainer(ui->gbPrimaryUnitLinear);
+    disableContainer(ui->gbPrimaryUnitAngular);
+
+    ui->cbAlternateUnitsDisplay->setEnabled(false);
+    disableContainer(ui->gbAltUnits);
+    disableContainer(ui->dsbTolScalingHeight);
+    disableContainer(ui->grpTolAltUnit);
+}
+
+void LC_DlgDimStyleManager::disableContainer(QWidget* tab) {
+     auto widgets = tab->findChildren<QWidget*>();
+     for (auto it: widgets) {
+         it->setDisabled(true);
+     }
 }

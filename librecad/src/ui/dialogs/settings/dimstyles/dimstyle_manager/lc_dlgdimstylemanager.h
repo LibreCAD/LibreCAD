@@ -43,12 +43,14 @@ namespace Ui {
 class LC_DlgDimStyleManager : public LC_Dialog{
     Q_OBJECT
 public:
-    explicit LC_DlgDimStyleManager(QWidget *parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic, RS2::EntityType dimensionType);
+    LC_DlgDimStyleManager(QWidget *parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic, RS2::EntityType dimensionType);
+    LC_DlgDimStyleManager(QWidget *parent, LC_DimStyle* dimStyle, RS_Graphic* originalGraphic, RS_Dimension* entity, const QString& baseStyleName);
     ~LC_DlgDimStyleManager() override;
     LC_DimStyle*  getDimStyle(){return m_dimStyle;}
     void addDimStyle(LC_DimStyle* dimStyle);
     void refreshPreview() const;
     void resizeEvent(QResizeEvent*) override;
+    void setReadOnly();
 protected slots:
     // lines tab slots
     void onDimLineColorChanged(const RS_Color& color);
@@ -76,8 +78,9 @@ protected slots:
     void onArrowheadSecondChanged(int index);
     void onArrowheadLeaderChanged(int index);
     void onArrowheadArrowSizeChanged(double d);
+    void onDimBreakChanged(double d);
     void onArrowheadTickSizeChanged(double d);
-    void onArrowheadLineGapChanged(double d) const;
+    void onTextLineGapChanged(double d) const;
     void onCenterMarkTypeToggled(bool val) const;
     void setCentermarkSize(double d) const;
     void onCenterMarkSizeChanged(double d) const;
@@ -108,6 +111,7 @@ protected slots:
     // primaryUnit tab slots
     void onLinearDimUnitFormatIndexChanged(int index);
     void onLinearDimPrecisionIndexChanged(int index);
+    void onLinearDimFractionIndexChanged(int index);
     void onLinearDimUnitDecimalSeparatorIndexChanged(int index);
     void onLinearDimRoundOffChanged(double d);
     void onLinearDimPrefixEditingFinished();
@@ -116,7 +120,7 @@ protected slots:
     void onLinearScaleApplyToLayoutDimsOnlyToggled(bool val);
     void onLinearZerosSuppressionToggled(bool val);
     void onLinearUnitFactorChanged(double d);
-    void onLinearUnitPrefixEditingFinished(void);
+    void onLinearUnitPrefixEditingFinished();
     void onAngularFormatIndexChanged(int index) const;
     void onAngularPrecisionIndexChanged(int index) const;
     void onAngularZerosSuppressionToggled(bool d);
@@ -143,16 +147,20 @@ protected slots:
     void onTolLinearZerosSuppressionToggled(bool val);
     void onTolAltPrecisionIndexChanged(int index);
     void cbTolAlternateZerosSuppressionToggled(bool val);
+    void disableContainer(QWidget* tab);
 private:
     void setDimStyle(LC_DimStyle *dimStyle);
     void createPreviewGraphicView(RS2::EntityType dimensionType);
+    void createPreviewGraphicView(RS_Dimension* entity);
     void initPreview(RS2::EntityType dimensionType);
+    void initPreview(RS_Dimension* entity);
     void hideFieldsReservedForTheFuture();
     void adjustUIForDimensionType(RS2::EntityType entity);
     void init(RS2::EntityType dimensionType);
     void initConnections();
     void initBlocksList();
     void addPreviewProxy(QWidget* proxyMe, QGroupBox* preview);
+    void setupPreview();
     void languageChange();
     void connectLinesTab();
     void connectArrowsTab();
@@ -162,13 +170,13 @@ private:
     void connectAltUnitTab();
     void connectToleranceTab();
     void fillLinesTab(LC_DimStyle* dimStyle, const LC_DimStyle::DimensionLine* dimLine);
-    void setDimGapForLineAndText(LC_DimStyle::DimensionLine* dimLine);
+    void setDimGap(LC_DimStyle::DimensionLine* dimLine, double lineGap);
     void fillArrowsTab(LC_DimStyle* dimStyle, LC_DimStyle::DimensionLine* dimLine);
     void fillTextTab(LC_DimStyle* dimStyle);
     void setArrowComboboxValue(QComboBox* arrowComboBox, const QString& arrowBlockName);
     void uiUpdateArrowsControlsByTickSize(double tickSize);
-    void uiUpdateTextOffsetFromDimLine(LC_DimStyle::Text::VerticalPositionPolicy verticalPositioning);
     void uiUpdateLinearFormat(RS2::LinearFormat format);
+    void uiUpdateTextOffsetFromDimLine(LC_DimStyle::Text::VerticalPositionPolicy verticalPositioning);
     void uiUpdateAltLinearFormat(RS2::LinearFormat format);
     void uiUpdateZerosLeading(bool suppressLeading);
     void uiUpdateAltZerosLeading(bool suppressLeading);
@@ -179,11 +187,19 @@ private:
     void enableAltUnitsControls(bool enable);
     void uiUpdateToleranceControls(bool enable, bool showLowerLimit, bool showVerticalPosition);
     LC_DimStyle* m_dimStyle {nullptr};
-    LC_DimStylePreviewGraphicView* m_previewView;
+    LC_DimStylePreviewGraphicView* m_previewView{nullptr};
     Ui::LC_DlgDimStyleManager *ui;
-    RS_Graphic* m_originalGraphic;
+    RS_Graphic* m_originalGraphic {nullptr};
     QStringList m_blocksList;
     std::vector<LC_DimArrowRegistry::ArrowInfo> m_defaultArrowsInfo;
+
+    enum EditMode {
+        DIMSTYLE_EDITING,
+        OVERRIDE_EDITING
+    };
+
+    EditMode m_editMode {DIMSTYLE_EDITING};
+    QString m_baseStyleName = "";
 };
 
 #endif // LC_DLGDIMSTYLEMANAGER_H

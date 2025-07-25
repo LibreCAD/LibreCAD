@@ -28,13 +28,13 @@
      <property name="currentIndex">
       <number>6</number>
      </property>
-     <widget class="QWidget" name="tab_7">
+     <widget class="QWidget" name="tabLines">
       <attribute name="title">
        <string>Lines</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="gbLinesDimLines">
          <property name="minimumSize">
           <size>
            <width>400</width>
@@ -123,6 +123,9 @@
             <property name="toolTip">
              <string>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="4" column="0">
@@ -144,6 +147,9 @@
              <string>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
 
 </string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -183,7 +189,7 @@
         </widget>
        </item>
        <item row="1" column="0" rowspan="3">
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="gbLinesExtLines">
          <property name="title">
           <string>Extension Lines</string>
          </property>
@@ -286,6 +292,9 @@
             <property name="toolTip">
              <string>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="5" column="0">
@@ -306,6 +315,9 @@
             <property name="toolTip">
              <string>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="7" column="0">
@@ -325,6 +337,9 @@
             </property>
             <property name="toolTip">
              <string>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -407,7 +422,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tabSymbolsArrows">
       <attribute name="title">
        <string>Symbols and Arrows</string>
       </attribute>
@@ -426,7 +441,11 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QDoubleSpinBox" name="bsbJogHeightFactor"/>
+           <widget class="QDoubleSpinBox" name="bsbJogHeightFactor">
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+           </widget>
           </item>
           <item row="0" column="2">
            <widget class="QLabel" name="label_21">
@@ -456,13 +475,16 @@
             <property name="toolTip">
              <string>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox_3">
+        <widget class="QGroupBox" name="gbSymbolsArrowheads">
          <property name="minimumSize">
           <size>
            <width>400</width>
@@ -477,6 +499,9 @@
            <widget class="QDoubleSpinBox" name="dsbArrowheadArrowSize">
             <property name="toolTip">
              <string>Displays and sets the size of arrowheads. (DIMASZ system variable)</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -549,13 +574,16 @@
              <string> Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If &gt;0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_5">
+        <widget class="QGroupBox" name="gbSymbolsDimBreak">
          <property name="title">
           <string>Dimension break</string>
          </property>
@@ -568,9 +596,12 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QDoubleSpinBox" name="dsbLinegap">
+           <widget class="QDoubleSpinBox" name="dsbDimBreakSize">
             <property name="toolTip">
-             <string>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</string>
+             <string/>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -578,7 +609,7 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QGroupBox" name="groupBox_6">
+        <widget class="QGroupBox" name="gbSymbolsArcLength">
          <property name="title">
           <string>Arc length symbol</string>
          </property>
@@ -617,7 +648,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_4">
+        <widget class="QGroupBox" name="gbSymbolsCentermarks">
          <property name="title">
           <string>Centermarks</string>
          </property>
@@ -664,6 +695,9 @@
             <property name="toolTip">
              <string>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
          </layout>
@@ -697,13 +731,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="tabText">
       <attribute name="title">
        <string>Text</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_14">
        <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox_9">
+        <widget class="QGroupBox" name="gbTextAppearance">
          <property name="minimumSize">
           <size>
            <width>400</width>
@@ -764,6 +798,12 @@
             <property name="toolTip">
              <string>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</string>
             </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="6" column="0">
@@ -777,6 +817,12 @@
            <widget class="QDoubleSpinBox" name="dcbTextHeight">
             <property name="toolTip">
              <string>Sets the height of the current dimension text style. (DIMTXT system variable)</string>
+            </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -824,7 +870,7 @@
         </spacer>
        </item>
        <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_11">
+        <widget class="QGroupBox" name="gbTextAlignment">
          <property name="title">
           <string>Text Alignment</string>
          </property>
@@ -863,30 +909,26 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_10">
+        <widget class="QGroupBox" name="gbTextPlacement">
          <property name="title">
           <string>Text Placement</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_13">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_29">
-            <property name="text">
-             <string>Horizontal:</string>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="cbTextPlacementReadingDirection">
+            <property name="toolTip">
+             <string>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</string>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_28">
-            <property name="text">
-             <string>Vertical:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>View Direction:</string>
-            </property>
+            <item>
+             <property name="text">
+              <string>Left-To-Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right-To-Left</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="4" column="0">
@@ -896,10 +938,56 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QDoubleSpinBox" name="dsbTextOffsetFromDimLine">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Horizontal:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbTextPlacementHorizontal">
             <property name="toolTip">
-             <string>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</string>
+             <string>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>Centered</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>At Ext Line 1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>At Ext Line 2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Over Ext Line 1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Over Ext Line 2</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>View Direction:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>Vertical:</string>
             </property>
            </widget>
           </item>
@@ -935,53 +1023,34 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbTextPlacementHorizontal">
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="dsbTextOffsetFromDimLine">
             <property name="toolTip">
-             <string>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</string>
+             <string>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</string>
             </property>
-            <item>
-             <property name="text">
-              <string>Centered</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>At Ext Line 1</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>At Ext Line 2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Over Ext Line 1</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Over Ext Line 2</string>
-             </property>
-            </item>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="cbTextPlacementReadingDirection">
-            <property name="toolTip">
-             <string>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</string>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lblTextGapFromDimLine">
+            <property name="text">
+             <string>Broken dim line text gap:</string>
             </property>
-            <item>
-             <property name="text">
-              <string>Left-To-Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right-To-Left</string>
-             </property>
-            </item>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QDoubleSpinBox" name="dsbTextGapFromDimLine">
+            <property name="toolTip">
+             <string>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1002,13 +1071,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_4">
+     <widget class="QWidget" name="tabFit">
       <attribute name="title">
        <string>Fit</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_21">
        <item row="3" column="0">
-        <widget class="QGroupBox" name="groupBox_14">
+        <widget class="QGroupBox" name="gbFitFineTune">
          <property name="title">
           <string>Fine tuning</string>
          </property>
@@ -1037,7 +1106,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_15">
+        <widget class="QGroupBox" name="gbFitScale">
          <property name="title">
           <string>Scale</string>
          </property>
@@ -1057,6 +1126,9 @@
             <property name="toolTip">
              <string>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="0" column="0" colspan="2">
@@ -1073,7 +1145,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_13">
+        <widget class="QGroupBox" name="bgFitTextPlacement">
          <property name="minimumSize">
           <size>
            <width>400</width>
@@ -1141,7 +1213,7 @@
         </spacer>
        </item>
        <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox_12">
+        <widget class="QGroupBox" name="bgFitOptions">
          <property name="minimumSize">
           <size>
            <width>400</width>
@@ -1240,13 +1312,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_5">
+     <widget class="QWidget" name="tabPrimaryUnits">
       <attribute name="title">
        <string>Primary Units</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_24">
        <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_19">
+        <widget class="QGroupBox" name="gbPrimaryUnitAngular">
          <property name="title">
           <string>Angular Dimensions</string>
          </property>
@@ -1325,7 +1397,7 @@
         </spacer>
        </item>
        <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox_17">
+        <widget class="QGroupBox" name="gbPrimaryUnitLinear">
          <property name="minimumSize">
           <size>
            <width>400</width>
@@ -1344,7 +1416,7 @@
            </widget>
           </item>
           <item row="7" column="0" colspan="2">
-           <widget class="QGroupBox" name="groupBox_18">
+           <widget class="QGroupBox" name="gbPrimaryUnitLinear_2">
             <property name="title">
              <string>Measurement scale</string>
             </property>
@@ -1366,6 +1438,9 @@
                </property>
                <property name="toolTip">
                 <string>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</string>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
                </property>
               </widget>
              </item>
@@ -1451,6 +1526,9 @@
            <widget class="QDoubleSpinBox" name="dsbLinearDimRoundOff">
             <property name="toolTip">
              <string>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -1575,6 +1653,9 @@
                <property name="toolTip">
                 <string>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </string>
                </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
               </widget>
              </item>
              <item row="3" column="1">
@@ -1611,7 +1692,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_6">
+     <widget class="QWidget" name="tabAltUnits">
       <attribute name="title">
        <string>Alternate Units</string>
       </attribute>
@@ -1670,6 +1751,9 @@
             <property name="toolTip">
              <string>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="2" column="0">
@@ -1683,6 +1767,9 @@
            <widget class="QDoubleSpinBox" name="bsbAlternateRoundTo">
             <property name="toolTip">
              <string>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -1779,6 +1866,9 @@
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
                </property>
               </widget>
              </item>
@@ -1877,7 +1967,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tabTolerances">
       <attribute name="title">
        <string>Tolerances</string>
       </attribute>
@@ -1898,6 +1988,9 @@
            <widget class="QDoubleSpinBox" name="dsbTolLowerLimit">
             <property name="toolTip">
              <string>Sets the minimum or lower tolerance value. (DIMTM system variable)</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -2037,6 +2130,9 @@
             <property name="toolTip">
              <string>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="0" column="0">
@@ -2058,6 +2154,9 @@
             <property name="toolTip">
              <string>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</string>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
            </widget>
           </item>
           <item row="5" column="0">
@@ -2068,13 +2167,13 @@
            </widget>
           </item>
           <item row="7" column="0" colspan="2">
-           <widget class="QGroupBox" name="gbTolMeasurementScale">
+           <widget class="QGroupBox" name="gbTolAdjustment">
             <property name="title">
-             <string>Measurement scale</string>
+             <string>Tolerance Adjustment</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_33">
              <item row="0" column="0">
-              <widget class="QRadioButton" name="rbTolMeasurementAlignDecimal">
+              <widget class="QRadioButton" name="rbTolAjustAlignDecimal">
                <property name="toolTip">
                 <string>Values are stacked by their decimal separators.</string>
                </property>
@@ -2084,7 +2183,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QRadioButton" name="rbTolMeasurementAlignOperational">
+              <widget class="QRadioButton" name="rbTolAjustAlignOpSymbols">
                <property name="toolTip">
                 <string>Values are stacked by their operational symbols.</string>
                </property>
@@ -2215,6 +2314,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QG_LineTypeBox</class>
+   <extends>QWidget</extends>
+   <header>qg_linetypebox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_colorbox.h</header>
@@ -2228,11 +2332,6 @@
    <class>QG_FontBox</class>
    <extends>QWidget</extends>
    <header>qg_fontbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QG_LineTypeBox</class>
-   <extends>QWidget</extends>
-   <header>qg_linetypebox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -2256,7 +2355,7 @@
   <tabstop>cbArrowheadSecond</tabstop>
   <tabstop>cbArrowheadLeader</tabstop>
   <tabstop>dsbArrowheadArrowSize</tabstop>
-  <tabstop>dsbLinegap</tabstop>
+  <tabstop>dsbDimBreakSize</tabstop>
   <tabstop>rbCentermarkNone</tabstop>
   <tabstop>rbCentermarkMark</tabstop>
   <tabstop>rbCentermarkLine</tabstop>
@@ -2334,8 +2433,8 @@
   <tabstop>dsbTolLowerLimit</tabstop>
   <tabstop>dsbTolHeightScale</tabstop>
   <tabstop>cbTolVerticalPosition</tabstop>
-  <tabstop>rbTolMeasurementAlignDecimal</tabstop>
-  <tabstop>rbTolMeasurementAlignOperational</tabstop>
+  <tabstop>rbTolAjustAlignDecimal</tabstop>
+  <tabstop>rbTolAjustAlignOpSymbols</tabstop>
   <tabstop>cbTolZerosLeading</tabstop>
   <tabstop>cbTolZerosTrailing</tabstop>
   <tabstop>cbTolZeros0Feet</tabstop>
