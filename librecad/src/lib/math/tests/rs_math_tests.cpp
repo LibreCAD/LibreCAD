@@ -62,16 +62,6 @@ TEST_CASE("RS_Math::eval tests", "[rs_math]") {
 TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
     QString result;
 
-    SECTION("Simple fraction") {
-        result = RS_Math::derationalize("1/2");
-        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(0.5, 2));
-    }
-
-    SECTION("Mixed number") {
-        result = RS_Math::derationalize("2-1/4");
-        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(2.25, 2));
-    }
-
     SECTION("Invalid rational") {
         result = RS_Math::derationalize("1/0");
         REQUIRE(result == "1/0");

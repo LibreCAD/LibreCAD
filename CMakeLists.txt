@@ -1607,9 +1607,20 @@ if(BUILD_TESTS)
     add_subdirectory(externals/Catch2)
 
     # Define test executable
-    qt_add_executable(librecad_tests
-        ${PROJECT_SOURCE_DIR}/librecad/src/lib/math/tests/rs_math_tests.cpp
-        ${SOURCES}
+    add_executable(librecad_tests
+        librecad/src/lib/math/tests/rs_math_tests.cpp
+        librecad/src/lib/math/rs_math.cpp
+        libraries/muparser/src/muParser.cpp
+        libraries/muparser/src/muParserBase.cpp
+        libraries/muparser/src/muParserBytecode.cpp
+        libraries/muparser/src/muParserCallback.cpp
+        libraries/muparser/src/muParserDLL.cpp
+        libraries/muparser/src/muParserError.cpp
+        libraries/muparser/src/muParserInt.cpp
+        libraries/muparser/src/muParserTokenReader.cpp
+        librecad/src/lib/engine/rs_vector.cpp
+        librecad/src/lib/debug/rs_debug.cpp
+	librecad/src/lib/engine/document/entities/lc_rect.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
@@ -1625,6 +1636,9 @@ if(BUILD_TESTS)
         ${Boost_LIBRARIES}
         Qt6::Core
         Qt6::Gui
+	Qt6::Network
+	Qt6::PrintSupport
+	Qt6::Svg
         Qt6::Widgets
     )
 
