@@ -52,10 +52,20 @@ std::vector<LC_DimArrowRegistry::ArrowInfo> LC_DimArrowRegistry::m_defaultArrows
 QString LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE = "_OBLIQUE";
 QString LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_ARCHTICK = "_ARCHTICK";
 
-bool LC_DimArrowRegistry::getArrowInfoByBlockName(const QString& blockName, ArrowInfo& found) const {
-    QString nameToFind = blockName.toUpper();
+bool LC_DimArrowRegistry::isStandardBlockName(const QString& blockName) {
+    init();
     for (auto info: m_defaultArrowsInfo) {
-        if (info.blockName == nameToFind) {
+        if (info.blockName.compare(blockName, Qt::CaseInsensitive) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool LC_DimArrowRegistry::getArrowInfoByBlockName(const QString& blockName, ArrowInfo& found) {
+    init();
+    for (auto info: m_defaultArrowsInfo) {
+        if (info.blockName.compare(blockName, Qt::CaseInsensitive) == 0) {
             found = info;
             return true;
         }
@@ -63,7 +73,8 @@ bool LC_DimArrowRegistry::getArrowInfoByBlockName(const QString& blockName, Arro
     return false;
 }
 
-bool LC_DimArrowRegistry::getArrowInfoByType(const ArrowType type, ArrowInfo& found) const {
+bool LC_DimArrowRegistry::getArrowInfoByType(const ArrowType type, ArrowInfo& found)  {
+    init();
     for (auto info: m_defaultArrowsInfo) {
         if (info.type == type) {
             found = info;
@@ -79,7 +90,7 @@ RS_Entity* LC_DimArrowRegistry::createArrowBlock(RS_EntityContainer* container, 
         RS_BlockList* blocksList = graphic->getBlockList();
         auto customBlock = blocksList->findCaseInsensitive(blockName);
         if (customBlock != nullptr) {
-            return createCustomArrowBlock(container, blockName, point, directionAngle, arrowSize);
+            return createCustomArrowBlock(container, customBlock->getName(), point, directionAngle, arrowSize);
         }
     }
     ArrowInfo info;
@@ -174,6 +185,8 @@ void LC_DimArrowRegistry::init() {
     if (m_defaultArrowsInfo.empty()) {
         m_defaultArrowsInfo = {
             {"", closed_filled, tr("Closed Filled")},
+            // todo - sand - dot is supported by ACAD for setting default arrow block. Think about adding such support too
+            // {".", closed_filled, tr("Closed Filled")},
             {"_DOT", dot, tr("Dot")},
             {"_DOTSMALL", dot_small, tr("Dot Small")},
             {"_DOTBLANK", dot_blank, tr("Dot Blank")},
@@ -210,5 +223,6 @@ void LC_DimArrowRegistry::fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTyp
 }
 
 bool LC_DimArrowRegistry::isObliqueOrArchArrow(const QString& blockName) {
-    return blockName == ArrowInfo::ARROW_TYPE_OBLIQUE || blockName == ArrowInfo::ARROW_TYPE_ARCHTICK;
+    return blockName.compare(ArrowInfo::ARROW_TYPE_OBLIQUE, Qt::CaseInsensitive)  == 0 ||
+           blockName.compare(ArrowInfo::ARROW_TYPE_ARCHTICK, Qt::CaseInsensitive) == 0 ;
 }

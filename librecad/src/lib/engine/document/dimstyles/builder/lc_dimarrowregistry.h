@@ -54,6 +54,7 @@ enum ArrowType {
     _CUSTOM
 };
 
+// fixme - convert to namespace?
 class LC_DimArrowRegistry: public QObject{
     Q_OBJECT
 public:
@@ -75,13 +76,13 @@ public:
     };
 
     LC_DimArrowRegistry();
-    bool getArrowInfoByBlockName(const QString& blockName, ArrowInfo &found) const;
-    bool getArrowInfoByType(ArrowType type, ArrowInfo & found) const;
-    RS_Entity* createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize);
-
+    static bool isStandardBlockName(const QString& blockName);
+    static bool getArrowInfoByBlockName(const QString& blockName, ArrowInfo &found);
+    static bool getArrowInfoByType(ArrowType type, ArrowInfo & found);
     static void fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTypes);
+    static bool isObliqueOrArchArrow(const QString& blockName);
 
-    bool isObliqueOrArchArrow(const QString& blockName);
+    RS_Entity* createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize);
 protected:
     RS_Entity* createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, const RS_Vector &point, double directionAngle, double
                                        arrowSize);
