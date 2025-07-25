@@ -848,15 +848,40 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
     RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
 
     for (RS_Entity *e: *this) {
+        if (e->isUndone()) {
+            continue;
+        }
         if (RS_Information::isDimension(e->rtti())) {
             auto dimension = static_cast<RS_Dimension*>(e);
             // update and reposition label:
-            dimension->updateDim(autoText);
+            // dimension->updateDim(autoText);
+            dimension->update();
         } else if (e->rtti() == RS2::EntityDimLeader)
             e->update();
         else if (e->isContainer()) {
             auto container = static_cast<RS_EntityContainer*>(e);
             container->updateDimensions(autoText);
+        }
+    }
+
+    RS_DEBUG->print("RS_EntityContainer::updateDimensions() OK");
+}
+
+void RS_EntityContainer::updateVisibleDimensions(bool autoText) {
+    RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
+
+    for (RS_Entity *e: *this) {
+        if (e->isVisible()) {
+            if (RS_Information::isDimension(e->rtti())) {
+                auto dimension = static_cast<RS_Dimension*>(e);
+                // update and reposition label:
+                dimension->updateDim(autoText);
+            } else if (e->rtti() == RS2::EntityDimLeader)
+                e->update();
+            else if (e->isContainer()) {
+                auto container = static_cast<RS_EntityContainer*>(e);
+                container->updateDimensions(autoText);
+            }
         }
     }
 

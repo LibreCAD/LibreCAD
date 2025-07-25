@@ -164,6 +164,7 @@ public:
     void calculateBorders() override;
     void forcedCalculateBorders();
     void updateDimensions( bool autoText=true);
+    void updateVisibleDimensions( bool autoText=true);
     virtual void updateInserts();
     virtual void updateSplines();
     void update() override;
