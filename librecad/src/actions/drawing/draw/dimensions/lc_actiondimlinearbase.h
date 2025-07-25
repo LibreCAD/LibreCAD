@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDimLinearBase:public RS_ActionDimension {
 Q_OBJECT
 public:
-    LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
+    LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, RS2::EntityType entityType, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_ActionDimLinearBase() override;
 protected:
     /**

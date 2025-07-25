@@ -29,7 +29,7 @@
 #include "rs_dimaligned.h"
 
 RS_ActionDimAligned::RS_ActionDimAligned(LC_ActionContext *actionContext)
-    :LC_ActionDimLinearBase("Draw aligned dimensions",actionContext, RS2::ActionDimAligned){
+    :LC_ActionDimLinearBase("Draw aligned dimensions",actionContext,RS2::EntityDimAligned, RS2::ActionDimAligned){
     reset();
 }
 

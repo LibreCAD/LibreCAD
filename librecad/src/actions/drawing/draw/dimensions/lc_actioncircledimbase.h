@@ -30,7 +30,7 @@ class RS_Dimension;
 class LC_ActionCircleDimBase:public RS_ActionDimension {
     Q_OBJECT
 public:
-    LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext,RS2::ActionType actionType);
+    LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::EntityType dimType, RS2::ActionType actionType);
     ~LC_ActionCircleDimBase() override;
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;

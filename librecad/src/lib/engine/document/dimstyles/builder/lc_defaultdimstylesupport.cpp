@@ -72,12 +72,26 @@ void LC_DimStyleToVariablesMapper::toDictionary(const LC_DimStyle* style, RS_Var
     zerosSuppression2Vars(style->zerosSuppression(), vd);
 }
 
+void LC_DimStyleToVariablesMapper::arc2Vars(LC_DimStyle::Arc* s,RS_VariableDict* vd) {
+    if (s->checkModifyState(LC_DimStyle::Arc::$DIMARCSYM)) {
+        vd->add(QStringLiteral( "$DIMARCSYM"), s->arcSymbolPosition(), 90);
+    }
+}
+
+void LC_DimStyleToVariablesMapper::arcFromVars(LC_DimStyle::Arc* s,RS_VariableDict* vd) {
+    // not present in header, may be in dxf
+    if (vd->has("$DIMARCSYM")) {
+        s->setArcSymbolPositionRaw(vd->getInt("$DIMARCSYM", 0));
+    }
+}
+
+
 void LC_DimStyleToVariablesMapper::angularUnitFromVars(LC_DimStyle::AngularFormat* s,RS_VariableDict* vd) {
     if (vd->has("$DIMAUNIT")) {
         s->setFormatRaw( vd->getInt("$DIMAUNIT", RS2::AngleFormat::DegreesDecimal));
     }
     if (vd->has("$DIMADEC")) {
-        s->setDecimalPlaces(vd->getInt( "$DIMADEC", 0));
+        s->setDecimalPlaces(vd->getInt( "$DIMADEC", 90));
     }
 }
 
@@ -140,18 +154,6 @@ void LC_DimStyleToVariablesMapper::arrow2Vars(LC_DimStyle::Arrowhead* s, RS_Vari
     }
 }
 
-void LC_DimStyleToVariablesMapper::arcFromVars(LC_DimStyle::Arc* s,RS_VariableDict* vd) {
-    // not present in header, may be in dxf
-    if (vd->has("$DIMARCSYM")) {
-        s->setArcSymbolDisplayRaw(vd->getInt("$DIMARCSYM", 0));
-    }
-}
-
-void LC_DimStyleToVariablesMapper::arc2Vars(LC_DimStyle::Arc* s,  RS_VariableDict* vd) {
-    // not present in header, may be in dxf
-    vd->add("$DIMARCSYM", s->arcSymbolDisplay(), 70);
-}
-
 void LC_DimStyleToVariablesMapper::fractionsFromVars(LC_DimStyle::Fractions* s,RS_VariableDict* vd) {
     // not present in header, may be in dxf
     if (vd->has("$DIMFRAC")) {
@@ -209,6 +211,9 @@ void LC_DimStyleToVariablesMapper::toleranceFromVars(LC_DimStyle::LatteralTolera
     if (vd->has("$DIMTP")) {
         s->setUpperToleranceLimit(varDouble(vd, unit, "$DIMTP", 0.0));
     }
+    if (vd->has("$DIMTALN")) {
+        s->setUpperToleranceLimit(vd->getInt("$DIMTALN", 0));
+    }
 }
 
 void LC_DimStyleToVariablesMapper::toleranceStyle2Vars(LC_DimStyle::LatteralTolerance* s,RS_VariableDict* vd) {
@@ -235,6 +240,9 @@ void LC_DimStyleToVariablesMapper::toleranceStyle2Vars(LC_DimStyle::LatteralTole
     }
     if (s->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTP)) {
         vd->add("$DIMTP", s->upperToleranceLimit(), 40);
+    }
+    if (s->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN)) {
+        vd->add("$DIMTALN", s->adjustment(), 70);
     }
 }
 
@@ -309,7 +317,7 @@ void LC_DimStyleToVariablesMapper::unitFormatFromVars(LC_DimStyle::LinearFormat*
         s->setAltDecimalPlaces(vd->getInt("$DIMALTD", 3));
     }
     if (vd->has("$DIMALTF")) {
-        s->setAltUnitsMultiplier(vd->getInt("$DIMALTF", 0.0394));
+        s->setAltUnitsMultiplier(vd->getDouble("$DIMALTF", 0.03937));
     }
     if (vd->has("$DIMALTU")) {
         s->setAltFormatRaw(vd->getInt("$DIMALTU", 2));
@@ -507,10 +515,16 @@ void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionL
         s->setHasFixedLength(vd->getBool("$DIMFXLON", false));
     }
     if (vd->has("$DIMLTEX1")) {
-        s->setLineTypeFirst(vd->getString("$DIMLTEX1", ""));
+        auto dimltex1 = vd->getString("$DIMLTEX1", "");
+        if (!dimltex1.isEmpty()) {
+            s->setLineTypeFirst(dimltex1);
+        }
     }
     if (vd->has("$DIMLTEX2")) {
-        s->setLineTypeSecond(vd->getString("$DIMLTEX2", ""));
+        auto dimltex2 = vd->getString("$DIMLTEX2", "");
+        if (!dimltex2.isEmpty()) {
+            s->setLineTypeSecond(dimltex2);
+        }
     }
 }
 
@@ -527,7 +541,7 @@ void LC_DimStyleToVariablesMapper::extensionLine2Vars(LC_DimStyle::ExtensionLine
         vd->add("$DIMEXO", s->distanceFromOriginPoint(), 40);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLWE)) {
-        vd->add("$DIMLWE", RS2::lineWidthToInt(s->lineWidth()), 70);
+        vd->add("$DIMLWE", RS2::lineWidth2dxfInt(s->lineWidth()), 70);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
         vd->add("$DIMSE1", s->firstLineSuppression(), 70);
@@ -567,11 +581,10 @@ void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s
         s->setLineGap(varDouble(vd, unit, "$DIMGAP", 0.625));
     }
     if (vd->has("$DIMLTYPE")) {
-        s->setLineType(vd->getString("$DIMLTYPE", "")); // fixme - sand - dim - default
+        s->setLineType(static_cast<RS2::LineType>(vd->getInt("$DIMLTYPE", RS2::LineType::LineByBlock)));
     }
     if (vd->has("$DIMLWD")) {
-        RS2::LineWidth dimlwd = RS2::intToLineWidth(vd->getInt("$DIMLWD", -2));
-        s->setLineWidth(dimlwd);
+        s->setLineWidthRaw(vd->getInt("$DIMLWD", -2));
     }
     if (vd->has("$DIMSD1")) {
         s->setFirstLineSuppressionRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
@@ -597,10 +610,10 @@ void LC_DimStyleToVariablesMapper::dimLine2Vars(LC_DimStyle::DimensionLine* s, R
         vd->add("$DIMGAP", s->lineGap(), 40);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMLTYPE)) {
-        vd->add("$DIMLTYPE", s->lineType(), 1); //fixme - code???
+        vd->add("$DIMLTYPE", s->lineType(), 70);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMLWD)) {
-        vd->add("$DIMLWD", RS2::lineWidthToInt(s->lineWidth()), 70);
+        vd->add("$DIMLWD", RS2::lineWidth2dxfInt(s->lineWidth()), 70);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
         vd->add("$DIMSD1", s->firstLineSuppression(), 70);

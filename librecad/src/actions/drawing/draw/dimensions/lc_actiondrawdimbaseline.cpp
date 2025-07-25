@@ -30,7 +30,7 @@
 
 // some functions are duplicated with DimLiner action, however, that's intentional as later we can support angular dimensions in additional to linear ones
 LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(LC_ActionContext *actionContext, RS2::ActionType type)
-       :LC_ActionDimLinearBase(type == RS2::ActionDimBaseline? "Draw Dim Baseline": "Draw Dim Continue", actionContext, type),
+       :LC_ActionDimLinearBase(type == RS2::ActionDimBaseline? "Draw Dim Baseline": "Draw Dim Continue", actionContext, RS2::EntityUnknown, type),
        m_edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), 0, 0.)){
 }
 
@@ -107,6 +107,7 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         extPoint1 = dimLinear->getExtensionPoint1();
                         extPoint2 = dimLinear->getExtensionPoint2();
                         dimLinear->getDimPoints(dim1, dim2);
+                        m_dimTypeToCreate = RS2::EntityDimLinear; // fixme - pick dimension styles from start entity!!!
                         break;
                     }
                     case RS2::EntityDimAligned:{
@@ -114,6 +115,7 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                         extPoint1 = dimAligned->getExtensionPoint1();
                         extPoint2 = dimAligned->getExtensionPoint2();
                         dimAligned->getDimPoints(dim1, dim2);
+                        m_dimTypeToCreate = RS2::EntityDimAligned; // fixme - pick dimension styles from start entity!!!
                         break;
                     }
                     default:

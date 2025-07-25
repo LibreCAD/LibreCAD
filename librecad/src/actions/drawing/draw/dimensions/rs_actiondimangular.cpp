@@ -34,7 +34,7 @@
 #include "rs_preview.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(LC_ActionContext *actionContext) :
-    RS_ActionDimension( "Draw Angular Dimensions", actionContext,  RS2::ActionDimAngular){
+    RS_ActionDimension( "Draw Angular Dimensions", actionContext,  RS2::EntityDimAngular, RS2::ActionDimAngular){
     reset();
 }
 
@@ -232,7 +232,7 @@ void RS_ActionDimAngular::updateMouseButtonHints(){
 RS_LineData RS_ActionDimAngular::justify(RS_Line* line, const RS_Vector &click){
     RS_Vector vStartPoint( line->getStartpoint());
     RS_LineData lineData = line->getData();
-    if( ! RS_Math::equal( vStartPoint.angleTo(m_center), click.angleTo( m_center), RS_TOLERANCE_ANGLE)
+    if( RS_Math::notEqual( vStartPoint.angleTo(m_center), click.angleTo( m_center), RS_TOLERANCE_ANGLE)
         || vStartPoint.distanceTo( m_center) < click.distanceTo( m_center)) {
         lineData.reverse();
     }

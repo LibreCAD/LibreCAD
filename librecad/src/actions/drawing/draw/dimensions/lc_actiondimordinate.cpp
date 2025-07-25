@@ -40,7 +40,7 @@ struct LC_ActionDimOrdinate::ActionData {
 };
 
 LC_ActionDimOrdinate::LC_ActionDimOrdinate(LC_ActionContext* context)
-    : RS_ActionDimension("DimOrdinate", context,  RS2::ActionDimOrdinate)
+    : RS_ActionDimension("DimOrdinate", context,  RS2::EntityDimRadial, RS2::ActionDimOrdinate)
     ,m_actionData{std::make_unique<ActionData>()}{
 }
 

@@ -26,8 +26,8 @@
 #include "rs_dimension.h"
 #include "rs_preview.h"
 
-LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
-  : RS_ActionDimension(name, actionContext, actionType)
+LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext,  RS2::EntityType dimType, RS2::ActionType actionType)
+  : RS_ActionDimension(name, actionContext, dimType, actionType)
     , m_entity(nullptr)
     , m_lastStatus(SetEntity)
     , m_position(std::make_unique<RS_Vector>()){

@@ -31,7 +31,7 @@
 #include "rs_preview.h"
 
 LC_ActionDimArc::LC_ActionDimArc(LC_ActionContext *actionContext):
-    RS_ActionDimension("Draw Arc Dimensions", actionContext, RS2::ActionDimArc){
+    RS_ActionDimension("Draw Arc Dimensions", actionContext,RS2::EntityDimArc, RS2::ActionDimArc){
     reset();
 }
 

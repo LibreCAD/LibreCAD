@@ -37,7 +37,7 @@
  *                   false: The user can change the angle in a option widget.
  */
 RS_ActionDimLinear::RS_ActionDimLinear(LC_ActionContext *actionContext,double angle,bool _fixedAngle, RS2::ActionType type)
-    :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, type),
+    :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, RS2::EntityDimLinear, type),
      m_edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      m_fixedAngle(_fixedAngle), m_lastStatus(SetExtPoint1){
     setUcsAngleDegrees(angle);

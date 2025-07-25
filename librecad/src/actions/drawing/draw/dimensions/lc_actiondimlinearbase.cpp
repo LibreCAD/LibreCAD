@@ -30,8 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_entity.h"
 #include "rs_preview.h"
 
-LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType):
-   RS_ActionDimension(name, actionContext, actionType){
+LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext,  RS2::EntityType dimType, RS2::ActionType actionType):
+   RS_ActionDimension(name, actionContext, dimType, actionType){
 }
 
 LC_ActionDimLinearBase::~LC_ActionDimLinearBase() = default;

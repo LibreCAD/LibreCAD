@@ -34,8 +34,8 @@ namespace {
     const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");
 }
 
-RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *actionContext, RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name,actionContext, actionType){
+RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *actionContext, RS2::EntityType dimType,  RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name,actionContext, actionType),  m_dimTypeToCreate {dimType}{
     reset();
     readSettings();
 }
@@ -44,18 +44,22 @@ RS_ActionDimension::~RS_ActionDimension() = default;
 
 void RS_ActionDimension::reset(){
     RS_PreviewActionInterface::init(0);
+
+    // auto dimStyleName = "Standard";
+    auto dimStyleName = m_graphic->getDefaultDimStyleName();
     m_dimensionData = std::make_unique<RS_DimensionData>(RS_Vector(false),
-                                              RS_Vector(false),
-                                              RS_MTextData::VAMiddle,
-                                              RS_MTextData::HACenter,
-                                              RS_MTextData::Exact,
-                                              1.0,
-                                              "",
-                                              "Standard",
-                                              0.0,
-                                              0.0,
-                                              true,
-                                              nullptr);
+                                                         RS_Vector(false),
+                                                         RS_MTextData::VAMiddle,
+                                                         RS_MTextData::HACenter,
+                                                         RS_MTextData::Exact,
+                                                         1.0,
+                                                         "",
+                                                         dimStyleName,
+                                                         0.0,
+                                                         0.0,
+                                                         true,
+                                                         nullptr);
+    setDimStyleName(dimStyleName);
     m_diameter = false;
 }
 
@@ -156,7 +160,7 @@ void RS_ActionDimension::setDiameter(bool d){
 }
 
 LC_ActionOptionsWidget* RS_ActionDimension::createOptionsWidget(){
-    return new QG_DimOptions();
+    return new QG_DimOptions(m_graphic);
 }
 
 // FIXME - sand - REWORK
@@ -167,4 +171,19 @@ void RS_ActionDimension::readSettings() {
 void RS_ActionDimension::resume() {
     RS_PreviewActionInterface::resume();
     readSettings();
+}
+
+void RS_ActionDimension::setDimStyleName(const QString& styleName) {
+    LC_DimStylesList* stylesList = m_graphic->getDimStyleList();
+    auto typeSpecificDimStyle = stylesList->findByBaseNameAndType(styleName, m_dimTypeToCreate);
+    if (typeSpecificDimStyle != nullptr) {
+        m_dimensionData->style = typeSpecificDimStyle->getName();
+    }
+    else {
+        m_dimensionData->style = styleName;
+    }
+}
+
+QString RS_ActionDimension::getDimStyleName() {
+    return m_dimensionData->style;
 }
