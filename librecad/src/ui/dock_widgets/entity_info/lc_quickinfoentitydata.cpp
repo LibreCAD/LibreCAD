@@ -75,7 +75,7 @@ bool LC_QuickInfoEntityData::hasData() const{
  */
 
 // collecting some generic common properties of all entities
-QString LC_QuickInfoEntityData::prepareGenericEntityDescription(const RS_Entity* e, const QString &entityTypeName, RS2::EntityDescriptionLevel level){
+QString LC_QuickInfoEntityData::prepareGenericEntityDescription(RS_Entity* e, const QString &entityTypeName, RS2::EntityDescriptionLevel level){
     QString result;
     switch (level){
         case RS2::EntityDescriptionLevel::DescriptionCreating:{
@@ -523,7 +523,7 @@ void LC_QuickInfoEntityData::collectGenericProperties(RS_Entity *e){
  * Properties for line
  * @param line
  */
-void LC_QuickInfoEntityData::collectLineProperties(const RS_Line *line){
+void LC_QuickInfoEntityData::collectLineProperties(RS_Line *line){
     m_entityName = tr("LINE");
     const RS_Vector &start = line->getStartpoint();
     const RS_Vector &end = line->getEndpoint();
@@ -541,7 +541,7 @@ void LC_QuickInfoEntityData::collectLineProperties(const RS_Line *line){
     addLinearProperty(tr("Length"), length);
 }
 
-QString LC_QuickInfoEntityData::prepareLineDescription(const RS_Line *line, RS2::EntityDescriptionLevel level){
+QString LC_QuickInfoEntityData::prepareLineDescription(RS_Line *line, RS2::EntityDescriptionLevel level){
     QString result = prepareGenericEntityDescription(line, tr("LINE"), level);
 
     const RS_Vector &start = line->getStartpoint();
@@ -568,7 +568,7 @@ QString LC_QuickInfoEntityData::prepareLineDescription(const RS_Line *line, RS2:
  * Properties for circle
  * @param circle
  */
-void LC_QuickInfoEntityData::collectCircleProperties(const RS_Circle *circle){
+void LC_QuickInfoEntityData::collectCircleProperties(RS_Circle *circle){
     m_entityName = tr("CIRCLE");
     RS_Vector center = circle->getCenter();
     double radius = circle->getRadius();
@@ -583,7 +583,7 @@ void LC_QuickInfoEntityData::collectCircleProperties(const RS_Circle *circle){
     addAreaProperty(tr("Area"), area);
 }
 
-QString LC_QuickInfoEntityData::prepareCircleDescription(const RS_Circle *circle, RS2::EntityDescriptionLevel level){
+QString LC_QuickInfoEntityData::prepareCircleDescription(RS_Circle *circle, RS2::EntityDescriptionLevel level){
     QString result = prepareGenericEntityDescription(circle, tr("CIRCLE"), level);
 
     RS_Vector center = circle->getCenter();
@@ -608,7 +608,7 @@ QString LC_QuickInfoEntityData::prepareCircleDescription(const RS_Circle *circle
  * properties for arc
  * @param arc
  */
-void LC_QuickInfoEntityData::collectArcProperties(const RS_Arc *arc){
+void LC_QuickInfoEntityData::collectArcProperties(RS_Arc *arc){
     m_entityName = tr("ARC");
     RS_Vector center = arc->getCenter();
     double radius = arc->getRadius();
@@ -635,7 +635,7 @@ void LC_QuickInfoEntityData::collectArcProperties(const RS_Arc *arc){
     addProperty(tr("Reversed"), arc->isReversed() ?  tr("Yes") : tr("No") , OTHER);
 }
 
-QString LC_QuickInfoEntityData::prepareArcDescription(const RS_Arc *arc, RS2::EntityDescriptionLevel level){
+QString LC_QuickInfoEntityData::prepareArcDescription(RS_Arc *arc, RS2::EntityDescriptionLevel level){
     QString result = prepareGenericEntityDescription(arc, tr("ARC"), level);
     RS_Vector center = arc->getCenter();
     double radius = arc->getRadius();
@@ -672,7 +672,7 @@ QString LC_QuickInfoEntityData::prepareArcDescription(const RS_Arc *arc, RS2::En
  * properties for ellipse
  * @param ellipse
  */
-void LC_QuickInfoEntityData::collectEllipseProperties(const RS_Ellipse *ellipse){
+void LC_QuickInfoEntityData::collectEllipseProperties(RS_Ellipse *ellipse){
     RS_Vector center = ellipse->getCenter();
     double minorRadius = ellipse->getMinorRadius();
     double majorRadius = ellipse->getMajorRadius();
@@ -709,7 +709,7 @@ void LC_QuickInfoEntityData::collectEllipseProperties(const RS_Ellipse *ellipse)
     }
 }
 
-QString LC_QuickInfoEntityData::prepareEllipseDescription(const RS_Ellipse *ellipse, RS2::EntityDescriptionLevel level){
+QString LC_QuickInfoEntityData::prepareEllipseDescription(RS_Ellipse *ellipse, RS2::EntityDescriptionLevel level){
     bool ellipticArc = ellipse->isEllipticArc();
     QString entityName = ellipticArc ? tr("ELLIPSE ARC") : tr("ELLIPSE");
     
@@ -756,19 +756,19 @@ QString LC_QuickInfoEntityData::prepareEllipseDescription(const RS_Ellipse *elli
 /**
  * Properties for point
  */
-void LC_QuickInfoEntityData::collectPointProperties(const RS_Point *point){
+void LC_QuickInfoEntityData::collectPointProperties(RS_Point *point){
     m_entityName = tr("POINT");
     RS_Vector center = point->getPos();
     addVectorProperty(tr("Position"), center);
 }
 
-QString LC_QuickInfoEntityData::preparePointDescription(const RS_Point *point, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::preparePointDescription(RS_Point *point, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(point, tr("POINT"), level);
     appendWCSAbsolute(result, tr("Position"), point->getPos());
     return result;
 }
 
-QString LC_QuickInfoEntityData::preparePolylineDescription(const RS_Polyline *polyline, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::preparePolylineDescription(RS_Polyline *polyline, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(polyline, tr("POLYLINE"), level);
     appendWCSAbsolute(result, tr("Start"), polyline->getStartpoint());
     appendWCSAbsolute(result, tr("End"), polyline->getEndpoint());
@@ -781,7 +781,7 @@ QString LC_QuickInfoEntityData::preparePolylineDescription(const RS_Polyline *po
  * Properties for polyline. information about line and arc vertexes
  * @param l
  */
-void LC_QuickInfoEntityData::collectPolylineProperties(const RS_Polyline *l){
+void LC_QuickInfoEntityData::collectPolylineProperties(RS_Polyline *l){
     m_entityName = tr("POLYLINE");
 
     double totalLengh = 0.0;
@@ -841,7 +841,7 @@ void LC_QuickInfoEntityData::collectPolylineProperties(const RS_Polyline *l){
     addLinearProperty(tr("Total Length"), totalLengh, OTHER);
 }
 
-QString LC_QuickInfoEntityData::prepareInsertDescription(const RS_Insert *insert, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareInsertDescription(RS_Insert *insert, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(insert, tr("INSERT"), level);
     const RS_InsertData &data = insert->getData();
     appendValue(result, tr("Name"), data.name);
@@ -862,7 +862,7 @@ QString LC_QuickInfoEntityData::prepareInsertDescription(const RS_Insert *insert
  * Insert properties
  * @param insert
  */
-void LC_QuickInfoEntityData::collectInsertProperties(const RS_Insert *insert){
+void LC_QuickInfoEntityData::collectInsertProperties(RS_Insert *insert){
     m_entityName = tr("INSERT");
     const RS_InsertData &data = insert->getData();
 
@@ -877,7 +877,7 @@ void LC_QuickInfoEntityData::collectInsertProperties(const RS_Insert *insert){
     addDoubleProperty(tr("Spacing Y"), formatDouble(data.spacing.y), data.spacing.y, OTHER);
 }
 
-QString LC_QuickInfoEntityData::prepareTextDescription(const RS_Text *text, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareTextDescription(RS_Text *text, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(text, tr("TEXT"), level);
     const RS_TextData &data = text->getData();
     appendWCSAbsolute(result, tr("Insertion Point"), data.insertionPoint);
@@ -906,7 +906,7 @@ QString LC_QuickInfoEntityData::prepareTextDescription(const RS_Text *text, RS2:
  * Text properties
  * @param text
  */
-void LC_QuickInfoEntityData::collectTextProperties(const RS_Text *text){
+void LC_QuickInfoEntityData::collectTextProperties(RS_Text *text){
     m_entityName = tr("TEXT");
     const RS_TextData &data = text->getData();
     addVectorProperty(tr("Insertion Point"), data.insertionPoint);
@@ -1160,7 +1160,7 @@ void LC_QuickInfoEntityData::collectImageProperties(RS_Image *image){
     addProperty(tr("DPI"), formatDouble(RS_Units::scaleToDpi(scale,image->getGraphicUnit())), OTHER);
 }
 
-QString LC_QuickInfoEntityData::prepareSplineDescription(const RS_Spline *spline, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareSplineDescription(RS_Spline *spline, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(spline, tr("SPLINE"), level);
     RS_SplineData data = spline->getData();
     appendInt(result, tr("Degree"), data.degree);
@@ -1176,7 +1176,7 @@ QString LC_QuickInfoEntityData::prepareSplineDescription(const RS_Spline *spline
  * Spline properties
  * @param spline
  */
-void LC_QuickInfoEntityData::collectSplineProperties(const RS_Spline *spline){
+void LC_QuickInfoEntityData::collectSplineProperties(RS_Spline *spline){
     m_entityName = tr("SPLINE");
     const RS_SplineData &data = spline->getData();
     addLinearProperty(tr("Length"), spline->getLength());
@@ -1296,7 +1296,7 @@ void LC_QuickInfoEntityData::collectHatchProperties(RS_Hatch *hatch){
     }
 }
 
-QString LC_QuickInfoEntityData::prepareDimLeaderDescription(const RS_Leader *dim, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimLeaderDescription(RS_Leader *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMLEADER"), level);
     const RS_LeaderData &data = dim->getData();
     appendValue(result, tr("Arrow Head"), data.arrowHead ? tr("Yes") : tr("No"));
@@ -1307,17 +1307,17 @@ QString LC_QuickInfoEntityData::prepareDimLeaderDescription(const RS_Leader *dim
  * Dim leader properties
  * @param leader
  */
-void LC_QuickInfoEntityData::collectDimLeaderProperties(const RS_Leader *leader){
+void LC_QuickInfoEntityData::collectDimLeaderProperties(RS_Leader *leader){
     m_entityName = tr("DIMLEADER");
     const RS_LeaderData &data = leader->getData();
     addProperty(tr("Arrow Head"), data.arrowHead ? tr("Yes") : tr("No"), OTHER);
 }
 
-QString LC_QuickInfoEntityData::prepareDimArcDescription(const LC_DimArc *dim, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimArcDescription(LC_DimArc *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMARC"), level);
      if (!level){
          const LC_DimArcData &data = dim->getData();
-         appendValue(result, tr("Style"), dim->getStyle());
+         appendValue(result, tr("Style"), getDimensionStyleString(dim));
          appendLinear(result, tr("Radius"), data.radius);
          appendLinear(result, tr("Arc Length"), data.arcLength);
          appendWCSAbsolute(result, tr("Center"), data.centre);
@@ -1331,10 +1331,10 @@ QString LC_QuickInfoEntityData::prepareDimArcDescription(const LC_DimArc *dim, R
  * Dim arc properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimArcProperties(const LC_DimArc *dim){
+void LC_QuickInfoEntityData::collectDimArcProperties(LC_DimArc *dim){
     m_entityName = tr("DIMARC");
     const LC_DimArcData &data = dim->getData();
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
 
     addLinearProperty(tr("Radius"), data.radius);
     addLinearProperty(tr("Arc Length"), data.arcLength);
@@ -1348,9 +1348,9 @@ void LC_QuickInfoEntityData::collectDimArcProperties(const LC_DimArc *dim){
 //    addLinearProperty("Arrow Size",dimarc->getArrowSize());
 }
 
-QString LC_QuickInfoEntityData::prepareDimAngularDescription(const RS_DimAngular *dim, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimAngularDescription(RS_DimAngular *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMANGULAR"), level);
-    appendValue(result, tr("Style"), dim->getStyle());
+    appendValue(result, tr("Style"), getDimensionStyleString(dim));
 //    appendAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
 //    appendAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint1());
     return result;
@@ -1362,27 +1362,28 @@ QString LC_QuickInfoEntityData::prepareDimAngularDescription(const RS_DimAngular
  */
 void LC_QuickInfoEntityData::collectDimAngularProperties([[maybe_unused]]RS_DimAngular *dim){
     m_entityName = tr("DIMANGULAR");
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
 //    const RS_DimensionData &data = dimang->getData();
 //    todo - is it actually necessary to show more info here?
 }
 
 QString LC_QuickInfoEntityData::prepareDimDiametricDescription(RS_DimDiametric *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMDIAMETRIC"), level);
-    appendValue(result, tr("Style"), dim->getStyle());
+    appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     return result;
 }
 
 void LC_QuickInfoEntityData::collectDimDiametricProperties([[maybe_unused]]RS_DimDiametric *dim){
     m_entityName = tr("DIMDIAMETRIC");
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
     addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
 //    addLinearProperty("Leader", dimdia->getLeader());
 }
 
 QString LC_QuickInfoEntityData::prepareDimRadialDescription(RS_DimRadial *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMRADIAL"), level);
+    appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     return result;
 }
@@ -1393,26 +1394,49 @@ QString LC_QuickInfoEntityData::prepareDimRadialDescription(RS_DimRadial *dim, R
  */
 void LC_QuickInfoEntityData::collectDimRadialProperties(RS_DimRadial *dim){
     m_entityName = tr("DIMRADIAL");
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
     addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
 //    addLinearProperty("Leader", dimrad->getLeader());
 }
 
+QString LC_QuickInfoEntityData::getDimensionStyleString(RS_Dimension* dim) {
+    QString style = dim->getStyle();
+    if (dim->getDimStyleOverride() != nullptr) {
+        style.append(" - ").append(tr("[Override]"));
+    }
+    return style;
+}
 
-QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear *dim, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimLinearDescription(RS_DimLinear *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMLINEAR"), level);
-    appendValue(result, tr("Style"), dim->getStyle());
+    appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     appendWCSAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
     appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint2());
-    appendWCSAbsolute(result, tr("Text Middle Point"), dim->getData().middleOfText);
+    appendWCSAbsolute(result, tr("Text Middle Point"), dim->getMiddleOfText());
     appendWCSAngle(result, tr("Angle"), dim->getAngle());
     appendWCSAngle(result, tr("Oblique"), dim->getOblique());
     return result;
 }
 
-QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level) {
+/**
+ * Dim linear properties
+ * @param dim
+ */
+void LC_QuickInfoEntityData::collectDimLinearProperties(RS_DimLinear *dim){
+    m_entityName = tr("DIMLINEAR");
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
+    addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
+    addVectorProperty(tr("Extension Point 1"), dim->getExtensionPoint1());
+    addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint2());
+    addVectorProperty(tr("Text Middle Point"), dim->getMiddleOfText());
+    addAngleProperty(tr("Angle"), dim->getAngle());
+    addAngleProperty(tr("Oblique"), dim->getOblique());
+}
+
+QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMORDINATE"), level);
-    appendValue(result, tr("Style"), dim->getStyle());
+    appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendValue(result, tr("Ordinate"), dim->isForXDirection() ? "X":"Y");
     appendWCSAbsolute(result, tr("Origin Point"), dim->getData().definitionPoint);
     appendWCSAngle(result, tr("Horizontal Direction"), dim->getHDir());
@@ -1422,22 +1446,9 @@ QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdina
     return result;
 }
 
-/**
- * Dim linear properties
- * @param dim
- */
-void LC_QuickInfoEntityData::collectDimLinearProperties(const RS_DimLinear *dim){
-    m_entityName = tr("DIMLINEAR");
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
-    addVectorProperty(tr("Extension Point 1"), dim->getExtensionPoint1());
-    addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint2());
-    addAngleProperty(tr("Angle"), dim->getAngle());
-    addAngleProperty(tr("Oblique"), dim->getOblique());
-}
-
 void LC_QuickInfoEntityData::collectDimOrdinateProperties(LC_DimOrdinate* dim) {
     m_entityName = tr("DIMORDINATE");
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
     addVectorProperty(tr("Origin Point"), dim->getDefinitionPoint());
     addAngleProperty(tr("Horizontal Direction"), dim->getHDir());
     addProperty(tr("Ordinate"), dim->isForXDirection() ? "X":"Y", PropertyType::OTHER);
@@ -1446,11 +1457,13 @@ void LC_QuickInfoEntityData::collectDimOrdinateProperties(LC_DimOrdinate* dim) {
     addVectorProperty(tr("Text Middle Point"), dim->getData().middleOfText);
 }
 
-QString LC_QuickInfoEntityData::prepareDimAlignedDescription(const RS_DimAligned *dim, RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimAlignedDescription(RS_DimAligned *dim, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMALIGNED"), level);
-    appendValue(result, tr("Style"), dim->getStyle());
+    appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     appendWCSAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
-    appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint1());
+    appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint2());
+    appendWCSAbsolute(result, tr("Text Middle Point"), dim->getMiddleOfText());
     return result;
 }
 
@@ -1458,12 +1471,14 @@ QString LC_QuickInfoEntityData::prepareDimAlignedDescription(const RS_DimAligned
  * Dim Aligned properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimAlignedProperties(const RS_DimAligned *dim){
+void LC_QuickInfoEntityData::collectDimAlignedProperties(RS_DimAligned *dim){
     m_entityName = tr("DIMALIGNED");
 //    addAngleProperty("Angle", dim->getAngle());
-    addProperty(tr("Style"), dim->getStyle(),PropertyType::OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::OTHER);
+    addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
     addVectorProperty(tr("Extension Point 1"), dim->getExtensionPoint1());
-    addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint1());
+    addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint2());
+    addVectorProperty(tr("Text Middle Point"), dim->getMiddleOfText());
 }
 
 /**
