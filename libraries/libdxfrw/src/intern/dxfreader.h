@@ -35,7 +35,7 @@ public:
     bool readRec(int *code);
 
     std::string getString() {return strData;}
-    int getHandleString();//Convert hex string to int
+    int getHandleId();//Convert hex string to int
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
     std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}

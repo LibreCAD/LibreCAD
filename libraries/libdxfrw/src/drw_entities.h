@@ -97,7 +97,7 @@ namespace DRW {
 *  Base class for entities
 *  @author Rallaz
 */
-class DRW_Entity {
+class DRW_Entity: public DRW_ParseableEntity{
     SETENTFRIENDS
 public:
     //initializes default values
@@ -117,7 +117,7 @@ public:
 
 protected:
     //parses dxf pair to read entity
-    virtual bool parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     //calculates extrusion axis (normal vector)
     void calculateAxis(DRW_Coord extPoint);
     //apply extrusion to @extPoint and return data in @point

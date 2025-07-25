@@ -70,10 +70,10 @@ void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
 bool DRW_Entity::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 5:
-        handle = reader->getHandleString();
+        handle = reader->getHandleId();
         break;
     case 330:
-        parentHandle = reader->getHandleString();
+        parentHandle = reader->getHandleId();
         break;
     case 8:
         layer = reader->getUtf8String();
@@ -165,7 +165,7 @@ bool DRW_Entity::parseDxfGroups(int code, dxfReader *reader){
 //            curr.code = code;
             //RLZ code == 330 || code == 360 OR nc == 330 || nc == 360 ?
             if (code == 330 || code == 360)
-                curr.addInt(code, reader->getHandleString());//RLZ code or nc
+                curr.addInt(code, reader->getHandleId());//RLZ code or nc
             else {
                 switch (reader->type) {
                 case dxfReader::STRING:
@@ -2272,7 +2272,7 @@ bool DRW_Image::parseCode(int code, dxfReader *reader){
         sizev = reader->getDouble();
         break;
     case 340:
-        ref = reader->getHandleString();
+        ref = reader->getHandleId();
         break;
     case 280:
         clip = reader->getInt32();
@@ -2813,7 +2813,7 @@ bool DRW_Leader::parseCode(int code, dxfReader *reader){
             vertexpoint->z = reader->getDouble();
         break;
     case 340:
-        annotHandle = reader->getHandleString();
+        annotHandle = reader->getHandleId();
         break;
     case 210:
         extrusionPoint.x = reader->getDouble();

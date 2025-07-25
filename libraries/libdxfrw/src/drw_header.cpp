@@ -2162,10 +2162,8 @@ int DRW_Header::measurement(const int unit) {
         case Units::Mil:
         case Units::Yard:
             return Units::English;
-
         default:
             break;
     }
-
     return Units::Metric;
 }

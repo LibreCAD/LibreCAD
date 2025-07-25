@@ -20,6 +20,8 @@
 #include <cmath>
 #include <unordered_map>
 
+class dxfReader;
+
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
 #else
@@ -231,6 +233,12 @@ public:
     double z{0};
 };
 
+
+class DRW_ParseableEntity {
+public:
+    virtual ~DRW_ParseableEntity() = default;
+    virtual bool parseCode(int code, dxfReader *reader) = 0;
+};
 
 //! Class to handle vertex
 /*!
