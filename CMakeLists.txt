@@ -1609,8 +1609,7 @@ if(BUILD_TESTS)
     # Define test executable
     add_executable(librecad_tests
         ${PROJECT_SOURCE_DIR}/librecad/src/lib/math/tests/rs_math_tests.cpp
-        ${PROJECT_SOURCE_DIR}/librecad/src/lib/math/rs_math.cpp
-        librecad/src/lib/debug/rs_debug.cpp
+        ${SOURCES}
     )
 
     # Include directories for rs_math.h and other dependencies
