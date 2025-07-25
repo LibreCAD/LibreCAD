@@ -39,7 +39,7 @@ class QG_DlgOptionsDrawing : public LC_Dialog, public Ui::QG_DlgOptionsDrawing{
     Q_OBJECT
 public:
     void connectPointsTab();
-    void connectLegacyDimsTab();
+    void _to_remove_ConnectLegacyDimsTab();
     explicit QG_DlgOptionsDrawing(QWidget* parent = nullptr);
 	~QG_DlgOptionsDrawing() override;
     void showInitialTab(int tabIndex);
@@ -61,6 +61,7 @@ protected slots:
     void updateDimLengthPrecision();
     void updateDimAnglePrecision();
     void updatePaperPreview();
+    void onTabCurrentChanged(int index);
     void on_cbGridOn_toggled(bool checked);
 	void onLandscapeToggled(bool checked);
     void onDimFxLonToggled(bool checked);
@@ -69,12 +70,13 @@ protected slots:
     void enableXSpacing(bool checked);
 
     void onDimStyleNew(bool checked);
-    void expansStylesTree();
+    void expandStylesTree();
     void onDimStyleEdit(bool checked=false);
     void onDimStyleRename(bool checked);
     void onDimStyleRemove(bool checked);
     void onDimStyleExport(bool checked);
     void onDimStyleImport(bool checked);
+    void updateActiveStyleLabel(LC_DimStyleTreeModel* model);
     void onDimStyleSetDefault(bool checked);
     void updateActionButtons(LC_DimStyleItem* item);
     void onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
@@ -87,7 +89,7 @@ protected:
     void setupSplinesTab();
     void setupGridTab();
     void setupPaperTab();
-    void setupLegacyDimsTab(RS2::LinearFormat& linearFormat, int lunits, int luprec, int aunits, int auprec);
+    void _toRemoveSetupLegacyDimsTab(RS2::LinearFormat& linearFormat, int lunits, int luprec, int aunits, int auprec);
     LC_DimStyleTreeModel* getDimStylesModel();
     void doCreateDimStyle(const QString &newStyleName, LC_DimStyleTreeModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType);
     void connectPaperTab();
@@ -111,7 +113,7 @@ private:
     void collectStylesUsage(RS_Graphic* rs_graphic, QMap<QString, int>& map);
     void setupDimStylesTab(RS_Graphic* g);
     void setupVariablesTab();
-    void tmp_ValidateDimsOld();
+    void _toRemove_validateDimsOld();
     bool validateDimensions();
     bool validatePointsTab();
     void validateSplinesTab();

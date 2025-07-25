@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabPaper">
       <attribute name="title">
@@ -1890,7 +1890,7 @@
             <item>
              <widget class="QToolButton" name="tbDimDefault">
               <property name="toolTip">
-               <string>Marks style as default one. Default style will be used during creation of dimensions.</string>
+               <string>Marks style as active one. Active style will be used during creation of dimensions.</string>
               </property>
               <property name="text">
                <string>...</string>
@@ -1956,6 +1956,29 @@
              </spacer>
             </item>
            </layout>
+          </item>
+          <item row="2" column="0">
+           <widget class="QGroupBox" name="groupBox_7">
+            <property name="title">
+             <string>Style Info:</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_24">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Active Style:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="lblActiveStyle">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
