@@ -65,14 +65,14 @@ void RS_Arc::setCenter(const RS_Vector& center) {
 }
 
 void RS_Arc::setRadius(double radius) {
-    if (!RS_Math::equal(data.radius, radius)) {
+    if (RS_Math::notEqual(data.radius, radius)) {
         data.radius = radius;
         calculateBorders();
     }
 }
 
 void RS_Arc::setAngle1(double a1) {
-    if (!RS_Math::equal(data.angle1, a1)) {
+    if (RS_Math::notEqual(data.angle1, a1)) {
         data.angle1 = a1;
         calculateBorders();
     }
@@ -80,7 +80,7 @@ void RS_Arc::setAngle1(double a1) {
 
 /** Sets new end angle. */
 void RS_Arc::setAngle2(double a2) {
-    if (!RS_Math::equal(data.angle2, a2)) {
+    if (RS_Math::notEqual(data.angle2, a2)) {
         data.angle2 = a2;
         calculateBorders();
     }

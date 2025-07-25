@@ -52,6 +52,7 @@ RS_Vector pow(const RS_Vector &x, int y);
  * @return true if the floating points are considered equal
  */
 bool equal(double d1, double d2, double tolerance = 0.);
+bool notEqual(double d1, double d2, double tolerance = 0.);
 
 double rad2deg(double a);
 double deg2rad(double a);

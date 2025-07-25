@@ -107,6 +107,11 @@ bool RS_Math::equal(double d1, double d2, double tolerance)
     return std::abs(d1 - d2) <= std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
 }
 
+bool RS_Math::notEqual(double d1, double d2, double tolerance)
+{
+    return std::abs(d1 - d2) > std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
+}
+
 /**
  * Converts radians to degrees.
  */
