@@ -63,6 +63,7 @@
 #include "rs_math.h"
 #include "dxf_format.h"
 #include "lc_defaults.h"
+#include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
 #include "lc_extentitydata.h"
@@ -318,8 +319,6 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
             graphic->addVariable("$DIMADEC", data.dimadec, 70);
         }
     }
-
-
 
     LC_DimStyle* dimStyle = createDimStyle(data);
     graphic->addDimStyle(dimStyle);
@@ -1040,7 +1039,7 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
  * Implementation of the method which handles
  * dimensions (DIMENSION).
  */
-RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data, DRW_ParsingContext& ctx) {
 
     DRW_Coord crd = data->getDefPoint();
     RS_Vector defP(crd.x, crd.y);
@@ -1098,7 +1097,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data, s
     if (!data->extData.empty()) {
         LC_ExtEntityData* extData = extractEntityExtData(data->extData);
         if (extData != nullptr) {
-            dimStyleOverride = parseDimStyleOverride(extData, blockRecords);
+            dimStyleOverride = parseDimStyleOverride(extData, ctx);
             delete extData;
         }
     }
@@ -1111,8 +1110,59 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data, s
                             t, sty, data->getDir(), data->getHDir(), !customTextLocation, dimStyleOverride);
 }
 
-// this methos is quite generic and may be used for parsing any entity's ext data
-// fixme - sand - nesting of tags is not supported so far in code, yet it's supported by DXF !!!!
+void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>> &extData, LC_ExtEntityData* entityData) {
+    auto appDatas = entityData->getAppData();
+    for (auto appData: *appDatas) {
+        extData.push_back(std::make_shared<DRW_Variant>(1001, appData->getName().toStdString())); // application name
+        auto groups = appData->getGroups();
+        for (auto group: *groups) {
+            extData.push_back(std::make_shared<DRW_Variant>(1000, group->getName().toStdString())); // group name
+            extData.push_back(std::make_shared<DRW_Variant>(1002, "{")); // start
+
+            auto tagsList = group->getTagsList();
+
+            for (auto tag: *tagsList) {
+                if (tag->isAtomic ()) {
+                    // fixme - just plain list of tags within the group, no nesting!
+                    auto variable = tag->var();
+                    int code = variable->getCode();
+                    extData.push_back(std::make_shared<DRW_Variant>(1070, code)); // code of variable
+                    auto varType = variable->getType();
+                    switch (varType) {
+                        case RS2::VariableInt: {
+                            extData.push_back(std::make_shared<DRW_Variant>(1070, variable->getInt())); // int value
+                            break;
+                        }
+                        case RS2::VariableDouble: {
+                            extData.push_back(std::make_shared<DRW_Variant>(1040, variable->getDouble())); // double value
+                            break;
+                        }
+                        case RS2::VariableString: {
+                            // fixme code??
+                            extData.push_back(std::make_shared<DRW_Variant>(1003, variable->getDouble())); // string value
+                            break;
+                        }
+                        case RS2::VariableVector: {
+                            RS_Vector vec = variable->getVector();
+                            extData.push_back(std::make_shared<DRW_Variant>(1010, vec.x)); // vector value
+                            extData.push_back(std::make_shared<DRW_Variant>(1011, vec.y)); // vector value
+                            extData.push_back(std::make_shared<DRW_Variant>(1012, vec.z)); // vector value
+                            break;
+                        }
+                        case RS2::VariableVoid: {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            extData.push_back(std::make_shared<DRW_Variant>(1002, "}")); // end
+        }
+    }
+}
+
+// this method is quite generic and may be used for parsing any entity's ext data
+// fixme & todo - sand - nesting of tags is not supported so far in code, yet it's supported by DXF !!!!
 LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::shared_ptr<DRW_Variant>> &extData) {
     auto* result = new LC_ExtEntityData();
     LC_ExtDataAppData* currentAppData = nullptr;
@@ -1163,7 +1213,7 @@ LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::sh
             case 1012:
             case 1013: {
                 if (currentGroup != nullptr) {
-                    auto coord = v->coord();
+                    auto coord = v->coord(); // fixme - sand - review how actually coordinate is parsed, and why it's on several codes??
                     if (coord != nullptr) {
                         currentGroup->add(currentValType, RS_Vector(coord->x, coord->y, coord->z));
                     }
@@ -1206,8 +1256,334 @@ LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::sh
     return result;
 }
 
+bool RS_FilterDXFRW::shouldGenerateExtEntityData(RS_Dimension* entity) {
+    // todo - so far, we support only dimension style override as extension data.
+    // however, that's logic may be expanded later and store, for example,
+    // something like entity-specific meta information or so.
+    return entity->getDimStyleOverride() != nullptr;
+}
 
-LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityData, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) const {
+QString RS_FilterDXFRW::toHexStr(int n){
+    return QString::number(n, 16).toUpper();
+}
+
+void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEntityData, LC_DimStyle* styleOverride) {
+    if (styleOverride == nullptr) {
+        return;
+    }
+    auto appData = extEntityData->addAppData("ACAD");
+    auto group = appData->addGroup("DSTYLE");
+
+    auto arrowhead = styleOverride->arrowhead();
+    auto linearFormat = styleOverride->linearFormat();
+    auto extensionLine = styleOverride->extensionLine();
+    auto dimensionLine = styleOverride->dimensionLine();
+    auto text = styleOverride->text();
+    auto tolerance = styleOverride->latteralTolerance();
+    auto zerosSuppression = styleOverride->zerosSuppression();
+    auto scaling = styleOverride->scaling();
+    auto roundoff = styleOverride->roundOff();
+    auto radial = styleOverride->radial();
+    auto angularFormat = styleOverride->angularFormat();
+    auto fractions = styleOverride->fractions();
+    auto leader = styleOverride->leader();
+    auto arc = styleOverride->arc();
+
+    auto savedModificationMode = linearFormat->getModifyCheckMode();
+    // here we're interested only in actually modified fields
+    styleOverride->setModifyCheckMode(LC_DimStyle::ModificationAware::SET);
+
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMPOST)) { // $DIMPOST
+        group->add(3, linearFormat->prefixOrSuffix());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMAPOST)) { // $DIMAPOST
+        group->add(4, linearFormat->altPrefixOrSuffix());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK)) { // $DIMBLK
+        group->add(5, arrowhead->sameBlockName());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK1)) { // $DIMBLK1
+        group->add(6, arrowhead->arrowHeadBlockNameFirst());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK2)) { // $DIMBLK2
+        group->add(7, arrowhead->arrowHeadBlockNameSecond());
+    }
+    if (scaling->checkModifyState(LC_DimStyle::Scaling::$DIMSCALE)) { // $DIMSCALE
+        group->add(40, scaling->scale());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMASZ)) { // $DIMASZ
+        group->add(41, arrowhead->size());
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMEXO)) { // $DIMEXO
+        group->add(42, extensionLine->distanceFromOriginPoint());
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMDLI)) {// $DIMDLI
+        group->add(43, dimensionLine->baseLineDimLinesSpacing());
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMEXE)) { // $DIMEXE
+        group->add(44, extensionLine->distanceBeyondDimLine());
+    }
+    if (roundoff->checkModifyState(LC_DimStyle::LinearRoundOff::$DIMRND)) { // $DIMRND
+        group->add(45, roundoff->roundTo());
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMDLE)) {// $DIMDLE
+        group->add(46, dimensionLine->distanceBeyondExtLinesForObliqueStroke());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTP)) {// $DIMDTP
+        group->add(47, tolerance->upperToleranceLimit());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTM)) {// $DIMDTM
+        group->add(48, tolerance->lowerToleranceLimit());
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMFXL)) { // $DIMFXL
+        group->add(49, extensionLine->fixedLength());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTXT)) { // $DIMTXT
+        group->add(140, text->height());
+    }
+    if (radial->checkModifyState(LC_DimStyle::Radial::$DIMCEN)) { // $DIMCEN
+        group->add(141, radial->centerCenterMarkOrLineSize());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMTSZ)) { // $DIMTSZ
+        group->add(142, arrowhead->tickSize());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMALTF)) { // $DIMALTF
+        group->add(143, linearFormat->altUnitsMultiplier());
+    }
+    if (scaling->checkModifyState(LC_DimStyle::Scaling::$DIMLFAC)) { // $DIMLFAC
+        group->add(144, scaling->linearFactor());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTVP)) { // $DIMTVP
+        group->add(145, text->verticalDistanceToDimLine());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTFAC)) {// $DIMTFAC
+        group->add(146, tolerance->heightScaleFactorToDimText());
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMGAP)) {// $DIMGAP
+        group->add(147, dimensionLine->lineGap());
+    }
+    if (roundoff->checkModifyState(LC_DimStyle::LinearRoundOff::$DIMALTRND)) { // $DIMALTRND
+        group->add(148, roundoff->altRoundTo());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILL)) { // $DIMTFILL
+        group->add(69, text->backgroundFillMode());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILLCLR)) { // $DIMTFILLCLR
+        int colorRgb;
+        int colorNumber = colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
+        group->add(70, colorNumber);
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOL)) {// $DIMTOL
+        group->add(71, tolerance->isAppendTolerancesToDimText() ? 1 : 0);
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMLIM)) {// $DIMLIM
+        group->add(72, tolerance->isLimitsGeneratedAsDefaultText() ? 1 : 0);
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTIH)) { // $DIMTIH
+        group->add(73, text->orientationInside());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTOH)) { // $DIMTOH
+        group->add(74, text->orientationOutside());
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) { // $DIMSE1
+        group->add(75, extensionLine->firstLineSuppression());
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE2)) { // $DIMSE2
+        group->add(76, extensionLine->secondLineSuppression());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTAD)) { // $DIMTAD
+        group->add(77, text->verticalPositioning());
+    }
+    if (zerosSuppression->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMZIN)) { // $DIMZIN
+        group->add(78, zerosSuppression->linearRaw());
+    }
+    if (zerosSuppression->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMAZIN)) { // $DIMAZIN
+        group->add(79, zerosSuppression->angularRaw());
+    }
+    if (arc->checkModifyState(LC_DimStyle::Arc::$DIMARCSYM)) { // $DIMARCSYM
+        group->add(90, arc->arcSymbolPosition());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMALT)) { // $DIMALT
+        group->add(170, linearFormat->alternateUnits());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMALTD)) { // $DIMALTD
+        group->add(171, linearFormat->altDecimalPlaces());
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMTOFL)) {// $DIMTOFL
+        group->add(172, dimensionLine->drawPolicyForOutsideText());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMSAH)) { // $DIMSAH
+        group->add(173, arrowhead->isUseSeparateArrowHeads()); // fixme - check value
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTIX)) { // $DIMTIX
+        group->add(174, text->extLinesRelativePlacement());
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMSOXD)) { // $DIMSOXD
+        group->add(175, arrowhead->suppression()); // fixme - check value
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {// $DIMCLRD
+        int colorRgb;
+        int colorNumber = colorToNumber(dimensionLine->color(), &colorRgb);
+        group->add(176, colorNumber);
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {// $DIMCLRE
+        int colorRgb;
+        int color = colorToNumber(extensionLine->color(), &colorRgb);
+        group->add(177, color);
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {// $DIMCLRT
+        int colorRgb;
+        int colorNumber = colorToNumber(text->color(), &colorRgb);
+        group->add(178, colorNumber);
+    }
+    if (angularFormat->checkModifyState(LC_DimStyle::AngularFormat::$DIMADEC)) { // $DIMADEC
+        group->add(179, angularFormat->decimalPlaces());
+    }
+    // case 270: // fixme - sand - obsolete DIMUNIT
+    // result->linearFormat()->setUDecimalPlaces(var->getInt());
+    // dimunit = reader->getInt32();
+    // add("$DIMUNIT", code, dimunit);
+    // break;
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMDEC)) { // $DIMDEC
+        group->add(271, linearFormat->decimalPlaces());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTDEC)) {// $DIMTDEC
+        group->add(272, tolerance->decimalPlaces());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMALTU)) { // $DIMALTU
+        group->add(273, linearFormat->altFormat());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMALTTD)) {// $DIMALTTD
+        group->add(274, tolerance->decimalPlacesAltDim());
+    }
+    if (angularFormat->checkModifyState(LC_DimStyle::AngularFormat::$DIMAUNIT)) { // $DIMAUNIT
+        group->add(275, angularFormat->format());
+    }
+    if (fractions->checkModifyState(LC_DimStyle::Fractions::$DIMFRAC)) { // $DIMFRAC
+        group->add(276, fractions->style());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMLUNIT)) { // $DIMLUNIT
+        group->add(277, linearFormat->formatRaw());
+    }
+    if (linearFormat->checkModifyState(LC_DimStyle::LinearFormat::$DIMSEP)) { // $DIMDSEP
+        group->add(278, linearFormat->decimalFormatSeparatorChar());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTMOVE)) { // $DIMTMOVE
+        group->add(279, text->positionMovementPolicy());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMJUST)) { // $DIMJUST
+        group->add(280, text->horizontalPositioning());
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {// $DIMSD1
+        group->add(281, dimensionLine->firstLineSuppression());
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD2)) {// $DIMSD2
+        group->add(282, dimensionLine->secondLineSuppression());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOLJ)) {// $DIMTOLJ
+        group->add(283, tolerance->verticalJustification());
+    }
+    if (zerosSuppression->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMTZIN)) { // $DIMTZIN
+        group->add(284, zerosSuppression->toleranceRaw());
+    }
+    if (zerosSuppression->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMALTZ)) { // $DIMALTZ
+        group->add(285, zerosSuppression->altLinearRaw());
+    }
+    if (zerosSuppression->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMALTTZ)) { // $DIMALTTZ
+        group->add(286, zerosSuppression->altToleranceRaw());
+    }
+    //case 287: // fixme - DIMFIT
+    // dimfit = reader->getInt32();
+    // add("$DIMFIT", code, dimfit);
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMUPT)) { // $DIMUPT
+        group->add(288, text->cursorControlPolicy());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMATFIT)) { // $DIMATFIT
+        group->add(289, text->unsufficientSpacePolicy());
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMFXLON)) { // $DIMFXLON
+        group->add(290, extensionLine->hasFixedLength() ? 1 : 0);  // fixme - check
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTXTDIRECTION)) { // $DIMTXTDIRECTION
+        group->add(292, text->readingDirection());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTXSTY)) { // $DIMTXSTY
+        group->add(340, text->style()); // fixme - ref to style?
+    }
+    if (leader->checkModifyState(LC_DimStyle::Leader::$DIMLDRBLK)) { //DIMLDRBLK
+        auto blockName = leader->arrowBlockName();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                group->add(341, toHexStr(blkHandle));
+            }
+        }
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK)) { //$DIMBLK
+        auto blockName = arrowhead->sameBlockName();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                group->add(342, toHexStr(blkHandle));
+            }
+        }
+    }
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK1)) { //$DIMBLK1
+        auto blockName = arrowhead->arrowHeadBlockNameFirst();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                group->add(343, toHexStr(blkHandle));
+            }
+        }
+    }
+
+    if (arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK2)) { //$DIMBLK2
+        auto blockName = arrowhead->arrowHeadBlockNameSecond();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                group->add(344, toHexStr(blkHandle));
+            }
+        }
+    }
+/*
+                    // case 345: // codes///
+                    // fixme - may this code be used for DIMLDRBLK?
+                    //      dimblk2 = reader->getUtf8String();
+                    //      add("$DIMBLK2", code, dimblk2);
+                    //      break;
+     */
+
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLTYPE)) { // $DIMLTYPE
+        // group->add(346, dimensionLine->lineTypeName());  // fixme - check
+        group->add(345, dimensionLine->lineType());  // fixme - check
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX1)) { // $DIMLTEX1
+        group->add(347, extensionLine->lineTypeFirstRaw());  // fixme - check
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX2)) { // $DIMLTEX2
+        group->add(348, extensionLine->lineTypeSecondRaw());  // fixme - check
+    }
+    if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLWD)) { // $DIMLWD
+        auto lineWidth = dimensionLine->lineWidth();
+        int lw = RS2::lineWidth2dxfInt(lineWidth);
+        group->add(371, lw);
+    }
+    if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLWE)) { // $DIMLWE
+        auto lineWidth = extensionLine->lineWidth();
+        int lw = RS2::lineWidth2dxfInt(lineWidth);
+        group->add(372, lw);
+    }
+
+    styleOverride->setModifyCheckMode(savedModificationMode);
+}
+
+LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityData, DRW_ParsingContext& ctx) const {
     if (extEntityData != nullptr) {
         auto dimStyleGroup = extEntityData->getGroupByName("ACAD", "DSTYLE");
         if (dimStyleGroup != nullptr) {
@@ -1223,6 +1599,7 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
             auto text = result->text();
             auto tolerance = result->latteralTolerance();
             auto zerosSuppression = result->zerosSuppression();
+            auto arc = result->arc();
 
             result->setModifyCheckMode(LC_DimStyle::ModificationAware::ALL);
             int count = dimStyleVariables->size();
@@ -1459,10 +1836,18 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         int refHandle = refHandleStr.toInt(&ok, 16);
                         if (ok) {
                             QString blockName;
-                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            ok = resolveBlockName(refHandle, blockName, ctx);
                             if (ok) {
                                 result->leader()->setArrowBlockName(blockName);
                             }
+                        }
+                        else { // the string is not handle, but a direct name of the block.
+                            // fixme - DIMLDRBLK reading!
+                            // This is workaround for referring leader by name, not by block ref...
+                            // however, it may be not ACad compatible..
+                            // if (LC_DimArrowRegistry::isStandardBlockName(refHandleStr)) {
+                                // result->leader()->setArrowBlockName(refHandleStr);
+                            // }
                         }
                         break;
                     }
@@ -1472,7 +1857,7 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         int refHandle = refHandleStr.toInt(&ok, 16);
                         if (ok) {
                             QString blockName;
-                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            ok = resolveBlockName(refHandle, blockName, ctx);
                             if (ok) {
                                 arrowhead->setSameBlockName(blockName);
                             }
@@ -1486,7 +1871,7 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         int refHandle = refHandleStr.toInt(&ok, 16);
                         if (ok) {
                             QString blockName;
-                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            ok = resolveBlockName(refHandle, blockName, ctx);
                             if (ok) {
                                 arrowhead->setArrowHeadBlockNameFirst(blockName);
                             }
@@ -1500,7 +1885,7 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         int refHandle = refHandleStr.toInt(&ok, 16);
                         if (ok) {
                             QString blockName;
-                            ok = resolveBlockName(refHandle, blockName, blockRecords);
+                            ok = resolveBlockName(refHandle, blockName, ctx);
                             if (ok) {
                                 arrowhead->setArrowHeadBlockNameSecond(blockName);
                             }
@@ -1512,20 +1897,34 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                     //      dimblk2 = reader->getUtf8String();
                     //      add("$DIMBLK2", code, dimblk2);
                     //      break;
-                    case 346: // "$DIMLTYPE"
-                        dimensionLine->setLineType(var->getString());
+                    case 345: {
+                        // "$DIMLTYPE"
+                        int ltype = var->getInt();
+                        dimensionLine->setLineType(static_cast<RS2::LineType>(ltype));
                         break;
-                    case 347: // "$DIMLTEX1"
-                        extensionLine->setLineTypeFirst(var->getString());
+                    }
+                    case 347: { // "$DIMLTEX1"
+                        auto dimltex1 = var->getString();
+                        if (!dimltex1.isEmpty()) {
+                            extensionLine->setLineTypeFirst(dimltex1);
+                        }
                         break;
-                    case 348: //"$DIMLTEX2"
-                        extensionLine->setLineTypeSecond(var->getString());
+                    }
+                    case 348: { //"$DIMLTEX2"
+                        auto dimltex2 = var->getString();
+                        if (!dimltex2.isEmpty()) {
+                            extensionLine->setLineTypeSecond(dimltex2);
+                        }
                         break;
+                    }
                     case 371: // "$DIMLWD"
                         dimensionLine->setLineWidthRaw(var->getInt());
                         break;
                     case 372: //"$DIMLWE"
                         extensionLine->setLineWidthRaw(var->getInt());
+                        break;
+                    case 90: //"$DIMARCSYM"
+                        arc->setArcSymbolPositionRaw(var->getInt());
                         break;
                     default:
                         break;
@@ -1534,7 +1933,7 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
 
             // workaround for AutoCAD - it seems that later versions ignores DIMSAH and consider blocks for arrowhead to be
             // different if individual arrows are different. So we set the flag manually
-            // fixme - check wether given conition is enough for properly setting the flag
+            // fixme - check whether given condition is enough for properly setting the flag
             result->setModifyCheckMode(LC_DimStyle::ModificationAware::SET);
             if (!arrowhead->checkModifyState(LC_DimStyle::Arrowhead::$DIMSAH) ) {
                 if(arrowhead->sameBlockName().isEmpty() && (arrowhead->arrowHeadBlockNameFirst() != arrowhead->arrowHeadBlockNameSecond())) {
@@ -1552,17 +1951,17 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
  * Implementation of the method which handles
  * aligned dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimAligned");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, ctx);
 
     RS_Vector ext1(data->getDef1Point().x, data->getDef1Point().y);
     RS_Vector ext2(data->getDef2Point().x, data->getDef2Point().y);
 
     RS_DimAlignedData d(ext1, ext2);
 
-    RS_DimAligned* entity = new RS_DimAligned(currentContainer,
+    auto* entity = new RS_DimAligned(currentContainer,
                             dimensionData, d);
     setEntityAttributes(entity, data);
     entity->updateDimPoint();
@@ -1574,10 +1973,10 @@ void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data, std::unordered_map<
  * Implementation of the method which handles
  * linear dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimLinear(const DRW_DimLinear *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimLinear(const DRW_DimLinear *data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimLinear");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, ctx);
 
     RS_Vector dxt1(data->getDef1Point().x, data->getDef1Point().y);
     RS_Vector dxt2(data->getDef2Point().x, data->getDef2Point().y);
@@ -1598,10 +1997,10 @@ void RS_FilterDXFRW::addDimLinear(const DRW_DimLinear *data, std::unordered_map<
  * Implementation of the method which handles
  * radial dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial* data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimRadial");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, ctx);
     RS_Vector dp(data->getDiameterPoint().x, data->getDiameterPoint().y);
 
     RS_DimRadialData d(dp, data->getLeaderLength());
@@ -1620,10 +2019,10 @@ void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial* data, std::unordered_map<
  * Implementation of the method which handles
  * diametric dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric* data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimDiametric");
 
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, ctx);
     RS_Vector dp(data->getDiameter1Point().x, data->getDiameter1Point().y);
 
     RS_DimDiametricData d(dp, data->getLeaderLength());
@@ -1642,10 +2041,10 @@ void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric* data, std::unordere
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimAngular");
 
-    RS_DimensionData dimensionData = convDimensionData(data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData(data, ctx);
     RS_Vector dp1(data->getFirstLine1().x, data->getFirstLine1().y);
     RS_Vector dp2(data->getFirstLine2().x, data->getFirstLine2().y);
     RS_Vector dp3(data->getSecondLine1().x, data->getSecondLine1().y);
@@ -1665,10 +2064,10 @@ void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular* data, std::unordered_ma
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimAngular3P");
 
-    RS_DimensionData dimensionData = convDimensionData(data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData(data, ctx);
     RS_Vector dp1(data->getFirstLine().x, data->getFirstLine().y);
     RS_Vector dp2(data->getSecondLine().x, data->getSecondLine().y);
     RS_Vector dp3(data->getVertexPoint().x, data->getVertexPoint().y);
@@ -1685,9 +2084,9 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data, std::unordere
     currentContainer->addEntity(entity);
 }
 
-void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
-    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, blockRecords);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)data, ctx);
 
     RS_Vector featurePoint{data->getFirstLine().x, data->getFirstLine().y};
     RS_Vector leaderEndPoint{data->getSecondLine().x, data->getSecondLine().y};
@@ -1707,10 +2106,10 @@ void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data, std::unordered_
 /**
  * Implementation of the method which handles leader entities.
  */
-void RS_FilterDXFRW::addLeader(const DRW_Leader *data, std::unordered_map<duint32, DRW_Block_Record*>& blockRecords) {
+void RS_FilterDXFRW::addLeader(const DRW_Leader *data, DRW_ParsingContext& ctx) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimLeader");
     RS_LeaderData d(data->arrow!=0, QString::fromUtf8(data->style.c_str()));
-    RS_Leader* leader = new RS_Leader(currentContainer, d);
+    auto leader = new RS_Leader(currentContainer, d);
     setEntityAttributes(leader, data);
 
 	for (auto const& vert: data->vertexlist)
@@ -2277,16 +2676,16 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     data.addStr("$CLAYER", (graphic->getActiveLayer()->getName()).toUtf8().data(), 8);
 }
 
-void RS_FilterDXFRW::writeLTypes(){
+void RS_FilterDXFRW::writeLTypes(std::vector<std::pair<std::string, int>>& lineTypesMap){
     DRW_LType ltype;
     // Standard linetypes for LibreCAD / AutoCAD
     ltype.name = "CONTINUOUS";
     ltype.desc = "Solid line";
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
     ltype.name = "ByLayer";
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
     ltype.name = "ByBlock";
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.name = "DOT";
     ltype.desc = "Dot . . . . . . . . . . . . . . . . . . . . . .";
@@ -2294,7 +2693,7 @@ void RS_FilterDXFRW::writeLTypes(){
 	ltype.length = 6.35;
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DOTTINY";
@@ -2303,7 +2702,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 0.9525;
     ltype.path.push_back(0.0);
     ltype.path.push_back(-0.9525);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DOT2";
@@ -2312,7 +2711,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 3.175;
     ltype.path.push_back(0.0);
     ltype.path.push_back(-3.175);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DOTX2";
@@ -2321,7 +2720,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 12.7;
     ltype.path.push_back(0.0);
     ltype.path.push_back(-12.7);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHED";
@@ -2330,7 +2729,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 19.05;
     ltype.path.push_back(12.7);
     ltype.path.push_back(-6.35);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHEDTINY";
@@ -2339,7 +2738,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 2.8575;
     ltype.path.push_back(1.905);
     ltype.path.push_back(-0.9525);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHED2";
@@ -2348,7 +2747,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 9.525;
     ltype.path.push_back(6.35);
     ltype.path.push_back(-3.175);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHEDX2";
@@ -2357,7 +2756,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.length = 38.1;
     ltype.path.push_back(25.4);
     ltype.path.push_back(-12.7);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHDOT";
@@ -2368,7 +2767,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHDOTTINY";
@@ -2379,7 +2778,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-0.9525);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-0.9525);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHDOT2";
@@ -2390,7 +2789,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-3.175);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DASHDOTX2";
@@ -2401,7 +2800,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-12.7);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DIVIDE";
@@ -2414,7 +2813,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DIVIDETINY";
@@ -2427,7 +2826,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-0.9525);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-0.9525);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DIVIDE2";
@@ -2440,7 +2839,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-3.175);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "DIVIDEX2";
@@ -2453,7 +2852,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-12.7);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "BORDER";
@@ -2466,7 +2865,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "BORDERTINY";
@@ -2479,7 +2878,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-0.9525);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-0.9525);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "BORDER2";
@@ -2492,7 +2891,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-3.175);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "BORDERX2";
@@ -2505,7 +2904,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-12.7);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "CENTER";
@@ -2516,7 +2915,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(6.35);
     ltype.path.push_back(-6.35);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "CENTERTINY";
@@ -2527,7 +2926,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-0.9525);
     ltype.path.push_back(0.9525);
     ltype.path.push_back(-0.9525);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "CENTER2";
@@ -2538,7 +2937,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     ltype.path.push_back(3.175);
     ltype.path.push_back(-3.175);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 
     ltype.path.clear();
     ltype.name = "CENTERX2";
@@ -2549,7 +2948,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     ltype.path.push_back(12.7);
     ltype.path.push_back(-12.7);
-    dxfW->writeLineType(&ltype);
+    dxfW->writeLineType(&ltype, lineTypesMap);
 }
 
 void RS_FilterDXFRW::writeLayers(){
@@ -2764,8 +3163,8 @@ void RS_FilterDXFRW::writeVports(){
 }
 
 
-void RS_FilterDXFRW::writeDimstyles(){
-    DRW_Dimstyle dsty;
+void RS_FilterDXFRW::writeDimstyles(std::vector<std::pair<std::string, int>>& lineTypesMap){
+   /* DRW_Dimstyle dsty;
     dsty.name = "Standard";
     dsty.dimscale = graphic->getVariableDouble("$DIMSCALE", 1.0);
     dsty.dimasz = graphic->getVariableDouble("$DIMASZ", 2.5);
@@ -2790,8 +3189,424 @@ void RS_FilterDXFRW::writeDimstyles(){
     dsty.dimfxlon = graphic->getVariableInt("$DIMFXLON", 0);
     dsty.dimtxsty = graphic->getVariableString("$DIMTXSTY", "standard").toStdString();
     dsty.dimlwd = graphic->getVariableInt("$DIMLWD", -2);
-    dsty.dimlwe = graphic->getVariableInt("$DIMLWE", -2);
-    dxfW->writeDimstyle(&dsty);
+    dsty.dimlwe = graphic->getVariableInt("$DIMLWE", -2);*/
+
+    LC_DimStylesList* dimStylesList = graphic->getDimStyleList();
+    auto stylesList = dimStylesList->getStylesList();
+    for (auto ds: *stylesList) {
+        DRW_Dimstyle dst;
+        prepareDRWDimStyle(dst, ds, lineTypesMap);
+        dxfW->writeDimstyle(&dst);
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleZerosSuppression(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto zeros = ds->zerosSuppression();
+    if (zeros->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMZIN)) {
+        d.add("$DIMZIN", 78, zeros->linearRaw());
+    }
+    if (zeros->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMAZIN)) {
+        d.add("$DIMAZIN", 79, zeros->angularRaw());
+    }
+
+    if (zeros->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMTZIN)) {
+        d.add("$DIMTZIN", 284, zeros->toleranceRaw());
+    }
+    if (zeros->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMALTZ)) {
+        d.add("$DIMALTZ", 285, zeros->altLinearRaw());
+    }
+    if (zeros->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMALTTZ)) {
+        d.add("$DIMALTTZ", 286, zeros->altToleranceRaw());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto arrow = ds->arrowhead();
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK)) {
+        QString blockName = arrow->sameBlockName();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                d.add("_$DIMBLK", 342, toHexStr(blkHandle).toStdString());
+            }
+            d.add("$DIMBLK", 5, blkName);
+        }
+    }
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK1)) {
+        QString blockName = arrow->arrowHeadBlockNameFirst();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                d.add("_$DIMBLK1", 343, toHexStr(blkHandle).toStdString());
+            }
+            d.add("$DIMBLK1", 6, blkName);
+        }
+    }
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMBLK1)) {
+        QString blockName = arrow->arrowHeadBlockNameSecond();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                d.add("_$DIMBLK2", 344, toHexStr(blkHandle).toStdString());
+            }
+            d.add("$DIMBLK2", 7, blkName);
+        }
+    }
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMASZ)) {
+        d.add("$DIMASZ", 41, arrow->size());
+    }
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMTSZ)) {
+        d.add("$DIMTSZ", 142, arrow->tickSize());
+    }
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMSAH)) {
+        d.add("$DIMSAH", 173, arrow->isUseSeparateArrowHeads()? 1 : 0);
+    }
+    if (arrow->checkModifyState(LC_DimStyle::Arrowhead::$DIMSOXD)) {
+        d.add("$DIMSOXD", 175, arrow->suppression());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleScaling(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto scale = ds->scaling();
+    if (scale->checkModifyState(LC_DimStyle::Scaling::$DIMSCALE)) {
+        d.add("$DIMSCALE", 40, scale->scale());
+    }
+    if (scale->checkModifyState(LC_DimStyle::Scaling::$DIMLFAC)) {
+        d.add("$DIMLFAC", 144, scale->linearFactor());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleExtLine(DRW_Dimstyle& d, LC_DimStyle* ds,
+    std::vector<std::pair<std::string, int>>& lineTypesMap) {
+    auto extLine = ds->extensionLine();
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMEXO)) {
+        d.add("$DIMEXO", 42, extLine->distanceFromOriginPoint());
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMEXE)) {
+        d.add("$DIMEXE", 44, extLine->distanceBeyondDimLine());
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMFXL)) {
+        d.add("$DIMFXL", 49, extLine->fixedLength());
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMFXLON)) {
+        d.add("$DIMFXLON", 290, extLine->hasFixedLength() ? 1: 0);
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLWE)) {
+        auto lineWidth = extLine->lineWidth();
+        int lw = RS2::lineWidth2dxfInt(lineWidth);
+        d.add("$DIMLWE", 372, lw);
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
+        auto lineColor = extLine->color();
+        int colRGB;
+        int colNum = colorToNumber(lineColor, &colRGB);
+        d.add("$DIMCLRE", 177, colNum);
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
+        d.add("$DIMSE1", 75, extLine->firstLineSuppression());
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE2)) {
+        d.add("$DIMSE2", 76, extLine->secondLineSuppression());
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX1)) {
+        int lineTypeHandle = findLineTypeHandle(extLine->lineTypeFirstRaw(), lineTypesMap);
+        if (lineTypeHandle > 0) {
+            auto handleStr = toHexStr(lineTypeHandle);
+            d.add("$DIMLTEX1", 347, handleStr.toStdString());
+        }
+        // auto lineType = extLine->lineTypeFirstRaw().toStdString();
+        // d.add("$DIMLTEX1", 347, lineType);
+    }
+    if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX2)) {
+        int lineTypeHandle = findLineTypeHandle(extLine->lineTypeSecondRaw(), lineTypesMap);
+        if (lineTypeHandle > 0) {
+            auto handleStr = toHexStr(lineTypeHandle);
+            d.add("$DIMLTEX2", 348, handleStr.toStdString());
+        }
+        // auto lineType = extLine->lineTypeFirstRaw().toStdString();
+        // d.add("$DIMLTEX2", 348, lineType);
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle& d, LC_DimStyle* ds, std::vector<std::pair<std::string, int>>& lineTypesMap) {
+    auto dimLine = ds->dimensionLine();
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLWD)) {
+        auto lineWidth = dimLine->lineWidth();
+        int lw = RS2::lineWidth2dxfInt(lineWidth);
+        d.add("$DIMLWD", 371, lw);
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMDLE)) {
+        d.add("$DIMDLE", 46, dimLine->distanceBeyondExtLinesForObliqueStroke());
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMDLI)) {
+        d.add("$DIMDLI", 43, dimLine->baseLineDimLinesSpacing());
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMGAP)) {
+        d.add("$DIMGAP", 147, dimLine->lineGap());
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
+        auto lineColor = dimLine->color();
+        int colRGB;
+        int colNum = colorToNumber(lineColor, &colRGB);
+        d.add("$DIMCLRD", 176, colNum);
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
+        d.add("$DIMSD1", 281, dimLine->firstLineSuppression());
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD2)) {
+        d.add("$DIMSD2", 281, dimLine->secondLineSuppression());
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMTOFL)) {
+        d.add("$DIMTOFL", 172, dimLine->drawPolicyForOutsideText());
+    }
+    if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLTYPE)) {
+        // auto value = dimLine->lineType();
+        // auto lineType = dimLine->lineTypeName().toStdString();
+        int lineTypeHandle = findLineTypeHandle(dimLine->lineTypeName(), lineTypesMap);
+        if (lineTypeHandle > 0) {
+            auto handleStr = toHexStr(lineTypeHandle);
+            d.add("$DIMLTYPE", 345, handleStr.toStdString());
+        }
+    }
+}
+
+int RS_FilterDXFRW::findLineTypeHandle(const QString& name, std::vector<std::pair<std::string, int>>& lineTypesMap) const {
+    std::string lineName = name.toUpper().toStdString();
+    for (auto p: lineTypesMap) {
+        if (p.first.compare(lineName) == 0) {
+            return p.second;
+        }
+    }
+    return -1;
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto text = ds->text();
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTXT)) {
+        d.add("$DIMTXT", 140, text->height());
+    }
+
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTXSTY)) {
+        auto styleName = text->style().toStdString();
+        int styleHandle = dxfW->getTextStyleHandle(styleName);
+        if(styleHandle > 0) {
+            d.add("$DIMTXSTY", 340, toHexStr(styleHandle).toStdString());
+        }
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTOH)) {
+        d.add("$DIMTOH", 74, text->orientationOutside());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTIH)) {
+        d.add("$DIMTIH", 73, text->orientationInside());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMJUST)) {
+        d.add("$DIMJUST", 280, text->horizontalPositioning());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
+        auto lineColor = text->color();
+        int colRGB;
+        int colNum = colorToNumber(lineColor, &colRGB);
+        d.add("$DIMCLRT", 178, colNum);
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTAD)) {
+        d.add("$DIMTAD", 77, text->verticalPositioning());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTIX)) {
+        d.add("$DIMTIX", 174, text->extLinesRelativePlacement());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILL)) {
+        d.add("$DIMTFILL", 69, text->backgroundFillMode());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILLCLR)) {
+        auto lineColor = text->explicitBackgroundFillColor();
+        int colRGB;
+        int colNum = colorToNumber(lineColor, &colRGB);
+        d.add("$DIMTFILLCLR", 70, colNum);
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTXTDIRECTION)) {
+        d.add("$DIMTXTDIRECTION", 292, text->readingDirection());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTVP)) {
+        d.add("$DIMTVP", 145, text->verticalDistanceToDimLine());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMUPT)) {
+        d.add("$DIMUPT", 288, text->cursorControlPolicy());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMTMOVE)) {
+        d.add("$DIMTMOVE", 279, text->positionMovementPolicy());
+    }
+    if (text->checkModifyState(LC_DimStyle::Text::$DIMATFIT)) {
+        d.add("$DIMATFIT", 289, text->unsufficientSpacePolicy());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleLinearFormat(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto linear = ds->linearFormat();
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMLUNIT)) {
+        d.add("$DIMLUNIT", 277, linear->formatRaw());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMSEP)) {
+        d.add("$DIMDSEP", 278, linear->decimalFormatSeparatorChar());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMDEC)) {
+        d.add("$DIMDEC", 271, linear->decimalPlaces());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMPOST)) {
+        d.add("$DIMPOST", 3, linear->prefixOrSuffix().toStdString());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMALT)) {
+        d.add("$DIMALT", 170, linear->alternateUnits());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMALTU)) {
+        d.add("$DIMALTU", 273, linear->altFormatRaw());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMALTD)) {
+        d.add("$DIMALTD", 171, linear->altDecimalPlaces());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMALTF)) {
+        d.add("$DIMALTF", 143, linear->altUnitsMultiplier());
+    }
+    if (linear->checkModifyState(LC_DimStyle::LinearFormat::$DIMAPOST)) {
+        d.add("$DIMAPOST", 4, linear->altPrefixOrSuffix().toStdString());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleFractions(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto fraction = ds->fractions();
+    if (fraction->checkModifyState(LC_DimStyle::Fractions::$DIMFRAC)) {
+        d.add("$DIMFRAC", 276, fraction->style());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleAngularFormat(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto angular = ds->angularFormat();
+    if (angular->checkModifyState(LC_DimStyle::AngularFormat::$DIMAUNIT)) {
+        d.add("$DIMAUNIT", 275, angular->format());
+    }
+    if (angular->checkModifyState(LC_DimStyle::AngularFormat::$DIMADEC)) {
+        d.add("$DIMADEC", 179, angular->decimalPlaces());
+    }
+
+    auto round = ds->roundOff();
+    if (round->checkModifyState(LC_DimStyle::LinearRoundOff::$DIMRND)) {
+        d.add("$DIMRND", 45, round->roundTo());
+    }
+    if (round->checkModifyState(LC_DimStyle::LinearRoundOff::$DIMALTRND)) {
+        d.add("$DIMALTRND", 148, round->altRoundTo());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleRadial(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto radial = ds->radial();
+    if (radial->checkModifyState(LC_DimStyle::Radial::$DIMCEN)) {
+        d.add("$DIMCEN", 141, radial->centerCenterMarkOrLineSize());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleTolerance(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto tolerance = ds->latteralTolerance();
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTDEC)) {
+        d.add("$DIMTDEC", 272, tolerance->decimalPlaces());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMALTTD)) {
+        d.add("$DIMALTTD", 274, tolerance->decimalPlacesAltDim());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOL)) {
+        d.add("$DIMTOL", 71, tolerance->isAppendTolerancesToDimText() ? 1 : 0);
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOLJ)) {
+        d.add("$DIMTOLJ", 283, tolerance->verticalJustification());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTM)) {
+        d.add("$DIMTM", 48, tolerance->lowerToleranceLimit());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTM)) {
+        d.add("$DIMTP", 47, tolerance->upperToleranceLimit());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTFAC)) {
+        d.add("$DIMTFAC", 146, tolerance->heightScaleFactorToDimText());
+    }
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMLIM)) {
+        d.add("$DIMLIM", 72, tolerance->isLimitsGeneratedAsDefaultText() ? 1 : 0);
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleArc(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto arc = ds->arc();
+    if (arc->checkModifyState(LC_DimStyle::Arc::$DIMARCSYM)) {
+        d.add("$DIMARCSYM", 90, arc->arcSymbolPosition());
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto leader = ds->leader();
+    if (leader->checkModifyState(LC_DimStyle::Leader::$DIMLDRBLK)) {
+        QString blockName = leader->arrowBlockName();
+        if (!blockName.isEmpty()) {
+            auto blkName = blockName.toStdString();
+            int blkHandle = dxfW->getBlockRecordHandle(blkName);
+            if(blkHandle > 0) {
+                d.add("$_DIMLDRBLK", 341, toHexStr(blkHandle).toStdString());
+            }
+        }
+    }
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle& d, LC_DimStyle* ds) {
+    auto tolerance = ds->latteralTolerance();
+    if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN)) {
+        d.extData.push_back(new DRW_Variant(1001, "ACAD_DSTYLE_DIMTALN"));
+        d.extData.push_back(new DRW_Variant(1070, 392));
+        d.extData.push_back(new DRW_Variant(1070, tolerance->adjustment()));
+    }
+
+    // todo - add support of ACAD_DIMSTYLE_DIMBREAK
+    // todo - add support of ACAD_DIMSTYLE_DIMJAG
+}
+
+void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds, std::vector<std::pair<std::string, int>>& lineTypesMap) {
+    d.name = ds->getName().toStdString();
+
+    auto savedMode = ds->getModifyCheckMode();
+    if (ds->isBaseStyle()){
+        // base styles are written completely, regardless of fields modification state!
+        ds->setModifyCheckMode(LC_DimStyle::ModificationAware::ALL);
+    }
+
+    // in AutoCAD, dimstyle that is specific for the type of dimension will contain only
+    // values that are really overriden for the type. Other properties will be
+    // extracted from the base style.
+    // therefore, have need to check for properties that are modified and write only
+    // one that has modified flag set...
+
+    prepareDRWDimStyleArrows(d, ds);
+    prepareDRWDimStyleScaling(d, ds);
+    prepareDRWDimStyleExtLine(d, ds, lineTypesMap);
+    prepareDRWDimStyleDimLine(d, ds, lineTypesMap);
+    prepareDRWDimStyleText(d, ds);
+    prepareDRWDimStyleZerosSuppression(d, ds);
+    prepareDRWDimStyleLinearFormat(d, ds);
+    prepareDRWDimStyleAngularFormat(d, ds);
+    prepareDRWDimStyleFractions(d, ds);
+    prepareDRWDimStyleRadial(d, ds);
+    prepareDRWDimStyleTolerance(d, ds);
+    prepareDRWDimStyleArc(d, ds);
+    prepareDRWDimStyleLeader(d, ds);
+    prepareDRWDimStyleExtData(d, ds);
+    // result->setDimunit(s.dimunit); // $DIMLUNIT
+
+    ds->setModifyCheckMode(savedMode); // restore modification flags
+
+    // fixme - return to this later, move to MLeaderStyle
+    // auto mleader = ds->mleader();
+    // var = s.get("$MLEADERSCALE");
+    // if (var != nullptr) {
+    //     mleaderStyle->setScale(var->d_val());
+    // }
+
 }
 
 void RS_FilterDXFRW::writeObjects() {
@@ -2812,6 +3627,10 @@ void RS_FilterDXFRW::writeAppId(){
     ai.name ="LibreCad";
     dxfW->writeAppId(&ai);
 
+    ai.name ="ACAD_DSTYLE_DIMTALN";
+    dxfW->writeAppId(&ai);
+
+    // ACAD_DSTYLE_DIMJAG
     // fixme - sand - probably we can add version there, check format
 }
 
@@ -3409,8 +4228,8 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
 
     switch (d->rtti()) {
         case RS2::EntityDimAligned: {
-            RS_DimAligned* da = static_cast<RS_DimAligned*>(d);
-            DRW_DimAligned* dd = new DRW_DimAligned();
+            auto* da = static_cast<RS_DimAligned*>(d);
+            auto dd = new DRW_DimAligned();
             dim = dd;
             dim->type = 1 + 32;
             dd->setDef1Point(DRW_Coord(da->getExtensionPoint1().x, da->getExtensionPoint1().y, 0.0));
@@ -3418,8 +4237,8 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             break;
         }
         case RS2::EntityDimDiametric: {
-            RS_DimDiametric* dr = static_cast<RS_DimDiametric*>(d);
-            DRW_DimDiametric* dd = new DRW_DimDiametric();
+            auto* dr = static_cast<RS_DimDiametric*>(d);
+            auto dd = new DRW_DimDiametric();
             dim = dd;
             dim->type = 3 + 32;
             dd->setDiameter1Point(DRW_Coord(dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
@@ -3427,8 +4246,8 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             break;
         }
         case RS2::EntityDimRadial: {
-            RS_DimRadial* dr = static_cast<RS_DimRadial*>(d);
-            DRW_DimRadial* dd = new DRW_DimRadial();
+            auto* dr = static_cast<RS_DimRadial*>(d);
+            auto* dd = new DRW_DimRadial();
             dim = dd;
             dim->type = 4 + 32;
             dd->setDiameterPoint(DRW_Coord(dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
@@ -3436,9 +4255,9 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             break;
         }
         case RS2::EntityDimAngular: {
-            RS_DimAngular* da = static_cast<RS_DimAngular*>(d);
+            auto* da = static_cast<RS_DimAngular*>(d);
             if (da->getDefinitionPoint3() == da->getData().definitionPoint) {
-                DRW_DimAngular3p* dd = new DRW_DimAngular3p();
+                auto* dd = new DRW_DimAngular3p();
                 dim = dd;
                 dim->type = 5 + 32;
                 dd->setFirstLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //13
@@ -3447,7 +4266,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
                 dd->setDimPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //10
             }
             else {
-                DRW_DimAngular* dd = new DRW_DimAngular();
+                auto* dd = new DRW_DimAngular();
                 dim = dd;
                 dim->type = 2 + 32;
                 dd->setFirstLine1(DRW_Coord(da->getDefinitionPoint1().x, da->getDefinitionPoint1().y, 0.0)); //13
@@ -3458,8 +4277,8 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             break;
         }
         case RS2::EntityDimOrdinate: {
-            LC_DimOrdinate* da = static_cast<LC_DimOrdinate*>(d);
-            DRW_DimOrdinate* dd = new DRW_DimOrdinate();
+            auto* da = static_cast<LC_DimOrdinate*>(d);
+            auto* dd = new DRW_DimOrdinate();
             dim = dd;
             dd->type = 6 + 32;
             auto dimOridinateData = da->getEData();
@@ -3499,7 +4318,13 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     if (!blkName.isEmpty()) {
         dim->setName(blkName.toStdString());
     }
-
+    LC_DimStyle* override = d->getDimStyleOverride();
+    if (override != nullptr) {
+        auto* extEntityData = new LC_ExtEntityData();
+        addDimStyleOverrideToExtendedData(extEntityData, override);
+        fillEntityExtData(dim->extData, extEntityData);
+        delete extEntityData;
+    }
     dxfW->writeDimension(dim);
     delete dim;
 }
@@ -3911,64 +4736,62 @@ RS_Color RS_FilterDXFRW::numberToColor(int num) {
     return RS_Color();
 }
 
-
-
 /**
  * Converts a color into a color number in the DXF palette.
  * The color that fits best is chosen.
  */
 int RS_FilterDXFRW::colorToNumber(const RS_Color& col, int *rgb) {
-
     //printf("Searching color for %s\n", col.name().toLatin1().data());
-
     *rgb = -1;
     // Special color BYBLOCK:
     if (col.getFlag(RS2::FlagByBlock)) {
         return 0;
     }
-
     // Special color BYLAYER
     else if (col.getFlag(RS2::FlagByLayer)) {
         return 256;
     }
-
     // Special color black is not in the table but white represents both
     // black and white
-    else if (col.red()==0 && col.green()==0 && col.blue()==0) {
-        return 7;
-    }
-
-    // All other colors
     else {
-        int num=0;
-        int diff=255*3;  // smallest difference to a color in the table found so far
+        int red = col.red();
+        int green = col.green();
+        int blue = col.blue();
+        if (red==0 && green==0 && blue==0) {
+            return 7;
+        }
+        // All other colors
+        else {
+            int num=0;
+            int diff=255*3;  // smallest difference to a color in the table found so far
 
-        // Run through the whole table and compare
-        for (int i=1; i<=255; i++) {
-            int d = abs(col.red()-DRW::dxfColors[i][0])
-                    + abs(col.green()-DRW::dxfColors[i][1])
-                    + abs(col.blue()-DRW::dxfColors[i][2]);
+            // Run through the whole table and compare
+            for (int i=1; i<=255; i++) {
+                int d = abs(red-DRW::dxfColors[i][0])
+                    + abs(green-DRW::dxfColors[i][1])
+                    + abs(blue-DRW::dxfColors[i][2]);
 
-            if (d<diff) {
-                /*
+                if (d<diff) {
+                    /*
                 printf("color %f,%f,%f is closer\n",
                        dxfColors[i][0],
                        dxfColors[i][1],
                        dxfColors[i][2]);
                 */
-                diff = d;
-                num = i;
-                if (d==0) {
-                    break;
+                    diff = d;
+                    num = i;
+                    if (d==0) {
+                        break;
+                    }
                 }
             }
+            //printf("  Found: %d, diff: %d\n", num, diff);
+            if(diff != 0) {
+                *rgb = 0;
+                *rgb = red<<16 | green<<8 | blue;
+            }
+            return num;
         }
-        //printf("  Found: %d, diff: %d\n", num, diff);
-        if(diff != 0) {
-            *rgb = 0;
-            *rgb = col.red()<<16 | col.green()<<8 | col.blue();
-        }
-        return num;
     }
 }
 
@@ -3977,7 +4800,7 @@ void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
     RS_PolylineData d(RS_Vector(false),
                       RS_Vector(false),
                       !data.invisibleflag);
-    RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
+    auto *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
     RS_Vector v1(data.basePoint.x, data.basePoint.y);
     RS_Vector v2(data.secPoint.x, data.secPoint.y);
@@ -4853,18 +5676,23 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     QString name = QString::fromUtf8(s.name.c_str());
     result->setName(name);
 
+    bool styleForEntityType = !result->isBaseStyle();
+    if (styleForEntityType) {
+        result->setModifyCheckMode(LC_DimStyle::ModificationAware::ALL);
+    }
+
     auto arrowStyle = result->arrowhead();
 
     DRW_Variant* var = s.get("$DIMBLK");
-    if (var != nullptr) {// fixme - resolve via table?
+    if (var != nullptr) {
         arrowStyle->setSameBlockName(strVal(var));
     }
     var = s.get("$DIMBLK1");
-    if (var != nullptr) {// fixme - resolve via table?
+    if (var != nullptr) {
         arrowStyle->setArrowHeadBlockNameFirst(strVal(var));
     }
     var = s.get("$DIMBLK2");
-    if (var != nullptr) {// fixme - resolve via table?
+    if (var != nullptr) {
         arrowStyle->setArrowHeadBlockNameSecond(strVal(var));
     }
     var = s.get("$DIMASZ");
@@ -4884,14 +5712,6 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
         arrowStyle->setSuppressionsRaw(var->i_val());
     }
 
-    // arrowStyle->setSameBlockName(QString::fromUtf8(s.dimblk.c_str()));
-    // arrowStyle->setArrowHeadBlockNameFirst(QString::fromUtf8(s.dimblk1.c_str()));
-    // arrowStyle->setArrowHeadBlockNameSecond(QString::fromUtf8(s.dimblk2.c_str()));
-    // arrowStyle->setSize(s.dimasz);
-    // arrowStyle->setTickSize(s.dimtsz);
-    // arrowStyle->setUseSeparateArrowHeads(s.dimsah);
-    // arrowStyle->setSuppressionsRaw(s.dimsoxd);
-
     auto scaleStyle = result->scaling();
     var = s.get("$DIMSCALE");
     if (var != nullptr) {
@@ -4901,9 +5721,6 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     if (var != nullptr) {
         scaleStyle->setLinearFactor(var->d_val());
     }
-
-    // scaleStyle->setScale(s.dimscale);
-    // scaleStyle->setLinearFactor(s.dimlfac);
 
     auto extLineStyle = result->extensionLine();
 
@@ -4939,25 +5756,20 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     if (var != nullptr) {
         extLineStyle->setSuppressionSecondRaw(var->i_val());
     }
-    var = s.get("$DIMLTEXT1");
-    if (var != nullptr) { // fixme - resolve via table?
-        extLineStyle->setLineTypeFirst(strVal(var));
+    var = s.get("$DIMLTEX1");
+    if (var != nullptr) {
+        auto dimltex1 = strVal(var);
+        if (!dimltex1.isEmpty()) {
+            extLineStyle->setLineTypeFirst(dimltex1);
+        }
     }
-    var = s.get("$DIMLTEXT2");
-    if (var != nullptr) {// fixme - resolve via table?
-        extLineStyle->setLineTypeSecond(strVal(var));
+    var = s.get("$DIMLTEX2");
+    if (var != nullptr) {
+        auto dimltex2 = strVal(var);
+        if (!dimltex2.isEmpty()) {
+            extLineStyle->setLineTypeSecond(dimltex2);
+        }
     }
-
-    // extLineStyle->setDistanceFromOriginPoint(s.dimexo);
-    // extLineStyle->setDistanceBeyondDimLine(s.dimexe);
-    // extLineStyle->setFixedLength(s.dimfxl);
-    // extLineStyle->setHasFixedLength(s.dimfxlon);
-    // extLineStyle->setLineWidthRaw(s.dimlwe);
-    // extLineStyle->setColor(s.dimclre);
-    // extLineStyle->setSuppressionFirstRaw(s.dimse1);
-    // extLineStyle->setSuppressionSecondRaw(s.dimse2);
-    // extLineStyle->setLineTypeFirst(QString::fromUtf8(s.dimltext1.c_str()));
-    // extLineStyle->setLineTypeSecond(QString::fromUtf8(s.dimltext2.c_str()));
 
     auto dimLineStyle = result->dimensionLine();
     var = s.get("$DIMLWD");
@@ -4993,19 +5805,12 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
         dimLineStyle->setDrawPolicyForOutsideTextRaw(var->i_val());
     }
     var = s.get("$DIMLTYPE");
-    if (var != nullptr) { // fixme - resolve via table?
-        dimLineStyle->setLineType(strVal(var));
+    if (var != nullptr) {
+        auto dimltype = strVal(var);
+        if (!dimltype.isEmpty()) {
+            dimLineStyle->setLineType(dimltype);
+        }
     }
-
-    // dimLineStyle->setLineWidthRaw(s.dimlwd);
-    // dimLineStyle->setDistanceBeyondExtLinesForObliqueStroke(s.dimdle);
-    // dimLineStyle->setBaselineDimLinesSpacing(s.dimdli);
-    // dimLineStyle->setLineGap(s.dimgap);
-    // dimLineStyle->setColor(s.dimclrd);
-    // dimLineStyle->setFirstLineSuppressionRaw(s.dimsd1);
-    // dimLineStyle->setSecondLineSuppressionRaw(s.dimsd2);
-    // dimLineStyle->setDrawPolicyForOutsideTextRaw(s.dimtofl);
-    // dimLineStyle->setLineType(QString::fromUtf8(s.dimltype.c_str()));
 
     auto textStyle = result->text();
     var = s.get("$DIMTXT");
@@ -5068,21 +5873,6 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     if (var != nullptr) {
         textStyle->setUnsufficientSpacePolicyRaw(var->i_val());
     }
-    // textStyle->setHeight(s.dimtxt);
-    // textStyle->setStyle(QString::fromUtf8(s.dimtxsty.c_str()));
-    // textStyle->setOrientationOutsideRaw(s.dimtoh);
-    // textStyle->setOrientationInsideRaw(s.dimtih);
-    // textStyle->setHorizontalPositioningRaw(s.dimjust);
-    // textStyle->setColor(s.dimclrt);
-    // textStyle->setVerticalPositioningRaw(s.dimtad);
-    // textStyle->setExtLinesRelativePlacementRaw(s.dimtix);
-    // textStyle->setBackgroundFillModeRaw(s.dimtfill);
-    // textStyle->setExplicitBackgroundFillColor(s.dimtfillclr);
-    // textStyle->setReadingDirectionRaw(s.dimtxtdirection);
-    // textStyle->setVerticalDistanceToDimLine(s.dimtvp);
-    // textStyle->setCursorControlPolicyRaw(s.dimupt);
-    // textStyle->setPositionMovementPolicyRaw(s.dimtmove);
-    // textStyle->setUnsufficientSpacePolicyRaw(s.dimatfit);
 
     auto zerosSuppression = result->zerosSuppression();
 
@@ -5106,11 +5896,6 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     if (var != nullptr) {
         zerosSuppression->setAltToleranceRaw(var->i_val());
     }
-    // zerosSuppression->setLinearRaw(s.dimzin);
-    // zerosSuppression->setAngularRaw(s.dimazin);
-    // zerosSuppression->setToleranceRaw(s.dimtzin);
-    // zerosSuppression->setAltLinearRaw(s.dimaltz);
-    // zerosSuppression->setAltToleranceRaw(s.dimaltttz);
 
     auto linearFormat = result->linearFormat();
 
@@ -5144,21 +5929,12 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     }
     var = s.get("$DIMALTF");
     if (var != nullptr) {
-        linearFormat->setAltUnitsMultiplier(var->i_val());
+        linearFormat->setAltUnitsMultiplier(var->d_val());
     }
     var = s.get("$DIMAPOST");
     if (var != nullptr) {
         linearFormat->setAltPrefixOrSuffix(strVal(var));
     }
-    // linearFormat->setFormatRaw(s.dimlunit);
-    // linearFormat->setDecimalFormatSeparatorChar(s.dimdsep);
-    // linearFormat->setDecimalPlaces(s.dimdec);
-    // linearFormat->setPrefixOrSuffix(QString::fromUtf8(s.dimpost.c_str()));
-    // linearFormat->setAlternateUnitsRaw(s.dimalt);
-    // linearFormat->setAltFormatRaw(s.dimaltu);
-    // linearFormat->setAltDecimalPlaces(s.dimaltd);
-    // linearFormat->setAltUnitsMultiplier(s.dimaltf);
-    // linearFormat->setAltPrefixOrSuffix(QString::fromUtf8(s.dimapost.c_str()));
 
     auto angularFormat = result->angularFormat();
     var = s.get("$DIMAUNIT");
@@ -5170,9 +5946,6 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
         angularFormat->setDecimalPlaces(var->i_val());
     }
 
-    // angularFormat->setFormatRaw(s.dimaunit);
-    // angularFormat->setDecimalPlaces(s.dimadec);
-
     auto linearRoundOff = result->roundOff();
     var = s.get("$DIMRND");
     if (var != nullptr) {
@@ -5182,24 +5955,18 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     if (var != nullptr) {
         linearRoundOff->setAltRoundToValue(var->d_val());
     }
-    // linearRoundOff->setRoundToValue(s.dimrnd);
-    // linearRoundOff->setAltRoundToValue(s.dimaltrnd);
 
     auto fractionStyle = result->fractions();
     var = s.get("$DIMFRAC");
     if (var != nullptr) {
         fractionStyle->setStyleRaw(var->i_val());
     }
-    // fractionStyle->setStyleRaw(s.dimfrac);
 
     auto radialStyle = result->radial();
     var = s.get("$DIMCEN");
     if (var != nullptr) {
-        radialStyle->setCenterMarkOrLineSize(var->i_val());
+        radialStyle->setCenterMarkOrLineSize(var->d_val());
     }
-
-    // radialStyle->setCenterMarkOrLineSize(s.dimcen);
-
 
     auto toleranceStyle = result->latteralTolerance();
 
@@ -5213,7 +5980,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     }
     var = s.get("$DIMTOL");
     if (var != nullptr) {
-        toleranceStyle->setVerticalJustificationRaw(var->i_val()); // fixme - review
+        toleranceStyle->setAppendTolerancesToDimText(var->i_val()); // fixme - review
     }
     var = s.get("$DIMTOLJ");
     if (var != nullptr) {
@@ -5236,44 +6003,43 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
         toleranceStyle->setLimitsAreGeneratedAsDefaultText(var->i_val()); // fixme - review
     }
 
-    // toleranceStyle->setDecimalPlaces(s.dimtdec);
-    // toleranceStyle->setDecimalPlacesAltDim(s.dimalttd);
-    // toleranceStyle->setAppendTolerancesToDimText(s.dimtol);
-    // toleranceStyle->setVerticalJustificationRaw(s.dimtolj);
-    // toleranceStyle->setLowerToleranceLimit(s.dimtm);
-    // toleranceStyle->setUpperToleranceLimit(s.dimtp);
-    // toleranceStyle->setHeightScaleFactorToDimText(s.dimtfac);
-    // toleranceStyle->setLimitsAreGeneratedAsDefaultText(s.dimlim);
-
-    // result->setDimunit(s.dimunit); // $DIMLUNIT
-
     auto leaderStyle = result->leader();
     var = s.get("$DIMLDRBLK");
     if (var != nullptr) {
         leaderStyle->setArrowBlockName(strVal(var));
     }
-    // leaderStyle->setArrowBlockName(QString::fromUtf8(s.dimldrblk.c_str()));
 
-    auto mleaderStyle = result->mleader();
+    auto arc = result->arc();
+    var = s.get("$DIMARCSYM");
+    if (var != nullptr) {
+      arc->setArcSymbolPositionRaw(var->i_val());
+    }
+
+    // fixme - remove to MLeaderStyle
+    /*auto mleaderStyle = result->mleader();
     var = s.get("$MLEADERSCALE");
     if (var != nullptr) {
         mleaderStyle->setScale(var->d_val());
-    }
+    }*/
     // mleaderStyle->setScale(s.mleaderscale);
 
     parseDimStyleExtData(s, result);
+
+    if (styleForEntityType) {
+        result->setModifyCheckMode(LC_DimStyle::ModificationAware::SET);
+    }
     return result;
 }
 
 bool RS_FilterDXFRW::resolveBlockName(duint32 blockHandle, QString& blockName,
-    const std::unordered_map<unsigned int, DRW_Block_Record*>& blockRecords) const {
-    auto it = blockRecords.find(blockHandle);
-    if (it != blockRecords.end()) {
-        DRW_Block_Record* blockRecord = it->second;
-        blockName = QString(blockRecord->name.c_str());
-        return true;
+    DRW_ParsingContext& ctx) const {
+
+    std::string name = ctx.resolveBlockRecordName(blockHandle);
+    if (name.empty()) {
+        return false;
     }
-    return false;
+    blockName = name.c_str();
+    return true;
 }
 
 void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* result) {
@@ -5288,7 +6054,7 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* re
         switch (code) {
             case 1001: { // application name
                 if (!applicationName.isEmpty()) {
-                    applyDimStyleExtData(result, applicationName, tagData);
+                    applyParsedDimStyleExtData(result, applicationName, tagData);
                     tagData.clear();
                 }
                 applicationName = v->c_str();
@@ -5326,12 +6092,12 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* re
         expectType = !expectType;
     }
     if (!applicationName.isEmpty()) { // process last app name setion
-        applyDimStyleExtData(result, applicationName, tagData);
+        applyParsedDimStyleExtData(result, applicationName, tagData);
         tagData.clear();
     }
 }
 
-void RS_FilterDXFRW::applyDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector) {
+void RS_FilterDXFRW::applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector) {
     if (vector.empty()) {
         return;
     }
@@ -5351,8 +6117,7 @@ void RS_FilterDXFRW::applyDimStyleExtData(LC_DimStyle* dimStyle, const QString& 
         // code 392, int
         if (code == 392) {
             int val = var->i_val();
-            dimStyle->latteralTolerance()->setVerticalJustificationRaw(val);
-            // fixme - decide where to store it. This is "Dimension Break" in acad.
+            dimStyle->latteralTolerance()->setAdjustmentRaw(val);
         }
     }
     else if (appName == "ACAD_DSTYLE_DIMBREAK") {
