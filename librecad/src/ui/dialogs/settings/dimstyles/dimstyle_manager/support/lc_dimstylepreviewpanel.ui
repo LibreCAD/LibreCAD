@@ -73,7 +73,7 @@
    <item row="0" column="1">
     <widget class="QToolButton" name="tbZoomOut">
      <property name="toolTip">
-      <string>Zoom Auto</string>
+      <string>Zoom Out</string>
      </property>
      <property name="text">
       <string/>

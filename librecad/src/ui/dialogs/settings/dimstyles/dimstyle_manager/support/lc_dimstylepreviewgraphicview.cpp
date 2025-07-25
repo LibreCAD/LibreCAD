@@ -39,8 +39,7 @@
 
 class LC_PreviewGraphic: public RS_Graphic {
 public:
-    explicit LC_PreviewGraphic():RS_Graphic(){
-    };
+    explicit LC_PreviewGraphic() {};
 
     void setDimStyle(LC_DimStyle* dimStyle) {
         QString styleName = dimStyle->getName();
@@ -52,7 +51,7 @@ public:
     void onLoadingCompleted() override {}
     void clearDimStyles() {getDimStyleList()->clear();}
 
-    LC_DimStyle* getResolvedDimStyle(const QString& dimStyleName, RS2::EntityType dimType) override {
+    LC_DimStyle* getResolvedDimStyle(const QString& dimStyleName, RS2::EntityType dimType) const override {
         return RS_Graphic::getResolvedDimStyle(m_currentStyleBaseName, dimType);
     };
 private:
@@ -78,11 +77,44 @@ LC_DimStylePreviewGraphicView::~LC_DimStylePreviewGraphicView() {
     deleteActionContext();
 };
 
-LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent,RS_Graphic* originalGraphic, RS2::EntityType dimensionType) {
-    LC_DimStylePreviewGraphicView* result = nullptr;
-    auto graphic = new LC_PreviewGraphic();
-    graphic->newDoc();
+LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::createAndSetupView(QWidget* parent, LC_PreviewGraphic* graphic, RS_Graphic* originalGraphic, bool showInWCS) {
 
+    graphic->setAnglesBase(originalGraphic->getAnglesBase());
+    graphic->setAnglesCounterClockwise((originalGraphic->areAnglesCounterClockWise()));
+
+
+    auto* actionHandler = new QG_ActionHandler(nullptr);
+    auto* actionContext = new LC_DefaultActionContext(actionHandler);
+    actionHandler->setActionContext(actionContext);
+    auto* result = new LC_DimStylePreviewGraphicView(parent, actionContext);
+    actionHandler->setDocumentAndView(graphic->getDocument(), result);
+    result->setContainer(graphic);
+    auto viewport = result->getViewPort();
+    viewport->setBorders(15,15,15,15);
+
+    result->initView();
+    result->addScrollbars();
+    result->loadSettings();
+    result->setDraftMode(false);
+    result->setDraftLinesMode(false);
+
+    auto* renderer = dynamic_cast<LC_GraphicViewRenderer*>(result->getRenderer());
+    renderer->absZeroOptions()->m_extendAxisLines = false;
+    renderer->ucsMarkOptions()->m_showWCSZeroMarker = false;
+    renderer->relZeroOptions()->hideRelativeZero = true;
+
+    if (!showInWCS) {
+        auto ucs = originalGraphic->getCurrentUCS();
+        viewport->applyUCS(ucs);
+        delete ucs;
+    }
+
+    result->zoomAuto();
+
+    return result;
+}
+
+void LC_DimStylePreviewGraphicView::copyBlocks(RS_Graphic* originalGraphic, LC_PreviewGraphic* graphic) {
     // copy blocks to preview graphics for arrows. Can't determine which blocks are for arrows, so force to copy all available ones
     auto srcBlockLock = originalGraphic->getBlockList();
     auto blockList = graphic->getBlockList();
@@ -93,32 +125,35 @@ LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* pare
             blockList->add(blockClone, false);
         }
     }
+}
+
+LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent,RS_Graphic* originalGraphic, RS2::EntityType dimensionType) {
+    auto graphic = new LC_PreviewGraphic();
+    graphic->newDoc();
+    copyBlocks(originalGraphic, graphic);
 
     bool loaded = RS_FileIO::instance()->fileImport(*graphic, ":/dxf/dim_sample.dxf", RS2::FormatUnknown);
     if (loaded) {
-        auto* actionHandler = new QG_ActionHandler(nullptr);
-        auto* actionContext = new LC_DefaultActionContext(actionHandler);
-        actionHandler->setActionContext(actionContext);
-        result = new LC_DimStylePreviewGraphicView(parent, actionContext);
-        actionHandler->setDocumentAndView(graphic->getDocument(), result);
-        result->setContainer(graphic);
-        auto viewport = result->getViewPort();
-        viewport->setBorders(15,15,15,15);
-        result->initView();
-        result->addScrollbars();
-        result->loadSettings();
-        result->setDraftMode(false);
-        result->setDraftLinesMode(false);
+        LC_DimStylePreviewGraphicView* result = createAndSetupView(parent, graphic, originalGraphic, true);
         result->hideNonRelevantLayers(dimensionType);
-
-        auto* renderer = dynamic_cast<LC_GraphicViewRenderer*>(result->getRenderer());
-        renderer->absZeroOptions()->m_extendAxisLines = false;
-        result->zoomAuto();
+        return result;
     }
     else {
         // how it could be???
+        return nullptr;
     }
-    return result;
+}
+
+LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent, RS_Graphic* originalGraphic, RS_Dimension* dimension) {
+    auto graphic = new LC_PreviewGraphic();
+    graphic->newDoc();
+
+    auto clone = dimension->clone();
+
+    graphic->getDocument()->addEntity(clone);
+
+    copyBlocks(originalGraphic, graphic);
+    return createAndSetupView(parent, graphic, originalGraphic, false);
 }
 
 void LC_DimStylePreviewGraphicView::hideNonRelevantLayers(RS2::EntityType dimType) {
@@ -157,8 +192,9 @@ void LC_DimStylePreviewGraphicView::hideNonRelevantLayers(RS2::EntityType dimTyp
         auto layersList = getGraphic(false)->getLayerList();
         for (auto layer: *layersList) {
             QString layerName = layer->getName();
-            bool layerInvisible = layerName != "0" && layerName != layerToShow;
-            layer->freeze(layerInvisible);
+            if (layerName != "0") {
+                layer->freeze(layerName != layerToShow);
+            }
         }
     }
 }
@@ -169,7 +205,7 @@ bool LC_DimStylePreviewGraphicView::proceedEvent(QEvent* event) {
 
 void LC_DimStylePreviewGraphicView::updateDims() {
     auto graphic = getGraphic();
-    graphic->updateDimensions(true);
+    graphic->updateVisibleDimensions(true);
     redraw(RS2::RedrawDrawing);
     repaint();
 }
@@ -190,6 +226,29 @@ void LC_DimStylePreviewGraphicView::setDimStyle(LC_DimStyle* dimStyle) {
     graphic->setDimStyle(dimStyle);
     RS2::EntityType dimType = dimStyle->getDimensionType();
     hideNonRelevantLayers(dimType);
+}
+
+void LC_DimStylePreviewGraphicView::setEntityDimStyle(LC_DimStyle* dimStyle, bool override, const QString& baseName) {
+    auto* graphic = dynamic_cast<LC_PreviewGraphic*>(getGraphic());
+    auto doc = graphic->getDocument();
+
+    LC_DimStyle* styleOverride = nullptr;
+    QString styleName = baseName;
+
+    if (override) {
+        styleOverride = dimStyle;
+    }
+
+    for (auto en : *doc) {
+        if (RS2::isDimensionalEntity(en->rtti())) {
+            auto dim = dynamic_cast<RS_Dimension*>(en);
+            if (dim) {
+                dim->setStyle(styleName);
+                dim->setDimStyleOverride(styleOverride);
+            }
+        }
+    }
+
 }
 
 void LC_DimStylePreviewGraphicView::zoomPan() {
