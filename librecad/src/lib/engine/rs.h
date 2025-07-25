@@ -793,7 +793,8 @@ namespace RS2 {
         WidthByLayer = -1, /**< Line width defined by layer not entity. */
         WidthByBlock = -2, /**< Line width defined by block not entity. */
         WidthDefault = -3,  /**< Line width defaults to the predefined line width. */
-        WidthUnchanged = -4 /* utility type for not changed line width during editing*/
+        WidthByDIPs = -4,   /*  kLnWtByDIPs*/
+        WidthUnchanged = -10 /* utility type for not changed line width during editing*/
     };
 
 
@@ -802,6 +803,8 @@ namespace RS2 {
      */
     LineWidth intToLineWidth(int w);
     int lineWidthToInt(LineWidth lw);
+    LineWidth dxfInt2lineWidth(int i);
+    int lineWidth2dxfInt(LineWidth lw);
 
     /**
      * Enum of cursor types.

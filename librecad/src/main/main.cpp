@@ -393,7 +393,9 @@ int main(int argc, char** argv) {
 
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);
-    loadFilesOnStartup(splash.get(), appWin, app, fileList);
+    if (!fileList.empty()) {
+        loadFilesOnStartup(splash.get(), appWin, app, fileList);
+    }
 
     appWin.initCompleted();
 
