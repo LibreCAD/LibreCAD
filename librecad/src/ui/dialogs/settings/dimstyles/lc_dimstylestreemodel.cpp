@@ -27,7 +27,9 @@
 
 #include "lc_dimstyleitem.h"
 
-LC_DimStyleTreeModel::LC_DimStyleTreeModel(QObject* parent,const QList<LC_DimStyleItem*>& items):QAbstractItemModel(parent) {
+LC_DimStyleTreeModel::LC_DimStyleTreeModel(QObject* parent, const QList<LC_DimStyleItem*>& items,
+                                           bool highlightCurrent) : QAbstractItemModel(parent),
+                                                                    m_highlightCurrentItem{highlightCurrent} {
     m_rootItem = std::make_unique<LC_DimStyleItem>();
     buildTree(items);
 }
@@ -36,26 +38,49 @@ QVariant LC_DimStyleTreeModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid()) {
         return QVariant();
     }
-    LC_DimStyleItem *item = getItemForIndex(index);
+    LC_DimStyleItem* item = getItemForIndex(index);
+    if (item == nullptr) {
+        return QVariant();
+    }
     switch (role) {
         case Qt::DisplayRole: {
-            int usageCount = item->usageCount();
-            if (usageCount > 0) {
-                return item->displayName() + " (" + QString::number(item->usageCount()) + ")";
+            if (item->isOverrideItem()) {
+                return tr("[Override]");
             }
-            return item->displayName();
+            else {
+                int usageCount = item->usageCount();
+                auto displayName = item->displayName();
+                if (item->isActive()) {
+                    // displayName = "--> " + displayName;
+                    displayName = "[A] " + displayName;
+                }
+                if (usageCount > 0) {
+                    return displayName + " (" + QString::number(item->usageCount()) + ")";
+                }
+                return displayName;
+            }
         }
         case Qt::FontRole: {
-            if (item->isCurrent()) {
+            if (item->isEntityStyleItem()) {
                 QFont font;
                 font.setBold(true);
+                if (item->isActive()) {
+                    font.setItalic(true);
+                }
+                return font;
+            }
+            else if (item->isActive()) {
+                QFont font;
+                if (m_highlightCurrentItem) {
+                    font.setBold(true);
+                }
                 font.setItalic(true);
                 return font;
-           }
-           break;
+            }
+            break;
         }
         default:
-           break;
+            break;
     }
     return QVariant();
 }
@@ -64,24 +89,26 @@ QModelIndex LC_DimStyleTreeModel::index(int row, int column, const QModelIndex& 
     if (!hasIndex(row, column, parent)) {
         return QModelIndex();
     }
-    LC_DimStyleItem *parentItem = parent.isValid() ? getItemForIndex(parent) : m_rootItem.get();
-    LC_DimStyleItem *childItem = parentItem->child(row);
+    LC_DimStyleItem* parentItem = parent.isValid() ? getItemForIndex(parent) : m_rootItem.get();
+    LC_DimStyleItem* childItem = parentItem->child(row);
     return childItem ? createIndex(row, column, childItem) : QModelIndex();
 }
 
 QModelIndex LC_DimStyleTreeModel::parent(const QModelIndex& index) const {
-    if (index.isValid()){
-        LC_DimStyleItem *childItem = getItemForIndex(index);
-        LC_DimStyleItem *parentItem = childItem->parentItem();
-        if (parentItem != m_rootItem.get()){
-            return createIndex(parentItem->row(), 0, parentItem);
+    if (index.isValid()) {
+        LC_DimStyleItem* childItem = getItemForIndex(index);
+        if (childItem != nullptr) {
+            LC_DimStyleItem* parentItem = childItem->parentItem();
+            if (parentItem != m_rootItem.get()) {
+                return createIndex(parentItem->row(), 0, parentItem);
+            }
         }
     }
     return QModelIndex();
 }
 
 int LC_DimStyleTreeModel::rowCount(const QModelIndex& parent) const {
-    LC_DimStyleItem *parentItem;
+    LC_DimStyleItem* parentItem;
     if (parent.isValid()) {
         parentItem = getItemForIndex(parent);
     }
@@ -89,24 +116,42 @@ int LC_DimStyleTreeModel::rowCount(const QModelIndex& parent) const {
         parentItem = m_rootItem.get();
     }
 
-    int result = parentItem->childCount();
-    return result;
+    if (parentItem != nullptr) {
+        int result = parentItem->childCount();
+        return result;
+    }
+    return 0;
 }
 
 int LC_DimStyleTreeModel::columnCount(const QModelIndex& parent) const {
     return 1;
 }
 
-LC_DimStyleItem* LC_DimStyleTreeModel::getItemForIndex(const QModelIndex &index) const{
+LC_DimStyleItem* LC_DimStyleTreeModel::getItemForIndex(const QModelIndex& index) const {
     LC_DimStyleItem* result = nullptr;
-    if (index.isValid()){
+    if (index.isValid()) {
         result = static_cast<LC_DimStyleItem*>(index.internalPointer());
     }
     return result;
 }
 
-LC_DimStyleItem* LC_DimStyleTreeModel::getCurrentItem() {
-    return m_rootItem->findCurrent();
+void LC_DimStyleTreeModel::collectUnsavedItems(QList<LC_DimStyleItem*>& items) const {
+    int childCount = m_rootItem->childCount();
+    // created styles will be under the root. If they are on further level - it means that it's overrides...
+    for (int i = 0; i < childCount; i++) {
+        auto child = m_rootItem->child(i);
+        if (child->isUnsaved()) {
+            items << child;
+        }
+    }
+}
+
+LC_DimStyleItem* LC_DimStyleTreeModel::getActiveStyleItem() {
+    return m_rootItem->findActive();
+}
+
+LC_DimStyleItem* LC_DimStyleTreeModel::getEntityStyleItem() {
+    return m_rootItem->findEntityStyleItem();
 }
 
 LC_DimStyleItem* LC_DimStyleTreeModel::getStandardItem() {
@@ -116,7 +161,6 @@ LC_DimStyleItem* LC_DimStyleTreeModel::getStandardItem() {
 LC_DimStyleItem* LC_DimStyleTreeModel::findByName(const QString& name) {
     return m_rootItem->findByName(name);
 }
-
 
 void LC_DimStyleTreeModel::collectItemsForBaseStyleItem(QList<LC_DimStyleItem*>* list, LC_DimStyleItem* baseItem) {
     if (baseItem != nullptr) {
@@ -155,22 +199,36 @@ void LC_DimStyleTreeModel::removeItem(LC_DimStyleItem* item) {
     emitDataChanged();
 }
 
-void LC_DimStyleTreeModel::setDefaultItem(const QModelIndex& index) {
+void LC_DimStyleTreeModel::setActiveStyleItem(const QModelIndex& index) {
     LC_DimStyleItem* item = getItemForIndex(index);
     if (item != nullptr) {
-        if (item->isBaseStyle()) {
-            LC_DimStyleItem* currentlyActiveItem = m_rootItem->findCurrent();
-            if (currentlyActiveItem != nullptr) {
-                currentlyActiveItem->setCurrent(false);
-            }
-            item->setCurrent(true);
+        LC_DimStyleItem* currentlyActiveItem = m_rootItem->findActive();
+        if (currentlyActiveItem != nullptr) {
+            currentlyActiveItem->setActive(false);
         }
+        item->setActive(true);
     }
     emitDataChanged();
 }
 
-void LC_DimStyleTreeModel::cleanup() {
-    m_rootItem->cleanup();
+void LC_DimStyleTreeModel::setEntityItem(LC_DimStyleItem* item) {
+    if (item != nullptr) {
+        LC_DimStyleItem* currentlyActiveItem = m_rootItem->findEntityStyleItem();
+        if (currentlyActiveItem != nullptr) {
+            currentlyActiveItem->setEntityStyleItem(false);
+        }
+        item->setEntityStyleItem(true);
+    }
+    emitDataChanged();
+}
+
+void LC_DimStyleTreeModel::setEntityItem(const QModelIndex& index) {
+    LC_DimStyleItem* item = getItemForIndex(index);
+    setEntityItem(item);
+}
+
+void LC_DimStyleTreeModel::cleanup(bool deleteDimStyles) {
+    m_rootItem->cleanup(deleteDimStyles);
     m_itemsCount = 0;
 }
 
@@ -179,11 +237,12 @@ void LC_DimStyleTreeModel::collectAllStyleItems(QList<LC_DimStyleItem*>& items) 
 }
 
 void LC_DimStyleTreeModel::mergeWith(const QList<LC_DimStyle*>& list) {
-    for (const auto i: list) {
+    for (const auto i : list) {
         auto incomingDimStyle = i;
         QString itemName = incomingDimStyle->getName();
         auto existingItem = findByName(itemName);
-        if (existingItem != nullptr) { // style with such name already exists...
+        if (existingItem != nullptr) {
+            // style with such name already exists...
             auto existingDimStyle = existingItem->dimStyle();
             // todo - sand - potentially, some policy may be used there and that policy will define how to
             // handle duplicates of styles. For example, it's possible to make a copy.
@@ -214,7 +273,6 @@ void LC_DimStyleTreeModel::addItem(LC_DimStyleItem* item) {
     }
     emitDataChanged();
 }
-
 
 void LC_DimStyleTreeModel::addToParent(LC_DimStyleItem* item) {
     QString baseName = item->baseName();

@@ -31,15 +31,17 @@ class LC_DimStyleItem;
 
 class LC_DimStyleTreeModel: public QAbstractItemModel{
 public:
-    LC_DimStyleTreeModel(QObject* parent, const QList<LC_DimStyleItem*>& items);
+    LC_DimStyleTreeModel(QObject* parent, const QList<LC_DimStyleItem*>& items, bool highlightCurrentItem);
     QVariant data(const QModelIndex& index, int role) const override;
     QModelIndex index(int row, int column, const QModelIndex& parent) const override;
     QModelIndex parent(const QModelIndex& child) const override;
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& parent) const override;
     LC_DimStyleItem* getItemForIndex(const QModelIndex& index) const;
+    void collectUnsavedItems(QList<LC_DimStyleItem*>& items) const;
     void setUsageCount(bool val) {m_showUsageCount = val;}
-    LC_DimStyleItem* getCurrentItem();
+    LC_DimStyleItem* getActiveStyleItem();
+    LC_DimStyleItem* getEntityStyleItem();
     LC_DimStyleItem* getStandardItem();
     LC_DimStyleItem* findByName(const QString& chars);
     void addItem(LC_DimStyleItem* item);
@@ -48,17 +50,21 @@ public:
     void collectItemsForBaseStyleName(const QString& chars, QList<LC_DimStyleItem*>* list);
     void emitDataChanged();
     void removeItem(LC_DimStyleItem* item);
-    void setDefaultItem(const QModelIndex& model_index);
-    void cleanup();
+    void setActiveStyleItem(const QModelIndex& model_index);
+    void setEntityItem(LC_DimStyleItem* item);
+    void setEntityItem(const QModelIndex& model_index);
+    void cleanup(bool deleteDimStyles);
     void collectAllStyleItems(QList<LC_DimStyleItem*>& items);
     void mergeWith(const QList<LC_DimStyle*>& list);
     int itemsCount();
+    LC_DimStyleItem*  rootItem() {return m_rootItem.get();}
 private:
     void addToParent(LC_DimStyleItem* item);
     void buildTree(const QList<LC_DimStyleItem*>& list);
     std::unique_ptr<LC_DimStyleItem> m_rootItem;
     bool m_showUsageCount {true};
     int m_itemsCount{0};
+    bool m_highlightCurrentItem {false};
 };
 
 #endif // LC_DIMSTYLETREEMODEL_H

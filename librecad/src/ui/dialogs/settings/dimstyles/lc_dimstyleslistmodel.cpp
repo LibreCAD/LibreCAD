@@ -28,18 +28,23 @@
 
 LC_StylesListModel::LC_StylesListModel(QObject* parent, const QList<LC_DimStyleItem*>& items, bool showUsageCount)
     : QAbstractListModel{parent},
-      items{items} {
+      m_items{items} {
     m_showUsagesCount = showUsageCount;
 }
 
-int LC_StylesListModel::rowCount(const QModelIndex& parent) const { return items.size(); }
+LC_StylesListModel::LC_StylesListModel(QObject* parent, RS_Graphic* g, RS2::EntityType dimensionType):QAbstractListModel{parent},
+    m_showUsagesCount{false}{
+    createModel(g, dimensionType);
+}
+
+int LC_StylesListModel::rowCount(const QModelIndex& parent) const { return m_items.size(); }
 
 QVariant LC_StylesListModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid()) {
         return QVariant();
     }
     int row = index.row();
-    LC_DimStyleItem* item = items[row];
+    LC_DimStyleItem* item = m_items[row];
     switch (role) {
         case Qt::DisplayRole: {
             if (m_showUsagesCount) {
@@ -50,7 +55,7 @@ QVariant LC_StylesListModel::data(const QModelIndex& index, int role) const {
             }
         }
         case Qt::FontRole: {
-            if (item->isCurrent()) {
+            if (item->isActive()) {
                 QFont font;
                 font.setBold(true);
                 font.setItalic(true);
@@ -64,15 +69,15 @@ QVariant LC_StylesListModel::data(const QModelIndex& index, int role) const {
 }
 
 void LC_StylesListModel::addItem(LC_DimStyleItem* item) {
-    items << item;
+    m_items << item;
     emitDataChanged();
 }
 
-LC_DimStyleItem* LC_StylesListModel::getCurrentItem() {
-    size_t size = items.size();
+LC_DimStyleItem* LC_StylesListModel::getActiveStyleItem() {
+    size_t size = m_items.size();
     for (int i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = items[i];
-        if (item->isCurrent()) {
+        LC_DimStyleItem *item = m_items[i];
+        if (item->isActive()) {
             return item;
         };
     }
@@ -83,32 +88,32 @@ LC_DimStyleItem* LC_StylesListModel::getItemForIndex(const QModelIndex& index) c
     if (!index.isValid()) {
         return nullptr;
     }
-    return items[index.row()];
+    return m_items[index.row()];
 }
 
 LC_DimStyleItem* LC_StylesListModel::getItemAtRow(int row) const {
-    return items[row];
+    return m_items[row];
 }
 
 LC_DimStyleItem* LC_StylesListModel::getStandardItem() const {
-    return items[0];
+    return m_items[0];
 }
 
-void LC_StylesListModel::setDefaultItem(const QModelIndex& index) {
+void LC_StylesListModel::setActiveStyleItem(const QModelIndex& index) {
     int row = index.row();
-    size_t size = items.size();
+    size_t size = m_items.size();
     for (int i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = items[i];
-        item->setCurrent(i == row);
+        LC_DimStyleItem *item = m_items[i];
+        item->setActive(i == row);
     }
     emitDataChanged();
 }
 
-int LC_StylesListModel::getDefaultItemIndex() {
-    size_t size = items.size();
+int LC_StylesListModel::getActiveStyleItemIndex() {
+    size_t size = m_items.size();
     for (int i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = items[i];
-        if (item->isCurrent()) {
+        LC_DimStyleItem *item = m_items[i];
+        if (item->isActive()) {
             return i;
         };
     }
@@ -120,9 +125,9 @@ void LC_StylesListModel::emitDataChanged() {
 }
 
 LC_DimStyleItem* LC_StylesListModel::findByName(const QString& name) {
-    size_t size = items.size();
+    size_t size = m_items.size();
     for (int i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = items[i];
+        LC_DimStyleItem *item = m_items[i];
         auto itemName = item->dimStyle()->getName();
         if (itemName == name) {
             return item;
@@ -133,10 +138,10 @@ LC_DimStyleItem* LC_StylesListModel::findByName(const QString& name) {
 
 void LC_StylesListModel::removeItem(LC_DimStyleItem* item) {
     if (item != nullptr) {
-        items.removeOne(item);
+        m_items.removeOne(item);
 
-        if (item->isCurrent()) {
-            items[0]->setCurrent(true);
+        if (item->isActive()) {
+            m_items[0]->setActive(true);
         }
         delete item;
         emitDataChanged();
@@ -159,7 +164,7 @@ void LC_StylesListModel::mergeWith(QList<LC_DimStyle*>& list) {
         }
         else {
             auto varsItem = new LC_DimStyleItem(incomingDimStyle, 0, false);
-            items << varsItem;
+            m_items << varsItem;
         }
     }
 
@@ -172,9 +177,9 @@ LC_StylesListModel* LC_StylesListModel::getFlatItemsListModel() {
 }
 
 int LC_StylesListModel::getItemIndex(LC_DimStyleItem* itemToFind) {
-    size_t size = items.size();
+    size_t size = m_items.size();
     for (int i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = items[i];
+        LC_DimStyleItem *item = m_items[i];
         if (item == itemToFind) {
             return i;
         };
@@ -183,7 +188,7 @@ int LC_StylesListModel::getItemIndex(LC_DimStyleItem* itemToFind) {
 }
 
 void LC_StylesListModel::collectItemsForBaseStyleName(const QString &baseName, QList<LC_DimStyleItem*>* list) {
-    for (const auto dsi: items) {
+    for (const auto dsi: m_items) {
         if (baseName == dsi->baseName()) {
             list->push_back(dsi);
         }
@@ -198,6 +203,8 @@ void LC_StylesListModel::collectItemsForStyle(LC_DimStyle* dimStyle, QList<LC_Di
     collectItemsForBaseStyleName(baseName, list);
 }
 
+// todo - think whether some sorting is needed for dimension styles. Actually, its hardly possible that amount of
+// style will be significant, yet still....
 void LC_StylesListModel::sort(int column, Qt::SortOrder order) {
     /*emit layoutAboutToBeChanged({QModelIndex()}, QAbstractItemModel::VerticalSortHint);
     std::sort(items.begin(), items.end(), [column,order](const LC_DimStyle* a, const LC_DimStyle* b)-> bool
@@ -213,5 +220,28 @@ void LC_StylesListModel::sort(int column, Qt::SortOrder order) {
 }
 
 void LC_StylesListModel::cleanup() {
-    qDeleteAll(items);
+    qDeleteAll(m_items);
+}
+
+void LC_StylesListModel::createModel(RS_Graphic* g, RS2::EntityType dimensionType) {
+    QString defaultDimStyleName = g->getDefaultDimStyleName();
+    LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
+
+    auto dimStylesList = g->getDimStyleList();
+    auto dimStyles = dimStylesList->getStylesList();
+
+    for (const auto dimStyle : *dimStyles) {
+        QString styleName = dimStyle->getName();
+        QString baseName;
+        RS2::EntityType entityType = RS2::EntityUnknown;
+
+        LC_DimStyle::parseStyleName(styleName, baseName, entityType);
+        // skip artificial style from vars and skip type-specific styles
+        if (!dimStyle->isFromVars() && entityType == RS2::EntityUnknown) {
+            LC_DimStyle* ds = dimStyle->getCopy();
+            bool defaultStyle = styleThatIsDefault == dimStyle;
+            auto item = new LC_DimStyleItem(ds, 0, defaultStyle);
+            m_items << item;
+        }
+    }
 }

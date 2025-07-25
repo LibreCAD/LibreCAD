@@ -33,7 +33,9 @@ namespace RS2
 LC_DimStyleItem::LC_DimStyleItem() : m_dimType{} {
 }
 
-LC_DimStyleItem::~LC_DimStyleItem() {}
+LC_DimStyleItem::~LC_DimStyleItem() {
+    m_childItems.clear();
+}
 
 void LC_DimStyleItem::appendChild(LC_DimStyleItem *item){
     m_childItems.append(item);
@@ -126,7 +128,7 @@ LC_DimStyleItem* LC_DimStyleItem::findByName(const QString& name) const {
     int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
-        if (child->dimStyle()->getName() == name) {
+        if (child->dimStyle()->getName().compare(name, Qt::CaseInsensitive) == 0) {
             return child;
         }
         LC_DimStyleItem* foundChild = child->findByName(name);
@@ -141,21 +143,23 @@ LC_DimStyleItem* LC_DimStyleItem::findBaseStyleItem(const QString& baseStyleName
     int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
-        if (child->baseName() == baseStyleName) {
+        if (child->baseName().compare(baseStyleName, Qt::CaseInsensitive) == 0) {
             return child;
         }
     }
     return nullptr;
 }
 
-LC_DimStyleItem* LC_DimStyleItem::findCurrent() const {
+// fixme - sand - rework later, create more uniform generic
+// tree model, with search based on acceptors etc..
+LC_DimStyleItem* LC_DimStyleItem::findActive() const {
     int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
-        if (child->isCurrent()) {
+        if (child->isActive()) {
             return child;
         }
-        LC_DimStyleItem* foundChild = child->findCurrent();
+        LC_DimStyleItem* foundChild = child->findActive();
         if (foundChild != nullptr) {
             return foundChild;
         }
@@ -163,11 +167,30 @@ LC_DimStyleItem* LC_DimStyleItem::findCurrent() const {
     return nullptr;
 }
 
-void LC_DimStyleItem::cleanup() {
+LC_DimStyleItem* LC_DimStyleItem::findEntityStyleItem() const {
     int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
-        child->cleanup();
+        if (child->isEntityStyleItem()) {
+            return child;
+        }
+        LC_DimStyleItem* foundChild = child->findEntityStyleItem();
+        if (foundChild != nullptr) {
+            return foundChild;
+        }
+    }
+    return nullptr;
+}
+
+void LC_DimStyleItem::cleanup(bool deleteDimStyles) {
+    int childCount = m_childItems.count();
+    for (int i = 0; i < childCount; ++i) {
+        LC_DimStyleItem* child = m_childItems.at(i);
+        child->cleanup(deleteDimStyles);
+        auto dimStyle = child->dimStyle();
+        if (deleteDimStyles) {
+            delete dimStyle;
+        }
         delete child;
     }
     m_childItems.clear();
@@ -175,6 +198,7 @@ void LC_DimStyleItem::cleanup() {
 
 void LC_DimStyleItem::removeChild(LC_DimStyleItem* item) {
     m_childItems.removeAll(item);
+    item->setParentItem(nullptr);
 }
 
 void LC_DimStyleItem::collectChildren(QList<LC_DimStyleItem*>& items) {
