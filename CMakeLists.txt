@@ -1614,7 +1614,9 @@ if(BUILD_TESTS)
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories(librecad_tests PRIVATE
-        ${PROJECT_SOURCE_DIR}/librecad/src/lib/math
+        ${Qt6Core_INCLUDE_DIRS}
+        ${Qt6Gui_INCLUDE_DIRS}
+        ${Qt6Widgets_INCLUDE_DIRS}
     )
 
     # Link Catch2 and other required libraries (e.g., Boost, Qt)
@@ -1622,6 +1624,8 @@ if(BUILD_TESTS)
         Catch2::Catch2WithMain
         ${Boost_LIBRARIES}
         Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
     )
 
     # Enable C++17 for the test target (matching LibreCAD's standard)
