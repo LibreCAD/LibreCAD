@@ -274,9 +274,10 @@ public:
 
     LC_DimStyle* getFallBackDimStyleFromVars() const;
     LC_DimStyle* getDimStyleByName(const QString &name, RS2::EntityType dimType = RS2::EntityUnknown) const;
-    QString getDefaultDimStyleName();
+    QString getDefaultDimStyleName() const;
     void setDefaultDimStyleName(QString name);
-    virtual LC_DimStyle* getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType = RS2::EntityUnknown);
+    LC_DimStyle* getEffectiveDimStyle(const QString &styleName, RS2::EntityType dimType, LC_DimStyle* styleOverride) const;
+    virtual LC_DimStyle* getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType = RS2::EntityUnknown) const;
     void updateFallbackDimStyle(LC_DimStyle* get_copy);
     void replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles);
 protected:

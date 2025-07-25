@@ -169,25 +169,9 @@ void RS_Graphic::onLoadingCompleted() {
         // are different to values in the base style is store.
         // Therefore, for dimension type-specific styles, we perform a merge of non-set variables with values
         // from base style.
-        auto dimStylesList = dimstyleList.getStylesList();
-        for (auto dimStyle: *dimStylesList) {
-            QString baseName;
-            RS2::EntityType dimensionType;
-            LC_DimStyle::parseStyleName(dimStyle->getName(), baseName, dimensionType);
-            if (dimensionType != RS2::EntityUnknown) {
-                // update unset properties of dimension-specific style by values from the
-                // base style
-                auto* baseStyle = dimstyleList.findByName(baseName);
-                if (baseStyle != nullptr) {
-                    // merge with check mode for unset values, so resulting style will have
-                    // set vars from type-specific style, and ones that are unset in it - will come from
-                    // base style
-                    dimStyle->mergeWith(baseStyle, LC_DimStyle::ModificationAware::UNSET,
-                        LC_DimStyle::ModificationAware::SET);
-                }
-            }
-        }
+        dimstyleList.mergeStyles();
     }
+    updateDimensions(true);
 }
 
 /**
@@ -899,7 +883,7 @@ LC_DimStyle* RS_Graphic::getFallBackDimStyleFromVars() const {
     return dimstyleList.getFallbackDimStyleFromVars();
 }
 
-QString RS_Graphic::getDefaultDimStyleName() {
+QString RS_Graphic::getDefaultDimStyleName() const{
     return getVariableString("$DIMSTYLE", "Standard");
 }
 
@@ -907,7 +891,25 @@ void RS_Graphic::setDefaultDimStyleName(QString name) {
     addVariable("$DIMSTYLE", name, 2);
 }
 
-LC_DimStyle* RS_Graphic::getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType) {
+LC_DimStyle* RS_Graphic::getEffectiveDimStyle(const QString &styleName, RS2::EntityType dimType, LC_DimStyle* styleOverride) const{
+  auto globalDimStyle = getResolvedDimStyle(styleName, dimType);
+    LC_DimStyle* resolvedDimStyle = nullptr;
+    if (styleOverride == nullptr) {
+        resolvedDimStyle = globalDimStyle;
+    }
+    else {
+        // NOTE: If there is style override, the returned instance SHOULD BE DELETED by caller code!!!
+        // that's pretty ugly, yet avoid to eliminate additinal copy operation for most cases, as
+        // it's expected that style override is less commonly used feature comparing to just setting
+        // existing styles to the dimension entity
+        auto styleOverrideCopy = styleOverride->getCopy();
+        styleOverrideCopy->mergeWith(globalDimStyle, LC_DimStyle::ModificationAware::UNSET, LC_DimStyle::ModificationAware::UNSET);
+        resolvedDimStyle = styleOverrideCopy;
+    }
+    return resolvedDimStyle;
+}
+
+LC_DimStyle* RS_Graphic::getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType) const {
     LC_DimStyle* result = nullptr;
     if (dimStyleName != nullptr && !dimStyleName.isEmpty()) { // try to get style by explicit name, if any
         result = getDimStyleByName(dimStyleName, dimType);
