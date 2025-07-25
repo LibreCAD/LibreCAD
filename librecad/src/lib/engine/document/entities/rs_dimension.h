@@ -139,7 +139,9 @@ public:
      * to update the subentities which make up the dimension entity.
      */
     void update() override;
-    void resolveDimStyleAndUpdateDim();
+    LC_DimStyle* getGlobalDimStyle();
+    LC_DimStyle* getEffectiveDimStyle();
+    void resolveEffectiveDimStyleAndUpdateDim();
     void updateDim(bool autoText=false);
 
     RS_Vector getDefinitionPoint() {return m_dimGenericData.definitionPoint;}
@@ -155,6 +157,7 @@ public:
     double hasUserDefinedTextLocation(){return !m_dimGenericData.autoText;}
     void setHDir(double hdir) {m_dimGenericData.horizontalAxisDirection = hdir;}
     void setDefinitionPoint(RS_Vector defPoint) {m_dimGenericData.definitionPoint = defPoint;}
+    void setStyle(const QString& style){m_dimGenericData.style = style;}
 
     double getGeneralFactor();
     double getGeneralScale();
@@ -163,6 +166,7 @@ public:
     double getExtensionLineExtension();
     double getExtensionLineOffset();
     double getDimensionLineGap();
+    double getVerticalDistanceToDimLine();
     double getTextHeight();
     bool getInsideHorizontalText();
     bool getFixedLengthOn();

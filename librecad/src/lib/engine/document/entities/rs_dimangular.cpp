@@ -124,7 +124,6 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
     m_dimAngularData( ed)
 {
     calcDimension();
-    calculateBorders();
 }
 
 RS_Entity* RS_DimAngular::clone() const

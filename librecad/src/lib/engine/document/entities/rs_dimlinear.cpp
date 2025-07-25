@@ -75,10 +75,10 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
                            const RS_DimensionData& d,
                            const RS_DimLinearData& ed)
         : RS_Dimension(parent, d), m_dimLinearData(ed) {
-    calculateBorders();
 }
 
 RS_Entity* RS_DimLinear::clone() const {
+    // fixme - sand - is it ok to copy references to data on clone??
     auto* d = new RS_DimLinear(getParent(), getData(), getEData());
     d->setOwner(isOwner());
     d->detach();

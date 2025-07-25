@@ -66,8 +66,6 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
                            const RS_DimensionData& d,
                            const RS_DimDiametricData& ed)
         : RS_Dimension(parent, d), m_dimDiametricData(ed) {
-
-    calculateBorders();
 }
 
 RS_Entity* RS_DimDiametric::clone() const {

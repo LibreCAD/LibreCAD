@@ -67,9 +67,6 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
                              const RS_DimensionData& d,
                              const RS_DimAlignedData& ed)
     : RS_Dimension(parent, d), m_dimAlignedData(ed) {
-    updateDimensions();
-    RS_DimAligned::updateDim();
-    calculateBorders();
 }
 
 RS_Entity* RS_DimAligned::clone() const{

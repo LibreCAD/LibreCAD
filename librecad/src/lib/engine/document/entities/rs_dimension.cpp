@@ -28,6 +28,7 @@
 
 #include <QRegularExpression>
 
+#include "lc_align.h"
 #include "lc_arrow_box.h"
 #include "lc_arrow_circle.h"
 #include "lc_arrow_datum.h"
@@ -372,6 +373,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
     double dimscale = getGeneralScale();
     double dimtxt = getTextHeight() * dimscale;
     double dimgap = getDimensionLineGap() * dimscale;
+    double dimOffset = getVerticalDistanceToDimLine() * dimscale;
 
     bool drawFrameAroundText = std::signbit(dimgap);
     if (drawFrameAroundText) {
@@ -500,7 +502,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
 
     // calculate split dimension lines
     bool splitDimensionLine = false;
-    if (!outsideArrows) {
+    // if (!outsideArrows) {
         w = text->getUsedTextWidth() / 2 + dimgap;
         h = text->getUsedTextHeight() / 2 + dimgap;
         RS_Vector s1 = text->getInsertionPoint() - RS_Vector{w, h};
@@ -545,36 +547,43 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
             dimensionLineInside2 = new RS_Line{this, s2, p2};
             dimensionLineInside2->setPen(dimensionLinePen);
         }
-    }
+    // }
 
     // finally, add the dimension line(s) and text to the drawing
-    if (outsideArrows && dimensionLineOutside1) {
+    if (outsideArrows && dimensionLineOutside1 != nullptr) {
         if (noSuppress1){
-            addEntity(dimensionLineOutside1);
+            addDimComponentEntity(dimensionLineOutside1, dimensionLinePen);
         }
         else {
             delete dimensionLineOutside1;
         }
         if (noSuppress2) {
-            addEntity(dimensionLineOutside2);
+            addDimComponentEntity(dimensionLineOutside2, dimensionLinePen);
         }
         else {
             delete dimensionLineOutside2;
         }
     }
-    else if (splitDimensionLine && dimensionLineInside1) {
+
+    if (splitDimensionLine && dimensionLineInside1 != nullptr) {
         auto dimLine = m_dimStyleTransient->dimensionLine();
-        if (dimLine->drawPolicyForOutsideText() == LC_DimStyle::DimensionLine::DRAW_EVEN_IF_ARROWHEADS_ARE_OUTSIDE) {
-            addEntity(dimensionLineInside1);
-            addEntity(dimensionLineInside2);
+        if (outsideArrows) {
+            if (dimLine->drawPolicyForOutsideText() == LC_DimStyle::DimensionLine::DRAW_EVEN_IF_ARROWHEADS_ARE_OUTSIDE) {
+                addDimComponentEntity(dimensionLineInside1, dimensionLinePen);
+                addDimComponentEntity(dimensionLineInside2, dimensionLinePen);
+            }
+            else {
+                delete dimensionLineInside1;
+                delete dimensionLineInside2;
+            }
         }
         else {
-            delete dimensionLineInside1;
-            delete dimensionLineInside2;
+            addDimComponentEntity(dimensionLineInside1, dimensionLinePen);
+            addDimComponentEntity(dimensionLineInside2, dimensionLinePen);
         }
     }
     else {
-        addEntity(dimensionLine);
+        addDimComponentEntity(dimensionLine, dimensionLinePen);
     }
 }
 
@@ -639,6 +648,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
     double dimscale = getGeneralScale();
     double dimtxt = getTextHeight() * dimscale;
     double dimgap = getDimensionLineGap() * dimscale;
+    double dimOffset = getVerticalDistanceToDimLine() * dimscale;
 
     bool drawFrameAroundText = std::signbit(dimgap);
     if (drawFrameAroundText) {
@@ -685,7 +695,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
         // rotate text so it's readable from the bottom or right (ISO)
         // quadrant 1 & 4
         double const a = corrected ? -M_PI_2 : M_PI_2;
-        RS_Vector distV = RS_Vector::polar(dimgap + dimtxt / 2.0, dimAngle1 + a);
+        RS_Vector distV = RS_Vector::polar(dimOffset + dimtxt / 2.0, dimAngle1 + a);
 
         // move text away from dimension line:
         textPos += distV;
@@ -845,6 +855,11 @@ double RS_Dimension::getExtensionLineOffset() {
  */
 double RS_Dimension::getDimensionLineGap() {
     return m_dimStyleTransient->dimensionLine()->lineGap();
+    // return getGraphicVariable("$DIMGAP", 0.625, 40);
+}
+
+double RS_Dimension::getVerticalDistanceToDimLine() {
+    return m_dimStyleTransient->text()->verticalDistanceToDimLine();
     // return getGraphicVariable("$DIMGAP", 0.625, 40);
 }
 
@@ -1109,23 +1124,29 @@ void RS_Dimension::update() {
     if (isUndone()) {
         return;
     }
-    resolveDimStyleAndUpdateDim();
+    resolveEffectiveDimStyleAndUpdateDim();
     calculateBorders();
 }
 
-void RS_Dimension::resolveDimStyleAndUpdateDim() {
+LC_DimStyle* RS_Dimension::getGlobalDimStyle() {
     auto dimStyleName = getStyle();
     auto globalDimStyle = getGraphic()->getResolvedDimStyle(dimStyleName, rtti());
-    auto dimStyleOverride = getDimStyleOverride();
-    if (dimStyleOverride == nullptr) {
-        m_dimStyleTransient = globalDimStyle;
-    }
-    else {
-        m_dimStyleTransient = dimStyleOverride->getCopy();
-        m_dimStyleTransient->mergeWith(globalDimStyle, LC_DimStyle::ModificationAware::UNSET, LC_DimStyle::ModificationAware::UNSET);
-    }
+    return globalDimStyle;
+}
+
+LC_DimStyle* RS_Dimension::getEffectiveDimStyle() {
+    auto dimStyleName = getStyle();
+    LC_DimStyle* result = getGraphic()->getEffectiveDimStyle(dimStyleName, rtti(), getDimStyleOverride());
+    return result;
+}
+
+void RS_Dimension::resolveEffectiveDimStyleAndUpdateDim() {
+    m_dimStyleTransient = getEffectiveDimStyle();
     if (m_dimStyleTransient != nullptr) { // it migth be null during reading of file of example
         doUpdateDim();
+        if (getDimStyleOverride() != nullptr) {
+            delete m_dimStyleTransient;
+        }
     }
     m_dimStyleTransient = nullptr;
 }
@@ -1136,7 +1157,7 @@ void RS_Dimension::updateDim(bool autoText) {
     if (isUndone()) {
         return;
     }
-    resolveDimStyleAndUpdateDim();
+    resolveEffectiveDimStyleAndUpdateDim();
 }
 
 void RS_Dimension::addDimComponentEntity(RS_Entity* en, const RS_Pen &pen) {

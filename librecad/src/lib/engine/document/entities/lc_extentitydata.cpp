@@ -166,8 +166,11 @@ LC_ExtEntityData::~LC_ExtEntityData() {
 }
 
 LC_ExtDataAppData* LC_ExtEntityData::addAppData(const QString& appName) {
-    auto* appData = new LC_ExtDataAppData(appName);
-    m_appData.push_back(appData);
+    auto* appData = getAppDataByName(appName);
+    if (appData == nullptr) {
+        appData = new LC_ExtDataAppData(appName);
+        m_appData.push_back(appData);
+    }
     return appData;
 
 }
