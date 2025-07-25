@@ -34,6 +34,7 @@ class LC_DimStyle{
     LC_DimStyle(const QString &name);
 
     static QString STANDARD_DIM_STYLE;
+    static QString NAME_SEPARATOR;
 
     class ModificationAware: public RS_Flags {
     public:
@@ -43,7 +44,7 @@ class LC_DimStyle{
            UNSET
         };
         bool checkModifyState(unsigned f);
-        CheckFlagMode modifyCheckMode() const {return m_checkModificationMode;}
+        CheckFlagMode getModifyCheckMode() const {return m_checkModificationMode;}
         void setModifyCheckMode(CheckFlagMode mode) {m_checkModificationMode = mode;}
     protected:
         void checkModified(int newValue, int currentValue, unsigned flag);
@@ -51,7 +52,7 @@ class LC_DimStyle{
         void checkModified(const QString &newValue, const QString& currentValue, unsigned flag);
         void checkModified(bool newValue, bool currentValue, unsigned flag);
         void checkModified(double newValue, double currentValue, unsigned flag);
-        void checkModified(RS_Color newValue, RS_Color currentValue, unsigned int flag);
+        void checkModified(const RS_Color& newValue, const RS_Color& currentValue, unsigned int flag);
         void copyFlags(ModificationAware* c);
     private:
         CheckFlagMode m_checkModificationMode{SET};
@@ -198,12 +199,12 @@ class LC_DimStyle{
          1 - The background color of the drawing
          2 - The background specified by DIMTFILLCLR
         */
-        BackgroundColorPolicy DIMTFILL{NONE}; // fixme - code
+        BackgroundColorPolicy DIMTFILL{NONE}; /* code 69*/
 
         /** Sets the color for the text background in dimensions.
            Initial value:	0
         */
-        RS_Color DIMTFILLCLR{RS2::FlagByBlock}; // fixme - code
+        RS_Color DIMTFILLCLR{RS2::FlagByBlock}; /* code 70 */
 
         /** controls the vertical position of text in relation to the dimension line.
         // 0 (imperial) or 1 (metric)
@@ -277,7 +278,7 @@ class LC_DimStyle{
            0 - Displays dimension text in a Left-to-Right reading style
            1 - Displays dimension text in a Right-to-Left reading style
         */
-        TextDirection DIMTXTDIRECTION {LEFT_TO_RIGHT}; // fixme - code
+        TextDirection DIMTXTDIRECTION {LEFT_TO_RIGHT};  /* code 292 */
 
         /** Controls options for user-positioned text.
            Initial value:	0
@@ -391,7 +392,7 @@ class LC_DimStyle{
         /** Sets the linetype of the dimension line.
            The value is BYLAYER, BYBLOCK, or the name of a linetype.
         */
-        QString DIMLTYPE; // fixme - sand - code
+        QString DIMLTYPE;  /* code 346*/
 
         RS2::LineType DIMLTYPE_LineType{RS2::LineByBlock};
 
@@ -405,7 +406,7 @@ class LC_DimStyle{
            All values must be entered in hundredths of millimeters.
            (Multiply a value by 2540 to convert values from inches to hundredths of millimeters.)
         */
-        RS2::LineWidth DIMLWD = RS2::intToLineWidth(-2); /*!< code 371 V2000+ */
+        RS2::LineWidth DIMLWD = RS2::WidthByBlock; /*!< code 371 V2000+ */
 
         /** Controls suppression of the first dimension line and arrowhead.
            Initial value:	0
@@ -461,8 +462,8 @@ class LC_DimStyle{
         ExtensionLineAndArrowSuppressionPolicy firstLineSuppression() const{return DIMSE1;}
         ExtensionLineAndArrowSuppressionPolicy secondLineSuppression() const{return DIMSE2;}
 
-        const QString lineTypeFirstRaw() const {return DIMLTEX1;}
-        const QString lineTypeSecondRaw() const {return DIMLTEX2;}
+        QString lineTypeFirstRaw() const {return DIMLTEX1;}
+        QString lineTypeSecondRaw() const {return DIMLTEX2;}
         RS2::LineType lineTypeFirst() const {return DIMLTEX1_linetype;}
         RS2::LineType lineTypeSecond() const {return DIMLTEX2_linetype;}
 
@@ -514,18 +515,18 @@ class LC_DimStyle{
         */
         bool DIMFXLON{false};             /*!< code 290 V2007+ */
 
-        // fixme - sand - dims - support of linetypes for ext lines
+
         /** Sets the linetype of the first extension line.
           Initial value:	""
            The value is BYLAYER, BYBLOCK, or the name of a linetype.
         */
-        QString DIMLTEX1{""}; // fixme - code
+        QString DIMLTEX1{""};  /* code 347*/
 
         /** Sets the linetype of the second extension line.
          * Initial value:	""
            The value is BYLAYER, BYBLOCK, or the name of a linetype.
         */
-        QString DIMLTEX2{""}; // fixme - code
+        QString DIMLTEX2{""}; /* code 348 */
 
         RS2::LineType DIMLTEX1_linetype = RS2::LineType::LineByBlock;
         RS2::LineType DIMLTEX2_linetype = RS2::LineType::LineByBlock;
@@ -540,7 +541,7 @@ class LC_DimStyle{
            All values must be entered in hundredths of millimeters.
            (Multiply a value by 2540 to convert values from inches to hundredths of millimeters.)
         */
-        RS2::LineWidth DIMLWE = RS2::intToLineWidth(-2);               /*!< code 372 V2000+ */
+        RS2::LineWidth DIMLWE =  RS2::WidthByBlock;               /*!< code 372 V2000+ */
 
         /** Suppresses display of the first extension line.
            OFF Extension line is not suppressed
@@ -673,7 +674,6 @@ class LC_DimStyle{
         };
 
         enum ToleranceSuppressionPolicy {
-            // fixme - sand - complete
            TOL_SUPPRESS_ZERO_FEET_AND_ZERO_INCHES = 0,  // 0 Suppresses zero feet and precisely zero inches
            TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES = 1,   // 1 Includes zero feet and precisely zero inches
            TOL_INCLUDE_ZERO_FEET_AND_SUPPRESS_ZERO_INCHES = 2, // 2 Includes zero feet and suppresses zero inches
@@ -693,7 +693,7 @@ class LC_DimStyle{
         bool isToleranceSuppress(int flag){return DIMTZIN &flag;}
         int altLinearRaw() const {return DIMALTZ;}
         bool isAltLinearSuppress(int flag) {return DIMALTZ &flag;}
-        int altToleranceRaw() const  {return DIMALTTZ;} // fixme - sand - or to tolerance?
+        int altToleranceRaw() const  {return DIMALTTZ;}
         bool isAltToleranceSuppress(int flag){return DIMALTTZ &flag;}
 
         void clearLinear(){DIMZIN = 0;}
@@ -791,7 +791,7 @@ class LC_DimStyle{
 
         double linearFactor() const {return DIMLFAC;}
         double scale() const {return DIMSCALE;}
-        void copyTo(Scaling* scaling);;
+        void copyTo(Scaling* scaling);
         void setLinearFactor(double dimlfac);
         void setScale(double dimscale);
         void fillByDefaults();
@@ -1102,12 +1102,18 @@ class LC_DimStyle{
             $DIMTM = 1 << 4,
             $DIMTOL = 1 << 5,
             $DIMTOLJ = 1 << 6,
-            $DIMTP = 1 << 7
+            $DIMTP = 1 << 7,
+            $DIMTALN = 1 << 8
         };
         enum VerticalJustificationToDimText{
             BOTTOM = 0,  // 0 Bottom
             MIDDLE = 1,  // 1  Middle
             TOP  = 2    // 2  Top
+        };
+
+        enum AdjustmentMode {
+            ALIGN_DECIMAL_SEPARATORS = 0,
+            ALIGN_OPERATIONAL_SYMBOLS = 1
         };
 
         LatteralTolerance() = default;
@@ -1119,6 +1125,7 @@ class LC_DimStyle{
         double lowerToleranceLimit() const {return DIMTM;}
         bool isAppendTolerancesToDimText() const {return DIMTOL;}
         VerticalJustificationToDimText verticalJustification() const {return DIMTOLJ;}
+        AdjustmentMode adjustment() const {return DIMTALN;}
         double upperToleranceLimit() const {return DIMTP;}
 
         void setDecimalPlacesAltDim(int dimalttd);
@@ -1130,6 +1137,8 @@ class LC_DimStyle{
         void setUpperToleranceLimit(double dimtp);
         void setVerticalJustification(VerticalJustificationToDimText dimtolj);
         void setVerticalJustificationRaw(int dimtolj);
+        void setAdjustment(AdjustmentMode dimtaln);
+        void setAdjustmentRaw(int dimtaln);
         void fillByDefaults();
         void merge(const LatteralTolerance* parent);
         void copyTo(LatteralTolerance* latteral_tolerance);
@@ -1196,12 +1205,18 @@ class LC_DimStyle{
             plus sign is added to the DIMTP value if it is positive.
         */
         double DIMTP {0.0};             /*!< code 47 */
+
+        /** sets align for tolerance's measurements scale
+         * 0 - align decimal separators
+         * 1 - align operational symbols
+         */
+        AdjustmentMode DIMTALN {ALIGN_DECIMAL_SEPARATORS}; /* dimstyle extended data, code 392 in group ACAD_DSTYLE_DIMTALN */
     };
 
     class Leader : public ModificationAware{
     public:
         enum Fields: unsigned{
-            $DIMLDRBLK = 1 << 0,
+            $DIMLDRBLK = 1 << 0, // fixme - sand - LOAD/SAVE
         };
 
         Leader() = default;
@@ -1219,6 +1234,7 @@ class LC_DimStyle{
         QString DIMLDRBLK{""};     /*!< code 341 V2000+ */
     };
 
+    // fixme - sand - move to MLeaderStyle out of DimStyle
     class MLeader : public ModificationAware{
     public:
         enum Fields: unsigned{
@@ -1248,7 +1264,7 @@ class LC_DimStyle{
         current multileader style is annotative, the MLEADERSCALE value is set to 0. Changes to the MLEADERSCALE
          value are ignored and the value is reset to 0.
         */
-        double MLEADERSCALE{1.0}; // fixme code
+        double MLEADERSCALE{1.0}; // fixme code - should it actually be there?
     };
 
     class Radial : public ModificationAware{
@@ -1296,7 +1312,7 @@ class LC_DimStyle{
          Initial value:	45
          Jogged radius dimensions are often created when the center point is located off the page. Valid settings range is 5 to 90.
          */
-        double DIMJOGANG {45}; // DIMJOGANG // fixme - code
+        double DIMJOGANG {45}; /* DIMJOGANG, stored in ExtData for DimStyle */
     };
 
     class Arc : public ModificationAware{
@@ -1306,15 +1322,15 @@ class LC_DimStyle{
         };
         Arc() = default;
 
-        enum DimArcSymbolMode {
+        enum DimArcSymbolPositionPolicy {
             BEFORE = 0,
             ABOVE = 1,
             NONE = 2
         };
 
-        DimArcSymbolMode arcSymbolDisplay() const {return DIMARCSYM;}
-        void setArcSymbolDisplay(DimArcSymbolMode dimarcsym);
-        void setArcSymbolDisplayRaw(int dimarcsym);
+        DimArcSymbolPositionPolicy arcSymbolPosition() const {return DIMARCSYM;}
+        void setArcSymbolPosition(DimArcSymbolPositionPolicy dimarcsym);
+        void setArcSymbolPositionRaw(int dimarcsym);
         void fillByDefaults();
         void merge(const Arc* parent);
         void copyTo(Arc* arc);
@@ -1325,14 +1341,15 @@ class LC_DimStyle{
          1 Places arc length symbols above the dimension text
          2 Suppresses the display of arc length symbols
         */
-        DimArcSymbolMode DIMARCSYM {BEFORE}; // DIMARCSYM // fixme - code
+        DimArcSymbolPositionPolicy DIMARCSYM {BEFORE}; // DIMARCSYM - code 90 !!!! 2 - none, 1 - above, 0 (if empty) - preceeding
     };
 
     void fillByDefaults();
     void merge(const LC_DimStyle* src);
     void mergeWith(const LC_DimStyle* src, ModificationAware::CheckFlagMode mergeMode, ModificationAware::CheckFlagMode nextMode);
+    ModificationAware::CheckFlagMode getModifyCheckMode();
     void copyTo(LC_DimStyle* copy);
-    void resetFlags();
+    void resetFlags(bool toUnset = true);
     LC_DimStyle* getCopy();
     const QString& getName() const;
     void setName(const QString& name);
@@ -1340,6 +1357,8 @@ class LC_DimStyle{
     static void parseStyleName(const QString& fullName, QString& baseName, RS2::EntityType& dimensionType);
     static QString getStyleNameForBaseAndType(const QString& baseName, RS2::EntityType dimType);
     RS2::EntityType getDimensionType();
+    QString getBaseName();
+    bool isBaseStyle();
 
     AngularFormat* angularFormat() const {return m_angularUnitFormattingStyle.get();}
     Arrowhead* arrowhead() const {return m_arrowheadStyle.get();}
