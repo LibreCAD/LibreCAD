@@ -329,7 +329,6 @@ QString RS_Math::derationalize(const QString& expr) {
         total *= sign;
 
         RS_DEBUG->print("RS_Math::derationalize: total = '%f'", total);
-	LC_ERR<<expr<<" => "<<total;
         return QString::number(total, 'g', 16);
     }
     else {
