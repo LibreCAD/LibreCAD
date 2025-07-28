@@ -60,6 +60,14 @@ Requirements:
 
 More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
 
+***Building Unit Tests***
+To build unit tests (e.g., for `rs_math.cpp`), enable the `BUILD_TESTS` flag:
+
+```bash
+cmake -DBUILD_TESTS=ON ..
+make
+./build/librecad_tests
+
 **Contributing**
 
 [Git and GitHub](https://github.com/LibreCAD/LibreCAD/wiki/Git-and-GitHub)

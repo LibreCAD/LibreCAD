@@ -1599,3 +1599,51 @@ endif(NOT WIN32)
 
 add_subdirectory(libraries/lciconengine)
 add_subdirectory(plugins)
+
+option(BUILD_TESTS "Build unit tests for LibreCAD" OFF)
+
+if(BUILD_TESTS)
+    # Add Catch2 as a subdirectory (assumes Catch2 is in externals/Catch2)
+    add_subdirectory(externals/Catch2)
+
+    # Define test executable
+    add_executable(librecad_tests
+        librecad/src/lib/math/tests/rs_math_tests.cpp
+        librecad/src/lib/math/rs_math.cpp
+        libraries/muparser/src/muParser.cpp
+        libraries/muparser/src/muParserBase.cpp
+        libraries/muparser/src/muParserBytecode.cpp
+        libraries/muparser/src/muParserCallback.cpp
+        libraries/muparser/src/muParserDLL.cpp
+        libraries/muparser/src/muParserError.cpp
+        libraries/muparser/src/muParserInt.cpp
+        libraries/muparser/src/muParserTokenReader.cpp
+        librecad/src/lib/engine/rs_vector.cpp
+        librecad/src/lib/debug/rs_debug.cpp
+	librecad/src/lib/engine/document/entities/lc_rect.cpp
+    )
+
+    # Include directories for rs_math.h and other dependencies
+    target_include_directories(librecad_tests PRIVATE
+        ${Qt6Core_INCLUDE_DIRS}
+        ${Qt6Gui_INCLUDE_DIRS}
+        ${Qt6Widgets_INCLUDE_DIRS}
+    )
+
+    # Link Catch2 and other required libraries (e.g., Boost, Qt)
+    target_link_libraries(librecad_tests PRIVATE
+        Catch2::Catch2WithMain
+        ${Boost_LIBRARIES}
+        Qt6::Core
+        Qt6::Gui
+	Qt6::Network
+	Qt6::PrintSupport
+	Qt6::Svg
+        Qt6::Widgets
+    )
+
+    # Enable C++17 for the test target (matching LibreCAD's standard)
+    target_compile_features(librecad_tests PRIVATE cxx_std_17)
+endif()
+
+
