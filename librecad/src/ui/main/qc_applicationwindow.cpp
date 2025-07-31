@@ -559,21 +559,25 @@ void QC_ApplicationWindow::slotFocus() {
     setFocus();
 }
 
+void QC_ApplicationWindow::disableUIForAbsentDrawing() {
+    enableWidgets(false);
+    enableWidgetList(false, {
+                         m_layerTreeWidget,
+                         m_layerWidget,
+                         m_commandWidget
+                     });
+    m_snapToolBar->getSnapOptionsHolder()->hideSnapOptions();
+    m_coordinateWidget->clearContent();
+    m_relativeZeroCoordinatesWidget->clearContent();
+}
+
 /**
  * Called when a document window was activated.
  */
 void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
 
     if (w == nullptr) { // when it may occur???
-        enableWidgets(false);
-        enableWidgetList(false, {
-            m_layerTreeWidget,
-            m_layerWidget,
-            m_commandWidget
-        });
-        m_snapToolBar->getSnapOptionsHolder()->hideSnapOptions();
-        m_coordinateWidget->clearContent();
-        m_relativeZeroCoordinatesWidget->clearContent();
+        disableUIForAbsentDrawing();
         // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
         activeMDIWindowChanged(nullptr);

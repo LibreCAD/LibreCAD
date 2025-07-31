@@ -131,6 +131,7 @@ public:
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
+    void disableUIForAbsentDrawing();
     void slotKillAllActions();
     void slotFocusCommandLine();
     void slotFocusOptionsWidget();

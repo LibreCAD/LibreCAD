@@ -269,14 +269,12 @@ int main(int argc, char** argv) {
 
     bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
 
-
     bool allowOptions=true;
     QList<int> argClean;
-    for (int i=0; i<argc; i++)
-    {
+
+    for (int i=0; i<argc; i++)   {
         QString argstr(argv[i]);
-        if(allowOptions&&QString::compare("--", argstr)==0)
-        {
+        if(allowOptions&&QString::compare("--", argstr)==0){
             allowOptions=false;
             continue;
         }
@@ -392,10 +390,9 @@ int main(int argc, char** argv) {
     setlocale(LC_NUMERIC, "C");
 
     // parse command line arguments that might not need a launched program:
+    // fixme - sand - add support of skipping of loading via cmdline flag
     QStringList fileList = handleArgs(argc, argv, argClean);
-    if (!fileList.empty()) {
-        loadFilesOnStartup(splash.get(), appWin, app, fileList);
-    }
+    loadFilesOnStartup(splash.get(), appWin, app, fileList);
 
     appWin.initCompleted();
 
@@ -431,28 +428,30 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
     QStringList ret;
 
     bool doexit = false;
-
-    for (int i=1; i<argc; i++)    {
-        if(argClean.indexOf(i)>=0) continue;
-        if (!QString(argv[i]).startsWith("-"))
-        {
-            QString fname = QDir::toNativeSeparators(
-            QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath());
+    for (int i = 1; i < argc; i++) {
+        if (argClean.indexOf(i) >= 0) {
+            continue;
+        }
+        auto localFileName = argv[i];
+        if (!QString(localFileName).startsWith("-")) {
+            auto decodedName = QFile::decodeName(localFileName);
+            QFileInfo fileInfo(decodedName);
+            auto absolutePath = fileInfo.absoluteFilePath();
+            QString fname = QDir::toNativeSeparators(absolutePath);
             ret.append(fname);
         }
-        else if (QString(argv[i])=="--exit")        {
+        else if (QString(localFileName) == "--exit") {
             doexit = true;
         }
     }
-    if (doexit)    {
+    if (doexit) {
         exit(0);
     }
     RS_DEBUG->print("main: handling args: OK");
     return ret;
 }
 
-QString LCReleaseLabel()
-{
+QString LCReleaseLabel(){
     QString version{XSTR(LC_VERSION)};
     QString label;
     const std::map<QString, QString> labelMap = {
