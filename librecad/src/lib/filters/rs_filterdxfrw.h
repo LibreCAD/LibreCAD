@@ -115,14 +115,14 @@ public:
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
     void addMText(const DRW_MText& data) override;
-    void addDimAlign(const DRW_DimAligned *data, DRW_ParsingContext& ctx) override;
-    void addDimLinear(const DRW_DimLinear *data, DRW_ParsingContext& ctx) override;
-    void addDimRadial(const DRW_DimRadial *data, DRW_ParsingContext& ctx) override;
-    void addDimDiametric(const DRW_DimDiametric *data, DRW_ParsingContext& ctx) override;
-    void addDimAngular(const DRW_DimAngular *data, DRW_ParsingContext& ctx) override;
-    void addDimAngular3P(const DRW_DimAngular3p *data, DRW_ParsingContext& ctx) override;
-    void addDimOrdinate(const DRW_DimOrdinate *data, DRW_ParsingContext& ctx) override;
-    void addLeader(const DRW_Leader *data, DRW_ParsingContext& ctx) override;
+    void addDimAlign(const DRW_DimAligned *data) override;
+    void addDimLinear(const DRW_DimLinear *data) override;
+    void addDimRadial(const DRW_DimRadial *data) override;
+    void addDimDiametric(const DRW_DimDiametric *data) override;
+    void addDimAngular(const DRW_DimAngular *data) override;
+    void addDimAngular3P(const DRW_DimAngular3p *data) override;
+    void addDimOrdinate(const DRW_DimOrdinate *data) override;
+    void addLeader(const DRW_Leader *data) override;
     void addHatch(const DRW_Hatch* data) override;
     void addViewport(const DRW_Viewport& /*data*/) override{}
     void addImage(const DRW_Image* data) override;
@@ -137,8 +137,10 @@ public:
     bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) override;
 
     void writeHeader(DRW_Header& data) override;
+    void writeLType(const std::string& lTypeName, const std::string& ltDescription, int ltSize, double ltLength,
+                    const std::vector<double>& ltPath);
     void writeEntities() override;
-    void writeLTypes(std::vector<std::pair<std::string, int>>& lineTypesMap) override;
+    void writeLTypes() override;
     void writeLayers() override;
     void writeViews() override;
     void writeUCSs() override;
@@ -146,13 +148,13 @@ public:
     void writeVports() override;
     void writeBlockRecords() override;
     void writeBlocks() override;
-    void writeDimstyles(std::vector<std::pair<std::string, int>>& lineTypesMap) override;
+    void writeDimstyles() override;
     void prepareDRWDimStyleZerosSuppression(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleScaling(DRW_Dimstyle& d, LC_DimStyle* ds);
-    void prepareDRWDimStyleExtLine(DRW_Dimstyle& d, LC_DimStyle* ds,std::vector<std::pair<std::string, int>>& lineTypesMap);
-    void prepareDRWDimStyleDimLine(DRW_Dimstyle& d, LC_DimStyle* ds, std::vector<std::pair<std::string, int>>& lineTypesMap);
-    int findLineTypeHandle(const QString& name, std::vector<std::pair<std::string, int>>& lineTypesMap) const;
+    void prepareDRWDimStyleExtLine(DRW_Dimstyle& d, LC_DimStyle* ds);
+    void prepareDRWDimStyleDimLine(DRW_Dimstyle& d, LC_DimStyle* ds);
+    int findLineTypeHandleToWrite(const QString& name) const;
     void prepareDRWDimStyleText(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleLinearFormat(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleFractions(DRW_Dimstyle& d, LC_DimStyle* ds);
@@ -162,7 +164,7 @@ public:
     void prepareDRWDimStyleArc(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleLeader(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleExtData(DRW_Dimstyle& d, LC_DimStyle* ds);
-    void prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds, std::vector<std::pair<std::string, int>>& lineTypesMap);
+    void prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds);
     void writeObjects() override;
     void writeAppId() override;
 
@@ -220,9 +222,9 @@ public:
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 protected:
     void parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* result);
-    bool resolveBlockName(duint32 handle, QString& block_name, DRW_ParsingContext& ctx) const;
-    LC_DimStyle* parseDimStyleOverride(LC_ExtEntityData* data, DRW_ParsingContext& ctx) const;
-    RS_DimensionData convDimensionData(const DRW_Dimension* data, DRW_ParsingContext& ctx);
+    bool resolveBlockNameByHandle(duint32 handle, QString& block_name) const;
+    LC_DimStyle* parseDimStyleOverride(LC_ExtEntityData* data) const;
+    RS_DimensionData convDimensionData(const DRW_Dimension* data);
     void fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>& extData, LC_ExtEntityData* entityData);
     LC_ExtEntityData* extractEntityExtData(const std::vector<std::shared_ptr<DRW_Variant>>& extData);
     bool shouldGenerateExtEntityData(RS_Dimension* entity);
@@ -261,7 +263,8 @@ private:
     QHash <RS_Entity*, QString> noNameBlock;
     QHash <QString, QString> fontList;
     bool oldMText;
-    dxfRW *dxfW;
+    dxfRW *dxfW {nullptr};
+    dxfRW *dxfR {nullptr};
     /** If saved version are 2004 or above can save color in RGB value. */
     bool exactColor;
     /** hash of block containers and handleBlock numbers to read dwg files */
