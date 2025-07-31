@@ -207,14 +207,14 @@ public:
 private:
     static RS_VectorSolutions getIntersectionsLineContainer(const RS_Line* l, const RS_EntityContainer* c,
                                                             bool infiniteLine = false);
-    void createHorizontalTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1,
-                                                 bool arrow2,
-                                                 bool noSuppress1, bool noSuppress2,
+    void createHorizontalTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool showArrow1,
+                                                 bool showArrow2,
+                                                 bool showLine1, bool showLine2,
                                                  bool autoText = false);
     RS_VectorSolutions* determineTextAreaBounds(RS_MText* text, double dimGap);
-    void createAlignedTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1,
-                                        bool arrow2,
-                                        bool noSuppress1, bool noSuppress2,
+    void createAlignedTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool showArrow1,
+                                        bool showArrow2,
+                                        bool showLine1, bool showLine2,
                                         bool autoText = false);
 protected:
     /** Data common to all dimension entities. */
@@ -240,7 +240,7 @@ protected:
     QString createLinearMeasuredLabel(double dist);
     double prepareLabelLinearDistance(double distance);
     void createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd,
-              bool arrow1=true, bool arrow2=true, bool noSuppress1 = false, bool noSuppress2 = false, bool autoText=false);
+              bool showArrow1=true, bool showArrow2=true, bool showLine1 = false, bool showLine2 = false, bool autoText=false);
 };
 
 #endif

@@ -116,19 +116,18 @@ void RS_DimLinear::doUpdateDim() {
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
 
     auto extLineStyle = m_dimStyleTransient->extensionLine();
-    bool dontSuppressExt1 = extLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    bool dontSuppressExt2 = extLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool showExtLine1 = extLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool showExtLine2 = extLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
 
     auto dimLineStyle = m_dimStyleTransient->dimensionLine();
 
-    bool dontSuppressDim1 = dimLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    bool arrow1 = dontSuppressExt1 && dontSuppressDim1;
-    bool dontSuppressDim2 = dimLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    bool arrow2 = dontSuppressExt2 && dontSuppressDim2;
-
+    bool showDimLine1 = dimLineStyle->firstLineSuppression() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow1 = showExtLine1 && showDimLine1;
+    bool showDimLine2 = dimLineStyle->secondLineSuppression() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow2 = showExtLine2 && showDimLine2;
 
     // Definitive dimension line:
-    createDimensionLine(dimP1, dimP2, arrow1, arrow2, dontSuppressDim1, dontSuppressDim2, m_dimGenericData.autoText);
+    createDimensionLine(dimP1, dimP2, showArrow1, showArrow2, showDimLine1, showDimLine2, m_dimGenericData.autoText);
 
     double extAngle1, extAngle2;
 
@@ -177,11 +176,11 @@ void RS_DimLinear::doUpdateDim() {
 
     // extension lines:
 
-    if (dontSuppressExt1) {
+    if (showExtLine1) {
         addDimExtensionLine(m_dimLinearData.extensionPoint1+vDimexo1, dimP1+vDimexe1, true);
     }
 
-    if (dontSuppressExt2) {
+    if (showExtLine2) {
         addDimExtensionLine(m_dimLinearData.extensionPoint2+vDimexo2, dimP2+vDimexe2, false);
     }
 }

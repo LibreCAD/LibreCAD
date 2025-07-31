@@ -103,8 +103,9 @@ RS_VectorSolutions RS_DimDiametric::getRefPoints() const {
 void RS_DimDiametric::doUpdateDim() {
     RS_DEBUG->print("RS_DimDiametric::update");
     // dimension line:
+    // fixme - sand - rework diametric dimension
     createDimensionLine(m_dimGenericData.definitionPoint, m_dimDiametricData.definitionPoint,
-                              true, true, m_dimGenericData.autoText);
+                              true, true, true, true, m_dimGenericData.autoText);
 }
 
 void RS_DimDiametric::move(const RS_Vector& offset) {

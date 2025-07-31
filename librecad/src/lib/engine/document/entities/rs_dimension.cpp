@@ -366,8 +366,8 @@ RS_MTextData RS_Dimension::createDimTextData(RS_Vector textPos, double textHeigh
  * @param forceAutoText Automatically reposition the text label.
  */
 void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
-                                                           const RS_Vector& p2, bool arrow1, bool arrow2,
-                                                           bool noSuppress1, bool noSuppress2,
+                                                           const RS_Vector& p2, bool showArrow1, bool showArrow2,
+                                                           bool showLine1, bool showLine2,
                                                            bool forceAutoText) {
 
     double dimscale = getGeneralScale();
@@ -385,9 +385,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
     // arrow size:
     double arrowSize = getArrowSize() * dimscale;
 
-    RS_Pen dimensionLinePen(getDimensionLineColor(),
-               getDimensionLineWidth(),
-               RS2::LineByBlock);
+    RS_Pen dimensionLinePen = getPenDimensionLine();
 
     // Create dimension line:
     RS_Line* dimensionLine{new RS_Line{this, p1, p2}};
@@ -463,6 +461,43 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
         }
     }
     double dimtsz = getTickSize() * dimscale;
+    LC_DimArrowRegistry dimArrowRegistry;
+    auto arrowStyle = m_dimStyleTransient->arrowhead();
+    bool firstArrowIsObliqueOrArch = false;
+    bool secondArrowIsObliqueOrArch = false;
+
+    if (dimtsz < 0.01) {
+        //display arrow
+        if ( showArrows) {
+            if (showArrow1) {
+                auto firstArrowName = arrowStyle->obtainFirstArrowName();
+                auto arrow = dimArrowRegistry.createArrowBlock(this, firstArrowName, p1, arrowAngle1, arrowSize);
+                addArrow(arrow, dimensionLinePen);
+                firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
+            }
+
+            if (showArrow2) {
+                auto secondArrowName = arrowStyle->obtainSecondArrowName();
+                auto arrow = dimArrowRegistry.createArrowBlock(this, secondArrowName, p2, arrowAngle2, arrowSize);
+                addArrow(arrow, dimensionLinePen);
+                secondArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(secondArrowName);
+            }
+        }
+    }
+    else {
+        if (showArrow1) { // tick 1
+            auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p1, arrowAngle1, arrowSize);
+            addArrow(arrow, dimensionLinePen);
+            firstArrowIsObliqueOrArch = true;
+        }
+        if (showArrow2) { // tick 2:
+            auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p2, arrowAngle2, arrowSize);
+            addArrow(arrow, dimensionLinePen);
+            secondArrowIsObliqueOrArch = true;
+        }
+    }
+
+  /*
     bool displayArrows = dimtsz < 0.01 && showArrows;
     if (displayArrows) {
         //display arrow
@@ -495,10 +530,11 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
         }
     }
 
+    */
+
     if (drawFrameAroundText) {
         addBoundsAroundText(dimgap, text);
     }
-
 
     // calculate split dimension lines
     bool splitDimensionLine = false;
@@ -542,22 +578,23 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
         }
 
         if (splitDimensionLine) {
-            dimensionLineInside1 = new RS_Line{this, p1, s1};
-            dimensionLineInside1->setPen(dimensionLinePen);
-            dimensionLineInside2 = new RS_Line{this, s2, p2};
-            dimensionLineInside2->setPen(dimensionLinePen);
+            if (showLine1) {
+                dimensionLineInside1 = new RS_Line{this, p1, s1};
+            }
+            if (showLine2) {
+                dimensionLineInside2 = new RS_Line{this, s2, p2};
+            }
         }
-    // }
 
     // finally, add the dimension line(s) and text to the drawing
     if (outsideArrows && dimensionLineOutside1 != nullptr) {
-        if (noSuppress1){
+        if (showLine1){
             addDimComponentEntity(dimensionLineOutside1, dimensionLinePen);
         }
         else {
             delete dimensionLineOutside1;
         }
-        if (noSuppress2) {
+        if (showLine2) {
             addDimComponentEntity(dimensionLineOutside2, dimensionLinePen);
         }
         else {
@@ -565,7 +602,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
         }
     }
 
-    if (splitDimensionLine && dimensionLineInside1 != nullptr) {
+    if (splitDimensionLine) {
         auto dimLine = m_dimStyleTransient->dimensionLine();
         if (outsideArrows) {
             if (dimLine->drawPolicyForOutsideText() == LC_DimStyle::DimensionLine::DRAW_EVEN_IF_ARROWHEADS_ARE_OUTSIDE) {
@@ -578,8 +615,8 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
             }
         }
         else {
-            addDimComponentEntity(dimensionLineInside1, dimensionLinePen);
-            addDimComponentEntity(dimensionLineInside2, dimensionLinePen);
+             addDimComponentEntity(dimensionLineInside1, dimensionLinePen);
+             addDimComponentEntity(dimensionLineInside2, dimensionLinePen);
         }
     }
     else {
@@ -642,8 +679,8 @@ void RS_Dimension::addArrow(RS_Entity* arrow, RS_Pen &dimensionPen) {
  * @param forceAutoText Automatically reposition the text label.
  */
 void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
-                                                        const RS_Vector& p2, bool arrow1, bool arrow2,
-                                                        bool noSuppress1, bool noSuppress2,
+                                                        const RS_Vector& p2, bool showArrow1, bool showArrow2,
+                                                        bool showLine1, bool showLine2,
                                                         bool forceAutoText) {
     double dimscale = getGeneralScale();
     double dimtxt = getTextHeight() * dimscale;
@@ -740,14 +777,14 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
     bool secondArrowIsObliqueOrArch = false;
     if (dimtsz < 0.01) {
         //display arrow
-        if (arrow1) {
+        if (showArrow1) {
             auto firstArrowName = arrowStyle->obtainFirstArrowName();
             auto arrow = dimArrowRegistry.createArrowBlock(this, firstArrowName, p1, arrowAngle1, arrowSize);
             addArrow(arrow, dimensionPen);
             firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
         }
 
-        if (arrow2) {
+        if (showArrow2) {
             auto secondArrowName = arrowStyle->obtainSecondArrowName();
             auto arrow = dimArrowRegistry.createArrowBlock(this, secondArrowName, p2, arrowAngle2, arrowSize);
             addArrow(arrow, dimensionPen);
@@ -755,12 +792,12 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
         }
     }
     else {
-        if (arrow1) { // tick 1
+        if (showArrow1) { // tick 1
             auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p1, arrowAngle1, arrowSize);
             addArrow(arrow, dimensionPen);
             firstArrowIsObliqueOrArch = true;
         }
-        if (arrow2) { // tick 2:
+        if (showArrow2) { // tick 2:
             auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p2, arrowAngle2, arrowSize);
             addArrow(arrow, dimensionPen);
             secondArrowIsObliqueOrArch = true;
@@ -792,12 +829,12 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
  * @param forceAutoText Automatically reposition the text label.
  */
 void RS_Dimension::createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd,
-    bool arrow1, bool arrow2, bool noSuppress1, bool noSuppress2,  bool forceAutoText) {
+    bool showArrow1, bool showArrow2, bool showLine1, bool showLine2,  bool forceAutoText) {
     if (getInsideHorizontalText()) {
-        createHorizontalTextDimensionLine(dimLineStart, dimLineEnd, arrow1, arrow2, noSuppress1, noSuppress2, forceAutoText);
+        createHorizontalTextDimensionLine(dimLineStart, dimLineEnd, showArrow1, showArrow2, showLine1, showLine2, forceAutoText);
     }
     else {
-        createAlignedTextDimensionLine(dimLineStart, dimLineEnd, arrow1, arrow2, noSuppress1,noSuppress2, forceAutoText);
+        createAlignedTextDimensionLine(dimLineStart, dimLineEnd, showArrow1, showArrow2, showLine1,showLine2, forceAutoText);
     }
 }
 
@@ -1145,7 +1182,7 @@ void RS_Dimension::resolveEffectiveDimStyleAndUpdateDim() {
     if (m_dimStyleTransient != nullptr) { // it migth be null during reading of file of example
         doUpdateDim();
         if (getDimStyleOverride() != nullptr) {
-            delete m_dimStyleTransient;
+            delete m_dimStyleTransient; // delete a copy of style that was created for override
         }
     }
     m_dimStyleTransient = nullptr;
@@ -1161,9 +1198,11 @@ void RS_Dimension::updateDim(bool autoText) {
 }
 
 void RS_Dimension::addDimComponentEntity(RS_Entity* en, const RS_Pen &pen) {
-    en->setPen(pen);
-    en->setLayer(nullptr);
-    addEntity(en);
+    if (en != nullptr) {
+        en->setPen(pen);
+        en->setLayer(nullptr);
+        addEntity(en);
+    }
 }
 
 RS_Line* RS_Dimension::addDimExtensionLine(RS_Vector start, RS_Vector end, bool first) {

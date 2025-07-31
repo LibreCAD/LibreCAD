@@ -145,24 +145,24 @@ void RS_DimAligned::doUpdateDim() {
 
     // Extension lines
     auto extensionLineStyle = m_dimStyleTransient->extensionLine();
-    bool dontSuppressExt1 = extensionLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    if (dontSuppressExt1) {
+    bool showExtLine1 = extensionLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    if (showExtLine1) {
         addDimExtensionLine(m_dimAlignedData.extensionPoint1 + extLineOffsetVector, dimLineStart + extLineExtensionVector, true);
     }
-    bool dontSuppressExt2 = extensionLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    if (dontSuppressExt2) {
+    bool showExtLine2 = extensionLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    if (showExtLine2) {
         addDimExtensionLine(m_dimAlignedData.extensionPoint2 + extLineOffsetVector, dimLineEnd + extLineExtensionVector, false);
     }
 
     // Dimension line:
     auto dimLineStyle = m_dimStyleTransient->dimensionLine();
 
-    bool donSuppressDim1 = dimLineStyle->firstLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    bool arrow1 = dontSuppressExt1 && donSuppressDim1;
-    bool donSuppressDim2 = dimLineStyle->secondLineSuppression() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
-    bool arrow2 = dontSuppressExt2 && donSuppressDim2;
+    bool showDimLine1 = dimLineStyle->firstLineSuppression() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow1 = showExtLine1 && showDimLine1;
+    bool showDimLine2 = dimLineStyle->secondLineSuppression() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow2 = showExtLine2 && showDimLine2;
 
-    createDimensionLine(dimLineStart,dimLineEnd,arrow1, arrow2, donSuppressDim1, dontSuppressExt2, m_dimGenericData.autoText);
+    createDimensionLine(dimLineStart,dimLineEnd,showArrow1, showArrow2, showDimLine1, showDimLine2, m_dimGenericData.autoText);
 }
 
 void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
