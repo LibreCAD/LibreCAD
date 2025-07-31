@@ -253,59 +253,80 @@ void RS_Graphic::newDoc() {
 }
 
 void RS_Graphic::clearVariables() {
-    variableDict.clear();
+    m_variableDict.clear();
+}
+
+QString RS_Graphic::getCustomProperty(const QString &key, const QString& defaultValue) {
+   return m_customVariablesDict.getString(key, defaultValue);
+}
+
+void RS_Graphic::addCustomProperty(const QString &key, const QString& value) {
+    m_customVariablesDict.add(key, value, 1);
+    setModified(true);
+}
+
+void RS_Graphic::removeCustomProperty(const QString &key) {
+    m_customVariablesDict.remove(key);
+}
+
+bool RS_Graphic::hasCustomProperty(const QString& key) {
+    return m_customVariablesDict.has(key);
+}
+
+const QHash<QString, RS_Variable> & RS_Graphic::getCustomProperties() const {
+    return m_customVariablesDict.getVariableDict();
 }
 
 int RS_Graphic::countVariables() const{
-    return variableDict.count();
+    return m_variableDict.count();
 }
 
 void RS_Graphic::addVariable(const QString& key, const RS_Vector& value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, const QString& value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, int value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, bool value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, double value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::removeVariable(const QString& key) {
-    variableDict.remove(key);
+    m_variableDict.remove(key);
 }
 
 RS_Vector RS_Graphic::getVariableVector(const QString& key, const RS_Vector& def) const {
-    return variableDict.getVector(key, def);
+    return m_variableDict.getVector(key, def);
 }
 
 QString RS_Graphic::getVariableString(const QString& key, const QString& def) const {
-    return variableDict.getString(key, def);
+    return m_variableDict.getString(key, def);
 }
 
 int RS_Graphic::getVariableInt(const QString& key, int def) const {
-    return variableDict.getInt(key, def);
+    return m_variableDict.getInt(key, def);
 }
 
 bool RS_Graphic::getVariableBool(const QString& key, bool def) const {
-    return variableDict.getInt(key, def ? 1 : 0) != 0;
+    return m_variableDict.getInt(key, def ? 1 : 0) != 0;
 }
 
 double RS_Graphic::getVariableDouble(const QString& key, double def) const {
-    return variableDict.getDouble(key, def);
+    return m_variableDict.getDouble(key, def);
 }
 
 QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
-    return variableDict.getVariableDict();
+    return m_variableDict.getVariableDict();
 }
 
 //
@@ -457,6 +478,16 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() const{
     // fixme - sand - add caching
     int lunits = getVariableInt("$LUNITS", 2);
     return convertLinearFormatDXF2LC(lunits);
+}
+
+void RS_Graphic::replaceCustomWars(const QHash<QString, QString>& vars) {
+    m_customVariablesDict.clear();
+    QHashIterator<QString,QString> customVar(vars);
+    while (customVar.hasNext()) {
+        customVar.next();
+        m_customVariablesDict.add(customVar.key(), customVar.value(), 1);
+    }
+    setModified(true);
 }
 
 /**

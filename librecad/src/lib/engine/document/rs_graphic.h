@@ -124,6 +124,11 @@ public:
 
         // Wrappers for variable functions:
     void clearVariables();
+    QString getCustomProperty(const QString& key, const QString& defaultValue);
+    void addCustomProperty(const QString& key, const QString& value);
+    void removeCustomProperty(const QString& key);
+    bool hasCustomProperty(const QString& key);
+    const QHash<QString, RS_Variable>& getCustomProperties() const;
     int countVariables() const;
 
     void addVariable(const QString& key, const RS_Vector& value, int code);
@@ -140,17 +145,18 @@ public:
     bool getVariableBool(const QString& key, bool def) const;
     double getVariableDouble(const QString& key, double def) const;
 
-    void setVariableDictObject(RS_VariableDict inputVariableDict) {variableDict = inputVariableDict;}
+    void setVariableDictObject(RS_VariableDict inputVariableDict) {m_variableDict = inputVariableDict;}
 
     RS_VariableDict getVariableDictObject() const{
-        return variableDict;
+        return m_variableDict;
     }
 
     RS_VariableDict* getVariableDictObjectRef() {
-        return &variableDict;
+        return &m_variableDict;
     }
 
     RS2::LinearFormat getLinearFormat() const;
+    void replaceCustomWars(const QHash<QString, QString>& hash);
 
     static RS2::LinearFormat convertLinearFormatDXF2LC(int f);
     int getLinearPrecision() const;
@@ -289,7 +295,8 @@ private:
     // fixme - sand - files - change to unique_ptrs?
     RS_LayerList layerList{};
     RS_BlockList blockList{true};
-    RS_VariableDict variableDict;
+    RS_VariableDict m_variableDict;
+    RS_VariableDict m_customVariablesDict;
     LC_ViewList namedViewsList;
     LC_UCSList ucsList;
     LC_DimStylesList dimstyleList;
