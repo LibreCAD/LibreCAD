@@ -1038,56 +1038,56 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             DRW_DimOrdinate e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimOrdinate(&e,parsingContext);
+                intfa.addDimOrdinate(&e);
             }
             break; }
         case 21: {
             DRW_DimLinear e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimLinear(&e,parsingContext);
+                intfa.addDimLinear(&e);
             }
             break; }
         case 22: {
             DRW_DimAligned e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimAlign(&e,parsingContext);
+                intfa.addDimAlign(&e);
             }
             break; }
         case 23: {
             DRW_DimAngular3p e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimAngular3P(&e,parsingContext);
+                intfa.addDimAngular3P(&e);
             }
             break; }
         case 24: {
             DRW_DimAngular e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimAngular(&e,parsingContext);
+                intfa.addDimAngular(&e);
             }
             break; }
         case 25: {
             DRW_DimRadial e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimRadial(&e,parsingContext);
+                intfa.addDimRadial(&e);
             }
             break; }
         case 26: {
             DRW_DimDiametric e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimDiametric(&e,parsingContext);
+                intfa.addDimDiametric(&e);
             }
             break; }
         case 45: {
             DRW_Leader e;
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addLeader(&e,parsingContext);
+                intfa.addLeader(&e);
             }
             break; }
         case 31: {

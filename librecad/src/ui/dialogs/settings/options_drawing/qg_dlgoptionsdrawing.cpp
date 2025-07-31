@@ -41,6 +41,7 @@
 #include "lc_dimstyleslistmodel.h"
 #include "lc_dimstylestreemodel.h"
 #include "lc_dlgdimstylemanager.h"
+#include "lc_dlgnewcustomvariable.h"
 #include "lc_dlgnewdimstyle.h"
 #include "lc_inputtextdialog.h"
 #include "qc_applicationwindow.h"
@@ -51,6 +52,7 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_vector.h"
+#include "ui_lc_dlgnewcustomvariable.h"
 
 #define $ENABLE_LEGACY_DIMENSIONS_TAB // fixme - sand - temporary, remove later
 
@@ -82,6 +84,7 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
 #endif
 
     connectPointsTab();
+    connectUserVarsTab();
 
     tabWidget->setCurrentIndex(0);
     init();
@@ -89,12 +92,19 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
 
 void QG_DlgOptionsDrawing::onTabCurrentChanged(int index) {
     if (index == 3) { // dimensions tab
-        m_previewView->zoomAuto();
+        if (m_previewView != nullptr) {
+            m_previewView->zoomAuto();
+        }
     }
 }
 
 void QG_DlgOptionsDrawing::connectPointsTab() {
     connect(rbRelSize, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onRelSizeToggled);
+}
+
+void QG_DlgOptionsDrawing::connectUserVarsTab() {
+    connect(pbCustomVarAdd, &QPushButton::clicked, this, &QG_DlgOptionsDrawing::onCustomVariableAdd);
+    connect(pbCustomVarDelete, &QPushButton::clicked, this, &QG_DlgOptionsDrawing::onCustomVariableDelete);
 }
 
 void QG_DlgOptionsDrawing::_to_remove_ConnectLegacyDimsTab() {
@@ -199,13 +209,13 @@ void QG_DlgOptionsDrawing::init() {
 
 #define TO_MM(v) RS_Units::convert(v, RS2::Millimeter, unit)
 
-void QG_DlgOptionsDrawing::prepareDimStyleItems(RS_Graphic* g, QList<LC_DimStyleItem*> &items) {
-    QString defaultDimStyleName = g->getDefaultDimStyleName();
-    LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
+void QG_DlgOptionsDrawing::prepareDimStyleItems(QList<LC_DimStyleItem*> &items) {
+    QString defaultDimStyleName = m_graphic->getDefaultDimStyleName();
+    LC_DimStyle* styleThatIsDefault = m_graphic->getDimStyleByName(defaultDimStyleName);
     QMap<QString, int> usages;
-    auto dimStylesList = g->getDimStyleList();
+    auto dimStylesList = m_graphic->getDimStyleList();
     auto dimStyles = dimStylesList->getStylesList();
-    collectStylesUsage(g, usages);
+    collectStylesUsage(usages);
 
     for (const auto dimStyle : *dimStyles) {
         LC_DimStyle* ds = dimStyle->getCopy();
@@ -215,7 +225,7 @@ void QG_DlgOptionsDrawing::prepareDimStyleItems(RS_Graphic* g, QList<LC_DimStyle
     }
 }
 
-void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
+void QG_DlgOptionsDrawing::setupDimStylesTab() {
     m_previewView = LC_DimStylePreviewGraphicView::init(this, m_graphic, RS2::EntityUnknown);
 
     auto* layout = new QVBoxLayout(gbDimStylesPreview);
@@ -231,7 +241,7 @@ void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
     layout->addWidget(m_previewView, 10);
 
     QList<LC_DimStyleItem*> items;
-    prepareDimStyleItems(g, items);
+    prepareDimStyleItems(items);
 
     auto* model = new LC_DimStyleTreeModel(this, items, true);
     lvDimStyles->setModel(model);
@@ -270,14 +280,14 @@ void QG_DlgOptionsDrawing::setupDimStylesTab(RS_Graphic* g) {
     connect(lvDimStyles, &QListView::doubleClicked, this, &QG_DlgOptionsDrawing::onDimStyleDoubleClick);
 }
 
-void QG_DlgOptionsDrawing::collectStylesUsage(RS_Graphic* graphic, QMap<QString, int>& map) {
-    for (RS_Entity* e : graphic->getEntityList()) {
+void QG_DlgOptionsDrawing::collectStylesUsage(QMap<QString, int>& map) {
+    for (RS_Entity* e : m_graphic->getEntityList()) {
         auto entityType = e->rtti();
         if (!e->isUndone() && RS2::isDimensionalEntity(entityType)) {
             auto* dim = dynamic_cast<RS_Dimension*>(e);
             QString styleName = dim->getStyle();
 
-            auto dimStyleForNameAndType = graphic->getDimStyleByName(styleName, entityType);
+            auto dimStyleForNameAndType = m_graphic->getDimStyleByName(styleName, entityType);
             if (dimStyleForNameAndType != nullptr) {
                 QString resolvedStyleName = dimStyleForNameAndType->getName();
                 int value = map.value(resolvedStyleName, 0);
@@ -291,16 +301,122 @@ void QG_DlgOptionsDrawing::collectStylesUsage(RS_Graphic* graphic, QMap<QString,
     }
 }
 
+void QG_DlgOptionsDrawing::setupMetaTab() {
+    QString title = m_graphic->getVariableString("$TITLE", "");
+    QString subject = m_graphic->getVariableString("$SUBJECT", "");
+    QString author = m_graphic->getVariableString("$AUTHOR", "");
+    QString keywords = m_graphic->getVariableString("$KEYWORDS", "");
+    QString comments = m_graphic->getVariableString("$COMMENTS", "");
+
+    leMetaTitle->setText(title);
+    leMetaSubject->setText(subject);
+    leMetaAuthor->setText(author);
+    leMetaKeywords->setText(keywords);
+    leMetaComments->setText(comments);
+}
+
+void QG_DlgOptionsDrawing::setupUserREditor(QLineEdit* edit, const QString &key) {
+    double rval = m_graphic->getVariableDouble(key, 0.0);
+    QString val = QString::number(rval, 'g', 12);
+    edit->setText(val);
+}
+
+void QG_DlgOptionsDrawing::setupUserTab() {
+    sbUserI1->setValue(m_graphic->getVariableInt("$USERI1", 0));
+    sbUserI2->setValue(m_graphic->getVariableInt("$USERI2", 0));
+    sbUserI3->setValue(m_graphic->getVariableInt("$USERI3", 0));
+    sbUserI4->setValue(m_graphic->getVariableInt("$USERI4", 0));
+    sbUserI5->setValue(m_graphic->getVariableInt("$USERI5", 0));
+
+    setupUserREditor(leUserR1, "$USERR1");
+    setupUserREditor(leUserR2, "$USERR2");
+    setupUserREditor(leUserR3, "$USERR3");
+    setupUserREditor(leUserR4, "$USERR4");
+    setupUserREditor(leUserR5, "$USERR5");
+
+    twCustomVars->setColumnCount(2);
+    twCustomVars->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
+
+    auto customVars = m_graphic->getCustomProperties();
+    int row = 0;
+    QHashIterator<QString,RS_Variable> it(customVars);
+    while (it.hasNext()){
+        it.next();
+        QString key = it.key();
+        QString value = it.value().getString();
+        twCustomVars->insertRow(row);
+        auto keyItem = new QTableWidgetItem(key);
+        keyItem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        twCustomVars->setItem(row,0, keyItem);
+        twCustomVars->setItem(row,1, new QTableWidgetItem(value));
+        row++;
+    }
+    if (row == 0) {
+        pbCustomVarDelete->setEnabled(false);
+    }
+    // twCustomVars->resizeColumnsToContents();
+    twCustomVars->horizontalHeader()->setStretchLastSection(true);
+    twCustomVars->setSelectionBehavior(QAbstractItemView::SelectRows);
+    twCustomVars->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+    twCustomVars->setSortingEnabled(true);
+    twCustomVars->verticalHeader()->hide();
+}
+
+void QG_DlgOptionsDrawing::onCustomVariableAdd(bool checked) {
+    LC_DlgNewCustomVariable dlg(this);
+    QStringList propertyNames;
+    int rowCount = twCustomVars->rowCount();
+    for (int row = 0; row < rowCount; row++) {
+        QString propertyName = twCustomVars->item(row, 0)->text();
+        propertyNames.push_back(propertyName);
+    }
+    dlg.setPropertyNames(&propertyNames);
+    if (dlg.exec() == QDialog::Accepted) {
+        QString propertyName = dlg.getPropertyName();
+        QString propertyValue = dlg.getPropertyValue();
+        int rowCount = twCustomVars->rowCount();
+        twCustomVars->insertRow(rowCount);
+        twCustomVars->setItem(rowCount,0, new QTableWidgetItem(propertyName));
+        twCustomVars->setItem(rowCount,1, new QTableWidgetItem(propertyValue));
+        pbCustomVarDelete->setEnabled(true);
+    }
+    // twCustomVars->resizeColumnsToContents();
+    // twCustomVars->horizontalHeader()->setStretchLastSection(true);
+    // twCustomVars->horizontalHeader()->setSectionR    esizeMode(QHeaderView::Stretch);
+    twCustomVars->update();
+}
+
+void QG_DlgOptionsDrawing::onCustomVariableDelete(bool checked) {
+    int row = twCustomVars->currentRow();
+    if (row >= 0) {
+        QString propertyName = twCustomVars->item(row, 0)->text();
+        int response = QMessageBox::warning(
+                   this,
+                   tr("Delete Custom Property"),
+                   QObject::tr("Are you sure you'd like to delete property [%1]?").arg(propertyName),
+                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No
+                   );
+
+        if (response != QMessageBox::Yes) {
+            return;
+        }
+        twCustomVars->removeRow(row);
+    }
+    if (twCustomVars->rowCount() == 0) {
+        pbCustomVarDelete->setEnabled(false);
+    }
+}
+
 void QG_DlgOptionsDrawing::onDimStyleDoubleClick() {
     onDimStyleEdit(false);
 }
 
 void QG_DlgOptionsDrawing::reject() {
-    if (m_hasImportantMoficationsToAskOnCancel) {
+    if (m_hasImportantModificationsToAskOnCancel) {
         int response = QMessageBox::warning(
                    this,
                    tr("Drawing Options"),
-                   QObject::tr("Settings were changed. Are you sure you'd like to skip saving changes (so the will not be saved)?"),
+                   QObject::tr("Settings were changed. Are you sure you'd like to skip saving changes (so they will not be saved)?"),
                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No
                    );
 
@@ -451,7 +567,7 @@ void QG_DlgOptionsDrawing::doCreateDimStyle(const QString &newStyleName, LC_DimS
         model->addItem(item);
         expandStylesTree();
         updateDimStylePreview(originalStyle, model);
-        m_hasImportantMoficationsToAskOnCancel = true;
+        m_hasImportantModificationsToAskOnCancel = true;
     }
     else {
         delete styleCopyToEdit;
@@ -499,7 +615,7 @@ void QG_DlgOptionsDrawing::onDimStyleEdit(bool checked) {
 
         if (dimStyleManager.exec() == QDialog::Accepted) {
             styleCopyToEdit->copyTo(originalStyleToEdit);
-            m_hasImportantMoficationsToAskOnCancel = true;
+            m_hasImportantModificationsToAskOnCancel = true;
             updateDimStylePreview(originalStyleToEdit, model);
         };
         delete styleCopyToEdit;
@@ -525,10 +641,11 @@ void QG_DlgOptionsDrawing::onDimStyleRename(bool checked) {
             }
             model->emitDataChanged();
             expandStylesTree();
-            m_hasImportantMoficationsToAskOnCancel = true;
+            m_hasImportantModificationsToAskOnCancel = true;
         }
     }
 }
+
 
 void QG_DlgOptionsDrawing::onDimStyleRemove(bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
@@ -576,7 +693,7 @@ void QG_DlgOptionsDrawing::onDimStyleRemove(bool checked) {
             if (allowRemoval) {
                 model->removeItem(item);
                 expandStylesTree();
-                m_hasImportantMoficationsToAskOnCancel = true;
+                m_hasImportantModificationsToAskOnCancel = true;
             }
         }
     }
@@ -606,7 +723,7 @@ void QG_DlgOptionsDrawing::onDimStyleImport(bool checked) {
         else{
             itemToRefresh = model->getStandardItem();
         }
-        m_hasImportantMoficationsToAskOnCancel= true;
+        m_hasImportantModificationsToAskOnCancel= true;
         updateDimStylePreview(itemToRefresh->dimStyle(), model);
     }
 }
@@ -1040,7 +1157,9 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     setupPaperTab();
     setupPointsTab();
     setupSplinesTab();
-    setupDimStylesTab(g);
+    setupDimStylesTab();
+    setupMetaTab();
+    setupUserTab();
     setupVariablesTab();
 }
 
@@ -1183,7 +1302,7 @@ void QG_DlgOptionsDrawing::_toRemove_validateDimsOld() {
     m_graphic->updateDimensions(ok1);
 }
 
-bool QG_DlgOptionsDrawing::validateDimensions() {
+bool QG_DlgOptionsDrawing::validateDimensionsTab() {
     LC_DimStyleTreeModel* model = getDimStylesModel();
     QList<LC_DimStyleItem*> items;
     model->collectAllStyleItems(items);
@@ -1212,49 +1331,66 @@ bool QG_DlgOptionsDrawing::validatePointsTab() {
     // Get currently selected point style from which button is checked
     int pdmode = LC_DEFAULTS_PDMode;
 
-    if (bDot->isChecked())
+    if (bDot->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreDot;
-    else if (bBlank->isChecked())
+    }
+    else if (bBlank->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreBlank;
-    else if (bPlus->isChecked())
+    }
+    else if (bPlus->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentrePlus;
-    else if (bCross->isChecked())
+    }
+    else if (bCross->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreCross;
-    else if (bTick->isChecked())
+    }
+    else if (bTick->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreTick;
-
-    else if (bDotCircle->isChecked())
+    }
+    else if (bDotCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot);
-    else if (bBlankCircle->isChecked())
+    }
+    else if (bBlankCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank);
-    else if (bPlusCircle->isChecked())
+    }
+    else if (bPlusCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus);
-    else if (bCrossCircle->isChecked())
+    }
+    else if (bCrossCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross);
-    else if (bTickCircle->isChecked())
+    }
+    else if (bTickCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick);
-
-    else if (bDotSquare->isChecked())
+    }
+    else if (bDotSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
-    else if (bBlankSquare->isChecked())
+    }
+    else if (bBlankSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank);
-    else if (bPlusSquare->isChecked())
+    }
+    else if (bPlusSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus);
-    else if (bCrossSquare->isChecked())
+    }
+    else if (bCrossSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross);
-    else if (bTickSquare->isChecked())
+    }
+    else if (bTickSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick);
-
-    else if (bDotCircleSquare->isChecked())
+    }
+    else if (bDotCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot);
-    else if (bBlankCircleSquare->isChecked())
+    }
+    else if (bBlankCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank);
-    else if (bPlusCircleSquare->isChecked())
+    }
+    else if (bPlusCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus);
-    else if (bCrossCircleSquare->isChecked())
+    }
+    else if (bCrossCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross);
-    else if (bTickCircleSquare->isChecked())
+    }
+    else if (bTickCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick);
+    }
 
     m_graphic->addVariable("$PDMODE", pdmode, DXF_FORMAT_GC_PDMode);
 
@@ -1274,9 +1410,7 @@ bool QG_DlgOptionsDrawing::validatePointsTab() {
 
 void QG_DlgOptionsDrawing::validateSplinesTab() {
     // splines:
-    m_graphic->addVariable("$SPLINESEGS",
-                           (int) RS_Math::eval(cbSplineSegs->currentText()), 70);
-
+    m_graphic->addVariable("$SPLINESEGS",(int) RS_Math::eval(cbSplineSegs->currentText()), 70);
 
     RS_DEBUG->print("QG_DlgOptionsDrawing::validate: splinesegs is: %s",
                     cbSplineSegs->currentText().toLatin1().data());
@@ -1350,6 +1484,38 @@ void QG_DlgOptionsDrawing::validatePaperTab() {
                            sbPagesNumV->value());
 }
 
+void QG_DlgOptionsDrawing::validateMetaTab() {
+    m_graphic->addVariable("$TITLE", leMetaTitle->text(), 1);
+    m_graphic->addVariable("$SUBJECT", leMetaSubject->text(), 1);
+    m_graphic->addVariable("$AUTHOR", leMetaAuthor->text(), 1);
+    m_graphic->addVariable("$KEYWORDS", leMetaKeywords->text(), 1);
+    m_graphic->addVariable("$COMMENTS", leMetaComments->toPlainText(), 1);
+}
+
+void QG_DlgOptionsDrawing::validateUserTab() {
+    m_graphic->addVariable("$USERI1", sbUserI1->value(),70);
+    m_graphic->addVariable("$USERI2", sbUserI2->value(),70);
+    m_graphic->addVariable("$USERI3", sbUserI3->value(),70);
+    m_graphic->addVariable("$USERI4", sbUserI4->value(),70);
+    m_graphic->addVariable("$USERI5", sbUserI5->value(),70);
+
+    m_graphic->addVariable("$USERR1", RS_Math::eval(leUserR1->text(),0.0),40);
+    m_graphic->addVariable("$USERR2", RS_Math::eval(leUserR2->text(),0.0),40);
+    m_graphic->addVariable("$USERR3", RS_Math::eval(leUserR3->text(),0.0),40);
+    m_graphic->addVariable("$USERR4", RS_Math::eval(leUserR4->text(),0.0),40);
+    m_graphic->addVariable("$USERR5", RS_Math::eval(leUserR5->text(),0.0),40);
+
+    int row_count = twCustomVars->rowCount();
+
+    QHash<QString, QString> newCustomVars;
+    for (int i = 0; i < row_count; i++) {
+        QString name = twCustomVars->item(i, 0)->text();
+        QString value = twCustomVars->item(i, 1)->text();
+        newCustomVars.insert(name, value);
+    }
+    m_graphic->replaceCustomWars(newCustomVars);
+}
+
 void QG_DlgOptionsDrawing::validateUnitsTab() {
     // units:
     auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
@@ -1406,8 +1572,10 @@ void QG_DlgOptionsDrawing::validate() {
 #ifdef ENABLE_LEGACY_DIMENSIONS_TAB
         _toRemove_validateDimsOld();
 #endif
-        validateDimensions();
+        validateDimensionsTab();
         validatePointsTab();
+        validateMetaTab();
+        validateUserTab();
 
         // indicate graphic is modified and requires save
         m_graphic->setModified(true);

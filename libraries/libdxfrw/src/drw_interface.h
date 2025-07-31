@@ -130,41 +130,41 @@ public:
     /**
      * Called for every aligned dimension entity. 
      */
-    virtual void addDimAlign(const DRW_DimAligned *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimAlign(const DRW_DimAligned *data) = 0;
     /**
      * Called for every linear or rotated dimension entity. 
      */
-    virtual void addDimLinear(const DRW_DimLinear *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimLinear(const DRW_DimLinear *data) = 0;
 
 	/**
      * Called for every radial dimension entity. 
      */
-    virtual void addDimRadial(const DRW_DimRadial *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimRadial(const DRW_DimRadial *data) = 0;
 
 	/**
      * Called for every diametric dimension entity. 
      */
-    virtual void addDimDiametric(const DRW_DimDiametric *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimDiametric(const DRW_DimDiametric *data) = 0;
 
 	/**
      * Called for every angular dimension (2 lines version) entity. 
      */
-    virtual void addDimAngular(const DRW_DimAngular *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimAngular(const DRW_DimAngular *data) = 0;
 
 	/**
      * Called for every angular dimension (3 points version) entity. 
      */
-    virtual void addDimAngular3P(const DRW_DimAngular3p *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimAngular3P(const DRW_DimAngular3p *data) = 0;
 	
     /**
      * Called for every ordinate dimension entity. 
      */
-    virtual void addDimOrdinate(const DRW_DimOrdinate *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addDimOrdinate(const DRW_DimOrdinate *data) = 0;
     
     /** 
 	 * Called for every leader start. 
 	 */
-    virtual void addLeader(const DRW_Leader *data, DRW_ParsingContext &ctx) = 0;
+    virtual void addLeader(const DRW_Leader *data) = 0;
 	
 	/** 
 	 * Called for every hatch entity. 
@@ -200,13 +200,13 @@ public:
     virtual void writeBlocks() = 0;
     virtual void writeBlockRecords() = 0;
     virtual void writeEntities() = 0;
-    virtual void writeLTypes(std::vector<std::pair<std::string, int>>& lineTypesMap) = 0;
+    virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;
     virtual void writeViews() = 0;
     virtual void writeUCSs() = 0;
     virtual void writeTextstyles() = 0;
     virtual void writeVports() = 0;
-    virtual void writeDimstyles(std::vector<std::pair<std::string, int>>& lineTypesMap) = 0;
+    virtual void writeDimstyles() = 0;
     virtual void writeObjects() = 0;
     virtual void writeAppId() = 0;
 };

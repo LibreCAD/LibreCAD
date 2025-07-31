@@ -760,9 +760,6 @@ void LC_DlgDimension::expandStylesTree() {
 void LC_DlgDimension::setupPreview() {
     m_previewView = LC_DimStylePreviewGraphicView::init(this, m_graphic,m_entity);
 
-    auto dimStyle = m_entity->getEffectiveDimStyle();
-
-    m_previewView->setDimStyle(dimStyle);
     m_previewView->setFocusPolicy(Qt::ClickFocus);
 
     auto* layout = new QVBoxLayout(this);

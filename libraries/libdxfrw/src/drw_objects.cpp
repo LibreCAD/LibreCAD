@@ -2138,3 +2138,9 @@ std::string DRW_ParsingContext::resolveLineTypeName(int handle) {
     }
     return {};
 }
+
+DRW_WritingContext::~DRW_WritingContext() {
+    textStyleMap.clear();
+    blockMap.clear();
+    lineTypesMap.clear();
+}

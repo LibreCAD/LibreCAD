@@ -83,18 +83,26 @@ protected slots:
 
     void onDimStylesListMenuRequested(const QPoint &pos);
     void onDimStyleDoubleClick();
+
+    void onCustomVariableAdd(bool checked);
+    void onCustomVariableDelete(bool checked);
+
     void reject() override;
 protected:
     void setupPointsTab();
     void setupSplinesTab();
     void setupGridTab();
     void setupPaperTab();
+    void setupMetaTab();
+    void setupUserREditor(QLineEdit* edit, const QString &key);
+    void setupUserTab();
     void _toRemoveSetupLegacyDimsTab(RS2::LinearFormat& linearFormat, int lunits, int luprec, int aunits, int auprec);
     LC_DimStyleTreeModel* getDimStylesModel();
     void doCreateDimStyle(const QString &newStyleName, LC_DimStyleTreeModel* model, LC_DimStyleItem* styleItemBasedOn, RS2::EntityType newDimType);
     void connectPaperTab();
     void connectUnitTab();
     void connectGridTab();
+    void connectUserVarsTab();
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
     void updateLPtSzUnits();
@@ -102,23 +110,25 @@ protected:
     void updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimStyleTreeModel* model) const;
 private:
     std::unique_ptr<QStringList> m_listPrec1;
-    RS_Graphic* m_graphic;
-    QGraphicsScene* m_paperScene;
+    RS_Graphic* m_graphic {nullptr};
+    QGraphicsScene* m_paperScene {nullptr};
     std::unique_ptr<RS_Vector> m_spacing;
-    LC_DimStylePreviewGraphicView* m_previewView;
-    bool m_hasImportantMoficationsToAskOnCancel = false;
+    LC_DimStylePreviewGraphicView* m_previewView {nullptr};
+    bool m_hasImportantModificationsToAskOnCancel = false;
 
     void init();
-    void prepareDimStyleItems(RS_Graphic* g, QList<LC_DimStyleItem*> &items);
-    void collectStylesUsage(RS_Graphic* rs_graphic, QMap<QString, int>& map);
-    void setupDimStylesTab(RS_Graphic* g);
+    void prepareDimStyleItems(QList<LC_DimStyleItem*> &items);
+    void collectStylesUsage(QMap<QString, int>& map);
+    void setupDimStylesTab();
     void setupVariablesTab();
     void _toRemove_validateDimsOld();
-    bool validateDimensions();
+    bool validateDimensionsTab();
     bool validatePointsTab();
     void validateSplinesTab();
     void validateGridTab();
     void validatePaperTab();
+    void validateMetaTab();
+    void validateUserTab();
     void validateUnitsTab();
     QModelIndex getSelectedDimStyleIndex();
 

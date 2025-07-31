@@ -312,6 +312,19 @@ public:
     }
 
     DRW_TableEntry* newInstance() override;
+
+    void updateValues(const UTF8STRING &lTypeName, const UTF8STRING &ltDescription, int ltSize, double ltLength, const std::vector<double> &ltPath) {
+        reset();
+        name = lTypeName;
+        desc = ltDescription;
+        size = ltSize;
+        length = ltLength;
+        path.clear();
+
+        for (auto it:ltPath) {
+            path.push_back(it);
+        }
+    }
 protected:
     bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
@@ -709,7 +722,15 @@ public:
     std::unordered_map<duint32, DRW_LType*> lineTypeMap;
     std::unordered_map<duint32, DRW_Block_Record*> blockRecordMap;
     std::unordered_map<duint32, DRW_Textstyle*> textStyles;
+};
 
+class DRW_WritingContext {
+public:
+    DRW_WritingContext() = default;
+    ~DRW_WritingContext();
+    std::vector<std::pair<std::string, int>> lineTypesMap;
+    std::unordered_map<std::string,int> blockMap;
+    std::unordered_map<std::string,int> textStyleMap;
 };
 
 

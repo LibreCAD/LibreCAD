@@ -38,20 +38,46 @@ bool DRW_Header::parseCode(int code, dxfReader *reader){
     }
 
     switch (code) {
-    case 9:
-        curr = new DRW_Variant();
+    case 9: {
         name = reader->getString();
-        if (version < DRW::AC1015 && name == "$DIMUNIT")
-            name="$DIMLUNIT";
-        vars[name]=curr;
-        break;
-    case 1:
-        curr->addString(code, reader->getUtf8String());
-        if (name =="$ACADVER") {
-            reader->setVersion(*curr->content.s, true);
-            version = reader->getVersion();
+        if ("$CUSTOMPROPERTYTAG" == name) {
+            waitingFor = CUSTOM_VAR_NAME;
+        }
+        else if ("$CUSTOMPROPERTY" == name) {
+            waitingFor = CUSTOM_VAR_VALUE;
+        }
+        else {
+            waitingFor = VARIABLE_VALUE;
+            curr = new DRW_Variant();
+            if (version < DRW::AC1015 && name == "$DIMUNIT")
+                name="$DIMLUNIT";
+            vars[name]=curr;
         }
         break;
+    }
+    case 1: {
+        auto value = reader->getUtf8String();
+        switch (waitingFor) {
+            case VARIABLE_VALUE: {
+                curr->addString(code, value);
+                if (name =="$ACADVER") {
+                    reader->setVersion(*curr->content.s, true);
+                    version = reader->getVersion();
+                }
+                break;
+            }
+            case CUSTOM_VAR_NAME: {
+                currentCustomVarName = value;
+                break;
+            }
+            case CUSTOM_VAR_VALUE: {
+                auto var = new DRW_Variant(1, value);
+                customVars[currentCustomVarName]=var;
+                break;
+            }
+        }
+        break;
+    }
     case 2:
         curr->addString(code, reader->getUtf8String());
         break;

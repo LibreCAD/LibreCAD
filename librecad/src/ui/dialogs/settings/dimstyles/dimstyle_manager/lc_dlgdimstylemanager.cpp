@@ -1894,7 +1894,7 @@ void LC_DlgDimStyleManager::refreshPreview() const {
     if (m_editMode == OVERRIDE_EDITING) {
         m_previewView->setEntityDimStyle(m_dimStyle, true, m_baseStyleName);
     }
-    m_previewView->updateDims();
+        m_previewView->updateDims();
 }
 
 void LC_DlgDimStyleManager::resizeEvent(QResizeEvent* resize_event) {
@@ -1912,7 +1912,6 @@ void LC_DlgDimStyleManager::setReadOnly() {
     disableContainer(ui->gbSymbolsCentermarks);
     disableContainer(ui->gbSymbolsArcLength);
     disableContainer(ui->gbLinearJog );
-    disableContainer(ui->gbRadiusJog );
     disableContainer(ui->gbRadiusJog );
     disableContainer(ui->gbTextAppearance);
     disableContainer(ui->gbTextPlacement);

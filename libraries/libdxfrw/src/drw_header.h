@@ -76,6 +76,9 @@ public:
         for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
             this->vars[it->first] = new DRW_Variant( *(it->second) );
         }
+        for (auto it=h.customVars.begin(); it!=h.customVars.end(); ++it){
+            this->customVars[it->first] = new DRW_Variant( *(it->second) );
+        }
         this->curr = nullptr;
     }
     DRW_Header& operator=(const DRW_Header &h) {
@@ -85,6 +88,10 @@ public:
            this->comments = h.comments;
            for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
                this->vars[it->first] = new DRW_Variant( *(it->second) );
+           }
+
+           for (auto it=h.customVars.begin(); it!=h.customVars.end(); ++it){
+               this->customVars[it->first] = new DRW_Variant( *(it->second) );
            }
        }
        return *this;
@@ -99,6 +106,7 @@ public:
     void addComment(std::string c);
     bool parseCode(int code, dxfReader *reader) override;
     std::unordered_map<std::string,DRW_Variant*> vars;
+    std::unordered_map<std::string,DRW_Variant*> customVars;
     static int measurement(const int unit);
 protected:
     void writeVar(dxfWriter* writer, std::string name, double defaultValue, int varCode = 40);
@@ -110,6 +118,13 @@ private:
     std::string comments;
     std::string name;
     DRW_Variant* curr {nullptr};
+    enum WaitingFor {
+        VARIABLE_VALUE,
+        CUSTOM_VAR_NAME,
+        CUSTOM_VAR_VALUE
+    };
+    WaitingFor waitingFor = VARIABLE_VALUE;
+    std::string currentCustomVarName{""};
     int version; //to use on read
 
     duint32 linetypeCtrl;
@@ -133,6 +148,11 @@ private:
             delete it->second;
 
         vars.clear();
+
+        for (auto it=customVars.begin(); it!=customVars.end(); ++it)
+            delete it->second;
+
+        customVars.clear();
     }
 };
 

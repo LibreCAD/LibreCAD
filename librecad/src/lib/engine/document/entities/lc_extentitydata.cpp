@@ -41,9 +41,12 @@ LC_ExtDataTag::LC_ExtDataTag(int code, double value) {
     add(v);
 }
 
-LC_ExtDataTag::LC_ExtDataTag(int code, const QString& value) {
+LC_ExtDataTag::LC_ExtDataTag(int code, const QString& value, bool asReference) {
     RS_Variable* v = new RS_Variable(value, code);
     add(v);
+    if (asReference){
+      type = REF;
+    }
 }
 
 LC_ExtDataTag::LC_ExtDataTag(RS_Variable* var) {
@@ -74,7 +77,11 @@ void LC_ExtDataTag::add(LC_ExtDataTag* tag) {
 }
 
 bool LC_ExtDataTag::isAtomic() const {
-    return type == VAR;
+    return type != LIST;
+}
+
+bool LC_ExtDataTag::isRef() const {
+    return type == REF;
 }
 
 RS_Variable* LC_ExtDataTag::var() const {
@@ -100,6 +107,11 @@ void LC_ExtDataGroup::add(int code, double value) {
 
 void LC_ExtDataGroup::add(int code, const QString& value) {
     auto tagData = new LC_ExtDataTag(code, value);
+    m_tagData.add(tagData);
+}
+
+void LC_ExtDataGroup::addRef(int code, const QString& value) {
+    auto tagData = new LC_ExtDataTag(code, value, true);
     m_tagData.add(tagData);
 }
 

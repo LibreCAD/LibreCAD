@@ -18,6 +18,7 @@
 #include <sstream>
 #include <cassert>
 #include <functional>
+#include <boost/type_traits/has_dereference.hpp>
 
 #include "intern/drw_textcodec.h"
 #include "intern/dxfreader.h"
@@ -42,11 +43,7 @@ dxfRW::~dxfRW(){
     for (auto it=imageDef.begin(); it!=imageDef.end(); ++it) {
         delete *it;
     }
-
-    textStyleMap.clear();
     imageDef.clear();
-
-
 }
 
 void dxfRW::setDebug(DRW::DebugLevel lvl){
@@ -180,8 +177,8 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
 }
 
 
-void dxfRW::writeHeader(){
-/*RLZ: TODO complete all vars to AC1024*/
+void dxfRW::writeHeader() {
+    /*RLZ: TODO complete all vars to AC1024*/
 
     int varInt;
     std::string varStr;
@@ -191,32 +188,32 @@ void dxfRW::writeHeader(){
     writeString(9, "$ACADVER");
 
     switch (version) {
-    case DRW::AC1006: //unsupported version acad 10
-    case DRW::AC1009: //acad 11 & 12
-        varStr = "AC1009";
-        break;
-    case DRW::AC1012: //unsupported version acad 13
-    case DRW::AC1014: //acad 14
-        varStr = "AC1014";
-        break;
-    case DRW::AC1015: //acad 2000
-        varStr = "AC1015";
-        break;
-    case DRW::AC1018: //acad 2004
-        varStr = "AC1018";
-        break;
-/*    case DRW::AC1021: //acad 2007
-        varStr = "AC1021";
-        break;*/
-    case DRW::AC1024: //acad 2010
-        varStr = "AC1024";
-        break;
-    case DRW::AC1027: //acad 2013
-        varStr = "AC1027";
-        break;
-    default: //acad 2007 default version
-        varStr = "AC1021";
-        break;
+        case DRW::AC1006: //unsupported version acad 10
+        case DRW::AC1009: //acad 11 & 12
+            varStr = "AC1009";
+            break;
+        case DRW::AC1012: //unsupported version acad 13
+        case DRW::AC1014: //acad 14
+            varStr = "AC1014";
+            break;
+        case DRW::AC1015: //acad 2000
+            varStr = "AC1015";
+            break;
+        case DRW::AC1018: //acad 2004
+            varStr = "AC1018";
+            break;
+            /*    case DRW::AC1021: //acad 2007
+                    varStr = "AC1021";
+                    break;*/
+        case DRW::AC1024: //acad 2010
+            varStr = "AC1024";
+            break;
+        case DRW::AC1027: //acad 2013
+            varStr = "AC1027";
+            break;
+        default: //acad 2007 default version
+            varStr = "AC1021";
+            break;
     }
     writeString(1, varStr);
     writer->setVersion(varStr, true);
@@ -233,9 +230,17 @@ void dxfRW::writeHeader(){
 
     DRW_Coord zeroCoord{0.0, 0.0, 0.0};
     DRW_Coord maxCoord{
-    1.0000000000000000E+020,
-    1.0000000000000000E+020, 1.0000000000000000E+020
-    };
+        1.0000000000000000E+020,
+        1.0000000000000000E+020, 1.0000000000000000E+020
+        };
+
+
+    writeVar("$TITLE", "");
+    writeVar("$SUBJECT", "");
+    writeVar("$AUTHOR", "");
+    writeVar("$KEYWORDS", "");
+    writeVar("$COMMENTS", "");
+
 
     DRW_Coord xVectorCoord(1.0, 0.0, 0.0);
     DRW_Coord yVectorCoord(0.0, 1.0, 0.0);
@@ -359,7 +364,7 @@ void dxfRW::writeHeader(){
         if (varInt < 1 || varInt > 6) {
             varInt = 2;
         }
-        if (version> DRW::AC1014) {
+        if (afterAC1014) {
             writeVarExp("$DIMLUNIT", varInt, 70);
         } else {
             writeVarExp("$DIMUNIT", varInt, 70);
@@ -369,7 +374,7 @@ void dxfRW::writeHeader(){
         writeVar("$DIMLWE", -2);
         writeVar("$DIMTMOVE", 0);
 
-        if (version > DRW::AC1018) {// and post v2004 dim vars
+        if (afterAC1018) {// and post v2004 dim vars
             writeVar("$DIMFXL", 1.0);
             writeVar("$DIMFXLON", 0);
             writeVar("$DIMJOGANG", 0.7854);
@@ -503,14 +508,14 @@ void dxfRW::writeHeader(){
     writeVar("$PEXTMIN", 10, zeroCoord);
     writeVar("$PEXTMAX", 10, zeroCoord);
 
-/* RLZ: moved to active VPORT, but can write in header if present*/
+    /* RLZ: moved to active VPORT, but can write in header if present*/
     writeVarOpt("$GRIDMODE", 70);
     writeVarOpt("$SNAPSTYLE", 70);
 
     writeVar2DOpt("$GRIDUNIT", 10);
     writeVar2DOpt("$VIEWCTR", 10);
 
-/* RLZ: moved to active VPORT, but can write in header if present*/
+    /* RLZ: moved to active VPORT, but can write in header if present*/
 
     writeVar2D("$PLIMMIN", 10, zeroCoord);
     writeVar2D("$PLIMMAX", 10, {297.0, 210.0, 0.0});
@@ -536,7 +541,7 @@ void dxfRW::writeHeader(){
         writeVar("$ENDCAPS", 0, 280);
         writeVar("$JOINSTYLE", 0, 280);
         writeVar("$LWDISPLAY", 0, 290);
-        if (version > DRW::AC1014) {
+        if (afterAC1014) {
             writeVarExp("$INSUNITS", insunits, 70);  // already fetched above for $MEASUREMENT
         }
         writeVar("$HYPERLINKBASE", "", 1);
@@ -545,33 +550,13 @@ void dxfRW::writeHeader(){
         writeVar("$CEPSNTYPE", 0, 380);
         writeVar("$PSTYLEMODE", 1, 290);
 
-//RLZ: here $FINGERPRINTGUID and $VERSIONGUID, do not add?
+        //RLZ: here $FINGERPRINTGUID and $VERSIONGUID, do not add?
 
         writeVar("$EXTNAMES", 1, 290);
         writeVar("$PSVPSCALE", 0.0, 40);
         writeVar("$OLESTARTUP", 0, 290);
     }
-    if (version > DRW::AC1015) {// and post v2004 vars
-        writeVar("$SORTENTS", 127, 280);
-        writeVar("$INDEXCTL", 0, 280);
-        writeVar("$HIDETEXT", 1, 280);
-
-        if (version > DRW::AC1021) {
-            writeVar("$XCLIPFRAME", 0, 280);
-
-        } else {
-            writeVar("$XCLIPFRAME", 0, 290);
-        }
-
-        writeVar("$HALOGAP", 0, 280);
-        writeVar("$OBSCOLOR", 257);
-        writeVar("$OBSLTYPE", 0, 280);
-        writeVar("$INTERSECTIONDISPLAY", 0, 280);
-        writeVar("$INTERSECTIONCOLOR", 257);
-        writeVar("$DIMASSOC", 1, 280);
-        writeVar("$PROJECTNAME", "");
-    }
-    if (version > DRW::AC1018) {// and post v2007 vars
+    if (afterAC1018) {// and post v2007 vars
         writeVar("$CAMERADISPLAY", 0, 290);
         writeVar("$LENSLENGTH", 50.0, 40);
         writeVar("$CAMERAHEIGHT", 0.0, 40);
@@ -591,7 +576,7 @@ void dxfRW::writeHeader(){
         writeVar("$LONGITUDE", 1.0);
         writeVar("$NORTHDIRECTION", 0.0);
 
-    //$CMATERIAL is a handle
+        //$CMATERIAL is a handle
 
         writeVar("$TIMEZONE", -8000);
         writeVar("$LIGHTGLYPHDISPLAY", 1, 280);
@@ -609,6 +594,18 @@ void dxfRW::writeHeader(){
 
         writeVar("$CSHADOW", 0, 280);
         writeVar("$SHADOWPLANELOCATION", 0.0, 40);
+    }
+
+    for (auto it :header.customVars) {
+        std::string key = it.first;
+        DRW_Variant* var = it.second;
+        auto val = var->content.s;
+        if (!val->empty()) {
+            writeString(9, "$CUSTOMPROPERTYTAG");
+            writeString(1, key);
+            writeString(9, "$CUSTOMPROPERTY");
+            writeString(1, *val);
+        }
     }
 }
 
@@ -682,7 +679,7 @@ bool dxfRW::writeAppData(const std::list<std::list<DRW_Variant>>& appData) {
     return true;
 }
 
-bool dxfRW::writeLineTypeGenerics(DRW_LType *ent, int handle, std::vector<std::pair<std::string, int>>& lineTypesMap) {
+bool dxfRW::writeLineTypeGenerics(DRW_LType *ent, int handle) {
     writeName("LTYPE");
     std::string strname = ent->name;
     transform(strname.begin(), strname.end(), strname.begin(),::toupper);
@@ -694,14 +691,14 @@ bool dxfRW::writeLineTypeGenerics(DRW_LType *ent, int handle, std::vector<std::p
         }
         writeSymTypeRecord("Linetype");
         writeUtf8String(2, ent->name);
-        lineTypesMap.emplace_back(std::pair<std::string, int>(strname, handle));
+        m_writingContext.lineTypesMap.emplace_back(std::pair<std::string, int>(strname, handle));
     } else {
         writeUtf8Caps(2, strname);
     }
     return true;
 }
 
-bool dxfRW::writeLineType(DRW_LType *ent,std::vector<std::pair<std::string, int>>& lineTypesMap){
+bool dxfRW::writeLineType(DRW_LType *ent){
     std::string strname = ent->name;
 
     transform(strname.begin(), strname.end(), strname.begin(),::toupper);
@@ -709,7 +706,7 @@ bool dxfRW::writeLineType(DRW_LType *ent,std::vector<std::pair<std::string, int>
     if (strname == "BYLAYER" || strname == "BYBLOCK" || strname == "CONTINUOUS") {
         return true;
     }
-    writeLineTypeGenerics(ent, ++entCount, lineTypesMap);
+    writeLineTypeGenerics(ent, ++entCount);
     
     writeInt16(70, ent->flags);
     writeUtf8String(3, ent->desc);
@@ -874,7 +871,7 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
     }
     if (afterAC1009) {
         writeString(5, toHexStr(++entCount));
-        textStyleMap[name] = entCount;
+        m_writingContext.textStyleMap[name] = entCount;
         if (afterAC1012) {
             writeString(330, "2");
         }
@@ -1607,10 +1604,11 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
 
                 if (ent->eType == DRW::DIMLINEAR) {
                     auto dl = static_cast<DRW_DimLinear*>(ent);
-
-                    writeDoubleOpt(50, dl->getAngle());
-                    writeDoubleOpt(52, dl->getOblique());
                     writeSubClass("RotatedDimension");
+                    // writeDouble(50, dl->getAngle());
+                    writeDoubleOpt(50, dl->getAngle());
+                    // writeDouble(52, dl->getOblique());
+                    writeDoubleOpt(52, dl->getOblique());
                 }
                 break;
             }
@@ -1839,7 +1837,7 @@ bool dxfRW::writeBlockRecord(std::string name){
         writeName("BLOCK_RECORD");
         writeString(5, toHexStr(++entCount)); // Handle (all except DIMSTYLE)
 
-        blockMap[name] = entCount;
+        m_writingContext.blockMap[name] = entCount;
         entCount = 2+entCount;//reserve 2 for BLOCK & ENDBLOCK
         if (afterAC1014) {
             writeString(330, "1"); // Soft-pointer ID/handle to owner object
@@ -1872,7 +1870,7 @@ bool dxfRW::writeBlock(DRW_Block *bk){
     writingBlock = true;
     writeName("BLOCK");
     if (afterAC1009) {
-        currHandle = (*(blockMap.find(bk->name))).second;
+        currHandle = (*(m_writingContext.blockMap.find(bk->name))).second;
         writeString(5, toHexStr(currHandle+1));
         if (afterAC1014) {
             writeString(330, toHexStr(currHandle));
@@ -1926,13 +1924,13 @@ void dxfRW::writeLayerTable() {
     writeTableEnd();
 }
 
-void dxfRW::writeLineTypeTable(std::vector<std::pair<std::string, int>>& lineTypesMap) {
+void dxfRW::writeLineTypeTable() {
     writeTableStart("LTYPE", "5", 4);
     //Mandatory linetypes
     DRW_LType lt;
     lt.reset();
     lt.name = "ByBlock";
-    writeLineTypeGenerics(&lt, 20, lineTypesMap);
+    writeLineTypeGenerics(&lt, 20);
     writeInt16(70, 0);
     writeString(3, "");
     writeInt16(72, 65);
@@ -1940,7 +1938,7 @@ void dxfRW::writeLineTypeTable(std::vector<std::pair<std::string, int>>& lineTyp
     writeDouble(40, 0.0);
 
     lt.name = "ByLayer";
-    writeLineTypeGenerics(&lt, 21, lineTypesMap);
+    writeLineTypeGenerics(&lt, 21);
 
     writeInt16(70, 0);
     writeString(3, "");
@@ -1949,7 +1947,7 @@ void dxfRW::writeLineTypeTable(std::vector<std::pair<std::string, int>>& lineTyp
     writeDouble(40, 0.0);
 
     lt.name = "Continuous";
-    writeLineTypeGenerics(&lt, 22, lineTypesMap);
+    writeLineTypeGenerics(&lt, 22);
 
     writeInt16(70, 0);
     writeString(3, "Solid line");
@@ -1957,7 +1955,7 @@ void dxfRW::writeLineTypeTable(std::vector<std::pair<std::string, int>>& lineTyp
     writeInt16(73, 0);
     writeDouble(40, 0.0);
     //Application linetypes
-    iface->writeLTypes(lineTypesMap);
+    iface->writeLTypes();
     writeTableEnd();
 }
 
@@ -2045,7 +2043,7 @@ void dxfRW::writeBlockRecordTable() {
     }
 }
 
-void dxfRW::writeDimStyleTable(std::vector<std::pair<std::string, int>>& lineTypesMap) {
+void dxfRW::writeDimStyleTable() {
     writeTableStart("DIMSTYLE", "A", 1);
     if (afterAC1014) {
         writeSubClass("DimStyleTable");
@@ -2053,21 +2051,20 @@ void dxfRW::writeDimStyleTable(std::vector<std::pair<std::string, int>>& lineTyp
     }
 
     // dimstyleStd =false;
-    iface->writeDimstyles(lineTypesMap);
+    iface->writeDimstyles();
     writeTableEnd();
 }
 
 bool dxfRW::writeTables() {
-    std::vector<std::pair<std::string, int>> lineTypesMap;
     writeViewPortTable();
-    writeLineTypeTable(lineTypesMap);
+    writeLineTypeTable();
     writeLayerTable();
     writeStyleTable();
     writeUCSTable();
     writeViewTable();
     writeAppIdTable();
     writeBlockRecordTable();
-    writeDimStyleTable(lineTypesMap);
+    writeDimStyleTable();
     return true;
 }
 
@@ -2463,7 +2460,7 @@ bool dxfRW::processTables() {
                 }
             } else if (sectionstr == "ENDSEC") {
                 for (auto it=dimstyles.begin(); it!=dimstyles.end(); ++it) {
-                    it->resolveRefs(parsingContext);
+                    it->resolveRefs(m_readingContext);
                     iface->addDimStyle(*it);
                 }
 
@@ -2481,7 +2478,7 @@ bool dxfRW::processBlockRecord() {
     return doProcessTableEntry("BLOCK_RECORD", blockRecord, [this](DRW_TableEntry* r){
         auto br = static_cast<DRW_Block_Record*>(r);
         duint32 handle = br->handle;
-        parsingContext.blockRecordMap[handle] = br;
+        m_readingContext.blockRecordMap[handle] = br;
     }, false);
 }
 
@@ -2510,7 +2507,7 @@ bool dxfRW::processLType() {
         auto ltp = static_cast<DRW_LType*>(l);
         ltp->update();
         int handle = ltp->handle;
-        parsingContext.lineTypeMap[handle] = ltp;
+        m_readingContext.lineTypeMap[handle] = ltp;
         iface->addLType(*ltp);
     }, false);
 }
@@ -2587,7 +2584,7 @@ bool dxfRW::processTextStyle(){
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
             if (reading) {
-                parsingContext.textStyles[textStyle->handle] = textStyle;
+                m_readingContext.textStyles[textStyle->handle] = textStyle;
                 iface->addTextStyle(*textStyle);
             }
             sectionstr = getString();
@@ -3035,37 +3032,37 @@ bool dxfRW::processDimension() {
         switch (type) {
             case 0: {
                 DRW_DimLinear d(*ent);
-                iface->addDimLinear(&d, parsingContext);
+                iface->addDimLinear(&d);
                 break;
             }
             case 1: {
                 DRW_DimAligned d(*ent);
-                iface->addDimAlign(&d, parsingContext);
+                iface->addDimAlign(&d);
                 break;
             }
             case 2: {
                 DRW_DimAngular d(*ent);
-                iface->addDimAngular(&d, parsingContext);
+                iface->addDimAngular(&d);
                 break;
             }
             case 3: {
                 DRW_DimDiametric d(*ent);
-                iface->addDimDiametric(&d, parsingContext);
+                iface->addDimDiametric(&d);
                 break;
             }
             case 4: {
                 DRW_DimRadial d(*ent);
-                iface->addDimRadial(&d, parsingContext);
+                iface->addDimRadial(&d);
                 break;
             }
             case 5: {
                 DRW_DimAngular3p d(*ent);
-                iface->addDimAngular3P(&d, parsingContext);
+                iface->addDimAngular3P(&d);
                 break;
             }
             case 6: {
                 DRW_DimOrdinate d(*ent);
-                iface->addDimOrdinate(&d, parsingContext);
+                iface->addDimOrdinate(&d);
                 break;
             }
             default:
@@ -3079,7 +3076,7 @@ bool dxfRW::processLeader() {
     DRW_Leader leader;
     return doProcessParseable(leader,[this](DRW_ParseableEntity* e){
         auto ent = static_cast<DRW_Leader*>(e);
-        iface->addLeader(ent,parsingContext);
+        iface->addLeader(ent);
         return true;
     });
 }
@@ -3165,7 +3162,7 @@ std::string dxfRW::toHexStr(int n){
 #endif
 }
 
-int dxfRW::getBlockRecordHandle(const std::string &blockName) const {
+int dxfRW::getBlockRecordHandleToWrite(const std::string &blockName) const {
     // fixme - sand - so far, the exact match of block it expected!
     // check whether case insensitive search is needed. If it is, the code should be like below...
     // std::string txstyname = blockName;
@@ -3173,8 +3170,8 @@ int dxfRW::getBlockRecordHandle(const std::string &blockName) const {
     // if(blockMap.count(blockName) > 0) {
     //    auto pair = blockMap.find(blockName);
 
-    if(blockMap.count(blockName) > 0) {
-        auto pair = blockMap.find(blockName);
+    if(m_writingContext.blockMap.count(blockName) > 0) {
+        auto pair = m_writingContext.blockMap.find(blockName);
         int blkHandle = pair->second;
         return blkHandle;
     }
@@ -3182,9 +3179,8 @@ int dxfRW::getBlockRecordHandle(const std::string &blockName) const {
 }
 
 int dxfRW::getTextStyleHandle(const std::string &blockName) const {
-    // fixme - sand - so far, the exact match of block it expected
-    if(blockMap.count(blockName) > 0) {
-        auto pair = blockMap.find(blockName);
+    if(m_writingContext.textStyleMap.count(blockName) > 0) {
+        auto pair = m_writingContext.textStyleMap.find(blockName);
         int blkHandle = pair->second;
         return blkHandle;
     }
@@ -3214,7 +3210,7 @@ void dxfRW::setVersion(DRW::Version v) {
     afterAC1018 = v > DRW::AC1018;
 }
 
-bool dxfRW::writeString(int code, std::string text) {
+bool dxfRW::writeString(int code, const std::string &text) {
     return writer->writeString(code, text);
 }
 
@@ -3229,11 +3225,11 @@ bool dxfRW::writeDoubleOpt(int code, double d) {
     return true;
 }
 
-bool dxfRW::writeUtf8String(int code, std::string text) {
+bool dxfRW::writeUtf8String(int code, const std::string &text) {
     return writer->writeUtf8String(code, text);
 }
 
-bool dxfRW::writeUtf8Caps(int code, std::string text) {
+bool dxfRW::writeUtf8Caps(int code, const std::string &text) {
     return writer->writeUtf8Caps(code, text);
 }
 

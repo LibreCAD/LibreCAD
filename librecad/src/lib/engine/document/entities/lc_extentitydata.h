@@ -30,18 +30,20 @@ class LC_ExtDataTag {
     enum TYPE {
         VAR,
         LIST,
+        REF
     };
 public:
     LC_ExtDataTag();
-        LC_ExtDataTag(int code, const RS_Vector& value);
+    LC_ExtDataTag(int code, const RS_Vector& value);
     LC_ExtDataTag(int code, int value);
     LC_ExtDataTag(int code, double value);
-    LC_ExtDataTag(int code, const QString& value);
+    LC_ExtDataTag(int code, const QString& value, bool asReference = false);
     explicit LC_ExtDataTag(RS_Variable* var);
     ~LC_ExtDataTag();
     void add(RS_Variable* v);
     void add(LC_ExtDataTag* tag);
     bool isAtomic() const;
+    bool isRef() const;
     RS_Variable* var() const;
     std::vector<LC_ExtDataTag*>* list();
 private:
@@ -58,6 +60,7 @@ public:
     void add(int code, int value);
     void add(int code, double value);
     void add(int code, const QString& value);
+    void addRef(int code, const QString& value);
     void add(int code, const RS_Vector& value);
     void add(int code, LC_ExtDataTag* tagData);
     QString getName();

@@ -48,10 +48,23 @@ public:
     bool read(DRW_Interface *interface_, bool ext);
     bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
     void setBinary(bool b) {binFile = b;}
-
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+
+    DRW::Version getVersion() const;
+    DRW::error getError() const;
+
+    /*use version from dwgutil.h*/
+    static std::string toHexStr(int n);//RLZ removeme
+
+    int getBlockRecordHandleToWrite(const std::string& blockName) const;
+    int getTextStyleHandle(const std::string& blockName) const;
+
+    DRW_ParsingContext* getReadingContext() {return &m_readingContext;}
+    DRW_WritingContext* getWritingContext() {return &m_writingContext;}
+
+
     void writeHeader();
-    bool writeLineType(DRW_LType *ent,std::vector<std::pair<std::string, int>>& lineTypesMap);
+    bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeView(DRW_View *ent);
     bool writeUCS(DRW_UCS* ent);
@@ -76,13 +89,13 @@ public:
     bool writeBlock(DRW_Block *ent);
     void writeViewPortTable();
     void writeLayerTable();
-    void writeLineTypeTable(std::vector<std::pair<std::string, int>>& lineTypesMap);
+    void writeLineTypeTable();
     void writeStyleTable();
     void writeUCSTable();
     void writeViewTable();
     void writeAppIdTable();
     void writeBlockRecordTable();
-    void writeDimStyleTable(std::vector<std::pair<std::string, int>>& lineTypesMap);
+    void writeDimStyleTable();
     bool writeInsert(DRW_Insert *ent);
     bool writeMText(DRW_MText *ent);
     bool writeText(DRW_Text *ent);
@@ -94,16 +107,8 @@ public:
     bool writeEntityExtData(DRW_Entity* ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
-
-    DRW::Version getVersion() const;
-    DRW::error getError() const;
-
-    /*use version from dwgutil.h*/
-    static std::string toHexStr(int n);//RLZ removeme
-
-    int getBlockRecordHandle(const std::string& blockName) const;
-    int getTextStyleHandle(const std::string& blockName) const;
 private:
+
     /// used by read() to parse the content of the file
     bool processDxf();
     bool processHeader();
@@ -161,14 +166,14 @@ private:
     bool writeObjects();
     bool writeExtData(const std::vector<DRW_Variant*> &ed);
     bool writeAppData(const std::list<std::list<DRW_Variant>> &appData);
-    bool writeLineTypeGenerics(DRW_LType* ent, int handle, std::vector<std::pair<std::string, int>>& lineTypesMap);
+    bool writeLineTypeGenerics(DRW_LType* ent, int handle);
     bool setError(const DRW::error lastError);
 
-    inline bool writeString(int code, std::string text);
+    inline bool writeString(int code, const std::string &text);
     inline bool writeDouble(int code, double d);
     inline bool writeDoubleOpt(int code, double d);
-    inline bool writeUtf8String(int code, std::string text);
-    inline bool writeUtf8Caps(int code, std::string text);
+    inline bool writeUtf8String(int code, const std::string &text);
+    inline bool writeUtf8Caps(int code, const std::string& text);
     inline bool writeHandle(int code, int handle);
     inline bool writeInt16(int code, int val);
     inline bool writeInt32(int code, int val);
@@ -181,12 +186,12 @@ private:
     inline void writeSymTypeRecord(const std::string& typeName);
     inline void writeSubClass(const std::string& typeName);
     inline void writeSubClassOpt(const std::string& typeName);
-    void writeTableStart(const std::string& name, std::string handle, int maxEntriesNumber, int handleCode=5);
     inline void writeTableName(const std::string& name);
     inline void writeName(const std::string& name);
     inline void writeTableEnd();
     inline void writeSymTable();
     inline void writeCoord(int startCode, const DRW_Coord& coord);
+    void writeTableStart(const std::string& name, std::string handle, int maxEntriesNumber, int handleCode=5);
     void writeVar(const std::string &name, int defaultValue, int varCode  = 70);
     void writeVarExp(const std::string& name, int value, int varCode);
     void writeVarOpt(const std::string& name, int varCode);
@@ -224,15 +229,15 @@ private:
     bool applyExt =false;
     bool writingBlock;
     int elParts;  /*!< parts number when convert ellipse to polyline */
-    std::unordered_map<std::string,int> blockMap;
 
 
-    std::unordered_map<std::string,int> textStyleMap;
+
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 
     int currHandle;
 
-    DRW_ParsingContext parsingContext;
+    DRW_ParsingContext m_readingContext;
+    DRW_WritingContext m_writingContext;
 
     // using TableEntryApplyFunc = void (dxfRW::*)(DRW_TableEntry& entry);
 };
