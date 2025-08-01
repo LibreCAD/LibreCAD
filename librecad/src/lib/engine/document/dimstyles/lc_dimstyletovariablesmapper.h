@@ -21,8 +21,8 @@
  * ********************************************************************************
  */
 
-#ifndef LC_DEFDIMSTYLESUPPORT_H
-#define LC_DEFDIMSTYLESUPPORT_H
+#ifndef LC_DIMSTYLETOVARIABLESMAPPER_H
+#define LC_DIMSTYLETOVARIABLESMAPPER_H
 #include <qstring.h>
 
 #include "lc_dimstyle.h"
@@ -73,4 +73,4 @@ protected:
     RS2::Unit getGraphicUnit() const;
 };
 
-#endif // LC_DEFDIMSTYLESUPPORT_H
+#endif // LC_DIMSTYLETOVARIABLESMAPPER_H

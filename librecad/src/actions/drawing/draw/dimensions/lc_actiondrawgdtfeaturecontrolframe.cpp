@@ -31,19 +31,7 @@
 
 
 
-struct LC_ActionDrawGDTFeatureControlFrame::ActionData {
-    ~ActionData() {
-        clear();
-    };
 
-    void clear() {
-        m_insertionPoint.valid = false;
-        delete m_entity;
-    }
-
-    RS_Vector m_insertionPoint;
-    LC_Tolerance* m_entity;
-};
 
 LC_ActionDrawGDTFeatureControlFrame::LC_ActionDrawGDTFeatureControlFrame(LC_ActionContext* actionContext)
     : RS_PreviewActionInterface("GDTFeatureControlFrame", actionContext, RS2::ActionGTDFeatureControlFrame)

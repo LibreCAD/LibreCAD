@@ -15,7 +15,6 @@
 #include <cmath>
 #include "drw_objects.h"
 
-#include <QString>
 
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"

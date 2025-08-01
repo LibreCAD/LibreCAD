@@ -1537,6 +1537,7 @@ void LC_DimStyle::Fractions::setStyleRaw(int dimfrac) {
         }
         case (2): {
             _dimfrac = NOT_STACKED;
+            break;
         }
         default:
             _dimfrac = HORIZONTAL;

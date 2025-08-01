@@ -63,7 +63,7 @@
 #include "rs_math.h"
 #include "dxf_format.h"
 #include "lc_defaults.h"
-#include "lc_dimarrowregistry.h"
+#include "../engine/document/dimstyles/lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
 #include "lc_extentitydata.h"

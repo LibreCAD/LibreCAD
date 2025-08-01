@@ -28,6 +28,7 @@
 
 class LC_DimStylePreviewGraphicView;
 class RS_GraphicView;
+class QToolButton;
 
 namespace Ui{
     class LC_DimStylePreviewPanel;

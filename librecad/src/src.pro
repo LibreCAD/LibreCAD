@@ -112,15 +112,17 @@ INCLUDEPATH += \
     lib/engine/document \
     lib/engine/document/blocks \
     lib/engine/document/container \
-    lib/engine/document/entities \
-    lib/engine/document/fonts \
-    lib/engine/document/layers \
     lib/engine/document/dimstyles \
+    lib/engine/document/entities \
+    lib/engine/document/entities/support \
+    lib/engine/document/fonts \
+    lib/engine/document/io \
+    lib/engine/document/layers \    
     lib/engine/document/patterns \
+    lib/engine/document/textstyles \
     lib/engine/document/ucs \
     lib/engine/document/variables \
-    lib/engine/document/views \
-    lib/engine/document/io \
+    lib/engine/document/views \    
     lib/engine/clipboard \
     lib/engine/overlays \
     lib/engine/overlays/angles_base \
@@ -232,6 +234,9 @@ INCLUDEPATH += \
     ui/dialogs/file/export/makercam \        
     ui/dialogs/main \
     ui/dialogs/settings \
+    ui/dialogs/settings/dimstyles \
+    ui/dialogs/settings/dimstyles/dimstyle_manager \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support \
     ui/dialogs/settings/options_device \
     ui/dialogs/settings/options_drawing \
     ui/dialogs/settings/options_general \
@@ -264,11 +269,20 @@ INCLUDEPATH += \
     main/console_dxf2pdf \
     test \
     plugins \
-    ../res
+    ../res  \
+    ../res/arrows \
+    ../res/controls \
+    ../res/dxf \
+    ../res/gdt \
+    ../res/icons \
+    ../res/images \
 
 
-RESOURCES += ../res/icons/icons.qrc
+RESOURCES += ../res/arrows/arrows.qrc
 RESOURCES += ../res/controls/controls.qrc
+RESOURCES += ../res/dxf/dxf.qrc
+RESOURCES += ../res/gdt/gdt.qrc
+RESOURCES += ../res/icons/icons.qrc
 RESOURCES += ../res/images/images.qrc
 RESOURCES += ../../licenses/licenses.qrc
 
@@ -289,6 +303,7 @@ HEADERS += \
     actions/drawing/draw/dimensions/lc_actiondimordinate.h \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.h \
     actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.h \
+    actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.h \
     actions/drawing/draw/line/misc/lc_actiondrawmidline.h \
     actions/drawing/draw/line/misc/lc_actiondrawboundingbox.h \
     actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.h \
@@ -313,8 +328,29 @@ HEADERS += \
     actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
     lib/actions/lc_overlayboxaction.h \
+    lib/engine/document/dimstyles/lc_dimstyle.h \
+    lib/engine/document/dimstyles/lc_dimstyleslist.h \
+    lib/engine/document/dimstyles/lc_dimarrowregistry.h \
+    lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.h \
+    lib/engine/document/entities/lc_extentitydata.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_tolerance.h \
+    lib/engine/document/entities/support/lc_arrow_box.h \
+    lib/engine/document/entities/support/lc_arrow_circle.h \
+    lib/engine/document/entities/support/lc_arrow_datum.h \
+    lib/engine/document/entities/support/lc_arrow_dot.h \
+    lib/engine/document/entities/support/lc_arrow_headclosed.h \
+    lib/engine/document/entities/support/lc_arrow_headclosed2.h \
+    lib/engine/document/entities/support/lc_arrow_headclosed_blank.h \
+    lib/engine/document/entities/support/lc_arrow_headopen.h \
+    lib/engine/document/entities/support/lc_arrow_integral.h \
+    lib/engine/document/entities/support/lc_arrow_none.h \
+    lib/engine/document/entities/support/lc_arrow_tick.h \
+    lib/engine/document/entities/support/lc_dimarrowblock.h \
+    lib/engine/document/entities/support/lc_dimarrowblockpoly.h \
+    lib/engine/document/lc_graphicvariables.h \
+    lib/engine/document/textstyles/lc_textstyle.h \
+    lib/engine/document/textstyles/lc_textstylelist.h \
     lib/engine/document/ucs/lc_ucslist.h \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h \
     lib/engine/overlays/highlight/lc_highlight.h \
@@ -381,9 +417,7 @@ HEADERS += \
     lib/engine/document/layers/rs_layerlistlistener.h \
     lib/engine/document/entities/rs_leader.h \
     lib/engine/document/entities/rs_line.h \
-    lib/engine/document/entities/rs_mtext.h \
-    lib/engine/document/dimstyles/lc_dimstyle.h \
-    lib/engine/document/dimstyles/lc_dimstyleslist.h \
+    lib/engine/document/entities/rs_mtext.h \    
     lib/engine/overlays/rs_overlayline.h \
     lib/engine/overlays/overlay_box/rs_overlaybox.h \
     lib/engine/document/patterns/rs_pattern.h \
@@ -410,6 +444,7 @@ HEADERS += \
     lib/engine/document/variables/rs_variabledict.h \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
+    lib/fileio/lc_filenameselectionservice.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
@@ -426,12 +461,23 @@ HEADERS += \
     plugins/lc_plugininvoker.h \
     lib/actions/lc_actioncontext.h \
     ui/components/creators/lc_creatorinvoker.h \
-    # ui/components/toolbars/lc_snapoptionsholdermanager.h \
+    # ui/components/toolbars/lc_snapoptionsholdermanager.h \    
+    ui/dialogs/entity/lc_dlgdimension.h \
     ui/dialogs/file/export/image/lc_exporttoimageservice.h \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
     ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.h \
+    ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.h \
+    ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.h \
+    ui/dialogs/settings/options_drawing/lc_dimstylesexporter.h \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
+    ui/dialogs/settings/dimstyles/lc_dimstyleitem.h \
+    ui/dialogs/settings/dimstyles/lc_dimstyleslistmodel.h \
+    ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.h \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.h \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewgraphicview.h \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.h \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_tabproxywidget.h \
     ui/dialogs/file/export/layers/lc_layerexportoptions.h \
     ui/dock_widgets/lc_dockwidget.h \
     ui/dock_widgets/lc_graphicviewawarewidget.h \
@@ -541,6 +587,7 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
+    actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinate.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp \
     actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp \
@@ -561,8 +608,29 @@ SOURCES += \
     actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
     lib/actions/lc_overlayboxaction.cpp \
+    lib/engine/document/dimstyles/lc_dimstyle.cpp \
+    lib/engine/document/dimstyles/lc_dimstyleslist.cpp \
+    lib/engine/document/dimstyles/lc_dimarrowregistry.cpp \
+    lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.cpp \
+    lib/engine/document/entities/lc_extentitydata.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
+    lib/engine/document/entities/support/lc_arrow_box.cpp \
+    lib/engine/document/entities/support/lc_arrow_circle.cpp \
+    lib/engine/document/entities/support/lc_arrow_datum.cpp \
+    lib/engine/document/entities/support/lc_arrow_dot.cpp \
+    lib/engine/document/entities/support/lc_arrow_headclosed.cpp \
+    lib/engine/document/entities/support/lc_arrow_headclosed2.cpp \
+    lib/engine/document/entities/support/lc_arrow_headclosed_blank.cpp \
+    lib/engine/document/entities/support/lc_arrow_headopen.cpp \
+    lib/engine/document/entities/support/lc_arrow_integral.cpp \
+    lib/engine/document/entities/support/lc_arrow_none.cpp \
+    lib/engine/document/entities/support/lc_arrow_tick.cpp \
+    lib/engine/document/entities/support/lc_dimarrowblock.cpp \
+    lib/engine/document/entities/support/lc_dimarrowblockpoly.cpp \
+    lib/engine/document/lc_graphicvariables.cpp \
+    lib/engine/document/textstyles/lc_textstyle.cpp \
+    lib/engine/document/textstyles/lc_textstylelist.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
@@ -585,12 +653,23 @@ SOURCES += \
     plugins/lc_plugininvoker.cpp \
     lib/actions/lc_actioncontext.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
-    #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
+    #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \    
+    ui/dialogs/entity/lc_dlgdimension.cpp \
     ui/dialogs/entity/lc_dlgdimordinate.cpp \
+    ui/dialogs/entity/lc_dlgtolerance.cpp \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
-    ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \
+    ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \    
     ui/dialogs/lc_inputtextdialog.cpp \
+    ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp \
+    ui/dialogs/settings/dimstyles/lc_dimstyleslistmodel.cpp \
     ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.cpp \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewgraphicview.cpp \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.cpp \
+    ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_tabproxywidget.cpp \
+    ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp \
+    ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp \
+    ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
     ui/dialogs/file/export/layers/lc_layerexportoptions.cpp \
     #ui/dock_widgets/library_widget/lc_librarywidget.cpp \
@@ -659,9 +738,7 @@ SOURCES += \
     lib/engine/document/entities/rs_dimlinear.cpp \
     lib/engine/document/entities/lc_dimordinate.cpp \
     lib/engine/document/entities/rs_dimradial.cpp \
-    lib/engine/document/entities/lc_dimarc.cpp \
-    lib/engine/document/dimstyles/lc_dimstyle.cpp \
-    lib/engine/document/dimstyles/lc_dimstyleslist.cpp \
+    lib/engine/document/entities/lc_dimarc.cpp \    
     lib/engine/document/rs_document.cpp \
     lib/engine/document/entities/rs_ellipse.cpp \
     lib/engine/document/entities/rs_entity.cpp \
@@ -697,6 +774,7 @@ SOURCES += \
     lib/engine/document/variables/rs_variabledict.cpp \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
+    lib/fileio/lc_filenameselectionservice.cpp \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
@@ -1221,6 +1299,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dialogs/entity/qg_dlgdimension.h \
     ui/dialogs/entity/qg_dlgdimlinear.h \
     ui/dialogs/entity/lc_dlgdimordinate.h \
+    ui/dialogs/entity/lc_dlgtolerance.h \
     ui/dialogs/entity/qg_dlgellipse.h \
     ui/dialogs/entity/qg_dlghatch.h \
     ui/dialogs/entity/qg_dlgimage.h \
@@ -1585,8 +1664,10 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/actions/modify/qg_dlgrotate2.ui \
        ui/dialogs/actions/modify/qg_dlgscale.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
-       ui/dialogs/entity/LC_DlgParabola.ui \
+       ui/dialogs/entity/LC_DlgParabola.ui \       
+       ui/dialogs/entity/lc_dlgdimension.ui \
        ui/dialogs/entity/lc_dlgdimordinate.ui \
+       ui/dialogs/entity/lc_dlgtolerance.ui \
        ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
        ui/dialogs/entity/qg_dimensionlabeleditor.ui \
@@ -1605,7 +1686,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgpoint.ui \
        ui/dialogs/entity/qg_dlgpolyline.ui \
        ui/dialogs/entity/qg_dlgspline.ui \
-       ui/dialogs/entity/qg_dlgtext.ui \
+       ui/dialogs/entity/qg_dlgtext.ui \       
        ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui \
        ui/dialogs/lc_inputtextdialog.ui \
        ui/dialogs/main/lc_dlgabout.ui \
@@ -1613,7 +1694,11 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/main/qg_dlginitial.ui \
        ui/dialogs/main/qg_exitdialog.ui \
        ui/dialogs/settings/options_device/lc_deviceoptions.ui \
+       ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui \
+       ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui \
        ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui \
+       ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui \
+       ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui \
        ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui \
        ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui \
        ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui \
@@ -1632,7 +1717,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui \
        ui/dock_widgets/ucs_list/lc_ucslistwidget.ui \
        ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
-       ui/dock_widgets/views_list/lc_namedviewslistwidget.ui
+       ui/dock_widgets/views_list/lc_namedviewslistwidget.ui       
        # ui/not_used/customtoolbarcreator.ui \
        # ui/not_used/customwidgetcreator.ui \
        # ui/not_used/qg_dimlinearoptions.ui \

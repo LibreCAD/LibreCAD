@@ -90,6 +90,7 @@ include_directories(librecad/src/lib/engine/document/dimstyles/export)
 include_directories(librecad/src/lib/engine/document/views)
 include_directories(librecad/src/lib/engine/document/fonts)
 include_directories(librecad/src/lib/engine/document/patterns)
+include_directories(librecad/src/lib/engine/document/textstyles)
 include_directories(librecad/src/lib/engine/document/entities)
 include_directories(librecad/src/lib/engine/document/entities/support)
 include_directories(librecad/src/lib/engine/document/container)
@@ -758,16 +759,18 @@ set(SOURCES
         librecad/src/lib/engine/document/dimstyles/lc_dimstyle.cpp
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.h
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.cpp
-        librecad/src/lib/engine/document/dimstyles/builder/lc_dimarrowregistry.h
-        librecad/src/lib/engine/document/dimstyles/builder/lc_dimarrowregistry.cpp
-        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.h
-        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.cpp
-        librecad/src/lib/engine/document/dimstyles/builder/lc_defaultdimstylesupport.h
-        librecad/src/lib/engine/document/dimstyles/builder/lc_defaultdimstylesupport.cpp
-        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.h
-        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.cpp
+        librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.h
+        librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp
+#        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.h
+#        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.cpp
+        librecad/src/lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.h
+        librecad/src/lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.cpp
+#        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.h
+#        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.cpp
         librecad/src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.h
         librecad/src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp
+        librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.h
+        librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.cpp
 		librecad/src/lib/engine/document/entities/rs_leader.h
 		librecad/src/lib/engine/document/entities/rs_line.cpp
@@ -1569,6 +1572,16 @@ set(SOURCES
         librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.h
         librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp
         librecad/src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp
+        librecad/src/lib/engine/document/textstyles/lc_textstylelist.h
+        librecad/src/lib/engine/document/textstyles/lc_textstylelist.cpp
+        librecad/src/lib/engine/document/textstyles/lc_textstyle.h
+        librecad/src/lib/engine/document/textstyles/lc_textstyle.cpp
+        librecad/src/lib/engine/document/entities/lc_extentitydata.h
+        librecad/src/lib/engine/document/entities/lc_extentitydata.cpp
+        librecad/src/ui/dialogs/entity/lc_dlgdimension.h
+        librecad/src/ui/dialogs/entity/lc_dlgdimension.cpp
+        librecad/src/lib/engine/document/lc_graphicvariables.h
+        librecad/src/lib/engine/document/lc_graphicvariables.cpp
 )
 
 #qt_standard_project_setup()

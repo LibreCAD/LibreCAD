@@ -26,12 +26,14 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 
-#include "lc_defaultdimstylesupport.h"
+#include "lc_dimstyletovariablesmapper.h"
 #include "lc_dimstyleslistmodel.h"
 #include "lc_filenameselectionservice.h"
+
 #include "rs_settings.h"
 #include "lc_dimstyleitem.h"
 
@@ -60,7 +62,7 @@ bool LC_DimStylesExporter::exportStyles(QWidget* parent, const QList<LC_DimStyle
 
        LC_DimStyle* dimStyle = dimStyleItem->dimStyle();
        bool basestyle = dimStyleItem->isBaseStyle();
-       LC_DimStyle::ModificationAware::CheckFlagMode savedModifyCheckMode = dimStyle->arrowhead()->modifyCheckMode();
+       LC_DimStyle::ModificationAware::CheckFlagMode savedModifyCheckMode = dimStyle->arrowhead()->getModifyCheckMode();
 
        LC_DimStyle::ModificationAware::CheckFlagMode exportModifyCheckMode;
        if (basestyle) {

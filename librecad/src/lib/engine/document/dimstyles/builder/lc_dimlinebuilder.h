@@ -23,7 +23,7 @@
 
 #ifndef LC_DIMLINEBUILDER_H
 #define LC_DIMLINEBUILDER_H
-#include "lc_dimarrowregistry.h"
+#include "../lc_dimarrowregistry.h"
 #include "rs_graphic.h"
 
 class LC_DimLineBuilder{

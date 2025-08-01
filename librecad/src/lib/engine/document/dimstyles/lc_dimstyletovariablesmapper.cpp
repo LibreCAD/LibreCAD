@@ -21,7 +21,7 @@
  * ********************************************************************************
  */
 
-#include "lc_defaultdimstylesupport.h"
+#include "lc_dimstyletovariablesmapper.h"
 
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"

@@ -29,7 +29,7 @@
 #include "rs_graphic.h"
 
 #include "dxf_format.h"
-#include "lc_defaultdimstylesupport.h"
+#include "lc_dimstyletovariablesmapper.h"
 #include "lc_defaults.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

@@ -39,7 +39,7 @@
 #include "lc_arrow_integral.h"
 #include "lc_arrow_none.h"
 #include "lc_arrow_tick.h"
-#include "lc_dimarrowregistry.h"
+#include "../dimstyles/lc_dimarrowregistry.h"
 #include "lc_linemath.h"
 #include "muParser.h"
 #include "rs_arc.h"

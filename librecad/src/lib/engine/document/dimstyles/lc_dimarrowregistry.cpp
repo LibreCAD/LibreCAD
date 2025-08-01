@@ -41,8 +41,6 @@
 #include "rs_insert.h"
 #include "rs_vector.h"
 
-
-
 LC_DimArrowRegistry::LC_DimArrowRegistry() {
     init();
 }

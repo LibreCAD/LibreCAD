@@ -32,7 +32,7 @@
 #include <QStandardItemModel>
 #include <cfloat>
 
-#include "lc_defaultdimstylesupport.h"
+#include "lc_dimstyletovariablesmapper.h"
 #include "lc_defaults.h"
 #include "lc_dimstyleitem.h"
 #include "lc_dimstylepreviewgraphicview.h"
@@ -1788,8 +1788,9 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     auto u = static_cast<RS2::Unit>(cbUnit->currentIndex());
     QString unitSign = RS_Units::unitToSign(u);
     auto labels = {lDimUnit1, lDimUnit2, lDimUnit3, lDimUnit4, lDimUnit5, lDimUnit6, lDimUnit7};
-    for(QLabel* unitLabel : labels)
+    for(QLabel* unitLabel : labels) {
         unitLabel->setText(unitSign);
+    }
     //have to update paper size when unit changes
     updatePaperSize();
 }

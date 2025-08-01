@@ -25,8 +25,8 @@
 #define LC_ACTIONDRAWGDTFEATURECONTROLFRAME_H
 
 #include "rs_previewactioninterface.h"
+#include <lc_tolerance.h>
 
-class LC_Tolerance;
 
 class LC_ActionDrawGDTFeatureControlFrame: public RS_PreviewActionInterface{
     Q_OBJECT
@@ -40,7 +40,20 @@ protected:
         SetInsertionPoint
     };
 
-    struct ActionData;
+    struct ActionData {
+        ~ActionData() {
+            clear();
+        };
+
+        void clear() {
+            m_insertionPoint.valid = false;
+            delete m_entity;
+        }
+
+        RS_Vector m_insertionPoint;
+        LC_Tolerance* m_entity;
+    };
+
     std::unique_ptr<ActionData> m_actionData;
     void updateMouseButtonHints() override;
     bool doProcessCommand(int status, const QString& command) override;
