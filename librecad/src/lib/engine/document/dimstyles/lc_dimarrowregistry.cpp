@@ -52,7 +52,7 @@ QString LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_ARCHTICK = "_ARCHTICK";
 
 bool LC_DimArrowRegistry::isStandardBlockName(const QString& blockName) {
     init();
-    for (auto info: m_defaultArrowsInfo) {
+    for (const auto& info: m_defaultArrowsInfo) {
         if (info.blockName.compare(blockName, Qt::CaseInsensitive) == 0) {
             return true;
         }
@@ -62,7 +62,7 @@ bool LC_DimArrowRegistry::isStandardBlockName(const QString& blockName) {
 
 bool LC_DimArrowRegistry::getArrowInfoByBlockName(const QString& blockName, ArrowInfo& found) {
     init();
-    for (auto info: m_defaultArrowsInfo) {
+    for (const auto& info: m_defaultArrowsInfo) {
         if (info.blockName.compare(blockName, Qt::CaseInsensitive) == 0) {
             found = info;
             return true;
@@ -73,7 +73,7 @@ bool LC_DimArrowRegistry::getArrowInfoByBlockName(const QString& blockName, Arro
 
 bool LC_DimArrowRegistry::getArrowInfoByType(const ArrowType type, ArrowInfo& found)  {
     init();
-    for (auto info: m_defaultArrowsInfo) {
+    for (const auto& info: m_defaultArrowsInfo) {
         if (info.type == type) {
             found = info;
             return true;
@@ -82,22 +82,30 @@ bool LC_DimArrowRegistry::getArrowInfoByType(const ArrowType type, ArrowInfo& fo
     return false;
 }
 
-RS_Entity* LC_DimArrowRegistry::createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize) {
+std::pair<RS_Entity*, double> LC_DimArrowRegistry::createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize) {
     auto graphic = container->getGraphic();
+    ArrowInfo info;
     if (graphic != nullptr) {
         RS_BlockList* blocksList = graphic->getBlockList();
         auto customBlock = blocksList->findCaseInsensitive(blockName);
         if (customBlock != nullptr) {
-            return createCustomArrowBlock(container, customBlock->getName(), point, directionAngle, arrowSize);
+            double dimLineExtension = 0.0;
+            // check whether this is a block for standard arrows - and whether we need to adjust dimline points
+            // to address AutoCAD-like rendering of such special built-in arrow types
+            if (getArrowInfoByBlockName(blockName, info)) {
+                dimLineExtension = info.dimLineCorrection;
+            }
+            auto blockEntity = createCustomArrowBlock(container, customBlock->getName(), point, directionAngle, arrowSize);
+            return {blockEntity, dimLineExtension};
         }
     }
-    ArrowInfo info;
+
     bool hasArrowType = getArrowInfoByBlockName(blockName, info);
     if (!hasArrowType) {
         info = m_defaultArrowsInfo[0];
     }
-    return createDefaultArrowBlock(container, info.type, point, directionAngle, arrowSize);
-
+    auto blockEntity = createDefaultArrowBlock(container, info.type, point, directionAngle, arrowSize);
+    return {blockEntity, 0.0};
 }
 
 RS_Entity* LC_DimArrowRegistry::createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, const RS_Vector &point,
@@ -182,28 +190,28 @@ RS_Entity* LC_DimArrowRegistry::createCustomArrowBlock(RS_EntityContainer* conta
 void LC_DimArrowRegistry::init() {
     if (m_defaultArrowsInfo.empty()) {
         m_defaultArrowsInfo = {
-            {"", closed_filled, tr("Closed Filled")},
+            {"", closed_filled, tr("Closed Filled"), 0.0},
             // todo - sand - dot is supported by ACAD for setting default arrow block. Think about adding such support too
             // {".", closed_filled, tr("Closed Filled")},
-            {"_DOT", dot, tr("Dot")},
-            {"_DOTSMALL", dot_small, tr("Dot Small")},
-            {"_DOTBLANK", dot_blank, tr("Dot Blank")},
-            {"_ORIGIN", origin_indicator, tr("Origin Indicator")},
-            {"_ORIGIN2", origin_indicator_2, tr("Origin Indicator 2")},
-            {"_OPEN", open, tr("Open")},
-            {"_OPEN90", right_angle, tr("Right Angle")},
-            {"_OPEN30", open_30, tr("Open 30")},
-            {"_CLOSED", closed, tr("Closed")},
-            {"_SMALL", dot_small_blank, tr("Dot Small Blank")},
-            {"_NONE", none, tr("None")},
-            {ArrowInfo::ARROW_TYPE_OBLIQUE, oblique, tr("Oblique")},
-            {"_BOXFILLED", box_filled, tr("Box Filled")},
-            {"_BOXBLANK", box, tr("Box Blank")},
-            {"_CLOSEDBLANK", closed_blank, tr("Closed Blank")},
-            {"_DATUMFILLED", datum_triangle_filled, tr("Datum Filled")},
-            {"_DATUMBLANK", datum_triangle, tr("Datum Blank")},
-            {"_INTEGRAL", integral, tr("Integral")},
-            {ArrowInfo::ARROW_TYPE_ARCHTICK, architectural_tick, tr("Architecture Tick")}
+            {"_DOT", dot, tr("Dot"),0.0},
+            {"_DOTSMALL", dot_small, tr("Dot Small"),1.0},
+            {"_DOTBLANK", dot_blank, tr("Dot Blank"),0.0},
+            {"_ORIGIN", origin_indicator, tr("Origin Indicator"),0.0},
+            {"_ORIGIN2", origin_indicator_2, tr("Origin Indicator 2"),0.0},
+            {"_OPEN", open, tr("Open"),0.0},
+            {"_OPEN90", right_angle, tr("Right Angle"),0.0},
+            {"_OPEN30", open_30, tr("Open 30"),0.0},
+            {"_CLOSED", closed, tr("Closed"),0.0},
+            {"_SMALL", dot_small_blank, tr("Dot Small Blank"), 1},
+            {"_NONE", none, tr("None"),1.0},
+            {ArrowInfo::ARROW_TYPE_OBLIQUE, oblique, tr("Oblique"),1.0},
+            {"_BOXFILLED", box_filled, tr("Box Filled"),0.0},
+            {"_BOXBLANK", box, tr("Box Blank"),0.0},
+            {"_CLOSEDBLANK", closed_blank, tr("Closed Blank"),0.0},
+            {"_DATUMFILLED", datum_triangle_filled, tr("Datum Filled"),0.0},
+            {"_DATUMBLANK", datum_triangle, tr("Datum Blank"), 0.0},
+            {"_INTEGRAL", integral, tr("Integral"), 1.0},
+            {ArrowInfo::ARROW_TYPE_ARCHTICK, architectural_tick, tr("Architecture Tick"), 1.0}
         };
     }
 }
@@ -215,7 +223,7 @@ void LC_DimArrowRegistry::fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTyp
         if (blockName.isEmpty()) {
             blockName = "_CLOSEDFILLED";
         }
-        ArrowInfo arrowType(blockName, at.type, at.name);
+        ArrowInfo arrowType(blockName, at.type, at.name, at.dimLineCorrection);
         arrowTypes.push_back(arrowType);
     }
 }

@@ -61,15 +61,20 @@ public:
     struct ArrowInfo {
         ArrowInfo() = default;
 
-        ArrowInfo( const QString& block, ArrowType type, const QString& name)
-            : type{type},
-              name{name},
-              blockName{block} {
+        ArrowInfo(const QString& block, ArrowType type, const QString& name, double dimCorrection)
+            : type{type}, name{name}, blockName{block}, dimLineCorrection{dimCorrection} {
         }
 
         ArrowType type = _CUSTOM;
         QString blockName;
         QString name;
+        // this is workaround for a hacky way of drawing arrow blocks in AutoCAD. Some standard blocks that are inserted
+        // by AutoCAD (like Tick, Arc Tick, Integral, None, Dot Small, Dot Blank) does not include a line that
+        // continues dimension line. Therefore, if they are inserted "as is" - there is a gap between dimension line
+        // and block content.
+        // HOWEVER! it seems that AutoCAD handles such blocks differently and fills that gap. So we use
+        // adjustment value there, to extend endpoints of calculated dimension line.
+        double dimLineCorrection {0};
 
         static QString ARROW_TYPE_OBLIQUE;
         static QString ARROW_TYPE_ARCHTICK;
@@ -82,7 +87,7 @@ public:
     static void fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTypes);
     static bool isObliqueOrArchArrow(const QString& blockName);
 
-    RS_Entity* createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize);
+    std::pair<RS_Entity*, double> createArrowBlock(RS_EntityContainer* container, const QString& blockName, const RS_Vector& point, double directionAngle, double arrowSize);
 protected:
     RS_Entity* createDefaultArrowBlock(RS_EntityContainer* container, ArrowType type, const RS_Vector &point, double directionAngle, double
                                        arrowSize);

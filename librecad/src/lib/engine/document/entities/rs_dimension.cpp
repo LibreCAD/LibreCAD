@@ -472,14 +472,14 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
             if (showArrow1) {
                 auto firstArrowName = arrowStyle->obtainFirstArrowName();
                 auto arrow = dimArrowRegistry.createArrowBlock(this, firstArrowName, p1, arrowAngle1, arrowSize);
-                addArrow(arrow, dimensionLinePen);
+                addArrow(arrow.first, dimensionLinePen);
                 firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
             }
 
             if (showArrow2) {
                 auto secondArrowName = arrowStyle->obtainSecondArrowName();
                 auto arrow = dimArrowRegistry.createArrowBlock(this, secondArrowName, p2, arrowAngle2, arrowSize);
-                addArrow(arrow, dimensionLinePen);
+                addArrow(arrow.first, dimensionLinePen);
                 secondArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(secondArrowName);
             }
         }
@@ -487,12 +487,12 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
     else {
         if (showArrow1) { // tick 1
             auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p1, arrowAngle1, arrowSize);
-            addArrow(arrow, dimensionLinePen);
+            addArrow(arrow.first, dimensionLinePen);
             firstArrowIsObliqueOrArch = true;
         }
         if (showArrow2) { // tick 2:
             auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p2, arrowAngle2, arrowSize);
-            addArrow(arrow, dimensionLinePen);
+            addArrow(arrow.first, dimensionLinePen);
             secondArrowIsObliqueOrArch = true;
         }
     }
@@ -708,14 +708,19 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
     double arrowAngle1, arrowAngle2;
     double dimAngle1 = p1.angleTo(p2);
 
-    RS_Vector arrowOffsetVector = RS_Vector::polar(arrowSize, dimAngle1);
-    RS_Vector dimP1 = p1 + arrowOffsetVector;
-    RS_Vector dimP2 = p2 - arrowOffsetVector;
+
+    RS_Vector firstArrowOffsetVector = RS_Vector::polar(arrowSize, dimAngle1);
+    RS_Vector dimP1 = p1 + firstArrowOffsetVector;
+
+    RS_Vector secondArrowOffsetVector = RS_Vector::polar(arrowSize, dimAngle1);
+    RS_Vector dimP2 = p2 - secondArrowOffsetVector;
 
     RS_Pen dimensionPen = getPenDimensionLine();
 
    // Create dimension line:
     auto* dimensionLine = addDimComponentLine(dimP1, dimP2, dimensionPen);
+
+    auto midPoint = (dimP1 + dimP2)*0.5;
 
     // Text label:
     RS_Vector textPos;
@@ -727,7 +732,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
         textPos = m_dimGenericData.middleOfText;
     }
     else {
-        textPos = dimensionLine->getMiddlePoint();
+        textPos = midPoint;
 
         // rotate text so it's readable from the bottom or right (ISO)
         // quadrant 1 & 4
@@ -775,32 +780,46 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
     auto arrowStyle = m_dimStyleTransient->arrowhead();
     bool firstArrowIsObliqueOrArch = false;
     bool secondArrowIsObliqueOrArch = false;
+    double dimLineOffsetFirst{0.0};
+    double dimLineOffsetSecond{0.0};
     if (dimtsz < 0.01) {
         //display arrow
         if (showArrow1) {
             auto firstArrowName = arrowStyle->obtainFirstArrowName();
             auto arrow = dimArrowRegistry.createArrowBlock(this, firstArrowName, p1, arrowAngle1, arrowSize);
-            addArrow(arrow, dimensionPen);
+            addArrow(arrow.first, dimensionPen);
             firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
+            dimLineOffsetFirst = arrow.second * arrowSize;
+            RS_Vector firstArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetFirst, dimAngle1);
+            dimensionLine->setStartpoint(dimP1-firstArrowAdjustmentVector);
         }
 
         if (showArrow2) {
             auto secondArrowName = arrowStyle->obtainSecondArrowName();
             auto arrow = dimArrowRegistry.createArrowBlock(this, secondArrowName, p2, arrowAngle2, arrowSize);
-            addArrow(arrow, dimensionPen);
+            addArrow(arrow.first, dimensionPen);
             secondArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(secondArrowName);
+            dimLineOffsetSecond = arrow.second * arrowSize;
+            RS_Vector secondArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetSecond, dimAngle1);
+            dimensionLine->setEndpoint(dimP2+secondArrowAdjustmentVector);
         }
     }
     else {
         if (showArrow1) { // tick 1
             auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p1, arrowAngle1, arrowSize);
-            addArrow(arrow, dimensionPen);
+            addArrow(arrow.first, dimensionPen);
             firstArrowIsObliqueOrArch = true;
+            dimLineOffsetFirst = arrow.second * arrowSize;
+            RS_Vector firstArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetFirst, dimAngle1);
+            dimensionLine->setEndpoint(dimP2-firstArrowAdjustmentVector);
         }
         if (showArrow2) { // tick 2:
             auto arrow = dimArrowRegistry.createArrowBlock(this, LC_DimArrowRegistry::ArrowInfo::ARROW_TYPE_OBLIQUE, p2, arrowAngle2, arrowSize);
-            addArrow(arrow, dimensionPen);
+            addArrow(arrow.first, dimensionPen);
             secondArrowIsObliqueOrArch = true;
+            dimLineOffsetSecond = arrow.second * arrowSize;
+            RS_Vector secondArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetSecond, dimAngle1);
+            dimensionLine->setEndpoint(dimP2+secondArrowAdjustmentVector);
         }
     }
 
