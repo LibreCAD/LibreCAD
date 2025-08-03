@@ -110,6 +110,8 @@ private:
     bool m_originalExpandedToolsMenu;
     bool m_originalExpandedToolsMenuTillEntity;
 
+    int m_initialLanguageGUIIdx{0};
+
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
     void destroy();

@@ -123,8 +123,7 @@ void QG_DlgOptionsGeneral::init(){
         RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
                         lang.toLatin1().data());
 
-        QString l = RS_SYSTEM->symbolToLanguage(lang);
-        if (!l.isEmpty() && cbLanguage->findData(lang) == -1) {
+        if (QString l = RS_SYSTEM->symbolToLanguage(lang); !l.isEmpty() && cbLanguage->findData(lang) == -1) {
             RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
             cbLanguage->addItem(l, lang);
             cbLanguageCmd->addItem(l, lang);
@@ -137,6 +136,8 @@ void QG_DlgOptionsGeneral::init(){
         QString def_lang = "en";
         QString lang = LC_GET_STR("Language", def_lang);
         cbLanguage->setCurrentIndex(cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)));
+
+        m_initialLanguageGUIIdx = cbLanguage->currentIndex();
 
         QString langCmd = LC_GET_STR("LanguageCmd", def_lang);
         cbLanguageCmd->setCurrentIndex(cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)));
@@ -678,7 +679,11 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("VisualizePreviewRefPoints", cbDisplayRefPoints->isChecked());
             LC_SET("MinGridSpacing", cbMinGridSpacing->currentText());
             LC_SET("MaxPreview", cbMaxPreview->currentText());
-            LC_SET("Language", cbLanguage->itemData(cbLanguage->currentIndex()).toString());
+            int langGuiIdx = cbLanguage->currentIndex();
+            if (langGuiIdx != m_initialLanguageGUIIdx) {
+                setRestartNeeded();
+            }
+            LC_SET("Language", cbLanguage->itemData(langGuiIdx).toString());
             LC_SET("LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()).toString());
             LC_SET("indicator_lines_state", indicator_lines_checkbox->isChecked());
             LC_SET("indicator_lines_type", indicator_lines_combobox->currentIndex());

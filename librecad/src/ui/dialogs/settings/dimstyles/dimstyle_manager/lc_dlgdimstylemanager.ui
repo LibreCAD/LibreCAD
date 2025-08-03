@@ -26,7 +26,7 @@
       <string/>
      </property>
      <property name="currentIndex">
-      <number>6</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabLines">
       <attribute name="title">
@@ -571,7 +571,7 @@
           <item row="0" column="1">
            <widget class="QDoubleSpinBox" name="dsbTickSize">
             <property name="toolTip">
-             <string> Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If &gt;0 – draws arrowheads.
+             <string>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </string>
             </property>
             <property name="singleStep">
@@ -888,7 +888,7 @@
           <item row="1" column="0">
            <widget class="QRadioButton" name="rbTextAlignmentAligned">
             <property name="toolTip">
-             <string>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</string>
+             <string>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</string>
             </property>
             <property name="text">
              <string>Aligned with dimension line</string>
@@ -1153,7 +1153,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Sets the placement of dimension text when it is moved from the default position, that is, the position defined by the dimension style. (DIMTMOVE system variable)</string>
+          <string/>
          </property>
          <property name="title">
           <string>Text Placement</string>
@@ -1667,7 +1667,7 @@
                 </sizepolicy>
                </property>
                <property name="toolTip">
-                <string>ncludes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</string>
+                <string>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</string>
                </property>
               </widget>
              </item>
@@ -2314,11 +2314,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QG_LineTypeBox</class>
-   <extends>QWidget</extends>
-   <header>qg_linetypebox.h</header>
-  </customwidget>
-  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_colorbox.h</header>
@@ -2332,6 +2327,11 @@
    <class>QG_FontBox</class>
    <extends>QWidget</extends>
    <header>qg_fontbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_LineTypeBox</class>
+   <extends>QWidget</extends>
+   <header>qg_linetypebox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

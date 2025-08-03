@@ -24,7 +24,7 @@
 #ifndef LC_DLDDIMORDINATE_H
 #define LC_DLDDIMORDINATE_H
 
-#include "lc_entitypropertiesdlg.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
 class LC_DimOrdinate;
 

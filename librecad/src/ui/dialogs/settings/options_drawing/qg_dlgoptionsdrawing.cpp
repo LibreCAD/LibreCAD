@@ -393,7 +393,7 @@ void QG_DlgOptionsDrawing::onCustomVariableDelete(bool checked) {
         int response = QMessageBox::warning(
                    this,
                    tr("Delete Custom Property"),
-                   QObject::tr("Are you sure you'd like to delete property [%1]?").arg(propertyName),
+                   tr("Are you sure you'd like to delete property [%1]?").arg(propertyName),
                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No
                    );
 
@@ -416,7 +416,7 @@ void QG_DlgOptionsDrawing::reject() {
         int response = QMessageBox::warning(
                    this,
                    tr("Drawing Options"),
-                   QObject::tr("Settings were changed. Are you sure you'd like to skip saving changes (so they will not be saved)?"),
+                   tr("Settings were changed. Are you sure you'd like to skip saving changes (so they will not be saved)?"),
                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No
                    );
 

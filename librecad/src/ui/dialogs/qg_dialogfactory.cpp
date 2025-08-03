@@ -36,9 +36,8 @@
 #include <QRegularExpression>
 
 #include "LC_DlgParabola.h"
-#include "lc_dimordinate.h"
+
 #include "lc_dlgdimension.h"
-#include "lc_dlgdimordinate.h"
 #include "lc_dlgsplinepoints.h"
 #include "lc_parabola.h"
 #include "qc_applicationwindow.h"
@@ -47,8 +46,6 @@
 #include "qg_dlgarc.h"
 #include "qg_dlgattributes.h"
 #include "qg_dlgcircle.h"
-#include "qg_dlgdimension.h"
-#include "qg_dlgdimlinear.h"
 #include "qg_dlgellipse.h"
 #include "qg_dlghatch.h"
 #include "qg_dlgimage.h"
@@ -74,7 +71,6 @@
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_dimension.h"
-#include "rs_dimlinear.h"
 #include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
@@ -780,20 +776,9 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
     case RS2::EntityDimArc:
     case RS2::EntityDimOrdinate:
     case RS2::EntityDimLinear: {
-
-        // editDialog = new QG_DlgDimension(parent, viewport,dynamic_cast<RS_Dimension *>(entity));
         editDialog = new LC_DlgDimension(parent, viewport,dynamic_cast<RS_Dimension *>(entity));
-
         break;
     }
-    // case RS2::EntityDimLinear: {
-    //     editDialog = new QG_DlgDimLinear(parent, viewport, dynamic_cast<RS_DimLinear *>(entity));
-    //     break;
-    // }
-    /*case RS2::EntityDimOrdinate: {
-        editDialog = new LC_DlgDimOrdinate(parent, viewport, dynamic_cast<LC_DimOrdinate *>(entity));
-        break;
-    }*/
     case RS2::EntityMText: {
         editDialog = new QG_DlgMText(parent, viewport,dynamic_cast<RS_MText *>(entity), false);
         break;

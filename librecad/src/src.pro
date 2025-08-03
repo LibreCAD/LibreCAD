@@ -655,7 +655,6 @@ SOURCES += \
     ui/components/creators/lc_creatorinvoker.cpp \
     #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \    
     ui/dialogs/entity/lc_dlgdimension.cpp \
-    ui/dialogs/entity/lc_dlgdimordinate.cpp \
     ui/dialogs/entity/lc_dlgtolerance.cpp \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \    
@@ -852,6 +851,7 @@ SOURCES += \
     ui/components/status_bar/lc_relzerocoordinateswidget.cpp \
     ui/dialogs/lc_dialog.cpp \
     ui/main/lc_mdiapplicationwindow.cpp
+    # ui/not_used/lc_dlgdimordinate.cpp \
 
 # ################################################################################
 # Command
@@ -1295,10 +1295,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dialogs/entity/qg_dimensionlabeleditor.h \
     ui/dialogs/entity/qg_dlgarc.h \
     ui/dialogs/entity/qg_dlgattributes.h \
-    ui/dialogs/entity/qg_dlgcircle.h \
-    ui/dialogs/entity/qg_dlgdimension.h \
-    ui/dialogs/entity/qg_dlgdimlinear.h \
-    ui/dialogs/entity/lc_dlgdimordinate.h \
+    ui/dialogs/entity/qg_dlgcircle.h \    
     ui/dialogs/entity/lc_dlgtolerance.h \
     ui/dialogs/entity/qg_dlgellipse.h \
     ui/dialogs/entity/qg_dlghatch.h \
@@ -1388,6 +1385,9 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     # ui/not_used/qg_dlgoptionsvariables.h \
     # ui/not_used/qg_linepolygon2options.h \
     # ui/not_used/qg_mainwindowinterface.h \
+    # ui/not_used/qg_dlgdimlinear.h \
+    # ui/not_used/lc_dlgdimordinate.h \
+    # ui/not_used/qg_dlgdimension.h \
     ui/qg_actionhandler.h \
     ui/view/lc_centralwidget.h \
     ui/view/qg_graphicview.h
@@ -1487,8 +1487,6 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/dialogs/entity/qg_dlgarc.cpp \
     ui/dialogs/entity/qg_dlgattributes.cpp \
     ui/dialogs/entity/qg_dlgcircle.cpp \
-    ui/dialogs/entity/qg_dlgdimension.cpp \
-    ui/dialogs/entity/qg_dlgdimlinear.cpp \
     ui/dialogs/entity/qg_dlgellipse.cpp \
     ui/dialogs/entity/qg_dlghatch.cpp \
     ui/dialogs/entity/qg_dlgimage.cpp \
@@ -1576,6 +1574,8 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     # ui/not_used/qg_dimlinearoptions.cpp \
     # ui/not_used/qg_dlgoptionsvariables.cpp \
     # ui/not_used/qg_linepolygon2options.cpp \
+    # ui/not_used/qg_dlgdimlinear.cpp \
+    # ui/not_used/qg_dlgdimension.cpp \
     ui/qg_actionhandler.cpp \
     ui/view/lc_centralwidget.cpp \
     ui/view/qg_graphicview.cpp
@@ -1665,17 +1665,14 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/actions/modify/qg_dlgscale.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
        ui/dialogs/entity/LC_DlgParabola.ui \       
-       ui/dialogs/entity/lc_dlgdimension.ui \
-       ui/dialogs/entity/lc_dlgdimordinate.ui \
+       ui/dialogs/entity/lc_dlgdimension.ui \       
        ui/dialogs/entity/lc_dlgtolerance.ui \
        ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
        ui/dialogs/entity/qg_dimensionlabeleditor.ui \
        ui/dialogs/entity/qg_dlgarc.ui \
        ui/dialogs/entity/qg_dlgattributes.ui \
-       ui/dialogs/entity/qg_dlgcircle.ui \
-       ui/dialogs/entity/qg_dlgdimension.ui \
-       ui/dialogs/entity/qg_dlgdimlinear.ui \
+       ui/dialogs/entity/qg_dlgcircle.ui \       
        ui/dialogs/entity/qg_dlgellipse.ui \
        ui/dialogs/entity/qg_dlghatch.ui \
        ui/dialogs/entity/qg_dlgimage.ui \
@@ -1724,6 +1721,9 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        # ui/not_used/qg_dlgoptionsvariables.ui \
        # ui/not_used/qg_snaptoolbar.ui \
        # ui/not_used/qg_linepolygon2options.ui
+       # ui/not_used/qg_dlgdimension.ui \
+       # ui/not_used/qg_dlgdimlinear.ui \
+       # ui/not_used/lc_dlgdimordinate.ui \
 
 
 # ################################################################################

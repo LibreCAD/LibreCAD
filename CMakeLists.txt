@@ -915,8 +915,8 @@ set(SOURCES
         librecad/src/plugins/qc_plugininterface.h
         librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.h
         librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.cpp
-        librecad/src/ui/dialogs/entity/lc_dlgdimordinate.h
-        librecad/src/ui/dialogs/entity/lc_dlgdimordinate.cpp
+#        librecad/src/ui/not_used/lc_dlgdimordinate.h
+#        librecad/src/ui/not_used/lc_dlgdimordinate.cpp
         librecad/src/ui/dialogs/entity/lc_dlgtolerance.h
         librecad/src/ui/dialogs/entity/lc_dlgtolerance.cpp
 		librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp
@@ -949,10 +949,10 @@ set(SOURCES
 		librecad/src/ui/dialogs/entity/qg_dlgattributes.h
 		librecad/src/ui/dialogs/entity/qg_dlgcircle.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgcircle.h
-		librecad/src/ui/dialogs/entity/qg_dlgdimension.cpp
-		librecad/src/ui/dialogs/entity/qg_dlgdimension.h
-		librecad/src/ui/dialogs/entity/qg_dlgdimlinear.cpp
-		librecad/src/ui/dialogs/entity/qg_dlgdimlinear.h
+#        librecad/src/ui/not_used/qg_dlgdimension.cpp
+#        librecad/src/ui/not_used/qg_dlgdimension.h
+#        librecad/src/ui/not_used/qg_dlgdimlinear.cpp
+#        librecad/src/ui/not_used/qg_dlgdimlinear.h
 		librecad/src/ui/dialogs/entity/qg_dlgellipse.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgellipse.h
 		librecad/src/ui/dialogs/entity/qg_dlghatch.cpp

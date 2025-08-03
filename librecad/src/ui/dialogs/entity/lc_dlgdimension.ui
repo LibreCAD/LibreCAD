@@ -165,7 +165,7 @@
               <string>Edit style override</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string/>
              </property>
              <property name="icon">
               <iconset resource="../../../../res/icons/icons.qrc">
@@ -179,7 +179,7 @@
               <string>Save style override as independent style.</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string/>
              </property>
              <property name="icon">
               <iconset resource="../../../../res/icons/icons.qrc">
@@ -193,7 +193,7 @@
               <string>Set style as active one. Active style is applied to newly created dimensions.</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string/>
              </property>
              <property name="icon">
               <iconset resource="../../../../res/icons/icons.qrc">
@@ -207,7 +207,7 @@
               <string>Export</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string/>
              </property>
              <property name="icon">
               <iconset resource="../../../../res/icons/icons.qrc">
@@ -221,7 +221,7 @@
               <string>Import</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string/>
              </property>
              <property name="icon">
               <iconset resource="../../../../res/icons/icons.qrc">
@@ -243,6 +243,9 @@
                <font>
                 <bold>true</bold>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Name of style for this dimension entity</string>
               </property>
               <property name="text">
                <string>TextLabel</string>
@@ -294,7 +297,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label">
               <property name="toolTip">
-               <string>Name of style for this dimension entity</string>
+               <string/>
               </property>
               <property name="text">
                <string>Style:</string>
