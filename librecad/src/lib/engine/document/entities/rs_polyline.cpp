@@ -46,8 +46,7 @@ RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
                                  const RS_Vector& _endpoint,
                                  bool _closed):
     startpoint(_startpoint)
-    ,endpoint(_endpoint)
-{
+    ,endpoint(_endpoint){
     if (_closed) {
         setFlag(RS2::FlagClosed);
     }
@@ -64,8 +63,7 @@ std::ostream& operator << (std::ostream& os,
  * Constructor.
  */
 RS_Polyline::RS_Polyline(RS_EntityContainer* parent)
-    :RS_EntityContainer(parent, true)
-{
+    :RS_EntityContainer(parent, true){
 }
 
 /**
@@ -75,8 +73,7 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent)
 RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
                          const RS_PolylineData& d)
     :RS_EntityContainer(parent, true)
-    ,data(d)
-{
+    ,data(d){
     calculateBorders();
 }
 
@@ -124,7 +121,6 @@ void RS_Polyline::removeLastVertex() {
  *         was the first vertex added.
  */
 RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend) {
-
     RS_Entity* entity=nullptr;
     //static double nextBulge = 0.0;
 
@@ -169,7 +165,9 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
  */
 void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> >& vl) {
     //static double nextBulge = 0.0;
-    if (!vl.size()) return;
+    if (!vl.size()) {
+        return;
+    }
     size_t idx = 0;
     // very first vertex:
     if (!data.startpoint.valid) {
@@ -205,7 +203,6 @@ void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> 
  *         was the first vertex added.
  */
 std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prepend) {
-
     std::unique_ptr<RS_Entity> entity;
 
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f",
@@ -472,17 +469,20 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         RS_Vector vEnd(en0->getEndpoint());
         double d0 = 0., d1 = 0.;
         en1->getNearestEndpoint(vStart,&d0);
-        en1->getNearestEndpoint(vEnd,&d1);
-        if(d0<d1) en0->revertDirection();
+        en1->getNearestEndpoint(vEnd, &d1);
+        if (d0 < d1) {
+            en0->revertDirection();
+        }
         for(int i=1;i<length;i++){
             //linked to head-tail chain
-            en1=entityAt(i);
-            vStart=en1->getStartpoint();
-            vEnd=en1->getEndpoint();
+            en1 = entityAt(i);
+            vStart = en1->getStartpoint();
+            vEnd = en1->getEndpoint();
             en0->getNearestEndpoint(vStart, &d0);
             en0->getNearestEndpoint(vEnd, &d1);
-            if(d0>d1)
+            if(d0>d1) {
                 en1->revertDirection();
+            }
             intersections[i-1]=(en0->getEndpoint()+en1->getStartpoint())*0.5;
             en0=en1;
         }
@@ -519,9 +519,9 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         for(const RS_Vector& vp: sol0){
 
             double d0 = (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared();//potential bug, need to trim better
-            if(d0>dmax) {
-                dmax=d0;
-                trimP=vp;
+            if (d0 > dmax) {
+                dmax = d0;
+                trimP = vp;
             }
         }
         RS_Vector vp;
@@ -543,44 +543,49 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-        for(const RS_Vector& vp: sol0){
-            double d0( (vp - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
-            if(d0>dmax) {
-                dmax=d0;
-                trimP=vp;
+        for (const RS_Vector& vp : sol0) {
+            double d0((vp - pnew->entityAt(previousIndex)->getEndpoint()).squared());
+            //potential bug, need to trim better
+            if (d0 > dmax) {
+                dmax = d0;
+                trimP = vp;
             }
         }
         RS_Vector vp;
-        if(trimP.valid){
+        if (trimP.valid) {
             static_cast<RS_AtomicEntity*>(pnew->entityAt(previousIndex))->trimEndpoint(trimP);
             static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimStartpoint(trimP);
-            vp=pnew->entityAt(previousIndex)->getMiddlePoint();
-        }else{
-            vp=pnew->entityAt(previousIndex)->getEndpoint();
-            vp.rotate(entityAt(previousIndex)->getEndpoint(),entityAt(i)->getDirection1()-entityAt(previousIndex)->getDirection2()+M_PI);
+            vp = pnew->entityAt(previousIndex)->getMiddlePoint();
         }
-        pnew->entityAt(i)->offset(vp,distance);
-        previousIndex=i;
+        else {
+            vp = pnew->entityAt(previousIndex)->getEndpoint();
+            vp.rotate(entityAt(previousIndex)->getEndpoint(),
+                      entityAt(i)->getDirection1() - entityAt(previousIndex)->getDirection2() + M_PI);
+        }
+        pnew->entityAt(i)->offset(vp, distance);
+        previousIndex = i;
     }
     //trim
     //connect and trim        RS_Modification m(*container, graphicView);
-    for(i=0;i<length;i++){
+    for (i = 0; i < length; i++) {
         RS_Entity* en0;
         RS_Entity* en1;
-        if (i<length-1){
-            en0=pnew->entityAt(i);
-            en1=pnew->entityAt(i+1);
-        }else{
+        if (i < length - 1) {
+            en0 = pnew->entityAt(i);
+            en1 = pnew->entityAt(i + 1);
+        }
+        else {
             if (isClosed()) {
-                en0=pnew->entityAt(i);
-                en1=pnew->entityAt(0);
-            }else{
+                en0 = pnew->entityAt(i);
+                en1 = pnew->entityAt(0);
+            }
+            else {
                 break;
             }
         }
-        RS_VectorSolutions sol0=RS_Information::getIntersection(en0,en1,true);
-        if(sol0.getNumber()==0){
-            sol0=RS_Information::getIntersection(en0,en1);
+        RS_VectorSolutions sol0 = RS_Information::getIntersection(en0, en1, true);
+        if (sol0.getNumber() == 0) {
+            sol0 = RS_Information::getIntersection(en0, en1);
 //            RS_Vector vp0(pnew->entityAt(i)->getEndpoint());
 //            RS_Vector vp1(pnew->entityAt(i+1)->getStartpoint());
 //            double a0(intersections.at(i).angleTo(vp0));
@@ -595,12 +600,13 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //		sol1.push_back(vp);
             //    }
             //}
-            sol1=sol0;
-            if(sol1.getNumber()==0) continue;
+            sol1 = sol0;
+            if (sol1.getNumber() == 0) continue;
             RS_Vector trimP(sol1.getClosest(intersections.at(i)));
             static_cast<RS_AtomicEntity*>(en0)->trimEndpoint(trimP);
             static_cast<RS_AtomicEntity*>(en1)->trimStartpoint(trimP);
-        }else{
+        }
+        else {
             RS_Vector trimP(sol0.getClosest(intersections.at(i)));
             static_cast<RS_AtomicEntity*>(en0)->trimEndpoint(trimP);
             static_cast<RS_AtomicEntity*>(en1)->trimStartpoint(trimP);
@@ -642,8 +648,7 @@ void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
     calculateBorders();
 }
 
-bool RS_Polyline::containsArc() const
-{
+bool RS_Polyline::containsArc() const{
     return std::any_of(cbegin(), cend(), [](const RS_Entity* entity) {
         return entity->rtti() == RS2::EntityArc;
     });
@@ -690,7 +695,6 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
     calculateBorders();
 }
 
-
 /**
  * Slightly optimized drawing for polylines.
  */
@@ -710,11 +714,8 @@ void RS_Polyline::drawAsChild(RS_Painter *painter) {
  */
 std::ostream& operator << (std::ostream& os, const RS_Polyline& l) {
     os << " Polyline: " << l.getData() << " {\n";
-
     os << (RS_EntityContainer&)l;
-
     os << "\n}\n";
-
     return os;
 }
 /**
@@ -749,8 +750,7 @@ RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vec
     return previous;
 }
 
-bool RS_Polyline::isFont() const
-{
+bool RS_Polyline::isFont() const{
     // fixme - sand - temporary disabled elliptic arcs until painting for them is fixed and save is solved
     // const RS_EntityContainer* parent = getParent();
     // return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
