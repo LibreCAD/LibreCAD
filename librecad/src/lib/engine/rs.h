@@ -492,7 +492,6 @@ namespace RS2 {
         ActionDimOrdinateSelectSameOrigin,
         ActionDimOrdinateRebase,
         ActionGTDFeatureControlFrame,
-
         /** Needed to loop through all actions */
         ActionLast
     };

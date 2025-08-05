@@ -844,48 +844,59 @@ void RS_EntityContainer::forcedCalculateBorders() {
  *
  * @param autoText Automatically reposition the text label bool autoText=true
  */
-void RS_EntityContainer::updateDimensions(bool autoText) {
+int RS_EntityContainer::updateDimensions(bool autoText) {
     RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
+    int updatedDimsCount = 0;
 
     for (RS_Entity *e: *this) {
         if (e->isUndone()) {
             continue;
+        }
+        if (e->rtti() == RS2::EntityDimLeader) {
+            updatedDimsCount ++;
+            e->update();
         }
         if (RS_Information::isDimension(e->rtti())) {
             auto dimension = static_cast<RS_Dimension*>(e);
             // update and reposition label:
             // dimension->updateDim(autoText);
             dimension->update();
-        } else if (e->rtti() == RS2::EntityDimLeader)
-            e->update();
+            updatedDimsCount ++;
+        }
         else if (e->isContainer()) {
             auto container = static_cast<RS_EntityContainer*>(e);
-            container->updateDimensions(autoText);
+            updatedDimsCount += container->updateDimensions(autoText);
         }
     }
 
     RS_DEBUG->print("RS_EntityContainer::updateDimensions() OK");
+    return updatedDimsCount;
 }
 
-void RS_EntityContainer::updateVisibleDimensions(bool autoText) {
-    RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
-
+int RS_EntityContainer::updateVisibleDimensions(bool autoText) {
+    RS_DEBUG->print("RS_EntityContainer::updateVisibleDimensions()");
+    int updatedDimsCount = 0;
     for (RS_Entity *e: *this) {
         if (e->isVisible()) {
-            if (RS_Information::isDimension(e->rtti())) {
+            if (e->rtti() == RS2::EntityDimLeader) {
+                e->update();
+                updatedDimsCount ++;
+            }
+            else if (RS_Information::isDimension(e->rtti())) {
                 auto dimension = static_cast<RS_Dimension*>(e);
                 // update and reposition label:
                 dimension->updateDim(autoText);
-            } else if (e->rtti() == RS2::EntityDimLeader)
-                e->update();
+                updatedDimsCount ++;
+            }
             else if (e->isContainer()) {
                 auto container = static_cast<RS_EntityContainer*>(e);
-                container->updateDimensions(autoText);
+                updatedDimsCount += container->updateVisibleDimensions(autoText);
             }
         }
     }
 
-    RS_DEBUG->print("RS_EntityContainer::updateDimensions() OK");
+    RS_DEBUG->print("RS_EntityContainer::updateVisibleDimensions() OK");
+    return updatedDimsCount;
 }
 
 /**

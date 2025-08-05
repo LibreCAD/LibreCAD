@@ -163,8 +163,8 @@ public:
     virtual void adjustBorders(RS_Entity* entity);
     void calculateBorders() override;
     void forcedCalculateBorders();
-    void updateDimensions( bool autoText=true);
-    void updateVisibleDimensions( bool autoText=true);
+    int updateDimensions( bool autoText=true);
+    int updateVisibleDimensions( bool autoText=true);
     virtual void updateInserts();
     virtual void updateSplines();
     void update() override;

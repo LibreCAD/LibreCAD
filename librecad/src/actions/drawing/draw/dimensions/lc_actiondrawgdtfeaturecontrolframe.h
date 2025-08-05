@@ -47,11 +47,11 @@ protected:
 
         void clear() {
             m_insertionPoint.valid = false;
-            delete m_entity;
+            // delete m_entity;
         }
 
         RS_Vector m_insertionPoint;
-        LC_Tolerance* m_entity;
+        LC_Tolerance* m_entity {nullptr};
     };
 
     std::unique_ptr<ActionData> m_actionData;

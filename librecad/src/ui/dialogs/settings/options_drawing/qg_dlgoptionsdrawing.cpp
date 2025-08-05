@@ -1322,7 +1322,7 @@ bool QG_DlgOptionsDrawing::validateDimensionsTab() {
 
     // dimstyles will be set to graphic, so don't delete them
     model->cleanup(false);
-
+    m_graphic->updateDimensions(false);
     return true;
 }
 

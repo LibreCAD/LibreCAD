@@ -1045,6 +1045,7 @@ void QC_ApplicationWindow::changeDrawingOptions(int tabToShow){
         m_anglesBasisWidget->update(graphic);
         graphicView->loadSettings();
         graphic->update();
+        graphicView->redraw();
         graphicView->repaint();
         // fixme - sand - emit signal?
     } else {

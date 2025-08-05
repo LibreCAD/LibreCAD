@@ -177,8 +177,6 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList)
     return layer;
 }
 
-
-
 /**
  * Shows a dialog that asks the user if the selected layer
  * can be removed. Doesn't remove the layer. This is up to the caller.
@@ -232,7 +230,6 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
 
     return layer;
 }
-
 
 /**
  * Shows a dialog that asks the user if the selected layers
@@ -331,7 +328,6 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
     return QStringList();
 }
 
-
 /**
  * Shows a dialog for editing a layer. A new layer is created and
  * returned. Modifying the layer is up to the caller.
@@ -379,8 +375,6 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
 
     return layer;
 }
-
-
 
 /**
  * Shows a dialog for adding a block. Doesn't add the block.

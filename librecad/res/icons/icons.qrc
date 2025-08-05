@@ -359,5 +359,6 @@
         <file alias="layer_export_visible.lci">layer_export_visible.svg</file>
         <file alias="layer_export_single.lci">layer_export_single.svg</file>
         <file alias="dim_apply_style.lci">dim_apply_style.svg</file>
+        <file alias="dim_regenerate.lci">dim_regenerate.svg</file>
     </qresource>
 </RCC>

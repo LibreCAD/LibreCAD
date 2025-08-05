@@ -176,12 +176,6 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     addActionsToMainWindow(a_map);
 
     prepareActionsToDisableInPrintPreview(m_appWin->m_actionsToDisableInPrintPreviewList, a_map);
-
-    // fixme - review why this action is not used, is it really necessary or may be removed?
-    // action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
-//    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
-//    action->setObjectName("ToolRegenerateDimensions");
-//    a_map["ToolRegenerateDimensions"] = action;
 }
 
 void LC_ActionFactory::createDrawShapeActions(QMap<QString, QAction*>& map, QActionGroup* group) const {
@@ -352,9 +346,16 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
         {"DimOrdinateForBase",RS2::ActionDimOrdinateSelectSameOrigin,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
         {"DimOrdinateReBase", RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
-        {"GTDFeatureFrame",   RS2::ActionGTDFeatureControlFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"}
+        {"GTDFeatureFrame",   RS2::ActionGTDFeatureControlFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"},
+        {"DimRegenerate",    RS2::ActionToolRegenerateDimensions,   tr("Regenerate Dimensions"),  ":/icons/dim_regenerate.lci"}
     });
 }
+
+// fixme - review why this action is not used, is it really necessary or may be removed?
+// action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
+//    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
+//    action->setObjectName("ToolRegenerateDimensions");
+//    a_map["ToolRegenerateDimensions"] = action;
 
 void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     /* action = new QAction(tr("Delete Freehand"), agm->modify);
@@ -934,7 +935,8 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimOrdinate",
                         "DimOrdinateForBase",
                         "DimOrdinateReBase",
-                        "GTDFeatureFrame"
+                        "GTDFeatureFrame",
+                        "DimRegenerate"
                     }, map);
 
     fillActionsList(other_drawing_actions, {
