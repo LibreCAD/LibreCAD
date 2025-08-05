@@ -104,12 +104,11 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_
                     data.changeWidth = true;
                     data.changeLayer = false;
 
-                    // this is temporary selection, it is needed as RS_Modification relies on selected entities.
-                    // fixme - sand - replace by version with explicitly provided entity rather than one that relies on selection
-                    en->setSelected(true);
+                    std::vector<RS_Entity *> selectedEntities;
+                    selectedEntities.push_back(en);
 
                     RS_Modification m(*m_container, m_viewport);
-                    m.changeAttributes(data, false);
+                    m.changeAttributes(data, selectedEntities, m_container, false);
                 }
                 break;
             }

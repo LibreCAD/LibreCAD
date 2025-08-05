@@ -337,11 +337,9 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
 
         RS_Entity *cl = en->clone();
         RS_Pen pen = cl->getPen(false);
-
         if (data.changeLayer) {
             cl->setLayer(data.layer);
         }
-
         if (data.changeColor) {
             pen.setColor(data.pen.getColor());
         }
@@ -370,13 +368,20 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
 
     for (auto block: blocks) {
         for (auto en: *block) {
-            if (en == nullptr) continue;
+            if (en == nullptr) {
+                continue;
+            }
             en->setSelected(true);
         }
         changeAttributes(data, block, keepSelected);
     }
 
     for (auto cl: clones) {
+        RS2::EntityType rtti = cl->rtti();
+        if (RS2::isDimensionalEntity(rtti)) {
+            cl->update();
+        }
+
         cont->addEntity(cl);
         // if (graphic != nullptr) {
             // graphic->addUndoable(cl);
@@ -471,7 +476,6 @@ RS_BoundData RS_Modification::getBoundingRect(std::vector<RS_Entity *> &selected
     RS_BoundData result(min, max);
     return result;
 }
-
 
 /**
  * Copies the given entity from the given container to the clipboard.

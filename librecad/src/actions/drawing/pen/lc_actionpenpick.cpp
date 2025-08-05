@@ -64,10 +64,10 @@ void LC_ActionPenPick::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             applyPenToPenToolBar(en);
             init( getStatus() - 1);
             finish(true);
+            redraw();
             m_graphicView->back();
         }
     }
-    redraw();
 }
 
 void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
