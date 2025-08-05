@@ -106,6 +106,7 @@ public:
     virtual void appendEntity(RS_Entity* entity);
     virtual void prependEntity(RS_Entity* entity);
     virtual void moveEntity(int index, QList<RS_Entity *>& entList);
+    void adjustBordersIfNeeded(RS_Entity* entity);
     virtual void insertEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);
 
@@ -229,6 +230,7 @@ public:
     void stretch(const RS_Vector& firstCorner,
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
+    void calculateBordersIfNeeded();
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;

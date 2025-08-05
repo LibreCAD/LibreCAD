@@ -78,7 +78,7 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Polyline::clone() const {
-    RS_Polyline* p = new RS_Polyline(*this);
+    auto* p = new RS_Polyline(*this);
     p->setOwner(isOwner());
     p->detach();
     return p;
@@ -104,7 +104,6 @@ void RS_Polyline::removeLastVertex() {
         }
     }
 }
-
 
 /**
  * Adds a vertex from the endpoint of the last segment or
@@ -151,7 +150,6 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
     return entity;
 }
 
-
 /**
  * Appends a vertex list from the endpoint of the last segment
  * sets the startpoint to the first point if not exist.
@@ -187,7 +185,6 @@ void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> 
 
     endPolyline();
 }
-
 
 /**
  * Creates a vertex from the endpoint of the last element or
@@ -397,18 +394,9 @@ void RS_Polyline::updateEndpoints() {
 void RS_Polyline::addEntity(RS_Entity* /*entity*/) {
     RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Polyline::addEntity:"
                                          " should never be called\n"
-                                         "use addVertex() or addSegment() instead"
-    );
+                                         "use addVertex() or addSegment() instead");
     assert(false);
 }
-
-/**
- * Adds a segment to the polyline.
- */
-/*void RS_Polyline::addSegment(RS_Entity* entity) {
-        RS_EntityContainer::addEntity(entity);
-        // TODO: reorder and check polyline
-}*/
 
 RS_VectorSolutions RS_Polyline::getRefPoints() const{
     RS_VectorSolutions ret{{data.startpoint}};
@@ -437,17 +425,6 @@ RS_Vector RS_Polyline::getNearestSelectedRef( const RS_Vector& coord,
     // use RS_Entity instead for vertex dragging
     return RS_Entity::getNearestSelectedRef( coord, dist);
 }
-/*
-void RS_Polyline::reorder() {
-        // current point:
-        RS_Vector cp;
-
-        bool done = false;
-        do {
-
-        } while(!done);
-}
-*/
 
 /**
   * this should handle modifyOffset
@@ -511,7 +488,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     pnew->entityAt(i)->offset(coord,distance);
     //offset all
     //fixme, this is too ugly
-    for(i=indexNearest-1;i>=0;i--){
+    for (i = indexNearest - 1; i >= 0; i--) {
         RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(previousIndex),entityAt(i),true);
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
@@ -680,10 +657,7 @@ void RS_Polyline::revertDirection() {
     data.endpoint = tmp;
 }
 
-void RS_Polyline::stretch(const RS_Vector& firstCorner,
-                          const RS_Vector& secondCorner,
-                          const RS_Vector& offset) {
-
+void RS_Polyline::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) {
     if (data.startpoint.isInWindow(firstCorner, secondCorner)) {
         data.startpoint.move(offset);
     }

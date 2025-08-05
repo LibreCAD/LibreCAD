@@ -43,7 +43,6 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent)
 {
 }
 
-
 /**
  * Constructor.
  * @param d Leader data

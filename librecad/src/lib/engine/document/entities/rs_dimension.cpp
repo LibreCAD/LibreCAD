@@ -194,20 +194,18 @@ std::ostream& operator <<(std::ostream& os,
 /**
  * Constructor.
  */
-RS_Dimension::RS_Dimension(RS_EntityContainer* parent,const RS_DimensionData& d)
+RS_Dimension::RS_Dimension(RS_EntityContainer* parent, const RS_DimensionData& d)
     : RS_EntityContainer(parent)
-    , m_dimGenericData(std::move(d)){
+      , m_dimGenericData(std::move(d)) {
 }
 
-RS_Vector RS_Dimension::getNearestRef(const RS_Vector& coord,
-                                      double* dist /*= nullptr*/) const {
+RS_Vector RS_Dimension::getNearestRef(const RS_Vector& coord, double* dist /*= nullptr*/) const {
     // override the RS_EntityContainer method
     // use RS_Entity instead for refpoint dragging
     return RS_Entity::getNearestRef(coord, dist);
 }
 
-RS_Vector RS_Dimension::getNearestSelectedRef(const RS_Vector& coord,
-                                              double* dist /*= nullptr*/) const {
+RS_Vector RS_Dimension::getNearestSelectedRef(const RS_Vector& coord, double* dist /*= nullptr*/) const {
     // override the RS_EntityContainer method
     // use RS_Entity instead for refpoint dragging
     return RS_Entity::getNearestSelectedRef(coord, dist);
@@ -278,9 +276,7 @@ RS_VectorSolutions RS_Dimension::getIntersectionsLineContainer(
     // Find all intersections, including those beyond limits of container
     // entities.
     for (RS_Entity* e : *c) {
-        solutions_initial.push_back(
-            RS_Information::getIntersection(l, e, false)
-            );
+        solutions_initial.push_back(RS_Information::getIntersection(l, e, false));
     }
 
     // Filter solutions based on whether they are actually on any entities.
@@ -308,10 +304,8 @@ RS_VectorSolutions RS_Dimension::getIntersectionsLineContainer(
      */
     std::vector<RS_Vector> solutions_sorted(solutions_filtered.getVector());
     std::sort(solutions_sorted.begin(), solutions_sorted.end(),
-              [l](const RS_Vector& lhs, const RS_Vector& rhs)
-              {
-                  return l->getProjectionValueAlongLine(lhs)
-                      < l->getProjectionValueAlongLine(rhs);
+              [l](const RS_Vector& lhs, const RS_Vector& rhs) {
+                  return l->getProjectionValueAlongLine(lhs) < l->getProjectionValueAlongLine(rhs);
               });
 
     return RS_VectorSolutions(solutions_sorted);
@@ -369,7 +363,6 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1,
                                                            const RS_Vector& p2, bool showArrow1, bool showArrow2,
                                                            bool showLine1, bool showLine2,
                                                            bool forceAutoText) {
-
     double dimscale = getGeneralScale();
     double dimtxt = getTextHeight() * dimscale;
     double dimgap = getDimensionLineGap() * dimscale;
@@ -1228,7 +1221,6 @@ RS_Line* RS_Dimension::addDimExtensionLine(RS_Vector start, RS_Vector end, bool 
     return addDimComponentLine(start, end, getPenExtensionLine(first));
 }
 
-
 RS_Line* RS_Dimension::addDimDimensionLine(RS_Vector start, RS_Vector end) {
     return addDimComponentLine(start, end, getPenDimensionLine());
 }
@@ -1239,7 +1231,6 @@ RS_Arc* RS_Dimension::addDimArc(RS_ArcData& arcData) {
     addDimComponentEntity(arc, pen);
     return arc;
 }
-
 
 RS_Line* RS_Dimension::addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen &pen) {
     auto line = new RS_Line(this, {start, end});
@@ -1265,8 +1256,9 @@ QString RS_Dimension::createLinearMeasuredLabel(double dist) {
         }
         //verify if units are decimal and comma separator
         if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
-            if (getDimDecimalFormatSeparatorChar() == 44)
+            if (getDimDecimalFormatSeparatorChar() == 44) {
                 ret.replace(QChar('.'), QChar(','));
+            }
         }
     }
     else {

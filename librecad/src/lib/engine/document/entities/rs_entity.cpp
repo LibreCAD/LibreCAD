@@ -73,8 +73,7 @@ struct RS_Entity::Impl {
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
     : parent{parent}
-    , m_pImpl{std::make_unique<Impl>()}
-{
+    , m_pImpl{std::make_unique<Impl>()}{
     init(true);
 }
 
@@ -84,13 +83,11 @@ RS_Entity::RS_Entity(const RS_Entity& other):
     , maxV {other.maxV}
     , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
-    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}
-{
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
     init(false);
 }
 
-RS_Entity& RS_Entity::operator = (const RS_Entity& other)
-{
+RS_Entity& RS_Entity::operator = (const RS_Entity& other){
     parent = other.parent;
     minV  = other.minV;
     maxV  = other.maxV;
@@ -107,13 +104,11 @@ RS_Entity::RS_Entity(RS_Entity&& other):
     , maxV {other.maxV}
     , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
-    , m_pImpl{std::move(other.m_pImpl)}
-{
+    , m_pImpl{std::move(other.m_pImpl)}{
     initId();
 }
 
-RS_Entity& RS_Entity::operator = (RS_Entity&& other)
-{
+RS_Entity& RS_Entity::operator = (RS_Entity&& other){
     parent = other.parent;
     minV  = other.minV;
     maxV  = other.maxV;
