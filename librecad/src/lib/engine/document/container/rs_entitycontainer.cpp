@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
-#include <QList>
+#include <cmath>
 #include <iostream>
-#include "rs_entitycontainer.h"
-
-#include <QObject>
 #include <set>
 
+#include <QList>
+#include <QObject>
+
+#include "lc_containertraverser.h"
 #include "lc_looputils.h"
 #include "qg_dialogfactory.h"
 #include "rs_constructionline.h"
@@ -38,6 +39,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_dimension.h"
 #include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -343,9 +345,10 @@ void RS_EntityContainer::selectWindow(
 
                 if (e->isContainer()) {
                     auto *ec = (RS_EntityContainer *) e;
-                    for (RS_Entity *se = ec->firstEntity(RS2::ResolveAll);
-                         se && !included;
-                         se = ec->nextEntity(RS2::ResolveAll)) {
+                    lc::LC_ContainerTraverser traverser{*ec, RS2::ResolveAll};
+                    for (RS_Entity *se = traverser.first();
+                         se != nullptr && !included;
+                         se = traverser.next()){
 
                         if (se->rtti() == RS2::EntitySolid) {
                             included = static_cast<RS_Solid *>(se)->isInCrossWindow(v1, v2);
@@ -413,9 +416,10 @@ void RS_EntityContainer::selectWindow(
 
                 if (e->isContainer()) {
                     auto *ec = (RS_EntityContainer *) e;
-                    for (RS_Entity *se = ec->firstEntity(RS2::ResolveAll);
-                         se && included == false;
-                         se = ec->nextEntity(RS2::ResolveAll)) {
+                    lc::LC_ContainerTraverser traverser{*ec, RS2::ResolveAll};
+                    for (RS_Entity *se = traverser.first();
+                         se != nullptr && !included;
+                         se = traverser.next()){
 
                         if (se->rtti() == RS2::EntitySolid) {
                             included = dynamic_cast<RS_Solid *>(se)->isInCrossWindow(v1, v2);
@@ -1336,7 +1340,8 @@ RS_Entity *RS_EntityContainer::prevEntity(RS2::ResolveLevel level) const {
 /**
  * @return Entity at the given index or nullptr if the index is out of range.
  */
-RS_Entity *RS_EntityContainer::entityAt(int index) {
+RS_Entity *RS_EntityContainer::entityAt(int index) const
+{
     if (m_entities.size() > index && index >= 0)
         return m_entities.at(index);
     else
@@ -2030,7 +2035,7 @@ void RS_EntityContainer::revertDirection() {
  void RS_EntityContainer::draw(RS_Painter *painter) {
     for(RS_Entity *e: *this){
         if (e!=nullptr && e->getId() != 0)
-        painter->drawEntity(e);
+            painter->drawEntity(e);
     }
 }
 

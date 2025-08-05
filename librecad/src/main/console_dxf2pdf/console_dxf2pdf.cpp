@@ -118,7 +118,7 @@ int console_dxf2pdf(int argc, char* argv[])
     parser.addOption(pagesNumOpt);
 
     QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
-        QObject::tr( "Output PDF file.", "file"));
+        QObject::tr( "Output PDF file.", "file"), "outfile");
     parser.addOption(outFileOpt);
 
     QCommandLineOption outDirOpt(QStringList() << "t" << "directory",

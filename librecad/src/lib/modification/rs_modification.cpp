@@ -27,6 +27,7 @@
 
 #include <QSet>
 
+#include "lc_containertraverser.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_splinepoints.h"
@@ -105,11 +106,9 @@ namespace {
             return RS_Information::getIntersection(&trimEntity, &limitEntity, false);
         }
         if (limitEntity.isContainer()){
-            auto ec = dynamic_cast<const RS_EntityContainer *>(&limitEntity);
+            auto ec = static_cast<const RS_EntityContainer *>(&limitEntity);
 
-            for (RS_Entity *e = ec->firstEntity(RS2::ResolveAll); e != nullptr;
-                 e = ec->nextEntity(RS2::ResolveAll)) {
-
+            for(RS_Entity* e: lc::LC_ContainerTraverser{*ec, RS2::ResolveAll}.entities()) {
                 RS_VectorSolutions s2 = RS_Information::getIntersection(&trimEntity,
                                                                         e, false);
 
@@ -3164,8 +3163,8 @@ static void update_exploded_children_recursively(
     if (clone->isContainer()) {
         // Note: reassigning ec and e here, so keep
         // that in mind when writing code below this block.
-        ec = (RS_EntityContainer*) clone;
-        for (e = ec->firstEntity(rl); e; e = ec->nextEntity(rl)) {
+        ec = static_cast<RS_EntityContainer*>(clone);
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*ec, rl}.entities()) {
             if (e != nullptr) {
                 // Run the same code for every children recursively
                 update_exploded_children_recursively(ec, clone, e,
@@ -3244,9 +3243,7 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
                     break;
             }
 
-            for (RS_Entity* e2 = ec->firstEntity(rl); e2;
-                 e2 = ec->nextEntity(rl)) {
-
+            for(RS_Entity* e2: lc::LC_ContainerTraverser{*ec, rl}.entities()) {
                 if (e2 != nullptr) {
                     RS_Entity* clone = e2->clone();
                     clone->setSelected(false);

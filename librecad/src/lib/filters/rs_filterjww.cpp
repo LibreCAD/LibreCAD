@@ -26,7 +26,6 @@
 
 #include <QRegularExpression>
 #include <QStringConverter>
-#include "rs_filterjww.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -34,7 +33,7 @@
 #include "dl_attributes.h"
 #include "dl_codes.h"
 #include "dl_writer_ascii.h"
-
+#include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
@@ -44,6 +43,7 @@
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
 #include "rs_ellipse.h"
+#include "rs_filterjww.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_insert.h"
@@ -1709,12 +1709,11 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
         bool first = true;
         RS_Entity* nextEntity = 0;
 		RS_AtomicEntity* ae = nullptr;
-        RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
-        for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-                        v;
-                        v=nextEntity) {
+        lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
+        RS_Entity* lastEntity = traverser.last();
+        for (RS_Entity* v=traverser.first(); v != nullptr; v = traverser.next()) {
 
-                nextEntity = l->nextEntity(RS2::ResolveNone);
+            nextEntity = traverser.next();
 
                 if (!v->isAtomic()) {
                         continue;
@@ -2194,10 +2193,7 @@ void RS_FilterJWW::writeLeader(DL_WriterA& dw, RS_Leader* l,
                                                   l->count()),
                         attrib);
                 bool first = true;
-                for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-                                v;
-                                v=l->nextEntity(RS2::ResolveNone)) {
-
+                for(RS_Entity* v: lc::LC_ContainerTraverser{*l, RS2::ResolveNone}.entities()) {
                         // Write line verties:
                         if (v->rtti()==RS2::EntityLine) {
                                 RS_Line* l = (RS_Line*)v;
@@ -2235,10 +2231,7 @@ void RS_FilterJWW::writeHatch(DL_WriterA& dw, RS_Hatch* h,
         bool writeIt = true;
         if (h->countLoops()>0) {
                 // check if all of the loops contain entities:
-                for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                                l;
-                                l=h->nextEntity(RS2::ResolveNone)) {
-
+            for(RS_Entity* l: lc::LC_ContainerTraverser{*h, RS2::ResolveNone}.entities()) {
                         if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
                                 if (l->count()==0) {
                                         writeIt = false;
@@ -2260,19 +2253,14 @@ void RS_FilterJWW::writeHatch(DL_WriterA& dw, RS_Hatch* h,
                                                   (const char*)h->getPattern().toLocal8Bit().data());
                 jww.writeHatch1(dw, data, attrib);
 
-                for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                                l;
-                                l=h->nextEntity(RS2::ResolveNone)) {
+                for(RS_Entity* l: lc::LC_ContainerTraverser{*h, RS2::ResolveNone}.entities()) {
 
                         // Write hatch loops:
                         if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
                                 RS_EntityContainer* loop = (RS_EntityContainer*)l;
                                 DL_HatchLoopData lData(loop->count());
                                 jww.writeHatchLoop1(dw, lData);
-
-                                for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
-                                                ed;
-                                                ed=loop->nextEntity(RS2::ResolveNone)) {
+                                for(RS_Entity* ed: lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()) {
 
                                         // Write hatch loop edges:
                                         if (ed->rtti()==RS2::EntityLine) {
@@ -2410,9 +2398,8 @@ void RS_FilterJWW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
         RS_Block* blk = new RS_Block(graphic, blkdata);
 
-		for (RS_Entity* e1 = con->firstEntity(); e1 ;
-                        e1 = con->nextEntity() ) {
-                blk->addEntity(e1);
+        for(RS_Entity* e1: lc::LC_ContainerTraverser{*con, RS2::ResolveNone}.entities()) {
+            blk->addEntity(e1);
         }
         writeBlock(dw, blk);
         //delete e1;
@@ -2427,11 +2414,7 @@ void RS_FilterJWW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 void RS_FilterJWW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                                                                            const DL_Attributes& attrib,
                                                                            RS2::ResolveLevel level) {
-
-        for (RS_Entity* e=c->firstEntity(level);
-                        e;
-                        e=c->nextEntity(level)) {
-
+        for(RS_Entity* e: lc::LC_ContainerTraverser{*c, level}.entities()) {
                 writeEntity(dw, e, attrib);
         }
 }

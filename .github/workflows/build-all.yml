@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          submodules: recursive
 
       - name: Install dependencies
         run: |
@@ -37,10 +38,15 @@ jobs:
       - name: Build and analyze
         run: |
           echo "cmake"
-          cmake -S . -B unix
+          cmake -S . -B unix -DBUILD_TESTS=ON
           echo "cmake build"
           cmake --build unix -j$(nproc)
           
+      - name: Run Tests
+        run: |
+          cd unix
+          ./librecad_tests
+
       - name: Create AppImage
         run: |
           QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh

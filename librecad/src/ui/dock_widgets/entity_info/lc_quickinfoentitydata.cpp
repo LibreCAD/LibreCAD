@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_quickinfoentitydata.h"
 
+#include "lc_containertraverser.h"
 #include "lc_dimarc.h"
 #include "lc_dimordinate.h"
 #include "lc_parabola.h"
@@ -798,7 +799,7 @@ void LC_QuickInfoEntityData::collectPolylineProperties(RS_Polyline *l){
     addProperty(tr("Segments"), formatInt(entitiesCount), OTHER);
     addVectorProperty(tr("Vertex - 0:"), l->getStartpoint());
 
-    for (RS_Entity *entity = l->firstEntity(RS2::ResolveAll); entity; entity = l->nextEntity(RS2::ResolveAll)) {
+    for(RS_Entity* entity: lc::LC_ContainerTraverser{*l, RS2::ResolveAll}.entities()) {
         index++;
         if (!entity->isAtomic()){
             continue;

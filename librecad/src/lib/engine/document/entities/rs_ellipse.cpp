@@ -151,7 +151,7 @@ class ClosestEllipticPoint {
 public:
     ClosestEllipticPoint(double a, double b, const RS_Vector& point):
         m_point{point}
-      , c2{a*a-b*b}
+      , c2{b * b - a * a}
       , ax2{2.*a*point.x}
       , by2{2.*b*point.y}
     {}

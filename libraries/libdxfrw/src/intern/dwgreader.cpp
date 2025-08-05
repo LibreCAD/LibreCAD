@@ -681,10 +681,12 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
                 DRW_ObjControl vpEntHeaderCtrl;
                 dbuf->setPosition(oc.loc);
                 int size = dbuf->getModularShort();
+                /*  avoid static-analysis warning, unused bs values
                 if (version > DRW::AC1021) //2010+
                     bs = dbuf->getUModularChar();
                 else
                     bs = 0;
+                */
                 tmpByteStr.resize(size);
                 dbuf->getBytes(tmpByteStr.data(), size);
                 dwgBuffer buff(tmpByteStr.data(), size, &decoder);

@@ -27,6 +27,7 @@
 #ifndef RS_MATH_H
 #define RS_MATH_H
 
+#include <algorithm>
 #include <cmath>
 #include <vector>
 
@@ -167,6 +168,12 @@ bool simultaneousQuadraticVerify(const std::vector<std::vector<double> > &m, RS_
 double ellipticIntegral_2(const double &k, const double &phi);
 
 // The ULP (Unit at Last Place) for a floating point
+/**
+ * @brief ulp - the ULP (Unit at Last Place) for a floating point
+ * @param x - a floating point
+ * @return - the ULP of the given floating point
+ * @author: Dongxu Li
+ */
 template<typename FT>
 std::enable_if_t<std::is_floating_point_v<FT>, FT> ulp(FT x)
 {
@@ -174,6 +181,34 @@ std::enable_if_t<std::is_floating_point_v<FT>, FT> ulp(FT x)
         return x - std::nexttoward(x, -std::numeric_limits<FT>::infinity());
     else
         return std::nexttoward(x, std::numeric_limits<FT>::infinity()) - x;
+}
+
+/**
+ * @brief less - compare two floating points using ULP as tolerance
+ * @param a - a floating point
+ * @param b - a floating point
+ * @return bool - true, if a is less or equal within twice of the ULP of b
+ * @author: Dongxu Li
+ */
+template<typename FT>
+std::enable_if_t<std::is_floating_point_v<FT>, bool> less(FT a, FT b)
+{
+    return a <= b + 2 * RS_Math::ulp<FT>(b);
+}
+
+/**
+ * @brief inBetween - whether a floating point is between two given floating points
+ * @param x - a floating to determine whether in range
+ * @param a - one bound of the range
+ * @param b - one bound of the range
+ * @return bool - true, if the floating point x is within the range defined by
+ *          a and b, with floating point ULP used as tolerance in comparison
+ * @author: Dongxu Li
+ */
+template<typename FT>
+std::enable_if_t<std::is_floating_point_v<FT>, bool> inBetween(FT x, FT a, FT b)
+{
+    return RS_Math::less<FT>(x, std::max<FT>(a, b)) && RS_Math::less<FT>(std::min<FT>(a, b), x);
 }
 
 QString doubleToString(double value, double prec);

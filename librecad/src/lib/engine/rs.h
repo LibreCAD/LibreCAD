@@ -611,7 +611,7 @@ namespace RS2 {
     /**
      * Enum of levels of resolving when iterating through an entity tree.
      */
-    enum ResolveLevel {
+    enum ResolveLevel: unsigned short {
         /** Groups are not resolved */
         ResolveNone,
         /**

@@ -43,6 +43,7 @@
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
+#include "rs_math.h"
 #include "rs_mtext.h"
 #include "rs_pen.h"
 #include "rs_point.h"
@@ -96,7 +97,6 @@ RS_Entity& RS_Entity::operator = (const RS_Entity& other)
     m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl->fromOther(other.m_pImpl.get());
-    // init(false);
     initId();
     return *this;
 }
@@ -143,11 +143,8 @@ RS_Entity::~RS_Entity() = default;
 /**
  * Initialisation. Called from all constructors.
  */
-#include "rs_math.h"
 void RS_Entity::init(bool setPenAndLayerToActive) {
     if (m_pImpl == nullptr) {
-
-        std::cout<<__func__<<" "<<RS_Math::findGCD(15, 21)<<std::endl;
         m_pImpl = std::make_unique<Impl>();
     }
     resetBorders();
@@ -294,17 +291,11 @@ bool RS_Entity::isUndone() const {
  * @return True if the entity is in the given range.
  */
 bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const{
-    double right, left, top, bottom;
-
-    right = std::max(v1.x, v2.x);
-    left = std::min(v1.x, v2.x);
-    top = std::max(v1.y, v2.y);
-    bottom = std::min(v1.y, v2.y);
-
-    return (getMin().x>=left &&
-            getMax().x<=right &&
-            getMin().y>=bottom &&
-            getMax().y<=top);
+    return
+        RS_Math::inBetween(getMin().x, v1.x, v2.x)
+        && RS_Math::inBetween(getMax().x, v1.x, v2.x)
+        && RS_Math::inBetween(getMin().y, v1.y, v2.y)
+        && RS_Math::inBetween(getMax().y, v1.y, v2.y);
 }
 
 double RS_Entity::areaLineIntegral() const{
@@ -483,7 +474,7 @@ bool RS_Entity::isHighlighted() const{
 }
 
 RS_Vector RS_Entity::getSize() const {
-	return maxV-minV;
+    return maxV-minV;
 }
 
 /**
@@ -494,7 +485,7 @@ bool RS_Entity::isLocked() const{
 }
 
 RS_Vector RS_Entity::getCenter() const {
-	return RS_Vector{};
+    return {};
 }
 
 double RS_Entity::getRadius() const {
@@ -993,7 +984,7 @@ void RS_Entity::delUserDefVar(QString key) {
  * @return A list of all keys connected to this entity.
  */
 std::vector<QString> RS_Entity::getAllKeys() const{
-    std::vector<QString> ret(0);
+    std::vector<QString> ret;
     for(auto const& [key, val]: m_pImpl->varList){
         ret.push_back(key);
     }

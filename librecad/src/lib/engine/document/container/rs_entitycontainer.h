@@ -121,7 +121,7 @@ public:
     virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
-    virtual RS_Entity* entityAt(int index);
+    virtual RS_Entity* entityAt(int index) const;
     virtual void setEntityAt(int index,RS_Entity* en);
     virtual int findEntity(RS_Entity const* const entity);
     int findEntityIndex(RS_Entity const* const entity);
@@ -131,8 +131,11 @@ public:
     //virtual unsigned long int count() {
     //	return count(false);
     //}
-    virtual bool isEmpty() const{
+    virtual bool isEmpty() const {
         return count()==0;
+    }
+    bool empty() const {
+        return isEmpty();
     }
     unsigned count() const override;
     unsigned countDeep() const override;
