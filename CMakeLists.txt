@@ -360,6 +360,8 @@ set(SOURCES
         librecad/src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp
         librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinate.h
         librecad/src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.h
+        librecad/src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp
         librecad/src/actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.h
         librecad/src/actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.cpp
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp

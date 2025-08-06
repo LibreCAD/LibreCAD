@@ -302,6 +302,7 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
     actions/drawing/draw/dimensions/lc_actiondimordinate.h \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.h \
+    actions/drawing/draw/dimensions/lc_actiondimstyleapply.h \
     actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.h \
     actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.h \
     actions/drawing/draw/line/misc/lc_actiondrawmidline.h \
@@ -588,6 +589,7 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
+    actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp \
     actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinate.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp \
