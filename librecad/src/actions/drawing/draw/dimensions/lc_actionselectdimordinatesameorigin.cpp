@@ -29,7 +29,7 @@
 #include "rs_document.h"
 
 LC_ActionSelectDimOrdinateSameOrigin::LC_ActionSelectDimOrdinateSameOrigin(LC_ActionContext* actionContext)
-    : LC_ActionSingleEntitySelectBase("SelectDimOrdinateSameOriginAction", actionContext, RS2::ActionDimOrdinateSelectSameOrigin){
+    : LC_ActionSingleEntitySelectBase("SelectDimOrdinateSameOriginAction", actionContext, RS2::ActionDimOrdByOriginSelect){
 }
 
 LC_ActionSelectDimOrdinateSameOrigin::~LC_ActionSelectDimOrdinateSameOrigin() = default;

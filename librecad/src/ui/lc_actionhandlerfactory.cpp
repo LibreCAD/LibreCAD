@@ -27,6 +27,7 @@
 #include "lc_actiondimarc.h"
 #include "lc_actiondimordinate.h"
 #include "lc_actiondimordinaterebase.h"
+#include "lc_actiondimstyleapply.h"
 #include "lc_actiondrawarc2pointsangle.h"
 #include "lc_actiondrawarc2pointsheight.h"
 #include "lc_actiondrawarc2pointslength.h"
@@ -334,7 +335,7 @@ namespace InnerFactory{
                 view->killSelectActions();
                 return new RS_ActionSelectLayer(ctx);
             }
-            case RS2::ActionToolRegenerateDimensions: {
+            case RS2::ActionDimRegenerate: {
                 return new RS_ActionToolRegenerateDimensions(ctx);
             }
             case RS2::ActionZoomIn: {
@@ -649,7 +650,7 @@ namespace InnerFactory{
             case RS2::ActionDimOrdinate: {
                 return new LC_ActionDimOrdinate(ctx);
             }
-            case RS2::ActionGTDFeatureControlFrame: {
+            case RS2::ActionGTDFCFrame: {
                 return new LC_ActionDrawGDTFeatureControlFrame(ctx);
             }
             case RS2::ActionDimLinearHor: {
@@ -678,6 +679,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDimContinue: {
                 return new LC_ActionDrawDimBaseline(ctx, RS2::ActionDimContinue);
+            }
+            case RS2::ActionDimStyleApply: {
+                return new LC_ActionDimStyleApply(ctx);
             }
             case RS2::ActionModifyLineJoin: {
                 return new LC_ActionModifyLineJoin(ctx);
@@ -955,10 +959,10 @@ namespace InnerFactory{
             case RS2::ActionLayerEntityToggleLock: {
                 return new LC_ActionLayerToggle(ctx, actionType);
             }
-            case RS2::ActionDimOrdinateSelectSameOrigin: {
+            case RS2::ActionDimOrdByOriginSelect: {
                 return new LC_ActionSelectDimOrdinateSameOrigin(ctx);
             }
-            case RS2::ActionDimOrdinateRebase: {
+            case RS2::ActionDimOrdRebase: {
                 return new LC_ActionDimOrdinateRebase(ctx);
             }
             default:

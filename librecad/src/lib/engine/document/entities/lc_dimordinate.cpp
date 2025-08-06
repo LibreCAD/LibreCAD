@@ -44,10 +44,12 @@ LC_DimOrdinate::LC_DimOrdinate(RS_EntityContainer* parent, const RS_DimensionDat
    RS_EntityContainer::calculateBorders();
 }
 
+LC_DimOrdinate::LC_DimOrdinate(const LC_DimOrdinate& other)
+    :RS_Dimension(other), m_dimOrdinateData{other.m_dimOrdinateData} {
+}
+
 RS_Entity* LC_DimOrdinate::clone() const {
     auto* d = new LC_DimOrdinate(*this);
-    d->setOwner(isOwner());
-    d->detach();
     return d;
 }
 

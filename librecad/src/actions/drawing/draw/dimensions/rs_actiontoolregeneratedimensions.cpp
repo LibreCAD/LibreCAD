@@ -32,7 +32,7 @@
 #include "rs_information.h"
 
 RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Regen Dims", actionContext, RS2::ActionToolRegenerateDimensions) {}
+        :RS_ActionInterface("Regen Dims", actionContext, RS2::ActionDimRegenerate) {}
 
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);

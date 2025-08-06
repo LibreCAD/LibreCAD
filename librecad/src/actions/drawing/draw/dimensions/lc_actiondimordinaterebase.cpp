@@ -30,7 +30,7 @@
 class LC_DimOrdinate;
 
 LC_ActionDimOrdinateRebase::LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext):LC_ActionPreSelectionAwareBase("DimOrdinateRebase",
-                                                                                                                       actionContext, RS2::ActionDimOrdinateRebase) {
+                                                                                                                       actionContext, RS2::ActionDimOrdRebase) {
 }
 
 

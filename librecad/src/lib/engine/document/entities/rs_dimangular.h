@@ -122,6 +122,7 @@ public:
     RS_DimAngular(RS_EntityContainer* parent,
                   const RS_DimensionData& d,
                   const RS_DimAngularData& ed);
+        RS_DimAngular(const RS_DimAngular& other);
 
     RS_Entity* clone() const override;
 

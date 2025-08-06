@@ -73,7 +73,7 @@ LC_DlgDimStyleManager::LC_DlgDimStyleManager(QWidget* parent, LC_DimStyle* dimSt
                                              RS_Dimension* entity, const QString& baseStyleName)
     : LC_Dialog(parent, "DimStyleManager")
       , ui(new Ui::LC_DlgDimStyleManager), m_originalGraphic{originalGraphic}, m_editMode{OVERRIDE_EDITING},
-      m_baseStyleName{baseStyleName} {
+      m_baseStyleName{baseStyleName}{
     ui->setupUi(this);
     initBlocksList();
     init(entity->rtti());
@@ -306,12 +306,12 @@ void LC_DlgDimStyleManager::onDimLineBaselineSpacingChanged(double d) {
 }
 
 void LC_DlgDimStyleManager::onDimLineSuppress1Toggled(bool val) {
-    m_dimStyle->dimensionLine()->setFirstLineSuppression(val? LC_DimStyle::DimensionLine::SUPPRESS : LC_DimStyle::DimensionLine::DONT_SUPPRESS);
+    m_dimStyle->dimensionLine()->setSuppressFirstLine(val? LC_DimStyle::DimensionLine::SUPPRESS : LC_DimStyle::DimensionLine::DONT_SUPPRESS);
     refreshPreview();
 }
 
 void LC_DlgDimStyleManager::onDimLineSuppress2Toggled(bool val) {
-    m_dimStyle->dimensionLine()->setSecondLineSuppression(val? LC_DimStyle::DimensionLine::SUPPRESS : LC_DimStyle::DimensionLine::DONT_SUPPRESS);
+    m_dimStyle->dimensionLine()->setSuppressSecondLine(val? LC_DimStyle::DimensionLine::SUPPRESS : LC_DimStyle::DimensionLine::DONT_SUPPRESS);
     refreshPreview();
 }
 
@@ -358,12 +358,12 @@ void LC_DlgDimStyleManager::onExtLineFixedLengthChanged(double d) {
 }
 
 void LC_DlgDimStyleManager::onExtLineSuppress1Toggled(bool val) {
-    m_dimStyle->extensionLine()->setSuppressionFirst(val? LC_DimStyle::ExtensionLine::SUPPRESS : LC_DimStyle::ExtensionLine::DONT_SUPPRESS);
+    m_dimStyle->extensionLine()->setSuppressFirst(val? LC_DimStyle::ExtensionLine::SUPPRESS : LC_DimStyle::ExtensionLine::DONT_SUPPRESS);
     refreshPreview();
 }
 
 void LC_DlgDimStyleManager::onExtLineSuppress2Toggled(bool val) {
-    m_dimStyle->extensionLine()->setSuppressionSecond(val? LC_DimStyle::ExtensionLine::SUPPRESS : LC_DimStyle::ExtensionLine::DONT_SUPPRESS);
+    m_dimStyle->extensionLine()->setSuppressSecond(val? LC_DimStyle::ExtensionLine::SUPPRESS : LC_DimStyle::ExtensionLine::DONT_SUPPRESS);
     refreshPreview();
 }
 
@@ -1140,8 +1140,8 @@ void LC_DlgDimStyleManager::fillLinesTab(LC_DimStyle* dimStyle, const LC_DimStyl
     ui->dsbDimLineExtendBeyond->setValue(dimLine->distanceBeyondExtLinesForObliqueStroke());
     ui->dsbBaselineSpacing->setValue(dimLine->baseLineDimLinesSpacing());
 
-    ui->cbDimLineSuppress1->setChecked(dimLine->firstLineSuppression() == LC_DimStyle::DimensionLine::SUPPRESS);
-    ui->cbDimLineSuppress2->setChecked(dimLine->secondLineSuppression() == LC_DimStyle::DimensionLine::SUPPRESS);
+    ui->cbDimLineSuppress1->setChecked(dimLine->suppressFirstLine() == LC_DimStyle::DimensionLine::SUPPRESS);
+    ui->cbDimLineSuppress2->setChecked(dimLine->suppressSecondLine() == LC_DimStyle::DimensionLine::SUPPRESS);
 
     auto extLine = dimStyle->extensionLine();
 
@@ -1159,8 +1159,8 @@ void LC_DlgDimStyleManager::fillLinesTab(LC_DimStyle* dimStyle, const LC_DimStyl
 
     ui->bsbExtLineFixedLength->setValue(extLine->fixedLength());
 
-    ui->cbExtLineSuppress1->setChecked(extLine->firstLineSuppression() == LC_DimStyle::ExtensionLine::SUPPRESS);
-    ui->cbExtLineSuppress2->setChecked(extLine->secondLineSuppression() == LC_DimStyle::ExtensionLine::SUPPRESS);
+    ui->cbExtLineSuppress1->setChecked(extLine->suppressFirstLine() == LC_DimStyle::ExtensionLine::SUPPRESS);
+    ui->cbExtLineSuppress2->setChecked(extLine->suppressSecondLine() == LC_DimStyle::ExtensionLine::SUPPRESS);
 }
 
 void LC_DlgDimStyleManager::setDimGap(LC_DimStyle::DimensionLine* dimLine, double lineGap) {
@@ -1894,7 +1894,7 @@ void LC_DlgDimStyleManager::refreshPreview() const {
     if (m_editMode == OVERRIDE_EDITING) {
         m_previewView->setEntityDimStyle(m_dimStyle, true, m_baseStyleName);
     }
-        m_previewView->updateDims();
+    m_previewView->updateDims();
 }
 
 void LC_DlgDimStyleManager::resizeEvent(QResizeEvent* resize_event) {

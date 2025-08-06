@@ -54,6 +54,7 @@ public:
 
     RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     RS_EntityContainer(const RS_EntityContainer& other);
+    RS_EntityContainer(const RS_EntityContainer& other, bool copyChildren);
     RS_EntityContainer& operator = (const RS_EntityContainer& other);
     RS_EntityContainer(RS_EntityContainer&& other);
     RS_EntityContainer& operator = (RS_EntityContainer&& other);
@@ -258,12 +259,10 @@ public:
     void push_back(RS_Entity* entity) {
         m_entities.push_back(entity);
     }
-    void pop_back()
-    {
+    void pop_back() {
         if (!isEmpty())
             m_entities.pop_back();
     }
-
 /**
  * @brief begin/end to support range based loop
  * @return iterator
@@ -282,13 +281,9 @@ public:
 //! \}
 
     const QList<RS_Entity*>& getEntityList();
-
     inline RS_Entity* unsafeEntityAt(int index) const {return m_entities.at(index);}
-
     void drawAsChild(RS_Painter *painter) override;
-
     RS_Entity *cloneProxy() const override;
-
 protected:
     /**
      * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
@@ -298,11 +293,8 @@ protected:
      */
     virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
-
     /** sub container used only temporarily for iteration. */
     mutable RS_EntityContainer* subContainer = nullptr;
-
-
 private:
 /**
  * @brief ignoredSnap whether snapping is ignored
@@ -319,8 +311,6 @@ private:
     bool m_autoUpdateBorders = true;
     mutable int entIdx = 0;
     bool autoDelete = false;
-
-
 };
 
 #endif

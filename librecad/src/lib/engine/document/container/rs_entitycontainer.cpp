@@ -103,7 +103,7 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other):
     , m_autoUpdateBorders{other.m_autoUpdateBorders}
     , entIdx{other.entIdx}
     , autoDelete{other.autoDelete}{
-    if (autoDelete) {
+    if (autoDelete) { // fixme - sand - check this logic, looks suspicious!
         for(auto it = begin(); it != end(); ++it) {
             if ((*it)->isContainer()) {
                 *it = (*it)->clone();
@@ -111,6 +111,26 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other):
         }
     }
 }
+
+RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other, bool copyChildren) :
+    RS_Entity{other}{
+    subContainer = nullptr;
+    m_autoUpdateBorders = other.m_autoUpdateBorders;
+    entIdx = other.entIdx;
+    autoDelete = other.autoDelete;
+    if (copyChildren) {
+        m_entities = other.m_entities;
+        if (autoDelete) {  // fixme - sand - check this logic, looks suspicious!
+            for(auto it = begin(); it != end(); ++it) {
+                if ((*it)->isContainer()) {
+                    *it = (*it)->clone();
+                }
+            }
+        }
+    }
+}
+
+
 
 RS_EntityContainer& RS_EntityContainer::operator = (const RS_EntityContainer& other){
     this->RS_Entity::operator = (other);

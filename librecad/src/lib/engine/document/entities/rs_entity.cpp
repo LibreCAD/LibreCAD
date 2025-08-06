@@ -77,6 +77,12 @@ RS_Entity::RS_Entity(RS_EntityContainer *parent)
     init(true);
 }
 
+// RS_Entity::RS_Entity(RS_EntityContainer *parent, bool setPenToActive)
+//     : parent{parent}
+// , m_pImpl{std::make_unique<Impl>()}{
+//     init(setPenToActive);
+// }
+
 RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
     , minV {other.minV}

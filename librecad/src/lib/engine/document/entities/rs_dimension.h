@@ -46,6 +46,7 @@ struct RS_DimensionData : public RS_Flags {
 	 * Default constructor
      */
 	RS_DimensionData();
+    RS_DimensionData(const RS_DimensionData& other);
 
     /**
      * Constructor with initialisation.
@@ -74,7 +75,9 @@ struct RS_DimensionData : public RS_Flags {
                      double angle,
                      double hdir,
                      bool autoTextLocation,
-                     LC_DimStyle* dimStyleOverride);
+                     LC_DimStyle* dimStyleOverride,
+                     bool flipArr1,
+                     bool flipArr2);
 
     /** Definition point */
     RS_Vector definitionPoint;
@@ -102,10 +105,11 @@ struct RS_DimensionData : public RS_Flags {
      * direction of horizontal coordinate axis
      */
     double horizontalAxisDirection = 0.0;
-
     bool autoText = true;
+    std::unique_ptr<LC_DimStyle> m_dimStyleOverride;
 
-    LC_DimStyle* m_dimStyleOverride = nullptr;
+    bool flipArrow1{false};
+    bool flipArrow2{false};
 };
 
 std::ostream& operator << (std::ostream& os,
@@ -119,6 +123,7 @@ std::ostream& operator << (std::ostream& os,
 class RS_Dimension : public RS_EntityContainer {
 public:
     RS_Dimension(RS_EntityContainer* parent,const RS_DimensionData& d);
+    RS_Dimension(const RS_Dimension& entity);
 
     RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
     RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
@@ -158,6 +163,9 @@ public:
     void setHDir(double hdir) {m_dimGenericData.horizontalAxisDirection = hdir;}
     void setDefinitionPoint(RS_Vector defPoint) {m_dimGenericData.definitionPoint = defPoint;}
     void setStyle(const QString& style){m_dimGenericData.style = style;}
+    bool isFlipArrow1() const {return m_dimGenericData.flipArrow1;}
+    bool isFlipArrow2() const {return m_dimGenericData.flipArrow2;}
+
 
     double getGeneralFactor();
     double getGeneralScale();
@@ -196,13 +204,17 @@ public:
     RS_Entity& shear([[maybe_unused]] double k) override { return *this; } // TODO
 
     LC_DimStyle* getDimStyleOverride() const {
-        return m_dimGenericData.m_dimStyleOverride;
+        return m_dimGenericData.m_dimStyleOverride.get();
     }
 
     void setDimStyleOverride(LC_DimStyle* dimStyleOverride) {
-        m_dimGenericData.m_dimStyleOverride = dimStyleOverride;
+        if (dimStyleOverride == nullptr) {
+            m_dimGenericData.m_dimStyleOverride.reset(nullptr);
+        }
+        else {
+            m_dimGenericData.m_dimStyleOverride.reset(dimStyleOverride->getCopy());
+        }
     }
-
 
 private:
     static RS_VectorSolutions getIntersectionsLineContainer(const RS_Line* l, const RS_EntityContainer* c,

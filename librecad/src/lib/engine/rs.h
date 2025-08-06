@@ -371,6 +371,8 @@ namespace RS2 {
         ActionDimBaseline,
         ActionDimContinue,
         ActionDimOrdinate,
+        ActionDimStyleApply,
+        ActionDimModify,
 
         ActionModifyAttributes,
         ActionModifyDelete,
@@ -475,7 +477,7 @@ namespace RS2 {
         ActionOptionsDrawingGrid,
         ActionOptionsDrawingUnits,
 
-        ActionToolRegenerateDimensions,
+        ActionDimRegenerate,
 
         ActionScriptOpenIDE,
         ActionScriptRun,
@@ -489,9 +491,9 @@ namespace RS2 {
 
         ActionUCSCreate,
         ActionUCSSetByDimOrdinate,
-        ActionDimOrdinateSelectSameOrigin,
-        ActionDimOrdinateRebase,
-        ActionGTDFeatureControlFrame,
+        ActionDimOrdByOriginSelect,
+        ActionDimOrdRebase,
+        ActionGTDFCFrame,
         /** Needed to loop through all actions */
         ActionLast
     };

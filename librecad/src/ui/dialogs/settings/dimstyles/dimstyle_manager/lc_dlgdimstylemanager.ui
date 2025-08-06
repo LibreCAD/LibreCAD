@@ -14,6 +14,16 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="minimumSize">
@@ -45,33 +55,6 @@
           <string>Dimension Lines</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Color:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QG_ColorBox" name="cbDimLineColor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Displays and sets the color for the dimension line (DIMCLRD system variable).</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Linetype:</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QG_LineTypeBox" name="cbDimLineLineType" native="true">
             <property name="sizePolicy">
@@ -85,30 +68,24 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Linetype:</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Linewidth:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QG_WidthBox" name="cbDimLineWidth">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Sets the lineweight of the dimension line. (DIMLWD system variable)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Extend beyond</string>
             </property>
            </widget>
           </item>
@@ -128,10 +105,36 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_5">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Baseline spacing:</string>
+             <string>Extend beyond</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QG_ColorBox" name="cbDimLineColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Displays and sets the color for the dimension line (DIMCLRD system variable).</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QG_WidthBox" name="cbDimLineWidth">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Sets the lineweight of the dimension line. (DIMLWD system variable)</string>
             </property>
            </widget>
           </item>
@@ -153,19 +156,10 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbDimLineSuppress1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Suppresses display of first dimension line (DIMSD1 system variable)</string>
-            </property>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>Suppress Dim line 1 and arrow</string>
+             <string>Baseline spacing:</string>
             </property>
            </widget>
           </item>
@@ -185,6 +179,22 @@
             </property>
            </widget>
           </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbDimLineSuppress1">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Suppresses display of first dimension line (DIMSD1 system variable)</string>
+            </property>
+            <property name="text">
+             <string>Suppress Dim line 1 and arrow</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -194,13 +204,6 @@
           <string>Extension Lines</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Color:</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QG_ColorBox" name="cbExtLineColor">
             <property name="sizePolicy">
@@ -214,50 +217,10 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_8">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>Linetype ext line 1:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QG_LineTypeBox" name="cbExtLineType1" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Linetype ext line 2:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QG_LineTypeBox" name="cbExtLineType2" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Lineweight:</string>
+             <string>Length:</string>
             </property>
            </widget>
           </item>
@@ -274,10 +237,39 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_12">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>Extend beyond dim lines:</string>
+             <string>Color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbExtLineSuppress1">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Suppresses the display of first extension line (DIMSE1 system variable).</string>
+            </property>
+            <property name="text">
+             <string>Suppress Ext line 1</string>
             </property>
            </widget>
           </item>
@@ -297,15 +289,28 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_13">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Offset from origin:</string>
+             <string>Linetype ext line 1:</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QDoubleSpinBox" name="dsbExtLineOffsetFromOrigin">
+          <item row="2" column="1">
+           <widget class="QG_LineTypeBox" name="cbExtLineType2" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbExtLineSuppress2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -313,17 +318,61 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</string>
+             <string>Suppresses the display of second extension line (DIMSE2 system variable).</string>
             </property>
-            <property name="singleStep">
-             <double>0.100000000000000</double>
+            <property name="text">
+             <string>Suppress Ext line 2</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_14">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Length:</string>
+             <string>Lineweight:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Linetype ext line 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbExtLineFixedLengthOn">
+            <property name="toolTip">
+             <string>Enables fixed length extension lines. (DIMFXLON system variable)</string>
+            </property>
+            <property name="text">
+             <string>Fixed length extension lines</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QG_LineTypeBox" name="cbExtLineType1" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Extend beyond dim lines:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Offset from origin:</string>
             </property>
            </widget>
           </item>
@@ -343,31 +392,8 @@
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbExtLineFixedLengthOn">
-            <property name="toolTip">
-             <string>Enables fixed length extension lines. (DIMFXLON system variable)</string>
-            </property>
-            <property name="text">
-             <string>Fixed length extension lines</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbExtLineSuppress1">
+          <item row="5" column="1">
+           <widget class="QDoubleSpinBox" name="dsbExtLineOffsetFromOrigin">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -375,26 +401,10 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Suppresses the display of first extension line (DIMSE1 system variable).</string>
+             <string>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</string>
             </property>
-            <property name="text">
-             <string>Suppress Ext line 1</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbExtLineSuppress2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Suppresses the display of second extension line (DIMSE2 system variable).</string>
-            </property>
-            <property name="text">
-             <string>Suppress Ext line 2</string>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -495,23 +505,6 @@
           <string>Arrowheads</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="6" column="1">
-           <widget class="QDoubleSpinBox" name="dsbArrowheadArrowSize">
-            <property name="toolTip">
-             <string>Displays and sets the size of arrowheads. (DIMASZ system variable)</string>
-            </property>
-            <property name="singleStep">
-             <double>0.100000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="cbArrowheadLeader">
-            <property name="toolTip">
-             <string>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_17">
             <property name="text">
@@ -526,17 +519,24 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="cbArrowheadSecond">
-            <property name="toolTip">
-             <string>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</string>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lblArrowheadFirst">
+            <property name="text">
+             <string>First:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbArrowheadTheSame">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_33">
             <property name="text">
-             <string>Use the same arrowhead for dimension line</string>
+             <string>Tick Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="cbArrowheadLeader">
+            <property name="toolTip">
+             <string>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</string>
             </property>
            </widget>
           </item>
@@ -547,10 +547,13 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lblArrowheadFirst">
-            <property name="text">
-             <string>First:</string>
+          <item row="6" column="1">
+           <widget class="QDoubleSpinBox" name="dsbArrowheadArrowSize">
+            <property name="toolTip">
+             <string>Displays and sets the size of arrowheads. (DIMASZ system variable)</string>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
             </property>
            </widget>
           </item>
@@ -561,10 +564,10 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_33">
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbArrowheadTheSame">
             <property name="text">
-             <string>Tick Size:</string>
+             <string>Use the same arrowhead for dimension line</string>
             </property>
            </widget>
           </item>
@@ -576,6 +579,13 @@
             </property>
             <property name="singleStep">
              <double>0.100000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="cbArrowheadSecond">
+            <property name="toolTip">
+             <string>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</string>
             </property>
            </widget>
           </item>
@@ -2298,16 +2308,6 @@
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
     </widget>
    </item>
   </layout>

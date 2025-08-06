@@ -29,21 +29,10 @@
 #include <QRegularExpression>
 
 #include "lc_align.h"
-#include "lc_arrow_box.h"
-#include "lc_arrow_circle.h"
-#include "lc_arrow_datum.h"
-#include "lc_arrow_dot.h"
-#include "lc_arrow_headclosed.h"
-#include "lc_arrow_headclosed_blank.h"
-#include "lc_arrow_headopen.h"
-#include "lc_arrow_integral.h"
-#include "lc_arrow_none.h"
-#include "lc_arrow_tick.h"
-#include "../dimstyles/lc_dimarrowregistry.h"
+#include "lc_dimarrowregistry.h"
 #include "lc_linemath.h"
 #include "muParser.h"
 #include "rs_arc.h"
-#include "rs_block.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
@@ -51,7 +40,6 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
-#include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_solid.h"
 #include "rs_units.h"
@@ -118,6 +106,26 @@ namespace
     }
 }
 
+RS_DimensionData::RS_DimensionData(const RS_DimensionData& other):
+   definitionPoint(other.definitionPoint),
+   middleOfText(other.middleOfText),
+   valign(other.valign),
+   halign(other.halign),
+   lineSpacingStyle(other.lineSpacingStyle),
+   lineSpacingFactor(other.lineSpacingFactor),
+   text(other.text),
+   style(other.style),
+   angle(other.angle),
+   horizontalAxisDirection(other.horizontalAxisDirection),
+   autoText{other.autoText}{
+    if (other.m_dimStyleOverride != nullptr) {
+        m_dimStyleOverride.reset(other.m_dimStyleOverride->getCopy());
+    }
+    else {
+        m_dimStyleOverride.reset();
+    }
+}
+
 RS_DimensionData::RS_DimensionData():
     definitionPoint(false),
     middleOfText(false),
@@ -129,8 +137,8 @@ RS_DimensionData::RS_DimensionData():
     style(""),
     angle(0.0),
     horizontalAxisDirection(0.0),
-    autoText{true},
-    m_dimStyleOverride{nullptr}{
+    autoText{true}{
+    m_dimStyleOverride.reset();
 }
 
 /**
@@ -160,7 +168,8 @@ RS_DimensionData::RS_DimensionData(const RS_Vector& _definitionPoint,
                                    double _angle,
                                    double hdir,
                                    bool autoTextLocation,
-                                   LC_DimStyle* dimStyleOverride):
+                                   LC_DimStyle* dimStyleOverride,
+                                   bool flp1, bool flp2):
     definitionPoint(_definitionPoint)
     , middleOfText(_middleOfText)
     , valign(_valign)
@@ -171,8 +180,10 @@ RS_DimensionData::RS_DimensionData(const RS_Vector& _definitionPoint,
     , style(_style)
     , angle(_angle)
     , horizontalAxisDirection(hdir)
-    , autoText{autoTextLocation},
-     m_dimStyleOverride{dimStyleOverride}{
+    , autoText{autoTextLocation}
+    ,flipArrow1{flp1}
+    ,flipArrow2{flp2}{
+    m_dimStyleOverride.reset(dimStyleOverride);
 }
 
 std::ostream& operator <<(std::ostream& os,
@@ -197,6 +208,11 @@ std::ostream& operator <<(std::ostream& os,
 RS_Dimension::RS_Dimension(RS_EntityContainer* parent, const RS_DimensionData& d)
     : RS_EntityContainer(parent)
       , m_dimGenericData(std::move(d)) {
+}
+
+RS_Dimension::RS_Dimension(const RS_Dimension& entity)
+    : RS_EntityContainer(entity, false)
+      , m_dimGenericData(std::move(entity.getData())) {
 }
 
 RS_Vector RS_Dimension::getNearestRef(const RS_Vector& coord, double* dist /*= nullptr*/) const {

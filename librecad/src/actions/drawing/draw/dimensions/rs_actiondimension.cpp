@@ -52,13 +52,9 @@ void RS_ActionDimension::reset(){
                                                          RS_MTextData::VAMiddle,
                                                          RS_MTextData::HACenter,
                                                          RS_MTextData::Exact,
-                                                         1.0,
-                                                         "",
-                                                         dimStyleName,
-                                                         0.0,
-                                                         0.0,
-                                                         true,
-                                                         nullptr);
+                                                         1.0,"",dimStyleName,0.0,0.0,
+                                                         true,nullptr,false,
+                                                         false);
     setDimStyleName(dimStyleName);
     m_diameter = false;
 }

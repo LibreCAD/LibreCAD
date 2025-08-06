@@ -344,10 +344,12 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimBaseline",       RS2::ActionDimBaseline,  tr("&Baseline"),   ":/icons/dim_baseline.lci"},
         {"DimContinue",       RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"},
         {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
-        {"DimOrdinateForBase",RS2::ActionDimOrdinateSelectSameOrigin,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
-        {"DimOrdinateReBase", RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
-        {"GTDFeatureFrame",   RS2::ActionGTDFeatureControlFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"},
-        {"DimRegenerate",    RS2::ActionToolRegenerateDimensions,   tr("Regenerate Dimensions"),  ":/icons/dim_regenerate.lci"}
+        {"DimOrdinateForBase",RS2::ActionDimOrdByOriginSelect,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
+        {"DimOrdinateReBase", RS2::ActionDimOrdRebase, tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
+        {"GTDFeatureFrame",   RS2::ActionGTDFCFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"},
+        {"DimPickApply",      RS2::ActionDimStyleApply, tr("Copy Style"),  ":/icons/dim_apply_style.lci"},
+        {"DimModify",         RS2::ActionDimModify,    tr("Modify Style"),  ":/icons/dim_modify_style.lci"},
+        {"DimRegenerate",     RS2::ActionDimRegenerate,tr("Regenerate Dimensions"),  ":/icons/dim_regenerate.lci"}
     });
 }
 
@@ -936,6 +938,8 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimOrdinateForBase",
                         "DimOrdinateReBase",
                         "GTDFeatureFrame",
+                        "DimModify",
+                        "DimPickApply",
                         "DimRegenerate"
                     }, map);
 

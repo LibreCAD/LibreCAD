@@ -52,6 +52,7 @@ class LC_Quadratic;
 class RS_Entity:public RS_Undoable, public LC_Drawable {
 public:
     RS_Entity(RS_EntityContainer *parent = nullptr);
+    // RS_Entity(RS_EntityContainer *parent, bool setPenToActive = false);
     RS_Entity(const RS_Entity& entity);
     RS_Entity& operator = (const RS_Entity& entity);
     RS_Entity(RS_Entity&& entity);

@@ -24,7 +24,7 @@
 #ifndef LC_DIMENSIONSBUILDER_H
 #define LC_DIMENSIONSBUILDER_H
 
-#include "../lc_dimarrowregistry.h"
+#include "lc_dimarrowregistry.h"
 
 class RS_Pen;
 class RS_Line;

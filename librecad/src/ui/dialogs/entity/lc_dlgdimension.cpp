@@ -86,8 +86,7 @@ void LC_DlgDimension::saveDimensionStyles() {
     auto entityStyleItem = model->getEntityStyleItem();
     if (entityStyleItem->isOverrideItem()) {
         // handle style override. Make a copy of style to simplify deletion of model.
-        auto dimStyleOverrideCopy = entityStyleItem->dimStyle()->getCopy();
-        m_entity->setDimStyleOverride(dimStyleOverrideCopy);
+        m_entity->setDimStyleOverride(entityStyleItem->dimStyle());
         auto parentItem = entityStyleItem->parentItem();
         auto parentStyle = parentItem->dimStyle();
         QString styleName = parentStyle->getName();

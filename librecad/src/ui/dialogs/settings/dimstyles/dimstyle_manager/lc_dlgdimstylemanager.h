@@ -26,7 +26,7 @@
 
 
 #include "lc_dialog.h"
-#include "../../../../../lib/engine/document/dimstyles/lc_dimarrowregistry.h"
+#include "lc_dimarrowregistry.h"
 #include "lc_dimstyle.h"
 
 class LC_DimStylePreviewGraphicView;

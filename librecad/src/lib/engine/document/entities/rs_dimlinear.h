@@ -38,6 +38,7 @@ struct RS_DimLinearData {
 	 * Default constructor
      */
 	RS_DimLinearData();
+    RS_DimLinearData(const RS_DimLinearData& other);
 
     /**
      * Constructor with initialisation.
@@ -73,10 +74,8 @@ std::ostream& operator << (std::ostream& os,
  */
 class RS_DimLinear:public RS_Dimension {
 public:
-    RS_DimLinear(
-        RS_EntityContainer *parent,
-        const RS_DimensionData &d,
-        const RS_DimLinearData &ed);
+    RS_DimLinear(RS_EntityContainer *parent,const RS_DimensionData &d, const RS_DimLinearData &ed);
+    RS_DimLinear(const RS_DimLinear& entity);
     ~RS_DimLinear() override = default;
     RS_Entity *clone() const override;
 

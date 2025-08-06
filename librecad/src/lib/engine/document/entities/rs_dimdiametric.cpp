@@ -37,6 +37,10 @@ RS_DimDiametricData::RS_DimDiametricData():
 	leader(0.0) {
 }
 
+RS_DimDiametricData::RS_DimDiametricData(const RS_DimDiametricData& other) :
+    definitionPoint{other.definitionPoint}, leader{other.leader} {
+}
+
 /**
  * Constructor with initialisation.
  *
@@ -68,10 +72,12 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
         : RS_Dimension(parent, d), m_dimDiametricData(ed) {
 }
 
+RS_DimDiametric::RS_DimDiametric(const RS_DimDiametric& other)
+    : RS_Dimension(other), m_dimDiametricData(other.m_dimDiametricData) {
+}
+
 RS_Entity* RS_DimDiametric::clone() const {
-    auto* d = new RS_DimDiametric(getParent(), getData(), getEData());
-	d->setOwner(isOwner());
-	d->detach();
+    auto* d = new RS_DimDiametric(*this);
 	return d;
 }
 

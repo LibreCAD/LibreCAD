@@ -502,10 +502,10 @@ void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionL
         s->setLineWidthRaw(vd->getInt("$DIMLWE", -2));
     }
     if (vd->has("$DIMSE1")) {
-        s->setSuppressionFirstRaw(vd->getInt("$DIMSE1", 0));
+        s->setSuppressFirstRaw(vd->getInt("$DIMSE1", 0));
     }
     if (vd->has("$DIMSE2")) {
-        s->setSuppressionFirstRaw(vd->getInt("$DIMSE2", 0));
+        s->setSuppressFirstRaw(vd->getInt("$DIMSE2", 0));
     }
     if (vd->has("$DIMFXL")) {
         // Sets the total length of the extension lines starting from the dimension line toward the dimension origin.
@@ -544,10 +544,10 @@ void LC_DimStyleToVariablesMapper::extensionLine2Vars(LC_DimStyle::ExtensionLine
         vd->add("$DIMLWE", RS2::lineWidth2dxfInt(s->lineWidth()), 70);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
-        vd->add("$DIMSE1", s->firstLineSuppression(), 70);
+        vd->add("$DIMSE1", s->suppressFirstLine(), 70);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE2)) {
-        vd->add("$DIMSE2", s->secondLineSuppression(), 70);
+        vd->add("$DIMSE2", s->suppressSecondLine(), 70);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMFXL)) {
         // not present in headers
@@ -587,10 +587,10 @@ void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s
         s->setLineWidthRaw(vd->getInt("$DIMLWD", -2));
     }
     if (vd->has("$DIMSD1")) {
-        s->setFirstLineSuppressionRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
+        s->setSuppressFirstLineRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
     }
     if (vd->has("$DIMSD1")) {
-        s->setSecondLineSuppressionRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
+        s->setSuppressSecondLineRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
     }
 }
 
@@ -616,10 +616,10 @@ void LC_DimStyleToVariablesMapper::dimLine2Vars(LC_DimStyle::DimensionLine* s, R
         vd->add("$DIMLWD", RS2::lineWidth2dxfInt(s->lineWidth()), 70);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
-        vd->add("$DIMSD1", s->firstLineSuppression(), 70);
+        vd->add("$DIMSD1", s->suppressFirstLine(), 70);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD2)) {
-        vd->add("$DIMSD2", s->secondLineSuppression(), 70);
+        vd->add("$DIMSD2", s->suppressSecondLine(), 70);
     }
 }
 

@@ -308,6 +308,8 @@ class LC_DimStyle{
             $DIMSD1 = 1 << 6,
             $DIMSD2 = 1 << 7,
             $DIMTOFL = 1 << 8,
+            $OVER_DIMFLP1 = 1 << 9,
+            $OVER_DIMFLP2 = 1 << 10
         };
 
         enum DimLineAndArrowSuppressionPolicy {
@@ -322,6 +324,7 @@ class LC_DimStyle{
                                                       // when arrowheads are placed outside  the measured points
         };
 
+
         DimensionLine() = default;
 
         RS_Color color() const {return DIMCLRD;}
@@ -329,8 +332,8 @@ class LC_DimStyle{
         RS2::LineWidth lineWidth() const {return DIMLWD;}
         double distanceBeyondExtLinesForObliqueStroke() const {return DIMDLE;}
         double baseLineDimLinesSpacing() const {return DIMDLI;}
-        DimLineAndArrowSuppressionPolicy firstLineSuppression() const {return DIMSD1;}
-        DimLineAndArrowSuppressionPolicy secondLineSuppression() const {return DIMSD2;}
+        DimLineAndArrowSuppressionPolicy suppressFirstLine() const {return DIMSD1;}
+        DimLineAndArrowSuppressionPolicy suppressSecondLine() const {return DIMSD2;}
         DrawPolicyForOutsideText drawPolicyForOutsideText() const {return DIMTOFL;}
         const QString& lineTypeName() const {return DIMLTYPE;}
         RS2::LineType lineType() const {return DIMLTYPE_LineType;}
@@ -340,16 +343,16 @@ class LC_DimStyle{
         void setLineWidth(RS2::LineWidth dimlwd);
         void setDistanceBeyondExtLinesForObliqueStroke(double dimdle);
         void setBaselineDimLinesSpacing(double dimdli);
-        void setFirstLineSuppression(DimLineAndArrowSuppressionPolicy dimsd1);
-        void setSecondLineSuppression(DimLineAndArrowSuppressionPolicy dimsd2);
+        void setSuppressFirstLine(DimLineAndArrowSuppressionPolicy dimsd1);
+        void setSuppressSecondLine(DimLineAndArrowSuppressionPolicy dimsd2);
         void setDrawPolicyForOutsideText(DrawPolicyForOutsideText dimtofl);
         void setLineType(QString dimltype);
         void fillByDefaults();
         void merge(const DimensionLine* parent);
         void setLineWidthRaw(int dimlwd);
         void setDrawPolicyForOutsideTextRaw(int dimtofl);
-        void setSecondLineSuppressionRaw(int dimsd2);
-        void setFirstLineSuppressionRaw(int dimsd1);
+        void setSuppressSecondLineRaw(int dimsd2);
+        void setSuppressFirstLineRaw(int dimsd1);
         void copyTo(DimensionLine* dimension_line);
     private:
         /** Assigns colors to dimension lines, arrowheads, and dimension leader lines.
@@ -459,8 +462,8 @@ class LC_DimStyle{
         double fixedLength() const {return DIMFXL;}
         RS2::LineWidth lineWidth() const {return DIMLWE;}
         bool hasFixedLength() const {return DIMFXLON;}
-        ExtensionLineAndArrowSuppressionPolicy firstLineSuppression() const{return DIMSE1;}
-        ExtensionLineAndArrowSuppressionPolicy secondLineSuppression() const{return DIMSE2;}
+        ExtensionLineAndArrowSuppressionPolicy suppressFirstLine() const{return DIMSE1;}
+        ExtensionLineAndArrowSuppressionPolicy suppressSecondLine() const{return DIMSE2;}
 
         QString lineTypeFirstRaw() const {return DIMLTEX1;}
         QString lineTypeSecondRaw() const {return DIMLTEX2;}
@@ -478,10 +481,10 @@ class LC_DimStyle{
         void setLineTypeSecond(const QString& dimltex2);
         void setLineTypeFirst(RS2::LineType lineType);
         void setLineTypeSecond(RS2::LineType lineType);
-        void setSuppressionFirst(ExtensionLineAndArrowSuppressionPolicy dimse1);
-        void setSuppressionSecond(ExtensionLineAndArrowSuppressionPolicy dimses);
-        void setSuppressionFirstRaw(int dimse1);
-        void setSuppressionSecondRaw(int dimse2);
+        void setSuppressFirst(ExtensionLineAndArrowSuppressionPolicy dimse1);
+        void setSuppressSecond(ExtensionLineAndArrowSuppressionPolicy dimses);
+        void setSuppressFirstRaw(int dimse1);
+        void setSuppressSecondRaw(int dimse2);
         void fillByDefaults();
         void merge(const ExtensionLine* parent);
         void copyTo(ExtensionLine* extension_line);

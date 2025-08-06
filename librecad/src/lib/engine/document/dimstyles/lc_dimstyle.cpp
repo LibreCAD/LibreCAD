@@ -335,6 +335,7 @@ void LC_DimStyle::DimensionLine::merge(const DimensionLine* parent) {
     }
 }
 
+
 void LC_DimStyle::DimensionLine::setLineGap(double dimgap) {
     checkModified(dimgap, DIMGAP, $DIMGAP);
     DIMGAP = dimgap;
@@ -360,12 +361,12 @@ void LC_DimStyle::DimensionLine::setBaselineDimLinesSpacing(double dimdli) {
     DIMDLI = dimdli;
 }
 
-void LC_DimStyle::DimensionLine::setFirstLineSuppression(DimLineAndArrowSuppressionPolicy dimsd1) {
+void LC_DimStyle::DimensionLine::setSuppressFirstLine(DimLineAndArrowSuppressionPolicy dimsd1) {
     checkModified(dimsd1, DIMSD1, $DIMSD1);
     DIMSD1 = dimsd1;
 }
 
-void LC_DimStyle::DimensionLine::setSecondLineSuppression(DimLineAndArrowSuppressionPolicy dimsd2) {
+void LC_DimStyle::DimensionLine::setSuppressSecondLine(DimLineAndArrowSuppressionPolicy dimsd2) {
     checkModified(dimsd2, DIMSD2, $DIMSD2);
     DIMSD2 = dimsd2;
 }
@@ -510,12 +511,12 @@ void LC_DimStyle::ExtensionLine::setLineTypeSecond(RS2::LineType lineType) {
     DIMLTEX2 = RS_FilterDXFRW::lineTypeToName(lineType);
 }
 
-void LC_DimStyle::ExtensionLine::setSuppressionFirst(ExtensionLineAndArrowSuppressionPolicy dimse1) {
+void LC_DimStyle::ExtensionLine::setSuppressFirst(ExtensionLineAndArrowSuppressionPolicy dimse1) {
     checkModified(dimse1, DIMSE1, $DIMSE1);
     DIMSE1 = dimse1;
 }
 
-void LC_DimStyle::ExtensionLine::setSuppressionSecond(ExtensionLineAndArrowSuppressionPolicy dimse2) {
+void LC_DimStyle::ExtensionLine::setSuppressSecond(ExtensionLineAndArrowSuppressionPolicy dimse2) {
     checkModified(dimse2, DIMSE2, $DIMSE2);
     DIMSE2 = dimse2;
 }
@@ -1201,14 +1202,14 @@ void LC_DimStyle::ExtensionLine::setLineWidthRaw(int dimlwe) {
     setLineWidth(_dimlwe);
 }
 
-void LC_DimStyle::ExtensionLine::setSuppressionFirstRaw(int dimse1) {
+void LC_DimStyle::ExtensionLine::setSuppressFirstRaw(int dimse1) {
     auto policy = int2SuppressionPolicy(dimse1);
-    setSuppressionFirst(policy);
+    setSuppressFirst(policy);
 }
 
-void LC_DimStyle::ExtensionLine::setSuppressionSecondRaw(int dimse2) {
+void LC_DimStyle::ExtensionLine::setSuppressSecondRaw(int dimse2) {
     auto policy = int2SuppressionPolicy(dimse2);
-    setSuppressionSecond(policy);
+    setSuppressSecond(policy);
 }
 
 LC_DimStyle::ExtensionLine::ExtensionLineAndArrowSuppressionPolicy
@@ -1488,7 +1489,7 @@ void LC_DimStyle::DimensionLine::setDrawPolicyForOutsideTextRaw(int dimtofl) {
     setDrawPolicyForOutsideText(_dimtofl);
 }
 
-void LC_DimStyle::DimensionLine::setSecondLineSuppressionRaw(int dimsd2) {
+void LC_DimStyle::DimensionLine::setSuppressSecondLineRaw(int dimsd2) {
     DimLineAndArrowSuppressionPolicy _dimsd2;
     switch (dimsd2) {
         case 0: {
@@ -1503,10 +1504,10 @@ void LC_DimStyle::DimensionLine::setSecondLineSuppressionRaw(int dimsd2) {
             _dimsd2 = DONT_SUPPRESS;
             break;
     }
-    setSecondLineSuppression(_dimsd2);
+    setSuppressSecondLine(_dimsd2);
 }
 
-void LC_DimStyle::DimensionLine::setFirstLineSuppressionRaw(int dimsd1) {
+void LC_DimStyle::DimensionLine::setSuppressFirstLineRaw(int dimsd1) {
     DimLineAndArrowSuppressionPolicy _dimsd1;
     switch (dimsd1) {
         case 0: {
@@ -1521,7 +1522,7 @@ void LC_DimStyle::DimensionLine::setFirstLineSuppressionRaw(int dimsd1) {
             _dimsd1 = DONT_SUPPRESS;
             break;
     }
-    setFirstLineSuppression(_dimsd1);
+    setSuppressFirstLine(_dimsd1);
 }
 
 void LC_DimStyle::Fractions::setStyleRaw(int dimfrac) {

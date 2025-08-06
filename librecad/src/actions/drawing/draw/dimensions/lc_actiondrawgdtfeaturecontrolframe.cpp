@@ -34,7 +34,7 @@
 
 
 LC_ActionDrawGDTFeatureControlFrame::LC_ActionDrawGDTFeatureControlFrame(LC_ActionContext* actionContext)
-    : RS_PreviewActionInterface("GDTFeatureControlFrame", actionContext, RS2::ActionGTDFeatureControlFrame)
+    : RS_PreviewActionInterface("GDTFeatureControlFrame", actionContext, RS2::ActionGTDFCFrame)
     ,m_actionData{std::make_unique<ActionData>()}{
 }
 
