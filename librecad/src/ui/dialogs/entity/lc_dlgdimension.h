@@ -56,6 +56,8 @@ protected:
     void getOverrideItemIndex(LC_DimStyleTreeModel* model, LC_DimStyleItem* entityStyleItem, QModelIndex& itemIndex);
     void updateActionButtons(LC_DimStyleItem* item);
     void updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimStyleTreeModel* model, bool override, const QString& baseName) const;
+    void updateDimStylePreview(const RS_Pen& pen);
+    void updateDimStylePreview(bool flipArrow1, bool flipArrow2);
     LC_DimStyleTreeModel* getDimStylesModel();
     bool isDimensionTypeMatchedToStyleType(RS2::EntityType styleType, RS2::EntityType dimensionType);
     RS2::EntityType adjustDimentityTypeForStyleName(RS2::EntityType entityType);
@@ -82,6 +84,8 @@ protected slots:
     void onDimStyleSet(bool val);
     void onDimStyleSetDefault(bool val);
     void onDimStyleEntitySelect(bool val);
+    void onPenChanged();
+    void onFlipArrowChanged(bool val);
 private:
     Ui::LC_DlgDimension* ui;
     RS_Dimension* m_entity = nullptr;

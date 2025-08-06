@@ -58,10 +58,8 @@ public:
 
 private slots:
     void slotColorChanged(int index);
-
 signals:
     void colorChanged(const RS_Color& color);
-
 protected:
     std::unique_ptr<RS_Color> m_currentColor;
     int findColor(const RS_Color& color);

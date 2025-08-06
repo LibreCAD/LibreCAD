@@ -1589,6 +1589,13 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writeDoubleOpt(51, ent->getHDir());
         writeCoord(210, ent->getExtrusion());
 
+        if (ent->getFlipArrow1()) {
+            writeBool(74,true);
+        }
+        if (ent->getFlipArrow2()) {
+            writeBool(75,true);
+        }
+
         switch (ent->eType) {
             case DRW::DIMALIGNED:
             case DRW::DIMLINEAR: {

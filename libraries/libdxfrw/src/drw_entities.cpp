@@ -2370,6 +2370,12 @@ bool DRW_Dimension::parseCode(int code, dxfReader *reader){
     case 72:
         linesty = reader->getInt32();
         break;
+    case 74:
+        flipArrow1  = reader->getBool();
+        break;
+    case 75:
+        flipArrow2  = reader->getBool();
+        break;
     case 10:
         defPoint.x = reader->getDouble();
         break;

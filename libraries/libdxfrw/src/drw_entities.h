@@ -1051,10 +1051,12 @@ public:
         circlePoint = d.circlePoint;
         length = d.length;
         hdir = d.hdir;
+        flipArrow1 = d.flipArrow1;
+        flipArrow2 = d.flipArrow2;
     }
     virtual ~DRW_Dimension() {}
 
-     void applyExtrusion() override {}
+    void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
@@ -1086,6 +1088,12 @@ public:
 //    int getType(){ return type;}                      /*!< Dimension type, code 70 */
     double getHDir() const {return hdir;}
     void setHDir(const double h) {hdir = h;}
+
+    void setFlipArrow1(bool v){flipArrow1 = v;}
+    void setFlipArrow2(bool v){flipArrow2 = v;}
+
+    bool getFlipArrow1() const {return flipArrow1;}
+    bool getFlipArrow2() const {return flipArrow2;}
 
 protected:
     DRW_Coord getPt2() const {return clonePoint;}
@@ -1128,6 +1136,9 @@ private:
     DRW_Coord circlePoint;     /*!< Definition point for diameter, radius & angular dims code 15, 25 & 35 (WCS) */
     DRW_Coord arcPoint;        /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 (OCS) */
     double length;             /*!< Leader length, code 40 */
+
+    bool flipArrow1 {false}; // force flip flag for arrow 1. Supported by dim override only, code 74 (if value is 1 - flip, 0 - no)
+    bool flipArrow2 {false}; // force flip flag for arrow 2. Supported by dim override only, code 75 (if value is 1 - flip, 0 - no)
 
 protected:
     dwgHandle dimStyleH;

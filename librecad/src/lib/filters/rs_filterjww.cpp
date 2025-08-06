@@ -730,7 +730,7 @@ RS_DimensionData RS_FilterJWW::convDimensionData(
                                                         valign, halign,
                                                         lss,
                                                         data.lineSpacingFactor,
-                                                        t, sty, data.angle, 0.0, true, nullptr);
+                                                        t, sty, data.angle, 0.0, true, nullptr, false, false);
 }
 
 

@@ -63,14 +63,15 @@ void RS_ActionModifyEntity::doTrigger() {
         unsigned long originalEntityId = m_entity->getId();
 
         m_graphicView->setForcedActionKillAllowed(false);
-        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get(), m_viewport)) {
-            m_container->addEntity(clone.get());
+        auto clonedEntity = clone.get();
+        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clonedEntity, m_viewport)) {
+            m_container->addEntity(clonedEntity);
 
             m_entity->setSelected(false);
             clone->setSelected(false);
 
             if (m_document) {
-                undoCycleReplace(m_entity, clone.get());
+                undoCycleReplace(m_entity, clonedEntity);
             }
 
             unsigned long cloneEntityId = clone->getId();

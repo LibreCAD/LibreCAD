@@ -36,8 +36,10 @@ public:
     void refresh();
     void setDimStyle(LC_DimStyle *dimStyle);
     void setEntityDimStyle(LC_DimStyle* dimStyle, bool override, const QString& baseName);
+    void setEntityPen(const RS_Pen& pen);
     void zoomPan();
     void addDimStyle(LC_DimStyle* dim_style);
+    void setEntityArrowsFlipMode(bool flip_arrow1, bool flip_arrow2);
     static LC_DimStylePreviewGraphicView* init(QWidget* parent,RS_Graphic* originalGraphic, RS2::EntityType dimensionType);
     static LC_DimStylePreviewGraphicView* init(QWidget* parent,RS_Graphic* originalGraphic, RS_Dimension* dimension);
 protected:
@@ -45,8 +47,8 @@ protected:
     ~LC_DimStylePreviewGraphicView() override;
     bool proceedEvent(QEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
-    void mouseDoubleClickEvent(QMouseEvent* e);
-    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
     void hideNonRelevantLayers(RS2::EntityType dimType);
     static LC_DimStylePreviewGraphicView* createAndSetupView(QWidget* parent,
             LC_PreviewGraphic* graphic, RS_Graphic* originalGraphic, bool showInWCS);

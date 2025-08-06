@@ -76,6 +76,8 @@ void LC_DlgDimension::updateEntity() {
     saveDimensionTypeDependentProperties();
     saveDimensionStyles();
 
+    m_entity->setFlipArrow1(ui->cbFlipArrow1->isChecked());
+    m_entity->setFlipArrow2(ui->cbFlipArrow2->isChecked());
     m_entity->updateDim(true);
 }
 
@@ -128,44 +130,65 @@ void LC_DlgDimension::setupDimensionTypeDependentUI(RS_Dimension* dim) {
     RS2::EntityType dimType = dim->rtti();
     switch (dimType) {
         case RS2::EntityDimOrdinate: {
+            setWindowTitle(tr("Ordinate Dimension"));
+
             auto* dimOrdinate = static_cast<LC_DimOrdinate*>(dim);
             bool ordinateX = dimOrdinate->isForXDirection();
+            ui->bgOrdinateGeometry->setVisible(true);
+
             ui->rbOrdinateX->setChecked(ordinateX);
             ui->rbOrdinateY->setChecked(!ordinateX);
-            ui->bgOrdinateGeometry->setVisible(true);
-            setWindowTitle(tr("Ordinate Dimension"));
+
+            ui->gbFlipArrows->setVisible(false);
             break;
         }
         case RS2::EntityDimLinear: {
+            setWindowTitle(tr("Linear Dimension"));
+
             auto dimLinear = static_cast<RS_DimLinear*>(dim);
             toUIAngleDeg(dimLinear->getAngle(), ui->leAngle);
             ui->bgLinearGeometry->setVisible(true);
-            setWindowTitle(tr("Linear Dimension"));
+
+            ui->cbFlipArrow1->setChecked(dim->isFlipArrow1());
+            ui->cbFlipArrow2->setChecked(dim->isFlipArrow2());
             break;
         }
         case RS2::EntityDimAligned: {
             setWindowTitle(tr("Aligned Dimension"));
+            ui->cbFlipArrow1->setChecked(dim->isFlipArrow1());
+            ui->cbFlipArrow2->setChecked(dim->isFlipArrow2());
             break;
         }
         case RS2::EntityDimAngular: {
             setWindowTitle(tr("Angular Dimension"));
+            ui->cbFlipArrow1->setChecked(dim->isFlipArrow1());
+            ui->cbFlipArrow2->setChecked(dim->isFlipArrow2());
             break;
         }
         case RS2::EntityDimArc: {
             setWindowTitle(tr("Arc Dimension"));
+            ui->cbFlipArrow1->setChecked(dim->isFlipArrow1());
+            ui->cbFlipArrow2->setChecked(dim->isFlipArrow2());
             break;
         }
         case RS2::EntityDimDiametric: {
             setWindowTitle(tr("Diametric Dimension"));
+            ui->cbFlipArrow1->setChecked(dim->isFlipArrow1());
+            ui->cbFlipArrow2->setChecked(dim->isFlipArrow2());
             break;
         }
         case RS2::EntityDimRadial: {
             setWindowTitle(tr("Radial Dimension"));
+            ui->cbFlipArrow1->setChecked(dim->isFlipArrow1());
+            ui->cbFlipArrow2->setVisible(false);
             break;
         }
         default:
             break;
     }
+
+    connect(ui->cbFlipArrow1, &QCheckBox::toggled, this,&LC_DlgDimension::onFlipArrowChanged);
+    connect(ui->cbFlipArrow2, &QCheckBox::toggled, this,&LC_DlgDimension::onFlipArrowChanged);
 }
 
 void LC_DlgDimension::setupDimensionAttributesUI(RS_Dimension* dim) {
@@ -185,6 +208,19 @@ void LC_DlgDimension::setupDimensionAttributesUI(RS_Dimension* dim) {
 
     ui->bgOrdinateGeometry->setVisible(false);
     ui->bgLinearGeometry->setVisible(false);
+
+    connect(ui->wPenEditor, &QG_WidgetPen::penChanged, this,&LC_DlgDimension::onPenChanged);
+
+    // fixme - sand - should we add preview modification for label change?
+}
+
+void LC_DlgDimension::onPenChanged() {
+    RS_Pen pen = ui->wPenEditor->getPen();
+    updateDimStylePreview(pen);
+}
+
+void LC_DlgDimension::onFlipArrowChanged(bool val) {
+    updateDimStylePreview(ui->cbFlipArrow1->isChecked(), ui->cbFlipArrow2->isChecked());
 }
 
 void LC_DlgDimension::setEntity(RS_Dimension* dim) {
@@ -650,6 +686,20 @@ QModelIndex LC_DlgDimension::getSelectedDimStyleIndex() {
 
 void LC_DlgDimension::updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimStyleTreeModel* model, bool override, const QString& baseName) const {
     m_previewView->setEntityDimStyle(dimStyle, override, baseName);
+    m_previewView->updateDims();
+    m_previewView->zoomAuto();
+    m_previewView->refresh();
+}
+
+void LC_DlgDimension::updateDimStylePreview(const RS_Pen& pen) {
+    m_previewView->setEntityPen(pen);
+    m_previewView->updateDims();
+    m_previewView->zoomAuto();
+    m_previewView->refresh();
+}
+
+void LC_DlgDimension::updateDimStylePreview(bool flipArrow1, bool flipArrow2) {
+    m_previewView->setEntityArrowsFlipMode(flipArrow1, flipArrow2);
     m_previewView->updateDims();
     m_previewView->zoomAuto();
     m_previewView->refresh();

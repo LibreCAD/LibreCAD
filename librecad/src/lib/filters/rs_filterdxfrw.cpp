@@ -1073,11 +1073,9 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
     }
 
     // data needed to add the actual dimension entity
-    return RS_DimensionData(defP, midP,
-                            valign, halign,
-                            lss,
-                            data->getTextLineFactor(),
-                            t, sty, data->getDir(), data->getHDir(), !customTextLocation, dimStyleOverride);
+    return RS_DimensionData(defP, midP, valign, halign, lss, data->getTextLineFactor(), t, sty,
+        data->getDir(), data->getHDir(), !customTextLocation, dimStyleOverride,
+        data->getFlipArrow1(), data->getFlipArrow2());
 }
 
 void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>> &extData, LC_ExtEntityData* entityData) {
@@ -1366,10 +1364,10 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         group->add(74, text->orientationOutside());
     }
     if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) { // $DIMSE1
-        group->add(75, extensionLine->firstLineSuppression());
+        group->add(75, extensionLine->suppressFirstLine());
     }
     if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE2)) { // $DIMSE2
-        group->add(76, extensionLine->secondLineSuppression());
+        group->add(76, extensionLine->suppressSecondLine());
     }
     if (text->checkModifyState(LC_DimStyle::Text::$DIMTAD)) { // $DIMTAD
         group->add(77, text->verticalPositioning());
@@ -1455,10 +1453,10 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         group->add(280, text->horizontalPositioning());
     }
     if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {// $DIMSD1
-        group->add(281, dimensionLine->firstLineSuppression());
+        group->add(281, dimensionLine->suppressFirstLine());
     }
     if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD2)) {// $DIMSD2
-        group->add(282, dimensionLine->secondLineSuppression());
+        group->add(282, dimensionLine->suppressSecondLine());
     }
     if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOLJ)) {// $DIMTOLJ
         group->add(283, tolerance->verticalJustification());
@@ -1697,10 +1695,10 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         text->setOrientationOutsideRaw(var->getInt());
                         break;
                     case 75: //"$DIMSE1"
-                        extensionLine->setSuppressionFirstRaw(var->getInt());
+                        extensionLine->setSuppressFirstRaw(var->getInt());
                         break;
                     case 76: //"$DIMSE2"
-                        extensionLine->setSuppressionSecondRaw(var->getInt());
+                        extensionLine->setSuppressSecondRaw(var->getInt());
                         break;
                     case 77: //"$DIMTAD"
                         text->setVerticalPositioningRaw(var->getInt());
@@ -1783,10 +1781,10 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         text->setHorizontalPositioningRaw(var->getInt());
                         break;
                     case 281: // "$DIMSD1"
-                        dimensionLine->setFirstLineSuppressionRaw(var->getInt());
+                        dimensionLine->setSuppressFirstLineRaw(var->getInt());
                         break;
                     case 282: // "$DIMSD2"
-                        dimensionLine->setSecondLineSuppressionRaw(var->getInt());
+                        dimensionLine->setSuppressSecondLineRaw(var->getInt());
                         break;
                     case 283: // "$DIMTOLJ"
                         tolerance->setVerticalJustificationRaw(var->getInt());
@@ -3075,10 +3073,10 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtLine(DRW_Dimstyle& d, LC_DimStyle* ds)
         d.add("$DIMCLRE", 177, colNum);
     }
     if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
-        d.add("$DIMSE1", 75, extLine->firstLineSuppression());
+        d.add("$DIMSE1", 75, extLine->suppressFirstLine());
     }
     if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE2)) {
-        d.add("$DIMSE2", 76, extLine->secondLineSuppression());
+        d.add("$DIMSE2", 76, extLine->suppressSecondLine());
     }
     if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX1)) {
         int lineTypeHandle = findLineTypeHandleToWrite(extLine->lineTypeFirstRaw());
@@ -3123,10 +3121,10 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle& d, LC_DimStyle* ds)
         d.add("$DIMCLRD", 176, colNum);
     }
     if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
-        d.add("$DIMSD1", 281, dimLine->firstLineSuppression());
+        d.add("$DIMSD1", 281, dimLine->suppressFirstLine());
     }
     if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD2)) {
-        d.add("$DIMSD2", 281, dimLine->secondLineSuppression());
+        d.add("$DIMSD2", 281, dimLine->suppressSecondLine());
     }
     if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMTOFL)) {
         d.add("$DIMTOFL", 172, dimLine->drawPolicyForOutsideText());
@@ -4077,6 +4075,8 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     dim->setText (toDxfString(d->getText()).toUtf8().data());
     dim->setTextLineFactor(d->getLineSpacingFactor());
     dim->setHDir(d->getHDir());
+    dim->setFlipArrow1(d->isFlipArrow1());
+    dim->setFlipArrow2(d->isFlipArrow2());
     if (d->hasUserDefinedTextLocation()) {
         dim->type = dim->type + 128;
     }
@@ -5325,11 +5325,11 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     }
     var = s.get("$DIMSE1");
     if (var != nullptr) {
-        extLineStyle->setSuppressionFirstRaw(var->i_val());
+        extLineStyle->setSuppressFirstRaw(var->i_val());
     }
     var = s.get("$DIMSE2");
     if (var != nullptr) {
-        extLineStyle->setSuppressionSecondRaw(var->i_val());
+        extLineStyle->setSuppressSecondRaw(var->i_val());
     }
     var = s.get("$DIMLTEX1");
     if (var != nullptr) {
@@ -5369,11 +5369,11 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     }
     var = s.get("$DIMSD1");
     if (var != nullptr) {
-        dimLineStyle->setFirstLineSuppressionRaw(var->i_val());
+        dimLineStyle->setSuppressFirstLineRaw(var->i_val());
     }
     var = s.get("$DIMSD2");
     if (var != nullptr) {
-        dimLineStyle->setSecondLineSuppressionRaw(var->i_val());
+        dimLineStyle->setSuppressSecondLineRaw(var->i_val());
     }
     var = s.get("$DIMTOFL");
     if (var != nullptr) {

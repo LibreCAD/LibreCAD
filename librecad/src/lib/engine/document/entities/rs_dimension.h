@@ -166,6 +166,8 @@ public:
     bool isFlipArrow1() const {return m_dimGenericData.flipArrow1;}
     bool isFlipArrow2() const {return m_dimGenericData.flipArrow2;}
 
+    void setFlipArrow1(bool val){m_dimGenericData.flipArrow1 = val;}
+    void setFlipArrow2(bool val){m_dimGenericData.flipArrow2 = val;}
 
     double getGeneralFactor();
     double getGeneralScale();

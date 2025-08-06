@@ -37,7 +37,6 @@ class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen{
 public:
     QG_WidgetPen(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_WidgetPen();
-
     bool isColorUnchanged();
     bool isLineTypeUnchanged();
     bool isWidthUnchanged();
@@ -47,10 +46,16 @@ public slots:
     void setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title);
     void setPen(RS_Entity *entity, RS_Layer *layer, const QString &title);
     RS_Pen getPen();
+signals:
+    void penChanged();
 protected slots:
     void languageChange();
+    void onColorChanged(const RS_Color& color);
+    void onWidthChanged(RS2::LineWidth);
+    void onLineTypeChanged(RS2::LineType);
 protected:
     bool m_initialized = false;
+    void notifyPenChanged();
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
 };

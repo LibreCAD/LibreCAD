@@ -77,7 +77,7 @@ void QG_DlgArc::setEntity(RS_Arc* a) {
     }
 }
 
-void QG_DlgArc:: updateEntity() {
+void QG_DlgArc::updateEntity() {
     m_entity->setCenter(toWCS(leCenterX, leCenterY, m_entity->getCenter()));
     m_entity->setRadius(toWCSValue(leRadius, m_entity->getRadius()));
 

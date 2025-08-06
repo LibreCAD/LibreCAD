@@ -248,7 +248,35 @@ void LC_DimStylePreviewGraphicView::setEntityDimStyle(LC_DimStyle* dimStyle, boo
             }
         }
     }
+}
 
+void LC_DimStylePreviewGraphicView::setEntityPen(const RS_Pen &pen) {
+    auto* graphic = dynamic_cast<LC_PreviewGraphic*>(getGraphic());
+    auto doc = graphic->getDocument();
+
+    for (auto en : *doc) {
+        if (RS2::isDimensionalEntity(en->rtti())) {
+            auto dim = dynamic_cast<RS_Dimension*>(en);
+            if (dim) {
+                dim->setPen(pen);
+            }
+        }
+    }
+}
+
+void LC_DimStylePreviewGraphicView::setEntityArrowsFlipMode(bool flipArrow1, bool flipArrow2) {
+    auto* graphic = dynamic_cast<LC_PreviewGraphic*>(getGraphic());
+    auto doc = graphic->getDocument();
+
+    for (auto en : *doc) {
+        if (RS2::isDimensionalEntity(en->rtti())) {
+            auto dim = dynamic_cast<RS_Dimension*>(en);
+            if (dim) {
+                dim->setFlipArrow1(flipArrow1);
+                dim->setFlipArrow2(flipArrow2);
+            }
+        }
+    }
 }
 
 void LC_DimStylePreviewGraphicView::zoomPan() {

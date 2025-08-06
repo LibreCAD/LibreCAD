@@ -117,7 +117,9 @@ RS_DimensionData::RS_DimensionData(const RS_DimensionData& other):
    style(other.style),
    angle(other.angle),
    horizontalAxisDirection(other.horizontalAxisDirection),
-   autoText{other.autoText}{
+   autoText{other.autoText},
+   flipArrow1{other.flipArrow1},
+   flipArrow2{other.flipArrow2}{
     if (other.m_dimStyleOverride != nullptr) {
         m_dimStyleOverride.reset(other.m_dimStyleOverride->getCopy());
     }
@@ -771,18 +773,37 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
     }
 
     // add arrows
-    if (outsideArrows == false) {
-        arrowAngle1 = dimensionLine->getAngle2();
-        arrowAngle2 = dimensionLine->getAngle1();
-    }
-    else {
+    // extend dimension line outside arrows
+    bool flipArrow1 = false;
+    bool flipArrow2 = false;
+
+    if (outsideArrows) {
         arrowAngle1 = dimensionLine->getAngle1();
         arrowAngle2 = dimensionLine->getAngle2();
-
-        // extend dimension line outside arrows
         RS_Vector dir = RS_Vector::polar(arrowSize * 2, arrowAngle2);
+
         dimensionLine->setStartpoint(p1 + dir);
         dimensionLine->setEndpoint(p2 - dir);
+    }
+    else {
+        flipArrow1 = isFlipArrow1();
+        flipArrow2 = isFlipArrow2();
+        if (flipArrow1) {
+            arrowAngle1 = dimensionLine->getAngle1();
+            RS_Vector dir = RS_Vector::polar(arrowSize * 2, arrowAngle1);
+            dimensionLine->setStartpoint(p1 - dir);
+        }
+        else {
+            arrowAngle1 = dimensionLine->getAngle2();
+        }
+        if (flipArrow2) {
+            arrowAngle2 = dimensionLine->getAngle2();
+            RS_Vector dir = RS_Vector::polar(arrowSize * 2, arrowAngle2);
+            dimensionLine->setEndpoint(p2 - dir);
+        }
+        else {
+            arrowAngle2 = dimensionLine->getAngle1();
+        }
     }
 
     LC_DimArrowRegistry dimArrowRegistry;
@@ -798,8 +819,15 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
             auto arrow = dimArrowRegistry.createArrowBlock(this, firstArrowName, p1, arrowAngle1, arrowSize);
             addArrow(arrow.first, dimensionPen);
             firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
-            dimLineOffsetFirst = arrow.second * arrowSize;
-            RS_Vector firstArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetFirst, dimAngle1);
+            RS_Vector firstArrowAdjustmentVector;
+            if (flipArrow1) {
+                dimLineOffsetFirst = arrow.second * arrowSize + 3*arrowSize;
+                firstArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetFirst, dimAngle1);
+            }
+            else {
+                dimLineOffsetFirst = arrow.second * arrowSize;
+                firstArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetFirst, dimAngle1);
+            }
             dimensionLine->setStartpoint(dimP1-firstArrowAdjustmentVector);
         }
 
@@ -808,8 +836,15 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
             auto arrow = dimArrowRegistry.createArrowBlock(this, secondArrowName, p2, arrowAngle2, arrowSize);
             addArrow(arrow.first, dimensionPen);
             secondArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(secondArrowName);
-            dimLineOffsetSecond = arrow.second * arrowSize;
-            RS_Vector secondArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetSecond, dimAngle1);
+            RS_Vector secondArrowAdjustmentVector;
+            if (flipArrow2) {
+                dimLineOffsetSecond = arrow.second * arrowSize + 3 * arrowSize;
+                secondArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetSecond, dimAngle1);
+            }
+            else {
+                dimLineOffsetSecond = arrow.second * arrowSize;
+                secondArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetSecond, dimAngle1);
+            }
             dimensionLine->setEndpoint(dimP2+secondArrowAdjustmentVector);
         }
     }

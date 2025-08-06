@@ -1210,7 +1210,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         0.0,
                                         0.0,
                                         customTextLocation,
-                                        nullptr
+                                        nullptr, false, false
                                     ),
                                     RS_DimLinearData(
                                         RS_Vector(v13, v23),
@@ -1249,7 +1249,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         0.0,
                                         0.0,
                                         customTextLocation,
-                                        nullptr
+                                        nullptr, false, false
                                     ),
                                     RS_DimAlignedData(
                                         RS_Vector(v13, v23),
@@ -1315,7 +1315,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                             0.0,
                                             0.0,
                                             customTextLocation,
-                                            nullptr
+                                            nullptr, false, false
                                         ),
                                         RS_DimAngularData(
                                             RS_Vector(v13, v23),
@@ -1360,7 +1360,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         0.0,
                                         0.0,
                                         customTextLocation,
-                                        nullptr
+                                        nullptr, false, false
                                     ),
                                     RS_DimRadialData(
                                         RS_Vector(v10, v20) + v2,
