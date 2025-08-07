@@ -719,7 +719,7 @@ void LC_GraphicViewport::setOffsetAndFactor(int ox, int oy, double f){
 }
 
 void LC_GraphicViewport::justSetOffsetAndFactor(int ox, int oy, double f){
-    offsetY = ox;
+    offsetX = ox;
     offsetY = oy;
     factor.x = std::abs(f);
     factor.y = std::abs(f);
