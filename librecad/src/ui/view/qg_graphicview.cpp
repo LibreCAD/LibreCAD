@@ -114,7 +114,7 @@ constexpr int g_hotspotXY=-1;
             && vpMin.y + 1e6 >= vpMax.y;
     }
 
-    LC_Rect getGuiRect(const LC_Rect& modelRect, const RS_Vector& model2GuiFactor)
+    LC_Rect getGuiRect([[maybe_unused]] const LC_Rect& modelRect, [[maybe_unused]] const RS_Vector& model2GuiFactor)
     {
         return {};
     }
@@ -339,6 +339,12 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
 
     // SourceForge issue 45 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
+
+    // Issue #2264: prevents macOS from applying text-related features like the Caps Lock indicator to the non-text canvas
+#ifdef Q_OS_MAC
+    setAttribute(Qt::WA_InputMethodEnabled, false);
+    setInputMethodHints(Qt::ImhNone);
+#endif
 }
 
 void QG_GraphicView::initView() {
