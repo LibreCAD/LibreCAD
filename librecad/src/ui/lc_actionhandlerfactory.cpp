@@ -244,7 +244,10 @@ namespace InnerFactory{
                     auto document = ctx->getEntityContainer();
                     RS_Selection s(static_cast<RS_EntityContainer&>(*document), view->getViewPort());
                     s.selectAll(false);
-                    RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
+
+                    auto selectionInfo = document->getSelectionInfo();
+                    ctx->updateSelectionWidget(selectionInfo.count, selectionInfo.length);
+                    // RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
                 }
                 return nullptr;
             }

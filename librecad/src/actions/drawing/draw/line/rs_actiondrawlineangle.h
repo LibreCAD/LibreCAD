@@ -58,7 +58,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetPos,       /**< Setting the position.  */
+        SetPos = InitialActionStatus,       /**< Setting the position.  */
         SetAngle,     /**< Setting angle in the command line. */
         SetLength     /**< Setting length in the command line. */
     };

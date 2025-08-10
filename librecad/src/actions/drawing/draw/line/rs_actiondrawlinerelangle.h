@@ -53,7 +53,7 @@ public:
     bool hasFixedAngle() const{return m_fixedAngle;}
 protected:
     enum Status {
-        SetEntity,     /**< Choose entity. */
+        SetEntity = InitialActionStatus,     /**< Choose entity. */
         SetPos,        /**< Choose position. */
         SetAngle,      /**< Set angle in console. */
         SetLength      /**< Set length in console. */

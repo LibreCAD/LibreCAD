@@ -46,7 +46,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetLine1,   //  Setting the First Line.  */
+        SetLine1  = InitialActionStatus,   //  Setting the First Line.  */
         SetLine2,   //  Setting the Second Line.  */
         SetLine3,   //  Setting the Third Line.  */
         SetLine4   //  Setting the Last Line.  */
@@ -54,6 +54,8 @@ protected:
 
     struct Points;
     std::unique_ptr<Points> m_actionData;
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     // 4 points on ellipse
     bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);

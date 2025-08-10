@@ -25,6 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QListView>
 #include <QMenu>
 #include <QStandardItemModel>
+
+#include "lc_actioncontext.h"
+#include "qc_applicationwindow.h"
 #if defined(Q_OS_LINUX)
 #include <QThread>
 #endif
@@ -715,7 +718,10 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
                 m_document->endUndoCycle();
 
                 clone.release();
-                RS_DIALOGFACTORY->updateSelectionWidget(m_document->countSelected(), m_document->totalSelectedLength());
+
+                auto selectionInfo = m_document->getSelectionInfo();
+                LC_ActionContext* ctx =  QC_ApplicationWindow::getAppWindow().get()->getActionContext();
+                ctx->updateSelectionWidget(selectionInfo.count, selectionInfo.length);
             }
         }
         else{ // entity not found, cleanup

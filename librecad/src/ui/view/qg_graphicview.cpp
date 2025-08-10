@@ -39,6 +39,10 @@
 
 #include "qg_graphicview.h"
 
+#include <boost/geometry/algorithms/centroid.hpp>
+#include <boost/numeric/ublas/expression_types.hpp>
+
+#include "lc_actiongroup.h"
 #include "lc_actioncontext.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
@@ -54,6 +58,7 @@
 #include "rs_actionmodifyentity.h"
 #include "rs_actionselectsingle.h"
 #include "rs_blocklist.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -70,12 +75,12 @@
 
 namespace {
 // Issue #1765: set default cursor size: 32x32
-constexpr int g_cursorSize=32;
+constexpr int g_cursorSize=32; // fixme - sand - move to common public place
 // Issue #1787: cursor hot spot at center by using hotX=hotY=-1
 constexpr int g_hotspotXY=-1;
 
 // maximum length for displayed block name in context menu
-    constexpr int g_MaxBlockNameLength = 40;
+    constexpr int g_MaxBlockNameLength = 40; // fixme - sand - move to common public place
 
 /*
          * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
@@ -139,11 +144,13 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event) {
     double distance = RS_MAXDOUBLE;
     const LC_GraphicViewport* viewPort = view.getViewPort();
 
-    RS_Entity* entity = container->getNearestEntity(viewPort->toWorldFromUi(mapped.x(), mapped.y()), &distance);
+    auto pos = viewPort->toWorldFromUi(mapped.x(), mapped.y());
+    RS_Entity* entity = container->getNearestEntity(pos, &distance, RS2::ResolveNone);
 
     return (viewPort->toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
 }
 
+// fixme - sand - remove, not needed?
 // Find an ancestor of the RS_Insert type.
 // Return nullptr, if none is found
 RS_Insert* getAncestorInsert(RS_Entity* entity) {
@@ -156,7 +163,7 @@ RS_Insert* getAncestorInsert(RS_Entity* entity) {
     }
     return nullptr;
 }
-
+// fixme - sand - remove, not needed?
 // whether the current insert is part of Text
 RS_Entity* getParentText(RS_Insert* insert) {
     if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr) {
@@ -354,7 +361,8 @@ void QG_GraphicView::createViewRenderer() {
 
 void QG_GraphicView::layerToggled(RS_Layer *) {
     const RS_EntityContainer::LC_SelectionInfo &info = getContainer()->getSelectionInfo();
-    RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
+    m_actionContext->updateSelectionWidget(info.count, info.length);
+    // RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
     redraw(RS2::RedrawDrawing);
 }
 
@@ -568,25 +576,20 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
             if (m_menus.contains("Right-Click")) {
                 m_menus["Right-Click"]->popup(mapToGlobal(event->pos()));
             } else {
-                auto *context_menu = new QMenu(this);
+                /*auto *context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                if (!m_recent_actions.empty()) {
-                    context_menu->addActions(m_recent_actions);
+                prepareDefaultContextMenu(event, context_menu);*/
+                auto contextMenu = QC_ApplicationWindow::getAppWindow()->createGraphicViewContentMenu(event, this);
+                if (contextMenu != nullptr && !contextMenu->isEmpty()) {
+                    contextMenu->exec(mapToGlobal(event->pos()));
                 }
-
-                // "Edit Entity" entry
-                addEditEntityEntry(event, *context_menu);
-                // Add drawing preferences
-                QAction *OptionsDrawing = QC_ApplicationWindow::getAppWindow()->getAction("OptionsDrawing");
-                if (OptionsDrawing != nullptr)
-                    context_menu->addAction(OptionsDrawing);
-                if (!context_menu->isEmpty())
-                    context_menu->exec(mapToGlobal(event->pos()));
-                else
-                    delete context_menu;
-
+                else {
+                    delete contextMenu;
+                }
             }
-        } else back();
+        } else {
+            back();
+        }
         break;
     }
     case Qt::XButton1:
@@ -599,42 +602,6 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         break;
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
-}
-
-void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
-    if (getContainer()==nullptr)
-        return;
-    RS_Entity* entity = snapEntity(*this, event);
-    if (entity == nullptr)
-        return;
-    RS_Insert* insert = getAncestorInsert(entity);
-    // MText/Text should not be edited as blocks
-    RS_Entity* toEdit = getParentText(insert) != nullptr ? getParentText(insert) : nullptr;
-    if (toEdit != nullptr) {
-        insert = nullptr;
-        entity = toEdit;
-    }
-    QAction* action = (insert != nullptr) ?
-                          // For an insert, show the menu entry to edit the block instead
-                          new QAction(QIcon(":/icons/properties.lci"),
-                                      QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
-                                      &contextMenu) :
-                          new QAction(QIcon(":/icons/properties.lci"),
-                                      tr("Edit Properties"), &contextMenu);
-
-    contextMenu.addAction(action);
-    connect(action, &QAction::triggered, this, [this, insert, entity](){
-        launchEditProperty(insert != nullptr ? insert : entity);
-    });
-
-    // Add "Activate Layer" for the current entity
-    if (getGraphic() == nullptr || getGraphic()->getActiveLayer() == entity->getLayer() || entity->getLayer() == nullptr)
-        return;
-    action = new QAction(tr("Activate Layer"), &contextMenu);
-    contextMenu.addAction(action);
-    connect(action, &QAction::triggered, this, [this, entity]() {
-        this->getGraphic()->activateLayer(entity->getLayer(), true);
-    });
 }
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){

@@ -69,8 +69,23 @@ LC_ActionDrawCross::LC_ActionDrawCross(LC_ActionContext *actionContext)
 
 LC_ActionDrawCross::~LC_ActionDrawCross() = default;
 
-// support of creation cross for already selected entities on action invocation
+void LC_ActionDrawCross::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    if (isAcceptSelectedEntityToTriggerOnInit(contextEntity)) {
+        m_entity = contextEntity;
+    }
+}
 
+void LC_ActionDrawCross::collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities,
+    QList<RS_Entity*> &entitiesForTrigger) {
+    if (m_entity == nullptr) {
+        LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(selectedEntities, entitiesForTrigger);
+    }
+    else {
+        entitiesForTrigger << m_entity;
+    }
+}
+
+// support of creation cross for already selected entities on action invocation
 bool LC_ActionDrawCross::doCheckMayTriggerOnInit(int status){
     return status == SetEntity;
 }

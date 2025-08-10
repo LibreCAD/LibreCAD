@@ -42,7 +42,7 @@ public:
 protected:
 
     enum Status {
-        SetEntity,     /**< Choose entity. */
+        SetEntity = InitialActionStatus,     /**< Choose entity. */
         SetPos,      /**< Choose point. */
         SetText        /**< Setting text label in the command line. */
     };
@@ -59,9 +59,11 @@ protected:
     bool m_alternateAngle = false;
     double m_currentAngle = 0.0;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setDimSourceEntity(RS_Entity* en, bool controlPressed, RS_Vector pos);
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     virtual RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) = 0;

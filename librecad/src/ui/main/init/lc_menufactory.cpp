@@ -27,14 +27,28 @@
 #include <QMdiArea>
 #include <QMenuBar>
 #include <QToolBar>
+#include <QMouseEvent>
 #include <QUrl>
 
 #include "lc_actiongroupmanager.h"
+#include "lc_graphicviewport.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
+#include "rs_debug.h"
+#include "rs_ellipse.h"
+#include "rs_insert.h"
 #include "rs_settings.h"
 
 class QToolBar;
+
+
+namespace {
+        // Issue #1765: set default cursor size: 32x32
+        constexpr int g_cursorSize=32; // fixme - sand - move to common public place! Duplicate from QG_GraphicView
+    // maximum length for displayed block name in context menu
+    constexpr int g_MaxBlockNameLength = 40; // fixme - sand - move to common public place! Duplicate from QG_GraphicView
+}
 
 LC_MenuFactory::LC_MenuFactory(QC_ApplicationWindow *main_win)
     : QObject(nullptr)
@@ -546,7 +560,6 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
          menuItem->setCheckable(true);
          menuItem->setChecked(!tabbed);
 
-
          if (tabbed) {
              menu = new QMenu(tr("&Layout"), m_menuWorkspace);
              menu->setTearOffEnabled(m_allowTearOffMenus);
@@ -609,7 +622,7 @@ void LC_MenuFactory::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*> &wind
                      title.remove(idx, 3);
                  }
              }
-             // QAction *id = m_menuWorkspace->addAction(title, m_appWin, SLOT(slotWindowsMenuActivated(bool)));
+             // QAction *id = m_menuWorkspace->addAction(title, m_appWin, SLOT(slotWindowsMenuActivated(bool),
              QAction *id = m_menuWorkspace->addAction(title, m_appWin, &QC_ApplicationWindow::slotWindowsMenuActivated);
              id->setCheckable(true);
              id->setData(i);
@@ -724,6 +737,586 @@ QMenu* LC_MenuFactory::createMainWindowPopupMenu() const {
     if (viewStatusBarAction != nullptr) {
         result->addAction(viewStatusBarAction);
     }
-
     return result;
+}
+
+QMenu* LC_MenuFactory::createGraphicViewContextMenu(QMouseEvent* event, QG_GraphicView* graphicView) {
+    auto *ctxMenu = new QMenu(graphicView);
+    ctxMenu->setAttribute(Qt::WA_DeleteOnClose);
+    auto actionContext = graphicView->getActionContext();
+
+    int selectionCount = actionContext->getSelectedEntitiesCount();
+
+    auto recentActions = graphicView->getRecentActions();
+
+    if (!recentActions.empty()) {
+        ctxMenu->addAction(recentActions.first());
+        auto recentAction = new QMenu(tr("Recent"), graphicView);
+        recentAction->addActions(recentActions);
+        ctxMenu->addMenu(recentAction);
+    }
+
+    if (selectionCount > 0) {
+        addAction(ctxMenu, "EditKillAllActions");
+    }
+
+    auto selectGroup = m_actionGroupManager->getActionGroup("select");
+    auto select = ctxMenu->addMenu(selectGroup->getIcon(), tr("Select"));
+    select->addActions(selectGroup->actions());
+
+    addAction(select, "SelectPoints");
+
+    auto edit = ctxMenu->addMenu(tr("Edit"));
+    bool undoAvailable{false}, redoAvailable{false};
+
+    auto container = graphicView->getContainer();
+    auto document = container->getDocument();
+
+    if (document != nullptr) {
+        document->collectUndoState(undoAvailable, redoAvailable);
+    }
+    if (undoAvailable) {
+        addAction(edit, "EditUndo");
+    }
+    if (redoAvailable) {
+        addAction(edit, "EditRedo");
+    }
+    if (redoAvailable || undoAvailable) {
+        edit->addSeparator();
+    }
+    addActions(edit, {
+        "EditCopy",
+        "EditCopyQuick",
+        "",
+        "EditPaste",
+        "EditPasteTransform",
+        "PasteToPoints",
+        "",
+        "EditCut",
+        "EditCutQuick"
+    });
+    ctxMenu->addMenu(edit);
+
+    if (selectionCount > 0) {
+        addActions(ctxMenu, {
+            "",
+            "ModifyMove",
+            "ModifyRotate",
+            "ModifyMirror",
+            "ModifyDuplicate"
+        });
+        auto modifyMoreMenu = ctxMenu->addMenu(QIcon(":/icons/move_rotate.lci"), tr("Modify More..."));
+        addActions(modifyMoreMenu, {
+            "ModifyScale",
+            "ModifyStretch",
+            "ModifyRotate2",
+            "ModifyBevel",
+            "ModifyRound",
+            "ModifyMoveRotate",
+            "ModifyOffset",
+            "",
+            "ModifyAlign",
+            "ModifyAlignOne",
+            "ModifyAlignRef"
+        });
+
+        if (selectionCount != 1) {
+            addAction(ctxMenu, "ModifyAttributes");
+
+        }
+        addAction(ctxMenu, "ModifyDelete");
+    }
+    else {
+        auto addMenu = ctxMenu->addMenu(QIcon(":/icons/order.lci"),tr("Add"));
+
+        auto lineGroup = m_actionGroupManager->getActionGroup("line");
+        auto lineMenu = addMenu->addMenu(lineGroup->getIcon(), tr("Line"));
+        lineMenu->addActions(lineGroup->actions());
+
+        auto pointGroup = m_actionGroupManager->getActionGroup("point");
+        auto pointMenu = addMenu->addMenu(pointGroup->getIcon(), tr("Point"));
+        pointMenu->addActions(pointGroup->actions());
+
+        auto circleGroup = m_actionGroupManager->getActionGroup("circle");
+        auto circleMenu = addMenu->addMenu(circleGroup->getIcon(), tr("Circle"));
+        circleMenu->addActions(circleGroup->actions());
+
+        auto arcGroup = m_actionGroupManager->getActionGroup("curve");
+        auto arcMenu = addMenu->addMenu(arcGroup->getIcon(), tr("Arc"));
+        arcMenu->addActions(arcGroup->actions());
+
+        auto shapeGroup = m_actionGroupManager->getActionGroup("shape");
+        auto shapeMenu = addMenu->addMenu(shapeGroup->getIcon(), tr("Polygon"));
+        shapeMenu->addActions(shapeGroup->actions());
+
+        auto splineMenu = addMenu->addMenu(QIcon(":/icons/polylines_polyline.lci"),tr("Polyline/Spline"));
+        addActions(splineMenu, {
+                       "DrawPolyline",
+                       "DrawSpline",
+                       "DrawSplinePoints",
+                       "DrawParabola4Points",
+                       "DrawParabolaFD"
+                   });
+
+        auto ellipseGroup = m_actionGroupManager->getActionGroup("ellipse");
+        auto ellipseMenu = addMenu->addMenu(ellipseGroup->getIcon(), tr("Ellipse"));
+        ellipseMenu->addActions(ellipseGroup->actions());
+
+        auto dimsGroup = m_actionGroupManager->getActionGroup("dimension");
+        auto dimsMenu = addMenu->addMenu(ellipseGroup->getIcon(), tr("Dimensions"));
+        dimsMenu->addActions(dimsGroup->actions());
+
+        auto otherGroup = m_actionGroupManager->getActionGroup("other");
+        auto otherMenu = addMenu->addMenu(ellipseGroup->getIcon(), tr("Other"));
+        otherMenu->addActions(otherGroup->actions());
+
+        ctxMenu->addMenu(addMenu);
+    }
+
+    ctxMenu->addSeparator();
+
+    fillEntitySpecificContextMenu(event, ctxMenu, graphicView);
+
+    ctxMenu->addSeparator();
+
+    auto infoGroup = m_actionGroupManager->getActionGroup("info");
+    auto dimsMenu = ctxMenu->addMenu(infoGroup->getIcon(), tr("Info"));
+    dimsMenu->addActions(infoGroup->actions());
+
+
+    if (selectionCount > 0) {
+        auto orderMenu = ctxMenu->addMenu(QIcon(":/icons/order.lci"), tr("Draw Order"));
+        addActions(orderMenu, {
+                       "OrderBottom",
+                       "OrderLower",
+                       "",
+                       "OrderRaise",
+                       "OrderTop"
+                   });
+    }
+    ctxMenu->addSeparator();
+
+    addAction(ctxMenu, "OptionsDrawing");
+
+    return ctxMenu;
+}
+
+void LC_MenuFactory::fillEntitySpecificContextMenu(QMouseEvent* event, QMenu* contextMenu, QG_GraphicView* graphicView){
+    auto container = graphicView->getContainer();
+    if (container == nullptr || event == nullptr) {
+        return;
+    }
+
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    const LC_GraphicViewport* viewPort = graphicView->getViewPort();
+
+    const auto pos = viewPort->toWorldFromUi(mapped.x(), mapped.y());
+    RS_Entity* entity = container->getNearestEntity(pos, &distance, RS2::ResolveNone);
+
+    const bool clearEntitySelection = !entity->isSelected();
+    if (clearEntitySelection) {
+        entity->setSelected(true);
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
+
+    if (viewPort->toGuiDX(distance) <= g_cursorSize) {
+        connect(contextMenu, &QMenu::aboutToHide, this, [graphicView, entity, clearEntitySelection]() {
+            // LC_ERR << "MENU_CLOSED";
+           if (clearEntitySelection) {
+               entity->setSelected(false);
+               graphicView->redraw();
+           }
+       });
+    }
+    else {
+       return;
+    }
+
+    // RS_Insert* insert = getAncestorInsert(entity);
+    // // MText/Text should not be edited as blocks
+    // RS_Entity* toEdit = getParentText(insert) != nullptr ? getParentText(insert) : nullptr;
+    // if (toEdit != nullptr) {
+    //     insert = nullptr;
+    //     entity = toEdit;
+    // }
+
+    bool isInsert = entity->rtti() == RS2::EntityInsert;
+    QAction* propertiesAction;
+    if (isInsert) {
+        auto insert = static_cast<RS_Insert*>(entity);
+        // For an insert, show the menu entry to edit the block instead
+       propertiesAction = contextMenu->addAction(QIcon(":/icons/properties.lci"),
+                    QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)));
+    }
+    else {
+        propertiesAction = contextMenu->addAction(QIcon(":/icons/properties.lci"), tr("Edit Properties"));
+    }
+
+    connect(propertiesAction, &QAction::triggered, this, [this, entity, graphicView](){
+        graphicView->launchEditProperty(entity);
+    });
+
+    RS2::EntityType entityType = entity->rtti();
+    LC_ActionContext* actionContext = graphicView->getActionContext();
+    int selectionCount = actionContext->getSelectedEntitiesCount();
+    /*if (selectionCount == 1)*/ {
+        auto appWindow = QC_ApplicationWindow::getAppWindow().get();
+        switch (entityType) {
+            case RS2::EntityLine: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    // this entity modification actions
+                                    "DrawSliceDivideLine",
+                                    "ModifyTrim",
+                                    "ModifyCut",
+                                    "ModifyBreakDivide",
+                                    "ModifyLineJoin",
+                                    "ModifyTrimAmount",
+                                    "ModifyRevertDirection",
+                                    ""
+                                });
+
+                auto moreMenu = contextMenu->addMenu(QIcon(":/icons/line_parallel.lci"), tr("Draw Line..."));
+                addProxyActions(moreMenu, entity, pos, actionContext, {
+                                    "DrawLineParallelThrough",
+                                    "DrawLineOrthogonalRel",
+                                    "DrawLineParallel",
+                                    "DrawLineRel",
+                                    "DrawLineAngleRel",
+                                    "DrawLineOrthTan",
+                                    "DrawLineBisector",
+                                    "DrawLineFree",
+                                    "ModifyTrim2",
+                                    "ModifyLineGap",
+                                    "DrawLineMiddle"
+                                });
+
+                auto circleMenu = contextMenu->addMenu(QIcon(":/icons/circle_center_point.lci"), tr("Draw Circle..."));
+                addProxyActions(circleMenu, entity, pos, actionContext, {
+                                    "DrawCircleTan1_2P",
+                                    "DrawCircleTan2",
+                                    "DrawCircleTan2_1P",
+                                    "DrawCircleTan3"
+                                    "DrawCircleInscribe",
+                                });
+
+                auto drawOther = contextMenu->addMenu(QIcon(":/icons/arc_continuation.lci"),
+                                                          tr("Draw Other..."));
+                addProxyActions(drawOther, entity, pos, actionContext, {
+                                    "DrawArcTangential",
+                                    "DrawEllipseInscribe",
+                                    "DrawBoundingBox"
+                                    "PolylineSegment",
+                                });
+
+
+                auto dimMenu = contextMenu->addMenu(QIcon(":/icons/dim_aligned.lci"), tr("Add Dimensions..."));
+                addProxyActions(dimMenu, entity, pos, actionContext, {
+                                    "DimAligned",
+                                    "DimLinear",
+                                    "DimLinearHor",
+                                    "DimLinearVer",
+                                    "DimAngular",
+                                    "DimLeader",
+                                    "DimOrdinate"
+                                });
+
+                break;
+            }
+            case RS2::EntityCircle: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    // entity modifications
+
+                                    "DrawSliceDivideCircle",
+                                    "DrawLineTangent1",
+                                    "DrawLineTangent2",
+                                    "DrawCross",
+
+                                    "DrawArcParallel"
+                                });
+                auto circleMenu = contextMenu->addMenu(QIcon(":/icons/circle_center_point.lci"), tr("Draw Circle..."));
+                addProxyActions(circleMenu, entity, pos, actionContext, {
+                                    "DrawCircleTan1_2P",
+                                    "DrawCircleTan2",
+                                    "DrawCircleTan2_1P",
+                                    "DrawCircleTan3",
+                                });
+
+                auto drawOther = contextMenu->addMenu(QIcon(":/icons/arc_continuation.lci"),
+                                      tr("Draw Other..."));
+                addProxyActions(drawOther, entity, pos, actionContext, {
+                                    "DrawArcTangential",
+                                    "DrawBoundingBox"
+                                });
+
+                auto dimMenu = contextMenu->addMenu(QIcon(":/icons/dim_aligned.lci"), tr("Add Dimensions"));
+                addProxyActions(dimMenu, entity, pos, actionContext, {
+                                    "DimRadial",
+                                    "DimDiametric",
+                                    "DimLeader",
+                                    "DimOrdinate"
+                                });
+                break;
+            }
+            case RS2::EntityArc: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    // entity modifications
+                                    "DrawSliceDivideCircle",
+                                    "DrawLineTangent2",
+                                    "DrawLineTangent1",
+                                    "DrawArcTangential",
+                                    "DrawCircleByArc",
+                                    "DrawCross",
+
+                                    "DrawArcParallel",
+                                    "PolylineSegment",
+                                    "ModifyRevertDirection"
+                                });
+
+                auto circleMenu = contextMenu->addMenu(QIcon(":/icons/circle_center_point.lci"), tr("Draw Circle..."));
+                addProxyActions(circleMenu, entity, pos, actionContext, {
+                                    "DrawCircleTan1_2P",
+                                    "DrawCircleTan2",
+                                    "DrawCircleTan2_1P",
+                                    "DrawCircleTan3",
+                                });
+
+                auto drawOther = contextMenu->addMenu(QIcon(":/icons/arc_continuation.lci"),
+                                                      tr("Draw Other..."));
+                addProxyActions(drawOther, entity, pos, actionContext, {
+                                    "DrawArcTangential",
+                                    "DrawBoundingBox"
+                                    "PolylineSegment",
+                                });
+
+
+                auto dimMenu = contextMenu->addMenu(QIcon(":/icons/dim_aligned.lci"), tr("Add Dimensions..."));
+                addProxyActions(dimMenu, entity, pos, actionContext, {
+                                    "DimRadial",
+                                    "DimDiametric",
+                                    "DimArc",
+                                    "DimLeader",
+                                    "DimOrdinate"
+                                });
+                break;
+            }
+            case RS2::EntityPolyline: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "PolylineAdd",
+                                    "PolylineAppend",
+                                    "PolylineDel",
+                                    "PolylineDelBetween",
+                                    "PolylineTrim",
+                                    "PolylineEquidistant",
+                                    "PolylineSegmentType",
+                                    "PolylineArcToLines",
+                                    "DrawSplineFromPolyline",
+                                    "PolylineSegment",
+                                    "BlocksExplode"
+                                });
+
+                auto drawOther = contextMenu->addMenu(QIcon(":/icons/arc_continuation.lci"),
+                                                    tr("Draw Other..."));
+
+                addProxyActions(drawOther, entity, pos, actionContext, {
+                                    "DrawBoundingBox"
+                                });
+
+
+                auto dimMenu = contextMenu->addMenu(QIcon(":/icons/dim_aligned.lci"), tr("Add Dimensions..."));
+                addProxyActions(dimMenu, entity, pos, actionContext, {
+                                    "DimAligned",
+                                    "DimLinear",
+                                    "DimLinearHor",
+                                    "DimLinearVer",
+                                    "DimAngular",
+                                    "DimLeader",
+                                    "DimOrdinate"
+                                });
+                break;
+            }
+            case RS2::EntitySpline:
+            case RS2::EntitySplinePoints: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DrawSplinePointsAdd",
+                                    "DrawSplinePointsAppend",
+                                    "DrawSplinePointsRemove",
+                                    "DrawSplineExplode",
+                                    "DrawSplinePointsDelTwo"
+                                });
+                addProxyActions(contextMenu, entity, pos, actionContext, {"DrawBoundingBox"});
+                break;
+            }
+            case RS2::EntityText: {
+                // fixme - sand - add additional actions (align, style etc.)?
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "ModifyExplodeText",
+                                    "BlocksExplode"
+                                });
+
+                break;
+            }
+            case RS2::EntityMText: {
+                // fixme - sand - add additional actions (align, style etc.)?
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "ModifyExplodeText",
+                                    "BlocksExplode"
+                                });
+                break;
+            }
+            case RS2::EntityEllipse: {
+                auto ellipse = static_cast<RS_Ellipse*> (entity);
+                if (ellipse->isEllipticArc()) { // fixme - check for elliptic arc
+                    addAction(contextMenu, "DrawArcTangential");
+                }
+
+                addProxyActions(contextMenu, entity, pos, actionContext, {"DrawBoundingBox"});
+                break;
+            }
+            case RS2::EntityDimAligned: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimPickApply",
+                                    "DimBaseline",
+                                    "DimContinue",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityDimLinear: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimPickApply",
+                                    "DimBaseline",
+                                    "DimContinue",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityDimAngular: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimBaseline",
+                                    "DimContinue",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityDimRadial: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {"DimRegenerate"});
+                break;
+            }
+            case RS2::EntityDimDiametric: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimPickApply",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityDimArc: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimPickApply",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityDimOrdinate: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimPickApply",
+                                    "DimOrdinateForBase",
+                                    "DimOrdinateReBase",
+                                    "UCSSetByDimOrdinate",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityDimLeader: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DimPickApply",
+                                    "DimRegenerate"
+                                });
+                break;
+            }
+            case RS2::EntityInsert:{
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "BlocksExplode"
+                                });
+                break;
+            }
+            case RS2::EntityPoint: {
+                addProxyActions(contextMenu, entity, pos, actionContext, {
+                                    "DrawCircleTan3"
+                                });
+                break;
+            }
+            case RS2::EntityImage: {
+                break;
+            }
+            case RS2::EntityHatch: {
+                break;
+            }
+            case RS2::EntityHyperbola: {
+                addAction(contextMenu, "DrawArcTangential");
+                break;
+            }
+            case RS2::EntityConstructionLine: {
+                addAction(contextMenu, "DrawArcTangential");
+                break;
+            }
+            case RS2::EntitySolid: {
+                break;
+            }
+            case RS2::EntityTolerance: {
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    auto layerMenu = contextMenu->addMenu(QIcon(":/icons/layer_list.lci"), tr("Layers..."));
+
+    RS_Graphic* graphic = graphicView->getGraphic(false);
+    auto entityLayer = entity->getLayer();
+    if (graphic != nullptr && entityLayer != nullptr) {
+        if (graphic->getActiveLayer() != entityLayer ) {
+            addProxyActions(layerMenu, entity, pos, actionContext, {
+                "EntityLayerActivate"}
+            );
+        }
+    }
+
+    addProxyActions(layerMenu, entity, pos, actionContext, {
+                                 "EntityLayerView",
+                                 "EntityLayerHideOthers",
+                                 "EntityLayerLock",
+                                 "EntityLayerPrint",
+                                 "EntityLayerConstruction"
+                             });
+
+}
+
+void LC_MenuFactory::addProxyActions(QMenu* menu, RS_Entity* entity, const RS_Vector& pos, LC_ActionContext* actionContext,
+    const std::vector<QString> & actionNames) {
+    for (const QString& actionName : actionNames){
+        if (actionName.isEmpty()){
+            menu->addSeparator();
+        }
+        else{
+            addActionProxy(menu, actionName, entity, pos, actionContext);
+        }
+    }
+}
+
+void LC_MenuFactory::addActionProxy(QMenu* menu, const QString& actionName, RS_Entity* entity, const RS_Vector& pos, LC_ActionContext* actionContext) {
+    auto srcAction = m_actionGroupManager->getActionByName(actionName);
+    if (srcAction != nullptr && srcAction->isEnabled()) {
+        auto actionProxy = new QAction(srcAction->icon(), srcAction->iconText());
+        actionProxy->setToolTip(srcAction->toolTip());
+
+        connect(actionProxy, &QAction::triggered, this,
+                [this, entity, pos, srcAction, actionContext](bool checked) {
+                    // LC_ERR << "MENU_TRIGGERED - 1";
+                    actionContext->saveContextMenuActionContext(entity, pos, false);
+                    srcAction->trigger();
+                });
+       menu->addAction(actionProxy);
+    }
 }

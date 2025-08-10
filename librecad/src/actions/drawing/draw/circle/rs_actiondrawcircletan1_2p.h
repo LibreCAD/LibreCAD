@@ -48,7 +48,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetCircle1 = 0, //  Setting the First Circle.  */
+        SetCircle1 = InitialActionStatus, //  Setting the First Circle.  */
         SetPoint1 = 1, //  Setting the First Point.  */
         SetPoint2 = 2, //  Setting the Second Point.  */
         SetCenter //  Setting the internal or external tangent circle's center.  */
@@ -56,8 +56,10 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS_AtomicEntity *m_baseEntity = nullptr;
-
-    RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    void doInitialInit() override;
+    RS_Entity *catchTangentEntity(LC_MouseEvent *e, bool forPreview);
+    void setCircleOne(RS_Entity* en);
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

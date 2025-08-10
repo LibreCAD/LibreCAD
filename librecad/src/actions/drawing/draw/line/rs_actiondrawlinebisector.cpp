@@ -202,11 +202,13 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
             int n = std::lround(RS_Math::eval(c, &ok));
             if (ok){
                 accept= true;
-                if (n > 0 && n <= 200)
+                if (n > 0 && n <= 200) {
                     m_numberToCreate = n;
-                else
+                }
+                else {
                     commandMessage(
-                        tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
+                       tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
+                }
             } else {
                 commandMessage(tr("Not a valid expression"));
             }

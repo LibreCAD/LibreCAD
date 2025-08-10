@@ -48,7 +48,7 @@ public:
     void setCrossMode(int i) {m_crossSizeMode = i;};
 protected:
     enum Status {
-        SetEntity      /**< Choose the circle / arc. */
+        SetEntity = InitialActionStatus     /**< Choose the circle / arc. */
     };
 
     /**
@@ -85,7 +85,9 @@ protected:
      */
     double m_ucsBasisAngleDegrees = 0.0;
 
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    void collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities, QList<RS_Entity*> &entitiesForTrigger) override;
+    void doPrepareTriggerEntities(QList<RS_Entity*>& list) override;
     bool doCheckMayTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;

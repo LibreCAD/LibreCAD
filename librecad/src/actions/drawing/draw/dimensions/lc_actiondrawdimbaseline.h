@@ -49,6 +49,7 @@ protected:
     bool m_alternateMode = false;
     double m_currentDistance = 0.0;
     Status m_lastStatus = SetExtPoint1;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     bool isBaseline();
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     RS_Vector getExtensionPoint1() override;
@@ -61,6 +62,7 @@ protected:
     void doTrigger() override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void pickOriginalEntity(RS_Entity* dimCandidate, const RS_Vector& mouse);
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };

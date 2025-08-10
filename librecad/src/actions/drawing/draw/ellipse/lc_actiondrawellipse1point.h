@@ -46,7 +46,7 @@ public:
     QStringList getAvailableCommands() override;
 protected:
 enum Status{
-        SetPoint,
+        SetPoint = InitialActionStatus,
         SetMajorAngle,
         SetAngle1,
         SetAngle2

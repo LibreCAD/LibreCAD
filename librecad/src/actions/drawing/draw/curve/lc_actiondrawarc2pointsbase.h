@@ -36,7 +36,7 @@ public:
     QStringList getAvailableCommands() override;
 protected:
     enum State{
-        SetPoint1,
+        SetPoint1 = InitialActionStatus,
         SetPoint2,
         SetParameterValue
     };

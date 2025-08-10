@@ -40,12 +40,14 @@ class RS_ActionPolylineDelBetween:public LC_ActionPolylineDeleteBase {
 public:
     RS_ActionPolylineDelBetween(LC_ActionContext *actionContext);
     ~RS_ActionPolylineDelBetween() override;
-    void init(int status) override;
     void drawSnapper() override;
 protected:
     RS_Vector m_vertexToDelete2 = RS_Vector(false);
+    void doInitialInit() override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setPolylineToModify(RS_Entity* en);
     void collectEntitiesToRemove(RS_Vector vector, RS_Vector vector1, QList<RS_Entity *> &list);
     void updateMouseButtonHints() override;
     void doTrigger() override;

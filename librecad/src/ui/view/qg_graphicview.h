@@ -114,7 +114,9 @@ public:
     void setDeviceName(QString deviceName) {
         m_device = std::move(deviceName);
     }
-
+    const QList<QAction*>& getRecentActions() const {return m_recent_actions;}
+    LC_ActionContext* getActionContext() const {return m_actionContext;}
+    void launchEditProperty(RS_Entity *entity);
 protected slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -142,7 +144,6 @@ protected:
     void ucsHighlightStep();
 
     virtual void createViewRenderer();
-    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
@@ -195,7 +196,6 @@ private:
     LC_ActionContext* m_actionContext {nullptr};
 
     void showEntityPropertiesDialog(RS_Entity *entity);
-    void launchEditProperty(RS_Entity *entity);
     void editAction(RS_Entity &entity);
     // for scroll bar adjustment
     std::mutex m_scrollbarMutex;

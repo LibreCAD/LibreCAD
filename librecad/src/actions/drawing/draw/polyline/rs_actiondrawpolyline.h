@@ -82,8 +82,8 @@ protected:
             * Action States.
             */
     enum Status {
-        SetStartpoint, /*  Setting the startpoint.  */
-        SetNextPoint,  /*  Setting the endpoint.    */
+        SetStartpoint = InitialActionStatus, /*  Setting the startpoint.  */
+        SetNextPoint,                        /*  Setting the endpoint.    */
     };
 
     struct Points {

@@ -881,16 +881,6 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
     return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
 }
 
-/**
- * Called whenever the selection changed.
- */
-void QG_DialogFactory::updateSelectionWidget(int num, double length) {
-    if (m_selectionWidget != nullptr) {
-        m_selectionWidget->setNumber(num);
-        m_selectionWidget->setTotalLength(length);
-    }
-}
-
 void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display){
     if (m_selectionWidget != nullptr)    {
         m_selectionWidget->flashAuxData( QString("Block Name"),

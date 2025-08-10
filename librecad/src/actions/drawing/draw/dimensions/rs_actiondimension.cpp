@@ -43,8 +43,6 @@ RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *action
 RS_ActionDimension::~RS_ActionDimension() = default;
 
 void RS_ActionDimension::reset(){
-    RS_PreviewActionInterface::init(0);
-
     // auto dimStyleName = "Standard";
     auto dimStyleName = m_graphic->getDefaultDimStyleName();
     m_dimensionData = std::make_unique<RS_DimensionData>(RS_Vector(false),
@@ -93,16 +91,17 @@ QString RS_ActionDimension::getText() const{
 
     QString l = m_label;
 
-    if (l.isEmpty() &&
-        (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
+    if (l.isEmpty() && (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
         l = "<>";
     }
 
     if (m_diameter) {
-        if (rtti() == RS2::ActionDimRadial && !l.startsWith(g_radialPrefix))
+        if (rtti() == RS2::ActionDimRadial && !l.startsWith(g_radialPrefix)) {
             l = g_radialPrefix + l;
-        else if (l.at(0) != QChar(0x2205))
+        }
+        else if (l.at(0) != QChar(0x2205)) {
             l = QChar(0x2205) + l;
+        }
     }
     else if (l.startsWith({QChar(0x2205)})) {
         l = l.mid(1);

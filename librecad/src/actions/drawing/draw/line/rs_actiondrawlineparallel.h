@@ -50,7 +50,7 @@ public:
 private:
     // fixme - why no possibility to set distance via command line?
     enum Status {
-        SetEntity,    /**< Choose original entity. */
+        SetEntity = InitialActionStatus,    /**< Choose original entity. */
 //SetDistance,  /**< Setting distance in the command line. */
         SetNumber     /**< Setting number in the command line. */
 //SetThrough     /**< Setting a point for the parallel to go through. */

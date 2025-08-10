@@ -1711,7 +1711,7 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
 		RS_AtomicEntity* ae = nullptr;
         lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
         RS_Entity* lastEntity = traverser.last();
-        for (RS_Entity* v=traverser.first(); v != nullptr; v = traverser.next()) {
+        for (RS_Entity* v=traverser.first(); v != nullptr; v = nextEntity) {
 
             nextEntity = traverser.next();
 

@@ -625,7 +625,15 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
             LC_ERR<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
             return {};
         }
-        double u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
+
+        double u;
+        if (r.size() < 2) { // this check is needed, since in some conditions r[] may contain only one element and so the crash.. :(
+            u = std::cbrt(r[0]);
+        }
+        else {
+            u = std::signbit(q) ? std::cbrt(r[0]) : std::cbrt(r[1]);
+        }
+
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
         double v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;

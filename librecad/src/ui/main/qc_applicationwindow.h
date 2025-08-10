@@ -34,6 +34,7 @@
 
 class LC_ActionFactory;
 class LC_ActionGroupManager;
+class LC_ActionGroup;
 class LC_ActionOptionsManager;
 class LC_AnglesBasisWidget;
 class LC_AppWindowDialogsInvoker;
@@ -139,6 +140,7 @@ public slots:
     void slotShowDrawingOptions();
     void slotShowDrawingOptionsUnits();
     void slotWorkspacesMenuAboutToShow();
+    QMenu* createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view);
     void slotWindowsMenuActivated(bool);
     void slotPenChanged(const RS_Pen& p);
     void setupCustomMenu(QG_GraphicView* view);
@@ -302,9 +304,9 @@ public:
     void openFile(const QString& fileName, RS2::FormatType type);
     void changeDrawingOptions(int tabIndex);
     void closeWindow(QC_MDIWindow* w) override;
-    QG_LibraryWidget* getLibraryWidget(){return m_libraryWidget;}
-
-    LC_ActionContext* getActionContext();
+    QG_LibraryWidget* getLibraryWidget() const {return m_libraryWidget;}
+    LC_ActionGroup* getActionGroup(const QString &groupName) const;
+    LC_ActionContext* getActionContext() const;
 protected:
     void closeEvent(QCloseEvent*) override;
     bool isAcceptableDragNDropFileName(const QString& fileName);

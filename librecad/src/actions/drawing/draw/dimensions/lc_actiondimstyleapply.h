@@ -32,18 +32,20 @@ class LC_ActionDimStyleApply:public RS_PreviewActionInterface {
 public:
     // statuses of action
     enum {
-        SelectEntity,
+        SelectEntity = InitialActionStatus,
         ApplyToEntity
     };
     LC_ActionDimStyleApply(LC_ActionContext *actionContext);
     ~LC_ActionDimStyleApply() override = default;
     void init(int status) override;
     void finish(bool updateTB) override;
+    void setSourceEntity(RS_Entity* en);
 private:
     RS_Dimension* m_srcEntity {nullptr};
     RS2::EntityType m_srcEntityStyleType {RS2::EntityUnknown};
     QString m_srcEntityBaseStyleName;
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

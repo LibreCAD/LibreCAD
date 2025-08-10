@@ -46,6 +46,11 @@ LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
     m_selectedEntities.clear();
 }
 
+void LC_ActionPreSelectionAwareBase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    m_selectedEntities.push_back(contextEntity);
+    onSelectionCompleted(true, true);
+}
+
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (status < 0){

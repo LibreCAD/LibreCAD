@@ -47,14 +47,17 @@ protected:
      * Action States.
      */
     enum Status {
-        SetCircle1=0,   //  Setting the first circle.  */
-        SetCircle2=1,   //  Setting the second circle.  */
-        SetPoint=2,   //  Setting point on the desired circle.  */
+        SetCircle1 = InitialActionStatus,   //  Setting the first circle.  */
+        SetCircle2,   //  Setting the second circle.  */
+        SetPoint,   //  Setting point on the desired circle.  */
         SetCenter
     };
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    RS_Entity* catchCircle(LC_MouseEvent* e, bool forPreview);
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    void doInitialInit() override;
+    RS_Entity* catchTangentEntity(LC_MouseEvent* e, bool forPreview);
+    void setCircle(RS_Entity* en, int status);
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

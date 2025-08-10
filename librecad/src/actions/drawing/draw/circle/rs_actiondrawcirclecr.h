@@ -52,7 +52,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetCenter,         /**< Setting the center point. */
+        SetCenter  = InitialActionStatus,         /**< Setting the center point. */
         SetRadius          /**< Setting radius in command line. */
     };
     LC_ActionOptionsWidget* createOptionsWidget() override;

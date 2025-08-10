@@ -3553,7 +3553,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
     for (RS_Entity* e=traverser.first(); e != nullptr; e=traverser.next()) {
         currEntity = e;
-        nextEntity = traverser.next();
+        // nextEntity = traverser.next();
 
         if (!e->isAtomic()) {
             continue;
@@ -3594,7 +3594,7 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     lc::LC_ContainerTraverser traverser{*p, RS2::ResolveNone};
     for (RS_Entity* e=traverser.first(); e != nullptr; e=traverser.next()) {
         currEntity = e;
-        nextEntity = traverser.next();
+        // nextEntity = traverser.next();
 
         if (!e->isAtomic()) {
             continue;

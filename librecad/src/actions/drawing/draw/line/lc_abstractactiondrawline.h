@@ -54,7 +54,7 @@ public:
 protected:
     // action statuses
     enum Status {
-        SetStartPoint,
+        SetStartPoint = InitialActionStatus,
         SetDirection,
         SetDistance,
         SetPoint,

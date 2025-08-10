@@ -361,5 +361,6 @@
         <file alias="dim_apply_style.lci">dim_apply_style.svg</file>
         <file alias="dim_regenerate.lci">dim_regenerate.svg</file>
         <file alias="dim_modify_style.lci">dim_modify_style.svg</file>
+        <file alias="layer_list.lci">layer_list.svg</file>
     </qresource>
 </RCC>

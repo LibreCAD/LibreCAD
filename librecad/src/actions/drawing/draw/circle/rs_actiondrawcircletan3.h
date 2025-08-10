@@ -47,18 +47,22 @@ protected:
      * Action States.
      */
     enum Status {
-        SetCircle1,   //  Setting the First Circle.  */
-        SetCircle2,   //  Setting the Second Circle.  */
-        SetCircle3,   //  Setting the Third Circle.  */
-        SetCenter   //  select the closest tangential Circle.  */
+        SetCircle1  = InitialActionStatus,   //  Setting the First Circle.  */
+        SetCircle2,                          //  Setting the Second Circle.  */
+        SetCircle3,                          //  Setting the Third Circle.  */
+        SetCenter                            //  select the closest tangential Circle.  */
     };
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    void doInitialInit() override;
+
     void drawSnapper() override;
     bool preparePreview();
     RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
+    void setCircle(RS_Entity* en, int status);
     bool getData(RS_Entity *en = nullptr);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
     RS2::CursorType doGetMouseCursor(int status) override;

@@ -49,6 +49,12 @@ void RS_ActionDimAngular::reset(){
     updateOptions();
 }
 
+void RS_ActionDimAngular::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    if (isLine(contextEntity)) {
+        setFirstLine(contextEntity, clickPos);
+    }
+}
+
 void RS_ActionDimAngular::doTrigger() {
     if (m_line1->getStartpoint().valid && m_line2->getStartpoint().valid) {
         auto* newEntity = new RS_DimAngular( m_container,*m_dimensionData,*m_edata);
@@ -109,15 +115,19 @@ void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionDimAngular::setFirstLine(RS_Entity* en, const RS_Vector& pos) {
+    m_line1 = dynamic_cast<RS_Line *>(en);
+    m_click1 = m_line1->getNearestPointOnEntity(pos);
+    setStatus(SetLine2);
+}
+
 void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     const RS_Vector &pos = e->graphPoint;
     switch (status) {
         case SetLine1: {
             RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine,RS2::ResolveAll);
             if (en != nullptr){
-                m_line1 = dynamic_cast<RS_Line *>(en);
-                m_click1 = m_line1->getNearestPointOnEntity(pos);
-                setStatus(SetLine2);
+                setFirstLine(en, pos);
             }
             break;
         }

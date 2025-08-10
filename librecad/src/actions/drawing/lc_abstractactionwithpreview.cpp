@@ -61,6 +61,17 @@ LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_A
     m_highlightedEntity{nullptr}{
 }
 
+void LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities, QList<RS_Entity*> &entitiesForTrigger) {
+    for (RS_Entity *e: *m_container) {
+        if (!e->isUndone() && e->isSelected()){
+            selectedEntities << e;
+            // check whether specific entity is suitable for processing
+            if (isAcceptSelectedEntityToTriggerOnInit(e)){
+                entitiesForTrigger << e;
+            }
+        }
+    }
+}
 
 /**
  * Init of action with build-in support of trigger on init invocation (if there are already selected entities
@@ -71,19 +82,12 @@ void LC_AbstractActionWithPreview::init(int status){
     RS_PreviewActionInterface::init(status);
     // check whether we may trigger with such status
     // fixme - refactor to separate methods
-    if (doCheckMayTriggerOnInit(status)){
+    if (doCheckMayTriggerOnInit(getStatus())){
         // collect selected entities
+
         QList<RS_Entity*> selectedEntities;
         QList<RS_Entity*> entitiesForTrigger;
-        for (RS_Entity *e: *m_container) {
-            if (e->isSelected()){
-                selectedEntities << e;
-                // check whether specific entity is suitable for processing
-                if (isAcceptSelectedEntityToTriggerOnInit(e)){
-                    entitiesForTrigger << e;
-                }
-            }
-        }
+        collectEntitiesForTriggerOnInit(selectedEntities, entitiesForTrigger);
         if (!entitiesForTrigger.isEmpty()){
             showOptions(); // use this as simplest way to read settings for the action
             if (m_document){

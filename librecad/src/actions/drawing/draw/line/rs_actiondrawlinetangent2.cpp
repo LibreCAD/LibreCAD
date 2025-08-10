@@ -80,8 +80,9 @@ void RS_ActionDrawLineTangent2::finish(bool updateTB){
 }
 
 void RS_ActionDrawLineTangent2::doTrigger() {
-    if (m_actionData->tangents.empty() || m_actionData->tangents.front() == nullptr)
+    if (m_actionData->tangents.empty() || m_actionData->tangents.front() == nullptr) {
         return;
+    }
 
     auto *newEntity = new RS_Line{m_container, m_actionData->tangents.front()->getData()};
 
@@ -137,7 +138,9 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
     switch (status) {
         case SetCircle1: {
             m_actionData->circle1 = catchEntityByEvent(e, circleType, RS2::ResolveAll);
-            if (!m_actionData->circle1) return;
+            if (m_actionData->circle1 == nullptr) {
+                return;
+            }
             init(status + 1);
             break;
         }
@@ -155,8 +158,9 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
             break;
         }
         case SelectLine: {
-            if (!m_actionData->tangents.empty())
+            if (!m_actionData->tangents.empty()) {
                 trigger();
+            }
             break;
         }
         default:
@@ -167,10 +171,8 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
 void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deleteSnapper();
     deletePreview();
-    if (status == SetCircle1){
-        if (m_actionData->circle1 != nullptr){
-            m_actionData->circle1 = nullptr;
-        }
+    if (status == SetCircle1) {
+        m_actionData->circle1 = nullptr;
     }
     initPrevious(status);
 }

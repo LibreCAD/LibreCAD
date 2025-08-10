@@ -26,6 +26,7 @@
 
 #include "rs_actionpolylinetrim.h"
 
+#include "lc_actioncontext.h"
 #include "rs_atomicentity.h"
 #include "rs_debug.h"
 #include "rs_modification.h"
@@ -36,10 +37,14 @@ RS_ActionPolylineTrim::RS_ActionPolylineTrim(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Trim segments",actionContext, RS2::ActionPolylineTrim) {
 }
 
+void RS_ActionPolylineTrim::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    setPolylineToModify(contextEntity);
+}
+
 void RS_ActionPolylineTrim::init(int status) {
-    RS_PreviewActionInterface::init(status);
     m_polylineToModify = nullptr;
     m_segment1 = m_segment2 = nullptr;
+    RS_PreviewActionInterface::init(status);
 }
 
 void RS_ActionPolylineTrim::doTrigger() {
@@ -107,21 +112,25 @@ void RS_ActionPolylineTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionPolylineTrim::setPolylineToModify(RS_Entity* en) {
+    if (en == nullptr){
+        commandMessage(tr("No Entity found."));
+    } else if (en->rtti() != RS2::EntityPolyline){
+        commandMessage(tr("Entity must be a polyline."));
+    } else {
+        m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
+        m_polylineToModify->setSelected(true);
+        redraw();
+        setStatus(SetSegment1);
+        redraw(); // fixme - why redraw twice??
+    }
+}
+
 void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity: {
             auto en = catchEntityByEvent(e);
-            if (en == nullptr){
-                commandMessage(tr("No Entity found."));
-            } else if (en->rtti() != RS2::EntityPolyline){
-                commandMessage(tr("Entity must be a polyline."));
-            } else {
-                m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                m_polylineToModify->setSelected(true);
-                redraw();
-                setStatus(SetSegment1);
-                redraw(); // fixme - why redraw twice??
-            }
+            setPolylineToModify(en);
             invalidateSnapSpot();
             break;
         }
@@ -151,7 +160,6 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *
         default:
             break;
     }
-
 }
 
 void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {

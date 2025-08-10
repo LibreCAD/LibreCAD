@@ -50,7 +50,7 @@ public:
     void setSymmetric(bool value){m_symmetric = value;};
 protected:
     enum Status {
-        SetEntity,    /**< Choose original entity. */
+        SetEntity = InitialActionStatus,    /**< Choose original entity. */
         SetPos,       /**< Setting point for this parallel to go through. */
         SetNumber     /**< Setting number in the command line. */
     };

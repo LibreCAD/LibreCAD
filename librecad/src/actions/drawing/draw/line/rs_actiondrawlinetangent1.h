@@ -51,7 +51,7 @@ protected:
     void doTrigger() override;
 private:
     enum Status {
-        SetPoint,     /**< Choose the startpoint. */
+        SetPoint = InitialActionStatus,     /**< Choose the startpoint. */
         SetCircle      /**< Choose the circle / arc. */
     };
 

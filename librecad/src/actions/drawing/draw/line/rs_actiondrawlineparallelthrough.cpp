@@ -48,11 +48,11 @@ void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
 }
 
 void RS_ActionDrawLineParallelThrough::doTrigger() {
-    if (m_entity){
+    if (m_entity != nullptr){
         RS_Creation creation(m_container, m_viewport);
         RS_Entity *e = creation.createParallelThrough(*m_coord,m_numberToCreate,m_entity, m_symmetric);
 
-        if (!e){
+        if (e == nullptr){
             RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger: No parallels added\n");
         }
     }
@@ -110,7 +110,7 @@ void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, LC_M
     switch (status) {
         case SetEntity:
             m_entity = catchEntityByEvent(e, RS2::ResolveAll);
-            if (m_entity){
+            if (m_entity != nullptr){
                 setStatus(SetPos);
             }
             break;
@@ -125,7 +125,7 @@ void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, LC_M
 
 void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
-    if (m_entity){
+    if (m_entity != nullptr){
         m_entity = nullptr;
     }
     initPrevious(status);

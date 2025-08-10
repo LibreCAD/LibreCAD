@@ -41,6 +41,10 @@ void LC_ActionDimStyleApply::init(int status){
     }
 }
 
+void LC_ActionDimStyleApply::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    setSourceEntity(contextEntity);
+}
+
 void LC_ActionDimStyleApply::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status){
         case SelectEntity:
@@ -65,23 +69,29 @@ void LC_ActionDimStyleApply::finish(bool updateTB){
     m_srcEntity = nullptr;
 }
 
+void LC_ActionDimStyleApply::setSourceEntity(RS_Entity* en) {
+    RS2::EntityType dimensionType = en->rtti();
+    bool dimensionalEntity = RS2::isDimensionalEntity(dimensionType);
+    // selection of entity that will be used as source for pen
+    if (dimensionalEntity) {
+        m_srcEntity = static_cast<RS_Dimension*>(en);
+        QString styleName = m_srcEntity->getStyle();
+        LC_DimStyle::parseStyleName(styleName, m_srcEntityBaseStyleName, m_srcEntityStyleType);
+        setStatus(ApplyToEntity);
+    }
+}
+
 void LC_ActionDimStyleApply::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Entity* en = catchEntityByEvent(e, RS2::ResolveNone);
     if(en != nullptr){
-        RS2::EntityType dimensionType = en->rtti();
-        bool dimensionalEntity = RS2::isDimensionalEntity(dimensionType);
         switch (getStatus()){
             case SelectEntity:{
-                // selection of entity that will be used as source for pen
-                if (dimensionalEntity) {
-                    m_srcEntity = static_cast<RS_Dimension*>(en);
-                    QString styleName = m_srcEntity->getStyle();
-                    LC_DimStyle::parseStyleName(styleName, m_srcEntityBaseStyleName, m_srcEntityStyleType);
-                    setStatus(ApplyToEntity);
-                }
+                setSourceEntity(en);
                 break;
             }
             case ApplyToEntity:{
+                RS2::EntityType dimensionType = en->rtti();
+                bool dimensionalEntity = RS2::isDimensionalEntity(dimensionType);
                 if (!en->isLocked() && en != m_srcEntity && dimensionalEntity){
 
                     auto clone = en->clone();

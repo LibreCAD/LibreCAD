@@ -58,6 +58,7 @@ void LC_DefaultActionContext::updateSelectionWidget(int countSelected, double se
         m_selectionWidget->setNumber(countSelected);
         m_selectionWidget->setTotalLength(selectedLength);
     }
+    m_selectionCount = countSelected;
 }
 
 void LC_DefaultActionContext::updateMouseWidget(const QString &left, const QString &right, const LC_ModifiersInfo &modifiers){

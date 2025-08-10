@@ -63,6 +63,8 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
     QG_ActionHandler* capturedHandler = m_actionHandler;
     connect(action, &QAction::triggered, capturedHandler, [ capturedHandler, actionType](bool){ // fixme - sand - simplify by using data() on QAction and sender()
         // LC_ERR << " ++ captured action handler "<<   capturedHandler;
+
+
         capturedHandler->setCurrentAction(actionType);
     });
     LC_ActionGroupManager::associateQActionWithActionType(action, actionType);

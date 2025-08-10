@@ -25,9 +25,10 @@
 #include "qg_dimoptions.h"
 #include "rs_constructionline.h"
 #include "rs_dimaligned.h"
-#include "rs_dimlinear.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
 
+class RS_Polyline;
 // some functions are duplicated with DimLiner action, however, that's intentional as later we can support angular dimensions in additional to linear ones
 LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(LC_ActionContext *actionContext, RS2::ActionType type)
        :LC_ActionDimLinearBase(type == RS2::ActionDimBaseline? "Draw Dim Baseline": "Draw Dim Continue", actionContext, RS2::EntityUnknown, type),
@@ -35,15 +36,24 @@ LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(LC_ActionContext *actionConte
 }
 
 namespace {
-    //list of entity types supported by current action - line, arc, circle
+    //list of dimensions supported by current action - linear, aligned
+    // fixme - sand - add support for angular dimensions
+    // fixme - sand - add support of copying style of original dimension,
+    // fixme - sand - add support for distance for baseline obtained from the style
     const auto dimEntityTypes = EntityTypeList{RS2::EntityDimLinear, RS2::EntityDimAligned};
 }
 
 void LC_ActionDrawDimBaseline::reset(){
     RS_ActionDimension::reset();
-
     double oldAngle = m_edata->angle; // keep selected angle
     *m_edata = {{}, {}, oldAngle, 0.0};
+}
+
+void LC_ActionDrawDimBaseline::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    int rtti = contextEntity->rtti();
+    if (dimEntityTypes.contains(rtti)) {
+        pickOriginalEntity(contextEntity, clickPos);
+    }
 }
 
 void LC_ActionDrawDimBaseline::doTrigger() {
@@ -255,62 +265,68 @@ void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, LC_MouseEven
     fireCoordinateEvent(snap);
 }
 
+void LC_ActionDrawDimBaseline::pickOriginalEntity(RS_Entity* dimCandidate, const RS_Vector& mouse) {
+    RS_Vector extPoint1;
+    RS_Vector extPoint2;
+    RS_Vector dim1;
+    RS_Vector dim2;
+    double dimAngle;
+
+    int rtti = dimCandidate->rtti();
+    switch (rtti){
+        case RS2::EntityDimLinear:{
+            auto dimLinear = dynamic_cast<RS_DimLinear *>(dimCandidate);
+            extPoint1 = dimLinear->getExtensionPoint1();
+            extPoint2 = dimLinear->getExtensionPoint2();
+            dimLinear->getDimPoints(dim1, dim2);
+            m_baseDefPoint = dimLinear->getDefinitionPoint();
+            dimAngle = dimLinear->getAngle();
+            m_dimDirectionAngle = extPoint1.angleTo(dim1);
+            break;
+        }
+        case RS2::EntityDimAligned:{
+            auto dimAligned = dynamic_cast<RS_DimAligned *>(dimCandidate);
+            extPoint1 = dimAligned->getExtensionPoint1();
+            extPoint2 = dimAligned->getExtensionPoint2();
+            dimAligned->getDimPoints(dim1, dim2);
+            m_baseDefPoint = dimAligned->getDefinitionPoint();
+            dimAngle = extPoint1.angleTo(extPoint2);
+            m_dimDirectionAngle = extPoint2.angleTo(dim2);
+            break;
+        }
+        case RS2::EntityDimAngular:
+            [[fallthrough]];
+        default:
+            dimAngle = 0.0; // just to avoid warning
+            return;
+    }
+
+    double dist1 = mouse.distanceTo(dim1);
+    double dist2 = mouse.distanceTo(dim2);
+
+    bool dim1CloserToMouse = dist1 < dist2;
+    if (m_alternateMode){
+        dim1CloserToMouse = !dim1CloserToMouse;
+    }
+    if (dim1CloserToMouse){
+        m_edata->extensionPoint1 = extPoint1;
+        m_prevExtensionPointEnd = extPoint2;
+    } else {
+        m_edata->extensionPoint1 = extPoint2;
+        m_prevExtensionPointEnd = extPoint1;
+    }
+
+    m_edata->angle =  dimAngle;
+    moveRelativeZero(m_edata->extensionPoint1);
+    setStatus(SetExtPoint2);
+}
+
 void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status){
         case SetExtPoint1: {
             auto dimCandidate = RS_Snapper::catchEntity(mouse, dimEntityTypes, RS2::ResolveNone);
             if (dimCandidate != nullptr) {
-                RS_Vector extPoint1;
-                RS_Vector extPoint2;
-                RS_Vector dim1;
-                RS_Vector dim2;
-                double dimAngle;
-
-                int rtti = dimCandidate->rtti();
-                switch (rtti){
-                    case RS2::EntityDimLinear:{
-                        auto dimLinear = dynamic_cast<RS_DimLinear *>(dimCandidate);
-                        extPoint1 = dimLinear->getExtensionPoint1();
-                        extPoint2 = dimLinear->getExtensionPoint2();
-                        dimLinear->getDimPoints(dim1, dim2);
-                        m_baseDefPoint = dimLinear->getDefinitionPoint();
-                        dimAngle = dimLinear->getAngle();
-                        m_dimDirectionAngle = extPoint1.angleTo(dim1);
-                        break;
-                    }
-                    case RS2::EntityDimAligned:{
-                        auto dimAligned = dynamic_cast<RS_DimAligned *>(dimCandidate);
-                        extPoint1 = dimAligned->getExtensionPoint1();
-                        extPoint2 = dimAligned->getExtensionPoint2();
-                        dimAligned->getDimPoints(dim1, dim2);
-                        m_baseDefPoint = dimAligned->getDefinitionPoint();
-                        dimAngle = extPoint1.angleTo(extPoint2);
-                        m_dimDirectionAngle = extPoint2.angleTo(dim2);
-                        break;
-                    }
-                    default:
-                        dimAngle = 0.0; // just to avoid warning
-                        break;
-                }
-
-                double dist1 = mouse.distanceTo(dim1);
-                double dist2 = mouse.distanceTo(dim2);
-
-                bool dim1CloserToMouse = dist1 < dist2;
-                if (m_alternateMode){
-                    dim1CloserToMouse = !dim1CloserToMouse;
-                }
-                if (dim1CloserToMouse){
-                    m_edata->extensionPoint1 = extPoint1;
-                    m_prevExtensionPointEnd = extPoint2;
-                } else {
-                    m_edata->extensionPoint1 = extPoint2;
-                    m_prevExtensionPointEnd = extPoint1;
-                }
-
-                m_edata->angle =  dimAngle;
-                moveRelativeZero(m_edata->extensionPoint1);
-                setStatus(SetExtPoint2);
+                pickOriginalEntity(dimCandidate, mouse);
             }
             break;
         }

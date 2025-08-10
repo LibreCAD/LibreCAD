@@ -42,7 +42,7 @@ public:
      * Action states
      */
     enum {
-        SetLine,
+        SetLine = InitialActionStatus,
         SetTickLength
     };
 

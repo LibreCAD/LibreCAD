@@ -377,7 +377,7 @@ void QC_ApplicationWindow::enableFileActions(const QC_MDIWindow *w) {
         },hasWindow && m_windowList.count() > 1);
 }
 
-LC_ActionContext* QC_ApplicationWindow::getActionContext() {
+LC_ActionContext* QC_ApplicationWindow::getActionContext() const {
     return m_actionContext;
 }
 
@@ -509,8 +509,10 @@ void QC_ApplicationWindow::slotKillAllActions() {
             auto doc = gv->getContainer();
             if (doc != nullptr) {
                 const RS_EntityContainer::LC_SelectionInfo &selectionInfo = doc->getSelectionInfo();
-                m_selectionWidget->setNumber((int)selectionInfo.count);
-                m_selectionWidget->setTotalLength(selectionInfo.length);
+
+                m_actionContext->updateSelectionWidget((int)selectionInfo.count, selectionInfo.length);
+                // m_selectionWidget->setNumber((int)selectionInfo.count);
+                // m_selectionWidget->setTotalLength(selectionInfo.length);
             }
         }
     }
@@ -686,6 +688,10 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
  */
 void QC_ApplicationWindow::slotWorkspacesMenuAboutToShow() {
     m_menuFactory->onWorkspaceMenuAboutToShow(m_windowList);
+}
+
+QMenu* QC_ApplicationWindow::createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view) {
+    return m_menuFactory->createGraphicViewContextMenu(event, view);
 }
 
 /**
@@ -1802,6 +1808,10 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) const {
 
 QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
     return m_actionGroupManager->getActionByName(actionName);
+}
+
+LC_ActionGroup* QC_ApplicationWindow::getActionGroup(const QString &groupName) const {
+    return m_actionGroupManager->getActionGroup(groupName);
 }
 
 // todo - think later about staying with signal-slot approach... current one is too explicit

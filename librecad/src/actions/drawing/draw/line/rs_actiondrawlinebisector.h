@@ -51,7 +51,7 @@ public:
 
 protected:
     enum Status {
-        SetLine1,     /**< Choose the 1st line. */
+        SetLine1 = InitialActionStatus,     /**< Choose the 1st line. */
         SetLine2,     /**< Choose the 2nd line. */
         SetLength,    /**< Set length in command line. */
         SetNumber     /**< Set number in command line. */

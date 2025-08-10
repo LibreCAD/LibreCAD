@@ -28,9 +28,8 @@
 #include "rs_line.h"
 
 namespace {
-
     //list of entity types supported by current action - only lines so far
-    const auto g_enTypeList = EntityTypeList{RS2::EntityLine};
+   const auto g_enTypeList = EntityTypeList{RS2::EntityLine};
 }
 
 LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
@@ -38,8 +37,16 @@ LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
 }
 
 void LC_ActionDrawMidLine::init(int status) {
-    RS_PreviewActionInterface::init(status);
     m_mainStatus = SetEntity1;
+    RS_PreviewActionInterface::init(status);
+}
+
+void LC_ActionDrawMidLine::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    if (g_enTypeList.contains(contextEntity->rtti())) {
+        m_firstEntity = contextEntity;
+        setStatus(SetEntity2);
+        m_mainStatus = SetEntity2;
+    }
 }
 
 void LC_ActionDrawMidLine::doTrigger() {

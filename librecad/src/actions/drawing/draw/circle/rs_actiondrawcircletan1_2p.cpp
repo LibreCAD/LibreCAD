@@ -66,12 +66,21 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
     }
 }
 
-
 void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
     if (m_baseEntity){
         redrawDrawing();
     }
     RS_PreviewActionInterface::finish(updateTB);
+}
+
+void RS_ActionDrawCircleTan1_2P::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+     if (g_enTypeList.contains(contextEntity->rtti())) {
+         setCircleOne(contextEntity);
+     }
+}
+
+void RS_ActionDrawCircleTan1_2P::doInitialInit() {
+    LC_ActionDrawCircleBase::doInitialInit();
 }
 
 void RS_ActionDrawCircleTan1_2P::doTrigger() {
@@ -94,7 +103,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
     switch (status) {
         case SetCircle1:{
             deleteSnapper();
-            RS_Entity *en = catchCircle(e, true);
+            RS_Entity *en = catchTangentEntity(e, true);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -111,8 +120,9 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     const RS_Vector &baseEntityCenter = m_baseEntity->getCenter();
                     RS_Vector const &dvp = mouse - baseEntityCenter;
                     double rvp = dvp.magnitude();
-                    if (rvp < RS_TOLERANCE2)
+                    if (rvp < RS_TOLERANCE2) {
                         break;
+                    }
                     m_actionData->cData.radius = (baseEntityRadius + rvp) * 0.5;
                     m_actionData->cData.center = baseEntityCenter + dvp * (m_actionData->cData.radius / rvp);
                     m_actionData->cData.radius = fabs(baseEntityRadius - m_actionData->cData.radius);
@@ -271,14 +281,18 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
 }
 
 bool RS_ActionDrawCircleTan1_2P::preparePreview(){
-    if (m_actionData->centers.empty()) getCenters();
-    if (m_actionData->centers.empty()) return false;
+    if (m_actionData->centers.empty()) {
+        getCenters();
+    }
+    if (m_actionData->centers.empty()) {
+        return false;
+    }
     m_actionData->cData.center = m_actionData->centers.getClosest(m_actionData->coord);
     m_actionData->cData.radius = m_actionData->points[0].distanceTo(m_actionData->cData.center);
     return true;
 }
 
-RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(LC_MouseEvent *e, bool forPreview){
+RS_Entity *RS_ActionDrawCircleTan1_2P::catchTangentEntity(LC_MouseEvent *e, bool forPreview){
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview){
@@ -297,16 +311,20 @@ RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(LC_MouseEvent *e, bool forPre
     return en;
 }
 
+void RS_ActionDrawCircleTan1_2P::setCircleOne(RS_Entity* en) {
+    m_baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
+    redrawDrawing();
+    setStatus(SetPoint1);
+}
+
 void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1: {
-            RS_Entity *en = catchCircle(e, false);
+            RS_Entity *en = catchTangentEntity(e, false);
             if (en == nullptr){
                 return;
             }
-            m_baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
-            redrawDrawing();
-            setStatus(status + 1);
+            setCircleOne(en);
             invalidateSnapSpot();
             break;
         }

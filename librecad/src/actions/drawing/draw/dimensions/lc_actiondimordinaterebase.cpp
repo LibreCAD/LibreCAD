@@ -29,10 +29,13 @@
 
 class LC_DimOrdinate;
 
-LC_ActionDimOrdinateRebase::LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext):LC_ActionPreSelectionAwareBase("DimOrdinateRebase",
-                                                                                                                       actionContext, RS2::ActionDimOrdRebase) {
+LC_ActionDimOrdinateRebase::LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext)
+    :LC_ActionPreSelectionAwareBase("DimOrdinateRebase", actionContext, RS2::ActionDimOrdRebase) {
 }
 
+void LC_ActionDimOrdinateRebase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    LC_ActionPreSelectionAwareBase::doInitWithContextEntity(contextEntity, clickPos);
+}
 
 void LC_ActionDimOrdinateRebase::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select Ordinate dimension to rebase (Enter - to complete)", MOD_CTRL(tr("Select and rebase")));

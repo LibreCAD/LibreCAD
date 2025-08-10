@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dimension.h"
 #include "rs_dimlinear.h"
 #include "rs_entity.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
 
 LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext,  RS2::EntityType dimType, RS2::ActionType actionType):
@@ -50,6 +51,19 @@ void LC_ActionDimLinearBase::doTrigger() {
     dim->update();
     undoCycleAdd(dim);
     RS_DEBUG->print("LC_ActionDimLinearBase::trigger(): dim added: %lu", dim->getId());
+}
+
+void LC_ActionDimLinearBase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(contextEntity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        setExtensionPoint1(entity->getStartpoint());
+        setExtensionPoint2(entity->getEndpoint());
+        setStatus(SetDefPoint);
+    }
 }
 
 void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {

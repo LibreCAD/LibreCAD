@@ -51,7 +51,7 @@ public:
 
 protected:
     enum{
-        SetArc
+        SetArc = InitialActionStatus
     };
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayTrigger() override;

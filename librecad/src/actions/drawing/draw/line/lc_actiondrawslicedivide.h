@@ -52,7 +52,7 @@ public:
      * action state
      */
     enum {
-        SetEntity
+        SetEntity = InitialActionStatus
     };
 
     /**

@@ -36,3 +36,25 @@ void LC_ActionContext::setDocumentAndView(RS_Document *document, RS_GraphicView 
         m_graphicView = view;
         m_entityContainer = document;
 }
+
+void LC_ActionContext::saveContextMenuActionContext(RS_Entity* entity, const RS_Vector& position, bool clearEntitySelection) {
+    m_contextMenuActionEntity = entity;
+    m_contextMenuClickPosition = position;
+    m_uselectContextMenuActionEntity = clearEntitySelection;
+}
+
+void LC_ActionContext::clearContextMenuActionContext() {
+    if (m_uselectContextMenuActionEntity) {
+        m_contextMenuActionEntity->setSelected(false);
+    }
+    m_contextMenuActionEntity = nullptr;
+    m_contextMenuClickPosition = RS_Vector(false);
+}
+
+RS_Entity* LC_ActionContext::getContextMenuActionContextEntity() {
+    return m_contextMenuActionEntity;
+}
+
+RS_Vector LC_ActionContext::getContextMenuActionClickPosition() {
+    return m_contextMenuClickPosition;
+}

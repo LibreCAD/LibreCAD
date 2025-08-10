@@ -64,6 +64,9 @@ namespace{
 class RS_ActionInterface : public RS_Snapper {
 Q_OBJECT
 public:
+    enum ActionStatus {
+        InitialActionStatus = 0
+    };
     RS_ActionInterface(const char* name,
                        LC_ActionContext *actionContext,
                        RS2::ActionType actionType /*= RS2::ActionNone*/);
@@ -133,6 +136,9 @@ protected:
     RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
     double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
+
+    virtual void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos);
+    virtual void doInitialInit();
 
     void switchToAction(RS2::ActionType actionType, void* data = nullptr);
     QString msgAvailableCommands();

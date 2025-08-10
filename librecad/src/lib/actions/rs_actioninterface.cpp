@@ -121,15 +121,32 @@ void RS_ActionInterface::setName(const char* _name) {
  */
 void RS_ActionInterface::init(int status){
     setStatus(status);
-    if (status>=0) {
+    if (status >= InitialActionStatus) {
         RS_Snapper::init();
         updateMouseButtonHints();
         updateMouseCursor();
-    }else{
+        if (status == InitialActionStatus) {
+            doInitialInit();
+            auto contextEntity = m_actionContext->getContextMenuActionContextEntity();
+            if (contextEntity != nullptr) {
+                // LC_ERR << "Action CTX INIT " << m_name;
+                doInitWithContextEntity(contextEntity, m_actionContext->getContextMenuActionClickPosition());
+                m_actionContext->clearContextMenuActionContext();
+            }
+        }
+    } else{
         //delete snapper when finished, bug#3416878
         deleteSnapper();
     }
 }
+
+void RS_ActionInterface::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+}
+
+void RS_ActionInterface::doInitialInit() {
+}
+
+
 /**
  * Called when the mouse moves and this is the current action.
  * This function can be overwritten by the implementing action.

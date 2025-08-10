@@ -41,7 +41,7 @@ public:
     void finish(bool updateTB) override;
 protected:
     enum Status {
-        SetLine,     /**< Choose the line orthogonal to the tangent line */
+        SetLine = InitialActionStatus,     /**< Choose the line orthogonal to the tangent line */
         SetCircle    /**< Choose the arc/circle/ellipse to create its tangent line*/
     };
 

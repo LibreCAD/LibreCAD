@@ -51,11 +51,13 @@ protected:
      * Action States.
      */
     enum Status {
-        ChooseEntity = 0 /**< Choosing one of the polyline segments. */
+        ChooseEntity = InitialActionStatus /**< Choosing one of the polyline segments. */
     };
 
     RS_Entity *m_targetEntity = nullptr;
     bool m_initWithTarget{false};
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
 
     //! create polyline from segments
 //! @param useSelected only create from selected entities

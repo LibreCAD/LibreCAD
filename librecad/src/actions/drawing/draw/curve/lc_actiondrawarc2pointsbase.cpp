@@ -134,8 +134,9 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(int status, const QString &co
            }else {
                commandMessage(tr("Positive value is expected"));
            }
-       } else
+       } else {
            commandMessage(tr("Not a valid expression"));
+       }
        accept = true;
    }
    return accept;

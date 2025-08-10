@@ -28,7 +28,10 @@
 #include "lc_graphicviewport.h"
 #include "lc_ucs.h"
 #include "rs_document.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
+
+class RS_Polyline;
 
 struct LC_ActionDimOrdinate::ActionData {
     ActionData() = default;
@@ -46,8 +49,35 @@ LC_ActionDimOrdinate::LC_ActionDimOrdinate(LC_ActionContext* context)
 
 LC_ActionDimOrdinate::~LC_ActionDimOrdinate()  = default;
 
-void LC_ActionDimOrdinate::initFromGraphic(RS_Graphic* graphic) {
-    RS_ActionDimension::initFromGraphic(graphic);
+void LC_ActionDimOrdinate::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    RS_Vector pos;
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        auto startPoint = entity->getStartpoint();
+        auto endPoint = entity->getEndpoint();
+        double distToStart = startPoint.distanceTo(clickPos);
+        double distToEnd = endPoint.distanceTo(clickPos);
+        if (distToEnd < distToStart) {
+            pos = endPoint;
+        }
+        else {
+            pos = startPoint;
+        }
+    }
+    else if (isArc(entity) || isCircle(entity) || isEllipse(entity)) {
+        pos = entity->getCenter();
+    }
+    else {
+        return;
+    }
+
+    m_actionData->m_wcsFeaturePoint = pos;
+    moveRelativeZero(pos);
+    setStatus(SetLeaderEnd);
 }
 
 void LC_ActionDimOrdinate::doTrigger() {

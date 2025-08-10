@@ -36,7 +36,7 @@ public:
     QStringList getAvailableCommands() override;
 protected:
     enum State {
-        ShowDialog,
+        ShowDialog = InitialActionStatus,
         SetInsertionPoint
     };
 

@@ -23,7 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONCONTEXT_H
 
 #include "rs.h"
+#include "rs_vector.h"
 
+class RS_Entity;
 class QString;
 
 struct RS_SnapMode;
@@ -68,9 +70,18 @@ public:
 
     virtual void setSnapMode([[maybe_unused]]const RS_SnapMode &mode) {}
     virtual void setCurrentAction(RS2::ActionType, [[maybe_unused]]void* data){}
+    int getSelectedEntitiesCount() const {return m_selectionCount;}
+    void saveContextMenuActionContext(RS_Entity* entity, const RS_Vector &position, bool clearEntitySelection);
+    void clearContextMenuActionContext();
+    RS_Entity* getContextMenuActionContextEntity();
+    RS_Vector getContextMenuActionClickPosition();
 protected:
     RS_EntityContainer * m_entityContainer {nullptr};
     RS_GraphicView * m_graphicView {nullptr};
+    int m_selectionCount{0};
+    RS_Vector m_contextMenuClickPosition {false};
+    RS_Entity* m_contextMenuActionEntity {nullptr};
+    bool m_uselectContextMenuActionEntity {false};
 };
 
 #endif // LC_ACTIONCONTEXT_H

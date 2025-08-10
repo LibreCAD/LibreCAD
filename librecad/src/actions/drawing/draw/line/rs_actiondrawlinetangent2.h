@@ -44,7 +44,7 @@ public:
     void finish(bool updateTB) override;
 protected:
     enum Status {
-        SetCircle1,     /**< Choose the startpoint. */
+        SetCircle1 = InitialActionStatus,     /**< Choose the startpoint. */
         SetCircle2,     /**< Choose the circle / arc. */
         SelectLine      /**<Choose the tangent*/
     };

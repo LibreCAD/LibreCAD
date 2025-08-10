@@ -79,7 +79,7 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"ucs", tr("UCS"), tr("UCS operations"), ":/icons/set_ucs.lci"},
         {"widgets", tr("Widgets"), tr("Widgets management"), ":/icons/dockwidgets_bottom.lci", false},
         {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false},
-        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/info_cursor_enable.lci", false}
+        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/layer_list.lci.lci", false}
     },agm);
 
     auto fileGroup = agm->getGroupByName("file");
@@ -213,8 +213,8 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawLineAngleRel",         RS2::ActionDrawLineAngleRel,        tr("Angle From Line"),        ":/icons/line_angle_rel.lci"},
         {"DrawLineOrthogonalRel",    RS2::ActionDrawLineOrthogonalRel,   tr("Orthogonal From Line"),   ":/icons/line_ortho_rel.lci"},
         {"DrawLineFromPointToLine",  RS2::ActionDrawLineFromPointToLine, tr("From Point To Line"),     ":/icons/line_to_ortho.lci"},
-        {"DrawLineMiddle",           RS2::ActionDrawLineMiddle,          tr("Middle Line"),            ":/icons/line_middle.lci"},
-        {"DrawCross",                RS2::ActionDrawCross,               tr("Cross"),                  ":/icons/cross_circle1.lci"},
+        {"DrawLineMiddle",           RS2::ActionDrawLineMiddle,          tr("Centerline"),            ":/icons/line_middle.lci"},
+        {"DrawCross",                RS2::ActionDrawCross,               tr("Center Mark"),              ":/icons/cross_circle1.lci"},
         {"DrawSliceDivideLine",      RS2::ActionDrawSliceDivideLine,     tr("Slice/Divide Line"),      ":/icons/slice_divide.lci"},
         {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   tr("Slice/Divide Circle"),    ":/icons/slice_divide_circle.lci"}
     });
@@ -253,9 +253,9 @@ void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QAc
         {"DrawCircle3P",       RS2::ActionDrawCircle3P,       tr("3 Points"),                      ":/icons/circle_3_points.lci"},
         {"DrawCircleParallel", RS2::ActionDrawCircleParallel, tr("&Concentric"),                   ":/icons/circle_concentric.lci"},
         {"DrawCircleInscribe", RS2::ActionDrawCircleInscribe, tr("Circle &Inscribed"),             ":/icons/circle_inscribed.lci"},
-        {"DrawCircleTan2",     RS2::ActionDrawCircleTan2,     tr("Tangential 2 Circles, Radius"),  ":/icons/circle_tangential_2circles_radius.lci"},
-        {"DrawCircleTan2_1P",  RS2::ActionDrawCircleTan2_1P,  tr("Tangential 2 Circles, 1 Point"), ":/icons/circle_tangential_2circles_point.lci"},
-        {"DrawCircleTan3",     RS2::ActionDrawCircleTan3,     tr("Tangential &3 Circles"),         ":/icons/circle_tangential_3entities.lci"},
+        {"DrawCircleTan2",     RS2::ActionDrawCircleTan2,     tr("Tangential 2 Entities, Radius"),  ":/icons/circle_tangential_2circles_radius.lci"},
+        {"DrawCircleTan2_1P",  RS2::ActionDrawCircleTan2_1P,  tr("Tangential 2 Entities, 1 Point"), ":/icons/circle_tangential_2circles_point.lci"},
+        {"DrawCircleTan3",     RS2::ActionDrawCircleTan3,     tr("Tangential &3 Entities"),         ":/icons/circle_tangential_3entities.lci"},
         {"DrawCircleTan1_2P",  RS2::ActionDrawCircleTan1_2P,  tr("Tangential, 2 P&oints"),         ":/icons/circle_tangential_2points.lci"}
     });
 }
@@ -272,7 +272,6 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
         {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,       tr("&2 Points, Height"),         ":/icons/arc_2p_height.lci"},
         {"DrawArcParallel",        RS2::ActionDrawArcParallel,       tr("&Concentric"),               ":/icons/arc_concentric.lci"},     // fixme - why this action is not in list?
         {"DrawArcTangential",      RS2::ActionDrawArcTangential,     tr("Arc &Tangential"),           ":/icons/arc_continuation.lci"}
-
     });
 }
 

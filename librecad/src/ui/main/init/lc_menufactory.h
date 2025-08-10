@@ -25,9 +25,13 @@
 
 #include <QObject>
 
+#include "lc_actioncontext.h"
 #include "lc_actionfactory.h"
 #include "lc_appwindowaware.h"
+#include "rs_entity.h"
 
+class QG_GraphicView;
+class QMouseEvent;
 class QC_MDIWindow;
 class QMenuBar;
 class QAction;
@@ -40,6 +44,8 @@ public:
     LC_MenuFactory(QC_ApplicationWindow* main_win);
     void recreateMainMenuIfNeeded(QMenuBar *menuBar);
     void createMainMenu(QMenuBar* menu_bar);
+    QMenu* createGraphicViewContextMenu(QMouseEvent* event, QG_GraphicView* graphicView);
+    void fillEntitySpecificContextMenu(QMouseEvent* event, QMenu* contextMenu, QG_GraphicView* graphicView);
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
     QMenu* createMainWindowPopupMenu() const;
 
@@ -96,6 +102,11 @@ protected:
     void createPluginsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
     void createWorkspaceMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
     void doCreateMenus(QMenuBar *menu_bar, bool firstCreation);
+
+    void addProxyActions(QMenu* menu, RS_Entity* entity, const RS_Vector& pos, LC_ActionContext* actionContext,
+                         const std::vector<QString>& actionNames);
+    void addActionProxy(QMenu* menu, const QString& actionName, RS_Entity* entity, const RS_Vector& pos,
+                        LC_ActionContext* actionContext);
 
     QAction* urlActionTR(const QString& title, const char *url);
     void addAction(QMenu *menu, const char *actionName) const;

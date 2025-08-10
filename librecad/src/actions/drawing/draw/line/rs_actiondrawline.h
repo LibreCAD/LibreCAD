@@ -55,7 +55,7 @@ public:
 protected:
     /// Action States
     enum Status {
-        SetStartpoint,   ///< Setting the startpoint
+        SetStartpoint = InitialActionStatus,   ///< Setting the startpoint
         SetEndpoint      ///< Setting the endpoint
     };
 

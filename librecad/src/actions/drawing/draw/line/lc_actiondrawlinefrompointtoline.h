@@ -53,7 +53,7 @@ public:
 protected:
     // action state
     enum{
-        SetPoint,
+        SetPoint = InitialActionStatus,
         SelectLine
     };
 
