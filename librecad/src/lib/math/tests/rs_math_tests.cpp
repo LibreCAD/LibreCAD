@@ -71,4 +71,14 @@ TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
         result = RS_Math::derationalize("3.14");
         REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(3.14, 2));
     }
+
+    SECTION("Fractal input") {
+        result = RS_Math::derationalize("2 1/4");
+        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinAbs(2.25, 1e-6));
+    }
+
+    SECTION("Fractal input") {
+        result = RS_Math::derationalize("2-1/4");
+        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinAbs(2.25, 1e-6));
+    }
 }

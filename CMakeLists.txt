@@ -40,7 +40,9 @@ find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 find_package(Boost REQUIRED COMPONENTS)
-find_package(Freetype)
+if(NOT WIN32)
+	find_package(Freetype)
+endif(NOT WIN32)
 
 file(GLOB_RECURSE AUTO_EXCLUDED_SOURCES
         "${PROJECT_SOURCE_DIR}/librecad/src/lib/debug/*.*"
@@ -1590,11 +1592,18 @@ qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 install(TARGETS librecad RUNTIME DESTINATION bin)
 
 if(NOT WIN32)
-add_executable(ttf2lff
-	tools/ttf2lff/main.cpp)
-target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
-target_include_directories(ttf2lff PRIVATE
-	${FREETYPE_INCLUDE_DIRS})
+    if (FREETYPE_FOUND)
+        add_executable(ttf2lff
+        tools/ttf2lff/main.cpp)
+        target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
+        message(WARNING "FreeType header: ${FREETYPE_INCLUDE_DIRS}")
+        target_include_directories(ttf2lff PRIVATE
+            ${FREETYPE_INCLUDE_DIRS})
+        include_directories(${FREETYPE_INCLUDE_DIRS})
+        target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
+    else()
+        message(WARNING "FreeType not found!")
+    endif(FREETYPE_FOUND)
 endif(NOT WIN32)
 
 add_subdirectory(libraries/lciconengine)

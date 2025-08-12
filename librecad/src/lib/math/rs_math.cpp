@@ -47,21 +47,46 @@
 
 namespace {
 constexpr double g_twoPi = M_PI*2; //2*PI
-const QRegularExpression unitreg(
-        R"((?P<sign>^-?))"
-        R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"  // DMS
-        R"((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)"
-            R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|)"
-        R"((?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?)"        // Metric
-        R"((?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?)"
-            R"((?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?$)|)"
-        R"((?:(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"              // Imperial
-        R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
-            R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
-                R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"                // rational inches
-        R"((?:inches|inch|in|"))?$)))"
-	);
+
+std::string g_unitregPattern =
+    R"~((?P<sign>^-?))~"  // Capture optional sign
+    R"~((?:)~"  // Start of main group for units
+    R"~((?:)~"  // DMS group
+    R"~((?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))~"  // Degrees
+    R"~((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)~"  // Optional minutes
+    R"~((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?)~"  // Optional seconds
+    R"~($)~"  // End of DMS
+    R"~()|)~"  // Close DMS and OR
+    R"~((?:)~"  // Metric group
+    R"~((?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?)~"  // Optional meters
+    R"~((?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?)~"  // Optional centimeters
+    R"~((?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?)~"  // Optional millimeters
+    R"~($)~"  // End of metric
+    R"~()|)~"  // Close metric and OR
+    R"~((?:)~"  // Imperial group
+    R"~((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)~"  // Optional yards
+    R"~((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)~"  // Optional feet
+    R"~((?:(?P<inches>\d*\.?\d*)[\s+-]?)~"  // Inches with optional space/+/-
+    R"~((?:(?P<numer>\d+)\/(?P<denom>\d+))?)~"  // Optional fraction
+    R"~((?:inches|inch|in|"))?)~"  // Optional inch unit
+    R"~($)~"  // End of imperial
+    R"~()))~"  // Close imperial group and main group
+    ;
+
+QRegularExpression g_unitreg(QString::fromStdString(g_unitregPattern));
+
+
+
+// Helper function (assumed existing; parses captured text to double * factor + offset)
+double convert_unit(const QRegularExpressionMatch& match, const QString& group, double factor, double offset) {
+    QString valueStr = match.captured(group);
+    if (valueStr.isEmpty()) return 0.0;
+    return valueStr.toDouble() * factor + offset;
 }
+
+const QString tmpStr0=RS_Math::derationalize("2 1/4");
+}
+
 
 /**
  * Rounds the given double to the closest int.
@@ -306,34 +331,58 @@ double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString
  * Note: only the gui cares about units, so all matched symbols are used naively.
  */
 QString RS_Math::derationalize(const QString& expr) {
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
+    // Trim whitespace
+    QString trimmed = expr.trimmed();
 
-    QRegularExpressionMatch match = unitreg.match(expr);
-    if (match.hasMatch()){
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING,
-                        "RS_Math::derationalize: matches = '%s'", match.capturedTexts().join(", ").toLatin1().data());
+    // Handle negative sign
+    bool isNegative = trimmed.startsWith('-');
+    if (isNegative) {
+        trimmed = trimmed.mid(1).trimmed();
+    }
+
+    QRegularExpressionMatch match = g_unitreg.match(trimmed);
+
+    if (match.hasMatch()) {
         double total = 0.0;
-        int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
 
-        // convert_unit(<match obj ref>, <regex group name>, <unit->base conversion factor>, <default value>)
+        // DMS (degrees, minutes, seconds)
         total += convert_unit(match, "degrees", 1.0, 0.0);
-        total += convert_unit(match, "minutes", 1/60.0, 0.0);
-        total += convert_unit(match, "seconds", 1/3600.0, 0.0);
+        total += convert_unit(match, "minutes", 1.0 / 60.0, 0.0);
+        total += convert_unit(match, "seconds", 1.0 / 3600.0, 0.0);
+
+        // Metric (assuming cm base; adjust factors if needed)
         total += convert_unit(match, "meters", 100.0, 0.0);
         total += convert_unit(match, "centis", 1.0, 0.0);
         total += convert_unit(match, "millis", 0.1, 0.0);
+
+        // Imperial (inches base)
         total += convert_unit(match, "yards", 36.0, 0.0);
         total += convert_unit(match, "feet", 12.0, 0.0);
         total += convert_unit(match, "inches", 1.0, 0.0);
-        total += convert_unit(match, "numer", 1.0, 0.0) / convert_unit(match, "denom", 1.0, 1.0);
-        total *= sign;
 
-        RS_DEBUG->print("RS_Math::derationalize: total = '%f'", total);
-        return QString::number(total, 'g', 16);
+        // Add fraction if present (applied to inches or unit-less)
+        double numer = match.captured("numer").toDouble();
+        double denom = match.captured("denom").toDouble();
+        if (denom != 0.0) {
+            total += numer / denom;
+            std::cout<<"out: total: "<<total<<std::endl;
+            LC_ERR<<"out: total: "<<total;
+        }
+
+        QString result = QString::number(total, 'f', 2);  // Format to 2 decimal places
+        return isNegative ? "-" + result : result;
     }
-    else {
-        return expr;
+
+            LC_ERR<<"out: failed: "<<trimmed;
+    // Fallback: try simple decimal conversion
+    bool ok = false;
+    double decimal = trimmed.toDouble(&ok);
+    if (ok) {
+        return QString::number(decimal, 'f', 2);
     }
+
+    // No match: return original
+    return expr;
 }
 
 /**
