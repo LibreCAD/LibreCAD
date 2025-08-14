@@ -40,9 +40,7 @@ find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 find_package(Boost REQUIRED COMPONENTS)
-if(NOT WIN32)
-	find_package(Freetype)
-endif(NOT WIN32)
+find_package(Freetype)
 
 file(GLOB_RECURSE AUTO_EXCLUDED_SOURCES
         "${PROJECT_SOURCE_DIR}/librecad/src/lib/debug/*.*"
@@ -828,7 +826,6 @@ set(SOURCES
         librecad/src/main/lc_application.cpp
         librecad/src/main/lc_application.h
         librecad/src/main/main.cpp
-        librecad/src/main/main.h
 	librecad/src/ui/main/mainwindowx.cpp
 	librecad/src/ui/main/mainwindowx.h
 	librecad/src/ui/main/qc_applicationwindow.h
@@ -1497,6 +1494,7 @@ set(SOURCES
 # qt6_standard_project_setup(I18N_TRANSLATED_LANGUAGES ar ca cs da de el en_au en es_ar es_bo es_cl es_co es_cr es_do es_ec es_gt es_hn es_mx es_ni es_pa es_pe es_pr es_py es_sv es es_us es_uy es_ve et eu fi fr gl he hi hu id_ID it ja ka ko lv mk nl no pa pl pt_br pt_pt ro_ro ru sk sl sq_al sr sv ta th tr uk zh_cn zh_tw)
 
 qt_add_executable(librecad
+  librecad/src/main/main.cpp
 	${SOURCES})
 
 #target_include_directories(librecad PRIVATE ${LIBRECAD_INCLUDE_DIRS})
@@ -1592,18 +1590,11 @@ qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 install(TARGETS librecad RUNTIME DESTINATION bin)
 
 if(NOT WIN32)
-    if (FREETYPE_FOUND)
-        add_executable(ttf2lff
-        tools/ttf2lff/main.cpp)
-        target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
-        message(WARNING "FreeType header: ${FREETYPE_INCLUDE_DIRS}")
-        target_include_directories(ttf2lff PRIVATE
-            ${FREETYPE_INCLUDE_DIRS})
-        include_directories(${FREETYPE_INCLUDE_DIRS})
-        target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
-    else()
-        message(WARNING "FreeType not found!")
-    endif(FREETYPE_FOUND)
+add_executable(ttf2lff
+	tools/ttf2lff/main.cpp)
+target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
+target_include_directories(ttf2lff PRIVATE
+	${FREETYPE_INCLUDE_DIRS})
 endif(NOT WIN32)
 
 add_subdirectory(libraries/lciconengine)
@@ -1618,18 +1609,8 @@ if(BUILD_TESTS)
     # Define test executable
     add_executable(librecad_tests
         librecad/src/lib/math/tests/rs_math_tests.cpp
-        librecad/src/lib/math/rs_math.cpp
-        libraries/muparser/src/muParser.cpp
-        libraries/muparser/src/muParserBase.cpp
-        libraries/muparser/src/muParserBytecode.cpp
-        libraries/muparser/src/muParserCallback.cpp
-        libraries/muparser/src/muParserDLL.cpp
-        libraries/muparser/src/muParserError.cpp
-        libraries/muparser/src/muParserInt.cpp
-        libraries/muparser/src/muParserTokenReader.cpp
-        librecad/src/lib/engine/rs_vector.cpp
-        librecad/src/lib/debug/rs_debug.cpp
-	librecad/src/lib/engine/document/entities/lc_rect.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
+        ${SOURCES}
     )
 
     # Include directories for rs_math.h and other dependencies
@@ -1653,6 +1634,8 @@ if(BUILD_TESTS)
 
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features(librecad_tests PRIVATE cxx_std_17)
+    # compiling time defines
+    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1)
 endif()
 
 
