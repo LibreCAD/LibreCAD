@@ -125,10 +125,6 @@ TEST_CASE("RS_Ellipse::getNearestPointOnEntity") {
     nearest = ellipse.getNearestPointOnEntity(queryPoint);
     REQUIRE(nearest == RS_Vector(0.0, 2.5));
     REQUIRE(nearest.valid == true);
-
-    queryPoint = RS_Vector(0.0, 0.0);  // Center, should return invalid or closest based on impl
-    nearest = ellipse.getNearestPointOnEntity(queryPoint);
-    //REQUIRE(nearest.valid == false);  // Assuming impl returns invalid for on-center
 }
 
 TEST_CASE("RS_Ellipse::areaLineIntegral") {
@@ -144,7 +140,8 @@ TEST_CASE("RS_Ellipse::switchMajorMinor") {
     REQUIRE(ellipse.switchMajorMinor() == true);
     REQUIRE(ellipse.getMajorP() == RS_Vector(0.0, 2.5));  // Switched to vertical major
     REQUIRE(std::abs(ellipse.getRatio() - 2.0) < EPS);  // Inverse ratio 1/0.5 = 2
-    REQUIRE(ellipse.switchMajorMinor() == true);  // Switch back
-    //REQUIRE(ellipse.getMajorP() == RS_Vector(5.0, 0.0));
+    REQUIRE(ellipse.switchMajorMinor());  // Switch back
+    REQUIRE(ellipse.getMajorP().distanceTo(RS_Vector(-5.0, 0.0)) < EPS);
     REQUIRE(std::abs(ellipse.getRatio() - 0.5) < EPS);
+
 }

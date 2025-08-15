@@ -214,10 +214,10 @@ public:
 };
 
 RS_Vector getPos() {
-    RS_Ellipse ell{nullptr, {RS_Vector{0., 0.}, RS_Vector{5.0, 0.}, 0.5, 0., 2. * M_PI }};
-    RS_Vector vp{-10., 0.};
-    RS_Vector vp1 = ell.getNearestPointOnEntity(vp, true);
-    return vp1;
+    RS_Ellipse ellipse(nullptr,
+                           {RS_Vector(0.,0.), RS_Vector(5.,0.), 0.5, 0, 2*M_PI, false});
+    RS_Vector vp0 = ellipse.getMajorP();
+    return vp0;
 }
 
 const RS_Vector vp00 = getPos();
