@@ -52,6 +52,8 @@
 #endif
 
 namespace{
+
+
 //functor to solve for distance, used by snapDistance
 class EllipseDistanceFunctor
 {
@@ -211,7 +213,17 @@ public:
     {}
 };
 
+RS_Vector getPos() {
+    RS_Ellipse ell{nullptr, {RS_Vector{0., 0.}, RS_Vector{5.0, 0.}, 0.5, 0., 2. * M_PI }};
+    RS_Vector vp{-10., 0.};
+    RS_Vector vp1 = ell.getNearestPointOnEntity(vp, true);
+    return vp1;
 }
+
+const RS_Vector vp00 = getPos();
+
+}
+
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
 	os << "(" << ed.center <<
@@ -612,13 +624,21 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //    RS_Vector vp2(false);
     double dDistance = RS_MAXDOUBLE*RS_MAXDOUBLE;
     //double ea;
+    std::vector<std::pair<double, double>> directions;
     for(double cosTheta: roots) {
+        if (std::abs(twoax-twoa2b2*cosTheta) > RS_TOLERANCE) {
+            double const sinTheta=twoby*cosTheta/(twoax-twoa2b2*cosTheta); //sine
+            directions.emplace_back(cosTheta, sinTheta);
+        } else {
+            directions.emplace_back(0., 1.);
+            directions.emplace_back(0., -1.);
+        }
+    }
+    for(const auto [cosTheta, sinTheta]: directions) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
-        //if ( std::abs(roots[i])>1.) continue;
-        double const sinTheta=twoby*cosTheta/(twoax-twoa2b2*cosTheta); //sine
         //if (std::abs(s) > 1. ) continue;
         double const d2=twoa2b2+(twoax-2.*cosTheta*twoa2b2)*cosTheta+twoby*sinTheta;
-        if (d2<0)
+        if (std::signbit(d2))
             continue; // fartherest
         RS_Vector vp3{a*cosTheta, b*sinTheta};
         double d=(vp3-ret).squared();

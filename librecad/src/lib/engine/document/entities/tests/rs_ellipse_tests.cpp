@@ -109,7 +109,7 @@ TEST_CASE("RS_Ellipse::getNearestEndpoint") {
 
     queryPoint = RS_Vector(-10.0, 0.0);  // Near negative x endpoint
     nearest = ellipse.getNearestEndpoint(queryPoint, &dist);
-    //REQUIRE(nearest == RS_Vector(-5.0, 0.0));  // Endpoint2 (for half ellipse)
+    REQUIRE(nearest.distanceTo(RS_Vector(-5.0, 0.0)) < EPS);  // Endpoint2 (for half ellipse)
     REQUIRE(std::abs(dist - 5.0) < EPS);
 }
 
@@ -123,7 +123,7 @@ TEST_CASE("RS_Ellipse::getNearestPointOnEntity") {
 
     queryPoint = RS_Vector(0.0, 3.0);  // Outside on minor axis
     nearest = ellipse.getNearestPointOnEntity(queryPoint);
-    //REQUIRE(nearest == RS_Vector(0.0, 2.5));
+    REQUIRE(nearest == RS_Vector(0.0, 2.5));
     REQUIRE(nearest.valid == true);
 
     queryPoint = RS_Vector(0.0, 0.0);  // Center, should return invalid or closest based on impl
