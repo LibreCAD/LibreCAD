@@ -1,0 +1,132 @@
+# ===== PLAN VIEW (offset at Y = 12000) =====
+
+line
+0,12000
+25000,12000
+
+# Left fence run segments (visual chain)
+line
+0,12000
+9850,12000
+
+# Gate opening (visual chain gap preserved by columns drawn separately)
+
+# Right fence run segments (visual chain)
+line
+15150,12000
+22000,12000
+
+# Guard room frontage (visual chain)
+line
+22000,12000
+25000,12000
+
+# Plan: gate columns (650 x 650)
+rectangle
+9850,12000
+10500,12650
+rectangle
+14500,12000
+15150,12650
+
+# Plan: guard room footprint (3,000 along frontage × 2,500 depth)
+rectangle
+22000,12000
+25000,14500
+
+# Chainage ticks at key points (short perpendicular marks, 50 mm each side)
+line
+0,11975
+0,12025
+line
+1970,11975
+1970,12025
+line
+3940,11975
+3940,12025
+line
+5910,11975
+5910,12025
+line
+7880,11975
+7880,12025
+line
+9850,11975
+9850,12025
+line
+10500,11975
+10500,12025
+line
+14500,11975
+14500,12025
+line
+15150,11975
+15150,12025
+line
+17433,11975
+17433,12025
+line
+19716,11975
+19716,12025
+line
+22000,11975
+22000,12025
+line
+25000,11975
+25000,12025
+
+# ===== ELEVATION VIEW (at Y = 0) =====
+
+# Ground line
+line
+0,0
+25000,0
+
+# Base wall (1,000 mm high)
+line
+0,1000
+25000,1000
+
+# Fence iron top line (to 2,200 mm)
+line
+0,2200
+9850,2200
+line
+15150,2200
+25000,2200
+
+# Elevation: gate columns (to 4,000 mm)
+rectangle
+9850,0
+10500,4000
+rectangle
+14500,0
+15150,4000
+
+# Beam (200 mm deep: soffit at 4,000; top/springline at 4,200)
+line
+9850,4000
+15150,4000
+line
+9850,4200
+15150,4200
+
+# Arch (segmental) by 3 points: left spring, right spring, crown
+arc
+3p
+10500,4200
+14500,4200
+12500,4900
+
+# Gate leaves (2 x 2,000 mm wide; height ~2,500 mm)
+rectangle
+10500,0
+12500,2500
+rectangle
+12500,0
+14500,2500
+
+# Right-side guard room elevation (to 3,000 mm nominal parapet)
+rectangle
+22000,0
+25000,3000
