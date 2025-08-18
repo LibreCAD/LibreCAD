@@ -233,19 +233,15 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Install boost
-        uses: MarkusJx/install-boost@v2
-        id: installBoost
-        with:
-          # REQUIRED: Specify the required boost version
-          # A list of supported versions can be found here:
-          # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-          boost_version: 1.87.0
-          # OPTIONAL: Specify a custon install location
-          boost_install_dir: ${{ github.workspace }}/../
-          # OPTIONAL: Specify a platform version
-          platform_version: 2022
-          # OPTIONAL: Specify a toolset
-          toolset: msvc
+        run: |
+          curl -# -L -o boost.7z https://archives.boost.io/release/1.87.0/source/boost_1_87_0.7z
+          7z x -o. -y boost.7z
+          mkdir -p boost/include
+          mv boost_1_87_0/boost boost/include/
+          rm boost.7z
+          pwd
+          ls -ld boost/include/boost/version.hpp
+        shell: bash
 
       - name: Configure CMake
         run: |
@@ -254,7 +250,7 @@ jobs:
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          BOOST_ROOT: ${{ steps.installBoost.outputs.BOOST_ROOT }}
+          BOOST_ROOT: boost
           CMAKE_CXX_FLAGS: " /MP8"
 
       - name: Build
