@@ -53,7 +53,6 @@
 
 namespace{
 
-
 //functor to solve for distance, used by snapDistance
 class EllipseDistanceFunctor
 {
@@ -212,17 +211,7 @@ public:
     void calculateBorders() override
     {}
 };
-
-RS_Vector getPos() {
-    RS_Ellipse ellipse(nullptr,
-                           {RS_Vector(0.,0.), RS_Vector(5.,0.), 0.5, 0, 2*M_PI, false});
-    RS_Vector vp0 = ellipse.getMajorP();
-    return vp0;
-}
-
-const RS_Vector vp00 = getPos();
-
-}
+} // anonymous namespace
 
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
