@@ -67,6 +67,7 @@ To build unit tests (e.g., for `rs_math.cpp`), enable the `BUILD_TESTS` flag:
 cmake -DBUILD_TESTS=ON ..
 make
 ./build/librecad_tests
+```
 
 **Contributing**
 
