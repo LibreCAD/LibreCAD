@@ -344,6 +344,10 @@ protected:
 
     void drawArcSegmentBySplinePointsUI(const RS_Vector& center, double uiRadiusX, double uiStartAngleDegrees,
                                         double angularLength, QPainterPath &path);
+private:
+    void addEllipseArcToPath(QPainterPath& localPath, double a, double b, double startAngleDeg, double angularLengthDeg, bool useSpline);
+    void drawEllipseSegmentBySplinePointsUI(double lx, double ly, double a, double b, double startRad, double lenRad, QPainterPath &path, bool closed);
+    void addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const;
 };
 
 #endif
