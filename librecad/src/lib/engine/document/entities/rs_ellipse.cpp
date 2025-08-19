@@ -1770,6 +1770,7 @@ double RS_Ellipse::getAngle1() const {
 
 void RS_Ellipse::setAngle1(double a1) {
 	data.angle1 = a1;
+    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
 }
 
 double RS_Ellipse::getAngle2() const {
@@ -1778,6 +1779,7 @@ double RS_Ellipse::getAngle2() const {
 
 void RS_Ellipse::setAngle2(double a2) {
 	data.angle2 = a2;
+    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
 }
 
 RS_Vector RS_Ellipse::getCenter() const {
@@ -1839,16 +1841,96 @@ double RS_Ellipse::getMinorRadius() const {
 }
 
 void RS_Ellipse::draw(RS_Painter* painter) {
-    // Adjust dash offset
+    if (!isEllipticArc()) {
+        RS_Ellipse arc(*this);
+        arc.setAngle2(2.*M_PI);
+        arc.setReversed(false);
+
+        return;
+    }
     painter->updateDashOffset(this);
-    if (data.isArc){
-        painter->drawEllipseArcWCS(data.center, getMajorRadius(), data.ratio, data.angleDegrees,
-                                data.startAngleDegrees, data.otherAngleDegrees,
-                                data.angularLength, data.reversed);
+
+    //only draw the visible portion of line
+    const LC_Rect& vpRect = painter->getWcsBoundingRect();
+
+    RS_Vector vpMin = vpRect.lowerLeftCorner();
+    RS_Vector vpMax = vpRect.upperRightCorner();
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+
+    RS_Vector vpStart = isReversed()?getEndpoint():getStartpoint();
+    RS_Vector vpEnd = isReversed()?getStartpoint():getEndpoint();
+
+    std::vector<RS_Vector> vertex;
+    for(unsigned short i=0; i<4; i++){
+        const QPointF& vp = visualBox.at(i);
+        vertex.emplace_back(vp.x(),vp.y());
     }
-    else {
-        painter->drawEllipseWCS(data.center, getMajorRadius(), data.ratio, data.angleDegrees);
+    /** angles at cross points */
+    std::vector<double> crossPoints(0);
+
+    double baseAngle=isReversed()?getAngle2():getAngle1();
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line{vertex.at(i),vertex.at((i+1)%4)};
+        auto vpIts=RS_Information::getIntersection(
+            static_cast<RS_Entity*>(this), &line, true);
+        //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
+        if( vpIts.size()==0) continue;
+        for(const RS_Vector& vp: vpIts){
+            auto ap1=getTangentDirection(vp).angle();
+            auto ap2=line.getTangentDirection(vp).angle();
+            //ignore tangent points, because the arc doesn't cross over
+            if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
+            crossPoints.push_back(
+                RS_Math::getAngleDifference(baseAngle, getEllipseAngle(vp))
+                );
+        }
     }
+    if(vpStart.isInWindowOrdered(vpMin, vpMax))
+        crossPoints.push_back(0.);
+    if(vpEnd.isInWindowOrdered(vpMin, vpMax))
+        crossPoints.push_back(
+            RS_Math::getAngleDifference(baseAngle,isReversed()?getAngle1():getAngle2())
+            );
+
+    //sorting
+    std::sort(crossPoints.begin(),crossPoints.end());
+    //draw visible
+
+    //    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
+    RS_Ellipse arc(*this);
+    arc.setSelected(isSelected());
+    arc.setPen(getPen());
+    arc.setReversed(false);
+    arc.calculateBorders();
+    if( crossPoints.size() >= 2) {
+        for(size_t i=1; i<crossPoints.size(); ++i){
+            const RS_Vector& middlePoint = arc.getEllipsePoint(baseAngle+ (crossPoints[i-1] + crossPoints[i]) * 0.5);
+            if (vpRect.inArea(middlePoint, RS_TOLERANCE)) {
+                arc.setAngle1(baseAngle+crossPoints[i-1]);
+                arc.setAngle2(baseAngle+crossPoints[i]);
+                arc.drawVisible(painter);
+            }
+        }
+    }
+}
+
+/** directly draw the arc, assuming the whole arc is within visible window */
+void RS_Ellipse::drawVisible(RS_Painter* painter) const {
+    if (painter == nullptr)
+        return;
+
+    //visible in grahic view
+    if(!isVisibleInWindow(*painter))
+        return;
+    painter->drawEllipseArcWCS(data.center, getMajorRadius(), data.ratio, data.angleDegrees,
+                               data.startAngleDegrees, data.otherAngleDegrees,
+                               data.angularLength, data.reversed);
+}
+
+bool RS_Ellipse::isVisibleInWindow(const RS_Painter& painter) const
+{
+    const LC_Rect& vpRect = painter.getWcsBoundingRect();
+    return LC_Rect{getMin(), getMax()}.overlaps(vpRect);
 }
 
 /**
