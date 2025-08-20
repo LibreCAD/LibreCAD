@@ -1843,6 +1843,7 @@ double RS_Ellipse::getMinorRadius() const {
 void RS_Ellipse::draw(RS_Painter* painter) {
     const LC_Rect& vpRect = painter->getWcsBoundingRect();
     if (LC_Rect{getMin(), getMax()}.inArea(vpRect)) {
+        // The whole ellipse/arc is visible in viewport
         double startAngle = RS_Math::rad2deg(getAngle1());
         double endAngle = RS_Math::rad2deg(getAngle2());
         if (isReversed()) {
@@ -1858,8 +1859,9 @@ void RS_Ellipse::draw(RS_Painter* painter) {
     }
     painter->updateDashOffset(this);
 
-    //only draw the visible portion of line
-
+    // only draw the visible portion of the ellipse/arc
+    // find visible portion by intersection with viewport borders in WCS
+    // coordinates
     std::array<RS_Vector, 4> vertices = vpRect.vertices();
     /** angles at cross points */
     std::vector<double> crossPoints(0);
@@ -1897,14 +1899,17 @@ void RS_Ellipse::draw(RS_Painter* painter) {
     std::sort(crossPoints.begin(),crossPoints.end());
     //draw visible
 
-    //    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
     RS_Ellipse arc(*this);
     arc.setSelected(isSelected());
     arc.setPen(getPen());
     arc.setReversed(false);
     arc.calculateBorders();
+    // check for all arc segments to avoid possible tangential points as
+    // intersections. Around a tangential point, both segments could be within
+    // the viewport rectangular
     for(size_t i=1; i<crossPoints.size(); ++i){
         const RS_Vector& middlePoint = arc.getEllipsePoint(baseAngle+ (crossPoints[i-1] + crossPoints[i]) * 0.5);
+        // use the middle point to determine whether the arc is within the viewport
         if (vpRect.inArea(middlePoint, RS_TOLERANCE)) {
             arc.setAngle1(baseAngle+crossPoints[i-1]);
             arc.setAngle2(baseAngle+crossPoints[i]);
@@ -1914,11 +1919,8 @@ void RS_Ellipse::draw(RS_Painter* painter) {
 }
 
 /** directly draw the arc, assuming the whole arc is within visible window */
-void RS_Ellipse::drawVisible(RS_Painter* painter) const {
-    if (painter == nullptr)
-        return;
-
-    //visible in grahic view
+void RS_Ellipse::drawVisible(RS_Painter* painter) const
+{
     if(!isVisibleInWindow(*painter))
         return;
     double startAngle = RS_Math::rad2deg(getAngle1());

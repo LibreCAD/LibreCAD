@@ -728,7 +728,6 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
     else {
 
         const bool useSpline = std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius();
-        LC_ERR<<" useSpline "<<useSpline;
 
         QPainterPath path;
         addEllipseArcToPath(path, uiRadii.x, uiRadii.y, angle1Degrees, angularLength, useSpline);
@@ -751,13 +750,14 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, double a, double b
 void RS_Painter::drawEllipseSegmentBySplinePointsUI(double ra, double rb, double startRad, double lenRad, QPainterPath &path, bool closed)
 {
     double r = std::max(ra, rb);
-    const double dParam = 2. * std::pow(2. / r, 1. / 4.);
-    int numSegments = int(std::ceil(std::abs(lenRad) / dParam));
-    numSegments = std::max(1, numSegments);
-    int numPoints = numSegments + 1;
-    LC_ERR<<__LINE__<<" spline points: "<<numPoints;
+    // maximum angular step size: using this angular step size keeps the maximum
+    // deviation of an arc from its parabola fitting
+    const double dParam = 0.25 * std::pow(2. / r, 1. / 4.);
+    int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
+    // Don't duplicate first point for closed
+    int numPoints = closed ? numSegments : numSegments + 1;
     if (closed) {
-        numPoints = numSegments; // Don't duplicate first point for closed
+        numPoints = numSegments;
     }
     double delta = lenRad / numSegments;
 
@@ -765,13 +765,10 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(double ra, double rb, double
     data.closed = closed;
 
     double param = startRad;
-    //path.moveTo(ra*std::cos(param),- rb*std::sin(param));
 
     for (int i = 0; i < numPoints; ++i) {
-        LC_ERR<<param;
+        // TODO: fix the mapping of ellipse rendering
         data.splinePoints.push_back(RS_Vector{param}.scale({ra, -rb}));
-    //path.lineTo(ra*std::cos(param), -rb*std::sin(param));
-
         param += delta;
     }
 
