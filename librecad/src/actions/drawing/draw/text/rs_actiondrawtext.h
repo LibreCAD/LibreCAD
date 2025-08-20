@@ -55,7 +55,7 @@ protected:
  * Action States.
  */
     enum Status {
-        ShowDialog,           /**< Showing the text dialog. */
+        ShowDialog = InitialActionStatus,           /**< Showing the text dialog. */
         SetPos,               /**< Setting the position. */
         SetSecPos,            /**< Setting the second point for aligned of fit text. */
         SetText               /**< Setting the text in the command line. */

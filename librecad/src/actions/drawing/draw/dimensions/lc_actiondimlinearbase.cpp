@@ -45,7 +45,7 @@ namespace {
 }
 
 void LC_ActionDimLinearBase::doTrigger() {
-    preparePreview();
+    preparePreview(m_alternateDimDirection);
     auto *dim = createDim(m_container);
     setPenAndLayerToActive(dim);
     dim->update();
@@ -69,9 +69,18 @@ void LC_ActionDimLinearBase::doInitWithContextEntity(RS_Entity* contextEntity, c
 void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
 
+    bool ctrlPressed = e->isControl;
     switch (status) {
         case SetExtPoint1: {
-            trySnapToRelZeroCoordinateEvent(e);
+            if (ctrlPressed) {
+                auto entity = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+                if (isLine(entity)) {
+                    highlightHover(entity);
+                }
+            }
+            else {
+                trySnapToRelZeroCoordinateEvent(e);
+            }
             break;
         }
         case SetExtPoint2: {
@@ -87,7 +96,8 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewRefSelectablePoint(mouse);
                 }
                 if (m_previewShowsFullDimension) {
-                    preparePreview();
+                    preparePreview(ctrlPressed);
+                    m_alternateDimDirection = ctrlPressed;
                     RS_Entity *dim = createDim(m_preview.get());
                     dim->update();
                     previewEntity(dim);
@@ -107,9 +117,10 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (extPoint1.valid && extPoint2.valid){
                 // less restrictive snap
                 mouse = getFreeSnapAwarePoint(e, mouse);
-                mouse = adjustByAdjacentDim(mouse, true);
+                m_alternateDimDirection = ctrlPressed;
+                mouse = adjustByAdjacentDim(mouse, true, ctrlPressed);
                 m_dimensionData->definitionPoint = mouse;
-                preparePreview();
+                preparePreview(ctrlPressed);
                 RS_Entity* dim = createDim(m_preview.get());
                 dim->update();
                 previewEntity(dim);
@@ -131,15 +142,42 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
 void LC_ActionDimLinearBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
-    if (status == SetExtPoint2){
-        snap = getSnapAngleAwarePoint(e, getExtensionPoint1(), snap);
+    switch (status) {
+        case SetExtPoint1: {
+            if (e->isControl) {
+                auto entity = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+                if (isLine(entity)) {
+                    setExtensionPoint1(entity->getStartpoint());
+                    setExtensionPoint2(entity->getEndpoint());
+                    setStatus(SetDefPoint);
+                }
+                else {
+                    fireCoordinateEvent(snap);
+                }
+            }
+            else {
+                fireCoordinateEvent(snap);
+            }
+            break;
+        }
+        case SetExtPoint2: {
+            m_alternateDimDirection = e->isControl;
+            snap = getSnapAngleAwarePoint(e, getExtensionPoint1(), snap);
+            fireCoordinateEvent(snap);
+            break;
+        }
+        case SetDefPoint: {
+            // less restrictive snap
+            snap = getFreeSnapAwarePoint(e, snap);
+            m_alternateDimDirection = e->isControl;
+            snap = adjustByAdjacentDim(snap, false, m_alternateDimDirection);
+            fireCoordinateEvent(snap);
+            break;
+        }
+        default:
+            fireCoordinateEvent(snap);
+            break;
     }
-    else if (status == SetDefPoint){
-        // less restrictive snap
-        snap = getFreeSnapAwarePoint(e, snap);
-        snap = adjustByAdjacentDim(snap, false);
-    }
-    fireCoordinateEvent(snap);
 }
 
 void LC_ActionDimLinearBase::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
@@ -256,20 +294,28 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
     return result;
 }
 
-RS_Vector LC_ActionDimLinearBase::adjustByAdjacentDim(RS_Vector mouse, bool forPreview){
-    return adjustDefPointByAdjacentDims(mouse, getExtensionPoint1(), getExtensionPoint2(), getDimAngle(), forPreview);
+RS_Vector LC_ActionDimLinearBase::adjustByAdjacentDim(RS_Vector mouse, bool forPreview, bool altDirection){
+    return adjustDefPointByAdjacentDims(mouse, getExtensionPoint1(), getExtensionPoint2(), getDimAngle(altDirection), forPreview);
+}
+
+void LC_ActionDimLinearBase::updateMouseButtonHintForExtPoint2() {
+    updateMouseWidgetTRBack(tr("Specify second extension line origin"), MOD_SHIFT_ANGLE_SNAP);
+}
+
+void LC_ActionDimLinearBase::updateMouseButtonHintForDefPoint() {
+    updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));
 }
 
 void LC_ActionDimLinearBase::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetExtPoint1:
-            updateMouseWidgetTRCancel(tr("Specify first extension line origin"),MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first extension line origin"),MOD_SHIFT_AND_CTRL( MSG_REL_ZERO, "Select Line for origin points"));
             break;
         case SetExtPoint2:
-            updateMouseWidgetTRBack(tr("Specify second extension line origin"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseButtonHintForExtPoint2();
             break;
         case SetDefPoint:
-            updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));
+            updateMouseButtonHintForDefPoint();
             break;
         case SetText:
             updateMouseWidget(tr("Enter dimension text:"));

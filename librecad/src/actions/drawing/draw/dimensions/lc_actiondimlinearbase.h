@@ -51,17 +51,21 @@ protected:
 
     ActionMode m_actionMode = NORMAL;
 
+    bool m_alternateDimDirection = false;
+
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     virtual RS_Vector getExtensionPoint1() = 0;
     virtual void setExtensionPoint1(RS_Vector p) = 0;
     virtual void setExtensionPoint2(RS_Vector p) = 0;
     virtual RS_Vector getExtensionPoint2() = 0;
-    virtual void preparePreview() = 0;
-    virtual double getDimAngle() = 0;
+    virtual void preparePreview(bool alternateMode) = 0;
+    virtual double getDimAngle(bool alternateMode) = 0;
     RS_Vector getAdjacentDimDimSnapPoint(const RS_Vector& ownDimPointToCheck, double snapRange);
     RS_Vector adjustDefPointByAdjacentDims(const RS_Vector& mouse, const RS_Vector& extPoint1,
                                            const RS_Vector& extPoint2, double ownDimLineAngle, bool forPreview);
-    RS_Vector adjustByAdjacentDim(RS_Vector mouse, bool forPreview);
+    RS_Vector adjustByAdjacentDim(RS_Vector mouse, bool forPreview, bool altDirection);
+    virtual void updateMouseButtonHintForExtPoint2();
+    virtual void updateMouseButtonHintForDefPoint();
     virtual RS_Entity* createDim(RS_EntityContainer* parent) = 0;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;

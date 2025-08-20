@@ -118,7 +118,7 @@ void LC_ActionDrawGDTFeatureControlFrame::onMouseLeftButtonRelease(int status, L
     RS_PreviewActionInterface::onMouseLeftButtonRelease(status, e);
 }
 
-void LC_ActionDrawGDTFeatureControlFrame::onMouseRightButtonRelease(int status, LC_MouseEvent* e) {
+void LC_ActionDrawGDTFeatureControlFrame::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent* e) {
     init(-1);
 }
 

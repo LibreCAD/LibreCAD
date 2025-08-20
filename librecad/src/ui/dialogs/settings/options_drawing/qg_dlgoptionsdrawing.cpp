@@ -52,7 +52,6 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_vector.h"
-#include "ui_lc_dlgnewcustomvariable.h"
 
 #define $ENABLE_LEGACY_DIMENSIONS_TAB // fixme - sand - temporary, remove later
 
@@ -362,7 +361,7 @@ void QG_DlgOptionsDrawing::setupUserTab() {
     twCustomVars->verticalHeader()->hide();
 }
 
-void QG_DlgOptionsDrawing::onCustomVariableAdd(bool checked) {
+void QG_DlgOptionsDrawing::onCustomVariableAdd([[maybe_unused]]bool checked) {
     LC_DlgNewCustomVariable dlg(this);
     QStringList propertyNames;
     int rowCount = twCustomVars->rowCount();
@@ -386,7 +385,7 @@ void QG_DlgOptionsDrawing::onCustomVariableAdd(bool checked) {
     twCustomVars->update();
 }
 
-void QG_DlgOptionsDrawing::onCustomVariableDelete(bool checked) {
+void QG_DlgOptionsDrawing::onCustomVariableDelete([[maybe_unused]]bool checked) {
     int row = twCustomVars->currentRow();
     if (row >= 0) {
         QString propertyName = twCustomVars->item(row, 0)->text();
@@ -433,7 +432,7 @@ LC_DimStyleTreeModel* QG_DlgOptionsDrawing::getDimStylesModel() {
 
 void QG_DlgOptionsDrawing::onDimStylesListMenuRequested(const QPoint& pos) {
     auto* contextMenu = new QMenu(this);
-    auto* caption = new QLabel(tr("Dim Styles Menu"), this);
+    // auto* caption = new QLabel(tr("Dim Styles Menu"), this);
     /*QPalette palette;
     palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
     palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
@@ -503,7 +502,7 @@ QString QG_DlgOptionsDrawing::askForUniqueDimStyleName(const QString &caption, c
     return styleName;
 }
 
-void QG_DlgOptionsDrawing::onDimStyleNew(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleNew([[maybe_unused]]bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     auto* model = getDimStylesModel();
     LC_DimStyleItem* defaultItem = nullptr;
@@ -574,7 +573,7 @@ void QG_DlgOptionsDrawing::doCreateDimStyle(const QString &newStyleName, LC_DimS
     }
 }
 
-void QG_DlgOptionsDrawing::onDimStyleEdit(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleEdit([[maybe_unused]]bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -626,7 +625,7 @@ QModelIndex QG_DlgOptionsDrawing::getSelectedDimStyleIndex() {
     return lvDimStyles->selectionModel()->currentIndex();
 }
 
-void QG_DlgOptionsDrawing::onDimStyleRename(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleRename([[maybe_unused]]bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto* model = getDimStylesModel();
@@ -647,7 +646,7 @@ void QG_DlgOptionsDrawing::onDimStyleRename(bool checked) {
 }
 
 
-void QG_DlgOptionsDrawing::onDimStyleRemove(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleRemove([[maybe_unused]]bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto* model = getDimStylesModel();
@@ -699,7 +698,7 @@ void QG_DlgOptionsDrawing::onDimStyleRemove(bool checked) {
     }
 }
 
-void QG_DlgOptionsDrawing::onDimStyleExport(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleExport([[maybe_unused]]bool checked) {
     LC_DimStylesExporter exporter;
     // here we export styles from the dialog, not from the document!!!
     auto model = getDimStylesModel();
@@ -708,7 +707,7 @@ void QG_DlgOptionsDrawing::onDimStyleExport(bool checked) {
     exporter.exportStyles(this, dimStyleItems, m_graphic->getFilename());
 }
 
-void QG_DlgOptionsDrawing::onDimStyleImport(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleImport([[maybe_unused]]bool checked) {
     LC_DimStylesExporter exporter;
     QList<LC_DimStyle*> items;
     if (exporter.importStyles(this, items)) {
@@ -737,7 +736,7 @@ void QG_DlgOptionsDrawing::updateActiveStyleLabel(LC_DimStyleTreeModel* model) {
     lblActiveStyle->setText(styleName);
 }
 
-void QG_DlgOptionsDrawing::onDimStyleSetDefault(bool checked) {
+void QG_DlgOptionsDrawing::onDimStyleSetDefault([[maybe_unused]]bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -757,7 +756,7 @@ void QG_DlgOptionsDrawing::updateActionButtons(LC_DimStyleItem* item) {
     tbDimRename->setEnabled(item->isBaseStyle() && notUsed);
 }
 
-void QG_DlgOptionsDrawing::onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous){
+void QG_DlgOptionsDrawing::onDimCurrentChanged(const QModelIndex &current, [[maybe_unused]]const QModelIndex &previous){
     if (current.isValid()) {
         auto model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(current);
@@ -1621,7 +1620,7 @@ void QG_DlgOptionsDrawing::updateDimLengthPrecision() {
 }
 
 void QG_DlgOptionsDrawing::updateLengthPrecisionCombobox(RS2::LinearFormat unit, QComboBox* p){
-    int index = p->currentIndex();
+
     p->clear();
 
     switch (unit) {

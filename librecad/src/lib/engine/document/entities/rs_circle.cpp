@@ -260,16 +260,16 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line
     }
     std::vector<RS_Line*> tri(lines);
     RS_VectorSolutions sol = RS_Information::getIntersectionLineLine(tri[0], tri[1]);
-    if (sol.getNumber() == 0) { //move parallel to opposite
+    if (sol.isEmpty()) { //move parallel to opposite
         std::swap(tri[1], tri[2]);
         sol = RS_Information::getIntersectionLineLine(tri[0], tri[1]);
     }
-    if (sol.getNumber() == 0) {
+    if (sol.isEmpty()) {
         return false;
     }
     RS_Vector vp0(sol.get(0));
     sol = RS_Information::getIntersectionLineLine(tri[2], tri[1]);
-    if (sol.getNumber() == 0) {
+    if (sol.isEmpty()) {
         return false;
     }
     RS_Vector vp1(sol.get(0));
@@ -295,7 +295,7 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line
     }
     RS_Line line1(vp1, vp1 + RS_Vector(angle0)); //second bisection line
     sol = RS_Information::getIntersectionLineLine(&line0, &line1);
-    if (sol.getNumber() == 0) {
+    if (sol.isEmpty()) {
         return false;
     }
     bool ret = createFromCR(sol.get(0), tri[1]->getDistanceToPoint(sol.get(0)));
@@ -577,20 +577,21 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
   */
 RS_VectorSolutions RS_Circle::getTangentPoint(const RS_Vector& point) const {
     RS_VectorSolutions ret;
-    double r2(getRadius() * getRadius());
+    double radius = getRadius();
+    double r2(radius * radius);
     if (r2 < RS_TOLERANCE2){
         return ret; //circle too small
     }
     RS_Vector vp(point - getCenter());
     double c2(vp.squared());
-    if (c2 < r2 - getRadius() * 2. * RS_TOLERANCE) {
+    if (c2 < r2 - radius * 2. * RS_TOLERANCE) {
         //inside point, no tangential point
         return ret;
     }
-    if (c2 > r2 + getRadius() * 2. * RS_TOLERANCE) {
+    if (c2 > r2 + radius * 2. * RS_TOLERANCE) {
         //external point
         RS_Vector vp1(-vp.y, vp.x);
-        vp1 *= getRadius() * sqrt(c2 - r2) / c2;
+        vp1 *= radius * sqrt(c2 - r2) / c2;
         vp *= r2 / c2;
         vp += getCenter();
         if (vp1.squared() > RS_TOLERANCE2) {

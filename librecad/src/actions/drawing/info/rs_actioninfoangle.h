@@ -47,15 +47,14 @@ protected:
   * Action States.
   */
     enum Status {
-        SetEntity1,    /**< Setting the 1st entity. */
+        SetEntity1 = InitialActionStatus,    /**< Setting the 1st entity. */
         SetEntity2     /**< Setting the 2nd entity. */
     };
-    RS_Entity *m_entity1 = nullptr;
-    RS_Entity *m_entity2 = nullptr;
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

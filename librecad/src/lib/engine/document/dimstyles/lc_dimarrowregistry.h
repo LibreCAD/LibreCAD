@@ -66,8 +66,8 @@ public:
         }
 
         ArrowType type = _CUSTOM;
-        QString blockName;
         QString name;
+        QString blockName;
         // this is workaround for a hacky way of drawing arrow blocks in AutoCAD. Some standard blocks that are inserted
         // by AutoCAD (like Tick, Arc Tick, Integral, None, Dot Small, Dot Blank) does not include a line that
         // continues dimension line. Therefore, if they are inserted "as is" - there is a gap between dimension line

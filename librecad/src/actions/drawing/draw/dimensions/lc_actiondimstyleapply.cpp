@@ -41,7 +41,7 @@ void LC_ActionDimStyleApply::init(int status){
     }
 }
 
-void LC_ActionDimStyleApply::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void LC_ActionDimStyleApply::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& clickPos) {
     setSourceEntity(contextEntity);
 }
 

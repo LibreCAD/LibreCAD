@@ -47,14 +47,14 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(LC_ActionContext* act
 
 RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;
 
-void RS_ActionDrawEllipseInscribe::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionDrawEllipseInscribe::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     auto entityParent = contextEntity->getParent();
     if (entityParent != nullptr) {
         if (entityParent->ignoredOnModification()) {
             return;
         }
     }
-    if (isLine(contextEntity)) {
+    if (isLine(contextEntity)) { // fixme- support of polyline
         m_actionData->lines.push_back(static_cast<RS_Line*>(contextEntity));
         setStatus(SetLine2);
     }

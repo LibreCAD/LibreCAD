@@ -50,7 +50,7 @@ public:
     double getAngle() const;
 protected:
     enum Status{
-        SetReferencePoint
+        SetReferencePoint = InitialActionStatus
     };
 
     std::unique_ptr<RS_Vector> m_referencePoint;

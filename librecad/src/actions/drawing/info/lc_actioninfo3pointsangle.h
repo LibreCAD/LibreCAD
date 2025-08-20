@@ -32,7 +32,7 @@ public:
     ~LC_ActionInfo3PointsAngle() override;
 protected:
     enum Status{
-        SetPoint1,
+        SetPoint1 = InitialActionStatus,
         SetPoint2,
         SetPoint3
     };

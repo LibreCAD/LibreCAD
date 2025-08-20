@@ -44,6 +44,7 @@ public:
     void init(int status) override;
     void preparePreview();
     QStringList getAvailableCommands() override;
+    bool checkMayAlternateDirection();
     void setSnapPoint(int sp);
     int getSnapPoint() const;
     void setUcsAngleDegrees(double ucsRelAngle);
@@ -66,9 +67,11 @@ protected:
         SNAP_START, SNAP_MIDDLE, SNAP_END
     };
     struct Points;
-    std::unique_ptr<Points> m_ActionData;
+    std::unique_ptr<Points> m_actionData;
     bool m_persistRelativeZero = false;
+    bool m_alternateDirection = false;
     bool m_orthoToAnglesBasis = false;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

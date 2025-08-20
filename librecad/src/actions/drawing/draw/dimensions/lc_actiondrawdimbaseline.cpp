@@ -50,14 +50,14 @@ void LC_ActionDrawDimBaseline::reset(){
 }
 
 void LC_ActionDrawDimBaseline::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
-    int rtti = contextEntity->rtti();
+    RS2::EntityType rtti = contextEntity->rtti();
     if (dimEntityTypes.contains(rtti)) {
         pickOriginalEntity(contextEntity, clickPos);
     }
 }
 
 void LC_ActionDrawDimBaseline::doTrigger() {
-    preparePreview();
+    preparePreview(m_alternateDimDirection);
     auto *dim = createDim(m_container);
     setPenAndLayerToActive(dim);
     dim->update();
@@ -213,7 +213,7 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (extPoint1.valid && extPoint2.valid){
                 // less restrictive snap
                 mouse = getFreeSnapAwarePoint(e, mouse);
-                mouse = adjustByAdjacentDim(mouse, true);
+                mouse = adjustByAdjacentDim(mouse, true, false);
 
                 const RS_Vector &dimVector = RS_Vector::polar(100.0, m_dimDirectionAngle);
                 // infinite line in normal direction to dimension angle
@@ -229,7 +229,7 @@ void LC_ActionDrawDimBaseline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 updateOptionsUI(QG_DimOptions::UI_UPDATE_BASELINE_DISTANCE);
 
                 m_dimensionData->definitionPoint = mouse;
-                preparePreview();
+                preparePreview(false);
                 previewRefSelectablePoint(m_dimensionData->definitionPoint);
                 previewRefPoint(extPoint1);
                 previewRefPoint(extPoint2);
@@ -256,7 +256,7 @@ void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, LC_MouseEven
         }
         case SetDefPoint: {
             snap = getFreeSnapAwarePoint(e, snap);
-            snap = adjustByAdjacentDim(snap, false);
+            snap = adjustByAdjacentDim(snap, false, false);
             break;
         }
         default:
@@ -462,7 +462,7 @@ RS_Vector LC_ActionDrawDimBaseline::getExtensionPoint2(){
     return m_edata->extensionPoint2;
 }
 
-double LC_ActionDrawDimBaseline::getDimAngle(){
+double LC_ActionDrawDimBaseline::getDimAngle([[maybe_unused]] bool alternateMode){
     return m_edata->angle;
 }
 
@@ -474,7 +474,7 @@ void LC_ActionDrawDimBaseline::setExtensionPoint2(RS_Vector p){
     m_edata->extensionPoint2 = p;
 }
 
-void LC_ActionDrawDimBaseline::preparePreview() {
+void LC_ActionDrawDimBaseline::preparePreview([[maybe_unused]]bool alternativeMode) {
     RS_Vector dirV = RS_Vector::polar(100., m_edata->angle + M_PI_2);
     RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
     m_dimensionData->definitionPoint = cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);

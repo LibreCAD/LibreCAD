@@ -45,6 +45,13 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType selectType,
     ,m_typeToSelect(selectType){
 }
 
+void RS_ActionSelectSingle::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    m_entityToSelect = contextEntity;
+    m_selectContour = false;
+    trigger();
+    redrawDrawing();
+}
+
 void RS_ActionSelectSingle::trigger(){
     selectEntity(m_entityToSelect,m_selectContour);
     m_selectContour = false;

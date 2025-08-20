@@ -3540,18 +3540,18 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
         return;
     }
     // version 12 are old style polyline
-    if (version==1009) {
+    if (version == 1009) {
         writePolyline(l);
         return;
     }
     DRW_LWPolyline pol;
-    RS_Entity* currEntity = 0;
-    RS_Entity* nextEntity = 0;
-	RS_AtomicEntity* ae = nullptr;
-    double bulge=0.0;
+    RS_Entity* currEntity = nullptr;
+
+    RS_AtomicEntity* ae = nullptr;
+    double bulge = 0.0;
 
     lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
-    for (RS_Entity* e=traverser.first(); e != nullptr; e=traverser.next()) {
+    for (RS_Entity* e = traverser.first(); e != nullptr; e = traverser.next()) {
         currEntity = e;
         // nextEntity = traverser.next();
 
@@ -3561,21 +3561,23 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
         ae = static_cast<RS_AtomicEntity*>(e);
 
         // Write vertex:
-            if (e->rtti()==RS2::EntityArc) {
-                bulge = static_cast<RS_Arc*>(e)->getBulge();
-            } else {
-                bulge = 0.0;
-            }
-            pol.addVertex( DRW_Vertex2D(ae->getStartpoint().x,ae->getStartpoint().y, bulge));
+        if (e->rtti() == RS2::EntityArc) {
+            bulge = static_cast<RS_Arc*>(e)->getBulge();
+        }
+        else {
+            bulge = 0.0;
+        }
+        pol.addVertex(DRW_Vertex2D(ae->getStartpoint().x, ae->getStartpoint().y, bulge));
     }
     if (l->isClosed()) {
         pol.flags = 1;
-    } else {
-        ae = (RS_AtomicEntity*)currEntity;
-        if (ae->rtti()==RS2::EntityArc) {
+    }
+    else {
+        ae = static_cast<RS_AtomicEntity*>(currEntity);
+        if (ae->rtti() == RS2::EntityArc) {
             bulge = static_cast<RS_Arc*>(ae)->getBulge();
         }
-        pol.addVertex( DRW_Vertex2D(ae->getEndpoint().x,ae->getEndpoint().y, bulge));
+        pol.addVertex(DRW_Vertex2D(ae->getEndpoint().x, ae->getEndpoint().y, bulge));
     }
     pol.vertexnum = pol.vertlist.size();
     getEntityAttributes(&pol, l);
@@ -3587,19 +3589,17 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     DRW_Polyline pol;
-    RS_Entity* currEntity = 0;
-    RS_Entity* nextEntity = 0;
+    RS_Entity* currEntity = 0;    
 	RS_AtomicEntity* ae = nullptr;
     double bulge=0.0;
     lc::LC_ContainerTraverser traverser{*p, RS2::ResolveNone};
     for (RS_Entity* e=traverser.first(); e != nullptr; e=traverser.next()) {
-        currEntity = e;
-        // nextEntity = traverser.next();
+        currEntity = e;        
 
         if (!e->isAtomic()) {
             continue;
         }
-        ae = (RS_AtomicEntity*)e;
+        ae = static_cast<RS_AtomicEntity*>(e);
 
         // Write vertex:
         if (e->rtti() == RS2::EntityArc) {
@@ -3613,7 +3613,7 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     if (p->isClosed()) {
         pol.flags = 1;
     } else {
-        ae = (RS_AtomicEntity*)currEntity;
+        ae = static_cast<RS_AtomicEntity*>(currEntity);
         if (ae->rtti()==RS2::EntityArc) {
             bulge = static_cast<RS_Arc*>(ae)->getBulge();
         }
@@ -5679,7 +5679,7 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QSt
 
     if (appName == "ACAD_DSTYLE_DIMJAG") {
         if (code == 388) {
-            double val = var->d_val();
+            // double val = var->d_val();
             // fixme - decide where to store it. this is "Jog Height Factor"
             // dimStyle->dimensionLine()->set
         }
@@ -5696,7 +5696,7 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QSt
     else if (appName == "ACAD_DSTYLE_DIMBREAK") {
         // code 391, float
         if (code == 391) {
-            double val = var->d_val();
+            // double val = var->d_val();
             // fixme - decide where to store it. This is "Dimension Break" in acad.
         }
     }

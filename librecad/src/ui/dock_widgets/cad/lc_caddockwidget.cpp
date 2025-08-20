@@ -42,15 +42,21 @@ LC_CADDockWidget::LC_CADDockWidget(QWidget* parent)
 {
     m_frame->setContentsMargins(0, 0, 0, 0);
     setWidget(m_frame);
-
-    // grid->setSpacing(2);
     m_gridLayout->setSpacing(0);
-    // grid->setContentsMargins(1, 1, 1, 1);
     m_gridLayout->setContentsMargins(0, 0, 0, 0);
     m_frame->setLayout(m_gridLayout);
 }
 
-void LC_CADDockWidget::add_actions(const QList<QAction *> &list, int columns, int icon_size, bool flatButton){
+void LC_CADDockWidget::addSpacers(QGridLayout* layout, int columns) {
+    auto verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+    int filledRows = (layout->count() / columns);
+    layout->addItem(verticalSpacer, filledRows + 1, 0, 1, 1);
+
+    // auto hSpacer = new QSpacerItem(0, 0, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+    // layout->addItem(hSpacer, 0, columns, filledRows + 1, 1);
+}
+
+void LC_CADDockWidget::addActions(const QList<QAction *> &list, int columns, int icon_size, bool flatButton){
 	for (auto const &item: list) {
 		auto *toolbutton = new QToolButton(this);
 		toolbutton->setDefaultAction(item);
@@ -62,6 +68,11 @@ void LC_CADDockWidget::add_actions(const QList<QAction *> &list, int columns, in
 		}
 		m_gridLayout->addWidget(toolbutton, count / columns, count % columns);
 	}
+
+    addSpacers(m_gridLayout, columns);
+
+    m_frame->setFrameShadow(QFrame::Raised);
+    m_frame->setLineWidth(2);
 }
 
 void LC_CADDockWidget::updateWidgetSettings(){
@@ -74,9 +85,9 @@ void LC_CADDockWidget::updateWidgetSettings(){
 
 		QList<QToolButton *> widgets = m_frame->findChildren<QToolButton *>();
 
-		auto* newGrid = new QGridLayout();
-		newGrid->setSpacing(0);
-		newGrid->setContentsMargins(0, 0, 0, 0);
+		auto* newGridLayout = new QGridLayout();
+		newGridLayout->setSpacing(0);
+		newGridLayout->setContentsMargins(0, 0, 0, 0);
 
 		if (leftToolbarColumnsCount == 0) {
 			leftToolbarColumnsCount = 5;
@@ -86,12 +97,14 @@ void LC_CADDockWidget::updateWidgetSettings(){
 			w->setAutoRaise(leftToolbarFlatIcons);
 			w->setIconSize(size);
 			m_gridLayout->removeWidget(w);
-			int const count = newGrid->count();
-			newGrid->addWidget(w, count / leftToolbarColumnsCount, count % leftToolbarColumnsCount);
+			int const count = newGridLayout->count();
+			newGridLayout->addWidget(w, count / leftToolbarColumnsCount, count % leftToolbarColumnsCount);
 		}
 		delete m_frame->layout();
-		m_frame->setLayout(newGrid);
-		m_gridLayout = newGrid;
+
+	    addSpacers(newGridLayout, leftToolbarColumnsCount);
+		m_frame->setLayout(newGridLayout);
+		m_gridLayout = newGridLayout;
 	}
 	LC_GROUP_END();
 }

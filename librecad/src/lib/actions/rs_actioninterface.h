@@ -76,7 +76,6 @@ public:
 
     void setName(const char* _name);
     QString getName();
-
     virtual void init(int status);
     virtual void mouseMoveEvent(QMouseEvent*);
     virtual void mousePressEvent(QMouseEvent*);
@@ -137,6 +136,7 @@ protected:
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
     double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
 
+    virtual bool mayInitWithContextEntity(int status);
     virtual void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos);
     virtual void doInitialInit();
 
@@ -167,6 +167,7 @@ protected:
 
     static bool isControl(const QInputEvent *e);
     static bool isShift(const QInputEvent *e);
+    static bool isAlt(const QInputEvent *e);
 
     virtual void onMouseLeftButtonRelease(int status, QMouseEvent * e);
     virtual void onMouseRightButtonRelease(int status, QMouseEvent * e);

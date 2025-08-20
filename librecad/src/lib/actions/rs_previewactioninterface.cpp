@@ -749,6 +749,7 @@ LC_MouseEvent RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent *e)
     result.uiPosition = e->pos();
     result.isShift = isShift(e);
     result.isControl = isControl(e);
+    result.isAlt = isAlt(e);
     result.originalEvent = e;
     return result;
 }

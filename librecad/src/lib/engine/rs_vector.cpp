@@ -710,6 +710,10 @@ size_t RS_VectorSolutions::getNumber() const {
     return vector.size();
 }
 
+bool RS_VectorSolutions::isEmpty() {
+    return vector.empty();
+}
+
 /**
  * @retval true There's at least one valid solution.
  * @retval false There's no valid solution.

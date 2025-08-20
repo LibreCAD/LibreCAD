@@ -55,7 +55,7 @@ void LC_ActionSingleEntitySelectBase::doInitialInit() {
     }
 }
 
-void LC_ActionSingleEntitySelectBase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void LC_ActionSingleEntitySelectBase::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     if (doCheckMaySelectEntity(contextEntity)) {
         m_entity = contextEntity;
         trigger();

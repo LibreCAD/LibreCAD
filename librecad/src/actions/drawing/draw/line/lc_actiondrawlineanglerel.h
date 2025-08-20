@@ -128,6 +128,7 @@ private:
     RS_Vector obtainLineSnapPointForMode(RS_Line* targetLine, RS_Vector& snap) const;
     TickData* prepareLineData(RS_Line* targetLine, const RS_Vector& tickSnapPosition, const RS_Vector& tickEndPosition, bool alternateAngle);
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
@@ -141,6 +142,7 @@ protected:
     void divideOriginalLine(TickData *pData, QList<RS_Entity *> &list);
     bool isSetActivePenAndLayerOnTrigger() override;
     void doFinish(bool updateTB) override;
+    void setLine(RS_Entity* en, const RS_Vector& snapPoint);
     void updateMouseButtonHints() override;
 };
 

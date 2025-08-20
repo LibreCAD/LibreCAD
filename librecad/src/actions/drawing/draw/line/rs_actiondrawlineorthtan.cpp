@@ -24,10 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_creation.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 
-namespace{
-//this holds a list of entity types which supports tangent
-const auto g_circleList = EntityTypeList{{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}};
+namespace {
+    //this holds a list of entity types which supports tangent
+    const auto g_supportedCircleEntityTypes = EntityTypeList{
+        {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}
+    };
 }
 
 struct RS_ActionDrawLineOrthTan::ActionData {
@@ -38,6 +41,7 @@ struct RS_ActionDrawLineOrthTan::ActionData {
     RS_Entity* circle = nullptr;
     bool altMode = false;
     RS_Vector mousePosition;
+    bool m_setCircleFirst = false;
 };
 
 /**
@@ -56,14 +60,41 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineOrthTan::doTrigger() {
+void RS_ActionDrawLineOrthTan::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) { // fixme - support of polyline
+        setLine(entity);
+    }
+    else {
+        RS2::EntityType rtti = entity->rtti();
+        if (g_supportedCircleEntityTypes.contains(rtti)) {
+            m_actionData->m_setCircleFirst = true;
+            m_actionData->circle = entity;
+            m_actionData->mousePosition = clickPos;
+            setStatus(SetLine);
+            highlightHover(entity);
+            drawPreview();
+        }
+    }
+}
 
+void RS_ActionDrawLineOrthTan::doTrigger() {
     RS_Creation creation(m_container, m_viewport, false);
     RS_Vector altTangentPosition;
     auto tangent = creation.createLineOrthTan(m_actionData->mousePosition,
         m_actionData->normal, m_actionData->circle, altTangentPosition);
 
-    RS_Entity *newEntity = new RS_Line(m_container, tangent->getData());
+    if (m_actionData->altMode) {
+        tangent.reset();
+        tangent = creation.createLineOrthTan(altTangentPosition,m_actionData->normal, m_actionData->circle, altTangentPosition);
+    }
+
+    auto tangentData = tangent->getData();
+    auto *newEntity = new RS_Line(m_container, tangentData);
 
     setPenAndLayerToActive(newEntity);
     undoCycleAdd(newEntity);
@@ -75,29 +106,58 @@ void RS_ActionDrawLineOrthTan::doTrigger() {
 void RS_ActionDrawLineOrthTan::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetLine: {
-            RS_Entity *en = catchModifiableAndDescribe(e, RS2::EntityLine);
+            auto en = catchModifiableAndDescribe(e, RS2::EntityLine);
             if (en != nullptr){
                 highlightHover(en);
+            }
+            if (m_actionData->m_setCircleFirst) {
+                highlightSelected(m_actionData->circle);
+                RS_Vector alternativeTangentPoint;
+                RS_Creation creation(m_preview.get(), m_viewport, false);
+                RS_Vector mouse = e->graphPoint;
+                auto line = static_cast<RS_Line*>(en);
+                auto tangent = creation.createLineOrthTan(mouse,line, m_actionData->circle, alternativeTangentPoint);
+                if (tangent != nullptr){
+                    if (e->isControl) {
+                        tangent.reset();
+                        tangent = creation.createLineOrthTan(alternativeTangentPoint,line, m_actionData->circle, alternativeTangentPoint);
+                    }
+                    auto tangentClone = tangent.get()->clone();
+                    previewEntityToCreate(tangentClone, true);
+                    previewRefSelectablePoint(alternativeTangentPoint);
+                    previewRefSelectablePoint(tangent->getEndpoint());
+                    if (m_showRefEntitiesOnPreview) {
+                        previewRefPoint(tangent->getStartpoint());
+                    }
+                }
             }
             break;
         }
         case SetCircle: {
             RS_Vector mouse = e->graphPoint;
-            auto normal = m_actionData->normal;
-            highlightSelected(normal);
-            deleteSnapper();
-            RS_Entity *en = catchAndDescribe(e, g_circleList, RS2::ResolveAll);
-            if (en != nullptr){
-                highlightHover(en);
-                RS_Vector alternativeTangentPoint;
-                RS_Creation creation(m_preview.get(), m_viewport, false);
-                auto tangent = creation.createLineOrthTan(mouse,normal, en, alternativeTangentPoint);
-                if (tangent != nullptr){
-                    previewEntityToCreate(tangent.get()->clone(), true);
-                    previewRefSelectablePoint(alternativeTangentPoint);
-                    previewRefSelectablePoint(tangent->getEndpoint());
-                    if (m_showRefEntitiesOnPreview) {
-                        previewRefPoint(tangent->getStartpoint());
+            if (m_actionData->m_setCircleFirst) {
+                auto en = catchAndDescribe(e, g_supportedCircleEntityTypes, RS2::ResolveAll);
+                if (en != nullptr) {
+                    highlightHover(en);
+                }
+            }
+            else {
+                auto normal = m_actionData->normal;
+                highlightSelected(normal);
+                deleteSnapper();
+                auto en = catchAndDescribe(e, g_supportedCircleEntityTypes, RS2::ResolveAll);
+                if (en != nullptr){
+                    highlightHover(en);
+                    RS_Vector alternativeTangentPoint;
+                    RS_Creation creation(m_preview.get(), m_viewport, false);
+                    auto tangent = creation.createLineOrthTan(mouse,normal, en, alternativeTangentPoint);
+                    if (tangent != nullptr){
+                        previewEntityToCreate(tangent.get()->clone(), true);
+                        previewRefSelectablePoint(alternativeTangentPoint);
+                        previewRefSelectablePoint(tangent->getEndpoint());
+                        if (m_showRefEntitiesOnPreview) {
+                            previewRefPoint(tangent->getStartpoint());
+                        }
                     }
                 }
             }
@@ -112,28 +172,48 @@ void RS_ActionDrawLineOrthTan::clearLines(){
     deletePreview();
 }
 
+bool RS_ActionDrawLineOrthTan::setLine(RS_Entity* en) {
+    if (en->getLength() < RS_TOLERANCE){
+        //ignore lines not long enough
+        return true;
+    }
+    m_actionData->normal = dynamic_cast<RS_Line *>(en);
+    if (m_actionData->m_setCircleFirst) {
+        trigger();
+    }
+    else {
+        setStatus(SetCircle);
+    }
+    return false;
+}
+
 void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetLine: {
-            RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+            auto en = catchModifiableEntity(e, RS2::EntityLine);
             if (en != nullptr){
-                if (en->getLength() < RS_TOLERANCE){
-                    //ignore lines not long enough
+                if (m_actionData->m_setCircleFirst) {
+                    m_actionData->mousePosition = e->graphPoint;
+                    m_actionData->altMode = e->isControl;
+                }
+                if (setLine(en)) {
                     break;
                 }
-                m_actionData->normal = dynamic_cast<RS_Line *>(en);
-                setStatus(SetCircle);
                 invalidateSnapSpot();
             }
             break;
         }
         case SetCircle: {
-            RS_Entity *en = catchAndDescribe(e, g_circleList, RS2::ResolveAll);
+            auto en = catchAndDescribe(e, g_supportedCircleEntityTypes, RS2::ResolveAll);
             if (en != nullptr) {
-                m_actionData->altMode = true;
                 m_actionData->circle = en;
                 m_actionData->mousePosition = e->graphPoint;
-                trigger();
+                if (m_actionData->m_setCircleFirst) {
+                    setStatus(SetLine);
+                }
+                else {
+                    trigger();
+                }
             };
             break;
         }
@@ -144,17 +224,32 @@ void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, LC_MouseEven
 
 void RS_ActionDrawLineOrthTan::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     clearLines();
-    if (status == SetLine){
-        finish(true);
-    } else {
-        initPrevious(status);
+    if (m_actionData->m_setCircleFirst) {
+        if (status == SetCircle) {
+            finish(true);
+        }
+        else {
+            setStatus(SetCircle);
+        }
+    }
+    else {
+        if (status == SetLine){
+            finish(true);
+        } else {
+            initPrevious(status);
+        }
     }
 }
 
 void RS_ActionDrawLineOrthTan::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine:
-            updateMouseWidgetTRCancel(tr("Select a line"));
+            if (m_actionData->m_setCircleFirst) {
+                updateMouseWidgetTRCancel(tr("Select a line"), MOD_CTRL(tr("Alternate Point")));
+            }
+            else {
+                updateMouseWidgetTRCancel(tr("Select a line"));
+            }
             break;
         case SetCircle:
             updateMouseWidgetTRBack(tr("Select circle, arc or ellipse"));

@@ -166,7 +166,7 @@ bool LC_ActionDimOrdinate::doProcessCommand(int status, const QString& command) 
     return accept;
 }
 
-void LC_ActionDimOrdinate::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) {
+void LC_ActionDimOrdinate::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector& pos) {
     switch (status) {
         case SetFeaturePoint: {
             m_actionData->m_wcsFeaturePoint = pos;
@@ -197,11 +197,11 @@ void LC_ActionDimOrdinate::onMouseLeftButtonRelease(int status, LC_MouseEvent* e
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDimOrdinate::onMouseRightButtonRelease(int status, LC_MouseEvent* e) {
+void LC_ActionDimOrdinate::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent* e) {
     initPrevious(status);
 }
 
-QStringList LC_ActionDimOrdinate::doGetAvailableCommands(int status) {
+QStringList LC_ActionDimOrdinate::doGetAvailableCommands([[maybe_unused]]int status) {
     return {command("text")};
 }
 

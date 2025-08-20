@@ -45,10 +45,10 @@ void LC_DimArrow::move(const RS_Vector& offset) {
     calculateBorders();
 }
 
-void LC_DimArrow::doMove(const RS_Vector& offset) {
+void LC_DimArrow::doMove([[maybe_unused]]const RS_Vector& offset) {
 }
 
-void LC_DimArrow::doRotate(const RS_Vector& center, RS_Vector angleVector) {
+void LC_DimArrow::doRotate([[maybe_unused]]const RS_Vector& center, [[maybe_unused]]RS_Vector angleVector) {
 }
 
 void LC_DimArrow::rotate(const RS_Vector& center, double angle) {
@@ -62,7 +62,7 @@ void LC_DimArrow::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
     calculateBorders();
 }
 
-void LC_DimArrow::doScale(const RS_Vector& center, const RS_Vector& factor) {
+void LC_DimArrow::doScale([[maybe_unused]]const RS_Vector& center, [[maybe_unused]]const RS_Vector& factor) {
 }
 
 void LC_DimArrow::scale(const RS_Vector& center, const RS_Vector& factor) {
@@ -71,7 +71,7 @@ void LC_DimArrow::scale(const RS_Vector& center, const RS_Vector& factor) {
     calculateBorders();
 }
 
-void LC_DimArrow::doMirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+void LC_DimArrow::doMirror([[maybe_unused]]const RS_Vector& axisPoint1, [[maybe_unused]]const RS_Vector& axisPoint2) {
 }
 
 void LC_DimArrow::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
@@ -119,7 +119,7 @@ void LC_DimArrow::calculateBorders() {
     doCalculateBorders();
 }
 
-RS_Vector LC_DimArrow::getNearestEndpoint(const RS_Vector& coord, double* dist /*= nullptr*/) const {
+RS_Vector LC_DimArrow::getNearestEndpoint([[maybe_unused]]const RS_Vector& coord, [[maybe_unused]]double* dist /*= nullptr*/) const {
     return m_position;
 }
 
@@ -130,9 +130,9 @@ void LC_DimArrow::setDistPtr(double* dist, double value) const {
 }
 
 RS_Vector LC_DimArrow::getNearestPointOnEntity(const RS_Vector& coord,
-                                               bool onEntity /*= true*/,
+                                               [[maybe_unused]]bool onEntity /*= true*/,
                                                double* dist /*= nullptr*/,
-                                               RS_Entity** entity /*= nullptr*/) const {
+                                              [[maybe_unused]] RS_Entity** entity /*= nullptr*/) const {
     *dist = m_position.distanceTo(coord);
     return m_position;
 }

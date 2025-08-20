@@ -49,7 +49,7 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
     RS_Modification m(*m_container, m_viewport);
-	   m.moveRotate(m_actionData->data, m_selectedEntities, false, keepSelected);
+	m.moveRotate(m_actionData->data, m_selectedEntities, false, keepSelected);
     m_actionData->targetPoint = RS_Vector(false);
     finish(false);
 }
@@ -100,7 +100,6 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
                 m.moveRotate(m_actionData->data, m_selectedEntities, true);
                 if (m_showRefEntitiesOnPreview) {
                     previewSnapAngleMark(targetPoint, mouse);
-
                     previewRefPoint(originalRefPoint);
                     previewRefPoint(targetPoint);
                     previewRefSelectablePoint(mouse);
@@ -248,7 +247,6 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
     switch (status) {
         case SetReferencePoint:
         case SetTargetPoint: {
-            // RVT_PORT changed from if (c==checkCommand("angle", c)) {
             if (checkCommand("angle", c)) {
                 deletePreview();
                 m_lastStatus = (Status) status;
@@ -332,7 +330,8 @@ RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursorSelected([[maybe_unus
 }
 
 void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to move and rotate  (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Move and rotate immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to move and rotate  (Enter to complete)"),
+        MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Move and rotate immediately after selection")));
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {

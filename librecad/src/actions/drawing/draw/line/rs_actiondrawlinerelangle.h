@@ -74,11 +74,14 @@ protected:
      * Is the angle fixed?
      */
     bool m_fixedAngle = false;
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setEntity(RS_Entity* en);
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;

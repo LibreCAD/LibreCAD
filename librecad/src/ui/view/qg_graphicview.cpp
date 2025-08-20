@@ -42,7 +42,7 @@
 #include <boost/geometry/algorithms/centroid.hpp>
 #include <boost/numeric/ublas/expression_types.hpp>
 
-#include "lc_actiongroup.h"
+
 #include "lc_actioncontext.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
@@ -100,16 +100,15 @@ constexpr int g_hotspotXY=-1;
 
 
     // Helper function to test validity of a rect
-    bool withinValidRange(double x)
-    {
+    bool withinValidRange(double x) {
         return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
     }
-    bool withinValidRange(const RS_Vector& vp)
-    {
+
+    bool withinValidRange(const RS_Vector& vp){
         return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
     }
-    bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax)
-    {
+
+    bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax) {
         return
             withinValidRange(vpMin)
             && withinValidRange(vpMax)
@@ -119,8 +118,7 @@ constexpr int g_hotspotXY=-1;
             && vpMin.y + 1e6 >= vpMax.y;
     }
 
-    LC_Rect getGuiRect(const LC_Rect& modelRect, const RS_Vector& model2GuiFactor)
-    {
+    LC_Rect getGuiRect([[maybe_unused]]const LC_Rect& modelRect, [[maybe_unused]]const RS_Vector& model2GuiFactor) {
         return {};
     }
 }
@@ -192,8 +190,7 @@ void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity){
     launchEditProperty(entity);
 }
 
-void QG_GraphicView::launchEditProperty(RS_Entity* entity)
-{
+void QG_GraphicView::launchEditProperty(RS_Entity* entity){
     RS_EntityContainer* container = getContainer();
     if (entity == nullptr || container == nullptr) {
         return;
@@ -377,20 +374,24 @@ QG_GraphicView::~QG_GraphicView() {
  * @return width of widget.
  */
 int QG_GraphicView::getWidth() const{
-    if (m_scrollbars)
+    if (m_scrollbars) {
         return width() - m_vScrollBar->sizeHint().width();
-    else
+    }
+    else {
         return width();
+    }
 }
 
 /**
  * @return height of widget.
  */
 int QG_GraphicView::getHeight() const{
-    if (m_scrollbars)
+    if (m_scrollbars) {
         return height() - m_hScrollBar->sizeHint().height();
-    else
+    }
+    else {
         return height();
+    }
 }
 
 /**
@@ -398,76 +399,76 @@ int QG_GraphicView::getHeight() const{
  */
 void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
     switch (cursorType) {
-    default:
-    case RS2::ArrowCursor:
-        setCursor(Qt::ArrowCursor);
-        break;
-    case RS2::UpArrowCursor:
-        setCursor(Qt::UpArrowCursor);
-        break;
-    case RS2::CrossCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::WaitCursor:
-        setCursor(Qt::WaitCursor);
-        break;
-    case RS2::IbeamCursor:
-        setCursor(Qt::IBeamCursor);
-        break;
-    case RS2::SizeVerCursor:
-        setCursor(Qt::SizeVerCursor);
-        break;
-    case RS2::SizeHorCursor:
-        setCursor(Qt::SizeHorCursor);
-        break;
-    case RS2::SizeBDiagCursor:
-        setCursor(Qt::SizeBDiagCursor);
-        break;
-    case RS2::SizeFDiagCursor:
-        setCursor(Qt::SizeFDiagCursor);
-        break;
-    case RS2::SizeAllCursor:
-        setCursor(Qt::SizeAllCursor);
-        break;
-    case RS2::BlankCursor:
-        setCursor(Qt::BlankCursor);
-        break;
-    case RS2::SplitVCursor:
-        setCursor(Qt::SplitVCursor);
-        break;
-    case RS2::SplitHCursor:
-        setCursor(Qt::SplitHCursor);
-        break;
-    case RS2::PointingHandCursor:
-        setCursor(Qt::PointingHandCursor);
-        break;
-    case RS2::ForbiddenCursor:
-        setCursor(Qt::ForbiddenCursor);
-        break;
-    case RS2::WhatsThisCursor:
-        setCursor(Qt::WhatsThisCursor);
-        break;
-    case RS2::OpenHandCursor:
-        setCursor(Qt::OpenHandCursor);
-        break;
-    case RS2::ClosedHandCursor:
-        setCursor(Qt::ClosedHandCursor);
-        break;
-    case RS2::CadCursor:
-        m_cursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorCad);
-        break;
-    case RS2::DelCursor:
-        setCursor(*m_cursorDel);
-        break;
-    case RS2::SelectCursor:
-        m_selectCursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorSelect);
-        break;
-    case RS2::MagnifierCursor:
-        setCursor(*m_cursorMagnifier);
-        break;
-    case RS2::MovingHandCursor:
-        setCursor(*m_cursorHand);
-        break;
+        default:
+        case RS2::ArrowCursor:
+            setCursor(Qt::ArrowCursor);
+            break;
+        case RS2::UpArrowCursor:
+            setCursor(Qt::UpArrowCursor);
+            break;
+        case RS2::CrossCursor:
+            setCursor(Qt::CrossCursor);
+            break;
+        case RS2::WaitCursor:
+            setCursor(Qt::WaitCursor);
+            break;
+        case RS2::IbeamCursor:
+            setCursor(Qt::IBeamCursor);
+            break;
+        case RS2::SizeVerCursor:
+            setCursor(Qt::SizeVerCursor);
+            break;
+        case RS2::SizeHorCursor:
+            setCursor(Qt::SizeHorCursor);
+            break;
+        case RS2::SizeBDiagCursor:
+            setCursor(Qt::SizeBDiagCursor);
+            break;
+        case RS2::SizeFDiagCursor:
+            setCursor(Qt::SizeFDiagCursor);
+            break;
+        case RS2::SizeAllCursor:
+            setCursor(Qt::SizeAllCursor);
+            break;
+        case RS2::BlankCursor:
+            setCursor(Qt::BlankCursor);
+            break;
+        case RS2::SplitVCursor:
+            setCursor(Qt::SplitVCursor);
+            break;
+        case RS2::SplitHCursor:
+            setCursor(Qt::SplitHCursor);
+            break;
+        case RS2::PointingHandCursor:
+            setCursor(Qt::PointingHandCursor);
+            break;
+        case RS2::ForbiddenCursor:
+            setCursor(Qt::ForbiddenCursor);
+            break;
+        case RS2::WhatsThisCursor:
+            setCursor(Qt::WhatsThisCursor);
+            break;
+        case RS2::OpenHandCursor:
+            setCursor(Qt::OpenHandCursor);
+            break;
+        case RS2::ClosedHandCursor:
+            setCursor(Qt::ClosedHandCursor);
+            break;
+        case RS2::CadCursor:
+            m_cursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorCad);
+            break;
+        case RS2::DelCursor:
+            setCursor(*m_cursorDel);
+            break;
+        case RS2::SelectCursor:
+            m_selectCursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorSelect);
+            break;
+        case RS2::MagnifierCursor:
+            setCursor(*m_cursorMagnifier);
+            break;
+        case RS2::MovingHandCursor:
+            setCursor(*m_cursorHand);
+            break;
     }
 }
 
@@ -521,9 +522,54 @@ void QG_GraphicView::switchToAction(RS2::ActionType actionType, void* data) cons
     m_actionContext->setCurrentAction(actionType, data);
 }
 
+RS_Entity* QG_GraphicView::catchContextEntity(QMouseEvent* event, RS_Vector& clickPos) {
+    auto container = getContainer();
+    if (container == nullptr || event == nullptr) {
+        return nullptr;
+    }
+
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    const LC_GraphicViewport* viewPort = getViewPort();
+
+    clickPos = viewPort->toWorldFromUi(mapped.x(), mapped.y());
+    RS_Entity* entity = container->getNearestEntity(clickPos, &distance, RS2::ResolveNone);
+
+    if (viewPort->toGuiDX(distance) <= g_cursorSize) {
+        return entity;
+    }
+    else {
+        return nullptr;
+    }
+}
+
+bool QG_GraphicView::invokeContextMenuForMouseEvent(QMouseEvent* e) {
+    bool result = false;
+    RS_Vector clickPos;
+    RS_Entity* entity = catchContextEntity(e, clickPos);
+    auto contextMenu = QC_ApplicationWindow::getAppWindow()->createGraphicViewContentMenu(e, this, entity, clickPos);
+    if (contextMenu != nullptr) {
+        if (!contextMenu->isEmpty()) {
+            auto actions = contextMenu->actions();
+            if (actions.size() == 1) {
+                auto action = actions.front();
+                action->trigger();
+                result = true;
+            }
+            else {
+                contextMenu->exec(mapToGlobal(e->pos()));
+                result = true;
+            }
+        }
+        delete contextMenu;
+    }
+    return result;
+}
+
 void QG_GraphicView::mousePressEvent(QMouseEvent* event){
+    // LC_ERR << "MOUSE PRESS";
     // pan zoom with middle mouse button
-    if (event->button()==Qt::MiddleButton){
+    if (event->button()==Qt::MiddleButton && event->modifiers() == Qt::NoModifier){
         switchToAction(RS2::ActionZoomPan);
         getCurrentAction()->mousePressEvent(event);
     }
@@ -533,22 +579,40 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
 }
 
 void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
-    switch(e->button()){
-        default:
-            break;
-        case Qt::MiddleButton:
-            switchToAction(RS2::ActionZoomAuto);
-            break;
-        case Qt::LeftButton:
-            if (m_menus.contains("Double-Click")){
-                killAllActions();
-                m_menus["Double-Click"]->popup(mapToGlobal(e->pos()));
-            } else {
-                // double click on an entity to edit entity properties
-                showEntityPropertiesDialog(getDefaultAction()->catchEntity(e));
+    // LC_ERR << "MOUSE DOUBLE CLICK";
+    if (!getEventHandler()->hasAction()) {
+        auto defaultAction = getEventHandler()->getDefaultAction();
+        RS_Vector clickPos;
+        RS_Entity* entity = catchContextEntity(e, clickPos);
+        if (entity == nullptr) {
+            if (defaultAction == nullptr) {
+                invokeContextMenuForMouseEvent(e);
             }
-            break;
+            else if (defaultAction->getStatus() == RS_ActionInterface::InitialActionStatus) {
+                invokeContextMenuForMouseEvent(e);
+            }
+        }
+        else if (defaultAction == nullptr) {
+            showEntityPropertiesDialog(entity);
+        }
+        else if (defaultAction->getStatus() == RS_ActionInterface::InitialActionStatus) {
+            showEntityPropertiesDialog(entity);
+        }
     }
+    /*else {
+        switch(e->button()){
+            case Qt::MiddleButton:
+                switchToAction(RS2::ActionZoomAuto);
+                break;
+            case Qt::LeftButton:
+                // double click on an entity to edit entity properties
+
+                showEntityPropertiesDialog(entity);
+                break;
+            default:
+                break;
+        }
+    }*/
     e->accept();
 }
 
@@ -556,50 +620,37 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
     event->accept();
-    // fixme - sand - delegate to invoker?
-    switch (event->button()) {
-    case Qt::RightButton: {
-        if (event->modifiers() == Qt::ControlModifier) {
-            if (m_menus.contains("Ctrl+Right-Click")) {
-                m_menus["Ctrl+Right-Click"]->popup(mapToGlobal(event->pos()));
+    if (getEventHandler()->hasAction()) {
+        switch (event->button()) {
+            case Qt::RightButton: {
+                if (getEventHandler()->hasAction()) {
+                    back();
+                }
                 break;
             }
-        }
-        if (event->modifiers() == Qt::ShiftModifier) {
-            if (m_menus.contains("Shift+Right-Click")) {
-                m_menus["Shift+Right-Click"]->popup(mapToGlobal(event->pos()));
+            case Qt::XButton1:
+                processEnterKey();
+                emit xbutton1_released();
                 break;
-            }
+            default:
+                getEventHandler()->mouseReleaseEvent(event);
+                break;
         }
-
-        if (!getEventHandler()->hasAction()) {
-            if (m_menus.contains("Right-Click")) {
-                m_menus["Right-Click"]->popup(mapToGlobal(event->pos()));
-            } else {
-                /*auto *context_menu = new QMenu(this);
-                context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                prepareDefaultContextMenu(event, context_menu);*/
-                auto contextMenu = QC_ApplicationWindow::getAppWindow()->createGraphicViewContentMenu(event, this);
-                if (contextMenu != nullptr && !contextMenu->isEmpty()) {
-                    contextMenu->exec(mapToGlobal(event->pos()));
-                }
-                else {
-                    delete contextMenu;
-                }
-            }
-        } else {
-            back();
-        }
-        break;
     }
-    case Qt::XButton1:
-        processEnterKey();
-        emit xbutton1_released();
-        break;
-
-    default:
-        getEventHandler()->mouseReleaseEvent(event);
-        break;
+    else {
+        auto defaultAction = getEventHandler()->getDefaultAction();
+        if (defaultAction != nullptr) {
+            int defaultActionStatus = defaultAction->getStatus();
+            if (defaultActionStatus == RS_ActionInterface::InitialActionStatus) {
+                invokeContextMenuForMouseEvent(event);
+            }
+            else {
+                getEventHandler()->mouseReleaseEvent(event);
+            }
+        }
+        else {
+            invokeContextMenuForMouseEvent(event);
+        }
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
@@ -803,7 +854,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-        if (getContainer()==nullptr) {
+    if (getContainer() == nullptr) {
         return;
     }
 
@@ -1025,8 +1076,9 @@ void QG_GraphicView::adjustOffsetControls(){
         return;
 
     std::unique_lock<std::mutex> lock(m_scrollbarMutex, std::defer_lock);
-    if (!lock.try_lock())
+    if (!lock.try_lock()) {
         return;
+    }
 
     if (getContainer()==nullptr || m_hScrollBar==nullptr || m_vScrollBar==nullptr) {
         return;
@@ -1214,7 +1266,7 @@ void QG_GraphicView::loadSettings() {
     RS_GraphicView::loadSettings();
 
     {
-    LC_GROUP_GUARD("Appearance");
+        LC_GROUP_GUARD("Appearance");
         int zoomFactor1000 = LC_GET_INT("ScrollZoomFactor", 1137);
         m_scrollZoomFactor = zoomFactor1000 / 1000.0;
 
@@ -1223,15 +1275,14 @@ void QG_GraphicView::loadSettings() {
     }
 
     {
-    LC_GROUP_GUARD("Defaults");
+        LC_GROUP_GUARD("Defaults");
         m_invertZoomDirection = LC_GET_ONE_BOOL("Defaults", "InvertZoomDirection");
         m_invertHorizontalScroll = LC_GET_BOOL("WheelScrollInvertH");
         m_invertVerticalScroll = LC_GET_BOOL("WheelScrollInvertV");
     }
 
+    LC_GROUP("Appearance");
     {
-        LC_GROUP("Appearance");
-
         m_cursor_hiding = LC_GET_BOOL("cursor_hiding", false);
         bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
         bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
@@ -1322,21 +1373,11 @@ void QG_GraphicView::setCurrentQAction(QAction* q_action){
     m_recent_actions.prepend(q_action);
 }
 
-void QG_GraphicView::destroyMenu(const QString& activator){
-    if (m_menus.contains(activator)) {
-        auto menu = m_menus.take(activator);
-        delete menu;
-    }
-}
-
-void QG_GraphicView::setMenu(const QString& activator, QMenu* menu){
-    destroyMenu(activator);
-    m_menus[activator] = menu;
-}
 
 void QG_GraphicView::startAutoPanTimer(QMouseEvent *event){
-    if (event == nullptr)
+    if (event == nullptr) {
         return;
+    }
     const RS_Vector cadArea_minCoord(0., 0.);
     const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
     const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
@@ -1413,16 +1454,18 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const{
 
     const bool autopanEnabled = LC_GET_ONE_BOOL("Appearance", "Autopanning");
 
-    if (!autopanEnabled)
+    if (!autopanEnabled) {
         return false;
+    }
 
     const RS_Vector cadArea_minCoord(0., 0.);
     const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
     const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
     const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
                                    cadArea_maxCoord - m_panData->probedAreaOffset);
-    if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.)
+    if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.) {
         return false;
+    }
 
     RS_Vector mouseCoord{event->position()};
 
@@ -1449,8 +1492,9 @@ void QG_GraphicView::deleteActionContext() {
 void QG_GraphicView::autoPanStep(){
     // skip first steps to avoid unintensional panning
     m_panData->m_delayCounter = std::min(++ m_panData->m_delayCounter, m_panData->delayCounterMax);
-    if (m_panData->m_delayCounter < m_panData->delayCounterMax)
+    if (m_panData->m_delayCounter < m_panData->delayCounterMax) {
         return;
+    }
 
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "%s(): Timer is ticking!", __func__);
     getViewPort()->zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
@@ -1471,8 +1515,10 @@ void QG_GraphicView::ucsHighlightStep(){
     overlayContainer->clear();
     if (m_ucsHighlightData->mayTick()){
         if (m_ucsHighlightData->m_inVisiblePhase) {
-            // note - potentially, here we may simply store data for custom ucs mark and create object in renderer.... that will eliminate storing ucs mark settings in this class
-            auto m_ucsMark = new LC_OverlayUCSMark(m_ucsHighlightData->origin, m_ucsHighlightData->angle, m_ucsHighlightData->forWCS, m_ucsMarkOptions.get());
+            // note - potentially, here we may simply store data for custom ucs mark and create object in renderer....
+            // that will eliminate storing ucs mark settings in this class
+            auto m_ucsMark = new LC_OverlayUCSMark(m_ucsHighlightData->origin, m_ucsHighlightData->angle,
+                                                   m_ucsHighlightData->forWCS, m_ucsMarkOptions.get());
             overlayContainer->add(m_ucsMark);
         }
         else{

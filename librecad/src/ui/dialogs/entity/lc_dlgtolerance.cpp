@@ -11,7 +11,7 @@ namespace
 
 LC_DlgTolerance::LC_DlgTolerance(QWidget* parent, LC_GraphicViewport* viewport, LC_Tolerance* tol, bool isNew)
     : LC_EntityPropertiesDlg(parent, QString("DlgTolerance") + (isNew ? "New" : "Edit"), viewport)
-      , ui(new Ui::LC_DlgTolerance), m_isNew{isNew}, m_entity{tol}{
+      , ui(new Ui::LC_DlgTolerance), m_entity{tol}, m_isNew{isNew}{
     ui->setupUi(this);
     initGeometricCharacterCombobox(ui->cbGeometryTop);
     initGeometricCharacterCombobox(ui->cbGeometryBottom);
@@ -104,7 +104,7 @@ void LC_DlgTolerance::accept() {
     updateEntity();
 }
 
-void LC_DlgTolerance::parseAndSetFields(const QString& string) {
+void LC_DlgTolerance::parseAndSetFields([[maybe_unused]]const QString& string) {
 }
 
 void LC_DlgTolerance::languageChange() {

@@ -120,7 +120,7 @@ void LC_ExtDataGroup::add(int code, const RS_Vector& value) {
     m_tagData.add(tagData);
 }
 
-void LC_ExtDataGroup::add(int code, LC_ExtDataTag* tagData) {
+void LC_ExtDataGroup::add([[maybe_unused]]int code, LC_ExtDataTag* tagData) {
     m_tagData.add(tagData);
 }
 

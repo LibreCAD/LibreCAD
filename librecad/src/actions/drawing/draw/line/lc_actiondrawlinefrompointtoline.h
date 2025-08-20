@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawLineFromPointToLine:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
-    LC_ActionDrawLineFromPointToLine(LC_ActionContext *actionContext);
+    explicit LC_ActionDrawLineFromPointToLine(LC_ActionContext *actionContext);
     ~LC_ActionDrawLineFromPointToLine() override = default;
     void setLineSnapMode(int val) {m_lineSnapMode = val;};
     int getLineSnapMode() const{return m_lineSnapMode;};
@@ -73,6 +73,8 @@ protected:
         SNAP_MIDDLE,
         SNAP_END
     };
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
@@ -117,7 +119,9 @@ protected:
      */
     double m_endOffset = 0.0;
 
-    RS_Line *createLineFromPointToTarget(RS_Line *line, RS_Vector& intersection);
+    bool m_selectLineFirst = false;
+
+    RS_Line *createLineFromPointToTarget(RS_Line *line, const RS_Vector& point, RS_Vector& intersection);
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector zero) override;
     bool doCheckMayTrigger() override;

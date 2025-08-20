@@ -582,7 +582,7 @@ QVector<RS_Vector> LC_ActionModifyBreakDivide::collectAllIntersectionsWithEntity
     // iterate over all entities
     for (auto* e: *m_container) {
         // consider only visible entities
-        if (e && e->isVisible()){
+        if (e != nullptr && e->isVisible()){
             // select containers / groups:
             if (e->isContainer()){
                 // additional handling for containers

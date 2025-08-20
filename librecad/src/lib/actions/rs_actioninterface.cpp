@@ -112,6 +112,10 @@ void RS_ActionInterface::setName(const char* _name) {
     m_name=_name;
 }
 
+bool RS_ActionInterface::mayInitWithContextEntity(int status) {
+    return status == InitialActionStatus;
+}
+
 /**
  * Called to initiate an action. This funtcion is often
  * overwritten by the implementing action.
@@ -125,7 +129,7 @@ void RS_ActionInterface::init(int status){
         RS_Snapper::init();
         updateMouseButtonHints();
         updateMouseCursor();
-        if (status == InitialActionStatus) {
+        if (mayInitWithContextEntity(status)) {
             doInitialInit();
             auto contextEntity = m_actionContext->getContextMenuActionContextEntity();
             if (contextEntity != nullptr) {
@@ -140,7 +144,7 @@ void RS_ActionInterface::init(int status){
     }
 }
 
-void RS_ActionInterface::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionInterface::doInitWithContextEntity([[maybe_unused]]RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
 }
 
 void RS_ActionInterface::doInitialInit() {
@@ -368,8 +372,7 @@ void RS_ActionInterface::setFinished() {
 /**
  * Finishes this action.
  */
-void RS_ActionInterface::finish(bool /*updateTB*/)
-{
+void RS_ActionInterface::finish(bool /*updateTB*/){
 	RS_DEBUG->print("RS_ActionInterface::finish");
 	//refuse to quit the default action
 	if(rtti() != RS2::ActionDefault) {
@@ -656,6 +659,11 @@ bool RS_ActionInterface::isControl(const QInputEvent *e){
 bool RS_ActionInterface::isShift(const QInputEvent *e){
     return  e->modifiers() & Qt::ShiftModifier;
 }
+
+bool RS_ActionInterface::isAlt(const QInputEvent *e){
+    return  e->modifiers() & Qt::AltModifier;
+}
+
 
 void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
     auto ce = RS_CoordinateEvent(coord);

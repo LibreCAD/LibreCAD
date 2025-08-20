@@ -60,5 +60,6 @@ void RS_ActionModifyAttributes::doTrigger(bool keepSelected){
 }
 
 void RS_ActionModifyAttributes::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to modify attributes (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Modify attributes immediately after selecting")));
+    updateMouseWidgetTRCancel(tr("Select to modify attributes (Enter to complete)"),
+        MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Modify attributes immediately after selecting")));
 }

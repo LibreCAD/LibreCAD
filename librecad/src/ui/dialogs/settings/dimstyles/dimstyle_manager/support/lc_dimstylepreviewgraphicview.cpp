@@ -51,7 +51,7 @@ public:
     void onLoadingCompleted() override {}
     void clearDimStyles() {getDimStyleList()->clear();}
 
-    LC_DimStyle* getResolvedDimStyle(const QString& dimStyleName, RS2::EntityType dimType) const override {
+    LC_DimStyle* getResolvedDimStyle([[maybe_unused]]const QString& dimStyleName, RS2::EntityType dimType) const override {
         return RS_Graphic::getResolvedDimStyle(m_currentStyleBaseName, dimType);
     };
 private:

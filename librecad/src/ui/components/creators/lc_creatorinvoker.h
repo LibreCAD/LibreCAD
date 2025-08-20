@@ -22,8 +22,12 @@
  ******************************************************************************/
 #ifndef LC_CREATORINVOKER_H
 #define LC_CREATORINVOKER_H
+#include <QMap>
 #include <QObject>
 
+#include "lc_menuactivator.h"
+
+class RS_Entity;
 class QAction;
 class QG_GraphicView;
 class QString;
@@ -34,22 +38,20 @@ class LC_CreatorInvoker : public QObject{
     Q_OBJECT
 public:
     LC_CreatorInvoker(QC_ApplicationWindow * appWindows, LC_ActionGroupManager * actionGrupManager);
-    void createCustomToolbars();
+    void createCustomToolbars(bool showTooltips);
     void invokeToolbarCreator();
     void invokeMenuCreator();
-    void invokeMenuAssigner(const QString &menu_name);
-    void unassignMenu(const QString &activator, const QString &menu_name);
-
-    void assignMenu(const QString &activator, const QString &menu_name);
-    void updateMenu(const QString &menu_name);
-    void destroyMenu(const QString &menu_name);
-    void setupCustomMenuForNewGraphicsView(QG_GraphicView* view);
+    bool getMenuActionsForMouseEvent(QMouseEvent* event, RS_Entity* entity, QStringList& actions);
 protected slots:
-    void createToolbar(const QString &toolbar_name);
-    void destroyToolbar(const QString &toolbar_name);
+    void createToolbar(const QString& toolbar_name, const QStringList& actionNames, int areaIndex);
+    void destroyToolbar(const QString& toolbar_name);
 private:
     QC_ApplicationWindow *m_appWindow;
     LC_ActionGroupManager* m_actionGroupManager {nullptr};
+    QList<LC_MenuActivator*> m_menuActivators;
+    bool m_showToolbarTooltips {false};
+    void loadMenuActivators();
     QAction*  getAction(const QString & key);
+    bool isDefaultMenuInvokerEvent(QMouseEvent* event);
 };
 #endif // LC_CREATORINVOKER_H

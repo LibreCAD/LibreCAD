@@ -642,8 +642,11 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
                 m_actionData->v1 = RS_Vector{e->uiPosition};
                 setStatus(Panning);
             } else {
-                m_actionData->v1 = e->graphPoint;
-                setStatus(Dragging);
+                // dragging should be without modifiers to let custom menu invocation
+                if (e->originalEvent->modifiers() == Qt::NoModifier) {
+                    m_actionData->v1 = e->graphPoint;
+                    setStatus(Dragging);
+                }
             }
             break;
         }
@@ -954,7 +957,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case Neutral: {
-            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Scroll Vertically / Select Child entities")));
+            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Pan / Scroll Vertically / Select Child entities")));
             commandPrompt("");
             break;
         }

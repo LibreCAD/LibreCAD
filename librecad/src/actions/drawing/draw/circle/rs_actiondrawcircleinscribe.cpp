@@ -25,7 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
+
+class RS_Polyline;
 
 struct RS_ActionDrawCircleInscribe::ActionData {
     RS_CircleData cData;
@@ -59,8 +62,13 @@ void RS_ActionDrawCircleInscribe::drawSnapper() {
 }
 
 void RS_ActionDrawCircleInscribe::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
-    if (isLine(contextEntity)) {
-        setLine1(static_cast<RS_Line*> (contextEntity));
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        setLine1(static_cast<RS_Line*> (entity));
     }
 }
 
@@ -137,7 +145,7 @@ void RS_ActionDrawCircleInscribe::setLine1(RS_Line* line) {
 }
 
 void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine); // fixme - support of polyline
     if (en == nullptr) {
         return;
     }

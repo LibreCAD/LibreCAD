@@ -79,7 +79,7 @@ RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, R
         arc->setRadius(r);
         arc->calculateBorders();
         return newEntity;
-    } else if (isLine(orgEntity) && isLine(newEntity)){
+    } else if (isLine(orgEntity) && isLine(newEntity)){ // fixme - support of polyline
         auto *line0 = static_cast<RS_Line*>(orgEntity);
         auto *line1 = static_cast<RS_Line*>(newEntity);
         RS_Vector v0 = line0->getStartpoint();
@@ -106,7 +106,7 @@ RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,R
     RS_VectorSolutions vsol;
     vsol = RS_Information::getIntersection(first, last, false);
 
-    if (vsol.getNumber() == 0) {
+    if (vsol.isEmpty()) {
         //Parallel entities
         return RS_Vector(false);
     }
@@ -348,16 +348,18 @@ bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polylin
     bool pointOnRightSide = false;
     double d = toGraphDX(m_catchEntityGuiRange) * 0.9;
     auto segment = polyline->getNearestEntity(snapPoint, &d, RS2::ResolveNone);
-    if (isLine(segment)){
+    if (isLine(segment)){ // fixme - support of polyline
         auto line = dynamic_cast<RS_Line *>(segment);
         double ang = line->getAngle1();
         double ang1 = line->getStartpoint().angleTo(snapPoint);
-        if (ang > ang1 || ang + M_PI < ang1)
+        if (ang > ang1 || ang + M_PI < ang1) {
             pointOnRightSide = true;
+        }
     } else {
         RS_Vector cen = ((RS_Arc *) segment)->getCenter();
-        if (cen.distanceTo(snapPoint) > ((RS_Arc *) segment)->getRadius() && ((RS_Arc *) segment)->getBulge() > 0)
+        if (cen.distanceTo(snapPoint) > ((RS_Arc *) segment)->getRadius() && ((RS_Arc *) segment)->getBulge() > 0) {
             pointOnRightSide = true;
+        }
     }
     return pointOnRightSide;
 }

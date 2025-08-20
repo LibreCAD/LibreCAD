@@ -227,13 +227,14 @@ INCLUDEPATH += \
     ui/dialogs/actions/modify \
     ui/dialogs/modify \
     ui/dialogs/entity \
+    ui/dialogs/creators \
     ui/dialogs/file \
     ui/dialogs/file/export \
     ui/dialogs/file/export/layers \
     ui/dialogs/file/export/image \
     ui/dialogs/file/export/makercam \        
     ui/dialogs/main \
-    ui/dialogs/settings \
+    ui/dialogs/settings \    
     ui/dialogs/settings/dimstyles \
     ui/dialogs/settings/dimstyles/dimstyle_manager \
     ui/dialogs/settings/dimstyles/dimstyle_manager/support \
@@ -464,6 +465,10 @@ HEADERS += \
     lib/actions/lc_actioncontext.h \
     ui/components/creators/lc_creatorinvoker.h \
     # ui/components/toolbars/lc_snapoptionsholdermanager.h \
+    ui/dialogs/creators/lc_dlgmenuassigner.h \
+    ui/dialogs/creators/lc_dlgwidgetcreator.h \
+    ui/components/creators/lc_menuactivator.h \
+    ui/dialogs/creators/lc_dlgnewwidget.h \
     ui/dialogs/entity/lc_dlgdimension.h \
     ui/dialogs/file/export/image/lc_exporttoimageservice.h \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h \
@@ -658,6 +663,10 @@ SOURCES += \
     lib/actions/lc_actioncontext.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     #ui/components/toolbars/lc_snapoptionsholdermanager.cpp \
+    ui/dialogs/creators/lc_dlgmenuassigner.cpp \
+    ui/dialogs/creators/lc_dlgwidgetcreator.cpp \
+    ui/components/creators/lc_menuactivator.cpp \
+    ui/dialogs/creators/lc_dlgnewwidget.cpp \
     ui/dialogs/entity/lc_dlgdimension.cpp \
     ui/dialogs/entity/lc_dlgtolerance.cpp \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
@@ -1272,8 +1281,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/components/comboboxes/qg_widthbox.h \
     ui/components/containers/lc_optionswidgetsholder.h \
     ui/components/containers/lc_snapoptionswidgetsholder.h \
-    ui/components/creators/actionlist.h \
-    ui/components/creators/widgetcreator.h \
+    ui/components/creators/actionlist.h \    
     ui/components/layouts/lc_flexlayout.h \
     ui/components/lc_plaintextedit.h \
     ui/components/pen/qg_widgetpen.h \
@@ -1465,8 +1473,7 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/components/comboboxes/qg_widthbox.cpp \
     ui/components/containers/lc_optionswidgetsholder.cpp \
     ui/components/containers/lc_snapoptionswidgetsholder.cpp \
-    ui/components/creators/actionlist.cpp \
-    ui/components/creators/widgetcreator.cpp \
+    ui/components/creators/actionlist.cpp \    
     ui/components/layouts/lc_flexlayout.cpp \
     ui/components/pen/qg_widgetpen.cpp \
     ui/components/status_bar/qg_activelayername.cpp \
@@ -1651,7 +1658,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/components/comboboxes/comboboxoption.ui \
        ui/components/containers/lc_optionswidgetsholder.ui \
        ui/components/containers/lc_snapoptionswidgetsholder.ui \
-       ui/components/creators/widgetcreator.ui \
+       ui/dialogs/creators/lc_dlgmenuassigner.ui \
+       ui/dialogs/creators/lc_dlgwidgetcreator.ui \
        ui/components/pen/qg_widgetpen.ui \
        ui/components/status_bar/lc_anglesbasiswidget.ui \
        ui/components/status_bar/lc_relzerocoordinateswidget.ui \
@@ -1668,6 +1676,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/actions/modify/qg_dlgrotate2.ui \
        ui/dialogs/actions/modify/qg_dlgscale.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
+       ui/dialogs/creators/lc_dlgnewwidget.ui \
        ui/dialogs/entity/LC_DlgParabola.ui \
        ui/dialogs/entity/lc_dlgdimension.ui \
        ui/dialogs/entity/lc_dlgtolerance.ui \

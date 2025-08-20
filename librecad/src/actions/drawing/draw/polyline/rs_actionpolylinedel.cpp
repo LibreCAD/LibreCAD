@@ -41,7 +41,7 @@ void RS_ActionPolylineDel::doInitialInit() {
     m_polylineToModify = nullptr;
 }
 
-void RS_ActionPolylineDel::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionPolylineDel::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     setPolylineToModify(contextEntity);
 }
 

@@ -190,6 +190,23 @@ int RS_Settings::readColor(const QString &key, int def) {
     return readColorSingle(m_group, key, def);
 }
 
+QStringList RS_Settings::getAllKeys() const {
+    return settings->allKeys();
+}
+
+QStringList RS_Settings::getChildKeys() const {
+    QString currentGroup = settings->group();
+    settings->beginGroup(m_group);
+    auto result = settings->childKeys();
+    settings->endGroup();
+    settings->beginGroup(currentGroup);
+    return result;
+}
+
+void RS_Settings::remove(const QString& key) const {
+    QString fullName = getFullName(m_group, key);
+    settings->remove(fullName);
+}
 
 int RS_Settings::readColorSingle(const QString& group, const QString &key, int def) {
     QString fullName = getFullName(group, key);

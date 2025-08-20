@@ -633,6 +633,9 @@ void QG_DlgOptionsGeneral::init(){
         cbExpandToolsMenuTillEntity->setChecked(expandToolsMenuTillEntity);
 
         cbExpandToolsMenuTillEntity->setEnabled(useExpandedToolsMenu);
+
+        m_originalShowToolbarTooltips = LC_GET_BOOL("ShowToolbarsTooltip", true);
+        cbStartupTBTooltips->setChecked(m_originalShowToolbarTooltips);
     }
     LC_GROUP_END();
 
@@ -916,6 +919,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("IgnorePreReleaseVersions", cbCheckNewVersionIgnorePreRelease->isChecked());
             LC_SET("ExpandedToolsMenu", cbExpandToolsMenu->isChecked());
             LC_SET("ExpandedToolsMenuTillEntity", cbExpandToolsMenuTillEntity->isChecked());
+            LC_SET("ShowToolbarsTooltip", cbStartupTBTooltips->isChecked());
         }
         LC_GROUP_END();
 
@@ -935,10 +939,11 @@ void QG_DlgOptionsGeneral::ok(){
     accept();
 }
 
-bool QG_DlgOptionsGeneral::checkRestartNeeded(){
+bool QG_DlgOptionsGeneral::checkRestartNeeded() {
     bool result = m_originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
                   m_originalLibraryPath != lePathLibrary->text().trimmed() ||
-                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
+                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked() ||
+                  m_originalShowToolbarTooltips != cbStartupTBTooltips->isChecked();
     return result;
 }
 

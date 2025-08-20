@@ -219,7 +219,7 @@ void LC_DlgDimension::onPenChanged() {
     updateDimStylePreview(pen);
 }
 
-void LC_DlgDimension::onFlipArrowChanged(bool val) {
+void LC_DlgDimension::onFlipArrowChanged([[maybe_unused]]bool val) {
     updateDimStylePreview(ui->cbFlipArrow1->isChecked(), ui->cbFlipArrow2->isChecked());
 }
 
@@ -331,7 +331,7 @@ void LC_DlgDimension::getOverrideItemIndex(LC_DimStyleTreeModel* model, LC_DimSt
     itemIndex = model->index(0, 0, parentIndex);
 }
 
-void LC_DlgDimension::onDimStyleEntitySelect(bool val) {
+void LC_DlgDimension::onDimStyleEntitySelect([[maybe_unused]]bool val) {
     auto model = getDimStylesModel();
     auto entityStyleItem = model->getEntityStyleItem();
     QModelIndex itemIndex;
@@ -345,7 +345,7 @@ void LC_DlgDimension::onDimStyleEntitySelect(bool val) {
     ui->lvDimStyles->update();
 }
 
-void LC_DlgDimension::onDimStyleSet(bool val) {
+void LC_DlgDimension::onDimStyleSet([[maybe_unused]]bool val) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -356,7 +356,7 @@ void LC_DlgDimension::onDimStyleSet(bool val) {
     expandStylesTree();
 }
 
-void LC_DlgDimension::onDimStyleSetDefault(bool val) {
+void LC_DlgDimension::onDimStyleSetDefault([[maybe_unused]]bool val) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -366,7 +366,7 @@ void LC_DlgDimension::onDimStyleSetDefault(bool val) {
     updateActiveStyleInfoLabel();
 }
 
-void LC_DlgDimension::onDimStyleOverrideRemove(bool val) {
+void LC_DlgDimension::onDimStyleOverrideRemove([[maybe_unused]]bool val) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -391,7 +391,7 @@ void LC_DlgDimension::onDimStyleOverrideRemove(bool val) {
     }
 }
 
-void LC_DlgDimension::onDimStyleOverrideSave(bool val) {
+void LC_DlgDimension::onDimStyleOverrideSave([[maybe_unused]]bool val) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -440,7 +440,7 @@ void LC_DlgDimension::onDimStyleOverrideSave(bool val) {
     }
 }
 
-void LC_DlgDimension::onDimStyleOverrideNew(bool val) {
+void LC_DlgDimension::onDimStyleOverrideNew([[maybe_unused]]bool val) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -479,7 +479,7 @@ void LC_DlgDimension::onDimStyleOverrideNew(bool val) {
     }
 }
 
-void LC_DlgDimension::onDimStyleOverrideEdit(bool checked) {
+void LC_DlgDimension::onDimStyleOverrideEdit([[maybe_unused]]bool checked) {
     QModelIndex selectedItemIndex = getSelectedDimStyleIndex();
     if (selectedItemIndex.isValid()) {
         auto model = getDimStylesModel();
@@ -540,17 +540,17 @@ void LC_DlgDimension::onDimStyleDoubleClick() {
     onDimStyleOverrideEdit(false);
 }
 
-void LC_DlgDimension::onDimStyleExport(bool val) {
+void LC_DlgDimension::onDimStyleExport([[maybe_unused]]bool val) {
     // fixme - support later
 }
 
-void LC_DlgDimension::onDimStyleImport(bool val) {
+void LC_DlgDimension::onDimStyleImport([[maybe_unused]]bool val) {
     // fixme - support later
 }
 
 void LC_DlgDimension::onDimStylesListMenuRequested(const QPoint& pos) {
     auto* contextMenu = new QMenu(this);
-    auto* caption = new QLabel(tr("Dim Styles Menu"), this);
+    // auto* caption = new QLabel(tr("Dim Styles Menu"), this);
     /*QPalette palette;
     palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
     palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
@@ -608,7 +608,7 @@ void LC_DlgDimension::onDimStylesListMenuRequested(const QPoint& pos) {
     delete contextMenu;
 }
 
-void LC_DlgDimension::onDimCurrentChanged(const QModelIndex &current, const QModelIndex &previous){
+void LC_DlgDimension::onDimCurrentChanged(const QModelIndex &current, [[maybe_unused]]const QModelIndex &previous){
     if (current.isValid()) {
         auto model = getDimStylesModel();
         LC_DimStyleItem* item = model->getItemForIndex(current);
@@ -684,7 +684,7 @@ QModelIndex LC_DlgDimension::getSelectedDimStyleIndex() {
     return ui->lvDimStyles->selectionModel()->currentIndex();
 }
 
-void LC_DlgDimension::updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimStyleTreeModel* model, bool override, const QString& baseName) const {
+void LC_DlgDimension::updateDimStylePreview(LC_DimStyle* dimStyle,[[maybe_unused]] LC_DimStyleTreeModel* model, bool override, const QString& baseName) const {
     m_previewView->setEntityDimStyle(dimStyle, override, baseName);
     m_previewView->updateDims();
     m_previewView->zoomAuto();

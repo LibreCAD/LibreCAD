@@ -104,8 +104,6 @@ public:
     void addScrollbars();
     bool hasScrollbars();
     void setCurrentQAction(QAction* q_action);
-    void destroyMenu(const QString& activator);
-    void setMenu(const QString& activator, QMenu* menu);
     QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
     virtual void initView();
     const QString& getDeviceName() const {
@@ -122,6 +120,7 @@ protected slots:
     void slotVScrolled(int value);
 protected:
     void mousePressEvent(QMouseEvent* e) override;
+    bool invokeContextMenuForMouseEvent(QMouseEvent* e);
     void mouseDoubleClickEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void mouseMoveEvent(QMouseEvent* e) override;
@@ -139,6 +138,7 @@ protected:
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
     void switchToAction(RS2::ActionType actionType, void* data = nullptr) const;
+    RS_Entity* catchContextEntity(QMouseEvent* event, RS_Vector& clickPos);
     void autoPanStep();
     void highlightUCSLocation(LC_UCS *ucs) override;
     void ucsHighlightStep();
@@ -178,8 +178,6 @@ private:
     bool m_isSmoothScrolling;
 
     std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
-
-    QMap<QString, QMenu*> m_menus;
 
     bool m_scrollbars{false};
     bool m_cursor_hiding{false};

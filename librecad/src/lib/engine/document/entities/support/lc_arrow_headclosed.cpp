@@ -27,7 +27,7 @@
 
 LC_ArrowHeadClosed::LC_ArrowHeadClosed(RS_EntityContainer* container, const RS_Vector& point, double dirAngle,
                                        double size, double ownAngle, bool filled):
-    LC_DimArrowPoly{container, point, dirAngle, size}, m_ownAngle(ownAngle), m_filled(filled) {
+    LC_DimArrowPoly{container, point, dirAngle, size}, m_filled(filled), m_ownAngle(ownAngle) {
     createVertexes();
 }
 
@@ -59,8 +59,6 @@ void LC_ArrowHeadClosed::createVertexes() {
     setVertex(0, -arrowSize, - halfArrowHeight);
     setVertex(1,0, 0);
     setVertex(2, -arrowSize, halfArrowHeight);
-
-
 
     positionFromZero();
     calculateBorders();

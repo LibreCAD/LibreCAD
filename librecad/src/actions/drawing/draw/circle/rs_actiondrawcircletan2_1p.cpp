@@ -74,7 +74,7 @@ void RS_ActionDrawCircleTan2_1P::doInitialInit() {
     LC_ActionDrawCircleBase::doInitialInit();
 }
 
-void RS_ActionDrawCircleTan2_1P::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionDrawCircleTan2_1P::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& clickPos) {
     if (g_enTypeList.contains(contextEntity->rtti())) {
         setCircle(contextEntity, SetCircle1);
     }

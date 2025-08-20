@@ -228,9 +228,14 @@ void QG_DimOptions::updateAngle(const QString & a) {
         dimLinearAction->setUcsAngleDegrees(ucsBasisAngleDegrees);
 
         bool checkVert = !LC_LineMath::isMeaningfulAngle(90-ucsBasisAngleDegrees);
+        ui->bVer->blockSignals(true);
         ui->bVer->setChecked(checkVert);
+        ui->bVer->blockSignals(false);
+
         bool checkHor = !LC_LineMath::isMeaningfulAngle(ucsBasisAngleDegrees);
+        ui->bHor->blockSignals(true);
         ui->bHor->setChecked(checkHor);
+        ui->bHor->blockSignals(false);
     }
 }
 

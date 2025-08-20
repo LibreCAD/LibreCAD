@@ -56,8 +56,8 @@ protected:
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;
     RS_Vector getExtensionPoint2() override;
-    void preparePreview() override;
-    double getDimAngle() override;
+    void preparePreview(bool alternativeMode) override;
+    double getDimAngle(bool alternateMode) override;
     bool doProcessCommand(int status, const QString &command) override;
     void doTrigger() override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;

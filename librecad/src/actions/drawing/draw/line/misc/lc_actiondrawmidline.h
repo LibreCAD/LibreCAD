@@ -70,6 +70,8 @@ protected:
     int m_mainStatus = 0;
     void restoreMainStatus(){setStatus(m_mainStatus);}
     void prepareLine(LineInfo &info, RS_Entity* ent, bool alternate);
+    RS2::LineType getLineTypeForCenterLine() const;
+    void setupCenterlinePenLayer(RS_Line* line) const;
     void doTrigger() override;
 };
 

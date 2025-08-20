@@ -37,9 +37,17 @@ LC_ActionModifyLineJoin::LC_ActionModifyLineJoin(LC_ActionContext *actionContext
 LC_ActionModifyLineJoin::~LC_ActionModifyLineJoin() = default;
 
 void LC_ActionModifyLineJoin::init(int status){
-    LC_AbstractActionWithPreview::init(status);
     m_line1 = nullptr;
     m_line2 = nullptr;
+    LC_AbstractActionWithPreview::init(status);
+}
+
+void LC_ActionModifyLineJoin::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+   if (isLine(contextEntity)) {
+       m_line1 = static_cast<RS_Line*>(contextEntity);
+       m_line1ClickPosition = contextEntity->getNearestPointOnEntity(clickPos, true);
+       setStatus(SetLine2);
+   }
 }
 
 /*

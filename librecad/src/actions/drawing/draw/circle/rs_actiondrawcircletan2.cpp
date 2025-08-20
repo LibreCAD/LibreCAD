@@ -62,7 +62,7 @@ void RS_ActionDrawCircleTan2::doInitialInit() {
     m_actionData->circles.clear();
 }
 
-void RS_ActionDrawCircleTan2::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionDrawCircleTan2::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     if (g_enTypeList.contains(contextEntity->rtti())) {
         setCircleOne(contextEntity);
     }
@@ -134,7 +134,7 @@ void RS_ActionDrawCircleTan2::onMouseMoveEvent([[maybe_unused]]int status, LC_Mo
                 if (m_showRefEntitiesOnPreview) {
                     for (RS_AtomicEntity *const pc: m_actionData->circles) { // highlight already selected // fixme - test and review, which cicle center is used
                         RS_Vector candidateCircleCenter = m_actionData->cData.center;
-                        if (isLine(pc)) {
+                        if (isLine(pc)) { // fixme - support of polyline
                             previewRefPoint(pc->getNearestPointOnEntity(candidateCircleCenter, false));
                         } else {
                             previewRefPoint(getTangentPoint(candidateCircleCenter, m_actionData->cData.radius, pc));

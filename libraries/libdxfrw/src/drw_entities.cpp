@@ -1121,7 +1121,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-void DRW_Entity::init(DRW_Entity const& rhs) {
+void DRW_Entity::init([[maybe_unused]]DRW_Entity const& rhs) {
 }
 
 bool DRW_Tolerance::parseCode(int code, dxfReader* reader) {
@@ -1165,7 +1165,7 @@ bool DRW_Tolerance::parseCode(int code, dxfReader* reader) {
     return true;
 }
 
-bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer* buf, duint32 bs) {
+bool DRW_Tolerance::parseDwg([[maybe_unused]]DRW::Version v, [[maybe_unused]]dwgBuffer* buf,[[maybe_unused]] duint32 bs) {
     DRW_DBG("PARSING TOLERANCE FROM DWG IS NOT SUPPORTED!!!");
     return true;
 }

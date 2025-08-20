@@ -113,10 +113,8 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
         case SetBaseEntity: {
             deleteSnapper();
             auto entity = catchAndDescribe(e, RS2::ResolveAll);
-            if (entity != nullptr){
-                if (entity->isAtomic()){
-                    highlightHover(entity);
-                }
+            if (isAtomic(entity)){
+                highlightHover(entity);
             }
             break;
         }
@@ -189,22 +187,20 @@ RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
 }
 
 void RS_ActionDrawArcTangential::setBaseEntity(RS_Entity* entity, RS_Vector coord) {
-    if (entity != nullptr){
-        if (entity->isAtomic()){
-            m_baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
-            const RS_Vector &startPoint = m_baseEntity->getStartpoint();
-            const RS_Vector &endPoint = m_baseEntity->getEndpoint();
-            if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)){
-                m_isStartPoint = true;
-                m_arcStartPoint = startPoint;
-
-            } else {
-                m_isStartPoint = false;
-                m_arcStartPoint = endPoint;
-            }
-            setStatus(SetEndAngle);
-            updateMouseButtonHints();
+    if (isAtomic(entity)) {
+        m_baseEntity = dynamic_cast<RS_AtomicEntity*>(entity);
+        const RS_Vector& startPoint = m_baseEntity->getStartpoint();
+        const RS_Vector& endPoint = m_baseEntity->getEndpoint();
+        if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)) {
+            m_isStartPoint = true;
+            m_arcStartPoint = startPoint;
         }
+        else {
+            m_isStartPoint = false;
+            m_arcStartPoint = endPoint;
+        }
+        setStatus(SetEndAngle);
+        updateMouseButtonHints();
     }
 }
 

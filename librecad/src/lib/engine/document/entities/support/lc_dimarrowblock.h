@@ -24,7 +24,6 @@
 #ifndef LC_DIMARROWBLOCK_H
 #define LC_DIMARROWBLOCK_H
 
-#include "lc_parabola.h"
 #include "rs_atomicentity.h"
 
 class LC_DimArrow: public RS_AtomicEntity{
@@ -49,7 +48,7 @@ public:
     RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist) const override;
     RS_Vector getNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
     double getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level,
-                              double solidDist) const;
+                              double solidDist) const override;
     double getAngle() const{return m_angle;}
     void setAngle(double angle){m_angle = angle;}
     double getArrowSize() const{return m_arrowSize;}
@@ -64,9 +63,9 @@ protected:
     virtual void doCalculateBorders();
     void setDimLinePoint(const RS_Vector& pos);
     void positionDimLinePointFromZero(const RS_Vector &angleVector);
-private:
-    double m_angle {0.0};
+private:    
     RS_Vector m_position {};
+    double m_angle {0.0};
     double m_arrowSize {0.0};
     RS_Vector m_dimLinePoint {};
 };

@@ -138,8 +138,9 @@ namespace {
                 const double a0 = center0.angleTo(trimCoord);
                 aStart = angles.front();
                 aEnd = angles.back();
-                if (!RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+                if (!RS_Math::isAngleBetween(a0, aStart, aEnd, false)) {
                     std::swap(aStart, aEnd);
+                }
                 break;
         }
         RS_ArcData arcData(circle->getCenter(),
@@ -162,13 +163,16 @@ namespace {
 
 // Support fillet trimming for whole ellipses
     RS_AtomicEntity *trimEllipseForRound(RS_AtomicEntity *entity, const RS_Arc &arcFillet){
-        if (entity == nullptr)
+        if (entity == nullptr) {
             return entity;
-        if (entity->rtti() != RS2::EntityEllipse)
+        }
+        if (entity->rtti() != RS2::EntityEllipse) {
             return entity;
+        }
         auto ellipse = dynamic_cast<RS_Ellipse *>(entity);
-        if (ellipse->isEllipticArc())
+        if (ellipse->isEllipticArc()) {
             return entity;
+        }
         RS_Vector tangent = entity->getNearestPointOnEntity(arcFillet.getCenter(), false);
         RS_Line line{nullptr, {arcFillet.getCenter(), tangent}};
         RS_Vector middle = arcFillet.getMiddlePoint();
@@ -181,12 +185,15 @@ namespace {
 
 // A quick fix for rounding on circles
     RS_AtomicEntity *trimCircleForRound(RS_AtomicEntity *entity, const RS_Arc &arcFillet){
-        if (entity == nullptr)
+        if (entity == nullptr) {
             return entity;
-        if (entity->rtti() == RS2::EntityEllipse)
+        }
+        if (entity->rtti() == RS2::EntityEllipse) {
             return trimEllipseForRound(entity, arcFillet);
-        if (entity->rtti() != RS2::EntityCircle)
+        }
+        if (entity->rtti() != RS2::EntityCircle) {
             return entity;
+        }
         RS_Line line{nullptr, {arcFillet.getCenter(), entity->getCenter()}};
         RS_Vector middle = arcFillet.getMiddlePoint();
         // prefer acute angle for fillet
@@ -1193,7 +1200,6 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
     bool lastDropped = false;
     RS_Entity* lastEntity = polyline.lastEntity();
     for (auto e: polyline) {
-
         if (e->isAtomic()){
             auto ae = dynamic_cast<RS_AtomicEntity *>(e);
             double bulge = 0.0;
@@ -2252,10 +2258,12 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
         auto *lin = dynamic_cast<RS_Line *>(trimEntity);
         for (unsigned int i=0; i< sol.size(); i++) {
             RS_Vector v = sol.at(i);
-            if (v == lin->getStartpoint())
+            if (v == lin->getStartpoint()) {
                 sol.removeAt(i);
-            else if (v == lin->getEndpoint())
+            }
+            else if (v == lin->getEndpoint()) {
                 sol.removeAt(i);
+            }
         }
     }
 
@@ -2598,14 +2606,10 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
 
 // Create new entities
     for(auto e: *container){ // fixme - sand - iteration over all entities in container
-        if (e &&
-            e->isVisible() &&
-            !e->isLocked() ) {
-//            &&
-            if (  (e->isInWindow(firstCorner, secondCorner) ||
-                   e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
-
-                RS_Entity* ec = e->clone();  // fixme - sand - should we use proxy there?
+        if (e && e->isVisible() && !e->isLocked()) {
+            if ((e->isInWindow(firstCorner, secondCorner) ||
+                e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
+                RS_Entity* ec = e->clone(); // fixme - sand - should we use proxy there?
                 ec->stretch(firstCorner, secondCorner, offset);
                 addList.push_back(ec);
                 e->setSelected(true);
@@ -2644,8 +2648,12 @@ LC_BevelResult* RS_Modification::bevel(
                         "RS_Modification::bevel: At least one entity is nullptr");
         return nullptr;
     }
-    if (entity1->isLocked() || !entity1->isVisible()) return nullptr;
-    if (entity2->isLocked() || !entity2->isVisible()) return nullptr;
+    if (entity1->isLocked() || !entity1->isVisible()) {
+        return nullptr;
+    }
+    if (entity2->isLocked() || !entity2->isVisible()) {
+        return nullptr;
+    }
 
     RS_EntityContainer *baseContainer = container;
     bool isPolyline = false;
@@ -2658,8 +2666,7 @@ LC_BevelResult* RS_Modification::bevel(
     auto* result = new LC_BevelResult();
 
     //fixme - that check should be in action too
-    if (entity1->getParent() &&
-        entity1->getParent()->rtti() == RS2::EntityPolyline){
+    if (entity1->getParent() && entity1->getParent()->rtti() == RS2::EntityPolyline){
         RS_DEBUG->print("RS_Modification::bevel: trimming polyline segments");
         if (entity1->getParent() != entity2->getParent()){
             RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -2924,8 +2931,12 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
                         "RS_Modification::round: At least one entity is nullptr");
         return nullptr;
     }
-    if (entity1->isLocked() || !entity1->isVisible()) return nullptr;
-    if (entity2->isLocked() || !entity2->isVisible()) return nullptr;
+    if (entity1->isLocked() || !entity1->isVisible()) {
+        return nullptr;
+    }
+    if (entity2->isLocked() || !entity2->isVisible()) {
+        return nullptr;
+    }
 
     auto* result = new LC_RoundResult();
 
@@ -2934,11 +2945,13 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
 //    bool isClosedPolyline = false;
 
     LC_UndoSection undo(document, viewport,handleUndo);
-    // find out whether we're rounding within a polyline:
-    if (entity1->getParent() &&
-        entity1->getParent()->rtti() == RS2::EntityPolyline){
 
-        if (entity1->getParent() != entity2->getParent()){
+    auto parent1 = entity1->getParent();
+    auto parent2 = entity2->getParent();
+    // find out whether we're rounding within a polyline:
+    if (parent1 != nullptr &&  parent1->rtti() == RS2::EntityPolyline){
+
+        if (parent1 != parent2){
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "RS_Modification::round: entities not in "
                             "the same polyline");
@@ -2947,18 +2960,21 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
         }
 
         // clone polyline for undo
-        auto cl = dynamic_cast<RS_EntityContainer *>(entity1->getParent()->clone());
+        auto cl = dynamic_cast<RS_EntityContainer *>(parent1->clone());
         baseContainer = cl;
 
         if (handleUndo){
             container->addEntity(cl);
             undo.addUndoable(cl);
-            undo.addUndoable(entity1->getParent());
-            entity1->getParent()->setUndoState(true);
+            undo.addUndoable(parent1);
+            parent1->setUndoState(true);
         }
 
-        entity1 = (RS_AtomicEntity *) baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
-        entity2 = (RS_AtomicEntity *) baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
+        int index1 = parent1->findEntity(entity1);
+        entity1 = static_cast<RS_AtomicEntity*>(baseContainer->entityAt(index1));
+
+        int index2 = parent2->findEntity(entity2);
+        entity2 = static_cast<RS_AtomicEntity*>(baseContainer->entityAt(index2));
 
         isPolyline = true;
         result->polyline = true;
@@ -3009,8 +3025,8 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
             trimmed1 = entity1;
             trimmed2 = entity2;
         } else {
-            trimmed1 = (RS_AtomicEntity *) entity1->clone();
-            trimmed2 = (RS_AtomicEntity *) entity2->clone();
+            trimmed1 = static_cast<RS_AtomicEntity*>(entity1->clone());
+            trimmed2 = static_cast<RS_AtomicEntity*>(entity2->clone());
         }
 
      /*   // remove trim entity:
@@ -3107,7 +3123,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
     result->trimmed2 = trimmed2;
 
     if (isPolyline){
-        ((RS_Polyline *) baseContainer)->updateEndpoints();
+        static_cast<RS_Polyline*>(baseContainer)->updateEndpoints();
     }
 
     if (handleUndo){
@@ -3137,7 +3153,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
 /**
  * Repetitive recursive block of code for the explode() method.
  */
-static void update_exploded_children_recursively(
+static void updateExplodedChildrenRecursively(
         RS_EntityContainer* ec,
         RS_Entity* e,
         RS_Entity* clone,
@@ -3168,16 +3184,15 @@ static void update_exploded_children_recursively(
         // Note: reassigning ec and e here, so keep
         // that in mind when writing code below this block.
         ec = static_cast<RS_EntityContainer*>(clone);
-        for(RS_Entity* e: lc::LC_ContainerTraverser{*ec, rl}.entities()) {
-            if (e != nullptr) {
+        for(RS_Entity* en: lc::LC_ContainerTraverser{*ec, rl}.entities()) {
+            if (en != nullptr) {
                 // Run the same code for every children recursively
-                update_exploded_children_recursively(ec, clone, e,
-                        rl, resolveLayer, resolvePen);
+                updateExplodedChildrenRecursively(ec, clone, en,
+                                                  rl, resolveLayer, resolvePen);
             }
         }
     }
 }
-
 
 /**
  * Removes the selected entity containers and adds the entities in them as
@@ -3198,15 +3213,16 @@ bool RS_Modification::explode(const bool remove /*= true*/,  const bool forceUnd
 
 // fixme - sand - decide how to treat keepSelected flag. So far one is ignored.
 bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const bool remove, const bool forceUndoableOperation, [[maybe_unused]]const bool keepSelected) {
-    if (container->isLocked() || ! container->isVisible()) return false;
+    if (container->isLocked() || ! container->isVisible()) {
+        return false;
+    }
 
     std::vector<RS_Entity*> clonesList;
 
     for(auto e: entitiesList){
         if (e->isContainer()) {
-
             // add entities from container:
-            auto* ec = (RS_EntityContainer*)e;
+            auto* ec = static_cast<RS_EntityContainer*>(e);
             //ec->setSelected(false);
 
             // iterate and explode container:
@@ -3237,7 +3253,7 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
                     if (RS2::isDimensionalEntity(containerType)) {
                         rl = RS2::ResolveNone;
                         resolveLayer = true;
-                        resolvePen = false;
+                        resolvePen = true;
                     }
                     else {
                         rl = RS2::ResolveAll;
@@ -3247,7 +3263,8 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
                     break;
             }
 
-            for(RS_Entity* e2: lc::LC_ContainerTraverser{*ec, rl}.entities()) {
+            auto entities = lc::LC_ContainerTraverser{*ec, rl}.entities();
+            for(RS_Entity* e2: entities) {
                 if (e2 != nullptr) {
                     RS_Entity* clone = e2->clone();
                     clone->setSelected(false);
@@ -3259,7 +3276,7 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
                     // we have to update all children of exploded entity,
                     // even those (below the tree) which are not direct
                     // subjects to the current explode() call.
-                    update_exploded_children_recursively(ec, e2, clone,
+                    updateExplodedChildrenRecursively(ec, e2, clone,
                                                          rl, resolveLayer, resolvePen);
 /*
                         if (resolveLayer) {
@@ -3306,9 +3323,9 @@ bool RS_Modification::explodeTextIntoLetters(bool keepSelected) {
 }
 
 bool RS_Modification::explodeTextIntoLetters(const std::vector<RS_Entity*> &entitiesList, [[maybe_unused]]bool keepSelected) {
-
-    if(container->isLocked() || ! container->isVisible()) return false;
-
+    if(container->isLocked() || ! container->isVisible()) {
+        return false;
+    }
     std::vector<RS_Entity*> clonesList;
 
     for(auto e: entitiesList){
@@ -3334,7 +3351,9 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Enti
     if (text == nullptr) {
         return false;
     }
-    if(text->isLocked() || ! text->isVisible()) return false;
+    if(text->isLocked() || ! text->isVisible()) {
+        return false;
+    }
 
     // iterate though lines:
     for(auto e2: *text){

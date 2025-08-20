@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -4820,6 +4820,26 @@
           <string>Startup</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_29">
+          <item row="9" column="0" colspan="2">
+           <widget class="QCheckBox" name="cad_toolbars_checkbox">
+            <property name="toolTip">
+             <string>If checked, toolbars with commands will be enabled. </string>
+            </property>
+            <property name="text">
+             <string>Enable CAD toolbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="tab_mode_check_box">
+            <property name="toolTip">
+             <string>Controls default mode for drawings</string>
+            </property>
+            <property name="text">
+             <string>Start in tab mode</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QCheckBox" name="cbSplash">
             <property name="toolTip">
@@ -4827,6 +4847,36 @@
             </property>
             <property name="text">
              <string>Display loading screen</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="left_sidebar_checkbox">
+            <property name="toolTip">
+             <string>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </string>
+            </property>
+            <property name="text">
+             <string>Enable CAD dockwidgets</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbOpenLastFiles">
+            <property name="toolTip">
+             <string>If set, previously opened files during previous closing of the application will be re-opened.</string>
+            </property>
+            <property name="text">
+             <string>Open last opened files</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbAllowMenusDetaching">
+            <property name="toolTip">
+             <string>If enabled, drop-down menus may become floating</string>
+            </property>
+            <property name="text">
+             <string>Allow menus detaching</string>
             </property>
            </widget>
           </item>
@@ -4850,36 +4900,6 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QCheckBox" name="left_sidebar_checkbox">
-            <property name="toolTip">
-             <string>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </string>
-            </property>
-            <property name="text">
-             <string>Enable CAD dockwidgets</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QCheckBox" name="cad_toolbars_checkbox">
-            <property name="toolTip">
-             <string>If checked, toolbars with commands will be enabled. </string>
-            </property>
-            <property name="text">
-             <string>Enable CAD toolbars</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbAllowMenusDetaching">
-            <property name="toolTip">
-             <string>If enabled, drop-down menus may become floating</string>
-            </property>
-            <property name="text">
-             <string>Allow menus detaching</string>
-            </property>
-           </widget>
-          </item>
           <item row="6" column="0" colspan="2">
            <widget class="QCheckBox" name="cbDuplicateActionsPromptsInStatusBar">
             <property name="toolTip">
@@ -4893,23 +4913,13 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbOpenLastFiles">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="cbStartupTBTooltips">
             <property name="toolTip">
-             <string>If set, previously opened files during previous closing of the application will be re-opened.</string>
+             <string>If enabled, tooltips toolbar's name will be shown</string>
             </property>
             <property name="text">
-             <string>Open last opened files</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="tab_mode_check_box">
-            <property name="toolTip">
-             <string>Controls default mode for drawings</string>
-            </property>
-            <property name="text">
-             <string>Start in tab mode</string>
+             <string>Show tooltips for toolbars</string>
             </property>
            </widget>
           </item>

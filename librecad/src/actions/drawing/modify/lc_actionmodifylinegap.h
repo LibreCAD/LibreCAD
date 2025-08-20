@@ -32,7 +32,7 @@ class LC_ActionModifyLineGap:public LC_AbstractActionWithPreview{
      * entity states
      */
     enum{
-        SetEntity,
+        SetEntity = InitialActionStatus,
         SetGapEndPoint
     };
 
@@ -102,6 +102,7 @@ protected:
      */
     GapData* m_gapData = nullptr;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS_Vector obtainLineSnapPointForMode(const RS_Line *targetLine, const RS_Vector &snap) const;

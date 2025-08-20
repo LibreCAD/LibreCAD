@@ -70,7 +70,7 @@ void RS_ActionModifyEntity::doTrigger() {
             m_entity->setSelected(false);
             clone->setSelected(false);
 
-            if (m_document) {
+            if (m_document != nullptr) {
                 undoCycleReplace(m_entity, clonedEntity);
             }
 

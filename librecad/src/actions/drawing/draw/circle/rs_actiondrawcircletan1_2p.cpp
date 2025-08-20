@@ -73,7 +73,7 @@ void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleTan1_2P::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionDrawCircleTan1_2P::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
      if (g_enTypeList.contains(contextEntity->rtti())) {
          setCircleOne(contextEntity);
      }
@@ -163,7 +163,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     if (m_showRefEntitiesOnPreview) {
                         previewRefPoint(m_actionData->points.at(0));
                         previewRefPoint(m_actionData->cData.center);
-                        if (isLine(m_baseEntity)) {
+                        if (isLine(m_baseEntity)) { // fixme - sand - support polyline
                             previewRefPoint(m_baseEntity->getNearestPointOnEntity(m_actionData->cData.center, false));
                         } else {
                             double baseEntityRadius = m_baseEntity->getRadius();
@@ -190,7 +190,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                 if (m_showRefEntitiesOnPreview) {
                     previewRefPoint(m_actionData->points.at(0));
                     previewRefPoint(m_actionData->points.at(1));
-                    if (isLine(m_baseEntity)) {
+                    if (isLine(m_baseEntity)) { // fixme - support of polyline
                         previewRefPoint(m_baseEntity->getNearestPointOnEntity(m_actionData->cData.center, false));
                     } else {
                         double baseEntityRadius = m_baseEntity->getRadius();

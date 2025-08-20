@@ -53,7 +53,7 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     QList<RS_Entity *> entitiesToCreate;
     createAlignedEntities(entitiesToCreate, m_alignMin, m_alignMax, false);
     if (!entitiesToCreate.isEmpty()) {
-        if (m_document) {
+        if (m_document != nullptr) {
             undoCycleStart();
 
             for (auto e: entitiesToCreate) {

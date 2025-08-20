@@ -29,11 +29,12 @@
 class LC_ActionSplineAppendPoint:public LC_ActionSplineModifyBase{
 Q_OBJECT
 public:
-    LC_ActionSplineAppendPoint(LC_ActionContext *actionContext);
+    explicit LC_ActionSplineAppendPoint(LC_ActionContext *actionContext);
     ~LC_ActionSplineAppendPoint() override = default;
 protected:
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
+    void setEntityToModify(RS_Entity* entity) override;
     void updateMouseButtonHints() override;
     bool mayModifySplineEntity(RS_Entity *e) override;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart) override;

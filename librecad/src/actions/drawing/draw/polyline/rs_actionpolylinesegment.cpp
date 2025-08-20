@@ -50,7 +50,7 @@ void RS_ActionPolylineSegment::drawSnapper() {
     // disable snapper for this action
 }
 
-void RS_ActionPolylineSegment::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionPolylineSegment::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& clickPos) {
     m_targetEntity = contextEntity;
     m_initWithTarget = true;
 }
@@ -187,7 +187,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) {
             continue;
         }
-        if (isLine(e1) || isArc(e1) || e1->rtti() == RS2::EntityPolyline){
+        if (isLine(e1) || isArc(e1) || e1->rtti() == RS2::EntityPolyline){ // fixme - support of polyline
             if (selectedEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(selectedEntity)->isClosed()) {
                 continue;
             }

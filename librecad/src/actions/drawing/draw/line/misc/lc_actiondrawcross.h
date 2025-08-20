@@ -86,6 +86,9 @@ protected:
     double m_ucsBasisAngleDegrees = 0.0;
 
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    bool isSetActivePenAndLayerOnTrigger() override;
+    void setupCrossLinePenAndLayer(RS_Line* line) const;
+    RS2::LineType getLineTypeForCenterLine() const;
     void collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities, QList<RS_Entity*> &entitiesForTrigger) override;
     void doPrepareTriggerEntities(QList<RS_Entity*>& list) override;
     bool doCheckMayTrigger() override;

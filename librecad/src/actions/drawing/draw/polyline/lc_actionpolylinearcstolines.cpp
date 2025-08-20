@@ -35,7 +35,7 @@ LC_ActionPolylineArcsToLines::LC_ActionPolylineArcsToLines(LC_ActionContext *act
 
 LC_ActionPolylineArcsToLines::~LC_ActionPolylineArcsToLines() = default;
 
-void LC_ActionPolylineArcsToLines::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void LC_ActionPolylineArcsToLines::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     setPolylineToModify(contextEntity);
 }
 

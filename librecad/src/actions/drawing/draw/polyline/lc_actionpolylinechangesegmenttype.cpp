@@ -41,7 +41,7 @@ void LC_ActionPolylineChangeSegmentType::doInitialInit() {
     m_polylineSegment = nullptr;
 }
 
-void LC_ActionPolylineChangeSegmentType::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& pos) {
+void LC_ActionPolylineChangeSegmentType::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& pos) {
     setPolylineToModify(contextEntity);
 }
 
@@ -77,7 +77,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
         case SetSegment:{
             auto entity = catchAndDescribe(e, RS2::ResolveAllButTextImage);
             bool segmentFound = false;
-            if (entity != nullptr && entity->isAtomic()){
+            if (isAtomic(entity)){
                 if (m_polyline == entity->getParent()){
                     int rtti = entity->rtti();
                     switch (rtti){
@@ -184,7 +184,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC
         }
         case SetSegment:{
             auto entity = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
-            if (entity != nullptr && entity->isAtomic()){
+            if (isAtomic(entity)){
                 if (m_polyline == entity->getParent()){
                     int rtti = entity->rtti();
                     switch (rtti){

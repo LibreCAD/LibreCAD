@@ -57,7 +57,7 @@ protected:
       * Action States.
       */
     enum Status {
-        SetStartPoint,   /**< Setting the startpoint.  */
+        SetStartPoint = InitialActionStatus,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
     };
 
@@ -70,7 +70,6 @@ private:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-
     void doTrigger() override;
 
     struct ActionData;

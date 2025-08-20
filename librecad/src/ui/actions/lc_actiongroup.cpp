@@ -22,11 +22,9 @@
 
 #include "lc_actiongroup.h"
 
-LC_ActionGroup::LC_ActionGroup(QObject *parent, const QString &name, const QString &description, const char* iconName)
-    :QActionGroup(parent) {
+LC_ActionGroup::LC_ActionGroup(QObject *parent, const QString &name, const QString& title, const QString &description, const char* iconName)
+    :QActionGroup(parent), m_name{name}, m_title{title}, m_description{description}{
     setObjectName(name);
-    m_name = name;
-    this->m_description = description;
     if (iconName != nullptr){
         m_icon = QIcon(iconName);
     }
@@ -41,6 +39,10 @@ const QString &LC_ActionGroup::getName() const {
 
 void LC_ActionGroup::setName(const QString &name) {
     m_name = name;
+}
+
+const QString LC_ActionGroup::getTitle() const {
+    return m_title;
 }
 
 const QString &LC_ActionGroup::getDescription() const {

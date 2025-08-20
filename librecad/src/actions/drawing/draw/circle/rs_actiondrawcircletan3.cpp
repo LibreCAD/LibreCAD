@@ -71,7 +71,7 @@ void RS_ActionDrawCircleTan3::doInitialInit() {
     m_actionData->circles.clear();
 }
 
-void RS_ActionDrawCircleTan3::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void RS_ActionDrawCircleTan3::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     if (g_enTypeList.contains(contextEntity->rtti())) {
         setCircle(contextEntity, SetCircle1);
     }
@@ -135,7 +135,7 @@ void RS_ActionDrawCircleTan3::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 if (m_showRefEntitiesOnPreview) {
                     for (RS_AtomicEntity *const pc: m_actionData->circles) { // highlight already selected
                         RS_Vector candidateCircleCenter = m_actionData->cData->center;
-                        if (isLine(pc)) {
+                        if (isLine(pc)) { // fixme - support of polyline
                             previewRefPoint(pc->getNearestPointOnEntity(candidateCircleCenter, false));
                         } else {
                             previewRefPoint(getTangentPoint(candidateCircleCenter, m_actionData->cData->radius, pc));
@@ -168,14 +168,14 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity* testThirdEntity) {
     });
 
     for (; i < circlesList.size(); ++i) {
-        if (isLine(circlesList[i])) {
+        if (isLine(circlesList[i])) { // fixme- support of polyline
             break;
         }
     }
     m_actionData->candidates.clear();
     size_t i1 = (i + 1) % 3;
     size_t i2 = (i + 2) % 3;
-    if (i < circlesList.size() && isLine(circlesList[i])) {
+    if (i < circlesList.size() && isLine(circlesList[i])) { // fixme- support of polyline
         //one or more lines
 
         LC_Quadratic lc0(circlesList[i], circlesList[i1], false);
@@ -200,7 +200,7 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity* testThirdEntity) {
                 break;
             }
             case 2: { //2 lines, one circle
-                if (isLine(circlesList[i2])) {
+                if (isLine(circlesList[i2])) { // fixme- support of polyline
                     std::swap(i1, i2);
                 }
                 //i2 is circle

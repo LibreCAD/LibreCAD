@@ -41,7 +41,6 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(LC_ActionContext *actionContext, bool fro
 RS_ActionInfoDist2::~RS_ActionInfoDist2()= default;
 
 void RS_ActionInfoDist2::init(int status){
-    RS_PreviewActionInterface::init(status);
     if (status == 0){
         if (m_selectionMode == FIRST_IS_POINT){
             setStatus(SetPoint);
@@ -51,6 +50,14 @@ void RS_ActionInfoDist2::init(int status){
     } else if (status < 0){
         restoreRelZero();
     }
+    RS_PreviewActionInterface::init(status);
+}
+
+void RS_ActionInfoDist2::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    m_entity = contextEntity;
+    setStatus(SetPoint);
+    highlightHover(m_entity);
+    drawPreview();
 }
 
 void RS_ActionInfoDist2::finish(bool updateTB){

@@ -690,9 +690,12 @@ void QC_ApplicationWindow::slotWorkspacesMenuAboutToShow() {
     m_menuFactory->onWorkspaceMenuAboutToShow(m_windowList);
 }
 
-QMenu* QC_ApplicationWindow::createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view) {
-    return m_menuFactory->createGraphicViewContextMenu(event, view);
+QMenu* QC_ApplicationWindow::createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view, RS_Entity* entity, const RS_Vector& pos) {
+    QStringList actions;
+    bool mayInvokeDefaultMenu = m_creatorInvoker->getMenuActionsForMouseEvent(event, entity, actions);
+    return m_menuFactory->createGraphicViewPopupMenu(view, entity, pos, actions, mayInvokeDefaultMenu);
 }
+
 
 /**
  * Called when the user selects a document window from the
@@ -717,14 +720,6 @@ void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
     }
 }
 
-/**
- * Creates a new MDI window with the given document or a new
- *  document if 'doc' is nullptr.
- */
-
-void QC_ApplicationWindow::setupCustomMenu(QG_GraphicView* view) {
-    m_creatorInvoker->setupCustomMenuForNewGraphicsView(view);
-}
 
 QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, const QString& expectedFileName) {
     static int id = 0;
@@ -782,7 +777,6 @@ QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(const QC_MDIWindow* w)
     connect(view, &QG_GraphicView::gridStatusChanged, this, &QC_ApplicationWindow::updateGridStatus);
     connect(view, &RS_GraphicView::currentActionChanged, this, &QC_ApplicationWindow::onViewCurrentActionChanged);
 
-    setupCustomMenu(view);
     return view;
 }
 
@@ -1509,6 +1503,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         m_infoCursorSettingsManager->loadFromSettings();
         rebuildMenuIfNecessary();
     }
+    fireCurrentActionIconChanged(nullptr);
 }
 
 void QC_ApplicationWindow::slotImportBlock() {
@@ -1617,13 +1612,15 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         qWarning("relayAction: graphicView is nullptr");
         return;
     }
-    // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
-    // probably there could be the list of ignored actions in the future
     bool setAsCurrentActionInView = true;
-    if (getAction("LockRelativeZero") == q_action) {
-        // other actions may be added later
-        setAsCurrentActionInView = false;
+    auto property = q_action->property("_SetAsCurrentActionInView");
+    if (property.isValid()) {
+        setAsCurrentActionInView = property.toBool();
     }
+    // if (getAction("LockRelativeZero") == q_action) {
+    //     // other actions may be added later
+    //     setAsCurrentActionInView = false;
+    // }
     if (setAsCurrentActionInView) {
         auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
         graphicView->setCurrentQAction(q_action);

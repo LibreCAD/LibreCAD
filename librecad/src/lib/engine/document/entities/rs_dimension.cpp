@@ -41,7 +41,6 @@
 #include "rs_painter.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
-#include "rs_solid.h"
 #include "rs_units.h"
 
 class LC_ArrowHeadOpen;
@@ -107,6 +106,7 @@ namespace
 }
 
 RS_DimensionData::RS_DimensionData(const RS_DimensionData& other):
+   RS_Flags(other),
    definitionPoint(other.definitionPoint),
    middleOfText(other.middleOfText),
    valign(other.valign),
@@ -691,7 +691,7 @@ void RS_Dimension::addArrow(RS_Entity* arrow, RS_Pen &dimensionPen) {
  */
 void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1,
                                                         const RS_Vector& p2, bool showArrow1, bool showArrow2,
-                                                        bool showLine1, bool showLine2,
+                                                        [[maybe_unused]]bool showLine1, [[maybe_unused]]bool showLine2,
                                                         bool forceAutoText) {
     double dimscale = getGeneralScale();
     double dimtxt = getTextHeight() * dimscale;

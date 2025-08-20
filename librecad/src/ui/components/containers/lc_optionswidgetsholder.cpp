@@ -31,6 +31,9 @@ LC_OptionsWidgetsHolder::LC_OptionsWidgetsHolder(QWidget *parent)
     , ui(new Ui::LC_OptionsWidgetsHolder){
     ui->setupUi(this);
     ui->snapOptionsHolder->setLocatedOnLeft(true);
+
+    ui->vCurrentActionLine->setVisible(false);
+    ui->lCurrentAction->setToolTip(tr("Current Action:")+ " " + tr("Default"));
 }
 
 LC_OptionsWidgetsHolder::~LC_OptionsWidgetsHolder(){
@@ -85,14 +88,25 @@ void LC_OptionsWidgetsHolder::clearActionIcon() {
 void LC_OptionsWidgetsHolder::setCurrentQAction(QAction *a) {
     QIcon icon;
     QString text="";
-    if (a != nullptr && LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)){
+    bool showIcon = a != nullptr && LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true);
+    if (showIcon) {
+        // check for actions those icons should not be shown
+        auto property = a->property("_SetAsCurrentActionInView");
+        if (property.isValid()) {
+            showIcon = property.toBool();
+        }
+    }
+    if (showIcon){
         icon = a->icon();
         text = LC_ShortcutsManager::getPlainActionToolTip(a);
         m_hasActionIcon = true;
+        ui->vCurrentActionLine->setVisible(!icon.isNull());
     }
     else{
         icon  = QIcon();
         m_hasActionIcon = false;
+        ui->vCurrentActionLine->setVisible(false);
+        text =tr("Default");
     }
     doSetIcon(icon, text);
 }

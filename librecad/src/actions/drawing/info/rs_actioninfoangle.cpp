@@ -31,6 +31,7 @@
 #include "rs_debug.h"
 #include "rs_information.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -39,16 +40,16 @@
 struct RS_ActionInfoAngle::ActionData {
 	RS_Vector point1;
 	RS_Vector point2;
-
 	RS_Vector intersection;
+    RS_Entity *m_entity1 = nullptr;
+    RS_Entity *m_entity2 = nullptr;
+
 };
 
 // fixme - sand - adding information about angle to entity info view
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Info Angle", actionContext, RS2::ActionInfoAngle)
-    ,m_entity1(nullptr)
-    ,m_entity2(nullptr)
     ,m_actionData(std::make_unique<ActionData>()){
 }
 
@@ -62,14 +63,27 @@ void RS_ActionInfoAngle::drawSnapper() {
     // disable snapper
 }
 
+void RS_ActionInfoAngle::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        m_actionData->point1 = entity->getNearestPointOnEntity(clickPos);
+        m_actionData->m_entity1 = entity;
+        setStatus(SetEntity2);
+    }
+}
+
 void RS_ActionInfoAngle::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoAngle::trigger()");
 
     int status = getStatus();
     switch (status){
         case SetEntity1: {
-            if (m_entity1 != nullptr){
-                auto line = dynamic_cast<RS_Line*>(m_entity1);
+            if (m_actionData->m_entity1 != nullptr){
+                auto line = dynamic_cast<RS_Line*>(m_actionData->m_entity1);
                 double angle1 = line->getAngle1();
                 double angle2 = line->getAngle2();
                 QString strAngle1 = formatWCSAngle(angle1);
@@ -86,14 +100,14 @@ void RS_ActionInfoAngle::doTrigger() {
                 const QString &msgTemplate = tr("Angle 1: %1\nAngle 2: %2");
                 const QString &msg = msgTemplate.arg(strAngle1, strAngle2);
                 commandMessage(msg);
-                m_entity1 = nullptr;
+                m_actionData->m_entity1 = nullptr;
                 setStatus(SetEntity1);
             }
             break;
         }
         case SetEntity2:{
-            if (m_entity1 != nullptr && m_entity2 != nullptr){
-                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_entity1, m_entity2, false);
+            if (m_actionData->m_entity1 != nullptr && m_actionData->m_entity2 != nullptr){
+                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_actionData->m_entity1, m_actionData->m_entity2, false);
                 if (sol.hasValid()) {
                     m_actionData->intersection = sol.get(0);
                     double angle1 = m_actionData->intersection.angleTo(m_actionData->point1);
@@ -125,6 +139,7 @@ void RS_ActionInfoAngle::doTrigger() {
                     const QString &msg = msgTemplate.arg(str, intersectX, intersectY, intersectRelX, intersectRelY);
                     commandMessage("---");
                     commandMessage(msg);
+                    commandMessage("");
 
                 } else {
                     commandMessage(tr("Lines are parallel"));
@@ -151,12 +166,12 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
         }
         case SetEntity2: {
             auto en = catchAndDescribe(event, RS2::ResolveAll);
-            highlightSelected(m_entity1);
+            highlightSelected(m_actionData->m_entity1);
             if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(m_actionData->point1);
             }
-            if (isLine(en)){
-                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_entity1, en, false);
+            if (isLine(en)){ // fixme - support of polyline
+                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_actionData->m_entity1, en, false);
                 if (sol.hasValid()){
                     highlightHover(en);
                     if (m_showRefEntitiesOnPreview) {
@@ -187,9 +202,9 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
     RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetEntity1:
-            m_entity1 = catchEntityByEvent(e, RS2::ResolveAll);
-            if (isLine(m_entity1)){
-                m_actionData->point1 = m_entity1->getNearestPointOnEntity(mouse);
+           m_actionData->m_entity1 = catchEntityByEvent(e, RS2::ResolveAll);
+            if (isLine(m_actionData->m_entity1)){ // fixme - support of polyline
+                m_actionData->point1 = m_actionData->m_entity1->getNearestPointOnEntity(mouse);
                 if (e->isControl){
                     trigger();
                 }
@@ -200,9 +215,9 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
             break;
 
         case SetEntity2:
-            m_entity2 = catchEntityByEvent(e, RS2::ResolveAll);
-            if (isLine(m_entity2)){
-                m_actionData->point2 = m_entity2->getNearestPointOnEntity(mouse);
+            m_actionData->m_entity2 = catchEntityByEvent(e, RS2::ResolveAll); // fixme - support of polyline
+            if (isLine(m_actionData->m_entity2)){
+                m_actionData->point2 = m_actionData->m_entity2->getNearestPointOnEntity(mouse);
                 trigger();
                 setStatus(SetEntity1);
             }
@@ -242,8 +257,7 @@ void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vect
         double angle2 = intersection.angleTo(point2);
         double angle = remainder(angle2 - angle1, 2. * M_PI);
 
-        auto builder = msg(tr("Info"))
-            .rawAngle(tr("Angle:"), angle);
+        auto builder = msgStart().string(tr("Info")).rawAngle(tr("Angle:"), angle);
         if (angle < 0) {
             builder.rawAngle(tr("Angle (alt): "), angle + 2. * M_PI);
         }

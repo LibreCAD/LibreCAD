@@ -48,7 +48,7 @@ void RS_ActionPolylineAdd::init(int status) {
     RS_PreviewActionInterface::init(status);
 }
 
-void RS_ActionPolylineAdd::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& pos) {
+void RS_ActionPolylineAdd::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& pos) {
     setPolylineToModify(contextEntity);
 }
 

@@ -37,14 +37,14 @@ RS_ActionPolylineTrim::RS_ActionPolylineTrim(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Trim segments",actionContext, RS2::ActionPolylineTrim) {
 }
 
-void RS_ActionPolylineTrim::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
-    setPolylineToModify(contextEntity);
-}
-
 void RS_ActionPolylineTrim::init(int status) {
     m_polylineToModify = nullptr;
     m_segment1 = m_segment2 = nullptr;
     RS_PreviewActionInterface::init(status);
+}
+
+void RS_ActionPolylineTrim::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    setPolylineToModify(contextEntity);
 }
 
 void RS_ActionPolylineTrim::doTrigger() {
@@ -85,24 +85,18 @@ void RS_ActionPolylineTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetSegment2:{
             highlightSelected(m_segment1);
             RS_Entity* en = catchEntityByEvent(e, RS2::ResolveAll);
-            if (en != nullptr){
-                if (en->getParent() == m_polylineToModify){
-                    if (en != m_segment1){
-                        if (en->isAtomic()){
-                            auto candidate = dynamic_cast<RS_AtomicEntity *>(en);
+            if (isAtomic(en) && en->getParent() == m_polylineToModify && en != m_segment1){
+                auto candidate = dynamic_cast<RS_AtomicEntity *>(en);
 
-                            previewRefPoint(m_segment1->getStartpoint());
-                            previewRefPoint(m_segment1->getEndpoint());
+                previewRefPoint(m_segment1->getStartpoint());
+                previewRefPoint(m_segment1->getEndpoint());
 
-                            RS_Modification m(*m_preview, m_viewport);
-                            auto polyline = m.polylineTrim((RS_Polyline &) *m_polylineToModify, *m_segment1, *candidate, true);
-                            if (polyline != nullptr){
-                                highlightHover(en);
-                                previewRefSelectablePoint(candidate->getStartpoint());
-                                previewRefSelectablePoint(candidate->getEndpoint());
-                            }
-                        }
-                    }
+                RS_Modification m(*m_preview, m_viewport);
+                auto polyline = m.polylineTrim((RS_Polyline &) *m_polylineToModify, *m_segment1, *candidate, true);
+                if (polyline != nullptr){
+                    highlightHover(en);
+                    previewRefSelectablePoint(candidate->getStartpoint());
+                    previewRefSelectablePoint(candidate->getEndpoint());
                 }
             }
             break;
@@ -136,7 +130,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *
         }
         case SetSegment1:{
             RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
-            if (en != nullptr &&  en->getParent() == m_polylineToModify && en->isAtomic()){
+            if (isAtomic(en) &&  en->getParent() == m_polylineToModify){
                 m_segment1 = dynamic_cast<RS_AtomicEntity *>(en);
                 setStatus(SetSegment2);
             }
@@ -147,7 +141,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *
         }
         case SetSegment2: {
             RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
-            if (en != nullptr &&  en->getParent() == m_polylineToModify && en->isAtomic() && en != m_segment1){
+            if (isAtomic(en) && en->getParent() == m_polylineToModify && en != m_segment1){
                 m_segment2 = dynamic_cast<RS_AtomicEntity *>(en);
                 deleteSnapper();
                 trigger();

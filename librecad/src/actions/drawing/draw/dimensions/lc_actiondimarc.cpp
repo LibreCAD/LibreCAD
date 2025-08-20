@@ -51,7 +51,7 @@ void LC_ActionDimArc::reset(){
     updateOptions(); // fixme - check whether it's necessary there
 }
 
-void LC_ActionDimArc::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+void LC_ActionDimArc::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
    setArcEntity(contextEntity);
 }
 

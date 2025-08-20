@@ -79,7 +79,7 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"ucs", tr("UCS"), tr("UCS operations"), ":/icons/set_ucs.lci"},
         {"widgets", tr("Widgets"), tr("Widgets management"), ":/icons/dockwidgets_bottom.lci", false},
         {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false},
-        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/layer_list.lci.lci", false}
+        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/layer_list.lci", false}
     },agm);
 
     auto fileGroup = agm->getGroupByName("file");
@@ -105,7 +105,7 @@ void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC
      {"EntityLayerHideOthers",   RS2::ActionLayerEntityHideOthers,        tr("Hide Other Layers than Entity's"),  ":/icons/not_visible_all.lci"},
      {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Lock Entity's Layer"),        ":/icons/locked.lci"},
      {"EntityLayerConstruction", RS2::ActionLayerEntityToggleConstruction,tr("Toggle Entity's Layer Construction"),":/icons/construction_layer.lci"},
-     {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,           tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
+     {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,       tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
  });
 }
 
@@ -161,6 +161,8 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createWorkspacesActionsUncheckable(a_map, agm->getGroupByName("workspaces"));
     createWidgetActionsUncheckable(a_map, agm->getGroupByName("widgets"));
     createEditActionsUncheckable(a_map, agm->getGroupByName("edit"));
+    createDrawDimensionsUncheckable(a_map, agm->getGroupByName("dimension"));
+
 
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
@@ -343,20 +345,14 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimBaseline",       RS2::ActionDimBaseline,  tr("&Baseline"),   ":/icons/dim_baseline.lci"},
         {"DimContinue",       RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"},
         {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
-        {"DimOrdinateForBase",RS2::ActionDimOrdByOriginSelect,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
+        {"DimOrdinateForBase",RS2::ActionDimOrdByOriginSelect,  tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
         {"DimOrdinateReBase", RS2::ActionDimOrdRebase, tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
         {"GTDFeatureFrame",   RS2::ActionGTDFCFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"},
-        {"DimPickApply",      RS2::ActionDimStyleApply, tr("Copy Style"),  ":/icons/dim_apply_style.lci"},
-        {"DimModify",         RS2::ActionDimModify,    tr("Modify Style"),  ":/icons/dim_modify_style.lci"},
-        {"DimRegenerate",     RS2::ActionDimRegenerate,tr("Regenerate Dimensions"),  ":/icons/dim_regenerate.lci"}
+        {"DimPickApply",      RS2::ActionDimStyleApply,tr("Copy Style"),  ":/icons/dim_apply_style.lci"},
+        {"DimModify",         RS2::ActionDimModify,    tr("Modify Style"),":/icons/dim_modify_style.lci"}
     });
 }
 
-// fixme - review why this action is not used, is it really necessary or may be removed?
-// action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
-//    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
-//    action->setObjectName("ToolRegenerateDimensions");
-//    a_map["ToolRegenerateDimensions"] = action;
 
 void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     /* action = new QAction(tr("Delete Freehand"), agm->modify);
@@ -496,7 +492,7 @@ void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &m
 
 void LC_ActionFactory::createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActionHandlerActions(map, group, {
-        {"InfoInside",       RS2::ActionInfoInside,           tr("Point inside contour"),               ""},
+        // {"InfoInside",       RS2::ActionInfoInside,           tr("Point inside contour"),               ""},
         {"InfoDist",         RS2::ActionInfoDistPoint2Point,  tr("&Distance Point to Point"),           ":/icons/distance_point_to_point.lci"},
         {"InfoDist2",        RS2::ActionInfoDistEntity2Point, tr("Distance &Entity to Point"),          ":/icons/distance_entity_to_point.lci"},
         {"InfoDist3",        RS2::ActionInfoDistPoint2Entity, tr("Distance &Point to Entity"),          ":/icons/distance_point_to_entity.lci"},
@@ -616,8 +612,8 @@ void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActio
 void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
         {"RedockWidgets",        &QC_ApplicationWindow::slotRedockWidgets,    tr("Re-dock Widgets")},
-        {"InvokeMenuCreator",    &QC_ApplicationWindow::invokeMenuCreator,    tr("Menu Creator"),    ":/icons/create_menu.lci"},
-        {"InvokeToolbarCreator", &QC_ApplicationWindow::invokeToolbarCreator, tr("Toolbar Creator"), ":/icons/create_toolbar.lci"}
+        {"InvokeMenuCreator",    &QC_ApplicationWindow::invokeMenuCreator,    tr("Custom Menu Creator"),    ":/icons/create_menu.lci"},
+        {"InvokeToolbarCreator", &QC_ApplicationWindow::invokeToolbarCreator, tr("Custom Toolbar Creator"), ":/icons/create_toolbar.lci"}
     });
 }
 
@@ -661,10 +657,23 @@ void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &ma
     createActionHandlerActions(map, group, {
         {"EditUndo",           RS2::ActionEditUndo,           tr("&Undo"),              ":/icons/undo.lci",            "edit-undo"},
         {"EditRedo",           RS2::ActionEditRedo,           tr("&Redo"),              ":/icons/redo.lci",            "edit-redo"},
-        {"ModifyDeleteQuick",  RS2::ActionModifyDeleteQuick,       tr("&Delete Selected"),   ":/icons/delete.lci"},
+        {"ModifyDeleteQuick",  RS2::ActionModifyDeleteQuick,  tr("&Delete Selected"),   ":/icons/delete.lci"},
         {"EditKillAllActions", RS2::ActionEditKillAllActions, tr("&Selection Pointer"), ":/icons/cursor.lci",          "go-previous-view"}
     });
 }
+void LC_ActionFactory::createDrawDimensionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const {
+    createActionHandlerActions(map, group, {
+       {"DimRegenerate",     RS2::ActionDimRegenerate,tr("Regenerate Dimensions"),  ":/icons/dim_regenerate.lci"}
+    });
+
+    auto dimSettingsAction = justCreateAction(map,"DimStyles",tr( "&Dimension Styles"),
+       ":/icons/dim_style_manager.lci", "", group);
+
+    connect(dimSettingsAction, &QAction::triggered, this, [this](bool){
+        m_appWin->changeDrawingOptions(3);
+    });
+}
+
 
 void LC_ActionFactory::createEditActions(QMap<QString, QAction*>& map, QActionGroup* group) const {
     createActionHandlerActions(map, group, {
@@ -712,6 +721,10 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
 
     connect(map["InfoCursorCatchedEntity"], &QAction::triggered, infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
+
+    // with this setting, the action's icon will not be set as current item in action's options bar and status bar (in QC_ApplicationWindow::relayAction())
+    map["DimStyles"]->setProperty("_SetAsCurrentActionInView", false);
+    map["LockRelativeZero"]->setProperty("_SetAsCurrentActionInView", false);
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {
@@ -939,7 +952,8 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "GTDFeatureFrame",
                         "DimModify",
                         "DimPickApply",
-                        "DimRegenerate"
+                        "DimRegenerate",
+                        "DimStyles"
                     }, map);
 
     fillActionsList(other_drawing_actions, {

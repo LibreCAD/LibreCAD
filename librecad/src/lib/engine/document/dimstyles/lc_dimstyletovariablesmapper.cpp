@@ -246,11 +246,11 @@ void LC_DimStyleToVariablesMapper::toleranceStyle2Vars(LC_DimStyle::LatteralTole
     }
 }
 
-void LC_DimStyleToVariablesMapper::mleaderStyle2Vars(LC_DimStyle::MLeader* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::mleaderStyle2Vars([[maybe_unused]]LC_DimStyle::MLeader* s,[[maybe_unused]]RS_VariableDict* vd) {
     // todo - sand - check why it's not stored in HEADER section of DXF
 }
 
-void LC_DimStyleToVariablesMapper::mleaderFromVars(LC_DimStyle::MLeader* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::mleaderFromVars([[maybe_unused]]LC_DimStyle::MLeader* s,[[maybe_unused]]RS_VariableDict* vd) {
   // nothing is in header
 }
 

@@ -140,10 +140,11 @@ public slots:
     void slotShowDrawingOptions();
     void slotShowDrawingOptionsUnits();
     void slotWorkspacesMenuAboutToShow();
-    QMenu* createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view);
+    QMenu* createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view, RS_Entity* entity, const RS_Vector& pos);
+
     void slotWindowsMenuActivated(bool);
     void slotPenChanged(const RS_Pen& p);
-    void setupCustomMenu(QG_GraphicView* view);
+
 
     //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);

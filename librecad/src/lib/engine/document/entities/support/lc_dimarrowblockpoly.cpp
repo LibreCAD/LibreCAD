@@ -53,7 +53,7 @@ RS_Vector LC_DimArrowPoly::getNearestEndpoint(const RS_Vector& coord, double* di
 }
 
 RS_Vector LC_DimArrowPoly::getNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist,
-    RS_Entity** entity) const {
+    [[maybe_unused]]RS_Entity** entity) const {
 
     //
     // this is not exact and quite generic implementation.
@@ -69,7 +69,7 @@ RS_Vector LC_DimArrowPoly::getNearestPointOnEntity(const RS_Vector& coord, bool 
     double currDist {RS_MAXDOUBLE};
     int next;
     size_t lastIndex = m_vertices.size() - 2;
-    for (int i = 0; i <= lastIndex; i++) {
+    for (size_t i = 0; i <= lastIndex; i++) {
         next = i + 1;
         auto current = m_vertices[i];
 

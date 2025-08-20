@@ -37,8 +37,9 @@ namespace {
 
     // whether the entity supports glowing effects on mouse hovering
     bool allowMouseOverGlowing(const RS_Entity *entity) {
-        if (entity == nullptr)
+        if (entity == nullptr) {
             return false;
+        }
         switch (entity->rtti()) {
             case RS2::EntityHatch:
             case RS2::EntityImage:
@@ -58,7 +59,6 @@ LC_ActionInfoProperties::LC_ActionInfoProperties(LC_ActionContext *actionContext
     :RS_PreviewActionInterface("Entity Info", actionContext, RS2::ActionInfoProperties){}
 
 void LC_ActionInfoProperties::init(int status){
-    RS_PreviewActionInterface::init(status);
     if (status >=0){
         // update widget
         LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
@@ -66,6 +66,13 @@ void LC_ActionInfoProperties::init(int status){
             entityInfoWidget->setWidgetMode(LC_QuickInfoWidget::MODE_ENTITY_INFO);
         }
     }
+    RS_PreviewActionInterface::init(status);
+}
+
+void LC_ActionInfoProperties::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    showEntityInfo(contextEntity, clickPos);
+    setStatus(-1);
+    finish();
 }
 
 void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
@@ -91,22 +98,16 @@ void LC_ActionInfoProperties::highlightAndShowEntityInfo(LC_MouseEvent *e, bool 
     highlightHoveredEntity(e, resolveChildren);
 }
 
-void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool resolveChildren){
+bool LC_ActionInfoProperties::showEntityInfo(RS_Entity* entity, RS_Vector currentMousePosition) {
     bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
-
-    RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
-    if (entity == nullptr) {
-        clearQuickInfoWidget();
-        return;
-    }
     if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
         clearQuickInfoWidget();
-        return;
+        return true;
     }
 
     const double hoverToleranceFactor = entity->is(RS2::EntityEllipse)
-                                        ? hoverToleranceFactor1
-                                        : hoverToleranceFactor2;
+                                            ? hoverToleranceFactor1
+                                            : hoverToleranceFactor2;
 
     const double hoverTolerance { hoverToleranceFactor / m_viewport->getFactor().magnitude() };
 
@@ -120,7 +121,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
 
     bool isPointOnEntity = false;
 
-    RS_Vector currentMousePosition = event->graphPoint;
+
     if (RS2::isDimensionalEntity(entityType) || RS2::isTextEntity(entityType)) {
         double nearestDistanceTo_pointOnEntity = 0.;
         entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
@@ -141,6 +142,18 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
             updateQuickInfoWidget(entity);
         }
     }
+    return false;
+}
+
+void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool resolveChildren){
+    RS_Vector currentMousePosition = event->graphPoint;
+    RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
+
+    if (entity == nullptr) {
+        clearQuickInfoWidget();
+        return;
+    }
+    showEntityInfo(entity, currentMousePosition);
 }
 
 void LC_ActionInfoProperties::updateQuickInfoWidget(RS_Entity *pEntity){

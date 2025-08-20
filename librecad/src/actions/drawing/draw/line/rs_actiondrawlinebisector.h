@@ -72,10 +72,13 @@ protected:
     /** Last status before entering length or number. */
     Status m_lastStatus = SetLine1;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setFirstLine(RS_Entity* en);
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

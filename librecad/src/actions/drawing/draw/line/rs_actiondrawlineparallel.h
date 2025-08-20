@@ -46,7 +46,6 @@ public:
     void setDistance(double d);
     int getNumber() const;
     void setNumber(int n);
-
 private:
     // fixme - why no possibility to set distance via command line?
     enum Status {
@@ -60,12 +59,15 @@ private:
     RS_Entity *m_parallel = nullptr;
     /** Distance of the parallel. */
     double m_distance = 0.;
-/** Number of parallels. */
+    /** Number of parallels. */
     int m_numberToCreate = 0;
-/** Coordinate of the mouse. */
+    /** Coordinate of the mouse. */
     std::unique_ptr<RS_Vector> m_coord;
-/** Original entity. */
+    /** Original entity. */
     RS_Entity *m_entity = nullptr;
+protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+private:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

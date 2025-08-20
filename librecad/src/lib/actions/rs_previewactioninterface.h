@@ -31,6 +31,7 @@
 
 #include "dxf_format.h"
 #include "rs_actioninterface.h"
+#include "rs_entity.h"
 #include "rs_vector.h"
 
 class RS_Point;
@@ -55,6 +56,7 @@ struct LC_MouseEvent{
     QPoint uiPosition;
     bool isControl = false;
     bool isShift = false;
+    bool isAlt = false;
     QMouseEvent* originalEvent = nullptr;
 };
 
@@ -145,9 +147,10 @@ protected:
     bool is(RS_Entity* e, RS2::EntityType type) const;
     bool isLine(RS_Entity*  e) const{return is(e, RS2::EntityLine);}
     bool isPolyline(RS_Entity*  e) const{return is(e, RS2::EntityPolyline);}
-    bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);}
-    bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);}
-    bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);}
+    bool isCircle(RS_Entity*  e) const {return is(e, RS2::EntityCircle);}
+    bool isArc(RS_Entity*  e) const {return is(e, RS2::EntityArc);}
+    bool isEllipse(RS_Entity*  e) const {return is(e, RS2::EntityEllipse);}
+    bool isAtomic(RS_Entity* e) const {return e != nullptr && e->isAtomic();}
 
     void previewSnapAngleMark(const RS_Vector &center, double angle);
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);

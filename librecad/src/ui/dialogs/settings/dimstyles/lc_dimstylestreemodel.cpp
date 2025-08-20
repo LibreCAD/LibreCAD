@@ -45,7 +45,7 @@ QVariant LC_DimStyleTreeModel::data(const QModelIndex& index, int role) const {
     switch (role) {
         case Qt::DisplayRole: {
             if (item->isOverrideItem()) {
-                return tr("[Override]");
+                return QObject::tr("[Override]");
             }
             else {
                 int usageCount = item->usageCount();
@@ -123,7 +123,7 @@ int LC_DimStyleTreeModel::rowCount(const QModelIndex& parent) const {
     return 0;
 }
 
-int LC_DimStyleTreeModel::columnCount(const QModelIndex& parent) const {
+int LC_DimStyleTreeModel::columnCount([[maybe_unused]]const QModelIndex& parent) const {
     return 1;
 }
 

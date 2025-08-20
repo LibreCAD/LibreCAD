@@ -38,9 +38,9 @@ void LC_ActionModifySelectionBase::mouseReleaseEvent(QMouseEvent *event){
 }
 
 int LC_ActionModifySelectionBase::countSelected() {
-    unsigned int ret=m_container->countSelected();
+    unsigned int ret = m_container->countSelected();
     // fixme - ensure that this is correct place for method
-    if (ret==0) {
+    if (ret == 0) {
         commandMessage(tr("No entity selected!"));
     }
     return ret;

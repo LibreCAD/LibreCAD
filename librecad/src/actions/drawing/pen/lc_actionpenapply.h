@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONPENAPPLY_H
 #define LC_ACTIONPENAPPLY_H
 
+#include "rs_pen.h"
 #include "rs_previewactioninterface.h"
 
 /**
@@ -33,18 +34,21 @@ class LC_ActionPenApply:public RS_PreviewActionInterface {
 public:
     // statuses of action
     enum {
-        SelectEntity,
+        SelectEntity = InitialActionStatus,
         ApplyToEntity
     };
     LC_ActionPenApply(LC_ActionContext *actionContext, bool copy);
     void init(int status) override;
     void finish(bool updateTB) override;
+    void applyPen(RS_Entity* en, RS_Pen penToApply);
 private:
     // entity that might be used as source for pen applying
     RS_Entity* m_srcEntity {nullptr};
     // controls whether pen should be copied from source entity or applied from pen toolbar
     bool m_copyMode;
 protected:
+    bool mayInitWithContextEntity(int status) override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

@@ -42,7 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * Major functions:
  * - basic control for entity highlighting
  * - generic common processing logic for common action events (like mouse up, mouse move)
- * - fine grained methods for specific events (left mouse, right mouse, back etc)
+ * - fine-grained methods for specific events (left mouse, right mouse, back etc)
  * - support of  pre-snap during mouse move point (+SHIFT)
  * - support of alternative action mode (by default, invoked by SHIFT on mouse move and click)
  * - support of already selected entities processing on action's invocation
