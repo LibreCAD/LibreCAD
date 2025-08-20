@@ -726,11 +726,9 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
         QPainter::drawLine(QPointF(- uiRadii.x, 0.), QPointF(uiRadii.x, 0.));
     }
     else {
-        if (reversed){
-            angle1Degrees = angle2Degrees - 360.;
-            angularLength = -angularLength;
-        }
+
         const bool useSpline = std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius();
+        LC_ERR<<" useSpline "<<useSpline;
 
         QPainterPath path;
         addEllipseArcToPath(path, uiRadii.x, uiRadii.y, angle1Degrees, angularLength, useSpline);
@@ -740,9 +738,9 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
 
 void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, double a, double b, double startAngleDeg, double angularLengthDeg, bool useSpline) {
     if (useSpline) {
-        double startRad = RS_Math::deg2rad(startAngleDeg);
-        double lenRad = RS_Math::deg2rad(angularLengthDeg);
-        drawEllipseSegmentBySplinePointsUI(0.0, 0.0, a, b, startRad, lenRad, localPath, false);
+        double startRad = RS_Math::deg2rad(toUCSAngleDegrees(startAngleDeg));
+        double lenRad = RS_Math::deg2rad(toUCSAngleDegrees(angularLengthDeg));
+        drawEllipseSegmentBySplinePointsUI(a, b, startRad, lenRad, localPath, false);
     } else {
         QRectF rect(-a, -b, 2 * a, 2 * b);
         localPath.arcMoveTo(rect, startAngleDeg);
@@ -750,13 +748,14 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, double a, double b
     }
 }
 
-void RS_Painter::drawEllipseSegmentBySplinePointsUI(double lx, double ly, double a, double b, double startRad, double lenRad, QPainterPath &path, bool closed)
+void RS_Painter::drawEllipseSegmentBySplinePointsUI(double ra, double rb, double startRad, double lenRad, QPainterPath &path, bool closed)
 {
-    double r = std::max(a, b);
+    double r = std::max(ra, rb);
     const double dParam = 2. * std::pow(2. / r, 1. / 4.);
-    int numSegments = int(ceil(std::abs(lenRad) / dParam));
+    int numSegments = int(std::ceil(std::abs(lenRad) / dParam));
     numSegments = std::max(1, numSegments);
     int numPoints = numSegments + 1;
+    LC_ERR<<__LINE__<<" spline points: "<<numPoints;
     if (closed) {
         numPoints = numSegments; // Don't duplicate first point for closed
     }
@@ -766,11 +765,13 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(double lx, double ly, double
     data.closed = closed;
 
     double param = startRad;
-    RS_Vector localCenter(lx, ly);
+    //path.moveTo(ra*std::cos(param),- rb*std::sin(param));
+
     for (int i = 0; i < numPoints; ++i) {
-        double x = a * std::cos(param);
-        double y = b * std::sin(param);
-        data.splinePoints.push_back(localCenter + RS_Vector(x, y));
+        LC_ERR<<param;
+        data.splinePoints.push_back(RS_Vector{param}.scale({ra, -rb}));
+    //path.lineTo(ra*std::cos(param), -rb*std::sin(param));
+
         param += delta;
     }
 

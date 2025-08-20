@@ -346,7 +346,8 @@ protected:
                                         double angularLength, QPainterPath &path);
 private:
     void addEllipseArcToPath(QPainterPath& localPath, double a, double b, double startAngleDeg, double angularLengthDeg, bool useSpline);
-    void drawEllipseSegmentBySplinePointsUI(double lx, double ly, double a, double b, double startRad, double lenRad, QPainterPath &path, bool closed);
+    // helper method: approximate a centered ellipse with lc_splinepoints
+    void drawEllipseSegmentBySplinePointsUI(double ra, double rb, double startRad, double lenRad, QPainterPath &path, bool closed);
     void addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const;
 };
 
