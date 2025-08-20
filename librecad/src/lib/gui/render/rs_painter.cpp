@@ -730,29 +730,29 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
         const bool useSpline = std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius();
 
         QPainterPath path;
-        addEllipseArcToPath(path, uiRadii.x, uiRadii.y, angle1Degrees, angularLength, useSpline);
+        addEllipseArcToPath(path, uiRadii, angle1Degrees, angularLength, useSpline);
         QPainter::drawPath(path);
     }
 }
 
-void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, double a, double b, double startAngleDeg, double angularLengthDeg, bool useSpline) {
+void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) {
     if (useSpline) {
         double startRad = RS_Math::deg2rad(toUCSAngleDegrees(startAngleDeg));
         double lenRad = RS_Math::deg2rad(toUCSAngleDegrees(angularLengthDeg));
-        drawEllipseSegmentBySplinePointsUI(a, b, startRad, lenRad, localPath, false);
+        drawEllipseSegmentBySplinePointsUI(uiRadii, startRad, lenRad, localPath, false);
     } else {
-        QRectF rect(-a, -b, 2 * a, 2 * b);
+        QRectF rect(-uiRadii.x, -uiRadii.y, 2 * uiRadii.x, 2 * uiRadii.y);
         localPath.arcMoveTo(rect, startAngleDeg);
         localPath.arcTo(rect, startAngleDeg, angularLengthDeg);
     }
 }
 
-void RS_Painter::drawEllipseSegmentBySplinePointsUI(double ra, double rb, double startRad, double lenRad, QPainterPath &path, bool closed)
+void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
 {
-    double r = std::max(ra, rb);
+    double r = std::max(uiRadii.x, uiRadii.y);
     // maximum angular step size: using this angular step size keeps the maximum
     // deviation of an arc from its parabola fitting
-    const double dParam = 0.25 * std::pow(2. / r, 1. / 4.);
+    const double dParam = std::pow(1./32. / r, 1. / 4.);
     int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
     // Don't duplicate first point for closed
     int numPoints = closed ? numSegments : numSegments + 1;
@@ -766,9 +766,10 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(double ra, double rb, double
 
     double param = startRad;
 
+    const RS_Vector scaleXY{uiRadii.x, -uiRadii.y};
     for (int i = 0; i < numPoints; ++i) {
         // TODO: fix the mapping of ellipse rendering
-        data.splinePoints.push_back(RS_Vector{param}.scale({ra, -rb}));
+        data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY));
         param += delta;
     }
 
