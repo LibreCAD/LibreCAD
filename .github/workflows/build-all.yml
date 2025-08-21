@@ -270,10 +270,12 @@ jobs:
         run: |
             echo "${{ github.workspace }}"
             dir "${{ github.workspace }}"
+            echo "-----List End"
         shell: cmd
 
       - name: winDeployment
         run: |
+          echo "-----winDeployment"
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
           mkdir generated\plugins
@@ -287,6 +289,7 @@ jobs:
         
       - name: Rename installer
         run: |
+          echo "-----winDeployment"
           mv LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
         shell: bash
 

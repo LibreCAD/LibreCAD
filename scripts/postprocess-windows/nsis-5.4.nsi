@@ -126,6 +126,8 @@ Section "Install Section" SecInstall
   File /r "..\..\generated\plugins"
   SetOutPath "$INSTDIR\resources\qm"
   File /NONFATAL "..\..\generated\*.qm"
+  SetOutPath "$INSTDIR\iconengines\"
+  File /r "..\..\generated\Release\iconengines\lc_svgiconengine.dll"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder
@@ -188,5 +190,3 @@ Section "Uninstall"
   DeleteRegKey HKLM "${UNINSTKEY}"
 
 SectionEnd
-
-
