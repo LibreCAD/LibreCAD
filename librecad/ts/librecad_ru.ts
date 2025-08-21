@@ -1556,7 +1556,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Angle From Line</source>
-        <translation>Угол от линии</translation>
+        <translation>Угол от Прямой</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
@@ -1924,7 +1924,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>An&amp;gle between two lines</source>
-        <translation>&amp;Угол между двумя линиями</translation>
+        <translation>&amp;Угол между двумя прямыми</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
@@ -1933,7 +1933,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
         <source>Polygonal &amp;Area</source>
-        <translation>&amp;Многоугольная область</translation>
+        <translation>&amp;Площадь многоугольника</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
@@ -2265,7 +2265,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="504"/>
         <source>Ang&amp;le between 3 points</source>
-        <translation>Угол между 3-мя точками</translation>
+        <translation>Угол между 3-мя Tочками</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
@@ -29970,12 +29970,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Scroll Horizontally / Select Contour</source>
-        <translation>Пролистывать Вертикально / Выделять контур</translation>
+        <translation type="unfinished">Пролистывать Горизонтально / Выделять контур</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Панорамировать /Пролистывать Горизонтально / Выделять дочерние объекты</translation>
+        <translation>Панорамировать /Пролистывать Вертикально / Выделять дочерние объекты</translation>
     </message>
     <message>
         <source>Scroll Vertically / Select Child entities</source>

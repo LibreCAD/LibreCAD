@@ -830,6 +830,7 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     m_actionData->v2 = e->graphPoint;
     switch (status) {
+        case Neutral:
         case Dragging: {
             // select single entity:
             RS_Entity *en = catchEntityByEvent(e);

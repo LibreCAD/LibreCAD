@@ -203,10 +203,10 @@ bool LC_DlgMenuAssigner::validateShortcut() {
     else  if (leftButton && noKeys && click) {
         noteMsg = tr("NOTE: Menu assignment will be ignored. It is reserved for 'Entity Select'.");
     }
-    else  if (leftButton && ctrl && click) {
+    else  if (leftButton && ctrl && click && !alt && !shift) {
         noteMsg = tr("NOTE: Menu assignment will be ignored. It is reserved for 'Pan'.");
     }
-    else  if (leftButton && shift && click) {
+    else  if (leftButton && shift && click && !alt && !ctrl) {
         noteMsg = tr("NNOTE: Menu assignment will be ignored. It is reserved for 'Select Contour'.");
     }
     else if (rightButton && noKeys && click) {

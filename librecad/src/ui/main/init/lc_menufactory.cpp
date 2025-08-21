@@ -1226,7 +1226,7 @@ void LC_MenuFactory::createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* g
     QAction* propertiesAction;
     propertiesAction = menu->QWidget::addAction(QIcon(":/icons/properties.lci"), tr("Edit Properties"));
     connect(propertiesAction, &QAction::triggered, this, [this, entity, graphicView]() {
-        graphicView->launchEditProperty(entity);
+            graphicView->launchEditProperty(entity);
     });
 }
 

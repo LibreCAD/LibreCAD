@@ -642,10 +642,15 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         if (defaultAction != nullptr) {
             int defaultActionStatus = defaultAction->getStatus();
             if (defaultActionStatus == RS_ActionInterface::InitialActionStatus) {
-                invokeContextMenuForMouseEvent(event);
+                if (isMouseReleaseEventForDefaultAction(event)) {
+                    defaultAction->mouseReleaseEvent(event);
+                }
+                else {
+                    invokeContextMenuForMouseEvent(event);
+                }
             }
             else {
-                getEventHandler()->mouseReleaseEvent(event);
+                defaultAction->mouseReleaseEvent(event);
             }
         }
         else {
@@ -653,6 +658,28 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         }
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
+}
+
+bool QG_GraphicView::isMouseReleaseEventForDefaultAction(QMouseEvent* event) {
+    // should correspond to LC_DlgMenuAssigner::validateShortcut()
+    if (event->button() == Qt::LeftButton) {
+        auto modifiers = event->modifiers();
+        if (modifiers == Qt::NoModifier) { // select
+            return true;
+        }
+        bool control = modifiers & Qt::ControlModifier;
+        bool alt = modifiers & Qt::AltModifier;
+        bool shift = modifiers & Qt::ShiftModifier;
+        if (control && !alt && !shift) {
+            // pan
+            return true;
+        }
+        if (shift && !alt && !control) {
+            // select contour
+            return true;
+        }
+    }
+    return false;
 }
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
