@@ -1,6 +1,12 @@
+include_directories(
+../librecad/src/plugins
+../libraries/muparser/include
+)
+
 set(PLUGIN_HEADERS
-    ../../librecad/src/plugins/document_interface.h
-    ../../librecad/src/plugins/document_interface.h
+  ../../librecad/src/plugins/qc_plugininterface.h
+  ../../librecad/src/plugins/document_interface.h
+  ../../librecad/src/plugins/document_interface.h
   ../../libraries/muparser/include/muParser.h
   ../../libraries/muparser/include/muParserBase.h
   ../../libraries/muparser/include/muParserBytecode.h

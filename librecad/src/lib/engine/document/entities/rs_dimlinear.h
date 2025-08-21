@@ -132,7 +132,7 @@ protected:
     /** Extended data. */
     RS_DimLinearData m_dimLinearData;
 
-    void doUpdateDim();
+    void doUpdateDim() override;
 };
 
 #endif

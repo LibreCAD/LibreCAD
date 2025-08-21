@@ -39,10 +39,6 @@
 
 #include "qg_graphicview.h"
 
-#include <boost/geometry/algorithms/centroid.hpp>
-#include <boost/numeric/ublas/expression_types.hpp>
-
-
 #include "lc_actioncontext.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
@@ -343,6 +339,12 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
 
     // SourceForge issue 45 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
+
+    // Issue #2264: prevents macOS from applying text-related features like the Caps Lock indicator to the non-text canvas
+#ifdef Q_OS_MAC
+    setAttribute(Qt::WA_InputMethodEnabled, false);
+    setInputMethodHints(Qt::ImhNone);
+#endif
 }
 
 void QG_GraphicView::initView() {
