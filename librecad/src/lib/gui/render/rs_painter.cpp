@@ -766,9 +766,8 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
 
     double param = startRad;
 
-    const RS_Vector scaleXY{uiRadii.x, -uiRadii.y};
+    const RS_Vector scaleXY{uiRadii.x, - uiRadii.y};
     for (int i = 0; i < numPoints; ++i) {
-        // TODO: fix the mapping of ellipse rendering
         data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY));
         param += delta;
     }
