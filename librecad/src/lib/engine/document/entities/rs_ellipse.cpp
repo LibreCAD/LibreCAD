@@ -1770,7 +1770,7 @@ double RS_Ellipse::getAngle1() const {
 
 void RS_Ellipse::setAngle1(double a1) {
 	data.angle1 = a1;
-    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
+    data.isArc = std::isnormal(data.angle1) || std::isnormal(data.angle2);
 }
 
 double RS_Ellipse::getAngle2() const {
@@ -1779,7 +1779,7 @@ double RS_Ellipse::getAngle2() const {
 
 void RS_Ellipse::setAngle2(double a2) {
 	data.angle2 = a2;
-    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
+    data.isArc = std::isnormal(data.angle1) || std::isnormal(data.angle2);
 }
 
 RS_Vector RS_Ellipse::getCenter() const {
