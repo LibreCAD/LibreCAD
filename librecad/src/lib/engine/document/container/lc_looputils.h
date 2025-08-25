@@ -54,23 +54,20 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
 
 /**
  * @brief The LoopExtractor class, to extract closed loops from edges.
- * The algorithm：
- * 0. Move label all edges as unprocessed
- * 1. Find an edge closest to the bounding box of all edges;
- * 2. Set the start point of the edge as the target point;
- * 3. Label the edge as processed;
- * 4. Find internal point of the edge;
- * 5. From the end point of the current edge, find all unprocessed edges connected to this point;
- * 6. From the end point draw a small circle, find intersections between the circle and edges(the current, and connected);
- * 7. Find the direction angle from the circle center to the intersections. Add another angle from the end point to the
- * internal point from Step 4.;
- * 8. Sort the angles, find the direction right next to the direction of the current edge;
- * 9. Choose the edge which has an angle right next to the current edge's angle;
- * 10. Repeat steps 2- 19, until the target point set in Step 2 to find a closed loop;
- * 11. Repeat Steps 1-10, untill all edges are processed.
+ * The algorithm:
+ * 0. Mark all edges as unprocessed.
+ * 1. Draw a line crossing the first edge and find intersections with all unprocessed edges; select the edge with the closest intersection to the line start as the first edge on an outermost loop.
+ * 2. Set the start or end point as the target point based on direction for counterclockwise traversal.
+ * 3. Mark the edge as processed and add to the current loop.
+ * 4. From the current end point, find all unprocessed edges connected to it.
+ * 5. If one connected edge, use it as next; if multiple, draw a small circle around the end point, find intersections with the current and connected edges.
+ * 6. Calculate angles from the end point to these intersections.
+ * 7. Sort by the smallest left-turning angle difference from the current edge's angle to find the next outermost edge.
+ * 8. Update the current edge and end point.
+ * 9. Repeat steps 4-8 until the end point matches the target point, closing the loop.
+ * 10. Add the closed loop and repeat steps 1-9 until all edges are processed.
  *
  * The algorithm has the following assumptions:
-
  * 1. Contours are closed loops, so each edge has its start/end points connected to other edges;
  * 2. Each loop is simply closed with number of edges equals the number of vertices (Shared endpoints),
  * i.e. Euler characteristic 0;
@@ -125,9 +122,6 @@ private:
     RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
     // the edges found for the current loop to form
     mutable std::unique_ptr<RS_EntityContainer> m_loop;
-
-    // all loops found
-    mutable std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
 
     // The internal data
     struct LoopData;
