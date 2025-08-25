@@ -221,7 +221,7 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.9.*'
+          version: '6.10.*'
           host: 'windows'
           arch: 'win64_msvc2022_64'
           target: 'desktop'
