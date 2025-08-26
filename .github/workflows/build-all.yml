@@ -128,22 +128,22 @@ jobs:
           retention-days: 2
 
   BuildSnap:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
           ref: master
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -qq install qmake6 qt6-base-dev qt6-declarative-dev qt6-image-formats-plugin-pdf qt6-pdf-dev linguist-qt6
-          sudo apt-get -qq install qt6-svg-dev libqt6svgwidgets6 qt6-l10n-tools qtchooser qt6-wayland-dev qt6-tools-dev
-          sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev libssl-dev libssl3
-          sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
-          sudo apt-get -qq install cmake
+          
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.10.*'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          modules: 'qtwaylandcompositor qtimageformats'
 
       - name: install snap
         uses: samuelmeuli/action-snapcraft@v2
