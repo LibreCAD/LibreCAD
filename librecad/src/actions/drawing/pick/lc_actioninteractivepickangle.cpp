@@ -54,11 +54,11 @@ void LC_ActionInteractivePickAngle::doSetInteractiveInputValue(
     interactiveInputInfo->m_angleRad = m_angle;
 }
 
-RS2::CursorType LC_ActionInteractivePickAngle::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionInteractivePickAngle::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 
-void LC_ActionInteractivePickAngle::onMouseRightButtonRelease(int status, LC_MouseEvent* e) {
+void LC_ActionInteractivePickAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent* e) {
     if (status == SetSecondLine) {
         setStatus(SetPoint1);
     }
@@ -314,7 +314,7 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
     }
 }
 
-void LC_ActionInteractivePickAngle::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) {
+void LC_ActionInteractivePickAngle::onCoordinateEvent(int status,[[maybe_unused]] bool isZero, const RS_Vector& pos) {
     switch (status){
         case SetPoint1:{
             m_point1 = pos;

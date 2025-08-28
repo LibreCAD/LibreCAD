@@ -322,7 +322,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
         addToolBar(Qt::BottomToolBarArea, bottomPanel);
 
         // Create a grid layout for the main content
-        QGridLayout* contentLayout = new QGridLayout();
+       // QGridLayout* contentLayout = new QGridLayout();
         // contentLayout->addWidget(topPanel, 0, 0, 1, 3);
         // contentLayout->addWidget(leftPanel, 1, 0);
         // contentLayout->addWidget(centerArea, 1, 1);

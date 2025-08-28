@@ -46,7 +46,7 @@ void RS_ActionDrawArcTangential::reset() {
     m_alternateArc = false;
 }
 
-void RS_ActionDrawArcTangential::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPosition) {
+void RS_ActionDrawArcTangential::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPosition) {
     setBaseEntity(contextEntity, m_actionContext->getContextMenuActionClickPosition());
 }
 

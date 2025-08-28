@@ -48,12 +48,12 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
     }
 }
 
-bool LC_ActionDrawArc2PointsBase::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+bool LC_ActionDrawArc2PointsBase::doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag, double angle) {
     setParameter(angle);
     return true;
 }
 
-bool LC_ActionDrawArc2PointsBase::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+bool LC_ActionDrawArc2PointsBase::doUpdateDistanceByInteractiveInput([[maybe_unused]]const QString& tag, double distance) {
     setParameter(distance);
     return true;
 }

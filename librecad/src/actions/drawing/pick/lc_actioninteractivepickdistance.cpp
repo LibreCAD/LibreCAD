@@ -43,7 +43,7 @@ LC_ActionInteractivePickDistance::LC_ActionInteractivePickDistance(LC_ActionCont
 LC_ActionInteractivePickDistance::~LC_ActionInteractivePickDistance() = default;
 
 bool LC_ActionInteractivePickDistance::isInteractiveDataValid() {
-    return LC_LineMath::isMeaningful(m_distance) && !std::signbit(m_distance) || (m_point1.valid && m_point2.valid);
+    return (LC_LineMath::isMeaningful(m_distance) && !std::signbit(m_distance)) || (m_point1.valid && m_point2.valid);
 }
 
 void LC_ActionInteractivePickDistance::doSetInteractiveInputValue(
