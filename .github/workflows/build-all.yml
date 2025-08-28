@@ -298,9 +298,101 @@ jobs:
           path: LibreCAD*.exe
           retention-days: 2
 
+  BuildWindowsARM64:
+    runs-on: windows-11-arm
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.9.*'
+          host: 'windows'
+          arch: 'win64_msvc2022_arm64_cross_compiled'
+          target: 'desktop'
+          tools-only: 'false'
+          modules: 'qt3d qt5compat qtimageformats qtshadertools'
+          tools: 'tools_cmake'
+
+      - name: (3) Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: arm64
+
+      - name: Install boost
+        run: |
+          curl -# -L -o boost.7z https://archives.boost.io/release/1.87.0/source/boost_1_87_0.7z
+          7z x -o. -y boost.7z
+          mkdir -p boost/include
+          mv boost_1_87_0/boost boost/include/
+          rm boost.7z
+          pwd
+          ls -ld boost/include/boost/version.hpp
+        shell: bash
+
+      - name: Configure CMake
+        run: |
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
+        shell: cmd
+        env:
+          BUILD_TYPE: release
+          MSVC_VER_NUMBER: "Visual Studio 17 2022"
+          BOOST_ROOT: boost
+          CMAKE_CXX_FLAGS: " /MP8"
+
+      - name: Build
+        run: |
+          cmake --build generated --config Release
+        shell: cmd
+
+      - name: listFile
+        run: |
+          cd generated
+          dir *.*
+          dir Release\*.*
+          dir ARM64\*.*
+        shell: cmd
+
+      - name: List files
+        run: |
+            echo "${{ github.workspace }}"
+            dir "${{ github.workspace }}"
+        shell: cmd
+
+      - name: winDeployment
+        run: |
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win-ARM64.nsh scripts\postprocess-windows\custom.nsh
+          mkdir generated\plugins
+          for /r %%a in (*.dll) do copy "%%a" generated\plugins
+          cd generated
+          windeployqt6.exe --release --compiler-runtime Release\LibreCAD.exe
+          dir *.*
+          pushd "${{ github.workspace }}\scripts"
+          call build-win-setup.bat
+        shell: cmd
+        
+      - name: Rename installer
+        run: |
+          mv LibreCAD-Installer.exe LibreCAD-`git describe --always`-winARM64.exe
+        shell: bash
+
+      - name: Upload artifact
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
+        with:
+          name: winARM64Assets
+          path: LibreCAD*.exe
+          retention-days: 2
+
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows64, BuildSnap]
+    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows64, BuildWindowsARM64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -328,5 +420,6 @@ jobs:
             linuxAssetsAarch64/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
+            winARM64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
             LICENSE
